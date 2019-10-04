@@ -1,0 +1,38 @@
+var group___u_s_b =
+[
+    [ "usb_instance_ctrl_t", "group___u_s_b.html#structusb__instance__ctrl__t", [
+      [ "module_number", "group___u_s_b.html#a4b47aee2b2f67c3ef24dabe958c57c39", null ],
+      [ "device_address", "group___u_s_b.html#ab313cd6b1d106eca43b7fc5b99fdda74", null ],
+      [ "pipe", "group___u_s_b.html#a9a0a93bef2a210dbc8f4c2af77c51970", null ],
+      [ "type", "group___u_s_b.html#a3265ee955a55690a72693735a891874e", null ],
+      [ "status", "group___u_s_b.html#ae690b0c74f62de7de65c90420737bb53", null ],
+      [ "event", "group___u_s_b.html#a15da4d731d624663354befb5c763a746", null ],
+      [ "data_size", "group___u_s_b.html#a98a330aeb2bc41c3294edfdade8d6aa2", null ],
+      [ "setup", "group___u_s_b.html#a595fbe9287a37d454104c206e0c86c11", null ],
+      [ "p_data", "group___u_s_b.html#a71cc75a3dc95788353882bb9116330a5", null ]
+    ] ],
+    [ "R_USB_Open", "group___u_s_b.html#ga85b7a825ad20b3e211cdfe3ccfca74c4", null ],
+    [ "R_USB_Close", "group___u_s_b.html#gae6762c6eccb45b491c51d0f3a843586d", null ],
+    [ "R_USB_Read", "group___u_s_b.html#ga980648af41a417cf4ee497c107866dad", null ],
+    [ "R_USB_Write", "group___u_s_b.html#ga27facc269c02909e5dc7f3124fc69ce6", null ],
+    [ "R_USB_Stop", "group___u_s_b.html#ga03dbfd9f25f25bb2c31d6039cdef7ac9", null ],
+    [ "R_USB_Suspend", "group___u_s_b.html#gaeac8a6fb5be90e448c32e0c9b81ea1a9", null ],
+    [ "R_USB_Resume", "group___u_s_b.html#gab3d84b4f8923dd2831e8c57e9a4ff39e", null ],
+    [ "R_USB_VbusSet", "group___u_s_b.html#ga225942c635bcdbad8e36aa28f297b812", null ],
+    [ "R_USB_InfoGet", "group___u_s_b.html#gad37a561aee0bc644e798e51d9de2d5ca", null ],
+    [ "R_USB_PipeRead", "group___u_s_b.html#gaa0274579d4b4b6d7702a49be28030b34", null ],
+    [ "R_USB_PipeWrite", "group___u_s_b.html#ga19887d8ae55cdabbfdf38ca318aa0599", null ],
+    [ "R_USB_PipeStop", "group___u_s_b.html#ga9967bbaca6a4d154ddcc0d4b6dd5eccb", null ],
+    [ "R_USB_UsedPipesGet", "group___u_s_b.html#ga9b62d0397972e12fe933d1ec5503f7c2", null ],
+    [ "R_USB_PipeInfoGet", "group___u_s_b.html#gac4fb3f68455949f056b56d7df8e33b7d", null ],
+    [ "R_USB_PullUp", "group___u_s_b.html#ga95ba117213b5391a907582cc300ba44d", null ],
+    [ "R_USB_EventGet", "group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951", null ],
+    [ "R_USB_VersionGet", "group___u_s_b.html#gaf95e0ee001b1be6f998be42e4986f1c9", null ],
+    [ "R_USB_ModuleNumberGet", "group___u_s_b.html#gad568903d7571f81da82b56d766bac46f", null ],
+    [ "R_USB_ClassTypeGet", "group___u_s_b.html#gafe65188a89a926bcc12676c39ff587ea", null ],
+    [ "R_USB_DeviceAddressGet", "group___u_s_b.html#ga5115f4b4a93c22485a82d753d5ca30b4", null ],
+    [ "R_USB_PipeNumberGet", "group___u_s_b.html#ga8a525c37cda36063befdb9451db98489", null ],
+    [ "R_USB_DeviceStateGet", "group___u_s_b.html#ga3daaad1d2b7430e08a5c1bf87bfec38d", null ],
+    [ "R_USB_DataSizeGet", "group___u_s_b.html#ga042d5b513be9896e593f023c8cb81cd1", null ],
+    [ "R_USB_SetupGet", "group___u_s_b.html#ga628af921919f90a9232c8c1713cc6c48", null ]
+];

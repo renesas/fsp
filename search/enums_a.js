@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['lpm_5fdeep_5fstandby_5fcancel_5fedge_5ft',['lpm_deep_standby_cancel_edge_t',['../group___l_p_m___a_p_i.html#gaecb8b2da6c5e7bf0b3532799418b9f70',1,'r_lpm_api.h']]],
+  ['lpm_5fdeep_5fstandby_5fcancel_5fsource_5ft',['lpm_deep_standby_cancel_source_t',['../group___l_p_m___a_p_i.html#gab83f1826bb070e32d292d48f139d0438',1,'r_lpm_api.h']]],
+  ['lpm_5fio_5fport_5ft',['lpm_io_port_t',['../group___l_p_m___a_p_i.html#ga93645998bccd96ec1dc8b97d84eea1a3',1,'r_lpm_api.h']]],
+  ['lpm_5fmode_5ft',['lpm_mode_t',['../group___l_p_m___a_p_i.html#ga22283c51ece346b4ba08a30c7b0cc8dd',1,'r_lpm_api.h']]],
+  ['lpm_5foutput_5fport_5fenable_5ft',['lpm_output_port_enable_t',['../group___l_p_m___a_p_i.html#ga9a22437bbccfdcc6663e585db99eaf91',1,'r_lpm_api.h']]],
+  ['lpm_5fpower_5fsupply_5ft',['lpm_power_supply_t',['../group___l_p_m___a_p_i.html#ga7dddfc8756ccb1fb6e9e430ecbcd4f18',1,'r_lpm_api.h']]],
+  ['lpm_5fsnooze_5fcancel_5ft',['lpm_snooze_cancel_t',['../group___l_p_m___a_p_i.html#ga4a91a996af007d54ca8ebccb0be76852',1,'r_lpm_api.h']]],
+  ['lpm_5fsnooze_5fdtc_5ft',['lpm_snooze_dtc_t',['../group___l_p_m___a_p_i.html#ga954afb771b813cdb81e0511f604da765',1,'r_lpm_api.h']]],
+  ['lpm_5fsnooze_5fend_5ft',['lpm_snooze_end_t',['../group___l_p_m___a_p_i.html#ga79a7c2de81bbd287a53ff255c15cd8d3',1,'r_lpm_api.h']]],
+  ['lpm_5fsnooze_5frequest_5ft',['lpm_snooze_request_t',['../group___l_p_m___a_p_i.html#gad89b68cf8999a1082839128aaad4e9d4',1,'r_lpm_api.h']]],
+  ['lpm_5fstandby_5fwake_5fsource_5ft',['lpm_standby_wake_source_t',['../group___l_p_m___a_p_i.html#ga9c49529c46118be3f3cda150e13f1a0f',1,'r_lpm_api.h']]],
+  ['lvd_5fcurrent_5fstate_5ft',['lvd_current_state_t',['../group___l_v_d___a_p_i.html#ga9d6a37d0481e360cf4db1a3374a0965a',1,'r_lvd_api.h']]],
+  ['lvd_5fnegation_5fdelay_5ft',['lvd_negation_delay_t',['../group___l_v_d___a_p_i.html#ga8de0a673b3fbe3e0e8ce004f4933189a',1,'r_lvd_api.h']]],
+  ['lvd_5fresponse_5ft',['lvd_response_t',['../group___l_v_d___a_p_i.html#gac3a698471443aa948c50dd6dc6661cdb',1,'r_lvd_api.h']]],
+  ['lvd_5fsample_5fclock_5ft',['lvd_sample_clock_t',['../group___l_v_d___a_p_i.html#ga29804b6d4357881b2d9b3cda6a11acf3',1,'r_lvd_api.h']]],
+  ['lvd_5fthreshold_5fcrossing_5ft',['lvd_threshold_crossing_t',['../group___l_v_d___a_p_i.html#gaad6c2ef7eb77fb3e002b8365ca042b76',1,'r_lvd_api.h']]],
+  ['lvd_5fthreshold_5ft',['lvd_threshold_t',['../group___l_v_d___a_p_i.html#gacfeb6d23a9c897df8217734c11f10d5c',1,'r_lvd_api.h']]],
+  ['lvd_5fvoltage_5fslope_5ft',['lvd_voltage_slope_t',['../group___l_v_d___a_p_i.html#ga3e15299c4637ea5e858cd80ded8ac197',1,'r_lvd_api.h']]]
+];

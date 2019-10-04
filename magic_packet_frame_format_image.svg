@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Microsoft Visio 11.0、SVG Export v1.0 により生成 magic_packet_frame_format_image.svg Page-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="9.56718in" height="1.10202in"
+		viewBox="0 0 688.837 79.3458" xml:space="preserve" color-interpolation-filters="sRGB" class="st13">
+	<v:documentProperties v:langID="1041" v:metric="true" v:viewMarkup="false"/>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#ffffff;stroke:#000000;stroke-linecap:butt;stroke-width:1}
+		.st2 {fill:#000000;font-family:Arial;font-size:0.75em}
+		.st3 {font-size:1em}
+		.st4 {fill:#ffffff;marker-end:url(#mrkr13-10);marker-start:url(#mrkr13-8);stroke:#000000;stroke-linecap:butt;stroke-width:1}
+		.st5 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.28409090909091}
+		.st6 {fill:#ff0000;font-size:1em}
+		.st7 {fill:#ff0000;font-family:Symbol;font-size:1em}
+		.st8 {marker-end:url(#mrkr4-68);stroke:#404040;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st9 {fill:#404040;fill-opacity:1;stroke:#404040;stroke-opacity:1;stroke-width:0.22935779816514}
+		.st10 {fill:none;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st11 {fill:#000000;font-family:Arial;font-size:0.833336em}
+		.st12 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st13 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs id="Patterns_And_Gradients">
+		<linearGradient id="grad30-65" v:fillPattern="30" v:foreground="#f0f0f0" v:background="#ffffff" x1="0" y1="1" x2="0" y2="0">
+			<stop offset="0" style="stop-color:#f0f0f0;stop-opacity:1"/>
+			<stop offset="1" style="stop-color:#ffffff;stop-opacity:1"/>
+		</linearGradient>
+	</defs>
+	<defs id="Markers">
+		<g id="lend13">
+			<path d="M 3 1 L 0 0 L 3 -1 L 3 1 " style="stroke:none"/>
+		</g>
+		<marker id="mrkr13-8" class="st5" v:arrowType="13" v:arrowSize="2" v:setback="10.56" refX="10.56" orient="auto"
+				markerUnits="strokeWidth" overflow="visible">
+			<use xlink:href="#lend13" transform="scale(3.52) "/>
+		</marker>
+		<marker id="mrkr13-10" class="st5" v:arrowType="13" v:arrowSize="2" v:setback="10.56" refX="-10.56" orient="auto"
+				markerUnits="strokeWidth" overflow="visible">
+			<use xlink:href="#lend13" transform="scale(-3.52,-3.52) "/>
+		</marker>
+		<g id="lend4">
+			<path d="M 2 1 L 0 0 L 2 -1 L 2 1 " style="stroke:none"/>
+		</g>
+		<marker id="mrkr4-68" class="st9" v:arrowType="4" v:arrowSize="2" v:setback="8.72" refX="-8.72" orient="auto"
+				markerUnits="strokeWidth" overflow="visible">
+			<use xlink:href="#lend4" transform="scale(-4.36,-4.36) "/>
+		</marker>
+	</defs>
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Page-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<g id="shape1-1" v:mID="1" v:groupContext="shape" transform="translate(127.973,-28.5295)">
+			<title>シート.1</title>
+			<desc>Transfer destination address (6 bytes)</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="48.6614" cy="59.5033" width="97.33" height="39.685"/>
+			<rect x="0" y="39.6607" width="97.3227" height="39.685" class="st1"/>
+			<text x="8.89" y="56.8" class="st2" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Transfer destination <v:newlineChar/><tspan
+						x="13.9" dy="1.2em" class="st3">address </tspan>(6 bytes)</text>		</g>
+		<g id="shape2-5" v:mID="2" v:groupContext="shape" transform="translate(225.296,-28.5295)">
+			<title>シート.2</title>
+			<desc>Transfer source address (6 bytes)</desc>
+			<v:textBlock v:margins="rect(4,0,4,0)" v:tabSpace="42.5197"/>
+			<v:textRect cx="36.378" cy="59.5033" width="72.76" height="39.685"/>
+			<rect x="0" y="39.6607" width="72.7559" height="39.685" class="st4"/>
+			<text x="4.87" y="51.4" class="st2" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Transfer source <v:newlineChar/><tspan
+						x="20.37" dy="1.2em" class="st3">address <v:newlineChar/></tspan><tspan x="18.87" dy="1.2em" class="st3">(</tspan>6 bytes)</text>		</g>
+		<g id="shape3-14" v:mID="3" v:groupContext="shape" transform="translate(298.052,-28.5295)">
+			<title>シート.3</title>
+			<desc>Length/type (2 bytes)</desc>
+			<v:textBlock v:margins="rect(4,0,4,0)" v:tabSpace="42.5197"/>
+			<v:textRect cx="26.6929" cy="59.5033" width="53.39" height="39.685"/>
+			<rect x="0" y="39.6607" width="53.3858" height="39.685" class="st4"/>
+			<text x="3.17" y="56.8" class="st2" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Length/type<v:newlineChar/><tspan
+						x="9.19" dy="1.2em" class="st3">(</tspan>2 bytes)</text>		</g>
+		<g id="shape4-20" v:mID="4" v:groupContext="shape" transform="translate(351.438,-28.5295)">
+			<title>シート.4</title>
+			<desc>Data (FF:FF:FF:FF:FF:FF, Transfer destination address ´ 16)</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="96.6614" cy="59.5033" width="193.33" height="39.685"/>
+			<rect x="0" y="39.6607" width="193.323" height="39.685" class="st4"/>
+			<text x="87.16" y="51.33" class="st2" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Data<v:newlineChar/><tspan
+						x="13.66" dy="1.2em" class="st3">(</tspan><tspan class="st6">FF</tspan><tspan class="st6">:</tspan><tspan
+						class="st6">FF</tspan><tspan class="st6">:</tspan><tspan class="st6">FF</tspan><tspan class="st6">:</tspan><tspan
+						class="st6">FF</tspan><tspan class="st6">:</tspan><tspan class="st6">FF</tspan><tspan class="st6">:</tspan><tspan
+						class="st6">FF</tspan><tspan class="st6">, </tspan><tspan class="st6" v:langID="1033">Transfer destination <v:newlineChar/></tspan><tspan
+						x="69.18" dy="1.212em" class="st6" v:langID="1033">address</tspan><tspan class="st6"> </tspan><tspan
+						class="st7">´</tspan><tspan class="st6"> </tspan><tspan class="st6">16</tspan>)</text>		</g>
+		<g id="shape5-44" v:mID="5" v:groupContext="shape" transform="translate(597.863,-28.5295)">
+			<title>シート.5</title>
+			<desc>FCS (4 bytes)</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="39.9213" cy="59.5033" width="79.85" height="39.685"/>
+			<rect x="0" y="39.6607" width="79.8425" height="39.685" class="st4"/>
+			<text x="30.92" y="56.8" class="st2" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>FCS<v:newlineChar/><tspan
+						x="22.42" dy="1.2em" class="st3">(</tspan>4 bytes)</text>		</g>
+		<g id="shape6-50" v:mID="6" v:groupContext="shape" transform="translate(8.4458,-28.5295)">
+			<title>シート.6</title>
+			<desc>Preamble (7 bytes)</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="39.685" cy="59.5033" width="79.38" height="39.685"/>
+			<rect x="0" y="39.6607" width="79.3701" height="39.685" class="st1"/>
+			<text x="20.43" y="56.8" class="st2" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Preamble<v:newlineChar/><tspan
+						x="22.18" dy="1.2em" class="st3" v:langID="1041">(</tspan><tspan class="st3" v:langID="1041">7 </tspan><tspan
+						class="st3" v:langID="1041">bytes</tspan><tspan class="st3" v:langID="1041">)</tspan></text>		</g>
+		<g id="shape10-57" v:mID="10" v:groupContext="shape" transform="translate(87.249,-28.5295)">
+			<title>シート.10</title>
+			<desc>SFD (1 byte)</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="20.4094" cy="59.5033" width="40.82" height="39.685"/>
+			<rect x="0" y="39.6607" width="40.8189" height="39.685" class="st1"/>
+			<text x="11.41" y="56.8" class="st2" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>SFD<v:newlineChar/><tspan
+						x="5.15" dy="1.2em" class="st3">(</tspan>1 byte)</text>		</g>
+		<g id="shape11-61" v:mID="11" v:groupContext="shape" transform="translate(107.942,-11.5217)">
+			<title>→</title>
+			<v:userDefs>
+				<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+				<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+			</v:userDefs>
+			<path d="M0 79.35 L13.3 79.35" class="st8"/>
+		</g>
+		<g id="shape12-69" v:mID="12" v:groupContext="shape" transform="translate(27.4784,147.359) rotate(180)">
+			<title>→.12</title>
+			<v:userDefs>
+				<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+				<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+			</v:userDefs>
+			<path d="M0 79.35 L13.63 79.35" class="st8"/>
+		</g>
+		<g id="shape13-75" v:mID="13" v:groupContext="shape" transform="translate(26.3671,-0.938976)">
+			<title>シート.13</title>
+			<desc>Physical header</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="42.5197" cy="69.3458" width="85.04" height="20"/>
+			<rect x="0" y="59.3458" width="85.0394" height="20" class="st10"/>
+			<text x="6.94" y="72.35" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Physical header</text>		</g>
+		<g id="shape14-78" v:mID="14" v:groupContext="shape" transform="translate(280.288,-11.5217)">
+			<title>→.14</title>
+			<v:userDefs>
+				<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+				<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+			</v:userDefs>
+			<path d="M0 79.35 L64.33 79.35" class="st8"/>
+		</g>
+		<g id="shape15-84" v:mID="15" v:groupContext="shape" transform="translate(198.934,147.17) rotate(180)">
+			<title>→.15</title>
+			<v:userDefs>
+				<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+				<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+			</v:userDefs>
+			<path d="M0 79.35 L64.89 79.35" class="st8"/>
+		</g>
+		<g id="shape16-90" v:mID="16" v:groupContext="shape" transform="translate(195.249,-1.12795)">
+			<title>シート.16</title>
+			<desc>Ethernet header</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="44.0787" cy="69.3458" width="88.16" height="20"/>
+			<rect x="0" y="59.3458" width="88.1575" height="20" class="st10"/>
+			<text x="8.22" y="72.35" class="st11" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Ethernet <tspan
+						class="st3" v:langID="1033">header</tspan></text>		</g>
+		<g id="shape17-94" v:mID="17" v:groupContext="shape" transform="translate(502.889,-11.5217)">
+			<title>→.17</title>
+			<v:userDefs>
+				<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+				<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+			</v:userDefs>
+			<path d="M0 79.35 L88.72 79.35" class="st8"/>
+		</g>
+		<g id="shape18-100" v:mID="18" v:groupContext="shape" transform="translate(454.7,147.17) rotate(180)">
+			<title>→.18</title>
+			<v:userDefs>
+				<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+				<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+			</v:userDefs>
+			<path d="M0 79.35 L96.91 79.35" class="st8"/>
+		</g>
+		<g id="shape19-106" v:mID="19" v:groupContext="shape" transform="translate(446.21,-1.12795)">
+			<title>シート.19</title>
+			<desc>Payload</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="32.6614" cy="69.3458" width="65.33" height="20"/>
+			<rect x="0" y="59.3458" width="65.3228" height="20" class="st10"/>
+			<text x="14.59" y="72.35" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Payload</text>		</g>
+		<g id="shape20-109" v:mID="20" v:groupContext="shape" transform="translate(656.365,-11.5217)">
+			<title>→.20</title>
+			<v:userDefs>
+				<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+				<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+			</v:userDefs>
+			<path d="M0 79.35 L14.8 79.35" class="st8"/>
+		</g>
+		<g id="shape21-115" v:mID="21" v:groupContext="shape" transform="translate(619.919,147.17) rotate(180)">
+			<title>→.21</title>
+			<v:userDefs>
+				<v:ud v:nameU="msvThemeColors" v:val="VT0(36):26"/>
+				<v:ud v:nameU="msvThemeEffects" v:val="VT0(16):26"/>
+			</v:userDefs>
+			<path d="M0 79.35 L15.61 79.35" class="st8"/>
+		</g>
+		<g id="shape22-121" v:mID="22" v:groupContext="shape" transform="translate(608.824,-1.88386)">
+			<title>シート.22</title>
+			<desc>Trailer</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="29.9055" cy="69.3458" width="59.82" height="20"/>
+			<rect x="0" y="59.3458" width="59.811" height="20" class="st10"/>
+			<text x="15.74" y="72.35" class="st11" v:langID="1033"><v:paragraph v:horizAlign="1"/><v:tabList/>Trailer</text>		</g>
+		<g id="shape9-124" v:mID="9" v:groupContext="shape" transform="translate(207.414,50.2493) rotate(90)">
+			<title>直線</title>
+			<path d="M0 79.35 L28.35 79.35" class="st12"/>
+		</g>
+		<g id="shape23-127" v:mID="23" v:groupContext="shape" transform="translate(430.784,49.8714) rotate(90)">
+			<title>直線.23</title>
+			<path d="M0 79.35 L28.35 79.35" class="st12"/>
+		</g>
+		<g id="shape24-130" v:mID="24" v:groupContext="shape" transform="translate(677.398,50.0604) rotate(90)">
+			<title>直線.24</title>
+			<path d="M0 79.35 L28.35 79.35" class="st12"/>
+		</g>
+		<g id="shape26-133" v:mID="26" v:groupContext="shape" transform="translate(544.761,-28.5295)">
+			<title>シート.26</title>
+			<desc>Padding</desc>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="26.6457" cy="59.5033" width="53.3" height="39.685"/>
+			<rect x="0" y="39.6607" width="53.2913" height="39.685" class="st4"/>
+			<text x="10.13" y="62.2" class="st2" v:langID="1041"><v:paragraph v:horizAlign="1"/><v:tabList/>Padding</text>		</g>
+	</g>
+</svg>
