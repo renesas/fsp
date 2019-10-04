@@ -1,0 +1,424 @@
+/***********************************************************************************************************************
+ * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ *
+ * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
+ * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
+ * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
+ * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
+ * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
+ * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
+ **********************************************************************************************************************/
+
+#ifndef R_ADC_API_H
+#define R_ADC_API_H
+
+/*******************************************************************************************************************//**
+ * @ingroup RENESAS_INTERFACES
+ * @defgroup ADC_API ADC Interface
+ * @brief Interface for A/D Converters.
+ *
+ * @section ADC_API_SUMMARY Summary
+ * The ADC interface provides standard ADC functionality including one-shot mode (single scan), continuous scan and
+ * group scan. It also allows configuration of hardware and software triggers for starting scans. After each conversion
+ * an interrupt can be triggered, and if a callback function is provided, the call back is invoked with the
+ * appropriate event information.
+ *
+ * Implemented by:
+ * @ref ADC
+ *
+ * @{
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Includes
+ **********************************************************************************************************************/
+
+/* Includes board and MCU related header files. */
+#include "bsp_api.h"
+#include "r_elc_api.h"
+#include "r_transfer_api.h"
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
+
+/**********************************************************************************************************************
+ * Macro definitions
+ **********************************************************************************************************************/
+
+/* Version Number of API.  */
+#define ADC_API_VERSION_MAJOR    (1U)
+#define ADC_API_VERSION_MINOR    (0U)
+
+/*****************************************************************************
+ * Typedef definitions
+ ******************************************************************************/
+
+/** ADC operation mode definitions  */
+typedef enum e_adc_mode
+{
+    ADC_MODE_SINGLE_SCAN     = 0,      ///< Single scan - one or more channels
+    ADC_MODE_GROUP_SCAN      = 1,      ///< Two trigger sources to trigger scan for two groups which contain one or more channels
+    ADC_MODE_CONTINUOUS_SCAN = 2,      ///< Continuous scan - one or more channels
+} adc_mode_t;
+
+/** ADC data resolution definitions */
+typedef enum e_adc_resolution
+{
+    ADC_RESOLUTION_12_BIT = 0,         ///< 12 bit resolution
+    ADC_RESOLUTION_10_BIT = 1,         ///< 10 bit resolution
+    ADC_RESOLUTION_8_BIT  = 2,         ///< 8 bit resolution
+    ADC_RESOLUTION_14_BIT = 3,         ///< 14 bit resolution
+    ADC_RESOLUTION_16_BIT = 4,         ///< 16 bit resolution
+    ADC_RESOLUTION_24_BIT = 5,         ///< 24 bit resolution
+} adc_resolution_t;
+
+/** ADC data alignment definitions  */
+typedef enum e_adc_alignment
+{
+    ADC_ALIGNMENT_RIGHT = 0,           ///< Data alignment right
+    ADC_ALIGNMENT_LEFT  = 1            ///< Data alignment left
+} adc_alignment_t;
+
+/** ADC data sample addition and averaging options */
+typedef enum e_adc_add
+{
+    ADC_ADD_OFF             = 0,       ///< Addition turned off for channels/sensors
+    ADC_ADD_TWO             = 1,       ///< Add two samples
+    ADC_ADD_THREE           = 2,       ///< Add three samples
+    ADC_ADD_FOUR            = 3,       ///< Add four samples
+    ADC_ADD_SIXTEEN         = 5,       ///< Add sixteen samples
+    ADC_ADD_AVERAGE_TWO     = 0x81,    ///< Average two samples
+    ADC_ADD_AVERAGE_FOUR    = 0x83,    ///< Average four samples
+    ADC_ADD_AVERAGE_EIGHT   = 0x84,    ///< Average eight samples
+    ADC_ADD_AVERAGE_SIXTEEN = 0x85,    ///< Add sixteen samples
+} adc_add_t;
+
+/** ADC clear after read definitions */
+typedef enum e_adc_clear
+{
+    ADC_CLEAR_AFTER_READ_OFF = 0,      ///< Clear after read off
+    ADC_CLEAR_AFTER_READ_ON  = 1       ///< Clear after read on
+} adc_clear_t;
+
+/** ADC trigger mode definitions */
+typedef enum e_adc_trigger
+{
+    ADC_TRIGGER_SOFTWARE       = 0,    ///< Software trigger; not for group modes
+    ADC_TRIGGER_SYNC_ELC       = 2,    ///< Synchronous trigger via ELC
+    ADC_TRIGGER_ASYNC_EXTERNAL = 3,    ///< External asynchronous trigger; not for group modes
+} adc_trigger_t;
+
+/** ADC sample state registers */
+typedef enum e_adc_sample_state_reg
+{
+    ADC_SAMPLE_STATE_CHANNEL_0 = 0,         ///< Sample state register channel 0
+    ADC_SAMPLE_STATE_CHANNEL_1,             ///< Sample state register channel 1
+    ADC_SAMPLE_STATE_CHANNEL_2,             ///< Sample state register channel 2
+    ADC_SAMPLE_STATE_CHANNEL_3,             ///< Sample state register channel 3
+    ADC_SAMPLE_STATE_CHANNEL_4,             ///< Sample state register channel 4
+    ADC_SAMPLE_STATE_CHANNEL_5,             ///< Sample state register channel 5
+    ADC_SAMPLE_STATE_CHANNEL_6,             ///< Sample state register channel 6
+    ADC_SAMPLE_STATE_CHANNEL_7,             ///< Sample state register channel 7
+    ADC_SAMPLE_STATE_CHANNEL_8,             ///< Sample state register channel 8
+    ADC_SAMPLE_STATE_CHANNEL_9,             ///< Sample state register channel 9
+    ADC_SAMPLE_STATE_CHANNEL_10,            ///< Sample state register channel 10
+    ADC_SAMPLE_STATE_CHANNEL_11,            ///< Sample state register channel 11
+    ADC_SAMPLE_STATE_CHANNEL_12,            ///< Sample state register channel 12
+    ADC_SAMPLE_STATE_CHANNEL_13,            ///< Sample state register channel 13
+    ADC_SAMPLE_STATE_CHANNEL_14,            ///< Sample state register channel 14
+    ADC_SAMPLE_STATE_CHANNEL_15,            ///< Sample state register channel 15
+    ADC_SAMPLE_STATE_CHANNEL_16_TO_31 = -3, ///< Sample state register channel 16 to 31
+} adc_sample_state_reg_t;
+
+/** ADC sample state configuration */
+typedef struct st_adc_sample_state
+{
+    adc_sample_state_reg_t reg_id;     ///< Sample state register ID
+    uint8_t                num_states; ///< Number of sampling states for conversion. Ch16-20/21 use the same value.
+} adc_sample_state_t;
+
+/** ADC callback event definitions  */
+typedef enum e_adc_event
+{
+    ADC_EVENT_SCAN_COMPLETE,           ///< Normal/Group A scan complete
+    ADC_EVENT_SCAN_COMPLETE_GROUP_B,   ///< Group B scan complete
+    ADC_EVENT_CALIBRATION_COMPLETE,    ///< Calibration complete
+    ADC_EVENT_CONVERSION_COMPLETE,     ///< Conversion complete
+} adc_event_t;
+
+/** ADC action for group A interrupts group B scan.
+ * This enumeration is used to specify the priority between Group A and B in group mode.  */
+typedef enum e_adc_group_a
+{
+    ADC_GROUP_A_PRIORITY_OFF             = 0,      ///< Group A ignored and does not interrupt ongoing group B scan
+    ADC_GROUP_A_GROUP_B_WAIT_FOR_TRIGGER = 1,      ///< Group A interrupts Group B(single scan) which restarts at next Group B trigger
+    ADC_GROUP_A_GROUP_B_RESTART_SCAN     = 3,      ///< Group A interrupts Group B(single scan) which restarts immediately after Group A scan is complete
+    ADC_GROUP_A_GROUP_B_CONTINUOUS_SCAN  = 0x8001, ///< Group A interrupts Group B(continuous scan) which continues scanning without a new Group B trigger
+} adc_group_a_t;
+
+/** ADC channels */
+typedef enum e_adc_channel
+{
+    ADC_CHANNEL_0           = 0,       ///< ADC channel 0
+    ADC_CHANNEL_1           = 1,       ///< ADC channel 1
+    ADC_CHANNEL_2           = 2,       ///< ADC channel 2
+    ADC_CHANNEL_3           = 3,       ///< ADC channel 3
+    ADC_CHANNEL_4           = 4,       ///< ADC channel 4
+    ADC_CHANNEL_5           = 5,       ///< ADC channel 5
+    ADC_CHANNEL_6           = 6,       ///< ADC channel 6
+    ADC_CHANNEL_7           = 7,       ///< ADC channel 7
+    ADC_CHANNEL_8           = 8,       ///< ADC channel 8
+    ADC_CHANNEL_9           = 9,       ///< ADC channel 9
+    ADC_CHANNEL_10          = 10,      ///< ADC channel 10
+    ADC_CHANNEL_11          = 11,      ///< ADC channel 11
+    ADC_CHANNEL_12          = 12,      ///< ADC channel 12
+    ADC_CHANNEL_13          = 13,      ///< ADC channel 13
+    ADC_CHANNEL_14          = 14,      ///< ADC channel 14
+    ADC_CHANNEL_15          = 15,      ///< ADC channel 15
+    ADC_CHANNEL_16          = 16,      ///< ADC channel 16
+    ADC_CHANNEL_17          = 17,      ///< ADC channel 17
+    ADC_CHANNEL_18          = 18,      ///< ADC channel 18
+    ADC_CHANNEL_19          = 19,      ///< ADC channel 19
+    ADC_CHANNEL_20          = 20,      ///< ADC channel 20
+    ADC_CHANNEL_21          = 21,      ///< ADC channel 21
+    ADC_CHANNEL_22          = 22,      ///< ADC channel 22
+    ADC_CHANNEL_23          = 23,      ///< ADC channel 23
+    ADC_CHANNEL_24          = 24,      ///< ADC channel 24
+    ADC_CHANNEL_25          = 25,      ///< ADC channel 25
+    ADC_CHANNEL_26          = 26,      ///< ADC channel 26
+    ADC_CHANNEL_27          = 27,      ///< ADC channel 27
+    ADC_CHANNEL_TEMPERATURE = -3,      ///< Temperature sensor output
+    ADC_CHANNEL_VOLT        = -2,      ///< Internal reference voltage
+} adc_channel_t;
+
+/** ADC states. */
+typedef enum e_adc_state
+{
+    ADC_STATE_IDLE             = 0,    ///< ADC is idle
+    ADC_STATE_SCAN_IN_PROGRESS = 1,    ///< ADC scan in progress
+} adc_state_t;
+
+/** ADC status. */
+typedef struct st_adc_status
+{
+    adc_state_t state;                 ///< Current state
+} adc_status_t;
+
+/** ADC callback arguments definitions  */
+typedef struct st_adc_callbackb_args
+{
+    uint16_t      unit;                ///< ADC device in use
+    adc_event_t   event;               ///< ADC callback event
+    void const  * p_context;           ///< Placeholder for user data
+    adc_channel_t channel;             ///< Channel of conversion result.  Only valid for ADC_EVENT_CONVERSION_COMPLETE
+} adc_callback_args_t;
+
+/** ADC Information Structure for Transfer Interface */
+typedef struct st_adc_info
+{
+    __I uint16_t   * p_address;           ///< The address to start reading the data from
+    uint32_t         length;              ///< The total number of transfers to read
+    transfer_size_t  transfer_size;       ///< The size of each transfer
+    elc_peripheral_t elc_peripheral;      ///< Name of the peripheral in the ELC list
+    elc_event_t      elc_event;           ///< Name of the ELC event for the peripheral
+    uint32_t         calibration_data;    ///< Temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage
+    int16_t          slope_microvolts;    ///< Temperature sensor slope in microvolts/degrees C
+    bool             calibration_ongoing; ///< Calibration is in progress.
+} adc_info_t;
+
+/** ADC channel(s) configuration       */
+typedef struct st_adc_channel_cfg
+{
+    uint32_t      scan_mask;           ///< Channels/bits: bit 0 is ch0; bit 15 is ch15. Use ADC_MASK_CHANNEL_x
+    uint32_t      scan_mask_group_b;   ///< Valid for group modes. Use ADC_MASK_CHANNEL_x
+    uint32_t      add_mask;            ///< Valid if add enabled in Open(). Use ADC_MASK_CHANNEL_x
+    adc_group_a_t priority_group_a;    ///< Valid for group modes.
+    uint8_t       sample_hold_mask;    ///< Channels/bits 0-2. Use ADC_MASK_CHANNEL_x
+    uint8_t       sample_hold_states;  ///< Number of states to be used for sample and hold. Affects channels 0-2.
+} adc_channel_cfg_t;
+
+/** ADC general configuration  */
+typedef struct st_adc_cfg
+{
+    uint16_t         unit;                             ///< ADC Unit to be used
+    adc_mode_t       mode;                             ///< ADC operation mode
+    adc_resolution_t resolution;                       ///< ADC resolution 8, 10, or 12-bit
+    adc_alignment_t  alignment;                        ///< Specify left or right alignment; ignored if addition used
+    adc_add_t        add_average_count;                ///< Add or average samples
+    adc_clear_t      clearing;                         ///< Clear after read
+    adc_trigger_t    trigger;                          ///< Default and Group A trigger source
+    adc_trigger_t    trigger_group_b;                  ///< Group B trigger source; valid only for group mode
+    IRQn_Type        scan_end_irq;                     ///< Scan end IRQ number
+    IRQn_Type        scan_end_b_irq;                   ///< Scan end group B IRQ number
+    uint8_t          scan_end_ipl;                     ///< Scan end interrupt priority
+    uint8_t          scan_end_b_ipl;                   ///< Scan end group B interrupt priority
+    void (* p_callback)(adc_callback_args_t * p_args); ///< Callback function; set to NULL for none
+    void const * p_context;                            ///< Placeholder for user data. Passed to the user callback in adc_api_t::adc_callback_args_t.
+    void const * p_extend;                             ///< Extension parameter for hardware specific settings
+} adc_cfg_t;
+
+/** ADC control block. Allocate using driver instance control structure from driver instance header file. */
+typedef void adc_ctrl_t;
+
+/** ADC functions implemented at the HAL layer will follow this API. */
+typedef struct st_adc_api
+{
+    /** Initialize ADC Unit;  apply power, set the operational mode, trigger sources, interrupt priority,
+     * and configurations common to all channels and sensors.
+     * @par Implemented as
+     *  - R_ADC_Open()
+     *  - R_SDADC_Open()
+     *
+     * @pre Configure peripheral clocks, ADC pins and IRQs prior to calling this function.
+     * @param[in]  p_ctrl  Pointer to control handle structure
+     * @param[in]  p_cfg   Pointer to configuration structure
+     */
+    fsp_err_t (* open)(adc_ctrl_t * const p_ctrl, adc_cfg_t const * const p_cfg);
+
+    /** Configure the scan including the channels, groups, and scan triggers to be used for the unit that
+     * was initialized in the open call.  Some configurations are not supported for all implementations.
+     * See implementation for details.
+     * @par Implemented as
+     *  - R_ADC_ScanCfg()
+     *  - R_SDADC_ScanConfigure()
+     *
+     * @param[in]  p_ctrl     Pointer to control handle structure
+     * @param[in]  p_channel_cfg   Pointer to scan configuration structure
+     */
+    fsp_err_t (* scanCfg)(adc_ctrl_t * const p_ctrl, adc_channel_cfg_t const * const p_channel_cfg);
+
+    /** Start the scan (in case of a software trigger), or enable the hardware trigger.
+     * @par Implemented as
+     *  - R_ADC_ScanStart()
+     *  - R_SDADC_ScanStart()
+     *
+     * @param[in]  p_ctrl   Pointer to control handle structure
+     */
+    fsp_err_t (* scanStart)(adc_ctrl_t * const p_ctrl);
+
+    /** Stop the ADC scan (in case of a software trigger), or disable the hardware trigger.
+     * @par Implemented as
+     *  - R_ADC_ScanStop()
+     *  - R_SDADC_ScanStop()
+     *
+     * @param[in]  p_ctrl   Pointer to control handle structure
+     */
+    fsp_err_t (* scanStop)(adc_ctrl_t * const p_ctrl);
+
+    /** Check scan status.
+     * @par Implemented as
+     *  - R_ADC_StatusGet()
+     *  - R_SDADC_StatusGet()
+     *
+     * @param[in]  p_ctrl   Pointer to control handle structure
+     * @param[out] p_status Pointer to store current status in
+     */
+    fsp_err_t (* scanStatusGet)(adc_ctrl_t * const p_ctrl, adc_status_t * p_status);
+
+    /** Read ADC conversion result.
+     * @par Implemented as
+     *  - R_ADC_Read()
+     *  - R_SDADC_Read()
+     *
+     * @param[in]  p_ctrl   Pointer to control handle structure
+     * @param[in]  reg_id   ADC channel to read (see enumeration adc_channel_t)
+     * @param[in]  p_data   Pointer to variable to load value into.
+     */
+    fsp_err_t (* read)(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, uint16_t * const p_data);
+
+    /** Read ADC conversion result into a 32-bit word.
+     * @par Implemented as
+     *  - R_SDADC_Read32()
+     *
+     * @param[in]  p_ctrl   Pointer to control handle structure
+     * @param[in]  reg_id   ADC channel to read (see enumeration adc_channel_t)
+     * @param[in]  p_data   Pointer to variable to load value into.
+     */
+    fsp_err_t (* read32)(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, uint32_t * const p_data);
+
+    /** Set the sample state count for the specified channel. Not supported for all implementations.
+     *  See implementation for details.
+     * @par Implemented as
+     *  - R_ADC_SetSampleStateCount()
+     *
+     * @param[in]  p_ctrl    Pointer to control handle structure
+     * @param[in]  p_sample  Pointer to the ADC channels and corresponding sample states to be set
+     */
+    fsp_err_t (* sampleStateCountSet)(adc_ctrl_t * const p_ctrl, adc_sample_state_t * p_sample);
+
+    /** Calibrate ADC or associated PGA (programmable gain amplifier).  The driver may require implementation specific
+     * arguments to the p_extend input. Not supported for all implementations. See implementation for details.
+     * @par Implemented as
+     *  - R_SDADC_Calibrate()
+     *
+     * @param[in]  p_ctrl    Pointer to control handle structure
+     * @param[in]  p_extend  Pointer to implementation specific arguments
+     */
+    fsp_err_t (* calibrate)(adc_ctrl_t * const p_ctrl, void * const p_extend);
+
+    /** Set offset for input PGA configured for differential input. Not supported for all implementations.
+     *  See implementation for details.
+     * @par Implemented as
+     *  - R_SDADC_OffsetSet()
+     *
+     * @param[in]  p_ctrl    Pointer to control handle structure
+     * @param[in]  reg_id    ADC channel to read (see enumeration adc_channel_t)
+     * @param[in]  offset    See implementation for details.
+     */
+    fsp_err_t (* offsetSet)(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, int32_t const offset);
+
+    /** Close the specified ADC unit by ending any scan in progress, disabling interrupts, and removing power to the
+     * specified A/D unit.
+     * @par Implemented as
+     *  - R_ADC_Close()
+     *  - R_SDADC_Close()
+     *
+     * @param[in]  p_ctrl   Pointer to control handle structure
+     */
+    fsp_err_t (* close)(adc_ctrl_t * const p_ctrl);
+
+    /** Return the ADC data register address of the first (lowest number) channel and the total number of bytes
+     * to be read in order for the DTC/DMAC to read the conversion results of all configured channels.
+     * Return the temperature sensor calibration and slope data.
+     * @par Implemented as
+     *  - R_ADC_InfoGet()
+     *  - R_SDADC_InfoGet()
+     *
+     * @param[in]   p_ctrl       Pointer to control handle structure
+     * @param[out]  p_adc_info   Pointer to ADC information structure
+     */
+    fsp_err_t (* infoGet)(adc_ctrl_t * const p_ctrl, adc_info_t * const p_adc_info);
+
+    /** Retrieve the API version.
+     * @par Implemented as
+     *  - R_ADC_VersionGet()
+     *  - R_SDADC_VersionGet()
+     *
+     * @pre This function retrieves the API version.
+     * @param[in]  p_version   Pointer to version structure
+     */
+    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
+} adc_api_t;
+
+/** This structure encompasses everything that is needed to use an instance of this interface. */
+typedef struct st_adc_instance
+{
+    adc_ctrl_t              * p_ctrl;        ///< Pointer to the control structure for this instance
+    adc_cfg_t const         * p_cfg;         ///< Pointer to the configuration structure for this instance
+    adc_channel_cfg_t const * p_channel_cfg; ///< Pointer to the channel configuration structure for this instance
+    adc_api_t const         * p_api;         ///< Pointer to the API structure for this instance
+} adc_instance_t;
+
+/*******************************************************************************************************************//**
+ * @} (end defgroup ADC_API)
+ **********************************************************************************************************************/
+
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
+
+#endif

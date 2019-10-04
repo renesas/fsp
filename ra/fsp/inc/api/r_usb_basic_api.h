@@ -1,0 +1,617 @@
+/***********************************************************************************************************************
+ * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ *
+ * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
+ * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
+ * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
+ * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
+ * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
+ * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
+ **********************************************************************************************************************/
+/*******************************************************************************************************************//**
+ * @ingroup RENESAS_INTERFACES
+ * @defgroup USB_API USB Interface
+ * @brief Interface for USB functions.
+ *
+ * @section USB_API_Summary Summary
+ * The USB interface provides USB functionality.
+ *
+ * The USB interface can be implemented by:
+ * - @ref USB
+ *
+ * @{
+ **********************************************************************************************************************/
+
+#ifndef R_USB_API_H
+#define R_USB_API_H
+
+/******************************************************************************
+Includes   <System Includes> , "Project Includes"
+******************************************************************************/
+#include "bsp_api.h"
+#include "../../src/r_usb_basic/src/driver/inc/r_usb_basic_define.h"
+
+#if (USB_CFG_RTOS_USE == USB_CFG_ENABLE)
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "timers.h"
+#include "semphr.h"
+#endif /* #if (USB_CFG_RTOS_USE == USB_CFG_ENABLE) */
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
+
+/******************************************************************************
+ Macro definitions
+ ******************************************************************************/
+
+/* USB Version Info */
+#define USB_API_VERSION_MINOR                   (0U)        ///< Minor version of the API.
+#define USB_API_VERSION_MAJOR                   (1U)        ///< Major version of the API.
+
+/* USB Request Type Register */
+#define USB_BREQUEST                            (0xFF00U)   ///< b15-8
+
+/* USB Standard request */
+#define USB_GET_STATUS                          (0x0000U)   ///< USB Standard request Get Status
+#define USB_CLEAR_FEATURE                       (0x0100U)   ///< USB Standard request Clear Feature
+#define USB_REQRESERVED                         (0x0200U)   ///< USB Standard request Reqreserved
+#define USB_SET_FEATURE                         (0x0300U)   ///< USB Standard request Set Feature
+#define USB_REQRESERVED1                        (0x0400U)   ///< USB Standard request Reqreserved1
+#define USB_SET_ADDRESS                         (0x0500U)   ///< USB Standard request Set Address
+#define USB_GET_DESCRIPTOR                      (0x0600U)   ///< USB Standard request Get Descriptor
+#define USB_SET_DESCRIPTOR                      (0x0700U)   ///< USB Standard request Set Descriptor
+#define USB_GET_CONFIGURATION                   (0x0800U)   ///< USB Standard request Get Configuration
+#define USB_SET_CONFIGURATION                   (0x0900U)   ///< USB Standard request Set Configuration
+#define USB_GET_INTERFACE                       (0x0A00U)   ///< USB Standard request Get Interface
+#define USB_SET_INTERFACE                       (0x0B00U)   ///< USB Standard request Set Interface
+#define USB_SYNCH_FRAME                         (0x0C00U)   ///< USB Standard request Synch Frame
+
+/* USB_BMREQUESTTYPEDIR 0x0080u(b7) */
+#define USB_HOST_TO_DEV                         (0x0000U)   ///< From host to device.
+#define USB_DEV_TO_HOST                         (0x0080U)   ///< From device to host.
+
+/* USB_BMREQUESTTYPETYPE    0x0060u(b6-5) */
+#define USB_STANDARD                            (0x0000U)   ///< Standard Request
+#define USB_CLASS                               (0x0020U)   ///< Class Request
+#define USB_VENDOR                              (0x0040U)   ///< Vendor Request
+
+/* USB_BMREQUESTTYPERECIP   0x001Fu(b4-0) */
+#define USB_DEVICE                              (0x0000U)   ///< Device
+#define USB_INTERFACE                           (0x0001U)   ///< Interface
+#define USB_ENDPOINT                            (0x0002U)   ///< End Point
+#define USB_OTHER                               (0x0003U)   ///< Other
+
+#define USB_NULL                                (0x0U)      ///< NULL pointer
+
+#define USB_IP0                                 (0)         ///< USB0 module
+#define USB_IP1                                 (1)         ///< USB1 module
+
+/* USB pipe number */
+#define USB_PIPE0                               (0x0U)      ///< Pipe Number0
+#define USB_PIPE1                               (0x1U)      ///< Pipe Number1
+#define USB_PIPE2                               (0x2U)      ///< Pipe Number2
+#define USB_PIPE3                               (0x3U)      ///< Pipe Number3
+#define USB_PIPE4                               (0x4U)      ///< Pipe Number4
+#define USB_PIPE5                               (0x5U)      ///< Pipe Number5
+#define USB_PIPE6                               (0x6U)      ///< Pipe Number6
+#define USB_PIPE7                               (0x7U)      ///< Pipe Number7
+#define USB_PIPE8                               (0x8U)      ///< Pipe Number8
+#define USB_PIPE9                               (0x9U)      ///< Pipe Number9
+
+#define USB_EP0                                 (0x0U)      ///< End Point Number0
+#define USB_EP1                                 (0x1U)      ///< End Point Number1
+#define USB_EP2                                 (0x2U)      ///< End Point Number2
+#define USB_EP3                                 (0x3U)      ///< End Point Number3
+#define USB_EP4                                 (0x4U)      ///< End Point Number4
+#define USB_EP5                                 (0x5U)      ///< End Point Number5
+#define USB_EP6                                 (0x6U)      ///< End Point Number6
+#define USB_EP7                                 (0x7U)      ///< End Point Number7
+#define USB_EP8                                 (0x8U)      ///< End Point Number8
+#define USB_EP9                                 (0x9U)      ///< End Point Number9
+#define USB_EP10                                (0xAU)      ///< End Point Number10
+#define USB_EP11                                (0xBU)      ///< End Point Number11
+#define USB_EP12                                (0xCU)      ///< End Point Number12
+#define USB_EP13                                (0xDU)      ///< End Point Number13
+#define USB_EP14                                (0xEU)      ///< End Point Number14
+#define USB_EP15                                (0xFU)      ///< End Point Number15
+
+/* Descriptor type  Define */
+#define USB_DT_DEVICE                           (0x01U)     ///< Device Descriptor
+#define USB_DT_CONFIGURATION                    (0x02U)     ///< Configuration Descriptor
+#define USB_DT_STRING                           (0x03U)     ///< String Descriptor
+#define USB_DT_INTERFACE                        (0x04U)     ///< Interface Descriptor
+#define USB_DT_ENDPOINT                         (0x05U)     ///< Endpoint Descriptor
+#define USB_DT_DEVICE_QUALIFIER                 (0x06U)     ///< Device Qualifier Descriptor
+#define USB_DT_OTHER_SPEED_CONF                 (0x07U)     ///< Other Speed Configuration Descriptor
+#define USB_DT_INTERFACE_POWER                  (0x08U)     ///< Interface Power Descriptor
+#define USB_DT_OTGDESCRIPTOR                    (0x09U)     ///< OTG Descriptor
+#define USB_DT_HUBDESCRIPTOR                    (0x29U)     ///< HUB descriptor
+
+/* Interface class Define */
+#define USB_IFCLS_NOT                           (0x00U)     ///< Un corresponding Class
+#define USB_IFCLS_AUD                           (0x01U)     ///< Audio Class
+#define USB_IFCLS_CDC                           (0x02U)     ///< CDC Class
+#define USB_IFCLS_CDCC                          (0x02U)     ///< CDC-Control Class
+#define USB_IFCLS_HID                           (0x03U)     ///< HID Class
+#define USB_IFCLS_PHY                           (0x05U)     ///< Physical Class
+#define USB_IFCLS_IMG                           (0x06U)     ///< Image Class
+#define USB_IFCLS_PRN                           (0x07U)     ///< Printer Class
+#define USB_IFCLS_MAS                           (0x08U)     ///< Mass Storage Class
+#define USB_IFCLS_HUB                           (0x09U)     ///< HUB Class
+#define USB_IFCLS_CDCD                          (0x0AU)     ///< CDC-Data Class
+#define USB_IFCLS_CHIP                          (0x0BU)     ///< Chip/Smart Card Class
+#define USB_IFCLS_CNT                           (0x0CU)     ///< Content-Security Class
+#define USB_IFCLS_VID                           (0x0DU)     ///< Video Class
+#define USB_IFCLS_DIAG                          (0xDCU)     ///< Diagnostic Device
+#define USB_IFCLS_WIRE                          (0xE0U)     ///< Wireless Controller
+#define USB_IFCLS_APL                           (0xFEU)     ///< Application-Specific
+#define USB_IFCLS_VEN                           (0xFFU)     ///< Vendor-Specific Class
+
+/* Endpoint Descriptor  Define */
+#define USB_EP_IN                               (0x80U)     ///< In Endpoint
+#define USB_EP_OUT                              (0x00U)     ///< Out Endpoint
+#define USB_EP_ISO                              (0x01U)     ///< Isochronous Transfer
+#define USB_EP_BULK                             (0x02U)     ///< Bulk Transfer
+#define USB_EP_INT                              (0x03U)     ///< Interrupt Transfer
+
+/* Configuration descriptor bit define */
+#define USB_CF_RESERVED                         (0x80U)     ///< Reserved(set to 1)
+#define USB_CF_SELFP                            (0x40U)     ///< Self Powered
+#define USB_CF_BUSP                             (0x00U)     ///< Bus Powered
+#define USB_CF_RWUPON                           (0x20U)     ///< Remote Wake up ON
+#define USB_CF_RWUPOFF                          (0x00U)     ///< Remote Wake up OFF
+
+/* Descriptor length Define */
+#define USB_DD_BLENGTH                          (18U)       ///< Device Descriptor Length
+#define USB_CD_BLENGTH                          (9U)        ///< Configuration Descriptor Length
+#define USB_ID_BLENGTH                          (9U)        ///< Interface Descriptor Length
+#define USB_ED_BLENGTH                          (7U)        ///< Endpoint Descriptor Length
+
+/*****************************************************************************
+ Typedef definitions
+ ******************************************************************************/
+/** USB speed type */
+typedef enum e_usb_speed
+{
+    USB_SPEED_LS = 0,     ///< Low speed operation
+	USB_SPEED_FS,         ///< Full speed operation
+	USB_SPEED_HS,         ///< Hi speed operation
+} usb_speed_t;
+
+/** USB request result */
+typedef enum e_usb_setup_status
+{
+    USB_SETUP_STATUS_ACK = 0,       ///< ACK response
+	USB_SETUP_STATUS_STALL,         ///< STALL response
+} usb_setup_status_t;
+
+/** USB driver status */
+typedef enum e_usb_status
+{
+    USB_STATUS_POWERED = 0,      ///< Powered State
+    USB_STATUS_DEFAULT,          ///< Default State
+    USB_STATUS_ADDRESS,          ///< Address State
+    USB_STATUS_CONFIGURED,       ///< Configured State
+    USB_STATUS_SUSPEND,          ///< Suspend State
+    USB_STATUS_RESUME,           ///< Resume State
+    USB_STATUS_DETACH,           ///< Detach State
+    USB_STATUS_REQUEST,          ///< Request State
+    USB_STATUS_REQUEST_COMPLETE, ///< Request Complete State
+    USB_STATUS_READ_COMPLETE,    ///< Read Complete State
+    USB_STATUS_WRITE_COMPLETE,   ///< Write Complete State
+    USB_STATUS_BC,               ///< battery Charge State
+    USB_STATUS_OVERCURRENT,      ///< Over Current state
+    USB_STATUS_NOT_SUPPORT,      ///< Device Not Support
+    USB_STATUS_NONE,             ///< None Status
+    USB_STATUS_MSC_CMD_COMPLETE, ///< MSC_CMD Complete
+} usb_status_t;
+
+/** USB class type */
+typedef enum e_usb_class
+{
+    USB_CLASS_PCDC = 0,    ///< PCDC Class
+	USB_CLASS_PCDCC,       ///< PCDCC Class
+	USB_CLASS_PHID,        ///< PHID Class
+	USB_CLASS_PVND,        ///< PVND Class
+    USB_CLASS_HCDC,        ///< HCDC Class
+	USB_CLASS_HCDCC,       ///< HCDCC Class
+	USB_CLASS_HHID,        ///< HHID Class
+	USB_CLASS_HVND,        ///< HVND Class
+    USB_CLASS_HMSC,        ///< HMSC Class
+	USB_CLASS_PMSC,        ///< PMSC Class
+	USB_CLASS_REQUEST      ///< USB Class Request
+} usb_class_t;
+
+/** USB battery charging type */
+typedef enum e_usb_bcport
+{
+    USB_BCPORT_SDP = 0,   ///< SDP port settings
+	USB_BCPORT_CDP,       ///< CDP port settings
+	USB_BCPORT_DCP,       ///< DCP port settings
+} usb_bcport_t;
+
+/** USB status */
+typedef enum e_usb_onoff
+{
+    USB_OFF = 0,         ///< USB Off State
+	USB_ON,              ///< USB On State
+} usb_onoff_t;
+
+/** USB read / write type */
+typedef enum e_usb_transfer
+{
+    USB_TRANSFER_READ = 0,           ///< Data Receive communication
+	USB_TRANSFER_WRITE,              ///< Data transmission communication
+} usb_transfer_t;
+
+/** USB transfer type */
+typedef enum e_usb_transfer_type
+{
+    USB_TRANSFER_TYPE_BULK = 0,      ///< Bulk communication
+	USB_TRANSFER_TYPE_INT,           ///< Interrupt communication
+	USB_TRANSFER_TYPE_ISO,           ///< Isochronous communication
+} usb_transfer_type_t;
+
+/* H/W function type */
+typedef enum e_usb_mode
+{
+    USB_MODE_HOST = 1,               ///< Host mode
+    USB_MODE_PERI,                   ///< Peripheral mode
+} usb_mode_t;
+
+typedef enum e_usb_compliancetest_status
+{
+    USB_COMPLIANCETEST_ATTACH,       ///< Device Attach Detection
+    USB_COMPLIANCETEST_DETACH,       ///< Device Detach Detection
+    USB_COMPLIANCETEST_TPL,          ///< TPL device connect
+    USB_COMPLIANCETEST_NOTTPL,       ///< Not TPL device connect
+    USB_COMPLIANCETEST_HUB,          ///< USB Hub connect
+    USB_COMPLIANCETEST_OVRC,         ///< Over current
+    USB_COMPLIANCETEST_NORES,        ///< Response Time out for Control Read Transfer
+    USB_COMPLIANCETEST_SETUP_ERR,    ///< Setup Transaction Error
+} usb_compliancetest_status_t;
+
+typedef void usb_ctrl_t;
+typedef void (*usb_compliance_cb_t)( void *);
+
+#if (USB_CFG_RTOS_USE == USB_CFG_ENABLE)
+typedef TaskHandle_t    usb_hdl_t;
+
+typedef void (usb_callback_t)(usb_ctrl_t *, usb_hdl_t, usb_onoff_t);
+
+#else /* #if (USB_CFG_RTOS_USE == USB_CFG_ENABLE) */
+typedef void (usb_callback_t)( void *);
+#endif /* #if (USB_CFG_RTOS_USE == USB_CFG_ENABLE) */
+
+typedef struct st_usb_descriptor
+{
+    uint8_t *p_device;               ///< Pointer to the device descriptor
+    uint8_t *p_config_f;             ///< Pointer to the configuration descriptor for Full-speed
+    uint8_t *p_config_h;             ///< Pointer to the configuration descriptor for Hi-speed
+    uint8_t *p_qualifier;            ///< Pointer to the qualifier descriptor
+    uint8_t **p_string;              ///< Pointer to the string descriptor table
+    uint8_t num_string;              ///< Num entry String Descriptor
+} usb_descriptor_t;
+
+typedef struct st_usb_cfg
+{
+	usb_mode_t          usb_mode;    ///< USB_HOST/USB_PERI
+	usb_speed_t         usb_speed;   ///< USB speed (USB_HS/USB_FS/USB_LS)
+    usb_descriptor_t    *p_usb_reg;  ///< Pointer to the usb_decriptor_t structure area
+    usb_compliance_cb_t usb_complience_cb; ///< A callback variable dedicated to compliance testing.
+    IRQn_Type           irq;         ///< USBI dedicated interrupt number storage variable.
+    IRQn_Type           irq_r;       ///< USBR dedicated interrupt number storage variable.
+    IRQn_Type           irq_d0;      ///< FS D0FIFO dedicated interrupt number storage variable.
+    IRQn_Type           irq_d1;      ///< FS D1FIFO dedicated interrupt number storage variable.
+    IRQn_Type           hsirq;       ///< USBIR dedicated interrupt number storage variable.
+    IRQn_Type           hsirq_d0;    ///< HS D0FIFO dedicated interrupt number storage variable.
+    IRQn_Type           hsirq_d1;    ///< HS D1FIFO dedicated interrupt number storage variable.
+    uint8_t             ipl;         ///< Variable to store the interrupt priority of USBI
+    uint8_t             ipl_r;       ///< Variable to store the interrupt priority of USBR.
+    uint8_t             ipl_d0;      ///< Variable to store the interrupt priority of FS D0FIFO.
+    uint8_t             ipl_d1;      ///< Variable to store the interrupt priority of FS D1FIFO.
+    uint8_t             hsipl;         ///< Variable to store the interrupt priority of USBIR.
+    uint8_t             hsipl_d0;      ///< Variable to store the interrupt priority of HS D0FIFO.
+    uint8_t             hsipl_d1;      ///< Variable to store the interrupt priority of HS D1FIFO.
+    usb_callback_t      *p_usb_apl_callback; ///< Callback function used in Rtos.
+} usb_cfg_t;
+
+typedef struct st_usb_setup
+{
+    uint16_t        request_type;    ///< USB standard/class request type
+    uint16_t        request_value;   ///< Request value
+    uint16_t        request_index;   ///< Request index
+    uint16_t        request_length;  ///< Request length
+} usb_setup_t;
+
+typedef struct st_usb_pipe
+{
+    uint8_t         endpoint;        ///< Endpoint number
+    uint8_t         transfer_type;   ///< Transfer type (USB_BULK/USB_INT etc)
+    uint16_t        maxpacketsize;   ///< Max packet size
+} usb_pipe_t;
+
+typedef struct st_usb_info
+{
+    uint8_t         class_type;      ///< USB device class type
+    uint8_t         speed;           ///< USB speed
+    uint8_t         device_status;   ///< USB device status
+    uint8_t         bcport;          ///< Battery charging information
+} usb_info_t;
+
+typedef struct st_usb_compliance
+{
+    usb_compliancetest_status_t  status;  ///< USB Status
+    uint16_t   vid;                       ///< Vendor ID
+    uint16_t   pid;                       ///< Product ID
+
+} usb_compliance_t;
+
+typedef struct st_usb_instance_transfer
+{
+	uint8_t         module_number;   ///< USB module number (USB_IP0/USB_IP1)
+    uint8_t         device_address;  ///< USB device address
+    uint8_t         pipe;            ///< USB pipe number
+    usb_class_t     type;            ///< USB device class etc
+    uint16_t        status;          ///< USB device state etc
+    usb_status_t    event;           ///< USB event
+    uint32_t        data_size;       ///< Read data size
+    usb_setup_t     setup;           ///< usb_setup_t structure area
+    void            *p_data;         ///< Other information
+    usb_cfg_t const *p_usb_cfg;      ///< Config structure
+} usb_instance_transfer_t;
+
+/** WDT functions implemented at the HAL layer will follow this API. */
+typedef struct st_usb_api
+{
+    /** Start the USB module
+     * @par Implemented as
+     * - R_USB_Open()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_cfg        Pointer to configuration structure.
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* open)( usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_cfg, usb_instance_transfer_t * p_api_trans);
+
+    /** Stop the USB module
+     * @par Implemented as
+     * - R_USB_Close()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* close)(usb_ctrl_t * const p_api_ctrl, usb_instance_transfer_t * p_api_trans);
+
+    /** Request USB data read
+     * @par Implemented as
+     * - R_USB_Read()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_buf        Pointer to area that stores read data.
+     * @param[in]  size         Read request size.
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* read)(usb_ctrl_t * const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t * p_api_trans);
+
+    /** Request USB data write
+     * @par Implemented as
+     * - R_USB_Write()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_buf        Pointer to area that stores write data.
+     * @param[in]  size         Read request size.
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* write)(usb_ctrl_t * const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t * p_api_trans);
+
+    /** Stop USB data read/write processing
+     * @par Implemented as
+     * - R_USB_Stop()
+     *
+     * @param[in]  p_ctrl        Pointer to control structure.
+     * @param[in]  type          Receive (USB_READ) or send (USB_WRITE).
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* stop)(usb_ctrl_t * const p_api_ctrl, usb_transfer_t type, usb_instance_transfer_t * p_api_trans);
+
+    /** Request suspend
+     * @par Implemented as
+     * - R_USB_Suspend()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* suspend)(usb_ctrl_t * const p_api_ctrl, usb_instance_transfer_t * p_api_trans);
+
+    /** Request resume
+     * @par Implemented as
+     * - R_USB_Resume()
+     *
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* resume)(usb_ctrl_t * const p_api_ctrl, usb_instance_transfer_t * p_api_trans);
+
+    /** Sets VBUS supply start/stop.
+     * @par Implemented as
+     * - R_USB_VbusSet()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  state        VBUS supply start/stop specification
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* vbusSet)( usb_ctrl_t * const p_api_ctrl, uint16_t state, usb_instance_transfer_t * p_api_trans);
+
+    /** Get information on USB device.
+     * @par Implemented as
+     * - R_USB_InfomationGet()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_info       Pointer to usb_info_t structure area.
+     */
+    fsp_err_t (* infoGet)( usb_ctrl_t * const p_api_ctrl, usb_info_t *p_info);
+
+    /** Request data read from specified pipe
+     * @par Implemented as
+     * - R_USB_PipeRead()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_buf        Pointer to area that stores read data.
+     * @param[in]  size         Read request size.
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* pipeRead)(usb_ctrl_t * const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t * p_api_trans);
+
+    /** Request data write to specified pipe
+     * @par Implemented as
+     * - R_USB_PipeWrite()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_buf        Pointer to area that stores write data.
+     * @param[in]  size         Read request size.
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* pipeWrite)(usb_ctrl_t * const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t * p_api_trans);
+
+    /** Stop USB data read/write processing to specified pipe
+     * @par Implemented as
+     * - R_USB_PipeStop()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_api_trans  pointer to transfer structure.
+     */
+    fsp_err_t (* pipeStop)(usb_ctrl_t * const p_api_ctrl, usb_instance_transfer_t * p_api_trans);
+
+    /** Get pipe number
+     * @par Implemented as
+     * - R_USB_UsedPipesGet()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_pipe       Pointer to area that stores the selected pipe number (bit map information).
+     */
+    fsp_err_t (* usedPipesGet)(usb_ctrl_t * const p_api_ctrl, uint16_t *p_pipe);
+
+    /** Get pipe information
+     * @par Implemented as
+     * - R_USB_PipeInfoGet()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_info       Pointer to usb_pipe_t structure area.
+     */
+    fsp_err_t (* pipeInfoGet)(usb_ctrl_t * const p_api_ctrl, usb_pipe_t *p_info);
+
+    /** Get the driver version
+     * @par Implemented as
+     * - R_USB_VersionGet()
+     *
+     * @param[out] version      Version number.
+     */
+    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
+
+    /** Return USB-related completed events (Non-OS only)
+     * @par Implemented as
+     * - R_USB_EventGet()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[out] event        Pointer to event.
+     */
+    fsp_err_t (* eventGet)(usb_ctrl_t * const p_api_ctrl, usb_status_t *event);
+
+    /** Pull-up enable/disable setting of D+/D- line.
+     * @par Implemented as
+     * - R_USB_PullUp()
+     *
+     * @param[in]  state       Pull-up enable/disable setting.
+     */
+    fsp_err_t (* pullup)(uint8_t state);
+
+    /** This API gets the module number.
+     * @par Implemented as
+     * - R_USB_ModuleNumberGet()
+     *
+     * @param[in]  p_api_ctrl       USB control structure.
+     * @param[out] module_number    Module number to get.
+     */
+    fsp_err_t (* modulenumberget)(usb_ctrl_t * const p_api_ctrl, uint8_t *module_number);
+
+    /** This API gets the module number.
+     * @par Implemented as
+     * - R_USB_ClassTypeGet()
+     *
+     * @param[in]  p_api_ctrl       USB control structure.
+     * @param[out] class_type       Class type to get.
+     */
+    fsp_err_t (* classtypeget)(usb_ctrl_t * const p_api_ctrl, usb_class_t *class_type);
+
+    /** This API gets the device address.
+     * @par Implemented as
+     * - R_USB_DeviceAddressGet()
+     *
+     * @param[in]  p_api_ctrl       USB control structure.
+     * @param[out] device_address   device address to get.
+     */
+    fsp_err_t (* deviceaddressget)(usb_ctrl_t * const p_api_ctrl, uint8_t *device_address);
+
+    /** This API gets the pipe number.
+     * @par Implemented as
+     * - R_USB_PipeNumberGet()
+     *
+     * @param[in]  p_api_ctrl       USB control structure.
+     * @param[out] pipe_number      Pipe number to get.
+     */
+    fsp_err_t (* pipenumberget)(usb_ctrl_t * const p_api_ctrl, uint8_t *pipe_number);
+
+    /** This API gets the state of the device.
+     * @par Implemented as
+     * - R_USB_DeviceStateGet()
+     *
+     * @param[in]  p_api_ctrl       USB control structure.
+     * @param[out] state            device state to get.
+     */
+    fsp_err_t (* devicestateget)(usb_ctrl_t * const p_api_ctrl, uint16_t *state);
+
+    /** This API gets the data size.
+     * @par Implemented as
+     * - R_USB_DataSizeGet()
+     *
+     * @param[in]  p_api_ctrl       USB control structure.
+     * @param[out] data_size        Data size to get.
+     */
+    fsp_err_t (* datasizeget)(usb_ctrl_t * const p_api_ctrl, uint32_t *data_size);
+
+    /** This API gets the setup type.
+     * @par Implemented as
+     * - R_USB_SetupGet()
+     *
+     * @param[in]  p_api_ctrl       USB control structure.
+     * @param[out] setup            Setup type to get.
+     */
+    fsp_err_t (* setupget)(usb_ctrl_t * const p_api_ctrl, usb_setup_t *setup);
+
+} usb_api_t;
+
+/** This structure encompasses everything that is needed to use an instance of this interface. */
+typedef struct st_usb_instance
+{
+    usb_ctrl_t      * p_ctrl;          ///< Pointer to the control structure for this instance
+    usb_cfg_t const * p_cfg;           ///< Pointer to the configuration structure for this instance
+    usb_api_t const * p_api;           ///< Pointer to the API structure for this instance
+} usb_instance_t;
+
+
+/** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
+
+#endif /* R_USB_API_H */
+
+/*******************************************************************************************************************//**
+ * @} (end addtogroup USB_API)
+ **********************************************************************************************************************/

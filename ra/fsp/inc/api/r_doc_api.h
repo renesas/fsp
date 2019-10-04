@@ -1,0 +1,161 @@
+/***********************************************************************************************************************
+ * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ *
+ * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
+ * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
+ * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
+ * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
+ * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
+ * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
+ **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ * @ingroup RENESAS_INTERFACES
+ * @defgroup DOC_API DOC Interface
+ *
+ * @brief Interface for the Data Operation Circuit.
+ *
+ * Defines the API and data structures for the DOC implementation of the Data Operation Circuit (DOC) interface.
+ *
+ * @section DOC_API_SUMMARY Summary
+ * @brief This module implements the DOC_API using the Data Operation Circuit (DOC).
+ *
+ * Implemented by:
+ * @ref DOC
+ *
+ * @{
+ **********************************************************************************************************************/
+
+#ifndef R_DOC_API_H
+#define R_DOC_API_H
+
+/***********************************************************************************************************************
+ * Includes
+ **********************************************************************************************************************/
+
+/** Register definitions, common services and error codes. */
+#include "bsp_api.h"
+#include "r_transfer_api.h"
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
+
+/**********************************************************************************************************************
+ * Macro definitions
+ **********************************************************************************************************************/
+#define DOC_API_VERSION_MAJOR    (1U)
+#define DOC_API_VERSION_MINOR    (0U)
+
+/**********************************************************************************************************************
+ * Typedef definitions
+ **********************************************************************************************************************/
+
+/** DOC status */
+typedef struct e_doc_status
+{
+    uint16_t result;
+} doc_status_t;
+
+/** Event that can trigger a callback function. */
+typedef enum e_doc_event
+{
+    DOC_EVENT_COMPARISON_MISMATCH = 0x00, ///< Comparison of data has resulted in a mismatch.
+    DOC_EVENT_ADDITION            = 0x01, ///< Addition of data has resulted in a value greater than H'FFFF.
+    DOC_EVENT_SUBTRACTION         = 0x02, ///< Subtraction of data has resulted in a value less than H'0000.
+    DOC_EVENT_COMPARISON_MATCH    = 0x04, ///< Comparison of data has resulted in a match.
+} doc_event_t;
+
+/** Callback function parameter data. */
+typedef struct st_doc_callback_args
+{
+    void const * p_context;            ///< Placeholder for user data.
+    ///< Set in doc_api_t::open function in ::doc_cfg_t.
+} doc_callback_args_t;
+
+/** DOC control block.  Allocate an instance specific control block to pass into the DOC API calls.
+ * @par Implemented as
+ * - doc_instance_ctrl_t
+ */
+typedef void doc_ctrl_t;
+
+/** User configuration structure, used in the open function. */
+typedef struct st_doc_cfg
+{
+    doc_event_t event;                 ///< Select enumerated value from ::doc_event_t.
+    uint16_t    doc_data;              ///< initial/reference value for DODSR register.
+    uint8_t     ipl;                   ///< DOC interrupt priority
+    IRQn_Type   irq;                   ///< NVIC interrupt number assigned to this instance
+
+    /** Callback provided when a DOC ISR occurs. */
+    void (* p_callback)(doc_callback_args_t * p_args);
+
+    /** Placeholder for user data. Passed to the user callback in ::doc_callback_args_t. */
+    void const * p_context;
+} doc_cfg_t;
+
+/** Data Operation Circuit (DOC) API structure. DOC functions implemented at the HAL layer will follow this API. */
+typedef struct st_doc_api
+{
+    /** Initial configuration.
+     * @par Implemented as
+     *  - R_DOC_Open()
+     * @param[in]   p_ctrl      Pointer to control block. Must be declared by user. Elements set here.
+     * @param[in]   p_cfg       Pointer to configuration structure. All elements of this structure must be set by user.
+     */
+    fsp_err_t (* open)(doc_ctrl_t * const p_ctrl, doc_cfg_t const * const p_cfg);
+
+    /**Allow the driver to be reconfigured. Will reduce power consumption.
+     * @par Implemented as
+     *  - R_DOC_Close()
+     * @param[in]   p_ctrl      Control block set in doc_api_t::open call.
+     */
+    fsp_err_t (* close)(doc_ctrl_t * const p_ctrl);
+
+    /** Gets the result of addition/subtraction and stores it in the provided pointer p_data.
+     * @par Implemented as
+     *  - R_DOC_StatusGet()
+     * @param[in]   p_ctrl      Control block set in doc_api_t::open call.
+     * @param[out]  p_data      Provides the 16 bit result of the addition/subtraction operation
+     *                          at the user defined location.
+     */
+    fsp_err_t (* statusGet)(doc_ctrl_t * const p_ctrl, doc_status_t * p_status);
+
+    /** Write to the DODIR register.
+     * @par Implemented as
+     *  - R_DOC_Write()
+     *
+     * @param[in]   p_ctrl      Control block set in doc_api_t::open call.
+     * @param[in]   data        data to be written to DOC DODIR register.
+     */
+    fsp_err_t (* write)(doc_ctrl_t * const p_ctrl, uint16_t data);
+
+    /** Get version and stores it in provided pointer p_version.
+     * @par Implemented as
+     *  - R_DOC_VersionGet()
+     *
+     * @param[out]  p_version  Code and API version used.
+     */
+    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
+} doc_api_t;
+
+/** This structure encompasses everything that is needed to use an instance of this interface. */
+typedef struct st_doc_instance
+{
+    doc_ctrl_t      * p_ctrl;          ///< Pointer to the control structure for this instance
+    doc_cfg_t const * p_cfg;           ///< Pointer to the configuration structure for this instance
+    doc_api_t const * p_api;           ///< Pointer to the API structure for this instance
+} doc_instance_t;
+
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
+
+#endif
+
+/*******************************************************************************************************************//**
+ * @} (end addtogroup DOC_API)
+ **********************************************************************************************************************/

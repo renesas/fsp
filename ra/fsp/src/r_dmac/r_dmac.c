@@ -1,0 +1,698 @@
+/***********************************************************************************************************************
+ * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ *
+ * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
+ * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
+ * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
+ * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
+ * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
+ * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Includes
+ **********************************************************************************************************************/
+#include "r_dmac.h"
+#include "r_dmac_cfg.h"
+
+/***********************************************************************************************************************
+ * Macro definitions
+ **********************************************************************************************************************/
+
+/** Driver ID (DMAC in ASCII) */
+#define DMAC_ID                         (0x444d4143)
+
+/** Length limited to 1024 transfers for repeat and block mode */
+#define DMAC_REPEAT_BLOCK_MAX_LENGTH    (0x400)
+
+#define DMAC_PRV_MASK_ALIGN_2_BYTES     (0x1U)
+#define DMAC_PRV_MASK_ALIGN_4_BYTES     (0x3U)
+
+/* Calculate the mask bits for byte alignment from the transfer_size_t. */
+#define DMAC_PRV_MASK_ALIGN_N_BYTES(x)    ((1U << (x)) - 1U)
+
+#define DMAC_PRV_REG(ch)                  ((R_DMAC0_Type *) ((R_DMAC1 - R_DMAC0) * ch + R_DMAC0))
+
+/* Transfer Count Register A Bit Field Definitions */
+#define DMAC_PRV_DMCRA_LOW_OFFSET      (0U)
+#define DMAC_PRV_DMCRA_LOW_MASK        (0x3FFU << DMAC_PRV_DMCRA_LOW_OFFSET)
+#define DMAC_PRV_DMCRA_HIGH_OFFSET     (16U)
+#define DMAC_PRV_DMCRA_HIGH_MASK       (0x3FFU << DMAC_PRV_DMCRA_HIGH_OFFSET)
+
+/* Transfer Mode Register Bit Field Definitions */
+#define DMAC_PRV_DMTMD_DCTG_OFFSET     (0U)
+#define DMAC_PRV_DMTMD_DCTG_MASK       (3U << DMAC_PRV_DMTMD_DCTG_OFFSET)
+#define DMAC_PRV_DMTMD_SZ_OFFSET       (8U)
+#define DMAC_PRV_DMTMD_SZ_MASK         (3U << DMAC_PRV_DMTMD_SZ_OFFSET)
+#define DMAC_PRV_DMTMD_DTS_OFFSET      (12U)
+#define DMAC_PRV_DMTMD_DTS_MASK        (3U << DMAC_PRV_DMTMD_DTS_OFFSET)
+#define DMAC_PRV_DMTMD_MD_OFFSET       (14U)
+#define DMAC_PRV_DMTMD_MD_MASK         (3U << DMAC_PRV_DMTMD_MD_OFFSET)
+
+/* Interrupt Setting Register Bit Field Definitions */
+#define DMAC_PRV_DMINT_DARIE_OFFSET    (0U)
+#define DMAC_PRV_DMINT_DARIE_MASK      (1U << DMAC_PRV_DMINT_DARIE_OFFSET)
+#define DMAC_PRV_DMINT_SARIE_OFFSET    (1U)
+#define DMAC_PRV_DMINT_SARIE_MASK      (1U << DMAC_PRV_DMINT_SARIE_OFFSET)
+#define DMAC_PRV_DMINT_RPTIE_OFFSET    (2U)
+#define DMAC_PRV_DMINT_RPTIE_MASK      (1U << DMAC_PRV_DMINT_RPTIE_OFFSET)
+#define DMAC_PRV_DMINT_ESIE_OFFSET     (3U)
+#define DMAC_PRV_DMINT_ESIE_MASK       (1U << DMAC_PRV_DMINT_ESIE_OFFSET)
+#define DMAC_PRV_DMINT_DTIE_OFFSET     (4U)
+#define DMAC_PRV_DMINT_DTIE_MASK       (1U << DMAC_PRV_DMINT_DTIE_OFFSET)
+
+/* Address Mode Register Bit Field Definitions */
+#define DMAC_PRV_DMAMD_DARA_OFFSET     (0U)
+#define DMAC_PRV_DMAMD_DARA_MASK       (0x1FU << DMAC_PRV_DMAMD_DARA_OFFSET)
+#define DMAC_PRV_DMAMD_DM_OFFSET       (6U)
+#define DMAC_PRV_DMAMD_DM_MASK         (3U << DMAC_PRV_DMAMD_DM_OFFSET)
+#define DMAC_PRV_DMAMD_SARA_OFFSET     (8U)
+#define DMAC_PRV_DMAMD_SARA_MASK       (0x1FU << DMAC_PRV_DMAMD_SARA_OFFSET)
+#define DMAC_PRV_DMAMD_SM_OFFSET       (14U)
+#define DMAC_PRV_DMAMD_SM_MASK         (3U << DMAC_PRV_DMAMD_SM_OFFSET)
+
+/* Software Start Register Bit Field Definitions */
+#define DMAC_PRV_DMREQ_SWREQ_OFFSET    (0U)
+#define DMAC_PRV_DMREQ_SWREQ_MASK      (1U << DMAC_PRV_DMREQ_SWREQ_OFFSET)
+#define DMAC_PRV_DMREQ_CLRS_OFFSET     (4U)
+#define DMAC_PRV_DMREQ_CLRS_MASK       (1U << DMAC_PRV_DMREQ_CLRS_OFFSET)
+
+/***********************************************************************************************************************
+ * Typedef definitions
+ **********************************************************************************************************************/
+
+/** Internal driver storage for p_callback, used by ISRs. */
+typedef struct st_dmac_callback
+{
+    /** Callback for transfer end interrupt. Set to NULL for no CPU interrupt. */
+    void (* p_callback)(dmac_callback_args_t * cb_data);
+
+    /** Placeholder for user data.  Passed to the user p_callback in ::dmac_callback_args_t. */
+    void const * p_context;
+} dmac_callback_t;
+
+/***********************************************************************************************************************
+ * Private function prototypes
+ **********************************************************************************************************************/
+void dmac_int_isr(void);
+
+static fsp_err_t r_dmac_prv_enable(dmac_instance_ctrl_t * p_ctrl);
+static void      r_dmac_prv_disable(dmac_instance_ctrl_t * p_ctrl);
+static void      r_dmac_config_transfer_info(dmac_instance_ctrl_t * p_ctrl, transfer_info_t * p_info);
+
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+static fsp_err_t r_dma_open_parameter_checking(dmac_instance_ctrl_t * const p_ctrl, transfer_cfg_t const * const p_cfg);
+static fsp_err_t r_dmac_info_paramter_checking(transfer_info_t const * const p_info);
+static fsp_err_t r_dmac_enable_parameter_checking(dmac_instance_ctrl_t * const p_ctrl);
+
+#endif
+
+/***********************************************************************************************************************
+ * Private global variables
+ **********************************************************************************************************************/
+
+/** Version data structure used by error logger macro. */
+static const fsp_version_t g_dmac_version =
+{
+    .api_version_minor  = TRANSFER_API_VERSION_MINOR,
+    .api_version_major  = TRANSFER_API_VERSION_MAJOR,
+    .code_version_major = DMAC_CODE_VERSION_MAJOR,
+    .code_version_minor = DMAC_CODE_VERSION_MINOR
+};
+
+/***********************************************************************************************************************
+ * Exported global variables
+ **********************************************************************************************************************/
+
+/** DMAC implementation of transfer API. */
+const transfer_api_t g_transfer_on_dmac =
+{
+    .open          = R_DMAC_Open,
+    .reconfigure   = R_DMAC_Reconfigure,
+    .reset         = R_DMAC_Reset,
+    .infoGet       = R_DMAC_InfoGet,
+    .softwareStart = R_DMAC_SoftwareStart,
+    .softwareStop  = R_DMAC_SoftwareStop,
+    .enable        = R_DMAC_Enable,
+    .disable       = R_DMAC_Disable,
+    .close         = R_DMAC_Close,
+    .versionGet    = R_DMAC_VersionGet,
+};
+
+/*******************************************************************************************************************//**
+ * @addtogroup DMAC
+ * @{
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Functions
+ **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ * Configure a DMAC channel.
+ *
+ * @retval FSP_SUCCESS                    Successful open.
+ * @retval FSP_ERR_ASSERTION              An input parameter is invalid.
+ * @retval FSP_ERR_IP_CHANNEL_NOT_PRESENT The configured channel is invalid.
+ * @retval FSP_ERR_IRQ_BSP_DISABLED       The IRQ associated with the activation source is not enabled in the BSP.
+ * @retval FSP_ERR_ALREADY_OPEN           The control structure is already opened.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_Open (transfer_ctrl_t * const p_api_ctrl, transfer_cfg_t const * const p_cfg)
+{
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    fsp_err_t err = FSP_SUCCESS;
+    err = r_dma_open_parameter_checking(p_api_ctrl, p_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#endif
+
+    dmac_instance_ctrl_t * p_ctrl   = (dmac_instance_ctrl_t *) p_api_ctrl;
+    dmac_extended_cfg_t  * p_extend = (dmac_extended_cfg_t *) p_cfg->p_extend;
+
+    p_ctrl->p_cfg = p_cfg;
+    p_ctrl->p_reg = DMAC_PRV_REG(p_extend->channel);
+
+    /* Enable DMAC Operation. */
+    R_BSP_MODULE_START(FSP_IP_DMAC, p_extend->channel);
+    R_DMA->DMAST = 1;
+
+    /* Configure the transfer settings. */
+    r_dmac_config_transfer_info(p_ctrl, p_cfg->p_info);
+
+    /* Mark driver as open by initializing "DMAC" in its ASCII equivalent.*/
+    p_ctrl->open = DMAC_ID;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Reconfigure the transfer with new transfer info.
+ *
+ * @retval FSP_SUCCESS              Transfer is configured and will start when trigger occurs.
+ * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
+ * @retval FSP_ERR_NOT_ENABLED      DMAC is not enabled. The current configuration must not be valid.
+ * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DMAC_Open to initialize the control block.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_Reconfigure (transfer_ctrl_t * const p_api_ctrl, transfer_info_t * p_info)
+{
+    fsp_err_t              err;
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) p_api_ctrl;
+
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl != NULL);
+    FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
+    err = r_dmac_info_paramter_checking(p_info);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#endif
+
+    /* Reconfigure the transfer settings. */
+    r_dmac_config_transfer_info(p_ctrl, p_info);
+
+    /* Enable the transfer configuration. */
+    err = r_dmac_prv_enable(p_api_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_NOT_ENABLED);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Reset transfer source, destination, and number of transfers.
+ *
+ * @retval FSP_SUCCESS              Transfer reset successfully.
+ * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
+ * @retval FSP_ERR_NOT_ENABLED      DMAC is not enabled. The current configuration must not be valid.
+ * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DMAC_Open to initialize the control block.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_Reset (transfer_ctrl_t * const p_api_ctrl,
+                        void const * volatile   p_src,
+                        void * volatile         p_dest,
+                        uint16_t const          num_transfers)
+{
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t              err    = FSP_SUCCESS;
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Disable transfers if they are currently enabled. */
+    r_dmac_prv_disable(p_ctrl);
+
+    if (NULL != p_src)
+    {
+        /* Configure the DMAC source pointer if it is provided. */
+        p_ctrl->p_reg->DMSAR = (uint32_t) p_src;
+    }
+
+    if (NULL != p_dest)
+    {
+        /* Configure the DMAC destination pointer if it is provided. */
+        p_ctrl->p_reg->DMDAR = (uint32_t) p_dest;
+    }
+
+    if ((TRANSFER_MODE_NORMAL != (transfer_mode_t) p_ctrl->p_reg->DMTMD_b.MD))
+    {
+        /* Reset the block/repeat count if it is not normal mode. */
+        p_ctrl->p_reg->DMCRB = num_transfers;
+    }
+    else
+    {
+        /* Reset the transfer count if it is normal mode. */
+        p_ctrl->p_reg->DMCRA = num_transfers;
+    }
+
+    /* Enable the transfer configuration. */
+    err = r_dmac_prv_enable(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_NOT_ENABLED);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * If the mode is TRANSFER_START_MODE_SINGLE initiate a single transfer with software. If the mode is
+ * TRANSFER_START_MODE_REPEAT continue triggering transfers until all of the transfers are completed.
+ *
+ * @retval FSP_SUCCESS              Transfer started written successfully.
+ * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
+ * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DMAC_Open to initialize the control block.
+ * @retval FSP_ERR_UNSUPPORTED      Handle was not configured for software activation.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_SoftwareStart (transfer_ctrl_t * const p_api_ctrl, transfer_start_mode_t mode)
+{
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) p_api_ctrl;
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
+
+    dmac_extended_cfg_t * p_extend = (dmac_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    FSP_ERROR_RETURN(ELC_EVENT_NONE == p_extend->activation_source, FSP_ERR_UNSUPPORTED);
+#endif
+
+    /* Set auto clear bit and software start bit. */
+    p_ctrl->p_reg->DMREQ = (uint8_t) (((uint32_t) mode << DMAC_PRV_DMREQ_CLRS_OFFSET) | DMAC_PRV_DMREQ_SWREQ_MASK);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Stop software transfers if they were started with TRANSFER_START_MODE_REPEAT.
+ *
+ * @retval FSP_SUCCESS              Transfer stopped written successfully.
+ * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
+ * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DMAC_Open to initialize the control block.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_SoftwareStop (transfer_ctrl_t * const p_api_ctrl)
+{
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) p_api_ctrl;
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Reset auto clear bit and clear software start bit. */
+    p_ctrl->p_reg->DMREQ = 0;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Enable transfers for the configured activation source.
+ *
+ * @retval FSP_SUCCESS              Counter value written successfully.
+ * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
+ * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DMAC_Open to initialize the control block.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_Enable (transfer_ctrl_t * const p_api_ctrl)
+{
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) p_api_ctrl;
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
+#endif
+
+    return r_dmac_prv_enable(p_ctrl);
+}
+
+/*******************************************************************************************************************//**
+ * Disable transfers so that they are no longer triggered by the activation source.
+ *
+ * @retval FSP_SUCCESS              Counter value written successfully.
+ * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
+ * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DMAC_Open to initialize the control block.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_Disable (transfer_ctrl_t * const p_api_ctrl)
+{
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) p_api_ctrl;
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
+#endif
+
+    r_dmac_prv_disable(p_ctrl);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Set driver specific information in provided pointer.
+ *
+ * @retval FSP_SUCCESS              Information has been written to p_info.
+ * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DMAC_Open to initialize the control block.
+ * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_InfoGet (transfer_ctrl_t * const p_api_ctrl, transfer_properties_t * const p_info)
+{
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) p_api_ctrl;
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
+    FSP_ASSERT(NULL != p_info);
+#endif
+
+    p_info->transfer_length_max = DMAC_MAX_BLOCK_TRANSFER_LENGTH;
+    p_info->block_count_max     = DMAC_MAX_BLOCK_COUNT;
+
+    transfer_mode_t mode = (transfer_mode_t) p_ctrl->p_reg->DMTMD_b.MD;
+
+    p_info->block_count_remaining     = p_ctrl->p_reg->DMCRB;
+    p_info->transfer_length_remaining = p_ctrl->p_reg->DMCRA_b.DMCRAL;
+
+    if (TRANSFER_MODE_NORMAL == mode)
+    {
+        p_info->transfer_length_max = DMAC_MAX_NORMAL_TRANSFER_LENGTH;
+    }
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Disable transfer and clean up internal data. Implements transfer_api_t::close.
+ *
+ * @retval FSP_SUCCESS           Successful close.
+ * @retval FSP_ERR_ASSERTION     An input parameter is invalid.
+ * @retval FSP_ERR_NOT_OPEN      Handle is not initialized.  Call R_DMAC_Open to initialize the control block.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_Close (transfer_ctrl_t * const p_api_ctrl)
+{
+    dmac_instance_ctrl_t * p_ctrl = (dmac_instance_ctrl_t *) p_api_ctrl;
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(p_ctrl->open == DMAC_ID, FSP_ERR_NOT_OPEN);
+#endif
+
+    dmac_extended_cfg_t * p_extend = (dmac_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    /* Disable DMAC transfers on this channel. */
+    R_ICU->DELSR[p_extend->channel] = ELC_EVENT_NONE;
+    p_ctrl->p_reg->DMCNT            = 0;
+
+    if (NULL != p_extend->p_callback)
+    {
+        R_BSP_IrqDisable(p_extend->irq);
+        R_FSP_IsrContextSet(p_extend->irq, NULL);
+    }
+
+    /* Clear ID so control block can be reused. */
+    p_ctrl->open = 0U;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Set driver version based on compile time macros.
+ *
+ * @retval FSP_SUCCESS              Successful close.
+ * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
+ **********************************************************************************************************************/
+fsp_err_t R_DMAC_VersionGet (fsp_version_t * const p_version)
+{
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+
+    /* Verify parameters are valid */
+    FSP_ASSERT(NULL != p_version);
+#endif
+
+    p_version->version_id = g_dmac_version.version_id;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * @} (end addtogroup DMAC)
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Private Functions
+ **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ * Enable transfers for the channel.
+ *
+ * @param[in]  p_ctrl             Pointer to control structure.
+ *
+ * @retval     FSP_SUCCESS        Successful close.
+ * @retval     FSP_ERR_ASSERTION  An input parameter is invalid.
+ **********************************************************************************************************************/
+static fsp_err_t r_dmac_prv_enable (dmac_instance_ctrl_t * p_ctrl)
+{
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+    fsp_err_t err = r_dmac_enable_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#endif
+
+    /** Enable transfer. */
+    p_ctrl->p_reg->DMCNT = 1;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Disable transfers for the channel.
+ *
+ * @param      p_ctrl          Pointer to the control structure
+ **********************************************************************************************************************/
+static void r_dmac_prv_disable (dmac_instance_ctrl_t * p_ctrl)
+{
+    dmac_extended_cfg_t * p_extend = (dmac_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    /* Disable the transfers. Reference Figure 17.12  "Register setting procedure" in the RA6M3 Hardware manual
+     * R01UH0886EJ0100. */
+    R_ICU->DELSR[p_extend->channel] = ELC_EVENT_NONE;
+    p_ctrl->p_reg->DMCNT            = 0;
+
+    /* Configure the activation source. */
+    R_ICU->DELSR[p_extend->channel] = p_extend->activation_source;
+
+    /* Disable software start. */
+    p_ctrl->p_reg->DMREQ = 0;
+}
+
+/*******************************************************************************************************************//**
+ * Write the transfer info to the hardware registers.
+ *
+ * @param[in]   p_ctrl         Pointer to control structure.
+ * @param       p_info         Pointer to transfer info.
+ **********************************************************************************************************************/
+static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer_info_t * p_info)
+{
+    dmac_extended_cfg_t * p_extend = (dmac_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    uint32_t dmcra = 0;
+    uint32_t dmcrb = 0;
+    uint32_t dmtmd = 0;
+    uint32_t dmint = 0;
+    uint32_t dmamd = 0;
+
+    /* Disable transfers if they are currently enabled. */
+    r_dmac_prv_disable(p_ctrl);
+
+    /* Configure the Transfer Data Size (1,2,4) bytes. */
+    dmtmd |= (uint32_t) (p_info->size << DMAC_PRV_DMTMD_SZ_OFFSET);
+
+    /* Configure source and destination address mode. */
+    dmamd |= (uint32_t) (p_info->src_addr_mode << DMAC_PRV_DMAMD_SM_OFFSET);
+    dmamd |= (uint32_t) (p_info->dest_addr_mode << DMAC_PRV_DMAMD_DM_OFFSET);
+
+    /* Configure the transfer mode. */
+    dmtmd |= (uint32_t) p_info->mode << DMAC_PRV_DMTMD_MD_OFFSET;
+
+    /* Configure the transfer count. */
+    dmcra = p_info->length;
+
+    if ((TRANSFER_MODE_BLOCK == p_info->mode) || (TRANSFER_MODE_REPEAT == p_info->mode))
+    {
+        /* Configure the reload count. */
+        dmcra |= dmcra << DMAC_PRV_DMCRA_HIGH_OFFSET;
+        dmcra &= (DMAC_PRV_DMCRA_HIGH_MASK | DMAC_PRV_DMCRA_LOW_MASK);
+
+        /* Configure the block count. */
+        dmcrb = p_info->num_blocks;
+
+        /* Configure the repeat area */
+        dmtmd |= (uint32_t) (p_info->repeat_area << DMAC_PRV_DMTMD_DTS_OFFSET);
+    }
+    else                               /* TRANSFER_MODE_NORMAL */
+    {
+        /* Configure no repeat area. */
+        dmtmd |= 2U << DMAC_PRV_DMTMD_DTS_OFFSET;
+    }
+
+    if (ELC_EVENT_NONE != p_extend->activation_source)
+    {
+        /* DMAC will be triggered by interrupts (ELC Events). */
+        dmtmd |= 1U << DMAC_PRV_DMTMD_DCTG_OFFSET;
+    }
+
+    if (NULL != p_extend->p_callback)
+    {
+        /* Enable transfer end interrupt requests. */
+        dmint |= DMAC_PRV_DMINT_DTIE_MASK;
+
+        if (TRANSFER_IRQ_EACH == p_info->irq)
+        {
+            /* Enable the transfer end escape interrupt requests
+             * (Repeat size end and Extended Repeat area overflow requests). */
+            dmint |= (DMAC_PRV_DMINT_RPTIE_MASK | DMAC_PRV_DMINT_ESIE_MASK);
+        }
+
+        /* Enable the IRQ in the NVIC. */
+        R_BSP_IrqCfgEnable(p_extend->irq, p_extend->ipl, p_ctrl);
+    }
+
+    /* Write register settings. */
+    p_ctrl->p_reg->DMAMD = (uint16_t) dmamd;
+    p_ctrl->p_reg->DMTMD = (uint16_t) dmtmd;
+    p_ctrl->p_reg->DMSAR = (uint32_t) p_info->p_src;
+    p_ctrl->p_reg->DMDAR = (uint32_t) p_info->p_dest;
+    p_ctrl->p_reg->DMCRA = dmcra;
+    p_ctrl->p_reg->DMCRB = (uint16_t) dmcrb;
+    p_ctrl->p_reg->DMOFR = (uint32_t) p_extend->offset;
+    p_ctrl->p_reg->DMINT = (uint8_t) dmint;
+}
+
+#if DMAC_CFG_PARAM_CHECKING_ENABLE
+
+/*******************************************************************************************************************//**
+ * Parameter checking of R_DMAC_Open.
+ *
+ * @param[in]   p_ctrl                    Pointer to control structure.
+ * @param[in]   p_cfg                     Pointer to configuration structure. All elements of the structure must be
+ *                                        set by user.
+ *
+ * @retval FSP_SUCCESS                    Input Parameters are Valid.
+ * @retval FSP_ERR_ASSERTION              An input parameter is invalid.
+ * @retval FSP_ERR_IP_CHANNEL_NOT_PRESENT The configured channel is invalid.
+ * @retval FSP_ERR_IRQ_BSP_DISABLED       Callback is NULL and the DMAC IRQ is not enabled.
+ * @retval FSP_ERR_ALREADY_OPEN           The control structure is already opened.
+ **********************************************************************************************************************/
+static fsp_err_t r_dma_open_parameter_checking (dmac_instance_ctrl_t * const p_ctrl, transfer_cfg_t const * const p_cfg)
+{
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(p_ctrl->open != DMAC_ID, FSP_ERR_ALREADY_OPEN);
+    FSP_ASSERT(NULL != p_cfg);
+    dmac_extended_cfg_t * p_extend = (dmac_extended_cfg_t *) p_cfg->p_extend;
+    FSP_ASSERT(NULL != p_cfg->p_extend);
+    FSP_ERROR_RETURN(p_extend->channel < BSP_FEATURE_DMAC_MAX_CHANNEL, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+
+    if (NULL != p_extend->p_callback)
+    {
+        FSP_ERROR_RETURN(p_extend->irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
+    }
+
+    fsp_err_t err = r_dmac_info_paramter_checking(p_cfg->p_info);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Checks for errors in the transfer into structure.
+ *
+ * @param[in]   p_info              Pointer transfer info.
+ *
+ * @retval FSP_SUCCESS              The transfer info is valid.
+ * @retval FSP_ERR_ASSERTION        A transfer info setting is invalid.
+ **********************************************************************************************************************/
+static fsp_err_t r_dmac_info_paramter_checking (transfer_info_t const * const p_info)
+{
+    FSP_ASSERT(p_info != NULL);
+
+    if (TRANSFER_MODE_NORMAL != p_info->mode)
+    {
+        FSP_ASSERT(p_info->length <= DMAC_REPEAT_BLOCK_MAX_LENGTH);
+    }
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Parameter checking for r_dmac_prv_enable.
+ *
+ * @param[in]   p_ctrl                 Pointer to control structure.
+ *
+ * @retval      FSP_SUCCESS            Alignment on source and destination pointers is valid.
+ * @retval      FSP_ERR_ASSERTION      The current configuration is invalid.
+ **********************************************************************************************************************/
+static fsp_err_t r_dmac_enable_parameter_checking (dmac_instance_ctrl_t * const p_ctrl)
+{
+    void const    * p_src  = (void const *) p_ctrl->p_reg->DMSAR;
+    void const    * p_dest = (void const *) p_ctrl->p_reg->DMDAR;
+    transfer_size_t size   = (transfer_size_t) p_ctrl->p_reg->DMTMD_b.SZ;
+    transfer_mode_t mode   = (transfer_mode_t) p_ctrl->p_reg->DMTMD_b.MD;
+
+    /* The source and destination pointers cannot be NULL. */
+    FSP_ASSERT(NULL != p_src);
+    FSP_ASSERT(NULL != p_dest);
+
+    /* The source and destination pointers must be aligned to the transfer size. */
+    FSP_ASSERT(0U == ((uint32_t) p_dest & DMAC_PRV_MASK_ALIGN_N_BYTES(size)));
+    FSP_ASSERT(0U == ((uint32_t) p_src & DMAC_PRV_MASK_ALIGN_N_BYTES(size)));
+
+    if (TRANSFER_MODE_NORMAL == mode)
+    {
+        /* Setting transfer count to 0 in normal mode means transfer forever. This feature is not supported. */
+        FSP_ASSERT(0 != p_ctrl->p_reg->DMCRA);
+    }
+
+    return FSP_SUCCESS;
+}
+
+#endif
+
+/*******************************************************************************************************************//**
+ * DMAC ISR
+ **********************************************************************************************************************/
+void dmac_int_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
+
+    /* Clear IRQ to make sure it doesn't fire again after exiting */
+    R_BSP_IrqStatusClear(irq);
+
+    dmac_instance_ctrl_t * p_ctrl   = R_FSP_IsrContextGet(irq);
+    dmac_extended_cfg_t  * p_extend = (dmac_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    /* Call user callback */
+    dmac_callback_args_t args;
+    args.p_context = p_extend->p_context;
+    p_extend->p_callback(&args);
+
+    /* Transfers are disabled during the interrupt if an interrupt is requested after each block or after each repeat
+     * length. If not all transfers are complete, reenable transfer here. See section 17.4.2 Transfer End by Repeat
+     * Size End Interrupt in the RA6M3 hardware manual R01UH0886EJ0100. */
+    if (p_ctrl->p_reg->DMCRB > 0U)
+    {
+        p_ctrl->p_reg->DMCNT = 1;
+    }
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
+}
