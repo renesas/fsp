@@ -19,8 +19,8 @@ Download the latest FSP version from the [Releases page](https://github.com/rene
 - EK-RA6M3G
 
 ### Setup Instructions
-1.	Download the FSP platform installer from the Assets section of the [latest release](https://github.com/renesas/fsp/releases).
-2.	Run the platform installer. This will install the e² studio tool, FSP packs, GCC toolchain, and other tools required to use this software. No additional installations are required.
+1.	Download the FSP with e² studio Installer from the Assets section of the [latest release](https://github.com/renesas/fsp/releases).
+2.	Run the installer. This will install the e² studio tool, FSP packs, GCC toolchain and other tools required to use this software. No additional installations are required.
 
 ### Starting Development
 1. Open e² studio and click File > New > RA C/C++ Project.
@@ -28,7 +28,7 @@ Download the latest FSP version from the [Releases page](https://github.com/rene
 ### Related Links
 FSP Releases :  https://github.com/renesas/fsp/releases
 
-FSP GitHub Pages : https://renesas.github.io/fsp
+FSP Documentation : https://renesas.github.io/fsp
 
 FSP Webpage: www.renesas.com/ra/fsp
 
