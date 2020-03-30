@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -121,7 +121,7 @@ typedef struct st_i2c_master_api
 {
     /** Opens the I2C Master driver and initializes the hardware.
      * @par Implemented as
-     * - R_IIC_MASTER_Open()
+     * - @ref R_IIC_MASTER_Open()
      *
      * @param[in] p_ctrl    Pointer to control block. Must be declared by user. Elements are set here.
      * @param[in] p_cfg     Pointer to configuration structure.
@@ -130,7 +130,7 @@ typedef struct st_i2c_master_api
 
     /** Performs a read operation on an I2C Master device.
      * @par Implemented as
-     * - R_IIC_MASTER_Read()
+     * - @ref R_IIC_MASTER_Read()
      *
      * @param[in] p_ctrl    Pointer to control block set in i2c_api_master_t::open call.
      * @param[in] p_dest    Pointer to the location to store read data.
@@ -142,7 +142,7 @@ typedef struct st_i2c_master_api
 
     /** Performs a write operation on an I2C Master device.
      * @par Implemented as
-     * - R_IIC_MASTER_Write()
+     * - @ref R_IIC_MASTER_Write()
      *
      * @param[in] p_ctrl    Pointer to control block set in i2c_api_master_t::open call.
      * @param[in] p_src     Pointer to the location to get write data from.
@@ -154,7 +154,7 @@ typedef struct st_i2c_master_api
 
     /** Performs a reset of the peripheral.
      * @par Implemented as
-     * - R_IIC_MASTER_Abort()
+     * - @ref R_IIC_MASTER_Abort()
      *
      * @param[in] p_ctrl    Pointer to control block set in i2c_api_master_t::open call.
      */
@@ -162,7 +162,7 @@ typedef struct st_i2c_master_api
 
     /** Sets address of the slave device without reconfiguring the bus.
      * @par Implemented as
-     * - R_IIC_MASTER_SlaveAddressSet()
+     * - @ref R_IIC_MASTER_SlaveAddressSet()
      *
      * @param[in] p_ctrl            Pointer to control block set in i2c_api_master_t::open call.
      * @param[in] slave_address     Address of the slave device.
@@ -173,7 +173,7 @@ typedef struct st_i2c_master_api
 
     /** Closes the driver and releases the I2C Master device.
      * @par Implemented as
-     * - R_IIC_MASTER_Close()
+     * - @ref R_IIC_MASTER_Close()
      *
      * @param[in] p_ctrl    Pointer to control block set in i2c_api_master_t::open call.
      */
@@ -181,7 +181,7 @@ typedef struct st_i2c_master_api
 
     /** Gets version information and stores it in the provided version struct.
      * @par Implemented as
-     * - R_IIC_MASTER_VersionGet()
+     * - @ref R_IIC_MASTER_VersionGet()
      *
      * @param[out] p_version  Code and API version used.
      */

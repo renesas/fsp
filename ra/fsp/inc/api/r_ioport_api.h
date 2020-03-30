@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -214,17 +214,17 @@ typedef void ioport_ctrl_t;
 typedef struct st_ioport_api
 {
     /** Initialize internal driver data and initial pin configurations.  Called during startup.  Do
-     * not call this API during runtime.  Use ioport_api_t::pinsCfg for runtime reconfiguration of
+     * not call this API during runtime.  Use @ref ioport_api_t::pinsCfg for runtime reconfiguration of
      * multiple pins.
      * @par Implemented as
-     * - R_IOPORT_Open()
+     * - @ref R_IOPORT_Open()
      * @param[in]  p_cfg                Pointer to pin configuration data array.
      */
     fsp_err_t (* open)(ioport_ctrl_t * const p_ctrl, const ioport_cfg_t * p_cfg);
 
     /** Close the API.
      * @par Implemented as
-     * - R_IOPORT_Close()
+     * - @ref R_IOPORT_Close()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      **/
@@ -232,14 +232,14 @@ typedef struct st_ioport_api
 
     /** Configure multiple pins.
      * @par Implemented as
-     * - R_IOPORT_PinsCfg()
+     * - @ref R_IOPORT_PinsCfg()
      * @param[in]  p_cfg                Pointer to pin configuration data array.
      */
     fsp_err_t (* pinsCfg)(ioport_ctrl_t * const p_ctrl, const ioport_cfg_t * p_cfg);
 
     /** Configure settings for an individual pin.
      * @par Implemented as
-     * - R_IOPORT_PinCfg()
+     * - @ref R_IOPORT_PinCfg()
      * @param[in]  pin                  Pin to be read.
      * @param[in]  cfg                  Configuration options for the pin.
      */
@@ -247,7 +247,7 @@ typedef struct st_ioport_api
 
     /** Read the event input data of the specified pin and return the level.
      * @par Implemented as
-     * - R_IOPORT_PinEventInputRead()
+     * - @ref R_IOPORT_PinEventInputRead()
      * @param[in]  pin                  Pin to be read.
      * @param[in]  p_pin_event         Pointer to return the event data.
      */
@@ -255,7 +255,7 @@ typedef struct st_ioport_api
 
     /** Write pin event data.
      * @par Implemented as
-     * - R_IOPORT_PinEventOutputWrite()
+     * - @ref R_IOPORT_PinEventOutputWrite()
      * @param[in]  pin                  Pin event data is to be written to.
      * @param[in]  pin_value            Level to be written to pin output event.
      */
@@ -263,7 +263,7 @@ typedef struct st_ioport_api
 
     /** Configure the PHY mode of the Ethernet channels.
      * @par Implemented as
-     * - R_IOPORT_EthernetModeCfg()
+     * - @ref R_IOPORT_EthernetModeCfg()
      * @param[in]  channel              Channel configuration will be set for.
      * @param[in]  mode                 PHY mode to set the channel to.
      */
@@ -272,7 +272,7 @@ typedef struct st_ioport_api
 
     /** Read level of a pin.
      * @par Implemented as
-     * - R_IOPORT_PinRead()
+     * - @ref R_IOPORT_PinRead()
      * @param[in]  pin                  Pin to be read.
      * @param[in]  p_pin_value          Pointer to return the pin level.
      */
@@ -280,7 +280,7 @@ typedef struct st_ioport_api
 
     /** Write specified level to a pin.
      * @par Implemented as
-     * - R_IOPORT_PinWrite()
+     * - @ref R_IOPORT_PinWrite()
      * @param[in]  pin                  Pin to be written to.
      * @param[in]  level                State to be written to the pin.
      */
@@ -288,7 +288,7 @@ typedef struct st_ioport_api
 
     /** Set the direction of one or more pins on a port.
      * @par Implemented as
-     * - R_IOPORT_PortDirectionSet()
+     * - @ref R_IOPORT_PortDirectionSet()
      * @param[in]  port                 Port being configured.
      * @param[in]  direction_values     Value controlling direction of pins on port (1 - output, 0 - input).
      * @param[in]  mask                 Mask controlling which pins on the port are to be configured.
@@ -298,7 +298,7 @@ typedef struct st_ioport_api
 
     /** Read captured event data for a port.
      * @par Implemented as
-     * - R_IOPORT_PortEventInputRead()
+     * - @ref R_IOPORT_PortEventInputRead()
      * @param[in]  port                 Port to be read.
      * @param[in]  p_event_data         Pointer to return the event data.
      */
@@ -306,7 +306,7 @@ typedef struct st_ioport_api
 
     /** Write event output data for a port.
      * @par Implemented as
-     * - R_IOPORT_PortEventOutputWrite()
+     * - @ref R_IOPORT_PortEventOutputWrite()
      * @param[in]  port                 Port event data will be written to.
      * @param[in]  event_data           Data to be written as event data to specified port.
      * @param[in]  mask_value           Each bit set to 1 in the mask corresponds to that bit's value in event data.
@@ -317,7 +317,7 @@ typedef struct st_ioport_api
 
     /** Read states of pins on the specified port.
      * @par Implemented as
-     * - R_IOPORT_PortRead()
+     * - @ref R_IOPORT_PortRead()
      * @param[in]  port                 Port to be read.
      * @param[in]  p_port_value         Pointer to return the port value.
      */
@@ -325,7 +325,7 @@ typedef struct st_ioport_api
 
     /** Write to multiple pins on a port.
      * @par Implemented as
-     * - R_IOPORT_PortWrite()
+     * - @ref R_IOPORT_PortWrite()
      * @param[in]  port                 Port to be written to.
      * @param[in]  value                Value to be written to the port.
      * @param[in]  mask                 Mask controlling which pins on the port are written to.
@@ -334,7 +334,7 @@ typedef struct st_ioport_api
 
     /** Return the version of the IOPort driver.
      * @par Implemented as
-     * - R_IOPORT_VersionGet()
+     * - @ref R_IOPORT_VersionGet()
      * @param[out]  p_data              Memory address to return version information to.
      */
     fsp_err_t (* versionGet)(fsp_version_t * p_data);

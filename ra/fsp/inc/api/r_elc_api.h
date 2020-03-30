@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -100,7 +100,7 @@ typedef struct st_elc_api
 {
     /** Initialize all links in the Event Link Controller.
      * @par Implemented as
-     * - R_ELC_Open()
+     * - @ref R_ELC_Open()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      * @param[in]   p_cfg   Pointer to configuration structure.
@@ -109,7 +109,7 @@ typedef struct st_elc_api
 
     /** Disable all links in the Event Link Controller and close the API.
      * @par Implemented as
-     * - R_ELC_Close()
+     * - @ref R_ELC_Close()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      **/
@@ -117,7 +117,7 @@ typedef struct st_elc_api
 
     /** Generate a software event in the Event Link Controller.
      * @par Implemented as
-     * - R_ELC_SoftwareEventGenerate()
+     * - @ref R_ELC_SoftwareEventGenerate()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      * @param[in]   eventNum           Software event number to be generated.
@@ -126,7 +126,7 @@ typedef struct st_elc_api
 
     /** Create a single event link.
      * @par Implemented as
-     * - R_ELC_LinkSet()
+     * - @ref R_ELC_LinkSet()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      * @param[in]   peripheral The peripheral block that will receive the event signal.
@@ -136,7 +136,7 @@ typedef struct st_elc_api
 
     /** Break an event link.
      * @par Implemented as
-     * - R_ELC_LinkBreak()
+     * - @ref R_ELC_LinkBreak()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      * @param[in]   peripheral   The peripheral that should no longer be linked.
@@ -145,7 +145,7 @@ typedef struct st_elc_api
 
     /** Enable the operation of the Event Link Controller.
      * @par Implemented as
-     * - R_ELC_Enable()
+     * - @ref R_ELC_Enable()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      **/
@@ -153,7 +153,7 @@ typedef struct st_elc_api
 
     /** Disable the operation of the Event Link Controller.
      * @par Implemented as
-     * - R_ELC_Disable()
+     * - @ref R_ELC_Disable()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      **/
@@ -161,7 +161,7 @@ typedef struct st_elc_api
 
     /** Get the driver version based on compile time macros.
      * @par Implemented as
-     * - R_ELC_VersionGet()
+     * - @ref R_ELC_VersionGet()
      *
      * @param[in]   p_ctrl  Pointer to control structure.
      * @param[out]  p_version is value returned.

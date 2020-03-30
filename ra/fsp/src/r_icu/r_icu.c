@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -77,7 +77,7 @@ const external_irq_api_t g_external_irq_on_icu =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Configure an IRQ input pin for use with the external interrupt interface.  Implements external_irq_api_t::open.
+ * Configure an IRQ input pin for use with the external interrupt interface.  Implements @ref external_irq_api_t::open.
  *
  * The Open function is responsible for preparing an external IRQ pin for operation.
  *
@@ -156,7 +156,7 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
 }
 
 /*******************************************************************************************************************//**
- * Enable external interrupt for specified channel at NVIC. Implements external_irq_api_t::enable.
+ * Enable external interrupt for specified channel at NVIC. Implements @ref external_irq_api_t::enable.
  *
  * @retval FSP_SUCCESS                 Interrupt Enabled successfully.
  * @retval FSP_ERR_ASSERTION           The p_ctrl parameter was null.
@@ -180,7 +180,7 @@ fsp_err_t R_ICU_ExternalIrqEnable (external_irq_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Disable external interrupt for specified channel at NVIC. Implements external_irq_api_t::disable.
+ * Disable external interrupt for specified channel at NVIC. Implements @ref external_irq_api_t::disable.
  *
  * @retval FSP_SUCCESS                 Interrupt disabled successfully.
  * @retval FSP_ERR_ASSERTION           The p_ctrl parameter was null.
@@ -204,7 +204,7 @@ fsp_err_t R_ICU_ExternalIrqDisable (external_irq_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Close the external interrupt channel. Implements external_irq_api_t::close.
+ * Close the external interrupt channel. Implements @ref external_irq_api_t::close.
  *
  * @retval     FSP_SUCCESS          Successfully closed.
  * @retval     FSP_ERR_ASSERTION    The parameter p_ctrl is NULL.
@@ -233,7 +233,7 @@ fsp_err_t R_ICU_ExternalIrqClose (external_irq_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Set driver version based on compile time macros.  Implements external_irq_api_t::versionGet.
+ * Set driver version based on compile time macros.  Implements @ref external_irq_api_t::versionGet.
  *
  * @retval     FSP_SUCCESS        Successful close.
  * @retval     FSP_ERR_ASSERTION  The parameter p_version is NULL.

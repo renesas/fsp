@@ -23,11 +23,11 @@
 
 #include <string.h>
 
-#if EMWIN_USE_JPEG_HW && EMWIN_USE_DAVE
+#if EMWIN_JPEG_USE_HW && EMWIN_LCD_USE_DAVE
 
  #include "r_jpeg.h"
 
-void _JPEGDecodeCallback(jpeg_decode_callback_args_t * p_args);
+void _JPEGDecodeCallback(jpeg_callback_args_t * p_args);
 void JPEG_X_Init(JPEG_X_CONTEXT * pContext);
 int  JPEG_X_Draw(GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0);
 void JPEG_X_DeInit(void);
@@ -43,7 +43,7 @@ void MOVIE_X_cbNotify(GUI_MOVIE_HANDLE hMovie, int32_t Notification, uint32_t Cu
  *
  **********************************************************************
  */
-extern const jpeg_decode_instance_t * _g_jpeg_emwin_decode;
+extern const jpeg_instance_t * _g_jpeg_emwin_decode;
 
 extern void LCDCONF_DrawJPEG(int32_t      LayerIndex,
                              int32_t      x,
@@ -53,6 +53,11 @@ extern void LCDCONF_DrawJPEG(int32_t      LayerIndex,
                              int32_t      ySize,
                              int32_t      BytesPerLine);
 
+ #if EMWIN_JPEG_DOUBLE_BUFFER_OUTPUT
+extern void LCDCONF_FlushJPEG(void);
+
+ #endif
+
 /*********************************************************************
  *
  *       Static data
@@ -60,10 +65,20 @@ extern void LCDCONF_DrawJPEG(int32_t      LayerIndex,
  **********************************************************************
  */
 
-static U8 _aBuffer[NUMBYTES_OUTBUFFER]  __attribute__((section(JPEG_BUFFER_SECTION))) BSP_ALIGN_VARIABLE(8);
-static U8 _aInBuffer[NUMBYTES_INBUFFER] __attribute__((section(JPEG_BUFFER_SECTION))) BSP_ALIGN_VARIABLE(8);
+ #if EMWIN_JPEG_DOUBLE_BUFFER_OUTPUT
+static uint8_t _aBuffer[EMWIN_JPEG_NUMBYTES_OUTBUFFER * 2] __attribute__((section(EMWIN_JPEG_BUFFER_SECTION)))
+BSP_ALIGN_VARIABLE(8);
+ #else
+static uint8_t _aBuffer[EMWIN_JPEG_NUMBYTES_OUTBUFFER] __attribute__((section(EMWIN_JPEG_BUFFER_SECTION)))
+BSP_ALIGN_VARIABLE(8);
+ #endif
 
-static jpeg_decode_status_t g_jpeg_status = JPEG_DECODE_STATUS_NOT_OPEN;
+ #if !EMWIN_JPEG_NOCOPY
+static uint8_t _aInBuffer[EMWIN_JPEG_NUMBYTES_INBUFFER] __attribute__((section(EMWIN_JPEG_BUFFER_SECTION)))
+BSP_ALIGN_VARIABLE(8);
+ #endif
+
+static volatile jpeg_status_t g_jpeg_status = JPEG_STATUS_NONE;
 
 static SemaphoreHandle_t _SemaphoreJPEG;
 static StaticSemaphore_t _SemaphoreJPEG_Memory;
@@ -79,7 +94,7 @@ static StaticSemaphore_t _SemaphoreJPEG_Memory;
  *
  *       _JPEGDecodeCallback
  */
-void _JPEGDecodeCallback (jpeg_decode_callback_args_t * p_args)
+void _JPEGDecodeCallback (jpeg_callback_args_t * p_args)
 {
     FSP_PARAMETER_NOT_USED(p_args);
     BaseType_t context_switch;
@@ -108,8 +123,7 @@ static void _DrawBitmap (int32_t x, int32_t y, void const * p, int32_t xSize, in
 {
  #if (GUI_WINSUPPORT)
     GUI_RECT r;
- #endif
- #if (GUI_WINSUPPORT)
+
     WM_ADDORG(x, y);
     r.x0 = (int16_t) x;
     r.x1 = (int16_t) (r.x0 + xSize - 1);
@@ -125,6 +139,19 @@ static void _DrawBitmap (int32_t x, int32_t y, void const * p, int32_t xSize, in
     WM_ITERATE_END();
  #endif
 }
+
+ #if EMWIN_JPEG_DOUBLE_BUFFER_OUTPUT
+
+/*********************************************************************
+ *
+ *       _FlushBitmap
+ */
+static void _FlushBitmap (void)
+{
+    LCDCONF_FlushJPEG();
+}
+
+ #endif
 
 /*********************************************************************
  *
@@ -159,20 +186,23 @@ void JPEG_X_Init (JPEG_X_CONTEXT * pContext)
  */
 int JPEG_X_Draw (GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0)
 {
-    int32_t  Error;
-    int32_t  x;
-    int32_t  y;
-    int32_t  xSize;
-    int32_t  ySize;
-    int32_t  BitsPerPixel;
-    int32_t  BytesPerLine;
-    int32_t  Off;
-    int32_t  NumBytesInBuffer;
-    int32_t  OutBufferSize;
-    uint32_t LinesDecoded;
-    void   * pInBuffer;
-    void   * pOutBuffer;
-    jpeg_decode_color_space_t ColorSpace;
+    int32_t            Error;
+    int32_t            x;
+    int32_t            y;
+    int32_t            xSize;
+    int32_t            ySize;
+    int32_t            BitsPerPixel;
+    int32_t            BytesPerLine;
+    int32_t            Off;
+    int32_t            NumBytesInBuffer;
+    int32_t            OutBufferSize;
+    uint32_t           LinesDecoded;
+    void             * pInBuffer;
+    void             * pOutBuffer;
+    jpeg_color_space_t ColorSpace;
+ #if EMWIN_JPEG_NOCOPY
+    uint8_t * _aInBuffer;
+ #endif
 
     GUI_LOCK();
     x             = x0;
@@ -180,12 +210,12 @@ int JPEG_X_Draw (GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0)
     xSize         = 0;
     ySize         = 0;
     Error         = 0;
-    g_jpeg_status = JPEG_DECODE_STATUS_NOT_OPEN;
+    g_jpeg_status = JPEG_STATUS_NONE;
 
     //
     // Initialize JPEG decoder
     //
-    if (R_JPEG_Decode_Open(_g_jpeg_emwin_decode->p_ctrl, _g_jpeg_emwin_decode->p_cfg) != FSP_SUCCESS)
+    if (R_JPEG_Open(_g_jpeg_emwin_decode->p_ctrl, _g_jpeg_emwin_decode->p_cfg) != FSP_SUCCESS)
     {
         GUI_UNLOCK();
 
@@ -194,39 +224,44 @@ int JPEG_X_Draw (GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0)
 
     NumBytesInBuffer = 0;
 
-    while (!(g_jpeg_status & JPEG_DECODE_STATUS_ERROR))
+    while (!(g_jpeg_status & JPEG_STATUS_ERROR))
     {
         //
         // Get data
         //
-        Off = pfGetData(p, (const U8 **) &pInBuffer, (uint32_t) NUMBYTES_INBUFFER, (uint32_t) NumBytesInBuffer);
+        Off = pfGetData(p,
+                        (const uint8_t **) &pInBuffer,
+                        (uint32_t) EMWIN_JPEG_NUMBYTES_INBUFFER,
+                        (uint32_t) NumBytesInBuffer);
+ #if EMWIN_JPEG_NOCOPY
+        _aInBuffer = pInBuffer;
+ #else
         memcpy(_aInBuffer, pInBuffer, (size_t) Off);
+ #endif
         NumBytesInBuffer += Off;
 
         //
         // Set in-buffer to get some information about the JPEG
         //
-        if (R_JPEG_Decode_InputBufferSet(_g_jpeg_emwin_decode->p_ctrl, (void *) _aInBuffer,
-                                         NUMBYTES_INBUFFER) != FSP_SUCCESS)
+        if (R_JPEG_InputBufferSet(_g_jpeg_emwin_decode->p_ctrl, (void *) _aInBuffer,
+                                  EMWIN_JPEG_NUMBYTES_INBUFFER) != FSP_SUCCESS)
         {
-            Error = 1;
+            Error = 2;
 
             break;
         }
-
-        R_BSP_SoftwareDelay(10, BSP_DELAY_UNITS_MICROSECONDS);
 
         //
         // Wait for callback
         //
-        if (_WaitForCallbackTimed(JPEG_TIMEOUT))
+        if (_WaitForCallbackTimed(EMWIN_JPEG_TIMEOUT))
         {
-            Error = 1;
+            Error = 3;
 
             break;
         }
 
-        if (g_jpeg_status & JPEG_DECODE_STATUS_IMAGE_SIZE_READY)
+        if (g_jpeg_status & JPEG_STATUS_IMAGE_SIZE_READY)
         {
             break;
         }
@@ -237,9 +272,10 @@ int JPEG_X_Draw (GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0)
         //
         // Get image dimensions
         //
-        if (R_JPEG_Decode_ImageSizeGet(_g_jpeg_emwin_decode->p_ctrl, (U16 *) &xSize, (U16 *) &ySize) != FSP_SUCCESS)
+        if (R_JPEG_DecodeImageSizeGet(_g_jpeg_emwin_decode->p_ctrl, (uint16_t *) &xSize,
+                                      (uint16_t *) &ySize) != FSP_SUCCESS)
         {
-            Error = 1;
+            Error = 4;
         }
     }
 
@@ -248,13 +284,13 @@ int JPEG_X_Draw (GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0)
         //
         // Get color space and check dimensions accordingly
         //
-        R_JPEG_Decode_PixelFormatGet(_g_jpeg_emwin_decode->p_ctrl, &ColorSpace);
-        if (g_jpeg_status & JPEG_DECODE_STATUS_ERROR)
+        R_JPEG_DecodePixelFormatGet(_g_jpeg_emwin_decode->p_ctrl, &ColorSpace);
+        if (g_jpeg_status & JPEG_STATUS_ERROR)
         {
             //
             // Image dimensions incompatible with JPEG Codec
             //
-            Error = 1;
+            Error = 5;
         }
     }
 
@@ -265,15 +301,15 @@ int JPEG_X_Draw (GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0)
         //
         BitsPerPixel  = (_g_jpeg_emwin_decode->p_cfg->pixel_format == JPEG_DECODE_PIXEL_FORMAT_ARGB8888) ? 32 : 16;
         BytesPerLine  = (xSize * BitsPerPixel) >> 3;
-        OutBufferSize = sizeof(_aBuffer);
+        OutBufferSize = EMWIN_JPEG_NUMBYTES_OUTBUFFER;
         pOutBuffer    = (void *) _aBuffer;
 
         //
         // Set stride value
         //
-        if (R_JPEG_Decode_HorizontalStrideSet(_g_jpeg_emwin_decode->p_ctrl, (uint32_t) xSize) != FSP_SUCCESS)
+        if (R_JPEG_DecodeHorizontalStrideSet(_g_jpeg_emwin_decode->p_ctrl, (uint32_t) xSize) != FSP_SUCCESS)
         {
-            Error = 1;
+            Error = 6;
         }
     }
 
@@ -282,87 +318,103 @@ int JPEG_X_Draw (GUI_GET_DATA_FUNC * pfGetData, void * p, int x0, int y0)
         //
         // Start decoding process by setting out-buffer
         //
-        if (R_JPEG_Decode_OutputBufferSet(_g_jpeg_emwin_decode->p_ctrl, pOutBuffer,
-                                          (uint32_t) OutBufferSize) != FSP_SUCCESS)
+        if (R_JPEG_OutputBufferSet(_g_jpeg_emwin_decode->p_ctrl, pOutBuffer, (uint32_t) OutBufferSize) != FSP_SUCCESS)
         {
-            Error = 1;
+            Error = 7;
         }
     }
 
     if (!Error)
     {
-        while (!(g_jpeg_status & JPEG_DECODE_STATUS_ERROR))
+        while (!(g_jpeg_status & JPEG_STATUS_ERROR))
         {
             //
             // Do not wait forever, it might fail and we will hang
             //
-            if (_WaitForCallbackTimed(JPEG_TIMEOUT))
+            if (_WaitForCallbackTimed(EMWIN_JPEG_TIMEOUT))
             {
-                Error = 1;
+                Error = 8;
 
                 break;
             }
 
-            if (g_jpeg_status & JPEG_DECODE_STATUS_INPUT_PAUSE)
-            {
-                //
-                // Get next block of input data
-                //
-                Off = pfGetData(p, (const U8 **) &pInBuffer, (uint32_t) NUMBYTES_INBUFFER, (uint32_t) NumBytesInBuffer);
-                memcpy(_aInBuffer, pInBuffer, (size_t) Off);
-                NumBytesInBuffer += Off;
-
-                //
-                // Set the new input buffer pointer
-                //
-                if (R_JPEG_Decode_InputBufferSet(_g_jpeg_emwin_decode->p_ctrl, (void *) _aInBuffer,
-                                                 NUMBYTES_INBUFFER) != FSP_SUCCESS)
-                {
-                    Error = 1;
-
-                    break;
-                }
-            }
-
-            if ((g_jpeg_status & JPEG_DECODE_STATUS_OUTPUT_PAUSE) || (g_jpeg_status & JPEG_DECODE_STATUS_DONE))
+            if ((g_jpeg_status & JPEG_STATUS_OUTPUT_PAUSE) || (g_jpeg_status & JPEG_STATUS_OPERATION_COMPLETE))
             {
                 //
                 // Draw the JPEG work buffer to the framebuffer
                 //
-                R_JPEG_Decode_LinesDecodedGet(_g_jpeg_emwin_decode->p_ctrl, &LinesDecoded);
+                R_JPEG_DecodeLinesDecodedGet(_g_jpeg_emwin_decode->p_ctrl, &LinesDecoded);
                 _DrawBitmap(x, y, (void const *) pOutBuffer, xSize, (int32_t) LinesDecoded, BytesPerLine);
                 y = y + (int32_t) LinesDecoded;
-                if (!(g_jpeg_status & JPEG_DECODE_STATUS_DONE))
+ #if EMWIN_JPEG_DOUBLE_BUFFER_OUTPUT
+                pOutBuffer = (pOutBuffer == _aBuffer) ? (&_aBuffer[EMWIN_JPEG_NUMBYTES_OUTBUFFER]) : (_aBuffer);
+ #endif
+                if (!(g_jpeg_status & JPEG_STATUS_OPERATION_COMPLETE))
                 {
                     //
                     // Set the output buffer to the next 16-line block
                     //
-                    if (R_JPEG_Decode_OutputBufferSet(_g_jpeg_emwin_decode->p_ctrl, pOutBuffer,
-                                                      (uint32_t) OutBufferSize) != FSP_SUCCESS)
+                    if (R_JPEG_OutputBufferSet(_g_jpeg_emwin_decode->p_ctrl, pOutBuffer,
+                                               (uint32_t) OutBufferSize) != FSP_SUCCESS)
                     {
-                        Error = 1;
+                        Error = 10;
 
                         break;
                     }
                 }
             }
 
-            if (g_jpeg_status & JPEG_DECODE_STATUS_DONE)
+            if (g_jpeg_status & JPEG_STATUS_INPUT_PAUSE)
             {
+                //
+                // Get next block of input data
+                //
+                Off = pfGetData(p,
+                                (const uint8_t **) &pInBuffer,
+                                (uint32_t) EMWIN_JPEG_NUMBYTES_INBUFFER,
+                                (uint32_t) NumBytesInBuffer);
+ #if EMWIN_JPEG_NOCOPY
+                _aInBuffer = pInBuffer;
+ #else
+                memcpy(_aInBuffer, pInBuffer, (size_t) Off);
+ #endif
+                NumBytesInBuffer += Off;
+
+                //
+                // Set the new input buffer pointer
+                //
+                if (R_JPEG_InputBufferSet(_g_jpeg_emwin_decode->p_ctrl, (void *) _aInBuffer,
+                                          EMWIN_JPEG_NUMBYTES_INBUFFER) != FSP_SUCCESS)
+                {
+                    Error = 9;
+
+                    break;
+                }
+            }
+
+            if (g_jpeg_status & JPEG_STATUS_OPERATION_COMPLETE)
+            {
+ #if EMWIN_JPEG_DOUBLE_BUFFER_OUTPUT
+
+                //
+                // Wait for any remaining draw operation to finish
+                //
+                _FlushBitmap();
+ #endif
                 break;
             }
         }
     }
 
-    if (g_jpeg_status & JPEG_DECODE_STATUS_ERROR)
+    if ((g_jpeg_status & JPEG_STATUS_ERROR) && (!Error))
     {
-        Error = 1;
+        Error = 11;
     }
 
     //
     // De-Init
     //
-    R_JPEG_Decode_Close(_g_jpeg_emwin_decode->p_ctrl);
+    R_JPEG_Close(_g_jpeg_emwin_decode->p_ctrl);
 
     GUI_UNLOCK();
 

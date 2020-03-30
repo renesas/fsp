@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -15,149 +15,191 @@
  **********************************************************************************************************************/
 
 #if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
+ #include "mbedtls/config.h"
 #else
-#include MBEDTLS_CONFIG_FILE
+ #include MBEDTLS_CONFIG_FILE
 #endif
 
 #if defined(MBEDTLS_RSA_C)
 
-#include "mbedtls/rsa.h"
-#include "mbedtls/rsa_internal.h"
-#include "mbedtls/oid.h"
-#include "mbedtls/platform_util.h"
+ #include "mbedtls/rsa.h"
+ #include "mbedtls/rsa_internal.h"
+ #include "mbedtls/oid.h"
+ #include "mbedtls/platform_util.h"
 
-#include <string.h>
+ #include <string.h>
 
-#if defined(MBEDTLS_PKCS1_V21)
-#include "mbedtls/md.h"
-#endif
+ #if defined(MBEDTLS_PKCS1_V21)
+  #include "mbedtls/md.h"
+ #endif
 
-#if defined(MBEDTLS_PKCS1_V15) && !defined(__OpenBSD__)
-#include <stdlib.h>
-#endif
+ #if defined(MBEDTLS_PKCS1_V15) && !defined(__OpenBSD__)
+  #include <stdlib.h>
+ #endif
 
-#if defined(MBEDTLS_PLATFORM_C)
-#include "mbedtls/platform.h"
-#else
-#include <stdio.h>
-#define mbedtls_printf printf
-#define mbedtls_calloc calloc
-#define mbedtls_free   free
-#endif
+ #if defined(MBEDTLS_PLATFORM_C)
+  #include "mbedtls/platform.h"
+ #else
+  #include <stdio.h>
+  #define mbedtls_printf    printf
+  #define mbedtls_calloc    calloc
+  #define mbedtls_free      free
+ #endif
 
-#if defined(MBEDTLS_RSA_ALT)
-#include "hw_sce_rsa_private.h"
+ #if defined(MBEDTLS_RSA_ALT)
+  #include "hw_sce_rsa_private.h"
+
+  #define RM_PSA_CRYPTO_RSA_KEY_PLAINTEXT    (0U)
+  #define RM_PSA_CRYPTO_RSA_KEY_WRAPPED      (1U)
+
+static const hw_sce_rsa_generatekey_t g_rsa_keygen_lookup[2] =
+{
+  #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
+    [RM_PSA_CRYPTO_RSA_KEY_PLAINTEXT] =
+        HW_SCE_RSA_2048KeyGenerate,
+  #endif
+  #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
+    [RM_PSA_CRYPTO_RSA_KEY_WRAPPED] =
+        HW_SCE_HRK_RSA_2048KeyGenerate,
+  #endif
+};
+
+static const hw_sce_rsa_private_decrypt_t g_rsa_private_decrypt_lookup[2] =
+{
+  #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
+    [RM_PSA_CRYPTO_RSA_KEY_PLAINTEXT] =
+        HW_SCE_RSA_2048PrivateKeyDecrypt,
+  #endif
+  #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
+    [RM_PSA_CRYPTO_RSA_KEY_WRAPPED] =
+        HW_SCE_HRK_RSA_2048PrivateKeyDecrypt,
+  #endif
+};
 
 /* Parameter validation macros */
-#define RSA_VALIDATE_RET( cond )                                       \
-    MBEDTLS_INTERNAL_VALIDATE_RET( cond, MBEDTLS_ERR_RSA_BAD_INPUT_DATA )
-#define RSA_VALIDATE( cond )                                           \
-    MBEDTLS_INTERNAL_VALIDATE( cond )
+  #define RSA_VALIDATE_RET(cond) \
+    MBEDTLS_INTERNAL_VALIDATE_RET(cond, MBEDTLS_ERR_RSA_BAD_INPUT_DATA)
+  #define RSA_VALIDATE(cond) \
+    MBEDTLS_INTERNAL_VALIDATE(cond)
 
+  #if defined(MBEDTLS_GENPRIME)
 
-#if defined(MBEDTLS_GENPRIME)
-
-/**/
 /*
  * Generate an RSA keypair
  */
-int mbedtls_rsa_gen_key( mbedtls_rsa_context *ctx,
-                 int (*f_rng)(void *, unsigned char *, size_t),
-                 void *p_rng,
-                 unsigned int nbits, int exponent )
+int mbedtls_rsa_gen_key (mbedtls_rsa_context * ctx,
+                         int (* f_rng)(void *, unsigned char *, size_t),
+                         void * p_rng,
+                         unsigned int nbits,
+                         int exponent)
 {
-    int ret = 0; // used by MBEDTLS_MPI_CHK
-    RSA_VALIDATE_RET( ctx != NULL );
-    (void)f_rng;
-    (void)p_rng;
-    uint8_t *p_rsa_private_exponent = NULL;
-    uint8_t *p_rsa_public_modulus = NULL;
-    uint8_t *p_rsa2048_domain_parameters = NULL;
-    
-    /*calloc pointers created to remove clang warnings */
-    uint32_t *p_calloc_rsa_private_exponent = NULL; 
-    uint32_t *p_calloc_rsa_public_modulus = NULL;
-    uint32_t *p_calloc_rsa2048_domain_parameters = NULL;
+    (void) nbits;
+    (void) exponent;
+    int ret = 0;
+    RSA_VALIDATE_RET(ctx != NULL);
+    (void) f_rng;
+    (void) p_rng;
 
-    uint8_t  rsa_public_exponent[4] = {0x00, 0x01, 0x00, 0x01};
+    uint8_t  * p_rsa2048_domain_parameters_8 = NULL;
+    uint32_t * p_common_buff_32              = NULL;
+    uint32_t   private_key_size_bytes        = RSA_MODULUS_SIZE_BYTES(2048);
 
-    if(exponent != RSA_PUBLIC_EXPONENT_BE)
+   #if defined(MBEDTLS_CHECK_PARAMS)
+
+    /* HW can only generate public exponent of 65537 */
+    if (exponent != RSA_PUBLIC_EXPONENT_BE)
     {
-    	return( MBEDTLS_ERR_RSA_BAD_INPUT_DATA );
+        return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
     }
 
     /* We only support RSA2048 now*/
     if (nbits != RSA_2048_BITS)
     {
-        return( MBEDTLS_ERR_RSA_BAD_INPUT_DATA);
+        return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
     }
+   #endif
 
-
-    /*obtain a 32-bit aligned block of memory to be used by the SCE fore key generation*/
-    p_calloc_rsa_private_exponent = (uint32_t *)mbedtls_calloc(RSA_MODULUS_SIZE_BYTES(2048)/4, sizeof(uint32_t));
-    p_calloc_rsa_public_modulus = (uint32_t *)mbedtls_calloc(RSA_MODULUS_SIZE_BYTES(2048)/4, sizeof(uint32_t));
-    p_calloc_rsa2048_domain_parameters = (uint32_t *)mbedtls_calloc(RSA_PLAIN_TEXT_CRT_KEY_SIZE_BYTES(2048)/4, sizeof(uint32_t));
-
-    p_rsa_private_exponent = (uint8_t *)p_calloc_rsa_private_exponent;
-    p_rsa_public_modulus = (uint8_t *)p_calloc_rsa_public_modulus;
-    p_rsa2048_domain_parameters = (uint8_t *)p_calloc_rsa2048_domain_parameters;
-
-
-    if ((p_rsa_private_exponent == NULL) || (p_rsa_public_modulus == NULL) || (p_rsa2048_domain_parameters == NULL))
+    if (true == (bool) ctx->vendor_ctx)
     {
-        mbedtls_free(p_calloc_rsa_private_exponent);
-        mbedtls_free(p_calloc_rsa_public_modulus);
-        mbedtls_free(p_calloc_rsa2048_domain_parameters);
-        return MBEDTLS_ERR_MPI_ALLOC_FAILED;;
+        private_key_size_bytes = RSA_WRAPPED_PRIVATE_KEY_SIZE_BYTES(2048);
     }
 
-    if (FSP_SUCCESS != HW_SCE_RSA_2048KeyGenerate (SCE_RSA_NUM_TRIES_10240,
-            (uint32_t *)p_rsa_private_exponent,
-            (uint32_t *)p_rsa_public_modulus,
-            (uint32_t*)p_rsa2048_domain_parameters))
+    /* Calloc pointers created to remove clang warnings */
+    uint32_t * p_rsa_private_exponent      = NULL;
+    uint32_t * p_rsa_public_modulus        = NULL;
+    uint32_t * p_rsa2048_domain_parameters = NULL;
+
+    hw_sce_rsa_generatekey_t p_hw_sce_rsa_generatekey = NULL;
+    uint8_t rsa_public_exponent[4] = {0x00, 0x01, 0x00, 0x01};
+
+    p_hw_sce_rsa_generatekey = g_rsa_keygen_lookup[(uint32_t) ctx->vendor_ctx];
+    if (NULL == p_hw_sce_rsa_generatekey)
     {
-        mbedtls_free(p_calloc_rsa_private_exponent);
-        mbedtls_free(p_calloc_rsa_public_modulus);
-        mbedtls_free(p_calloc_rsa2048_domain_parameters);
-        return( MBEDTLS_ERR_RSA_KEY_GEN_FAILED );
+        return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
     }
 
-    /*Copy the public key data into the context*/
-    if (0 != mbedtls_mpi_read_binary(&ctx->N, p_rsa_public_modulus, RSA_MODULUS_SIZE_BYTES(2048)))
+    /* Obtain a 32-bit aligned block of memory. It will be used for all the following items in this order:
+     * Private Key D of size  private_key_size_bytes
+     * Public Modulus N of size RSA_MODULUS_SIZE_BYTES(x)
+     * CRT parameters Dq|Q|Dp|P|Qp each of size RSA_PARAMETERS_SIZE_BYTES(x) */
+    p_common_buff_32 =
+        (uint32_t *) mbedtls_calloc((private_key_size_bytes +
+                                     (RSA_MODULUS_SIZE_BYTES(2048) + RSA_PLAIN_TEXT_CRT_KEY_SIZE_BYTES(2048))) / 4,
+                                    sizeof(uint32_t));
+
+    if (NULL == p_common_buff_32)
+    {
+        return MBEDTLS_ERR_MPI_ALLOC_FAILED;
+    }
+
+    p_rsa_private_exponent        = p_common_buff_32;
+    p_rsa_public_modulus          = p_rsa_private_exponent + (private_key_size_bytes / 4);
+    p_rsa2048_domain_parameters   = p_rsa_public_modulus + (RSA_MODULUS_SIZE_BYTES(2048) / 4);
+    p_rsa2048_domain_parameters_8 = (uint8_t *) p_rsa2048_domain_parameters;
+
+    if (FSP_SUCCESS !=
+        p_hw_sce_rsa_generatekey(SCE_RSA_NUM_TRIES_20480, p_rsa_private_exponent, p_rsa_public_modulus,
+                                 p_rsa2048_domain_parameters))
+    {
+        ret = MBEDTLS_ERR_RSA_KEY_GEN_FAILED;
+    }
+    /* Copy the public key data into the context */
+    else if (0 !=
+             mbedtls_mpi_read_binary(&ctx->N, (uint8_t *) p_rsa_public_modulus, RSA_MODULUS_SIZE_BYTES(2048)))
     {
         ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
     }
-    /*Copy the public exponent into the context*/
-    else if (0 !=mbedtls_mpi_read_binary(&ctx->E, (unsigned char *)&rsa_public_exponent, 4))
+    /* Copy the public exponent into the context */
+    else if (0 !=
+             mbedtls_mpi_read_binary(&ctx->E, (unsigned char *) &rsa_public_exponent, 4))
     {
         ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
     }
-    /*Copy the private key into the context*/
-    else if (0 != mbedtls_mpi_read_binary(&ctx->D, p_rsa_private_exponent, RSA_MODULUS_SIZE_BYTES(2048)))
+    /* Copy the private key into the context */
+    else if (0 !=
+             mbedtls_mpi_read_binary(&ctx->D, (uint8_t *) p_rsa_private_exponent, private_key_size_bytes))
     {
         ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
     }
     /* The generated domain parameters are in the format:
      * d mod (q-1) || q || d mod (p-1) || p || (1/q) mod p
-     * Import these elements into the mbedtlk_rsa_context structure */
-    else if (0 != mbedtls_mpi_read_binary(&ctx->DQ, p_rsa2048_domain_parameters + (0), RSA_PARAMETERS_SIZE_BYTES(2048)))
+     * Import these elements into the mbedtls_rsa_context structure
+     * We are not using CRT so d mode (q-1), d mode (p-1) and (1/q) mod p are ignored
+     * */
+    else if (0 !=
+             mbedtls_mpi_read_binary(&ctx->Q,
+                                     p_rsa2048_domain_parameters_8 +
+                                     (1 * RSA_PARAMETERS_SIZE_BYTES(2048)),
+                                     RSA_PARAMETERS_SIZE_BYTES(2048)))
     {
         ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
     }
-    else if (0 != mbedtls_mpi_read_binary(&ctx->Q,  p_rsa2048_domain_parameters + (1 * RSA_PARAMETERS_SIZE_BYTES(2048)), RSA_MODULUS_SIZE_BYTES(2048)))
-    {
-        ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-    }
-    else if (0 != mbedtls_mpi_read_binary(&ctx->DP, p_rsa2048_domain_parameters + (2 * RSA_PARAMETERS_SIZE_BYTES(2048)), RSA_MODULUS_SIZE_BYTES(2048)))
-    {
-        ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-    }
-    else if (0 != mbedtls_mpi_read_binary(&ctx->P,  p_rsa2048_domain_parameters + (3 * RSA_PARAMETERS_SIZE_BYTES(2048)), RSA_MODULUS_SIZE_BYTES(2048)))
-    {
-        ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-    }
-    else if (0 != mbedtls_mpi_read_binary(&ctx->QP, p_rsa2048_domain_parameters + (4 * RSA_PARAMETERS_SIZE_BYTES(2048)), RSA_MODULUS_SIZE_BYTES(2048)))
+    else if (0 !=
+             mbedtls_mpi_read_binary(&ctx->P,
+                                     p_rsa2048_domain_parameters_8 +
+                                     (3 *
+                                      RSA_PARAMETERS_SIZE_BYTES(2048)),
+                                     RSA_PARAMETERS_SIZE_BYTES(2048)))
     {
         ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
     }
@@ -166,187 +208,176 @@ int mbedtls_rsa_gen_key( mbedtls_rsa_context *ctx,
         ret = 0;
     }
 
-    /*Clear out the generated private key from memory*/
-    memset(p_rsa_private_exponent, 0, RSA_MODULUS_SIZE_BYTES(2048));
-    /*Clear out the generated domain parameters from memory*/
-    memset(p_rsa2048_domain_parameters, 0, RSA_PLAIN_TEXT_CRT_KEY_SIZE_BYTES(2048));
-    /*Free the allocated memory*/
-    mbedtls_free(p_calloc_rsa_private_exponent);
-    mbedtls_free(p_calloc_rsa_public_modulus);
-    mbedtls_free(p_calloc_rsa2048_domain_parameters);
-    
-    ctx->len = mbedtls_mpi_size( &ctx->N );
+    /* Clear out the allocated buffer memory */
+    memset(p_common_buff_32,
+           0,
+           (private_key_size_bytes +
+            (RSA_MODULUS_SIZE_BYTES(2048) + RSA_PLAIN_TEXT_CRT_KEY_SIZE_BYTES(2048))));
 
-    if( ret != 0 )
+    /* Free the allocated memory */
+    mbedtls_free(p_common_buff_32);
+
+    ctx->len = mbedtls_mpi_size(&ctx->N);
+
+    if (ret != 0)
     {
-        mbedtls_rsa_free( ctx );
-        return( ret);
+        mbedtls_rsa_free(ctx);
     }
-    return( 0 );
+
+    return ret;
 }
 
-#endif /* MBEDTLS_GENPRIME */
+  #endif                               /* MBEDTLS_GENPRIME */
 
 /*
  * Do an RSA public key operation
  */
 
-int mbedtls_rsa_public( mbedtls_rsa_context *ctx,
-                const unsigned char *input,
-                unsigned char *output )
+int mbedtls_rsa_public (mbedtls_rsa_context * ctx, const unsigned char * input, unsigned char * output)
 {
-   uint32_t temp_E= {RSA_PUBLIC_EXPONENT_LE};
-   uint8_t *p_temp_buff_N;
-   uint8_t *p_temp_CtxN;
-   uint8_t *p_temp_N;
-   uint32_t i = 0;
-   fsp_err_t iret; 
-   p_temp_CtxN = (uint8_t *)ctx->N.p;
-   p_temp_CtxN += RSA_MODULUS_SIZE_BYTES(2048) - 1;
-    /*calloc pointer created to remove clang warnings */
-    uint32_t *p_calloc_temp_buff_N = NULL; 
+    uint32_t  temp_E = 0U;
+    fsp_err_t iret;
 
-   //If the size of N is not equal to the modulus size, then that is because of the leading 00 (sign field) from the ASN1 import
-   // Use openssl asn1parse -in private1.pem (in !test folder) to see asn1 format of key
-   if (ctx->N.n != (RSA_MODULUS_SIZE_BYTES(2048)/(sizeof (mbedtls_mpi_uint))))
-   {
-       // There should be only 1 extra value (00) at the beginning; otherwise the key is in an unexpected format
-       if ((ctx->N.n - 1 ) != (RSA_MODULUS_SIZE_BYTES(2048)/(sizeof (mbedtls_mpi_uint))))
-       {
-           return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
-       }
-   }
+    /* Calloc pointer created to remove clang warnings */
+    uint32_t * p_calloc_temp_buff_N = NULL;
 
-   /*Only 65537 public exponent is valid*/
-   if (*ctx->E.p != RSA_PUBLIC_EXPONENT_BE)
-   {
-       return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
-   }
-
-   /*obtain a 32-bit aligned block of memory to be used by the SCE fore key generation*/
-   p_calloc_temp_buff_N = (uint32_t *)mbedtls_calloc(RSA_MODULUS_SIZE_BYTES(2048)/4, sizeof(uint32_t));
-   if (p_calloc_temp_buff_N == NULL)
-   {
-       mbedtls_free(p_calloc_temp_buff_N);
-       return MBEDTLS_ERR_MPI_ALLOC_FAILED;;
-   }
-
-   p_temp_buff_N =  (uint8_t *)p_calloc_temp_buff_N;
-   p_temp_N = p_temp_buff_N;
-
-    /* Reverse the byte order */
-   for (i = 0; i <RSA_MODULUS_SIZE_BYTES(2048); i++ )
-   {
-       *p_temp_N = *p_temp_CtxN;
-       p_temp_CtxN--;
-       p_temp_N++;
-   }
-
-    iret =FSP_ERR_CRYPTO_CONTINUE;
-    for ( ; FSP_ERR_CRYPTO_CONTINUE == iret; )
+    /* If the size of N is not equal to the modulus size, then that is because of the leading 00 (sign field) from the ASN1 import
+     * Use openssl asn1parse -in private1.pem (in !test folder) to see asn1 format of key */
+    if (ctx->N.n != (RSA_MODULUS_SIZE_BYTES(2048) / (sizeof(mbedtls_mpi_uint))))
     {
-        iret = HW_SCE_RSA_2048PublicKeyEncrypt((uint32_t *)input, &temp_E, (uint32_t *)p_temp_buff_N, (uint32_t *)output);
+        /* There should be only 1 extra value (00) at the beginning; otherwise the key is in an unexpected format */
+        if ((ctx->N.n - 1) != (RSA_MODULUS_SIZE_BYTES(2048) / (sizeof(mbedtls_mpi_uint))))
+        {
+            return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
+        }
     }
 
-    /*Free the allocated buffer*/
+    /* Reverse byte order for E */
+    temp_E = __REV(*ctx->E.p);
+
+    /* Obtain a 32-bit aligned block of memory to be used by the SCE for key generation */
+    p_calloc_temp_buff_N = (uint32_t *) mbedtls_calloc(RSA_MODULUS_SIZE_BYTES(2048) / 4, sizeof(uint32_t));
+    if (p_calloc_temp_buff_N == NULL)
+    {
+        return MBEDTLS_ERR_MPI_ALLOC_FAILED;;
+    }
+
+    /* Write N into the buffer in reverse */
+    mbedtls_mpi_write_binary(&ctx->N, (uint8_t *) p_calloc_temp_buff_N, RSA_MODULUS_SIZE_BYTES(2048));
+
+    iret = FSP_ERR_CRYPTO_CONTINUE;
+    for ( ; FSP_ERR_CRYPTO_CONTINUE == iret; )
+    {
+        iret = HW_SCE_RSA_2048PublicKeyEncrypt((uint32_t *) input, &temp_E, p_calloc_temp_buff_N, (uint32_t *) output);
+    }
+
+    /* Free the allocated buffer */
     mbedtls_free(p_calloc_temp_buff_N);
     if (0 != iret)
     {
-    	return( MBEDTLS_ERR_RSA_PUBLIC_FAILED);
+        return MBEDTLS_ERR_RSA_PUBLIC_FAILED;
     }
 
-    return( 0 );
+    return 0;
 }
 
 /*
  * Do an RSA private key operation
  */
 
-int mbedtls_rsa_private( mbedtls_rsa_context *ctx,
-                 int (*f_rng)(void *, unsigned char *, size_t),
-                 void *p_rng,
-                 const unsigned char *input,
-                 unsigned char *output )
+int mbedtls_rsa_private (mbedtls_rsa_context * ctx,
+                         int (* f_rng)(void *, unsigned char *, size_t),
+                         void * p_rng,
+                         const unsigned char * input,
+                         unsigned char * output)
 {
+    (void) f_rng;
+    (void) p_rng;
+    fsp_err_t err;
+    int       ret = 0;
+    uint32_t  private_key_size_bytes = RSA_MODULUS_SIZE_BYTES(2048);
+    hw_sce_rsa_private_decrypt_t p_hw_sce_rsa_private_decrypt = NULL;
 
-   uint32_t i;
-   (void) f_rng;
-   (void) p_rng;
-   uint8_t *p_temp_buff_D;
-   uint8_t *p_temp_buff_N;
-   uint8_t *p_temp_CtxD;
-   uint8_t *p_temp_CtxN;
-   uint8_t *p_temp_D;
-   uint8_t *p_temp_N;
-   fsp_err_t iret;
-       /*calloc 32-bit pointer created to remove clang warnings */
-   uint32_t *p_calloc_temp_buff_N = NULL; 
-   uint32_t *p_calloc_temp_buff_D = NULL; 
-
-   RSA_VALIDATE_RET( ctx != NULL );
-   RSA_VALIDATE_RET( input != NULL );
-   RSA_VALIDATE_RET( output != NULL );
-
-   /*Set pointer to end of D and N in the context*/
-   p_temp_CtxD = (uint8_t *)ctx->D.p;
-   p_temp_CtxD += RSA_MODULUS_SIZE_BYTES(2048) - 1;
-   p_temp_CtxN = (uint8_t *)ctx->N.p;
-   p_temp_CtxN += RSA_MODULUS_SIZE_BYTES(2048) - 1;
-
-   //If the size of N is not equal to the modulus size, then that is because of the leading 00 (sign field) from the ASN1 import
-   // Use openssl asn1parse -in private1.pem to see asn1 format of a .pem key
-   if (ctx->N.n != (RSA_MODULUS_SIZE_BYTES(2048)/(sizeof (mbedtls_mpi_uint))))
-   {
-       // There should be only 1 extra value (00) at the beginning; otherwise the key is in an unexpected format
-       if ((ctx->N.n -1 ) != (RSA_MODULUS_SIZE_BYTES(2048)/(sizeof (mbedtls_mpi_uint))))
-       {
-           return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
-       }
-   }
-
-   /*Obtain a 32-bit aligned block of memory to be used by the SCE fore key generation
-    * Assuming RSA2048 key this is the max size of each field: N D P Q*/
-   p_calloc_temp_buff_N = (uint32_t *)mbedtls_calloc(RSA_MODULUS_SIZE_BYTES(2048)/4, sizeof(uint32_t));
-   p_calloc_temp_buff_D = (uint32_t *)mbedtls_calloc(RSA_MODULUS_SIZE_BYTES(2048)/4, sizeof(uint32_t));
-   if ((p_calloc_temp_buff_N == NULL) || (p_calloc_temp_buff_D == NULL))
-   {
-       mbedtls_free(p_calloc_temp_buff_N);
-       mbedtls_free(p_calloc_temp_buff_D);
-       return MBEDTLS_ERR_MPI_ALLOC_FAILED;;
-   }
-   p_temp_buff_N = (uint8_t *)p_calloc_temp_buff_N;
-   p_temp_buff_D = (uint8_t *)p_calloc_temp_buff_D;
-   
-   p_temp_D = p_temp_buff_D;
-   p_temp_N = p_temp_buff_N;
-
-    /* Reverse the byte order */
-   for (i = 0; i <RSA_MODULUS_SIZE_BYTES(2048); i++ )
-   {
-       *p_temp_D = *p_temp_CtxD;
-       *p_temp_N = *p_temp_CtxN;
-       p_temp_CtxD--;
-       p_temp_CtxN--;
-       p_temp_D++;
-       p_temp_N++;
-   }
-
-    iret =FSP_ERR_CRYPTO_CONTINUE;
-    for ( ; FSP_ERR_CRYPTO_CONTINUE == iret; )
+    if (true == (bool) ctx->vendor_ctx)
     {
-        iret = HW_SCE_RSA_2048PrivateKeyDecrypt((uint32_t *)input, (uint32_t *)p_temp_buff_D, (uint32_t *)p_temp_buff_N, (uint32_t *)output);
+        private_key_size_bytes = RSA_WRAPPED_PRIVATE_KEY_SIZE_BYTES(2048);
     }
 
-    mbedtls_free(p_calloc_temp_buff_N);
-    mbedtls_free(p_calloc_temp_buff_D);
+    /* Calloc 32-bit pointer created to remove clang warnings */
+    uint32_t * p_calloc_temp_buff_N = NULL;
+    uint32_t * p_calloc_temp_buff_D = NULL;
+    uint32_t * p_common_buff_32     = NULL;
 
-    if (iret != 0)
+    RSA_VALIDATE_RET(ctx != NULL);
+    RSA_VALIDATE_RET(input != NULL);
+    RSA_VALIDATE_RET(output != NULL);
+
+    /* If the size of N is not equal to the modulus size, then that is because of the leading 00 (sign field) from the ASN1 import
+     * Use openssl asn1parse -in private1.pem to see asn1 format of a .pem key */
+    if (ctx->N.n != (RSA_MODULUS_SIZE_BYTES(2048) / (sizeof(mbedtls_mpi_uint))))
     {
-        return MBEDTLS_ERR_RSA_PRIVATE_FAILED;
+        /* There should be only 1 extra value (00) at the beginning; otherwise the key is in an unexpected format */
+        if ((ctx->N.n - 1) != (RSA_MODULUS_SIZE_BYTES(2048) / (sizeof(mbedtls_mpi_uint))))
+        {
+            return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
+        }
     }
-    return (0);
+
+    p_hw_sce_rsa_private_decrypt = g_rsa_private_decrypt_lookup[(bool) ctx->vendor_ctx];
+    if (NULL == p_hw_sce_rsa_private_decrypt)
+    {
+        return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+    }
+
+    /* Obtain a common 32-bit aligned buffer. It will be used for all the following items in this order:
+     * Public Key (N) of size RSA_MODULUS_SIZE_BYTES(x)
+     * Private Key (D) of size private_key_size_bytes
+     */
+    p_common_buff_32 = mbedtls_calloc(((RSA_MODULUS_SIZE_BYTES(2048) + private_key_size_bytes) / 4), sizeof(uint32_t));
+
+    if (NULL == p_common_buff_32)
+    {
+        return MBEDTLS_ERR_MPI_ALLOC_FAILED;
+    }
+
+    p_calloc_temp_buff_N = p_common_buff_32;
+    p_calloc_temp_buff_D = p_calloc_temp_buff_N + (RSA_MODULUS_SIZE_BYTES(2048) / 4);
+
+    /* Write N into the buffer in reverse */
+    if (0 != mbedtls_mpi_write_binary(&ctx->N, (uint8_t *) p_calloc_temp_buff_N, RSA_MODULUS_SIZE_BYTES(2048)))
+    {
+        ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
+    }
+    /* Write D into the buffer in reverse */
+    else if (0 != mbedtls_mpi_write_binary(&ctx->D, (uint8_t *) p_calloc_temp_buff_D, private_key_size_bytes))
+    {
+        ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
+    }
+    else
+    {
+        err = FSP_ERR_CRYPTO_CONTINUE;
+        for ( ; FSP_ERR_CRYPTO_CONTINUE == err; )
+        {
+            err =
+                p_hw_sce_rsa_private_decrypt((uint32_t *) input,
+                                             p_calloc_temp_buff_D,
+                                             p_calloc_temp_buff_N,
+                                             (uint32_t *) output);
+        }
+
+        if (err != 0)
+        {
+            ret = MBEDTLS_ERR_RSA_PRIVATE_FAILED;
+        }
+    }
+
+    /* Clear out the allocated buffer memory */
+    memset(p_common_buff_32, 0, ((RSA_MODULUS_SIZE_BYTES(2048) + private_key_size_bytes)));
+    mbedtls_free(p_common_buff_32);
+
+    return ret;
 }
 
-#endif /* !MBEDTLS_RSA_ALT */
+ #endif                                /* !MBEDTLS_RSA_ALT */
 
-#endif /* MBEDTLS_RSA_C */
+#endif                                 /* MBEDTLS_RSA_C */

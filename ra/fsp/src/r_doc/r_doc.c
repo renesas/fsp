@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -124,9 +124,6 @@ fsp_err_t R_DOC_Open (doc_ctrl_t * const p_api_ctrl, doc_cfg_t const * const p_c
 
 /*******************************************************************************************************************//**
  * Closes the module driver. Enables module stop mode.
- *
- * Example:
- * @snippet r_doc_example.c R_DOC_Close
  *
  * @retval FSP_SUCCESS          Module successfully closed.
  * @retval FSP_ERR_NOT_OPEN     Driver not open.

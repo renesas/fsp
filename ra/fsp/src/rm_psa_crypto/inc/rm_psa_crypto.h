@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -15,31 +15,38 @@
  **********************************************************************************************************************/
 
 #ifndef RM_PSA_CRYPTO_H
-#define RM_PSA_CRYPTO_H
-#if defined(MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT)
+ #define RM_PSA_CRYPTO_H
 
-#include <string.h>
-#include "bsp_api.h"
-#include "hw_sce_private.h"
-#include "hw_sce_trng_private.h"
+ #define PSA_KEY_LIFETIME_PERSISTENT_WRAPPED    (PSA_KEY_LIFETIME_VENDOR_FLAG | PSA_KEY_LIFETIME_PERSISTENT)
+ #define PSA_KEY_LIFETIME_VOLATILE_WRAPPED      (PSA_KEY_LIFETIME_VENDOR_FLAG | PSA_KEY_LIFETIME_VOLATILE)
+
+ #if defined(MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT)
+
+  #include <string.h>
+  #include "bsp_api.h"
+  #include "hw_sce_private.h"
+  #include "hw_sce_trng_private.h"
 
 // Define the maximum number of attempts by the TRNG to generate dissimilar data
-#define RM_PSA_CRYPTO_TRNG_MAX_ATTEMPTS    2
-/*******************************************************************************************************************//**
- * @addtogroup RM_PSA_CRYPTO 
+  #define RM_PSA_CRYPTO_TRNG_MAX_ATTEMPTS    2
+
+/*******************************************************************************************************************/ /**
+ * @addtogroup RM_PSA_CRYPTO
  * @{
  **********************************************************************************************************************/
 fsp_err_t RM_PSA_CRYPTO_TRNG_Read(uint8_t * const p_rngbuf, uint32_t num_req_bytes, uint32_t * p_num_gen_bytes);
 
   #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
   #endif
 
   #ifdef __cplusplus
 }
   #endif
-#endif /* MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT */
-/*******************************************************************************************************************//**
+ #endif                                /* MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT */
+
+/*******************************************************************************************************************/ /**
  * @} (end addtogroup PSA_CRYPTO)
  **********************************************************************************************************************/
-#endif  /* RM_PSA_CRYPTO_H*/
+#endif                                 /* RM_PSA_CRYPTO_H */

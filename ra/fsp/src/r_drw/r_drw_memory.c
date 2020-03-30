@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -132,7 +132,7 @@ d1_uint_t d1_memsize (void * ptr)
 
 /*******************************************************************************************************************//**
  * Allocate video memory.
- * Flex does not use virtual memory so this function simply calls d1_allocmem.
+ * FSP does not use virtual memory so this function simply calls d1_allocmem.
  *
  * @param[in] handle    Pointer to the d1_device object (not used).
  * @param[in] memtype   Type of memory (not used).
@@ -150,7 +150,7 @@ void * d1_allocvidmem (d1_device * handle, d1_int_t memtype, d1_uint_t size)
 
 /*******************************************************************************************************************//**
  * Free video memory.
- * Flex does not use virtual memory so this function simply calls d1_freemem.
+ * FSP does not use virtual memory so this function simply calls d1_freemem.
  *
  * @param[in] handle    Pointer to the d1_device object (not used).
  * @param[in] memtype   Type of memory (not used).
@@ -196,25 +196,25 @@ d1_int_t d1_queryarchitecture (d1_device * handle)
 
 /*******************************************************************************************************************//**
  * Map video memory for direct CPU access.
- * Flex does not use virtual memory so this function simply returns the passed pointer.
+ * FSP does not use virtual memory so this function simply returns the passed pointer.
  *
  * @param[in] handle    Pointer to the d1_device object (not used).
  * @param[in] ptr       Video memory address returned by d1_allocvidmem.
  * @param[in] flags     Memory mapping flags (not used).
- * @retval    ptr       The function just returns ptr back as there is no mapping required for Flex.
+ * @retval    ptr       The function just returns ptr back as there is no mapping required for FSP.
  **********************************************************************************************************************/
 void * d1_mapvidmem (d1_device * handle, void * ptr, d1_int_t flags)
 {
     FSP_PARAMETER_NOT_USED(handle);
     FSP_PARAMETER_NOT_USED(flags);
 
-    /* Nothing special necessary for Flex. */
+    /* Nothing special necessary for FSP. */
     return ptr;
 }
 
 /*******************************************************************************************************************//**
  * Release memory mapping.
- * Flex does not use virtual memory so this function always returns 1.
+ * FSP does not use virtual memory so this function always returns 1.
  *
  * @param[in] handle    Pointer to the d1_device object (not used).
  * @param[in] ptr       Mapped video memory address returned by d1_mapvidmem (not used).
@@ -225,23 +225,23 @@ d1_int_t d1_unmapvidmem (d1_device * handle, void * ptr)
     FSP_PARAMETER_NOT_USED(handle);
     FSP_PARAMETER_NOT_USED(ptr);
 
-    /* No unmapping necessary for Flex. */
+    /* No unmapping necessary for FSP. */
     return 1;
 }
 
 /*******************************************************************************************************************//**
  * Map CPU accessible address of a video memory block back to video memory address.
- * Flex does not use virtual memory so this function simply returns the passed pointer.
+ * FSP does not use virtual memory so this function simply returns the passed pointer.
  *
  * @param[in] handle    Pointer to the d1_device object (not used).
  * @param[in] ptr       CPU accessible address pointing to a video memory block originally allocated using d1_allocvidmem.
- * @retval    ptr       The function just returns ptr back as there is no mapping required for Flex.
+ * @retval    ptr       The function just returns ptr back as there is no mapping required for FSP.
  **********************************************************************************************************************/
 void * d1_maptovidmem (d1_device * handle, void * ptr)
 {
     FSP_PARAMETER_NOT_USED(handle);
 
-    /* Nothing special necessary for Flex. */
+    /* Nothing special necessary for FSP. */
     return ptr;
 }
 
@@ -250,13 +250,13 @@ void * d1_maptovidmem (d1_device * handle, void * ptr)
  *
  * @param[in] handle    Pointer to the d1_device object (not used).
  * @param[in] ptr       Video memory address returned by d1_allocvidmem.
- * @retval    ptr       The function just returns ptr back as there is no mapping required for Flex.
+ * @retval    ptr       The function just returns ptr back as there is no mapping required for FSP.
  **********************************************************************************************************************/
 void * d1_mapfromvidmem (d1_device * handle, void * ptr)
 {
     FSP_PARAMETER_NOT_USED(handle);
 
-    /* Nothing special necessary for Flex. */
+    /* Nothing special necessary for FSP. */
     return ptr;
 }
 

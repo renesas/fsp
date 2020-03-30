@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -25,7 +25,7 @@
 #include "bsp_api.h"
 
 /*******************************************************************************************************************//**
- * @ingroup Common_Version
+ * @addtogroup RENESAS_COMMON
  * @{
  **********************************************************************************************************************/
 
@@ -34,10 +34,10 @@
  **********************************************************************************************************************/
 
 /** FSP pack major version. */
-#define FSP_VERSION_MAJOR (0U)
+#define FSP_VERSION_MAJOR (1U)
 
 /** FSP pack minor version. */
-#define FSP_VERSION_MINOR (8U)
+#define FSP_VERSION_MINOR (0U)
 
 /** FSP pack patch version. */
 #define FSP_VERSION_PATCH (0U)
@@ -46,10 +46,10 @@
 #define FSP_VERSION_BUILD           (0U)
 
 /** Public FSP version name. */
-#define FSP_VERSION_STRING          ("0.8.0")
+#define FSP_VERSION_STRING          ("1.0.0")
 
 /** Unique FSP version ID. */
-#define FSP_VERSION_BUILD_STRING    ("Built with Renesas Arm Flexible Software Package version 0.8.0")
+#define FSP_VERSION_BUILD_STRING    ("Built with Renesas Arm Flexible Software Package version 1.0.0")
 
 /**********************************************************************************************************************
  * Typedef definitions

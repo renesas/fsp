@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -22,31 +22,32 @@
 #include "bsp_api.h"
 #include "r_ether_phy.h"
 
-#if (ETHER_PHY_CFG_USE_PHY == 2)
+#if (ETHER_PHY_CFG_USE_PHY == ETHER_PHY_CFG_USE_PHY_KSZ8041)
 
 /***********************************************************************************************************************
- Macro definitions
+ * Macro definitions
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- Typedef definitions
+ * Typedef definitions
  ***********************************************************************************************************************/
+
 /* Vendor Specific PHY Registers */
-#define ETHER_PHY_REG_PHY_CONTROL_1           (0x1E)
+ #define ETHER_PHY_REG_PHY_CONTROL_1    (0x1E)
 
 /***********************************************************************************************************************
- Exported global variables (to be accessed by other files)
+ * Exported global variables (to be accessed by other files)
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- Exported global function
+ * Exported global function
  ***********************************************************************************************************************/
-void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl);
-extern uint32_t ether_phy_read (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
-extern void ether_phy_write (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
+void            ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+extern uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
+extern void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
 
 /***********************************************************************************************************************
- Private global variables and functions
+ * Private global variables and functions
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -69,11 +70,10 @@ void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
      * the pin that outputs the state of LINK is used combinedly with ACTIVITY in default.
      * The setting of the pin is changed so that only the state of LINK is output.
      */
-        reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL_1);
-        reg &= ~0x8000U;
-        reg |= 0x4000U;
-        ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL_1, reg);
+    reg  = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL_1);
+    reg &= ~0x8000U;
+    reg |= 0x4000U;
+    ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL_1, reg);
+}                                      /* End of function ether_phy_targets_initialize() */
 
-} /* End of function ether_phy_targets_initialize() */
-
-#endif /* ETHER_PHY_CFG_USE_PHY == 2 */
+#endif /* ETHER_PHY_CFG_USE_PHY == ETHER_PHY_CFG_USE_PHY_KSZ8041 */

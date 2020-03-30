@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -44,17 +44,19 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /** DAC instance control block. */
-typedef struct st_dac_instance_ctrl  
+typedef struct st_dac_instance_ctrl
 {
     uint8_t  channel;                  // DAC channel number
     uint32_t channel_opened;           // DAC Driver ID
     bool     output_amplifier_enabled; // DAC Output amplifier (on selected MCUs) enabled/disabled.
-} dac_instance_ctrl_t; 
+} dac_instance_ctrl_t;
 
 /** DAC extended configuration */
 typedef struct st_dac_extended_cfg
 {
-    bool enable_charge_pump;           ///< Enable DAC charge pump available on selected MCUs.
+    bool              enable_charge_pump;       ///< Enable DAC charge pump available on selected MCUs.
+    bool              output_amplifier_enabled; ///< Output amplifier enable available on selected MCUs.
+    dac_data_format_t data_format;              ///< Data format
 } dac_extended_cfg_t;
 
 /**********************************************************************************************************************

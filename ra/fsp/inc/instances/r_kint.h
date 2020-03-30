@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -41,7 +41,7 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** Channel instance control block. DO NOT INITIALIZE. Initialization occurs when keymatrix_api_t::open is called. */
+/** Channel instance control block. DO NOT INITIALIZE. Initialization occurs when @ref keymatrix_api_t::open is called. */
 typedef struct st_kint_instance_ctrl
 {
     uint32_t                open;

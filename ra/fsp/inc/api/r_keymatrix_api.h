@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -69,7 +69,7 @@ typedef enum e_keymatrix_trigger
 /** Callback function parameter data */
 typedef struct st_keymatrix_calback_args
 {
-    void const * p_context;            ///< Holder for user data. Set in keymatrix_api_t::open function in ::keymatrix_cfg_t.
+    void const * p_context;            ///< Holder for user data. Set in @ref keymatrix_api_t::open function in @ref keymatrix_cfg_t.
 
     /** Bit vector representing the physical hardware channel(s) that caused the interrupt. */
     uint32_t channel_mask;
@@ -93,7 +93,7 @@ typedef struct st_keymatrix_api
 {
     /** Initial configuration.
      * @par Implemented as
-     * - R_KINT_KEYMATRIX_Open()
+     * - @ref R_KINT_Open()
      *
      * @param[out]  p_ctrl   Pointer to control block. Must be declared by user. Value set in this function.
      * @param[in]   p_cfg    Pointer to configuration structure. All elements of the structure must be set by user.
@@ -102,7 +102,7 @@ typedef struct st_keymatrix_api
 
     /** Enable Key interrupt
      * @par Implemented as
-     * - R_KINT_KEYMATRIX_Enable()
+     * - @ref R_KINT_Enable()
      *
      * @param[in]     p_ctrl      Control block pointer set in Open call for this Key interrupt.
      */
@@ -110,7 +110,7 @@ typedef struct st_keymatrix_api
 
     /** Disable Key interrupt.
      * @par Implemented as
-     * - R_KINT_KEYMATRIX_Disable()
+     * - @ref R_KINT_Disable()
      *
      * @param[in]     p_ctrl      Control block pointer set in Open call for this Key interrupt.
      */
@@ -118,7 +118,7 @@ typedef struct st_keymatrix_api
 
     /** Allow driver to be reconfigured. May reduce power consumption.
      * @par Implemented as
-     * - R_KINT_KEYMATRIX_Close()
+     * - @ref R_KINT_Close()
      *
      * @param[in]  p_ctrl      Control block pointer set in Open call for this Key interrupt.
      */
@@ -126,7 +126,7 @@ typedef struct st_keymatrix_api
 
     /** Get version and store it in provided pointer p_version.
      * @par Implemented as
-     * - R_KINT_VersionGet()
+     * - @ref R_KINT_VersionGet()
      *
      * @param[out]  p_version  Code and API version used.
      */

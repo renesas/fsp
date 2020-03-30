@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -106,7 +106,7 @@ typedef enum e_comparator_state
 {
     COMPARATOR_STATE_OUTPUT_LOW      = 0, ///< VCMP < VREF if polarity is not inverted, VCMP > VREF if inverted
     COMPARATOR_STATE_OUTPUT_HIGH     = 1, ///< VCMP > VREF if polarity is not inverted, VCMP < VREF if inverted
-    COMPARATOR_STATE_OUTPUT_DISABLED = 2, ///< comparator_api_t::outputEnable() has not been called
+    COMPARATOR_STATE_OUTPUT_DISABLED = 2, ///< @ref comparator_api_t::outputEnable() has not been called
 } comparator_state_t;
 
 /** Comparator information. */
@@ -124,7 +124,7 @@ typedef struct st_comparator_status
 /** Callback function parameter data */
 typedef struct st_comparator_callback_args
 {
-    /** Placeholder for user data. Set in comparator_api_t::open function in ::comparator_cfg_t. */
+    /** Placeholder for user data. Set in @ref comparator_api_t::open function in @ref comparator_cfg_t. */
     void const * p_context;
     uint32_t     channel;              ///< The physical hardware channel that caused the interrupt.
 } comparator_callback_args_t;
@@ -145,7 +145,7 @@ typedef struct st_comparator_cfg
     /** Callback called when comparator event occurs. */
     void (* p_callback)(comparator_callback_args_t * p_args);
 
-    /** Placeholder for user data.  Passed to the user callback in ::comparator_callback_args_t. */
+    /** Placeholder for user data.  Passed to the user callback in @ref comparator_callback_args_t. */
     void const * p_context;
     void const * p_extend;             ///< Comparator hardware dependent configuration.
 } comparator_cfg_t;
@@ -155,8 +155,8 @@ typedef struct st_comparator_api
 {
     /** Initialize the comparator.
      * @par Implemented as
-     *  - R_ACMPHS_Open()
-     *  - R_ACMPLP_Open()
+     * - @ref R_ACMPHS_Open()
+     * - @ref R_ACMPLP_Open()
      *
      * @param[in]  p_ctrl  Pointer to instance control block
      * @param[in]  p_cfg   Pointer to configuration
@@ -165,8 +165,8 @@ typedef struct st_comparator_api
 
     /** Start the comparator.
      * @par Implemented as
-     *  - R_ACMPHS_OutputEnable()
-     *  - R_ACMPLP_OutputEnable()
+     * - @ref R_ACMPHS_OutputEnable()
+     * - @ref R_ACMPLP_OutputEnable()
      *
      * @param[in]  p_ctrl         Pointer to instance control block
      */
@@ -174,8 +174,8 @@ typedef struct st_comparator_api
 
     /** Provide information such as the recommended minimum stabilization wait time.
      * @par Implemented as
-     *  - R_ACMPHS_InfoGet()
-     *  - R_ACMPLP_InfoGet()
+     * - @ref R_ACMPHS_InfoGet()
+     * - @ref R_ACMPLP_InfoGet()
      *
      * @param[in]   p_ctrl       Pointer to instance control block
      * @param[out]  p_info       Comparator information stored here
@@ -184,8 +184,8 @@ typedef struct st_comparator_api
 
     /** Provide current comparator status.
      * @par Implemented as
-     *  - R_ACMPHS_StatusGet()
-     *  - R_ACMPLP_StatusGet()
+     * - @ref R_ACMPHS_StatusGet()
+     * - @ref R_ACMPLP_StatusGet()
      *
      * @param[in]   p_ctrl       Pointer to instance control block
      * @param[out]  p_status     Status stored here
@@ -194,8 +194,8 @@ typedef struct st_comparator_api
 
     /** Stop the comparator.
      * @par Implemented as
-     *  - R_ACMPHS_Close()
-     *  - R_ACMPLP_Close()
+     * - @ref R_ACMPHS_Close()
+     * - @ref R_ACMPLP_Close()
      *
      * @param[in]  p_ctrl   Pointer to instance control block
      */
@@ -203,8 +203,8 @@ typedef struct st_comparator_api
 
     /** Retrieve the API version.
      * @par Implemented as
-     *  - R_ACMPHS_VersionGet()
-     *  - R_ACMPLP_VersionGet()
+     * - @ref R_ACMPHS_VersionGet()
+     * - @ref R_ACMPLP_VersionGet()
      *
      * @pre This function retrieves the API version.
      * @param[in]  p_version   Pointer to version structure

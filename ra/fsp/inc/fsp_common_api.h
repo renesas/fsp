@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -97,12 +97,13 @@ typedef enum e_fsp_err
     FSP_ERR_INVALID_STATE         = 30,                     ///< API or command not valid in the current state
     FSP_ERR_NOT_ERASED            = 31,                     ///< Erase verification failed
     FSP_ERR_SECTOR_RELEASE_FAILED = 32,                     ///< Sector release failed
+    FSP_ERR_NOT_INITIALIZED       = 33,                     ///< Required initialization not complete
 
-    /** Start of RTOS only error codes */
+    /* Start of RTOS only error codes */
     FSP_ERR_INTERNAL     = 100,                             ///< Internal error
-    FSP_ERR_WAIT_ABORTED = 101,                             ///< Wait
+    FSP_ERR_WAIT_ABORTED = 101,                             ///< Wait aborted
 
-    /** Start of UART specific */
+    /* Start of UART specific */
     FSP_ERR_FRAMING            = 200,                       ///< Framing error occurs
     FSP_ERR_BREAK_DETECT       = 201,                       ///< Break signal detects
     FSP_ERR_PARITY             = 202,                       ///< Parity error occurs
@@ -111,14 +112,14 @@ typedef enum e_fsp_err
     FSP_ERR_INSUFFICIENT_SPACE = 205,                       ///< Not enough space in transmission circular buffer
     FSP_ERR_INSUFFICIENT_DATA  = 206,                       ///< Not enough data in receive circular buffer
 
-    /** Start of SPI specific */
+    /* Start of SPI specific */
     FSP_ERR_TRANSFER_ABORTED = 300,                         ///< The data transfer was aborted.
     FSP_ERR_MODE_FAULT       = 301,                         ///< Mode fault error.
     FSP_ERR_READ_OVERFLOW    = 302,                         ///< Read overflow.
     FSP_ERR_SPI_PARITY       = 303,                         ///< Parity error.
     FSP_ERR_OVERRUN          = 304,                         ///< Overrun error.
 
-    /** Start of CGC Specific */
+    /* Start of CGC Specific */
     FSP_ERR_CLOCK_INACTIVE        = 400,                    ///< Inactive clock specified as system clock.
     FSP_ERR_CLOCK_ACTIVE          = 401,                    ///< Active clock source cannot be modified without stopping first.
     FSP_ERR_NOT_STABILIZED        = 403,                    ///< Clock has not stabilized after its been turned on/off
@@ -131,17 +132,17 @@ typedef enum e_fsp_err
     FSP_ERR_HARDWARE_TIMEOUT      = 410,                    ///< A register read or write timed out
     FSP_ERR_LOW_VOLTAGE_MODE      = 411,                    ///< Invalid clock setting attempted in low voltage mode
 
-    /** Start of FLASH Specific */
+    /* Start of FLASH Specific */
     FSP_ERR_PE_FAILURE             = 500,                   ///< Unable to enter Programming mode.
     FSP_ERR_CMD_LOCKED             = 501,                   ///< Peripheral in command locked state
     FSP_ERR_FCLK                   = 502,                   ///< FCLK must be >= 4 MHz
     FSP_ERR_INVALID_LINKED_ADDRESS = 503,                   ///< Function or data are linked at an invalid region of memory
     FSP_ERR_BLANK_CHECK_FAILED     = 504,                   ///< Blank check operation failed
 
-    /** Start of CAC Specific */
+    /* Start of CAC Specific */
     FSP_ERR_INVALID_CAC_REF_CLOCK = 600,                    ///< Measured clock rate < reference clock rate
 
-    /** Start of GLCD Specific */
+    /* Start of GLCD Specific */
     FSP_ERR_CLOCK_GENERATION           = 1000,              ///< Clock cannot be specified as system clock
     FSP_ERR_INVALID_TIMING_SETTING     = 1001,              ///< Invalid timing parameter
     FSP_ERR_INVALID_LAYER_SETTING      = 1002,              ///< Invalid layer parameter
@@ -153,7 +154,7 @@ typedef enum e_fsp_err
     FSP_ERR_INVALID_FADE_SETTING       = 1008,              ///< Invalid fade-in/fade-out setting
     FSP_ERR_INVALID_BRIGHTNESS_SETTING = 1009,              ///< Invalid gamma correction parameter
 
-    /** Start of JPEG Specific */
+    /* Start of JPEG Specific */
     FSP_ERR_JPEG_ERR                                = 1100, ///< JPEG error
     FSP_ERR_JPEG_SOI_NOT_DETECTED                   = 1101, ///< SOI not detected until EOI detected.
     FSP_ERR_JPEG_SOF1_TO_SOFF_DETECTED              = 1102, ///< SOF1 to SOFF detected.
@@ -172,15 +173,15 @@ typedef enum e_fsp_err
     FSP_ERR_JPEG_BUFFERSIZE_NOT_ENOUGH              = 1115, ///< User provided buffer size not enough
     FSP_ERR_JPEG_UNSUPPORTED_IMAGE_SIZE             = 1116, ///< JPEG Image size is not aligned with MCU
 
-    /** Start of touch panel framework specific */
+    /* Start of touch panel framework specific */
     FSP_ERR_CALIBRATE_FAILED = 1200,                        ///< Calibration failed
 
-    /** Start of IP specific */
+    /* Start of IP specific */
     FSP_ERR_IP_HARDWARE_NOT_PRESENT = 1400,                 ///< Requested IP does not exist on this device
     FSP_ERR_IP_UNIT_NOT_PRESENT     = 1401,                 ///< Requested unit does not exist on this device
     FSP_ERR_IP_CHANNEL_NOT_PRESENT  = 1402,                 ///< Requested channel does not exist on this device
 
-    /** Start of USB specific */
+    /* Start of USB specific */
     FSP_ERR_USB_FAILED      = 1500,
     FSP_ERR_USB_BUSY        = 1501,
     FSP_ERR_USB_SIZE_SHORT  = 1502,
@@ -189,7 +190,7 @@ typedef enum e_fsp_err
     FSP_ERR_USB_NOT_SUSPEND = 1505,
     FSP_ERR_USB_PARAMETER   = 1506,
 
-    /** Start of Message framework specific */
+    /* Start of Message framework specific */
     FSP_ERR_NO_MORE_BUFFER           = 2000,         ///< No more buffer found in the memory block pool
     FSP_ERR_ILLEGAL_BUFFER_ADDRESS   = 2001,         ///< Buffer address is out of block memory pool
     FSP_ERR_INVALID_WORKBUFFER_SIZE  = 2002,         ///< Work buffer size is invalid
@@ -201,44 +202,34 @@ typedef enum e_fsp_err
     FSP_ERR_ILLEGAL_SUBSCRIBER_LISTS = 2008,         ///< Message subscriber lists is illegal
     FSP_ERR_BUFFER_RELEASED          = 2009,         ///< Buffer has been released
 
-    /** Start of 2DG Driver specific */
+    /* Start of 2DG Driver specific */
     FSP_ERR_D2D_ERROR_INIT      = 3000,              ///< Dave/2d has an error in the initialization
     FSP_ERR_D2D_ERROR_DEINIT    = 3001,              ///< Dave/2d has an error in the initialization
     FSP_ERR_D2D_ERROR_RENDERING = 3002,              ///< Dave/2d has an error in the rendering
     FSP_ERR_D2D_ERROR_SIZE      = 3003,              ///< Dave/2d has an error in the rendering
 
-    /** Start of ETHER Driver specific */
+    /* Start of ETHER Driver specific */
     FSP_ERR_ETHER_ERROR_NO_DATA              = 4000, ///< No Data in Receive buffer.
     FSP_ERR_ETHER_ERROR_LINK                 = 4001, ///< ETHERC/EDMAC has an error in the Auto-negotiation
-    FSP_ERR_ETHER_ERROR_MAGIC_PACKTE_MODE    = 4002, ///< As a Magic Packet is being detected, and transmission/reception is not enabled
+    FSP_ERR_ETHER_ERROR_MAGIC_PACKET_MODE    = 4002, ///< As a Magic Packet is being detected, and transmission/reception is not enabled
     FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL = 4003, ///< Transmit buffer is not empty
     FSP_ERR_ETHER_ERROR_FILTERING            = 4004, ///< Detect multicast frame when multicast frame filtering enable
     FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION    = 4005, ///< ETHERC/EDMAC has an error in the phy communication
 
-    /** Start of ETHER_PHY Driver specific */
+    /* Start of ETHER_PHY Driver specific */
     FSP_ERR_ETHER_PHY_ERROR_LINK = 5000,             ///< PHY is not link up.
     FSP_ERR_ETHER_PHY_NOT_READY  = 5001,             ///< PHY has an error in the Auto-negotiation
 
-    /** Start of BYTEQ library specific */
+    /* Start of BYTEQ library specific */
     FSP_ERR_QUEUE_FULL  = 10000,                     ///< Queue is full, cannot queue another data
     FSP_ERR_QUEUE_EMPTY = 10001,                     ///< Queue is empty, no data to dequeue
 
-    /** Sensor count overflowed when performing CTSU scan. @note User must clear the CTSUSCOVF bit manually. */
-    FSP_ERR_CTSU_SC_OVERFLOW = 0x8010,
+    /* Start of CTSU Driver specific */
+    FSP_ERR_CTSU_SCANNING          = 6000,           ///< Scanning.
+    FSP_ERR_CTSU_NOT_GET_DATA      = 6001,           ///< Not processed previous scan data.
+    FSP_ERR_CTSU_INCOMPLETE_TUNING = 6002,           ///< Incomplete initial offset tuning.
 
-    /** Reference count overflowed when performing CTSU scan. @note User must clear the CTSURCOVF bit manually. */
-    FSP_ERR_CTSU_RC_OVERFLOW = 0x8020,
-
-    /** Abnormal TSCAP voltage. @note User must clear the CTSUICOMP bit manually. */
-    FSP_ERR_CTSU_ICOMP = 0x8040,
-
-    /** Auto tuning algorithm failed. */
-    FSP_ERR_CTSU_OFFSET_ADJUSTMENT_FAILED = 0x8080,
-
-    /** Safety check failed **/
-    FSP_ERR_CTSU_SAFETY_CHECK_FAILED = 0x8100,
-
-    /** Start of SDMMC specific */
+    /* Start of SDMMC specific */
     FSP_ERR_CARD_INIT_FAILED     = 40000,            ///< SD card or eMMC device failed to initialize.
     FSP_ERR_CARD_NOT_INSERTED    = 40001,            ///< SD card not installed.
     FSP_ERR_DEVICE_BUSY          = 40002,            ///< Device is holding DAT0 low or another operation is ongoing.
@@ -247,11 +238,11 @@ typedef enum e_fsp_err
     FSP_ERR_TRANSFER_BUSY        = 40006,            ///< Transfer in progress.
     FSP_ERR_RESPONSE             = 40007,            ///< Card did not respond or responded with an error.
 
-    /** Start of FX_IO specific */
+    /* Start of FX_IO specific */
     FSP_ERR_MEDIA_FORMAT_FAILED = 50000,             ///< Media format failed.
     FSP_ERR_MEDIA_OPEN_FAILED   = 50001,             ///< Media open failed.
 
-    /** Start of CAN specific */
+    /* Start of CAN specific */
     FSP_ERR_CAN_DATA_UNAVAILABLE   = 60000,          ///< No data available.
     FSP_ERR_CAN_MODE_SWITCH_FAILED = 60001,          ///< Switching operation modes failed.
     FSP_ERR_CAN_INIT_FAILED        = 60002,          ///< Hardware initialization failed.
@@ -260,14 +251,14 @@ typedef enum e_fsp_err
     FSP_ERR_CAN_TRANSMIT_MAILBOX   = 60005,          ///< Mailbox is setup as a transmit mailbox.
     FSP_ERR_CAN_MESSAGE_LOST       = 60006,          ///< Receive message has been overwritten or overrun.
 
-    /** Start of SF_WIFI Specific */
+    /* Start of SF_WIFI Specific */
     FSP_ERR_WIFI_CONFIG_FAILED   = 70000,            ///< WiFi module Configuration failed.
     FSP_ERR_WIFI_INIT_FAILED     = 70001,            ///< WiFi module initialization failed.
     FSP_ERR_WIFI_TRANSMIT_FAILED = 70002,            ///< Transmission failed
     FSP_ERR_WIFI_INVALID_MODE    = 70003,            ///< API called when provisioned in client mode
     FSP_ERR_WIFI_FAILED          = 70004,            ///< WiFi Failed.
 
-    /** Start of SF_CELLULAR Specific */
+    /* Start of SF_CELLULAR Specific */
     FSP_ERR_CELLULAR_CONFIG_FAILED       = 80000,    ///< Cellular module Configuration failed.
     FSP_ERR_CELLULAR_INIT_FAILED         = 80001,    ///< Cellular module initialization failed.
     FSP_ERR_CELLULAR_TRANSMIT_FAILED     = 80002,    ///< Transmission failed
@@ -277,14 +268,14 @@ typedef enum e_fsp_err
     FSP_ERR_CELLULAR_INVALID_STATE       = 80006,    ///< API Called in invalid state.
     FSP_ERR_CELLULAR_REGISTRATION_FAILED = 80007,    ///< Cellular Network registration failed
 
-    /** Start of SF_BLE specific */
+    /* Start of SF_BLE specific */
     FSP_ERR_BLE_FAILED              = 90001,         ///< BLE operation failed
     FSP_ERR_BLE_INIT_FAILED         = 90002,         ///< BLE device initialization failed
     FSP_ERR_BLE_CONFIG_FAILED       = 90003,         ///< BLE device configuration failed
     FSP_ERR_BLE_PRF_ALREADY_ENABLED = 90004,         ///< BLE device Profile already enabled
     FSP_ERR_BLE_PRF_NOT_ENABLED     = 90005,         ///< BLE device not enabled
 
-    /** Start of Crypto specific (0x10000) @note Refer to sf_cryoto_err.h for Crypto error code. */
+    /* Start of Crypto specific (0x10000) @note Refer to sf_cryoto_err.h for Crypto error code. */
     FSP_ERR_CRYPTO_CONTINUE              = 0x10000,  ///< Continue executing function
     FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT = 0x10001,  ///< Hardware resource busy
     FSP_ERR_CRYPTO_SCE_FAIL              = 0x10002,  ///< Internal I/O buffer is not empty
@@ -304,7 +295,7 @@ typedef enum e_fsp_err
     FSP_ERR_CRYPTO_INSTALL_KEY_FAILED    = 0x10010,  ///< Specified input key is invalid.
     FSP_ERR_CRYPTO_AUTHENTICATION_FAILED = 0x10011,  ///< Authentication failed
 
-    /** Start of SF_CRYPTO specific */
+    /* Start of SF_CRYPTO specific */
     FSP_ERR_CRYPTO_COMMON_NOT_OPENED      = 0x20000, ///< Crypto Framework Common is not opened
     FSP_ERR_CRYPTO_HAL_ERROR              = 0x20001, ///< Cryoto HAL module returned an error
     FSP_ERR_CRYPTO_KEY_BUF_NOT_ENOUGH     = 0x20002, ///< Key buffer size is not enough to generate a key

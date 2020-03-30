@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -25,6 +25,7 @@
  *
  * Implemented by:
  * @ref DAC
+ * @ref DAC8
  *
  * @{
  **********************************************************************************************************************/
@@ -68,16 +69,15 @@ typedef struct dac_info
 /** DAC Open API configuration parameter */
 typedef struct st_dac_cfg
 {
-    uint8_t           channel;                  ///< ID associated with this DAC channel
-    bool              ad_da_synchronized;       ///< AD/DA synchronization
-    dac_data_format_t data_format;              ///< Data format
-    bool              output_amplifier_enabled; ///< Output amplifier enable
-    void const      * p_extend;
+    uint8_t      channel;              ///< ID associated with this DAC channel
+    bool         ad_da_synchronized;   ///< AD/DA synchronization
+    void const * p_extend;
 } dac_cfg_t;
 
 /** DAC control block.  Allocate an instance specific control block to pass into the DAC API calls.
  * @par Implemented as
  * - dac_instance_ctrl_t
+ * - dac8_instance_ctrl_t
  */
 typedef void dac_ctrl_t;
 
@@ -86,68 +86,59 @@ typedef struct st_dac_api
 {
     /** Initial configuration.
      * @par Implemented as
-     * - R_DAC_Open()
-     * - R_DAC8_Open()
+     * - @ref R_DAC_Open()
+     * - @ref R_DAC8_Open()
      *
      * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.
      */
-    fsp_err_t (* open)(dac_ctrl_t * p_ctrl, dac_cfg_t const * const p_cfg);
+    fsp_err_t (* open)(dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg);
 
     /** Close the D/A Converter.
      * @par Implemented as
-     * - R_DAC_Close()
-     * - R_DAC8_Close()
+     * - @ref R_DAC_Close()
+     * - @ref R_DAC8_Close()
      *
-     * @param[in]   p_ctrl     Control block set in dac_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.
      */
-    fsp_err_t (* close)(dac_ctrl_t * p_ctrl);
+    fsp_err_t (* close)(dac_ctrl_t * const p_ctrl);
 
     /** Write sample value to the D/A Converter.
      * @par Implemented as
-     * - R_DAC_Write()
-     * - R_DAC8_Write()
+     * - @ref R_DAC_Write()
+     * - @ref R_DAC8_Write()
      *
-     * @param[in]   p_ctrl     Control block set in dac_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.
      * @param[in]   value      Sample value to be written to the D/A Converter.
      */
-    fsp_err_t (* write)(dac_ctrl_t * p_ctrl, uint16_t value);
+    fsp_err_t (* write)(dac_ctrl_t * const p_ctrl, uint16_t value);
 
     /** Start the D/A Converter if it has not been started yet.
      * @par Implemented as
-     * - R_DAC_Start()
-     * - R_DAC8_Start()
+     * - @ref R_DAC_Start()
+     * - @ref R_DAC8_Start()
      *
-     * @param[in]   p_ctrl     Control block set in dac_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.
      */
-    fsp_err_t (* start)(dac_ctrl_t * p_ctrl);
+    fsp_err_t (* start)(dac_ctrl_t * const p_ctrl);
 
     /** Stop the D/A Converter if the converter is running.
      * @par Implemented as
-     * - R_DAC_Stop()
-     * - R_DAC8_Stop()
+     * - @ref R_DAC_Stop()
+     * - @ref R_DAC8_Stop()
      *
-     * @param[in]   p_ctrl     Control block set in dac_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.
      */
-    fsp_err_t (* stop)(dac_ctrl_t * p_ctrl);
+    fsp_err_t (* stop)(dac_ctrl_t * const p_ctrl);
 
     /** Get version and store it in provided pointer p_version.
      * @par Implemented as
-     * - R_DAC_VersionGet()
-     * - R_DAC8_VersionGet()
+     * - @ref R_DAC_VersionGet()
+     * - @ref R_DAC8_VersionGet()
      *
      * @param[out]  p_version  Code and API version used.
      */
     fsp_err_t (* versionGet)(fsp_version_t * p_version);
-
-    /** Get information about DAC Resolution and store it in provided pointer p_info.
-     * @par Implemented as
-     * - R_DAC_InfoGet()
-     * - R_DAC8_InfoGet()
-     *
-     * @param[out]  p_info  Collection of information for this DAC.
-     */
-    fsp_err_t (* infoGet)(dac_info_t * const p_info);
 } dac_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

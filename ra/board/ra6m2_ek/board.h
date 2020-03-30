@@ -1,7 +1,7 @@
 /***********************************************************************************************************************
  * Copyright [2015] Renesas Electronics Corporation and/or its licensors. All Rights Reserved.
  *
- * This file is part of Renesas RA Flex Software Package (FSP)
+ * This file is part of Renesas RA Flexible Software Package (FSP)
  *
  * The contents of this file (the "contents") are proprietary and confidential to Renesas Electronics Corporation
  * and/or its licensors ("Renesas") and subject to statutory and contractual protections.
@@ -27,7 +27,7 @@
  * @defgroup BOARD_RA6M2_EK for the EK-RA6M2 Board
  * @brief BSP for the EK-RA6M2 Board
  *
- * The EK-RA6M2 is a development kit for the Renesas RA Flex RA6M2 microcontroller.
+ * The EK-RA6M2 is a development kit for the Renesas RA6M2 microcontroller.
  *
  * @{
  **********************************************************************************************************************/
@@ -42,13 +42,15 @@
 /* BSP Board Specific Includes. */
 #include "board_init.h"
 #include "board_leds.h"
+#include "board_ethernet_phy.h"
 
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
 #define BOARD_RA6M2_EK
 
-/* Except for BSP_CLOCK_CFG_SUBCLOCK_POPULATED, these are just default settings, not based on the board design. */
+/* Except for BSP_CLOCK_CFG_SUBCLOCK_POPULATED and _MAIN_OSC_POPULATED, these are just default settings, not based on the board design. */
+#define BSP_CLOCK_CFG_MAIN_OSC_POPULATED           (1)
 #define BSP_CLOCK_CFG_MAIN_OSC_WAIT                (9)
 #define BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE        (0)
 #define BSP_CLOCK_CFG_SUBCLOCK_POPULATED           (1)

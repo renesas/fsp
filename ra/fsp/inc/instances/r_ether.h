@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -24,7 +24,7 @@
 
 #include "bsp_api.h"
 
-/* Common macro for SSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
 /***********************************************************************************************************************
@@ -67,7 +67,7 @@ typedef enum e_ether_link_establish_status
     ETHER_LINK_ESTABLISH_STATUS_UP   = 1, ///< Link establish status is up
 } ether_link_establish_status_t;
 
-/** ETHER control block. DO NOT INITIALIZE.  Initialization occurs when ether_api_t::open is called. */
+/** ETHER control block. DO NOT INITIALIZE.  Initialization occurs when @ref ether_api_t::open is called. */
 typedef struct st_ether_instance_ctrl
 {
     uint32_t open;                                       ///< Used to determine if the channel is configured
@@ -164,7 +164,7 @@ fsp_err_t R_ETHER_Open(ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p_
 
 fsp_err_t R_ETHER_Close(ether_ctrl_t * const p_ctrl);
 
-fsp_err_t R_ETHER_Read(ether_ctrl_t * const p_ctrl, void ** const pp_buffer, uint32_t * const length_bytes);
+fsp_err_t R_ETHER_Read(ether_ctrl_t * const p_ctrl, void * const p_buffer, uint32_t * const length_bytes);
 
 fsp_err_t R_ETHER_BufferRelease(ether_ctrl_t * const p_ctrl);
 
@@ -182,7 +182,7 @@ fsp_err_t R_ETHER_VersionGet(fsp_version_t * const p_version);
  * @} (end addtogroup ETHER)
  **********************************************************************************************************************/
 
-/* Common macro for SSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 
 #endif                                 // R_ETHER_H

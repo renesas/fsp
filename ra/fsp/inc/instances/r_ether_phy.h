@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -24,7 +24,7 @@
 
 #include "bsp_api.h"
 
-/* Common macro for SSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
 /***********************************************************************************************************************
@@ -36,26 +36,30 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ETHER_PHY_CODE_VERSION_MAJOR    (1U)
-#define ETHER_PHY_CODE_VERSION_MINOR    (0U)
+#define ETHER_PHY_CODE_VERSION_MAJOR        (1U)
+#define ETHER_PHY_CODE_VERSION_MINOR        (0U)
+
+#define ETHER_PHY_CFG_USE_PHY_KSZ8091RNB    (1)
+#define ETHER_PHY_CFG_USE_PHY_KSZ8041       (2)
+#define ETHER_PHY_CFG_USE_PHY_DP83620       (3)
 
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** ETHER PHY control block. DO NOT INITIALIZE.  Initialization occurs when ether_api_t::open is called. */
+/** ETHER PHY control block. DO NOT INITIALIZE.  Initialization occurs when @ref ether_phy_api_t::open is called. */
 typedef struct st_ether_phy_instance_ctrl
 {
     uint32_t open;                           ///< Used to determine if the channel is configured
 
-    /* Configuration of Ethernet Phy-LSI module. */
+    /* Configuration of Ethernet PHY-LSI module. */
     ether_phy_cfg_t const * p_ether_phy_cfg; ///< Pointer to initial configurations.
 
     /* Interface for PHY-LSI chip. */
-    volatile uint32_t * p_reg_pir;           ///< Register of Phy interface
+    volatile uint32_t * p_reg_pir;           ///< Pointer to ETHERC peripheral registers.
 
-    /* the capabilities of the local link as PHY data */
-    uint32_t local_advertise;                ///< local advertise.
+    /* The capabilities of the local link as PHY data */
+    uint32_t local_advertise;                ///< Capabilities bitmap for local advertising.
 } ether_phy_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -94,7 +98,7 @@ fsp_err_t R_ETHER_PHY_VersionGet(fsp_version_t * const p_version);
  * @} (end addtogroup ETHER_PHY)
  **********************************************************************************************************************/
 
-/* Common macro for SSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 
 #endif                                 // R_ETHER_PHY_H

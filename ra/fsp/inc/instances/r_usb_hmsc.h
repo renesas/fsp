@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -18,7 +18,12 @@
  * File Name    : r_usb_hmsc.h
  * Description  : USB HMSC public APIs.
  **********************************************************************************************************************/
- 
+
+/*******************************************************************************************************************//**
+ * @addtogroup USB_HMSC
+ * @{
+ **********************************************************************************************************************/
+
 #ifndef R_USB_HMSC_H
 #define R_USB_HMSC_H
 
@@ -26,21 +31,34 @@
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
- 
+
 /******************************************************************************
- Exported global functions (to be accessed by other files)
+ * Exported global functions (to be accessed by other files)
  ******************************************************************************/
-fsp_err_t       R_USB_HmscStrgCmd (usb_ctrl_t * const p_api_ctrl, uint8_t *p_buf, uint16_t command, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_HMSC_StorageCommand(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint8_t command,
+                                    uint8_t destination);
 
-fsp_err_t       R_USB_HmscDriveNoGet (usb_ctrl_t * const p_api_ctrl, uint8_t *p_drive, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_HMSC_DriveNumberGet(usb_ctrl_t * const p_api_ctrl, uint8_t * p_drive, uint8_t destination);
 
-fsp_err_t       R_USB_HmscSmpDrive2Addr (uint16_t side, usb_utr_t *devadr);
+fsp_err_t R_USB_HMSC_SemaphoreGet(void);
 
-void            R_USB_HmscSemGet (void);
+fsp_err_t R_USB_HMSC_SemaphoreRelease(void);
 
-void            R_USB_HmscSemRel (void);
+fsp_err_t R_USB_HMSC_StorageReadSector(uint16_t        drive_number,
+                                       uint8_t * const buff,
+                                       uint32_t        sector_number,
+                                       uint16_t        sector_count);
+
+fsp_err_t R_USB_HMSC_StorageWriteSector(uint16_t              drive_number,
+                                        uint8_t const * const buff,
+                                        uint32_t              sector_number,
+                                        uint16_t              sector_count);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 
-#endif                                 // R_USB_HMSC_H
+#endif                                 /* R_USB_HMSC_H */
+
+/*******************************************************************************************************************//**
+ * @} (end addtogroup USB_HMSC)
+ **********************************************************************************************************************/

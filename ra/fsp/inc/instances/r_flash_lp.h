@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -127,7 +127,7 @@ fsp_err_t R_FLASH_LP_InfoGet(flash_ctrl_t * const p_api_ctrl, flash_info_t * con
  **********************************************************************************************************************/
 
 /* This will generate a build error if this file is included and the target MCU used is NOT one of the following. */
-#if !defined(BSP_FEATURE_FLASH_LP_VERSION)
+#if !BSP_FEATURE_FLASH_LP_VERSION
  #error "r_flash_lp is not a supported module for this board type."
 #endif
 

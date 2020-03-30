@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -161,7 +161,7 @@ typedef struct st_cac_cfg
     uint8_t ferri_ipl;                                 ///< Frequency error interrupt priority
 
     void (* p_callback)(cac_callback_args_t * p_args); ///< Callback provided when a CAC interrupt ISR occurs.
-    void const * p_context;                            ///< Passed to user callback in ::cac_callback_args_t.
+    void const * p_context;                            ///< Passed to user callback in @ref cac_callback_args_t.
 
     void const * p_extend;                             ///< CAC hardware dependent configuration */
 } cac_cfg_t;

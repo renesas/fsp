@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -44,7 +44,7 @@
  * Exported global variables (to be accessed by other files)
  **********************************************************************************************************************/
 
-/*!< System Clock Frequency (Core Clock)*/
+/** System Clock Frequency (Core Clock) */
 uint32_t SystemCoreClock = 0U;
 
 #if defined(__ARMCC_VERSION)
@@ -110,7 +110,7 @@ void R_BSP_WarmStart(bsp_warm_start_event_t event) __attribute__((weak));
 #endif
 
 /*******************************************************************************************************************//**
- * Setup MCU.
+ * Initialize the MCU and the runtime environment.
  **********************************************************************************************************************/
 void SystemInit (void)
 {
@@ -293,20 +293,24 @@ void R_BSP_WarmStart (bsp_warm_start_event_t event)
 }
 
 /*******************************************************************************************************************//**
- * Disable trng circuit to prevent unnecessary current draw which may otherwise occur when the Crypto module
+ * Disable TRNG circuit to prevent unnecessary current draw which may otherwise occur when the Crypto module
  * is not in use.
  **********************************************************************************************************************/
 #if BSP_FEATURE_BSP_RESET_TRNG
 static void bsp_reset_trng_circuit (void)
 {
     volatile uint8_t read_port = 0U;
-    FSP_PARAMETER_NOT_USED(read_port);  /// Prevent compiler 'unused' warning
+    FSP_PARAMETER_NOT_USED(read_port); /// Prevent compiler 'unused' warning
+
+    /* Release register protection for low power modes (per RA2A1 User's Manual (R01UH0888EJ0100) Figure 11.13 "Example
+     * of initial setting flow for an unused circuit") */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
 
     /* Enable TRNG function (disable stop function) */
- #if BSP_FEATURE_BSP_HAS_SCE_ON_S1
-    R_BSP_MODULE_START(FSP_IP_TRNG, 0); ///< TRNG Module Stop needs to be started/stopped for S0/S1 series.
+ #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
+    R_BSP_MODULE_START(FSP_IP_TRNG, 0); ///< TRNG Module Stop needs to be started/stopped for RA2 series.
  #elif BSP_FEATURE_BSP_HAS_SCE5
-    R_BSP_MODULE_START(FSP_IP_SCE, 0);  ///< TRNG Module Stop needs to be started/stopped for S3 series.
+    R_BSP_MODULE_START(FSP_IP_SCE, 0);  ///< TRNG Module Stop needs to be started/stopped for RA4 series.
  #else
   #error "BSP_FEATURE_BSP_RESET_TRNG is defined but not handled."
  #endif
@@ -317,13 +321,17 @@ static void bsp_reset_trng_circuit (void)
     read_port = R_PFS->PORT[0].PIN[0].PmnPFS_b.PODR;
 
     /* Disable TRNG function */
- #if BSP_FEATURE_BSP_HAS_SCE_ON_S1
-    R_BSP_MODULE_STOP(FSP_IP_TRNG, 0); ///< TRNG Module Stop needs to be started/stopped for S0/S1 series.
+ #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
+    R_BSP_MODULE_STOP(FSP_IP_TRNG, 0); ///< TRNG Module Stop needs to be started/stopped for RA2 series.
  #elif BSP_FEATURE_BSP_HAS_SCE5
-    R_BSP_MODULE_STOP(FSP_IP_SCE, 0);  ///< TRNG Module Stop needs to be started/stopped for S3 series.
+    R_BSP_MODULE_STOP(FSP_IP_SCE, 0);  ///< TRNG Module Stop needs to be started/stopped for RA4 series.
  #else
   #error "BSP_FEATURE_BSP_RESET_TRNG is defined but not handled."
  #endif
+
+    /* Reapply register protection for low power modes (per RA2A1 User's Manual (R01UH0888EJ0100) Figure 11.13 "Example
+     * of initial setting flow for an unused circuit") */
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
 }
 
 #endif

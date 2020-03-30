@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -45,20 +45,12 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** Channel control block. DO NOT INITIALIZE.  Initialization occurs when rtc_api_t::open is called */
+/** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref rtc_api_t::open is called */
 typedef struct st_rtc_ctrl
 {
-    IRQn_Type          alarm_irq;                      ///< Alarm interrupt vector
-    IRQn_Type          periodic_irq;                   ///< Periodic interrupt vector
-    IRQn_Type          carry_irq;                      ///< Carry interrupt vector
-    uint32_t           open;                           ///< Whether or not driver is open
-    rtc_clock_source_t clock_source;                   ///< Clock source for the RTC block
-    const rtc_cfg_t  * p_cfg;                          ///< Pointer to initial configurations
-    void (* p_callback)(rtc_callback_args_t * p_args); ///< Called from the ISR.
-    void const * p_context;                            ///< User defined context passed into callback function.
-    void const * p_extend;                             ///< RTC hardware dependant configuration.
-
-    volatile bool carry_isr_triggered;                 ///< Was the carry isr triggered
+    uint32_t          open;                ///< Whether or not driver is open
+    const rtc_cfg_t * p_cfg;               ///< Pointer to initial configurations
+    volatile bool     carry_isr_triggered; ///< Was the carry isr triggered
 } rtc_instance_ctrl_t;
 
 /**********************************************************************************************************************

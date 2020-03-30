@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -168,18 +168,18 @@ const i2s_api_t g_i2s_on_ssi =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Opens the SSI. Implements i2s_api_t::open.
+ * Opens the SSI. Implements @ref i2s_api_t::open.
  *
  * This function sets this clock divisor and the configurations specified in i2s_cfg_t.  It also opens the timer and
  * transfer instances if they are provided.
  *
  * @retval FSP_SUCCESS                     Ready for I2S communication.
- * @retval FSP_ERR_ASSERTION               The pointer to p_instance_ctrl or p_cfg is null.
+ * @retval FSP_ERR_ASSERTION               The pointer to p_ctrl or p_cfg is null.
  * @retval FSP_ERR_ALREADY_OPEN            The control block has already been opened.
  * @retval FSP_ERR_IP_CHANNEL_NOT_PRESENT  Channel number is not available on this MCU.
  * @return                                 See @ref RENESAS_ERROR_CODES or functions called by this function for other
  *                                         possible return codes. This function calls:
- *                                             * transfer_api_t::open
+ *                                             * @ref transfer_api_t::open
  **********************************************************************************************************************/
 fsp_err_t R_SSI_Open (i2s_ctrl_t * const p_ctrl, i2s_cfg_t const * const p_cfg)
 {
@@ -315,7 +315,7 @@ fsp_err_t R_SSI_Open (i2s_ctrl_t * const p_ctrl, i2s_cfg_t const * const p_cfg)
 }
 
 /*******************************************************************************************************************//**
- * Writes data buffer to SSI. Implements i2s_api_t::write.
+ * Writes data buffer to SSI. Implements @ref i2s_api_t::write.
  *
  * This function resets the transfer if the transfer interface is used, or writes the length of data that fits in the
  * FIFO then stores the remaining write buffer in the control block to be written in the ISR.
@@ -324,14 +324,14 @@ fsp_err_t R_SSI_Open (i2s_ctrl_t * const p_ctrl, i2s_cfg_t const * const p_cfg)
  * when the SSI is idle, or after the I2S_EVENT_TX_EMPTY event.
  *
  * @retval FSP_SUCCESS                 Write initiated successfully.
- * @retval FSP_ERR_ASSERTION           The pointer to p_instance_ctrl or p_src was null, or bytes requested was 0.
+ * @retval FSP_ERR_ASSERTION           The pointer to p_ctrl or p_src was null, or bytes requested was 0.
  * @retval FSP_ERR_IN_USE              Another transfer is in progress, data was not written.
  * @retval FSP_ERR_NOT_OPEN            The channel is not opened.
  * @retval FSP_ERR_UNDERFLOW           A transmit underflow error is pending. Wait for the SSI to go idle before
  *                                     resuming communication.
  * @return                             See @ref RENESAS_ERROR_CODES or functions called by this function for other
  *                                     possible return codes. This function calls:
- *                                         * transfer_api_t::reset
+ *                                         * @ref transfer_api_t::reset
  **********************************************************************************************************************/
 fsp_err_t R_SSI_Write (i2s_ctrl_t * const p_ctrl, void const * const p_src, uint32_t const bytes)
 {
@@ -365,7 +365,7 @@ fsp_err_t R_SSI_Write (i2s_ctrl_t * const p_ctrl, void const * const p_src, uint
 }
 
 /*******************************************************************************************************************//**
- * Reads data into provided buffer. Implements i2s_api_t::read.
+ * Reads data into provided buffer. Implements @ref i2s_api_t::read.
  *
  * This function resets the transfer if the transfer interface is used, or reads the length of data available in the
  * FIFO then stores the remaining read buffer in the control block to be filled in the ISR.
@@ -375,13 +375,13 @@ fsp_err_t R_SSI_Write (i2s_ctrl_t * const p_ctrl, void const * const p_src, uint
  *
  * @retval FSP_SUCCESS                 Read initiated successfully.
  * @retval FSP_ERR_IN_USE              Peripheral is in the wrong mode or not idle.
- * @retval FSP_ERR_ASSERTION           The pointer to p_instance_ctrl or p_dest was null, or bytes requested was 0.
+ * @retval FSP_ERR_ASSERTION           The pointer to p_ctrl or p_dest was null, or bytes requested was 0.
  * @retval FSP_ERR_NOT_OPEN            The channel is not opened.
  * @retval FSP_ERR_OVERFLOW            A receive overflow error is pending. Wait for the SSI to go idle before
  *                                     resuming communication.
  * @return                             See @ref RENESAS_ERROR_CODES or functions called by this function for other
  *                                     possible return codes. This function calls:
- *                                         * transfer_api_t::reset
+ *                                         * @ref transfer_api_t::reset
  **********************************************************************************************************************/
 fsp_err_t R_SSI_Read (i2s_ctrl_t * const p_ctrl, void * const p_dest, uint32_t const bytes)
 {
@@ -415,7 +415,7 @@ fsp_err_t R_SSI_Read (i2s_ctrl_t * const p_ctrl, void * const p_dest, uint32_t c
 }
 
 /*******************************************************************************************************************//**
- * Writes from source buffer and reads data into destination buffer. Implements i2s_api_t::writeRead.
+ * Writes from source buffer and reads data into destination buffer. Implements @ref i2s_api_t::writeRead.
  *
  * This function calls R_SSI_Write and R_SSI_Read.
  *
@@ -432,7 +432,7 @@ fsp_err_t R_SSI_Read (i2s_ctrl_t * const p_ctrl, void * const p_dest, uint32_t c
  *                                     resuming communication.
  * @return                             See @ref RENESAS_ERROR_CODES or functions called by this function for other
  *                                     possible return codes. This function calls:
- *                                         * transfer_api_t::reset
+ *                                         * @ref transfer_api_t::reset
  **********************************************************************************************************************/
 fsp_err_t R_SSI_WriteRead (i2s_ctrl_t * const p_ctrl,
                            void const * const p_src,
@@ -476,14 +476,14 @@ fsp_err_t R_SSI_WriteRead (i2s_ctrl_t * const p_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Stops SSI. Implements i2s_api_t::stop.
+ * Stops SSI. Implements @ref i2s_api_t::stop.
  *
  * This function disables both transmission and reception, and disables any transfer instances used.
  *
  * The SSI will stop on the next frame boundary.  Do not restart SSI until it is idle.
  *
  * @retval FSP_SUCCESS           I2S communication stop request issued.
- * @retval FSP_ERR_ASSERTION     The pointer to p_instance_ctrl null.
+ * @retval FSP_ERR_ASSERTION     The pointer to p_ctrl was null.
  * @retval FSP_ERR_NOT_OPEN      The channel is not opened.
  * @return                       See @ref RENESAS_ERROR_CODES or lower level drivers for other possible return codes.
  **********************************************************************************************************************/
@@ -503,12 +503,12 @@ fsp_err_t R_SSI_Stop (i2s_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Mutes SSI on the next frame boundary. Implements i2s_api_t::mute.
+ * Mutes SSI on the next frame boundary. Implements @ref i2s_api_t::mute.
  *
  * Data is still written while mute is enabled, but the transmit line outputs zeros.
  *
  * @retval FSP_SUCCESS           Transmission is muted.
- * @retval FSP_ERR_ASSERTION     The pointer to p_instance_ctrl was null.
+ * @retval FSP_ERR_ASSERTION     The pointer to p_ctrl was null.
  * @retval FSP_ERR_NOT_OPEN      The channel is not opened.
  **********************************************************************************************************************/
 fsp_err_t R_SSI_Mute (i2s_ctrl_t * const p_ctrl, i2s_mute_t const mute_enable)
@@ -526,10 +526,10 @@ fsp_err_t R_SSI_Mute (i2s_ctrl_t * const p_ctrl, i2s_mute_t const mute_enable)
 }
 
 /*******************************************************************************************************************//**
- * Gets SSI status and stores it in provided pointer p_status. Implements i2s_api_t::statusGet.
+ * Gets SSI status and stores it in provided pointer p_status. Implements @ref i2s_api_t::statusGet.
  *
  * @retval FSP_SUCCESS           Information stored successfully.
- * @retval FSP_ERR_ASSERTION     The p_instance_ctrl or p_info parameter was null.
+ * @retval FSP_ERR_ASSERTION     The p_instance_ctrl or p_status parameter was null.
  * @retval FSP_ERR_NOT_OPEN      The channel is not opened.
  **********************************************************************************************************************/
 fsp_err_t R_SSI_StatusGet (i2s_ctrl_t * const p_ctrl, i2s_status_t * const p_status)
@@ -550,12 +550,12 @@ fsp_err_t R_SSI_StatusGet (i2s_ctrl_t * const p_ctrl, i2s_status_t * const p_sta
 }
 
 /*******************************************************************************************************************//**
- * Closes SSI. Implements i2s_api_t::close.
+ * Closes SSI. Implements @ref i2s_api_t::close.
  *
  * This function powers down the SSI and closes the lower level timer and transfer drivers if they are used.
  *
  * @retval FSP_SUCCESS           Device closed successfully.
- * @retval FSP_ERR_ASSERTION     The pointer to p_instance_ctrl null.
+ * @retval FSP_ERR_ASSERTION     The pointer to p_ctrl was null.
  * @retval FSP_ERR_NOT_OPEN      The channel is not opened.
  **********************************************************************************************************************/
 fsp_err_t R_SSI_Close (i2s_ctrl_t * const p_ctrl)
@@ -669,7 +669,7 @@ static void r_ssi_interrupts_configure (ssi_instance_ctrl_t * const p_instance_c
  * @retval FSP_SUCCESS                 Dependent drivers configured successfully.
  * @return                             See @ref RENESAS_ERROR_CODES or functions called by this function for other
  *                                     possible return codes. This function calls:
- *                                         * transfer_api_t::open
+ *                                         * @ref transfer_api_t::open
  **********************************************************************************************************************/
 static fsp_err_t r_ssi_dependent_drivers_configure (R_SSI0_Type           * p_reg,
                                                     i2s_cfg_t const * const p_cfg,
@@ -788,7 +788,7 @@ static void r_ssi_stop_sub (ssi_instance_ctrl_t * const p_instance_ctrl)
  * @retval FSP_SUCCESS                 Transmit FIFO successfully loaded.
  * @return                             See @ref RENESAS_ERROR_CODES or functions called by this function for other
  *                                     possible return codes. This function calls:
- *                                         * transfer_api_t::reset
+ *                                         * @ref transfer_api_t::reset
  **********************************************************************************************************************/
 fsp_err_t r_ssi_tx_load_fifo (ssi_instance_ctrl_t * const p_instance_ctrl,
                               void const * const          p_src,
@@ -832,7 +832,7 @@ fsp_err_t r_ssi_tx_load_fifo (ssi_instance_ctrl_t * const p_instance_ctrl,
  * @retval FSP_SUCCESS                 Receive FIFO successfully unloaded.
  * @return                             See @ref RENESAS_ERROR_CODES or functions called by this function for other
  *                                     possible return codes. This function calls:
- *                                         * transfer_api_t::reset
+ *                                         * @ref transfer_api_t::reset
  **********************************************************************************************************************/
 fsp_err_t r_ssi_rx_unload_fifo (ssi_instance_ctrl_t * const p_instance_ctrl, void * const p_dest, uint32_t const bytes)
 {

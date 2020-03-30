@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -23,8 +23,7 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BSP_DLEAY_UINT32_MAX       (0xFFFFFFFFU)
-#define BSP_DLEAY_NS_PER_SECOND    (1000000000)
+#define BSP_DELAY_NS_PER_SECOND    (1000000000)
 #define BSP_DELAY_NS_PER_US        (1000)
 
 /***********************************************************************************************************************
@@ -61,11 +60,11 @@
  *              A delay of 2 us therefore requires 2000ns/332ns or 6 loops.
  *
  *              The 'theoretical' maximum delay that may be obtained is determined by a full 32 bit loop count and the system clock rate.
- *              @240MHz:  ((0xFFFFFFFF loops * 4 cycles /loop) / 240000000) = 71 seconds.
+ *              @120MHz:  ((0xFFFFFFFF loops * 4 cycles /loop) / 120000000) = 143 seconds.
  *              @32MHz:  ((0xFFFFFFFF loops * 4 cycles /loop) / 32000000) = 536 seconds
  *
  *              Note that requests for very large delays will be affected by rounding in the calculations and the actual delay
- *              achieved may be slightly less. @32 MHz, for example, a request for 532 seconds will be closer to 536 seconds.
+ *              achieved may be slightly longer. @32 MHz, for example, a request for 532 seconds will be closer to 536 seconds.
  *
  *              Note also that if the calculations result in a loop_cnt of zero, the bsp_prv_software_delay_loop() function is not called
  *              at all. In this case the requested delay is too small (nanoseconds) to be carried out by the loop itself, and the
@@ -94,14 +93,14 @@ void R_BSP_SoftwareDelay (uint32_t delay, bsp_delay_units_t units)
      * to the delay loop. Given this, at this frequency anything less then a delay request of 122 us will not even generate a single
      * pass through the delay loop.  For this reason small delays (<=~200 us) at this slow clock rate will not be possible and such a request
      * will generate a minimum delay of ~200 us.*/
-    ns_per_cycle = BSP_DLEAY_NS_PER_SECOND / iclk_hz;                 /** Get the # of nanoseconds/cycle. */
+    ns_per_cycle = BSP_DELAY_NS_PER_SECOND / iclk_hz;                 /** Get the # of nanoseconds/cycle. */
 
     /* We want to get the time in total nanoseconds but need to be conscious of overflowing 32 bits. We also do not want to do 64 bit */
     /* division as that pulls in a division library. */
     ns_64bits = (uint64_t) total_us * (uint64_t) BSP_DELAY_NS_PER_US; // Convert to ns.
 
     /* Have we overflowed 32 bits? */
-    if (ns_64bits <= BSP_DLEAY_UINT32_MAX)
+    if (ns_64bits <= UINT32_MAX)
     {
         /* No, we will not overflow. */
         cycles_requested = ((uint32_t) ns_64bits / ns_per_cycle);
@@ -114,7 +113,7 @@ void R_BSP_SoftwareDelay (uint32_t delay, bsp_delay_units_t units)
         ns_64bits = (uint64_t) total_us * (uint64_t) BSP_DELAY_NS_PER_US; // Convert to ns.
 
         /* Have we overflowed 32 bits? */
-        if (ns_64bits <= BSP_DLEAY_UINT32_MAX)
+        if (ns_64bits <= UINT32_MAX)
         {
             /* No, we will not overflow. */
             loops_required = (uint32_t) ns_64bits;
@@ -122,7 +121,7 @@ void R_BSP_SoftwareDelay (uint32_t delay, bsp_delay_units_t units)
         else
         {
             /* We still overflowed, use the max count for cycles */
-            loops_required = BSP_DLEAY_UINT32_MAX;
+            loops_required = UINT32_MAX;
         }
     }
 

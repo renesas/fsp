@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -339,15 +339,15 @@ const sdmmc_api_t g_sdmmc_on_sdhi =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Opens the driver.  Resets SDHI, and enables card detection interrupts if card detection is enabled. R_SDHI_MediaInit
- * must be called after this function before any other functions can be used.
+ * Opens the driver.  Resets SDHI, and enables card detection interrupts if card detection is enabled.
+ * @ref R_SDHI_MediaInit must be called after this function before any other functions can be used.
  *
- * Implements sdmmc_api_t::open().
+ * Implements @ref sdmmc_api_t::open().
  *
  * Example:
  * @snippet r_sdhi_example.c R_SDHI_Open
  *
- * @retval     FSP_SUCCESS                     Port is available and is now open for read/write/control access.
+ * @retval     FSP_SUCCESS                     Module is now open.
  * @retval     FSP_ERR_ASSERTION               Null Pointer or block size is not in the valid range of 1-512. Block size
  *                                             must be 512 bytes for SD cards and eMMC devices.  It is configurable for
  *                                             SDIO only.
@@ -413,12 +413,12 @@ fsp_err_t R_SDHI_Open (sdmmc_ctrl_t * const p_api_ctrl, sdmmc_cfg_t const * cons
  * procedure requires several sequential commands.  This function blocks until all identification and configuration
  * commands are complete.
  *
- * Implements sdmmc_api_t::open().
+ * Implements @ref sdmmc_api_t::mediaInit().
  *
  * Example:
  * @snippet r_sdhi_example.c R_SDHI_MediaInit
  *
- * @retval     FSP_SUCCESS               Port is available and is now open for read/write/control access.
+ * @retval     FSP_SUCCESS               Module is now ready for read/write access.
  * @retval     FSP_ERR_ASSERTION         Null Pointer or block size is not in the valid range of 1-512. Block size must
  *                                       be 512 bytes for SD cards and eMMC devices.  It is configurable for SDIO only.
  * @retval     FSP_ERR_NOT_OPEN          Driver has not been initialized.
@@ -458,6 +458,7 @@ fsp_err_t R_SDHI_MediaInit (sdmmc_ctrl_t * const p_api_ctrl, sdmmc_device_t * co
 #endif
 
     /* Return device information to user. */
+    p_ctrl->device.sector_size_bytes = p_ctrl->p_cfg->block_size;
     if (NULL != p_device)
     {
         *p_device = p_ctrl->device;
@@ -469,10 +470,9 @@ fsp_err_t R_SDHI_MediaInit (sdmmc_ctrl_t * const p_api_ctrl, sdmmc_device_t * co
 }
 
 /*******************************************************************************************************************//**
- * Reads data from an SD or eMMC device.  Up to 0x10000 sectors can be read at a time. Implements sdmmc_api_t::read().
+ * Reads data from an SD or eMMC device.  Up to 0x10000 sectors can be read at a time. Implements @ref sdmmc_api_t::read().
  *
- * This function blocks until the command is sent and the response is received.  A callback with the event
- * SDMMC_EVENT_TRANSFER_COMPLETE is called when the read data is available.
+ * A callback with the event SDMMC_EVENT_TRANSFER_COMPLETE is called when the read data is available.
  *
  * Example:
  * @snippet r_sdhi_example.c R_SDHI_Read
@@ -526,11 +526,10 @@ fsp_err_t R_SDHI_Read (sdmmc_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Writes data to an SD or eMMC device. Up to 0x10000 sectors can be written at a time. Implements sdmmc_api_t::write().
+ * Writes data to an SD or eMMC device. Up to 0x10000 sectors can be written at a time. Implements @ref sdmmc_api_t::write().
  *
- * This function blocks until the command is sent and the response is received. A callback with the event
- * SDMMC_EVENT_TRANSFER_COMPLETE is called when the all data has been written and the device is no longer holding DAT0
- * low to indicate it is busy.
+ * A callback with the event SDMMC_EVENT_TRANSFER_COMPLETE is called when the all data has been written and the device
+ * is no longer holding DAT0 low to indicate it is busy.
  *
  * Example:
  * @snippet r_sdhi_example.c R_SDHI_Write
@@ -591,7 +590,7 @@ fsp_err_t R_SDHI_Write (sdmmc_ctrl_t * const  p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * The Read function reads a one byte register from an SDIO card.  Implements sdmmc_api_t::readIo().
+ * The Read function reads a one byte register from an SDIO card.  Implements @ref sdmmc_api_t::readIo().
  *
  * This function blocks until the command is sent and the response is received.  p_data contains the register value read
  * when this function returns.
@@ -639,7 +638,7 @@ fsp_err_t R_SDHI_ReadIo (sdmmc_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Writes a one byte register to an SDIO card.  Implements sdmmc_api_t::writeIo().
+ * Writes a one byte register to an SDIO card.  Implements @ref sdmmc_api_t::writeIo().
  *
  * This function blocks until the command is sent and the response is received.  The register has been written when this
  * function returns.  If read_after_write is true, p_data contains the register value read when this function returns.
@@ -688,7 +687,7 @@ fsp_err_t R_SDHI_WriteIo (sdmmc_ctrl_t * const        p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Reads data from an SDIO card function.  Implements sdmmc_api_t::readIoExt().
+ * Reads data from an SDIO card function.  Implements @ref sdmmc_api_t::readIoExt().
  *
  * This function blocks until the command is sent and the response is received.  A callback with the event
  * SDMMC_EVENT_TRANSFER_COMPLETE is called when the read data is available.
@@ -775,7 +774,7 @@ fsp_err_t R_SDHI_ReadIoExt (sdmmc_ctrl_t * const     p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Writes data to an SDIO card function.  Implements sdmmc_api_t::writeIoExt().
+ * Writes data to an SDIO card function.  Implements @ref sdmmc_api_t::writeIoExt().
  *
  * This function blocks until the command is sent and the response is received.  A callback with the event
  * SDMMC_EVENT_TRANSFER_COMPLETE is called when the all data has been written.
@@ -864,7 +863,7 @@ fsp_err_t R_SDHI_WriteIoExt (sdmmc_ctrl_t * const     p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Enables or disables the SDIO Interrupt.  Implements sdmmc_api_t::ioIntEnable().
+ * Enables or disables the SDIO Interrupt.  Implements @ref sdmmc_api_t::ioIntEnable().
  *
  * @retval     FSP_SUCCESS          Card enabled or disabled SDIO interrupts successfully.
  * @retval     FSP_ERR_NOT_OPEN     Driver has not been initialized.
@@ -910,7 +909,7 @@ fsp_err_t R_SDHI_IoIntEnable (sdmmc_ctrl_t * const p_api_ctrl, bool enable)
 }
 
 /*******************************************************************************************************************//**
- * Provides driver status.  Implements sdmmc_api_t::statusGet().
+ * Provides driver status.  Implements @ref sdmmc_api_t::statusGet().
  *
  * @retval     FSP_SUCCESS        Status stored in p_status.
  * @retval     FSP_ERR_ASSERTION  NULL pointer.
@@ -951,9 +950,9 @@ fsp_err_t R_SDHI_StatusGet (sdmmc_ctrl_t * const p_api_ctrl, sdmmc_status_t * co
 }
 
 /*******************************************************************************************************************//**
- * Erases sectors of an SD card or eMMC device.  Implements sdmmc_api_t::erase().
+ * Erases sectors of an SD card or eMMC device.  Implements @ref sdmmc_api_t::erase().
  *
- * This function blocks until erase is complete.
+ * This function blocks until the erase command is sent.  Poll the status to determine when erase is complete.
  *
  * @retval     FSP_SUCCESS                   Erase operation requested.
  * @retval     FSP_ERR_ASSERTION             A required pointer is NULL or an argument is invalid.
@@ -1020,7 +1019,7 @@ fsp_err_t R_SDHI_Erase (sdmmc_ctrl_t * const p_api_ctrl, uint32_t const start_se
 }
 
 /*******************************************************************************************************************//**
- * Closes an open SD/MMC device.  Implements sdmmc_api_t::close().
+ * Closes an open SD/MMC device.  Implements @ref sdmmc_api_t::close().
  *
  * @retval     FSP_SUCCESS        Successful close.
  * @retval     FSP_ERR_ASSERTION  The parameter p_ctrl is NULL.
@@ -1056,7 +1055,7 @@ fsp_err_t R_SDHI_Close (sdmmc_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Returns the version of the firmware and API.  Implements sdmmc_api_t::versionGet().
+ * Returns the version of the firmware and API.  Implements @ref sdmmc_api_t::versionGet().
  *
  * @retval     FSP_SUCCESS        Function executed successfully.
  * @retval     FSP_ERR_ASSERTION  Null Pointer.
@@ -1278,7 +1277,7 @@ static void r_sdhi_access_irq_process (sdhi_instance_ctrl_t * p_ctrl, sdmmc_call
         p_args->event |= SDMMC_EVENT_RESPONSE;
 
         /* Check the R1 response. */
-        if (p_ctrl->p_reg->SD_SECCNT > 1U)
+        if (1U == p_ctrl->p_reg->SD_STOP_b.SEC)
         {
             /* Get the R1 response for multiple block read and write from SD_RSP54 since the response in SD_RSP10 may
              * have been overwritten by the response to CMD12. */
@@ -1289,12 +1288,28 @@ static void r_sdhi_access_irq_process (sdhi_instance_ctrl_t * p_ctrl, sdmmc_call
             p_args->response.status = p_ctrl->p_reg->SD_RSP10;
         }
 
-        /* Enable the access interrupt. */
-        /* Disable response end interrupt (set the bit) and enable access end interrupt (clear the bit). */
-        uint32_t mask = p_ctrl->p_reg->SD_INFO1_MASK;
-        mask &= (~SDHI_PRV_SDHI_INFO1_ACCESS_END);
-        mask |= SDHI_PRV_SDHI_INFO1_RESPONSE_END;
-        p_ctrl->p_reg->SD_INFO1_MASK = mask;
+        if (SDHI_PRV_CMD_ERASE == p_ctrl->p_reg->SD_CMD)
+        {
+            /* Determine if erase is complete or not based on DAT0. Access interrupt is not required for erase. */
+            if (SDHI_PRV_SD_INFO2_CBSY_SDD0MON_IDLE_VAL ==
+                (p_ctrl->p_reg->SD_INFO2 & SDHI_PRV_SD_INFO2_CBSY_SDD0MON_IDLE_MASK))
+            {
+                p_args->event |= SDMMC_EVENT_ERASE_COMPLETE;
+            }
+            else
+            {
+                p_args->event |= SDMMC_EVENT_ERASE_BUSY;
+            }
+        }
+        else
+        {
+            /* Enable the access interrupt. */
+            /* Disable response end interrupt (set the bit) and enable access end interrupt (clear the bit). */
+            uint32_t mask = p_ctrl->p_reg->SD_INFO1_MASK;
+            mask &= (~SDHI_PRV_SDHI_INFO1_ACCESS_END);
+            mask |= SDHI_PRV_SDHI_INFO1_RESPONSE_END;
+            p_ctrl->p_reg->SD_INFO1_MASK = mask;
+        }
     }
 
     /* Check for errors */
@@ -1506,7 +1521,7 @@ static fsp_err_t r_sdhi_card_identify (sdhi_instance_ctrl_t * const p_ctrl)
      * in the CCCR (bit 3 of register 6). Reference Table 6-2 "CCCR bit definitions" in SDIO Simplified Specification
      * Version 3.00. */
     uint8_t data = 1U << 3;
-    r_sdhi_cmd52(p_ctrl, &data, 0U, 6U, SDMMC_IO_WRITE_READ_AFTER_WRITE, SDHI_PRV_SDIO_CMD52_WRITE);
+    r_sdhi_cmd52(p_ctrl, &data, 0U, 6U, SDMMC_IO_WRITE_MODE_NO_READ, SDHI_PRV_SDIO_CMD52_WRITE);
 #endif
 
     /* For SD cards, follow the procedure in Figure 4-1 "SD Memory Card State Diagram (card identification mode" in
@@ -1750,7 +1765,12 @@ static fsp_err_t r_sdhi_sdio_check (sdhi_instance_ctrl_t * const p_ctrl)
 
     /* Check for SDIO capabilities (CMD5). */
     fsp_err_t err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_SDIO, 0x00);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    if (FSP_ERR_RESPONSE == err)
+    {
+
+        /* This is not an SDIO card. */
+        return FSP_SUCCESS;
+    }
 
     /* Check response of CMD5 (R4). */
     response.status = p_ctrl->p_reg->SD_RSP10;
@@ -2465,7 +2485,7 @@ void r_sdhi_transfer_callback (sdhi_instance_ctrl_t * p_ctrl)
  * @retval     FSP_SUCCESS  Transfer successfully configured to write data.
  * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes. This
  *             function calls:
- *               * transfer_api_t::reconfigure
+ *               * @ref transfer_api_t::reconfigure
  **********************************************************************************************************************/
 static fsp_err_t r_sdhi_transfer_read (sdhi_instance_ctrl_t * const p_ctrl,
                                        uint32_t                     block_count,
@@ -2531,7 +2551,7 @@ static fsp_err_t r_sdhi_transfer_read (sdhi_instance_ctrl_t * const p_ctrl,
  * @retval     FSP_SUCCESS  Transfer successfully configured to write data.
  * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes. This
  *             function calls:
- *               * transfer_api_t::reconfigure
+ *               * @ref transfer_api_t::reconfigure
  **********************************************************************************************************************/
 static fsp_err_t r_sdhi_transfer_write (sdhi_instance_ctrl_t * const p_ctrl,
                                         uint32_t                     block_count,

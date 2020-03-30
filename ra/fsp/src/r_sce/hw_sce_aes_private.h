@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -14,17 +14,40 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-/*******************************************************************************************************************//**
- * @ingroup SCE_PROC
- * @addtogroup SCE_PROC_AES
- * @{
- ***********************************************************************************************************************/
-
 #ifndef HW_SCE_AES_PRIVATE_H
 #define HW_SCE_AES_PRIVATE_H
 
 #include <stdint.h>
 #include "bsp_api.h"
+
+/* AES key lengths defined for SCE operations. */
+#define SIZE_AES_128BIT_KEYLEN_BITS             (128)
+#define SIZE_AES_128BIT_KEYLEN_BYTES            ((SIZE_AES_128BIT_KEYLEN_BITS) / 8)
+#define SIZE_AES_128BIT_KEYLEN_WORDS            ((SIZE_AES_128BIT_KEYLEN_BITS) / 32)
+
+#define SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED     (288)
+#define SIZE_AES_128BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED) / 8)
+#define SIZE_AES_128BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED) / 32)
+
+#define SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED     (416)
+#define SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 8)
+#define SIZE_AES_192BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 32)
+
+#define SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED     (416)
+#define SIZE_AES_256BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 8)
+#define SIZE_AES_256BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 32)
+
+#define SIZE_AES_192BIT_KEYLEN_BITS             (192)
+#define SIZE_AES_192BIT_KEYLEN_BYTES            ((SIZE_AES_192BIT_KEYLEN_BITS) / 8)
+#define SIZE_AES_192BIT_KEYLEN_WORDS            ((SIZE_AES_192BIT_KEYLEN_BITS) / 32)
+
+#define SIZE_AES_256BIT_KEYLEN_BITS             (256)
+#define SIZE_AES_256BIT_KEYLEN_BYTES            ((SIZE_AES_256BIT_KEYLEN_BITS) / 8)
+#define SIZE_AES_256BIT_KEYLEN_WORDS            ((SIZE_AES_256BIT_KEYLEN_BITS) / 32)
+
+#define SIZE_AES_BLOCK_BITS                     (128)
+#define SIZE_AES_BLOCK_BYTES                    (128 / 8)
+#define SIZE_AES_BLOCK_WORDS                    ((SIZE_AES_BLOCK_BITS) / 32)
 
 typedef struct st_sce_data
 {
@@ -122,8 +145,28 @@ extern fsp_err_t HW_SCE_AES_256XtsDecrypt(const uint32_t * InData_Key,
                                           uint32_t       * OutData_Text,
                                           uint32_t       * OutData_IV);
 
-#endif                                 /* HW_SCE_AES_PRIVATE_H */
+extern fsp_err_t HW_SCE_AES_128CreateEncryptedKey(uint32_t * OutData_KeyIndex);
 
-/*******************************************************************************************************************//**
- * @}
- **********************************************************************************************************************/
+extern fsp_err_t HW_SCE_AES_128EcbEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text);
+
+extern fsp_err_t HW_SCE_AES_128EcbDecryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text);
+
+extern fsp_err_t HW_SCE_AES_256CreateEncryptedKey(uint32_t * OutData_KeyIndex);
+
+extern fsp_err_t HW_SCE_AES_256EcbEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text);
+
+extern fsp_err_t HW_SCE_AES_256EcbDecryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text);
+
+#endif                                 /* HW_SCE_AES_PRIVATE_H */

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -170,7 +170,7 @@ const ether_phy_api_t g_ether_phy_on_ether_phy =
  **********************************************************************************************************************/
 
 /********************************************************************************************************************//**
- * @brief Resets Ethernet PHY device. Implements ether_phy_api_t::open.
+ * @brief Resets Ethernet PHY device. Implements @ref ether_phy_api_t::open.
  *  *
  * @retval  FSP_SUCCESS                             Channel opened successfully.
  * @retval  FSP_ERR_ASSERTION                       Pointer to ETHER_PHY control block or configuration structure is NULL.
@@ -231,7 +231,7 @@ fsp_err_t R_ETHER_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t con
 } /* End of function R_ETHER_PHY_Open() */
 
 /********************************************************************************************************************//**
- * @brief Close Ethernet PHY device. Implements ether_phy_api_t::close.
+ * @brief Close Ethernet PHY device. Implements @ref ether_phy_api_t::close.
  *
  * @retval  FSP_SUCCESS                                 Channel successfully closed.
  * @retval  FSP_ERR_ASSERTION                           Pointer to ETHER_PHY control block is NULL.
@@ -259,7 +259,7 @@ fsp_err_t R_ETHER_PHY_Close (ether_phy_ctrl_t * const p_ctrl)
 } /* End of function R_ETHER_PHY_Close() */
 
 /********************************************************************************************************************//**
- * @brief Starts auto-negotiate. Implements ether_phy_api_t::startAutoNegotiate.
+ * @brief Starts auto-negotiate. Implements @ref ether_phy_api_t::startAutoNegotiate.
  *
  * @retval  FSP_SUCCESS                                 ETHER_PHY successfully starts auto-negotiate.
  * @retval  FSP_ERR_ASSERTION                           Pointer to ETHER_PHY control block is NULL.
@@ -311,7 +311,7 @@ fsp_err_t R_ETHER_PHY_StartAutoNegotiate(ether_phy_ctrl_t * const p_ctrl)
 } /* End of function R_ETHER_PHY_StartAutoNegotiate() */
 
 /********************************************************************************************************************//**
- * @brief Reports the other side's physical capability. Implements ether_phy_api_t::linkPartnerAbilityGet.
+ * @brief Reports the other side's physical capability. Implements @ref ether_phy_api_t::linkPartnerAbilityGet.
  *
  * @retval  FSP_SUCCESS                                 ETHER_PHY successfully get link partner ability.
  * @retval  FSP_ERR_ASSERTION                           Pointer to ETHER_PHY control block is NULL.
@@ -395,7 +395,7 @@ fsp_err_t R_ETHER_PHY_LinkPartnerAbilityGet(ether_phy_ctrl_t * const p_ctrl, uin
 } /* End of function R_ETHER_PHY_LinkPartnerAbilityGet() */
 
 /********************************************************************************************************************//**
- * @brief Returns the status of the physical link. Implements ether_phy_api_t::linkStatusGet.
+ * @brief Returns the status of the physical link. Implements @ref ether_phy_api_t::linkStatusGet.
  *
  * @retval  FSP_SUCCESS                                 ETHER_PHY successfully get link partner ability.
  * @retval  FSP_ERR_ASSERTION                           Pointer to ETHER_PHY control block is NULL.
@@ -435,7 +435,7 @@ fsp_err_t R_ETHER_PHY_LinkStatusGet(ether_phy_ctrl_t * const p_ctrl)
 
 
 /********************************************************************************************************************//**
- * @brief Provides API and code version in the user provided pointer. Implements ether_phy_api_t::versionGet.
+ * @brief Provides API and code version in the user provided pointer. Implements @ref ether_phy_api_t::versionGet.
  *
  * @param[in] p_version   Version number set here
  *

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -65,7 +65,7 @@ const keymatrix_api_t g_keymatrix_on_kint =
 
 /*******************************************************************************************************************//**
  * Configure all the Key Input (KINT) channels and provides a handle for use with the rest of the KINT API functions.
- * Implements keymatrix_api_t::open.
+ * Implements @ref keymatrix_api_t::open.
  *
  * @retval     FSP_SUCCESS                     Initialization was successful.
  * @retval     FSP_ERR_ASSERTION               One of the following parameters may be NULL: p_cfg, or p_ctrl or the
@@ -113,7 +113,7 @@ fsp_err_t R_KINT_Open (keymatrix_ctrl_t * const p_api_ctrl, keymatrix_cfg_t cons
 }
 
 /*******************************************************************************************************************//**
- * Clear the KINT configuration and disable the KINT IRQ. Implements keymatrix_api_t::close.
+ * Clear the KINT configuration and disable the KINT IRQ. Implements @ref keymatrix_api_t::close.
  *
  * @retval FSP_SUCCESS        Successful close.
  * @retval FSP_ERR_ASSERTION  The parameter p_ctrl is NULL.
@@ -146,7 +146,7 @@ fsp_err_t R_KINT_Close (keymatrix_ctrl_t * const p_api_ctrl)
 
 /*******************************************************************************************************************//**
  * This function enables interrupts for the KINT peripheral after clearing any pending requests.
- * Implements keymatrix_api_t::enable.
+ * Implements @ref keymatrix_api_t::enable.
  *
  * @retval FSP_SUCCESS        Interrupt disabled successfully.
  * @retval FSP_ERR_ASSERTION  The p_ctrl parameter was null.
@@ -178,7 +178,7 @@ fsp_err_t R_KINT_Enable (keymatrix_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * This function disables interrupts for the KINT peripheral. Implements keymatrix_api_t::disable.
+ * This function disables interrupts for the KINT peripheral. Implements @ref keymatrix_api_t::disable.
  *
  * @retval FSP_SUCCESS        Interrupt disabled successfully.
  * @retval FSP_ERR_ASSERTION  The p_ctrl parameter was null.

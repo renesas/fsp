@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -105,7 +105,7 @@ const lpm_api_t g_lpm_on_lpm =
  * Private Functions
  **********************************************************************************************************************/
 static fsp_err_t r_lpm_configure(lpm_cfg_t const * const p_cfg);
-static fsp_err_t r_lpm_low_power_enter(void);
+static fsp_err_t r_lpm_low_power_enter(lpm_instance_ctrl_t * const p_instance_ctrl);
 static fsp_err_t r_lpm_check_clocks(uint32_t clock_source);
 static void      r_lpm_wait_for_operating_mode_flags(void);
 
@@ -149,6 +149,9 @@ fsp_err_t R_LPM_Open (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_c
     FSP_ERROR_RETURN(LPM_OPEN != p_ctrl->lpm_open, FSP_ERR_ALREADY_OPEN);
 #endif
 
+    /* Save the configuration  */
+    p_ctrl->p_cfg = p_cfg;
+
     fsp_err_t err = r_lpm_configure(p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
@@ -184,13 +187,15 @@ fsp_err_t R_LPM_Open (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_c
  **********************************************************************************************************************/
 fsp_err_t R_LPM_LowPowerReconfigure (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_cfg)
 {
-#if LPM_CFG_PARAM_CHECKING_ENABLE
     lpm_instance_ctrl_t * p_ctrl = (lpm_instance_ctrl_t *) p_api_ctrl;
+
+#if LPM_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_api_ctrl);
     FSP_ERROR_RETURN(LPM_OPEN == p_ctrl->lpm_open, FSP_ERR_NOT_OPEN);
-#else
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
 #endif
+
+    /* Save the configuration  */
+    p_ctrl->p_cfg = p_cfg;
 
     return r_lpm_configure(p_cfg);
 }
@@ -212,18 +217,16 @@ fsp_err_t R_LPM_LowPowerReconfigure (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t co
  **********************************************************************************************************************/
 fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
 {
-#if LPM_CFG_PARAM_CHECKING_ENABLE
     lpm_instance_ctrl_t * p_ctrl = (lpm_instance_ctrl_t *) p_api_ctrl;
+#if LPM_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(LPM_OPEN == p_ctrl->lpm_open, FSP_ERR_NOT_OPEN);
-#else
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
 #endif
 
     /* Wait for ongoing operating mode transition (OPCMTSF, SOPCMTSF) */
     r_lpm_wait_for_operating_mode_flags();
 
-    fsp_err_t err = r_lpm_low_power_enter();
+    fsp_err_t err = r_lpm_low_power_enter(p_ctrl);
 
 #if BSP_FEATURE_LPM_HAS_DEEP_STANDBY
     if (FSP_ERR_INVALID_MODE == err)
@@ -452,8 +455,7 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
             R_SYSTEM->SNZREQCR = (uint32_t) p_cfg->snooze_request_source;
 
             /* Enable/disable DTC operation */
-            snzcr |= (((uint32_t) p_cfg->dtc_state_in_snooze) << R_SYSTEM_SNZCR_SNZDTCEN_Pos) |
-                     (1U << R_SYSTEM_SNZCR_SNZE_Pos);
+            snzcr |= (uint32_t) (p_cfg->dtc_state_in_snooze << R_SYSTEM_SNZCR_SNZDTCEN_Pos);
 
             /* Set the source that can cause an exit from snooze to normal mode */
             R_ICU->SELSR0_b.SELS = (uint8_t) p_cfg->snooze_cancel_sources;
@@ -535,7 +537,7 @@ fsp_err_t r_lpm_check_clocks (uint32_t clock_source)
  *                                           PLL was running when using snooze mode with SCI0/RXD0.
  *                                           Unable to disable ocillator stop detect when using standby or deep standby.
  **********************************************************************************************************************/
-fsp_err_t r_lpm_low_power_enter (void)
+fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 {
 #if BSP_FEATURE_LPM_HAS_DEEP_STANDBY
     uint32_t saved_opccr        = 0U;
@@ -643,11 +645,28 @@ fsp_err_t r_lpm_low_power_enter (void)
 #endif
     }
 
+    if (LPM_MODE_STANDBY_SNOOZE == p_instance_ctrl->p_cfg->low_power_mode)
+    {
+#if !BSP_FEATURE_LPM_HAS_DEEP_STANDBY
+
+        /* Enable writing to CGC and Low Power Mode registers. */
+        R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
+#endif
+
+        /* Enable Snooze mode (SNZCR.SNZE = 1) immediately before entering to Software Standby mode.
+         * See Section 11.8.2 "Canceling Snooze Mode" in the RA6M3 manual  R01UM0004EU0110 */
+        R_SYSTEM->SNZCR_b.SNZE = 1;
+    }
+
     /* DSB should be last instruction executed before WFI
      * infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0321a/BIHICBGB.html */
     __DSB();
 
     __WFI();
+
+    /* Disable Snooze mode (SNZCR.SNZE = 0) immediately after canceling Snooze mode.
+     * See Section 11.8.2 "Canceling Snooze Mode" in the RA6M3 manual  R01UM0004EU0110 */
+    R_SYSTEM->SNZCR_b.SNZE = 0;
 
 #if BSP_FEATURE_LPM_HAS_DEEP_STANDBY
     if (1U == R_SYSTEM->SBYCR_b.SSBY)
@@ -668,6 +687,13 @@ fsp_err_t r_lpm_low_power_enter (void)
  #if BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED
         bsp_prv_power_change_mstp_clear(stopped_modules);
  #endif
+    }
+
+#else
+    if (LPM_MODE_STANDBY_SNOOZE == p_instance_ctrl->p_cfg->low_power_mode)
+    {
+        /* Disable writing to CGC and Low Power Mode registers. */
+        R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
     }
 #endif
 

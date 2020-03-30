@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -34,7 +34,7 @@
  * Includes
  **********************************************************************************************************************/
 
-/** Register definitions, common services and error codes. */
+/* Register definitions, common services and error codes. */
 #include "bsp_api.h"
 #include "r_timer_api.h"
 #include "r_transfer_api.h"
@@ -106,7 +106,7 @@ typedef enum e_i2s_ws_continue
     I2S_WS_CONTINUE_OFF = 1,           ///< Disable WS continue mode
 } i2s_ws_continue_t;
 
-/** Possible status values returned by i2s_api_t::statusGet. */
+/** Possible status values returned by @ref i2s_api_t::statusGet. */
 typedef enum e_i2s_state
 {
     I2S_STATE_IN_USE,                  ///< I2S is in use
@@ -116,7 +116,7 @@ typedef enum e_i2s_state
 /** Callback function parameter data */
 typedef struct st_i2s_callback_args
 {
-    /** Placeholder for user data.  Set in i2s_api_t::open function in ::i2s_cfg_t. */
+    /** Placeholder for user data.  Set in @ref i2s_api_t::open function in @ref i2s_cfg_t. */
     void const * p_context;
     i2s_event_t  event;                ///< The event can be used to identify what caused the callback (overflow or error).
 } i2s_callback_args_t;
@@ -130,7 +130,7 @@ typedef void i2s_ctrl_t;
 /** I2S status. */
 typedef struct st_i2s_status
 {
-    i2s_state_t state;
+    i2s_state_t state;                 ///< Current I2S state
 } i2s_status_t;
 
 /** User configuration structure, used in open function */
@@ -152,7 +152,7 @@ typedef struct st_i2s_cfg
     /** Callback provided when an I2S ISR occurs.  Set to NULL for no CPU interrupt. */
     void (* p_callback)(i2s_callback_args_t * p_args);
 
-    /** Placeholder for user data.  Passed to the user callback in ::i2s_callback_args_t. */
+    /** Placeholder for user data.  Passed to the user callback in @ref i2s_callback_args_t. */
     void const * p_context;
     void const * p_extend;             ///< Extension parameter for hardware specific settings.
     uint8_t      rxi_ipl;              ///< Receive interrupt priority
@@ -168,10 +168,10 @@ typedef struct st_i2s_api
 {
     /** Initial configuration.
      * @par Implemented as
-     * - R_SSI_Open()
+     * - @ref R_SSI_Open()
      *
      * @pre Peripheral clocks and any required output pins should be configured prior to calling this function.
-     * @note To reconfigure after calling this function, call i2s_api_t::close first.
+     * @note To reconfigure after calling this function, call @ref i2s_api_t::close first.
      * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.
      */
@@ -180,17 +180,17 @@ typedef struct st_i2s_api
     /** Stop communication. Communication is stopped when callback is called with I2S_EVENT_IDLE.
      *
      * @par Implemented as
-     * - R_SSI_Stop()
+     * - @ref R_SSI_Stop()
      *
-     * @param[in]   p_ctrl     Control block set in i2s_api_t::open call for this instance.
+     * @param[in]   p_ctrl     Control block set in @ref i2s_api_t::open call for this instance.
      */
     fsp_err_t (* stop)(i2s_ctrl_t * const p_ctrl);
 
     /** Enable or disable mute.
      * @par Implemented as
-     * - R_SSI_Mute()
+     * - @ref R_SSI_Mute()
      *
-     * @param[in]   p_ctrl       Control block set in i2s_api_t::open call for this instance.
+     * @param[in]   p_ctrl       Control block set in @ref i2s_api_t::open call for this instance.
      * @param[in]   mute_enable  Whether to enable or disable mute.
      */
     fsp_err_t (* mute)(i2s_ctrl_t * const p_ctrl, i2s_mute_t const mute_enable);
@@ -198,9 +198,9 @@ typedef struct st_i2s_api
     /** Write I2S data.  All transmit data is queued when callback is called with I2S_EVENT_TX_EMPTY.
      * Transmission is complete when callback is called with I2S_EVENT_IDLE.
      * @par Implemented as
-     * - R_SSI_Write()
+     * - @ref R_SSI_Write()
      *
-     * @param[in]   p_ctrl     Control block set in i2s_api_t::open call for this instance.
+     * @param[in]   p_ctrl     Control block set in @ref i2s_api_t::open call for this instance.
      * @param[in]   p_src      Buffer of PCM samples.  Must be 4 byte aligned.
      * @param[in]   bytes      Number of bytes in the buffer.  Recommended requesting a multiple of 8 bytes.  If not
      *                         a multiple of 8, padding 0s will be added to transmission to make it a multiple of 8.
@@ -209,9 +209,9 @@ typedef struct st_i2s_api
 
     /** Read I2S data.  Reception is complete when callback is called with I2S_EVENT_RX_EMPTY.
      * @par Implemented as
-     * - R_SSI_Read()
+     * - @ref R_SSI_Read()
      *
-     * @param[in]   p_ctrl     Control block set in i2s_api_t::open call for this instance.
+     * @param[in]   p_ctrl     Control block set in @ref i2s_api_t::open call for this instance.
      * @param[in]   p_dest     Buffer to store PCM samples.  Must be 4 byte aligned.
      * @param[in]   bytes      Number of bytes in the buffer.  Recommended requesting a multiple of 8 bytes.  If not
      *                         a multiple of 8, receive will stop at the multiple of 8 below requested bytes.
@@ -221,9 +221,9 @@ typedef struct st_i2s_api
     /** Simultaneously write and read I2S data.  Transmission and reception are complete when
      * callback is called with I2S_EVENT_IDLE.
      * @par Implemented as
-     * - R_SSI_WriteRead()
+     * - @ref R_SSI_WriteRead()
      *
-     * @param[in]   p_ctrl     Control block set in i2s_api_t::open call for this instance.
+     * @param[in]   p_ctrl     Control block set in @ref i2s_api_t::open call for this instance.
      * @param[in]   p_src      Buffer of PCM samples.  Must be 4 byte aligned.
      * @param[in]   p_dest     Buffer to store PCM samples.  Must be 4 byte aligned.
      * @param[in]   bytes      Number of bytes in the buffers.  Recommended requesting a multiple of 8 bytes.  If not
@@ -235,24 +235,24 @@ typedef struct st_i2s_api
 
     /** Get current status and store it in provided pointer p_status.
      * @par Implemented as
-     * - R_SSI_StatusGet()
+     * - @ref R_SSI_StatusGet()
      *
-     * @param[in]   p_ctrl     Control block set in i2s_api_t::open call for this instance.
+     * @param[in]   p_ctrl     Control block set in @ref i2s_api_t::open call for this instance.
      * @param[out]  p_status   Current status of the driver.
      */
     fsp_err_t (* statusGet)(i2s_ctrl_t * const p_ctrl, i2s_status_t * const p_status);
 
     /** Allows driver to be reconfigured and may reduce power consumption.
      * @par Implemented as
-     * - R_SSI_Close()
+     * - @ref R_SSI_Close()
      *
-     * @param[in]   p_ctrl     Control block set in i2s_api_t::open call for this instance.
+     * @param[in]   p_ctrl     Control block set in @ref i2s_api_t::open call for this instance.
      */
     fsp_err_t (* close)(i2s_ctrl_t * const p_ctrl);
 
     /** Get version and store it in provided pointer p_version.
      * @par Implemented as
-     * - R_SSI_VersionGet()
+     * - @ref R_SSI_VersionGet()
      *
      * @param[out]  p_version  Code and API version used.
      */

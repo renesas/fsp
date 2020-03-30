@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -71,9 +71,9 @@ typedef void transfer_ctrl_t;
 /** Transfer mode describes what will happen when a transfer request occurs. */
 typedef enum e_transfer_mode
 {
-    /** In normal mode, each transfer request causes a transfer of ::transfer_size_t from the source pointer to
+    /** In normal mode, each transfer request causes a transfer of @ref transfer_size_t from the source pointer to
      *  the destination pointer.  The transfer length is decremented and the source and address pointers are
-     *  updated according to ::transfer_addr_mode_t.  After the transfer length reaches 0, transfer requests
+     *  updated according to @ref transfer_addr_mode_t.  After the transfer length reaches 0, transfer requests
      *  will not cause any further transfers. */
     TRANSFER_MODE_NORMAL = 0,
 
@@ -84,9 +84,9 @@ typedef enum e_transfer_mode
      *  used, the transfer repeats continuously (no limit to the number of repeat transfers). */
     TRANSFER_MODE_REPEAT = 1,
 
-    /** In block mode, each transfer request causes transfer_info_t::length transfers of ::transfer_size_t.
+    /** In block mode, each transfer request causes transfer_info_t::length transfers of @ref transfer_size_t.
      *  After each individual transfer, the source and destination pointers are updated according to
-     *  ::transfer_addr_mode_t.  After the block transfer is complete, transfer_info_t::num_blocks is
+     *  @ref transfer_addr_mode_t.  After the block transfer is complete, transfer_info_t::num_blocks is
      *  decremented.  After the transfer_info_t::num_blocks reaches 0, transfer requests will not cause any
      *  further transfers. */
     TRANSFER_MODE_BLOCK = 2
@@ -111,22 +111,22 @@ typedef enum e_transfer_addr_mode
     /** Offset is added to the address pointer after each transfer. */
     TRANSFER_ADDR_MODE_OFFSET = 1,
 
-    /** Address pointer is incremented by associated ::transfer_size_t after each transfer. */
+    /** Address pointer is incremented by associated @ref transfer_size_t after each transfer. */
     TRANSFER_ADDR_MODE_INCREMENTED = 2,
 
-    /** Address pointer is decremented by associated ::transfer_size_t after each transfer. */
+    /** Address pointer is decremented by associated @ref transfer_size_t after each transfer. */
     TRANSFER_ADDR_MODE_DECREMENTED = 3
 } transfer_addr_mode_t;
 
-/** Repeat area options (source or destination).  In ::TRANSFER_MODE_REPEAT, the selected pointer returns to its
- *  original value after transfer_info_t::length transfers.  In ::TRANSFER_MODE_BLOCK, the selected pointer
+/** Repeat area options (source or destination).  In @ref TRANSFER_MODE_REPEAT, the selected pointer returns to its
+ *  original value after transfer_info_t::length transfers.  In @ref TRANSFER_MODE_BLOCK, the selected pointer
  *  returns to its original value after each transfer. */
 typedef enum e_transfer_repeat_area
 {
-    /** Destination area repeated in ::TRANSFER_MODE_REPEAT or ::TRANSFER_MODE_BLOCK. */
+    /** Destination area repeated in @ref TRANSFER_MODE_REPEAT or @ref TRANSFER_MODE_BLOCK. */
     TRANSFER_REPEAT_AREA_DESTINATION = 0,
 
-    /** Source area repeated in ::TRANSFER_MODE_REPEAT or ::TRANSFER_MODE_BLOCK. */
+    /** Source area repeated in @ref TRANSFER_MODE_REPEAT or @ref TRANSFER_MODE_BLOCK. */
     TRANSFER_REPEAT_AREA_SOURCE = 1
 } transfer_repeat_area_t;
 
@@ -137,10 +137,10 @@ typedef enum e_transfer_chain_mode
     /** Chain mode not used. */
     TRANSFER_CHAIN_MODE_DISABLED = 0,
 
-    /** Switch to next transfer after a single transfer from this ::transfer_info_t. */
+    /** Switch to next transfer after a single transfer from this @ref transfer_info_t. */
     TRANSFER_CHAIN_MODE_EACH = 2,
 
-    /** Complete the entire transfer defined in this ::transfer_info_t before chaining to next transfer. */
+    /** Complete the entire transfer defined in this @ref transfer_info_t before chaining to next transfer. */
     TRANSFER_CHAIN_MODE_END = 3
 } transfer_chain_mode_t;
 
@@ -187,7 +187,7 @@ typedef struct st_transfer_info
             /** Select what happens to destination pointer after each transfer. */
             transfer_addr_mode_t dest_addr_mode : 2;
 
-            /** Select to repeat source or destination area, unused in ::TRANSFER_MODE_NORMAL. */
+            /** Select to repeat source or destination area, unused in @ref TRANSFER_MODE_NORMAL. */
             transfer_repeat_area_t repeat_area : 1;
 
             /** Select if interrupts should occur after each individual transfer or after the completion of all planned
@@ -205,7 +205,7 @@ typedef struct st_transfer_info
             /** Select number of bytes to transfer at once. @see transfer_info_t::length. */
             transfer_size_t size : 2;
 
-            /** Select mode from ::transfer_mode_t. */
+            /** Select mode from @ref transfer_mode_t. */
             transfer_mode_t mode : 2;
         };
         uint32_t transfer_settings_word;
@@ -214,16 +214,16 @@ typedef struct st_transfer_info
     void const * volatile p_src;       ///< Source pointer
     void * volatile       p_dest;      ///< Destination pointer
 
-    /** Number of blocks to transfer when using ::TRANSFER_MODE_BLOCK (both DTC an DMAC) and
-     * ::TRANSFER_MODE_REPEAT (DMAC only), unused in other modes. */
+    /** Number of blocks to transfer when using @ref TRANSFER_MODE_BLOCK (both DTC an DMAC) and
+     * @ref TRANSFER_MODE_REPEAT (DMAC only), unused in other modes. */
     volatile uint16_t num_blocks;
 
-    /** Length of each transfer.  Range limited for ::TRANSFER_MODE_BLOCK and ::TRANSFER_MODE_REPEAT,
+    /** Length of each transfer.  Range limited for @ref TRANSFER_MODE_BLOCK and @ref TRANSFER_MODE_REPEAT,
      *  see HAL driver for details. */
     volatile uint16_t length;
 } transfer_info_t;
 
-/** Driver configuration set in transfer_api_t::open. All elements except p_extend are required and must be
+/** Driver configuration set in @ref transfer_api_t::open. All elements except p_extend are required and must be
  *  initialized. */
 typedef struct st_transfer_cfg
 {
@@ -246,8 +246,8 @@ typedef struct st_transfer_api
 {
     /** Initial configuration.
      * @par Implemented as
-     * - R_DTC_Open()
-     * - R_DMAC_Open()
+     * - @ref R_DTC_Open()
+     * - @ref R_DMAC_Open()
      *
      * @param[in,out] p_ctrl   Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]     p_cfg    Pointer to configuration structure. All elements of this structure
@@ -258,8 +258,8 @@ typedef struct st_transfer_api
     /** Reconfigure the transfer.
      * Enable the transfer if p_info is valid.
      * @par Implemented as
-     * - R_DTC_Reconfigure()
-     * - R_DMAC_Reconfigure()
+     * - @ref R_DTC_Reconfigure()
+     * - @ref R_DMAC_Reconfigure()
      *
      * @param[in,out] p_ctrl   Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]     p_info   Pointer to a new transfer info structure.
@@ -269,10 +269,10 @@ typedef struct st_transfer_api
     /** Reset source address pointer, destination address pointer, and/or length, keeping all other settings the same.
      * Enable the transfer if p_src, p_dest, and length are valid.
      * @par Implemented as
-     * - R_DTC_Reset()
-     * - R_DMAC_Reset()
+     * - @ref R_DTC_Reset()
+     * - @ref R_DMAC_Reset()
      *
-     * @param[in]     p_ctrl         Control block set in transfer_api_t::open call for this transfer.
+     * @param[in]     p_ctrl         Control block set in @ref transfer_api_t::open call for this transfer.
      * @param[in]     p_src          Pointer to source. Set to NULL if source pointer should not change.
      * @param[in]     p_dest         Pointer to destination. Set to NULL if destination pointer should not change.
      * @param[in]     num_transfers  Transfer length in normal mode or number of blocks in block mode.  In DMAC only,
@@ -282,25 +282,25 @@ typedef struct st_transfer_api
     fsp_err_t (* reset)(transfer_ctrl_t * const p_ctrl, void const * p_src, void * p_dest,
                         uint16_t const num_transfers);
 
-    /** Enable transfer. Transfers occur after the activation source event (or when transfer_api_t::start is called
-     * if ELC_EVENT_ELC_NONE is chosen as activation source).
+    /** Enable transfer. Transfers occur after the activation source event (or when
+     * @ref transfer_api_t::softwareStart is called if ELC_EVENT_ELC_NONE is chosen as activation source).
      * @par Implemented as
-     * - R_DTC_Enable()
-     * - R_DMAC_Enable()
+     * - @ref R_DTC_Enable()
+     * - @ref R_DMAC_Enable()
      *
-     * @param[in]     p_ctrl   Control block set in transfer_api_t::open call for this transfer.
+     * @param[in]     p_ctrl   Control block set in @ref transfer_api_t::open call for this transfer.
      */
     fsp_err_t (* enable)(transfer_ctrl_t * const p_ctrl);
 
     /** Disable transfer. Transfers do not occur after the activation source event (or when
-     * transfer_api_t::start is called if ELC_EVENT_ELC_NONE is chosen as the DMAC activation source).
+     * @ref transfer_api_t::softwareStart is called if ELC_EVENT_ELC_NONE is chosen as the DMAC activation source).
      * @note If a transfer is in progress, it will be completed.  Subsequent transfer requests do not cause a
      * transfer.
      * @par Implemented as
-     * - R_DTC_Disable()
-     * - R_DMAC_Disable()
+     * - @ref R_DTC_Disable()
+     * - @ref R_DMAC_Disable()
      *
-     * @param[in]     p_ctrl   Control block set in transfer_api_t::open call for this transfer.
+     * @param[in]     p_ctrl   Control block set in @ref transfer_api_t::open call for this transfer.
      */
     fsp_err_t (* disable)(transfer_ctrl_t * const p_ctrl);
 
@@ -308,10 +308,10 @@ typedef struct st_transfer_api
      * @warning Only works if ELC_EVENT_ELC_NONE is chosen as the DMAC activation source.
      * @note Not supported for DTC.
      * @par Implemented as
-     * - R_DMAC_SoftwareStart()
+     * - @ref R_DMAC_SoftwareStart()
      *
-     * @param[in]     p_ctrl   Control block set in transfer_api_t::open call for this transfer.
-     * @param[in]     mode     Select mode from ::transfer_start_mode_t.
+     * @param[in]     p_ctrl   Control block set in @ref transfer_api_t::open call for this transfer.
+     * @param[in]     mode     Select mode from @ref transfer_start_mode_t.
      */
     fsp_err_t (* softwareStart)(transfer_ctrl_t * const p_ctrl, transfer_start_mode_t mode);
 
@@ -320,34 +320,34 @@ typedef struct st_transfer_api
      * @note Only applies for transfers started with TRANSFER_START_MODE_REPEAT.
      * @warning Only works if ELC_EVENT_ELC_NONE is chosen as the DMAC activation source.
      * @par Implemented as
-     * - R_DMAC_SoftwareStop()
+     * - @ref R_DMAC_SoftwareStop()
      *
-     * @param[in]     p_ctrl   Control block set in transfer_api_t::open call for this transfer.
+     * @param[in]     p_ctrl   Control block set in @ref transfer_api_t::open call for this transfer.
      */
     fsp_err_t (* softwareStop)(transfer_ctrl_t * const p_ctrl);
 
     /** Provides information about this transfer.
      * @par Implemented as
-     * - R_DTC_InfoGet()
-     * - R_DMAC_InfoGet()
+     * - @ref R_DTC_InfoGet()
+     * - @ref R_DMAC_InfoGet()
      *
-     * @param[in]     p_ctrl         Control block set in transfer_api_t::open call for this transfer.
+     * @param[in]     p_ctrl         Control block set in @ref transfer_api_t::open call for this transfer.
      * @param[out]    p_properties   Driver specific information.
      */
     fsp_err_t (* infoGet)(transfer_ctrl_t * const p_ctrl, transfer_properties_t * const p_properties);
 
-    /** Releases hardware lock.  This allows a transfer to be reconfigured using transfer_api_t::open.
+    /** Releases hardware lock.  This allows a transfer to be reconfigured using @ref transfer_api_t::open.
      * @par Implemented as
-     * - R_DTC_Close()
-     * - R_DMAC_Close()
-     * @param[in]     p_ctrl    Control block set in transfer_api_t::open call for this transfer.
+     * - @ref R_DTC_Close()
+     * - @ref R_DMAC_Close()
+     * @param[in]     p_ctrl    Control block set in @ref transfer_api_t::open call for this transfer.
      */
     fsp_err_t (* close)(transfer_ctrl_t * const p_ctrl);
 
     /** Gets version and stores it in provided pointer p_version.
      * @par Implemented as
-     * - R_DTC_VersionGet()
-     * - R_DMAC_VersionGet()
+     * - @ref R_DTC_VersionGet()
+     * - @ref R_DMAC_VersionGet()
      * @param[out]    p_version  Code and API version used.
      */
     fsp_err_t (* versionGet)(fsp_version_t * const p_version);

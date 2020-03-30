@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -26,7 +26,6 @@
 #include "r_usb_basic_cfg.h"
 #include "r_usb_basic_api.h"
 
-
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
@@ -39,27 +38,16 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+
 /** ICU private control block. DO NOT MODIFY.  Initialization occurs when R_ICU_ExternalIrqOpen is called. */
-typedef struct st_usb_instance_ctrl
-{
-	uint8_t         module_number;   ///< USB module number (USB_IP0/USB_IP1)
-    uint8_t         device_address;  ///< USB device address
-    uint8_t         pipe;            ///< USB pipe number
-    usb_class_t     type;            ///< USB device class etc
-    uint16_t        status;          ///< USB device state etc
-    usb_status_t    event;           ///< USB event
-    uint32_t        data_size;       ///< Read data size
-    usb_setup_t     setup;           ///< usb_setup_t structure area
-    void            *p_data;         ///< Other information
-    usb_cfg_t const *p_usb_cfg;
-} usb_instance_ctrl_t;
+
+typedef usb_event_info_t usb_instance_ctrl_t;
 
 /**********************************************************************************************************************
  * Exported global variables
  **********************************************************************************************************************/
 
 /** @cond INC_HEADER_DEFS_SEC */
-/** Filled in Interface API structure for this Instance. */
 extern const usb_api_t g_usb_on_usb;
 
 /** @endcond */
@@ -67,60 +55,67 @@ extern const usb_api_t g_usb_on_usb;
 /**********************************************************************************************************************
  * Public Function Prototypes
  **********************************************************************************************************************/
-fsp_err_t    R_USB_Open(usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const cfg, usb_instance_transfer_t * p_api_trans);
 
-fsp_err_t    R_USB_Close (usb_ctrl_t * const p_api_ctrl, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_Open(usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const cfg);
 
-fsp_err_t    R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_Close(usb_ctrl_t * const p_api_ctrl);
 
-fsp_err_t    R_USB_Write (usb_ctrl_t * const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_Read(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size, uint8_t destination);
 
-fsp_err_t    R_USB_Stop (usb_ctrl_t * const p_api_ctrl, usb_transfer_t type, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_Write(usb_ctrl_t * const p_api_ctrl, uint8_t const * const p_buf, uint32_t size, uint8_t destination);
 
-fsp_err_t    R_USB_Suspend (usb_ctrl_t * const p_api_ctrl, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_Stop(usb_ctrl_t * const p_api_ctrl, usb_transfer_t direction, uint8_t destination);
 
-fsp_err_t    R_USB_Resume (usb_ctrl_t * const p_api_ctrl, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_Suspend(usb_ctrl_t * const p_api_ctrl);
 
-fsp_err_t    R_USB_VbusSet (usb_ctrl_t * const p_api_ctrl, uint16_t state, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_Resume(usb_ctrl_t * const p_api_ctrl);
 
-fsp_err_t    R_USB_InfoGet (usb_ctrl_t * const p_api_ctrl, usb_info_t *p_info);
+fsp_err_t R_USB_VbusSet(usb_ctrl_t * const p_api_ctrl, uint16_t state);
 
-fsp_err_t    R_USB_PipeRead (usb_ctrl_t * const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_InfoGet(usb_ctrl_t * const p_api_ctrl, usb_info_t * p_info, uint8_t destination);
 
-fsp_err_t    R_USB_PipeWrite (usb_ctrl_t * const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_PipeRead(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size, uint8_t pipe_number);
 
-fsp_err_t    R_USB_PipeStop (usb_ctrl_t * const p_api_ctrl, usb_instance_transfer_t * p_api_trans);
+fsp_err_t R_USB_PipeWrite(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size, uint8_t pipe_number);
 
-fsp_err_t    R_USB_UsedPipesGet (usb_ctrl_t * const p_api_ctrl, uint16_t *p_pipe);
+fsp_err_t R_USB_PipeStop(usb_ctrl_t * const p_api_ctrl, uint8_t pipe_number);
 
-fsp_err_t    R_USB_PipeInfoGet (usb_ctrl_t * const p_api_ctrl, usb_pipe_t *p_info);
+fsp_err_t R_USB_UsedPipesGet(usb_ctrl_t * const p_api_ctrl, uint16_t * p_pipe, uint8_t destination);
 
-fsp_err_t    R_USB_PullUp(uint8_t state);
+fsp_err_t R_USB_PipeInfoGet(usb_ctrl_t * const p_api_ctrl, usb_pipe_t * p_info, uint8_t pipe_number);
 
-#if (USB_CFG_RTOS_USE == USB_CFG_DISABLE)
-fsp_err_t    R_USB_EventGet (usb_ctrl_t * const p_api_ctrl, usb_status_t *event);
-#endif /* #if (USB_CFG_RTOS_USE == USB_CFG_DISABLE) */
+fsp_err_t R_USB_PullUp(usb_ctrl_t * const p_api_ctrl, uint8_t state);
 
-fsp_err_t    R_USB_VersionGet (fsp_version_t * const p_version);
+fsp_err_t R_USB_EventGet(usb_ctrl_t * const p_api_ctrl, usb_status_t * event);
 
-#if (USB_CFG_RTOS_USE == USB_CFG_ENABLE)
-void         R_USB_Callback (usb_callback_t * p_callback);
-#endif /* #if (USB_CFG_RTOS_USE == USB_CFG_ENABLE) */
+fsp_err_t R_USB_VersionGet(fsp_version_t * const p_version);
 
-fsp_err_t    R_USB_ModuleNumberGet(usb_ctrl_t * const p_api_ctrl, uint8_t *module_number);
+fsp_err_t R_USB_Callback(usb_callback_t * p_callback);
 
-fsp_err_t    R_USB_ClassTypeGet(usb_ctrl_t * const p_api_ctrl, usb_class_t *class_type);
+fsp_err_t R_USB_HostControlTransfer(usb_ctrl_t * const p_api_ctrl,
+                                    usb_setup_t      * p_setup,
+                                    uint8_t          * p_buf,
+                                    uint8_t            device_address);
 
-fsp_err_t    R_USB_DeviceAddressGet(usb_ctrl_t * const p_api_ctrl, uint8_t *device_address);
+fsp_err_t R_USB_PeriControlDataGet(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size);
 
-fsp_err_t    R_USB_PipeNumberGet(usb_ctrl_t * const p_api_ctrl, uint8_t *pipe_number);
+fsp_err_t R_USB_PeriControlDataSet(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size);
 
-fsp_err_t    R_USB_DeviceStateGet(usb_ctrl_t * const p_api_ctrl, uint16_t *state);
+fsp_err_t R_USB_PeriControlStatusSet(usb_ctrl_t * const p_api_ctrl, usb_setup_status_t status);
 
-fsp_err_t    R_USB_DataSizeGet(usb_ctrl_t * const p_api_ctrl, uint32_t *data_size);
+fsp_err_t R_USB_ModuleNumberGet(usb_ctrl_t * const p_api_ctrl, uint8_t * module_number);
 
-fsp_err_t    R_USB_SetupGet(usb_ctrl_t * const p_api_ctrl, usb_setup_t *setup);
+fsp_err_t R_USB_ClassTypeGet(usb_ctrl_t * const p_api_ctrl, usb_class_t * class_type);
 
+fsp_err_t R_USB_DeviceAddressGet(usb_ctrl_t * const p_api_ctrl, uint8_t * device_address);
+
+fsp_err_t R_USB_PipeNumberGet(usb_ctrl_t * const p_api_ctrl, uint8_t * pipe_number);
+
+fsp_err_t R_USB_DeviceStateGet(usb_ctrl_t * const p_api_ctrl, uint16_t * state);
+
+fsp_err_t R_USB_DataSizeGet(usb_ctrl_t * const p_api_ctrl, uint32_t * data_size);
+
+fsp_err_t R_USB_SetupGet(usb_ctrl_t * const p_api_ctrl, usb_setup_t * setup);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

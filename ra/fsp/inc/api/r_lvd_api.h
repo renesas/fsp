@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -217,7 +217,7 @@ typedef struct st_lvd_api
 {
     /** Initializes a low voltage detection driver according to the passed-in configuration structure.
      * @par Implemented as
-     *  - R_LVD_Open()
+     * - @ref R_LVD_Open()
      * @param[in]       p_ctrl      Pointer to control structure for the driver instance
      * @param[in]       p_cfg       Pointer to the configuration structure for the driver instance
      **/
@@ -226,7 +226,7 @@ typedef struct st_lvd_api
     /** Get the current state of the monitor, (threshold crossing detected, voltage currently above or below threshold).
      * Must be used if the peripheral was initialized with lvd_response_t set to LVD_RESPONSE_NONE.
      * @par Implemented as
-     *  - R_LVD_StatusGet()
+     * - @ref R_LVD_StatusGet()
      * @param[in]       p_ctrl          Pointer to the control structure for the driver instance
      * @param[in,out]   p_lvd_status    Pointer to a lvd_status_t structure
      **/
@@ -235,7 +235,7 @@ typedef struct st_lvd_api
     /** Clears the latched status of the monitor.
      * Must be used if the peripheral was initialized with lvd_response_t set to LVD_RESPONSE_NONE.
      * @par Implemented as
-     *  - R_LVD_StatusClear()
+     * - @ref R_LVD_StatusClear()
      * @param[in]       p_ctrl      Pointer to the control structure for the driver instance
      **/
     fsp_err_t (* statusClear)(lvd_ctrl_t * const p_ctrl);
@@ -243,14 +243,14 @@ typedef struct st_lvd_api
     /** Disables the LVD peripheral.
      * Closes the driver instance.
      * @par Implemented as
-     *  - R_LVD_Close()
+     * - @ref R_LVD_Close()
      * @param[in]   p_ctrl      Pointer to the control structure for the driver instance
      **/
     fsp_err_t (* close)(lvd_ctrl_t * const p_ctrl);
 
     /** Returns the LVD driver version based on compile time macros.
      * @par Implemented as
-     *  - R_LVD_VersionGet()
+     * - @ref R_LVD_VersionGet()
      * @param[in,out]   p_version   Pointer to version structure
      **/
     fsp_err_t (* versionGet)(fsp_version_t * const p_version);

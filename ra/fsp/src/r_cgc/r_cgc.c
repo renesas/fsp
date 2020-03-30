@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -225,7 +225,7 @@ const cgc_api_t g_cgc_on_cgc =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Initialize the CGC API.  Implements cgc_api_t::open.
+ * Initialize the CGC API.  Implements @ref cgc_api_t::open.
  *
  * Example:
  * @snippet r_cgc_example.c R_CGC_Open
@@ -280,7 +280,7 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
  * Do not attempt to stop the requested clock source or the source of the PLL if the PLL will be running after this
  * operation completes.
  *
- * Implements cgc_api_t::clocksCfg.
+ * Implements @ref cgc_api_t::clocksCfg.
  *
  * Example:
  * @snippet r_cgc_example.c R_CGC_ClocksCfg
@@ -479,7 +479,7 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
 
 /*******************************************************************************************************************//**
  * Start the specified clock if it is not currently active. The PLL configuration cannot be changed while the PLL
- * is running. Implements cgc_api_t::clockStart.
+ * is running. Implements @ref cgc_api_t::clockStart.
  *
  * The PLL source clock must be operating and stable prior to starting the PLL.
  *
@@ -561,7 +561,7 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
 }
 
 /*******************************************************************************************************************//**
- * Stop the specified clock if it is active.  Implements cgc_api_t::clockStop.
+ * Stop the specified clock if it is active.  Implements @ref cgc_api_t::clockStop.
  *
  * Do not attempt to stop the current system clock source.  Do not attempt to stop the source clock of the PLL if the
  * PLL is running.
@@ -629,7 +629,7 @@ fsp_err_t R_CGC_ClockStop (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
 
 /*******************************************************************************************************************//**
  * Set the specified clock as the system clock and configure the internal dividers for ICLK, PCLKA, PCLKB, PCLKC,
- * PCLKD, BCLK, and FCLK.  Implements cgc_api_t::systemClockSet.
+ * PCLKD, BCLK, and FCLK.  Implements @ref cgc_api_t::systemClockSet.
  *
  * The requested clock source must be running and stable prior to calling this function.  The internal dividers are
  * subject to constraints described in the hardware manual table "Specifications of the Clock Generation Circuit for
@@ -698,7 +698,7 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Return the current system clock source and configuration.  Implements cgc_api_t::systemClockGet.
+ * Return the current system clock source and configuration.  Implements @ref cgc_api_t::systemClockGet.
  *
  * @retval FSP_SUCCESS                 Parameters returned successfully.
  * @retval FSP_ERR_ASSERTION           Invalid input argument.
@@ -735,7 +735,7 @@ fsp_err_t R_CGC_SystemClockGet (cgc_ctrl_t * const        p_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Check the specified clock for stability.  Implements cgc_api_t::clockCheck.
+ * Check the specified clock for stability.  Implements @ref cgc_api_t::clockCheck.
  *
  * @retval FSP_SUCCESS                 Clock is running and stable.
  * @retval FSP_ERR_ASSERTION           Invalid input argument.
@@ -765,7 +765,7 @@ fsp_err_t R_CGC_ClockCheck (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
 }
 
 /*******************************************************************************************************************//**
- * Enable the oscillation stop detection for the main clock.  Implements cgc_api_t::oscStopDetectEnable.
+ * Enable the oscillation stop detection for the main clock.  Implements @ref cgc_api_t::oscStopDetectEnable.
  *
  * The MCU will automatically switch the system clock to MOCO when a stop is detected if Main Clock is
  * the system clock. If the system clock is the PLL, then the clock source will not be changed and the
@@ -832,7 +832,7 @@ fsp_err_t R_CGC_OscStopDetectEnable (cgc_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Disable the oscillation stop detection for the main clock.  Implements cgc_api_t::oscStopDetectDisable.
+ * Disable the oscillation stop detection for the main clock.  Implements @ref cgc_api_t::oscStopDetectDisable.
  *
  * Example:
  * @snippet r_cgc_example.c R_CGC_OscStopDetectDisable
@@ -877,7 +877,7 @@ fsp_err_t R_CGC_OscStopDetectDisable (cgc_ctrl_t * const p_ctrl)
 
 /*******************************************************************************************************************//**
  * Clear the Oscillation Stop Detection Status register.  This register is not cleared automatically if the stopped
- * clock is restarted.  Implements cgc_api_t::oscStopStatusClear.
+ * clock is restarted.  Implements @ref cgc_api_t::oscStopStatusClear.
  *
  * After clearing the status, oscillation stop detection is no longer enabled.
  *
@@ -957,7 +957,7 @@ fsp_err_t R_CGC_OscStopStatusClear (cgc_ctrl_t * const p_ctrl)
 }
 
 /******************************************************************************************************************//**
- * Closes the CGC module.  Implements cgc_api_t::close.
+ * Closes the CGC module.  Implements @ref cgc_api_t::close.
  *
  * @retval FSP_SUCCESS                 The module is successfully closed.
  * @retval FSP_ERR_ASSERTION           Invalid input argument.
@@ -981,7 +981,7 @@ fsp_err_t R_CGC_Close (cgc_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Return the driver version.  Implements cgc_api_t::versionGet.
+ * Return the driver version.  Implements @ref cgc_api_t::versionGet.
  *
  * @retval FSP_SUCCESS                 Module version provided in p_version.
  * @retval FSP_ERR_ASSERTION           Invalid input argument.

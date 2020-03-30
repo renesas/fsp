@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -34,6 +34,9 @@
  Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
 #include "r_usb_basic_cfg.h"
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
 
 /******************************************************************************
  Macro definitions
@@ -85,6 +88,9 @@ typedef struct
     uint16_t brts  :1;             ///< RTS 
     uint16_t rsv   :14;            ///< reserve 
 } usb_pcdc_ctrllinestate_t; /* USB_PCDC_ControlLineState_t; */
+
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
 
 #endif /* R_USB_PCDC_API_H */
 

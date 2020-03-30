@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -148,7 +148,7 @@ const spi_api_t g_spi_on_spi =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * This functions initializes a channel for SPI communication mode. Implements spi_api_t::open.
+ * This functions initializes a channel for SPI communication mode. Implements @ref spi_api_t::open.
  *
  * This function performs the following tasks:
  * - Performs parameter checking and processes error conditions.
@@ -162,7 +162,7 @@ const spi_api_t g_spi_on_spi =
  *                                             configuration.
  * @retval     FSP_ERR_IP_CHANNEL_NOT_PRESENT  The channel number is invalid.
  * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes. This
- *             function calls: transfer_api_t::open
+ *             function calls: @ref transfer_api_t::open
  * @note       This function is reentrant.
  **********************************************************************************************************************/
 fsp_err_t R_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
@@ -238,7 +238,7 @@ fsp_err_t R_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
 }
 
 /*******************************************************************************************************************//**
- * This function receives data from a SPI device. Implements spi_api_t::read.
+ * This function receives data from a SPI device. Implements @ref spi_api_t::read.
  *
  * The function performs the following tasks:
  * - Performs parameter checking and processes error conditions.
@@ -259,7 +259,7 @@ fsp_err_t R_SPI_Read (spi_ctrl_t * const    p_api_ctrl,
 
 /*******************************************************************************************************************//**
  * This function transmits data to a SPI device using the TX Only Communications Operation Mode.
- * Implements spi_api_t::write.
+ * Implements @ref spi_api_t::write.
  *
  * The function performs the following tasks:
  * - Performs parameter checking and processes error conditions.
@@ -279,7 +279,7 @@ fsp_err_t R_SPI_Write (spi_ctrl_t * const    p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * This function simultaneously transmits and receive data. Implements spi_api_t::writeread.
+ * This function simultaneously transmits and receive data. Implements @ref spi_api_t::writeRead.
  *
  * The function performs the following tasks:
  * - Performs parameter checking and processes error conditions.
@@ -306,7 +306,7 @@ fsp_err_t R_SPI_WriteRead (spi_ctrl_t * const    p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * This function manages the closing of a channel by the following task. Implements spi_api_t::close.
+ * This function manages the closing of a channel by the following task. Implements @ref spi_api_t::close.
  *
  * Disables SPI operations by disabling the SPI bus.
  * - Disables the SPI peripheral.
@@ -360,7 +360,7 @@ fsp_err_t R_SPI_Close (spi_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * This function gets the version information of the underlying driver. Implements spi_api_t::versionget.
+ * This function gets the version information of the underlying driver. Implements @ref spi_api_t::versionGet.
  *
  * @retval      FSP_SUCCESS            Successful version get.
  * @retval      FSP_ERR_ASSERTION      The parameter p_version is NULL.
@@ -461,7 +461,7 @@ fsp_err_t R_SPI_CalculateBitrate (uint32_t bitrate, rspck_div_setting_t * spck_d
  *
  * @retval     FSP_SUCCESS     The given transfer instances were configured successfully.
  * @return                     See @ref RENESAS_ERROR_CODES for other possible return codes. This function internally
- *                             calls transfer_api_t::open.
+ *                             calls @ref transfer_api_t::open.
  **********************************************************************************************************************/
 static fsp_err_t r_spi_transfer_config (spi_cfg_t const * const p_cfg)
 {
@@ -772,7 +772,7 @@ static void r_spi_start_transfer (spi_instance_ctrl_t * p_ctrl)
  * @retval     FSP_ERR_NOT_OPEN  The instance has not been initialized.
  * @retval     FSP_ERR_IN_USE    A transfer is already in progress.
  * @return                       See @ref RENESAS_ERROR_CODES for other possible return codes. This function internally
- *                               calls transfer_api_t::reconfigure.
+ *                               calls @ref transfer_api_t::reconfigure.
  **********************************************************************************************************************/
 static fsp_err_t r_spi_write_read_common (spi_ctrl_t * const    p_api_ctrl,
                                           void const          * p_src,

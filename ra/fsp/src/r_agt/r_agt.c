@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -112,7 +112,7 @@ const timer_api_t g_timer_on_agt =
 };
 
 /*******************************************************************************************************************//**
- * @ingroup AGT
+ * @addtogroup AGT
  * @{
  **********************************************************************************************************************/
 
@@ -121,7 +121,7 @@ const timer_api_t g_timer_on_agt =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Initializes the AGT module instance.
+ * Initializes the AGT module instance. Implements @ref timer_api_t::open.
  *
  * The AGT hardware does not support one-shot functionality natively.  The one-shot feature is therefore implemented in
  * the AGT HAL layer. For a timer configured as a one-shot timer, the timer is stopped upon the first timer expiration.
@@ -181,7 +181,7 @@ fsp_err_t R_AGT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
 }
 
 /*******************************************************************************************************************//**
- * Starts timer. Implements timer_api_t::start.
+ * Starts timer. Implements @ref timer_api_t::start.
  *
  * Example:
  * @snippet r_agt_example.c R_AGT_Start
@@ -218,7 +218,7 @@ fsp_err_t R_AGT_Start (timer_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Stops the timer.  Implements timer_api_t::stop.
+ * Stops the timer.  Implements @ref timer_api_t::stop.
  *
  * Example:
  * @snippet r_agt_example.c R_AGT_Stop
@@ -241,7 +241,7 @@ fsp_err_t R_AGT_Stop (timer_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Resets the counter value to the period minus one. Implements timer_api_t::reset.
+ * Resets the counter value to the period minus one. Implements @ref timer_api_t::reset.
  *
  * @retval FSP_SUCCESS                 Counter reset.
  * @retval FSP_ERR_ASSERTION           p_ctrl is NULL
@@ -261,7 +261,7 @@ fsp_err_t R_AGT_Reset (timer_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Enables external event triggers that start, stop, clear, or capture the counter. Implements timer_api_t::enable.
+ * Enables external event triggers that start, stop, clear, or capture the counter. Implements @ref timer_api_t::enable.
  *
  * Example:
  * @snippet r_agt_example.c R_AGT_Enable
@@ -288,7 +288,7 @@ fsp_err_t R_AGT_Enable (timer_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Disables external event triggers that start, stop, clear, or capture the counter. Implements timer_api_t::disable.
+ * Disables external event triggers that start, stop, clear, or capture the counter. Implements @ref timer_api_t::disable.
  *
  * Example:
  * @snippet r_agt_example.c R_AGT_Disable
@@ -313,7 +313,7 @@ fsp_err_t R_AGT_Disable (timer_ctrl_t * const p_ctrl)
 
 /*******************************************************************************************************************//**
  * Updates period. The new period is updated immediately and the counter is reset to the maximum value. Implements
- * timer_api_t::periodSet.
+ * @ref timer_api_t::periodSet.
  *
  * @warning If periodic output is used, the duty cycle buffer registers are updated after the period buffer register.
  * If this function is called while the timer is running and an AGT underflow occurs during processing, the duty cycle
@@ -350,7 +350,7 @@ fsp_err_t R_AGT_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
 
 /*******************************************************************************************************************//**
  * Updates duty cycle. If the timer is counting, the new duty cycle is reflected after the next counter underflow.
- * Implements timer_api_t::dutyCycleSet.
+ * Implements @ref timer_api_t::dutyCycleSet.
  *
  * Example:
  * @snippet r_agt_example.c R_AGT_DutyCycleSet
@@ -400,7 +400,7 @@ fsp_err_t R_AGT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
 }
 
 /*******************************************************************************************************************//**
- * Gets timer information and store it in provided pointer p_info. Implements timer_api_t::infoGet.
+ * Gets timer information and store it in provided pointer p_info. Implements @ref timer_api_t::infoGet.
  *
  * Example:
  * @snippet r_agt_example.c R_AGT_InfoGet
@@ -441,7 +441,7 @@ fsp_err_t R_AGT_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p_inf
 }
 
 /*******************************************************************************************************************//**
- * Retrieves the current state and counter value stores them in p_status. Implements timer_api_t::statusGet.
+ * Retrieves the current state and counter value stores them in p_status. Implements @ref timer_api_t::statusGet.
  *
  * Example:
  * @snippet r_agt_example.c R_AGT_StatusGet
@@ -472,7 +472,7 @@ fsp_err_t R_AGT_StatusGet (timer_ctrl_t * const p_ctrl, timer_status_t * const p
 
 /*******************************************************************************************************************//**
  * Stops counter, disables interrupts, disables output pins, and clears internal driver data.  Implements
- * timer_api_t::close.
+ * @ref timer_api_t::close.
  *
  *
  *
@@ -507,7 +507,7 @@ fsp_err_t R_AGT_Close (timer_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Sets driver version based on compile time macros.  Implements timer_api_t::versionGet.
+ * Sets driver version based on compile time macros.  Implements @ref timer_api_t::versionGet.
  *
  * @retval     FSP_SUCCESS          Version in p_version.
  * @retval     FSP_ERR_ASSERTION    The parameter p_version is NULL.

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -330,7 +330,7 @@ static const fsp_version_t g_flash_hp_version =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Initializes the high performance flash peripheral. Implements flash_api_t::open.
+ * Initializes the high performance flash peripheral. Implements @ref flash_api_t::open.
  *
  * The Open function initializes the Flash.
  *
@@ -399,7 +399,7 @@ fsp_err_t R_FLASH_HP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * 
 }
 
 /*******************************************************************************************************************//**
- * Writes to the specified Code or Data Flash memory area. Implements flash_api_t::write.
+ * Writes to the specified Code or Data Flash memory area. Implements @ref flash_api_t::write.
  *
  * Example:
  * @snippet r_flash_hp_example.c R_FLASH_HP_Write
@@ -465,7 +465,7 @@ fsp_err_t R_FLASH_HP_Write (flash_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Erases the specified Code or Data Flash blocks. Implements flash_api_t::erase by the block_erase_address.
+ * Erases the specified Code or Data Flash blocks. Implements @ref flash_api_t::erase by the block_erase_address.
  *
  * @note       Code flash may contain blocks of different sizes. When erasing code flash it is important to take this
  *             into consideration to prevent erasing a larger address space than desired.
@@ -564,7 +564,7 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
 }
 
 /*******************************************************************************************************************//**
- * Performs a blank check on the specified address area. Implements flash_api_t::blankCheck.
+ * Performs a blank check on the specified address area. Implements @ref flash_api_t::blankCheck.
  *
  * Example:
  * @snippet r_flash_hp_example.c R_FLASH_HP_BlankCheck
@@ -630,7 +630,7 @@ fsp_err_t R_FLASH_HP_BlankCheck (flash_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Query the FLASH peripheral for its status. Implements flash_api_t::statusGet.
+ * Query the FLASH peripheral for its status. Implements @ref flash_api_t::statusGet.
  *
  * Example:
  * @snippet r_flash_hp_example.c R_FLASH_HP_StatusGet
@@ -670,7 +670,7 @@ fsp_err_t R_FLASH_HP_StatusGet (flash_ctrl_t * const p_api_ctrl, flash_status_t 
 }
 
 /*******************************************************************************************************************//**
- * Implements flash_api_t::idCodeSet.
+ * Implements @ref flash_api_t::idCodeSet.
  *
  * @retval     FSP_SUCCESS               ID Code successfully configured.
  * @retval     FSP_ERR_IN_USE            FLASH peripheral is busy with a prior operation.
@@ -726,7 +726,7 @@ fsp_err_t R_FLASH_HP_IdCodeSet (flash_ctrl_t * const  p_api_ctrl,
  * @note       If the start address and end address are set to the same value, then the access window is effectively
  *             removed. This accomplishes the same functionality as R_FLASH_HP_AccessWindowClear().
  *
- * Implements flash_api_t::accessWindowSet.
+ * Implements @ref flash_api_t::accessWindowSet.
  *
  * @retval     FSP_SUCCESS               Access window successfully configured.
  * @retval     FSP_ERR_INVALID_ADDRESS   Invalid settings for start_addr and/or end_addr.
@@ -781,7 +781,7 @@ fsp_err_t R_FLASH_HP_AccessWindowSet (flash_ctrl_t * const p_api_ctrl,
 
 /*******************************************************************************************************************//**
  * Remove any access window that is currently configured in the Code Flash. Subsequent to this call all Code Flash is
- * writable. Implements flash_api_t::accessWindowClear.
+ * writable. Implements @ref flash_api_t::accessWindowClear.
  *
  * @retval     FSP_SUCCESS               Access window successfully removed.
  * @retval     FSP_ERR_IN_USE            FLASH peripheral is busy with a prior operation.
@@ -823,7 +823,7 @@ fsp_err_t R_FLASH_HP_AccessWindowClear (flash_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Reset the FLASH peripheral. Implements flash_api_t::reset.
+ * Reset the FLASH peripheral. Implements @ref flash_api_t::reset.
  *
  * No attempt is made to check if the flash is busy before executing the reset since the assumption is that a reset will
  * terminate any existing operation.
@@ -861,7 +861,7 @@ fsp_err_t R_FLASH_HP_Reset (flash_ctrl_t * const p_api_ctrl)
  * temporary), or permanent subsequent to the next reset. Doing a temporary switch might appear to have limited
  * usefulness. If there is an access window in place such that Block 0 is write protected, then one could do a temporary
  * switch, update the block and switch them back without having to touch the access window. Implements
- * flash_api_t::startupAreaSelect.
+ * @ref flash_api_t::startupAreaSelect.
  *
  * @retval     FSP_SUCCESS               Start-up area successfully toggled.
  * @retval     FSP_ERR_IN_USE            FLASH peripheral is busy with a prior operation.
@@ -911,7 +911,7 @@ fsp_err_t R_FLASH_HP_StartUpAreaSelect (flash_ctrl_t * const      p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Indicate to the already open Flash API that the FCLK has changed. Implements flash_api_t::updateFlashClockFreq.
+ * Indicate to the already open Flash API that the FCLK has changed. Implements @ref flash_api_t::updateFlashClockFreq.
  *
  * This could be the case if the application has changed the system clock, and therefore the FCLK. Failure to call this
  * function subsequent to changing the FCLK could result in damage to the flash macro.
@@ -938,7 +938,7 @@ fsp_err_t R_FLASH_HP_UpdateFlashClockFreq (flash_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Returns the information about the flash regions. Implements flash_api_t::infoGet.
+ * Returns the information about the flash regions. Implements @ref flash_api_t::infoGet.
  *
  * @retval     FSP_SUCCESS        Successful retrieved the request information.
  * @retval     FSP_ERR_NOT_OPEN   The control block is not open.
@@ -971,7 +971,7 @@ fsp_err_t R_FLASH_HP_InfoGet (flash_ctrl_t * const p_api_ctrl, flash_info_t * co
 
 /*******************************************************************************************************************//**
  * Releases any resources that were allocated by the Open() or any subsequent Flash operations. Implements
- * flash_api_t::close.
+ * @ref flash_api_t::close.
  *
  * @retval     FSP_SUCCESS        Successful close.
  * @retval     FSP_ERR_NOT_OPEN   The control block is not open.

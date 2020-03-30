@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -14,12 +14,6 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-/*******************************************************************************************************************//**
- * @ingroup SCE_PROC
- * @addtogroup SCE_PROC_RSA
- * @{
- ***********************************************************************************************************************/
-
 #ifndef HW_SCE_RSA_PRIVATE_H
 #define HW_SCE_RSA_PRIVATE_H
 
@@ -29,46 +23,35 @@
 #include "bsp_api.h"
 #include "hw_sce_common.h"
 
+typedef fsp_err_t (* hw_sce_rsa_generatekey_t)(uint32_t num_tries, uint32_t * OutData_KeyIndex, uint32_t * OutData_N,
+                                               uint32_t * OutData_DomainParam);
+
+typedef fsp_err_t (* hw_sce_rsa_private_decrypt_t)(const uint32_t * InData_Text, const uint32_t * InData_KeyIndex,
+                                                   const uint32_t * InData_N, uint32_t * OutData_Text);
+
 fsp_err_t HW_SCE_RSA_2048PublicKeyEncrypt(const uint32_t * InData_Text,
-                                       const uint32_t * InData_PublicKey,
-                                       const uint32_t * InData_N,
-                                       uint32_t       * OutData_Text);
+                                          const uint32_t * InData_PublicKey,
+                                          const uint32_t * InData_N,
+                                          uint32_t       * OutData_Text);
 
 fsp_err_t HW_SCE_RSA_2048PrivateKeyDecrypt(const uint32_t * InData_Text,
                                            const uint32_t * InData_PrivateKey,
                                            const uint32_t * InData_N,
                                            uint32_t       * OutData_Text);
 
-fsp_err_t HW_SCE_RSA_2048PrivateCrtKeyDecrypt(const uint32_t * InData_Text,
-                                              const uint32_t * InData_DomainParam,
-                                              uint32_t       * OutData_Text);
-
-fsp_err_t HW_SCE_RSA_1024PublicKeyEncrypt(const uint32_t * InData_Text,
-                                       const uint32_t * InData_PublicKey,
-                                       const uint32_t * InData_N,
-                                       uint32_t       * OutData_Text);
-
-fsp_err_t HW_SCE_RSA_1024PrivateKeyDecrypt(const uint32_t * InData_Text,
-                                           const uint32_t * InData_PrivateKey,
-                                           const uint32_t * InData_N,
-                                           uint32_t       * OutData_Text);
-
-fsp_err_t HW_SCE_RSA_1024PrivateCrtKeyDecrypt(const uint32_t * InData_Text,
-                                              const uint32_t * InData_DomainParam,
-                                              uint32_t       * OutData_Text);
-
 fsp_err_t HW_SCE_RSA_2048KeyGenerate(uint32_t   num_tries,
                                      uint32_t * OutData_PrivateKey,
                                      uint32_t * OutData_N,
                                      uint32_t * OutData_DomainParam);
 
-fsp_err_t HW_SCE_RSA_1024KeyGenerate(uint32_t   num_words,
-                                     uint32_t * OutData_PrivateKey,
-                                     uint32_t * OutData_N,
-                                     uint32_t * OutData_DomainParam);
+fsp_err_t HW_SCE_HRK_RSA_2048KeyGenerate(uint32_t   num_tries,
+                                         uint32_t * OutData_KeyIndex,
+                                         uint32_t * OutData_N,
+                                         uint32_t * OutData_DomainParam);
 
-#endif                                 /* HW_SCE_TRNG_PRIVATE_H */
+fsp_err_t HW_SCE_HRK_RSA_2048PrivateKeyDecrypt(const uint32_t * InData_Text,
+                                               const uint32_t * InData_KeyIndex,
+                                               const uint32_t * InData_N,
+                                               uint32_t       * OutData_Text);
 
-/*******************************************************************************************************************//**
- * @} (end addtogroup SCE)
- ***********************************************************************************************************************/
+#endif                                 /* HW_SCE_RSA_PRIVATE_H */

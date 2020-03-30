@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -90,8 +90,8 @@ typedef enum e_ether_promiscuous
 /** Zero copy */
 typedef enum e_ether_zerocopy
 {
-    ETHER_ZEROCOPY_DISABLE = 0,       ///< Disable zero copy in Read/Write function
-    ETHER_ZEROCOPY_ENABLE  = 1,       ///< Enable zero copy in Read/Write function
+    ETHER_ZEROCOPY_DISABLE = 0,        ///< Disable zero copy in Read/Write function
+    ETHER_ZEROCOPY_ENABLE  = 1,        ///< Enable zero copy in Read/Write function
 } ether_zerocopy_t;
 
 /** EDMAC descriptor as defined in the hardware manual.
@@ -100,7 +100,8 @@ typedef enum e_ether_zerocopy
 typedef struct st_ether_instance_descriptor
 {
     volatile uint32_t status;
-#if ((defined(__GNUC__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)) || (defined(__ARMCC_VERSION) && !defined(__ARM_BIG_ENDIAN)) || (defined(__ICCARM__) && (__LITTLE_ENDIAN__)))
+#if ((defined(__GNUC__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)) || (defined(__ARMCC_VERSION) && \
+    !defined(__ARM_BIG_ENDIAN)) || (defined(__ICCARM__) && (__LITTLE_ENDIAN__)))
 
     /* Little endian */
     volatile uint16_t size;
@@ -132,7 +133,7 @@ typedef struct st_ether_callback_args
     uint32_t      status_ecsr;         ///< ETHERC status register for interrupt handler
     uint32_t      status_eesr;         ///< ETHERC/EDMAC status register for interrupt handler
 
-    void const * p_context;            ///< Placeholder for user data.  Set in ether_api_t::open function in ::ether_cfg_t.
+    void const * p_context;            ///< Placeholder for user data.  Set in @ref ether_api_t::open function in @ref ether_cfg_t.
 } ether_callback_args_t;
 
 /** Control block.  Allocate an instance specific control block to pass into the API calls.
@@ -144,34 +145,34 @@ typedef void ether_ctrl_t;
 /** Configuration parameters. */
 typedef struct st_ether_cfg
 {
-    uint8_t              channel;                            ///< Channel
-    ether_zerocopy_t     zerocopy;                           ///< Zero copy enable or disable in Read/Write function
-    ether_multicast_t    multicast;                          ///< Multicast enable or disable
-    ether_promiscuous_t  promiscuous;                        ///< Promiscuous mode enable or disable
-    ether_flow_control_t flow_control;                       ///< Flow control functionally enable or disable
-    uint32_t             broadcast_filter;                   ///< Limit of the number of broadcast frames received continuously
-    uint8_t            * p_mac_address;                      ///< Pointer of MAC address
+    uint8_t              channel;                        ///< Channel
+    ether_zerocopy_t     zerocopy;                       ///< Zero copy enable or disable in Read/Write function
+    ether_multicast_t    multicast;                      ///< Multicast enable or disable
+    ether_promiscuous_t  promiscuous;                    ///< Promiscuous mode enable or disable
+    ether_flow_control_t flow_control;                   ///< Flow control functionally enable or disable
+    uint32_t             broadcast_filter;               ///< Limit of the number of broadcast frames received continuously
+    uint8_t            * p_mac_address;                  ///< Pointer of MAC address
 
-    ether_instance_descriptor_t * p_rx_descriptors;          ///< Transmission descriptor
-    ether_instance_descriptor_t * p_tx_descriptors;          ///< Receive descriptor
+    ether_instance_descriptor_t * p_rx_descriptors;      ///< Receive descriptor buffer pool
+    ether_instance_descriptor_t * p_tx_descriptors;      ///< Transmit descriptor buffer pool
 
-    uint8_t              num_tx_descriptors;                 ///< Number of transmission descriptor
-    uint8_t              num_rx_descriptors;                 ///< Number of receive descriptor
+    uint8_t num_tx_descriptors;                          ///< Number of transmission descriptor
+    uint8_t num_rx_descriptors;                          ///< Number of receive descriptor
 
-    uint8_t             ** pp_ether_buffers;                 ///< Transmit and receive buffer
+    uint8_t ** pp_ether_buffers;                         ///< Transmit and receive buffer
 
-    uint32_t             ether_buffer_size;                  ///< Size of transmit and receive buffer
+    uint32_t ether_buffer_size;                          ///< Size of transmit and receive buffer
 
-    IRQn_Type irq;                                           ///< NVIC interrupt number
-    uint32_t  interrupt_priority;                            ///< NVIC interrupt priority
+    IRQn_Type irq;                                       ///< NVIC interrupt number
+    uint32_t  interrupt_priority;                        ///< NVIC interrupt priority
 
-    void (* p_callback)(ether_callback_args_t * p_args);     ///< Callback provided when an ISR occurs.
+    void (* p_callback)(ether_callback_args_t * p_args); ///< Callback provided when an ISR occurs.
 
-    ether_phy_instance_t const * p_ether_phy_instance;       ///< Pointer to ETHER_PHY instance
+    ether_phy_instance_t const * p_ether_phy_instance;   ///< Pointer to ETHER_PHY instance
 
     /** Placeholder for user data.  Passed to the user callback in ether_callback_args_t. */
     void const * p_context;
-    void const * p_extend;                                   ///< Placeholder for user extension.
+    void const * p_extend;                               ///< Placeholder for user extension.
 } ether_cfg_t;
 
 /** Functions implemented at the HAL layer will follow this API. */
@@ -179,7 +180,7 @@ typedef struct st_ether_api
 {
     /** Open driver.
      * @par Implemented as
-     * - R_ETHER_Open()
+     * - @ref R_ETHER_Open()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -188,25 +189,25 @@ typedef struct st_ether_api
 
     /** Close driver.
      * @par Implemented as
-     * - R_ETHER_Close()
+     * - @ref R_ETHER_Close()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(ether_ctrl_t * const p_api_ctrl);
 
-    /** Read packet.
+    /** Read packet if data is available.
      * @par Implemented as
-     * - R_ETHER_Read()
+     * - @ref R_ETHER_Read()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      * @param[in]  p_buffer     Pointer to where to store read data.
      * @param[in]  length_bytes Number of bytes in buffer
      */
-    fsp_err_t (* read)(ether_ctrl_t * const p_api_ctrl, void ** const pp_buffer, uint32_t * const length_bytes);
+    fsp_err_t (* read)(ether_ctrl_t * const p_api_ctrl, void * const p_buffer, uint32_t * const length_bytes);
 
-    /** Release rx buffer from buffer pool process in zero copy read operation.
+    /** Release rx buffer from buffer pool process in zero-copy read operation.
      * @par Implemented as
-     * - R_ETHER_BufferRelease()
+     * - @ref R_ETHER_BufferRelease()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      */
@@ -214,17 +215,17 @@ typedef struct st_ether_api
 
     /** Write packet.
      * @par Implemented as
-     * - R_ETHER_Write()
+     * - @ref R_ETHER_Write()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
-     * @param[in]  p_buffer     Pointer to where to load write data.
+     * @param[in]  p_buffer     Pointer to data to write.
      * @param[in]  frame_length Send ethernet frame size(without 4 bytes of CRC data size).
      */
     fsp_err_t (* write)(ether_ctrl_t * const p_api_ctrl, void * const p_buffer, uint32_t const frame_length);
 
     /** Process link.
      * @par Implemented as
-     * - R_ETHER_LinkProcess()
+     * - @ref R_ETHER_LinkProcess()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      */
@@ -232,7 +233,7 @@ typedef struct st_ether_api
 
     /** Enable magic packet detection.
      * @par Implemented as
-     * - R_ETHER_WakeOnLANEnable()
+     * - @ref R_ETHER_WakeOnLANEnable()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      */
@@ -240,9 +241,8 @@ typedef struct st_ether_api
 
     /** Return the version of the driver.
      * @par Implemented as
-     * - R_ETHER_VersionGet()
+     * - @ref R_ETHER_VersionGet()
      *
-     * @param[in]  p_api_ctrl       Pointer to control structure.
      * @param[out] p_data       Memory address to return version information to.
      */
     fsp_err_t (* versionGet)(fsp_version_t * const p_data);

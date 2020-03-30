@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -37,9 +37,7 @@
 #include "hw_sce_trng_private.h"
 
 /*******************************************************************************************************************//**
- * @ingroup SCE_PROC_RNG
- *  @brief Generate 128-bit random number using SCE HW TRNG
- *
+ * Generate 128-bit random number using SCE HW TRNG
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**

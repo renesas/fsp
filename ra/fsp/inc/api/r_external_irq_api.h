@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -55,7 +55,7 @@ FSP_HEADER
 /** Callback function parameter data */
 typedef struct st_external_irq_callback_args
 {
-    /** Placeholder for user data. Set in external_irq_api_t::open function in ::external_irq_cfg_t. */
+    /** Placeholder for user data. Set in @ref external_irq_api_t::open function in @ref external_irq_cfg_t. */
     void const * p_context;
     uint32_t     channel;              ///< The physical hardware channel that caused the interrupt.
 } external_irq_callback_args_t;
@@ -93,7 +93,7 @@ typedef struct st_external_irq_cfg
     /** Callback provided external input trigger occurs. */
     void (* p_callback)(external_irq_callback_args_t * p_args);
 
-    /** Placeholder for user data.  Passed to the user callback in ::external_irq_callback_args_t. */
+    /** Placeholder for user data.  Passed to the user callback in @ref external_irq_callback_args_t. */
     void const * p_context;
     void const * p_extend;             ///< External IRQ hardware dependent configuration.
 } external_irq_cfg_t;
@@ -109,7 +109,7 @@ typedef struct st_external_irq_api
 {
     /** Initial configuration.
      * @par Implemented as
-     * - R_ICU_ExternalIrqOpen()
+     * - @ref R_ICU_ExternalIrqOpen()
      *
      * @param[out]  p_ctrl  Pointer to control block. Must be declared by user. Value set here.
      * @param[in]   p_cfg   Pointer to configuration structure. All elements of the structure must be set by user.
@@ -118,7 +118,7 @@ typedef struct st_external_irq_api
 
     /** Enable callback when an external trigger condition occurs.
      * @par Implemented as
-     * - R_ICU_ExternalIrqEnable()
+     * - @ref R_ICU_ExternalIrqEnable()
      *
      * @param[in]  p_ctrl      Control block set in Open call for this external interrupt.
      */
@@ -126,7 +126,7 @@ typedef struct st_external_irq_api
 
     /** Disable callback when external trigger condition occurs.
      * @par Implemented as
-     * - R_ICU_ExternalIrqDisable()
+     * - @ref R_ICU_ExternalIrqDisable()
      *
      * @param[in]  p_ctrl      Control block set in Open call for this external interrupt.
      */
@@ -134,7 +134,7 @@ typedef struct st_external_irq_api
 
     /** Allow driver to be reconfigured. May reduce power consumption.
      * @par Implemented as
-     * - R_ICU_ExternalIrqClose()
+     * - @ref R_ICU_ExternalIrqClose()
      *
      * @param[in]  p_ctrl      Control block set in Open call for this external interrupt.
      */
@@ -142,7 +142,7 @@ typedef struct st_external_irq_api
 
     /** Get version and store it in provided pointer p_version.
      * @par Implemented as
-     * - R_ICU_ExternalIrqVersionGet()
+     * - @ref R_ICU_ExternalIrqVersionGet()
      *
      * @param[out]  p_version  Code and API version used.     */
     fsp_err_t (* versionGet)(fsp_version_t * const p_version);

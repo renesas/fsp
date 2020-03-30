@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -22,32 +22,33 @@
 #include "bsp_api.h"
 #include "r_ether_phy.h"
 
-#if (ETHER_PHY_CFG_USE_PHY == 1)
+#if (ETHER_PHY_CFG_USE_PHY == ETHER_PHY_CFG_USE_PHY_KSZ8091RNB)
 
 /***********************************************************************************************************************
- Macro definitions
+ * Macro definitions
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- Typedef definitions
+ * Typedef definitions
  ***********************************************************************************************************************/
+
 /* Vendor Specific PHY Registers */
-#define ETHER_PHY_REG_INTERRUPT_CONTROL       (0x1B)
-#define ETHER_PHY_REG_PHY_CONTROL2            (0x1F)
+ #define ETHER_PHY_REG_INTERRUPT_CONTROL    (0x1B)
+ #define ETHER_PHY_REG_PHY_CONTROL2         (0x1F)
 
 /***********************************************************************************************************************
- Exported global variables (to be accessed by other files)
+ * Exported global variables (to be accessed by other files)
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- Exported global function
+ * Exported global function
  ***********************************************************************************************************************/
-void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl);
-extern uint32_t ether_phy_read (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
-extern void ether_phy_write (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
+void            ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+extern uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
+extern void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
 
 /***********************************************************************************************************************
- Private global variables and functions
+ * Private global variables and functions
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -73,12 +74,15 @@ void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
     ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_INTERRUPT_CONTROL, 0x0500);
     ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_INTERRUPT_CONTROL);
     reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2);
+
     /* b7=1:RMII 50MHz clock mode; clock input to XI(pin 9) is 50MHz */
+ #if (ETHER_PHY_CFG_USE_REF_CLK == 0)
     reg |= 0x0080;
+ #endif
+
     /* b9=0:Interrupt pin active low */
     reg &= 0xfdff;
     ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2, reg);
+}                                      /* End of function ether_phy_targets_initialize() */
 
-} /* End of function ether_phy_targets_initialize() */
-
-#endif /* ETHER_PHY_CFG_USE_PHY == 1 */
+#endif /* ETHER_PHY_CFG_USE_PHY == ETHER_PHY_CFG_USE_PHY_KSZ8091RNB */

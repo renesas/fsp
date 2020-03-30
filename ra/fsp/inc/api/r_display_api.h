@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -335,7 +335,7 @@ typedef struct st_display_api
 {
     /** Open display device.
      * @par Implemented as
-     * - R_GLCDC_Open()
+     * - @ref R_GLCDC_Open()
      * @param[in,out]  p_ctrl        Pointer to display interface control block. Must be declared by user. Value set
      *                               here.
      * @param[in]      p_cfg         Pointer to display configuration structure. All elements of this structure must be
@@ -345,28 +345,28 @@ typedef struct st_display_api
 
     /** Close display device.
      * @par Implemented as
-     * - R_GLCDC_Close()
+     * - @ref R_GLCDC_Close()
      * @param[in]     p_ctrl   Pointer to display interface control block.
      */
     fsp_err_t (* close)(display_ctrl_t * const p_ctrl);
 
     /** Display start.
      * @par Implemented as
-     * - R_GLCDC_Start()
+     * - @ref R_GLCDC_Start()
      * @param[in]     p_ctrl   Pointer to display interface control block.
      */
     fsp_err_t (* start)(display_ctrl_t * const p_ctrl);
 
     /** Display stop.
      * @par Implemented as
-     * - R_GLCDC_Stop()
+     * - @ref R_GLCDC_Stop()
      * @param[in]     p_ctrl   Pointer to display interface control block.
      */
     fsp_err_t (* stop)(display_ctrl_t * const p_ctrl);
 
     /** Change layer parameters at runtime.
      * @par Implemented as
-     * - R_GLCDC_LayerChange()
+     * - @ref R_GLCDC_LayerChange()
      * @param[in]   p_ctrl     Pointer to display interface control block.
      * @param[in]   p_cfg      Pointer to run-time layer configuration structure.
      * @param[in]   frame      Number of graphic frames.
@@ -376,7 +376,7 @@ typedef struct st_display_api
 
 /** Change layer framebuffer pointer.
  * @par Implemented as
- * - R_GLCDC_BufferChange()
+ * - @ref R_GLCDC_BufferChange()
  * @param[in]   p_ctrl       Pointer to display interface control block.
  * @param[in]   framebuffer  Pointer to desired framebuffer.
  * @param[in]   frame        Number of graphic frames.
@@ -388,7 +388,7 @@ typedef struct st_display_api
 
     /** Color correction.
      * @par Implemented as
-     * - R_GLCDC_ColorCorrection()
+     * - @ref R_GLCDC_ColorCorrection()
      * @param[in]   p_ctrl     Pointer to display interface control block.
      * @param[in]   param      Pointer to color correction configuration structure.
      */
@@ -397,7 +397,7 @@ typedef struct st_display_api
 
     /** Set CLUT for display device.
      * @par Implemented as
-     * - R_GLCDC_ClutUpdate()
+     * - @ref R_GLCDC_ClutUpdate()
      * @param[in]   p_ctrl     Pointer to display interface control block.
      * @param[in]   p_clut_cfg Pointer to CLUT configuration structure.
      * @param[in]   frame      Number of frame buffer corresponding to the CLUT.
@@ -407,7 +407,7 @@ typedef struct st_display_api
 
     /** Get status for display device.
      * @par Implemented as
-     * - R_GLCDC_StatusGet()
+     * - @ref R_GLCDC_StatusGet()
      * @param[in]   p_ctrl     Pointer to display interface control block.
      * @param[in]   status     Pointer to display interface status structure.
      */
@@ -415,7 +415,7 @@ typedef struct st_display_api
 
     /** Get version.
      * @par Implemented as
-     * - R_GLCDC_VersionGet()
+     * - @ref R_GLCDC_VersionGet()
      * @param[in]   p_version  Pointer to the memory to store the version information.
      */
     fsp_err_t (* versionGet)(fsp_version_t * p_version);

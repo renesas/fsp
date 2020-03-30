@@ -1370,6 +1370,25 @@
               </enumeratedValues>
             </field>
             <field>
+              <name>ADINV</name>
+              <description>Single-Ended Input A/D Converted Data Inversion Select</description>
+              <lsb>14</lsb>
+              <msb>14</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Data is stored in a range of -32768 to 0.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Data is stored in a range of 0 to 32767.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
               <name>DIAGM</name>
               <description>Self-Diagnosis Enable</description>
               <lsb>11</lsb>
@@ -44054,6 +44073,26 @@ FMS2,1,0:
         <size>0x008</size>
         <usage>registers</usage>
       </addressBlock>
+      <addressBlock>
+        <offset>0x00000100</offset>
+        <size>0x11C</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <addressBlock>
+        <offset>0x00000220</offset>
+        <size>0x0B2</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <addressBlock>
+        <offset>0x00000300</offset>
+        <size>0x01C</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <addressBlock>
+        <offset>0x00000320</offset>
+        <size>0x0B2</size>
+        <usage>registers</usage>
+      </addressBlock>
       <registers>
         <register>
           <name>JCMOD</name>
@@ -45617,6 +45656,64 @@ FMS2,1,0:
               <readAction>modify</readAction>
             </field>
           </fields>
+        </register>
+        <register>
+          <dim>64</dim>
+          <dimIncrement>0x1</dimIncrement>
+          <name>JCQTBL0[%s]</name>
+          <description>Quantization Table 0</description>
+          <addressOffset>0x0100</addressOffset>
+          <size>8</size>
+          <access>write-only</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0x00</resetMask>
+        </register>
+        <register derivedFrom="JCQTBL0[%s]">
+          <name>JCQTBL1[%s]</name>
+          <description>Quantization Table 1</description>
+          <addressOffset>0x0140</addressOffset>
+        </register>
+        <register derivedFrom="JCQTBL0[%s]">
+          <name>JCQTBL2[%s]</name>
+          <description>Quantization Table 2</description>
+          <addressOffset>0x0180</addressOffset>
+        </register>
+        <register derivedFrom="JCQTBL0[%s]">
+          <name>JCQTBL3[%s]</name>
+          <description>Quantization Table 3</description>
+          <addressOffset>0x01C0</addressOffset>
+        </register>
+        <register>
+          <dim>28</dim>
+          <dimIncrement>0x1</dimIncrement>
+          <name>JCHTBD0[%s]</name>
+          <description>DC Huffman Table 0</description>
+          <addressOffset>0x0200</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0x00</resetMask>
+        </register>
+        <register derivedFrom="JCHTBD0[%s]">
+          <name>JCHTBD1[%s]</name>
+          <description>DC Huffman Table 1</description>
+          <addressOffset>0x0300</addressOffset>
+        </register>
+        <register>
+          <dim>178</dim>
+          <dimIncrement>0x1</dimIncrement>
+          <name>JCHTBA0[%s]</name>
+          <description>AC Huffman Table 0</description>
+          <addressOffset>0x0220</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0x00</resetMask>
+        </register>
+        <register derivedFrom="JCHTBA0[%s]">
+          <name>JCHTBA1[%s]</name>
+          <description>DC Huffman Table 1</description>
+          <addressOffset>0x0320</addressOffset>
         </register>
       </registers>
     </peripheral>
@@ -48606,6 +48703,25 @@ FMS2,1,0:
               </enumeratedValues>
             </field>
             <field>
+              <name>MSTPC4</name>
+              <description>Segment LCD Controller Module Stop</description>
+              <lsb>4</lsb>
+              <msb>4</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Cancel the module-stop state</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Enter the module-stop state</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
               <name>MSTPC3</name>
               <description>Capacitive Touch Sensing Unit Module Stop</description>
               <lsb>3</lsb>
@@ -48928,12 +49044,12 @@ FMS2,1,0:
         <cluster>
           <dim>4</dim>
           <dimIncrement>0x3</dimIncrement>
-          <name>AMPIO[%s]</name>
+          <name>AMP[%s]</name>
           <description>Input and Output Selectors for Operational Amplifier %s</description>
           <addressOffset>0x0E</addressOffset>
           <access>read-write</access>
           <register>
-            <name>O</name>
+            <name>OS</name>
             <description>Output Select Register </description>
             <addressOffset>0</addressOffset>
             <size>8</size>
@@ -48943,7 +49059,7 @@ FMS2,1,0:
             <fields />
           </register>
           <register>
-            <name>P</name>
+            <name>PS</name>
             <description>Plus Input Select Register </description>
             <addressOffset>2</addressOffset>
             <size>8</size>
@@ -48953,7 +49069,7 @@ FMS2,1,0:
             <fields />
           </register>
           <register>
-            <name>M</name>
+            <name>MS</name>
             <description>Minus Input Select Register</description>
             <addressOffset>1</addressOffset>
             <size>8</size>
@@ -49213,6 +49329,38 @@ FMS2,1,0:
                 <enumeratedValue>
                   <name>1</name>
                   <description>Operational amplifier is operating.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>AMPCPC</name>
+          <description>Operational amplifier switch charge pump control register</description>
+          <addressOffset>0x1A</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <dim>3</dim>
+              <dimIncrement>1</dimIncrement>
+              <name>PUMP%sEN</name>
+              <description>charge pump for AMP%s enable/disable</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>charge pump for AMP is disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>charge pump for AMP is enabled.</description>
                   <value>#1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -59481,6 +59629,544 @@ FMS2,1,0:
       <baseAddress>0x40062400</baseAddress>
     </peripheral>
     <peripheral>
+      <name>R_SLCDC</name>
+      <description>Segment LCD Controller/Driver</description>
+      <baseAddress>0x40082000</baseAddress>
+      <addressBlock>
+        <offset>0x00</offset>
+        <size>4</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <addressBlock>
+        <offset>0x100</offset>
+        <size>38</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <registers>
+        <register>
+          <name>LCDM0</name>
+          <description>LCD Mode Register 0 </description>
+          <addressOffset>0x000</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <name>MDSET</name>
+              <description>LCD drive voltage generator selection</description>
+              <lsb>6</lsb>
+              <msb>7</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>00</name>
+                  <description>External resistance division method</description>
+                  <value>#00</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01</name>
+                  <description>Internal voltage boosting method</description>
+                  <value>#01</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>10</name>
+                  <description>Capacitor split method</description>
+                  <value>#10</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>11</name>
+                  <description>Setting prohibited</description>
+                  <value>#11</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>LWAVE</name>
+              <description>LCD display waveform selection</description>
+              <lsb>5</lsb>
+              <msb>5</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Waveform A</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Waveform B</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>LDTY</name>
+              <description>Time Slice of LCD Display Select</description>
+              <lsb>2</lsb>
+              <msb>4</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>000</name>
+                  <description>Static</description>
+                  <value>#000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>001</name>
+                  <description>2-time slice</description>
+                  <value>#001</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>010</name>
+                  <description>3-time slice</description>
+                  <value>#010</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>011</name>
+                  <description>4-time slice</description>
+                  <value>#011</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>101</name>
+                  <description>8-time slice</description>
+                  <value>#101</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>others</name>
+                  <description>Setting prohibited</description>
+                  <isDefault>true</isDefault>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>LBAS</name>
+              <description>LCD Display Bias Method Select</description>
+              <lsb>0</lsb>
+              <msb>1</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>00</name>
+                  <description>1/2 bias method</description>
+                  <value>#00</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01</name>
+                  <description>1/3 bias method</description>
+                  <value>#01</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>10</name>
+                  <description>1/4 bias method</description>
+                  <value>#10</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>11</name>
+                  <description>Setting prohibited</description>
+                  <value>#11</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>LCDM1</name>
+          <description>LCD Mode Register 1 </description>
+          <addressOffset>0x001</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <name>LCDON</name>
+              <description>LCD Display Enable/Disable</description>
+              <lsb>7</lsb>
+              <msb>7</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Output ground level to segment/common pin(SCOC=0)/Display off (all segment outputs are deselected)(SCOC=1)</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Output ground level to segment/common pin(SCOC=0)/Display on(SCOC=1)</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>SCOC</name>
+              <description>LCD Display Enable/Disable</description>
+              <lsb>6</lsb>
+              <msb>6</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Output ground level to segment/common pin(LCDON=0)/Output ground level to segment/common pin(LCDON=1)</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Display off (all segment outputs are deselected)(LCDON=0)/Display on(LCDON=1)</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>VLCON</name>
+              <description>Voltage boost circuit or capacitor split circuit operation enable/disable</description>
+              <lsb>5</lsb>
+              <msb>5</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Stops voltage boost circuit or capacitor split circuit operation</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Enables voltage boost circuit or capacitor split circuit operation</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>BLON</name>
+              <description>Display data area control</description>
+              <lsb>4</lsb>
+              <msb>4</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Displaying an A-pattern area data (lower four bits of LCD display data register)(LCDSEL=0)/Displaying a B-pattern area data (higher four bits of LCD display data register)(LCDSEL=1)</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Alternately displaying A-pattern and B-pattern area data (blinking display corresponding to the constant-period interrupt (INTRTC) timing of the real-time clock (RTC))</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>LCDSEL</name>
+              <description>Display data area control</description>
+              <lsb>3</lsb>
+              <msb>3</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Displaying an A-pattern area data (lower four bits of LCD display data register)(BLON=0)/Alternately displaying A-pattern and B-pattern area data (blinking display corresponding to the constant-period interrupt (INTRTC) timing of the real-time clock (RTC))(BLON=1)</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Displaying a B-pattern area data (higher four bits of LCD display data register)(BLON=0)/Alternately displaying A-pattern and B-pattern area data (blinking display corresponding to the constant-period interrupt (INTRTC) timing of the real-time clock (RTC))(BLON=1)</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>Reserved</name>
+              <description>These bits are read as 00. The write value should be 00.</description>
+              <lsb>1</lsb>
+              <msb>2</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>LCDVLM</name>
+              <description>Voltage Boosting Pin Initial Value Switching Control</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Set when VDD &gt;= 2.7 V</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Set when VDD &lt;= 4.2 V </description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>LCDC0</name>
+          <description>LCD Clock Control Register 0 </description>
+          <addressOffset>0x002</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <name>LCDC</name>
+              <description>LCD clock (LCDCL)</description>
+              <lsb>0</lsb>
+              <msb>5</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>000001</name>
+                  <description>(Sub clock)/22  or  (LOCO clock)/22</description>
+                  <value>#000001</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>000010</name>
+                  <description>(Sub clock)/23  or  (LOCO clock)/23</description>
+                  <value>#000010</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>000011</name>
+                  <description>(Sub clock)/24  or  (LOCO clock)/24 </description>
+                  <value>#000011</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>000100</name>
+                  <description>(Sub clock)/25  or  (LOCO clock)/25 </description>
+                  <value>#000100</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>000101</name>
+                  <description>(Sub clock)/26  or  (LOCO clock)/26 </description>
+                  <value>#000101</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>000110</name>
+                  <description>(Sub clock)/27  or  (LOCO clock)/27</description>
+                  <value>#000110</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>000111</name>
+                  <description>(Sub clock)/28  or  (LOCO clock)/28</description>
+                  <value>#000111</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>001000</name>
+                  <description>(Sub clock)/29  or  (LOCO clock)/29</description>
+                  <value>#001000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>001001</name>
+                  <description>(Sub clock)/210 or  (LOCO clock)/210</description>
+                  <value>#001001</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>010001</name>
+                  <description>(Main clock)/28 or  (HOCO clock)/28 </description>
+                  <value>#010001</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>010010</name>
+                  <description>(Main clock)/29 or  (HOCO clock)/29</description>
+                  <value>#010010</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>010011</name>
+                  <description>(Main clock)/210 or  (HOCO clock)/210</description>
+                  <value>#010011</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>010100</name>
+                  <description>(Main clock)/211 or  (HOCO clock)/211</description>
+                  <value>#010100</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>010101</name>
+                  <description>(Main clock)/212 or  (HOCO clock)/212</description>
+                  <value>#010101</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>010110</name>
+                  <description>(Main clock)/213 or  (HOCO clock)/213 </description>
+                  <value>#010110</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>010111</name>
+                  <description>(Main clock)/214 or  (HOCO clock)/214</description>
+                  <value>#010111</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>011000</name>
+                  <description>(Main clock)/215 or  (HOCO clock)/215</description>
+                  <value>#011000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>011001</name>
+                  <description>(Main clock)/216 or  (HOCO clock)/216</description>
+                  <value>#011001</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>011010</name>
+                  <description>(Main clock)/217 or  (HOCO clock)/217</description>
+                  <value>#011010</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>011011</name>
+                  <description>(Main clock)/218 or  (HOCO clock)/218</description>
+                  <value>#011011</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>101011</name>
+                  <description>(Main clock)/219 or  (HOCO clock)/219</description>
+                  <value>#101011</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>others</name>
+                  <description>Other than above Setting prohibited</description>
+                  <isDefault>true</isDefault>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>VLCD</name>
+          <description>LCD Boost Level Control Register </description>
+          <addressOffset>0x003</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x04</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <name>VLCD</name>
+              <description>Reference Voltage(Contrast Adjustment) Select</description>
+              <lsb>0</lsb>
+              <msb>4</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>00100</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.00 V (default)  VL4 voltage:  3.00 V(1/3 bias method)/4.00 V(1/4 bias method)</description>
+                  <value>#00100</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>00101</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.05 V  VL4 voltage:  3.15 V(1/3 bias method)/4.20 V(1/4 bias method)</description>
+                  <value>#00101</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>00110</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.10 V  VL4 voltage:  3.30 V(1/3 bias method)/4.40 V(1/4 bias method)</description>
+                  <value>#00110</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>00111</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.15 V   VL4 voltage:  3.45 V(1/3 bias method)/4.60 V(1/4 bias method)</description>
+                  <value>#00111</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01000</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.20 V  VL4 voltage:  3.60 V(1/3 bias method)/4.80 V(1/4 bias method)</description>
+                  <value>#01000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01001</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.25 V  VL4 voltage:  3.75 V(1/3 bias method)/5.00 V(1/4 bias method)</description>
+                  <value>#01001</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01010</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.30 V  VL4 voltage:  3.90 V(1/3 bias method)/5.20 V(1/4 bias method)</description>
+                  <value>#01010</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01011</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.35 V  VL4 voltage:  4.05 V(1/3 bias method)/Setting prohibited(1/4 bias method)</description>
+                  <value>#01011</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01100</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.40 V  VL4 voltage:  4.20 V(1/3 bias method)/Setting prohibited(1/4 bias method)</description>
+                  <value>#01100</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01101</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.45 V  VL4 voltage:  4.35 V(1/3 bias method)/Setting prohibited(1/4 bias method)</description>
+                  <value>#01101</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01110</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.50 V  VL4 voltage:  4.50 V(1/3 bias method)/Setting prohibited(1/4 bias method)</description>
+                  <value>#01110</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01111</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.55 V  VL4 voltage:  4.65 V(1/3 bias method)/Setting prohibited(1/4 bias method)</description>
+                  <value>#01111</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>10000</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.60 V   VL4 voltage:  4.80 V(1/3 bias method)/Setting prohibited(1/4 bias method)</description>
+                  <value>#10000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>10001</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.65 V   VL4 voltage:  4.95 V(1/3 bias method)/Setting prohibited(1/4 bias method)</description>
+                  <value>#10001</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>10010</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.70 V   VL4 voltage:  5.10 V(1/3 bias method)/Setting prohibited(1/4 bias method)</description>
+                  <value>#10010</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>10011</name>
+                  <description>Reference voltageselection(contrast adjustment):  1.75 V   VL4 voltage:  5.25 V(1/3 bias method)/Setting prohibited(1/4 bias method)</description>
+                  <value>#10011</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>others</name>
+                  <description>Setting prohibited</description>
+                  <isDefault>true</isDefault>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <dim>38</dim>
+          <dimIncrement>0x1</dimIncrement>
+          <name>SEG[%s]</name>
+          <description>LCD Display Data Array</description>
+          <addressOffset>0x100</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <name>A</name>
+              <description>A-Pattern Area</description>
+              <lsb>0</lsb>
+              <msb>3</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>B</name>
+              <description>B-Pattern Area</description>
+              <lsb>4</lsb>
+              <msb>7</msb>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+      </registers>
+    </peripheral>
+    <peripheral>
       <name>R_SPI0</name>
       <description>Serial Peripheral Interface</description>
       <baseAddress>0x40072000</baseAddress>
@@ -65762,6 +66448,36 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
           </fields>
         </register>
         <register>
+          <name>USBCKCR</name>
+          <description>USB Clock Control Register</description>
+          <addressOffset>0xD0</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <name>USBCLKSEL</name>
+              <description>The USBCLKSEL bit selects the source of the USB clock (UCLK).</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PLL</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>HOCO</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>SDADCCKCR</name>
           <description>24-bit Sigma-Delta A/D Converter Clock Control Register</description>
           <addressOffset>0xD1</addressOffset>
@@ -65952,10 +66668,8 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
           </fields>
         </register>
         <register>
-          <dim>2</dim>
-          <dimIncrement>1</dimIncrement>
-          <name>DPSIER%s</name>
-          <description>Deep Standby Interrupt Enable Register %s</description>
+          <name>DPSIER0</name>
+          <description>Deep Standby Interrupt Enable Register 0</description>
           <addressOffset>0x402</addressOffset>
           <size>8</size>
           <access>read-write</access>
@@ -65965,6 +66679,39 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
             <field>
               <dim>8</dim>
               <dimIncrement>1</dimIncrement>
+              <name>DIRQ%sE</name>
+              <description>IRQ-DS Pin Enable</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Canceling deep software standby mode is disabled</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Canceling deep software standby mode is enabled</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DPSIER1</name>
+          <description>Deep Standby Interrupt Enable Register 1</description>
+          <addressOffset>0x403</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <dim>8</dim>
+              <dimIncrement>1</dimIncrement>
+              <dimIndex>8-15</dimIndex>
               <name>DIRQ%sE</name>
               <description>IRQ-DS Pin Enable</description>
               <lsb>0</lsb>
@@ -66160,10 +66907,8 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
           </fields>
         </register>
         <register>
-          <dim>2</dim>
-          <dimIncrement>1</dimIncrement>
-          <name>DPSIFR%s</name>
-          <description>Deep Standby Interrupt Flag Register %s</description>
+          <name>DPSIFR0</name>
+          <description>Deep Standby Interrupt Flag Register 0</description>
           <addressOffset>0x406</addressOffset>
           <size>8</size>
           <access>read-write</access>
@@ -66173,6 +66918,41 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
             <field>
               <dim>8</dim>
               <dimIncrement>1</dimIncrement>
+              <name>DIRQ%sF</name>
+              <description>IRQ-DS Pin Deep Standby Cancel Flag</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <access>read-write</access>
+              <modifiedWriteValues>zeroToClear</modifiedWriteValues>
+              <readAction>modify</readAction>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>The cancel request is not generated</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>The cancel request is generated</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DPSIFR1</name>
+          <description>Deep Standby Interrupt Flag Register 1</description>
+          <addressOffset>0x407</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <dim>8</dim>
+              <dimIncrement>1</dimIncrement>
+              <dimIndex>8-15</dimIndex>
               <name>DIRQ%sF</name>
               <description>IRQ-DS Pin Deep Standby Cancel Flag</description>
               <lsb>0</lsb>

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -110,13 +110,7 @@ FSP_HEADER
 #endif
 
 /** Version data structure used by error logger macro. */
-static const fsp_version_t g_bsp_version =
-{
-    .api_version_minor  = BSP_API_VERSION_MINOR,
-    .api_version_major  = BSP_API_VERSION_MAJOR,
-    .code_version_major = BSP_CODE_VERSION_MAJOR,
-    .code_version_minor = BSP_CODE_VERSION_MINOR
-};
+extern const fsp_version_t g_bsp_version;
 
 /****************************************************************
  *
@@ -137,13 +131,13 @@ static const fsp_version_t g_bsp_version =
  #define BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION    (0U)
 #endif
 
-/** This macro defines a variable for saving previous mask value */
+/* This macro defines a variable for saving previous mask value */
 #ifndef FSP_CRITICAL_SECTION_DEFINE
 
  #define FSP_CRITICAL_SECTION_DEFINE               uint32_t old_mask_level = 0U
 #endif
 
-/** These macros abstract methods to save and restore the interrupt state for different architectures. */
+/* These macros abstract methods to save and restore the interrupt state for different architectures. */
 #if (0 == BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION)
  #define FSP_CRITICAL_SECTION_GET_CURRENT_STATE    __get_PRIMASK
  #define FSP_CRITICAL_SECTION_SET_STATE            __set_PRIMASK
@@ -155,19 +149,19 @@ static const fsp_version_t g_bsp_version =
                                                                (8U - __NVIC_PRIO_BITS)))
 #endif
 
-/** This macro defined to get the mask value */
+/** This macro temporarily saves the current interrupt state and disables interrupts. */
 #ifndef FSP_CRITICAL_SECTION_ENTER
  #define FSP_CRITICAL_SECTION_ENTER                            \
     old_mask_level = FSP_CRITICAL_SECTION_GET_CURRENT_STATE(); \
     FSP_CRITICAL_SECTION_SET_STATE(FSP_CRITICAL_SECTION_IRQ_MASK_SET)
 #endif
 
-/** This macro defined to restore the old mask value */
+/** This macro restores the previously saved interrupt state, reenabling interrupts. */
 #ifndef FSP_CRITICAL_SECTION_EXIT
  #define FSP_CRITICAL_SECTION_EXIT              FSP_CRITICAL_SECTION_SET_STATE(old_mask_level)
 #endif
 
-/** Number of Cortex processor exceptions, used as an offset from XPSR value for the IRQn_Type macro. */
+/* Number of Cortex processor exceptions, used as an offset from XPSR value for the IRQn_Type macro. */
 #define FSP_PRIV_CORTEX_PROCESSOR_EXCEPTIONS    (16U)
 
 /** Used to signify that the requested IRQ vector is not defined in this system. */

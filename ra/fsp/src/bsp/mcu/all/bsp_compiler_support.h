@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -25,14 +25,21 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#if   defined(__GNUC__)                /* GCC or AC6 Compiler */
+#if defined(__ARMCC_VERSION)           /* AC6 compiler */
+ #define BSP_SECTION_HEAP                  ".bss.heap"
+ #define BSP_DONT_REMOVE
+ #define BSP_ATTRIBUTE_STACKLESS           __attribute__((naked))
+ #define BSP_FORCE_INLINE                  __attribute__((always_inline))
+#elif   defined(__GNUC__)              /* GCC compiler */
  #define BSP_SECTION_HEAP                  ".heap"
  #define BSP_DONT_REMOVE
  #define BSP_ATTRIBUTE_STACKLESS           __attribute__((naked))
-#elif defined(__ICCARM__)              /* IAR Compiler */
+ #define BSP_FORCE_INLINE                  __attribute__((always_inline))
+#elif defined(__ICCARM__)              /* IAR compiler */
  #define BSP_SECTION_HEAP                  "HEAP"
  #define BSP_DONT_REMOVE                   __root
  #define BSP_ATTRIBUTE_STACKLESS           __stackless
+ #define BSP_FORCE_INLINE                  _Pragma("inline=forced")
 #endif
 
 #define BSP_SECTION_STACK                  ".stack"

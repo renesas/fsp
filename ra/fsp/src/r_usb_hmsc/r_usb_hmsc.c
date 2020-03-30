@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -15,7 +15,7 @@
  **********************************************************************************************************************/
 
 /******************************************************************************
- Includes   <System Includes> , "Project Includes"
+ * Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
 
 #include <r_usb_basic.h>
@@ -28,17 +28,19 @@
 #include "src/inc/r_usb_hmsc_driver.h"
 
 #if (BSP_CFG_RTOS == 2)
-#include "FreeRTOS.h"
-#endif  /* (BSP_CFG_RTOS == 2) */
-
-#if defined(USB_CFG_HMSC_USE)
+ #include "FreeRTOS.h"
+#endif                                 /* (BSP_CFG_RTOS == 2) */
 
 /******************************************************************************
- Exported global variables (to be accessed by other files)
+ * Private global variables and functions
+ ******************************************************************************/
+
+/******************************************************************************
+ * Exported global variables (to be accessed by other files)
  ******************************************************************************/
 #if (BSP_CFG_RTOS == 2)
-extern SemaphoreHandle_t  SemaphoreHandleRead;
-#endif /* (BSP_CFG_RTOS == 2) */
+extern SemaphoreHandle_t SemaphoreHandleRead;
+#endif                                 /* (BSP_CFG_RTOS == 2) */
 
 /***********************************************************************************************************************
  * Global variables
@@ -46,9 +48,12 @@ extern SemaphoreHandle_t  SemaphoreHandleRead;
 
 const usb_hmsc_api_t g_hmsc_on_usb =
 {
-    .strgcmd             = R_USB_HmscStrgCmd,
-    .drivenoget          = R_USB_HmscDriveNoGet,
-    .drive2addr          = R_USB_HmscSmpDrive2Addr,
+    .storageCommand     = R_USB_HMSC_StorageCommand,
+    .driveNumberGet     = R_USB_HMSC_DriveNumberGet,
+    .storageReadSector  = R_USB_HMSC_StorageReadSector,
+    .storageWriteSector = R_USB_HMSC_StorageWriteSector,
+    .semaphoreGet       = R_USB_HMSC_SemaphoreGet,
+    .semaphoreRelease   = R_USB_HMSC_SemaphoreRelease,
 };
 
 /***********************************************************************************************************************
@@ -60,55 +65,58 @@ const usb_hmsc_api_t g_hmsc_on_usb =
  * @{
  **********************************************************************************************************************/
 
-/**************************************************************************//**
+/*************************************************************************//**
  * @brief Processing for MassStorage(ATAPI) command.
  *
- * @retval FSP_SUCCESS         Success in open.
- * @retval FSP_ERR_USB_FAILED  The function could not be completed successfully.
- * @retval FSP_ERR_ASSERTION   Parameter error.
+ *
+ * @retval FSP_SUCCESS           Success.
+ * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
+ * @retval FSP_ERR_ASSERTION     Parameter Null pointer error.
+ * @retval FSP_ERR_USB_PARAMETER Parameter error.
  ******************************************************************************/
-fsp_err_t   R_USB_HmscStrgCmd(usb_ctrl_t * const p_api_ctrl, uint8_t *buf, uint16_t command, usb_instance_transfer_t * p_api_trans)
+fsp_err_t R_USB_HMSC_StorageCommand (usb_ctrl_t * const p_api_ctrl, uint8_t * buf, uint8_t command, uint8_t destination)
 {
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-    fsp_err_t   err = FSP_SUCCESS;
-    usb_info_t  info;
-    usb_utr_t   utr;
-    uint8_t     side;
-    uint16_t    ret;
+    fsp_err_t  err = FSP_SUCCESS;
+    usb_info_t info;
+    usb_utr_t  utr;
+    uint8_t    side;
+    uint16_t   ret;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(USB_NULL != p_api_ctrl)
+    FSP_ASSERT(p_api_ctrl)
 
-    FSP_ASSERT(USB_NULL != p_api_trans)
+    FSP_ASSERT(buf)
+
     /* Argument Checking */
-    FSP_ASSERT(!((USB_IP0 != p_api_trans->module_number) && (USB_IP1 != p_api_trans->module_number)))
+    FSP_ASSERT(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number)))
 
-#if defined(BSP_MCU_GROUP_RA2A1)
+ #if defined(BSP_MCU_GROUP_RA2A1)
     FSP_ASSERT(USB_IP1 != p_api_trans->module)
-#endif /* defined(BSP_MCU_GROUP_RA2A1) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA2A1) */
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+    FSP_ASSERT(destination)
+    FSP_ERROR_RETURN(USB_ADDRESS5 >= destination, FSP_ERR_USB_PARAMETER)
+ #endif                                /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+#endif                                 /* #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
 
-#endif /* #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+    utr.ip                 = p_ctrl->module_number;
+    utr.ipp                = usb_hstd_get_usb_ip_adr(utr.ip);
+    p_ctrl->device_address = destination;
+    utr.p_transfer_rx      = p_ctrl->p_transfer_rx;
+    utr.p_transfer_tx      = p_ctrl->p_transfer_tx;
 
-    p_ctrl->module_number = p_api_trans->module_number;
-    p_ctrl->type = p_api_trans->type;
-    p_ctrl->device_address = p_api_trans->device_address;
-    p_ctrl->pipe = p_api_trans->pipe;
-    p_ctrl->setup = p_api_trans->setup;
-
-    utr.ip = p_ctrl->module_number;
-    utr.ipp = usb_hstd_get_usb_ip_adr(utr.ip);
-
-    R_USB_InfoGet(p_ctrl, &info);
+    R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
     FSP_ERROR_RETURN(USB_STATUS_CONFIGURED == info.device_status, FSP_ERR_USB_FAILED)
 
-    err = R_USB_HmscDriveNoGet(p_ctrl, &side, p_api_trans);
+    err = R_USB_HMSC_DriveNumberGet(p_ctrl, &side, p_ctrl->device_address);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_USB_FAILED)
 
     ret = usb_hmsc_strg_user_command(&utr, side, command, buf, usb_hmsc_strg_cmd_complete);
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(USB_PAR != ret)
-#endif /* #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
 
     if (USB_OK != ret)
     {
@@ -116,104 +124,112 @@ fsp_err_t   R_USB_HmscStrgCmd(usb_ctrl_t * const p_api_ctrl, uint8_t *buf, uint1
         if (USB_HMSC_CSW_ERR == utr.result)
         {
             p_ctrl->status         = USB_CSW_RESULT_FAIL;
-            p_ctrl->module_number  = (uint8_t)utr.ip;       /* Module number setting */
-            p_ctrl->pipe           = (uint8_t)utr.keyword;  /* Pipe number setting */
-            p_ctrl->device_address = (uint8_t)(usb_hstd_get_devsel(&utr, p_ctrl->pipe) >> 12);
-            p_ctrl->data_size           = 0;
-#if (BSP_CFG_RTOS == 2)
-            p_ctrl->p_data = (void *)xTaskGetCurrentTaskHandle();
-#endif /* (BSP_CFG_RTOS == 2) */
+            p_ctrl->module_number  = utr.ip;                /* Module number setting */
+            p_ctrl->pipe           = (uint8_t) utr.keyword; /* Pipe number setting */
+            p_ctrl->device_address = (uint8_t) (usb_hstd_get_devsel(&utr, p_ctrl->pipe) >> 12);
+            p_ctrl->data_size      = 0;
+ #if (BSP_CFG_RTOS == 2)
+            p_ctrl->p_data = (void *) xTaskGetCurrentTaskHandle();
+ #endif                                                         /* (BSP_CFG_RTOS == 2) */
             usb_set_event(USB_STATUS_MSC_CMD_COMPLETE, p_ctrl); /* Set Event(USB receive complete)  */
             err = FSP_SUCCESS;
         }
         else
         {
-        	err = FSP_ERR_USB_FAILED;
+            err = FSP_ERR_USB_FAILED;
         }
-#else   /* (BSP_CFG_RTOS == 2) */
+
+#else                                  /* (BSP_CFG_RTOS == 2) */
         err = FSP_ERR_USB_FAILED;
 #endif  /* (BSP_CFG_RTOS == 2) */
     }
+
 #if (BSP_CFG_RTOS == 2)
     else
     {
-        p_ctrl->module_number  = (uint8_t)utr.ip;       /* Module number setting */
-        p_ctrl->pipe           = (uint8_t)utr.keyword;  /* Pipe number setting */
-        p_ctrl->device_address = (uint8_t)(usb_hstd_get_devsel(&utr, p_ctrl->pipe) >> 12);
+        p_ctrl->module_number  = utr.ip;                /* Module number setting */
+        p_ctrl->pipe           = (uint8_t) utr.keyword; /* Pipe number setting */
+        p_ctrl->device_address = (uint8_t) (usb_hstd_get_devsel(&utr, p_ctrl->pipe) >> 12);
         p_ctrl->data_size      = 0;
 
         switch (utr.result)
         {
             case USB_HMSC_OK:
-                p_ctrl->data_size    = utr.tranlen;
-                p_ctrl->status  = USB_CSW_RESULT_SUCCESS;
-            break;
+            {
+                p_ctrl->data_size = utr.tranlen;
+                p_ctrl->status    = USB_CSW_RESULT_SUCCESS;
+                break;
+            }
 
             case USB_HMSC_CSW_ERR:
-                p_ctrl->status  = USB_CSW_RESULT_FAIL;
-            break;
+            {
+                p_ctrl->status = USB_CSW_RESULT_FAIL;
+                break;
+            }
 
             case USB_HMSC_CSW_PHASE_ERR:
-                p_ctrl->status  = USB_CSW_RESULT_PHASE;
-            break;
+            {
+                p_ctrl->status = USB_CSW_RESULT_PHASE;
+                break;
+            }
 
             default:
-                p_ctrl->status  = USB_CSW_RESULT_FAIL;
-            break;
+            {
+                p_ctrl->status = USB_CSW_RESULT_FAIL;
+                break;
+            }
         }
-#if (BSP_CFG_RTOS == 2)
-        p_ctrl->p_data = (void *)xTaskGetCurrentTaskHandle();
-#endif /* (BSP_CFG_RTOS == 2) */
+
+ #if (BSP_CFG_RTOS == 2)
+        p_ctrl->p_data = (void *) xTaskGetCurrentTaskHandle();
+ #endif                                                     /* (BSP_CFG_RTOS == 2) */
         usb_set_event(USB_STATUS_MSC_CMD_COMPLETE, p_ctrl); /* Set Event(USB receive complete)  */
     }
-#endif  /* (BSP_CFG_RTOS == 2) */
+#endif                                                      /* (BSP_CFG_RTOS == 2) */
 
     return err;
-
 }
+
 /******************************************************************************
- End of function R_USB_HmscStrgCmd
+ * End of function R_USB_HmscStrgCmd
  ******************************************************************************/
 
-/**************************************************************************//**
+/*************************************************************************//**
  * @brief Get number of Storage drive.
  *
- * @retval FSP_SUCCESS         Success in open.
- * @retval FSP_ERR_USB_FAILED  The function could not be completed successfully.
- * @retval FSP_ERR_ASSERTION   Parameter error.
+ *
+ * @retval FSP_SUCCESS           Success.
+ * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
+ * @retval FSP_ERR_ASSERTION     Parameter Null pointer error.
+ * @retval FSP_ERR_USB_PARAMETER Parameter error.
  ******************************************************************************/
-fsp_err_t     R_USB_HmscDriveNoGet(usb_ctrl_t * const p_api_ctrl, uint8_t *p_drive, usb_instance_transfer_t * p_api_trans)
+fsp_err_t R_USB_HMSC_DriveNumberGet (usb_ctrl_t * const p_api_ctrl, uint8_t * p_drive, uint8_t destination)
 {
-	usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
+    usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-    usb_info_t  info;
-    usb_utr_t   utr;
-    volatile uint16_t   address;
+    usb_info_t        info;
+    usb_utr_t         utr;
+    volatile uint16_t address;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(USB_NULL != p_api_ctrl)
+    FSP_ASSERT(p_api_ctrl)
 
-    FSP_ASSERT(USB_NULL != p_api_trans)
+    FSP_ASSERT(p_drive)
 
     /* Argument Checking */
-    FSP_ASSERT(!((USB_IP0 != p_api_trans->module_number) && (USB_IP1 != p_api_trans->module_number)))
+    FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number)), FSP_ERR_USB_PARAMETER)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+    FSP_ASSERT(destination)
+    FSP_ERROR_RETURN(USB_ADDRESS5 >= destination, FSP_ERR_USB_PARAMETER)
+ #endif                                /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
 
+    utr.ip                 = p_ctrl->module_number;
+    utr.ipp                = usb_hstd_get_usb_ip_adr(utr.ip);
+    p_ctrl->device_address = destination;
 
-#endif  /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
-	if(p_ctrl != (usb_instance_ctrl_t *)p_api_trans)
-	{
-	    p_ctrl->module_number = p_api_trans->module_number;
-	    p_ctrl->type = p_api_trans->type;
-	    p_ctrl->device_address = p_api_trans->device_address;
-	    p_ctrl->pipe = p_api_trans->pipe;
-	    p_ctrl->setup = p_api_trans->setup;
-	}
-
-    utr.ip = p_ctrl->module_number;
-    utr.ipp = usb_hstd_get_usb_ip_adr(utr.ip);
-
-    R_USB_InfoGet(p_ctrl, &info);
-    FSP_ERROR_RETURN (USB_STATUS_CONFIGURED == info.device_status, FSP_ERR_USB_FAILED)
+    R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
+    FSP_ERROR_RETURN(USB_STATUS_CONFIGURED == info.device_status, FSP_ERR_USB_FAILED)
 
     address = p_ctrl->device_address;
     if (USB_IP1 == p_ctrl->module_number)
@@ -221,73 +237,236 @@ fsp_err_t     R_USB_HmscDriveNoGet(usb_ctrl_t * const p_api_ctrl, uint8_t *p_dri
         address |= USBA_ADDRESS_OFFSET;
     }
 
-    *p_drive = (uint8_t)usb_hmsc_ref_drvno(address);
-    FSP_ERROR_RETURN(USB_ERROR != *p_drive,FSP_ERR_USB_FAILED)
+    *p_drive = (uint8_t) usb_hmsc_ref_drvno(address);
+    FSP_ERROR_RETURN(USB_ERROR != *p_drive, FSP_ERR_USB_FAILED)
 
     return FSP_SUCCESS;
-
 }
+
 /******************************************************************************
- End of function R_USB_HmscGetDriveNo
+ * End of function R_USB_HmscGetDriveNo
  ******************************************************************************/
 
-/**************************************************************************//**
- * @brief Retrieves device address.
+/*************************************************************************//**
+ * @brief Read sector information.
  *
- * @retval FSP_SUCCESS         Success in open.
- * @retval FSP_ERR_ASSERTION   Parameter error.
+ *
+ * @retval FSP_SUCCESS           Success.
+ * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
+ * @retval FSP_ERR_ASSERTION     Parameter Null pointer error.
+ * @retval FSP_ERR_USB_PARAMETER Parameter error.
+ * @note The address specified in the argument buff must be 4-byte aligned.
  ******************************************************************************/
-fsp_err_t R_USB_HmscSmpDrive2Addr (uint16_t side, usb_utr_t *devadr)
+fsp_err_t R_USB_HMSC_StorageReadSector (uint16_t        drive_number,
+                                        uint8_t * const buff,
+                                        uint32_t        sector_number,
+                                        uint16_t        sector_count)
 {
+    fsp_err_t   result = FSP_ERR_USB_FAILED;
+    uint32_t    trans_byte;
+    usb_utr_t   ptr;
+    uint16_t    err_code;
+    usb_cfg_t * p_cfg;
+
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(USB_MAXSTRAGE > side)
+    FSP_ASSERT(buff)
+    FSP_ERROR_RETURN(USB_MAXSTRAGE >= drive_number, FSP_ERR_USB_PARAMETER)
+    FSP_ERROR_RETURN((((uint32_t) buff & 0x03) == 0), FSP_ERR_USB_PARAMETER)
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
 
-	FSP_ASSERT(USB_NULL != devadr)
-#endif  /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+    /* set sector size */
+    trans_byte = (uint32_t) (sector_count * USB_HMSC_SECTOR_SIZE);
 
-    devadr->keyword = g_usb_hmsc_drvno_tbl[side].devadr; /* Device Address */
-    devadr->ip = g_usb_hmsc_drvno_tbl[side].ip; /* USB IP No.     */
-    devadr->ipp = usb_hstd_get_usb_ip_adr(devadr->ip);
+    /* Drive no. -> USB IP no. and IO Reg Base address */
+    usb_hmsc_drive_to_addr(drive_number, &ptr);
 
-    return FSP_SUCCESS;
-}
-/******************************************************************************
- End of function R_USB_HmscSmpDrive2Addr
- ******************************************************************************/
+    /* Device Status */
+    if (USB_TRUE != usb_hmsc_get_dev_sts(drive_number))
+    {
+        return FSP_ERR_USB_FAILED;
+    }
 
+    if (ptr.ip)
+    {
+#if defined(BSP_MCU_GROUP_RA6M3)
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
+#else
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+#endif
+    }
+    else
+    {
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+    }
+
+    ptr.p_transfer_rx = p_cfg->p_transfer_rx;
+    ptr.p_transfer_tx = p_cfg->p_transfer_tx;
+
+    g_usb_hmsc_strg_process[ptr.ip] = USB_MSG_HMSC_STRG_RW_END;
+    err_code = usb_hmsc_read10(&ptr, drive_number, buff, sector_number, sector_count, trans_byte);
+    if (USB_HMSC_OK == err_code)
+    {
+        result = FSP_SUCCESS;
+    }
+    else
+    {
 #if (BSP_CFG_RTOS == 2)
-/******************************************************************************
-Function Name   : R_USB_HmscSemGet
-Description     : Get a semaphore.
-Arguments       : none
-Return value    : none
-******************************************************************************/
-void     R_USB_HmscSemGet(void)
-{
-    xSemaphoreTake(SemaphoreHandleRead, portMAX_DELAY);
+        hmsc_error_process(&ptr, drive_number, err_code);
+#endif                                 /* (BSP_CFG_RTOS == 2) */
+        result = FSP_ERR_USB_FAILED;
+    }
+
+    return result;
 }
-/******************************************************************************
- End of function R_USB_HmscGetSem
- ******************************************************************************/
 
 /******************************************************************************
-Function Name   : R_USB_HmscSemRel
-Description     : Release a semaphore.
-Arguments       : none
-Return value    : none
-******************************************************************************/
-void     R_USB_HmscSemRel(void)
-{
-    xSemaphoreGive(SemaphoreHandleRead);
-}
-/******************************************************************************
- End of function R_USB_HmscRelSem
+ * End of function R_USB_HMSC_StrgReadSector
  ******************************************************************************/
+
+/*************************************************************************//**
+ * @brief Write sector information.
+ *
+ *
+ * @retval FSP_SUCCESS           Success.
+ * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
+ * @retval FSP_ERR_ASSERTION     Parameter Null pointer error.
+ * @retval FSP_ERR_USB_PARAMETER Parameter error.
+ * @note The address specified in the argument buff must be 4-byte aligned.
+ ******************************************************************************/
+fsp_err_t R_USB_HMSC_StorageWriteSector (uint16_t              drive_number,
+                                         uint8_t const * const buff,
+                                         uint32_t              sector_number,
+                                         uint16_t              sector_count)
+{
+    fsp_err_t   result = FSP_ERR_USB_FAILED;
+    uint32_t    trans_byte;
+    usb_utr_t   ptr;
+    uint16_t    err_code;
+    usb_cfg_t * p_cfg;
+
+#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(buff)
+    FSP_ERROR_RETURN(USB_MAXSTRAGE >= drive_number, FSP_ERR_USB_PARAMETER)
+    FSP_ERROR_RETURN((((uint32_t) buff & 0x03) == 0), FSP_ERR_USB_PARAMETER)
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+
+    /* set sector size */
+    trans_byte = (uint32_t) (sector_count * USB_HMSC_SECTOR_SIZE);
+
+    /* Drive no. -> USB IP no. and IO Reg Base address */
+    usb_hmsc_drive_to_addr(drive_number, &ptr);
+
+    /* Device Status */
+    if (USB_TRUE != usb_hmsc_get_dev_sts(drive_number))
+    {
+        return FSP_ERR_USB_FAILED;
+    }
+
+    if (ptr.ip)
+    {
+#if defined(BSP_MCU_GROUP_RA6M3)
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
+#else
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+#endif
+    }
+    else
+    {
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+    }
+
+    ptr.p_transfer_rx = p_cfg->p_transfer_rx;
+    ptr.p_transfer_tx = p_cfg->p_transfer_tx;
+
+    g_usb_hmsc_strg_process[ptr.ip] = USB_MSG_HMSC_STRG_RW_END;
+    err_code = usb_hmsc_write10(&ptr, drive_number, buff, sector_number, sector_count, trans_byte);
+    if (USB_HMSC_OK == err_code)
+    {
+        result = FSP_SUCCESS;
+    }
+    else
+    {
+#if (BSP_CFG_RTOS == 2)
+        hmsc_error_process(&ptr, drive_number, err_code);
+#endif                                 /* (BSP_CFG_RTOS == 2) */
+        result = FSP_ERR_USB_FAILED;
+    }
+
+    return result;
+}
+
+/******************************************************************************
+ * End of function R_USB_HMSC_StrgWriteSector
+ ******************************************************************************/
+
+/*************************************************************************//**
+ * @brief Get a semaphore. (RTOS only)
+ *
+ * If this function is called in the OS less execution environment, a failure is returned.
+ * @retval FSP_SUCCESS           Success.
+ * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
+ ******************************************************************************/
+fsp_err_t R_USB_HMSC_SemaphoreGet (void)
+{
+    fsp_err_t result;
+#if (BSP_CFG_RTOS == 2)
+    BaseType_t err_code;
+
+    err_code = xSemaphoreTake(SemaphoreHandleRead, portMAX_DELAY);
+
+    if (pdPASS == err_code)
+    {
+        result = FSP_SUCCESS;
+    }
+    else
+    {
+        result = FSP_ERR_USB_FAILED;
+    }
+
+#else                                  /* (BSP_CFG_RTOS == 2) */
+    result = FSP_ERR_USB_FAILED;
+#endif /* (BSP_CFG_RTOS == 2) */
+    return result;
+}
+
+/******************************************************************************
+ * End of function R_USB_HmscGetSem
+ ******************************************************************************/
+
+/*************************************************************************//**
+ * @brief Release a semaphore. (RTOS only)
+ *
+ * If this function is called in the OS less execution environment, a failure is returned.
+ * @retval FSP_SUCCESS           Success.
+ * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
+ ******************************************************************************/
+fsp_err_t R_USB_HMSC_SemaphoreRelease (void)
+{
+    fsp_err_t result;
+#if (BSP_CFG_RTOS == 2)
+    BaseType_t err_code;
+    err_code = xSemaphoreGive(SemaphoreHandleRead);
+
+    if (pdPASS == err_code)
+    {
+        result = FSP_SUCCESS;
+    }
+    else
+    {
+        result = FSP_ERR_USB_FAILED;
+    }
+
+#else                                  /* (BSP_CFG_RTOS == 2) */
+    result = FSP_ERR_USB_FAILED;
 #endif /* (BSP_CFG_RTOS == 2) */
 
-#endif /* defined(USB_CFG_HMSC_USE) */
+    return result;
+}
+
+/******************************************************************************
+ * End of function R_USB_HmscRelSem
+ ******************************************************************************/
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup USB_HMSC)
  **********************************************************************************************************************/
-

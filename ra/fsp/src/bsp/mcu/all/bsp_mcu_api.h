@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -31,7 +31,6 @@ void      R_BSP_RegisterProtectDisable(bsp_reg_protect_t regs_to_unprotect);
 fsp_err_t R_BSP_GroupIrqWrite(bsp_grp_irq_t irq, void (* p_callback)(bsp_grp_irq_t irq));
 void      R_BSP_SoftwareDelay(uint32_t delay, bsp_delay_units_t units);
 fsp_err_t R_BSP_VersionGet(fsp_version_t * p_version);
-fsp_err_t R_BSP_EventInfoGet(fsp_ip_t id, uint32_t channel, fsp_signal_t signal, bsp_event_info_t * const p_info);
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -66,27 +66,15 @@
 /* Value of ADICR with no interrupt at end of calibration */
 #define ADC_ADICR_CALIBRATION_INTERRUPT_DISABLED    (0x00U)
 
-#define ADC_PRV_ADCSR_ADCS_OFFSET                   (13)
-#define ADC_PRV_ADCSR_EXTRG_OFFSET                  (8)
-#define ADC_PRV_ADCSR_TRSA_OFFSET                   (8)
-#define ADC_PRV_ADCSR_GBADIE_BIT                    (1U << 6)
-#define ADC_PRV_ADCSR_ADST_BIT                      (1U << 15)
-#define ADC_PRV_ADCSR_ADST_TRGE_MASK                (0x8200U)
+/* Stabilization time when BGR is enabled */
+#define ADC_BGR_STABILIZATION_DELAY_US              (150U)
+
+#define ADC_PRV_VREFAMPCNT_BGR_VREFADCG_MASK        (0x16U)
+
+#define ADC_PRV_ADCSR_ADST_TRGE_MASK                (R_ADC0_ADCSR_ADST_Msk | R_ADC0_ADCSR_TRGE_Msk)
 #define ADC_PRV_ADCSR_CLEAR_ADST_TRGE               (~ADC_PRV_ADCSR_ADST_TRGE_MASK)
 
-#define ADC_PRV_TSCR_TSN_ENABLE                     (0x90)
-
-#define ADC_PRV_ADEXICR_TSSA_BIT                    (1U << 8)
-#define ADC_PRV_ADEXICR_TSSB_BIT                    (1U << 10)
-#define ADC_PRV_ADEXICR_TSSAD_BIT                   (1U << 0)
-#define ADC_PRV_ADEXICR_OCSA_BIT                    (1U << 9)
-#define ADC_PRV_ADEXICR_OCSB_BIT                    (1U << 11)
-#define ADC_PRV_ADEXICR_OCSAD_BIT                   (1U << 1)
-
-#define ADC_PRV_ADCER_ADPRC_OFFSET                  (1)
-#define ADC_PRV_ADCER_ADFMT_OFFSET                  (15)
-#define ADC_PRV_ADCER_ADINV_OFFSET                  (14)
-#define ADC_PRV_ADCER_ACE_OFFSET                    (5)
+#define ADC_PRV_TSCR_TSN_ENABLE                     (R_TSN_CTRL_TSCR_TSEN_Msk | R_TSN_CTRL_TSCR_TSOE_Msk)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -98,6 +86,7 @@ typedef enum e_adc_elc_trigger
     ADC_ELC_TRIGGER_EXTERNAL = (0x00U),
     ADC_ELC_TRIGGER          = (0x09U),
     ADC_ELC_TRIGGER_GROUP_B  = (0x0AU),
+    ADC_ELC_TRIGGER_BOTH     = (0x0BU),
     ADC_ELC_TRIGGER_DISABLED = (0x3FU)
 } adc_elc_trigger_t;
 
@@ -110,25 +99,27 @@ static fsp_err_t r_adc_open_cfg_resolution_check(adc_cfg_t const * const p_cfg);
 static fsp_err_t r_adc_sample_state_cfg_check(adc_instance_ctrl_t * p_instance_ctrl, adc_sample_state_t * p_sample);
 
 static fsp_err_t r_adc_scan_cfg_check_sample_hold(adc_instance_ctrl_t * const     p_instance_ctrl,
-                                                  adc_channel_cfg_t const * const p_cfg);
+                                                  adc_channel_cfg_t const * const p_channel_cfg);
 
 static fsp_err_t r_adc_scan_cfg_check_sensors(adc_instance_ctrl_t * const     p_instance_ctrl,
-                                              adc_channel_cfg_t const * const p_cfg);
+                                              adc_channel_cfg_t const * const p_channel_cfg);
 
 #endif
 
 static void r_adc_open_sub(adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg_t const * const p_cfg);
 
-static void r_adc_sensor_cfg(adc_instance_ctrl_t * const p_instance_ctrl, adc_channel_cfg_t const * const p_cfg);
+static void r_adc_sensor_cfg(adc_instance_ctrl_t * const     p_instance_ctrl,
+                             adc_channel_cfg_t const * const p_channel_cfg);
 
 #if ADC_CFG_PARAM_CHECKING_ENABLE
 
 static fsp_err_t r_adc_scan_cfg_check(adc_instance_ctrl_t * const     p_instance_ctrl,
-                                      adc_channel_cfg_t const * const p_cfg);
+                                      adc_channel_cfg_t const * const p_channel_cfg);
 
 #endif
 
-static void    r_adc_scan_cfg(adc_instance_ctrl_t * const p_instance_ctrl, adc_channel_cfg_t const * const p_cfg);
+static void r_adc_scan_cfg(adc_instance_ctrl_t * const     p_instance_ctrl,
+                           adc_channel_cfg_t const * const p_channel_cfg);
 static void    r_adc_sensor_sample_state_calculation(uint32_t * const p_sample_states);
 void           adc_scan_end_b_isr(void);
 void           adc_scan_end_isr(void);
@@ -142,6 +133,15 @@ static const fsp_version_t g_adc_version =
     .api_version_major  = ADC_API_VERSION_MAJOR,
     .code_version_major = ADC_CODE_VERSION_MAJOR,
     .code_version_minor = ADC_CODE_VERSION_MINOR
+};
+
+/** Look-up table for ADSTRGR values */
+static const uint32_t adc_elc_trigger_lut[] =
+{
+    [ADC_DOUBLE_TRIGGER_DISABLED]         = (ADC_ELC_TRIGGER << R_ADC0_ADSTRGR_TRSA_Pos) + ADC_ELC_TRIGGER_GROUP_B,
+    [ADC_DOUBLE_TRIGGER_ENABLED]          = (ADC_ELC_TRIGGER << R_ADC0_ADSTRGR_TRSA_Pos) + ADC_ELC_TRIGGER_GROUP_B,
+    [ADC_DOUBLE_TRIGGER_ENABLED_EXTENDED] = (ADC_ELC_TRIGGER_BOTH << R_ADC0_ADSTRGR_TRSA_Pos) +
+                                            ADC_ELC_TRIGGER_DISABLED,
 };
 
 #if ADC_CFG_PARAM_CHECKING_ENABLE
@@ -163,19 +163,18 @@ static const uint32_t g_adc_valid_channels[] =
 /** ADC Implementation of ADC. */
 const adc_api_t g_adc_on_adc =
 {
-    .open                = R_ADC_Open,
-    .scanCfg             = R_ADC_ScanCfg,
-    .infoGet             = R_ADC_InfoGet,
-    .scanStart           = R_ADC_ScanStart,
-    .scanStop            = R_ADC_ScanStop,
-    .scanStatusGet       = R_ADC_StatusGet,
-    .sampleStateCountSet = R_ADC_SampleStateCountSet,
-    .read                = R_ADC_Read,
-    .read32              = R_ADC_Read32,
-    .close               = R_ADC_Close,
-    .versionGet          = R_ADC_VersionGet,
-    .calibrate           = R_ADC_Calibrate,
-    .offsetSet           = R_ADC_OffsetSet,
+    .open          = R_ADC_Open,
+    .scanCfg       = R_ADC_ScanCfg,
+    .infoGet       = R_ADC_InfoGet,
+    .scanStart     = R_ADC_ScanStart,
+    .scanStop      = R_ADC_ScanStop,
+    .scanStatusGet = R_ADC_StatusGet,
+    .read          = R_ADC_Read,
+    .read32        = R_ADC_Read32,
+    .close         = R_ADC_Close,
+    .versionGet    = R_ADC_VersionGet,
+    .calibrate     = R_ADC_Calibrate,
+    .offsetSet     = R_ADC_OffsetSet,
 };
 
 /*******************************************************************************************************************//**
@@ -262,7 +261,8 @@ fsp_err_t R_ADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
 }
 
 /*******************************************************************************************************************//**
- * Configures the ADC scan parameters. Channel specific settings are set in this function.
+ * Configures the ADC scan parameters. Channel specific settings are set in this function. Pass a pointer to
+ * @ref adc_channel_cfg_t to p_extend.
  *
  * @note This starts group B scans if adc_channel_cfg_t::priority_group_a is set to ADC_GROUP_A_GROUP_B_CONTINUOUS_SCAN.
  *
@@ -270,10 +270,11 @@ fsp_err_t R_ADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
  **********************************************************************************************************************/
-fsp_err_t R_ADC_ScanCfg (adc_ctrl_t * p_ctrl, adc_channel_cfg_t const * const p_channel_cfg)
+fsp_err_t R_ADC_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_extend)
 {
-    adc_instance_ctrl_t * p_instance_ctrl = (adc_instance_ctrl_t *) p_ctrl;
-    fsp_err_t             err             = FSP_SUCCESS;
+    adc_channel_cfg_t const * p_channel_cfg   = (adc_channel_cfg_t const *) p_extend;
+    adc_instance_ctrl_t     * p_instance_ctrl = (adc_instance_ctrl_t *) p_ctrl;
+    fsp_err_t                 err             = FSP_SUCCESS;
 
 #if ADC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
@@ -405,14 +406,16 @@ fsp_err_t R_ADC_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_t 
     FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
 
     /* Verify that the channel is valid for this MCU */
-    if (reg_id >= ADC_CHANNEL_0)
+    if ((reg_id >= ADC_CHANNEL_0) && ((uint32_t) reg_id <= 31U))
     {
         uint32_t requested_channel_mask = (1U << (uint32_t) reg_id);
         FSP_ASSERT(0 != (requested_channel_mask & g_adc_valid_channels[p_instance_ctrl->p_cfg->unit]));
     }
     else
     {
-        FSP_ASSERT((reg_id == ADC_CHANNEL_TEMPERATURE) || (reg_id == ADC_CHANNEL_VOLT));
+        FSP_ASSERT((reg_id == ADC_CHANNEL_TEMPERATURE) || (reg_id == ADC_CHANNEL_VOLT) ||
+                   (reg_id == ADC_CHANNEL_DUPLEX) || (reg_id == ADC_CHANNEL_DUPLEX_A) ||
+                   (reg_id == ADC_CHANNEL_DUPLEX_B));
     }
 #endif
 
@@ -606,13 +609,13 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
     /* Disable interrupts. */
     if (p_instance_ctrl->p_cfg->scan_end_irq >= 0)
     {
-        NVIC_DisableIRQ(p_instance_ctrl->p_cfg->scan_end_irq);
+        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->scan_end_irq);
         R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->scan_end_irq, NULL);
     }
 
     if (p_instance_ctrl->p_cfg->scan_end_b_irq >= 0)
     {
-        NVIC_DisableIRQ(p_instance_ctrl->p_cfg->scan_end_b_irq);
+        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->scan_end_b_irq);
         R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->scan_end_b_irq, NULL);
     }
 
@@ -706,7 +709,7 @@ fsp_err_t R_ADC_Calibrate (adc_ctrl_t * const p_ctrl, void * const p_extend)
 }
 
 /*******************************************************************************************************************//**
- * adc_api_t::offsetSet is not supported on the ADC.
+ * @ref adc_api_t::offsetSet is not supported on the ADC.
  *
  * @retval FSP_ERR_UNSUPPORTED         Function not supported in this implementation.
  **********************************************************************************************************************/
@@ -789,32 +792,37 @@ static fsp_err_t r_adc_open_cfg_check (adc_cfg_t const * const p_cfg)
     /* Check for valid argument values for addition/averaging. Reference section 47.2.10 "A/D-Converted Value
      * Addition/Average Count Select Register (ADADC)" in the RA6M3 manual R01UH0886EJ0100 and section 32.2.11
      * "A/D-Converted Value Average Count Select Register (ADADC)" in the RA2A1 manual R01UH0888EJ0100. */
-    if (ADC_ADD_OFF != p_cfg->add_average_count)
+    adc_extended_cfg_t const * p_cfg_extend = (adc_extended_cfg_t const *) p_cfg->p_extend;
+    if (ADC_ADD_OFF != p_cfg_extend->add_average_count)
     {
  #if BSP_FEATURE_ADC_ADDITION_SUPPORTED
 
         /* The ADC12 and ADC14 do not support averaging 8 or 16 samples. */
-        FSP_ASSERT(p_cfg->add_average_count <= ADC_ADD_AVERAGE_FOUR);
+        FSP_ASSERT(p_cfg_extend->add_average_count <= ADC_ADD_AVERAGE_FOUR);
  #else
 
         /* The ADC16 supports averaging only, it does not support addition. */
-        FSP_ASSERT(0U != (ADC_ADADC_AVEE_BIT & p_cfg->add_average_count));
+        FSP_ASSERT(0U != (ADC_ADADC_AVEE_BIT & p_cfg_extend->add_average_count));
  #endif
     }
 
     /* If 16 time addition is used only 12 bit accuracy can be selected. Reference Note 1 of section 47.2.10
      * "A/D-Converted Value Addition/Average Count Select Register (ADADC)" in the RA6M3 manual R01UH0886EJ0100. */
-    if (ADC_ADD_SIXTEEN == p_cfg->add_average_count)
+    if (ADC_ADD_SIXTEEN == p_cfg_extend->add_average_count)
     {
         FSP_ASSERT(ADC_RESOLUTION_12_BIT == p_cfg->resolution);
     }
 
     /* Only synchronous triggers (ELC) allowed in group scan mode (reference TRSA documentation in section 47.2.12
      * "A/D Conversion Start Trigger Select Register (ADSTRGR)" in the RA6M3 manual R01UH0886EJ0100.  */
-    if ((ADC_MODE_GROUP_SCAN == p_cfg->mode))
+    if ((ADC_MODE_GROUP_SCAN == p_cfg->mode) || (ADC_DOUBLE_TRIGGER_DISABLED != p_cfg_extend->double_trigger_mode))
     {
         FSP_ASSERT(ADC_TRIGGER_SYNC_ELC == p_cfg->trigger);
-        FSP_ASSERT(ADC_TRIGGER_SYNC_ELC == p_cfg->trigger_group_b);
+
+        if ((ADC_MODE_GROUP_SCAN == p_cfg->mode))
+        {
+            FSP_ASSERT(ADC_TRIGGER_SYNC_ELC == p_cfg_extend->trigger_group_b);
+        }
     }
 
     return FSP_SUCCESS;
@@ -873,32 +881,32 @@ static fsp_err_t r_adc_open_cfg_resolution_check (adc_cfg_t const * const p_cfg)
  * Checks the sample and hold arguments
  *
  * @param[in]  p_instance_ctrl         Pointer to instance control block
- * @param[in]  p_cfg                   Pointer to channel configuration
+ * @param[in]  p_channel_cfg           Pointer to channel configuration
  *
  * @retval FSP_SUCCESS                 No configuration errors detected
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  **********************************************************************************************************************/
 static fsp_err_t r_adc_scan_cfg_check_sample_hold (adc_instance_ctrl_t * const     p_instance_ctrl,
-                                                   adc_channel_cfg_t const * const p_cfg)
+                                                   adc_channel_cfg_t const * const p_channel_cfg)
 {
  #if !BSP_FEATURE_ADC_HAS_SAMPLE_HOLD_REG
 
     /* If the MCU does not have sample and hold, verify the sample and hold feature is not used. */
-    FSP_ASSERT(0U == p_cfg->sample_hold_mask);
+    FSP_ASSERT(0U == p_channel_cfg->sample_hold_mask);
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
  #else
-    if (0U != p_cfg->sample_hold_mask)
+    if (0U != p_channel_cfg->sample_hold_mask)
     {
         /* Sample and Hold channels can only be 0, 1, 2 and must have at least minimum state count specified (reference
          * section 47.2.15 "A/D Sample and Hold Circuit Control Register (ADSHCR)" in the RA6M3 manual
          * R01UH0886EJ0100. */
-        FSP_ASSERT(p_cfg->sample_hold_mask <= ADC_SAMPLE_HOLD_CHANNELS);
-        FSP_ASSERT(p_cfg->sample_hold_states >= ADC_SAMPLE_STATE_HOLD_COUNT_MIN);
+        FSP_ASSERT(p_channel_cfg->sample_hold_mask <= ADC_SAMPLE_HOLD_CHANNELS);
+        FSP_ASSERT(p_channel_cfg->sample_hold_states >= ADC_SAMPLE_STATE_HOLD_COUNT_MIN);
 
-        uint32_t b_mask = p_cfg->sample_hold_mask & p_cfg->scan_mask_group_b;
+        uint32_t b_mask = p_channel_cfg->sample_hold_mask & p_channel_cfg->scan_mask_group_b;
         if (ADC_MODE_GROUP_SCAN == p_instance_ctrl->p_cfg->mode)
         {
-            if (ADC_GROUP_A_PRIORITY_OFF != p_cfg->priority_group_a)
+            if (ADC_GROUP_A_PRIORITY_OFF != p_channel_cfg->priority_group_a)
             {
                 /* Sample and hold channels cannot be in GroupB if GroupA priority enabled. (reference SHANS[2:0] bits
                  * in section 47.2.15 "A/D Sample and Hold Circuit Control Register (ADSHCR)" in the RA6M3 manual
@@ -920,7 +928,7 @@ static fsp_err_t r_adc_scan_cfg_check_sample_hold (adc_instance_ctrl_t * const  
  * This function checks the Temperature and Voltage sensor arguments
  *
  * @param[in]  p_instance_ctrl         Pointer to instance control block
- * @param[in]  p_cfg                   Pointer to channel configuration
+ * @param[in]  p_channel_cfg           Pointer to channel configuration
  *
  * @retval  FSP_SUCCESS                No configuration errors detected
  * @retval  FSP_ERR_ASSERTION          Sensor configuration has been selected for Group B on an MCU which does not allow
@@ -928,21 +936,20 @@ static fsp_err_t r_adc_scan_cfg_check_sample_hold (adc_instance_ctrl_t * const  
  *                                     not enabled or MCU does not allow both the sensors to be used simultaneously
  **********************************************************************************************************************/
 static fsp_err_t r_adc_scan_cfg_check_sensors (adc_instance_ctrl_t * const     p_instance_ctrl,
-                                               adc_channel_cfg_t const * const p_cfg)
+                                               adc_channel_cfg_t const * const p_channel_cfg)
 {
     /* Some MCUs have nothing to check here. */
-    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
-    FSP_PARAMETER_NOT_USED(p_cfg);
+    FSP_PARAMETER_NOT_USED(p_channel_cfg);
 
  #if !BSP_FEATURE_ADC_GROUP_B_SENSORS_ALLOWED
 
     /* Sensors are not supported in Group B in some MCUs. Reference section 32.2.14 "A/D Conversion Extended Input
      * Control Register (ADEXICR)" of the RA2A1 manual R01UH0888EJ0100. */
-    FSP_ASSERT(0U == (p_cfg->scan_mask_group_b & ADC_MASK_SENSORS));
+    FSP_ASSERT(0U == (p_channel_cfg->scan_mask_group_b & ADC_MASK_SENSORS));
  #endif
 
  #if BSP_FEATURE_ADC_SENSORS_EXCLUSIVE
-    uint32_t sensor_mask = p_cfg->scan_mask & ADC_MASK_SENSORS;
+    uint32_t sensor_mask = p_channel_cfg->scan_mask & ADC_MASK_SENSORS;
     if (0U != sensor_mask)
     {
         /* If the temperature sensor or the internal voltage reference is used, then none of the channels can be used
@@ -950,10 +957,17 @@ static fsp_err_t r_adc_scan_cfg_check_sensors (adc_instance_ctrl_t * const     p
          * mode. Reference TSSA and OCSA bits in section 35.2.13 "A/D Conversion Extended Input Control Register
          * (ADEXICR)" of the RA4M1 manual R01UH0887EJ0100. */
         FSP_ASSERT(ADC_MASK_SENSORS != sensor_mask);
-        FSP_ASSERT(p_cfg->scan_mask == sensor_mask);
+        FSP_ASSERT(p_channel_cfg->scan_mask == sensor_mask);
         FSP_ASSERT(ADC_MODE_SINGLE_SCAN == p_instance_ctrl->p_cfg->mode);
     }
  #endif
+
+    /* When using double-trigger modes the sensors must not be configured or used in Group A. */
+    adc_extended_cfg_t const * p_cfg_extend = (adc_extended_cfg_t const *) p_instance_ctrl->p_cfg->p_extend;
+    if (ADC_DOUBLE_TRIGGER_DISABLED != p_cfg_extend->double_trigger_mode)
+    {
+        FSP_ASSERT(0U == (p_channel_cfg->scan_mask & ADC_MASK_SENSORS));
+    }
 
     return FSP_SUCCESS;
 }
@@ -969,33 +983,50 @@ static fsp_err_t r_adc_scan_cfg_check_sensors (adc_instance_ctrl_t * const     p
  **********************************************************************************************************************/
 static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg_t const * const p_cfg)
 {
+    adc_extended_cfg_t const * p_cfg_extend = (adc_extended_cfg_t const *) p_cfg->p_extend;
+
     /* Determine the value for ADCSR:
-     *   * ADCSR.DBLANS and ADCSR.DBLE are set to the default value of 0. Double trigger is not supported by this
-     *     driver.
+     *   * The configured mode is set in ADCSR.ADCS.
      *   * ADCSR.GBADIE is always set by this driver. It will only trigger an interrupt in group mode if the group B
      *     interrupt is enabled.
+     *   * If double-trigger mode is selected ADCSR.DBLANS is set to the chosen double-trigger scan channel and
+     *     ADCSR.DBLE is set to 1; otherwise, both are set to 0.
      *   * The configured trigger mode is set in ADCSR.EXTRG and ADCSR.TRGE.
-     *   * The configured mode is set in ADCSR.ADCS.
      *   * The value to set in ADCSR to start a scan is stored in the control structure. ADCSR.ADST is set in
      *     R_ADC_ScanStart if software trigger mode is used.
      */
-    uint32_t adcsr = ADC_PRV_ADCSR_GBADIE_BIT;
-    adcsr |= ((uint32_t) p_cfg->mode << ADC_PRV_ADCSR_ADCS_OFFSET);
-    adcsr |= ((uint32_t) p_cfg->trigger << ADC_PRV_ADCSR_EXTRG_OFFSET);
-    p_instance_ctrl->scan_start_adcsr = (uint16_t) adcsr;
-    if (ADC_TRIGGER_SOFTWARE == p_cfg->trigger)
+    uint32_t adcsr = (uint32_t) (p_cfg->mode << R_ADC0_ADCSR_ADCS_Pos);
+    adcsr |= (uint32_t) (R_ADC0_ADCSR_GBADIE_Msk);
+    adcsr |= ((uint32_t) p_cfg->trigger << R_ADC0_ADCSR_EXTRG_Pos);
+
+    if (ADC_DOUBLE_TRIGGER_DISABLED != p_cfg_extend->double_trigger_mode)
     {
-        p_instance_ctrl->scan_start_adcsr = (uint16_t) (adcsr | ADC_PRV_ADCSR_ADST_BIT);
+        adcsr |= R_ADC0_ADCSR_TRGE_Msk | R_ADC0_ADCSR_DBLE_Msk;
     }
+    else if (ADC_TRIGGER_SOFTWARE == p_cfg->trigger)
+    {
+        adcsr |= R_ADC0_ADCSR_ADST_Msk;
+    }
+    else
+    {
+        /* Do nothing. */
+    }
+
+    p_instance_ctrl->scan_start_adcsr = (uint16_t) adcsr;
 
     /* The default value for ADSTRGR is 0 out of reset. Update it only if the ADC is triggered on ELC events. */
     uint32_t adstrgr = 0U;
     if (ADC_TRIGGER_SYNC_ELC == p_cfg->trigger)
     {
-        /* If the ELC is used as the trigger, set ADCSR.TRSA to trigger normal / group A on ELC_PERIPHERAL_ADCn and to
-         * trigger group B on ELC_PERIPHERAL_ADCn_B, where n is the unit number. */
-        adstrgr  = ADC_ELC_TRIGGER << ADC_PRV_ADCSR_TRSA_OFFSET;
-        adstrgr |= ADC_ELC_TRIGGER_GROUP_B;
+        /* Set ADSTRGR per the following:
+         *   Extended double-trigger mode:
+         *    - Normal (Group A): ELC_PERIPHERAL_ADCn and ELC_PERIPHERAL_ADCn_B
+         *    - Group B: None
+         *   All other modes:
+         *    - Normal (Group A): ELC_PERIPHERAL_ADCn
+         *    - Group B: ELC_PERIPHERAL_ADCn_B
+         */
+        adstrgr = adc_elc_trigger_lut[p_cfg_extend->double_trigger_mode];
     }
 
     /* Determine the value for ADCER:
@@ -1007,22 +1038,22 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
      */
     uint32_t adcer = 0U;
 #if BSP_FEATURE_ADC_HAS_ADCER_ADPRC
-    adcer |= (uint32_t) p_cfg->resolution << ADC_PRV_ADCER_ADPRC_OFFSET;
+    adcer |= (uint32_t) p_cfg->resolution << R_ADC0_ADCER_ADPRC_Pos;
 #endif
 #if BSP_FEATURE_ADC_HAS_ADCER_ADRFMT
-    adcer |= (uint32_t) p_cfg->alignment << ADC_PRV_ADCER_ADFMT_OFFSET;
+    adcer |= (uint32_t) p_cfg->alignment << R_ADC0_ADCER_ADRFMT_Pos;
 #endif
-    adcer |= (uint32_t) p_cfg->clearing << ADC_PRV_ADCER_ACE_OFFSET;
+    adcer |= (uint32_t) p_cfg_extend->clearing << R_ADC0_ADCER_ACE_Pos;
 
 #if BSP_FEATURE_ADC_CALIBRATION_REG_AVAILABLE
-    adcer |= 1U << ADC_PRV_ADCER_ADINV_OFFSET;
+    adcer |= 1U << R_ADC0_ADCER_ADINV_Pos;
 #endif
 
     /* Determine the value for ADADC:
      *   * The addition/averaging modes are set as configured in ADADC.ADC and ADADC.AVEE.
      *   * On MCUs that do not have the ADADC.AVEE bit (addition not supported), the ADADC.AVEE bit is cleared.
      */
-    uint32_t adadc = p_cfg->add_average_count;
+    uint32_t adadc = p_cfg_extend->add_average_count;
 #if !BSP_FEATURE_ADC_ADDITION_SUPPORTED
     adadc &= ~ADC_ADADC_AVEE_BIT;
 #endif
@@ -1051,6 +1082,21 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
     /* Use ADC in single-ended mode. */
     p_instance_ctrl->p_reg->ADANIM = 0U;
 #endif
+
+#if BSP_FEATURE_ADC_HAS_VREFAMPCNT
+    uint32_t vrefampcnt = 0;
+
+    /* Configure Reference Voltage controls
+     * Reference section "32.6 Selecting Reference Voltage" in the RA2A1 manual R01UH0888EJ0100. */
+    vrefampcnt = (uint32_t) (p_cfg_extend->adc_vref_control & ADC_PRV_VREFAMPCNT_BGR_VREFADCG_MASK);
+    p_instance_ctrl->p_reg->VREFAMPCNT = (uint8_t) vrefampcnt;
+
+    R_BSP_SoftwareDelay(ADC_BGR_STABILIZATION_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* Enable Over current detection and VREFADC output */
+    p_instance_ctrl->p_reg->VREFAMPCNT = (uint8_t) (vrefampcnt | R_ADC0_VREFAMPCNT_VREFADCEN_Msk |
+                                                    R_ADC0_VREFAMPCNT_OLDETEN_Msk);
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -1058,16 +1104,17 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
  * This function must only be called if it has been verified that sensors are used in this configuration
  *
  * @param[in]  p_instance_ctrl         Pointer to instance control block
- * @param[in]  p_cfg                   Pointer to channel configuration
+ * @param[in]  p_channel_cfg           Pointer to channel configuration
  **********************************************************************************************************************/
-static void r_adc_sensor_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_channel_cfg_t const * const p_cfg)
+static void r_adc_sensor_cfg (adc_instance_ctrl_t * const     p_instance_ctrl,
+                              adc_channel_cfg_t const * const p_channel_cfg)
 {
     /* Calculate sample states required for temperature and voltage sensor at the current ADCLK speed. */
     uint32_t sample_states = 0U;
     r_adc_sensor_sample_state_calculation(&sample_states);
 
     /* Check if the temperature sensor channel is enabled */
-    uint32_t combined_scan_mask = p_cfg->scan_mask | p_cfg->scan_mask_group_b;
+    uint32_t combined_scan_mask = p_channel_cfg->scan_mask | p_channel_cfg->scan_mask_group_b;
     uint32_t adexicr            = 0U;
     if (combined_scan_mask & ADC_MASK_TEMPERATURE)
     {
@@ -1084,27 +1131,27 @@ static void r_adc_sensor_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_c
         p_instance_ctrl->p_reg->ADSSTRT = (uint8_t) sample_states;
 
 #if BSP_FEATURE_ADC_GROUP_B_SENSORS_ALLOWED
-        if (p_cfg->scan_mask & ADC_MASK_TEMPERATURE)
+        if (p_channel_cfg->scan_mask & ADC_MASK_TEMPERATURE)
         {
             /* Scan the temperature sensor in normal/group A. */
-            adexicr |= ADC_PRV_ADEXICR_TSSA_BIT;
+            adexicr |= R_ADC0_ADEXICR_TSSA_Msk;
         }
         else
         {
             /* Scan the temperature sensor in group B */
-            adexicr |= ADC_PRV_ADEXICR_TSSB_BIT;
+            adexicr |= R_ADC0_ADEXICR_TSSB_Msk;
         }
 
 #else
 
         /* Scan the temperature sensor in normal/group A. */
-        adexicr |= ADC_PRV_ADEXICR_TSSA_BIT;
+        adexicr |= R_ADC0_ADEXICR_TSSA_Msk;
 #endif
 
         /* Enable temperature addition mode if configured. */
-        if (p_cfg->add_mask & ADC_MASK_TEMPERATURE)
+        if (p_channel_cfg->add_mask & ADC_MASK_TEMPERATURE)
         {
-            adexicr |= ADC_PRV_ADEXICR_TSSAD_BIT;
+            adexicr |= R_ADC0_ADEXICR_TSSAD_Msk;
         }
     }
 
@@ -1114,27 +1161,27 @@ static void r_adc_sensor_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_c
         /*sample state registers are set to the calculated value */
         p_instance_ctrl->p_reg->ADSSTRO = (uint8_t) sample_states;
 #if BSP_FEATURE_ADC_GROUP_B_SENSORS_ALLOWED
-        if (p_cfg->scan_mask & ADC_MASK_VOLT)
+        if (p_channel_cfg->scan_mask & ADC_MASK_VOLT)
         {
             /* Scan the internal reference voltage in normal/group A.  */
-            adexicr |= ADC_PRV_ADEXICR_OCSA_BIT;
+            adexicr |= R_ADC0_ADEXICR_OCSA_Msk;
         }
         else
         {
             /* Scan the internal reference voltage in group B.  */
-            adexicr |= ADC_PRV_ADEXICR_OCSB_BIT;
+            adexicr |= R_ADC0_ADEXICR_OCSB_Msk;
         }
 
 #else
 
         /* Scan the internal reference voltage in normal/group A.  */
-        adexicr |= ADC_PRV_ADEXICR_OCSA_BIT;
+        adexicr |= R_ADC0_ADEXICR_OCSA_Msk;
 #endif
 
         /* Enable temperature addition mode if configured. */
-        if (p_cfg->add_mask & ADC_MASK_VOLT)
+        if (p_channel_cfg->add_mask & ADC_MASK_VOLT)
         {
-            adexicr |= ADC_PRV_ADEXICR_OCSAD_BIT;
+            adexicr |= R_ADC0_ADEXICR_OCSAD_Msk;
         }
     }
 
@@ -1185,55 +1232,57 @@ static void r_adc_sensor_sample_state_calculation (uint32_t * const p_sample_sta
  * This function does extensive checking on channel mask settings based upon operational mode.
  *
  * @param[in]  p_instance_ctrl         Pointer to instance control block
- * @param[in]  p_cfg                   Pointer to channel configuration
+ * @param[in]  p_channel_cfg           Pointer to channel configuration
  *
  * @retval FSP_SUCCESS                 No configuration errors detected
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  **********************************************************************************************************************/
 static fsp_err_t r_adc_scan_cfg_check (adc_instance_ctrl_t * const     p_instance_ctrl,
-                                       adc_channel_cfg_t const * const p_cfg)
+                                       adc_channel_cfg_t const * const p_channel_cfg)
 {
     fsp_err_t err;
     uint16_t  unit = p_instance_ctrl->p_cfg->unit;
 
     /* Verify at least one channel is selected for normal / group A. */
     uint32_t valid_channels = g_adc_valid_channels[unit] | ADC_MASK_TEMPERATURE | ADC_MASK_VOLT;
-    FSP_ASSERT((0U != p_cfg->scan_mask) && (0U == (p_cfg->scan_mask & (~valid_channels))));
+    FSP_ASSERT((0U != p_channel_cfg->scan_mask) && (0U == (p_channel_cfg->scan_mask & (~valid_channels))));
 
     if (ADC_MODE_GROUP_SCAN == p_instance_ctrl->p_cfg->mode)
     {
         /* Verify at least one channel is selected for group B. */
-        FSP_ASSERT((0U != p_cfg->scan_mask_group_b) && (0U == (p_cfg->scan_mask_group_b & (~valid_channels))));
+        FSP_ASSERT((0U != p_channel_cfg->scan_mask_group_b) &&
+                   (0U == (p_channel_cfg->scan_mask_group_b & (~valid_channels))));
 
         /* Cannot have the same channel in both groups. */
-        FSP_ASSERT(0 == (p_cfg->scan_mask & p_cfg->scan_mask_group_b));
+        FSP_ASSERT(0 == (p_channel_cfg->scan_mask & p_channel_cfg->scan_mask_group_b));
     }
     else
     {
         /* If group mode is not enabled, no channels can be selected for group B. */
-        FSP_ASSERT(ADC_MASK_OFF == p_cfg->scan_mask_group_b);
+        FSP_ASSERT(ADC_MASK_OFF == p_channel_cfg->scan_mask_group_b);
     }
 
     /* Verify sensor configuration. */
-    err = r_adc_scan_cfg_check_sensors(p_instance_ctrl, p_cfg);
+    err = r_adc_scan_cfg_check_sensors(p_instance_ctrl, p_channel_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Verify that if addition is enabled, then at least one channel is selected. */
-    if (ADC_ADD_OFF != p_instance_ctrl->p_cfg->add_average_count)
+    adc_extended_cfg_t const * p_cfg_extend = (adc_extended_cfg_t const *) p_instance_ctrl->p_cfg->p_extend;
+    if (ADC_ADD_OFF != p_cfg_extend->add_average_count)
     {
         /* Addition mask should not include bits from inactive channels.
          * This also serves as a check for valid channels in the addition mask */
-        uint32_t tmp_mask = p_cfg->scan_mask_group_b | p_cfg->scan_mask;
-        FSP_ASSERT((0U == (p_cfg->add_mask & ~tmp_mask)) && (0U != p_cfg->add_mask));
+        uint32_t tmp_mask = p_channel_cfg->scan_mask_group_b | p_channel_cfg->scan_mask;
+        FSP_ASSERT((0U == (p_channel_cfg->add_mask & ~tmp_mask)) && (0U != p_channel_cfg->add_mask));
     }
     else
     {
         /* Channels cannot be selected for addition if addition is not used. */
-        FSP_ASSERT(ADC_MASK_OFF == p_cfg->add_mask);
+        FSP_ASSERT(ADC_MASK_OFF == p_channel_cfg->add_mask);
     }
 
     /* Check sample and hold settings. */
-    err = r_adc_scan_cfg_check_sample_hold(p_instance_ctrl, p_cfg);
+    err = r_adc_scan_cfg_check_sample_hold(p_instance_ctrl, p_channel_cfg);
 
     return err;
 }
@@ -1246,14 +1295,18 @@ static fsp_err_t r_adc_scan_cfg_check (adc_instance_ctrl_t * const     p_instanc
  * is not 0.
  *
  * @param[in]  p_instance_ctrl         Pointer to instance control block
- * @param[in]  p_cfg                   Pointer to channel configuration
+ * @param[in]  p_channel_cfg           Pointer to channel configuration
  **********************************************************************************************************************/
-static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_channel_cfg_t const * const p_cfg)
+static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_channel_cfg_t const * const p_channel_cfg)
 {
-    /* Set mask for channels. */
-    uint32_t scan_mask         = p_cfg->scan_mask & ~(uint32_t) ADC_MASK_SENSORS;
-    uint32_t scan_mask_group_b = p_cfg->scan_mask_group_b & ~(uint32_t) ADC_MASK_SENSORS;
-    uint32_t add_mask          = p_cfg->add_mask & ~(uint32_t) ADC_MASK_SENSORS;
+    /* Set mask for Group A channels. */
+    uint32_t scan_mask = p_channel_cfg->scan_mask & ~(uint32_t) ADC_MASK_SENSORS;
+    adc_extended_cfg_t const * p_cfg_extend = (adc_extended_cfg_t const *) p_instance_ctrl->p_cfg->p_extend;
+
+    /* Set other channel masks. */
+    uint32_t scan_mask_group_b = p_channel_cfg->scan_mask_group_b & ~(uint32_t) ADC_MASK_SENSORS;
+    uint32_t add_mask          = p_channel_cfg->add_mask & ~(uint32_t) ADC_MASK_SENSORS;
+
     p_instance_ctrl->p_reg->ADANSA[0] = (uint16_t) (scan_mask);
     p_instance_ctrl->p_reg->ADANSB[0] = (uint16_t) (scan_mask_group_b);
     p_instance_ctrl->p_reg->ADADS[0]  = (uint16_t) (add_mask);
@@ -1262,7 +1315,7 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
     p_instance_ctrl->p_reg->ADADS[1]  = (uint16_t) ((add_mask >> 16));
 
     /* If either voltage or temperature sensor are used, configure them. */
-    uint32_t temp_mask = p_cfg->scan_mask | p_cfg->scan_mask_group_b;
+    uint32_t temp_mask = p_channel_cfg->scan_mask | p_channel_cfg->scan_mask_group_b;
     if (temp_mask & ADC_MASK_SENSORS)
     {
         /* Calculate sample state values such that the sample time for the temperature and voltage sensor is the
@@ -1270,19 +1323,29 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
          * 5 microseconds for RV40. The sample states will be calculated to allow sampling for this duration. */
 
         /* Retrieve the clock source and frequency used by the ADC peripheral and sampling time required for the sensor. */
-        r_adc_sensor_cfg(p_instance_ctrl, p_cfg);
+        r_adc_sensor_cfg(p_instance_ctrl, p_channel_cfg);
     }
 
     /* Configure sample and hold. */
-    uint32_t adshcr = p_cfg->sample_hold_states;
-    adshcr |= (p_cfg->sample_hold_mask & ADC_MASK_SAMPLE_HOLD_BYPASS_CHANNELS) <<
+    uint32_t adshcr = p_channel_cfg->sample_hold_states;
+    adshcr |= (p_channel_cfg->sample_hold_mask & ADC_MASK_SAMPLE_HOLD_BYPASS_CHANNELS) <<
               ADC_MASK_SAMPLE_HOLD_BYPASS_SHIFT;
     p_instance_ctrl->p_reg->ADSHCR = (uint16_t) adshcr;
 
     /* Set group A priority action (not interrupt priority!)
      * This will also start the Group B scans if configured for ADC_GROUP_A_GROUP_B_CONTINUOUS_SCAN.
      */
-    p_instance_ctrl->p_reg->ADGSPCR = (uint16_t) p_cfg->priority_group_a;
+    p_instance_ctrl->p_reg->ADGSPCR = (uint16_t) p_channel_cfg->priority_group_a;
+
+    /* In double-trigger mode set the channel select bits to the highest selected channel number then return. */
+    if (ADC_DOUBLE_TRIGGER_DISABLED != p_cfg_extend->double_trigger_mode)
+    {
+        uint32_t adcsr = p_instance_ctrl->p_reg->ADCSR;
+        adcsr = (adcsr & ~R_ADC0_ADCSR_DBLANS_Msk) + (31U - __CLZ(scan_mask));
+
+        p_instance_ctrl->p_reg->ADCSR      = (uint16_t) adcsr;
+        p_instance_ctrl->scan_start_adcsr |= (uint16_t) adcsr;
+    }
 }
 
 /*******************************************************************************************************************//**

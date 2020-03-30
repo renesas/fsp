@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -532,7 +532,8 @@ static void iic_open_hw_slave (iic_slave_instance_ctrl_t * const p_ctrl)
     }
 
     /* Enable the slave address */
-    p_ctrl->p_reg->ICSER = (uint8_t) IIC_SLAVE_ICSER_SLAVE_ADDRESS_ENABLE_REGISTER_0;
+    p_ctrl->p_reg->ICSER = (uint8_t) ((uint8_t) IIC_SLAVE_ICSER_SLAVE_ADDRESS_ENABLE_REGISTER_0 |
+                                      ((uint8_t) p_ctrl->p_cfg->general_call_enable << R_IIC0_ICSER_GCAE_Pos));
 
     /* Allow timeouts to be generated on the low value of SCL using long count mode */
     p_ctrl->p_reg->ICMR2 = IIC_SLAVE_BUS_MODE_REGISTER_2_MASK;
@@ -603,11 +604,15 @@ static void iic_slave_initiate_transaction (iic_slave_instance_ctrl_t * p_ctrl, 
 
     /* Check if correct API is called here  Check direction (API called) against slave event requested (ISR invoked) */
     if (!(((IIC_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ ==
-            p_ctrl->direction) && (I2C_SLAVE_EVENT_RX_REQUEST == slave_event)) ||
+            p_ctrl->direction) &&
+           ((I2C_SLAVE_EVENT_RX_REQUEST == slave_event) || (I2C_SLAVE_EVENT_GENERAL_CALL == slave_event))) ||
           ((IIC_SLAVE_TRANSFER_DIR_MASTER_READ_SLAVE_WRITE ==
             p_ctrl->direction) && (I2C_SLAVE_EVENT_TX_REQUEST == slave_event))))
     {
         /* In case MasterWriteSlaveRead API is NOT called to service Master write operation a NACK is
+         * issued from the RXI ISR (which is fired once) and the bus is released.
+         *
+         * In case MasterWriteSlaveRead API is NOT called to service Master General Call operation a NACK is
          * issued from the RXI ISR (which is fired once) and the bus is released.
          *
          * In case MasterReadSlaveWrite API is NOT called to service Master read operation the TXI will fire once,
@@ -680,8 +685,12 @@ static void iic_rxi_slave (iic_slave_instance_ctrl_t * p_ctrl)
         /* Check if the read request event has been notified through callback, if not provide the callback */
         if (!p_ctrl->notify_request)
         {
-            /* Perform the read when data byte received */
-            iic_slave_initiate_transaction(p_ctrl, I2C_SLAVE_EVENT_RX_REQUEST);
+            /* Check if this is a General Call by Master */
+            i2c_slave_event_t receive_callback_event =
+                (R_IIC0_ICSR1_GCA_Msk ==
+                 (p_ctrl->p_reg->ICSR1 &
+                  R_IIC0_ICSR1_GCA_Msk)) ? I2C_SLAVE_EVENT_GENERAL_CALL : I2C_SLAVE_EVENT_RX_REQUEST;
+            iic_slave_initiate_transaction(p_ctrl, receive_callback_event);
         }
 
 #if IIC_SLAVE_CFG_PARAM_CHECKING_ENABLE

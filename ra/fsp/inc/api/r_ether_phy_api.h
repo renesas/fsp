@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -20,7 +20,9 @@
  * @brief Interface for Ethernet phy functions.
  *
  * @section ETHER_PHY_API_Summary Summary
- * The Ethernet PHY interface provides Ethernet phy functionality.
+ * The Ethernet PHY module (r_ether_phy) provides an API for standard Ethernet PHY communications applications that use
+ * the ETHERC peripheral.
+ *
  * The Ethernet PHY interface supports the following features:
  * - Auto negotiation support
  * - Flow control support
@@ -89,9 +91,9 @@ typedef void ether_phy_ctrl_t;
 typedef struct st_ether_phy_cfg
 {
     uint8_t channel;                       ///< Channel
-    uint8_t phy_lsi_address;               ///< Address of Phy-LSI
+    uint8_t phy_lsi_address;               ///< Address of PHY-LSI
 
-    uint32_t phy_reset_wait_time;          ///< Wait time for Phy-LSI reboot
+    uint32_t phy_reset_wait_time;          ///< Wait time for PHY-LSI reboot
     int32_t  mii_bit_access_wait_time;     ///< Wait time for MII/RMII access
 
     ether_phy_flow_control_t flow_control; ///< Flow control functionally enable or disable
@@ -107,7 +109,7 @@ typedef struct st_ether_phy_api
 {
     /** Open driver.
      * @par Implemented as
-     * - R_ETHER_PHY_Open()
+     * - @ref R_ETHER_PHY_Open()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -116,7 +118,7 @@ typedef struct st_ether_phy_api
 
     /** Close driver.
      * @par Implemented as
-     * - R_ETHER_PHY_Close()
+     * - @ref R_ETHER_PHY_Close()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      */
@@ -124,7 +126,7 @@ typedef struct st_ether_phy_api
 
     /** Start auto negotiation.
      * @par Implemented as
-     * - R_ETHER_PHY_StartAutoNegotiate()
+     * - @ref R_ETHER_PHY_StartAutoNegotiate()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      */
@@ -132,11 +134,11 @@ typedef struct st_ether_phy_api
 
     /** Get the partner ability.
      * @par Implemented as
-     * - R_ETHER_PHY_LinkPartnerAbilityGet()
+     * - @ref R_ETHER_PHY_LinkPartnerAbilityGet()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      * @param[out] p_line_speed_duplex        Pointer to the location of both the line speed and the duplex.
-     * @param[out] p_local_pause        Pointer to the location to store the local pause bits..
+     * @param[out] p_local_pause        Pointer to the location to store the local pause bits.
      * @param[out] p_partner_pause        Pointer to the location to store the partner pause bits.
      */
     fsp_err_t (* linkPartnerAbilityGet)(ether_phy_ctrl_t * const p_api_ctrl, uint32_t * const p_line_speed_duplex,
@@ -144,7 +146,7 @@ typedef struct st_ether_phy_api
 
     /** Get Link status from phy-LSI interface.
      * @par Implemented as
-     * - R_ETHER_PHY_LinkStatusGet()
+     * - @ref R_ETHER_PHY_LinkStatusGet()
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      */
@@ -152,7 +154,7 @@ typedef struct st_ether_phy_api
 
     /** Return the version of the driver.
      * @par Implemented as
-     * - R_ETHER_PHY_VersionGet()
+     * - @ref R_ETHER_PHY_VersionGet()
      *
      * @param[out] p_data       Memory address to return version information to.
      */

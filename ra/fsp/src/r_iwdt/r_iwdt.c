@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -261,7 +261,7 @@ fsp_err_t R_IWDT_StatusGet (wdt_ctrl_t * const p_api_ctrl, wdt_status_t * const 
 }
 
 /*******************************************************************************************************************//**
- * Clear the IWDT status and error flags. Implements wdt_api_t::statusClear.
+ * Clear the IWDT status and error flags. Implements @ref wdt_api_t::statusClear.
  *
  * Example:
  * @snippet r_iwdt_example.c R_IWDT_StatusClear
@@ -302,7 +302,7 @@ fsp_err_t R_IWDT_StatusClear (wdt_ctrl_t * const p_api_ctrl, const wdt_status_t 
 }
 
 /*******************************************************************************************************************//**
- * Read the current count value of the IWDT. Implements wdt_api_t::counterGet.
+ * Read the current count value of the IWDT. Implements @ref wdt_api_t::counterGet.
  *
  * Example:
  * @snippet r_iwdt_example.c R_IWDT_CounterGet
@@ -327,9 +327,9 @@ fsp_err_t R_IWDT_CounterGet (wdt_ctrl_t * const p_api_ctrl, uint32_t * const p_c
 }
 
 /*******************************************************************************************************************//**
- * Read timeout information for the watchdog timer. Implements wdt_api_t::timeoutGet.
+ * Read timeout information for the watchdog timer. Implements @ref wdt_api_t::timeoutGet.
  *
- * @retval FSP_SUCCESS              WDT successfully refreshed.
+ * @retval FSP_SUCCESS              IWDT timeout information retrieved successfully.
  * @retval FSP_ERR_ASSERTION        One or more parameters are NULL pointers.
  * @retval FSP_ERR_NOT_OPEN         The driver has not been opened. Perform R_IWDT_Open() first.
  **********************************************************************************************************************/
@@ -368,7 +368,7 @@ fsp_err_t R_IWDT_TimeoutGet (wdt_ctrl_t * const p_api_ctrl, wdt_timeout_values_t
 }
 
 /*******************************************************************************************************************//**
- * Return IWDT HAL driver version. Implements wdt_api_t::versionGet.
+ * Return IWDT HAL driver version. Implements @ref wdt_api_t::versionGet.
  *
  * @retval          FSP_SUCCESS         Call successful.
  * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter.

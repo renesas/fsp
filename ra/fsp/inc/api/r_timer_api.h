@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -61,9 +61,11 @@ FSP_HEADER
 /** Events that can trigger a callback function */
 typedef enum e_timer_event
 {
-    TIMER_EVENT_CYCLE_END,             ///< Requested timer delay has expired or timer has wrapped around.
-    TIMER_EVENT_CAPTURE_A,             ///< A capture has occurred on signal A.
-    TIMER_EVENT_CAPTURE_B,             ///< A capture has occurred on signal B.
+    TIMER_EVENT_CYCLE_END,                     ///< Requested timer delay has expired or timer has wrapped around
+    TIMER_EVENT_CREST = TIMER_EVENT_CYCLE_END, ///< Timer crest event (counter is at a maximum, triangle-wave PWM only)
+    TIMER_EVENT_CAPTURE_A,                     ///< A capture has occurred on signal A
+    TIMER_EVENT_CAPTURE_B,                     ///< A capture has occurred on signal B
+    TIMER_EVENT_TROUGH,                        ///< Timer trough event (counter is 0, triangle-wave PWM only
 } timer_event_t;
 
 /** Timer variant types. */
@@ -76,7 +78,7 @@ typedef enum e_timer_variant
 /** Callback function parameter data */
 typedef struct st_timer_callback_args
 {
-    /** Placeholder for user data.  Set in timer_api_t::open function in ::timer_cfg_t. */
+    /** Placeholder for user data.  Set in @ref timer_api_t::open function in @ref timer_cfg_t. */
     void const  * p_context;
     timer_event_t event;               ///< The event can be used to identify what caused the callback.
 
@@ -91,7 +93,7 @@ typedef struct st_timer_callback_args
  */
 typedef void timer_ctrl_t;
 
-/** Possible status values returned by timer_api_t::statusGet. */
+/** Possible status values returned by @ref timer_api_t::statusGet. */
 typedef enum e_timer_state
 {
     TIMER_STATE_STOPPED  = 0,          ///< Timer is stopped
@@ -101,9 +103,11 @@ typedef enum e_timer_state
 /** Timer operational modes */
 typedef enum e_timer_mode
 {
-    TIMER_MODE_PERIODIC,               ///< Timer will restart after delay periods.
-    TIMER_MODE_ONE_SHOT,               ///< Timer will stop after delay periods.
-    TIMER_MODE_PWM                     ///< Timer generate PWM output.
+    TIMER_MODE_PERIODIC,                          ///< Timer restarts after period elapses.
+    TIMER_MODE_ONE_SHOT,                          ///< Timer stops after period elapses.
+    TIMER_MODE_PWM,                               ///< Timer generates saw-wave PWM output.
+    TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM  = 4U, ///< Timer generates symmetric triangle-wave PWM output.
+    TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM = 5U, ///< Timer generates asymmetric triangle-wave PWM output.
 } timer_mode_t;
 
 /** Direction of timer count */
@@ -131,9 +135,13 @@ typedef enum e_timer_source_div
 /** Timer information structure to store various information for a timer resource */
 typedef struct st_timer_info
 {
-    timer_direction_t count_direction; ///< Clock counting direction of the timer resource.
-    uint32_t          clock_frequency; ///< Clock frequency of the timer resource.
-    uint32_t          period_counts;   ///< Time in clock counts until timer will expire.
+    timer_direction_t count_direction; ///< Clock counting direction of the timer.
+    uint32_t          clock_frequency; ///< Clock frequency of the timer counter.
+
+    /* Period in raw timer counts.
+     * @note For triangle wave PWM modes, the full period is double this value.
+     */
+    uint32_t period_counts;
 } timer_info_t;
 
 /** Current timer status. */
@@ -146,7 +154,11 @@ typedef struct st_timer_status
 /** User configuration structure, used in open function */
 typedef struct st_timer_cfg
 {
-    timer_mode_t       mode;              ///< Select enumerated value from ::timer_mode_t
+    timer_mode_t mode;                    ///< Select enumerated value from @ref timer_mode_t
+
+    /* Period in raw timer counts.
+     * @note For triangle wave PWM modes, enter the period of half the triangle wave, or half the desired period.
+     */
     uint32_t           period_counts;     ///< Period in raw timer counts
     timer_source_div_t source_div;        ///< Source clock divider
     uint32_t           duty_cycle_counts; ///< Duty cycle in counts
@@ -159,7 +171,7 @@ typedef struct st_timer_cfg
     /** Callback provided when a timer ISR occurs.  Set to NULL for no CPU interrupt. */
     void (* p_callback)(timer_callback_args_t * p_args);
 
-    /** Placeholder for user data.  Passed to the user callback in ::timer_callback_args_t. */
+    /** Placeholder for user data.  Passed to the user callback in @ref timer_callback_args_t. */
     void const * p_context;
     void const * p_extend;             ///< Extension parameter for hardware specific settings.
 } timer_cfg_t;
@@ -169,8 +181,8 @@ typedef struct st_timer_api
 {
     /** Initial configuration.
      * @par Implemented as
-     * - R_GPT_Open()
-     * - R_AGT_Open()
+     * - @ref R_GPT_Open()
+     * - @ref R_AGT_Open()
      *
      * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.
@@ -179,58 +191,58 @@ typedef struct st_timer_api
 
     /** Start the counter.
      * @par Implemented as
-     * - R_GPT_Start()
-     * - R_AGT_Start()
+     * - @ref R_GPT_Start()
+     * - @ref R_AGT_Start()
      *
-     * @param[in]   p_ctrl     Control block set in timer_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      */
     fsp_err_t (* start)(timer_ctrl_t * const p_ctrl);
 
     /** Stop the counter.
      * @par Implemented as
-     * - R_GPT_Stop()
-     * - R_AGT_Stop()
+     * - @ref R_GPT_Stop()
+     * - @ref R_AGT_Stop()
      *
-     * @param[in]   p_ctrl     Control block set in timer_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      */
     fsp_err_t (* stop)(timer_ctrl_t * const p_ctrl);
 
     /** Reset the counter to the initial value.
      * @par Implemented as
-     * - R_GPT_Reset()
-     * - R_AGT_Reset()
+     * - @ref R_GPT_Reset()
+     * - @ref R_AGT_Reset()
      *
-     * @param[in]   p_ctrl     Control block set in timer_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      */
     fsp_err_t (* reset)(timer_ctrl_t * const p_ctrl);
 
     /** Enables input capture.
      * @par Implemented as
-     * - R_GPT_Enable()
-     * - R_AGT_Enable()
+     * - @ref R_GPT_Enable()
+     * - @ref R_AGT_Enable()
      *
-     * @param[in]   p_ctrl     Control block set in timer_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      */
     fsp_err_t (* enable)(timer_ctrl_t * const p_ctrl);
 
     /** Disables input capture.
      * @par Implemented as
-     * - R_GPT_Disable()
-     * - R_AGT_Disable()
+     * - @ref R_GPT_Disable()
+     * - @ref R_AGT_Disable()
      *
-     * @param[in]   p_ctrl     Control block set in timer_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      */
     fsp_err_t (* disable)(timer_ctrl_t * const p_ctrl);
 
     /** Set the time until the timer expires.  See implementation for details of period update timing.
      *
      * @par Implemented as
-     * - R_GPT_PeriodSet()
-     * - R_AGT_PeriodSet()
+     * - @ref R_GPT_PeriodSet()
+     * - @ref R_AGT_PeriodSet()
      *
      * @note Timer expiration may or may not generate a CPU interrupt based on how the timer is configured in
-     * timer_api_t::open.
-     * @param[in]   p_ctrl     Control block set in timer_api_t::open call for this timer.
+     * @ref timer_api_t::open.
+     * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      * @param[in]   p_period   Time until timer should expire.
      */
     fsp_err_t (* periodSet)(timer_ctrl_t * const p_ctrl, uint32_t const period);
@@ -239,10 +251,10 @@ typedef struct st_timer_api
      * reflected after the next timer expiration.
      *
      * @par Implemented as
-     * - R_GPT_DutyCycleSet()
-     * - R_AGT_DutyCycleSet()
+     * - @ref R_GPT_DutyCycleSet()
+     * - @ref R_AGT_DutyCycleSet()
      *
-     * @param[in]   p_ctrl             Control block set in timer_api_t::open call for this timer.
+     * @param[in]   p_ctrl             Control block set in @ref timer_api_t::open call for this timer.
      * @param[in]   duty_cycle_counts  Time until duty cycle should expire.
      * @param[in]   pin                Which output pin to update.  See implementation for details.
      */
@@ -250,37 +262,37 @@ typedef struct st_timer_api
 
     /** Stores timer information in p_info.
      * @par Implemented as
-     * - R_GPT_InfoGet()
-     * - R_AGT_InfoGet()
+     * - @ref R_GPT_InfoGet()
+     * - @ref R_AGT_InfoGet()
      *
-     * @param[in]   p_ctrl     Control block set in timer_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      * @param[out]  p_info     Collection of information for this timer.
      */
     fsp_err_t (* infoGet)(timer_ctrl_t * const p_ctrl, timer_info_t * const p_info);
 
     /** Get the current counter value and timer state and store it in p_status.
      * @par Implemented as
-     * - R_GPT_StatusGet()
-     * - R_AGT_StatusGet()
+     * - @ref R_GPT_StatusGet()
+     * - @ref R_AGT_StatusGet()
      *
-     * @param[in]   p_ctrl     Control block set in timer_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      * @param[out]  p_status   Current status of this timer.
      */
     fsp_err_t (* statusGet)(timer_ctrl_t * const p_ctrl, timer_status_t * const p_status);
 
     /** Allows driver to be reconfigured and may reduce power consumption.
      * @par Implemented as
-     * - R_GPT_Close()
-     * - R_AGT_Close()
+     * - @ref R_GPT_Close()
+     * - @ref R_AGT_Close()
      *
-     * @param[in]   p_ctrl     Control block set in timer_api_t::open call for this timer.
+     * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      */
     fsp_err_t (* close)(timer_ctrl_t * const p_ctrl);
 
     /** Get version and store it in provided pointer p_version.
      * @par Implemented as
-     * - R_GPT_VersionGet()
-     * - R_AGT_VersionGet()
+     * - @ref R_GPT_VersionGet()
+     * - @ref R_AGT_VersionGet()
      *
      * @param[out]  p_version  Code and API version used.
      */

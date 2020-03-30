@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -83,8 +83,8 @@ const comparator_api_t g_comparator_on_acmphs =
 
 /*******************************************************************************************************************//**
  * Configures the comparator and starts operation. Callbacks and pin output are not active until outputEnable() is
- * called. comparator_api_t::outputEnable() should be called after the output has stabilized. Implements
- * comparator_api_t::open().
+ * called. @ref comparator_api_t::outputEnable() should be called after the output has stabilized. Implements
+ * @ref comparator_api_t::open().
  *
  * Comparator inputs must be configured in the application code prior to calling this function.
  *
@@ -123,7 +123,7 @@ fsp_err_t R_ACMPHS_Open (comparator_ctrl_t * const p_ctrl, comparator_cfg_t cons
     /* Initialize control block. */
     p_instance_ctrl->p_reg = ACMPHS_REG(p_instance_ctrl->p_cfg->channel);
 
-    /* Configure interrupt priority. The interrupt is disabled until comparator_api_t::outputEnable() is called. */
+    /* Configure interrupt priority. The interrupt is disabled until @ref comparator_api_t::outputEnable() is called. */
     if (p_instance_ctrl->p_cfg->irq >= 0)
     {
         R_BSP_IrqCfg(p_instance_ctrl->p_cfg->irq, p_instance_ctrl->p_cfg->ipl, p_instance_ctrl);
@@ -141,7 +141,7 @@ fsp_err_t R_ACMPHS_Open (comparator_ctrl_t * const p_ctrl, comparator_cfg_t cons
 }
 
 /*******************************************************************************************************************//**
- * Provides the minimum stabilization wait time in microseconds. Implements comparator_api_t::infoGet().
+ * Provides the minimum stabilization wait time in microseconds. Implements @ref comparator_api_t::infoGet().
  *
  * @retval  FSP_SUCCESS                Information stored in p_info.
  * @retval  FSP_ERR_ASSERTION          An input pointer was NULL.
@@ -183,8 +183,8 @@ fsp_err_t R_ACMPHS_InfoGet (comparator_ctrl_t * const p_ctrl, comparator_info_t 
 }
 
 /*******************************************************************************************************************//**
- * Enables the comparator output, which can be polled using comparator_api_t::statusGet(). Also enables pin output and
- * interrupts as configured during comparator_api_t::open(). Implements comparator_api_t::outputEnable().
+ * Enables the comparator output, which can be polled using @ref comparator_api_t::statusGet(). Also enables pin output and
+ * interrupts as configured during @ref comparator_api_t::open(). Implements @ref comparator_api_t::outputEnable().
  *
  * @retval  FSP_SUCCESS                Comparator output is enabled.
  * @retval  FSP_ERR_ASSERTION          An input pointer was NULL.
@@ -226,7 +226,7 @@ fsp_err_t R_ACMPHS_OutputEnable (comparator_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Provides the operating status of the comparator. Implements comparator_api_t::statusGet().
+ * Provides the operating status of the comparator. Implements @ref comparator_api_t::statusGet().
  *
  * @retval  FSP_SUCCESS                Operating status of the comparator is provided in p_status.
  * @retval  FSP_ERR_ASSERTION          An input pointer was NULL.
@@ -287,7 +287,7 @@ fsp_err_t R_ACMPHS_StatusGet (comparator_ctrl_t * const p_ctrl, comparator_statu
 }
 
 /*******************************************************************************************************************//**
- * Stops the comparator. Implements comparator_api_t::close().
+ * Stops the comparator. Implements @ref comparator_api_t::close().
  *
  * @retval  FSP_SUCCESS                Instance control block closed successfully.
  * @retval  FSP_ERR_ASSERTION          An input pointer was NULL.
@@ -331,7 +331,7 @@ fsp_err_t R_ACMPHS_Close (comparator_ctrl_t * p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Gets the API and code version. Implements comparator_api_t::versionGet().
+ * Gets the API and code version. Implements @ref comparator_api_t::versionGet().
  *
  * @retval  FSP_SUCCESS        Version information available in p_version.
  * @retval  FSP_ERR_ASSERTION  The parameter p_version is NULL.

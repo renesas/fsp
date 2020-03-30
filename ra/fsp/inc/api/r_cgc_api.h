@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -156,7 +156,7 @@ typedef enum e_cgc_sys_clock_div
     CGC_SYS_CLOCK_DIV_64 = 6,          ///< System clock divided by 64
 } cgc_sys_clock_div_t;
 
-/** Clock configuration structure - Used as an input parameter to the cgc_api_t::clockStart function for the PLL clock. */
+/** Clock configuration structure - Used as an input parameter to the @ref cgc_api_t::clockStart function for the PLL clock. */
 typedef struct st_cgc_pll_cfg
 {
     cgc_clock_t   source_clock;        ///< PLL source clock (main oscillator or HOCO)
@@ -164,7 +164,7 @@ typedef struct st_cgc_pll_cfg
     cgc_pll_mul_t multiplier;          ///< PLL multiplier
 } cgc_pll_cfg_t;
 
-/** Clock configuration structure - Used as an input parameter to the cgc_api_t::systemClockSet and cgc_api_t::systemClockGet
+/** Clock configuration structure - Used as an input parameter to the @ref cgc_api_t::systemClockSet and @ref cgc_api_t::systemClockGet
  * functions. */
 typedef union u_cgc_divider_cfg
 {
@@ -235,7 +235,7 @@ typedef struct
 {
     /** Initial configuration
      * @par Implemented as
-     * - R_CGC_Open()
+     * - @ref R_CGC_Open()
      * @param[in]   p_ctrl         Pointer to instance control block
      * @param[in]   p_cfg          Pointer to configuration
      */
@@ -243,7 +243,7 @@ typedef struct
 
     /** Configure all system clocks.
      * @par Implemented as
-     * - R_CGC_ClocksCfg()
+     * - @ref R_CGC_ClocksCfg()
      * @param[in]   p_ctrl         Pointer to instance control block
      * @param[in]   p_clock_cfg    Pointer to desired configuration of system clocks
      */
@@ -251,7 +251,7 @@ typedef struct
 
     /** Start a clock.
      * @par Implemented as
-     * - R_CGC_ClockStart()
+     * - @ref R_CGC_ClockStart()
      * @param[in]   p_ctrl         Pointer to instance control block
      * @param[in]   clock_source   Clock source to start
      * @param[in]   p_pll_cfg      Pointer to PLL configuration, can be NULL if clock_source is not CGC_CLOCK_PLL
@@ -261,7 +261,7 @@ typedef struct
 
     /** Stop a clock.
      * @par Implemented as
-     * - R_CGC_ClockStop()
+     * - @ref R_CGC_ClockStop()
      * @param[in]   p_ctrl         Pointer to instance control block
      * @param[in]   clock_source   The clock source to stop
      */
@@ -269,7 +269,7 @@ typedef struct
 
     /** Check the stability of the selected clock.
      * @par Implemented as
-     * - R_CGC_ClockCheck()
+     * - @ref R_CGC_ClockCheck()
      * @param[in]   p_ctrl         Pointer to instance control block
      * @param[in]   clock_source   Which clock source to check for stability
      */
@@ -277,7 +277,7 @@ typedef struct
 
     /** Set the system clock.
      * @par Implemented as
-     * - R_CGC_SystemClockSet()
+     * - @ref R_CGC_SystemClockSet()
      * @param[in]   p_ctrl         Pointer to instance control block
      * @param[in]   clock_source   Clock source to set as system clock
      * @param[in]   p_divider_cfg  Pointer to the clock divider configuration
@@ -287,7 +287,7 @@ typedef struct
 
     /** Get the system clock information.
      * @par Implemented as
-     * - R_CGC_SystemClockGet()
+     * - @ref R_CGC_SystemClockGet()
      * @param[in]   p_ctrl          Pointer to instance control block
      * @param[out]  p_clock_source  Returns the current system clock
      * @param[out]  p_divider_cfg   Returns the current system clock dividers
@@ -297,7 +297,7 @@ typedef struct
 
     /** Enable and optionally register a callback for Main Oscillator stop detection.
      * @par Implemented as
-     * - R_CGC_OscStopDetectEnable()
+     * - @ref R_CGC_OscStopDetectEnable()
      * @param[in]   p_ctrl       Pointer to instance control block
      * @param[in]   p_callback   Callback function that will be called by the NMI interrupt when an oscillation stop is
      *                           detected. If the second argument is "false", then this argument can be NULL.
@@ -307,28 +307,28 @@ typedef struct
 
     /** Disable Main Oscillator stop detection.
      * @par Implemented as
-     * - R_CGC_OscStopDetectDisable()
+     * - @ref R_CGC_OscStopDetectDisable()
      * @param[in]   p_ctrl          Pointer to instance control block
      */
     fsp_err_t (* oscStopDetectDisable)(cgc_ctrl_t * const p_ctrl);
 
     /** Clear the oscillator stop detection flag.
      * @par Implemented as
-     * - R_CGC_OscStopStatusClear()
+     * - @ref R_CGC_OscStopStatusClear()
      * @param[in]   p_ctrl          Pointer to instance control block
      */
     fsp_err_t (* oscStopStatusClear)(cgc_ctrl_t * const p_ctrl);
 
     /** Close the CGC driver.
      * @par Implemented as
-     *  - R_CGC_Close()
+     * - @ref R_CGC_Close()
      * @param[in]   p_ctrl          Pointer to instance control block
      */
     fsp_err_t (* close)(cgc_ctrl_t * const p_ctrl);
 
     /** Gets the CGC driver version.
      * @par Implemented as
-     * - R_CGC_VersionGet()
+     * - @ref R_CGC_VersionGet()
      * @param[out]  p_version   Code and API version used
      */
     fsp_err_t (* versionGet)(fsp_version_t * p_version);

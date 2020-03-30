@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -44,8 +44,7 @@
 // 2048-bit RSA
 
 /*******************************************************************************************************************//**
- * @ingroup SCE_PROC_RSA
- * @brief Encryption using 2048-bit RSA public key
+ *  Encryption using 2048-bit RSA public key
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
@@ -61,9 +60,9 @@
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal I/O buffer is not empty.
  **********************************************************************************************************************/
 fsp_err_t HW_SCE_RSA_2048PublicKeyEncrypt (const uint32_t * InData_Text,
-                                        const uint32_t * InData_PublicKey,
-                                        const uint32_t * InData_N,
-                                        uint32_t       * OutData_Text)
+                                           const uint32_t * InData_PublicKey,
+                                           const uint32_t * InData_N,
+                                           uint32_t       * OutData_Text)
 {
     uint32_t jLoop, lLoop;
 

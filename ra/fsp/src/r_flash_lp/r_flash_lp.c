@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -378,7 +378,7 @@ static flash_regions_t g_flash_data_region =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Initialize the Low Power flash peripheral. Implements flash_api_t::open.
+ * Initialize the Low Power flash peripheral. Implements @ref flash_api_t::open.
  *
  * The Open function initializes the Flash.
  *
@@ -444,7 +444,7 @@ fsp_err_t R_FLASH_LP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * 
 }
 
 /*******************************************************************************************************************//**
- * Write to the specified Code or Data Flash memory area. Implements flash_api_t::write.
+ * Write to the specified Code or Data Flash memory area. Implements @ref flash_api_t::write.
  *
  * Example:
  * @snippet r_flash_lp_example.c R_FLASH_LP_Write
@@ -509,7 +509,7 @@ fsp_err_t R_FLASH_LP_Write (flash_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Erase the specified Code or Data Flash blocks. Implements flash_api_t::erase.
+ * Erase the specified Code or Data Flash blocks. Implements @ref flash_api_t::erase.
  *
  * Example:
  * @snippet r_flash_lp_example.c R_FLASH_LP_Erase
@@ -591,7 +591,7 @@ fsp_err_t R_FLASH_LP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
 }
 
 /*******************************************************************************************************************//**
- * Perform a blank check on the specified address area. Implements flash_api_t::blankCheck.
+ * Perform a blank check on the specified address area. Implements @ref flash_api_t::blankCheck.
  *
  * Example:
  * @snippet r_flash_lp_example.c R_FLASH_LP_BlankCheck
@@ -659,7 +659,7 @@ fsp_err_t R_FLASH_LP_BlankCheck (flash_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Query the FLASH for its status. Implements flash_api_t::statusGet.
+ * Query the FLASH for its status. Implements @ref flash_api_t::statusGet.
  *
  * Example:
  * @snippet r_flash_lp_example.c R_FLASH_LP_StatusGet
@@ -701,7 +701,7 @@ fsp_err_t R_FLASH_LP_StatusGet (flash_ctrl_t * const p_api_ctrl, flash_status_t 
 }
 
 /*******************************************************************************************************************//**
- * Configure an access window for the Code Flash memory. Implements flash_api_t::accessWindowSet.
+ * Configure an access window for the Code Flash memory. Implements @ref flash_api_t::accessWindowSet.
  *
  * An access window defines a contiguous area in Code Flash for which programming/erase is enabled. This area is on
  * block boundaries. The block containing start_addr is the first block. The block containing end_addr is the last
@@ -767,7 +767,7 @@ fsp_err_t R_FLASH_LP_AccessWindowSet (flash_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Remove any access window that is configured in the Code Flash. Implements flash_api_t::accessWindowClear. On
+ * Remove any access window that is configured in the Code Flash. Implements @ref flash_api_t::accessWindowClear. On
  * successful return from this call all Code Flash is writable.
  *
  * @retval     FSP_SUCCESS               Access window successfully removed.
@@ -807,7 +807,7 @@ fsp_err_t R_FLASH_LP_AccessWindowClear (flash_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Write the ID code provided to the id code registers. Implements flash_api_t::idCodeSet.
+ * Write the ID code provided to the id code registers. Implements @ref flash_api_t::idCodeSet.
  *
  * @retval     FSP_SUCCESS               ID code successfully configured.
  * @retval     FSP_ERR_IN_USE            FLASH peripheral is busy with a prior operation.
@@ -853,7 +853,7 @@ fsp_err_t R_FLASH_LP_IdCodeSet (flash_ctrl_t * const  p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Reset the FLASH peripheral. Implements flash_api_t::reset.
+ * Reset the FLASH peripheral. Implements @ref flash_api_t::reset.
  *
  * No attempt is made to check if the flash is busy before executing the reset since the assumption is that a reset
  * will terminate any existing operation.
@@ -883,7 +883,7 @@ fsp_err_t R_FLASH_LP_Reset (flash_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Select which block is used as the startup area block. Implements flash_api_t::startupAreaSelect.
+ * Select which block is used as the startup area block. Implements @ref flash_api_t::startupAreaSelect.
  *
  * Selects which block - Default (Block 0) or Alternate (Block 1) is used as the startup area block. The provided
  * parameters determine which block will become the active startup block and whether that action will be immediate (but
@@ -970,7 +970,7 @@ fsp_err_t R_FLASH_LP_UpdateFlashClockFreq (flash_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Returns the information about the flash regions. Implements flash_api_t::infoGet.
+ * Returns the information about the flash regions. Implements @ref flash_api_t::infoGet.
  *
  * @retval     FSP_SUCCESS        Successful retrieved the request information.
  * @retval     FSP_ERR_ASSERTION  NULL provided for p_ctrl or p_info.
@@ -1001,7 +1001,7 @@ fsp_err_t R_FLASH_LP_InfoGet (flash_ctrl_t * const p_api_ctrl, flash_info_t * co
 }
 
 /*******************************************************************************************************************//**
- * Release any resources that were allocated by the Flash API. Implements flash_api_t::close.
+ * Release any resources that were allocated by the Flash API. Implements @ref flash_api_t::close.
  *
  * @retval     FSP_SUCCESS        Successful close.
  * @retval     FSP_ERR_ASSERTION  NULL provided for p_ctrl or p_cfg.
@@ -1079,16 +1079,14 @@ static fsp_err_t r_flash_lp_setup (flash_lp_instance_ctrl_t * p_ctrl)
     /* Initialize the flash timeout calculations and transfer global parameters to code and data flash layers. */
     r_flash_lp_init(p_ctrl);
 
-    /* Enable the DataFlash */
-    R_FACI_LP->DFLCTL = 1U;
-
-    if (1U == R_FACI_LP->DFLCTL)
+    /* Enable the DataFlash if not already enabled */
+    if (1U != R_FACI_LP->DFLCTL)
     {
-        __NOP();
-    }
+        R_FACI_LP->DFLCTL = 1U;
 
-    /* Wait for (tDSTOP) before reading from data flash. */
-    r_flash_lp_delay_us(FLASH_LP_WAIT_TDSTOP, p_ctrl->system_clock_frequency);
+        /* Wait for (tDSTOP) before reading from data flash. */
+        r_flash_lp_delay_us(FLASH_LP_WAIT_TDSTOP, p_ctrl->system_clock_frequency);
+    }
 
     return err;
 }

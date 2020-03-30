@@ -21,7 +21,7 @@
 
 #include "rm_emwin_port_cfg.h"
 
-#if EMWIN_USE_JPEG_HW && EMWIN_USE_DAVE
+#if EMWIN_JPEG_USE_HW && EMWIN_LCD_USE_DAVE
 
 typedef struct
 {

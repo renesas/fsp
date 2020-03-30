@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -133,7 +133,7 @@ d1_int_t d1_shutdownirq_intern (d1_device_flex * handle)
  * This function waits for DRW_INT with timeout.
  *
  * @param[in] handle    Pointer to the d1_device object (Not used).
- * @param[in] irqmask   Interrupt ID (Not used. Flex only uses Display list IRQ).
+ * @param[in] irqmask   Interrupt ID (Not used. FSP only uses Display list IRQ).
  * @param[in] timeout   Timeout value.
  * @retval    0         The function returns 0 if the wait times out.
  * @retval    1         The function returns 1 if DRW_INT was detected.

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -340,9 +340,7 @@ static glcdc_dithering_output_format_t g_pdtha_lut[] =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @brief  Open GLCDC module.
- * @par    Implements
- * - display_api_t::open.
+ * Open GLCDC module. Implements @ref display_api_t::open.
  *
  * @retval  FSP_SUCCESS                        Device was opened successfully.
  * @retval  FSP_ERR_ALREADY_OPEN               Device was already open.
@@ -446,9 +444,7 @@ fsp_err_t R_GLCDC_Open (display_ctrl_t * const p_api_ctrl, display_cfg_t const *
 }
 
 /*******************************************************************************************************************//**
- * @brief  Close GLCDC module.
- * @par    Implements
- * - display_api_t::close.
+ * Close GLCDC module. Implements @ref display_api_t::close.
  *
  * @retval  FSP_SUCCESS                     Device was closed successfully.
  * @retval  FSP_ERR_ASSERTION               Pointer to the control block is NULL.
@@ -507,9 +503,7 @@ fsp_err_t R_GLCDC_Close (display_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * @brief  Start GLCDC module.
- * @par    Implements
- * - display_api_t::start.
+ * Start GLCDC module. Implements @ref display_api_t::start.
  *
  * @retval  FSP_SUCCESS                  Device was started successfully.
  * @retval  FSP_ERR_NOT_OPEN             GLCDC module has not been opened.
@@ -541,9 +535,7 @@ fsp_err_t R_GLCDC_Start (display_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * @brief  Stop GLCDC module.
- * @par    Implements
- * - display_api_t::stop.
+ * Stop GLCDC module. Implements @ref display_api_t::stop.
  *
  * @retval  FSP_SUCCESS                   Device was stopped successfully
  * @retval  FSP_ERR_ASSERTION             Pointer to the control block is NULL
@@ -581,9 +573,7 @@ fsp_err_t R_GLCDC_Stop (display_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * @brief  Change layer parameters of GLCDC module at runtime.
- * @par    Implements
- * - display_api_t::layerChange.
+ * Change layer parameters of GLCDC module at runtime. Implements display_api_t::layerChange.
  *
  * @retval  FSP_SUCCESS                      Changed layer parameters of GLCDC module successfully.
  * @retval  FSP_ERR_ASSERTION                Pointer to the control block or the configuration structure is NULL.
@@ -623,9 +613,7 @@ fsp_err_t R_GLCDC_LayerChange (display_ctrl_t const * const        p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * @brief  Change the framebuffer pointer for a layer.
- * @par    Implements
- * - display_api_t::bufferChange.
+ * Change the framebuffer pointer for a layer. Implements @ref display_api_t::bufferChange.
  *
  * @retval  FSP_SUCCESS                      Changed layer parameters of GLCDC module successfully.
  * @retval  FSP_ERR_ASSERTION                Pointer to the control block is NULL.
@@ -688,9 +676,7 @@ fsp_err_t R_GLCDC_BufferChange (display_ctrl_t const * const p_api_ctrl,
 #if GLCDC_CFG_COLOR_CORRECTION_ENABLE
 
 /*******************************************************************************************************************//**
- * @brief  Perform color correction through the GLCDC module.
- * @par    Implements
- * - display_api_t::correction.
+ * Perform color correction through the GLCDC module. Implements display_api_t::correction.
  *
  * @retval  FSP_SUCCESS                        Color correction by GLCDC module was performed successfully.
  * @retval  FSP_ERR_ASSERTION                  Pointer to the control block or the display correction structure is NULL.
@@ -738,9 +724,7 @@ fsp_err_t R_GLCDC_ColorCorrection (display_ctrl_t const * const       p_api_ctrl
 #endif
 
 /*******************************************************************************************************************//**
- * @brief  Update a color look-up table (CLUT) in the GLCDC module.
- * @par    Implements
- * - display_api_t::clut.
+ * Update a color look-up table (CLUT) in the GLCDC module. Implements display_api_t::clut.
  *
  * @retval  FSP_SUCCESS                  CLUT updated successfully.
  * @retval  FSP_ERR_ASSERTION            Pointer to the control block or CLUT source data is NULL.
@@ -779,9 +763,7 @@ fsp_err_t R_GLCDC_ClutUpdate (display_ctrl_t const * const     p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * @brief  Get status of GLCDC module.
- * @par    Implements
- * - display_api_t::statusGet.
+ * Get status of GLCDC module. Implements display_api_t::statusGet.
  *
  * @retval  FSP_SUCCESS         Got status successfully.
  * @retval  FSP_ERR_ASSERTION   Pointer to the control block or the status structure is NULL.
@@ -828,9 +810,7 @@ fsp_err_t R_GLCDC_StatusGet (display_ctrl_t const * const p_api_ctrl, display_st
 }
 
 /*******************************************************************************************************************//**
- * @brief  Get version of R_GLCDC module.
- * @par    Implements
- * - display_api_t::versionGet.
+ * Get version of R_GLCDC module. Implements display_api_t::versionGet.
  *
  * @retval  FSP_SUCCESS   Got version information successfully.
  * @note    This function is re-entrant.
@@ -852,7 +832,7 @@ fsp_err_t R_GLCDC_VersionGet (fsp_version_t * p_version)
  #if GLCDC_CFG_COLOR_CORRECTION_ENABLE
 
 /*******************************************************************************************************************//**
- * @brief   The parameter checking subroutine for brightness correction.
+ * The parameter checking subroutine for brightness correction.
  * @param[in]     p_brightness   Pointer to a brightness setting struct
  * @retval  FSP_SUCCESS                           No parameter error found
  * @retval  FSP_ERR_INVALID_BRIGHTNESS_SETTING    Invalid brightness setting found
@@ -870,7 +850,7 @@ static fsp_err_t r_glcdc_param_check_brightness (display_brightness_t const * co
 }
 
 /*******************************************************************************************************************//**
- * @brief   The parameter checking subroutine for R_GLCDC_Open API.
+ * The parameter checking subroutine for R_GLCDC_Open API.
  * @param[in]     p_gamma_correction   Pointer to the gamma configuration struct
  * @retval  FSP_SUCCESS                      No parameter error found
  * @retval  FSP_ERR_ASSERTION                Gain or threshold table pointers are NULL
@@ -904,7 +884,7 @@ static fsp_err_t r_glcdc_param_check_gamma_correction (gamma_correction_t const 
  #endif
 
 /*******************************************************************************************************************//**
- * @brief   The parameter checking subroutine for the R_GLCDC_Open API.
+ * The parameter checking subroutine for the R_GLCDC_Open API.
  * @param[in]     p_cfg   Pointer to the configuration structure for display interface
  * @param[in]     layer   Layer number to check
  * @retval  FSP_SUCCESS                      No parameter error found
@@ -925,7 +905,7 @@ static fsp_err_t r_glcdc_param_check_layer_setting_alignment (display_cfg_t cons
 }
 
 /*******************************************************************************************************************//**
- * @brief   This is the parameter checking subroutine for the R_GLCDC_Open API.
+ * This is the parameter checking subroutine for the R_GLCDC_Open API.
  * @param[in]     p_cfg   Pointer to the configuration structure for display interface
  * @retval  FSP_SUCCESS                      No parameter error found
  * @retval  FSP_ERR_INVALID_TIMING_SETTING   Invalid panel timing parameter
@@ -949,7 +929,7 @@ static fsp_err_t r_glcdc_param_check_display_cycle (display_cfg_t const * const 
 }
 
 /*******************************************************************************************************************//**
- * @brief   This is the parameter checking subroutine for the R_GLCDC_Open API.
+ * This is the parameter checking subroutine for the R_GLCDC_Open API.
  * @param[in]     p_cfg   Pointer to the configuration structure for display interface
  * @retval  FSP_SUCCESS                      No parameter error found
  * @retval  FSP_ERR_INVALID_TIMING_SETTING   Invalid panel timing parameter
@@ -986,7 +966,7 @@ static fsp_err_t r_glcdc_param_check_display_timing (display_cfg_t const * const
 }
 
 /*******************************************************************************************************************//**
- * @brief   This is the parameter checking subroutine for the R_GLCDC_Open API.
+ * This is the parameter checking subroutine for the R_GLCDC_Open API.
  * @param[in]     p_cfg   Pointer to the configuration structure for display interface
  * @retval  FSP_SUCCESS                      No parameter error found
  * @retval  FSP_ERR_INVALID_TIMING_SETTING   Invalid panel timing parameter
@@ -1010,7 +990,7 @@ static fsp_err_t r_glcdc_open_param_check_sync_signal (display_cfg_t const * con
 }
 
 /*******************************************************************************************************************//**
- * @brief   The parameter checking subroutine for the R_GLCDC_Open API.
+ * The parameter checking subroutine for the R_GLCDC_Open API.
  * @param[in]     p_cfg   Pointer to the configuration structure for display interface
  * @retval  FSP_SUCCESS                      No parameter error found
  * @retval  FSP_ERR_INVALID_LAYER_SETTING    Invalid layer setting found
@@ -1056,7 +1036,7 @@ static fsp_err_t r_glcdc_open_param_check_layer_setting (display_cfg_t const * c
  #if GLCDC_CFG_COLOR_CORRECTION_ENABLE
 
 /*******************************************************************************************************************//**
- * @brief   The parameter checking subroutine for R_GLCDC_Open API.
+ * The parameter checking subroutine for R_GLCDC_Open API.
  * @param[in]     p_cfg   Pointer to the configuration structure for display interface
  * @retval  FSP_SUCCESS                        No parameter error found
  * @retval  FSP_ERR_ASSERTION                  Gain or threshold table pointers are NULL
@@ -1100,7 +1080,7 @@ static fsp_err_t r_glcdc_open_param_check_correction_setting (display_cfg_t cons
  #endif
 
 /*******************************************************************************************************************//**
- * @brief   The parameter checking subroutine for R_GLCDC_Open API.
+ * The parameter checking subroutine for R_GLCDC_Open API.
  * @param[in] p_cfg   Pointer to the configuration structure for display interface
  * @retval  FSP_SUCCESS                        No parameter error found
  * @retval  FSP_ERR_ASSERTION                  Pointer to the control block is NULL
@@ -1144,7 +1124,7 @@ static fsp_err_t r_glcdc_open_param_check (display_cfg_t const * const p_cfg)
 #endif
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure dot clock setting
+ * Subroutine to configure dot clock setting
  * @param[in]     p_cfg        Pointer to the configuration structure for display interface
  * @retval        void
  **********************************************************************************************************************/
@@ -1164,7 +1144,7 @@ static void r_glcdc_clock_set (display_cfg_t const * const p_cfg)
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the sync signal setting (TCON block setting)
+ * Subroutine to configure the sync signal setting (TCON block setting)
  * @param[in]     p_cfg        Pointer to the configuration structure for display interface
  * @retval        void
  **********************************************************************************************************************/
@@ -1214,7 +1194,7 @@ static void r_glcdc_sync_signal_set (display_cfg_t const * const p_cfg)
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure a TCON signal output
+ * Subroutine to configure a TCON signal output
  * @param[in]     tcon         TCON pin select(GLCDC_TCON_PIN_0|GLCDC_TCON_PIN_1|GLCDC_TCON_PIN_2|GLCDC_TCON_PIN_3)
  * @param[in]     signal       Signal to output
  * @param[in]     polarity     Signal polarity
@@ -1237,7 +1217,7 @@ static void r_glcdc_tcon_set (glcdc_tcon_pin_t           tcon,
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the horizontal signal setting
+ * Subroutine to configure the horizontal signal setting
  * @param[in]     tcon        TCON pin select(GLCDC_TCON_PIN_0|GLCDC_TCON_PIN_1|GLCDC_TCON_PIN_2|GLCDC_TCON_PIN_3)
  * @param[in]     timing      Hsync signal timing
  * @retval        void
@@ -1250,7 +1230,7 @@ static void r_glcdc_hsync_set (glcdc_tcon_pin_t tcon, display_timing_t const * t
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the vertical signal setting
+ * Subroutine to configure the vertical signal setting
  * @param[in]     tcon        TCON pin select(GLCDC_TCON_PIN_0|GLCDC_TCON_PIN_1|GLCDC_TCON_PIN_2|GLCDC_TCON_PIN_3)
  * @param[in]     timing      Vsync signal timing
  * @retval        void
@@ -1263,7 +1243,7 @@ static void r_glcdc_vsync_set (glcdc_tcon_pin_t tcon, display_timing_t const * c
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the data enable(DE) signal setting
+ * Subroutine to configure the data enable(DE) signal setting
  * @param[in]     tcon        TCON pin select(GLCDC_TCON_PIN_0|GLCDC_TCON_PIN_1|GLCDC_TCON_PIN_2|GLCDC_TCON_PIN_3)
  * @param[in]     vtiming     DE signal vertical timing
  * @param[in]     htiming     DE signal horizontal timing
@@ -1284,7 +1264,7 @@ static void r_glcdc_data_enable_set (glcdc_tcon_pin_t const          tcon,
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the background screen setting
+ * Subroutine to configure the background screen setting
  *          - Panel timing setting
  *          - Color setting for the background screen
  * @param[in]     p_cfg      Pointer to the configuration structure for display interface
@@ -1315,7 +1295,7 @@ static void r_glcdc_background_screen_set (display_cfg_t const * const p_cfg)
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the blending setting for the graphics planes
+ * Subroutine to configure the blending setting for the graphics planes
  * @param[in]     p_layer     The layer configuration
  * @param[in]     layer       Layer number
  * @retval        void
@@ -1360,7 +1340,7 @@ static void r_glcdc_graphics_layer_blend_condition_set (display_layer_t const * 
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to recalculate the configuration for the graphics planes. This routine recalculates the layer
+ * Subroutine to recalculate the configuration for the graphics planes. This routine recalculates the layer
  *           configuration if the layer is beyond the left/right/top/bottom end of the active video region.
  * @param[in]     p_input         The input frame buffer configuration
  * @param[in]     p_layer         The layer configuration
@@ -1432,7 +1412,7 @@ static void r_glcdc_graphics_layer_param_recalculation (display_input_cfg_t cons
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the graphics layer register settings which includes...
+ * Subroutine to configure the graphics layer register settings which includes...
  *          - Blend setting of foreground or background plane on background plane
  *          - Rectangle area blending settings
  * @param[in]     p_input         The input frame buffer configuration
@@ -1532,7 +1512,7 @@ static void r_glcdc_graphics_layer_set (display_input_cfg_t const * const p_inpu
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the output control block register settings which includes...
+ * Subroutine to configure the output control block register settings which includes...
  *          - Bit endian / color order setting
  *          - Output color setting
  *          - Color correction setting
@@ -1592,7 +1572,7 @@ static void r_glcdc_output_block_set (display_cfg_t const * const p_cfg)
 #if GLCDC_CFG_COLOR_CORRECTION_ENABLE
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the brightness register settings. Pixel color output comes to be the value
+ * Subroutine to configure the brightness register settings. Pixel color output comes to be the value
  *           shown below processed by the brightness control block.
  *          - Gout = Gin + p_cfg->output.brightness.g - 512 (output.brightness.g must be 10 bits value; up to 512)
  *          - Bout = Bin + p_cfg->output.brightness.b - 512 (output.brightness.b must be 10 bits value; up to 512)
@@ -1635,7 +1615,7 @@ static void r_glcdc_brightness_correction (glcdc_instance_ctrl_t const * const p
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the contrast register settings. Pixel color output becomes the value
+ * Subroutine to configure the contrast register settings. Pixel color output becomes the value
  *           shown below, processed by the contrast control block. Contrast can be changed between x0.000 to x1.992
  *           (0x0:x0.000 / 0x80:x1.000 / 0xFF:x1.992).
  *          - Gout = (Gin + p_contrast->g)/128
@@ -1680,7 +1660,7 @@ static void r_glcdc_contrast_correction (glcdc_instance_ctrl_t const * const p_c
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the color correction order.
+ * Subroutine to configure the color correction order.
  *
  * @param[in]  p_cfg      Pointer to the configuration structure for the display interface
  * @retval     void
@@ -1707,7 +1687,7 @@ static void r_glcdc_color_correction_order (display_cfg_t const * const p_cfg)
 }
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to configure the gamma correction register setting.
+ * Subroutine to configure the gamma correction register setting.
  * @param[in]     p_cfg      Pointer to the configuration structure for the display interface
  * @retval        void
  **********************************************************************************************************************/
@@ -1774,7 +1754,7 @@ static void r_glcdc_gamma_correction (display_cfg_t const * const p_cfg)
 #endif
 
 /*******************************************************************************************************************//**
- * @brief   Subroutine to get the bit size of the specified format.
+ * Subroutine to get the bit size of the specified format.
  * @param[in]     format   Color format (specify display_in_format_t type enumeration value)
  * @retval        Bit size
  **********************************************************************************************************************/
@@ -1784,7 +1764,7 @@ static inline uint16_t r_glcdc_get_bit_size (display_in_format_t const format)
 }
 
 /*******************************************************************************************************************//**
- * @brief   The line detection interrupt service routine.
+ * The line detection interrupt service routine.
  *           This ISR is called when the number of the display line reaches the designated number of lines. If a
  *           callback function is registered in R_GLCDC_Open(), it is called from this ISR and the
  *           DISPLAY_EVENT_LINE_DETECTION event code is set as its argument.
@@ -1826,7 +1806,7 @@ void glcdc_line_detect_isr (void)
 }
 
 /*******************************************************************************************************************//**
- * @brief   The graphics plane 1 underflow detection interrupt service routine.
+ * The graphics plane 1 underflow detection interrupt service routine.
  *           This ISR is called when the underflow occurs in the graphics plane 1 control block. If a callback function
  *           is registered in R_GLCDC_Open(), it is called back from this ISR and the DISPLAY_EVENT_GR1_UNDERFLOW event
  *           code is set as its argument.
@@ -1857,7 +1837,7 @@ void glcdc_underflow_1_isr (void)
 }
 
 /*******************************************************************************************************************//**
- * @brief   The graphics plane 2 underflow detection interrupt service routine.
+ * The graphics plane 2 underflow detection interrupt service routine.
  *           This ISR is called when the underflow occurs in the graphics plane 2 control block. If a callback function
  *           is registered in R_GLCDC_Open(), it is called from this ISR and the DISPLAY_EVENT_GR2_UNDERFLOW event
  *           code is set as its argument.
@@ -1888,7 +1868,7 @@ void glcdc_underflow_2_isr (void)
 }
 
 /*******************************************************************************************************************//**
- * @brief         Enable the glcdc interrupt.
+ * Enable the glcdc interrupt.
  * @param[in]     p_instance_ctrl   Pointer to GLCDC instance struct
  * @retval        none
  **********************************************************************************************************************/
@@ -1921,7 +1901,7 @@ static void r_glcdc_interrupt_enable (glcdc_instance_ctrl_t * p_instance_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * @brief         Calculate the pixels to be displayed on window based on the offset of the graphic layer.
+ * Calculate the pixels to be displayed on window based on the offset of the graphic layer.
  * @param[in]     p_input         The input frame buffer configuration
  * @param[in]     p_layer         The layer configuration
  * @param[in,out] p_recalculated  Pointer to store recalculated parameter

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -15,68 +15,73 @@
  **********************************************************************************************************************/
 
 #if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
+ #include "mbedtls/config.h"
 #else
-#include MBEDTLS_CONFIG_FILE
+ #include MBEDTLS_CONFIG_FILE
 #endif
 
 #if defined(MBEDTLS_SHA256_C)
 
-#include "mbedtls/sha256.h"
-#include "mbedtls/platform_util.h"
+ #include "mbedtls/sha256.h"
+ #include "mbedtls/platform_util.h"
 
-#include <string.h>
+ #include <string.h>
 
-#if defined(MBEDTLS_PLATFORM_C)
-#include "mbedtls/platform.h"
-#else
-#include <stdio.h>
-#include <stdlib.h>
-#define mbedtls_printf printf
-#define mbedtls_calloc    calloc
-#define mbedtls_free       free
-#endif /* MBEDTLS_PLATFORM_C */
+ #if defined(MBEDTLS_PLATFORM_C)
+  #include "mbedtls/platform.h"
+ #else
+  #include <stdio.h>
+  #include <stdlib.h>
+  #define mbedtls_printf    printf
+  #define mbedtls_calloc    calloc
+  #define mbedtls_free      free
+ #endif                                /* MBEDTLS_PLATFORM_C */
 
-#define SHA256_VALIDATE_RET(cond)                           \
-    MBEDTLS_INTERNAL_VALIDATE_RET( cond, MBEDTLS_ERR_SHA256_BAD_INPUT_DATA )
-#define SHA256_VALIDATE(cond)  MBEDTLS_INTERNAL_VALIDATE( cond )
+ #define SHA256_VALIDATE_RET(cond) \
+    MBEDTLS_INTERNAL_VALIDATE_RET(cond, MBEDTLS_ERR_SHA256_BAD_INPUT_DATA)
+ #define SHA256_VALIDATE(cond)    MBEDTLS_INTERNAL_VALIDATE(cond)
 
+ #if defined(MBEDTLS_SHA256_PROCESS_ALT)
+  #include "hw_sce_hash_private.h"
 
-#if defined(MBEDTLS_SHA256_PROCESS_ALT)
-#include "hw_sce_hash_private.h"
- /*******************************************************************************************************************//**
- * @addtogroup RM_PSA_CRYPTO 
+/*******************************************************************************************************************//**
+ * @addtogroup RM_PSA_CRYPTO
  * @{
  **********************************************************************************************************************/
+
 /*******************************************************************************************************************//**
  * Uses the SCE to process the hash and returns the result.
  *
  *
- * @retval 0                             		   Hash calculation was successful.
+ * @retval 0                                       Hash calculation was successful.
  * @retval MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED    Hash calculation with the SCE failed
  **********************************************************************************************************************/
-int mbedtls_internal_sha256_process( mbedtls_sha256_context *ctx,
-                                const unsigned char data[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES] )
+int mbedtls_internal_sha256_process (mbedtls_sha256_context * ctx,
+                                     const unsigned char      data[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES])
 {
-   	SHA256_VALIDATE_RET( ctx != NULL );
-   	SHA256_VALIDATE_RET( (const unsigned char *)data != NULL );
+    SHA256_VALIDATE_RET(ctx != NULL);
+    SHA256_VALIDATE_RET((const unsigned char *) data != NULL);
 
-    if (FSP_SUCCESS != HW_SCE_SHA256_UpdateHash((const uint32_t *)&data[0], BYTES_TO_WORDS(SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES), (uint32_t *)&ctx->state[0])) // NOLINT(rea-tp-casting)
+    if (FSP_SUCCESS !=
+        HW_SCE_SHA256_UpdateHash((const uint32_t *) &data[0], BYTES_TO_WORDS(SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES),
+                                 (uint32_t *) &ctx->state[0])) // NOLINT(rea-tp-casting)
     {
-    	return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
-    return( 0 );
+
+    return 0;
 }
 
-#if !defined(MBEDTLS_DEPRECATED_REMOVED)
-void mbedtls_sha256_process( mbedtls_sha256_context *ctx,
-                             const unsigned char data[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES] )
+  #if !defined(MBEDTLS_DEPRECATED_REMOVED)
+void mbedtls_sha256_process (mbedtls_sha256_context * ctx,
+                             const unsigned char      data[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES])
 {
-    mbedtls_internal_sha256_process( ctx, data );
+    mbedtls_internal_sha256_process(ctx, data);
 }
+
 /*******************************************************************************************************************//**
  * @} (end addtogroup RM_PSA_CRYPTO)
  **********************************************************************************************************************/
-#endif /* MBEDTLS_DEPRECATED_REMOVED*/
-#endif /* MBEDTLS_SHA256_PROCESS_ALT*/
-#endif /* MBEDTLS_SHA256_C*/
+  #endif                               /* MBEDTLS_DEPRECATED_REMOVED */
+ #endif                                /* MBEDTLS_SHA256_PROCESS_ALT */
+#endif                                 /* MBEDTLS_SHA256_C */

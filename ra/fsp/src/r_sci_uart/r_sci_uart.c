@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -283,7 +283,7 @@ const uart_api_t g_uart_on_sci =
 
 /*******************************************************************************************************************//**
  * Configures the UART driver based on the input configurations.  If reception is enabled at compile time, reception is
- * enabled at the end of this function. Implements uart_api_t::open
+ * enabled at the end of this function. Implements @ref uart_api_t::open
  *
  * @retval  FSP_SUCCESS                    Channel opened successfully.
  * @retval  FSP_ERR_ASSERTION              Pointer to UART control block or configuration structure is NULL.
@@ -293,7 +293,7 @@ const uart_api_t g_uart_on_sci =
  *
  * @return                       See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                               return codes. This function calls:
- *                                   * transfer_api_t::open
+ *                                   * @ref transfer_api_t::open
  **********************************************************************************************************************/
 fsp_err_t R_SCI_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * const p_cfg)
 {
@@ -438,7 +438,7 @@ fsp_err_t R_SCI_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * co
 
 /*******************************************************************************************************************//**
  * Aborts any in progress transfers. Disables interrupts, receiver, and transmitter.  Closes lower level transfer
- * drivers if used. Removes power. Implements uart_api_t::close
+ * drivers if used. Removes power. Implements @ref uart_api_t::close
  *
  * @retval  FSP_SUCCESS              Channel successfully closed.
  * @retval  FSP_ERR_ASSERTION        Pointer to UART control block is NULL.
@@ -484,7 +484,7 @@ fsp_err_t R_SCI_UART_Close (uart_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Receives user specified number of bytes into destination buffer pointer. Implements uart_api_t::read
+ * Receives user specified number of bytes into destination buffer pointer. Implements @ref uart_api_t::read
  *
  * @retval  FSP_SUCCESS                  Data reception successfully ends.
  * @retval  FSP_ERR_ASSERTION            Pointer to UART control block is NULL.
@@ -496,7 +496,7 @@ fsp_err_t R_SCI_UART_Close (uart_ctrl_t * const p_api_ctrl)
  *
  * @return                       See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                               return codes. This function calls:
- *                                   * transfer_api_t::reset
+ *                                   * @ref transfer_api_t::reset
  *
  * @note If 9-bit data length is specified at R_SCI_UART_Open call, p_dest must be aligned 16-bit boundary.
  **********************************************************************************************************************/
@@ -545,7 +545,7 @@ fsp_err_t R_SCI_UART_Read (uart_ctrl_t * const p_api_ctrl, uint8_t * const p_des
 }
 
 /*******************************************************************************************************************//**
- * Transmits user specified number of bytes from the source buffer pointer. Implements uart_api_t::write
+ * Transmits user specified number of bytes from the source buffer pointer. Implements @ref uart_api_t::write
  *
  * @retval  FSP_SUCCESS                  Data transmission finished successfully.
  * @retval  FSP_ERR_ASSERTION            Pointer to UART control block is NULL.
@@ -557,7 +557,7 @@ fsp_err_t R_SCI_UART_Read (uart_ctrl_t * const p_api_ctrl, uint8_t * const p_des
  *
  * @return                       See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                               return codes. This function calls:
- *                                   * transfer_api_t::reset
+ *                                   * @ref transfer_api_t::reset
  *
  * @note If 9-bit data length is specified at R_SCI_UART_Open call, p_src must be aligned on a 16-bit boundary.
  **********************************************************************************************************************/
@@ -658,7 +658,7 @@ fsp_err_t R_SCI_UART_Write (uart_ctrl_t * const p_api_ctrl, uint8_t const * cons
 
 /*******************************************************************************************************************//**
  * Updates the baud rate using the clock selected in Open. p_baud_setting is a pointer to a baud_setting_t structure.
- * Implements uart_api_t::baudSet
+ * Implements @ref uart_api_t::baudSet
  *
  * @warning This terminates any in-progress transmission.
  *
@@ -705,7 +705,7 @@ fsp_err_t R_SCI_UART_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const
 
 /*******************************************************************************************************************//**
  * Provides the driver information, including the maximum number of bytes that can be received or transmitted at a time.
- * Implements uart_api_t::infoGet
+ * Implements @ref uart_api_t::infoGet
  *
  * @retval  FSP_SUCCESS                  Information stored in provided p_info.
  * @retval  FSP_ERR_ASSERTION            Pointer to UART control block is NULL.
@@ -757,7 +757,7 @@ fsp_err_t R_SCI_UART_InfoGet (uart_ctrl_t * const p_api_ctrl, uart_info_t * cons
  * Provides API to abort ongoing transfer. Transmission is aborted after the current character is transmitted.
  * Reception is still enabled after abort(). Any characters received after abort() and before the transfer
  * is reset in the next call to read(), will arrive via the callback function with event UART_EVENT_RX_CHAR.
- * Implements uart_api_t::communicationAbort
+ * Implements @ref uart_api_t::communicationAbort
  *
  * @retval  FSP_SUCCESS                  UART transaction aborted successfully.
  * @retval  FSP_ERR_ASSERTION            Pointer to UART control block is NULL.
@@ -766,7 +766,7 @@ fsp_err_t R_SCI_UART_InfoGet (uart_ctrl_t * const p_api_ctrl, uart_info_t * cons
  *
  * @return                       See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                               return codes. This function calls:
- *                                   * transfer_api_t::disable
+ *                                   * @ref transfer_api_t::disable
  **********************************************************************************************************************/
 fsp_err_t R_SCI_UART_Abort (uart_ctrl_t * const p_api_ctrl, uart_dir_t communication_to_abort)
 {
@@ -1000,7 +1000,7 @@ fsp_err_t R_SCI_UART_BaudCalculate (uint32_t               baudrate,
 }
 
 /*******************************************************************************************************************//**
- * Provides API and code version in the user provided pointer. Implements uart_api_t::versionGet
+ * Provides API and code version in the user provided pointer. Implements @ref uart_api_t::versionGet
  *
  * @param[in] p_version   Version number set here
  *
@@ -1129,7 +1129,7 @@ static fsp_err_t r_sci_uart_transfer_configure (sci_uart_instance_ctrl_t * const
  *
  * @return                       See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                               return codes. This function calls:
- *                                   * transfer_api_t::open
+ *                                   * @ref transfer_api_t::open
  **********************************************************************************************************************/
 static fsp_err_t r_sci_uart_transfer_open (sci_uart_instance_ctrl_t * const p_ctrl, uart_cfg_t const * const p_cfg)
 {
@@ -1458,7 +1458,16 @@ void sci_uart_txi_isr (void)
             uint32_t fifo_count = (uint32_t) p_ctrl->p_reg->FDR_b.T;
             for (uint32_t cnt = fifo_count; (cnt < p_ctrl->fifo_depth) && p_ctrl->tx_src_bytes; cnt++)
             {
-                p_ctrl->p_reg->FTDRHL = *((uint16_t *) (p_ctrl->p_tx_src)) | (uint16_t) ~(SCI_UART_FIFO_DAT_MASK);
+                if (2U == p_ctrl->data_bytes)
+                {
+                    p_ctrl->p_reg->FTDRHL =
+                        (uint16_t) (*((uint16_t *) p_ctrl->p_tx_src) | (uint16_t) ~(SCI_UART_FIFO_DAT_MASK));
+                }
+                else
+                {
+                    p_ctrl->p_reg->FTDRL = *p_ctrl->p_tx_src;
+                }
+
                 p_ctrl->tx_src_bytes -= p_ctrl->data_bytes;
                 p_ctrl->p_tx_src     += p_ctrl->data_bytes;
             }

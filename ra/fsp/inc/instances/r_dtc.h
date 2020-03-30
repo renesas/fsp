@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -61,7 +61,7 @@ typedef struct st_dtc_extended_cfg
     IRQn_Type activation_source;
 } dtc_extended_cfg_t;
 
-/** Control block used by driver. DO NOT INITIALIZE - this structure will be initialized in transfer_api_t::open. */
+/** Control block used by driver. DO NOT INITIALIZE - this structure will be initialized in @ref transfer_api_t::open. */
 typedef struct st_dtc_instance_ctrl
 {
     uint32_t  open;                    // Driver ID

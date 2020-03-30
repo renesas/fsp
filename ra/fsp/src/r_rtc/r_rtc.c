@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -22,16 +22,8 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define TRUE                                (1)
-#define FALSE                               (0)
-
-#define MASK_MSB                            (0x0F)
-#define MASK_LSB                            (0xF0)
-
-/* Mask for the Interrupt Enable bits in RCR1 */
-#define RTC_AIE_MASK                        (1U)
-#define RTC_CIE_MASK                        (2U)
-#define RTC_PIE_MASK                        (4U)
+#define RTC_MASK_MSB                        (0x0F)
+#define RTC_MASK_LSB                        (0xF0)
 
 #define RTC_FIRST_DAY_OF_A_MONTH            (1)
 
@@ -183,7 +175,7 @@ static void r_rtc_error_adjustment_set(rtc_error_adjustment_cfg_t const * const 
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Opens and configures the RTC driver module. Implements rtc_api_t::open.
+ * Opens and configures the RTC driver module. Implements @ref rtc_api_t::open.
  * Configuration includes clock source, and interrupt callback function.
  *
  * Example:
@@ -224,16 +216,6 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
     }
 #endif
 
-    p_instance_ctrl->alarm_irq    = p_cfg->alarm_irq;
-    p_instance_ctrl->periodic_irq = p_cfg->periodic_irq;
-    p_instance_ctrl->carry_irq    = p_cfg->carry_irq;
-
-    /* Initialize control block. */
-    p_instance_ctrl->p_callback = p_cfg->p_callback;
-    p_instance_ctrl->p_context  = p_cfg->p_context;
-
-    /* Remember the clock source */
-    p_instance_ctrl->clock_source        = p_cfg->clock_source;
     p_instance_ctrl->carry_isr_triggered = false;
 
     r_rtc_config_rtc_interrupts(p_instance_ctrl, p_cfg);
@@ -241,6 +223,10 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
     /* Check if the RTC is already running */
     if (R_RTC->RCR2_b.START == 0)
     {
+        /* Initialize registers. */
+        R_RTC->RCR1 = 0U;
+        R_RTC->RCR2 = 0U;
+
         /* Set the clock source for RTC.
          * The count source must be selected only once before making the initial settings of the RTC registers
          * at power on. (see section 26.2.19 RTC Control Register 4 (RCR4) of the RA6M3 manual R01UH0886EJ0100)*/
@@ -255,7 +241,7 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
 
 /*******************************************************************************************************************//**
  * Close the RTC driver.
- * Implements rtc_api_t::close
+ * Implements @ref rtc_api_t::close
  *
  * @retval FSP_SUCCESS          De-Initialization was successful and RTC driver closed.
  * @retval FSP_ERR_ASSERTION    Invalid p_ctrl.
@@ -277,22 +263,22 @@ fsp_err_t R_RTC_Close (rtc_ctrl_t * const p_ctrl)
     /* Set the START bit to 0 */
     r_rtc_start_bit_update(0U);
 
-    if (p_instance_ctrl->periodic_irq >= 0)
+    if (p_instance_ctrl->p_cfg->periodic_irq >= 0)
     {
-        R_BSP_IrqDisable(p_instance_ctrl->periodic_irq);
-        R_FSP_IsrContextSet(p_instance_ctrl->periodic_irq, NULL);
+        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->periodic_irq);
+        R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->periodic_irq, NULL);
     }
 
-    if (p_instance_ctrl->alarm_irq >= 0)
+    if (p_instance_ctrl->p_cfg->alarm_irq >= 0)
     {
-        R_BSP_IrqDisable(p_instance_ctrl->alarm_irq);
-        R_FSP_IsrContextSet(p_instance_ctrl->alarm_irq, NULL);
+        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->alarm_irq);
+        R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->alarm_irq, NULL);
     }
 
-    if (p_instance_ctrl->carry_irq >= 0)
+    if (p_instance_ctrl->p_cfg->carry_irq >= 0)
     {
-        R_BSP_IrqDisable(p_instance_ctrl->carry_irq);
-        R_FSP_IsrContextSet(p_instance_ctrl->carry_irq, NULL);
+        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->carry_irq);
+        R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->carry_irq, NULL);
     }
 
     p_instance_ctrl->open = 0U;
@@ -303,7 +289,7 @@ fsp_err_t R_RTC_Close (rtc_ctrl_t * const p_ctrl)
 /*******************************************************************************************************************//**
  * Set the calendar time.
  *
- * Implements rtc_api_t::calendarTimeSet.
+ * Implements @ref rtc_api_t::calendarTimeSet.
  *
  * @retval FSP_SUCCESS              Calendar time set operation was successful.
  * @retval FSP_ERR_ASSERTION        Invalid input argument.
@@ -362,7 +348,7 @@ fsp_err_t R_RTC_CalendarTimeSet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p
  * @warning Do not call this function from a critical section or from an interrupt with higher priority than the carry
  * interrupt, or the time returned may be inaccurate.
  *
- * Implements rtc_api_t::calendarTimeGet
+ * Implements @ref rtc_api_t::calendarTimeGet
  *
  * @retval FSP_SUCCESS          Calendar time get operation was successful.
  * @retval FSP_ERR_ASSERTION    Invalid input argument.
@@ -376,19 +362,19 @@ fsp_err_t R_RTC_CalendarTimeGet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(p_time);
     FSP_ERROR_RETURN(RTC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->carry_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
+    FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->carry_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif
 
     fsp_err_t err = FSP_SUCCESS;
 
-    uint32_t carry_irq_status = NVIC_GetEnableIRQ(p_instance_ctrl->carry_irq);
+    uint32_t carry_irq_status = NVIC_GetEnableIRQ(p_instance_ctrl->p_cfg->carry_irq);
 
     if ((uint32_t) 0U == carry_irq_status)
     {
-        r_rtc_irq_set(true, RTC_CIE_MASK);
-        R_BSP_IrqEnable(p_instance_ctrl->carry_irq);
+        r_rtc_irq_set(true, R_RTC_RCR1_CIE_Msk);
+        R_BSP_IrqEnable(p_instance_ctrl->p_cfg->carry_irq);
     }
 
     /* If a carry occurs while the 64-Hz counter and time are being read, the correct time is not obtained,
@@ -407,15 +393,15 @@ fsp_err_t R_RTC_CalendarTimeGet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p
 
         /* Add 100 to match with C time.h standards */
         p_time->tm_year = (int32_t) rtc_bcd_to_dec((uint8_t) R_RTC->RYRCNT) + RTC_C_TIME_OFFSET;
-    } while (true == p_instance_ctrl->carry_isr_triggered);
+    } while (p_instance_ctrl->carry_isr_triggered);
 
     /** Restore the state of carry IRQ. */
     if ((uint32_t) 0U == carry_irq_status)
     {
-        r_rtc_irq_set(false, RTC_CIE_MASK);
+        r_rtc_irq_set(false, R_RTC_RCR1_CIE_Msk);
 
         /* Disable this interrupt in the NVIC */
-        R_BSP_IrqDisable(p_instance_ctrl->carry_irq);
+        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->carry_irq);
     }
 
     return err;
@@ -424,7 +410,7 @@ fsp_err_t R_RTC_CalendarTimeGet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p
 /*******************************************************************************************************************//**
  * Set the calendar alarm time.
  *
- * Implements rtc_api_t::calendarAlarmSet.
+ * Implements @ref rtc_api_t::calendarAlarmSet.
  *
  * @pre The calendar counter must be running before the alarm can be set.
  *
@@ -443,21 +429,21 @@ fsp_err_t R_RTC_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(p_alarm);
     FSP_ERROR_RETURN(RTC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->alarm_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
+    FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->alarm_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
 
     /* Verify the seconds, minutes, hours, year ,day of the week, day of the month and month are valid values */
     FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_alarm_time_and_date_validate(p_alarm), FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    if (p_instance_ctrl->alarm_irq >= 0)
+    if (p_instance_ctrl->p_cfg->alarm_irq >= 0)
     {
         /* Disable the ICU alarm interrupt request */
-        R_BSP_IrqDisable(p_instance_ctrl->alarm_irq);
+        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->alarm_irq);
     }
 
     /* Set alarm time */
     volatile uint8_t field;
-    if (true == p_alarm->sec_match)
+    if (p_alarm->sec_match)
     {
         field = rtc_dec_to_bcd((uint8_t) p_alarm->time.tm_sec) | (uint8_t) (p_alarm->sec_match << RTC_COMPARE_ENB_BIT);
     }
@@ -468,7 +454,7 @@ fsp_err_t R_RTC_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
 
     R_RTC->RSECAR = field;
 
-    if (true == p_alarm->min_match)
+    if (p_alarm->min_match)
     {
         field = rtc_dec_to_bcd((uint8_t) p_alarm->time.tm_min) | (uint8_t) (p_alarm->min_match << RTC_COMPARE_ENB_BIT);
     }
@@ -479,7 +465,7 @@ fsp_err_t R_RTC_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
 
     R_RTC->RMINAR = field;
 
-    if (true == p_alarm->hour_match)
+    if (p_alarm->hour_match)
     {
         field = rtc_dec_to_bcd((uint8_t) p_alarm->time.tm_hour) |
                 (uint8_t) (p_alarm->hour_match << RTC_COMPARE_ENB_BIT);
@@ -491,7 +477,7 @@ fsp_err_t R_RTC_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
 
     R_RTC->RHRAR = field;
 
-    if (true == p_alarm->dayofweek_match)
+    if (p_alarm->dayofweek_match)
     {
         field = (uint8_t) p_alarm->time.tm_wday | (uint8_t) (p_alarm->dayofweek_match << RTC_COMPARE_ENB_BIT);
     }
@@ -502,7 +488,7 @@ fsp_err_t R_RTC_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
 
     R_RTC->RWKAR = field;
 
-    if (true == p_alarm->mday_match)
+    if (p_alarm->mday_match)
     {
         field = rtc_dec_to_bcd((uint8_t) p_alarm->time.tm_mday) |
                 (uint8_t) (p_alarm->mday_match << RTC_COMPARE_ENB_BIT);
@@ -514,7 +500,7 @@ fsp_err_t R_RTC_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
 
     R_RTC->RDAYAR = field;
 
-    if (true == p_alarm->mon_match)
+    if (p_alarm->mon_match)
     {
         /* Add one to month to match with HW register */
         field = rtc_dec_to_bcd((uint8_t) (p_alarm->time.tm_mon + 1)) |
@@ -527,7 +513,7 @@ fsp_err_t R_RTC_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
 
     R_RTC->RMONAR = field;
 
-    if (true == p_alarm->year_match)
+    if (p_alarm->year_match)
     {
         field = rtc_dec_to_bcd((uint8_t) (p_alarm->time.tm_year - RTC_C_TIME_OFFSET));
     }
@@ -540,9 +526,9 @@ fsp_err_t R_RTC_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
     R_RTC->RYRAREN_b.ENB = (p_alarm->year_match);
 
     /* Enable the alarm interrupt */
-    r_rtc_irq_set(true, RTC_AIE_MASK);
+    r_rtc_irq_set(true, R_RTC_RCR1_AIE_Msk);
 
-    R_BSP_IrqEnable(p_instance_ctrl->alarm_irq);
+    R_BSP_IrqEnable(p_instance_ctrl->p_cfg->alarm_irq);
 
     return err;
 }
@@ -550,7 +536,7 @@ fsp_err_t R_RTC_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
 /*******************************************************************************************************************//**
  * Get the calendar alarm time.
  *
- * Implements rtc_api_t::calendarAlarmGet
+ * Implements @ref rtc_api_t::calendarAlarmGet
  *
  * @retval FSP_SUCCESS           Calendar alarm time get operation was successful.
  * @retval FSP_ERR_ASSERTION     Invalid input argument.
@@ -593,7 +579,9 @@ fsp_err_t R_RTC_CalendarAlarmGet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * 
 /*******************************************************************************************************************//**
  * Set the periodic interrupt rate and enable periodic interrupt.
  *
- * Implements rtc_api_t::periodicIrqRateSet
+ * Implements @ref rtc_api_t::periodicIrqRateSet
+ *
+ * @note To start the RTC @ref R_RTC_CalendarTimeSet must be called at least once.
  *
  * Example:
  * @snippet r_rtc_example.c R_RTC_PeriodicIrqRateSet
@@ -609,19 +597,21 @@ fsp_err_t R_RTC_PeriodicIrqRateSet (rtc_ctrl_t * const p_ctrl, rtc_periodic_irq_
 #if RTC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(RTC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->periodic_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
+    FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->periodic_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
 #endif
     fsp_err_t err = FSP_SUCCESS;
 
-    R_RTC->RCR1 |= (uint8_t) (rate << 4);
+    uint8_t rcr1 = R_RTC->RCR1;
+    rcr1       &= (uint8_t) ~R_RTC_RCR1_PES_Msk;
+    R_RTC->RCR1 = (uint8_t) (rcr1 | (rate << R_RTC_RCR1_PES_Pos));
 
     /* When the RCR1 register is modified, check that all the bits are updated before proceeding
      * (see section 26.2.17 "RTC Control Register 1 (RCR1)" of the RA6M3 manual R01UH0886EJ0100)*/
-    FSP_HARDWARE_REGISTER_WAIT(((R_RTC->RCR1 & 0xF0) >> 4), rate);
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR1 >> R_RTC_RCR1_PES_Pos, rate);
 
-    r_rtc_irq_set(true, RTC_PIE_MASK);
+    r_rtc_irq_set(true, R_RTC_RCR1_PIE_Msk);
 
-    R_BSP_IrqEnable(p_instance_ctrl->periodic_irq);
+    R_BSP_IrqEnable(p_instance_ctrl->p_cfg->periodic_irq);
 
     return err;
 }
@@ -629,7 +619,7 @@ fsp_err_t R_RTC_PeriodicIrqRateSet (rtc_ctrl_t * const p_ctrl, rtc_periodic_irq_
 /*******************************************************************************************************************//**
  * Set RTC clock source and running status information ad store it in provided pointer p_rtc_info
  *
- * Implements rtc_api_t::infoGet
+ * Implements @ref rtc_api_t::infoGet
  *
  * @retval FSP_SUCCESS          Get information Successful.
  * @retval FSP_ERR_ASSERTION    Invalid input argument.
@@ -644,7 +634,7 @@ fsp_err_t R_RTC_InfoGet (rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_inf
     FSP_ERROR_RETURN(RTC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    p_rtc_info->clock_source = p_instance_ctrl->clock_source;
+    p_rtc_info->clock_source = p_instance_ctrl->p_cfg->clock_source;
     p_rtc_info->status       = (rtc_status_t) R_RTC->RCR2_b.START;
 
     return FSP_SUCCESS;
@@ -653,7 +643,7 @@ fsp_err_t R_RTC_InfoGet (rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_inf
 /*******************************************************************************************************************//**
  * This function sets time error adjustment
  *
- * Implements rtc_api_t::errorAdjustmentSet
+ * Implements @ref rtc_api_t::errorAdjustmentSet
  *
  * @retval FSP_SUCCESS                 Time error adjustment successful.
  * @retval FSP_ERR_ASSERTION           Invalid input argument.
@@ -669,7 +659,7 @@ fsp_err_t R_RTC_ErrorAdjustmentSet (rtc_ctrl_t * const p_ctrl, rtc_error_adjustm
     FSP_ERROR_RETURN(RTC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* Error adjustment is supported only if clock source is sub-clock */
-    if (p_instance_ctrl->clock_source != RTC_CLOCK_SOURCE_SUBCLK)
+    if (p_instance_ctrl->p_cfg->clock_source != RTC_CLOCK_SOURCE_SUBCLK)
     {
         return FSP_ERR_UNSUPPORTED;
     }
@@ -689,7 +679,7 @@ fsp_err_t R_RTC_ErrorAdjustmentSet (rtc_ctrl_t * const p_ctrl, rtc_error_adjustm
 /*******************************************************************************************************************//**
  * Get driver version based on compile time macros.
  *
- * Implements rtc_api_t::versionGet
+ * Implements @ref rtc_api_t::versionGet
  *
  * @retval     FSP_SUCCESS          Successful close.
  * @retval     FSP_ERR_ASSERTION    The parameter p_version is NULL.
@@ -721,7 +711,7 @@ fsp_err_t R_RTC_VersionGet (fsp_version_t * p_version)
 static void r_rtc_start_bit_update (uint8_t value)
 {
     /* Set or Clear START bit in RCR2 register depending on the value */
-    R_RTC->RCR2_b.START = (uint8_t) (value & 1);
+    R_RTC->RCR2_b.START = value & 1U;
 
     /* The START bit is updated in synchronization with the next cycle of the count source. Check if the bit is updated
      * before proceeding (see section 26.2.18 "RTC Control Register 2 (RCR2)" of the RA6M3 manual R01UH0886EJ0100)*/
@@ -734,12 +724,12 @@ static void r_rtc_start_bit_update (uint8_t value)
 static void r_rtc_software_reset (void)
 {
     /* Set the RESET bit in the RCR2 register */
-    R_RTC->RCR2 |= (uint8_t) (0x1 << 1U);
+    R_RTC->RCR2_b.RESET = 1U;
 
     /* When 1 is written to this bit, initialization starts in synchronization with the count source. When the
      * initialization is completed, the RESET bit is automatically set to 0. Check that this bit is 0 before proceeding.
      * (see section 26.2.18 "RTC Control Register 2 (RCR2)" of the RA6M3 manual R01UH0886EJ0100)*/
-    FSP_HARDWARE_REGISTER_WAIT((R_RTC->RCR2 & 0x2), 0U);
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.RESET, 0U);
 }
 
 /*******************************************************************************************************************//**
@@ -751,11 +741,11 @@ static void r_rtc_software_reset (void)
 static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
 {
     /* Select the count source (RCKSEL) */
-    R_RTC->RCR4 = (uint8_t) p_ctrl->clock_source;
+    R_RTC->RCR4 = (uint8_t) p_ctrl->p_cfg->clock_source;
 
     /* Supply 6 clocks of the count source (LOCO, 183us, 32kHZ).
      * See 26.3.2 "Clock and Count Mode Setting Procedure" of the RA6M3 manual R01UH0886EJ0100)*/
-    if (RTC_CLOCK_SOURCE_SUBCLK == p_ctrl->clock_source)
+    if (RTC_CLOCK_SOURCE_SUBCLK == p_ctrl->p_cfg->clock_source)
     {
         R_BSP_SoftwareDelay(RTC_SUB_CLK_STABLIZATION_TIME_MS, BSP_DELAY_UNITS_MILLISECONDS);
     }
@@ -768,9 +758,9 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
     r_rtc_start_bit_update(0U);
 
     /* Force RTC to 24 hour mode. Set HR24 bit in the RCR2 register */
-    R_RTC->RCR2 |= (uint8_t) (0x1 << 6);
+    R_RTC->RCR2_b.HR24 = 1U;
 
-    if (RTC_CLOCK_SOURCE_LOCO == p_ctrl->clock_source)
+    if (RTC_CLOCK_SOURCE_LOCO == p_ctrl->p_cfg->clock_source)
     {
         /* Write 0 before writing to the RFRL register after a cold start. (see section 26.2.20
          * Frequency Register (RFRH/RFRL)" of the RA6M3 manual R01UH0886EJ0100) */
@@ -780,14 +770,14 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
     }
 
     /* Clear the the CNTMD bit in the RCR2 register */
-    R_RTC->RCR2 &= (uint8_t) ~(0x1 << 7);
+    R_RTC->RCR2_b.CNTMD = 0U;
 
     /* Wait for the CNTMD bit to become 0 */
 
     /* When setting the count mode, execute an RTC software reset and start again from the initial settings.
      * This bit is updated synchronously with the count source, and its value is fixed before the RTC software
      * reset is completed (see section 26.2.18 "RTC Control Register 2 (RCR2)" of the RA6M3 manual R01UH0886EJ0100)*/
-    FSP_HARDWARE_REGISTER_WAIT((R_RTC->RCR2 & 0x80U), RTC_CALENDAR_MODE);
+    FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.CNTMD, RTC_CALENDAR_MODE);
 
     /* Execute RTC software reset */
     r_rtc_software_reset();
@@ -801,19 +791,19 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
  **********************************************************************************************************************/
 static void r_rtc_config_rtc_interrupts (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
 {
-    if (p_ctrl->periodic_irq >= 0)
+    if (p_cfg->periodic_irq >= 0)
     {
-        R_BSP_IrqCfg(p_ctrl->periodic_irq, p_cfg->periodic_ipl, p_ctrl);
+        R_BSP_IrqCfg(p_cfg->periodic_irq, p_cfg->periodic_ipl, p_ctrl);
     }
 
-    if (p_ctrl->alarm_irq >= 0)
+    if (p_cfg->alarm_irq >= 0)
     {
-        R_BSP_IrqCfg(p_ctrl->alarm_irq, p_cfg->alarm_ipl, p_ctrl);
+        R_BSP_IrqCfg(p_cfg->alarm_irq, p_cfg->alarm_ipl, p_ctrl);
     }
 
-    if (p_ctrl->carry_irq >= 0)
+    if (p_cfg->carry_irq >= 0)
     {
-        R_BSP_IrqCfg(p_ctrl->carry_irq, p_cfg->carry_ipl, p_ctrl);
+        R_BSP_IrqCfg(p_cfg->carry_irq, p_cfg->carry_ipl, p_ctrl);
     }
 }
 
@@ -826,7 +816,7 @@ static void r_rtc_config_rtc_interrupts (rtc_instance_ctrl_t * const p_ctrl, rtc
 static void r_rtc_irq_set (bool irq_enable_flag, uint8_t mask)
 {
     /* Enable the RTC carry interrupt request */
-    if (true == irq_enable_flag)
+    if (irq_enable_flag)
     {
         /* Set the Interrupt Enable in RCR1 */
         R_RTC->RCR1 |= mask;
@@ -1049,7 +1039,7 @@ static fsp_err_t r_rtc_alarm_time_and_date_validate (rtc_alarm_time_t * const p_
     FSP_ERROR_RETURN(err == FSP_SUCCESS, err);
 
     /* Checking for alarm enable bit for year, month, day of the month */
-    if ((TRUE == p_time->year_match) && (TRUE == p_time->mon_match) && (TRUE == p_time->mday_match))
+    if ((p_time->year_match) && (p_time->mon_match) && (p_time->mday_match))
     {
         err = r_rtc_date_validate(&p_time->time);
         FSP_ERROR_RETURN(err == FSP_SUCCESS, err);
@@ -1080,11 +1070,11 @@ static fsp_err_t r_rtc_alarm_time_validate (rtc_alarm_time_t * const p_time)
 {
     fsp_err_t err;
     err = FSP_SUCCESS;
-    if (((TRUE == p_time->sec_match) &&
+    if (((p_time->sec_match) &&
          ((p_time->time.tm_sec < 0) || (p_time->time.tm_sec > RTC_SECONDS_IN_A_MINUTE))) ||
-        ((TRUE == p_time->min_match) &&
+        ((p_time->min_match) &&
          ((p_time->time.tm_min < 0) || (p_time->time.tm_min > RTC_MINUTES_IN_A_HOUR))) ||
-        ((TRUE == p_time->hour_match) &&
+        ((p_time->hour_match) &&
          ((p_time->time.tm_hour < 0) || (p_time->time.tm_hour > RTC_HOURS_IN_A_DAY))))
     {
         err = FSP_ERR_INVALID_ARGUMENT;
@@ -1109,9 +1099,9 @@ static fsp_err_t r_rtc_alarm_month_and_year_validate (rtc_alarm_time_t * const p
 {
     fsp_err_t err;
     err = FSP_SUCCESS;
-    if (((TRUE == p_time->mon_match) &&
+    if (((p_time->mon_match) &&
          ((p_time->time.tm_mon < 0) || (p_time->time.tm_mon > RTC_MONTHS_IN_A_YEAR))) ||
-        ((TRUE == p_time->year_match) &&
+        ((p_time->year_match) &&
          ((p_time->time.tm_year < RTC_YEAR_VALUE_MIN) || (p_time->time.tm_year > RTC_YEAR_VALUE_MAX))))
     {
         err = FSP_ERR_INVALID_ARGUMENT;
@@ -1142,7 +1132,7 @@ static fsp_err_t r_rtc_alarm_dayofmonth_and_dayofweek_validate (rtc_alarm_time_t
     err            = FSP_SUCCESS;
 
     /* checking for alarm enable bit of valid month */
-    if (TRUE == p_time->mon_match)
+    if (p_time->mon_match)
     {
         /* Checking condition for February month in time.h months start from 0 to 11, for February 1 */
         if ((RTC_FEBRUARY_MONTH - 1U) == p_time->time.tm_mon)
@@ -1163,9 +1153,9 @@ static fsp_err_t r_rtc_alarm_dayofmonth_and_dayofweek_validate (rtc_alarm_time_t
         num_days_month = (uint8_t) RTC_LAST_DAY_OF_A_MONTH;
     }
 
-    if (((TRUE == p_time->mday_match) &&
+    if (((p_time->mday_match) &&
          ((p_time->time.tm_mday < RTC_FIRST_DAY_OF_A_MONTH) || (day_of_a_month > num_days_month))) ||
-        ((TRUE == p_time->dayofweek_match) &&
+        ((p_time->dayofweek_match) &&
          ((p_time->time.tm_wday < 0) || (p_time->time.tm_wday > RTC_DAYS_IN_A_WEEK))))
     {
         err = FSP_ERR_INVALID_ARGUMENT;
@@ -1246,11 +1236,11 @@ void rtc_alarm_periodic_isr (void)
     rtc_instance_ctrl_t * p_ctrl = (rtc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
     /* Call the callback routine if one is available */
-    if ((NULL != p_ctrl) && (NULL != p_ctrl->p_callback))
+    if (NULL != p_ctrl->p_cfg->p_callback)
     {
         /* Set data to identify callback to user, then call user callback. */
         rtc_callback_args_t rtc_context_data;
-        if (irq == p_ctrl->alarm_irq)
+        if (irq == p_ctrl->p_cfg->alarm_irq)
         {
             rtc_context_data.event = RTC_EVENT_ALARM_IRQ;
         }
@@ -1259,8 +1249,8 @@ void rtc_alarm_periodic_isr (void)
             rtc_context_data.event = RTC_EVENT_PERIODIC_IRQ;
         }
 
-        rtc_context_data.p_context = p_ctrl->p_context;
-        p_ctrl->p_callback(&rtc_context_data);
+        rtc_context_data.p_context = p_ctrl->p_cfg->p_context;
+        p_ctrl->p_cfg->p_callback(&rtc_context_data);
     }
 
     /* Clear the IR flag in the ICU */
@@ -1300,7 +1290,7 @@ void rtc_carry_isr (void)
  **********************************************************************************************************************/
 static uint8_t rtc_dec_to_bcd (uint8_t to_convert)
 {
-    return (uint8_t) ((((to_convert / (uint8_t) 10) << 4) & (uint8_t) MASK_LSB) | (to_convert % (uint8_t) 10));
+    return (uint8_t) ((((to_convert / (uint8_t) 10) << 4) & (uint8_t) RTC_MASK_LSB) | (to_convert % (uint8_t) 10));
 }
 
 /*******************************************************************************************************************//**
@@ -1310,5 +1300,6 @@ static uint8_t rtc_dec_to_bcd (uint8_t to_convert)
  **********************************************************************************************************************/
 static uint8_t rtc_bcd_to_dec (uint8_t to_convert)
 {
-    return (uint8_t) ((((to_convert & (uint8_t) MASK_LSB) >> 4) * (uint8_t) 10) + (to_convert & (uint8_t) MASK_MSB));
+    return (uint8_t) ((((to_convert & (uint8_t) RTC_MASK_LSB) >> 4) * (uint8_t) 10) +
+                      (to_convert & (uint8_t) RTC_MASK_MSB));
 }

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -313,7 +313,8 @@ __STATIC_INLINE uint32_t R_BSP_PinRead (bsp_io_port_pin_t pin)
 __STATIC_INLINE void R_BSP_PinWrite (bsp_io_port_pin_t pin, bsp_io_level_t level)
 {
     /* Set output level and pin direction to output. */
-    R_PFS->PORT[pin >> 8].PIN[pin & BSP_IO_PRV_8BIT_MASK].PmnPFS = BSP_IO_PFS_PDR_OUTPUT | level;
+    uint32_t lvl = (uint32_t) level;
+    R_PFS->PORT[pin >> 8].PIN[pin & BSP_IO_PRV_8BIT_MASK].PmnPFS = BSP_IO_PFS_PDR_OUTPUT | lvl;
 }
 
 /*******************************************************************************************************************//**

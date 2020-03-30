@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -74,7 +74,7 @@ typedef enum e_doc_event
 typedef struct st_doc_callback_args
 {
     void const * p_context;            ///< Placeholder for user data.
-    ///< Set in doc_api_t::open function in ::doc_cfg_t.
+    ///< Set in @ref doc_api_t::open function in @ref doc_cfg_t.
 } doc_callback_args_t;
 
 /** DOC control block.  Allocate an instance specific control block to pass into the DOC API calls.
@@ -86,7 +86,7 @@ typedef void doc_ctrl_t;
 /** User configuration structure, used in the open function. */
 typedef struct st_doc_cfg
 {
-    doc_event_t event;                 ///< Select enumerated value from ::doc_event_t.
+    doc_event_t event;                 ///< Select enumerated value from @ref doc_event_t.
     uint16_t    doc_data;              ///< initial/reference value for DODSR register.
     uint8_t     ipl;                   ///< DOC interrupt priority
     IRQn_Type   irq;                   ///< NVIC interrupt number assigned to this instance
@@ -94,7 +94,7 @@ typedef struct st_doc_cfg
     /** Callback provided when a DOC ISR occurs. */
     void (* p_callback)(doc_callback_args_t * p_args);
 
-    /** Placeholder for user data. Passed to the user callback in ::doc_callback_args_t. */
+    /** Placeholder for user data. Passed to the user callback in @ref doc_callback_args_t. */
     void const * p_context;
 } doc_cfg_t;
 
@@ -103,7 +103,7 @@ typedef struct st_doc_api
 {
     /** Initial configuration.
      * @par Implemented as
-     *  - R_DOC_Open()
+     * - @ref R_DOC_Open()
      * @param[in]   p_ctrl      Pointer to control block. Must be declared by user. Elements set here.
      * @param[in]   p_cfg       Pointer to configuration structure. All elements of this structure must be set by user.
      */
@@ -111,15 +111,15 @@ typedef struct st_doc_api
 
     /**Allow the driver to be reconfigured. Will reduce power consumption.
      * @par Implemented as
-     *  - R_DOC_Close()
-     * @param[in]   p_ctrl      Control block set in doc_api_t::open call.
+     * - @ref R_DOC_Close()
+     * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
      */
     fsp_err_t (* close)(doc_ctrl_t * const p_ctrl);
 
     /** Gets the result of addition/subtraction and stores it in the provided pointer p_data.
      * @par Implemented as
-     *  - R_DOC_StatusGet()
-     * @param[in]   p_ctrl      Control block set in doc_api_t::open call.
+     * - @ref R_DOC_StatusGet()
+     * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
      * @param[out]  p_data      Provides the 16 bit result of the addition/subtraction operation
      *                          at the user defined location.
      */
@@ -127,16 +127,16 @@ typedef struct st_doc_api
 
     /** Write to the DODIR register.
      * @par Implemented as
-     *  - R_DOC_Write()
+     * - @ref R_DOC_Write()
      *
-     * @param[in]   p_ctrl      Control block set in doc_api_t::open call.
+     * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
      * @param[in]   data        data to be written to DOC DODIR register.
      */
     fsp_err_t (* write)(doc_ctrl_t * const p_ctrl, uint16_t data);
 
     /** Get version and stores it in provided pointer p_version.
      * @par Implemented as
-     *  - R_DOC_VersionGet()
+     * - @ref R_DOC_VersionGet()
      *
      * @param[out]  p_version  Code and API version used.
      */

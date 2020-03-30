@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -67,6 +67,15 @@ void fsp_error_log_internal(fsp_err_t err, const char * file, int32_t line); ///
 /***********************************************************************************************************************
  * Exported global variables (to be accessed by other files)
  **********************************************************************************************************************/
+
+/* BSP version structure. */
+const fsp_version_t g_bsp_version =
+{
+    .api_version_minor  = BSP_API_VERSION_MINOR,
+    .api_version_major  = BSP_API_VERSION_MAJOR,
+    .code_version_major = BSP_CODE_VERSION_MAJOR,
+    .code_version_minor = BSP_CODE_VERSION_MINOR
+};
 
 /* FSP pack version structure. */
 static BSP_DONT_REMOVE const fsp_pack_version_t g_fsp_version BSP_PLACE_IN_SECTION (FSP_SECTION_VERSION) =

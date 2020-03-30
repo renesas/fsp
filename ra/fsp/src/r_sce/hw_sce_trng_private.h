@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -13,12 +13,6 @@
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
-
-/*******************************************************************************************************************//**
- * @ingroup SCE_PROC
- * @addtogroup SCE_PROC_TRNG
- * @{
- ***********************************************************************************************************************/
 
 #ifndef HW_SCE_TRNG_PRIVATE_H
 #define HW_SCE_TRNG_PRIVATE_H
@@ -38,7 +32,3 @@
 fsp_err_t HW_SCE_RNG_Read(uint32_t * OutData_Text);
 
 #endif                                 /* HW_SCE_TRNG_PRIVATE_H */
-
-/*******************************************************************************************************************//**
- * @} (end addtogroup SCE_PROC_TRNG)
- ***********************************************************************************************************************/

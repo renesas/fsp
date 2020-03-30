@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -84,7 +84,8 @@ __STATIC_INLINE void R_BSP_IrqClearPending (IRQn_Type irq)
 
     /* The following statement is used in place of NVIC_ClearPendingIRQ to avoid including a branch for system
      * exceptions every time an interrupt is cleared in the NVIC. */
-    NVIC->ICPR[(((uint32_t) irq) >> 5UL)] = (uint32_t) (1UL << (((uint32_t) irq) & 0x1FUL));
+    uint32_t _irq = (uint32_t) irq;
+    NVIC->ICPR[(((uint32_t) irq) >> 5UL)] = (uint32_t) (1UL << (_irq & 0x1FUL));
 }
 
 /*******************************************************************************************************************//**
@@ -106,7 +107,7 @@ __STATIC_INLINE void R_BSP_IrqCfg (IRQn_Type const irq, uint32_t priority, void 
     NVIC->IPR[_IP_IDX(irq)] = ((uint32_t) (NVIC->IPR[_IP_IDX(irq)] & ~((uint32_t) UINT8_MAX << _BIT_SHIFT(irq))) |
                                (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t) UINT8_MAX) << _BIT_SHIFT(irq)));
 #else
- #error "Update BSP IRQ functions for new core."
+    NVIC_SetPriority(irq, priority);
 #endif
 
     /* Store the context. The context is recovered in the ISR. */
@@ -125,7 +126,8 @@ __STATIC_INLINE void R_BSP_IrqEnableNoClear (IRQn_Type const irq)
 {
     /* The following statement is used in place of NVIC_EnableIRQ to avoid including a branch for system exceptions
      * every time an interrupt is enabled in the NVIC. */
-    NVIC->ISER[(((uint32_t) irq) >> 5UL)] = (uint32_t) (1UL << (((uint32_t) irq) & 0x1FUL));
+    uint32_t _irq = (uint32_t) irq;
+    NVIC->ISER[(((uint32_t) irq) >> 5UL)] = (uint32_t) (1UL << (_irq & 0x1FUL));
 }
 
 /*******************************************************************************************************************//**
@@ -157,7 +159,9 @@ __STATIC_INLINE void R_BSP_IrqDisable (IRQn_Type const irq)
 {
     /* The following statements is used in place of NVIC_DisableIRQ to avoid including a branch for system
      * exceptions every time an interrupt is cleared in the NVIC. */
-    NVIC->ICER[(((uint32_t) irq) >> 5UL)] = (uint32_t) (1UL << (((uint32_t) irq) & 0x1FUL));
+    uint32_t _irq = (uint32_t) irq;
+    NVIC->ICER[(((uint32_t) irq) >> 5UL)] = (uint32_t) (1UL << (_irq & 0x1FUL));
+
     __DSB();
     __ISB();
 }

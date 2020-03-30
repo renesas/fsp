@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -555,6 +555,9 @@ void bsp_clock_init (void)
     g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_PLL] = BSP_CFG_XTAL_HZ;
 #endif
 
+    /* The SystemCoreClock needs to be updated before calling R_BSP_SoftwareDelay. */
+    SystemCoreClockUpdate();
+
 #if BSP_CFG_SOFT_RESET_SUPPORTED
 
     /* Update the main oscillator drive, source, and wait states if the main oscillator is stopped.  If the main
@@ -759,6 +762,22 @@ void bsp_clock_init (void)
     /* Set USB clock divisor if it exists on the MCU. */
 #ifdef BSP_CFG_UCK_DIV
     R_SYSTEM->SCKDIVCR2 = BSP_CFG_UCK_DIV << BSP_PRV_SCKDIVCR2_UCK_BIT;
+#endif
+
+#if BSP_FEATURE_BSP_HAS_USB_CLOCK_SEL
+
+    /* Some MCUs have an alternate register for selecting the USB clock source. */
+ #if BSP_FEATURE_BSP_HAS_USB_CLOCK_SEL_ALT
+  #if BSP_CLOCKS_SOURCE_CLOCK_PLL == BSP_CFG_UCK_SOURCE
+
+    /* Write to USBCKCR to select the PLL. */
+    R_SYSTEM->USBCKCR = 0;
+  #elif BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_UCK_SOURCE
+
+    /* Write to USBCKCR to select the HOCO. */
+    R_SYSTEM->USBCKCR = 1;
+  #endif
+ #endif
 #endif
 
     /* Configure BCLK if it exists on the MCU. */

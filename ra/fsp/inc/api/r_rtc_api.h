@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -173,7 +173,7 @@ typedef struct st_rtc_cfg
 
 /** RTC control block.  Allocate an instance specific control block to pass into the RTC API calls.
  * @par Implemented as
- * - rtc_instance_ctrl_t
+ * - @ref rtc_instance_ctrl_t
  */
 typedef void rtc_ctrl_t;
 
@@ -182,7 +182,7 @@ typedef struct st_rtc_api
 {
     /** Open the RTC driver.
      * @par Implemented as
-     * - R_RTC_Open()
+     * - @ref R_RTC_Open()
      *
      * @param[in] p_ctrl     Pointer to RTC device handle
      * @param[in] p_cfg      Pointer to the configuration structure
@@ -191,7 +191,7 @@ typedef struct st_rtc_api
 
     /** Close the RTC driver.
      * @par Implemented as
-     * - R_RTC_Close()
+     * - @ref R_RTC_Close()
      *
      * @param[in] p_ctrl     Pointer to RTC device handle.
      */
@@ -199,7 +199,7 @@ typedef struct st_rtc_api
 
     /** Set the calendar time and start the calender counter
      * @par Implemented as
-     * - R_RTC_CalendarTimeSet()
+     * - @ref R_RTC_CalendarTimeSet()
      *
      * @param[in] p_ctrl      Pointer to RTC device handle
      * @param[in] p_time      Pointer to a time structure that contains the time to set
@@ -209,7 +209,7 @@ typedef struct st_rtc_api
 
     /** Get the calendar time.
      * @par Implemented as
-     * - R_RTC_CalendarTimeGet()
+     * - @ref R_RTC_CalendarTimeGet()
      *
      * @param[in] p_ctrl      Pointer to RTC device handle
      * @param[out] p_time     Pointer to a time structure that contains the time to get
@@ -218,7 +218,7 @@ typedef struct st_rtc_api
 
     /** Set the calendar alarm time and enable the alarm interrupt.
      * @par Implemented as
-     * - R_RTC_CalendarAlarmSet()
+     * - @ref R_RTC_CalendarAlarmSet()
      *
      * @param[in] p_ctrl                 Pointer to RTC device handle
      * @param[in] p_alarm                Pointer to an alarm structure that contains the alarm time to set
@@ -228,7 +228,7 @@ typedef struct st_rtc_api
 
     /** Get the calendar alarm time.
      * @par Implemented as
-     * - R_RTC_CalendarAlarmGet()
+     * - @ref R_RTC_CalendarAlarmGet()
      *
      * @param[in] p_ctrl       Pointer to RTC device handle
      * @param[out] p_alarm     Pointer to an alarm structure to fill up with the alarm time
@@ -237,7 +237,7 @@ typedef struct st_rtc_api
 
     /** Set the periodic irq rate
      * @par Implemented as
-     * - R_RTC_PeriodicIrqRateSet()
+     * - @ref R_RTC_PeriodicIrqRateSet()
      *
      * @param[in] p_ctrl       Pointer to RTC device handle
      * @param[in] rate         Rate of periodic interrupts
@@ -247,7 +247,7 @@ typedef struct st_rtc_api
     /** Set time error adjustment.
      *
      * @par Implemented as
-     * R_RTC_ErrorAdjustmentSet()
+     * - @ref R_RTC_ErrorAdjustmentSet()
      *
      * @param[in]  p_ctrl        Pointer to control handle structure
      * @param[in]  err_adj_cfg   Pointer to the Error Adjustment Config
@@ -257,7 +257,7 @@ typedef struct st_rtc_api
     /** Return the currently configure clock source for the RTC
      *
      * @par Implemented as
-     *  - R_RTC_InfoGet()
+     * - @ref R_RTC_InfoGet()
      *
      * @param[in]   p_ctrl       Pointer to control handle structure
      * @param[out]  p_rtc_info   Pointer to RTC information structure
@@ -266,7 +266,7 @@ typedef struct st_rtc_api
 
     /** Gets version and stores it in provided pointer p_version.
      * @par Implemented as
-     * - R_RTC_VersionGet()
+     * - @ref R_RTC_VersionGet()
      *
      * @param[out]  p_version  Code and API version used
      */

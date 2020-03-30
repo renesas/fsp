@@ -1,20 +1,17 @@
 /***********************************************************************************************************************
- * Copyright [2015-2017] Renesas Electronics Corporation and/or its licensors. All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This file is part of Renesas RA Flex Software Package (FSP)
- *
- * The contents of this file (the "contents") are proprietary and confidential to Renesas Electronics Corporation
- * and/or its licensors ("Renesas") and subject to statutory and contractual protections.
- *
- * This file is subject to a Renesas FSP license agreement. Unless otherwise agreed in an FSP license agreement with
- * Renesas: 1) you may not use, copy, modify, distribute, display, or perform the contents; 2) you may not use any name
- * or mark of Renesas for advertising or publicity purposes or in connection with your use of the contents; 3) RENESAS
- * MAKES NO WARRANTY OR REPRESENTATIONS ABOUT THE SUITABILITY OF THE CONTENTS FOR ANY PURPOSE; THE CONTENTS ARE PROVIDED
- * "AS IS" WITHOUT ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
- * PARTICULAR PURPOSE, AND NON-INFRINGEMENT; AND 4) RENESAS SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, OR
- * CONSEQUENTIAL DAMAGES, INCLUDING DAMAGES RESULTING FROM LOSS OF USE, DATA, OR PROJECTS, WHETHER IN AN ACTION OF
- * CONTRACT OR TORT, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THE CONTENTS. Third-party contents
- * included in this file may be subject to different terms.
+ * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
+ * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
+ * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
+ * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
+ * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
+ * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
 /**********************************************************************************************************************
@@ -39,28 +36,40 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define JPEG_DECODE_CODE_VERSION_MAJOR    (1U)
-#define JPEG_DECODE_CODE_VERSION_MINOR    (8U)
+#define JPEG_CODE_VERSION_MAJOR    (1U)
+#define JPEG_CODE_VERSION_MINOR    (0U)
 
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
 
 /** JPEG Codec module control block.  DO NOT INITIALIZE.  Initialization occurs when jpep_api_t::open is called. */
-typedef struct st_jpeg_decode_instance_ctrl
+typedef struct st_jpeg_instance_ctrl
 {
-    jpeg_decode_status_t status;                  ///< JPEG Codec module status
-    fsp_err_t            error_code;              ///< JPEG Codec error code (if any).
+    uint32_t      open;                           ///< JPEG Codec driver status
+    jpeg_status_t status;                         ///< JPEG Codec operational status
+    fsp_err_t     error_code;                     ///< JPEG Codec error code (if any).
+    jpeg_mode_t   mode;                           ///< Current mode (decode or encode).
+
+    uint32_t horizontal_stride_bytes;             ///< Horizontal Stride settings.
+    uint32_t output_buffer_size;                  ///< Output buffer size
 
     /* Pointer to JPEG codec peripheral specific configuration */
-    jpeg_decode_cfg_t const * p_cfg;              ///< JPEG Decode configuration struct
+    jpeg_cfg_t const * p_cfg;                     ///< JPEG Decode configuration struct
+    void const       * p_extend;                  ///< JPEG Codec hardware dependent configuration */
 
+#if JPEG_CFG_DECODE_ENABLE
     jpeg_decode_pixel_format_t pixel_format;      ///< Pixel format
-    uint32_t                horizontal_stride;    ///< Horizontal Stride settings.
-    uint32_t                outbuffer_size;       ///< Output buffer size
     uint16_t                total_lines_decoded;  ///< Track the number of lines decoded so far.
     jpeg_decode_subsample_t horizontal_subsample; ///< Horizontal sub-sample setting.
-} jpeg_decode_instance_ctrl_t;
+#endif
+
+#if JPEG_CFG_ENCODE_ENABLE
+    uint16_t lines_to_encode;                     ///< Number of lines to encode
+    uint16_t vertical_resolution;                 ///< vertical size
+    uint16_t total_lines_encoded;                 ///< Number of lines encoded
+#endif
+} jpeg_instance_ctrl_t;
 
 /**********************************************************************************************************************
  * Exported global variables
@@ -69,25 +78,33 @@ typedef struct st_jpeg_decode_instance_ctrl
 /**********************************************************************************************************************
  * Function Prototypes
  **********************************************************************************************************************/
-fsp_err_t R_JPEG_Decode_Open(jpeg_decode_ctrl_t * const p_api_ctrl, jpeg_decode_cfg_t const * const p_cfg);
-fsp_err_t R_JPEG_Decode_OutputBufferSet(jpeg_decode_ctrl_t * p_api_ctrl,
-                                        void               * output_buffer,
-                                        uint32_t             output_buffer_size);
-fsp_err_t R_JPEG_Decode_LinesDecodedGet(jpeg_decode_ctrl_t * const p_api_ctrl, uint32_t * const p_lines);
-fsp_err_t R_JPEG_Decode_HorizontalStrideSet(jpeg_decode_ctrl_t * p_api_ctrl, uint32_t horizontal_stride);
-fsp_err_t R_JPEG_Decode_InputBufferSet(jpeg_decode_ctrl_t * constp_api_ctrl,
-                                       void               * p_data_buffer,
-                                       uint32_t             data_buffer_size);
-fsp_err_t R_JPEG_Decode_Close(jpeg_decode_ctrl_t * p_api_ctrl);
-fsp_err_t R_JPEG_Decode_ImageSizeGet(jpeg_decode_ctrl_t * p_api_ctrl,
-                                     uint16_t           * p_horizontal_size,
-                                     uint16_t           * p_vertical_size);
-fsp_err_t R_JPEG_Decode_StatusGet(jpeg_decode_ctrl_t * p_api_ctrl, jpeg_decode_status_t * p_status);
-fsp_err_t R_JPEG_Decode_ImageSubsampleSet(jpeg_decode_ctrl_t * const p_api_ctrl,
-                                          jpeg_decode_subsample_t    horizontal_subsample,
-                                          jpeg_decode_subsample_t    vertical_subsample);
-fsp_err_t R_JPEG_Decode_PixelFormatGet(jpeg_decode_ctrl_t * p_api_ctrl, jpeg_decode_color_space_t * p_color_space);
-fsp_err_t R_JPEG_Decode_VersionGet(fsp_version_t * p_version);
+fsp_err_t R_JPEG_Open(jpeg_ctrl_t * const p_api_ctrl, jpeg_cfg_t const * const p_cfg);
+fsp_err_t R_JPEG_OutputBufferSet(jpeg_ctrl_t * p_api_ctrl, void * output_buffer, uint32_t output_buffer_size);
+fsp_err_t R_JPEG_InputBufferSet(jpeg_ctrl_t * constp_api_ctrl, void * p_data_buffer, uint32_t data_buffer_size);
+fsp_err_t R_JPEG_StatusGet(jpeg_ctrl_t * p_api_ctrl, jpeg_status_t * p_status);
+fsp_err_t R_JPEG_Close(jpeg_ctrl_t * p_api_ctrl);
+fsp_err_t R_JPEG_VersionGet(fsp_version_t * p_version);
+
+#if JPEG_CFG_ENCODE_ENABLE
+fsp_err_t R_JPEG_EncodeImageSizeSet(jpeg_ctrl_t * const p_api_ctrl, jpeg_encode_image_size_t * p_image_size);
+
+#endif
+
+#if JPEG_CFG_DECODE_ENABLE
+fsp_err_t R_JPEG_DecodeLinesDecodedGet(jpeg_ctrl_t * const p_api_ctrl, uint32_t * const p_lines);
+fsp_err_t R_JPEG_DecodeHorizontalStrideSet(jpeg_ctrl_t * p_api_ctrl, uint32_t horizontal_stride);
+fsp_err_t R_JPEG_DecodeImageSizeGet(jpeg_ctrl_t * p_api_ctrl, uint16_t * p_horizontal_size, uint16_t * p_vertical_size);
+fsp_err_t R_JPEG_DecodeImageSubsampleSet(jpeg_ctrl_t * const     p_api_ctrl,
+                                         jpeg_decode_subsample_t horizontal_subsample,
+                                         jpeg_decode_subsample_t vertical_subsample);
+fsp_err_t R_JPEG_DecodePixelFormatGet(jpeg_ctrl_t * p_api_ctrl, jpeg_color_space_t * p_color_space);
+
+#endif
+
+#if JPEG_CFG_DECODE_ENABLE && JPEG_CFG_ENCODE_ENABLE
+fsp_err_t R_JPEG_ModeSet(jpeg_ctrl_t * const p_api_ctrl, jpeg_mode_t mode);
+
+#endif
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -97,7 +114,7 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /** @cond INC_HEADER_DEFS_SEC */
-extern const jpeg_decode_api_t g_jpeg_decode_on_jpeg_decode;
+extern const jpeg_api_t g_jpeg_on_jpeg;
 
 /** @endcond */
 

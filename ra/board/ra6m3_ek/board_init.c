@@ -1,7 +1,7 @@
 /***********************************************************************************************************************
  * Copyright [2015] Renesas Electronics Corporation and/or its licensors. All Rights Reserved.
  *
- * This file is part of Renesas RA Flex Software Package (FSP)
+ * This file is part of Renesas RA Flexible Software Package (FSP)
  *
  * The contents of this file (the "contents") are proprietary and confidential to Renesas Electronics Corporation
  * and/or its licensors ("Renesas") and subject to statutory and contractual protections.
@@ -32,7 +32,6 @@
  * Includes   <System Includes> , "Project Includes"
  **********************************************************************************************************************/
 #include "bsp_api.h"
-#include "board_qspi.h"
 
 #if defined(BOARD_RA6M3_EK)
 
@@ -60,9 +59,6 @@
 void bsp_init (void * p_args)
 {
     FSP_PARAMETER_NOT_USED(p_args);
-
-    /** Initialize QSPI flash memory using QSPI driver for this board.*/
-    bsp_qspi_init();
 }
 
 #endif

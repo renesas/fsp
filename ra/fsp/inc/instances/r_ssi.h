@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -39,6 +39,8 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+
+/** Audio clock source. */
 typedef enum e_ssi_audio_clock
 {
     SSI_AUDIO_CLOCK_EXTERNAL = 0,      ///< Audio clock source is the AUDIO_CLK input pin
@@ -48,22 +50,22 @@ typedef enum e_ssi_audio_clock
 /** Bit clock division ratio.  Bit clock frequency = audio clock frequency / bit clock division ratio. */
 typedef enum e_ssi_clock_div
 {
-    SSI_CLOCK_DIV_1   = 0,
-    SSI_CLOCK_DIV_2   = 1,
-    SSI_CLOCK_DIV_4   = 2,
-    SSI_CLOCK_DIV_6   = 8,
-    SSI_CLOCK_DIV_8   = 3,
-    SSI_CLOCK_DIV_12  = 9,
-    SSI_CLOCK_DIV_16  = 4,
-    SSI_CLOCK_DIV_24  = 10,
-    SSI_CLOCK_DIV_32  = 5,
-    SSI_CLOCK_DIV_48  = 11,
-    SSI_CLOCK_DIV_64  = 6,
-    SSI_CLOCK_DIV_96  = 12,
-    SSI_CLOCK_DIV_128 = 7,
+    SSI_CLOCK_DIV_1   = 0,             ///< Clock divisor 1
+    SSI_CLOCK_DIV_2   = 1,             ///< Clock divisor 2
+    SSI_CLOCK_DIV_4   = 2,             ///< Clock divisor 4
+    SSI_CLOCK_DIV_6   = 8,             ///< Clock divisor 6
+    SSI_CLOCK_DIV_8   = 3,             ///< Clock divisor 8
+    SSI_CLOCK_DIV_12  = 9,             ///< Clock divisor 12
+    SSI_CLOCK_DIV_16  = 4,             ///< Clock divisor 16
+    SSI_CLOCK_DIV_24  = 10,            ///< Clock divisor 24
+    SSI_CLOCK_DIV_32  = 5,             ///< Clock divisor 32
+    SSI_CLOCK_DIV_48  = 11,            ///< Clock divisor 48
+    SSI_CLOCK_DIV_64  = 6,             ///< Clock divisor 64
+    SSI_CLOCK_DIV_96  = 12,            ///< Clock divisor 96
+    SSI_CLOCK_DIV_128 = 7,             ///< Clock divisor 128
 } ssi_clock_div_t;
 
-/** Channel instance control block. DO NOT INITIALIZE.  Initialization occurs when i2s_api_t::open is called. */
+/** Channel instance control block. DO NOT INITIALIZE.  Initialization occurs when @ref i2s_api_t::open is called. */
 typedef struct st_ssi_instance_ctrl
 {
     uint32_t          open;            // Whether or not this control block is initialized

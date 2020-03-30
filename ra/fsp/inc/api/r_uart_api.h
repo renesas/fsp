@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -168,7 +168,7 @@ typedef struct st_uart_api
 {
     /** Open  UART device.
      * @par Implemented as
-     * - R_SCI_UartOpen()
+     * - @ref R_SCI_UART_Open()
      *
      * @param[in,out]  p_ctrl     Pointer to the UART control block Must be declared by user. Value set here.
      * @param[in]      uart_cfg_t Pointer to UART configuration structure. All elements of this structure must be set by
@@ -181,7 +181,7 @@ typedef struct st_uart_api
      * the callback function with event UART_EVENT_RX_CHAR.
      * The maximum transfer size is reported by infoGet().
      * @par Implemented as
-     * - R_SCI_UartRead()
+     * - @ref R_SCI_UART_Read()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block for the channel.
      * @param[in]   p_dest     Destination address to read data from.
@@ -194,7 +194,7 @@ typedef struct st_uart_api
      * the callback called with event UART_EVENT_TX_COMPLETE.
      * The maximum transfer size is reported by infoGet().
      * @par Implemented as
-     * - R_SCI_UartWrite()
+     * - @ref R_SCI_UART_Write()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.
      * @param[in]   p_src      Source address  to write data to.
@@ -207,7 +207,7 @@ typedef struct st_uart_api
      * settings have been applied.
      *
      * @par Implemented as
-     * - R_SCI_UartBaudSet()
+     * - @ref R_SCI_UART_BaudSet()
      *
      * @param[in]   p_ctrl          Pointer to the UART control block.
      * @param[in]   p_baudrate_info Pointer to module specific information for configuring baud rate.
@@ -216,7 +216,7 @@ typedef struct st_uart_api
 
     /** Get the driver specific information.
      * @par Implemented as
-     * - R_SCI_UartInfoGet()
+     * - @ref R_SCI_UART_InfoGet()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.
      * @param[in]   baudrate   Baud rate in bps.
@@ -226,7 +226,7 @@ typedef struct st_uart_api
     /**
      * Abort ongoing transfer.
      * @par Implemented as
-     * - R_SCI_UartAbort()
+     * - @ref R_SCI_UART_Abort()
      *
      * @param[in]   p_ctrl                   Pointer to the UART control block.
      * @param[in]   communication_to_abort   Type of abort request.
@@ -235,7 +235,7 @@ typedef struct st_uart_api
 
     /** Close UART device.
      * @par Implemented as
-     * - R_SCI_UartClose()
+     * - @ref R_SCI_UART_Close()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.
      */
@@ -243,7 +243,7 @@ typedef struct st_uart_api
 
     /** Get version.
      * @par Implemented as
-     * - R_SCI_UartVersionGet()
+     * - @ref R_SCI_UART_VersionGet()
      *
      * @param[in]   p_version  Pointer to the memory to store the version information.
      */

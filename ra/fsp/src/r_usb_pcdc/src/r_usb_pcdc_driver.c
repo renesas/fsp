@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -13,8 +13,9 @@
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
+
 /******************************************************************************
- Includes   <System Includes> , "Project Includes"
+ * Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
 
 #include <r_usb_basic.h>
@@ -27,95 +28,111 @@
 #include "../../r_usb_basic/src/hw/inc/r_usb_bitdefine.h"
 
 #ifdef USB_CFG_PCDC_USE
+
 /******************************************************************************
- Macro definitions
+ * Macro definitions
  ******************************************************************************/
 
 /******************************************************************************
- Private global variables and functions
+ * Private global variables and functions
  ******************************************************************************/
 
 /******************************************************************************
- Exported global variables
+ * Exported global variables
  ******************************************************************************/
 
 /******************************************************************************
- Exported global variables (to be accessed by other files)
+ * Exported global variables (to be accessed by other files)
  ******************************************************************************/
 
 /******************************************************************************
- Renesas Abstracted Peripheral Communications Devices Class Driver API functions
+ * Renesas Abstracted Peripheral Communications Devices Class Driver API functions
  ******************************************************************************/
 
 /******************************************************************************
- Function Name   : usb_pcdc_read_complete
- Description     : CallBack Function
- Arguments       : usb_utr_t    *mess   : Pointer to usb_utr_t structure
-                 : uint16_t     data1   : Not used
-                 : uint16_t     data2   : Not used
- Return          : none
+ * Function Name   : usb_pcdc_read_complete
+ * Description     : CallBack Function
+ * Arguments       : usb_utr_t    *mess   : Pointer to usb_utr_t structure
+ *               : uint16_t     data1   : Not used
+ *               : uint16_t     data2   : Not used
+ * Return          : none
  ******************************************************************************/
-void usb_pcdc_read_complete (usb_utr_t *mess, uint16_t data1, uint16_t data2)
+void usb_pcdc_read_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
 
     FSP_PARAMETER_NOT_USED(data1);
     FSP_PARAMETER_NOT_USED(data2);
 
-    if ( USB_TRUE == g_usb_peri_connected)
+    if (USB_TRUE == g_usb_peri_connected)
     {
         /* Set Receive data length */
         ctrl.data_size = mess->read_req_len - mess->tranlen;
-        ctrl.pipe = (uint8_t)mess->keyword;  /* Pipe number setting */
-        ctrl.type = USB_CLASS_PCDC;       /* Device class setting  */
+        ctrl.pipe      = (uint8_t) mess->keyword; /* Pipe number setting */
+        ctrl.type      = USB_CLASS_PCDC;          /* Device class setting  */
+
         switch (mess->status)
         {
-            case USB_DATA_OK :
+            case USB_DATA_OK:
+            {
                 ctrl.status = FSP_SUCCESS;
-            break;
-            case USB_DATA_SHT :
+                break;
+            }
+
+            case USB_DATA_SHT:
+            {
                 ctrl.status = FSP_ERR_USB_SIZE_SHORT;
-            break;
-            case USB_DATA_OVR :
+                break;
+            }
+
+            case USB_DATA_OVR:
+            {
                 ctrl.status = FSP_ERR_USB_SIZE_OVER;
-            break;
-            case USB_DATA_ERR :
-            default :
+                break;
+            }
+
+            case USB_DATA_ERR:
+            default:
+            {
                 ctrl.status = FSP_ERR_USB_FAILED;
-            break;
+                break;
+            }
         }
-        ctrl.module_number = USB_CFG_USE_USBIP;
-#if (BSP_CFG_RTOS == 2)
-        ctrl.p_data = (void *)mess->cur_task_hdl;
-#endif /* (BSP_CFG_RTOS == 2) */
+
+        ctrl.module_number = mess->ip;
+ #if (BSP_CFG_RTOS == 2)
+        ctrl.p_data = (void *) mess->cur_task_hdl;
+ #endif                                /* (BSP_CFG_RTOS == 2) */
         usb_set_event(USB_STATUS_READ_COMPLETE, &ctrl);
     }
 }
+
 /******************************************************************************
- End of function usb_pcdc_read_complete
+ * End of function usb_pcdc_read_complete
  ******************************************************************************/
 
 /******************************************************************************
- Function Name   : usb_pcdc_write_complete
- Description     : CallBack Function
- Arguments       : usb_utr_t    *mess   : Pointer to usb_utr_t structure
-                 : uint16_t     data1   : Not used
-                 : uint16_t     data2   : Not used
- Return          : none
+ * Function Name   : usb_pcdc_write_complete
+ * Description     : CallBack Function
+ * Arguments       : usb_utr_t    *mess   : Pointer to usb_utr_t structure
+ *               : uint16_t     data1   : Not used
+ *               : uint16_t     data2   : Not used
+ * Return          : none
  ******************************************************************************/
-void usb_pcdc_write_complete (usb_utr_t *mess, uint16_t data1, uint16_t data2)
+void usb_pcdc_write_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
 
     FSP_PARAMETER_NOT_USED(data1);
     FSP_PARAMETER_NOT_USED(data2);
 
-    if ( USB_TRUE == g_usb_peri_connected)
+    if (USB_TRUE == g_usb_peri_connected)
     {
-        ctrl.pipe = (uint8_t)mess->keyword; /* Pipe number setting */
+        ctrl.pipe = (uint8_t) mess->keyword; /* Pipe number setting */
+
         if (USB_CFG_PCDC_BULK_IN == ctrl.pipe)
         {
-            ctrl.type = USB_CLASS_PCDC; /* CDC Data class  */
+            ctrl.type = USB_CLASS_PCDC;      /* CDC Data class  */
         }
 
         /* USB_CFG_PCDC_INT_IN */
@@ -123,6 +140,7 @@ void usb_pcdc_write_complete (usb_utr_t *mess, uint16_t data1, uint16_t data2)
         {
             ctrl.type = USB_CLASS_PCDCC; /* CDC Control class  */
         }
+
         if (USB_DATA_NONE == mess->status)
         {
             ctrl.status = FSP_SUCCESS;
@@ -131,18 +149,20 @@ void usb_pcdc_write_complete (usb_utr_t *mess, uint16_t data1, uint16_t data2)
         {
             ctrl.status = FSP_ERR_USB_FAILED;
         }
-        ctrl.module_number = USB_CFG_USE_USBIP;
-#if (BSP_CFG_RTOS == 2)
-        ctrl.p_data = (void *)mess->cur_task_hdl;
-#endif /* (BSP_CFG_RTOS == 2) */
+
+        ctrl.module_number = mess->ip;
+ #if (BSP_CFG_RTOS == 2)
+        ctrl.p_data = (void *) mess->cur_task_hdl;
+ #endif                                /* (BSP_CFG_RTOS == 2) */
         usb_set_event(USB_STATUS_WRITE_COMPLETE, &ctrl);
     }
 }
-/******************************************************************************
- End of function usb_pcdc_write_complete
- ******************************************************************************/
-#endif /* USB_CFG_PCDC_USE */
 
 /******************************************************************************
- End  Of File
+ * End of function usb_pcdc_write_complete
+ ******************************************************************************/
+#endif                                 /* USB_CFG_PCDC_USE */
+
+/******************************************************************************
+ * End  Of File
  ******************************************************************************/

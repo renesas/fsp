@@ -1,7 +1,7 @@
 /***********************************************************************************************************************
  * Copyright [2015] Renesas Electronics Corporation and/or its licensors. All Rights Reserved.
  *
- * This file is part of Renesas RA Flex Software Package (FSP)
+ * This file is part of Renesas RA Flexible Software Package (FSP)
  *
  * The contents of this file (the "contents") are proprietary and confidential to Renesas Electronics Corporation
  * and/or its licensors ("Renesas") and subject to statutory and contractual protections.
@@ -58,8 +58,7 @@ static const uint16_t g_bsp_prv_leds[] =
  * Exported global variables (to be accessed by other files)
  **********************************************************************************************************************/
 
-/** Structure with LED information for this board. Recommended to get this information through R_BSP_LedsGet() function
- * instead of using this structure directly to remove dependency on structure name. */
+/** Structure with LED information for this board. */
 
 const bsp_leds_t g_bsp_leds =
 {

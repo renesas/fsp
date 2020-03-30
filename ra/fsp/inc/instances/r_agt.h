@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -42,7 +42,7 @@ FSP_HEADER
 #define AGT_MAX_PERIOD            (UINT16_MAX + 1U)
 
 /*******************************************************************************************************************//**
- * @ingroup AGT
+ * @addtogroup AGT
  * @{
  **********************************************************************************************************************/
 
@@ -54,7 +54,7 @@ FSP_HEADER
 typedef enum e_agt_clock
 {
     /** Counter clock source is PCLKB when AGT_CLOCK_PCLKB, AGT_CLOCK_PCLKB_DIV_2, or AGT_CLOCK_PCLKB_DIV_8 is selected.
-     *  The PCLKB divisor is selected automatically at runtime to the optimal value of PCLKB/1, PCLKB/2, or PCLKB/8.
+     *  The PCLKB divisor is selected automatically by the configurator as either PCLKB/1, PCLKB/2, or PCLKB/8.
      *  If the timer_cfg_t::unit is TIMER_UNIT_PERIOD_RAW_COUNTS, the timer_cfg_t::period should be the desired value
      *  in PCLKB counts, even if the value would exceed 16 bits.  For example, if a period of 0x30000 counts is
      *  requested, a divisor of PCLKB/8 is be selected and the counter underflows after 0x6000 counts. */
@@ -117,7 +117,7 @@ typedef enum e_agt_pin_cfg
     AGT_PIN_CFG_START_LEVEL_HIGH = 7,  ///< Pin level high
 } agt_pin_cfg_t;
 
-/** Channel control block. DO NOT INITIALIZE.  Initialization occurs when timer_api_t::open is called. */
+/** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref timer_api_t::open is called. */
 typedef struct st_agt_instance_ctrl
 {
     uint32_t            open;          ///< Whether or not channel is open
@@ -151,10 +151,6 @@ typedef struct st_agt_extended_cfg
     agt_trigger_edge_t trigger_edge;     ///< Trigger edge to start pulse period measurement or count external event
 } agt_extended_cfg_t;
 
-/*******************************************************************************************************************//**
- * @} (end defgroup AGT)
- **********************************************************************************************************************/
-
 /**********************************************************************************************************************
  * Exported global variables
  **********************************************************************************************************************/
@@ -177,6 +173,10 @@ fsp_err_t R_AGT_StatusGet(timer_ctrl_t * const p_ctrl, timer_status_t * const p_
 fsp_err_t R_AGT_Stop(timer_ctrl_t * const p_ctrl);
 fsp_err_t R_AGT_Open(timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_cfg);
 fsp_err_t R_AGT_VersionGet(fsp_version_t * const p_version);
+
+/*******************************************************************************************************************//**
+ * @} (end defgroup AGT)
+ **********************************************************************************************************************/
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 

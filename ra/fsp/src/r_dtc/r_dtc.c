@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -129,7 +129,7 @@ const transfer_api_t g_transfer_on_dtc =
 
 /*******************************************************************************************************************//**
  * Configure the vector table if it hasn't been configured, enable the Module and copy the pointer to the transfer info
- * into the DTC vector table. Implements transfer_api_t::open.
+ * into the DTC vector table. Implements @ref transfer_api_t::open.
  *
  * Example:
  * @snippet r_dtc_example.c R_DTC_Open
@@ -186,7 +186,7 @@ fsp_err_t R_DTC_Open (transfer_ctrl_t * const p_api_ctrl, transfer_cfg_t const *
 
 /*******************************************************************************************************************//**
  * Copy pointer to transfer info into the DTC vector table and enable transfer in ICU.
- * Implements transfer_api_t::reconfigure.
+ * Implements @ref transfer_api_t::reconfigure.
  *
  * @retval FSP_SUCCESS              Transfer is configured and will start when trigger occurs.
  * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
@@ -220,7 +220,7 @@ fsp_err_t R_DTC_Reconfigure (transfer_ctrl_t * const p_api_ctrl, transfer_info_t
     /* Copy p_info into the DTC vector table. */
     r_dtc_set_info(p_ctrl, p_info);
 
-    /* This is an exception to Flex Architecture Parameter Checking (May return an error after modifying registers). */
+    /* This is an exception to FSP Architecture Parameter Checking (May return an error after modifying registers). */
     /* Enable transfers on this activation source. */
     FSP_ERROR_RETURN(FSP_SUCCESS == r_dtc_prv_enable(p_ctrl), FSP_ERR_NOT_ENABLED);
 
@@ -228,7 +228,7 @@ fsp_err_t R_DTC_Reconfigure (transfer_ctrl_t * const p_api_ctrl, transfer_info_t
 }
 
 /*******************************************************************************************************************//**
- * Reset transfer source, destination, and number of transfers. Implements transfer_api_t::reset.
+ * Reset transfer source, destination, and number of transfers. Implements @ref transfer_api_t::reset.
  *
  * @retval FSP_SUCCESS              Transfer reset successfully (transfers are enabled).
  * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
@@ -289,7 +289,7 @@ fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
     /* Enable read skip after all settings are written. */
     R_DTC->DTCCR = DTC_PRV_RRS_ENABLE;
 
-    /* This is an exception to Flex Architecture Parameter Checking (May return an error after modifying registers). */
+    /* This is an exception to FSP Architecture Parameter Checking (May return an error after modifying registers). */
     /* Enable transfers on this activation source. */
     FSP_ERROR_RETURN(FSP_SUCCESS == r_dtc_prv_enable(p_ctrl), FSP_ERR_NOT_ENABLED);
 
@@ -297,7 +297,7 @@ fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Placeholder for unsupported softwareStart function. Implements transfer_api_t::softwareStart.
+ * Placeholder for unsupported softwareStart function. Implements @ref transfer_api_t::softwareStart.
  *
  * @retval FSP_ERR_UNSUPPORTED      DTC software start is not supported.
  **********************************************************************************************************************/
@@ -312,7 +312,7 @@ fsp_err_t R_DTC_SoftwareStart (transfer_ctrl_t * const p_api_ctrl, transfer_star
 }
 
 /*******************************************************************************************************************//**
- * Placeholder for unsupported softwareStop function. Implements transfer_api_t::softwareStop.
+ * Placeholder for unsupported softwareStop function. Implements @ref transfer_api_t::softwareStop.
  *
  * @retval FSP_ERR_UNSUPPORTED      DTC software stop is not supported.
  **********************************************************************************************************************/
@@ -326,7 +326,7 @@ fsp_err_t R_DTC_SoftwareStop (transfer_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Enable transfers on this activation source. Implements transfer_api_t::enable.
+ * Enable transfers on this activation source. Implements @ref transfer_api_t::enable.
  *
  * Example:
  * @snippet r_dtc_example.c R_DTC_Enable
@@ -348,7 +348,7 @@ fsp_err_t R_DTC_Enable (transfer_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Disable transfer on this activation source. Implements transfer_api_t::disable.
+ * Disable transfer on this activation source. Implements @ref transfer_api_t::disable.
  *
  * @retval FSP_SUCCESS              Transfers will not occur on activation events.
  * @retval FSP_ERR_NOT_OPEN         Handle is not initialized.  Call R_DTC_Open to initialize the control block.
@@ -370,7 +370,7 @@ fsp_err_t R_DTC_Disable (transfer_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Provides information about this transfer. Implements transfer_api_t::infoGet.
+ * Provides information about this transfer. Implements @ref transfer_api_t::infoGet.
  *
  * @retval FSP_SUCCESS              p_info updated with current instance information.
  * @retval FSP_ERR_NOT_OPEN         Handle is not initialized. Call R_DTC_Open to initialize the control block.
@@ -416,7 +416,7 @@ fsp_err_t R_DTC_InfoGet (transfer_ctrl_t * const p_api_ctrl, transfer_properties
 
 /*******************************************************************************************************************//**
  * Disables DTC activation in the ICU, then clears transfer data from the DTC vector table.
- * Implements transfer_api_t::close.
+ * Implements @ref transfer_api_t::close.
  *
  * @retval FSP_SUCCESS              Successful close.
  * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
@@ -445,7 +445,7 @@ fsp_err_t R_DTC_Close (transfer_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Get the driver version based on compile time macros.  Implements transfer_api_t::versionGet.
+ * Get the driver version based on compile time macros.  Implements @ref transfer_api_t::versionGet.
  *
  * @retval FSP_SUCCESS              Version information written to p_version.
  * @retval FSP_ERR_ASSERTION        An input parameter is invalid.

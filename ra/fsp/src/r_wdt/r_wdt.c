@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -192,7 +192,7 @@ const wdt_api_t g_wdt_on_wdt =
 
 /*******************************************************************************************************************//**
  * Configure the WDT in register start mode. In auto-start_mode the NMI callback can be registered. Implements
- * wdt_api_t::open.
+ * @ref wdt_api_t::open.
  *
  * This function should only be called once as WDT configuration registers can only be written to once so subsequent
  * calls will have no effect.
@@ -264,9 +264,9 @@ fsp_err_t R_WDT_Open (wdt_ctrl_t * const p_ctrl, wdt_cfg_t const * const p_cfg)
 }
 
 /*******************************************************************************************************************//**
- * Read timeout information for the watchdog timer. Implements wdt_api_t::timeoutGet.
+ * Read timeout information for the watchdog timer. Implements @ref wdt_api_t::timeoutGet.
  *
- * @retval FSP_SUCCESS              WDT successfully refreshed.
+ * @retval FSP_SUCCESS              WDT timeout information retrieved successfully.
  * @retval FSP_ERR_ASSERTION        Null Pointer.
  * @retval FSP_ERR_NOT_OPEN         Instance control block is not initialized.
  **********************************************************************************************************************/
@@ -313,7 +313,7 @@ fsp_err_t R_WDT_TimeoutGet (wdt_ctrl_t * const p_ctrl, wdt_timeout_values_t * co
 }
 
 /*******************************************************************************************************************//**
- * Refresh the watchdog timer. Implements wdt_api_t::refresh.
+ * Refresh the watchdog timer. Implements @ref wdt_api_t::refresh.
  *
  * In addition to refreshing the watchdog counter this function can be used to start the counter in register start mode.
  *
@@ -344,7 +344,7 @@ fsp_err_t R_WDT_Refresh (wdt_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Read the WDT status flags. Implements wdt_api_t::statusGet.
+ * Read the WDT status flags. Implements @ref wdt_api_t::statusGet.
  *
  * Indicates both status and error conditions.
  *
@@ -386,7 +386,7 @@ fsp_err_t R_WDT_StatusGet (wdt_ctrl_t * const p_ctrl, wdt_status_t * const p_sta
 }
 
 /*******************************************************************************************************************//**
- * Clear the WDT status and error flags. Implements wdt_api_t::statusClear.
+ * Clear the WDT status and error flags. Implements @ref wdt_api_t::statusClear.
  *
  * Example:
  * @snippet r_wdt_example.c R_WDT_StatusClear
@@ -443,7 +443,7 @@ fsp_err_t R_WDT_StatusClear (wdt_ctrl_t * const p_ctrl, const wdt_status_t statu
 }
 
 /*******************************************************************************************************************//**
- * Read the current count value of the WDT. Implements wdt_api_t::counterGet.
+ * Read the current count value of the WDT. Implements @ref wdt_api_t::counterGet.
  *
  * Example:
  * @snippet r_wdt_example.c R_WDT_CounterGet
@@ -470,7 +470,7 @@ fsp_err_t R_WDT_CounterGet (wdt_ctrl_t * const p_ctrl, uint32_t * const p_count)
 }
 
 /*******************************************************************************************************************//**
- * Return WDT HAL driver version. Implements wdt_api_t::versionGet.
+ * Return WDT HAL driver version. Implements @ref wdt_api_t::versionGet.
  *
  * @retval      FSP_SUCCESS             Version information successfully read.
  * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter

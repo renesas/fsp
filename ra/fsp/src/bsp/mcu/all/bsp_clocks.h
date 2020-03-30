@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -39,8 +39,13 @@ FSP_HEADER
 #define BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK    (4) // The subclock oscillator.
 #define BSP_CLOCKS_SOURCE_CLOCK_PLL         (5) // The PLL oscillator.
 
-/* PLL is not supported when using low voltage mode or on MCUs that have no PLL. */
-#if BSP_FEATURE_CGC_HAS_PLL && !BSP_CFG_USE_LOW_VOLTAGE_MODE
+/* PLL is not supported in the following scenarios:
+ *  - When using low voltage mode
+ *  - When using an MCU that does not have a PLL
+ *  - When the PLL only accepts the main oscillator as a source and XTAL is not used
+ */
+#if BSP_FEATURE_CGC_HAS_PLL && !BSP_CFG_USE_LOW_VOLTAGE_MODE && \
+    !((1U != BSP_FEATURE_CGC_PLLCCR_TYPE) && !BSP_CLOCK_CFG_MAIN_OSC_POPULATED)
  #define BSP_PRV_PLL_SUPPORTED              (1)
 #else
  #define BSP_PRV_PLL_SUPPORTED              (0)
@@ -83,7 +88,7 @@ FSP_HEADER
 #endif
 
 /* Startup clock frequency of each system clock. These macros are only helpful if the system clock and dividers have
- * not changed since startup. These macros are not used in Flex modules except for the clock startup code. */
+ * not changed since startup. These macros are not used in FSP modules except for the clock startup code. */
 #define BSP_STARTUP_ICLK_HZ                    (BSP_STARTUP_SOURCE_CLOCK_HZ >> BSP_CFG_ICLK_DIV)
 #define BSP_STARTUP_PCLKA_HZ                   (BSP_STARTUP_SOURCE_CLOCK_HZ >> BSP_CFG_PCLKA_DIV)
 #define BSP_STARTUP_PCLKB_HZ                   (BSP_STARTUP_SOURCE_CLOCK_HZ >> BSP_CFG_PCLKB_DIV)

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -42,25 +42,25 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/* Display control block.  DO NOT INITIALIZE. */
+/** Display control block.  DO NOT INITIALIZE. */
 typedef struct st_glcdc_instance_ctrl
 {
-    display_state_t state;                                 ///< Status of GLCDC module
+    display_state_t state;                                 // Status of GLCDC module
 
     /* Parameters to Event processing for display devices */
-    void (* p_callback)(display_callback_args_t * p_args); ///< Pointer to callback function
-    void const          * p_context;                       ///< Pointer to the higher level device context
-    const display_cfg_t * p_cfg;                           ///< Pointer to initial configurations
+    void (* p_callback)(display_callback_args_t * p_args); // Pointer to callback function
+    void const          * p_context;                       // Pointer to the higher level device context
+    const display_cfg_t * p_cfg;                           // Pointer to initial configurations
 } glcdc_instance_ctrl_t;
 
-/* Clock source select */
+/** Clock source select */
 typedef enum e_glcdc_clk_src
 {
     GLCDC_CLK_SRC_INTERNAL,            ///< Internal
     GLCDC_CLK_SRC_EXTERNAL,            ///< External
 } glcdc_clk_src_t;
 
-/* Clock frequency division ratio */
+/** Clock frequency division ratio */
 typedef enum e_glcdc_panel_clk_div
 {
     GLCDC_PANEL_CLK_DIVISOR_1  = 1,    ///< Division Ratio 1/1
@@ -78,7 +78,7 @@ typedef enum e_glcdc_panel_clk_div
     GLCDC_PANEL_CLK_DIVISOR_32 = 32,   ///< Division Ratio 1/32
 } glcdc_panel_clk_div_t;
 
-/* LCD TCON output pin select */
+/** LCD TCON output pin select */
 typedef enum e_glcdc_tcon_pin
 {
     GLCDC_TCON_PIN_NONE = -1,          ///< No output
@@ -88,21 +88,21 @@ typedef enum e_glcdc_tcon_pin
     GLCDC_TCON_PIN_3,                  ///< LCD_TCON3
 } glcdc_tcon_pin_t;
 
-/* Bus Arbitration setting */
+/** Bus Arbitration setting */
 typedef enum e_glcdc_bus_arbitraion
 {
     GLCDC_BUS_ARBITRATION_ROUNDROBIN,  ///< Round robin
     GLCDC_BUS_ARBITRATION_FIX_PRIORITY ///< Fixed
 } glcdc_bus_arbitration_t;
 
-/* Correction circuit sequence control */
+/** Correction circuit sequence control */
 typedef enum e_glcdc_correction_proc_order
 {
     GLCDC_CORRECTION_PROC_ORDER_BRIGHTNESS_CONTRAST2GAMMA, ///< Brightness -> contrast -> gamma correction
     GLCDC_CORRECTION_PROC_ORDER_GAMMA2BRIGHTNESS_CONTRAST  ///< Gamma correction -> brightness -> contrast
 } glcdc_correction_proc_order_t;
 
-/* Timing signals for driving the LCD panel */
+/** Timing signals for driving the LCD panel */
 typedef enum e_glcdc_tcon_signal_select
 {
     GLCDC_TCON_SIGNAL_SELECT_STVA_VS = 0, ///< STVA/VS
@@ -112,14 +112,14 @@ typedef enum e_glcdc_tcon_signal_select
     GLCDC_TCON_SIGNAL_SELECT_DE      = 7  ///< DE
 } glcdc_tcon_signal_select_t;
 
-/* Clock phase adjustment for serial RGB output */
+/** Clock phase adjustment for serial RGB output */
 typedef enum e_glcdc_clut_plane
 {
     GLCDC_CLUT_PLANE_0 = 0,            ///< GLCDC CLUT plane 0
     GLCDC_CLUT_PLANE_1 = 1,            ///< GLCDC CLUT plane 1
 } glcdc_clut_plane_t;
 
-/* Dithering mode */
+/** Dithering mode */
 typedef enum e_glcdc_dithering_mode
 {
     GLCDC_DITHERING_MODE_TRUNCATE   = 0, ///< No dithering (truncate)
@@ -128,7 +128,7 @@ typedef enum e_glcdc_dithering_mode
     GLCDC_DITHERING_MODE_SETTING_MAX
 } glcdc_dithering_mode_t;
 
-/* Dithering mode */
+/** Dithering mode */
 typedef enum e_glcdc_dithering_pattern
 {
     GLCDC_DITHERING_PATTERN_00 = 0,    ///< 2x2 pattern '00'
@@ -137,7 +137,7 @@ typedef enum e_glcdc_dithering_pattern
     GLCDC_DITHERING_PATTERN_11 = 3,    ///< 2x2 pattern '11'
 } glcdc_dithering_pattern_t;
 
-/* Output interface format */
+/** Output interface format */
 typedef enum e_glcdc_input_interface_format
 {
     GLCDC_INPUT_INTERFACE_FORMAT_RGB565   = 0, ///< Input interface format RGB565
@@ -150,7 +150,7 @@ typedef enum e_glcdc_input_interface_format
     GLCDC_INPUT_INTERFACE_FORMAT_CLUT1    = 7, ///< Input interface format CLUT1
 } glcdc_input_interface_format_t;
 
-/* Output interface format */
+/** Output interface format */
 typedef enum e_glcdc_output_interface_format
 {
     GLCDC_OUTPUT_INTERFACE_FORMAT_RGB888     = 0, ///< Output interface format RGB888
@@ -159,7 +159,7 @@ typedef enum e_glcdc_output_interface_format
     GLCDC_OUTPUT_INTERFACE_FORMAT_SERIAL_RGB = 3, ///< Output interface format Serial RGB
 } glcdc_output_interface_format_t;
 
-/* Dithering output format */
+/** Dithering output format */
 typedef enum e_glcdc_dithering_output_format
 {
     GLCDC_DITHERING_OUTPUT_FORMAT_RGB888 = 0, ///< Dithering output format RGB888
@@ -167,7 +167,7 @@ typedef enum e_glcdc_dithering_output_format
     GLCDC_DITHERING_OUTPUT_FORMAT_RGB565 = 2, ///< Dithering output format RGB565
 } glcdc_dithering_output_format_t;
 
-/* GLCDC hardware specific configuration */
+/** GLCDC hardware specific configuration */
 typedef struct st_glcdc_extended_cfg
 {
     glcdc_tcon_pin_t              tcon_hsync;            ///< GLCDC TCON output pin select

@@ -1,7 +1,7 @@
 /***********************************************************************************************************************
  * Copyright [2015] Renesas Electronics Corporation and/or its licensors. All Rights Reserved.
  *
- * This file is part of Renesas RA Flex Software Package (FSP)
+ * This file is part of Renesas RA Flexible Software Package (FSP)
  *
  * The contents of this file (the "contents") are proprietary and confidential to Renesas Electronics Corporation
  * and/or its licensors ("Renesas") and subject to statutory and contractual protections.

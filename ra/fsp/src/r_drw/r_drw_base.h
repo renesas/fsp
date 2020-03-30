@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -42,7 +42,7 @@ typedef long         d1_long_t;
 typedef int          d1_int_t;
 typedef unsigned int d1_uint_t;
 
-/** Device handle type definition for Flex implementation. */
+/** Device handle type definition for FSP implementation. */
 typedef struct _d1_device_flex
 {
     volatile uint32_t * pp_dlist_indirect_start; /* Display list start address */

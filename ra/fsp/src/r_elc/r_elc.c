@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -88,7 +88,7 @@ const elc_api_t g_elc_on_elc =
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Initialize all the links in the Event Link Controller. Implements elc_api_t::open
+ * Initialize all the links in the Event Link Controller. Implements @ref elc_api_t::open
  *
  * The configuration structure passed in to this function includes links for every event source included in the ELC
  * and sets them all at once. To set or clear an individual link use R_ELC_LinkSet and R_ELC_LinkBreak respectively.
@@ -136,7 +136,7 @@ fsp_err_t R_ELC_Open (elc_ctrl_t * const p_ctrl, elc_cfg_t const * const p_cfg)
 }
 
 /*******************************************************************************************************************//**
- * Globally disable ELC linking. Implements elc_api_t::close
+ * Globally disable ELC linking. Implements @ref elc_api_t::close
  *
  * @retval FSP_SUCCESS             The ELC was successfully disabled
  * @retval FSP_ERR_ASSERTION       p_ctrl was NULL
@@ -162,7 +162,7 @@ fsp_err_t R_ELC_Close (elc_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Generate a software event in the Event Link Controller. Implements elc_api_t::softwareEventGenerate
+ * Generate a software event in the Event Link Controller. Implements @ref elc_api_t::softwareEventGenerate
  *
  * Example:
  * @snippet r_elc_example.c R_ELC_SoftwareEventGenerate
@@ -197,7 +197,7 @@ fsp_err_t R_ELC_SoftwareEventGenerate (elc_ctrl_t * const p_ctrl, elc_software_e
 }
 
 /*******************************************************************************************************************//**
- * Create a single event link. Implements elc_api_t::linkSet
+ * Create a single event link. Implements @ref elc_api_t::linkSet
  *
  * Example:
  * @snippet r_elc_example.c R_ELC_LinkSet
@@ -224,7 +224,7 @@ fsp_err_t R_ELC_LinkSet (elc_ctrl_t * const p_ctrl, elc_peripheral_t peripheral,
 }
 
 /*******************************************************************************************************************//**
- * Break an event link. Implements elc_api_t::linkBreak
+ * Break an event link. Implements @ref elc_api_t::linkBreak
  *
  * @retval FSP_SUCCESS             Event link broken
  * @retval FSP_ERR_ASSERTION       p_ctrl was NULL
@@ -248,7 +248,7 @@ fsp_err_t R_ELC_LinkBreak (elc_ctrl_t * const p_ctrl, elc_peripheral_t periphera
 }
 
 /*******************************************************************************************************************//**
- * Enable the operation of the Event Link Controller. Implements elc_api_t::enable
+ * Enable the operation of the Event Link Controller. Implements @ref elc_api_t::enable
  *
  * @retval FSP_SUCCESS           ELC enabled.
  * @retval FSP_ERR_ASSERTION     p_ctrl was NULL
@@ -272,7 +272,7 @@ fsp_err_t R_ELC_Enable (elc_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Disable the operation of the Event Link Controller. Implements elc_api_t::disable
+ * Disable the operation of the Event Link Controller. Implements @ref elc_api_t::disable
  *
  * @retval FSP_SUCCESS           ELC disabled.
  * @retval FSP_ERR_ASSERTION     p_ctrl was NULL
@@ -296,7 +296,7 @@ fsp_err_t R_ELC_Disable (elc_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Get the driver version based on compile time macros. Implements elc_api_t::versionGet
+ * Get the driver version based on compile time macros. Implements @ref elc_api_t::versionGet
  *
  * @retval     FSP_SUCCESS          Successful close.
  * @retval     FSP_ERR_ASSERTION    p_version is NULL.

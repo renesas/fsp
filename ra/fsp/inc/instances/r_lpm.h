@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -42,7 +42,8 @@
 /** LPM private control block. DO NOT MODIFY. Initialization occurs when R_LPM_Open() is called. */
 typedef struct st_lpm_instance_ctrl
 {
-    uint32_t lpm_open;                 // Indicates whether the open() API has been successfully called.
+    uint32_t          lpm_open;        // Indicates whether the open() API has been successfully called.
+    lpm_cfg_t const * p_cfg;           // Pointer to initial configurations
 } lpm_instance_ctrl_t;
 
 /**********************************************************************************************************************

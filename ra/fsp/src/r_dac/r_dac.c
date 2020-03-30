@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -86,7 +86,7 @@ static const fsp_version_t g_dac_version =
  **********************************************************************************************************************/
 
 /******************************************************************************************************************//**
- * Perform required initialization described in hardware manual.  Implements dac_api_t::open.
+ * Perform required initialization described in hardware manual.  Implements @ref dac_api_t::open.
  * Configures a single DAC channel, starts the channel, and provides a handle for use with the
  * DAC API Write and Close functions.  Must be called once prior to calling any other DAC API
  * functions.  After a channel is opened, Open should not be called again for the same channel
@@ -129,8 +129,10 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
 
     FSP_CRITICAL_SECTION_EXIT;
 
+    dac_extended_cfg_t * p_extend = (dac_extended_cfg_t *) p_cfg->p_extend;
+
     /* Configure data format: left or right justified. */
-    R_DAC->DADPR = (uint8_t) ((uint8_t) p_cfg->data_format << (uint8_t) DAC_DADPR_REG_DPSEL_BIT_POS);
+    R_DAC->DADPR = (uint8_t) ((uint8_t) p_extend->data_format << (uint8_t) DAC_DADPR_REG_DPSEL_BIT_POS);
 
 #if BSP_FEATURE_ADC_UNIT_1_CHANNELS
 
@@ -165,7 +167,7 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
 #endif
 
 #if BSP_FEATURE_DAC_HAS_OUTPUT_AMPLIFIER
-    p_ctrl->output_amplifier_enabled = p_cfg->output_amplifier_enabled;
+    p_ctrl->output_amplifier_enabled = p_extend->output_amplifier_enabled;
 #endif
 
     /* Set the reference voltage. */
@@ -174,7 +176,7 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
 #endif
 
 #if (1U == BSP_FEATURE_DAC_HAS_CHARGEPUMP)
-    R_DAC->DAPC = (uint8_t) ((dac_extended_cfg_t *) p_cfg->p_extend)->enable_charge_pump;
+    R_DAC->DAPC = (uint8_t) p_extend->enable_charge_pump;
 #endif
 
     /* Initialize the channel state information. */
@@ -186,7 +188,6 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
 
 /******************************************************************************************************************//**
  * Write data to the D/A converter and enable the output if it has not been enabled.
- * Write function automatically starts the D/A conversion after data is successfully written to the channel.
  *
  * @retval   FSP_SUCCESS           Data is successfully written to the D/A Converter.
  * @retval   FSP_ERR_ASSERTION     p_api_ctrl is NULL.

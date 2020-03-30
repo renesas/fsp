@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -40,11 +40,11 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** WDT control block. DO NOT INITIALIZE.  Initialization occurs when wdt_api_t::open is called. */
+/** IWDT control block. DO NOT INITIALIZE.  Initialization occurs when @ref wdt_api_t::open is called. */
 typedef struct st_iwdt_instance_ctrl
 {
-    uint32_t wdt_open;                                 ///< Indicates whether the open() API has been successfully called.
-    void const * p_context;                            ///< Placeholder for user data.  Passed to the user callback in wdt_callback_args_t.
+    uint32_t      wdt_open;                            ///< Indicates whether the open() API has been successfully called.
+    void const  * p_context;                           ///< Placeholder for user data.  Passed to the user callback in wdt_callback_args_t.
     R_IWDT_Type * p_reg;                               ///< Pointer to register base address.
     void (* p_callback)(wdt_callback_args_t * p_args); ///< Callback provided when a WDT NMI ISR occurs.
 } iwdt_instance_ctrl_t;

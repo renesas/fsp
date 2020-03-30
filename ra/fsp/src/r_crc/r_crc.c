@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -80,7 +80,7 @@ const crc_api_t g_crc_on_crc =
 /*******************************************************************************************************************//**
  * Open the CRC driver module
  *
- * Implements crc_api_t::open
+ * Implements @ref crc_api_t::open
  *
  * Open the CRC driver module and initialize the driver control block according to the passed-in
  * configuration structure.
@@ -132,7 +132,7 @@ fsp_err_t R_CRC_Open (crc_ctrl_t * const p_ctrl, crc_cfg_t const * const p_cfg)
 /*******************************************************************************************************************//**
  * Close the CRC module driver.
  *
- * Implements crc_api_t::close
+ * Implements @ref crc_api_t::close
  *
  * @retval FSP_SUCCESS             Configuration was successful.
  * @retval FSP_ERR_ASSERTION       p_ctrl is NULL.
@@ -159,7 +159,7 @@ fsp_err_t R_CRC_Close (crc_ctrl_t * const p_ctrl)
 /*******************************************************************************************************************//**
  * Perform a CRC calculation on a block of 8-bit/32-bit(for 32-bit polynomial) data.
  *
- * Implements crc_api_t::calculate
+ * Implements @ref crc_api_t::calculate
  *
  * This function performs a CRC calculation on an array of 8-bit/32-bit(for 32-bit polynomial) values and
  * returns an 8-bit/32-bit(for 32-bit polynomial) calculated value
@@ -189,7 +189,7 @@ fsp_err_t R_CRC_Calculate (crc_ctrl_t * const p_ctrl, crc_input_t * const p_crc_
 /*******************************************************************************************************************//**
  * Return the current calculated value.
  *
- * Implements crc_api_t::crcResultGet
+ * Implements @ref crc_api_t::crcResultGet
  *
  * CRC calculation operates on a running value. This function returns the current calculated value.
  *
@@ -215,9 +215,9 @@ fsp_err_t R_CRC_CalculatedValueGet (crc_ctrl_t * const p_ctrl, uint32_t * calcul
 }
 
 /*******************************************************************************************************************//**
- * Configure the snoop channel and direction.
+ * Configure the snoop channel and set the CRC seed.
  *
- *  Implements crc_api_t::snoopCfg
+ *  Implements @ref crc_api_t::snoopEnable
  *
  * The CRC calculator can operate on reads and writes over any of the first ten SCI channels.
  * For example, if set to channel 0, transmit, every byte written out SCI channel 0 is also
@@ -259,7 +259,7 @@ fsp_err_t R_CRC_SnoopEnable (crc_ctrl_t * const p_ctrl, uint32_t crc_seed)
 /*******************************************************************************************************************//**
  * Disable snooping.
  *
- * Implements crc_api_t::snoopDisable
+ * Implements @ref crc_api_t::snoopDisable
  *
  * @retval FSP_SUCCESS             Snoop disabled.
  * @retval FSP_ERR_ASSERTION       p_ctrl is NULL.
@@ -284,7 +284,7 @@ fsp_err_t R_CRC_SnoopDisable (crc_ctrl_t * const p_ctrl)
 /*******************************************************************************************************************//**
  * Get the driver version based on compile time macros.
  *
- * Implements crc_api_t::versionGet
+ * Implements @ref crc_api_t::versionGet
  *
  * @retval     FSP_SUCCESS          Successful close.
  * @retval     FSP_ERR_ASSERTION    p_version is NULL.

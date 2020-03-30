@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -391,7 +391,7 @@ fsp_err_t R_DMAC_InfoGet (transfer_ctrl_t * const p_api_ctrl, transfer_propertie
 }
 
 /*******************************************************************************************************************//**
- * Disable transfer and clean up internal data. Implements transfer_api_t::close.
+ * Disable transfer and clean up internal data. Implements @ref transfer_api_t::close.
  *
  * @retval FSP_SUCCESS           Successful close.
  * @retval FSP_ERR_ASSERTION     An input parameter is invalid.

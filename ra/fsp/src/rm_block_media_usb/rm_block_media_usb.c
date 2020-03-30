@@ -1,0 +1,566 @@
+/***********************************************************************************************************************
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ *
+ * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
+ * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
+ * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
+ * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
+ * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
+ * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Includes
+ **********************************************************************************************************************/
+#include "rm_block_media_usb.h"
+#include "rm_block_media_usb_cfg.h"
+#include "r_usb_hmsc.h"
+
+/***********************************************************************************************************************
+ * Macro definitions
+ **********************************************************************************************************************/
+
+/* "MEUB" in ASCII. */
+#define RM_BLOCK_MEDIA_USB_OPEN                      (0x4D455542)
+
+/* Initial device address. */
+#define RM_BLOCK_MEDIA_USB_INVALID_DEVICE_ADDRESS    (0xFF)
+
+/* Command complete */
+#define RM_BLOCK_MEDIA_USB_COMMAND_COMPLETE          (1)
+
+/***********************************************************************************************************************
+ * Typedef definitions
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Private function prototypes
+ **********************************************************************************************************************/
+#if (BSP_CFG_RTOS == 2)
+void rm_block_media_usb_callback(usb_event_info_t * p_usb_event_info, usb_hdl_t current_task, usb_onoff_t usb_state);
+
+#endif
+
+/***********************************************************************************************************************
+ * Private global variables
+ **********************************************************************************************************************/
+const uint8_t g_block_media_usb_erase_data[512] __attribute__((__aligned__(4))) = {0};
+
+/** Version data structure. */
+static const fsp_version_t g_rm_block_media_usb_version =
+{
+    .api_version_minor  = RM_BLOCK_MEDIA_API_VERSION_MINOR,
+    .api_version_major  = RM_BLOCK_MEDIA_API_VERSION_MAJOR,
+    .code_version_major = RM_BLOCK_MEDIA_USB_CODE_VERSION_MAJOR,
+    .code_version_minor = RM_BLOCK_MEDIA_USB_CODE_VERSION_MINOR
+};
+
+/***********************************************************************************************************************
+ * Global Variables
+ **********************************************************************************************************************/
+
+const rm_block_media_api_t g_rm_block_media_on_usb =
+{
+    .open       = RM_BLOCK_MEDIA_USB_Open,
+    .mediaInit  = RM_BLOCK_MEDIA_USB_MediaInit,
+    .read       = RM_BLOCK_MEDIA_USB_Read,
+    .write      = RM_BLOCK_MEDIA_USB_Write,
+    .erase      = RM_BLOCK_MEDIA_USB_Erase,
+    .infoGet    = RM_BLOCK_MEDIA_USB_InfoGet,
+    .statusGet  = RM_BLOCK_MEDIA_USB_StatusGet,
+    .close      = RM_BLOCK_MEDIA_USB_Close,
+    .versionGet = RM_BLOCK_MEDIA_USB_VersionGet,
+};
+
+/*******************************************************************************************************************//**
+ * @addtogroup RM_BLOCK_MEDIA_USB
+ * @{
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Functions
+ **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ * Opens the module.
+ *
+ * Implements @ref rm_block_media_api_t::open().
+ *
+ * @retval     FSP_SUCCESS                     Module is available and is now open.
+ * @retval     FSP_ERR_ASSERTION               An input parameter is invalid.
+ * @retval     FSP_ERR_ALREADY_OPEN            Module has already been opened with this instance of the control
+ *                                             structure.
+ *
+ * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_Open (rm_block_media_ctrl_t * const p_ctrl, rm_block_media_cfg_t const * const p_cfg)
+{
+    rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_cfg);
+#endif
+
+    rm_block_media_usb_extended_cfg_t * p_extended_cfg = (rm_block_media_usb_extended_cfg_t *) p_cfg->p_extend;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg);
+    FSP_ASSERT(NULL != p_extended_cfg->p_usb);
+#endif
+
+    FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
+
+    p_instance_ctrl->p_cfg = p_cfg;
+
+    /* Open the underlying driver. */
+    usb_instance_t * p_usb_instance = (usb_instance_t *) p_extended_cfg->p_usb;
+
+    fsp_err_t err;
+    err = p_usb_instance->p_api->open(p_usb_instance->p_ctrl, p_usb_instance->p_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    p_instance_ctrl->device_address = RM_BLOCK_MEDIA_USB_INVALID_DEVICE_ADDRESS;
+
+    /* Event group create */
+    p_instance_ctrl->event_group = xEventGroupCreate();
+
+    /* This module is now open. */
+    p_instance_ctrl->initialized = false;
+    p_instance_ctrl->open        = RM_BLOCK_MEDIA_USB_OPEN;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Initializes the USB device.
+ *
+ * Implements @ref rm_block_media_api_t::mediaInit().
+ *
+ * @retval     FSP_SUCCESS               Module is initialized and ready to access the memory device.
+ * @retval     FSP_ERR_ASSERTION         An input parameter is invalid.
+ * @retval     FSP_ERR_NOT_OPEN          Module is not open.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
+{
+    rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
+    FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    rm_block_media_usb_extended_cfg_t * p_extended_cfg =
+        (rm_block_media_usb_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg->p_usb);
+#endif
+
+    usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
+    fsp_err_t        err   = R_USB_HMSC_StorageCommand(p_usb->p_ctrl,
+                                                       p_instance_ctrl->p_read_buffer,
+                                                       USB_ATAPI_READ_CAPACITY,
+                                                       p_instance_ctrl->device_address);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    xEventGroupWaitBits(p_instance_ctrl->event_group,
+                        RM_BLOCK_MEDIA_USB_COMMAND_COMPLETE,
+                        pdTRUE,
+                        pdFALSE,
+                        portMAX_DELAY);
+
+    p_instance_ctrl->sector_count      = __REV(*(uint32_t *) &p_instance_ctrl->p_read_buffer[0]) + 1;
+    p_instance_ctrl->sector_size_bytes = __REV(*(uint32_t *) &p_instance_ctrl->p_read_buffer[4]);
+
+    p_instance_ctrl->initialized = true;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Reads data from an USB device. Implements @ref rm_block_media_api_t::read().
+ *
+ * This function blocks until the data is read into the destination buffer.
+ *
+ * @retval     FSP_SUCCESS                   Data read successfully.
+ * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
+ * @retval     FSP_ERR_NOT_OPEN              Module is not open.
+ * @retval     FSP_ERR_NOT_INITIALIZED       Module has not been initialized.
+ *
+ * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_Read (rm_block_media_ctrl_t * const p_ctrl,
+                                   uint8_t * const               p_dest_address,
+                                   uint32_t const                block_address,
+                                   uint32_t const                num_blocks)
+{
+    rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_dest_address);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
+    FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+#endif
+
+    rm_block_media_usb_extended_cfg_t * p_extended_cfg =
+        (rm_block_media_usb_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg->p_usb);
+#endif
+
+    usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
+
+    /* Call the underlying driver. */
+    uint8_t   p_drive;
+    uint32_t  i;
+    fsp_err_t err = R_USB_HMSC_DriveNumberGet(p_usb->p_ctrl, &p_drive, p_instance_ctrl->device_address);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    for (i = 0; i < num_blocks; i++)
+    {
+        err = R_USB_HMSC_StorageReadSector(p_drive,
+                                           p_instance_ctrl->p_read_buffer,
+                                           block_address + i,
+                                           (uint16_t) 1U);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        memcpy((void *) (p_dest_address + i * p_instance_ctrl->sector_size_bytes),
+               p_instance_ctrl->p_read_buffer,
+               (size_t) p_instance_ctrl->sector_size_bytes);
+    }
+
+    rm_block_media_callback_args_t args;
+    memset(&args, 0U, sizeof(rm_block_media_callback_args_t));
+    args.p_context = p_instance_ctrl->p_cfg->p_context;
+    args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+    p_instance_ctrl->p_cfg->p_callback(&args);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Writes data to an USB device. Implements @ref rm_block_media_api_t::write().
+ *
+ * This function blocks until the write operation completes.
+ *
+ * @retval     FSP_SUCCESS                   Write finished successfully.
+ * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
+ * @retval     FSP_ERR_NOT_OPEN              Module is not open.
+ * @retval     FSP_ERR_NOT_INITIALIZED       Module has not been initialized.
+ *
+ * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_Write (rm_block_media_ctrl_t * const p_ctrl,
+                                    uint8_t const * const         p_src_address,
+                                    uint32_t const                block_address,
+                                    uint32_t const                num_blocks)
+{
+    rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_src_address);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
+    FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+#endif
+
+    rm_block_media_usb_extended_cfg_t * p_extended_cfg =
+        (rm_block_media_usb_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg->p_usb);
+#endif
+
+    usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
+
+    /* Call the underlying driver. */
+    uint8_t   p_drive;
+    uint32_t  i;
+    fsp_err_t err = R_USB_HMSC_DriveNumberGet(p_usb->p_ctrl, &p_drive, p_instance_ctrl->device_address);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    for (i = 0; i < num_blocks; i++)
+    {
+        memcpy(
+            p_instance_ctrl->p_write_buffer,
+            (void *) (p_src_address + i * p_instance_ctrl->sector_size_bytes),
+            (size_t) p_instance_ctrl->sector_size_bytes);
+        err = R_USB_HMSC_StorageWriteSector(p_drive,
+                                            p_instance_ctrl->p_write_buffer,
+                                            block_address + i,
+                                            (uint16_t) 1U);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+
+    rm_block_media_callback_args_t args;
+    memset(&args, 0U, sizeof(rm_block_media_callback_args_t));
+    args.p_context = p_instance_ctrl->p_cfg->p_context;
+    args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+    p_instance_ctrl->p_cfg->p_callback(&args);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Erases sectors of an USB device. Implements @ref rm_block_media_api_t::erase().
+ *
+ * This function blocks until erase is complete.
+ *
+ * @retval     FSP_SUCCESS                   Erase operation requested.
+ * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
+ * @retval     FSP_ERR_NOT_OPEN              Module is not open.
+ * @retval     FSP_ERR_NOT_INITIALIZED       Module has not been initialized.
+ *
+ * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_Erase (rm_block_media_ctrl_t * const p_ctrl,
+                                    uint32_t const                block_address,
+                                    uint32_t const                num_blocks)
+{
+    rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
+    FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+#endif
+
+    rm_block_media_usb_extended_cfg_t * p_extended_cfg =
+        (rm_block_media_usb_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg->p_usb);
+#endif
+
+    usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
+
+    /* Call the underlying driver. */
+    uint8_t   p_drive;
+    fsp_err_t err = R_USB_HMSC_DriveNumberGet(p_usb->p_ctrl, &p_drive, p_instance_ctrl->device_address);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    for (uint32_t i = 0; i < num_blocks; i++)
+    {
+        err = R_USB_HMSC_StorageWriteSector(p_drive,
+                                            &g_block_media_usb_erase_data[0],
+                                            block_address + i,
+                                            1U);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+
+    rm_block_media_callback_args_t args;
+    memset(&args, 0U, sizeof(rm_block_media_callback_args_t));
+    args.p_context = p_instance_ctrl->p_cfg->p_context;
+    args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+    p_instance_ctrl->p_cfg->p_callback(&args);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Provides driver status.  Implements @ref rm_block_media_api_t::statusGet().
+ *
+ * @retval     FSP_SUCCESS                   Status stored in p_status.
+ * @retval     FSP_ERR_ASSERTION             NULL pointer.
+ * @retval     FSP_ERR_NOT_OPEN              Module is not open.
+ * @retval     FSP_ERR_NOT_INITIALIZED       Module has not been initialized.
+ *
+ * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_StatusGet (rm_block_media_ctrl_t * const   p_api_ctrl,
+                                        rm_block_media_status_t * const p_status)
+{
+    rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_api_ctrl;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_status);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
+    FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+#endif
+
+    rm_block_media_usb_extended_cfg_t * p_extended_cfg =
+        (rm_block_media_usb_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg->p_usb);
+#endif
+
+    usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
+
+    /* Call the underlying driver. */
+    usb_info_t status;
+    fsp_err_t  err = p_usb->p_api->infoGet(p_usb->p_ctrl, &status, p_instance_ctrl->device_address);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    p_status->media_inserted = (USB_STATUS_DETACH != status.device_status);
+    p_status->initialized    = p_instance_ctrl->initialized;
+
+    /* USB does not have busy status. */
+    p_status->busy = false;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Retrieves module information.  Implements @ref rm_block_media_api_t::infoGet().
+ *
+ * @retval     FSP_SUCCESS                   Erase operation requested.
+ * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
+ * @retval     FSP_ERR_NOT_OPEN              Module is not open.
+ * @retval     FSP_ERR_NOT_INITIALIZED       Module has not been initialized.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_InfoGet (rm_block_media_ctrl_t * const p_ctrl, rm_block_media_info_t * const p_info)
+{
+    rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_info);
+    FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+#endif
+
+    p_info->sector_size_bytes = p_instance_ctrl->sector_size_bytes;
+    p_info->num_sectors       = p_instance_ctrl->sector_count;
+    p_info->reentrant         = false;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Closes an open USB device.  Implements @ref rm_block_media_api_t::close().
+ *
+ * @retval     FSP_SUCCESS                   Successful close.
+ * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
+ * @retval     FSP_ERR_NOT_OPEN              Module is not open.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_Close (rm_block_media_ctrl_t * const p_ctrl)
+{
+    rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
+#endif
+
+    FSP_ERROR_RETURN(RM_BLOCK_MEDIA_USB_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    rm_block_media_usb_extended_cfg_t * p_extended_cfg =
+        (rm_block_media_usb_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_extended_cfg->p_usb);
+#endif
+
+    usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
+
+    /* Event group delete */
+    vEventGroupDelete(p_instance_ctrl->event_group);
+
+    /* Close the underlying driver. */
+    fsp_err_t err = p_usb->p_api->close(p_usb->p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    p_instance_ctrl->open = 0U;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Returns the version of the firmware and API.  Implements @ref rm_block_media_api_t::versionGet().
+ *
+ * @retval     FSP_SUCCESS        Function executed successfully.
+ * @retval     FSP_ERR_ASSERTION  Null Pointer.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_VersionGet (fsp_version_t * const p_version)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
+
+    /* Check pointers for NULL values */
+    FSP_ASSERT(NULL != p_version);
+#endif
+    p_version->version_id = g_rm_block_media_usb_version.version_id;
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * @} (end addtogroup RM_BLOCK_MEDIA_USB)
+ **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ * Passes callback event from the lower layer driver to the user.
+ *
+ * @param[in] p_usb_event_info              USB callback arguments.
+ * @param[in] current_task                      USB callback arguments.
+ * @param[in] usb_state                     USB callback arguments.
+ **********************************************************************************************************************/
+#if BSP_CFG_RTOS == 2
+void rm_block_media_usb_callback (usb_event_info_t * p_usb_event_info, usb_hdl_t current_task, usb_onoff_t usb_state)
+{
+    FSP_PARAMETER_NOT_USED(current_task);
+    FSP_PARAMETER_NOT_USED(usb_state);
+
+    rm_block_media_callback_args_t args;
+    memset(&args, 0U, sizeof(rm_block_media_callback_args_t));
+    rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = p_usb_event_info->p_context;
+    args.p_context = p_instance_ctrl->p_cfg->p_context;
+
+    switch (p_usb_event_info->event)
+    {
+        case USB_STATUS_CONFIGURED:
+        {
+            p_instance_ctrl->device_address = p_usb_event_info->device_address;
+            args.event = RM_BLOCK_MEDIA_EVENT_MEDIA_INSERTED;
+            break;
+        }
+
+        case USB_STATUS_DETACH:
+        {
+            p_instance_ctrl->device_address = RM_BLOCK_MEDIA_USB_INVALID_DEVICE_ADDRESS;
+            p_instance_ctrl->initialized    = false;
+            args.event = RM_BLOCK_MEDIA_EVENT_MEDIA_REMOVED;
+
+            break;
+        }
+
+        case USB_STATUS_MSC_CMD_COMPLETE:
+        {
+            xEventGroupSetBits(p_instance_ctrl->event_group, RM_BLOCK_MEDIA_USB_COMMAND_COMPLETE);
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
+
+    if (args.event)
+    {
+        if (NULL != p_instance_ctrl->p_cfg->p_callback)
+        {
+            p_instance_ctrl->p_cfg->p_callback(&args);
+        }
+    }
+}
+
+#endif

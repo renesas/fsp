@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -69,25 +69,20 @@ void Reset_Handler (void)
 void Default_Handler (void)
 {
     /** A error has occurred. The user will need to investigate the cause. Common problems are stack corruption
-     *  or use of an invalid pointer. Use the Fault Status window in e2studio for more information.
+     *  or use of an invalid pointer. Use the Fault Status window in e2 studio for more information.
      */
     BSP_CFG_HANDLE_UNRECOVERABLE_ERROR(0);
 }
 
-/* Stacks. */
 /* Main stack */
 static uint8_t g_main_stack[BSP_CFG_STACK_MAIN_BYTES] BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT) BSP_PLACE_IN_SECTION(
     BSP_SECTION_STACK);
 
 /* Heap */
-#if !defined(__ARMCC_VERSION)
-
-/* AC6 heap is defined in the scatter file ARM_LIB_STACKHEAP execution region. */
- #if (BSP_CFG_HEAP_BYTES > 0)
+#if (BSP_CFG_HEAP_BYTES > 0)
 
 BSP_DONT_REMOVE static uint8_t g_heap[BSP_CFG_HEAP_BYTES] BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT) \
     BSP_PLACE_IN_SECTION(BSP_SECTION_HEAP);
- #endif
 #endif
 
 /* All system exceptions in the vector table are weak references to Default_Handler. If the user wishes to handle

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -124,7 +124,7 @@ typedef enum e_wdt_status
 /** Callback function parameter data */
 typedef struct st_wdt_callback_args
 {
-    void const * p_context;            ///< Placeholder for user data.  Set in wdt_api_t::open function in ::wdt_cfg_t.
+    void const * p_context;            ///< Placeholder for user data.  Set in @ref wdt_api_t::open function in @ref wdt_cfg_t.
 } wdt_callback_args_t;
 
 /** WDT timeout data. Used to return frequency of WDT clock and timeout period */
@@ -162,8 +162,8 @@ typedef struct st_wdt_api
 {
     /** Initialize the WDT in register start mode. In auto-start mode with NMI output it registers the NMI callback.
      * @par Implemented as
-     * - R_WDT_Open()
-     * - R_IWDT_Open()
+     * - @ref R_WDT_Open()
+     * - @ref R_IWDT_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to pin configuration structure.
@@ -172,8 +172,8 @@ typedef struct st_wdt_api
 
     /** Refresh the watchdog timer.
      * @par Implemented as
-     * - R_WDT_Refresh()
-     * - R_IWDT_Refresh()
+     * - @ref R_WDT_Refresh()
+     * - @ref R_IWDT_Refresh()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -181,8 +181,8 @@ typedef struct st_wdt_api
 
     /** Read the status of the WDT.
      * @par Implemented as
-     * - R_WDT_StatusGet()
-     * - R_IWDT_StatusGet()
+     * - @ref R_WDT_StatusGet()
+     * - @ref R_IWDT_StatusGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_status     Pointer to variable to return status information through.
@@ -191,8 +191,8 @@ typedef struct st_wdt_api
 
     /** Clear the status flags of the WDT.
      * @par Implemented as
-     * - R_WDT_StatusClear()
-     * - R_IWDT_StatusClear()
+     * - @ref R_WDT_StatusClear()
+     * - @ref R_IWDT_StatusClear()
      *
      * @param[in] p_ctrl        Pointer to control structure.
      * @param[in] status        Status condition(s) to clear.
@@ -201,8 +201,8 @@ typedef struct st_wdt_api
 
     /** Read the current WDT counter value.
      * @par Implemented as
-     * - R_WDT_CounterGet()
-     * - R_IWDT_CounterGet()
+     * - @ref R_WDT_CounterGet()
+     * - @ref R_IWDT_CounterGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_count      Pointer to variable to return current WDT counter value.
@@ -211,8 +211,8 @@ typedef struct st_wdt_api
 
     /** Read the watchdog timeout values.
      * @par Implemented as
-     * - R_WDT_TimeoutGet()
-     * - R_IWDT_TimeoutGet()
+     * - @ref R_WDT_TimeoutGet()
+     * - @ref R_IWDT_TimeoutGet()
      *
      * @param[in]  p_ctrl           Pointer to control structure.
      * @param[out] p_timeout        Pointer to structure to return timeout values.
@@ -221,8 +221,8 @@ typedef struct st_wdt_api
 
     /** Return the version of the driver.
      * @par Implemented as
-     * - R_WDT_VersionGet()
-     * - R_IWDT_VersionGet()
+     * - @ref R_WDT_VersionGet()
+     * - @ref R_IWDT_VersionGet()
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_data       Memory address to return version information to.
      */

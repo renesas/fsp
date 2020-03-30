@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -71,7 +71,7 @@ typedef struct
     uint32_t           maximum_status_retries; // Maximum number of status retries alowed
 } r_acmphs_extended_cfg_t;
 
-/* Channel instance control block. DO NOT INITIALIZE.  Initialization occurs in comparator_api_t::open. */
+/* Channel instance control block. DO NOT INITIALIZE.  Initialization occurs in @ref comparator_api_t::open. */
 typedef struct st_acmphs_instance_ctrl
 {
     uint32_t                 open;                   // Used to determine if channel control block is in use

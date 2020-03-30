@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -134,7 +134,7 @@ typedef void flash_ctrl_t;
 typedef struct st_flash_user_cb_data
 {
     flash_event_t event;               ///< Event can be used to identify what caused the callback (flash ready or error).
-    void const  * p_context;           ///< Placeholder for user data.  Set in flash_api_t::open function in::flash_cfg_t.
+    void const  * p_context;           ///< Placeholder for user data.  Set in @ref flash_api_t::open function in::flash_cfg_t.
 } flash_callback_args_t;
 
 /** FLASH Configuration */
@@ -147,7 +147,7 @@ typedef struct st_flash_cfg
 
     /* Pointer to FLASH peripheral specific configuration */
     void const * p_extend;                               ///< FLASH hardware dependent configuration
-    void const * p_context;                              ///< Placeholder for user data.  Passed to user callback in ::flash_callback_args_t.
+    void const * p_context;                              ///< Placeholder for user data.  Passed to user callback in @ref flash_callback_args_t.
     uint8_t      ipl;                                    ///< Flash ready interrupt priority
     IRQn_Type    irq;                                    ///< Flash ready interrupt number
     uint8_t      err_ipl;                                ///< Flash error interrupt priority (unused in r_flash_lp)
@@ -159,8 +159,8 @@ typedef struct st_flash_api
 {
     /** Open FLASH device.
      * @par Implemented as
-     * - R_FLASH_LP_Open()
-     * - R_FLASH_HP_Open()
+     * - @ref R_FLASH_LP_Open()
+     * - @ref R_FLASH_HP_Open()
      *
      * @param[out]  p_ctrl       Pointer to FLASH device control. Must be declared by user. Value set here.
      * @param[in]   flash_cfg_t  Pointer to FLASH configuration structure. All elements of this structure
@@ -170,8 +170,8 @@ typedef struct st_flash_api
 
     /** Write FLASH device.
      * @par Implemented as
-     * - R_FLASH_LP_Write()
-     * - R_FLASH_HP_Write()
+     * - @ref R_FLASH_LP_Write()
+     * - @ref R_FLASH_HP_Write()
      *
      * @param[in]   p_ctrl         Control for the FLASH device context.
      * @param[in]   src_address    Address of the buffer containing the data to write to Flash.
@@ -188,8 +188,8 @@ typedef struct st_flash_api
 
     /** Erase FLASH device.
      * @par Implemented as
-     * R_FLASH_LP_Erase()
-     * R_FLASH_HP_Erase()
+     * - @ref R_FLASH_LP_Erase()
+     * - @ref R_FLASH_HP_Erase()
      *
      * @param[in]  p_ctrl               Control for the FLASH device.
      * @param[in]  address              The block containing this address is the first block erased.
@@ -200,8 +200,8 @@ typedef struct st_flash_api
 
     /** Blank check FLASH device.
      * @par Implemented as
-     * - R_FLASH_LP_BlankCheck()
-     * - R_FLASH_HP_BlankCheck()
+     * - @ref R_FLASH_LP_BlankCheck()
+     * - @ref R_FLASH_HP_BlankCheck()
      *
      * @param[in]   p_ctrl    Control for the FLASH device context.
      * @param[in]   address   The starting address of the Flash area to blank check.
@@ -219,8 +219,8 @@ typedef struct st_flash_api
 
     /** Close FLASH device.
      * @par Implemented as
-     * - R_FLASH_LP_InfoGet()
-     * - R_FLASH_HP_InfoGet()
+     * - @ref R_FLASH_LP_InfoGet()
+     * - @ref R_FLASH_HP_InfoGet()
      *
      * @param[in]   p_ctrl        Pointer to FLASH device control.
      * @param[out]  p_info        Pointer to FLASH info structure.
@@ -229,8 +229,8 @@ typedef struct st_flash_api
 
     /** Close FLASH device.
      * @par Implemented as
-     * - R_FLASH_LP_Close()
-     * - R_FLASH_HP_Close()
+     * - @ref R_FLASH_LP_Close()
+     * - @ref R_FLASH_HP_Close()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      */
@@ -238,8 +238,8 @@ typedef struct st_flash_api
 
     /** Get Status for FLASH device.
      * @par Implemented as
-     * - R_FLASH_LP_StatusGet()
-     * - R_FLASH_HP_StatusGet()
+     * - @ref R_FLASH_LP_StatusGet()
+     * - @ref R_FLASH_HP_StatusGet()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[out]  p_ctrl       Pointer to the current flash status.
@@ -248,8 +248,8 @@ typedef struct st_flash_api
 
     /** Set Access Window for FLASH device.
      * @par Implemented as
-     * - R_FLASH_LP_AccessWindowSet()
-     * - R_FLASH_HP_AccessWindowSet()
+     * - @ref R_FLASH_LP_AccessWindowSet()
+     * - @ref R_FLASH_HP_AccessWindowSet()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[in]  start_addr    Determines the Starting block for the Code Flash access window.
@@ -260,8 +260,8 @@ typedef struct st_flash_api
 
     /** Clear any existing Code Flash access window for FLASH device.
      * @par Implemented as
-     * - R_FLASH_LP_AccessWindowClear()
-     * - R_FLASH_HP_AccessWindowClear()
+     * - @ref R_FLASH_LP_AccessWindowClear()
+     * - @ref R_FLASH_HP_AccessWindowClear()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[in]  start_addr    Determines the Starting block for the Code Flash access window.
@@ -271,18 +271,18 @@ typedef struct st_flash_api
 
     /** Set ID Code for FLASH device. Setting the ID code can restrict access to the device. The ID code will be
      * required to connect to the device. Bits 126 and 127 are set based on the mode.
-     * 
+     *
      * For example, uint8_t id_bytes[] = {0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
      *                            0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0x00};
      * with mode FLASH_ID_CODE_MODE_LOCKED_WITH_ALL_ERASE_SUPPORT
      * will result in an ID code of 00112233445566778899aabbccddeec0
-     * 
-	 * With mode FLASH_ID_CODE_MODE_LOCKED, it
+     *
+     * With mode FLASH_ID_CODE_MODE_LOCKED, it
      * will result in an ID code of 00112233445566778899aabbccddee80
      *
      * @par Implemented as
-     * - R_FLASH_LP_IdCodeSet()
-     * - R_FLASH_HP_IdCodeSet()
+     * - @ref R_FLASH_LP_IdCodeSet()
+     * - @ref R_FLASH_HP_IdCodeSet()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[in]  p_id_bytes    Ponter to the ID Code to be written.
@@ -292,8 +292,8 @@ typedef struct st_flash_api
 
     /** Reset function for FLASH device.
      * @par Implemented as
-     * - R_FLASH_LP_Reset()
-     * - R_FLASH_HP_Reset()
+     * - @ref R_FLASH_LP_Reset()
+     * - @ref R_FLASH_HP_Reset()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      */
@@ -301,23 +301,23 @@ typedef struct st_flash_api
 
     /** Update Flash clock frequency (FCLK) and recalculate timeout values
      * @par Implemented as
-     * - R_FLASH_LP_UpdateFlashClockFreq()
-     * - R_FLASH_HP_UpdateFlashClockFreq()
+     * - @ref R_FLASH_LP_UpdateFlashClockFreq()
+     * - @ref R_FLASH_HP_UpdateFlashClockFreq()
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      */
     fsp_err_t (* updateFlashClockFreq)(flash_ctrl_t * const p_ctrl);
 
     /** Select which block - Default (Block 0) or Alternate (Block 1) is used as the start-up area block.
      * @par Implemented as
-     * - R_FLASH_LP_StartUpAreaSelect()
-     * - R_FLASH_HP_StartUpAreaSelect()
+     * - @ref R_FLASH_LP_StartUpAreaSelect()
+     * - @ref R_FLASH_HP_StartUpAreaSelect()
      *
      * @param[in]  p_ctrl        Pointer to FLASH device control.
      * @param[in]  swap_type     FLASH_STARTUP_AREA_BLOCK0, FLASH_STARTUP_AREA_BLOCK1 or FLASH_STARTUP_AREA_BTFLG.
      * @param[in]  is_temporary  True or false. See table below.
      *
      * | swap_type             |    is_temporary |   Operation |
-	 * |-----------------------|-----------------|-------------|
+     * |-----------------------|-----------------|-------------|
      * | FLASH_STARTUP_AREA_BLOCK0 |  false  |     On next reset Startup area will be Block 0. |
      * | FLASH_STARTUP_AREA_BLOCK1 |  true   |     Startup area is immediately, but temporarily switched to Block 1. |
      * | FLASH_STARTUP_AREA_BTFLG  |  true   |     Startup area is immediately, but temporarily switched to the Block determined by the Configuration BTFLG. |
@@ -328,8 +328,8 @@ typedef struct st_flash_api
 
     /** Get Flash driver version.
      * @par Implemented as
-     * - R_FLASH_LP_VersionGet()
-     * - R_FLASH_HP_VersionGet()
+     * - @ref R_FLASH_LP_VersionGet()
+     * - @ref R_FLASH_HP_VersionGet()
      *
      * @param[out]  p_version Returns version.
      */

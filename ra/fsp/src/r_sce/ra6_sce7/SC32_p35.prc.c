@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -43,11 +43,6 @@
 #include  "SCE_ProcCommon.h"
 #include "hw_sce_hash_private.h"
 #include "hw_sce_private.h"
-
-/** @ingroup SCE_PROC
- * @addtogroup SCE_PROC_HASH
- * @{
- */
 
 /*******************************************************************************************************************//**
  * SHA-256 Message Digest Generation
@@ -128,7 +123,3 @@ fsp_err_t HW_SCE_SHA256_UpdateHash (const uint32_t * p_source, const uint32_t nu
 
     return FSP_SUCCESS;
 }
-
-/*******************************************************************************************************************//**
- * @}
- **********************************************************************************************************************/

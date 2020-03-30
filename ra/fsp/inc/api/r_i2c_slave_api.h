@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -80,6 +80,7 @@ typedef enum e_i2c_slave_event
     ///< configured to be read in slave.
     I2C_SLAVE_EVENT_TX_MORE_REQUEST = 7, ///< A write operation expected from slave. Master requests more data than
     ///< configured to be written by slave.
+    I2C_SLAVE_EVENT_GENERAL_CALL = 8,    ///< General Call address received from Master. Detected a write from master
 } i2c_slave_event_t;
 
 /** I2C callback parameter definition */
@@ -98,6 +99,7 @@ typedef struct st_i2c_slave_cfg
     i2c_slave_rate_t      rate;                              ///< Device's maximum clock rate from enum i2c_rate_t
     uint16_t              slave;                             ///< The address of the slave device
     i2c_slave_addr_mode_t addr_mode;                         ///< Indicates how slave fields should be interpreted
+    bool general_call_enable;                                ///< Allow a General call from master
 
     IRQn_Type rxi_irq;                                       ///< Receive IRQ number
     IRQn_Type txi_irq;                                       ///< Transmit IRQ number
@@ -124,7 +126,7 @@ typedef struct st_i2c_slave_api
 {
     /** Opens the I2C Slave driver and initializes the hardware.
      * @par Implemented as
-     * - R_IIC_SLAVE_Open()
+     * - @ref R_IIC_SLAVE_Open()
      *
      * @param[in] p_ctrl    Pointer to control block. Must be declared by user. Elements are set here.
      * @param[in] p_cfg     Pointer to configuration structure.
@@ -133,9 +135,9 @@ typedef struct st_i2c_slave_api
 
     /** Performs a read operation on an I2C Slave device.
      * @par Implemented as
-     * - R_IIC_SLAVE_Read()
+     * - @ref R_IIC_SLAVE_Read()
      *
-     * @param[in] p_ctrl    Pointer to control block set in i2c_slave_api_t::open call.
+     * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      * @param[in] p_dest    Pointer to the location to store read data.
      * @param[in] bytes     Number of bytes to read.
      */
@@ -143,9 +145,9 @@ typedef struct st_i2c_slave_api
 
     /** Performs a write operation on an I2C Slave device.
      * @par Implemented as
-     * - R_IIC_SLAVE_Write()
+     * - @ref R_IIC_SLAVE_Write()
      *
-     * @param[in] p_ctrl    Pointer to control block set in i2c_slave_api_t::open call.
+     * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      * @param[in] p_src     Pointer to the location to get write data from.
      * @param[in] bytes     Number of bytes to write.
      */
@@ -153,15 +155,15 @@ typedef struct st_i2c_slave_api
 
     /** Closes the driver and releases the I2C Slave device.
      * @par Implemented as
-     * - R_IIC_SLAVE_Close()
+     * - @ref R_IIC_SLAVE_Close()
      *
-     * @param[in] p_ctrl    Pointer to control block set in i2c_slave_api_t::open call.
+     * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      */
     fsp_err_t (* close)(i2c_slave_ctrl_t * const p_ctrl);
 
     /** Gets version information and stores it in the provided version struct.
      * @par Implemented as
-     * - R_IIC_SLAVE_VersionGet()
+     * - @ref R_IIC_SLAVE_VersionGet()
      *
      * @param[out] p_version  Code and API version used.
      */

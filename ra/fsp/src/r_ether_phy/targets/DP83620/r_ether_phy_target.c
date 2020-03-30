@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -22,32 +22,33 @@
 #include "bsp_api.h"
 #include "r_ether_phy.h"
 
-#if (ETHER_PHY_CFG_USE_PHY == 3)
+#if (ETHER_PHY_CFG_USE_PHY == ETHER_PHY_CFG_USE_PHY_DP83620)
 
 /***********************************************************************************************************************
- Macro definitions
+ * Macro definitions
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- Typedef definitions
+ * Typedef definitions
  ***********************************************************************************************************************/
+
 /* Vendor Specific PHY Registers */
-#define ETHER_PHY_REG_PAGE_SELECT             (0x13)
-#define ETHER_PHY_REG_14H                     (0x14)
+ #define ETHER_PHY_REG_PAGE_SELECT    (0x13)
+ #define ETHER_PHY_REG_14H            (0x14)
 
 /***********************************************************************************************************************
- Exported global variables (to be accessed by other files)
+ * Exported global variables (to be accessed by other files)
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
- Exported global function
+ * Exported global function
  ***********************************************************************************************************************/
-void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl);
-extern uint32_t ether_phy_read (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
-extern void ether_phy_write (ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
+void            ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+extern uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
+extern void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
 
 /***********************************************************************************************************************
- Private global variables and functions
+ * Private global variables and functions
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -65,22 +66,20 @@ void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
 {
     uint32_t reg;
 
-	if(ETHER_PHY_MII_TYPE_RMII == p_instance_ctrl->p_ether_phy_cfg->mii_type) {
+    if (ETHER_PHY_MII_TYPE_RMII == p_instance_ctrl->p_ether_phy_cfg->mii_type)
+    {
+        /*
+         * The following is the recommended settings for TI to output 50 MHz from CLK_OUT when using Texas Instruments DP83620
+         * in RMII master mode.
+         */
+        ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PAGE_SELECT, 0x0006);
+        reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_14H);
+        if (0x800A == reg)
+        {
+            ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_14H, 0x000A);
+            ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PAGE_SELECT, 0x0000);
+        }
+    }
+}                                      /* End of function ether_phy_targets_initialize() */
 
-		/*
-		 * The following is the recommended settings for TI to output 50 MHz from CLK_OUT when using Texas Instruments DP83620
-		 * in RMII master mode.
-		 */
-		ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PAGE_SELECT, 0x0006);
-		reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_14H);
-		if(0x800A == reg)
-		{
-			ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_14H, 0x000A);
-			ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PAGE_SELECT, 0x0000);
-		}
-
-	}
-
-} /* End of function ether_phy_targets_initialize() */
-
-#endif /* ETHER_PHY_CFG_USE_PHY == 3 */
+#endif /* ETHER_PHY_CFG_USE_PHY == ETHER_PHY_CFG_USE_PHY_DP83620 */

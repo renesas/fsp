@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -24,24 +24,22 @@
  #include "platform.h"
  #include "hw_sce_private.h"
 
- #if defined(RM_PSA_CRYPTO_BIG_ENDIAN)
-  #error "Big endian not supported in current HW accelerator code"
- #endif
-
 /*******************************************************************************************************************//**
- * @addtogroup RM_PSA_CRYPTO 
+ * @addtogroup RM_PSA_CRYPTO
  * @{
  **********************************************************************************************************************/
+
 /*******************************************************************************************************************//**
- * Initializes the SCE. Implements mbedtls_platform_setup function.
+ * This function initializes the SCE and the TRNG. It **must** be invoked before the crypto library can be used.
+ * This implementation is used if MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT is defined.
  *
  * Example:
- * @snippet rm_psa_crypto_example.c PSA_CRYPTO-SHA256
+ * @snippet rm_psa_crypto_example.c PSA_CRYPTO-PLATFORM-SETUP
  *
- * @retval 0                             Initialization was successful.
- * @retval MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED    SCE Initialization error.
+ * @retval 0                                        Initialization was successful.
+ * @retval MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED     SCE Initialization error.
  **********************************************************************************************************************/
-int mbedtls_platform_setup( mbedtls_platform_context *ctx )
+int mbedtls_platform_setup (mbedtls_platform_context * ctx)
 {
     (void) ctx;
 
@@ -64,30 +62,28 @@ int mbedtls_platform_setup( mbedtls_platform_context *ctx )
 
     if (FSP_SUCCESS == iret)
     {
- #if defined(RM_PSA_CRYPTO_BIG_ENDIAN)
-        HW_SCE_EndianSetBig();
- #else
         HW_SCE_EndianSetLittle();
- #endif
     }
 
     if (iret != FSP_SUCCESS)
     {
-        return (MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED);
+        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
 
     return 0;
 }
 
 /*******************************************************************************************************************//**
- * This is a placeholder function. Implements mbedtls_platform_teardown function.
+ * This implementation is used if MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT is defined.
+ * It is intended to de-initialize any items that were initialized in the mbedtls_platform_setup() function, but
+ * currently is only a placeholder function.
  *
  * Example:
- * @snippet rm_psa_crypto_example.c PSA_CRYPTO-SHA256
+ * @snippet rm_psa_crypto_example.c PSA_CRYPTO-PLATFORM-TEARDOWN
  *
  * @retval  N/A
  **********************************************************************************************************************/
-void mbedtls_platform_teardown( mbedtls_platform_context *ctx )
+void mbedtls_platform_teardown (mbedtls_platform_context * ctx)
 {
     (void) ctx;
 
@@ -99,5 +95,4 @@ void mbedtls_platform_teardown( mbedtls_platform_context *ctx )
  * @} (end addtogroup RM_PSA_CRYPTO)
  **********************************************************************************************************************/
 
-#endif  /* MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT */
-
+#endif                                 /* MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT */

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -23,58 +23,56 @@
 #include "r_usb_typedef.h"
 
 #ifndef FREERTOS_USB_TASK_H_
-#define FREERTOS_USB_TASK_H_
+ #define FREERTOS_USB_TASK_H_
 
 /******************************************************************************
-Macro definitions
-******************************************************************************/
+ * Macro definitions
+ ******************************************************************************/
+
 /** Size of a queue **/
-#define QUEUE_SIZE              (10)
+ #define QUEUE_SIZE         (10)
 
 /** USB task's priority **/
-#define HCD_TSK_PRI             (11)
-#define HUB_TSK_PRI             (9)
-#define MGR_TSK_PRI             (10)
-#define PCD_TSK_PRI             (11)
-#define PMSC_TSK_PRI            (8)
-#define HCDC_TSK_PRI            (8)
-#define HHID_TSK_PRI            (8)
+ #define HCD_TSK_PRI        (configMAX_PRIORITIES - 1)
+ #define HUB_TSK_PRI        (configMAX_PRIORITIES - 3)
+ #define MGR_TSK_PRI        (configMAX_PRIORITIES - 2)
+ #define PCD_TSK_PRI        (configMAX_PRIORITIES - 1)
+ #define PMSC_TSK_PRI       (configMAX_PRIORITIES - 2)
 
 /** USB task stack size in words **/
-#define HCD_STACK_SIZE          (512)
-#define HUB_STACK_SIZE          (512)
-#define MGR_STACK_SIZE          (512)
-#define PCD_STACK_SIZE          (512)
-#define PMSC_STACK_SIZE         (512)
-#define HCDC_STACK_SIZE         (512)
-#define HHID_STACK_SIZE         (512)
-
+ #define HCD_STACK_SIZE     (512)
+ #define HUB_STACK_SIZE     (512)
+ #define MGR_STACK_SIZE     (512)
+ #define PCD_STACK_SIZE     (512)
+ #define PMSC_STACK_SIZE    (512)
+ #define HCDC_STACK_SIZE    (512)
+ #define HHID_STACK_SIZE    (512)
 
 /******************************************************************************
-Typedef definitions
-******************************************************************************/
+ * Typedef definitions
+ ******************************************************************************/
 typedef enum e_usb_rtos_err
 {
-    UsbRtos_Success = 0,        // Successful
-    UsbRtos_Err_Init_Mbx,       // Failure of Mailbox Creation
-    UsbRtos_Err_Init_Mpl,       // Failure of Memory Pool Creation
-    UsbRtos_Err_Init_Tsk,       // Failure of Task Creation
-    UsbRtos_Err_Delete_Mbx,     // Failure of Mailbox Delete
-    UsbRtos_Err_Delete_Mpl,     // Failure of Memory Pool Delete
-    UsbRtos_Err_Delete_Tsk,     // Failure of Task Delete
+    UsbRtos_Success = 0,               // Successful
+    UsbRtos_Err_Init_Mbx,              // Failure of Mailbox Creation
+    UsbRtos_Err_Init_Mpl,              // Failure of Memory Pool Creation
+    UsbRtos_Err_Init_Tsk,              // Failure of Task Creation
+    UsbRtos_Err_Delete_Mbx,            // Failure of Mailbox Delete
+    UsbRtos_Err_Delete_Mpl,            // Failure of Memory Pool Delete
+    UsbRtos_Err_Delete_Tsk,            // Failure of Task Delete
 } usb_rtos_err_t;
 
 /******************************************************************************
-Exported global variables
-******************************************************************************/
-extern QueueHandle_t *g_mbx_table[];
-extern QueueHandle_t *g_mpl_table[];
+ * Exported global variables
+ ******************************************************************************/
+extern QueueHandle_t * g_mbx_table[];
+extern QueueHandle_t * g_mpl_table[];
 
 /******************************************************************************
-Exported global functions (to be accessed by other files)
-******************************************************************************/
+ * Exported global functions (to be accessed by other files)
+ ******************************************************************************/
 usb_rtos_err_t usb_rtos_configuration(void);
 usb_rtos_err_t usb_rtos_delete(void);
 
 #endif
-#endif /* FREERTOS_USB_TASK_H_ */
+#endif                                 /* FREERTOS_USB_TASK_H_ */

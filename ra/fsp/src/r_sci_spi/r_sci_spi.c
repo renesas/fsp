@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -96,7 +96,7 @@ void sci_spi_eri_isr(void);
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Initialize a channel for SPI communication mode. Implements spi_api_t::open.
+ * Initialize a channel for SPI communication mode. Implements @ref spi_api_t::open.
  *
  * This function performs the following tasks:
  *   - Performs parameter checking and processes error conditions.
@@ -155,7 +155,7 @@ fsp_err_t R_SCI_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg
 }
 
 /*******************************************************************************************************************//**
- * Receive data from an SPI device. Implements spi_api_t::read.
+ * Receive data from an SPI device. Implements @ref spi_api_t::read.
  *
  * The function performs the following tasks:
  *   - Performs parameter checking and processes error conditions.
@@ -186,7 +186,7 @@ fsp_err_t R_SCI_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg
  *
  * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes. This
  *             function calls:
- *               - transfer_api_t::reconfigure
+ *               - @ref transfer_api_t::reconfigure
  **********************************************************************************************************************/
 fsp_err_t R_SCI_SPI_Read (spi_ctrl_t * const    p_api_ctrl,
                           void                * p_dest,
@@ -210,7 +210,7 @@ fsp_err_t R_SCI_SPI_Read (spi_ctrl_t * const    p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Transmit data to a SPI  device. Implements spi_api_t::write.
+ * Transmit data to a SPI  device. Implements @ref spi_api_t::write.
  *
  * The function performs the following tasks:
  *   - Performs parameter checking and processes error conditions.
@@ -240,7 +240,7 @@ fsp_err_t R_SCI_SPI_Read (spi_ctrl_t * const    p_api_ctrl,
  *
  * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes. This
  *             function calls:
- *               - transfer_api_t::reconfigure
+ *               - @ref transfer_api_t::reconfigure
  **********************************************************************************************************************/
 fsp_err_t R_SCI_SPI_Write (spi_ctrl_t * const    p_api_ctrl,
                            void const          * p_src,
@@ -261,7 +261,7 @@ fsp_err_t R_SCI_SPI_Write (spi_ctrl_t * const    p_api_ctrl,
 
 /*******************************************************************************************************************//**
  * Simultaneously transmit data to SPI device while receiving data from SPI device (full duplex).
- * Implements spi_api_t::writeRead.
+ * Implements @ref spi_api_t::writeRead.
  *
  * The function performs the following tasks:
  *   - Performs parameter checking and processes error conditions.
@@ -295,7 +295,7 @@ fsp_err_t R_SCI_SPI_Write (spi_ctrl_t * const    p_api_ctrl,
  *
  * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes. This
  *             function calls:
- *               - transfer_api_t::reconfigure
+ *               - @ref transfer_api_t::reconfigure
  **********************************************************************************************************************/
 fsp_err_t R_SCI_SPI_WriteRead (spi_ctrl_t * const    p_api_ctrl,
                                void const          * p_src,
@@ -317,7 +317,7 @@ fsp_err_t R_SCI_SPI_WriteRead (spi_ctrl_t * const    p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
- * Disable the SCI channel and set the instance as not open. Implements spi_api_t::close.
+ * Disable the SCI channel and set the instance as not open. Implements @ref spi_api_t::close.
  *
  * @param      p_api_ctrl         Pointer to an opened instance.
  *
@@ -361,7 +361,7 @@ fsp_err_t R_SCI_SPI_Close (spi_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Get the version information of the underlying driver. Implements spi_api_t::versionGet.
+ * Get the version information of the underlying driver. Implements @ref spi_api_t::versionGet.
  * @param      p_version          Pointer to version structure.
  * @retval     FSP_SUCCESS        Successful version get.
  * @retval     FSP_ERR_ASSERTION  The parameter p_version is NULL.
@@ -646,7 +646,7 @@ static fsp_err_t r_sci_spi_transfer_config (sci_spi_instance_ctrl_t * const p_ct
  *
  * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes. This
  *             function calls:
- *               - transfer_api_t::reconfigure
+ *               - @ref transfer_api_t::reconfigure
  **********************************************************************************************************************/
 static fsp_err_t r_sci_spi_write_read_common (sci_spi_instance_ctrl_t * const p_ctrl,
                                               void const                    * p_src,

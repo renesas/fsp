@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2019] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
  * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
@@ -157,8 +157,8 @@ typedef struct st_spi_api
 {
     /** Initialize a channel for SPI communication mode.
      * @par Implemented as
-     * - R_SPI_Open()
-     * - R_SCI_SPI_Open()
+     * - @ref R_SPI_Open()
+     * - @ref R_SCI_SPI_Open()
      *
      * @param[in, out] p_ctrl Pointer to user-provided storage for the control block.
      * @param[in]      p_cfg  Pointer to SPI configuration structure.
@@ -167,8 +167,8 @@ typedef struct st_spi_api
 
     /** Receive data from a SPI device.
      * @par Implemented as
-     * - R_SPI_Read()
-     * - R_SCI_SPI_Read()
+     * - @ref R_SPI_Read()
+     * - @ref R_SCI_SPI_Read()
      *
      * @param[in]  p_ctrl    Pointer to the control block for the channel.
      * @param[in]  length    Number of units of data to be transferred (unit size specified by the
@@ -183,8 +183,8 @@ typedef struct st_spi_api
 
     /** Transmit data to a SPI device.
      * @par Implemented as
-     * - R_SPI_Write()
-     * - R_SCI_SPI_Write()
+     * - @ref R_SPI_Write()
+     * - @ref R_SCI_SPI_Write()
      *
      * @param[in]  p_ctrl    Pointer to the control block for the channel.
      * @param[in]  p_src     Pointer to a source data buffer from which data will be transmitted to a SPI device.
@@ -198,8 +198,8 @@ typedef struct st_spi_api
 
     /** Simultaneously transmit data to a SPI device while receiving data from a SPI device (full duplex).
      * @par Implemented as
-     * - R_SPI_WriteRead()
-     * - R_SCI_SPI_WriteRead()
+     * - @ref R_SPI_WriteRead()
+     * - @ref R_SCI_SPI_WriteRead()
      *
      * @param[in]  p_ctrl    Pointer to the control block for the channel.
      * @param[in]  p_src     Pointer to a source data buffer from which data will be transmitted to a SPI device.
@@ -215,8 +215,8 @@ typedef struct st_spi_api
 
     /** Remove power to the SPI channel designated by the handle and disable the associated interrupts.
      * @par Implemented as
-     * - R_SPI_Close()
-     * - R_SCI_SPI_Close()
+     * - @ref R_SPI_Close()
+     * - @ref R_SCI_SPI_Close()
      *
      * @param[in]  p_ctrl  Pointer to the control block for the channel.
      */
@@ -224,8 +224,8 @@ typedef struct st_spi_api
 
     /** Get the version information of the underlying driver.
      * @par Implemented as
-     * - R_SPI_VersionGet()
-     * - R_SCI_SPI_VersionGet()
+     * - @ref R_SPI_VersionGet()
+     * - @ref R_SCI_SPI_VersionGet()
      *
      * @param[out]  p_version pointer to memory location to return version number
      */
