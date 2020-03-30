@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -120,10 +120,10 @@ Functions</h2></td></tr>
 <tr class="separator:gadf6c0ab632cd139e0ba1f4d576c6b096"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>The Ethernet PHY module (r_ether_phy) provides an API for standard Ethernet PHY communications applications and uses the ETHERC peripherals. It implements the <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html">Ethernet PHY Interface</a>. </p>
+<p>The Ethernet PHY module (r_ether_phy) provides an API for standard Ethernet PHY communications applications that use the ETHERC peripheral. It implements the <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html">Ethernet PHY Interface</a>. </p>
 <h1><a class="anchor" id="r-ether-phy-overview"></a>
 Overview</h1>
-<p>The Ethernet PHY module provides Ethernet phy functionality.</p>
+<p>The Ethernet PHY module is used to setup and manage an external Ethernet PHY device for use with the on-chip Ethernet Controller (ETHERC) peripheral. It performs auto-negotiation to determine the optimal connection parameters between link partners. Once initialized the connection between the external PHY and the onboard controller is automatically managed in hardware.</p>
 <h2><a class="anchor" id="r-ether-phy-features"></a>
 Features</h2>
 <p>The Ethernet PHY module supports the following features:</p><ul>
@@ -131,57 +131,13 @@ Features</h2>
 <li>Flow control support</li>
 <li>Link status check support</li>
 </ul>
-<h2>Target Devices</h2>
-<p>The Ethernet module supports the following devices.</p><ul>
-<li>RA6M3</li>
-<li>RA6M2</li>
-</ul>
-<h2>Accessing the MII and RMII Registers</h2>
-<p>Use the PIR register to access the MII and RMII registers in the PHY-LSI. Serial data in the MII and RMII management frame format is transmitted and received through the ET0_MDC and ET0_MDIO pins controlled by software.</p>
-<h3>MII and RMII management frame format</h3>
-<p>Table lists the MII and RMII management frame formats.</p>
-<table class="doxtable">
-<tr>
-<th colspan="2">Access type </th><th colspan="8">MII and RMII management frame  </th></tr>
-<tr>
-<td></td><td>Item </td><td>PRE </td><td>ST </td><td>OP </td><td>PHYAD </td><td>REGAD </td><td>TA </td><td>DATA </td><td>IDLE  </td></tr>
-<tr>
-<td></td><td>Number of bits </td><td>32 </td><td>2 </td><td>2 </td><td>5 </td><td>5 </td><td>2 </td><td>16 </td><td>1  </td></tr>
-<tr>
-<td colspan="2">Read </td><td>1...1 </td><td>01 </td><td>10 </td><td>00001 </td><td>RRRRR </td><td>Z0 </td><td>DDDDDDDDDDDDDDDD </td><td>Z  </td></tr>
-<tr>
-<td colspan="2">Write </td><td>1...1 </td><td>01 </td><td>01 </td><td>00001 </td><td>RRRRR </td><td>10 </td><td>DDDDDDDDDDDDDDDD </td><td>Z  </td></tr>
-</table>
-<dl class="section note"><dt>Note</dt><dd>- PRE (preamble): Send 32 consecutive 1s. </dd>
-<dd>
-- ST (start of frame): Send 01b. </dd>
-<dd>
-- OP (operation code): Send 10b for read or 01b for write. </dd>
-<dd>
-- PHYAD (PHY address): Up to 32 PHY-LSIs can be connected to one MAC. PHY-LSIs are selected with these 5 bits. When the </dd>
-<dd>
-- PHY-LSI address is 1, send 00001b. </dd>
-<dd>
-- REGAD (register address): One register is selected from up to 32 registers in the PHY-LSI. When the register address is 1, send 00001b. </dd>
-<dd>
-- TA (turnaround): Use 2-bit turnaround time to avoid contention between the register address and data during a read operation. </dd>
-<dd>
-Send 10b during a write operation. Release the bus for 1 bit during a read operation (Z is output). </dd>
-<dd>
-(This is indicated as Z0 because 0 is output from the PHY-LSI on the next clock cycle.) </dd>
-<dd>
-- DATA (data): 16-bit data. Sequentially send or receive starting from the MSB. </dd>
-<dd>
-- IDLE (IDLE condition): Wait time before inputting the next MII or RMII management format. Release the bus during a write </dd>
-<dd>
-operation (Z is output). No control is required, because a bus was already released during a read operation.</dd></dl>
 <h1><a class="anchor" id="r-ether-phy-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_ether_phy</h2>
-The following build time configurations are defined in fsp_cfg/driver/r_ether_phy_cfg.h:<br />
+The following build time configurations are defined in fsp_cfg/r_ether_phy_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -191,11 +147,13 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
 <td>Select PHY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default</li>
+<li>
+Other</li>
 <li>
 KSZ8091RNB</li>
 <li>
@@ -203,48 +161,62 @@ KSZ8041</li>
 <li>
 DP83620</li>
 </ul>
-</td><td>Select PHY chip to use. </td></tr>
+</td><td>Default </td><td>Select PHY chip to use. Selecting 'Default' will automatically choose the correct option when using a Renesas development board. </td></tr>
+<tr>
+<td>Use Reference Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Select whether to use the RMII reference clock. Selecting 'Default' will automatically choose the correct option when using a Renesas development board. </td></tr>
 </table>
- <h2>Configurations for Ethernet Driver on r_ether_phy</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Network -&gt; Ethernet Driver on r_ether_phy:<br />
+ <h2>Configurations for Driver &gt; Network &gt; Ethernet Driver on r_ether_phy</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Network &gt; Ethernet Driver on r_ether_phy:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_ether_phy0 </td><td>Module name. </td></tr>
 <tr>
-<td>Ether channel</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 0</li>
 <li>
 1</li>
 </ul>
-</td><td>Select the ether channel number. </td></tr>
+</td><td>0 </td><td>Select the Ethernet controller channel number. </td></tr>
 <tr>
-<td>PHY-LSI Address</td><td>Specify a value between 0 and 31.</td><td>PHY-LSI Address </td></tr>
+<td>PHY-LSI Address</td><td>Specify a value between 0 and 31.</td><td>0 </td><td>Specify the address of the PHY-LSI used. </td></tr>
 <tr>
-<td>The waiting time for reset completion of PHY-LSI</td><td>Specify a value between 1 and 0xFFFFFFFF.</td><td>Specify the loop count used for timeout processing of PHY-LSI reset completion wait.Set the number of loops according to the PHY-LSI to be used. </td></tr>
+<td>PHY-LSI Reset Completion Timeout</td><td>Specify a value between 1 and 0xFFFFFFFF.</td><td>0x00020000 </td><td>Specify the number of times to read the PHY-LSI control register while waiting for reset completion. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
 <tr>
-<td>The access timing of MII/RMII register</td><td>Specify a value between 1 and 0x7FFFFFFF.</td><td>Specify the loop count of software loop used for read or write in PHY-LSI. Set the number of loops according to the PHY-LSI to be used. </td></tr>
+<td>MII/RMII Register Access Wait-time</td><td>Specify a value between 1 and 0x7FFFFFFF.</td><td>8 </td><td>Specify the bit timing for MII/RMII register accesses during PHY initialization. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
 <tr>
-<td>Flow control functionality</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Flow Control</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable</li>
 </ul>
-</td><td>Flow control functionally enable or disable </td></tr>
+</td><td>Disable </td><td>Select whether to enable or disable flow control. </td></tr>
 </table>
 </p>
 <h1><a class="anchor" id="r-ether-phy-usage_notes"></a>
 Usage Notes</h1>
+<dl class="section note"><dt>Note</dt><dd>See the <a class="el" href="group___e_t_h_e_r___p_h_y.html#r-ether-phy-examples">example</a> below for details on how to initialize the Ethernet PHY module.</dd></dl>
 <h2><a class="anchor" id="r-ether-phy-limitations"></a>
 Limitations</h2>
+<ul>
+<li>The r_ether_phy module may need to be customized for PHY devices other than the ones currently supported (KSZ8091RNB, KSZ8041 and DP83620). Use the existing code as a starting point for creating a custom implementation.</li>
+</ul>
 <h1><a class="anchor" id="r-ether-phy-examples"></a>
 Examples</h1>
 <h2>ETHER PHY Basic Example</h2>
 <p>This is a basic example of minimal use of the ETHER PHY in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> ether_phy_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    g_ether_phy0_ctrl.open = 0U;</div><div class="line">    g_ether_phy0_cfg.channel = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r___p_h_y.html#gac54aa95e5976561c6d810eb1c868048c">R_ETHER_PHY_Open</a>(&amp;g_ether_phy0_ctrl, &amp;g_ether_phy0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r___p_h_y.html#gaca73174d76fd87100066407a8ff13147">R_ETHER_PHY_StartAutoNegotiate</a>(&amp;g_ether_phy0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Polling until link is established. */</span></div><div class="line">    <span class="keywordflow">while</span> (FSP_SUCCESS != <a class="code" href="group___e_t_h_e_r___p_h_y.html#ga13e3a39ef86ed3f62805963c55442e03">R_ETHER_PHY_LinkStatusGet</a>(&amp;g_ether_phy0_ctrl))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing */</span></div><div class="line">    }</div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d">BSP_DELAY_UNITS_SECONDS</a>);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get link partner ability from phy interface. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r___p_h_y.html#ga02b4fcbbb5e863cb759b610a7dc992bd">R_ETHER_PHY_LinkPartnerAbilityGet</a>(</div><div class="line">        &amp;g_ether_phy0_ctrl,</div><div class="line">        &amp;g_ether_phy0_line_speed_duplex,</div><div class="line">        &amp;g_ether_phy0_local_pause,</div><div class="line">        &amp;g_ether_phy0_partner_pause);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check current link status. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r___p_h_y.html#ga13e3a39ef86ed3f62805963c55442e03">R_ETHER_PHY_LinkStatusGet</a>(&amp;g_ether_phy0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r___p_h_y.html#ga6a4f3bdcd321faef43008379b2065c4b">R_ETHER_PHY_Close</a>(&amp;g_ether_phy0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">}</div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ether_phy_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    g_ether_phy0_ctrl.open   = 0U;</div><div class="line">    g_ether_phy0_cfg.channel = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r___p_h_y.html#gac54aa95e5976561c6d810eb1c868048c">R_ETHER_PHY_Open</a>(&amp;g_ether_phy0_ctrl, &amp;g_ether_phy0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r___p_h_y.html#gaca73174d76fd87100066407a8ff13147">R_ETHER_PHY_StartAutoNegotiate</a>(&amp;g_ether_phy0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Polling until link is established. */</span></div><div class="line">    <span class="keywordflow">while</span> (FSP_SUCCESS != <a class="code" href="group___e_t_h_e_r___p_h_y.html#ga13e3a39ef86ed3f62805963c55442e03">R_ETHER_PHY_LinkStatusGet</a>(&amp;g_ether_phy0_ctrl))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get link partner ability from phy interface. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r___p_h_y.html#ga02b4fcbbb5e863cb759b610a7dc992bd">R_ETHER_PHY_LinkPartnerAbilityGet</a>(&amp;g_ether_phy0_ctrl,</div><div class="line">                                            &amp;g_ether_phy0_line_speed_duplex,</div><div class="line">                                            &amp;g_ether_phy0_local_pause,</div><div class="line">                                            &amp;g_ether_phy0_partner_pause);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check current link status. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r___p_h_y.html#ga13e3a39ef86ed3f62805963c55442e03">R_ETHER_PHY_LinkStatusGet</a>(&amp;g_ether_phy0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structether__phy__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y.html#structether__phy__instance__ctrl__t">ether_phy_instance_ctrl_t</a></td></tr>
@@ -262,7 +234,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>ETHER PHY control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___e_t_h_e_r___a_p_i.html#ae75458ac2a31861195b73120676d670c">ether_api_t::open</a> is called. </p>
+<div class="textblock"><p>ETHER PHY control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#abeae29b0ee9ded59a1737b506abdc415">ether_phy_api_t::open</a> is called. </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -282,13 +254,13 @@ Pointer to initial configurations. </td></tr>
 <td class="fieldname">
 p_reg_pir</td>
 <td class="fielddoc">
-Register of Phy interface. </td></tr>
+Pointer to ETHERC peripheral registers. </td></tr>
 <tr><td class="fieldtype">
 <a id="aaa749ca05baa91975ca44896b3765e37"></a>uint32_t</td>
 <td class="fieldname">
 local_advertise</td>
 <td class="fielddoc">
-local advertise. </td></tr>
+Capabilities bitmap for local advertising. </td></tr>
 </table>
 
 </div>
@@ -512,9 +484,7 @@ local advertise. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

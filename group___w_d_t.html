@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -151,13 +151,13 @@ Selecting a Watchdog</h2>
 </table>
 <h1><a class="anchor" id="r-wdt-configuration"></a>
 Configuration</h1>
-<p>When using register start mode, configure the watchdog timer on the Threads tab.</p>
-<dl class="section note"><dt>Note</dt><dd>When using auto start mode, configurations on the Threads tab are ignored. Configure the watchdog using the OFS settings on the BSP tab.</dd></dl>
+<p>When using register start mode, configure the watchdog timer on the Stacks tab.</p>
+<dl class="section note"><dt>Note</dt><dd>When using auto start mode, configurations on the Stacks tab are ignored. Configure the watchdog using the OFS settings on the BSP tab.</dd></dl>
 <p><a class="anchor" id="um_wdt_nmi_callback_required"></a><a class="anchor" id="um_wdt_configuration_for_refresh_window_start_position"></a><a class="anchor" id="um_wdt_configuration_for_refresh_window_end_position"></a><a class="anchor" id="um_wdt_configuration_for_wdt_clock_division"></a><a class="anchor" id="um_wdt_configuration_for_wdt_timeout_period"></a> <h2>Build Time Configurations for r_wdt</h2>
 The following build time configurations are defined in fsp_cfg/r_wdt_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -167,7 +167,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
 <td>Register Start NMI Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -175,15 +175,15 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If enabled, code for NMI support in register start mode is included in the build. </td></tr>
+</td><td>Disabled </td><td>If enabled, code for NMI support in register start mode is included in the build. </td></tr>
 </table>
- <h2>Configurations for Watchdog Driver on r_wdt</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Monitoring -&gt; Watchdog Driver on r_wdt:<br />
+ <h2>Configurations for Driver &gt; Monitoring &gt; Watchdog Driver on r_wdt</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Monitoring &gt; Watchdog Driver on r_wdt:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_wdt0 </td><td>Module name. </td></tr>
 <tr>
 <td>Timeout</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -195,7 +195,7 @@ This module can be added to the Threads tab from New -&gt; Driver -&gt; Monitori
 <li>
 16,384 Cycles</li>
 </ul>
-</td><td>Select the watchdog timeout in cycles. </td></tr>
+</td><td>16,384 Cycles </td><td>Select the watchdog timeout in cycles. </td></tr>
 <tr>
 <td>Clock Division Ratio</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -211,7 +211,7 @@ PCLK/2048</li>
 <li>
 PCLK/8192</li>
 </ul>
-</td><td>Select the watchdog clock divisor. </td></tr>
+</td><td>PCLK/8192 </td><td>Select the watchdog clock divisor. </td></tr>
 <tr>
 <td>Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -223,7 +223,7 @@ PCLK/8192</li>
 <li>
 25</li>
 </ul>
-</td><td>Select the allowed watchdog refresh start point. </td></tr>
+</td><td>100% (Window Position Not Specified) </td><td>Select the allowed watchdog refresh start point. </td></tr>
 <tr>
 <td>Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -235,7 +235,7 @@ PCLK/8192</li>
 <li>
 75%</li>
 </ul>
-</td><td>Select the allowed watchdog refresh end point. </td></tr>
+</td><td>0% (Window Position Not Specified) </td><td>Select the allowed watchdog refresh end point. </td></tr>
 <tr>
 <td>Reset Control</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -243,7 +243,7 @@ Reset Output</li>
 <li>
 NMI Generated</li>
 </ul>
-</td><td>Select what happens when the watchdog timer expires. </td></tr>
+</td><td>Reset Output </td><td>Select what happens when the watchdog timer expires. </td></tr>
 <tr>
 <td>Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -251,14 +251,14 @@ WDT Count Enabled in Low Power Mode</li>
 <li>
 WDT Count Disabled in Low Power Mode</li>
 </ul>
-</td><td>Select the watchdog state in low power mode. </td></tr>
+</td><td>WDT Count Disabled in Low Power Mode </td><td>Select the watchdog state in low power mode. </td></tr>
 <tr>
-<td>NMI Callback</td><td>Name must be a valid C symbol</td><td>A user callback function must be provided if the WDT is configured to generate an NMI when the timer underflows or a refresh error occurs. If this callback function is provided, it will be called from the NMI handler each time the watchdog triggers. </td></tr>
+<td>NMI Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function must be provided if the WDT is configured to generate an NMI when the timer underflows or a refresh error occurs. If this callback function is provided, it will be called from the NMI handler each time the watchdog triggers. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-wdt-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The WDT clock is based on the PCLKB frequency. You can set the PCLKB frequency using the clock configurator in the ISDE or using the CGC Interface at run-time. The maximum timeout period with PCLKB running at 60 MHz is approximately 2.2 seconds.</p>
+<p>The WDT clock is based on the PCLKB frequency. You can set the PCLKB frequency using the clock configurator in e2 studio or using the CGC Interface at run-time. The maximum timeout period with PCLKB running at 60 MHz is approximately 2.2 seconds.</p>
 <h2><a class="anchor" id="r-wdt-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
@@ -286,9 +286,9 @@ Limitations</h2>
 Examples</h1>
 <h2>WDT Basic Example</h2>
 <p>This is a basic example of minimal use of the WDT in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> wdt_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* In auto start mode, the WDT starts counting immediately when the MCU is powered on. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* In register start mode, start the watchdog by calling R_WDT_Refresh. */</span></div><div class="line">    (void) <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI. */</span></div><div class="line">        (void) <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>WDT Advanced Example</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> wdt_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* In auto start mode, the WDT starts counting immediately when the MCU is powered on. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* In register start mode, start the watchdog by calling R_WDT_Refresh. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI. */</span></div><div class="line">        err = <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>WDT Advanced Example</h2>
 <p>This example demonstrates using a start window and gives an example callback to handle an NMI generated by an underflow or refresh error.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define WDT_TIMEOUT_COUNTS     (16384U)</span></div><div class="line"><span class="preprocessor">#define WDT_MAX_COUNTER        (WDT_TIMEOUT_COUNTS - 1U)</span></div><div class="line"><span class="preprocessor">#define WDT_START_WINDOW_75    ((WDT_MAX_COUNTER * 3) / 4)</span></div><div class="line"></div><div class="line"><span class="comment">/* Example callback called when a watchdog NMI occurs. */</span></div><div class="line"><span class="keywordtype">void</span> wdt_callback (<a class="code" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Determine the source of the NMI. */</span></div><div class="line">    <a class="code" href="group___w_d_t___a_p_i.html#ga46c1d04f78b75ad1ad21314cac574935">wdt_status_t</a> status = <a class="code" href="group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a0f1543f47bca7e987fe86ab04dd16e46">WDT_STATUS_NO_ERROR</a>;</div><div class="line">    err = <a class="code" href="group___w_d_t.html#ga17bf328598042575cbe4f126f59bbc1b">R_WDT_StatusGet</a>(&amp;g_wdt0_ctrl, &amp;status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Log source of NMI and any other debug information. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Clear the error flags. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gacd5b9ff42df96b9fd4603dda47b946cb">R_WDT_StatusClear</a>(&amp;g_wdt0_ctrl, status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Register start mode) In register start mode, call R_WDT_Refresh() to</span></div><div class="line"><span class="comment">     * continue using the watchdog after an error. */</span></div><div class="line">    (void) <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Issue a software reset to reset the MCU. */</span></div><div class="line">    __NVIC_SystemReset();</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> wdt_advanced_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Enable the WDT to count and generate NMI or reset when the</span></div><div class="line"><span class="comment">     * debugger is connected. */</span></div><div class="line">    R_DEBUG-&gt;DBGSTOPCR_b.DBGSTOP_WDT = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Check if the WDTRF flag is set to know if the system is</span></div><div class="line"><span class="comment">     * recovering from a WDT reset. */</span></div><div class="line">    <span class="keywordflow">if</span> (R_SYSTEM-&gt;RSTSR1_b.WDTRF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the flag. */</span></div><div class="line">        R_SYSTEM-&gt;RSTSR1 = 0U;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize other application code. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* (Register start mode) Call R_WDT_Refresh() to start the WDT in register</span></div><div class="line"><span class="comment">     * start mode.  Do not call R_WDT_Refresh() in auto start mode unless the</span></div><div class="line"><span class="comment">     * counter is in the acceptable refresh window. */</span></div><div class="line">    (void) <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* (Optional) If there is a chance the application takes less time than</span></div><div class="line"><span class="comment">         * the start window, verify the WDT counter is past the start window</span></div><div class="line"><span class="comment">         * before refreshing the WDT. */</span></div><div class="line">        uint32_t wdt_counter = 0U;</div><div class="line">        <span class="keywordflow">do</span></div><div class="line">        {</div><div class="line"></div><div class="line">            <span class="comment">/* Read the current WDT counter value. */</span></div><div class="line">            err = <a class="code" href="group___w_d_t.html#gaf6b4f726ecfe6795c7887dc1226450ca">R_WDT_CounterGet</a>(&amp;g_wdt0_ctrl, &amp;wdt_counter);</div><div class="line">            handle_error(err);</div><div class="line"></div><div class="line">        } <span class="keywordflow">while</span> (wdt_counter &gt;= WDT_START_WINDOW_75);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI. */</span></div><div class="line">        (void) <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="preprocessor">#define WDT_TIMEOUT_COUNTS     (16384U)</span></div><div class="line"><span class="preprocessor">#define WDT_MAX_COUNTER        (WDT_TIMEOUT_COUNTS - 1U)</span></div><div class="line"><span class="preprocessor">#define WDT_START_WINDOW_75    ((WDT_MAX_COUNTER * 3) / 4)</span></div><div class="line"></div><div class="line"><span class="comment">/* Example callback called when a watchdog NMI occurs. */</span></div><div class="line"><span class="keywordtype">void</span> wdt_callback (<a class="code" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Determine the source of the NMI. */</span></div><div class="line">    <a class="code" href="group___w_d_t___a_p_i.html#ga46c1d04f78b75ad1ad21314cac574935">wdt_status_t</a> status = <a class="code" href="group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a0f1543f47bca7e987fe86ab04dd16e46">WDT_STATUS_NO_ERROR</a>;</div><div class="line">    err = <a class="code" href="group___w_d_t.html#ga17bf328598042575cbe4f126f59bbc1b">R_WDT_StatusGet</a>(&amp;g_wdt0_ctrl, &amp;status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Log source of NMI and any other debug information. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Clear the error flags. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gacd5b9ff42df96b9fd4603dda47b946cb">R_WDT_StatusClear</a>(&amp;g_wdt0_ctrl, status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Register start mode) In register start mode, call R_WDT_Refresh() to</span></div><div class="line"><span class="comment">     * continue using the watchdog after an error. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Issue a software reset to reset the MCU. */</span></div><div class="line">    __NVIC_SystemReset();</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> wdt_advanced_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Enable the WDT to count and generate NMI or reset when the</span></div><div class="line"><span class="comment">     * debugger is connected. */</span></div><div class="line">    R_DEBUG-&gt;DBGSTOPCR_b.DBGSTOP_WDT = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Check if the WDTRF flag is set to know if the system is</span></div><div class="line"><span class="comment">     * recovering from a WDT reset. */</span></div><div class="line">    <span class="keywordflow">if</span> (R_SYSTEM-&gt;RSTSR1_b.WDTRF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the flag. */</span></div><div class="line">        R_SYSTEM-&gt;RSTSR1 = 0U;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize other application code. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* (Register start mode) Call R_WDT_Refresh() to start the WDT in register</span></div><div class="line"><span class="comment">     * start mode.  Do not call R_WDT_Refresh() in auto start mode unless the</span></div><div class="line"><span class="comment">     * counter is in the acceptable refresh window. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* (Optional) If there is a chance the application takes less time than</span></div><div class="line"><span class="comment">         * the start window, verify the WDT counter is past the start window</span></div><div class="line"><span class="comment">         * before refreshing the WDT. */</span></div><div class="line">        uint32_t wdt_counter = 0U;</div><div class="line">        <span class="keywordflow">do</span></div><div class="line">        {</div><div class="line"></div><div class="line">            <span class="comment">/* Read the current WDT counter value. */</span></div><div class="line">            err = <a class="code" href="group___w_d_t.html#gaf6b4f726ecfe6795c7887dc1226450ca">R_WDT_CounterGet</a>(&amp;g_wdt0_ctrl, &amp;wdt_counter);</div><div class="line">            handle_error(err);</div><div class="line"></div><div class="line">        } <span class="keywordflow">while</span> (wdt_counter &gt;= WDT_START_WINDOW_75);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI. */</span></div><div class="line">        err = <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structwdt__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t.html#structwdt__instance__ctrl__t">wdt_instance_ctrl_t</a></td></tr>
@@ -328,7 +328,7 @@ Data Structures</h2></td></tr>
 </div><div class="memdoc">
 <p>Refresh the watchdog timer. Implements <a class="el" href="group___w_d_t___a_p_i.html#a0d1533024396b8280b7240c781a09a44">wdt_api_t::refresh</a>.</p>
 <p>In addition to refreshing the watchdog counter this function can be used to start the counter in register start mode.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI. */</span></div><div class="line">        (void) <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI. */</span></div><div class="line">        err = <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>WDT successfully refreshed. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl is NULL. </td></tr>
@@ -367,7 +367,7 @@ Data Structures</h2></td></tr>
 </div><div class="memdoc">
 <p>Configure the WDT in register start mode. In auto-start_mode the NMI callback can be registered. Implements <a class="el" href="group___w_d_t___a_p_i.html#af03fc1703319e1adacabc412c7e3de31">wdt_api_t::open</a>.</p>
 <p>This function should only be called once as WDT configuration registers can only be written to once so subsequent calls will have no effect.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>WDT successfully configured. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
@@ -523,7 +523,7 @@ Data Structures</h2></td></tr>
 <p>Read timeout information for the watchdog timer. Implements <a class="el" href="group___w_d_t___a_p_i.html#ac2b6d848e8be0ff1a0a1be43289ad925">wdt_api_t::timeoutGet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>WDT successfully refreshed. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>WDT timeout information retrieved successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not initialized. </td></tr>
   </table>
@@ -564,9 +564,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

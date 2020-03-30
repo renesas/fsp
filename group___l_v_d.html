@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -137,7 +137,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_lvd_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -147,15 +147,15 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Low Voltage Detection Driver on r_lvd</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Power -&gt; Low Voltage Detection Driver on r_lvd:<br />
+ <h2>Configurations for Driver &gt; Power &gt; Low Voltage Detection Driver on r_lvd</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Power &gt; Low Voltage Detection Driver on r_lvd:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_lvd </td><td>Module name. </td></tr>
 <tr>
 <td>Monitor Number</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -163,11 +163,11 @@ This module can be added to the Threads tab from New -&gt; Driver -&gt; Power -&
 <li>
 2</li>
 </ul>
-</td><td>Select the LVD monitor. </td></tr>
+</td><td>1 </td><td>Select the LVD monitor. </td></tr>
 <tr>
-<td>Digital Filter Setting</td><td>MCU Specific Options</td><td>Enable the digital filter and select the digital filter clock divider. </td></tr>
+<td>Digital Filter Setting</td><td>MCU Specific Options</td><td></td><td>Enable the digital filter and select the digital filter clock divider. </td></tr>
 <tr>
-<td>Voltage Threshold</td><td>MCU Specific Options</td><td>Select the low voltage detection threshold. </td></tr>
+<td>Voltage Threshold</td><td>MCU Specific Options</td><td></td><td>Select the low voltage detection threshold. </td></tr>
 <tr>
 <td>Detection Response</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -179,7 +179,7 @@ Reset MCU (Only available for falling edge)</li>
 <li>
 No response (Voltage monitor status will be polled)</li>
 </ul>
-</td><td>Select what happens when the voltage crosses the threshold voltage. </td></tr>
+</td><td>No response (Voltage monitor status will be polled) </td><td>Select what happens when the voltage crosses the threshold voltage. </td></tr>
 <tr>
 <td>Voltage Slope</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -189,7 +189,7 @@ Rising voltage</li>
 <li>
 Rising or falling voltage</li>
 </ul>
-</td><td>Select detection on rising voltage, falling voltage or both. </td></tr>
+</td><td>Falling voltage </td><td>Select detection on rising voltage, falling voltage or both. </td></tr>
 <tr>
 <td>Negation Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -197,11 +197,11 @@ Delay from reset</li>
 <li>
 Delay from voltage returning to normal range</li>
 </ul>
-</td><td>Negation of the monitor signal can either be delayed from the reset event or from voltage returning to normal range. </td></tr>
+</td><td>Delay from reset </td><td>Negation of the monitor signal can either be delayed from the reset event or from voltage returning to normal range. </td></tr>
 <tr>
-<td>Monitor Interrupt Callback</td><td>Name must be a valid C symbol.</td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the IRQ triggers. </td></tr>
+<td>Monitor Interrupt Callback</td><td>Name must be a valid C symbol.</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the IRQ triggers. </td></tr>
 <tr>
-<td>LVD Monitor Interrupt Priority</td><td>MCU Specific Options</td><td>Select the LVD Monitor interrupt priority. </td></tr>
+<td>LVD Monitor Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the LVD Monitor interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-lvd-clock-configuration"></a>
@@ -232,9 +232,9 @@ Examples</h1>
 <p>This is a basic example of minimal use of the LVD in an application.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___l_v_d___a_p_i.html#structlvd__status__t">lvd_status_t</a> status;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___l_v_d.html#gae1af63498d91ee2ced63246e477faa8c">R_LVD_StatusGet</a>(&amp;g_lvd_ctrl, &amp;status);</div><div class="line"></div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (<a class="code" href="group___l_v_d___a_p_i.html#ggaad6c2ef7eb77fb3e002b8365ca042b76ae5caf5376bc83e65e556f3097f2a734a">LVD_THRESHOLD_CROSSING_DETECTED</a> == status.<a class="code" href="group___l_v_d___a_p_i.html#a03ad98ceabc205869874f6861d2cf8c9">crossing_detected</a>)</div><div class="line">        {</div><div class="line">            err = <a class="code" href="group___l_v_d.html#ga2f8bf11a148ad673457d5afcabb85d7d">R_LVD_StatusClear</a>(&amp;g_lvd_ctrl);</div><div class="line"></div><div class="line">            handle_error(err);</div><div class="line"></div><div class="line">            <span class="comment">/* Do something */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Interrupt Example</h2>
 <p>This is a basic example of using a LVD instance that is configured to generate an interrupt.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> interrupt_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application Process */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Application will be interrupted when Vcc crosses the configured threshold. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Called when Vcc crosses configured threshold. */</span></div><div class="line"><span class="keywordtype">void</span> lvd_callback (<a class="code" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___l_v_d___a_p_i.html#gga9d6a37d0481e360cf4db1a3374a0965aabc3dcdce3b10087e3eb7ac130fdb04fa">LVD_CURRENT_STATE_BELOW_THRESHOLD</a> == p_args-&gt;<a class="code" href="group___l_v_d___a_p_i.html#a5709e5f6ee2f70d1170e29db5c388286">current_state</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do Something */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Reset Example</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> interrupt_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application Process */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Application will be interrupted when Vcc crosses the configured threshold. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Called when Vcc crosses configured threshold. */</span></div><div class="line"><span class="keywordtype">void</span> lvd_callback (<a class="code" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___l_v_d___a_p_i.html#gga9d6a37d0481e360cf4db1a3374a0965aabc3dcdce3b10087e3eb7ac130fdb04fa">LVD_CURRENT_STATE_BELOW_THRESHOLD</a> == p_args-&gt;<a class="code" href="group___l_v_d___a_p_i.html#a5709e5f6ee2f70d1170e29db5c388286">current_state</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do Something */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Reset Example</h2>
 <p>This is a basic example of using a LVD instance that is configured to reset the MCU.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> reset_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.LVD1RF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* The system is coming out of reset because Vcc crossed configured voltage threshold. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Clear Voltage Monitor 1 Reset Detect Flag. */</span></div><div class="line">        R_SYSTEM-&gt;RSTSR0_b.LVD1RF = 0;</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application Process */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Application will reset when Vcc crosses the configured threshold. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> reset_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.LVD1RF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* The system is coming out of reset because Vcc crossed configured voltage threshold. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Clear Voltage Monitor 1 Reset Detect Flag. */</span></div><div class="line">        R_SYSTEM-&gt;RSTSR0_b.LVD1RF = 0;</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_v_d.html#gaef40e18e8b58672ce5a0993cf35cb77f">R_LVD_Open</a>(&amp;g_lvd_ctrl, &amp;g_lvd_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application Process */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Application will reset when Vcc crosses the configured threshold. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structlvd__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d.html#structlvd__instance__ctrl__t">lvd_instance_ctrl_t</a></td></tr>
@@ -454,9 +454,7 @@ Startup time can take on the order of milliseconds for some configurations.</dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

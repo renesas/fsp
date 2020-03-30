@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -124,16 +124,17 @@ Features</h2>
 <li>Normal mode or window mode</li>
 <li>Callback on rising edge, falling edge or both</li>
 <li>Configurable debounce filter</li>
-<li>Option to include comparator output on VCOUT pin or ELC events</li>
+<li>Option for comparator output on VCOUT pin</li>
+<li>ELC event output</li>
 </ul>
-<p><a class="anchor" id="um_comparator_window_mode"></a><a class="anchor" id="um_comparator_notification_of_rising_edge"></a><a class="anchor" id="um_comparator_notification_of_falling_edge"></a><a class="anchor" id="um_comparator_debounce_filter"></a><a class="anchor" id="um_comparator_output_enable"></a><a class="anchor" id="um_comparator_pin_output"></a> </p>
+<p><a class="anchor" id="um_comparator_window_mode"></a><a class="anchor" id="um_comparator_notification_of_rising_edge"></a><a class="anchor" id="um_comparator_notification_of_falling_edge"></a><a class="anchor" id="um_comparator_debounce_filter"></a><a class="anchor" id="um_comparator_output_enable"></a><a class="anchor" id="um_comparator_pin_output"></a><a class="anchor" id="um_comparator_output_inverted"></a> </p>
 <h1><a class="anchor" id="r-acmplp-configuration"></a>
 Configuration</h1>
-<p><a class="anchor" id="um_comparator_output_inverted"></a> <h2>Build Time Configurations for r_acmplp</h2>
+<p><h2>Build Time Configurations for r_acmplp</h2>
 The following build time configurations are defined in fsp_cfg/r_acmplp_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -143,7 +144,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
 <td>Reference Voltage Selection (ACMPLP1)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -151,117 +152,117 @@ IVREF0</li>
 <li>
 IVREF1</li>
 </ul>
-</td><td>Reference Voltage Selection for ACMPLP1. </td></tr>
+</td><td>IVREF1 </td><td>Reference Voltage Selection for ACMPLP1. When set to IVREF0, configure the reference for ACMPLP channel 1 (if used) to one of the channel 0 sources. </td></tr>
 </table>
- <h2>Configurations for Comparator Driver on r_acmplp</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Analog -&gt; Comparator Driver on r_acmplp:<br />
+ <h2>Configurations for Driver &gt; Analog &gt; Comparator Driver on r_acmplp</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Analog &gt; Comparator Driver on r_acmplp:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_comparator0 </td><td>Module name. </td></tr>
 <tr>
-<td>Channel</td><td>Value must be a non-negative integer</td><td>Select the hardware channel. </td></tr>
+<td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Select the hardware channel. </td></tr>
 <tr>
 <td>Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Mode Normal</li>
+Standard</li>
 <li>
-Mode Window</li>
+Window</li>
 </ul>
-</td><td>In normal mode, comparator output is high if VCMP &gt; VREF. In window mode, comparator output is high if VCMP is outside the range of VREF0 to VREF1. </td></tr>
+</td><td>Standard </td><td>In standard mode, comparator output is high if VCMP &gt; VREF. In window mode, comparator output is high if VCMP is outside the range of VREF0 to VREF1. </td></tr>
 <tr>
 <td>Trigger</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Trigger Rising</li>
+Rising</li>
 <li>
-Trigger Falling</li>
+Falling</li>
 <li>
-Trigger Both Edge</li>
+Both Edge</li>
 </ul>
-</td><td>The trigger specifies when a comparator callback event should occur. Unused if the interrupt priority is disabled or the callback is NULL. </td></tr>
+</td><td>Both Edge </td><td>The trigger specifies when a comparator callback event should occur. Unused if the interrupt priority is disabled or the callback is NULL. </td></tr>
 <tr>
 <td>Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Filter Off</li>
+No sampling (bypass)</li>
 <li>
-Filter 1</li>
+Sampling at PCLKB</li>
 <li>
-Filter 8</li>
+Sampling at PCLKB/8</li>
 <li>
-Filter 16</li>
-<li>
-Filter 32</li>
+Sampling at PCLKB/32</li>
 </ul>
-</td><td>Select the PCLK divisor for the hardware digital debounce filter. Larger divisors provide a longer debounce and take longer for the output to update. </td></tr>
+</td><td>No sampling (bypass) </td><td>Select the PCLK divisor for the hardware digital debounce filter. Larger divisors provide a longer debounce and take longer for the output to update. </td></tr>
 <tr>
-<td>Invert</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Output Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Not Inverted</li>
+<li>
+Inverted</li>
+</ul>
+</td><td>Not Inverted </td><td>When enabled comparator output is inverted. This affects the output read from <a class="el" href="group___a_c_m_p_l_p.html#ga6a4c4a95d6f25571a8e673e4c3d82cf2">R_ACMPLP_StatusGet()</a>, the pin output level, and the edge trigger. </td></tr>
+<tr>
+<td>Pin Output (VCOUT)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Off</li>
 <li>
 On</li>
 </ul>
-</td><td>Turn this on to invert the comparator output. This affects the output read from statusGet(), the pin output level, and the edge trigger. </td></tr>
+</td><td>Off </td><td>Turn this on to include the output from this comparator on VCOUT. The comparator output on VCOUT is OR'd with output from all other ACMPHS and ACMPLP comparators. </td></tr>
 <tr>
-<td>Pin Output</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Off</li>
-<li>
-On</li>
-</ul>
-</td><td>Turn this on to include the output from this comparator on VCOUT. The comparator output on VCOUT is OR'd with output from all other ACMPHS and ACMPLP comparators. </td></tr>
-<tr>
-<td>Internal Vref Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Vref (Standard mode only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Reference Voltage Selection. </td></tr>
+</td><td>Disabled </td><td>If reference voltage selection is enabled then internal reference voltage is used as comparator input </td></tr>
 <tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>Define this function in the application. It is called when the Trigger event occurs. </td></tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Define this function in the application. It is called when the Trigger event occurs. </td></tr>
 <tr>
-<td>Comparator Interrupt Priority</td><td>MCU Specific Options</td><td>Select the interrupt priority for the comparator interrupt. </td></tr>
+<td>Comparator Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for the comparator interrupt. </td></tr>
 <tr>
-<td>ACMPLP IVCMP</td><td>MCU Specific Options</td><td>Select the comparator input source. </td></tr>
+<td>Analog Input Voltage Source (IVCMP)</td><td>MCU Specific Options</td><td></td><td>Select the comparator input source. Only options for the configured channel are valid. </td></tr>
 <tr>
-<td>ACMPLP IVREF</td><td>MCU Specific Options</td><td>Select the comparator reference voltage source. </td></tr>
+<td>Reference Voltage Input Source (IVREF)</td><td>MCU Specific Options</td><td></td><td>Select the comparator reference voltage source.<br />
+<br />
+If channel 1 is seleected and the 'Reference Voltage Selection (ACMPLP1)' config option is set to IVREF0, select one of the Channel 0 options. In all other cases, only options for the configured channel are valid. </td></tr>
 </table>
 </p>
-<dl class="section note"><dt>Note</dt><dd>Reference Voltage Selection (ACMPLP channel 1) can choose IVREF0 or IVREF1. User must set reqiuired IVREF0/IVREF1 options from "ACMPLP IVREF". The "Channel 0 only" options can be selected for ACMPLP channel 1 when "Reference Voltage Selection" is set to IVREF0</dd></dl>
 <h2><a class="anchor" id="r-acmplp-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The ACMPLP peripheral module requires PCLKB as clock source</p>
+<p>The ACMPLP peripheral is clocked from PCLKB. You can set the PCLKB frequency using the clock configurator in e2 studio or using the CGC Interface at run-time.</p>
 <h2><a class="anchor" id="r-acmplp-pin-configuration"></a>
 Pin Configuration</h2>
-<p>Configure the function of pins IVREF and IVCMP</p>
-<h2>Output Polarity</h2>
-<p>If output polarity is configured as "Inverted" then the VCOUT will be inverted and the <a class="el" href="group___a_c_m_p_l_p.html#ga6a4c4a95d6f25571a8e673e4c3d82cf2">R_ACMPLP_StatusGet()</a> will result an inverted status.</p>
+<p>Comparator output can be enabled or disabled on each channel individually. The VCOUT pin is a logical OR of all comparator outputs.</p>
+<p>The CMPINn pins are used as comparator inputs. The CMPREFn pins are used as comparator reference values.</p>
 <h1><a class="anchor" id="r-acmplp-usage_notes"></a>
 Usage Notes</h1>
 <div class="image">
 <object type="image/svg+xml" data="r_acmplp_standard_mode.svg">r_acmplp_standard_mode.svg</object>
 <div class="caption">
 ACMPLP Standard Mode Operation</div></div>
- <h2>Comparator Output on VCOUT Pin</h2>
-<p>The signal on the VCOUT pin is ORed signal of all comparators with pin output enabled.</p>
-<h2>Debounce Filter</h2>
-<p>The ACMPLP0/ ACMPLP1 signal is sampled three times based on the sampling clock selected. The filter clock frequency is determined by PCLKB and the comparator_filter_t setting.</p>
+ <h2>Noise Filter</h2>
+<p>When the noise filter is enabled, the ACMPLP0/ACMPLP1 signal is sampled three times based on the sampling clock selected. The filter clock frequency is determined by PCLKB and the comparator_filter_t setting.</p>
+<h2>Output Polarity</h2>
+<p>If output polarity is configured as "Inverted" then the VCOUT signal will be inverted and the <a class="el" href="group___a_c_m_p_l_p.html#ga6a4c4a95d6f25571a8e673e4c3d82cf2">R_ACMPLP_StatusGet()</a> will return an inverted status.</p>
 <h2>Window Mode</h2>
-<p>In window mode, the comparator indicates if the analog input voltage falls within the window (low and high referrence voltage) or is outside the window.</p>
+<p>In window mode, the comparator indicates if the analog input voltage falls within the window (low and high reference voltage) or is outside the window.</p>
 <div class="image">
 <object type="image/svg+xml" data="r_acmplp_window_mode.svg">r_acmplp_window_mode.svg</object>
 <div class="caption">
 ACMPLP Window Mode Operation</div></div>
- <dl class="section note"><dt>Note</dt><dd>Once the analog comparator is configured, the program must wait for the stabilization time to elapse before using the comparator.</dd></dl>
-<h2><a class="anchor" id="r-acmplp-limitations"></a>
+ <h2><a class="anchor" id="r-acmplp-limitations"></a>
 Limitations</h2>
-<p>Low speed is not supported by the ACMPLP driver.</p>
+<ul>
+<li>Once the analog comparator is configured, the program must wait for the stabilization time to elapse before using the comparator.</li>
+<li>Low speed is not supported by the ACMPLP driver.</li>
+</ul>
 <h1><a class="anchor" id="r-acmplp-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
-<p>This is a basic example of minimal use of the ACMPLP in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> acmplp_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga0ad2123f7a5152cf108883163581f11b">R_BSP_PinAccessEnable</a>();</div><div class="line"></div><div class="line">    <span class="comment">/* Set compare pin low. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(TEST_COMPARATOR_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the ACMPLP module*/</span></div><div class="line">    err = <a class="code" href="group___a_c_m_p_l_p.html#gad3bf58ab5795c3dd1a403bb4f1b5d6dd">R_ACMPLP_Open</a>(&amp;g_comparator_ctrl, &amp;g_comparator_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the minimum stabilization wait time before enabling output. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(BSP_FEATURE_ACMPLP_MIN_WAIT_TIME_US, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the comparator output */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_l_p.html#gac9f793551a76222554a5fc13fd200d54">R_ACMPLP_OutputEnable</a>(&amp;g_comparator_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Set compare pin high. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(TEST_COMPARATOR_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_comparator_events)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__status__t">comparator_status_t</a> status;</div><div class="line"></div><div class="line">    <span class="comment">/* Check status of comparator, Status will be High */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_l_p.html#ga6a4c4a95d6f25571a8e673e4c3d82cf2">R_ACMPLP_StatusGet</a>(&amp;g_comparator_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<p>The following is a basic example of minimal use of the ACMPLP. The comparator is configured to trigger a callback when the input rises above the internal reference voltage (VREF). A GPIO output acts as the comparator input and is externally connected to the CMPIN input of the ACMPLP.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Connect this control pin to the VCMP input of the comparator. This can be any GPIO pin</span></div><div class="line"><span class="comment"> * that is not input only. */</span></div><div class="line"><span class="preprocessor">#define ACMPLP_EXAMPLE_CONTROL_PIN    (BSP_IO_PORT_04_PIN_08)</span></div><div class="line"></div><div class="line"><span class="keyword">volatile</span> uint32_t g_comparator_events = 0U;</div><div class="line"></div><div class="line"><span class="comment">/* This callback is called when a comparator event occurs. */</span></div><div class="line"><span class="keywordtype">void</span> acmplp_example_callback (<a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__callback__args__t">comparator_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line">    g_comparator_events++;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> acmplp_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Disable pin register write protection, if enabled */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga0ad2123f7a5152cf108883163581f11b">R_BSP_PinAccessEnable</a>();</div><div class="line"></div><div class="line">    <span class="comment">/* Start with the VCMP pin low. This example assumes the comparator is configured to trigger</span></div><div class="line"><span class="comment">     * when VCMP rises above VREF. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(ACMPLP_EXAMPLE_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the ACMPLP module */</span></div><div class="line">    err = <a class="code" href="group___a_c_m_p_l_p.html#gad3bf58ab5795c3dd1a403bb4f1b5d6dd">R_ACMPLP_Open</a>(&amp;g_comparator_ctrl, &amp;g_comparator_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the minimum stabilization wait time before enabling output. */</span></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__info__t">comparator_info_t</a> info;</div><div class="line">    <a class="code" href="group___a_c_m_p_l_p.html#ga6a9ac08a1095c12ef580a4ccec383635">R_ACMPLP_InfoGet</a>(&amp;g_comparator_ctrl, &amp;info);</div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(info.<a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ad0c2dd54f8ae5b8a775385bd46036ada">min_stabilization_wait_us</a>, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the comparator output */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_l_p.html#gac9f793551a76222554a5fc13fd200d54">R_ACMPLP_OutputEnable</a>(&amp;g_comparator_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Set VCMP low. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(ACMPLP_EXAMPLE_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_comparator_events)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__status__t">comparator_status_t</a> status;</div><div class="line"></div><div class="line">    <span class="comment">/* Check status of comparator, Status will be COMPARATOR_STATE_OUTPUT_HIGH */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_l_p.html#ga6a4c4a95d6f25571a8e673e4c3d82cf2">R_ACMPLP_StatusGet</a>(&amp;g_comparator_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:gacf5f338d07b27f3f740a174e0f0c9159"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_c_m_p_l_p.html#gacf5f338d07b27f3f740a174e0f0c9159">acmplp_input_t</a> </td></tr>
@@ -510,9 +511,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

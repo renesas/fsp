@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -255,11 +255,11 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <tr class="separator:afd4c3c463a931fa8068576f5bb410609"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9580ac1ebfaae9398ebee4f17562acb5"><td class="memItemLeft" align="right" valign="top"><a id="a9580ac1ebfaae9398ebee4f17562acb5"></a>
 <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__instance__descriptor__t">ether_instance_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a9580ac1ebfaae9398ebee4f17562acb5">p_rx_descriptors</a></td></tr>
-<tr class="memdesc:a9580ac1ebfaae9398ebee4f17562acb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmission descriptor. <br /></td></tr>
+<tr class="memdesc:a9580ac1ebfaae9398ebee4f17562acb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive descriptor buffer pool. <br /></td></tr>
 <tr class="separator:a9580ac1ebfaae9398ebee4f17562acb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01653c4335de922b635ef951dbccee3a"><td class="memItemLeft" align="right" valign="top"><a id="a01653c4335de922b635ef951dbccee3a"></a>
 <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__instance__descriptor__t">ether_instance_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a01653c4335de922b635ef951dbccee3a">p_tx_descriptors</a></td></tr>
-<tr class="memdesc:a01653c4335de922b635ef951dbccee3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive descriptor. <br /></td></tr>
+<tr class="memdesc:a01653c4335de922b635ef951dbccee3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit descriptor buffer pool. <br /></td></tr>
 <tr class="separator:a01653c4335de922b635ef951dbccee3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae2adf978d21f78a198689c42b484974"><td class="memItemLeft" align="right" valign="top"><a id="aae2adf978d21f78a198689c42b484974"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#aae2adf978d21f78a198689c42b484974">num_tx_descriptors</a></td></tr>
@@ -337,8 +337,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:ae75458ac2a31861195b73120676d670c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c0bc3caef73e0a216c2fe2edc4fff4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a1c0bc3caef73e0a216c2fe2edc4fff4b">close</a> )(<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:a1c0bc3caef73e0a216c2fe2edc4fff4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e3f4ad694c500a0d1cb7ed3cb4a6a92"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a2e3f4ad694c500a0d1cb7ed3cb4a6a92">read</a> )(<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl, void **const pp_buffer, uint32_t *const length_bytes)</td></tr>
-<tr class="separator:a2e3f4ad694c500a0d1cb7ed3cb4a6a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41d56c8843a454690b1969f8f766d65a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a41d56c8843a454690b1969f8f766d65a">read</a> )(<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl, void *const p_buffer, uint32_t *const length_bytes)</td></tr>
+<tr class="separator:a41d56c8843a454690b1969f8f766d65a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa38e7f82e66fd26fd8d51b11f46ae6e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#aa38e7f82e66fd26fd8d51b11f46ae6e6">bufferRelease</a> )(<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:aa38e7f82e66fd26fd8d51b11f46ae6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92e87f33f0a4e0ccb26464d697cdf233"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233">write</a> )(<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl, void *const p_buffer, uint32_t const frame_length)</td></tr>
@@ -363,7 +363,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Open driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd" title="After ETHERC, EDMAC and PHY-LSI are reset in software, an auto negotiation of PHY-LSI is begun...">R_ETHER_Open()</a></li>
+<li><a class="el" href="group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd">R_ETHER_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -388,7 +388,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Close driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158" title="Disables interrupts. Removes power and releases hardware lock. Implements ether_api_t::close. ">R_ETHER_Close()</a></li>
+<li><a class="el" href="group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158">R_ETHER_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -400,19 +400,19 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a2e3f4ad694c500a0d1cb7ed3cb4a6a92"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e3f4ad694c500a0d1cb7ed3cb4a6a92">&#9670;&nbsp;</a></span>read</h2>
+<a id="a41d56c8843a454690b1969f8f766d65a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41d56c8843a454690b1969f8f766d65a">&#9670;&nbsp;</a></span>read</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_api_t::read) (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl, void **const pp_buffer, uint32_t *const length_bytes)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_api_t::read) (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl, void *const p_buffer, uint32_t *const length_bytes)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read packet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r.html#ga705e2527edcde11a56d7b0114fcbf1f2" title="Receive Ethernet frame. Receives data to the location specified by the pointer to the receive buffer...">R_ETHER_Read()</a></li>
+<p>Read packet if data is available. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___e_t_h_e_r.html#ga174de3d54336469ca7a1e5949820bd3f">R_ETHER_Read()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -437,8 +437,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Release rx buffer from buffer pool process in zero copy read operation. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r.html#ga3bc8e53a14aa52d4d2b9b247ddd7cce8" title="Release the receive buffer. Implements ether_api_t::BufferRelease. ">R_ETHER_BufferRelease()</a></li>
+<p>Release rx buffer from buffer pool process in zero-copy read operation. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___e_t_h_e_r.html#ga3bc8e53a14aa52d4d2b9b247ddd7cce8">R_ETHER_BufferRelease()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -462,13 +462,13 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Write packet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112" title="Transmit Ethernet frame. Transmits data from the location specified by the pointer to the transmit bu...">R_ETHER_Write()</a></li>
+<li><a class="el" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to where to load write data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to data to write. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">frame_length</td><td>Send ethernet frame size(without 4 bytes of CRC data size). </td></tr>
   </table>
   </dd>
@@ -488,7 +488,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Process link. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311" title="The Link up processing, the Link down processing, and the magic packet detection processing are execu...">R_ETHER_LinkProcess()</a></li>
+<li><a class="el" href="group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311">R_ETHER_LinkProcess()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -512,7 +512,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Enable magic packet detection. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r.html#ga992be578c310d212389be65762d1b6ea" title="The setting of ETHERC is changed from a usual sending and receiving mode to the magic packet detectio...">R_ETHER_WakeOnLANEnable()</a></li>
+<li><a class="el" href="group___e_t_h_e_r.html#ga992be578c310d212389be65762d1b6ea">R_ETHER_WakeOnLANEnable()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -536,12 +536,11 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Return the version of the driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r.html#gaef9ae6460a191a602864a5b4da16cf45" title="Provides API and code version in the user provided pointer. Implements ether_api_t::versionGet. ">R_ETHER_VersionGet()</a></li>
+<li><a class="el" href="group___e_t_h_e_r.html#gaef9ae6460a191a602864a5b4da16cf45">R_ETHER_VersionGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_data</td><td>Memory address to return version information to. </td></tr>
   </table>
   </dd>
@@ -744,9 +743,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

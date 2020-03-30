@@ -6,8 +6,7 @@ var group___t_i_m_e_r___a_p_i =
     ] ],
     [ "timer_info_t", "group___t_i_m_e_r___a_p_i.html#structtimer__info__t", [
       [ "count_direction", "group___t_i_m_e_r___a_p_i.html#af333f19bba6c3962a91fe3beb90482a8", null ],
-      [ "clock_frequency", "group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345", null ],
-      [ "period_counts", "group___t_i_m_e_r___a_p_i.html#a08b897cfbf2d0cefafe8d3abb1afc747", null ]
+      [ "clock_frequency", "group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345", null ]
     ] ],
     [ "timer_status_t", "group___t_i_m_e_r___a_p_i.html#structtimer__status__t", [
       [ "counter", "group___t_i_m_e_r___a_p_i.html#ab3892976d7757fae081e19023e155006", null ],
@@ -47,8 +46,10 @@ var group___t_i_m_e_r___a_p_i =
     [ "timer_ctrl_t", "group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a", null ],
     [ "timer_event_t", "group___t_i_m_e_r___a_p_i.html#gac3bee51f7c9078f794c5ac19522f91eb", [
       [ "TIMER_EVENT_CYCLE_END", "group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c", null ],
+      [ "TIMER_EVENT_CREST", "group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba73d4afde72c0b28a768c8e6d25c050f8", null ],
       [ "TIMER_EVENT_CAPTURE_A", "group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba4bc1252f63147f4a01f7b7ba88afac1d", null ],
-      [ "TIMER_EVENT_CAPTURE_B", "group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebab7b635fbf34ede5a3e2f55b5a60ac21b", null ]
+      [ "TIMER_EVENT_CAPTURE_B", "group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebab7b635fbf34ede5a3e2f55b5a60ac21b", null ],
+      [ "TIMER_EVENT_TROUGH", "group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba83cb2de8ac629fcd95525e94b94089f0", null ]
     ] ],
     [ "timer_variant_t", "group___t_i_m_e_r___a_p_i.html#gaa3525eef2e1fa1bc8809b2d3aaf0de5d", [
       [ "TIMER_VARIANT_32_BIT", "group___t_i_m_e_r___a_p_i.html#ggaa3525eef2e1fa1bc8809b2d3aaf0de5da7dddd2791567467dc7bcf74ca2fc2cbb", null ],
@@ -61,7 +62,9 @@ var group___t_i_m_e_r___a_p_i =
     [ "timer_mode_t", "group___t_i_m_e_r___a_p_i.html#ga6d4cd64aed5c0009ac26803efc9c13b2", [
       [ "TIMER_MODE_PERIODIC", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e", null ],
       [ "TIMER_MODE_ONE_SHOT", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a", null ],
-      [ "TIMER_MODE_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac", null ]
+      [ "TIMER_MODE_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac", null ],
+      [ "TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a6a3c462f9e9cc1b26ab68f38efd79b14", null ],
+      [ "TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a204001ad413e9ad0db08a66d004a555a", null ]
     ] ],
     [ "timer_direction_t", "group___t_i_m_e_r___a_p_i.html#ga8d600bb7885c5490bb7e8f989aa2ff83", [
       [ "TIMER_DIRECTION_DOWN", "group___t_i_m_e_r___a_p_i.html#gga8d600bb7885c5490bb7e8f989aa2ff83a6a5c25392297a9e6adcc2a31d210e654", null ],

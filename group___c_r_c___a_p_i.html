@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -109,6 +109,8 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structcrc__input__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c___a_p_i.html#structcrc__input__t">crc_input_t</a></td></tr>
+<tr class="separator:structcrc__input__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcrc__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c___a_p_i.html#structcrc__cfg__t">crc_cfg_t</a></td></tr>
 <tr class="separator:structcrc__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcrc__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c___a_p_i.html#structcrc__api__t">crc_api_t</a></td></tr>
@@ -129,8 +131,25 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga5d770a90efa92855a81b5ae47b50db70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad26e18afbb5663c0bcb91d62d418e2e3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c___a_p_i.html#gad26e18afbb5663c0bcb91d62d418e2e3">crc_snoop_direction_t</a> </td></tr>
 <tr class="separator:gad26e18afbb5663c0bcb91d62d418e2e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d0e4730bce0d10c0702a6db06c1667c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c___a_p_i.html#ga9d0e4730bce0d10c0702a6db06c1667c">crc_snoop_address_t</a> </td></tr>
+<tr class="separator:ga9d0e4730bce0d10c0702a6db06c1667c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structcrc__input__t" id="structcrc__input__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcrc__input__t">&#9670;&nbsp;</a></span>crc_input_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct crc_input_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Structure for CRC inputs </p>
+</div>
+</div>
+</div>
 <a name="structcrc__cfg__t" id="structcrc__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structcrc__cfg__t">&#9670;&nbsp;</a></span>crc_cfg_t</h2>
 
@@ -158,7 +177,7 @@ bit_order</td>
 <td class="fielddoc">
 CRC Calculation Switching (LMS) </td></tr>
 <tr><td class="fieldtype">
-<a id="a6092ce832942f874107390ddea210a4e"></a>crc_snoop_address_t</td>
+<a id="a6092ce832942f874107390ddea210a4e"></a><a class="el" href="group___c_r_c___a_p_i.html#ga9d0e4730bce0d10c0702a6db06c1667c">crc_snoop_address_t</a></td>
 <td class="fieldname">
 snoop_address</td>
 <td class="fielddoc">
@@ -197,7 +216,7 @@ CRC Hardware Dependent Configuration. </td></tr>
 <tr class="separator:a4d4efcfb06b59c92801320f31e8f2eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab171c85217e275bda7426309bd832b02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c___a_p_i.html#ab171c85217e275bda7426309bd832b02">snoopDisable</a> )(<a class="el" href="group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0">crc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ab171c85217e275bda7426309bd832b02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ababb93aa2ede5ba3d5750bd3203ce7e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c___a_p_i.html#ababb93aa2ede5ba3d5750bd3203ce7e3">calculate</a> )(<a class="el" href="group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0">crc_ctrl_t</a> *const p_ctrl, crc_input_t *const p_crc_input, uint32_t *p_crc_result)</td></tr>
+<tr class="memitem:ababb93aa2ede5ba3d5750bd3203ce7e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c___a_p_i.html#ababb93aa2ede5ba3d5750bd3203ce7e3">calculate</a> )(<a class="el" href="group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0">crc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_r_c___a_p_i.html#structcrc__input__t">crc_input_t</a> *const p_crc_input, uint32_t *p_crc_result)</td></tr>
 <tr class="separator:ababb93aa2ede5ba3d5750bd3203ce7e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af01465b831364720a3327ce6ec9fe05d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c___a_p_i.html#af01465b831364720a3327ce6ec9fe05d">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *version)</td></tr>
 <tr class="separator:af01465b831364720a3327ce6ec9fe05d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -320,7 +339,7 @@ CRC Hardware Dependent Configuration. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Disable snooping. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>R_CRC_SnoopDisbale()</li>
+<li><a class="el" href="group___c_r_c.html#ga5bda4df2557aeaaf312b23fb31568f20">R_CRC_SnoopDisable()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -339,7 +358,7 @@ CRC Hardware Dependent Configuration. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  crc_api_t::calculate) (<a class="el" href="group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0">crc_ctrl_t</a> *const p_ctrl, crc_input_t *const p_crc_input, uint32_t *p_crc_result)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  crc_api_t::calculate) (<a class="el" href="group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0">crc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_r_c___a_p_i.html#structcrc__input__t">crc_input_t</a> *const p_crc_input, uint32_t *p_crc_result)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -504,15 +523,112 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga9d0e4730bce0d10c0702a6db06c1667c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9d0e4730bce0d10c0702a6db06c1667c">&#9670;&nbsp;</a></span>crc_snoop_address_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_r_c___a_p_i.html#ga9d0e4730bce0d10c0702a6db06c1667c">crc_snoop_address_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Snoop SCI register Address (lower 14 bits) </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca816bc142a0ffe87bb5467c5cb0caedad"></a>CRC_SNOOP_ADDRESS_NONE&#160;</td><td class="fielddoc"><p>Snoop mode disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667cafa311ac2cb99f65b2e41a15714bca761"></a>CRC_SNOOP_ADDRESS_SCI0_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI0 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca4b579e8ec5d8768321edb8fc33b8fd99"></a>CRC_SNOOP_ADDRESS_SCI1_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI1 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca8db51697250922cfee0932e99aeb11b7"></a>CRC_SNOOP_ADDRESS_SCI2_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI2 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca57390b484f8dd17690d720bd3ad07c1f"></a>CRC_SNOOP_ADDRESS_SCI3_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI3 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca2c1ff70f3df2d60062ea970c1eeda951"></a>CRC_SNOOP_ADDRESS_SCI4_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI4 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667cadba090861f3cc62ac9d0a550d6d0c560"></a>CRC_SNOOP_ADDRESS_SCI5_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI5 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca987c13e307bd42df957ab488eb66b742"></a>CRC_SNOOP_ADDRESS_SCI6_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI6 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667cae7808bc0f33d68676aa7336ad7f22a76"></a>CRC_SNOOP_ADDRESS_SCI7_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI7 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667caa5ade55cd8f4d77cd745a016590b7e39"></a>CRC_SNOOP_ADDRESS_SCI8_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI8 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca6c0a1796a69d421568140444395bdb65"></a>CRC_SNOOP_ADDRESS_SCI9_TDR&#160;</td><td class="fielddoc"><p>Snoop SCI9 transmit data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca66b499bd1172e3591eb6fab0ed1697c4"></a>CRC_SNOOP_ADDRESS_SCI0_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI0 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca07ecdc80c9eb5d7063fe4fcefb9d6fb4"></a>CRC_SNOOP_ADDRESS_SCI1_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI1 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca0b6e34bd9f04cb50c3a6bba90ac7e76a"></a>CRC_SNOOP_ADDRESS_SCI2_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI2 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667cafb971563bc5fd945f8194a6deda88472"></a>CRC_SNOOP_ADDRESS_SCI3_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI3 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca0e9bf65648a1b1024a2151a2f4c00fe2"></a>CRC_SNOOP_ADDRESS_SCI4_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI4 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca9fa04cf4b1aac6e2b11550886adb1529"></a>CRC_SNOOP_ADDRESS_SCI5_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI5 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca4e6fe29576a33567337dc5b0fbfc98a0"></a>CRC_SNOOP_ADDRESS_SCI6_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI6 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca4deb3ef5eed381de0426a83286fc9911"></a>CRC_SNOOP_ADDRESS_SCI7_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI7 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca33c785b0c932a72c9e489c9fe5a7d459"></a>CRC_SNOOP_ADDRESS_SCI8_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI8 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667caa99a7af0ae7a656e03671d008d7da335"></a>CRC_SNOOP_ADDRESS_SCI9_FTDRL&#160;</td><td class="fielddoc"><p>Snoop SCI9 transmit FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667caed6ad0d2c4335fe1b1dcac298b847030"></a>CRC_SNOOP_ADDRESS_SCI0_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI0 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667caa85a1173b613f187a019adb193a0f2f8"></a>CRC_SNOOP_ADDRESS_SCI1_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI1 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca79f7813f1d300541485ab27920a95c0f"></a>CRC_SNOOP_ADDRESS_SCI2_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI2 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667caa8d97edd67e37bc4b6b69d5760d41595"></a>CRC_SNOOP_ADDRESS_SCI3_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI3 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca4ca4b6c392ab21a80150aba2346da177"></a>CRC_SNOOP_ADDRESS_SCI4_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI4 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667caf6a9d5b409ada4331a65427dbdc9f66e"></a>CRC_SNOOP_ADDRESS_SCI5_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI5 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca131371cff34acdc9a618954f93ca10ae"></a>CRC_SNOOP_ADDRESS_SCI6_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI6 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca4692ab67a09d61603dd602103fc3e0d0"></a>CRC_SNOOP_ADDRESS_SCI7_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI7 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca09e7353590f0ef54da658765b7fa6cbe"></a>CRC_SNOOP_ADDRESS_SCI8_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI8 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca59c12f3ad4380aec66e1326fcd645469"></a>CRC_SNOOP_ADDRESS_SCI9_RDR&#160;</td><td class="fielddoc"><p>Snoop SCI9 receive data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667cabf0e853151f187990a78a3bf6286f327"></a>CRC_SNOOP_ADDRESS_SCI0_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI0 receive FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca55ee274d112b2a58e13e3041bd418d89"></a>CRC_SNOOP_ADDRESS_SCI1_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI1 receive FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca687172b85e90b86b6c40198b52b64425"></a>CRC_SNOOP_ADDRESS_SCI2_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI2 receive FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca4a7191b38bf98a17b0f201213893c339"></a>CRC_SNOOP_ADDRESS_SCI3_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI3 receive FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667caac99d6737ee5c8ad3cf53623590734c3"></a>CRC_SNOOP_ADDRESS_SCI4_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI4 receive FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667cab9cfe3ae156dd62186c795a3a5882fb7"></a>CRC_SNOOP_ADDRESS_SCI5_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI5 receive FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667cad26f57f595045c0ff5d9e6a0b66cfdec"></a>CRC_SNOOP_ADDRESS_SCI6_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI6 receive FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca313a1b8a6e36280c44fb4ef90e34abc4"></a>CRC_SNOOP_ADDRESS_SCI7_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI7 receive FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca608e5359e0f64461002d73d50e391539"></a>CRC_SNOOP_ADDRESS_SCI8_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI8 receive FIFO data register. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9d0e4730bce0d10c0702a6db06c1667ca059088cc3a7d95f9b4752eff2692bacf"></a>CRC_SNOOP_ADDRESS_SCI9_FRDRL&#160;</td><td class="fielddoc"><p>Snoop SCI9 receive FIFO data register. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

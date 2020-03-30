@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -323,13 +323,13 @@ API major version. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aada459ccb2b85a8dc33fabc987e173e4"></a>FSP_ERR_SECTOR_RELEASE_FAILED&#160;</td><td class="fielddoc"><p>Sector release failed. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a6d11b644cafb53d7d39f701de5ca026d"></a>FSP_ERR_INTERNAL&#160;</td><td class="fielddoc"><p>Internal error. </p>
-<p>Start of RTOS only error codes </p>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8add81216e0221e6d8583d35b1b471199b"></a>FSP_ERR_NOT_INITIALIZED&#160;</td><td class="fielddoc"><p>Required initialization not complete. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aa5cbda3787ddf5092d0fdf14b8e4fe57"></a>FSP_ERR_WAIT_ABORTED&#160;</td><td class="fielddoc"><p>Wait. </p>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a6d11b644cafb53d7d39f701de5ca026d"></a>FSP_ERR_INTERNAL&#160;</td><td class="fielddoc"><p>Internal error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aa5cbda3787ddf5092d0fdf14b8e4fe57"></a>FSP_ERR_WAIT_ABORTED&#160;</td><td class="fielddoc"><p>Wait aborted. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a8f76d058261cd655519cbc81f1586bc4"></a>FSP_ERR_FRAMING&#160;</td><td class="fielddoc"><p>Framing error occurs. </p>
-<p>Start of UART specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ae7b57f9284c226e7b524bcd9ee23cca9"></a>FSP_ERR_BREAK_DETECT&#160;</td><td class="fielddoc"><p>Break signal detects. </p>
 </td></tr>
@@ -344,7 +344,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a5875afbb6b583cfef9a6c83a053b7be6"></a>FSP_ERR_INSUFFICIENT_DATA&#160;</td><td class="fielddoc"><p>Not enough data in receive circular buffer. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aee232d80cec4c18cfae78bdfb718c7cf"></a>FSP_ERR_TRANSFER_ABORTED&#160;</td><td class="fielddoc"><p>The data transfer was aborted. </p>
-<p>Start of SPI specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a1009b837effcd110d0c0fb1106d90898"></a>FSP_ERR_MODE_FAULT&#160;</td><td class="fielddoc"><p>Mode fault error. </p>
 </td></tr>
@@ -355,7 +354,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ab17e4b925713a575bdc269db3bb06f9b"></a>FSP_ERR_OVERRUN&#160;</td><td class="fielddoc"><p>Overrun error. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a20165a34bc804ee7750960ad81853f20"></a>FSP_ERR_CLOCK_INACTIVE&#160;</td><td class="fielddoc"><p>Inactive clock specified as system clock. </p>
-<p>Start of CGC Specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ad0991da0bb1261a103f9b86c179446cc"></a>FSP_ERR_CLOCK_ACTIVE&#160;</td><td class="fielddoc"><p>Active clock source cannot be modified without stopping first. </p>
 </td></tr>
@@ -378,7 +376,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aac8334069ce27d25543b199d6b0afdb3"></a>FSP_ERR_LOW_VOLTAGE_MODE&#160;</td><td class="fielddoc"><p>Invalid clock setting attempted in low voltage mode. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ab0136751a5a85aedba8975720d6d6976"></a>FSP_ERR_PE_FAILURE&#160;</td><td class="fielddoc"><p>Unable to enter Programming mode. </p>
-<p>Start of FLASH Specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac967d11d3c3211ff7ce1c364a6376ed0"></a>FSP_ERR_CMD_LOCKED&#160;</td><td class="fielddoc"><p>Peripheral in command locked state. </p>
 </td></tr>
@@ -389,10 +386,8 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a61a8e059198001f46af73f2930e6c144"></a>FSP_ERR_BLANK_CHECK_FAILED&#160;</td><td class="fielddoc"><p>Blank check operation failed. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a899d80c2fd828410b2d01a7a96528f8c"></a>FSP_ERR_INVALID_CAC_REF_CLOCK&#160;</td><td class="fielddoc"><p>Measured clock rate &lt; reference clock rate. </p>
-<p>Start of CAC Specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a41282c4e46d7f2cc7869fcfd782fab54"></a>FSP_ERR_CLOCK_GENERATION&#160;</td><td class="fielddoc"><p>Clock cannot be specified as system clock. </p>
-<p>Start of GLCD Specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a0ae9f5e2b29a1355c61d1a6837fcc8a7"></a>FSP_ERR_INVALID_TIMING_SETTING&#160;</td><td class="fielddoc"><p>Invalid timing parameter. </p>
 </td></tr>
@@ -413,7 +408,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a96657076ca10ddfd97018bfbbeb94132"></a>FSP_ERR_INVALID_BRIGHTNESS_SETTING&#160;</td><td class="fielddoc"><p>Invalid gamma correction parameter. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac2e2eac0e5d38ed6ec2c7b8891782df0"></a>FSP_ERR_JPEG_ERR&#160;</td><td class="fielddoc"><p>JPEG error. </p>
-<p>Start of JPEG Specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a05ef199ce97212663fa6c3edc947d3bd"></a>FSP_ERR_JPEG_SOI_NOT_DETECTED&#160;</td><td class="fielddoc"><p>SOI not detected until EOI detected. </p>
 </td></tr>
@@ -448,19 +442,14 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a9a874eddeb97d535b197a7fe3723a2f6"></a>FSP_ERR_JPEG_UNSUPPORTED_IMAGE_SIZE&#160;</td><td class="fielddoc"><p>JPEG Image size is not aligned with MCU. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aa4ed46a9d166f29b87a6f2ff89c458b7"></a>FSP_ERR_CALIBRATE_FAILED&#160;</td><td class="fielddoc"><p>Calibration failed. </p>
-<p>Start of touch panel framework specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a9949d6ad0b2b4e41a620c15c2bfa393f"></a>FSP_ERR_IP_HARDWARE_NOT_PRESENT&#160;</td><td class="fielddoc"><p>Requested IP does not exist on this device. </p>
-<p>Start of IP specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a395e4056cceddf0f1606de74a028ed9e"></a>FSP_ERR_IP_UNIT_NOT_PRESENT&#160;</td><td class="fielddoc"><p>Requested unit does not exist on this device. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8af05386b34afb25ea06b40f7dd5d6ecf7"></a>FSP_ERR_IP_CHANNEL_NOT_PRESENT&#160;</td><td class="fielddoc"><p>Requested channel does not exist on this device. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ae2ae5c42194e6e81db569b16b96b51de"></a>FSP_ERR_USB_FAILED&#160;</td><td class="fielddoc"><p>Start of USB specific </p>
-</td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ab4725f604ee9846237af90d47c659f5a"></a>FSP_ERR_NO_MORE_BUFFER&#160;</td><td class="fielddoc"><p>No more buffer found in the memory block pool. </p>
-<p>Start of Message framework specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aef76cb06aecdf33a1186e2b1dd830b1a"></a>FSP_ERR_ILLEGAL_BUFFER_ADDRESS&#160;</td><td class="fielddoc"><p>Buffer address is out of block memory pool. </p>
 </td></tr>
@@ -481,7 +470,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a3e6f68238ad78176d339b01ee9f396a2"></a>FSP_ERR_BUFFER_RELEASED&#160;</td><td class="fielddoc"><p>Buffer has been released. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a7dfc1b7578f229e739a22ecb69e4710a"></a>FSP_ERR_D2D_ERROR_INIT&#160;</td><td class="fielddoc"><p>Dave/2d has an error in the initialization. </p>
-<p>Start of 2DG Driver specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a89727736be0655b4f42ea4bb77f43942"></a>FSP_ERR_D2D_ERROR_DEINIT&#160;</td><td class="fielddoc"><p>Dave/2d has an error in the initialization. </p>
 </td></tr>
@@ -490,11 +478,10 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a5612cd93ed5b3c657ace3c0a8831c4b5"></a>FSP_ERR_D2D_ERROR_SIZE&#160;</td><td class="fielddoc"><p>Dave/2d has an error in the rendering. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a39f6c51c69fd754c9a16551bbd8a7b59"></a>FSP_ERR_ETHER_ERROR_NO_DATA&#160;</td><td class="fielddoc"><p>No Data in Receive buffer. </p>
-<p>Start of ETHER Driver specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a58142c5af0984c7c4ede26c86aaf1376"></a>FSP_ERR_ETHER_ERROR_LINK&#160;</td><td class="fielddoc"><p>ETHERC/EDMAC has an error in the Auto-negotiation. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a75d749363c8e2f7d90674ca15a41ba90"></a>FSP_ERR_ETHER_ERROR_MAGIC_PACKTE_MODE&#160;</td><td class="fielddoc"><p>As a Magic Packet is being detected, and transmission/reception is not enabled. </p>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aea683aeff347b767dcdcc7d3630f6395"></a>FSP_ERR_ETHER_ERROR_MAGIC_PACKET_MODE&#160;</td><td class="fielddoc"><p>As a Magic Packet is being detected, and transmission/reception is not enabled. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a7ff828228ccab4f53b2438ddd1c7e11a"></a>FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL&#160;</td><td class="fielddoc"><p>Transmit buffer is not empty. </p>
 </td></tr>
@@ -503,27 +490,20 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a6240bb179602fe6d111b3cb464ca4612"></a>FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION&#160;</td><td class="fielddoc"><p>ETHERC/EDMAC has an error in the phy communication. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a629a12ea100187a63ddb2f8ee9a5c823"></a>FSP_ERR_ETHER_PHY_ERROR_LINK&#160;</td><td class="fielddoc"><p>PHY is not link up. </p>
-<p>Start of ETHER_PHY Driver specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aad936f5a80f8c3fe3faa8d6220189098"></a>FSP_ERR_ETHER_PHY_NOT_READY&#160;</td><td class="fielddoc"><p>PHY has an error in the Auto-negotiation. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8afe0f3347d7aed817201dac3bbad6fc75"></a>FSP_ERR_QUEUE_FULL&#160;</td><td class="fielddoc"><p>Queue is full, cannot queue another data. </p>
-<p>Start of BYTEQ library specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a897263b6cfdd866f230ba767b01fd457"></a>FSP_ERR_QUEUE_EMPTY&#160;</td><td class="fielddoc"><p>Queue is empty, no data to dequeue. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aa8bf2f1db51c66c2ad08a030e29aeae8"></a>FSP_ERR_CTSU_SC_OVERFLOW&#160;</td><td class="fielddoc"><p>Sensor count overflowed when performing CTSU scan. </p><dl class="section note"><dt>Note</dt><dd>User must clear the CTSUSCOVF bit manually. </dd></dl>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8abf96e28ad6ffcefb3753b3236b7d8f74"></a>FSP_ERR_CTSU_SCANNING&#160;</td><td class="fielddoc"><p>Scanning. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a4cfd94a6065502452455b302d9cbf08a"></a>FSP_ERR_CTSU_RC_OVERFLOW&#160;</td><td class="fielddoc"><p>Reference count overflowed when performing CTSU scan. </p><dl class="section note"><dt>Note</dt><dd>User must clear the CTSURCOVF bit manually. </dd></dl>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a7cfb255a9b41bb7d578b892b94ec362c"></a>FSP_ERR_CTSU_NOT_GET_DATA&#160;</td><td class="fielddoc"><p>Not processed previous scan data. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac4b9c7b062d8e509e072703c8db835c4"></a>FSP_ERR_CTSU_ICOMP&#160;</td><td class="fielddoc"><p>Abnormal TSCAP voltage. </p><dl class="section note"><dt>Note</dt><dd>User must clear the CTSUICOMP bit manually. </dd></dl>
-</td></tr>
-<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aa8e16532eed302466b57ee47e52637e9"></a>FSP_ERR_CTSU_OFFSET_ADJUSTMENT_FAILED&#160;</td><td class="fielddoc"><p>Auto tuning algorithm failed. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a0d5d1b914e36bbd0a84020ea1e53e73e"></a>FSP_ERR_CTSU_SAFETY_CHECK_FAILED&#160;</td><td class="fielddoc"><p>Safety check failed </p>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a19beacb3a5e19f362431d08a1fcaaa5d"></a>FSP_ERR_CTSU_INCOMPLETE_TUNING&#160;</td><td class="fielddoc"><p>Incomplete initial offset tuning. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a2ed5fe9a48f6c1a6e50b36b17158fc62"></a>FSP_ERR_CARD_INIT_FAILED&#160;</td><td class="fielddoc"><p>SD card or eMMC device failed to initialize. </p>
-<p>Start of SDMMC specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a3224cc4e49b921121dd1c25e4b680d58"></a>FSP_ERR_CARD_NOT_INSERTED&#160;</td><td class="fielddoc"><p>SD card not installed. </p>
 </td></tr>
@@ -538,12 +518,10 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a009dbf608109840cd7b1b82f08bf392b"></a>FSP_ERR_RESPONSE&#160;</td><td class="fielddoc"><p>Card did not respond or responded with an error. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a6e0d94ec73cc2ff2c1076b7f2e39508a"></a>FSP_ERR_MEDIA_FORMAT_FAILED&#160;</td><td class="fielddoc"><p>Media format failed. </p>
-<p>Start of FX_IO specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a96b579c4bf9998918494fe0ed7ba5570"></a>FSP_ERR_MEDIA_OPEN_FAILED&#160;</td><td class="fielddoc"><p>Media open failed. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac40178530b30251630ed759810117676"></a>FSP_ERR_CAN_DATA_UNAVAILABLE&#160;</td><td class="fielddoc"><p>No data available. </p>
-<p>Start of CAN specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a86b1991ace24bc346dbb056d094c9886"></a>FSP_ERR_CAN_MODE_SWITCH_FAILED&#160;</td><td class="fielddoc"><p>Switching operation modes failed. </p>
 </td></tr>
@@ -558,7 +536,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a094ba75816525a5f0d620bdce195cc9e"></a>FSP_ERR_CAN_MESSAGE_LOST&#160;</td><td class="fielddoc"><p>Receive message has been overwritten or overrun. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ad59d257fc10762fe60683c45a3f1b90a"></a>FSP_ERR_WIFI_CONFIG_FAILED&#160;</td><td class="fielddoc"><p>WiFi module Configuration failed. </p>
-<p>Start of SF_WIFI Specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ae1e9fb09fdb6841cf4379097812e6156"></a>FSP_ERR_WIFI_INIT_FAILED&#160;</td><td class="fielddoc"><p>WiFi module initialization failed. </p>
 </td></tr>
@@ -569,7 +546,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a5711df02b0d0b9e2027bef9de27948a4"></a>FSP_ERR_WIFI_FAILED&#160;</td><td class="fielddoc"><p>WiFi Failed. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a61cdc8708028a97a52556794d4c2e050"></a>FSP_ERR_CELLULAR_CONFIG_FAILED&#160;</td><td class="fielddoc"><p>Cellular module Configuration failed. </p>
-<p>Start of SF_CELLULAR Specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a4a5158a88f2ea654f62435a7b5ae72d2"></a>FSP_ERR_CELLULAR_INIT_FAILED&#160;</td><td class="fielddoc"><p>Cellular module initialization failed. </p>
 </td></tr>
@@ -586,7 +562,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a88587e0a35f8081d546cd72e48ddc198"></a>FSP_ERR_CELLULAR_REGISTRATION_FAILED&#160;</td><td class="fielddoc"><p>Cellular Network registration failed. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aad12dc3bfd3947b7586c089ee6c15383"></a>FSP_ERR_BLE_FAILED&#160;</td><td class="fielddoc"><p>BLE operation failed. </p>
-<p>Start of SF_BLE specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a151982a9bc9ba19d87b6a5a8b7679397"></a>FSP_ERR_BLE_INIT_FAILED&#160;</td><td class="fielddoc"><p>BLE device initialization failed. </p>
 </td></tr>
@@ -597,7 +572,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a517f6eb396408044e70353bedd2983e8"></a>FSP_ERR_BLE_PRF_NOT_ENABLED&#160;</td><td class="fielddoc"><p>BLE device not enabled. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a479e63b946d94636f905fd9bace227e9"></a>FSP_ERR_CRYPTO_CONTINUE&#160;</td><td class="fielddoc"><p>Continue executing function. </p>
-<p>Start of Crypto specific (0x10000) </p><dl class="section note"><dt>Note</dt><dd>Refer to sf_cryoto_err.h for Crypto error code. </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a558889b250c4c0dfa10cbce827f5b47e"></a>FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT&#160;</td><td class="fielddoc"><p>Hardware resource busy. </p>
 </td></tr>
@@ -634,7 +608,6 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8af70132beb6b5b4cdaeaed4c70bd553c4"></a>FSP_ERR_CRYPTO_AUTHENTICATION_FAILED&#160;</td><td class="fielddoc"><p>Authentication failed. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8acfbdf09c1ae8d64e7eb388094bf54b9b"></a>FSP_ERR_CRYPTO_COMMON_NOT_OPENED&#160;</td><td class="fielddoc"><p>Crypto Framework Common is not opened. </p>
-<p>Start of SF_CRYPTO specific </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac42e16e1358505398e631062a1afbd45"></a>FSP_ERR_CRYPTO_HAL_ERROR&#160;</td><td class="fielddoc"><p>Cryoto HAL module returned an error. </p>
 </td></tr>
@@ -658,9 +631,7 @@ API major version. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -14,10 +14,8 @@ var group___c_t_s_u___a_p_i =
       [ "cap", "group___c_t_s_u___a_p_i.html#a03f932c507090616c84f76e17248a9b3", null ],
       [ "txvsel", "group___c_t_s_u___a_p_i.html#ae84a8915368af6932e37de7d8b9d7df9", null ],
       [ "txvsel2", "group___c_t_s_u___a_p_i.html#a11d2a145988788572e82c9a9d559cf1e", null ],
-      [ "atune0", "group___c_t_s_u___a_p_i.html#aa295e7cb6185fba000a8224e39985000", null ],
       [ "atune1", "group___c_t_s_u___a_p_i.html#a421d4509c5e1c292bacd5dbecb3c3a20", null ],
       [ "atune12", "group___c_t_s_u___a_p_i.html#a14d15bb567fedf5a9e2d2bcd8910c2fd", null ],
-      [ "clk", "group___c_t_s_u___a_p_i.html#a876f21dd41aa6d6ac437d8a654b5502e", null ],
       [ "md", "group___c_t_s_u___a_p_i.html#a2b263d4feffa655339e202474b7ec3a3", null ],
       [ "posel", "group___c_t_s_u___a_p_i.html#af49c8d4839a54d3b2d999f66743254f0", null ],
       [ "ctsuchac0", "group___c_t_s_u___a_p_i.html#a0b82368bc7d53937996ad21ec99f2d62", null ],
@@ -33,13 +31,12 @@ var group___c_t_s_u___a_p_i =
       [ "p_elements", "group___c_t_s_u___a_p_i.html#a4e772870c7fdd16a6af6acfebb03fcfe", null ],
       [ "num_rx", "group___c_t_s_u___a_p_i.html#aa56acc1bedbf92f8a188631e6321f081", null ],
       [ "num_tx", "group___c_t_s_u___a_p_i.html#a542052c1596c2006262e4b2bfb977244", null ],
-      [ "threshold_3freq", "group___c_t_s_u___a_p_i.html#a9d4d3c08ac92292d69c954f8fe2a3436", null ],
       [ "num_moving_average", "group___c_t_s_u___a_p_i.html#abfff39da3a865d91b1d6e25e9d6b2933", null ],
       [ "tunning_enable", "group___c_t_s_u___a_p_i.html#a30d5daff3a3330673a7e3b8d306ec16c", null ],
-      [ "number", "group___c_t_s_u___a_p_i.html#acf283ed0bc31688322a42857f9948a13", null ],
       [ "p_callback", "group___c_t_s_u___a_p_i.html#a156c5159fbd59f5e29d12d7625f855ee", null ],
       [ "p_transfer_tx", "group___c_t_s_u___a_p_i.html#ac42f999742f1228975263f7b6b1b6d7e", null ],
       [ "p_transfer_rx", "group___c_t_s_u___a_p_i.html#afeb071da4ade7c5148db18ae14e6316c", null ],
+      [ "p_adc_instance", "group___c_t_s_u___a_p_i.html#af6d0c0887ba3fa676c7bf4d61eb5a3ea", null ],
       [ "write_irq", "group___c_t_s_u___a_p_i.html#a26b582b9ee181bcb054a96700416a686", null ],
       [ "read_irq", "group___c_t_s_u___a_p_i.html#a4f81a30050a0161004f2c82b94de3e48", null ],
       [ "end_irq", "group___c_t_s_u___a_p_i.html#adfdb692d8d85db036f69dd700d5c65c1", null ],
@@ -77,10 +74,6 @@ var group___c_t_s_u___a_p_i =
       [ "CTSU_TXVSEL_MODE", "group___c_t_s_u___a_p_i.html#gga45fc452df9c8843a08fd3d6028869589acbcd857df7ca84a20f63a12705a506a3", null ],
       [ "CTSU_TXVSEL_VCC_PRIVATE", "group___c_t_s_u___a_p_i.html#gga45fc452df9c8843a08fd3d6028869589a769fceb5e1de7b26b79e702da908e6c4", null ]
     ] ],
-    [ "ctsu_atune0_t", "group___c_t_s_u___a_p_i.html#ga246e290ce2532f4a2ee2db89782964bd", [
-      [ "CTSU_ATUNE0_NORMAL", "group___c_t_s_u___a_p_i.html#gga246e290ce2532f4a2ee2db89782964bdafb5223ba79ceb20f10a77cad579729c7", null ],
-      [ "CTSU_ATUNE0_LOW", "group___c_t_s_u___a_p_i.html#gga246e290ce2532f4a2ee2db89782964bda00d2fd1b9b5c05a9791bb3b04b185f95", null ]
-    ] ],
     [ "ctsu_atune1_t", "group___c_t_s_u___a_p_i.html#ga83b5e48e6a429017088f29cc4d64dba6", [
       [ "CTSU_ATUNE1_NORMAL", "group___c_t_s_u___a_p_i.html#gga83b5e48e6a429017088f29cc4d64dba6af9c63ca5ae1f47b470708f4ee7087c88", null ],
       [ "CTSU_ATUNE1_HIGH", "group___c_t_s_u___a_p_i.html#gga83b5e48e6a429017088f29cc4d64dba6a8933c23758eb058e975f0ba2f02cbe44", null ]
@@ -91,17 +84,12 @@ var group___c_t_s_u___a_p_i =
       [ "CTSU_ATUNE12_20UA", "group___c_t_s_u___a_p_i.html#gga3dfa24423192f44e90ac6b9fabf3ab89af0db5d9144165d415cb9ee15d5a49445", null ],
       [ "CTSU_ATUNE12_160UA", "group___c_t_s_u___a_p_i.html#gga3dfa24423192f44e90ac6b9fabf3ab89a5730fd81ba0edf0707449ea78e4db900", null ]
     ] ],
-    [ "ctsu_clk_t", "group___c_t_s_u___a_p_i.html#gaa15aa081e387d1bc10831dd89393a01d", [
-      [ "CTSU_CLK_DIV_1", "group___c_t_s_u___a_p_i.html#ggaa15aa081e387d1bc10831dd89393a01da8a1ed667542d0edca782fb8f9ca17e3f", null ],
-      [ "CTSU_CLK_DIV_2", "group___c_t_s_u___a_p_i.html#ggaa15aa081e387d1bc10831dd89393a01da2fd8ae76219fb46daab3ee02e78a4bd5", null ],
-      [ "CTSU_CLK_DIV_4", "group___c_t_s_u___a_p_i.html#ggaa15aa081e387d1bc10831dd89393a01dabca55b4b5f248ffbde710d3a4185b0dd", null ],
-      [ "CTSU_CLK_DIV_8", "group___c_t_s_u___a_p_i.html#ggaa15aa081e387d1bc10831dd89393a01da2e9c1b5b1d03b1924018065b54695a65", null ]
-    ] ],
     [ "ctsu_md_t", "group___c_t_s_u___a_p_i.html#ga3bb35bd3c3041f0a80dceac7c1590d06", [
       [ "CTSU_MODE_SELF_MULTI_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a03bffeb24e95d47cd5296ef4cea0f890", null ],
       [ "CTSU_MODE_MUTUAL_FULL_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a197562b688e70fae2404d42ddec1cb63", null ],
       [ "CTSU_MODE_MUTUAL_CFC_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a8f092552a327730e4bc4f28f8944a4cf", null ],
-      [ "CTSU_MODE_CURRENT_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a91f565d8ade1120a9ec5a6c210ff6b8c", null ]
+      [ "CTSU_MODE_CURRENT_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a91f565d8ade1120a9ec5a6c210ff6b8c", null ],
+      [ "CTSU_MODE_CORRECTION_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a1e67985ce6bc112436d3b41f0eea4ef1", null ]
     ] ],
     [ "ctsu_posel_t", "group___c_t_s_u___a_p_i.html#ga6246d9e85e33b347a40542a07b42395a", [
       [ "CTSU_POSEL_LOW_GPIO", "group___c_t_s_u___a_p_i.html#gga6246d9e85e33b347a40542a07b42395aabda330f6fc6d7a65ed7304aa90804372", null ],

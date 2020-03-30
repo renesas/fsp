@@ -11,6 +11,7 @@ var searchData=
   ['i2c_5fslave_5faddr_5fmode_5f10bit',['I2C_SLAVE_ADDR_MODE_10BIT',['../group___i2_c___s_l_a_v_e___a_p_i.html#gga8e76d805f1f518bf83a84f9df65beb1bafbc283c8ddb82d4704460fc1f9509552',1,'r_i2c_slave_api.h']]],
   ['i2c_5fslave_5faddr_5fmode_5f7bit',['I2C_SLAVE_ADDR_MODE_7BIT',['../group___i2_c___s_l_a_v_e___a_p_i.html#gga8e76d805f1f518bf83a84f9df65beb1ba545d1daef7aa30b4ca41077f570f8c42',1,'r_i2c_slave_api.h']]],
   ['i2c_5fslave_5fevent_5faborted',['I2C_SLAVE_EVENT_ABORTED',['../group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca0831b0e3a2fa5ee83aa651e6659d7cdf',1,'r_i2c_slave_api.h']]],
+  ['i2c_5fslave_5fevent_5fgeneral_5fcall',['I2C_SLAVE_EVENT_GENERAL_CALL',['../group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca25d53326260faa954236b7af69b94852',1,'r_i2c_slave_api.h']]],
   ['i2c_5fslave_5fevent_5frx_5fcomplete',['I2C_SLAVE_EVENT_RX_COMPLETE',['../group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8cac04326f0bdc42f852e082d2fc0e7ad65',1,'r_i2c_slave_api.h']]],
   ['i2c_5fslave_5fevent_5frx_5fmore_5frequest',['I2C_SLAVE_EVENT_RX_MORE_REQUEST',['../group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca833bea612872cc350d74f6edb66e9fad',1,'r_i2c_slave_api.h']]],
   ['i2c_5fslave_5fevent_5frx_5frequest',['I2C_SLAVE_EVENT_RX_REQUEST',['../group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca35bbc925e0a13c90e6398f8df78a440a',1,'r_i2c_slave_api.h']]],

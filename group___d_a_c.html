@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -124,15 +124,21 @@ Features</h2>
 <li><a class="anchor" id="um_dac_dac_input_data_format"></a>Supports setting left-justified or right-justified 12-bit value format for the 16-bit input data registers</li>
 <li>Supports output amplifiers on selected MCUs</li>
 <li><a class="anchor" id="um_dac_dac_charge_pump"></a>Supports charge pump on selected MCUs</li>
-<li><a class="anchor" id="um_dac_ad_da_synchronization"></a>Operate in synchronous anti-interference mode with the Analog-to-Digital Converter (ADC) module.</li>
+<li><a class="anchor" id="um_dac_ad_da_synchronization"></a>Supports synchronization with the Analog-to-Digital Converter (ADC) module</li>
 </ul>
 <h1><a class="anchor" id="r-dac-configuration"></a>
 Configuration</h1>
+<dl class="section note"><dt>Note</dt><dd>For MCUs supporting more than one channel, the following configuration options are shared by all the DAC channels:<ul>
+<li>Synchronize with ADC</li>
+<li>Data Format</li>
+<li>Charge Pump</li>
+</ul>
+</dd></dl>
 <p><h2>Build Time Configurations for r_dac</h2>
 The following build time configurations are defined in fsp_cfg/r_dac_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -142,17 +148,17 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for DAC Driver on r_dac</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Analog -&gt; DAC Driver on r_dac:<br />
+ <h2>Configurations for Driver &gt; Analog &gt; DAC Driver on r_dac</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Analog &gt; DAC Driver on r_dac:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_dac0 </td><td>Module name. </td></tr>
 <tr>
-<td>Channel</td><td>Value must be an integer greater than or equal to 0</td><td>Specify the hardware channel. </td></tr>
+<td>Channel</td><td>Value must be an integer greater than or equal to 0</td><td>0 </td><td>Specify the hardware channel. </td></tr>
 <tr>
 <td>Synchronize with ADC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -160,7 +166,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable DA/AD synchronization. </td></tr>
+</td><td>Disabled </td><td>Enable DA/AD synchronization. </td></tr>
 <tr>
 <td>Data Format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -168,41 +174,47 @@ Right Justified</li>
 <li>
 Left Justified</li>
 </ul>
-</td><td>Specify the DAC data format. </td></tr>
+</td><td>Right Justified </td><td>Specify the DAC data format. </td></tr>
 <tr>
-<td>Output Amplifier</td><td>MCU Specific Options</td><td>Enable the DAC output amplifier. </td></tr>
+<td>Output Amplifier</td><td>MCU Specific Options</td><td></td><td>Enable the DAC output amplifier. </td></tr>
 <tr>
-<td>Charge Pump (Requires MOCO active)</td><td>MCU Specific Options</td><td>Enable the DAC charge pump. </td></tr>
+<td>Charge Pump (Requires MOCO active)</td><td>MCU Specific Options</td><td></td><td>Enable the DAC charge pump. </td></tr>
 <tr>
-<td>ELC Trigger Source</td><td>MCU Specific Options</td><td>ELC source that will trigger DAC to start </td></tr>
+<td>ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC event source that will trigger the DAC to start a conversion. </td></tr>
 </table>
 </p>
-<ul>
-<li>For MCUs supporting more than one channel, configuration options like 'Synchronize with ADC' and 'Data Format' are shared by all the DAC channels.</li>
-</ul>
 <h2><a class="anchor" id="r-dac-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The DAC peripheral module uses the PCLKB as its clock source.</p>
+<p>The DAC peripheral module uses PCLKB as its clock source.</p>
 <h2><a class="anchor" id="r-dac-pin-configuration"></a>
 Pin Configuration</h2>
-<p>The DAC peripheral module uses analog pins on the MCU to communicate to external devices. There is a single analog output pin per channel. For channel 0 and channel 1 the pin is depicted as DA0 and DA1 respectively. Regarding number of available DAC12 channels refer to the MCU specifications.</p>
+<p>The DAn pins are used as analog outputs. Each DAC channel has one output pin.</p>
+<p>The AVCC0 and AVSS0 pins are power and ground supply pins for the DAC and ADC.</p>
+<p>The VREFH and VREFL pins are top and ground voltage reference pins for the DAC and ADC.</p>
+<h1><a class="anchor" id="r-dac-usage_notes"></a>
+Usage Notes</h1>
+<h2>Charge Pump</h2>
+<p>The charge pump must be enabled when using DAC pin output while operating at AV<sub>CC</sub> &lt; 2.7V.</p>
+<dl class="section note"><dt>Note</dt><dd>The MOCO must be running to use the charge pump.</dd>
+<dd>
+If the DAC output is to be routed to an internal signal, do not enable the charge pump.</dd></dl>
+<h2>Synchronization with ADC</h2>
+<p>When ADC synchronization is enabled and an ADC conversion is in progress, if a DAC conversion is started it will automatically be delayed until after the ADC conversion is complete.</p>
 <h2><a class="anchor" id="r-dac-limitations"></a>
 Limitations</h2>
 <ul>
 <li>For MCUs supporting ADC unit 1:<ul>
-<li>Once synchronization between DAC and ADC unit 1 is turned on at the time of calling R_DAC_Open, the synchronization cannot be turned off by the driver. In order to desynchronize DAC with ADC unit 1, manually clear DAADSCR.DAADST to 0. At the time of clearing DAADSCR, care must be taken to ensure ADCSR.ADST bit is 0 and ADC unit 1 is halted.</li>
-<li>DAC module can be synchronized with ADC unit 1 only and not with ADC unit 0.</li>
-<li>For MCUs having more than 1 DAC channel, both the channels get synchronized with ADC unit 1 if synchronization is enabled. There is no channel level granularity.</li>
+<li>Once synchronization between DAC and ADC unit 1 is turned on during R_DAC_Open synchronization cannot be turned off by the driver. In order to desynchronize DAC with ADC unit 1, manually clear DAADSCR.DAADST to 0 when the ADCSR.ADST bit is 0 and ADC unit 1 is halted.</li>
+<li>The DAC module can only be synchronized with ADC unit 1.</li>
+<li>For MCUs having more than 1 DAC channel, both channels are synchronized with ADC unit 1 if synchronization is enabled.</li>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="r-dac-usage_notes"></a>
-Usage Notes</h1>
 <h1><a class="anchor" id="r-dac-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the R_DAC in an application. This example shows how this driver can be used for basic Digital to Analog Conversion operations.</p>
-<div class="fragment"><div class="line"></div><div class="line"><a class="code" href="group___d_a_c.html#structdac__instance__ctrl__t">dac_instance_ctrl_t</a> g_dac_ctrl;</div><div class="line"><a class="code" href="group___d_a_c___a_p_i.html#structdac__cfg__t">dac_cfg_t</a>           g_dac_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___d_a_c___a_p_i.html#a8c9cbefc72cd82ce5b7645ee6a25cc2b">channel</a>                  = 0U,</div><div class="line">    .ad_da_synchronized       = <span class="keyword">true</span>,</div><div class="line">    .data_format              = <a class="code" href="group___d_a_c___a_p_i.html#ggac447d1d0850297aefbec6e8be8b55591a0a0260797a6ee32ac254076af73fccf0">DAC_DATA_FORMAT_FLUSH_RIGHT</a>,</div><div class="line">    .output_amplifier_enabled = <span class="keyword">true</span>,</div><div class="line">    .p_extend                 = &amp;g_dac_cfg_extend</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line">    uint16_t  value;</div><div class="line"></div><div class="line">    <span class="comment">/* Pin configuration: Output enable DA0 as Analog. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the DAC channel */</span></div><div class="line">    err = <a class="code" href="group___d_a_c.html#gaac71f25703e091754d21af33fe69ac13">R_DAC_Open</a>(&amp;g_dac_ctrl, &amp;g_dac_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    value = (uint16_t) DAC_EXAMPLE_VALUE_ABC;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___d_a_c.html#gad33261cb041a53bdd0e8978b2efcc435">R_DAC_Write</a>(&amp;g_dac_ctrl, value);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___d_a_c.html#ga3718be933be0892e741e796a791b8f0f">R_DAC_Start</a>(&amp;g_dac_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line">    uint16_t  value;</div><div class="line"></div><div class="line">    <span class="comment">/* Pin configuration: Output enable DA0 as Analog. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the DAC channel */</span></div><div class="line">    err = <a class="code" href="group___d_a_c.html#gaac71f25703e091754d21af33fe69ac13">R_DAC_Open</a>(&amp;g_dac_ctrl, &amp;g_dac_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    value = (uint16_t) DAC_EXAMPLE_VALUE_ABC;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___d_a_c.html#gad33261cb041a53bdd0e8978b2efcc435">R_DAC_Write</a>(&amp;g_dac_ctrl, value);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___d_a_c.html#ga3718be933be0892e741e796a791b8f0f">R_DAC_Start</a>(&amp;g_dac_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structdac__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c.html#structdac__instance__ctrl__t">dac_instance_ctrl_t</a></td></tr>
@@ -246,6 +258,18 @@ Data Structures</h2></td></tr>
 enable_charge_pump</td>
 <td class="fielddoc">
 Enable DAC charge pump available on selected MCUs. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab583eeb1cf8bb331fac17373785ed377"></a>bool</td>
+<td class="fieldname">
+output_amplifier_enabled</td>
+<td class="fielddoc">
+Output amplifier enable available on selected MCUs. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa52f7b31a54e93850984647a0b0dd6f0"></a><a class="el" href="group___d_a_c___a_p_i.html#gac447d1d0850297aefbec6e8be8b55591">dac_data_format_t</a></td>
+<td class="fieldname">
+data_format</td>
+<td class="fielddoc">
+Data format. </td></tr>
 </table>
 
 </div>
@@ -276,7 +300,7 @@ Enable DAC charge pump available on selected MCUs. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Perform required initialization described in hardware manual. Implements <a class="el" href="group___d_a_c___a_p_i.html#a9b1cc35b0ca7305f1f7ea794c7963f46">dac_api_t::open</a>. Configures a single DAC channel, starts the channel, and provides a handle for use with the DAC API Write and Close functions. Must be called once prior to calling any other DAC API functions. After a channel is opened, Open should not be called again for the same channel without calling Close first.</p>
+<p>Perform required initialization described in hardware manual. Implements <a class="el" href="group___d_a_c___a_p_i.html#acf1499043008fef274392889f70be8a5">dac_api_t::open</a>. Configures a single DAC channel, starts the channel, and provides a handle for use with the DAC API Write and Close functions. Must be called once prior to calling any other DAC API functions. After a channel is opened, Open should not be called again for the same channel without calling Close first.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>The channel was successfully opened. </td></tr>
@@ -319,7 +343,7 @@ Enable DAC charge pump available on selected MCUs. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write data to the D/A converter and enable the output if it has not been enabled. Write function automatically starts the D/A conversion after data is successfully written to the channel.</p>
+<p>Write data to the D/A converter and enable the output if it has not been enabled.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Data is successfully written to the D/A Converter. </td></tr>
@@ -445,9 +469,7 @@ Enable DAC charge pump available on selected MCUs. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

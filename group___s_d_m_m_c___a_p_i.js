@@ -10,6 +10,7 @@ var group___s_d_m_m_c___a_p_i =
       [ "write_protected", "group___s_d_m_m_c___a_p_i.html#a1c81235c4ee8bac8f6b4986471f5eeea", null ],
       [ "clock_rate", "group___s_d_m_m_c___a_p_i.html#adb34b7ce6149426167cea52544ad1f01", null ],
       [ "sector_count", "group___s_d_m_m_c___a_p_i.html#aa447f51afdf2dbc798b770d8d8b39d5d", null ],
+      [ "sector_size_bytes", "group___s_d_m_m_c___a_p_i.html#a327d1b7408eeb8c6f8ed181e95ac476f", null ],
       [ "erase_sector_count", "group___s_d_m_m_c___a_p_i.html#a0ceaae18aabfa2dd1933ad2c1d055c30", null ]
     ] ],
     [ "sdmmc_callback_args_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t", [
@@ -85,7 +86,9 @@ var group___s_d_m_m_c___a_p_i =
       [ "SDMMC_EVENT_RESPONSE", "group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a53777702228fec579977a1cefa52e6a7", null ],
       [ "SDMMC_EVENT_SDIO", "group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a3ed672727dc58b3a4b9b9fbf507fe880", null ],
       [ "SDMMC_EVENT_TRANSFER_COMPLETE", "group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a07f4a417555c6cae25fc3d0ccfba499b", null ],
-      [ "SDMMC_EVENT_TRANSFER_ERROR", "group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524ac80d35ed78905ad713a7b673e04424ce", null ]
+      [ "SDMMC_EVENT_TRANSFER_ERROR", "group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524ac80d35ed78905ad713a7b673e04424ce", null ],
+      [ "SDMMC_EVENT_ERASE_COMPLETE", "group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a96b99da9323dff0b7e2216afc9f8edf3", null ],
+      [ "SDMMC_EVENT_ERASE_BUSY", "group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a13ad975f249ed1bea3a3bd5b58611e1b", null ]
     ] ],
     [ "sdmmc_card_detect_t", "group___s_d_m_m_c___a_p_i.html#ga2b6c147efca9c55c313cfb8b6543f3ed", [
       [ "SDMMC_CARD_DETECT_NONE", "group___s_d_m_m_c___a_p_i.html#gga2b6c147efca9c55c313cfb8b6543f3edabf66e6f766566f3ab633465871570446", null ],

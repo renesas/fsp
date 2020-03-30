@@ -12,9 +12,17 @@ var searchData=
   ['glcdc_5fpanel_5fclk_5fdiv_5ft',['glcdc_panel_clk_div_t',['../group___g_l_c_d_c.html#ga4fddd2d014e000b5d1a805e49122c9d9',1,'r_glcdc.h']]],
   ['glcdc_5ftcon_5fpin_5ft',['glcdc_tcon_pin_t',['../group___g_l_c_d_c.html#ga9358532763760e20e3fd6f795f614344',1,'r_glcdc.h']]],
   ['glcdc_5ftcon_5fsignal_5fselect_5ft',['glcdc_tcon_signal_select_t',['../group___g_l_c_d_c.html#ga69083bd9f631cc2259c5fd30f32a54ba',1,'r_glcdc.h']]],
+  ['gpt_5fadc_5fcompare_5fmatch_5ft',['gpt_adc_compare_match_t',['../group___g_p_t.html#ga2a838fffcbafd97778bbe3ffbfbf54b1',1,'r_gpt.h']]],
+  ['gpt_5fadc_5ftrigger_5ft',['gpt_adc_trigger_t',['../group___g_p_t.html#ga6dfe4ddfb53ba52c674039fd20b6c2b6',1,'r_gpt.h']]],
   ['gpt_5fcapture_5ffilter_5ft',['gpt_capture_filter_t',['../group___g_p_t.html#ga4781e2b42b2ef339318ea0a70b250cd5',1,'r_gpt.h']]],
+  ['gpt_5fgtioc_5fdisable_5ft',['gpt_gtioc_disable_t',['../group___g_p_t.html#ga82d61d33edf38d50f1247d1d55ec506b',1,'r_gpt.h']]],
+  ['gpt_5finterrupt_5fskip_5fadc_5ft',['gpt_interrupt_skip_adc_t',['../group___g_p_t.html#ga9928e374919fa53240edaca52412beaa',1,'r_gpt.h']]],
+  ['gpt_5finterrupt_5fskip_5fcount_5ft',['gpt_interrupt_skip_count_t',['../group___g_p_t.html#gac737ceea25e4989a9afbf47969a71ba3',1,'r_gpt.h']]],
+  ['gpt_5finterrupt_5fskip_5fsource_5ft',['gpt_interrupt_skip_source_t',['../group___g_p_t.html#ga88d6114404f61d9ca10684f393deb613',1,'r_gpt.h']]],
   ['gpt_5fio_5fpin_5ft',['gpt_io_pin_t',['../group___g_p_t.html#gaabd4a03d16b1b4254cc44c7779f44c60',1,'r_gpt.h']]],
+  ['gpt_5foutput_5fdisable_5ft',['gpt_output_disable_t',['../group___g_p_t.html#ga7e57d68f5f5d9757bab01857e8252ade',1,'r_gpt.h']]],
   ['gpt_5fpin_5flevel_5ft',['gpt_pin_level_t',['../group___g_p_t.html#ga454c639e426428470ce78115af5d3648',1,'r_gpt.h']]],
+  ['gpt_5fpoeg_5flink_5ft',['gpt_poeg_link_t',['../group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943',1,'r_gpt.h']]],
   ['gpt_5fshortest_5flevel_5ft',['gpt_shortest_level_t',['../group___g_p_t.html#gab0579e86d3b176b4e3c7da752874649a',1,'r_gpt.h']]],
   ['gpt_5fsource_5ft',['gpt_source_t',['../group___g_p_t.html#gaa1457c9c1f178fff4dd1558832db196a',1,'r_gpt.h']]]
 ];

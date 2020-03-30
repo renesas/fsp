@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -97,11 +97,12 @@ $(document).ready(function(){initNavTree('group___r_m___e_m_w_i_n___p_o_r_t.html
 <p>SEGGER emWin port for RA MCUs. </p>
 <h1><a class="anchor" id="rm-emwin-port-overview"></a>
 Overview</h1>
-<p><a class="anchor" id="um_emwin_port"></a> The SEGGER emWin RA Port module provides the configuration and hardware acceleration support necessary for use of emWin on RA products. The port provides full integration with the graphics peripherals (GLCDC, DRW and JPEG) as well as Amazon FreeRTOS.</p>
+<p><a class="anchor" id="um_emwin_port"></a> The SEGGER emWin RA Port module provides the configuration and hardware acceleration support necessary for use of emWin on RA products. The port provides full integration with the graphics peripherals (GLCDC, DRW and JPEG) as well as FreeRTOS.</p>
 <dl class="section note"><dt>Note</dt><dd>This port layer primarily enables hardware acceleration and background handling of many display operations and does not contain code intended to be directly called by the user. Please consult the SEGGER emWin User Guide (UM03001) for details on how to use emWin in your project.</dd></dl>
 <h2><a class="anchor" id="rm-emwin-port-hw-accel"></a>
 Hardware Acceleration</h2>
 <p>The following functions are currently performed with hardware acceleration:<a class="anchor" id="um_emwin_drw_acceleration"></a><a class="anchor" id="um_emwin_jpeg_acceleration"></a></p><ul>
+<li>DRW Engine (r_drw)<ul>
 <li>Drawing bitmaps (ARGB8888 and RGB565)</li>
 <li>Rectangle fill</li>
 <li>Line and shape drawing</li>
@@ -111,8 +112,17 @@ Hardware Acceleration</h2>
 <li>Lines and arcs</li>
 </ul>
 </li>
+</ul>
+</li>
+<li>JPEG Codec (r_jpeg)<ul>
 <li>JPEG decoding</li>
-<li>LCD panel data conversion and output</li>
+</ul>
+</li>
+<li>Graphics LCD Controller (r_glcdc)<ul>
+<li>Brightness, contrast and gamma correction</li>
+<li>Pixel format conversion (framebuffer to LCD)</li>
+</ul>
+</li>
 </ul>
 <hr/>
 <h1><a class="anchor" id="rm-emwin-port-configuration"></a>
@@ -121,71 +131,77 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/rm_emwin_port_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Memory Allocation|GUI Heap Size</td><td>Value must be a non-negative integer</td><td>Set the size of the heap to be allocated for use exclusively by emWin. </td></tr>
+<td>Memory Allocation &gt; GUI Heap Size</td><td>Value must be a non-negative integer</td><td>32768 </td><td>Set the size of the heap to be allocated for use exclusively by emWin. </td></tr>
 <tr>
-<td>Memory Allocation|Section for GUI Heap</td><td>Configurable String</td><td>Specify the section in which to allocate the GUI heap. </td></tr>
+<td>Memory Allocation &gt; Section for GUI Heap</td><td>Manual Entry</td><td>.noinit </td><td>Specify the section in which to allocate the GUI heap. </td></tr>
 <tr>
-<td>Memory Allocation|Maximum Layers</td><td>Value must be a non-negative integer</td><td>Set the maximum number of available display layers. </td></tr>
+<td>Memory Allocation &gt; Maximum Layers</td><td>Value must be a non-negative integer</td><td>16 </td><td>Set the maximum number of available display layers in emWin.<br />
+<br />
+This setting is not related to GLCDC Layer 1 or 2. </td></tr>
 <tr>
-<td>Configuration|RTOS Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Memory Allocation &gt; AA Font Conversion Buffer Size</td><td>Value must be a non-negative integer</td><td>400 </td><td>Set the size of the conversion buffer for anti-aliased font glyphs. This should be set to the size (in bytes) of the largest AA character to be rendered. </td></tr>
+<tr>
+<td>Configuration &gt; Multi-thread Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable or disable RTOS awareness (multithreading support). </td></tr>
+</td><td>Enabled </td><td>Enable or disable multithreading support. </td></tr>
 <tr>
-<td>Configuration|Touch Panel Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Configuration &gt; Number of emWin-supported threads</td><td>Manual Entry</td><td>5 </td><td>If multithreading support is enabled this configuration specifies the number of different tasks that can call emWin functions. </td></tr>
+<tr>
+<td>Configuration &gt; Touch Panel Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable or disable touch panel support. </td></tr>
+</td><td>Enabled </td><td>Enable or disable touch panel support. </td></tr>
 <tr>
-<td>Configuration|Mouse Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Configuration &gt; Mouse Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable or disable support for mouse input. </td></tr>
+</td><td>Disabled </td><td>Enable or disable support for mouse input. </td></tr>
 <tr>
-<td>Configuration|Memory Devices</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Configuration &gt; Memory Devices</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable or disable support for memory devices, which allow the user to allocate their own memory in the GUI heap. </td></tr>
+</td><td>Enabled </td><td>Enable or disable support for memory devices, which allow the user to allocate their own memory in the GUI heap. </td></tr>
 <tr>
-<td>Configuration|Text Rotation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Configuration &gt; Text Rotation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable or disable support for displaying rotated text. </td></tr>
+</td><td>Disabled </td><td>Enable or disable support for displaying rotated text. </td></tr>
 <tr>
-<td>Configuration|Window Manager</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Configuration &gt; Window Manager</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable or disable the emWin Window Manager (WM). </td></tr>
+</td><td>Enabled </td><td>Enable or disable the emWin Window Manager (WM). </td></tr>
 <tr>
-<td>Configuration|Bidirectional Text</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Configuration &gt; Bidirectional Text</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable or disable support for bidirectional text (such as Arabic or Hebrew). </td></tr>
+</td><td>Disabled </td><td>Enable or disable support for bidirectional text (such as Arabic or Hebrew). </td></tr>
 <tr>
-<td>Configuration|Debug Logging Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Configuration &gt; Debug Logging Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None (0)</li>
 <li>
@@ -199,15 +215,37 @@ Log warnings (4)</li>
 <li>
 Log all messages (5)</li>
 </ul>
-</td><td>Set the debug logging level. </td></tr>
+</td><td>All checks enabled (2) </td><td>Set the debug logging level. </td></tr>
 <tr>
-<td>JPEG Decoding|Error Timeout</td><td>Value must be a non-negative integer</td><td>Set the timeout for JPEG decoding operations (in RTOS ticks) in the event of a decode error. </td></tr>
+<td>JPEG Decoding &gt; General &gt; Input Alignment</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+8-byte aligned (faster)</li>
+<li>
+Unaligned (slower)</li>
+</ul>
+</td><td>Unaligned (slower) </td><td>Setting this option to 8-bit alignment can allow the hardware JPEG Codec to directly read JPEG data. This speeds up JPEG decoding operations and reduces RAM overhead, but all JPEG images must reside on an 8-byte boundary.<br />
+<br />
+When this option is enabled the input buffer is not allocated. </td></tr>
 <tr>
-<td>JPEG Decoding|Input Buffer Size</td><td>Value must be a non-negative integer</td><td>Set the size of the JPEG decode input buffer (in bytes). This buffer is used to ensure 8-byte alignment of input data. Specifying a size smaller than the size of the JPEG to decode will use additional interrupts to stream data in during the decoding process. </td></tr>
+<td>JPEG Decoding &gt; General &gt; Double-Buffer Output</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable this option to configure JPEG decoding operations to use a double-buffered output pipeline. This allows the JPEG to be rendered to the display at the same time as decoding at the cost of additional RAM usage.<br />
+<br />
+Enabling this option automatically allocates double the output buffer size. </td></tr>
 <tr>
-<td>JPEG Decoding|Output Buffer Size</td><td>Value must be a non-negative integer</td><td>Set the size of the JPEG decode output buffer (in bytes). An output buffer smaller than the size of a decoded image will use additional interrupts to stream the data into a framebuffer. </td></tr>
+<td>JPEG Decoding &gt; General &gt; Error Timeout</td><td>Value must be a non-negative integer</td><td>50 </td><td>Set the timeout for JPEG decoding operations (in RTOS ticks) in the event of a decode error. </td></tr>
 <tr>
-<td>JPEG Decoding|Section for Buffers</td><td>Configurable String</td><td>Specify the section in which to allocate the JPEG work buffers. </td></tr>
+<td>JPEG Decoding &gt; Buffers &gt; Input Buffer Size</td><td>Value must be a non-negative integer</td><td>0x1000 </td><td>Set the size of the JPEG decode input buffer (in bytes). This buffer is used to ensure 8-byte alignment of input data. Specifying a size smaller than the size of the JPEG to decode will use additional interrupts to stream data in during the decoding process. </td></tr>
+<tr>
+<td>JPEG Decoding &gt; Buffers &gt; Output Buffer Size</td><td>Value must be a non-negative integer</td><td>0x3C00 </td><td>Set the size of the JPEG decode output buffer (in bytes). An output buffer smaller than the size of a decoded image will use additional interrupts to stream the data into a framebuffer.<br />
+<br />
+Unless you are sure of the subsampling used in and the size of the input JPEG images it is recommended to allocate at least 16 framebuffer lines of memory. </td></tr>
+<tr>
+<td>JPEG Decoding &gt; Buffers &gt; Section for Buffers</td><td>Manual Entry</td><td>.noinit </td><td>Specify the section in which to allocate the JPEG work buffers. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-emwin-port-hw-config"></a>
@@ -217,7 +255,7 @@ Hardware Configuration</h2>
 Usage Notes</h1>
 <h2><a class="anchor" id="rm-emwin-port-getting_started"></a>
 Getting Started</h2>
-<p>To get started with emWin in an e2 Studio project the following must be performed:</p>
+<p>To get started with emWin in an e2 studio project the following must be performed:</p>
 <ol type="1">
 <li>Open the configuration.xml file for your project</li>
 <li>Add emWin to your project in the Stacks view by clicking <b>New Stack -&gt; SEGGER -&gt; SEGGER emWin</b></li>
@@ -233,11 +271,49 @@ Getting Started</h2>
 <li>Click Generate Project Content to save and commit configuration changes</li>
 </ol>
 <p>At this point the project is now ready to build with emWin. Please refer to the SEGGER emWin User Guide (UM03001) as well as demo and sample code for details on how to create a GUI application.</p>
+<h2>Using Hardware Acceleration</h2>
+<p>In most cases there is no need to perform additional configuration to ensure the DRW Engine is used. However, there are some guidelines that should be followed depending on the item in question:</p>
+<ul>
+<li>Bitmaps:<ul>
+<li>ARGB8888, RGB888 and RGB565 bitmaps require no additional settings.</li>
+</ul>
+</li>
+<li>Anti-aliased shapes:<ul>
+<li>Anti-aliased lines, circles, polygons, polygon outlines and arcs are rendered with the DRW Engine.</li>
+</ul>
+</li>
+<li>Anti-aliased (4bpp) fonts:<ul>
+<li>Set the text mode to GUI_TM_TRANS or create the relevant widget with WM_CF_HASTRANS set.</li>
+<li>Ensure the "AA Font Conversion Buffer Size" configuration option is set to a size equal to or greater than the size (in bytes) of the largest glyph.</li>
+</ul>
+</li>
+<li>8bpp palletized images:<ul>
+<li>When creating these images ensure transparency is not enabled as the SEGGER method for this is not compatible with the DRW Engine.</li>
+</ul>
+</li>
+<li>RLE-encoded images:<ul>
+<li>Hardware acceleration is not available for SEGGER's RLE format at this time.</li>
+</ul>
+</li>
+</ul>
+<h2>Multi-thread Support</h2>
+<p>When the "Multi-thread Support" configuration is enabled, emWin can be called from multiple threads. This comes with advantages and disadvantages:</p>
+<p>Advantages:</p><ul>
+<li>High flexibility in development of applications</li>
+<li>Threads can pend and post on emWin events</li>
+</ul>
+<p>Disadvantages:</p><ul>
+<li>Slightly higher RAM/ROM use</li>
+<li>Large GUI projects can become difficult to debug</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Multi-thread support is independent of RTOS support. RTOS support is managed internally and cannot be manually configured.</dd></dl>
 <h2><a class="anchor" id="rm-emwin-port-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using SEGGER emWin with FSP:</p>
 <ul>
 <li>Color modes lower than 16 bits are not currently optimized for hardware acceleration.</li>
+<li>Support for rotated screen modes is in development.</li>
+<li>Hardware acceleration is not available for SEGGER's RLE image format at this time.</li>
 </ul>
 <hr/>
 <h1><a class="anchor" id="rm-emwin-port-examples"></a>
@@ -245,6 +321,7 @@ Examples</h1>
 <h2><a class="anchor" id="rm-emwin-port-examples-minimal"></a>
 Basic Example</h2>
 <p>This is a basic example demonstrating a very simple emWin application. The screen is cleared to white and "Hello World!" is printed in the center.</p>
+<dl class="section note"><dt>Note</dt><dd>emWin manages the GLCDC, DRW and JPEG Codec submodules internally; they do not need to be opened directly.</dd></dl>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;DIALOG.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define COLOR_WHITE       0x00FFFFFFU</span></div><div class="line"><span class="preprocessor">#define COLOR_BLACK       0x00000000U</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define GUI_DRAW_DELAY    100</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> _cbMain (WM_MESSAGE * pMsg)</div><div class="line">{</div><div class="line">    GUI_RECT Rect;</div><div class="line"></div><div class="line">    <span class="keywordflow">switch</span> (pMsg-&gt;MsgId)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> WM_CREATE:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> WM_PAINT:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Clear background to white */</span></div><div class="line">            GUI_SetBkColor(COLOR_WHITE);</div><div class="line">            GUI_Clear();</div><div class="line"></div><div class="line">            <span class="comment">/* Draw &quot;Hello World!&quot; in black in the center */</span></div><div class="line">            WM_GetClientRect(&amp;Rect);</div><div class="line">            GUI_SetColor(COLOR_BLACK);</div><div class="line">            GUI_DispStringInRect(<span class="stringliteral">&quot;Hello World!&quot;</span>, &amp;Rect, GUI_TA_VCENTER | GUI_TA_HCENTER);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            WM_DefaultProc(pMsg);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> emWinTask (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    int32_t xSize;</div><div class="line">    int32_t ySize;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize emWin */</span></div><div class="line">    GUI_Init();</div><div class="line"></div><div class="line">    <span class="comment">/* Get screen dimensions */</span></div><div class="line">    xSize = LCD_GetXSize();</div><div class="line">    ySize = LCD_GetYSize();</div><div class="line"></div><div class="line">    <span class="comment">/* Create main window */</span></div><div class="line">    WM_CreateWindowAsChild(0, 0, xSize, ySize, WM_HBKWIN, WM_CF_SHOW, _cbMain, 0);</div><div class="line"></div><div class="line">    <span class="comment">/* Enter main drawing loop */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        GUI_Delay(GUI_DRAW_DELAY);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>For further example code please consult SEGGER emWin documentation, which can be downloaded <a href="http://www.renesas.com/fsp#downloads">here</a>, as well as the Quick Start Guide and example project(s) provided with your Evaluation Kit (if applicable).</dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -252,9 +329,7 @@ Basic Example</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

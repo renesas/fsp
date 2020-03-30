@@ -8,14 +8,14 @@ var NAVTREE =
     ] ],
     [ "Starting Development", "_s_t_a_r_t__d_e_v.html", [
       [ "Starting Development Introduction", "_s_t_a_r_t__d_e_v.html#starting-development-introduction", [
-        [ "Getting Started with the e2 studio ISDE and FSP", "_s_t_a_r_t__d_e_v.html#getting-started-with-the-e2-studio-isde-and-fsp", null ]
+        [ "Getting Started with e2 studio and FSP", "_s_t_a_r_t__d_e_v.html#getting-started-with-e2-studio-and-fsp", null ]
       ] ],
-      [ "e2 studio ISDE User Guide", "_s_t_a_r_t__d_e_v.html#e2studio-isde-user-guide", [
-        [ "What is e2 studio ISDE?", "_s_t_a_r_t__d_e_v.html#what-is-the-e2studio-isde", null ],
-        [ "e2 studio ISDE Prerequisites", "_s_t_a_r_t__d_e_v.html#e2studio-isde-prerequisites", [
+      [ "e2 studio User Guide", "_s_t_a_r_t__d_e_v.html#e2studio-user-guide", [
+        [ "What is e2 studio?", "_s_t_a_r_t__d_e_v.html#what-is-e2studio", null ],
+        [ "e2 studio Prerequisites", "_s_t_a_r_t__d_e_v.html#e2studio-prerequisites", [
           [ "Obtaining an RA MCU Kit", "_s_t_a_r_t__d_e_v.html#obtaining-a-ra-mcu-kit", null ],
           [ "PC Requirements", "_s_t_a_r_t__d_e_v.html#pc-requirements", null ],
-          [ "Installing e2 studio, platform installer and  the FSP package", "_s_t_a_r_t__d_e_v.html#installing-e2studio-and-fsp", null ],
+          [ "Installing e2 studio, platform installer and the FSP package", "_s_t_a_r_t__d_e_v.html#installing-e2studio-and-fsp", null ],
           [ "Choosing a Toolchain", "_s_t_a_r_t__d_e_v.html#choosing-a-toolchain", null ],
           [ "Licensing", "_s_t_a_r_t__d_e_v.html#licensing", null ]
         ] ],
@@ -26,7 +26,7 @@ var NAVTREE =
           [ "Selecting a Project Template", "_s_t_a_r_t__d_e_v.html#selecting-a-project-template", null ]
         ] ],
         [ "Configuring a Project", "_s_t_a_r_t__d_e_v.html#configuring-a-project", [
-          [ "Configuring the BSP with the ISDE", "_s_t_a_r_t__d_e_v.html#configuring-the-bsp-with-the-isde", null ],
+          [ "Configuring the BSP with e2 studio", "_s_t_a_r_t__d_e_v.html#configuring-the-bsp-with-e2-studio", null ],
           [ "Configuring Clocks", "_s_t_a_r_t__d_e_v.html#configuring-clocks", null ],
           [ "Configuring Pins", "_s_t_a_r_t__d_e_v.html#configuring-pins", null ],
           [ "Configuring Interrupts", "_s_t_a_r_t__d_e_v.html#configuring-interrupts", [
@@ -54,7 +54,7 @@ var NAVTREE =
         ] ],
         [ "Debugging the Project", "_s_t_a_r_t__d_e_v.html#debugging-the-project", null ],
         [ "Modifying Toolchain Settings", "_s_t_a_r_t__d_e_v.html#modifying-toolchain-settings", null ],
-        [ "Importing an Existing Project into e2 studio ISDE", "_s_t_a_r_t__d_e_v.html#importing-an-existing-project-into-e2-studio-isde", null ]
+        [ "Importing an Existing Project into e2 studio", "_s_t_a_r_t__d_e_v.html#importing-an-existing-project-into-e2-studio", null ]
       ] ],
       [ "Tutorial: Your First RA MCU Project - Blinky", "_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky", [
         [ "Tutorial Blinky", "_s_t_a_r_t__d_e_v.html#tutorial-blinky", null ],
@@ -78,13 +78,13 @@ var NAVTREE =
       ] ],
       [ "Tutorial: Using HAL Drivers - Programming the WDT", "_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt", [
         [ "Application WDT", "_s_t_a_r_t__d_e_v.html#application-wdt", null ],
-        [ "Creating a WDT Application Using the RA MCU FSP and ISDE", "_s_t_a_r_t__d_e_v.html#creating-a-wdt-application-using-the-ra-fsp-and-isde", [
-          [ "Using the FSP and the e2 studio ISDE", "_s_t_a_r_t__d_e_v.html#using-the-fsp-and-the-e2-studio-isde", null ],
+        [ "Creating a WDT Application Using the RA MCU FSP and e2 studio", "_s_t_a_r_t__d_e_v.html#creating-a-wdt-application-using-the-ra-fsp-and-e2-studio", [
+          [ "Using the FSP and e2 studio", "_s_t_a_r_t__d_e_v.html#using-the-fsp-and-e2-studio", null ],
           [ "The WDT Application", "_s_t_a_r_t__d_e_v.html#the-wdt-application", null ],
           [ "WDT Application flow", "_s_t_a_r_t__d_e_v.html#wdt-application-flow", null ]
         ] ],
-        [ "Creating the Project with the ISDE", "_s_t_a_r_t__d_e_v.html#creating-the-project-with-the-isde", null ],
-        [ "Configuring the Project with the ISDE", "_s_t_a_r_t__d_e_v.html#configuring-the-project-with-the-isde", [
+        [ "Creating the Project with e2 studio", "_s_t_a_r_t__d_e_v.html#creating-the-project-with-e2-studio", null ],
+        [ "Configuring the Project with e2 studio", "_s_t_a_r_t__d_e_v.html#configuring-the-project-with-e2-studio", [
           [ "BSP Tab", "_s_t_a_r_t__d_e_v.html#bsp-tab", null ],
           [ "Clocks Tab", "_s_t_a_r_t__d_e_v.html#clocks-tab", null ],
           [ "Pins Tab", "_s_t_a_r_t__d_e_v.html#pins-tab", null ],
@@ -98,6 +98,20 @@ var NAVTREE =
           [ "WDT hal_entry.c", "_s_t_a_r_t__d_e_v.html#wdt-hal-entry-c", null ]
         ] ],
         [ "Building and Testing the Project", "_s_t_a_r_t__d_e_v.html#building-and-testing-the-project", null ]
+      ] ],
+      [ "RA SC User Guide for MDK and IAR", "_s_t_a_r_t__d_e_v.html#RASC-MDK-IAR-user-guide", [
+        [ "What is RA SC?", "_s_t_a_r_t__d_e_v.html#RASC", null ],
+        [ "Using RA Smart Configurator with Keil MDK", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk", [
+          [ "Prerequisites", "_s_t_a_r_t__d_e_v.html#RASC-MDK-prerequisites", null ],
+          [ "Create new RA project", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-create-project", null ],
+          [ "Modify existing RA project", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-modify-project", null ],
+          [ "Build and Debug RA project", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-build-project", null ],
+          [ "Notes and Restrictions", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-notes-restrictions", null ]
+        ] ],
+        [ "Using RA Smart Configurator with IAR EWARM", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-ewarm", [
+          [ "Prerequisites", "_s_t_a_r_t__d_e_v.html#RASC-EWARM-prerequisites", null ],
+          [ "Create new RA project", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-ewarm-create-project", null ]
+        ] ]
       ] ]
     ] ],
     [ "FSP Architecture", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html", [
@@ -141,29 +155,35 @@ var NAVTREE =
         ] ]
       ] ]
     ] ],
+    [ "Copyright", "_c_o_p_y_r_i_g_h_t.html", null ],
     [ "API Reference", "modules.html", "modules" ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html",
-"group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641",
-"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aaddeb430db13360a93b41add7c9abbc56",
-"group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a00303d0e260ebf4f15aa4771fda03531",
-"group___c_g_c___a_p_i.html#ggac42ad637386383ab22a111e33b4d3892a2dad54100030072176d73dcec8ca5bcf",
-"group___c_t_s_u___a_p_i.html#gga6246d9e85e33b347a40542a07b42395aa600b9598e8265ed1f67724a3d09b478a",
-"group___d_o_c.html#ga00abf8118e145197cb6dad5502d4e1e0",
-"group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca2d7a4f8fd21fad6f5a671336152d46b0",
-"group___g_p_t.html#ggaa1457c9c1f178fff4dd1558832db196aaa03328ca033b8043537b813ecabe1c50",
-"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840ea1343ff3523554da01ec019f553fb623e",
-"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8aa104329a7773f8ffbed0f7fbad258e6d",
-"group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa9de30cba76ab49b9b7a0925c73aff8a7",
-"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a517f6eb396408044e70353bedd2983e8",
-"group___s_c_i___i2_c.html#a880d8113fcc8b178207d73e61405d614",
-"group___s_p_i___a_p_i.html#structspi__callback__args__t",
-"group___u_a_r_t___a_p_i.html#afd111f21ce7f755b470b5e5d90249768",
-"group___u_s_b___a_p_i.html#ggae829d35e41400a0bb30a3c0969152083a1c7091216cfa9c9f4a252b0825ed32cb"
+"_c_o_p_y_r_i_g_h_t.html",
+"group___a_d_c___a_p_i.html",
+"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa660242e9eb38f89723d32a8663bb2d22",
+"group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a81f609a8552e4f09d721bcee73d130ff",
+"group___c_a_n.html#ga30d9371c5b32915b17834d0616ca893c",
+"group___c_g_c___a_p_i.html#ggac42ad637386383ab22a111e33b4d3892ac011461b3f505df97fdb3fffc43bc30b",
+"group___c_t_s_u___a_p_i.html#a4e772870c7fdd16a6af6acfebb03fcfe",
+"group___d_i_s_p_l_a_y___a_p_i.html#ggad42f0f62fa80ea5432d2c19bde0e4675a0f6b6a389b5462f9f8b32e11419fe270",
+"group___e_t_h_e_r___p_h_y___a_p_i.html#a339809c3abd9e0aef94670716425d5b9",
+"group___g_l_c_d_c.html#ggaf4c632aa5e2e15803a911e4349ff6500a92ebefc07736ac1af2b995a094eaf68c",
+"group___i2_s___a_p_i.html#a0268adf9536947ac5cd8ac2795416a18",
+"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840eab52bfe38ab8f85dc73ff58c440224ab5",
+"group___j_p_e_g___a_p_i.html#ga25768b7fdea96c61ccc6ca2f8ca43b21",
+"group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70ad97462ffbf5716e626df680cceceaf51",
+"group___p_o_e_g___a_p_i.html#structpoeg__cfg__t",
+"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aef76cb06aecdf33a1186e2b1dd830b1a",
+"group___s_c_i___s_p_i.html#ga7f7f0fbe5dc85ac7dac6c5676965e432",
+"group___s_l_c_d_c___a_p_i.html#a175274a05a50ae9b46f0c6aa6797ba09",
+"group___s_p_i___f_l_a_s_h___a_p_i.html#a8e3c8b055e778827f187f213a725de1e",
+"group___t_o_u_c_h___a_p_i.html#af52189bee95aded73e48319bf264085e",
+"group___u_s_b___a_p_i.html#ga7f2f5f181f29bec3e73afb0cd933caa1",
+"group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a64c6d100c73279cb794db805b1ece673"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

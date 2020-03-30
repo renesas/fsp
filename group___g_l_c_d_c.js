@@ -1,5 +1,19 @@
 var group___g_l_c_d_c =
 [
+    [ "glcdc_instance_ctrl_t", "group___g_l_c_d_c.html#structglcdc__instance__ctrl__t", null ],
+    [ "glcdc_extended_cfg_t", "group___g_l_c_d_c.html#structglcdc__extended__cfg__t", [
+      [ "tcon_hsync", "group___g_l_c_d_c.html#ad25fcdd7bd02ac3aaed31e62c30f4d3b", null ],
+      [ "tcon_vsync", "group___g_l_c_d_c.html#a3382091c2cab7622f4a815773dd2d9db", null ],
+      [ "tcon_de", "group___g_l_c_d_c.html#a8a2194cc7f4843eb41efffc3821538b4", null ],
+      [ "correction_proc_order", "group___g_l_c_d_c.html#a52a112fe1e54aeafa078c9912f173e7d", null ],
+      [ "clksrc", "group___g_l_c_d_c.html#acfb726d932a81205261ae596c6838e97", null ],
+      [ "clock_div_ratio", "group___g_l_c_d_c.html#a2c122302f8db7852c7159d9b60dc4b1e", null ],
+      [ "dithering_mode", "group___g_l_c_d_c.html#a62ebf558c5b2b956e6cb681313bd8ec6", null ],
+      [ "dithering_pattern_A", "group___g_l_c_d_c.html#ab79b1cad25e34e7b47420e1448667276", null ],
+      [ "dithering_pattern_B", "group___g_l_c_d_c.html#a6eb480ff0892cf412793666a8173460b", null ],
+      [ "dithering_pattern_C", "group___g_l_c_d_c.html#a09d3ac7b7b8aee905b4a1082e5dc960e", null ],
+      [ "dithering_pattern_D", "group___g_l_c_d_c.html#a328c2b20548a36cacf4ecdb1475f40c6", null ]
+    ] ],
     [ "glcdc_clk_src_t", "group___g_l_c_d_c.html#ga43acd93eeb35746824c49342b74f85a5", [
       [ "GLCDC_CLK_SRC_INTERNAL", "group___g_l_c_d_c.html#gga43acd93eeb35746824c49342b74f85a5a7eb6ad419d6034781e0a955081f12260", null ],
       [ "GLCDC_CLK_SRC_EXTERNAL", "group___g_l_c_d_c.html#gga43acd93eeb35746824c49342b74f85a5aa422a1cfc378a8ab5706037f5062b555", null ]
@@ -85,6 +99,6 @@ var group___g_l_c_d_c =
     [ "R_GLCDC_BufferChange", "group___g_l_c_d_c.html#ga0d020f73e547ae005c666638a0dff427", null ],
     [ "R_GLCDC_ColorCorrection", "group___g_l_c_d_c.html#ga9d0754a6820a3a189c270f8da8677b72", null ],
     [ "R_GLCDC_ClutUpdate", "group___g_l_c_d_c.html#gaaabcf5b43ea6cb821c0cddee78172cc5", null ],
-    [ "R_GLCDC_StatusGet", "group___g_l_c_d_c.html#ga1ba1f4b003e8045aefaa604f4eb5954f", null ],
+    [ "R_GLCDC_StatusGet", "group___g_l_c_d_c.html#ga4c5e0ed8faa047d4875460d4760dd8ed", null ],
     [ "R_GLCDC_VersionGet", "group___g_l_c_d_c.html#ga030162c7f18d2587397e9899cc792c2e", null ]
 ];

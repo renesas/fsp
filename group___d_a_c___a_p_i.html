@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('group___d_a_c___a_p_i.html','');});
 <h1><a class="anchor" id="DAC_API_SUMMARY"></a>
 Summary</h1>
 <p>The DAC interface provides standard Digital/Analog Converter functionality. A DAC application writes digital sample data to the device and generates analog output on the DAC output pin.</p>
-<p>Implemented by: <a class="el" href="group___d_a_c.html">Digital to Analog Converter (r_dac)</a> </p>
+<p>Implemented by: <a class="el" href="group___d_a_c.html">Digital to Analog Converter (r_dac)</a> <a class="el" href="group___d_a_c8.html">Digital to Analog Converter (r_dac8)</a> </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -178,18 +178,6 @@ ad_da_synchronized</td>
 <td class="fielddoc">
 AD/DA synchronization. </td></tr>
 <tr><td class="fieldtype">
-<a id="a6d1f382f6915ed9939f0327445f8bf8e"></a><a class="el" href="group___d_a_c___a_p_i.html#gac447d1d0850297aefbec6e8be8b55591">dac_data_format_t</a></td>
-<td class="fieldname">
-data_format</td>
-<td class="fielddoc">
-Data format. </td></tr>
-<tr><td class="fieldtype">
-<a id="a65af500de01ce34dcd5665f0b6aad85d"></a>bool</td>
-<td class="fieldname">
-output_amplifier_enabled</td>
-<td class="fielddoc">
-Output amplifier enable. </td></tr>
-<tr><td class="fieldtype">
 <a id="ae557c2694e1af63f72e2f6e2b56ea58e"></a>void const  *</td>
 <td class="fieldname">
 p_extend</td>
@@ -213,36 +201,34 @@ p_extend</td>
 <div class="textblock"><p>DAC driver structure. General DAC functions implemented at the HAL layer follow this API. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a9b1cc35b0ca7305f1f7ea794c7963f46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#a9b1cc35b0ca7305f1f7ea794c7963f46">open</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl, <a class="el" href="group___d_a_c___a_p_i.html#structdac__cfg__t">dac_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="separator:a9b1cc35b0ca7305f1f7ea794c7963f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a0e96bc777533bf48559b73e6ab1856"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#a0a0e96bc777533bf48559b73e6ab1856">close</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl)</td></tr>
-<tr class="separator:a0a0e96bc777533bf48559b73e6ab1856"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13ec6b32a45fcace1af36cf5fdc2f04b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#a13ec6b32a45fcace1af36cf5fdc2f04b">write</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl, uint16_t value)</td></tr>
-<tr class="separator:a13ec6b32a45fcace1af36cf5fdc2f04b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefc6027242d476a93b3f1b903f71f011"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#aefc6027242d476a93b3f1b903f71f011">start</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl)</td></tr>
-<tr class="separator:aefc6027242d476a93b3f1b903f71f011"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a766efd2347a8dd233fe1ccea22ac2206"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#a766efd2347a8dd233fe1ccea22ac2206">stop</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl)</td></tr>
-<tr class="separator:a766efd2347a8dd233fe1ccea22ac2206"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf1499043008fef274392889f70be8a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#acf1499043008fef274392889f70be8a5">open</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl, <a class="el" href="group___d_a_c___a_p_i.html#structdac__cfg__t">dac_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:acf1499043008fef274392889f70be8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56a4f3e70f9aa1e2d66c5c586f994c1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#a56a4f3e70f9aa1e2d66c5c586f994c1a">close</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a56a4f3e70f9aa1e2d66c5c586f994c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1f3bfcf59391fda4d5a1b46db9892b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#ab1f3bfcf59391fda4d5a1b46db9892b8">write</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl, uint16_t value)</td></tr>
+<tr class="separator:ab1f3bfcf59391fda4d5a1b46db9892b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad65c88411b83c76ab1a3698402520496"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#ad65c88411b83c76ab1a3698402520496">start</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ad65c88411b83c76ab1a3698402520496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc2c513b17daa37c5c84a639c1e74eb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#afc2c513b17daa37c5c84a639c1e74eb7">stop</a> )(<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:afc2c513b17daa37c5c84a639c1e74eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8662f9b4ad486920900b3f783b3ffe12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#a8662f9b4ad486920900b3f783b3ffe12">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
 <tr class="separator:a8662f9b4ad486920900b3f783b3ffe12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc35c64e0a034acaf440e2dfc4f6e57a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___a_p_i.html#afc35c64e0a034acaf440e2dfc4f6e57a">infoGet</a> )(<a class="el" href="group___d_a_c___a_p_i.html#structdac__info__t">dac_info_t</a> *const p_info)</td></tr>
-<tr class="separator:afc35c64e0a034acaf440e2dfc4f6e57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="a9b1cc35b0ca7305f1f7ea794c7963f46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b1cc35b0ca7305f1f7ea794c7963f46">&#9670;&nbsp;</a></span>open</h2>
+<a id="acf1499043008fef274392889f70be8a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf1499043008fef274392889f70be8a5">&#9670;&nbsp;</a></span>open</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::open) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl, <a class="el" href="group___d_a_c___a_p_i.html#structdac__cfg__t">dac_cfg_t</a> const *const p_cfg)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::open) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl, <a class="el" href="group___d_a_c___a_p_i.html#structdac__cfg__t">dac_cfg_t</a> const *const p_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Initial configuration. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___d_a_c.html#gaac71f25703e091754d21af33fe69ac13">R_DAC_Open()</a></li>
-<li>R_DAC8_Open()</li>
+<li><a class="el" href="group___d_a_c8.html#gab5ee65d723643341c8fb5749feebe9f9">R_DAC8_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -255,50 +241,50 @@ p_extend</td>
 
 </div>
 </div>
-<a id="a0a0e96bc777533bf48559b73e6ab1856"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a0e96bc777533bf48559b73e6ab1856">&#9670;&nbsp;</a></span>close</h2>
+<a id="a56a4f3e70f9aa1e2d66c5c586f994c1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56a4f3e70f9aa1e2d66c5c586f994c1a">&#9670;&nbsp;</a></span>close</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::close) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::close) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Close the D/A Converter. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___d_a_c.html#gaeabd912c5de6ef01f9d9955bac100da1">R_DAC_Close()</a></li>
-<li>R_DAC8_Close()</li>
+<li><a class="el" href="group___d_a_c8.html#ga1eaf239636a9b783a3018a8bf7dca406">R_DAC8_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_a_c___a_p_i.html#a9b1cc35b0ca7305f1f7ea794c7963f46">dac_api_t::open</a> call for this timer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_a_c___a_p_i.html#acf1499043008fef274392889f70be8a5">dac_api_t::open</a> call for this timer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a13ec6b32a45fcace1af36cf5fdc2f04b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13ec6b32a45fcace1af36cf5fdc2f04b">&#9670;&nbsp;</a></span>write</h2>
+<a id="ab1f3bfcf59391fda4d5a1b46db9892b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1f3bfcf59391fda4d5a1b46db9892b8">&#9670;&nbsp;</a></span>write</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::write) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl, uint16_t value)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::write) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl, uint16_t value)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Write sample value to the D/A Converter. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___d_a_c.html#gad33261cb041a53bdd0e8978b2efcc435">R_DAC_Write()</a></li>
-<li>R_DAC8_Write()</li>
+<li><a class="el" href="group___d_a_c8.html#gabd22339f6611161998fcde2ed0d42048">R_DAC8_Write()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_a_c___a_p_i.html#a9b1cc35b0ca7305f1f7ea794c7963f46">dac_api_t::open</a> call for this timer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_a_c___a_p_i.html#acf1499043008fef274392889f70be8a5">dac_api_t::open</a> call for this timer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Sample value to be written to the D/A Converter. </td></tr>
   </table>
   </dd>
@@ -306,50 +292,50 @@ p_extend</td>
 
 </div>
 </div>
-<a id="aefc6027242d476a93b3f1b903f71f011"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefc6027242d476a93b3f1b903f71f011">&#9670;&nbsp;</a></span>start</h2>
+<a id="ad65c88411b83c76ab1a3698402520496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad65c88411b83c76ab1a3698402520496">&#9670;&nbsp;</a></span>start</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::start) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::start) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Start the D/A Converter if it has not been started yet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___d_a_c.html#ga3718be933be0892e741e796a791b8f0f">R_DAC_Start()</a></li>
-<li>R_DAC8_Start()</li>
+<li><a class="el" href="group___d_a_c8.html#ga34e56069033c9baa3ece8c3f899b3602">R_DAC8_Start()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_a_c___a_p_i.html#a9b1cc35b0ca7305f1f7ea794c7963f46">dac_api_t::open</a> call for this timer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_a_c___a_p_i.html#acf1499043008fef274392889f70be8a5">dac_api_t::open</a> call for this timer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a766efd2347a8dd233fe1ccea22ac2206"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a766efd2347a8dd233fe1ccea22ac2206">&#9670;&nbsp;</a></span>stop</h2>
+<a id="afc2c513b17daa37c5c84a639c1e74eb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc2c513b17daa37c5c84a639c1e74eb7">&#9670;&nbsp;</a></span>stop</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::stop) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_ctrl)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::stop) (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *const p_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Stop the D/A Converter if the converter is running. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___d_a_c.html#ga0e585c5be1c80967e31b9ca6c777cac2">R_DAC_Stop()</a></li>
-<li>R_DAC8_Stop()</li>
+<li><a class="el" href="group___d_a_c8.html#ga3b61ad58ee313d0aac5fc667e87e7f5d">R_DAC8_Stop()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_a_c___a_p_i.html#a9b1cc35b0ca7305f1f7ea794c7963f46">dac_api_t::open</a> call for this timer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_a_c___a_p_i.html#acf1499043008fef274392889f70be8a5">dac_api_t::open</a> call for this timer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -369,37 +355,12 @@ p_extend</td>
 </div><div class="memdoc">
 <p>Get version and store it in provided pointer p_version. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___d_a_c.html#gabd5c205f54e3fdef5ab6ce7e5e9470ea">R_DAC_VersionGet()</a></li>
-<li>R_DAC8_VersionGet()</li>
+<li><a class="el" href="group___d_a_c8.html#ga6543b875e07078a4a4460df5b3cf46d5">R_DAC8_VersionGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">p_version</td><td>Code and API version used. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="afc35c64e0a034acaf440e2dfc4f6e57a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc35c64e0a034acaf440e2dfc4f6e57a">&#9670;&nbsp;</a></span>infoGet</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  dac_api_t::infoGet) (<a class="el" href="group___d_a_c___a_p_i.html#structdac__info__t">dac_info_t</a> *const p_info)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get information about DAC Resolution and store it in provided pointer p_info. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>R_DAC_InfoGet()</li>
-<li>R_DAC8_InfoGet()</li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_info</td><td>Collection of information for this DAC. </td></tr>
   </table>
   </dd>
 </dl>
@@ -458,7 +419,8 @@ Pointer to the API structure for this instance. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>DAC control block. Allocate an instance specific control block to pass into the DAC API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___d_a_c.html#structdac__instance__ctrl__t">dac_instance_ctrl_t</a> </li>
+<li><a class="el" href="group___d_a_c.html#structdac__instance__ctrl__t">dac_instance_ctrl_t</a></li>
+<li><a class="el" href="group___d_a_c8.html#structdac8__instance__ctrl__t">dac8_instance_ctrl_t</a> </li>
 </ul>
 </dd></dl>
 
@@ -492,9 +454,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

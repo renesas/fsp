@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -105,13 +105,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga4e625d8c9f3b301a46913c5827732682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens and configures the CTSU driver module. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#ae8f2c7b3cc9e33f0f790f76655d3d723">ctsu_api_t::open</a>.  <a href="#ga4e625d8c9f3b301a46913c5827732682">More...</a><br /></td></tr>
 <tr class="separator:ga4e625d8c9f3b301a46913c5827732682"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga46cf185922bbca921cb92b4c18f62525"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
-<tr class="memdesc:ga46cf185922bbca921cb92b4c18f62525"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called each time a periodic timer expires. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Once that is complete, normal processing of the data from the last scan occurs. If a different control block should be run on the next scan, that is set up as well, then the next scan is started. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a1df87278ab5d47fdd093994f53de96a6">ctsu_api_t::scanStart</a>.  <a href="#ga46cf185922bbca921cb92b4c18f62525">More...</a><br /></td></tr>
+<tr class="memdesc:ga46cf185922bbca921cb92b4c18f62525"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called each time a periodic timer expires. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Before starting the next scan, first get the data with <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>. If a different control block scan should be run, check the scan is complete before executing. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a1df87278ab5d47fdd093994f53de96a6">ctsu_api_t::scanStart</a>.  <a href="#ga46cf185922bbca921cb92b4c18f62525">More...</a><br /></td></tr>
 <tr class="separator:ga46cf185922bbca921cb92b4c18f62525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint16_t *p_data)</td></tr>
-<tr class="memdesc:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the sensor values as scanned by the CTSU. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>.  <a href="#ga1cff42feeaa3d73216b73c313fb9a5fe">More...</a><br /></td></tr>
+<tr class="memdesc:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>.  <a href="#ga1cff42feeaa3d73216b73c313fb9a5fe">More...</a><br /></td></tr>
 <tr class="separator:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga73b45020c568d57065c8a7adecaaeb4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga73b45020c568d57065c8a7adecaaeb4c">R_CTSU_Close</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
-<tr class="memdesc:ga73b45020c568d57065c8a7adecaaeb4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified CTSU control block. Implements <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ade5973e7a8e994f9146e0db84bee8bf4">transfer_api_t::close</a>.  <a href="#ga73b45020c568d57065c8a7adecaaeb4c">More...</a><br /></td></tr>
+<tr class="memdesc:ga73b45020c568d57065c8a7adecaaeb4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified CTSU control block. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395">ctsu_api_t::close</a>.  <a href="#ga73b45020c568d57065c8a7adecaaeb4c">More...</a><br /></td></tr>
 <tr class="separator:ga73b45020c568d57065c8a7adecaaeb4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6e821a30f20571244fd853784b15ae53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga6e821a30f20571244fd853784b15ae53">R_CTSU_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
 <tr class="memdesc:ga6e821a30f20571244fd853784b15ae53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return CTSU HAL driver version. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#ae74fcea91814d0f91913ae969301691c">ctsu_api_t::versionGet</a>.  <a href="#ga6e821a30f20571244fd853784b15ae53">More...</a><br /></td></tr>
@@ -121,34 +121,23 @@ Functions</h2></td></tr>
 <p>This HAL driver supports the Capacitive Touch Sensing Unit (CTSU). It implements the <a class="el" href="group___c_t_s_u___a_p_i.html">CTSU Interface</a>. </p>
 <h1><a class="anchor" id="r-ctsu-overview"></a>
 Overview</h1>
-<p>The capacitive touch sensing unit HAL driver (r_ctsu) provides an API to control the CTSU peripheral. Capacitance measurement with various settings is possible by editing the configuration.</p>
+<p>The capacitive touch sensing unit HAL driver (r_ctsu) provides an API to control the CTSU/CTSU2 peripheral. This driver performs capacitance measurement based on various settings defined by the configuration.</p>
 <h2><a class="anchor" id="r-ctsu-features"></a>
 Features</h2>
 <p><a class="anchor" id="um_ctsu_mutual"></a><a class="anchor" id="um_ctsu_multi_method"></a></p><ul>
-<li>Supports both Self-capacitance multi scan mode and Mutual-capacitance full scan mode.<ul>
-<li>The settings related to scanning can change in detail.</li>
-<li>Grouping of scans is possible.</li>
-</ul>
-</li>
-<li>Starts scanning at any time.<ul>
-<li>The scan may be started by a software trigger or an external trigger.</li>
-<li>The scan completion is signalled by the callback function.</li>
-</ul>
-</li>
-<li>Gets all results after scans are complete.</li>
-<li>Additional build-time features<ul>
-<li>Optional (build time) DTC support for CTSUWR and CTSURD respectively.</li>
-<li>Optional (build time) Support for real-time monitoring function by QE. (Not yet available)</li>
-</ul>
-</li>
+<li>Supports both Self-capacitance multi scan mode and Mutual-capacitance full scan mode</li>
+<li>Scans may be started by software or an external trigger</li>
+<li>Returns measured capacitance data on scan completion</li>
+<li>Optional DTC support</li>
 </ul>
 <h1><a class="anchor" id="r-ctsu-configuration"></a>
 Configuration</h1>
+<dl class="section note"><dt>Note</dt><dd><b>This module is configured via the QE for Capacitive Touch tuning tool.</b></dd></dl>
 <p><h2>Build Time Configurations for r_ctsu</h2>
 The following build time configurations are defined in fsp_cfg/r_ctsu_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -158,758 +147,74 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
-<td>Enable Support for using DTC</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Support for using DTC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If enabled, DTC instances will be included in the build for both transmission and reception. </td></tr>
+</td><td>Disabled </td><td>If enabled, DTC instances will be included in the build for both transmission and reception. </td></tr>
 <tr>
-<td>Interrupt priority level</td><td>Interrupt vector number must be an integer greater than 0</td><td>Priority level of all CTSU interrupt (CSTU_WR,CTSU_RD,CTSU_FN)  </td></tr>
-<tr>
-<td>NUM_SELF_ELEMENTS</td><td>Interrupt vector number must be an integer greater than 0</td><td>Number of self elements </td></tr>
-<tr>
-<td>NUM_MUTUAL_ELEMENTS</td><td>Interrupt vector number must be an integer greater than 0</td><td>Number of mutual elements </td></tr>
+<td>Interrupt priority level</td><td>MCU Specific Options</td><td></td><td>Priority level of all CTSU interrupt (CSTU_WR,CTSU_RD,CTSU_FN)  </td></tr>
 </table>
- <h2>Configurations for CTSU Driver on r_ctsu</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; CapTouch -&gt; CTSU Driver on r_ctsu:<br />
+ <h2>Configurations for Driver &gt; CapTouch &gt; CTSU Driver on r_ctsu</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; CapTouch &gt; CTSU Driver on r_ctsu:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>General|Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_ctsu0 </td><td>Module name. </td></tr>
 <tr>
-<td>Input|Number of rx</td><td>Number of elements must be an integer greater than 1</td><td>Number of using rx elemnts  </td></tr>
-<tr>
-<td>Input|Number of tx</td><td>Number of elements must be an integer greater than 1</td><td>Number of using tx elemnts </td></tr>
-<tr>
-<td>Interrupts|Trigger</td><td>MCU Specific Options</td><td>CTSU Measurement Operation Start Trigger Select </td></tr>
-<tr>
-<td>Input|txvsel</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-VCC</li>
-<li>
-INTERNAL_POWER</li>
-</ul>
-</td><td>Transmission Power Supply Select </td></tr>
-<tr>
-<td>Input|txvsel2(CTSU2 only)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-TXVSEL</li>
-<li>
-VCC_PRIVATE</li>
-</ul>
-</td><td>Transmission Power Supply Select 2 </td></tr>
-<tr>
-<td>Input|atune0</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-NORMAL</li>
-<li>
-LOW</li>
-</ul>
-</td><td>CTSU Power Supply Operating Mode Setting </td></tr>
-<tr>
-<td>Input|atune1(CTSU only)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-NORMAL</li>
-<li>
-HIGH</li>
-</ul>
-</td><td>CTSU Power Supply Capacity Adjustment </td></tr>
-<tr>
-<td>Input|atune12(CTSU2 only)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-CTSU_ATUNE12_80UA</li>
-<li>
-CTSU_ATUNE12_40UA</li>
-<li>
-CTSU_ATUNE12_20UA</li>
-<li>
-CTSU_ATUNE12_160UA</li>
-</ul>
-</td><td>CTSU Power Supply Capacity Adjustment </td></tr>
-<tr>
-<td>General|Clock divide</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-PCLKB</li>
-<li>
-PCLKB/2</li>
-<li>
-PCLKB/4</li>
-<li>
-PCLKB/8 (CTSU2 only)</li>
-</ul>
-</td><td>CTSU Operating Clock Select </td></tr>
-<tr>
-<td>General|Scan mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-SELF_MULTI_SCAN</li>
-<li>
-MUTUAL_FULL_SCAN</li>
-<li>
-MUTUAL_CFC_SCAN (CTSU2 only)</li>
-<li>
-CURRENT_SCAN (CTSU2 only)</li>
-</ul>
-</td><td>Scan Mode Select </td></tr>
-<tr>
-<td>Output|Non-measured Channel Output(CTSU2 only)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-CTSU_POSEL_LOW_GPIO</li>
-<li>
-CTSU_POSEL_HI_Z</li>
-<li>
-CTSU_POSEL_LOW</li>
-<li>
-CTSU_POSEL_SAME_PULSE</li>
-</ul>
-</td><td>Non-measured Channel Output Select </td></tr>
-<tr>
-<td>Interrupts|p_elements</td><td>Name must be a valid C symbol</td><td>Pointer to elements configuration array </td></tr>
-<tr>
-<td>General|Offset Tuning Select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enable</li>
-<li>
-Disable</li>
-</ul>
-</td><td>Initial offset tuning enable or disable </td></tr>
-<tr>
-<td>General|Threshold of 3 frequency(CTSU2 only)</td><td>Number of elements must be an integer greater than 1</td><td>majority threshold at three frequency </td></tr>
-<tr>
-<td>General|Number of moving average</td><td>Number of elements must be an integer greater than 1</td><td>Number of moving average for measurement data </td></tr>
-<tr>
-<td>General|Number for QE monitor</td><td>Number of elements must be an integer greater than 1</td><td>Configuration number for QE monitor </td></tr>
-<tr>
-<td>Interrupts|Callback provided when an ISR occurs</td><td>Name must be a valid C symbol</td><td>Callback provided when CTSUFN ISR occurs </td></tr>
-<tr>
-<td>Interrupts|Pointer to context structure</td><td>Name must be a valid C symbol</td><td>User defined context passed into callback function. </td></tr>
-<tr>
-<td>General|Pointer to extended configuration structure</td><td>Name must be a valid C symbol</td><td>Pointer to extended configuration by instance of interface. </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS00 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS01 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS02 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS03 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS04 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS05 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS06 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS07 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS08 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS09 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS10 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS11 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS12 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS13 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS14 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS15 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS16 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS17 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS18 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS19 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS20 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS21 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS22 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS23 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS24 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS25 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS26 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS27 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS28 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS29 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS30 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS31 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS32 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS33 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS34 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS35 Receive Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS00 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS01 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS02 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS03 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS04 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS05 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS06 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS07 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS08 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS09 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS10 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS11 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS12 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS13 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS14 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS15 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS16 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS17 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS18 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS19 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS20 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS21 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS22 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS23 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS24 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS25 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS26 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS27 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS28 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS29 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS30 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS31 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS32 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS33 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS34 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
-<tr>
-<td>Input|TS Channel Select|TS35 Transfer Channel select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>TS Channel select </td></tr>
+<td>Scan Start Trigger</td><td>MCU Specific Options</td><td></td><td>CTSU Scan Start Trigger Select </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-ctsu-interrupt-configuration"></a>
 Interrupt Configuration</h2>
-<p>The first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a> function call sets CTSU_CTSUWR, CTSU_CTSURD, and CTSU_CTSUFN interrupts. The user should provide callback function which would be invoked when CTSU_CTSUFN interrupt handler has been completed. The callback arguments will contain information about the scan status, and a pointer to the user defined context.</p>
+<p>The first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a> function call sets CTSU peripheral interrupts. The user should provide a callback function to be invoked at the end of the CTSU scan sequence. The callback argument will contain information about the scan status.</p>
 <h2><a class="anchor" id="r-ctsu-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The CTSU peripheral module uses the PCLKB as its clock source. You can set the PCLKB frequency using the clock configurator in the ISDE or using the CGC Interface at run-time. The CTSU Drive pulse will be calculated and set by the tooling depending on the selected transfer rate. If the PCLKB is configured in such a manner that the selected internal rate cannot be achieved, an error will be returned.</p>
+<p>The CTSU peripheral module uses PCLKB as its clock source. You can set the PCLKB frequency using the clock configurator in e2 studio or by using the CGC Interface at run-time.</p>
+<dl class="section note"><dt>Note</dt><dd>The CTSU Drive pulse will be calculated and set by the tooling depending on the selected transfer rate.</dd></dl>
 <h2><a class="anchor" id="r-ctsu-pin-configuration"></a>
 Pin Configuration</h2>
-<p>The CTSU peripheral module uses pins on the MCU to measure capacitance. Set the capacitance measurement TS terminal and TSCAP terminal to CTSU peripheral. Before <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>, use an I/O port to output low to the TSCAP pin, and discharge the existing LPF capacitance.</p>
+<p>The TSn pins are sensor pins for the CTSU.</p>
+<p>The TSCAP pin is used for an internal low-pass filter and must be connected to an external decoupling capacitor.</p>
 <h1><a class="anchor" id="r-ctsu-usage_notes"></a>
 Usage Notes</h1>
 <h2>CTSU</h2>
 <h3>Self-capacitance multi scan mode</h3>
-<p>Electrode of one TS terminal is assigned to one touch button. Electrodes of multiple TS terminals physically aligned can be used to create touch slider or touch wheel.</p>
+<p>In self-capacitance mode each TS pin is assigned to one touch button. Electrodes of multiple TS pins can be physically aligned to create slider or wheel interfaces.</p>
 <ul>
 <li>Scan Order<ul>
-<li>The hardware scans the specified number of terminals in ascending order.</li>
-<li>For example, if terminals TS05, TS08, TS02, TS03, and TS06 are specified in your application, the hardware will scan them in the order:<br />
- TS02, TS03, TS05, TS06, TS08</li>
+<li>The hardware scans the specified pins in ascending order.</li>
+<li>For example, if pins TS05, TS08, TS02, TS03, and TS06 are specified in your application, the hardware will scan them in the order TS02, TS03, TS05, TS06, TS08.</li>
 </ul>
 </li>
 <li>Element<ul>
-<li>An element refers to the index of terminal within the scan order. Using the previous example, TS05 is element 2.</li>
+<li>An element refers to the index of a pin within the scan order. Using the previous example, TS05 is element 2.</li>
 </ul>
 </li>
 <li>Scan Time<ul>
-<li>The scanning occurs in the background by the CTSU peripheral and does not utilize any main processor time.</li>
+<li>Scanning is handled directly by the CTSU peripheral and does not utilize any main processor time.</li>
 <li>It takes approximately 500us to scan a single sensor.</li>
-<li>If DTC is not used, an additional overhead is added for the main processor to transfer data to/from registers when each sensor is scanned.</li>
+<li>If DTC is not used additional overhead is required for the main processor to transfer data to/from registers when each sensor is scanned.</li>
 </ul>
 </li>
 </ul>
 <h3>Mutual-capacitance full scan mode</h3>
-<p>Electrodes of two TS terminal is assigned to one touch button. This mode is typically used when a matrix/keypad with more than four keys is present. This is because Mutual mode requires fewer terminals to operate than the equivalent in Self mode does. Consider a standard phone keypad. You can think of it as a matrix of four rows and three columns.</p>
+<p>In mutual-capacitance mode each TS pin acts as either a 'row' or 'column' in an array of sensors. As a result, this mode uses fewer pins when more than five sensors are configured. Mutual-capacitance mode is ideal for applications where many touch sensors are required, like keypads, button matrices and touchpads.</p>
+<p>As an example, consider a standard phone keypad comprised of a matrix of four rows and three columns.</p>
 <div class="image">
 <object type="image/svg+xml" data="r_ctsu_mutual_button.svg">r_ctsu_mutual_button.svg</object>
 <div class="caption">
 Mutual Button Image</div></div>
-<p> As you can see, only 7 terminals are necessary to scan 12 buttons. In self mode, 12 terminals are required.</p>
+<p> In mutual capacitance mode only 7 pins are necessary to scan 12 buttons. In self mode, 12 pins would be required.</p>
 <ul>
 <li>Scan Order<ul>
-<li>The hardware scans the pairs in ascending order, with terminals configured as RX being the primary, and the terminals configured as TX the secondary.</li>
-<li>For example, if sensors TS10, TS11, and TS03 are specified as RX sensors, and sensors TS02, TS07, and TS04 are specified as TX sensors, the hardware will scan them in the following sensor-pair order:<br />
+<li>The hardware scans the matrix by iterating over the TX pins first and the RX pins second.</li>
+<li>For example, if pins TS10, TS11, and TS03 are specified as RX sensors and pins TS02, TS07, and TS04 are specified as TX sensors, the hardware will scan them in the following sensor-pair order:<br />
  TS03-TS02, TS03-TS04, TS03-TS07, TS10-TS02, TS10-TS04, TS10-TS07, TS11-TS02, TS11-TS04, TS11-TS07</li>
 </ul>
 </li>
@@ -918,79 +223,61 @@ Mutual Button Image</div></div>
 </ul>
 </li>
 <li>Scan Time<ul>
-<li>Because mutual-capacitance scans two patterns for one element, it takes twice as long as the self-capacitance.</li>
+<li>Because mutual-capacitance scans two patterns for one element it takes twice as long as self-capacitance (1ms vs 0.5ms per element).</li>
 </ul>
 </li>
 </ul>
 <h2>CTSU2</h2>
-<p>The measurements method is high resolution pulse mode. Three frequencies are measured by shifting the measurement frequency, and the majority rule of the three frequencies is calculated. As a result, synchronous noise resistance is higher than CTSU.</p>
-<h3>Self-capacitance multi scan mode</h3>
-<p>This explanation is the same as the Self-capacitance multi scan mode of CTSU.</p>
-<h3>Ts mutual-capacitance multi scan mode</h3>
-<p>This explanation is the same as the mutual-capacitance multi scan mode of CTSU.</p>
+<dl class="section note"><dt>Note</dt><dd>The above notes regarding self- and mutual-capacitance modes on CTSU apply to the CTSU2 peripheral as well.</dd></dl>
 <h3>CFC mutual-capacitance multi scan mode</h3>
-<p>Improving the speed of mutual capacitance measurement by parallel measurement.</p>
+<p>In CFC mutual-capacitance mode the receive lines are scanned in parallel, providing a significant speed boost. Operation is otherwise identical to normal CTSU mutual scanning.</p>
 <ul>
 <li>Scan Order<ul>
-<li>The hardware scans the pairs in ascending order, with terminals configured as RX being the primary, and the terminals configured as TX the secondary.</li>
+<li>The hardware scans all RX pins simultaneously for each TX pin.</li>
 <li>For example, if sensors TS10, TS11, and TS03 are specified as RX sensors, and sensors TS02, TS07, and TS04 are specified as TX sensors, the hardware will scan them in the following sensor-pair order:<br />
- TS03-TS02, TS10-TS02, TS11-TS02, TS03-TS04, TS10-TS04, TS11-TS04, TS03-TS07, TS10-TS07, TS11-TS07</li>
+ TS02-(TS03, TS10, TS11), TS04-(TS03, TS10, TS11), TS07-(TS03, TS10, TS11)</li>
 </ul>
 </li>
 <li>Element<ul>
-<li>An element refers to the index of a sensor-pair within the scan order. Using the previous example, TS10-TS07 is element 7.</li>
+<li>An element refers to the index of a sensor-pair within the scan order. Using the previous example, TS07-TS10 is element 7.</li>
 </ul>
 </li>
 <li>Scan Time<ul>
-<li>The RX sensor is measured simultaneously for the same TX sensor, so the measurement time depends on the number of RX sensors.</li>
-<li>Using the previous example, it takes 3 times as fast as the Ts mutual-capacitance.</li>
+<li>Because the RX lines are scanned in parallel, CFC mutual-capacitance scan is the same amount of times faster than a basic mutual matrix scan as the number of RX lines. In other words, on a matrix with N receive lines, CFC mutual scanning is N times faster than basic mutual scanning.</li>
 </ul>
 </li>
 </ul>
-<h3>Current scan</h3>
-<p>Small current meesurement mode.</p>
-<h3>Non-measured Channel Output</h3>
-<p>When measuring by the self-capacitance method with the electrode as shown below and enabling the shield function,</p>
-<ul>
-<li>Shield terminal: TS3,<ul>
-<li>Set "1" in the transmission / reception control register to output transmission pulses and use them as shield terminals.</li>
-</ul>
-</li>
-<li>Measuring terminal: TS0 ~ TS2,<ul>
-<li>Set POSEL [1: 0] = "2'b11". The same pulse as the shield terminal is output from the non-measurement terminal, and it is used as a shield.</li>
-</ul>
-</li>
-</ul>
+<h3>Shield Output</h3>
+<p>The CTSU2 can optionally drive a shield signal on a single TS pin comprised of all TX pulses. This signal can be used to drive a shield trace or lattice pour around touch sensors to improve the signal-to-noise ratio.</p>
 <div class="image">
 <object type="image/svg+xml" data="r_ctsu_shield.svg">r_ctsu_shield.svg</object>
 <div class="caption">
-Shield terminal Image</div></div>
- <h2>Buffer Contents</h2>
-<p>At the lowest level, both the sensor count and reference count registers (CTSUSC and CTSURC) are loaded into the driver buffer for each sensor in the scan configuration. Though the CTSURC is not used, both registers are placed into the buffer for two reasons.</p><ul>
-<li>Both registers must have their contents read for proper scan operation.</li>
-<li>This allows for identical processing for both interrupt and DTC operation at a later point. However, <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet()</a> access this buffer will load only moving averaged CTSUSC values.</li>
-</ul>
-<h2>Control block</h2>
-<p>A control block refers to the group of elements such as scan mode. Typically there is only one control block used per application. However, more advanced applications may require different control block to be maked as different features are enabled within the product, or when a combination of Self and Mutual mode configurations are present.</p>
-<h2>For typical buttons, sliders and wheels</h2>
-<p>the CTSU HAL is not meant to be accessed directly by the user application, but rather only by the Touch middleware layer. Also, there are many configuration settings and complexity, we recommend using QE for Capacitive Touch.</p>
+Shield pin Image</div></div>
+ <dl class="section note"><dt>Note</dt><dd>This function is only available in self-capacitance mode.</dd></dl>
 <h2><a class="anchor" id="r-ctsu-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the CTSU:</p>
 <ul>
+<li>Self-capacitance single-scan mode is not supported.</li>
 <li>If DTC is used, external triggers may not be used for scan trigger type.</li>
 </ul>
 <h1><a class="anchor" id="r-ctsu-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the CTSU in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t data[CTSU_NUM_ELEMENTS];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait scan end callback */</span></div><div class="line">        }</div><div class="line">        g_flag = 0;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> <h2>Multi Mode Example</h2>
-<p>This is a optional exmaple of using both Self-capacitance and Mutual-capacitance.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu_optional_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t data[CTSU_NUM_ELEMENTS];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    handle_error(err);</div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl_mutual, &amp;g_ctsu_cfg_mutual);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait scan end callback */</span></div><div class="line">        }</div><div class="line">        g_flag = 0;</div><div class="line"></div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl_mutual);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag_mutual)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait scan end callback */</span></div><div class="line">        }</div><div class="line">        g_flag_mutual = 0;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl_mutual, data);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ctsu_callback (<a class="code" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___c_t_s_u___a_p_i.html#ggaf6b0abb6cb3e6996d8435268d5e7c9cfa110041f0d6a2dcfeac8b0d2ba3d2318b">CTSU_EVENT_SCAN_COMPLETE</a> == p_args-&gt;<a class="code" href="group___c_t_s_u___a_p_i.html#a40ee54221ab1d85ee5d2ce7a5cdd289a">event</a>)</div><div class="line">    {</div><div class="line">        g_scan_flag = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ctsu_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Multi-configuration Example</h2>
+<p>This is a optional exmaple of using both Self-capacitance and Mutual-capacitance configurations in the same project.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu_optional_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS + (CTSU_CFG_NUM_MUTUAL_ELEMENTS * 2)];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    handle_error(err);</div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl_mutual, &amp;g_ctsu_cfg_mutual);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl_mutual);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl_mutual, data);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structctsu__ctsuwr__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#structctsu__ctsuwr__t">ctsu_ctsuwr_t</a></td></tr>
 <tr class="separator:structctsu__ctsuwr__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structctsu__self__buf__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#structctsu__self__buf__t">ctsu_self_buf_t</a></td></tr>
+<tr class="separator:structctsu__self__buf__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structctsu__mutual__buf__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#structctsu__mutual__buf__t">ctsu_mutual_buf_t</a></td></tr>
+<tr class="separator:structctsu__mutual__buf__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structctsu__correction__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#structctsu__correction__info__t">ctsu_correction_info_t</a></td></tr>
+<tr class="separator:structctsu__correction__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structctsu__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#structctsu__instance__ctrl__t">ctsu_instance_ctrl_t</a></td></tr>
 <tr class="separator:structctsu__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -1000,6 +287,10 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga9be3b4466784415a4193f9584362c2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae3fb0beb148069bb590287ed34771117"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#gae3fb0beb148069bb590287ed34771117">ctsu_tuning_t</a> </td></tr>
 <tr class="separator:gae3fb0beb148069bb590287ed34771117"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7a98cce83446a25cc6d9fae6fa1296d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#gad7a98cce83446a25cc6d9fae6fa1296d">ctsu_correction_status_t</a> </td></tr>
+<tr class="separator:gad7a98cce83446a25cc6d9fae6fa1296d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07d91c963664201accc65a9d45fb817a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga07d91c963664201accc65a9d45fb817a">ctsu_range_t</a> </td></tr>
+<tr class="separator:ga07d91c963664201accc65a9d45fb817a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structctsu__ctsuwr__t" id="structctsu__ctsuwr__t"></a>
@@ -1014,7 +305,166 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>CTSUWR write register value </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ac0528bef59c8c84d71b8f14ec06e63ef"></a>uint16_t</td>
+<td class="fieldname">
+ctsussc</td>
+<td class="fielddoc">
+Copy from (ssdiv &lt;&lt; 8) by Open API. </td></tr>
+<tr><td class="fieldtype">
+<a id="aaf34d3ace08918bb6475ec3d1c552ef7"></a>uint16_t</td>
+<td class="fieldname">
+ctsuso0</td>
+<td class="fielddoc">
+Copy from ((snum &lt;&lt; 10) | so) by Open API. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7c9679ecf1fe0a5990b0876148ef95b9"></a>uint16_t</td>
+<td class="fieldname">
+ctsuso1</td>
+<td class="fielddoc">
+Copy from (sdpa &lt;&lt; 8) by Open API. ICOG and RICOA is set recommend value. </td></tr>
+</table>
+
 </div>
+</div>
+<a name="structctsu__self__buf__t" id="structctsu__self__buf__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structctsu__self__buf__t">&#9670;&nbsp;</a></span>ctsu_self_buf_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ctsu_self_buf_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Scan buffer data formats (Self) </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a6861f106e35481e78f023371e8a0a119"></a>uint16_t</td>
+<td class="fieldname">
+sen</td>
+<td class="fielddoc">
+Sensor counter data. </td></tr>
+<tr><td class="fieldtype">
+<a id="adc438e4276c0d59b50aed4803e7abfe7"></a>uint16_t</td>
+<td class="fieldname">
+ref</td>
+<td class="fielddoc">
+Reference counter data (Not used) </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structctsu__mutual__buf__t" id="structctsu__mutual__buf__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structctsu__mutual__buf__t">&#9670;&nbsp;</a></span>ctsu_mutual_buf_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ctsu_mutual_buf_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Scan buffer data formats (Mutual) </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a8173a36e5f8828115784966f8166b688"></a>uint16_t</td>
+<td class="fieldname">
+pri_sen</td>
+<td class="fielddoc">
+Primary sensor data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8181f53939fa39f21dfe1bade4ecfb3d"></a>uint16_t</td>
+<td class="fieldname">
+pri_ref</td>
+<td class="fielddoc">
+Primary reference data (Not used) </td></tr>
+<tr><td class="fieldtype">
+<a id="a1dfbcd55fcbb9e5f84715ce6e6044ba6"></a>uint16_t</td>
+<td class="fieldname">
+snd_sen</td>
+<td class="fielddoc">
+Secondary sensor data. </td></tr>
+<tr><td class="fieldtype">
+<a id="af11629c8645bed6f08a9dacdbd9c6bef"></a>uint16_t</td>
+<td class="fieldname">
+snd_ref</td>
+<td class="fielddoc">
+Secondary reference data (Not used) </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structctsu__correction__info__t" id="structctsu__correction__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structctsu__correction__info__t">&#9670;&nbsp;</a></span>ctsu_correction_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ctsu_correction_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Correction information </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aeea8e0424a7e537c771aa5605e234999"></a><a class="el" href="group___c_t_s_u.html#gad7a98cce83446a25cc6d9fae6fa1296d">ctsu_correction_status_t</a></td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+Correction status. </td></tr>
+<tr><td class="fieldtype">
+<a id="a93c9375ac0095e5fe3fcdbafb75bac27"></a><a class="el" href="group___c_t_s_u.html#structctsu__ctsuwr__t">ctsu_ctsuwr_t</a></td>
+<td class="fieldname">
+ctsuwr</td>
+<td class="fielddoc">
+Correction scan parameter. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9e6bd5681dc890925212b5e8c6992a81"></a>volatile <a class="el" href="group___c_t_s_u.html#structctsu__self__buf__t">ctsu_self_buf_t</a></td>
+<td class="fieldname">
+scanbuf</td>
+<td class="fielddoc">
+Correction scan buffer. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab57b6901038712e64335413e1410cd38"></a>uint16_t</td>
+<td class="fieldname">
+first_val</td>
+<td class="fielddoc">
+1st correction value </td></tr>
+<tr><td class="fieldtype">
+<a id="adf7029351b6a5a1783d9cdfdf84fc2e7"></a>uint16_t</td>
+<td class="fieldname">
+second_val</td>
+<td class="fielddoc">
+2nd correction value </td></tr>
+<tr><td class="fieldtype">
+<a id="acfe4f4937e286f12ce9ab99644d7c9b4"></a>uint32_t</td>
+<td class="fieldname">
+first_coefficient</td>
+<td class="fielddoc">
+1st correction coefficient </td></tr>
+<tr><td class="fieldtype">
+<a id="a9d61017a601220935fdd8b2802d28911"></a>uint32_t</td>
+<td class="fieldname">
+second_coefficient</td>
+<td class="fielddoc">
+2nd correction coefficient </td></tr>
+<tr><td class="fieldtype">
+<a id="a057c864fef470eed9c0fba106ccf7c88"></a>uint32_t</td>
+<td class="fieldname">
+ctsu_clock</td>
+<td class="fielddoc">
+CTSU clock [MHz]. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structctsu__instance__ctrl__t" id="structctsu__instance__ctrl__t"></a>
@@ -1028,7 +478,7 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Scan buffer data formats (Self) Scan buffer data formats (Mutual) CTSU private control block. DO NOT MODIFY. Initialization occurs when <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682" title="Opens and configures the CTSU driver module. Implements ctsu_api_t::open. ">R_CTSU_Open()</a> is called. </p>
+<div class="textblock"><p>CTSU private control block. DO NOT MODIFY. Initialization occurs when <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682" title="Opens and configures the CTSU driver module. Implements ctsu_api_t::open. ">R_CTSU_Open()</a> is called. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:a257eb16ff64e017d0a67a0a3384fdbf7"><td class="memItemLeft" align="right" valign="top"><a id="a257eb16ff64e017d0a67a0a3384fdbf7"></a>
@@ -1073,18 +523,14 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="separator:aaaf1fa1d2eae6508aeb04433bd02be27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83665cf5d96629fb4907ca79b605b25b"><td class="memItemLeft" align="right" valign="top"><a id="a83665cf5d96629fb4907ca79b605b25b"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a83665cf5d96629fb4907ca79b605b25b">ctsucr1</a></td></tr>
-<tr class="memdesc:a83665cf5d96629fb4907ca79b605b25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy from (atune0 &lt;&lt; 2, atune1 &lt;&lt; 3, clk &lt;&lt; 4, md &lt;&lt; 6) by Open API. CSW and PON is set by HAL driver. <br /></td></tr>
+<tr class="memdesc:a83665cf5d96629fb4907ca79b605b25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy from (atune1 &lt;&lt; 3, md &lt;&lt; 6) by Open API. CLK, ATUNE0, CSW, and PON is set by HAL driver. <br /></td></tr>
 <tr class="separator:a83665cf5d96629fb4907ca79b605b25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae37df5ead7bf27a590756b0c03a1c281"><td class="memItemLeft" align="right" valign="top"><a id="ae37df5ead7bf27a590756b0c03a1c281"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ae37df5ead7bf27a590756b0c03a1c281">ctsucr2</a></td></tr>
-<tr class="memdesc:ae37df5ead7bf27a590756b0c03a1c281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy from (posel, atune1, md) by Open API. FCMODE and SDPSEL and LOAD is set by HAL driver. <br /></td></tr>
-<tr class="separator:ae37df5ead7bf27a590756b0c03a1c281"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cf778904b1ccf46e5ce7fa6d1ec7c5f"><td class="memItemLeft" align="right" valign="top"><a id="a1cf778904b1ccf46e5ce7fa6d1ec7c5f"></a>
 <a class="el" href="group___c_t_s_u.html#structctsu__ctsuwr__t">ctsu_ctsuwr_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a1cf778904b1ccf46e5ce7fa6d1ec7c5f">p_ctsuwr</a></td></tr>
 <tr class="memdesc:a1cf778904b1ccf46e5ce7fa6d1ec7c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSUWR write register value. g_ctsu_ctsuwr[] is set by Open API. <br /></td></tr>
 <tr class="separator:a1cf778904b1ccf46e5ce7fa6d1ec7c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5911fb602e5ca9a55b2e3eb30ec3676"><td class="memItemLeft" align="right" valign="top"><a id="ab5911fb602e5ca9a55b2e3eb30ec3676"></a>
-ctsu_self_buf_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ab5911fb602e5ca9a55b2e3eb30ec3676">p_self_raw</a></td></tr>
+<a class="el" href="group___c_t_s_u.html#structctsu__self__buf__t">ctsu_self_buf_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ab5911fb602e5ca9a55b2e3eb30ec3676">p_self_raw</a></td></tr>
 <tr class="memdesc:ab5911fb602e5ca9a55b2e3eb30ec3676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API. <br /></td></tr>
 <tr class="separator:ab5911fb602e5ca9a55b2e3eb30ec3676"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a441edf6bb23f4feb5f5b81dbe67c74a6"><td class="memItemLeft" align="right" valign="top"><a id="a441edf6bb23f4feb5f5b81dbe67c74a6"></a>
@@ -1096,7 +542,7 @@ uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 <tr class="memdesc:a7d9d2ea0f565cf340e5735b1c86309fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to Self moving average data. g_ctsu_self_data[] is set by Open API. <br /></td></tr>
 <tr class="separator:a7d9d2ea0f565cf340e5735b1c86309fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f26ec90784dcf867d1fc63f5a0de0ff"><td class="memItemLeft" align="right" valign="top"><a id="a9f26ec90784dcf867d1fc63f5a0de0ff"></a>
-ctsu_mutual_buf_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a9f26ec90784dcf867d1fc63f5a0de0ff">p_mutual_raw</a></td></tr>
+<a class="el" href="group___c_t_s_u.html#structctsu__mutual__buf__t">ctsu_mutual_buf_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a9f26ec90784dcf867d1fc63f5a0de0ff">p_mutual_raw</a></td></tr>
 <tr class="memdesc:a9f26ec90784dcf867d1fc63f5a0de0ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API. <br /></td></tr>
 <tr class="separator:a9f26ec90784dcf867d1fc63f5a0de0ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac51ab27fd65db6e0c2c07f061532a3b4"><td class="memItemLeft" align="right" valign="top"><a id="ac51ab27fd65db6e0c2c07f061532a3b4"></a>
@@ -1115,10 +561,10 @@ uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a621ad282765bd1f41e88b497a82e4fab">p_mutual_snd_data</a></td></tr>
 <tr class="memdesc:a621ad282765bd1f41e88b497a82e4fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API. <br /></td></tr>
 <tr class="separator:a621ad282765bd1f41e88b497a82e4fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1de9bd16570e24bf22f68a4f806f0002"><td class="memItemLeft" align="right" valign="top"><a id="a1de9bd16570e24bf22f68a4f806f0002"></a>
-uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a1de9bd16570e24bf22f68a4f806f0002">p_mutual_data</a></td></tr>
-<tr class="memdesc:a1de9bd16570e24bf22f68a4f806f0002"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to Mutual subtract primary from secondary. g_ctsu_mutual_data[] is set by Open API. <br /></td></tr>
-<tr class="separator:a1de9bd16570e24bf22f68a4f806f0002"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae291493dd7e994e95df48d4dbc2162af"><td class="memItemLeft" align="right" valign="top"><a id="ae291493dd7e994e95df48d4dbc2162af"></a>
+<a class="el" href="group___c_t_s_u.html#structctsu__correction__info__t">ctsu_correction_info_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ae291493dd7e994e95df48d4dbc2162af">p_correction_info</a></td></tr>
+<tr class="memdesc:ae291493dd7e994e95df48d4dbc2162af"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to correction info <br /></td></tr>
+<tr class="separator:ae291493dd7e994e95df48d4dbc2162af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a538262fc400f4a0095f2cd60ebb710a6"><td class="memItemLeft" align="right" valign="top"><a id="a538262fc400f4a0095f2cd60ebb710a6"></a>
 <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a538262fc400f4a0095f2cd60ebb710a6">p_ctsu_cfg</a></td></tr>
 <tr class="memdesc:a538262fc400f4a0095f2cd60ebb710a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
@@ -1139,10 +585,10 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ac3493d9a66a667f943638459c3ba5392">p_context</a></td></tr>
 <tr class="memdesc:ac3493d9a66a667f943638459c3ba5392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. <br /></td></tr>
 <tr class="separator:ac3493d9a66a667f943638459c3ba5392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fb119afb149aa1ea58be0d19e7263fb"><td class="memItemLeft" align="right" valign="top"><a id="a0fb119afb149aa1ea58be0d19e7263fb"></a>
-void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a0fb119afb149aa1ea58be0d19e7263fb">p_callback</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *p_args)</td></tr>
-<tr class="memdesc:a0fb119afb149aa1ea58be0d19e7263fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a CTSUFN occurs. <br /></td></tr>
-<tr class="separator:a0fb119afb149aa1ea58be0d19e7263fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4678f4e7c014f1880d786da85e8348eb"><td class="memItemLeft" align="right" valign="top"><a id="a4678f4e7c014f1880d786da85e8348eb"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a4678f4e7c014f1880d786da85e8348eb">p_callback</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a4678f4e7c014f1880d786da85e8348eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a CTSUFN occurs. <br /></td></tr>
+<tr class="separator:a4678f4e7c014f1880d786da85e8348eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -1194,6 +640,58 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
+<a id="gad7a98cce83446a25cc6d9fae6fa1296d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad7a98cce83446a25cc6d9fae6fa1296d">&#9670;&nbsp;</a></span>ctsu_correction_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_t_s_u.html#gad7a98cce83446a25cc6d9fae6fa1296d">ctsu_correction_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CTSU Correction status </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad7a98cce83446a25cc6d9fae6fa1296da544177e8ae7de2375f436f67d8f0fe85"></a>CTSU_CORRECTION_INIT&#160;</td><td class="fielddoc"><p>Correction initial status. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7a98cce83446a25cc6d9fae6fa1296da226216e141c9645a7b026e71552fff8b"></a>CTSU_CORRECTION_RUN&#160;</td><td class="fielddoc"><p>Correction scan running. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7a98cce83446a25cc6d9fae6fa1296da547ad26a74b30f6abc040e88ca531b1d"></a>CTSU_CORRECTION_COMPLETE&#160;</td><td class="fielddoc"><p>Correction complete. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad7a98cce83446a25cc6d9fae6fa1296da9ca74c2bfb3ebcc87035a6c9eec1b12f"></a>CTSU_CORRECTION_ERROR&#160;</td><td class="fielddoc"><p>Correction error. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga07d91c963664201accc65a9d45fb817a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga07d91c963664201accc65a9d45fb817a">&#9670;&nbsp;</a></span>ctsu_range_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_t_s_u.html#ga07d91c963664201accc65a9d45fb817a">ctsu_range_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CTSU range definition </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga07d91c963664201accc65a9d45fb817aa18e0227acbd85f4a0e698e66e10ff399"></a>CTSU_RANGE_20UA&#160;</td><td class="fielddoc"><p>20uA mode </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga07d91c963664201accc65a9d45fb817aa8f4c9333b63b727e17dbe5cb1bba2b5d"></a>CTSU_RANGE_40UA&#160;</td><td class="fielddoc"><p>40uA mode </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga07d91c963664201accc65a9d45fb817aabe7fe0af42bd5680a187198d0a940b65"></a>CTSU_RANGE_80UA&#160;</td><td class="fielddoc"><p>80uA mode </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga07d91c963664201accc65a9d45fb817aa245c0b1c0e2c81523be95944d61438ea"></a>CTSU_RANGE_160UA&#160;</td><td class="fielddoc"><p>160uA mode </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga07d91c963664201accc65a9d45fb817aa7c1c26d795d57571c5b9441ea18f626d"></a>CTSU_RANGE_NUM&#160;</td><td class="fielddoc"><p>number of range </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga4e625d8c9f3b301a46913c5827732682"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga4e625d8c9f3b301a46913c5827732682">&#9670;&nbsp;</a></span>R_CTSU_Open()</h2>
@@ -1222,7 +720,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 </div><div class="memdoc">
 
 <p>Opens and configures the CTSU driver module. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#ae8f2c7b3cc9e33f0f790f76655d3d723">ctsu_api_t::open</a>. </p>
-<p>Example: </p><div class="fragment"><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    handle_error(err);</div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully configured. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
@@ -1251,14 +749,14 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called each time a periodic timer expires. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Once that is complete, normal processing of the data from the last scan occurs. If a different control block should be run on the next scan, that is set up as well, then the next scan is started. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a1df87278ab5d47fdd093994f53de96a6">ctsu_api_t::scanStart</a>. </p>
-<p>Example: </p><div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait scan end callback */</span></div><div class="line">        }</div><div class="line">        g_flag = 0;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>This function should be called each time a periodic timer expires. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Before starting the next scan, first get the data with <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>. If a different control block scan should be run, check the scan is complete before executing. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a1df87278ab5d47fdd093994f53de96a6">ctsu_api_t::scanStart</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully configured. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Now Scanning or not get data. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Other control block scan running. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_SCANNING</td><td>Scanning this instance or other. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_NOT_GET_DATA</td><td>The previous data does not been getted by DataGet. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1291,14 +789,14 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function gets the sensor values as scanned by the CTSU. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>. </p>
-<p>Example: </p><div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait scan end callback */</span></div><div class="line">        }</div><div class="line">        g_flag = 0;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully configured. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Other scan running. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Incomplete initial offset tuning. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_SCANNING</td><td>Scanning this instance. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_INCOMPLETE_TUNING</td><td>Incomplete initial offset tuning. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1321,11 +819,11 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>Disables specified CTSU control block. Implements <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ade5973e7a8e994f9146e0db84bee8bf4">transfer_api_t::close</a>. </p>
+<p>Disables specified CTSU control block. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395">ctsu_api_t::close</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully configured. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
   </table>
   </dd>
@@ -1366,9 +864,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('group___u_s_b___h_m_s_c___a_p_i.html',
 Summary</h1>
 <p>The USB HMSC interface provides USB HMSC functionality.</p>
 <p>The USB HMSC interface can be implemented by:</p><ul>
-<li><a class="el" href="group___u_s_b___h_m_s_c.html">Host Mass Storage Class Driver (r_usb_hmsc)</a> </li>
+<li><a class="el" href="group___u_s_b___h_m_s_c.html">USB Host Mass Storage Class Driver (r_usb_hmsc)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -130,92 +130,163 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>WDT functions implemented at the HAL layer will follow this API. </p>
+<div class="textblock"><p>USB HMSC functions implemented at the HAL layer will follow this API. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:af28fca3e58638ceec53357f6b8b40603"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#af28fca3e58638ceec53357f6b8b40603">strgcmd</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *buf, uint16_t command, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:af28fca3e58638ceec53357f6b8b40603"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb61e7c889e222f63c1520a9f5efcd1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#adb61e7c889e222f63c1520a9f5efcd1c">drivenoget</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_drive, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:adb61e7c889e222f63c1520a9f5efcd1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0092c3b0c678e588e7da183d850e4f9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#a0092c3b0c678e588e7da183d850e4f9e">drive2addr</a> )(uint16_t side, usb_utr_t *devadr)</td></tr>
-<tr class="separator:a0092c3b0c678e588e7da183d850e4f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21c1e8ad8a3d24399a017885dc1d6dba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#a21c1e8ad8a3d24399a017885dc1d6dba">storageCommand</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *buf, uint8_t command, uint8_t destination)</td></tr>
+<tr class="separator:a21c1e8ad8a3d24399a017885dc1d6dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ed33f95b316a6208e9cd0ad5a2455bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#a2ed33f95b316a6208e9cd0ad5a2455bb">driveNumberGet</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_drive, uint8_t destination)</td></tr>
+<tr class="separator:a2ed33f95b316a6208e9cd0ad5a2455bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae20932b0d37c7a0ccc1a21749622b578"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#ae20932b0d37c7a0ccc1a21749622b578">storageReadSector</a> )(uint16_t drive_number, uint8_t *const buff, uint32_t sector_number, uint16_t sector_count)</td></tr>
+<tr class="separator:ae20932b0d37c7a0ccc1a21749622b578"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af66944380f8a58067ad847c840adda3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#af66944380f8a58067ad847c840adda3e">storageWriteSector</a> )(uint16_t drive_number, uint8_t const *const buff, uint32_t sector_number, uint16_t sector_count)</td></tr>
+<tr class="separator:af66944380f8a58067ad847c840adda3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49a36c9bb87b760437e6b95de40ca428"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#a49a36c9bb87b760437e6b95de40ca428">semaphoreGet</a> )(void)</td></tr>
+<tr class="separator:a49a36c9bb87b760437e6b95de40ca428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a216bd4362becd0e4baa2616a40f72d10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html#a216bd4362becd0e4baa2616a40f72d10">semaphoreRelease</a> )(void)</td></tr>
+<tr class="separator:a216bd4362becd0e4baa2616a40f72d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="af28fca3e58638ceec53357f6b8b40603"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af28fca3e58638ceec53357f6b8b40603">&#9670;&nbsp;</a></span>strgcmd</h2>
+<a id="a21c1e8ad8a3d24399a017885dc1d6dba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21c1e8ad8a3d24399a017885dc1d6dba">&#9670;&nbsp;</a></span>storageCommand</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::strgcmd) (usb_ctrl_t *const p_api_ctrl, uint8_t *buf, uint16_t command, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::storageCommand) (usb_ctrl_t *const p_api_ctrl, uint8_t *buf, uint8_t command, uint8_t destination)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start the USB_HMSC module </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>R_USB_HmscStrgCmd()</li>
+<p>Processing for MassStorage(ATAPI) command. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b___h_m_s_c.html#gae5cbef3743893d8c35aa9fe45c9d6651">R_USB_HMSC_StorageCommand()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Pointer to the buffer area to store the transfer data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*buf</td><td>Pointer to the buffer area to store the transfer data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">command</td><td>ATAPI command. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Represents a device address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="adb61e7c889e222f63c1520a9f5efcd1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb61e7c889e222f63c1520a9f5efcd1c">&#9670;&nbsp;</a></span>drivenoget</h2>
+<a id="a2ed33f95b316a6208e9cd0ad5a2455bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ed33f95b316a6208e9cd0ad5a2455bb">&#9670;&nbsp;</a></span>driveNumberGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::drivenoget) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_drive, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::driveNumberGet) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_drive, uint8_t destination)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stop the USB_HMSC module </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>R_USB_HmscDriveNoGet()</li>
+<p>Get number of Storage drive. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b___h_m_s_c.html#gaccfdc1d2f97f244fcfbb94c52b03dc3b">R_USB_HMSC_DriveNumberGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_drive</td><td>Store address for Drive No. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Represents a device address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a0092c3b0c678e588e7da183d850e4f9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0092c3b0c678e588e7da183d850e4f9e">&#9670;&nbsp;</a></span>drive2addr</h2>
+<a id="ae20932b0d37c7a0ccc1a21749622b578"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae20932b0d37c7a0ccc1a21749622b578">&#9670;&nbsp;</a></span>storageReadSector</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::drive2addr) (uint16_t side, usb_utr_t *devadr)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::storageReadSector) (uint16_t drive_number, uint8_t *const buff, uint32_t sector_number, uint16_t sector_count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Retrieves device address </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>R_USB_HmscSmpDrive2Addr()</li>
+<p>Read sector information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b___h_m_s_c.html#gaa79dafa161ab34b91125136493f4a547">R_USB_HMSC_StorageReadSector()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">side</td><td>Drive number. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">devadr</td><td>Pointer to usb_utr_t structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">drive_number</td><td>Drive number. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*buff</td><td>Pointer to the buffer area to store the transfer data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sector_number</td><td>The sector number to start with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sector_count</td><td>Transmit with the sector size of the number of times. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="af66944380f8a58067ad847c840adda3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af66944380f8a58067ad847c840adda3e">&#9670;&nbsp;</a></span>storageWriteSector</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::storageWriteSector) (uint16_t drive_number, uint8_t const *const buff, uint32_t sector_number, uint16_t sector_count)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write sector information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b___h_m_s_c.html#ga87590ff490e5f422294773bfbc8ab1ce">R_USB_HMSC_StorageWriteSector()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drive_number</td><td>Drive number. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*buff</td><td>Pointer to the buffer area to store the transfer data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sector_number</td><td>The sector number to start with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sector_count</td><td>Transmit with the sector size of the number of times. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a49a36c9bb87b760437e6b95de40ca428"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49a36c9bb87b760437e6b95de40ca428">&#9670;&nbsp;</a></span>semaphoreGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::semaphoreGet) (void)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get Semaphore. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b___h_m_s_c.html#ga7320b74cf0e524e1ab5f038c80663fda">R_USB_HMSC_SemaphoreGet()</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="a216bd4362becd0e4baa2616a40f72d10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a216bd4362becd0e4baa2616a40f72d10">&#9670;&nbsp;</a></span>semaphoreRelease</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_hmsc_api_t::semaphoreRelease) (void)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Release Semaphore. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b___h_m_s_c.html#ga06eed41115834790213c720d27cf2a1e">R_USB_HMSC_SemaphoreRelease()</a> </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -235,39 +306,39 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da4f505e1e73993a10155a1610bd9ebbf7"></a>USB_ATAPI_TEST_UNIT_READY&#160;</td><td class="fielddoc"><p>ATAPI command Test Unit Ready. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da4f505e1e73993a10155a1610bd9ebbf7"></a>USB_ATAPI_TEST_UNIT_READY&#160;</td><td class="fielddoc"><p>ATAPI command Test Unit Ready. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594daaffec55c34b84191866fe00c0739762d"></a>USB_ATAPI_REQUEST_SENSE&#160;</td><td class="fielddoc"><p>ATAPI command Request Sense. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594daaffec55c34b84191866fe00c0739762d"></a>USB_ATAPI_REQUEST_SENSE&#160;</td><td class="fielddoc"><p>ATAPI command Request Sense. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da7779aea8021a735586ad28a6d77ae837"></a>USB_ATAPI_FORMAT_UNIT&#160;</td><td class="fielddoc"><p>ATAPI command Format Unit. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da7779aea8021a735586ad28a6d77ae837"></a>USB_ATAPI_FORMAT_UNIT&#160;</td><td class="fielddoc"><p>ATAPI command Format Unit. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da0b050e0e07f619e41aa97177c912ea23"></a>USB_ATAPI_INQUIRY&#160;</td><td class="fielddoc"><p>ATAPI command Inquiry. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da0b050e0e07f619e41aa97177c912ea23"></a>USB_ATAPI_INQUIRY&#160;</td><td class="fielddoc"><p>ATAPI command Inquiry. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594dac029c8375bf93264bce3d80097b79c7f"></a>USB_ATAPI_MODE_SELECT6&#160;</td><td class="fielddoc"><p>ATAPI command Mode Select6. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594dac029c8375bf93264bce3d80097b79c7f"></a>USB_ATAPI_MODE_SELECT6&#160;</td><td class="fielddoc"><p>ATAPI command Mode Select6. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594daa4b4bbda644de49d969ce7f45616f0fc"></a>USB_ATAPI_MODE_SENSE6&#160;</td><td class="fielddoc"><p>ATAPI command Mode Sense6. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594daa4b4bbda644de49d969ce7f45616f0fc"></a>USB_ATAPI_MODE_SENSE6&#160;</td><td class="fielddoc"><p>ATAPI command Mode Sense6. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594daf332baaef6acba17436d5970f50cd20a"></a>USB_ATAPI_START_STOP_UNIT&#160;</td><td class="fielddoc"><p>ATAPI command Start Stop Unit. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594daf332baaef6acba17436d5970f50cd20a"></a>USB_ATAPI_START_STOP_UNIT&#160;</td><td class="fielddoc"><p>ATAPI command Start Stop Unit. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da9f162c72af7321e38a845b48252f9529"></a>USB_ATAPI_PREVENT_ALLOW&#160;</td><td class="fielddoc"><p>ATAPI command Prevent Allow. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da9f162c72af7321e38a845b48252f9529"></a>USB_ATAPI_PREVENT_ALLOW&#160;</td><td class="fielddoc"><p>ATAPI command Prevent Allow. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da2bcce7b971b807b8baeb3ccf546643fc"></a>USB_ATAPI_READ_FORMAT_CAPACITY&#160;</td><td class="fielddoc"><p>ATAPI command Read Format Capacity. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da2bcce7b971b807b8baeb3ccf546643fc"></a>USB_ATAPI_READ_FORMAT_CAPACITY&#160;</td><td class="fielddoc"><p>ATAPI command Read Format Capacity. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da5def2216191bbb8a85f07393512be4a7"></a>USB_ATAPI_READ_CAPACITY&#160;</td><td class="fielddoc"><p>ATAPI command Read Capacity. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da5def2216191bbb8a85f07393512be4a7"></a>USB_ATAPI_READ_CAPACITY&#160;</td><td class="fielddoc"><p>ATAPI command Read Capacity. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594dac1308dd1575cf24f5f1f8ae68a2302b1"></a>USB_ATAPI_READ10&#160;</td><td class="fielddoc"><p>ATAPI command Read10. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594dac1308dd1575cf24f5f1f8ae68a2302b1"></a>USB_ATAPI_READ10&#160;</td><td class="fielddoc"><p>ATAPI command Read10. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da10b4a8ee8693370e8a3cbfc20e1af83f"></a>USB_ATAPI_WRITE10&#160;</td><td class="fielddoc"><p>ATAPI command Write10. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da10b4a8ee8693370e8a3cbfc20e1af83f"></a>USB_ATAPI_WRITE10&#160;</td><td class="fielddoc"><p>ATAPI command Write10. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da030fcf777a4d43f293751f1fd2dabb7f"></a>USB_ATAPI_SEEK&#160;</td><td class="fielddoc"><p>ATAPI command Seek. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da030fcf777a4d43f293751f1fd2dabb7f"></a>USB_ATAPI_SEEK&#160;</td><td class="fielddoc"><p>ATAPI command Seek. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594dabb00feb4634f84460ac4d8639d630d46"></a>USB_ATAPI_WRITE_AND_VERIFY&#160;</td><td class="fielddoc"><p>ATAPI command Write and Verify. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594dabb00feb4634f84460ac4d8639d630d46"></a>USB_ATAPI_WRITE_AND_VERIFY&#160;</td><td class="fielddoc"><p>ATAPI command Write and Verify. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594dac0d630b650873d796d84d8a5343269c2"></a>USB_ATAPI_VERIFY10&#160;</td><td class="fielddoc"><p>ATAPI command Verify10. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594dac0d630b650873d796d84d8a5343269c2"></a>USB_ATAPI_VERIFY10&#160;</td><td class="fielddoc"><p>ATAPI command Verify10. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da6174baf6b2a97463908ef798074251b9"></a>USB_ATAPI_MODE_SELECT10&#160;</td><td class="fielddoc"><p>ATAPI command Mode Select10. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da6174baf6b2a97463908ef798074251b9"></a>USB_ATAPI_MODE_SELECT10&#160;</td><td class="fielddoc"><p>ATAPI command Mode Select10. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac5b28f1be9ca57fc904f9c93266a594da1ade8c9399ae17756170038db2be97bb"></a>USB_ATAPI_MODE_SENSE10&#160;</td><td class="fielddoc"><p>ATAPI command Mode Sense10. </p>
+<tr><td class="fieldname"><a id="gac5b28f1be9ca57fc904f9c93266a594da1ade8c9399ae17756170038db2be97bb"></a>USB_ATAPI_MODE_SENSE10&#160;</td><td class="fielddoc"><p>ATAPI command Mode Sense10. </p>
 </td></tr>
 </table>
 
@@ -301,9 +372,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

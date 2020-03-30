@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -150,14 +150,17 @@ Features</h2>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>The available sources and peripherals may differ between devices. A full list of selectable peripherals and events is available in the User's Manual for your device.</dd>
 <dd>
-The source and destination peripherals must be configured to generate and receive events, respectively. Details on how to enable event functionality are located in the User's Manual for your device.</dd></dl>
+Some peripherals have specific settings related to ELC event generation and/or reception. Details on how to enable event functionality for each peripheral are located in the usage notes for the related module(s) as well as in the User's Manual for your device.</dd></dl>
 <h1><a class="anchor" id="r-elc-configuration"></a>
 Configuration</h1>
-<p>To link an event to a peripheral perform the following steps:</p>
+<dl class="section note"><dt>Note</dt><dd>The RA Configuration tool will automatically generate event links based on the selections made in module properties. To view the currently linked events check the <a class="el" href="_s_t_a_r_t__d_e_v.html#viewing-event-links">Event Links tab in the configuration</a>.</dd>
+<dd>
+Calling <a class="el" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a> followed by <a class="el" href="group___e_l_c.html#ga4bcac22edb575069ba86d87ce9aea84c">R_ELC_Enable</a> will automatically link all events shown in the Event Links tab.</dd></dl>
+<p>To manually link an event to a peripheral at runtime perform the following steps:</p>
 <ol type="1">
 <li>Configure the operation of the destination peripheral (including any configuration necessary to receive events)</li>
 <li>Use R_ELC_LinkSet to set the desired event link to the peripheral</li>
-<li>(Optional) If autostart is not enabled, use R_ELC_Enable to enable transmission of event signals</li>
+<li>Use R_ELC_Enable to enable transmission of event signals</li>
 <li>Configure the signaling module to output the desired event (typically an interrupt)</li>
 </ol>
 <p>To disable the event, either use R_ELC_LinkBreak to clear the link for a specific event or R_ELC_Disable to globally disable event linking.</p>
@@ -166,7 +169,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_elc_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -176,24 +179,18 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for ELC Driver on r_elc</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; System -&gt; ELC Driver on r_elc:<br />
+ <h2>Configurations for Driver &gt; System &gt; ELC Driver on r_elc</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; System &gt; ELC Driver on r_elc:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>ELC instance name must be g_elc to match <a class="el" href="group___e_l_c___a_p_i.html#structelc__cfg__t">elc_cfg_t</a> data structure created in elc_data.c</td><td>Module name. </td></tr>
+<td>Name</td><td>ELC instance name must be g_elc to match <a class="el" href="group___e_l_c___a_p_i.html#structelc__cfg__t">elc_cfg_t</a> data structure created in elc_data.c</td><td>g_elc </td><td>Module name. </td></tr>
 </table>
 </p>
-<h1><a class="anchor" id="r-elc-examples"></a>
-Examples</h1>
-<h2>Basic Example</h2>
-<p>Below is a basic example of minimal use of event linking in an application.</p>
-<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___e_l_c___a_p_i.html#structelc__cfg__t">elc_cfg_t</a> g_elc_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___e_l_c___a_p_i.html#ad58380dc39c1d257fc9128dda007865d">link</a>[ELC_PERIPHERAL_GPT_A]   = ELC_EVENT_ICU_IRQ0,</div><div class="line">    .link[ELC_PERIPHERAL_IOPORT1] = ELC_EVENT_GPT0_COUNTER_OVERFLOW</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> elc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the software and sets the links defined in the control structure. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Create or modify a link between a peripheral function and an event source. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_GPT0_COUNTER_OVERFLOW);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Globally enable event linking in the ELC. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4bcac22edb575069ba86d87ce9aea84c">R_ELC_Enable</a>(&amp;g_elc_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Software-Generated Events</h2>
-<p>This example demonstrates how to use a software-generated event to signal a peripheral. This can be useful when the desired event source is not supported by the ELC hardware.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Interrupt handler for peripheral event not supported by the ELC */</span></div><div class="line"><span class="keywordtype">void</span> peripheral_isr (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Generate an event signal through software to the linked peripheral. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#gaa8735a16325cfeff3c47a50345d11d82">R_ELC_SoftwareEventGenerate</a>(&amp;g_elc_ctrl, <a class="code" href="group___e_l_c___a_p_i.html#gga5fed76c06664ddad69c5a7ccb0330f0ea862eb8abb2f512a4b4caaa1ee6900d27">ELC_SOFTWARE_EVENT_0</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> elc_software_event (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Link ADC0 conversion start to software event 0. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_ELC_SOFTWARE_EVENT_0);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application code here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="r-elc-usage_notes"></a>
+<h1><a class="anchor" id="r-elc-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="r-elc-limitations"></a>
 Limitations</h2>
@@ -202,7 +199,13 @@ Limitations</h2>
 <li>To link events it is necessary for the ELC and the related modules to be enabled. The ELC cannot operate if the related modules are in the module stop state or the MCU is in a low power consumption mode for which the module is stopped.</li>
 <li>If two modules are linked across clock domains there may be a 1 to 2 cycle delay between event signaling and reception. The delay timing is based on the frequency of the slowest clock.</li>
 </ul>
-<table class="memberdecls">
+<h1><a class="anchor" id="r-elc-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>Below is a basic example of minimal use of event linking in an application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* This struct is automatically generated by the RA Configuration tool based on the events configured by peripherals. */</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___e_l_c___a_p_i.html#structelc__cfg__t">elc_cfg_t</a> g_elc_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___e_l_c___a_p_i.html#ad58380dc39c1d257fc9128dda007865d">link</a>[ELC_PERIPHERAL_GPT_A]   = ELC_EVENT_ICU_IRQ0,</div><div class="line">    .link[ELC_PERIPHERAL_IOPORT1] = ELC_EVENT_GPT0_COUNTER_OVERFLOW</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> elc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the software and sets the links defined in the control structure. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Create or modify a link between a peripheral function and an event source. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_GPT0_COUNTER_OVERFLOW);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Globally enable event linking in the ELC. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4bcac22edb575069ba86d87ce9aea84c">R_ELC_Enable</a>(&amp;g_elc_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Software-Generated Events</h2>
+<p>This example demonstrates how to use a software-generated event to signal a peripheral. This can be useful when the desired event source is not supported by the ELC hardware.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Interrupt handler for peripheral event not supported by the ELC */</span></div><div class="line"><span class="keywordtype">void</span> peripheral_isr (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Generate an event signal through software to the linked peripheral. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#gaa8735a16325cfeff3c47a50345d11d82">R_ELC_SoftwareEventGenerate</a>(&amp;g_elc_ctrl, <a class="code" href="group___e_l_c___a_p_i.html#gga5fed76c06664ddad69c5a7ccb0330f0ea862eb8abb2f512a4b4caaa1ee6900d27">ELC_SOFTWARE_EVENT_0</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> elc_software_event (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Link ADC0 conversion start to software event 0. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_ELC_SOFTWARE_EVENT_0);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application code here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structelc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_c.html#structelc__instance__ctrl__t">elc_instance_ctrl_t</a></td></tr>
@@ -252,7 +255,7 @@ Data Structures</h2></td></tr>
 </div><div class="memdoc">
 <p>Initialize all the links in the Event Link Controller. Implements <a class="el" href="group___e_l_c___a_p_i.html#ac4f753f3fcae95e036d24e3d6a84d1f5">elc_api_t::open</a></p>
 <p>The configuration structure passed in to this function includes links for every event source included in the ELC and sets them all at once. To set or clear an individual link use R_ELC_LinkSet and R_ELC_LinkBreak respectively.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the software and sets the links defined in the control structure. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initializes the software and sets the links defined in the control structure. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl or p_cfg was NULL </td></tr>
@@ -493,9 +496,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -5,6 +5,22 @@ var group___g_p_t =
       [ "stop_level", "group___g_p_t.html#a5805853871548d015520f71f3ab00e93", null ]
     ] ],
     [ "gpt_instance_ctrl_t", "group___g_p_t.html#structgpt__instance__ctrl__t", null ],
+    [ "gpt_extended_pwm_cfg_t", "group___g_p_t.html#structgpt__extended__pwm__cfg__t", [
+      [ "trough_ipl", "group___g_p_t.html#ad908895a31952a884009f3a63fdac8d0", null ],
+      [ "trough_irq", "group___g_p_t.html#af69392faec97dd6cf86b0634e6b79b44", null ],
+      [ "poeg_link", "group___g_p_t.html#aaf087f74d802f87ccac4e0a04e90cc04", null ],
+      [ "output_disable", "group___g_p_t.html#ac1bab8a37aeb13d8f27d05e44d567bc9", null ],
+      [ "adc_trigger", "group___g_p_t.html#aa39314cc7482a5855e27b0c2daa111ea", null ],
+      [ "dead_time_count_up", "group___g_p_t.html#ad6a0d3919d4334ec367619aecd96b0f0", null ],
+      [ "dead_time_count_down", "group___g_p_t.html#aafd7df5d2639958e4602b2f05b877707", null ],
+      [ "adc_a_compare_match", "group___g_p_t.html#abc2a1fdb7655945b5ef571c60bf7b4b0", null ],
+      [ "adc_b_compare_match", "group___g_p_t.html#a078a97f54349c6895fbebc67857c479a", null ],
+      [ "interrupt_skip_source", "group___g_p_t.html#a4d31e40df7ea5e4be69fcbbe559a8213", null ],
+      [ "interrupt_skip_count", "group___g_p_t.html#ac516350c554b9851aa9c66615e89b93b", null ],
+      [ "interrupt_skip_adc", "group___g_p_t.html#ab5abdaac972544ec4e58df69d1f8a08f", null ],
+      [ "gtioca_disable_setting", "group___g_p_t.html#af8c63e238ee298b4f1dac545a597eff7", null ],
+      [ "gtiocb_disable_setting", "group___g_p_t.html#aa34079abac90aaced078650c626c9820", null ]
+    ] ],
     [ "gpt_extended_cfg_t", "group___g_p_t.html#structgpt__extended__cfg__t", [
       [ "gtioca", "group___g_p_t.html#ad323c6db6a695028d2926dfbf0a0dda8", null ],
       [ "gtiocb", "group___g_p_t.html#a78476af74debd54ee8394dd0aa6d2505", null ],
@@ -19,11 +35,13 @@ var group___g_p_t =
       [ "capture_a_ipl", "group___g_p_t.html#a7e5402bac34e2c3d3006b68ee0b8ab2a", null ],
       [ "capture_b_ipl", "group___g_p_t.html#aae4ebebdd346531add1c9ce3bee52106", null ],
       [ "capture_a_irq", "group___g_p_t.html#a630c77adb426ddddb5eac8b974fd7c85", null ],
-      [ "capture_b_irq", "group___g_p_t.html#a22eb63abdf43064c9c83d81287c67c88", null ]
+      [ "capture_b_irq", "group___g_p_t.html#a22eb63abdf43064c9c83d81287c67c88", null ],
+      [ "p_pwm_cfg", "group___g_p_t.html#a55e5f85f57b77fd7ee5a1de7ff39da27", null ]
     ] ],
     [ "gpt_io_pin_t", "group___g_p_t.html#gaabd4a03d16b1b4254cc44c7779f44c60", [
       [ "GPT_IO_PIN_GTIOCA", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aec2d2c471241869efb57a9a48a5d0eda", null ],
-      [ "GPT_IO_PIN_GTIOCB", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aebd74a7b9507fb082ec4cce60ebe9369", null ]
+      [ "GPT_IO_PIN_GTIOCB", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aebd74a7b9507fb082ec4cce60ebe9369", null ],
+      [ "GPT_IO_PIN_GTIOCA_AND_GTIOCB", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60a2b44d1e05050c34cc6e8d9ee4093294d", null ]
     ] ],
     [ "gpt_pin_level_t", "group___g_p_t.html#ga454c639e426428470ce78115af5d3648", [
       [ "GPT_PIN_LEVEL_LOW", "group___g_p_t.html#gga454c639e426428470ce78115af5d3648a3270f1165e7a86c5b12eecb9501390f4", null ],
@@ -67,6 +85,57 @@ var group___g_p_t =
       [ "GPT_CAPTURE_FILTER_PCLKD_DIV_16", "group___g_p_t.html#gga4781e2b42b2ef339318ea0a70b250cd5a4058fd8fd2af5d30c572dd8aacc5ae9a", null ],
       [ "GPT_CAPTURE_FILTER_PCLKD_DIV_64", "group___g_p_t.html#gga4781e2b42b2ef339318ea0a70b250cd5a37769ce411256b3c4ec01cb1eed5a825", null ]
     ] ],
+    [ "gpt_adc_trigger_t", "group___g_p_t.html#ga6dfe4ddfb53ba52c674039fd20b6c2b6", [
+      [ "GPT_ADC_TRIGGER_NONE", "group___g_p_t.html#gga6dfe4ddfb53ba52c674039fd20b6c2b6a2818f2fff3a64fd3086a7230dabd7a14", null ],
+      [ "GPT_ADC_TRIGGER_UP_COUNT_START_ADC_A", "group___g_p_t.html#gga6dfe4ddfb53ba52c674039fd20b6c2b6a2bd0475913403dab220b5e7d6c1acf72", null ],
+      [ "GPT_ADC_TRIGGER_DOWN_COUNT_START_ADC_A", "group___g_p_t.html#gga6dfe4ddfb53ba52c674039fd20b6c2b6afd744cee1c5e631263a043ec92af7510", null ],
+      [ "GPT_ADC_TRIGGER_UP_COUNT_START_ADC_B", "group___g_p_t.html#gga6dfe4ddfb53ba52c674039fd20b6c2b6a850b0227fd4a50c51c146d44efe7c838", null ],
+      [ "GPT_ADC_TRIGGER_DOWN_COUNT_START_ADC_B", "group___g_p_t.html#gga6dfe4ddfb53ba52c674039fd20b6c2b6a0d5922b5221be7b92ce2218c2d8fb50c", null ]
+    ] ],
+    [ "gpt_poeg_link_t", "group___g_p_t.html#gac13c16f82e0b7cafcdb8eb6892722943", [
+      [ "GPT_POEG_LINK_POEG0", "group___g_p_t.html#ggac13c16f82e0b7cafcdb8eb6892722943ae96e3845c4ea884a6d610a745a2c343c", null ],
+      [ "GPT_POEG_LINK_POEG1", "group___g_p_t.html#ggac13c16f82e0b7cafcdb8eb6892722943ae9be405a3d64f348534f67710b37658c", null ],
+      [ "GPT_POEG_LINK_POEG2", "group___g_p_t.html#ggac13c16f82e0b7cafcdb8eb6892722943a41eefcd7c70c85413a47d006127e112e", null ],
+      [ "GPT_POEG_LINK_POEG3", "group___g_p_t.html#ggac13c16f82e0b7cafcdb8eb6892722943a7d98bec67e920f1f0f8a98ac18aaa7b5", null ]
+    ] ],
+    [ "gpt_output_disable_t", "group___g_p_t.html#ga7e57d68f5f5d9757bab01857e8252ade", [
+      [ "GPT_OUTPUT_DISABLE_NONE", "group___g_p_t.html#gga7e57d68f5f5d9757bab01857e8252adeaa35910cb9d2f17f2488b4efdcb1b1fe9", null ],
+      [ "GPT_OUTPUT_DISABLE_DEAD_TIME_ERROR", "group___g_p_t.html#gga7e57d68f5f5d9757bab01857e8252adea36ab56234fbe2b5bb676c0962382bd96", null ],
+      [ "GPT_OUTPUT_DISABLE_GTIOCA_GTIOCB_HIGH", "group___g_p_t.html#gga7e57d68f5f5d9757bab01857e8252adea236f4400f00369f754b3b88c8efc35a7", null ],
+      [ "GPT_OUTPUT_DISABLE_GTIOCA_GTIOCB_LOW", "group___g_p_t.html#gga7e57d68f5f5d9757bab01857e8252adea3004c3e75921fa586fdf0538b7ef5abe", null ]
+    ] ],
+    [ "gpt_gtioc_disable_t", "group___g_p_t.html#ga82d61d33edf38d50f1247d1d55ec506b", [
+      [ "GPT_GTIOC_DISABLE_PROHIBITED", "group___g_p_t.html#gga82d61d33edf38d50f1247d1d55ec506ba1756f7251a83337222f68cc80bc33dfb", null ],
+      [ "GPT_GTIOC_DISABLE_SET_HI_Z", "group___g_p_t.html#gga82d61d33edf38d50f1247d1d55ec506bab3661e69b77c3086864f7872d264be75", null ],
+      [ "GPT_GTIOC_DISABLE_LEVEL_LOW", "group___g_p_t.html#gga82d61d33edf38d50f1247d1d55ec506babb7208f6cf212d2da6b806bf7f094ca5", null ],
+      [ "GPT_GTIOC_DISABLE_LEVEL_HIGH", "group___g_p_t.html#gga82d61d33edf38d50f1247d1d55ec506ba2cd233e999331d566eafc32cd29ae9d0", null ]
+    ] ],
+    [ "gpt_adc_compare_match_t", "group___g_p_t.html#ga2a838fffcbafd97778bbe3ffbfbf54b1", [
+      [ "GPT_ADC_COMPARE_MATCH_ADC_A", "group___g_p_t.html#gga2a838fffcbafd97778bbe3ffbfbf54b1a6f5dba4e42352f1bea9dccd3201021cc", null ],
+      [ "GPT_ADC_COMPARE_MATCH_ADC_B", "group___g_p_t.html#gga2a838fffcbafd97778bbe3ffbfbf54b1abc17524a1e6137946784a36c5d31f27b", null ]
+    ] ],
+    [ "gpt_interrupt_skip_source_t", "group___g_p_t.html#ga88d6114404f61d9ca10684f393deb613", [
+      [ "GPT_INTERRUPT_SKIP_SOURCE_NONE", "group___g_p_t.html#gga88d6114404f61d9ca10684f393deb613a88ebf7e3d8a17fa38f3a3251e76b76d4", null ],
+      [ "GPT_INTERRUPT_SKIP_SOURCE_OVERFLOW_UNDERFLOW", "group___g_p_t.html#gga88d6114404f61d9ca10684f393deb613a8525d45b1517b92b3b6d6f5b5a301083", null ],
+      [ "GPT_INTERRUPT_SKIP_SOURCE_CREST", "group___g_p_t.html#gga88d6114404f61d9ca10684f393deb613a297710907b10befa05faa051f2e32be0", null ],
+      [ "GPT_INTERRUPT_SKIP_SOURCE_TROUGH", "group___g_p_t.html#gga88d6114404f61d9ca10684f393deb613a75e3083840b7df9aa2883cded3cd2704", null ]
+    ] ],
+    [ "gpt_interrupt_skip_count_t", "group___g_p_t.html#gac737ceea25e4989a9afbf47969a71ba3", [
+      [ "GPT_INTERRUPT_SKIP_COUNT_0", "group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3a6a175bfcdc5102e24b2f10726968262e", null ],
+      [ "GPT_INTERRUPT_SKIP_COUNT_1", "group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3a0168263b8e97f370e2d999e40e57689a", null ],
+      [ "GPT_INTERRUPT_SKIP_COUNT_2", "group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3af6d98ec31f682d5439b5381dcb5305e4", null ],
+      [ "GPT_INTERRUPT_SKIP_COUNT_3", "group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3a3551066dcaffb033a40d7e329169a345", null ],
+      [ "GPT_INTERRUPT_SKIP_COUNT_4", "group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3ab30f5da89de49b73e5d27e376a6702d9", null ],
+      [ "GPT_INTERRUPT_SKIP_COUNT_5", "group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3a21aec2bf2296497576f4f746e83078e9", null ],
+      [ "GPT_INTERRUPT_SKIP_COUNT_6", "group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3a46d2a195d3c9ab5c94c949ce243fbc46", null ],
+      [ "GPT_INTERRUPT_SKIP_COUNT_7", "group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3a1f87ae8bbf43b55f063cbcdbdc329d18", null ]
+    ] ],
+    [ "gpt_interrupt_skip_adc_t", "group___g_p_t.html#ga9928e374919fa53240edaca52412beaa", [
+      [ "GPT_INTERRUPT_SKIP_ADC_NONE", "group___g_p_t.html#gga9928e374919fa53240edaca52412beaaa9dee91a158ffa61d322cbbdac1ed99bd", null ],
+      [ "GPT_INTERRUPT_SKIP_ADC_A", "group___g_p_t.html#gga9928e374919fa53240edaca52412beaaa43c4146c6bbaa9877dc6f1a34b6ccacf", null ],
+      [ "GPT_INTERRUPT_SKIP_ADC_B", "group___g_p_t.html#gga9928e374919fa53240edaca52412beaaa9bc6d33154685e53dab457675e8161e8", null ],
+      [ "GPT_INTERRUPT_SKIP_ADC_A_AND_B", "group___g_p_t.html#gga9928e374919fa53240edaca52412beaaa872ee214e5d3998245ac518730f9dde6", null ]
+    ] ],
     [ "R_GPT_Open", "group___g_p_t.html#ga97d0a9c1a8fb6b88d1c12756dd8ce2d2", null ],
     [ "R_GPT_Stop", "group___g_p_t.html#ga1e6af74d7faaf735f5847a34121eff71", null ],
     [ "R_GPT_Start", "group___g_p_t.html#ga2769f9fda49613246bc84dba41aa4863", null ],
@@ -77,6 +146,10 @@ var group___g_p_t =
     [ "R_GPT_DutyCycleSet", "group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea", null ],
     [ "R_GPT_InfoGet", "group___g_p_t.html#gaca62ac33de2c05918b0fc359aeaebd97", null ],
     [ "R_GPT_StatusGet", "group___g_p_t.html#gaa6234faf45320a83382d7ea1923a2c49", null ],
+    [ "R_GPT_CounterSet", "group___g_p_t.html#ga4126139a9c63f1963ffdaea6cc697fe9", null ],
+    [ "R_GPT_OutputEnable", "group___g_p_t.html#ga0e6638508ec1d5441713195c877bb7a7", null ],
+    [ "R_GPT_OutputDisable", "group___g_p_t.html#gae204e5d6c9305923e98724005dcdf03d", null ],
+    [ "R_GPT_AdcTriggerSet", "group___g_p_t.html#ga311c91c55f20338f7082fa4369e7c80f", null ],
     [ "R_GPT_Close", "group___g_p_t.html#ga2fc5d6a737a00948802e2bb77fbe8d8c", null ],
     [ "R_GPT_VersionGet", "group___g_p_t.html#ga84b2245c5b4ed778ea2b220470ce69c5", null ]
 ];

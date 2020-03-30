@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Host Mass Storage Class Driver (r_usb_hmsc)</title>
+<title>RA Flexible Software Package Documentation: USB Host Mass Storage Class Driver (r_usb_hmsc)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,11 +90,36 @@ $(document).ready(function(){initNavTree('group___u_s_b___h_m_s_c.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Host Mass Storage Class Driver (r_usb_hmsc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">USB Host Mass Storage Class Driver (r_usb_hmsc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>The USB module (r_usb_hmsc) provides an API to perform hardware control of USB communications. It implements the <a class="el" href="group___u_s_b___a_p_i.html">USB Interface</a>. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae5cbef3743893d8c35aa9fe45c9d6651"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ga0e229cde7ac6e617ed7eac38d45c4dd7">FSP_HEADER</a> <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#gae5cbef3743893d8c35aa9fe45c9d6651">R_USB_HMSC_StorageCommand</a> (usb_ctrl_t *const p_api_ctrl, uint8_t *buf, uint8_t command, uint8_t destination)</td></tr>
+<tr class="memdesc:gae5cbef3743893d8c35aa9fe45c9d6651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing for MassStorage(ATAPI) command.  <a href="#gae5cbef3743893d8c35aa9fe45c9d6651">More...</a><br /></td></tr>
+<tr class="separator:gae5cbef3743893d8c35aa9fe45c9d6651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaccfdc1d2f97f244fcfbb94c52b03dc3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#gaccfdc1d2f97f244fcfbb94c52b03dc3b">R_USB_HMSC_DriveNumberGet</a> (usb_ctrl_t *const p_api_ctrl, uint8_t *p_drive, uint8_t destination)</td></tr>
+<tr class="memdesc:gaccfdc1d2f97f244fcfbb94c52b03dc3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of Storage drive.  <a href="#gaccfdc1d2f97f244fcfbb94c52b03dc3b">More...</a><br /></td></tr>
+<tr class="separator:gaccfdc1d2f97f244fcfbb94c52b03dc3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7320b74cf0e524e1ab5f038c80663fda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#ga7320b74cf0e524e1ab5f038c80663fda">R_USB_HMSC_SemaphoreGet</a> (void)</td></tr>
+<tr class="memdesc:ga7320b74cf0e524e1ab5f038c80663fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a semaphore. (RTOS only)  <a href="#ga7320b74cf0e524e1ab5f038c80663fda">More...</a><br /></td></tr>
+<tr class="separator:ga7320b74cf0e524e1ab5f038c80663fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06eed41115834790213c720d27cf2a1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#ga06eed41115834790213c720d27cf2a1e">R_USB_HMSC_SemaphoreRelease</a> (void)</td></tr>
+<tr class="memdesc:ga06eed41115834790213c720d27cf2a1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release a semaphore. (RTOS only)  <a href="#ga06eed41115834790213c720d27cf2a1e">More...</a><br /></td></tr>
+<tr class="separator:ga06eed41115834790213c720d27cf2a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa79dafa161ab34b91125136493f4a547"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#gaa79dafa161ab34b91125136493f4a547">R_USB_HMSC_StorageReadSector</a> (uint16_t drive_number, uint8_t *const buff, uint32_t sector_number, uint16_t sector_count)</td></tr>
+<tr class="memdesc:gaa79dafa161ab34b91125136493f4a547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read sector information.  <a href="#gaa79dafa161ab34b91125136493f4a547">More...</a><br /></td></tr>
+<tr class="separator:gaa79dafa161ab34b91125136493f4a547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga87590ff490e5f422294773bfbc8ab1ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#ga87590ff490e5f422294773bfbc8ab1ce">R_USB_HMSC_StorageWriteSector</a> (uint16_t drive_number, uint8_t const *const buff, uint32_t sector_number, uint16_t sector_count)</td></tr>
+<tr class="memdesc:ga87590ff490e5f422294773bfbc8ab1ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write sector information.  <a href="#ga87590ff490e5f422294773bfbc8ab1ce">More...</a><br /></td></tr>
+<tr class="separator:ga87590ff490e5f422294773bfbc8ab1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>The USB module (r_usb_hmsc) provides an API to perform hardware control of USB communications. It implements the <a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html">USB HMSC Interface</a>. </p>
 <p>This module is USB Basic Host and Peripheral. It works in combination with Driver (r_usb_basic module).</p>
 <h1><a class="anchor" id="r-usb_hmsc-overview"></a>
 Overview</h1>
@@ -103,7 +128,7 @@ Overview</h1>
 Features</h2>
 <p>The r_usb_hmsc module has the following key features:</p>
 <ul>
-<li>Checking of connected USB storage devices (to determine whether or not operation is supported)</li>
+<li>Checking of connected USB storage devices to determine whether or not operation is supported</li>
 <li>Storage command communication using the BOT protocol</li>
 <li>Support for SFF-8070i (ATAPI) USB mass storage subclass</li>
 <li>Sharing of a single pipe for IN/OUT directions or multiple devices</li>
@@ -118,10 +143,10 @@ Features</h2>
 <tr>
 <td align="left">GetMaxLun </td><td align="left">Gets the maximum number of units that are supported. </td></tr>
 <tr>
-<td align="left">MassStrageReset </td><td align="left">Cancels a protocol error. </td></tr>
+<td align="left">MassStorageReset </td><td align="left">Cancels a protocol error. </td></tr>
 </table>
 <p><b>2. Storage Commands</b></p>
-<p>This driver supports the following storage command.</p>
+<p>This driver supports the following storage commands:</p>
 <ul>
 <li>TEST_UNIT_READY</li>
 <li>REQUEST_SENSE</li>
@@ -134,26 +159,26 @@ Features</h2>
 </ul>
 <h1><a class="anchor" id="r-usb_hmsc-configuration"></a>
 Configuration</h1>
+<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> basic module.</p>
 <h2><a class="anchor" id="r-usb_hmsc-clock-configuration"></a>
 Clock Configuration</h2>
-<p>Refer to <a class="el" href="group___u_s_b.html">Universal Serial Bus (r_usb_basic)</a> basic module.</p>
+<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> basic module.</p>
 <h2><a class="anchor" id="r-usb_hmsc-pin-configuration"></a>
 Pin Configuration</h2>
-<p>Refer to <a class="el" href="group___u_s_b.html">Universal Serial Bus (r_usb_basic)</a> basic module.</p>
+<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> basic module.</p>
 <h1><a class="anchor" id="r-usb_hmsc-usage_notes"></a>
 Usage Notes</h1>
 <ul>
-<li>This driver is not guaranteed to provide USB communication operation. The customer should verify operation when utilizing it in a system and confirm the ability to connect to a variety of different types of devices.</li>
+<li>Due to the wide variety of USB mass storage device implementations, this driver is not guaranteed to work with all devices. When implementing the driver it is important to verify correct operation with the mass storage devices that the end user is expected to use.</li>
 <li>This module must be incorporated into a project using r_usb_basic. Once incorporated into a project, use the API to perform USB hardware control.</li>
-<li>This driver is confirmed for operation in combination with the FreeRTOS+FAT File System.</li>
 </ul>
 <h2><a class="anchor" id="r-usb_hmsc-limitations"></a>
 Limitations</h2>
 <ol type="1">
-<li>Some MSC devices may be unable to connect (because they are not recognized as storage devices).</li>
+<li>Some MSC devices may be unable to connect because they are not recognized as storage devices.</li>
 <li>MSC devices that return values of 1 or higher in response to the GetMaxLun command (mass storage class command) are not supported.</li>
 <li>Maximum 4 USB storage devices can be connected.</li>
-<li>USB storage devices with a sector size of 512 bytes can be connected.</li>
+<li>Only USB storage devices with a sector size of 512 bytes can be connected.</li>
 <li>A device that does not respond to the READ_CAPACITY command operates as a device with a sector size of 512 bytes.</li>
 </ol>
 <h1><a class="anchor" id="r-usb_hmsc-examples"></a>
@@ -189,16 +214,270 @@ Example Operating Environment</div></div>
 usb_apl_task</div></div>
 <p> <b>file_read_task</b></p>
 <p>Of the application tasks usb_apl_task and file_read_task, file_read_task is processed while usb_apl_task is in the wait state. This task performs file read processing on the file that was written to the MSC device (<code>hmscdemo.txt</code>).</p>
-<p>This is an hmsc example of minimal use of the USB in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> usb_hmsc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___u_s_b.html#structusb__instance__ctrl__t">usb_instance_ctrl_t</a> ctrl;</div><div class="line">    usb_instance_transfer_t trans;</div><div class="line">    usb_instance_transfer_t *p_mess;</div><div class="line">    uint8_t g_buf[USB_VALUE_64];</div><div class="line">    capacity_list_t *pcl;</div><div class="line">    FF_Disk_t *USB_ret = NULL;</div><div class="line">    <span class="keywordtype">size_t</span> size_return;</div><div class="line">    <span class="keywordtype">int</span> close_err;</div><div class="line"></div><div class="line">    apl_init();</div><div class="line"></div><div class="line">    usb_pin_setting();  <span class="comment">/* USB pin function and port mode setting. */</span></div><div class="line"></div><div class="line">    trans.module_number = <a class="code" href="group___u_s_b___a_p_i.html#gaa2977e7b1636fce1d93b20bb0c986d89">USB_IP0</a>;</div><div class="line">    trans.type = <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2afd9d59bc253fddb8b37cb089fc7f4e62">USB_CLASS_HMSC</a>;</div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aefa767fa78b481c328020e9b1a9b5812">open</a>(&amp;ctrl, &amp;g_usb0_cfg, &amp;trans);</div><div class="line"></div><div class="line">    g_usb0_cfg.p_usb_apl_callback = &amp;usb_apl_callback;</div><div class="line">    R_USB_Callback(g_usb0_cfg.p_usb_apl_callback);</div><div class="line">    usb_configured = 0;</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        USB_APL_RCV_MSG(USB_APL_MBX, (usb_msg_t **)&amp;p_mess);</div><div class="line">        trans = *p_mess;</div><div class="line"></div><div class="line">        <span class="keywordflow">switch</span> (trans.event)</div><div class="line">        {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a> :</div><div class="line">            g_buf[0] = USB_VALUE_3FH; <span class="comment">/* Page Code */</span></div><div class="line"></div><div class="line">            g_hmsc_on_usb.strgcmd(&amp;ctrl, g_buf, <a class="code" href="group___u_s_b___h_m_s_c___a_p_i.html#ggac5b28f1be9ca57fc904f9c93266a594da2bcce7b971b807b8baeb3ccf546643fc">USB_ATAPI_READ_FORMAT_CAPACITY</a>, &amp;trans);</div><div class="line"></div><div class="line">            pcl = (capacity_list_t *)g_buf;</div><div class="line">            <span class="keywordflow">if</span>(pcl-&gt;current_capacity_header.descriptor_code == 0x02)</div><div class="line">            {</div><div class="line">                usb_device_capacity_blocks = \</div><div class="line">                        ((uint32_t)pcl-&gt;current_capacity_header.number_of_blocks[0] &lt;&lt; 24) | \</div><div class="line">                        ((uint32_t)pcl-&gt;current_capacity_header.number_of_blocks[1] &lt;&lt; 16) | \</div><div class="line">                        ((uint32_t)pcl-&gt;current_capacity_header.number_of_blocks[2] &lt;&lt; 8) | \</div><div class="line">                        ((uint32_t)pcl-&gt;current_capacity_header.number_of_blocks[3]);</div><div class="line"></div><div class="line">                usb_configured = 1;</div><div class="line">            }</div><div class="line"></div><div class="line">            USB_ret = FF_DiskInit( (<span class="keywordtype">char</span>*)main_USB_DISK_NAME, &amp;disk_info);</div><div class="line">            <span class="keywordflow">if</span>(NULL == USB_ret)</div><div class="line">            {</div><div class="line">                printf(<span class="stringliteral">&quot;File Init Fail&quot;</span>);</div><div class="line">            }</div><div class="line"></div><div class="line">            R_USB_HmscSemGet();</div><div class="line"></div><div class="line">            <span class="comment">/* Open the source file in read only mode. */</span></div><div class="line">            pxSourceFile = ff_fopen((<span class="keyword">const</span> <span class="keywordtype">char</span> *)<span class="stringliteral">&quot;TEST_USB.txt&quot;</span>, (<span class="keyword">const</span> <span class="keywordtype">char</span> *)<span class="stringliteral">&quot;w&quot;</span>);</div><div class="line">            <span class="keywordflow">if</span>(0 != pxSourceFile)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Write however many bytes were read from the source file into the destination file. */</span></div><div class="line">                size_return = ff_fwrite( g_file_data, <span class="keyword">sizeof</span>(g_file_data), 1, pxSourceFile );</div><div class="line">                <span class="keywordflow">if</span>(1 == size_return)</div><div class="line">                {</div><div class="line">                    g_isFileWrite = USB_APL_YES;</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    printf(<span class="stringliteral">&quot;File Write Fail&quot;</span>);</div><div class="line">                }</div><div class="line"></div><div class="line">                close_err = ff_fclose( pxSourceFile );</div><div class="line">                <span class="keywordflow">if</span>(0 != close_err)</div><div class="line">                {</div><div class="line">                    printf(<span class="stringliteral">&quot;File Close Fail&quot;</span>);</div><div class="line">                }</div><div class="line"></div><div class="line">            }</div><div class="line"></div><div class="line">            R_USB_HmscSemRel();</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ae9bcf94bdb90960ca692b1dfecb98e78">USB_STATUS_DETACH</a> :</div><div class="line">            g_isFileWrite = USB_APL_NO;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        default :</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        } <span class="comment">/* switch( event ) */</span></div><div class="line">    } <span class="comment">/* while(1) */</span></div><div class="line">} <span class="comment">/* End of function usb_hmsc_example() */</span></div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+<h3>Example Code</h3>
+<dl class="section note"><dt>Note</dt><dd>For example code refer to the <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#rm-block-media-usb-examples">USB HMSC Block Media example.</a></dd></dl>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gae5cbef3743893d8c35aa9fe45c9d6651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae5cbef3743893d8c35aa9fe45c9d6651">&#9670;&nbsp;</a></span>R_USB_HMSC_StorageCommand()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_StorageCommand </td>
+          <td>(</td>
+          <td class="paramtype">usb_ctrl_t *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>destination</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Processing for MassStorage(ATAPI) command. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter Null pointer error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaccfdc1d2f97f244fcfbb94c52b03dc3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaccfdc1d2f97f244fcfbb94c52b03dc3b">&#9670;&nbsp;</a></span>R_USB_HMSC_DriveNumberGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_DriveNumberGet </td>
+          <td>(</td>
+          <td class="paramtype">usb_ctrl_t *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_drive</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>destination</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get number of Storage drive. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter Null pointer error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7320b74cf0e524e1ab5f038c80663fda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7320b74cf0e524e1ab5f038c80663fda">&#9670;&nbsp;</a></span>R_USB_HMSC_SemaphoreGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_SemaphoreGet </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a semaphore. (RTOS only) </p>
+<p>If this function is called in the OS less execution environment, a failure is returned. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga06eed41115834790213c720d27cf2a1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga06eed41115834790213c720d27cf2a1e">&#9670;&nbsp;</a></span>R_USB_HMSC_SemaphoreRelease()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_SemaphoreRelease </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Release a semaphore. (RTOS only) </p>
+<p>If this function is called in the OS less execution environment, a failure is returned. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa79dafa161ab34b91125136493f4a547"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa79dafa161ab34b91125136493f4a547">&#9670;&nbsp;</a></span>R_USB_HMSC_StorageReadSector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_StorageReadSector </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>drive_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sector_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>sector_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read sector information. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter Null pointer error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The address specified in the argument buff must be 4-byte aligned. </dd></dl>
+
+</div>
+</div>
+<a id="ga87590ff490e5f422294773bfbc8ab1ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga87590ff490e5f422294773bfbc8ab1ce">&#9670;&nbsp;</a></span>R_USB_HMSC_StorageWriteSector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_StorageWriteSector </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>drive_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sector_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>sector_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write sector information. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter Null pointer error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The address specified in the argument buff must be 4-byte aligned. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

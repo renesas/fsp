@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['last_5fdata',['last_data',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a3de60a0267cb49272d28d0dbfe9f80e8',1,'wifi_onchip_silex_instance_ctrl_t']]],
   ['layer',['layer',['../group___d_i_s_p_l_a_y___a_p_i.html#a0d527f8a7654fc8b2cf49d350247d0db',1,'display_cfg_t::layer()'],['../group___d_i_s_p_l_a_y___a_p_i.html#abd363f5bea0685cb767a6002c3d5afe3',1,'display_runtime_cfg_t::layer()']]],
   ['layerchange',['layerChange',['../group___d_i_s_p_l_a_y___a_p_i.html#ac012f204038e500efa90632c7c8ce5a8',1,'display_api_t']]],
   ['length',['length',['../group___a_d_c___a_p_i.html#a3f8dd9f7ffefcbc0180fc7252c0482c9',1,'adc_info_t::length()'],['../group___t_r_a_n_s_f_e_r___a_p_i.html#aa92c5d06d07e7d13c16f9704a431c7cb',1,'transfer_info_t::length()']]],
@@ -8,7 +9,8 @@ var searchData=
   ['line_5fdetect_5firq',['line_detect_irq',['../group___d_i_s_p_l_a_y___a_p_i.html#a335946e69d18bab7d1d19f80f1d18906',1,'display_cfg_t']]],
   ['lines_5frepeat_5fenable',['lines_repeat_enable',['../group___d_i_s_p_l_a_y___a_p_i.html#a94dcd0b4ce2d2a4788a8ebef01bec268',1,'display_input_cfg_t']]],
   ['lines_5frepeat_5ftimes',['lines_repeat_times',['../group___d_i_s_p_l_a_y___a_p_i.html#a62b381257f9a385f9abcbc84c1fd036e',1,'display_input_cfg_t']]],
-  ['linesdecodedget',['linesDecodedGet',['../group___j_p_e_g___a_p_i.html#adf07317f7924e9cd0e507a12ae382f8e',1,'jpeg_decode_api_t']]],
+  ['lines_5fto_5fencode',['lines_to_encode',['../group___j_p_e_g.html#af61ee8139d094bdee8b67e3693fb7cdd',1,'jpeg_instance_ctrl_t']]],
+  ['linesdecodedget',['linesDecodedGet',['../group___j_p_e_g___a_p_i.html#a584987aaa0b85efc471a7626b68738fc',1,'jpeg_api_t']]],
   ['link',['link',['../group___e_l_c___a_p_i.html#ad58380dc39c1d257fc9128dda007865d',1,'elc_cfg_t']]],
   ['link_5fchange',['link_change',['../group___e_t_h_e_r.html#a65bb4564fbf4e0a16fa2fe84762192db',1,'ether_instance_ctrl_t']]],
   ['link_5festablish_5fstatus',['link_establish_status',['../group___e_t_h_e_r.html#a72f0205de3ce7f074088034cbdbc6f06',1,'ether_instance_ctrl_t']]],

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -102,7 +102,8 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r___p_h_y___a_p_i.html
 <p>Interface for Ethernet phy functions. </p>
 <h1><a class="anchor" id="ETHER_PHY_API_Summary"></a>
 Summary</h1>
-<p>The Ethernet PHY interface provides Ethernet phy functionality. The Ethernet PHY interface supports the following features:</p><ul>
+<p>The Ethernet PHY module (r_ether_phy) provides an API for standard Ethernet PHY communications applications that use the ETHERC peripheral.</p>
+<p>The Ethernet PHY interface supports the following features:</p><ul>
 <li>Auto negotiation support</li>
 <li>Flow control support</li>
 <li>Link status check support</li>
@@ -160,13 +161,13 @@ Channel. </td></tr>
 <td class="fieldname">
 phy_lsi_address</td>
 <td class="fielddoc">
-Address of Phy-LSI. </td></tr>
+Address of PHY-LSI. </td></tr>
 <tr><td class="fieldtype">
 <a id="ae29e06fe95faa1b7024dc3e8e48528f0"></a>uint32_t</td>
 <td class="fieldname">
 phy_reset_wait_time</td>
 <td class="fielddoc">
-Wait time for Phy-LSI reboot. </td></tr>
+Wait time for PHY-LSI reboot. </td></tr>
 <tr><td class="fieldtype">
 <a id="a336b9a7ec0bc861c1b0ac90f9052e447"></a>int32_t</td>
 <td class="fieldname">
@@ -242,7 +243,7 @@ Placeholder for user extension. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Open driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#gac54aa95e5976561c6d810eb1c868048c" title="Resets Ethernet PHY device. Implements ether_phy_api_t::open. *. ">R_ETHER_PHY_Open()</a></li>
+<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#gac54aa95e5976561c6d810eb1c868048c">R_ETHER_PHY_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -267,7 +268,7 @@ Placeholder for user extension. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Close driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#ga6a4f3bdcd321faef43008379b2065c4b" title="Close Ethernet PHY device. Implements ether_phy_api_t::close. ">R_ETHER_PHY_Close()</a></li>
+<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#ga6a4f3bdcd321faef43008379b2065c4b">R_ETHER_PHY_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -291,7 +292,7 @@ Placeholder for user extension. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Start auto negotiation. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#gaca73174d76fd87100066407a8ff13147" title="Starts auto-negotiate. Implements ether_phy_api_t::startAutoNegotiate. ">R_ETHER_PHY_StartAutoNegotiate()</a></li>
+<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#gaca73174d76fd87100066407a8ff13147">R_ETHER_PHY_StartAutoNegotiate()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -315,14 +316,14 @@ Placeholder for user extension. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Get the partner ability. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#ga02b4fcbbb5e863cb759b610a7dc992bd" title="Reports the other side&#39;s physical capability. Implements ether_phy_api_t::linkPartnerAbilityGet. ">R_ETHER_PHY_LinkPartnerAbilityGet()</a></li>
+<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#ga02b4fcbbb5e863cb759b610a7dc992bd">R_ETHER_PHY_LinkPartnerAbilityGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_line_speed_duplex</td><td>Pointer to the location of both the line speed and the duplex. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_local_pause</td><td>Pointer to the location to store the local pause bits.. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_local_pause</td><td>Pointer to the location to store the local pause bits. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_partner_pause</td><td>Pointer to the location to store the partner pause bits. </td></tr>
   </table>
   </dd>
@@ -342,7 +343,7 @@ Placeholder for user extension. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Get Link status from phy-LSI interface. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#ga13e3a39ef86ed3f62805963c55442e03" title="Returns the status of the physical link. Implements ether_phy_api_t::linkStatusGet. ">R_ETHER_PHY_LinkStatusGet()</a></li>
+<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#ga13e3a39ef86ed3f62805963c55442e03">R_ETHER_PHY_LinkStatusGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -366,7 +367,7 @@ Placeholder for user extension. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Return the version of the driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#gadf6c0ab632cd139e0ba1f4d576c6b096" title="Provides API and code version in the user provided pointer. Implements ether_phy_api_t::versionGet. ">R_ETHER_PHY_VersionGet()</a></li>
+<li><a class="el" href="group___e_t_h_e_r___p_h_y.html#gadf6c0ab632cd139e0ba1f4d576c6b096">R_ETHER_PHY_VersionGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -512,9 +513,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -131,7 +131,6 @@ Features</h2>
 <ul>
 <li>RTC time and date get and set.</li>
 <li>RTC time and date alarm get and set.</li>
-<li>RTC time counter start and stop.</li>
 <li>RTC alarm and periodic event notification.</li>
 </ul>
 <p><a class="anchor" id="um_rtc_set_the_calendar_time"></a><a class="anchor" id="um_rtc_get_the_calendar_time"></a><a class="anchor" id="um_rtc_set_the_calendar_alarm"></a><a class="anchor" id="um_rtc_get_the_calendar_alarm"></a><a class="anchor" id="um_rtc_date_and_time_value_standard"></a><a class="anchor" id="um_rtc_get_rtc_information"></a><a class="anchor" id="um_rtc_set_the_periodic_rate"></a> The RTC HAL module supports three different interrupt types:</p>
@@ -159,9 +158,9 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_rtc_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Parameter Checking Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
 <li>
@@ -169,15 +168,15 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for RTC Driver on r_rtc</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Timers -&gt; RTC Driver on r_rtc:<br />
+ <h2>Configurations for Driver &gt; Timers &gt; RTC Driver on r_rtc</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; RTC Driver on r_rtc:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_rtc0 </td><td>Module name. </td></tr>
 <tr>
 <td>Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -185,9 +184,9 @@ Sub-Clock</li>
 <li>
 LOCO</li>
 </ul>
-</td><td>Select the RTC clock source. </td></tr>
+</td><td>LOCO </td><td>Select the RTC clock source. </td></tr>
 <tr>
-<td>Frequency Comparision Value (LOCO)</td><td>Value must be a positive integer between 7 and 511</td><td>Frequency comparison value when using LOCO </td></tr>
+<td>Frequency Comparision Value (LOCO)</td><td>Value must be a positive integer between 7 and 511</td><td>255 </td><td>Frequency comparison value when using LOCO </td></tr>
 <tr>
 <td>Automatic Adjustment Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -195,7 +194,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable/ Disable the Error Adjustment mode </td></tr>
+</td><td>Enabled </td><td>Enable/ Disable the Error Adjustment mode </td></tr>
 <tr>
 <td>Automatic Adjustment Period</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -205,7 +204,7 @@ Disabled</li>
 <li>
 NONE</li>
 </ul>
-</td><td>Select the Error Adjustment Period for Automatic Adjustment </td></tr>
+</td><td>10 Seconds </td><td>Select the Error Adjustment Period for Automatic Adjustment </td></tr>
 <tr>
 <td>Adjustment Type (Plus-Minus)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -215,17 +214,17 @@ Addition</li>
 <li>
 Subtraction</li>
 </ul>
-</td><td>Select the Error Adjustment type </td></tr>
+</td><td>NONE </td><td>Select the Error Adjustment type </td></tr>
 <tr>
-<td>Error Adjustment Value</td><td>Value must be a positive integer less than equal to 63</td><td>Specify the Adjustment Value (the number of sub-clock cycles) from the prescaler </td></tr>
+<td>Error Adjustment Value</td><td>Value must be a positive integer less than equal to 63</td><td>0 </td><td>Specify the Adjustment Value (the number of sub-clock cycles) from the prescaler </td></tr>
 <tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
 <tr>
-<td>Alarm Interrupt Priority</td><td>MCU Specific Options</td><td>Select the alarm interrupt priority. </td></tr>
+<td>Alarm Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the alarm interrupt priority. </td></tr>
 <tr>
-<td>Period Interrupt Priority</td><td>MCU Specific Options</td><td>Select the period interrupt priority. </td></tr>
+<td>Period Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the period interrupt priority. </td></tr>
 <tr>
-<td>Carry Interrupt Priority</td><td>MCU Specific Options</td><td>Select the carry interrupt priority. </td></tr>
+<td>Carry Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the carry interrupt priority. </td></tr>
 </table>
 </p>
 <dl class="section note"><dt>Note</dt><dd>See 23.2.20 Frequency Register (RFRH/RFRL) of the RA6M3 manual R01UH0886EJ0100) for more details</dd></dl>
@@ -252,6 +251,7 @@ Usage Notes</h1>
 <dl class="section warning"><dt>Warning</dt><dd>The subclock can take seconds to stabilize. The RA startup code does not wait for subclock stabilization unless the subclock is the main clock source. When running AGT or RTC off the subclock, the application must ensure the subclock is stable before starting operation.</dd></dl>
 <ul>
 <li>Carry interrupt priority must be set to avoid incorrect time returned from calendarTimeGet API during roll-over.</li>
+<li>Even when only running in Periodic Interrupt mode <a class="el" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a> must be called successfully to start the RTC.</li>
 </ul>
 <h2><a class="anchor" id="r-rtc-limitations"></a>
 Limitations</h2>
@@ -263,13 +263,13 @@ Limitations</h2>
 Examples</h1>
 <h2>RTC Basic Example</h2>
 <p>This is a basic example of minimal use of the RTC in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc_ctrl, &amp;g_rtc0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gaabcfafd522c18288ac274f6b56f76366">R_RTC_CalendarTimeGet</a>(&amp;g_rtc_ctrl, &amp;get_time);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Periodic interrupt example</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* rtc_time_t is an alias for the C Standard time.h struct &#39;tm&#39; */</span></div><div class="line"><a class="code" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> set_time =</div><div class="line">{</div><div class="line">    .tm_sec  = 10,</div><div class="line">    .tm_min  = 11,</div><div class="line">    .tm_hour = 12,</div><div class="line">    .tm_mday = 6,</div><div class="line">    .tm_wday = 3,</div><div class="line">    .tm_mon  = 11,</div><div class="line">    .tm_year = YEARS_SINCE_1900,</div><div class="line">};</div><div class="line"></div><div class="line"><a class="code" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> get_time;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the RTC module */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gaabcfafd522c18288ac274f6b56f76366">R_RTC_CalendarTimeGet</a>(&amp;g_rtc0_ctrl, &amp;get_time);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Periodic interrupt example</h2>
 <p>This is an example of periodic interrupt in RTC.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_periodic_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc_ctrl, &amp;g_rtc0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the periodic interrupt rate to 1 second */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282">R_RTC_PeriodicIrqRateSet</a>(&amp;g_rtc_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d">RTC_PERIODIC_IRQ_SELECT_1_SECOND</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the periodic interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Alarm interrupt example</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_periodic_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* R_RTC_CalendarTimeSet must be called at least once to start the RTC */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the periodic interrupt rate to 1 second */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282">R_RTC_PeriodicIrqRateSet</a>(&amp;g_rtc0_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d">RTC_PERIODIC_IRQ_SELECT_1_SECOND</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the periodic interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Alarm interrupt example</h2>
 <p>This is an example of alarm interrupt in RTC.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_alarm_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc_ctrl, &amp;g_rtc0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga5c39b02432cedcb7a29ae8bdc8fcefb8">R_RTC_CalendarAlarmSet</a>(&amp;g_rtc_ctrl, &amp;set_time1);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the Alarm interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Error Adjustment example</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_alarm_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga5c39b02432cedcb7a29ae8bdc8fcefb8">R_RTC_CalendarAlarmSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the Alarm interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Error Adjustment example</h2>
 <p>This is an example of modifying error adjustment in RTC.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_erroradj_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc_ctrl, &amp;g_rtc1_cfg);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line">    <span class="comment">/* Modify Error Adjustment after RTC is running */</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga6e0f357923c34057c8c938a52f6e8da8">R_RTC_ErrorAdjustmentSet</a>(&amp;g_rtc_ctrl, &amp;err_cfg2);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_erroradj_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc1_cfg);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line">    <span class="comment">/* Modify Error Adjustment after RTC is running */</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga6e0f357923c34057c8c938a52f6e8da8">R_RTC_ErrorAdjustmentSet</a>(&amp;g_rtc0_ctrl, &amp;err_cfg2);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrtc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#structrtc__instance__ctrl__t">rtc_instance_ctrl_t</a></td></tr>
@@ -288,48 +288,26 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Channel control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a">rtc_api_t::open</a> is called </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae03ed234b220fb886a2f66840ea1bc52"><td class="memItemLeft" align="right" valign="top"><a id="ae03ed234b220fb886a2f66840ea1bc52"></a>
-IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#ae03ed234b220fb886a2f66840ea1bc52">alarm_irq</a></td></tr>
-<tr class="memdesc:ae03ed234b220fb886a2f66840ea1bc52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alarm interrupt vector. <br /></td></tr>
-<tr class="separator:ae03ed234b220fb886a2f66840ea1bc52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4577c60be9eb0a43d2592943271a882"><td class="memItemLeft" align="right" valign="top"><a id="aa4577c60be9eb0a43d2592943271a882"></a>
-IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#aa4577c60be9eb0a43d2592943271a882">periodic_irq</a></td></tr>
-<tr class="memdesc:aa4577c60be9eb0a43d2592943271a882"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periodic interrupt vector. <br /></td></tr>
-<tr class="separator:aa4577c60be9eb0a43d2592943271a882"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16d8516e7e005dd1ca8fc0707ff2e132"><td class="memItemLeft" align="right" valign="top"><a id="a16d8516e7e005dd1ca8fc0707ff2e132"></a>
-IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#a16d8516e7e005dd1ca8fc0707ff2e132">carry_irq</a></td></tr>
-<tr class="memdesc:a16d8516e7e005dd1ca8fc0707ff2e132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carry interrupt vector. <br /></td></tr>
-<tr class="separator:a16d8516e7e005dd1ca8fc0707ff2e132"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a531f0ac7759fe0ec50841022ae9a9bfe"><td class="memItemLeft" align="right" valign="top"><a id="a531f0ac7759fe0ec50841022ae9a9bfe"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#a531f0ac7759fe0ec50841022ae9a9bfe">open</a></td></tr>
-<tr class="memdesc:a531f0ac7759fe0ec50841022ae9a9bfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not driver is open. <br /></td></tr>
-<tr class="separator:a531f0ac7759fe0ec50841022ae9a9bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00980a5e662aa5f0d1196fa0a5e65e67"><td class="memItemLeft" align="right" valign="top"><a id="a00980a5e662aa5f0d1196fa0a5e65e67"></a>
-<a class="el" href="group___r_t_c___a_p_i.html#gad8eef26a825fa4a0c5a417f8be08ccc6">rtc_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#a00980a5e662aa5f0d1196fa0a5e65e67">clock_source</a></td></tr>
-<tr class="memdesc:a00980a5e662aa5f0d1196fa0a5e65e67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source for the RTC block. <br /></td></tr>
-<tr class="separator:a00980a5e662aa5f0d1196fa0a5e65e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"><td class="memItemLeft" align="right" valign="top"><a id="a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"></a>
-const <a class="el" href="group___r_t_c___a_p_i.html#structrtc__cfg__t">rtc_cfg_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#a02ff7a87b8c7fdf8ec2ecc4ad4a817c6">p_cfg</a></td></tr>
-<tr class="memdesc:a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
-<tr class="separator:a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a546311ddbc2dec8750bcdd96546d4679"><td class="memItemLeft" align="right" valign="top"><a id="a546311ddbc2dec8750bcdd96546d4679"></a>
-void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#a546311ddbc2dec8750bcdd96546d4679">p_callback</a> )(<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *p_args)</td></tr>
-<tr class="memdesc:a546311ddbc2dec8750bcdd96546d4679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from the ISR. <br /></td></tr>
-<tr class="separator:a546311ddbc2dec8750bcdd96546d4679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a645db0fcf3c40cc7f3616f51d734e96d"><td class="memItemLeft" align="right" valign="top"><a id="a645db0fcf3c40cc7f3616f51d734e96d"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#a645db0fcf3c40cc7f3616f51d734e96d">p_context</a></td></tr>
-<tr class="memdesc:a645db0fcf3c40cc7f3616f51d734e96d"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed into callback function. <br /></td></tr>
-<tr class="separator:a645db0fcf3c40cc7f3616f51d734e96d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac579ec5913111d4f3c05be2362c9708d"><td class="memItemLeft" align="right" valign="top"><a id="ac579ec5913111d4f3c05be2362c9708d"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#ac579ec5913111d4f3c05be2362c9708d">p_extend</a></td></tr>
-<tr class="memdesc:ac579ec5913111d4f3c05be2362c9708d"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC hardware dependant configuration. <br /></td></tr>
-<tr class="separator:ac579ec5913111d4f3c05be2362c9708d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1e0ef1397b14d5d1571f960d536c50d"><td class="memItemLeft" align="right" valign="top"><a id="ad1e0ef1397b14d5d1571f960d536c50d"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#ad1e0ef1397b14d5d1571f960d536c50d">carry_isr_triggered</a></td></tr>
-<tr class="memdesc:ad1e0ef1397b14d5d1571f960d536c50d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Was the carry isr triggered. <br /></td></tr>
-<tr class="separator:ad1e0ef1397b14d5d1571f960d536c50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a531f0ac7759fe0ec50841022ae9a9bfe"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Whether or not driver is open. </td></tr>
+<tr><td class="fieldtype">
+<a id="a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"></a>const <a class="el" href="group___r_t_c___a_p_i.html#structrtc__cfg__t">rtc_cfg_t</a> *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to initial configurations. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad1e0ef1397b14d5d1571f960d536c50d"></a>volatile bool</td>
+<td class="fieldname">
+carry_isr_triggered</td>
+<td class="fielddoc">
+Was the carry isr triggered. </td></tr>
 </table>
 
 </div>
@@ -361,7 +339,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Opens and configures the RTC driver module. Implements <a class="el" href="group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a">rtc_api_t::open</a>. Configuration includes clock source, and interrupt callback function.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc_ctrl, &amp;g_rtc0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initialize the RTC module */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful and RTC has started. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid p_ctrl or p_cfg pointer. </td></tr>
@@ -584,7 +562,8 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Set the periodic interrupt rate and enable periodic interrupt.</p>
 <p>Implements <a class="el" href="group___r_t_c___a_p_i.html#a5a13e1acf6e07bfd87dc81bf65272951">rtc_api_t::periodicIrqRateSet</a></p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set the periodic interrupt rate to 1 second */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282">R_RTC_PeriodicIrqRateSet</a>(&amp;g_rtc_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d">RTC_PERIODIC_IRQ_SELECT_1_SECOND</a>);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<dl class="section note"><dt>Note</dt><dd>To start the RTC <a class="el" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a> must be called at least once.</dd></dl>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set the periodic interrupt rate to 1 second */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282">R_RTC_PeriodicIrqRateSet</a>(&amp;g_rtc0_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d">RTC_PERIODIC_IRQ_SELECT_1_SECOND</a>);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>The periodic interrupt rate was successfully set. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid input argument. </td></tr>
@@ -707,9 +686,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

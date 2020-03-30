@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -201,19 +201,19 @@ capture</td>
 <td class="fieldname">
 count_direction</td>
 <td class="fielddoc">
-Clock counting direction of the timer resource. </td></tr>
+Clock counting direction of the timer. </td></tr>
 <tr><td class="fieldtype">
 <a id="a85205f345201aaf1d25b5ee1257f8345"></a>uint32_t</td>
 <td class="fieldname">
 clock_frequency</td>
 <td class="fielddoc">
-Clock frequency of the timer resource. </td></tr>
+Clock frequency of the timer counter. </td></tr>
 <tr><td class="fieldtype">
 <a id="a08b897cfbf2d0cefafe8d3abb1afc747"></a>uint32_t</td>
 <td class="fieldname">
 period_counts</td>
 <td class="fielddoc">
-Time in clock counts until timer will expire. </td></tr>
+</td></tr>
 </table>
 
 </div>
@@ -748,7 +748,7 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>Timer control block. Allocate an instance specific control block to pass into the timer API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___g_p_t.html#structgpt__instance__ctrl__t">gpt_instance_ctrl_t</a></li>
-<li><a class="el" href="structagt__instance__ctrl__t.html">agt_instance_ctrl_t</a> </li>
+<li><a class="el" href="group___a_g_t.html#structagt__instance__ctrl__t">agt_instance_ctrl_t</a> </li>
 </ul>
 </dd></dl>
 
@@ -770,9 +770,13 @@ Pointer to the API structure for this instance. </td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c"></a>TIMER_EVENT_CYCLE_END&#160;</td><td class="fielddoc"><p>Requested timer delay has expired or timer has wrapped around. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91eba73d4afde72c0b28a768c8e6d25c050f8"></a>TIMER_EVENT_CREST&#160;</td><td class="fielddoc"><p>Timer crest event (counter is at a maximum, triangle-wave PWM only) </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91eba4bc1252f63147f4a01f7b7ba88afac1d"></a>TIMER_EVENT_CAPTURE_A&#160;</td><td class="fielddoc"><p>A capture has occurred on signal A. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91ebab7b635fbf34ede5a3e2f55b5a60ac21b"></a>TIMER_EVENT_CAPTURE_B&#160;</td><td class="fielddoc"><p>A capture has occurred on signal B. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac3bee51f7c9078f794c5ac19522f91eba83cb2de8ac629fcd95525e94b94089f0"></a>TIMER_EVENT_TROUGH&#160;</td><td class="fielddoc"><p>Timer trough event (counter is 0, triangle-wave PWM only. </p>
 </td></tr>
 </table>
 
@@ -833,11 +837,15 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>Timer operational modes </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e"></a>TIMER_MODE_PERIODIC&#160;</td><td class="fielddoc"><p>Timer will restart after delay periods. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e"></a>TIMER_MODE_PERIODIC&#160;</td><td class="fielddoc"><p>Timer restarts after period elapses. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a"></a>TIMER_MODE_ONE_SHOT&#160;</td><td class="fielddoc"><p>Timer will stop after delay periods. </p>
+<tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a"></a>TIMER_MODE_ONE_SHOT&#160;</td><td class="fielddoc"><p>Timer stops after period elapses. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac"></a>TIMER_MODE_PWM&#160;</td><td class="fielddoc"><p>Timer generate PWM output. </p>
+<tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac"></a>TIMER_MODE_PWM&#160;</td><td class="fielddoc"><p>Timer generates saw-wave PWM output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2a6a3c462f9e9cc1b26ab68f38efd79b14"></a>TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM&#160;</td><td class="fielddoc"><p>Timer generates symmetric triangle-wave PWM output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2a204001ad413e9ad0db08a66d004a555a"></a>TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM&#160;</td><td class="fielddoc"><p>Timer generates asymmetric triangle-wave PWM output. </p>
 </td></tr>
 </table>
 
@@ -907,9 +915,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -109,1924 +109,1976 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Hardware acceleration for the mbedCrypto implementation of the ARM PSA Crypto API. </p>
-<h1><a class="anchor" id="r-psa_crypto-overview"></a>
+<h1><a class="anchor" id="rm-psa-crypto-overview"></a>
 Overview</h1>
-<dl class="section note"><dt>Note</dt><dd><b>The PSA Crypto module does not provide any interfaces to the user. This release uses the mbed-Crypto version 1.1.0 which conforms to the PSA Crypto API 1.0 beta2 specification. Consult the ARM mbedCrypto documentation at <a href="https://github.com/ARMmbed/mbed-crypto/blob/mbedcrypto-1.1.0/docs/getting_started.md">https://github.com/ARMmbed/mbed-crypto/blob/mbedcrypto-1.1.0/docs/getting_started.md</a> for further information.</b></dd></dl>
-<h2><a class="anchor" id="r-psa_crypto-features"></a>
+<dl class="section note"><dt>Note</dt><dd><b>The PSA Crypto module does not provide any interfaces to the user. This release uses the mbed-Crypto version 3.1.0 which conforms to the PSA Crypto API 1.0 beta3 specification. Consult the ARM mbedCrypto documentation at <a href="https://github.com/ARMmbed/mbed-crypto/blob/mbedcrypto-3.1.0/docs/getting_started.md">https://github.com/ARMmbed/mbed-crypto/blob/mbedcrypto-3.1.0/docs/getting_started.md</a> for further information.</b></dd></dl>
+<h2><a class="anchor" id="rm-psa-crypto-features"></a>
 Features</h2>
 <p>The PSA_Crypto module provides hardware support for the following PSA Crypto operations</p><ul>
-<li>SHA256 calculation</li>
-<li>SHA224 calculation</li>
-<li>AES128/256.<ul>
-<li>Plain-Text Key generation</li>
-<li>Encryption with no padding and with PKCS7 padding.</li>
-<li>Decryption</li>
-<li>CBC and CTR modes</li>
+<li>SHA256 calculation <a class="anchor" id="um_sha256_hash_calculation"></a><a class="anchor" id="um_sha256_hash_multipart_calculation"></a><a class="anchor" id="um_sha256_hash_read"></a><a class="anchor" id="um_sha256_hash_clone"></a></li>
+<li>SHA224 calculation <a class="anchor" id="um_sha224_hash_read"></a></li>
+<li>AES<ul>
+<li>Keybits - 128, 256</li>
+<li>Plain-Text Key Generation <a class="anchor" id="um_AES_hardware_acceleration"></a><a class="anchor" id="um_AES256_key_generation_plaintext"></a><a class="anchor" id="um_AES128_key_generation_plaintext"></a></li>
+<li>Wrapped Key Generation <a class="anchor" id="um_AES256_key_generation_wrapped"></a><a class="anchor" id="um_AES128_key_generation_wrapped"></a></li>
+<li>Encryption and Decryption with no padding and with PKCS7 padding. <a class="anchor" id="um_AES_pkcs7_padding"></a><a class="anchor" id="um_AES128_encryption_decryption"></a><a class="anchor" id="um_AES256_encryption_decryption"></a></li>
+<li>CBC, CTR and GCM modes <a class="anchor" id="um_AES_cbc"></a><a class="anchor" id="um_AES_multipart_ctr"></a></li>
+<li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_AES256_key_generation_plaintext_export"></a><a class="anchor" id="um_AES128_key_generation_plaintext_export"></a><a class="anchor" id="um_AES192_key_generation_wrapped_fail"></a><a class="anchor" id="um_AES256_key_generation_wrapped_export"></a><a class="anchor" id="um_AES128_key_generation_wrapped_export"></a></li>
 </ul>
 </li>
-<li>RSA2048<ul>
+<li>ECC<ul>
+<li>Curves:<ul>
+<li>SECP256R1 <a class="anchor" id="um_ECC_key_generation_256K1"></a></li>
+<li>SECP256K1 <a class="anchor" id="um_ECC_key_generation_256R1"></a></li>
+<li>Brainpool256R1 <a class="anchor" id="um_ECC_key_generation_BP256R1"></a></li>
+<li>SECP384R1 <a class="anchor" id="um_ECC_key_generation_384R1"></a></li>
+<li>Brainpool384R1 <a class="anchor" id="um_ECC_key_generation_BP384R1"></a></li>
+</ul>
+</li>
 <li>Plain-Text Key Generation</li>
-<li>Signing</li>
-<li>Verification</li>
+<li>Wrapped Key Generation <a class="anchor" id="um_ECC_key_generation_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1Wrapped"></a></li>
+<li>Signing and Verification <a class="anchor" id="um_ECC_sign_verify_smaller_hash"></a></li>
+<li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_ECC_key_export_256R1"></a><a class="anchor" id="um_ECC_key_export_256K1"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_export_384R1"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1"></a><a class="anchor" id="um_ECC_key_import_256R1"></a><a class="anchor" id="um_ECC_key_import_256K1"></a><a class="anchor" id="um_ECC_key_import_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_import_384R1"></a><a class="anchor" id="um_ECC_key_import_BrainPool384R1"></a></li>
 </ul>
 </li>
-<li>Random number generation</li>
+<li>RSA<ul>
+<li>Keybits - 2048</li>
+<li>Plain-Text Key Generation <a class="anchor" id="um_RSA_key_generation"></a></li>
+<li>Wrapped Key Generation <a class="anchor" id="um_RSA_key_generationWrapped"></a></li>
+<li>Signing and Verification</li>
+<li>Encryption and Decryption with PKCS1V15 and OAEP padding <a class="anchor" id="um_RSA_PKCS1V15_encrypt_decrypt"></a><a class="anchor" id="um_RSA_OAEP_encrypt_decrypt"></a></li>
+<li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_RSA_key_export_import"></a><a class="anchor" id="um_RSA_key_import"></a><a class="anchor" id="um_RSA_key_import_e3"></a></li>
 </ul>
-<h1><a class="anchor" id="r-psa_crypto-configuration"></a>
+</li>
+<li>Random number generation <a class="anchor" id="um_psa_random_number_generation"></a><a class="anchor" id="um_RNG_hardware_acceleration"></a></li>
+<li>Persistent Key Storage <a class="anchor" id="um_AES_persistent_key"></a><a class="anchor" id="um_RSA_persistent_key"></a></li>
+</ul>
+<h1><a class="anchor" id="rm-psa-crypto-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for mbedCrypto</h2>
-The following build time configurations are defined in fsp_cfg/mbedtls/config.h:<br />
+The following build time configurations are defined in arm/mbedtls/config.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Hardware Acceleration|TRNG</td><td>Enabled</td><td>Defines MBEDTLS_ENTROPY_HARDWARE_ALT. </td></tr>
+<td>Hardware Acceleration &gt; Key Format &gt; AES</td><td>MCU Specific Options</td><td></td><td>Select AES key formats used </td></tr>
 <tr>
-<td>Hardware Acceleration|Hash|SHA256/224</td><td>MCU Specific Options</td><td>Defines MBEDTLS_SHA256_ALT and MBEDTLS_SHA256_PROCESS_ALT. </td></tr>
+<td>Hardware Acceleration &gt; Key Format &gt; ECC</td><td>MCU Specific Options</td><td></td><td>Select ECC key formats used </td></tr>
 <tr>
-<td>Hardware Acceleration|Cipher|AES</td><td>MCU Specific Options</td><td>Defines MBEDTLS_AES_SETKEY_ENC_ALT, MBEDTLS_AES_SETKEY_DEC_ALT, MBEDTLS_AES_ENCRYPT_ALT and MBEDTLS_AES_DECRYPT_ALT </td></tr>
+<td>Hardware Acceleration &gt; Key Format &gt; RSA</td><td>MCU Specific Options</td><td></td><td>Select RSA key formats used </td></tr>
 <tr>
-<td>Hardware Acceleration|Public Key Cryptography (PKC)|RSA</td><td>MCU Specific Options</td><td>Defines MBEDTLS_RSA_ALT. </td></tr>
+<td>Hardware Acceleration &gt; Hash &gt; SHA256/224</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_SHA256_ALT and MBEDTLS_SHA256_PROCESS_ALT. </td></tr>
 <tr>
-<td>Hardware Acceleration|Secure Crypto Engine Initialization</td><td>Enabled</td><td>MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT </td></tr>
+<td>Hardware Acceleration &gt; Cipher &gt; AES</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_AES_ALT, MBEDTLS_AES_SETKEY_ENC_ALT, MBEDTLS_AES_SETKEY_DEC_ALT, MBEDTLS_AES_ENCRYPT_ALT and MBEDTLS_AES_DECRYPT_ALT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_HAVE_ASM</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Define</li>
-<li>
-Undefine</li>
-</ul>
-</td><td>MBEDTLS_HAVE_ASM </td></tr>
+<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECC</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_ECP_ALT </td></tr>
+<tr>
+<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECDSA </td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_ECDSA_SIGN_ALT and MBEDTLS_ECDSA_VERIFY_ALT </td></tr>
+<tr>
+<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_RSA_ALT. </td></tr>
+<tr>
+<td>Hardware Acceleration &gt; TRNG</td><td>Enabled</td><td>Enabled </td><td>Defines MBEDTLS_ENTROPY_HARDWARE_ALT. </td></tr>
 <tr>
-<td>Platform|MBEDTLS_NO_UDBL_DIVISION</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hardware Acceleration &gt; Secure Crypto Engine Initialization</td><td>Enabled</td><td>Enabled </td><td>MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT </td></tr>
+<tr>
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_EXIT_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_NO_UDBL_DIVISION </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_EXIT_ALT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_NO_64BIT_MULTIPLICATION</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_TIME_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_NO_64BIT_MULTIPLICATION </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_TIME_ALT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_HAVE_SSE2</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_FPRINTF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HAVE_SSE2 </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_FPRINTF_ALT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_HAVE_TIME</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_PRINTF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HAVE_TIME </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_PRINTF_ALT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_HAVE_TIME_DATE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_SNPRINTF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HAVE_TIME_DATE </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_SNPRINTF_ALT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_MEMORY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_VSNPRINTF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_MEMORY </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_VSNPRINTF_ALT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_NO_STD_FUNCTIONS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_NV_SEED_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_NO_STD_FUNCTIONS </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_NV_SEED_ALT </td></tr>
 <tr>
-<td>Platform|Alternate|MBEDTLS_PLATFORM_EXIT_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_ZEROIZE_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_EXIT_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_ZEROIZE_ALT </td></tr>
 <tr>
-<td>Platform|Alternate|MBEDTLS_PLATFORM_TIME_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; Alternate &gt; MBEDTLS_PLATFORM_GMTIME_R_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_TIME_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_GMTIME_R_ALT </td></tr>
 <tr>
-<td>Platform|Alternate|MBEDTLS_PLATFORM_FPRINTF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_HAVE_ASM</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_FPRINTF_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HAVE_ASM </td></tr>
 <tr>
-<td>Platform|Alternate|MBEDTLS_PLATFORM_PRINTF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_NO_UDBL_DIVISION</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_PRINTF_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_NO_UDBL_DIVISION </td></tr>
 <tr>
-<td>Platform|Alternate|MBEDTLS_PLATFORM_SNPRINTF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_NO_64BIT_MULTIPLICATION</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_SNPRINTF_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_NO_64BIT_MULTIPLICATION </td></tr>
 <tr>
-<td>Platform|Alternate|MBEDTLS_PLATFORM_VSNPRINTF_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_HAVE_SSE2</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_VSNPRINTF_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HAVE_SSE2 </td></tr>
 <tr>
-<td>Platform|Alternate|MBEDTLS_PLATFORM_NV_SEED_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_HAVE_TIME</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_NV_SEED_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HAVE_TIME </td></tr>
 <tr>
-<td>General|MBEDTLS_DEPRECATED_WARNING</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_HAVE_TIME_DATE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_DEPRECATED_WARNING </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HAVE_TIME_DATE </td></tr>
 <tr>
-<td>General|MBEDTLS_DEPRECATED_REMOVED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_MEMORY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_DEPRECATED_REMOVED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_MEMORY </td></tr>
 <tr>
-<td>General|MBEDTLS_CHECK_PARAMS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_NO_STD_FUNCTIONS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CHECK_PARAMS </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_NO_STD_FUNCTIONS </td></tr>
 <tr>
-<td>Platform|MBEDTLS_TIMING_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_TIMING_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_TIMING_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_TIMING_ALT </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_AES_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_NO_PLATFORM_ENTROPY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_AES_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_NO_PLATFORM_ENTROPY </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_ARC4_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_ENTROPY_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ARC4_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_ENTROPY_C </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_ARIA_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ARIA_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_PLATFORM_C </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_BLOWFISH_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_CALLOC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_BLOWFISH_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_CALLOC </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_CALLOC value</td><td>Manual Entry</td><td>calloc </td><td>MBEDTLS_PLATFORM_STD_CALLOC value </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_CAMELLIA_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_FREE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CAMELLIA_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_FREE </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_CCM_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_FREE value</td><td>Manual Entry</td><td>free </td><td>MBEDTLS_PLATFORM_STD_FREE value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_EXIT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CCM_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_EXIT </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_EXIT value</td><td>Manual Entry</td><td>exit </td><td>MBEDTLS_PLATFORM_STD_EXIT value </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_CHACHA20_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_TIME</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CHACHA20_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_TIME </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_CHACHAPOLY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_TIME value</td><td>Manual Entry</td><td>time </td><td>MBEDTLS_PLATFORM_STD_TIME value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_FPRINTF</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CHACHAPOLY_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_FPRINTF </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_FPRINTF value</td><td>Manual Entry</td><td>fprintf </td><td>MBEDTLS_PLATFORM_STD_FPRINTF value </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_CMAC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_PRINTF</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CMAC_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_PRINTF </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_DES_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_PRINTF value</td><td>Manual Entry</td><td>printf </td><td>MBEDTLS_PLATFORM_STD_PRINTF value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_SNPRINTF</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_DES_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_SNPRINTF </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|DHM|Alternate|MBEDTLS_DHM_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_SNPRINTF value</td><td>Manual Entry</td><td>snprintf </td><td>MBEDTLS_PLATFORM_STD_SNPRINTF value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_EXIT_SUCCESS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_DHM_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_EXIT_SUCCESS </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_EXIT_SUCCESS value</td><td>Manual Entry</td><td>0 </td><td>MBEDTLS_PLATFORM_STD_EXIT_SUCCESS value </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECJPAKE_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_EXIT_FAILURE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECJPAKE_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_EXIT_FAILURE </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_GCM_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_EXIT_FAILURE value</td><td>Manual Entry</td><td>1 </td><td>MBEDTLS_PLATFORM_STD_EXIT_FAILURE value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_NV_SEED_READ</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_GCM_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_NV_SEED_READ </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_NV_SEED_READ value</td><td>Manual Entry</td><td>mbedtls_platform_std_nv_seed_read </td><td>MBEDTLS_PLATFORM_STD_NV_SEED_READ value </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_NIST_KW_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_NV_SEED_WRITE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_NIST_KW_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_NV_SEED_WRITE </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_MD2_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_NV_SEED_WRITE value</td><td>Manual Entry</td><td>mbedtls_platform_std_nv_seed_write </td><td>MBEDTLS_PLATFORM_STD_NV_SEED_WRITE value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_NV_SEED_FILE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD2_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_STD_NV_SEED_FILE </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_STD_NV_SEED_FILE value</td><td>Manual Entry</td><td></td><td>MBEDTLS_PLATFORM_STD_NV_SEED_FILE value </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_MD4_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_CALLOC_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD4_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_CALLOC_MACRO </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_MD5_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_CALLOC_MACRO value</td><td>Manual Entry</td><td>calloc </td><td>MBEDTLS_PLATFORM_CALLOC_MACRO value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_FREE_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD5_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_FREE_MACRO </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_FREE_MACRO value</td><td>Manual Entry</td><td>free </td><td>MBEDTLS_PLATFORM_FREE_MACRO value </td></tr>
 <tr>
-<td>Message Authentication Code (MAC)|Alternate|MBEDTLS_POLY1305_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_EXIT_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_POLY1305_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_EXIT_MACRO </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_RIPEMD160_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_EXIT_MACRO value</td><td>Manual Entry</td><td>exit </td><td>MBEDTLS_PLATFORM_EXIT_MACRO value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_TIME_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_RIPEMD160_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_TIME_MACRO </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_TIME_MACRO value</td><td>Manual Entry</td><td>time </td><td>MBEDTLS_PLATFORM_TIME_MACRO value </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_SHA1_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_TIME_TYPE_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_SHA1_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_TIME_TYPE_MACRO </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_SHA512_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_TIME_TYPE_MACRO value</td><td>Manual Entry</td><td>time_t </td><td>MBEDTLS_PLATFORM_TIME_TYPE_MACRO value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_FPRINTF_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_SHA512_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_FPRINTF_MACRO </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_FPRINTF_MACRO value</td><td>Manual Entry</td><td>fprintf </td><td>MBEDTLS_PLATFORM_FPRINTF_MACRO value </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_XTEA_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_PRINTF_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_XTEA_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_PRINTF_MACRO </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_PRINTF_MACRO value</td><td>Manual Entry</td><td>printf </td><td>MBEDTLS_PLATFORM_PRINTF_MACRO value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_SNPRINTF_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_SNPRINTF_MACRO </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_SNPRINTF_MACRO value</td><td>Manual Entry</td><td>snprintf </td><td>MBEDTLS_PLATFORM_SNPRINTF_MACRO value </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_MD2_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_VSNPRINTF_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD2_PROCESS_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_VSNPRINTF_MACRO </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_MD4_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_VSNPRINTF_MACRO value</td><td>Manual Entry</td><td>vsnprintf </td><td>MBEDTLS_PLATFORM_VSNPRINTF_MACRO value </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_NV_SEED_READ_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD4_PROCESS_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_NV_SEED_READ_MACRO </td></tr>
+<tr>
+<td>Platform &gt; MBEDTLS_PLATFORM_NV_SEED_READ_MACRO value</td><td>Manual Entry</td><td>mbedtls_platform_std_nv_seed_read </td><td>MBEDTLS_PLATFORM_NV_SEED_READ_MACRO value </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_MD5_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PARAM_FAILED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD5_PROCESS_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PARAM_FAILED </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_RIPEMD160_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_RIPEMD160_PROCESS_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_SHA1_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Platform &gt; MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO value</td><td>Manual Entry</td><td>mbedtls_platform_std_nv_seed_write </td><td>MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO value </td></tr>
+<tr>
+<td>General &gt; MBEDTLS_DEPRECATED_WARNING</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_SHA1_PROCESS_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_DEPRECATED_WARNING </td></tr>
 <tr>
-<td>Hash|Alternate|MBEDTLS_SHA512_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_DEPRECATED_REMOVED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_SHA512_PROCESS_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_DEPRECATED_REMOVED </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_DES_SETKEY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_CHECK_PARAMS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_DES_SETKEY_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_CHECK_PARAMS </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_DES_CRYPT_ECB_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_CHECK_PARAMS_ASSERT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_DES_CRYPT_ECB_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CHECK_PARAMS_ASSERT </td></tr>
 <tr>
-<td>Cipher|Alternate|MBEDTLS_DES3_CRYPT_ECB_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_ERROR_STRERROR_DUMMY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_DES3_CRYPT_ECB_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_ERROR_STRERROR_DUMMY </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECDH_GEN_PUBLIC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_MEMORY_DEBUG</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDH_GEN_PUBLIC_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MEMORY_DEBUG </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECDH_COMPUTE_SHARED_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_MEMORY_BACKTRACE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDH_COMPUTE_SHARED_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MEMORY_BACKTRACE </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECDSA_VERIFY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_PSA_CRYPTO_SPM</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDSA_VERIFY_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_SPM </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECDSA_SIGN_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_SELF_TEST</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDSA_SIGN_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_SELF_TEST </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECDSA_GENKEY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_THREADING_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDSA_GENKEY_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_THREADING_ALT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECDSA_GENKEY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_THREADING_PTHREAD</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDSA_GENKEY_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_THREADING_PTHREAD </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_INTERNAL_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_USE_PSA_CRYPTO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_INTERNAL_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_USE_PSA_CRYPTO </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_RANDOMIZE_JAC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_VERSION_FEATURES</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_RANDOMIZE_JAC_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_VERSION_FEATURES </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_ADD_MIXED_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_ERROR_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_ADD_MIXED_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_ERROR_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_DOUBLE_JAC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_MEMORY_BUFFER_ALLOC_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DOUBLE_JAC_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MEMORY_BUFFER_ALLOC_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_NORMALIZE_JAC_MANY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_PSA_CRYPTO_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_NORMALIZE_JAC_MANY_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_PSA_CRYPTO_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_NORMALIZE_JAC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_PSA_CRYPTO_SE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_NORMALIZE_JAC_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_SE_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_DOUBLE_ADD_MXZ_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_THREADING_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DOUBLE_ADD_MXZ_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_THREADING_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_RANDOMIZE_MXZ_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_TIMING_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_RANDOMIZE_MXZ_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_TIMING_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Alternate|MBEDTLS_ECP_NORMALIZE_MXZ_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_VERSION_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_NORMALIZE_MXZ_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_VERSION_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_TEST_NULL_ENTROPY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_MEMORY_ALIGN_MULTIPLE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_TEST_NULL_ENTROPY </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MEMORY_ALIGN_MULTIPLE </td></tr>
 <tr>
-<td>Cipher|AES|MBEDTLS_AES_ROM_TABLES</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; MBEDTLS_MEMORY_ALIGN_MULTIPLE value</td><td>Manual Entry</td><td>4 </td><td>MBEDTLS_MEMORY_ALIGN_MULTIPLE value </td></tr>
+<tr>
+<td>Cipher &gt; Alternate &gt; MBEDTLS_ARC4_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_AES_ROM_TABLES </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ARC4_ALT </td></tr>
 <tr>
-<td>Cipher|AES|MBEDTLS_AES_FEWER_TABLES</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_ARIA_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_AES_FEWER_TABLES </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ARIA_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CAMELLIA_SMALL_MEMORY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_BLOWFISH_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CAMELLIA_SMALL_MEMORY </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_BLOWFISH_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_MODE_CBC</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_CAMELLIA_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_MODE_CBC </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CAMELLIA_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_MODE_CFB</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_CCM_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_MODE_CFB </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CCM_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_MODE_CTR</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_CHACHA20_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_MODE_CTR </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CHACHA20_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_MODE_OFB</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_CHACHAPOLY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_MODE_OFB </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CHACHAPOLY_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_MODE_XTS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_CMAC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_MODE_XTS </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CMAC_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_NULL_CIPHER</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_DES_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_NULL_CIPHER </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_DES_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_PADDING_PKCS7</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_GCM_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_PADDING_PKCS7 </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_GCM_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_NIST_KW_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_NIST_KW_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_XTEA_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_XTEA_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_PADDING_ZEROS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_DES_SETKEY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_PADDING_ZEROS </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_DES_SETKEY_ALT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_SECP192R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_DES_CRYPT_ECB_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_SECP192R1_ENABLED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_DES_CRYPT_ECB_ALT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_SECP224R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; Alternate &gt; MBEDTLS_DES3_CRYPT_ECB_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_SECP224R1_ENABLED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_DES3_CRYPT_ECB_ALT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_SECP256R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; AES &gt; MBEDTLS_AES_ROM_TABLES</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_SECP256R1_ENABLED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_AES_ROM_TABLES </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_SECP384R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; AES &gt; MBEDTLS_AES_FEWER_TABLES</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_SECP384R1_ENABLED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_AES_FEWER_TABLES </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_SECP521R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CAMELLIA_SMALL_MEMORY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_SECP521R1_ENABLED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CAMELLIA_SMALL_MEMORY </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_SECP192K1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_MODE_CBC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_SECP192K1_ENABLED </td></tr>
+</td><td>Define </td><td>MBEDTLS_CIPHER_MODE_CBC </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_SECP224K1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_MODE_CFB</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_SECP224K1_ENABLED </td></tr>
+</td><td>Define </td><td>MBEDTLS_CIPHER_MODE_CFB </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_SECP256K1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_MODE_CTR</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_SECP256K1_ENABLED </td></tr>
+</td><td>Define </td><td>MBEDTLS_CIPHER_MODE_CTR </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_BP256R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_MODE_OFB</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_BP256R1_ENABLED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CIPHER_MODE_OFB </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_BP384R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_MODE_XTS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_BP384R1_ENABLED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CIPHER_MODE_XTS </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_BP512R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_NULL_CIPHER</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_BP512R1_ENABLED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CIPHER_NULL_CIPHER </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_CURVE25519_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_PADDING_PKCS7</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_CURVE25519_ENABLED </td></tr>
+</td><td>Define </td><td>MBEDTLS_CIPHER_PADDING_PKCS7 </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|Curves|MBEDTLS_ECP_DP_CURVE448_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_DP_CURVE448_ENABLED </td></tr>
+</td><td>Define </td><td>MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECP_NIST_OPTIM</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_NIST_OPTIM </td></tr>
+</td><td>Define </td><td>MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECP_RESTARTABLE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_PADDING_ZEROS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_RESTARTABLE </td></tr>
+</td><td>Define </td><td>MBEDTLS_CIPHER_PADDING_ZEROS </td></tr>
+<tr>
+<td>Cipher &gt; MBEDTLS_AES_C</td><td>Define</td><td>Define </td><td>MBEDTLS_AES_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECDH_LEGACY_CONTEXT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_ARC4_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDH_LEGACY_CONTEXT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ARC4_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECDSA_DETERMINISTIC</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_BLOWFISH_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDSA_DETERMINISTIC </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_BLOWFISH_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_PK_PARSE_EC_EXTENDED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CAMELLIA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PK_PARSE_EC_EXTENDED </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CAMELLIA_C </td></tr>
 <tr>
-<td>General|MBEDTLS_ERROR_STRERROR_DUMMY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_ARIA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ERROR_STRERROR_DUMMY </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ARIA_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_GENPRIME</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CCM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_GENPRIME </td></tr>
+</td><td>Define </td><td>MBEDTLS_CCM_C </td></tr>
 <tr>
-<td>Storage|MBEDTLS_FS_IO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CHACHA20_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_FS_IO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CHACHA20_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CHACHAPOLY_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CHACHAPOLY_C </td></tr>
 <tr>
-<td>Platform|MBEDTLS_NO_PLATFORM_ENTROPY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_CIPHER_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_NO_PLATFORM_ENTROPY </td></tr>
+</td><td>Define </td><td>MBEDTLS_CIPHER_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_ENTROPY_FORCE_SHA256</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_DES_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ENTROPY_FORCE_SHA256 </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_DES_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_ENTROPY_NV_SEED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_GCM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ENTROPY_NV_SEED </td></tr>
+</td><td>Define </td><td>MBEDTLS_GCM_C </td></tr>
 <tr>
-<td>Storage|MBEDTLS_PSA_CRYPTO_KEY_FILE_ID_ENCODES_OWNER</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_NIST_KW_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PSA_CRYPTO_KEY_FILE_ID_ENCODES_OWNER </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_NIST_KW_C </td></tr>
 <tr>
-<td>General|MBEDTLS_MEMORY_DEBUG</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Cipher &gt; MBEDTLS_XTEA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MEMORY_DEBUG </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_XTEA_C </td></tr>
 <tr>
-<td>General|MBEDTLS_MEMORY_BACKTRACE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; DHM &gt; Alternate &gt; MBEDTLS_DHM_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MEMORY_BACKTRACE </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_DHM_ALT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|RSA|MBEDTLS_PK_RSA_ALT_SUPPORT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; DHM &gt; MBEDTLS_DHM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PK_RSA_ALT_SUPPORT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_DHM_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_PKCS1_V15</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECJPAKE_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PKCS1_V15 </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECJPAKE_ALT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_PKCS1_V21</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECDSA_GENKEY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PKCS1_V21 </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECDSA_GENKEY_ALT </td></tr>
 <tr>
-<td>General|MBEDTLS_PSA_CRYPTO_SPM</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECP_INTERNAL_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PSA_CRYPTO_SPM </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_INTERNAL_ALT </td></tr>
 <tr>
-<td>RNG|MBEDTLS_PSA_INJECT_ENTROPY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECP_RANDOMIZE_JAC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PSA_INJECT_ENTROPY </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_RANDOMIZE_JAC_ALT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|RSA|MBEDTLS_RSA_NO_CRT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECP_ADD_MIXED_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_RSA_NO_CRT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_ADD_MIXED_ALT </td></tr>
 <tr>
-<td>General|MBEDTLS_SELF_TEST</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECP_DOUBLE_JAC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_SELF_TEST </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DOUBLE_JAC_ALT </td></tr>
 <tr>
-<td>Hash|MBEDTLS_SHA256_SMALLER</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECP_NORMALIZE_JAC_MANY_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_SHA256_SMALLER </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_NORMALIZE_JAC_MANY_ALT </td></tr>
 <tr>
-<td>General|MBEDTLS_THREADING_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECP_NORMALIZE_JAC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_THREADING_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_NORMALIZE_JAC_ALT </td></tr>
 <tr>
-<td>General|MBEDTLS_THREADING_PTHREAD</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECP_DOUBLE_ADD_MXZ_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_THREADING_PTHREAD </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DOUBLE_ADD_MXZ_ALT </td></tr>
 <tr>
-<td>General|MBEDTLS_USE_PSA_CRYPTO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECP_RANDOMIZE_MXZ_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_USE_PSA_CRYPTO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_RANDOMIZE_MXZ_ALT </td></tr>
 <tr>
-<td>General|MBEDTLS_VERSION_FEATURES</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Alternate &gt; MBEDTLS_ECP_NORMALIZE_MXZ_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_VERSION_FEATURES </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_NORMALIZE_MXZ_ALT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_AESNI_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_SECP192R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_AESNI_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_SECP192R1_ENABLED </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_AES_C</td><td>Define</td><td>MBEDTLS_AES_C </td></tr>
-<tr>
-<td>Cipher|MBEDTLS_ARC4_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_SECP224R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ARC4_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_SECP224R1_ENABLED </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_ASN1_PARSE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_SECP256R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ASN1_PARSE_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_ECP_DP_SECP256R1_ENABLED </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_ASN1_WRITE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_SECP384R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ASN1_WRITE_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_SECP384R1_ENABLED </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_BASE64_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_SECP521R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_BASE64_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_SECP521R1_ENABLED </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_BIGNUM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_SECP192K1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_BIGNUM_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_SECP192K1_ENABLED </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_BLOWFISH_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_SECP224K1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_BLOWFISH_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_SECP224K1_ENABLED </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CAMELLIA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_SECP256K1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CAMELLIA_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_SECP256K1_ENABLED </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_ARIA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_BP256R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ARIA_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_BP256R1_ENABLED </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CCM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_BP384R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CCM_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_BP384R1_ENABLED </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CHACHA20_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_BP512R1_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CHACHA20_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_BP512R1_ENABLED </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CHACHAPOLY_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_CURVE25519_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CHACHAPOLY_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_CURVE25519_ENABLED </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_CIPHER_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; Curves &gt; MBEDTLS_ECP_DP_CURVE448_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CIPHER_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_DP_CURVE448_ENABLED </td></tr>
 <tr>
-<td>Message Authentication Code (MAC)|MBEDTLS_CMAC_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECDH_GEN_PUBLIC_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CMAC_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECDH_GEN_PUBLIC_ALT </td></tr>
 <tr>
-<td>RNG|MBEDTLS_CTR_DRBG_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECDH_COMPUTE_SHARED_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CTR_DRBG_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECDH_COMPUTE_SHARED_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_DES_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_NIST_OPTIM</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_DES_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_NIST_OPTIM </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|DHM|MBEDTLS_DHM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_RESTARTABLE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_DHM_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_RESTARTABLE </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECDH_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECDH_LEGACY_CONTEXT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDH_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECDH_LEGACY_CONTEXT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECDSA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECDSA_DETERMINISTIC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECDSA_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECDSA_DETERMINISTIC </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECJPAKE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_PK_PARSE_EC_EXTENDED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECJPAKE_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PK_PARSE_EC_EXTENDED </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECP_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECDH_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECDH_C </td></tr>
 <tr>
-<td>Platform|MBEDTLS_ENTROPY_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECDSA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ENTROPY_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_ECDSA_C </td></tr>
 <tr>
-<td>General|MBEDTLS_ERROR_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ERROR_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_ECP_C </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_GCM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECJPAKE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_GCM_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECJPAKE_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_HAVEGE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_MAX_BITS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HAVEGE_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_MAX_BITS </td></tr>
+<tr>
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_MAX_BITS value</td><td>Manual Entry</td><td>521 </td><td>MBEDTLS_ECP_MAX_BITS value </td></tr>
 <tr>
-<td>Message Authentication Code (MAC)|MBEDTLS_HKDF_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_WINDOW_SIZE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HKDF_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_WINDOW_SIZE </td></tr>
 <tr>
-<td>Message Authentication Code (MAC)|MBEDTLS_HMAC_DRBG_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_WINDOW_SIZE value</td><td>Manual Entry</td><td>6 </td><td>MBEDTLS_ECP_WINDOW_SIZE value </td></tr>
+<tr>
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_FIXED_POINT_OPTIM</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HMAC_DRBG_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECP_FIXED_POINT_OPTIM </td></tr>
+<tr>
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECP_FIXED_POINT_OPTIM value</td><td>Manual Entry</td><td>1 </td><td>MBEDTLS_ECP_FIXED_POINT_OPTIM value </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_NIST_KW_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; ECC &gt; MBEDTLS_ECDH_VARIANT_EVEREST_ENABLED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_NIST_KW_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ECDH_VARIANT_EVEREST_ENABLED </td></tr>
 <tr>
-<td>Hash|MBEDTLS_MD_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; RSA &gt; MBEDTLS_PK_RSA_ALT_SUPPORT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PK_RSA_ALT_SUPPORT </td></tr>
 <tr>
-<td>Hash|MBEDTLS_MD2_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; RSA &gt; MBEDTLS_RSA_NO_CRT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD2_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_RSA_NO_CRT </td></tr>
 <tr>
-<td>Hash|MBEDTLS_MD4_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; RSA &gt; MBEDTLS_RSA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD4_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_RSA_C </td></tr>
 <tr>
-<td>Hash|MBEDTLS_MD5_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_GENPRIME</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MD5_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_GENPRIME </td></tr>
 <tr>
-<td>General|MBEDTLS_MEMORY_BUFFER_ALLOC_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PKCS1_V15</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MEMORY_BUFFER_ALLOC_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_PKCS1_V15 </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_OID_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PKCS1_V21</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_OID_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_PKCS1_V21 </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_PADLOCK_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_ASN1_PARSE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PADLOCK_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_ASN1_PARSE_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_PEM_PARSE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_ASN1_WRITE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PEM_PARSE_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_ASN1_WRITE_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_PEM_WRITE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_BASE64_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PEM_WRITE_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_BASE64_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_PK_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_BIGNUM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PK_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_BIGNUM_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_PK_PARSE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_OID_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PK_PARSE_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_OID_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_PK_WRITE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PEM_PARSE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PK_WRITE_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_PEM_PARSE_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_PKCS5_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PEM_WRITE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PKCS5_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_PEM_WRITE_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_PKCS12_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PK_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PKCS12_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_PK_C </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PK_PARSE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_PK_PARSE_C </td></tr>
 <tr>
-<td>Message Authentication Code (MAC)|MBEDTLS_POLY1305_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PK_WRITE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_POLY1305_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_PK_WRITE_C </td></tr>
 <tr>
-<td>General|MBEDTLS_PSA_CRYPTO_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PKCS5_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PSA_CRYPTO_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_PKCS5_C </td></tr>
 <tr>
-<td>Storage|MBEDTLS_PSA_CRYPTO_STORAGE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_PKCS12_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PSA_CRYPTO_STORAGE_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_PKCS12_C </td></tr>
 <tr>
-<td>Storage|MBEDTLS_PSA_ITS_FILE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_MPI_WINDOW_SIZE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PSA_ITS_FILE_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MPI_WINDOW_SIZE </td></tr>
 <tr>
-<td>Hash|MBEDTLS_RIPEMD160_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_MPI_WINDOW_SIZE value</td><td>Manual Entry</td><td>6 </td><td>MBEDTLS_MPI_WINDOW_SIZE value </td></tr>
+<tr>
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_MPI_MAX_SIZE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_RIPEMD160_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MPI_MAX_SIZE </td></tr>
+<tr>
+<td>Public Key Cryptography (PKC) &gt; MBEDTLS_MPI_MAX_SIZE value</td><td>Manual Entry</td><td>1024 </td><td>MBEDTLS_MPI_MAX_SIZE value </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|RSA|MBEDTLS_RSA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_MD2_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_RSA_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MD2_ALT </td></tr>
 <tr>
-<td>Hash|MBEDTLS_SHA1_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_MD4_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_SHA1_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MD4_ALT </td></tr>
 <tr>
-<td>Hash|MBEDTLS_SHA256_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_MD5_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_SHA256_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MD5_ALT </td></tr>
 <tr>
-<td>Hash|MBEDTLS_SHA512_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_RIPEMD160_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_SHA512_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_RIPEMD160_ALT </td></tr>
 <tr>
-<td>General|MBEDTLS_THREADING_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_SHA1_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_THREADING_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_SHA1_ALT </td></tr>
 <tr>
-<td>General|MBEDTLS_TIMING_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_SHA512_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_TIMING_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_SHA512_ALT </td></tr>
 <tr>
-<td>General|MBEDTLS_VERSION_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_MD2_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_VERSION_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MD2_PROCESS_ALT </td></tr>
 <tr>
-<td>Cipher|MBEDTLS_XTEA_C</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_MD4_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_XTEA_C </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MD4_PROCESS_ALT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_MPI_WINDOW_SIZE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_MD5_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MPI_WINDOW_SIZE </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MD5_PROCESS_ALT </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_MPI_WINDOW_SIZE value</td><td>Configurable String</td><td>MBEDTLS_MPI_WINDOW_SIZE value </td></tr>
-<tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_MPI_MAX_SIZE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_RIPEMD160_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MPI_MAX_SIZE </td></tr>
-<tr>
-<td>Public Key Cryptography (PKC)|MBEDTLS_MPI_MAX_SIZE value</td><td>Configurable String</td><td>MBEDTLS_MPI_MAX_SIZE value </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_RIPEMD160_PROCESS_ALT </td></tr>
 <tr>
-<td>RNG|MBEDTLS_CTR_DRBG_ENTROPY_LEN</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_SHA1_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>RNG|MBEDTLS_CTR_DRBG_ENTROPY_LEN </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_SHA1_PROCESS_ALT </td></tr>
 <tr>
-<td>RNG|MBEDTLS_CTR_DRBG_ENTROPY_LEN value</td><td>Configurable String</td><td>RNG value|MBEDTLS_CTR_DRBG_ENTROPY_LEN </td></tr>
-<tr>
-<td>RNG|MBEDTLS_CTR_DRBG_RESEED_INTERVAL</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; Alternate &gt; MBEDTLS_SHA512_PROCESS_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>RNG|MBEDTLS_CTR_DRBG_RESEED_INTERVAL </td></tr>
-<tr>
-<td>RNG|MBEDTLS_CTR_DRBG_RESEED_INTERVAL value</td><td>Configurable String</td><td>RNG value|MBEDTLS_CTR_DRBG_RESEED_INTERVAL </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_SHA512_PROCESS_ALT </td></tr>
 <tr>
-<td>RNG|MBEDTLS_CTR_DRBG_MAX_INPUT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_SHA256_SMALLER</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CTR_DRBG_MAX_INPUT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_SHA256_SMALLER </td></tr>
 <tr>
-<td>RNG|MBEDTLS_CTR_DRBG_MAX_INPUT value</td><td>Configurable String</td><td>MBEDTLS_CTR_DRBG_MAX_INPUT value </td></tr>
-<tr>
-<td>RNG|MBEDTLS_CTR_DRBG_MAX_REQUEST</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_SHA512_SMALLER</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CTR_DRBG_MAX_REQUEST </td></tr>
-<tr>
-<td>RNG|MBEDTLS_CTR_DRBG_MAX_REQUEST value</td><td>Configurable String</td><td>MBEDTLS_CTR_DRBG_MAX_REQUEST value </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_SHA512_SMALLER </td></tr>
 <tr>
-<td>RNG|MBEDTLS_CTR_DRBG_MAX_SEED_INPUT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_SHA512_NO_SHA384</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CTR_DRBG_MAX_SEED_INPUT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_SHA512_NO_SHA384 </td></tr>
 <tr>
-<td>RNG|MBEDTLS_CTR_DRBG_MAX_SEED_INPUT value</td><td>Configurable String</td><td>MBEDTLS_CTR_DRBG_MAX_SEED_INPUT value </td></tr>
-<tr>
-<td>RNG|MBEDTLS_CTR_DRBG_USE_128_BIT_KEY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_MD_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_CTR_DRBG_USE_128_BIT_KEY </td></tr>
+</td><td>Define </td><td>MBEDTLS_MD_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_HMAC_DRBG_RESEED_INTERVAL</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_MD2_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HMAC_DRBG_RESEED_INTERVAL </td></tr>
-<tr>
-<td>RNG|MBEDTLS_HMAC_DRBG_RESEED_INTERVAL value</td><td>Configurable String</td><td>MBEDTLS_HMAC_DRBG_RESEED_INTERVAL value </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MD2_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_HMAC_DRBG_MAX_INPUT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_MD4_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HMAC_DRBG_MAX_INPUT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_MD4_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_HMAC_DRBG_MAX_INPUT value</td><td>Configurable String</td><td>MBEDTLS_HMAC_DRBG_MAX_INPUT value </td></tr>
-<tr>
-<td>RNG|MBEDTLS_HMAC_DRBG_MAX_REQUEST</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_MD5_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HMAC_DRBG_MAX_REQUEST </td></tr>
+</td><td>Define </td><td>MBEDTLS_MD5_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_HMAC_DRBG_MAX_REQUEST value</td><td>Configurable String</td><td>MBEDTLS_HMAC_DRBG_MAX_REQUEST value </td></tr>
-<tr>
-<td>RNG|MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_RIPEMD160_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT </td></tr>
-<tr>
-<td>RNG|MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT value</td><td>Configurable String</td><td>MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT value </td></tr>
+</td><td>Define </td><td>MBEDTLS_RIPEMD160_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECP_MAX_BITS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_SHA1_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_MAX_BITS </td></tr>
+</td><td>Define </td><td>MBEDTLS_SHA1_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECP_MAX_BITS value</td><td>Configurable String</td><td>MBEDTLS_ECP_MAX_BITS value </td></tr>
-<tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECP_WINDOW_SIZE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_SHA256_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_WINDOW_SIZE </td></tr>
-<tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECP_WINDOW_SIZE value</td><td>Configurable String</td><td>MBEDTLS_ECP_WINDOW_SIZE value </td></tr>
+</td><td>Define </td><td>MBEDTLS_SHA256_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECP_FIXED_POINT_OPTIM</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Hash &gt; MBEDTLS_SHA512_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ECP_FIXED_POINT_OPTIM </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_SHA512_C </td></tr>
 <tr>
-<td>Public Key Cryptography (PKC)|ECC|MBEDTLS_ECP_FIXED_POINT_OPTIM value</td><td>Configurable String</td><td>MBEDTLS_ECP_FIXED_POINT_OPTIM value </td></tr>
-<tr>
-<td>RNG|MBEDTLS_ENTROPY_MAX_SOURCES</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Message Authentication Code (MAC) &gt; Alternate &gt; MBEDTLS_POLY1305_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ENTROPY_MAX_SOURCES </td></tr>
-<tr>
-<td>RNG|MBEDTLS_ENTROPY_MAX_SOURCES value</td><td>Configurable String</td><td>MBEDTLS_ENTROPY_MAX_SOURCES value </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_POLY1305_ALT </td></tr>
 <tr>
-<td>RNG|MBEDTLS_ENTROPY_MAX_GATHER</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Message Authentication Code (MAC) &gt; MBEDTLS_CMAC_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ENTROPY_MAX_GATHER </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CMAC_C </td></tr>
 <tr>
-<td>RNG|MBEDTLS_ENTROPY_MAX_GATHER value</td><td>Configurable String</td><td>MBEDTLS_ENTROPY_MAX_GATHER value </td></tr>
-<tr>
-<td>RNG|MBEDTLS_ENTROPY_MIN_HARDWARE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Message Authentication Code (MAC) &gt; MBEDTLS_HKDF_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_ENTROPY_MIN_HARDWARE </td></tr>
-<tr>
-<td>RNG|MBEDTLS_ENTROPY_MIN_HARDWARE value</td><td>Configurable String</td><td>MBEDTLS_ENTROPY_MIN_HARDWARE value </td></tr>
+</td><td>Define </td><td>MBEDTLS_HKDF_C </td></tr>
 <tr>
-<td>General|MBEDTLS_MEMORY_ALIGN_MULTIPLE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Message Authentication Code (MAC) &gt; MBEDTLS_HMAC_DRBG_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_MEMORY_ALIGN_MULTIPLE </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HMAC_DRBG_C </td></tr>
 <tr>
-<td>General|MBEDTLS_MEMORY_ALIGN_MULTIPLE value</td><td>Configurable String</td><td>MBEDTLS_MEMORY_ALIGN_MULTIPLE value </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_CALLOC</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Message Authentication Code (MAC) &gt; MBEDTLS_POLY1305_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_CALLOC </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_POLY1305_C </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_CALLOC value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_CALLOC value </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_FREE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_TEST_NULL_ENTROPY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_FREE </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_FREE value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_FREE value </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_TEST_NULL_ENTROPY </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_EXIT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_EXIT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_EXIT value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_EXIT value </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_TIME</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_ENTROPY_FORCE_SHA256</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_TIME </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_TIME value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_TIME value </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ENTROPY_FORCE_SHA256 </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_FPRINTF</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_ENTROPY_NV_SEED</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_FPRINTF </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ENTROPY_NV_SEED </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_FPRINTF value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_FPRINTF value </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_PRINTF</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_PSA_INJECT_ENTROPY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_PRINTF </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_PRINTF value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_PRINTF value </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PSA_INJECT_ENTROPY </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_SNPRINTF</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_CTR_DRBG_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_SNPRINTF </td></tr>
+</td><td>Define </td><td>MBEDTLS_CTR_DRBG_C </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_SNPRINTF value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_SNPRINTF value </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_EXIT_SUCCESS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_HAVEGE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_EXIT_SUCCESS </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_EXIT_SUCCESS value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_EXIT_SUCCESS value </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HAVEGE_C </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_EXIT_FAILURE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_CTR_DRBG_ENTROPY_LEN</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_EXIT_FAILURE </td></tr>
+</td><td>Undefine </td><td>RNG|MBEDTLS_CTR_DRBG_ENTROPY_LEN </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_EXIT_FAILURE value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_EXIT_FAILURE value </td></tr>
+<td>RNG &gt; MBEDTLS_CTR_DRBG_ENTROPY_LEN value</td><td>Manual Entry</td><td>48 </td><td>RNG value|MBEDTLS_CTR_DRBG_ENTROPY_LEN </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_NV_SEED_READ</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_CTR_DRBG_RESEED_INTERVAL</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_NV_SEED_READ </td></tr>
+</td><td>Undefine </td><td>RNG|MBEDTLS_CTR_DRBG_RESEED_INTERVAL </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_NV_SEED_READ value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_NV_SEED_READ value </td></tr>
+<td>RNG &gt; MBEDTLS_CTR_DRBG_RESEED_INTERVAL value</td><td>Manual Entry</td><td>10000 </td><td>RNG value|MBEDTLS_CTR_DRBG_RESEED_INTERVAL </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_NV_SEED_WRITE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_CTR_DRBG_MAX_INPUT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_NV_SEED_WRITE </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CTR_DRBG_MAX_INPUT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_NV_SEED_WRITE value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_NV_SEED_WRITE value </td></tr>
+<td>RNG &gt; MBEDTLS_CTR_DRBG_MAX_INPUT value</td><td>Manual Entry</td><td>256 </td><td>MBEDTLS_CTR_DRBG_MAX_INPUT value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_NV_SEED_FILE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_CTR_DRBG_MAX_REQUEST</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_STD_NV_SEED_FILE </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CTR_DRBG_MAX_REQUEST </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_STD_NV_SEED_FILE value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_STD_NV_SEED_FILE value </td></tr>
+<td>RNG &gt; MBEDTLS_CTR_DRBG_MAX_REQUEST value</td><td>Manual Entry</td><td>1024 </td><td>MBEDTLS_CTR_DRBG_MAX_REQUEST value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_CALLOC_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_CTR_DRBG_MAX_SEED_INPUT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_CALLOC_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CTR_DRBG_MAX_SEED_INPUT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_CALLOC_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_CALLOC_MACRO value </td></tr>
+<td>RNG &gt; MBEDTLS_CTR_DRBG_MAX_SEED_INPUT value</td><td>Manual Entry</td><td>384 </td><td>MBEDTLS_CTR_DRBG_MAX_SEED_INPUT value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_FREE_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_CTR_DRBG_USE_128_BIT_KEY</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_FREE_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_CTR_DRBG_USE_128_BIT_KEY </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_FREE_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_FREE_MACRO value </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_EXIT_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_HMAC_DRBG_RESEED_INTERVAL</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_EXIT_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HMAC_DRBG_RESEED_INTERVAL </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_EXIT_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_EXIT_MACRO value </td></tr>
+<td>RNG &gt; MBEDTLS_HMAC_DRBG_RESEED_INTERVAL value</td><td>Manual Entry</td><td>10000 </td><td>MBEDTLS_HMAC_DRBG_RESEED_INTERVAL value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_TIME_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_HMAC_DRBG_MAX_INPUT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_TIME_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HMAC_DRBG_MAX_INPUT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_TIME_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_TIME_MACRO value </td></tr>
+<td>RNG &gt; MBEDTLS_HMAC_DRBG_MAX_INPUT value</td><td>Manual Entry</td><td>256 </td><td>MBEDTLS_HMAC_DRBG_MAX_INPUT value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_TIME_TYPE_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_HMAC_DRBG_MAX_REQUEST</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_TIME_TYPE_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HMAC_DRBG_MAX_REQUEST </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_TIME_TYPE_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_TIME_TYPE_MACRO value </td></tr>
+<td>RNG &gt; MBEDTLS_HMAC_DRBG_MAX_REQUEST value</td><td>Manual Entry</td><td>1024 </td><td>MBEDTLS_HMAC_DRBG_MAX_REQUEST value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_FPRINTF_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_FPRINTF_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_FPRINTF_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_FPRINTF_MACRO value </td></tr>
+<td>RNG &gt; MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT value</td><td>Manual Entry</td><td>384 </td><td>MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_PRINTF_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_ENTROPY_MAX_SOURCES</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_PRINTF_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ENTROPY_MAX_SOURCES </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_PRINTF_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_PRINTF_MACRO value </td></tr>
+<td>RNG &gt; MBEDTLS_ENTROPY_MAX_SOURCES value</td><td>Manual Entry</td><td>20 </td><td>MBEDTLS_ENTROPY_MAX_SOURCES value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_SNPRINTF_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_ENTROPY_MAX_GATHER</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_SNPRINTF_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ENTROPY_MAX_GATHER </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_SNPRINTF_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_SNPRINTF_MACRO value </td></tr>
+<td>RNG &gt; MBEDTLS_ENTROPY_MAX_GATHER value</td><td>Manual Entry</td><td>128 </td><td>MBEDTLS_ENTROPY_MAX_GATHER value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_VSNPRINTF_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>RNG &gt; MBEDTLS_ENTROPY_MIN_HARDWARE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_VSNPRINTF_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_ENTROPY_MIN_HARDWARE </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_VSNPRINTF_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_VSNPRINTF_MACRO value </td></tr>
+<td>RNG &gt; MBEDTLS_ENTROPY_MIN_HARDWARE value</td><td>Manual Entry</td><td>32 </td><td>MBEDTLS_ENTROPY_MIN_HARDWARE value </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_NV_SEED_READ_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Storage &gt; MBEDTLS_FS_IO</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_NV_SEED_READ_MACRO </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_FS_IO </td></tr>
 <tr>
-<td>Platform|MBEDTLS_PLATFORM_NV_SEED_READ_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_NV_SEED_READ_MACRO value </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Storage &gt; MBEDTLS_PSA_CRYPTO_KEY_FILE_ID_ENCODES_OWNER</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO </td></tr>
-<tr>
-<td>Platform|MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO value</td><td>Configurable String</td><td>MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO value </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_KEY_FILE_ID_ENCODES_OWNER </td></tr>
 <tr>
-<td>Platform|Alternate|MBEDTLS_PLATFORM_ZEROIZE_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Storage &gt; MBEDTLS_PSA_CRYPTO_STORAGE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_ZEROIZE_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PSA_CRYPTO_STORAGE_C </td></tr>
 <tr>
-<td>Platform|Alternate|MBEDTLS_PLATFORM_GMTIME_R_ALT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Storage &gt; MBEDTLS_PSA_ITS_FILE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>MBEDTLS_PLATFORM_GMTIME_R_ALT </td></tr>
+</td><td>Undefine </td><td>MBEDTLS_PSA_ITS_FILE_C </td></tr>
 </table>
 </p>
-<h2><a class="anchor" id="r-psa_crypto-sha256-configuration"></a>
+<h2><a class="anchor" id="rm-psa-crypto-sha256-configuration"></a>
 SHA256 Configuration</h2>
-<p>To enable hardware acceleration for the SHA256/224 calculation, the macro MBEDTLS_SHA256_ALT and MBEDTLS_SHA256_PROCESS_ALT must be defined in the configuration file. Be default SHA256 is enabled. SHA256 can be disabled, but SHA512 then needs to be enabled (software version) because the PSA immplementation uses it for the entropy accumulator. This can be done using the configurator in an e2studio project.</p>
-<h2><a class="anchor" id="r-psa_crypto-aes-configuration"></a>
+<p>To enable hardware acceleration for the SHA256/224 calculation, the macro MBEDTLS_SHA256_ALT and MBEDTLS_SHA256_PROCESS_ALT must be defined in the configuration file. By default SHA256 is enabled. SHA256 can be disabled, but SHA512 then needs to be enabled (software version) because the PSA immplementation uses it for the entropy accumulator. This can be done using the configurator in an e2 studio project.</p>
+<h2><a class="anchor" id="rm-psa-crypto-aes-configuration"></a>
 AES Configuration</h2>
-<p>To enable hardware acceleration for the AES128/256 operation, the macro MBEDTLS_AES_SETKEY_ENC_ALT, MBEDTLS_AES_SETKEY_DEC_ALT, MBEDTLS_AES_ENCRYPT_ALT and MBEDTLS_AES_DECRYPT_ALT must be defined in the configuration file.Be default AES is enabled. AES cannot be disabled because the PSA immplementation required for the CTR_DRBG randon number generator. This can be done using the configurator in an e2studio project.</p>
-<h2><a class="anchor" id="r-psa_crypto-rsa-configuration"></a>
+<p>To enable hardware acceleration for the AES128/256 operation, the macro MBEDTLS_AES_SETKEY_ENC_ALT, MBEDTLS_AES_SETKEY_DEC_ALT, MBEDTLS_AES_ENCRYPT_ALT and MBEDTLS_AES_DECRYPT_ALT must be defined in the configuration file.By default AES is enabled. AES cannot be disabled because the PSA immplementation required for the CTR_DRBG randon number generator. This can be done using the configurator in an e2 studio project.</p>
+<h2><a class="anchor" id="rm-psa-crypto-ecc-configuration"></a>
+ECC Configuration</h2>
+<p>To enable hardware acceleration for the ECC Key Generation operation, the macro MBEDTLS_ECP_ALT must be defined in the configuration file. For ECDSA, the macros MBEDTLS_ECDSA_SIGN_ALT and MBEDTLS_ECDSA_VERIFY_ALT must be defined. By default ECC, ECDSA and ECDHE are enabled. To disable ECC, undefine MBEDTLS_ECP_C, MBEDTLS_ECDSA_C and MBEDTLS_ECDH_C. This can be done using the configurator in an e2 studio project.</p>
+<h2><a class="anchor" id="rm-psa-crypto-rsa-configuration"></a>
 RSA Configuration</h2>
-<p>To enable hardware acceleration for the RSA2048 operation, the macro MBEDTLS_RSA_ALT must be defined in the configuration file. Be default RSA is enabled. To disable RSA, undefine MBEDTLS_RSA_C, MBEDTLS_PK_C, MBEDTLS_PK_PARSE_C, MBEDTLS_PK_WRITE_C. This can be done using the configurator in an e2studio project. Only 65537 is supported for Public Exponent E both for key generation and when using externally generated keys.</p>
-<h1><a class="anchor" id="r-psa-crypto-examples"></a>
-Examples</h1>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>Before using the PSA crypto API make sure that <a class="el" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup()</a> is invoked so that the SCE is initialized</li>
-<li>Increase the heap from a default of 0 to 0x1000 to 0x5000 depending on the mbedCrypto features being used. The SHA256/224 does not require any heap. The AES implementaiton requires a heap for the context (about 0x180) plus the size of the key. Similarly the RSA2048 requires 0x1500 heap. These numbers may go up depending on the type of usage.</li>
-<li>Increase the stack to 0x1000. If using an RTOS, then the thread stack where this module is used needs to be set to 0x1000 instead.</li>
-<li>Only little endian mode is supported</li>
-<li>Not all the ARM PSA crypto features implemented in mbedCrypto have been tested; only the default configuration is tested.</li>
-</ul>
-</dd></dl>
-<h2>Hash Example</h2>
-<p>This is an example on calculating the SHA256 hash using the PSA Crypto API.</p>
-<div class="fragment"><div class="line">uint8_t NIST_SHA256ShortMsgLen200[] = {</div><div class="line">        0x2e, 0x7e, 0xa8, 0x4d, 0xa4, 0xbc, 0x4d, 0x7c, 0xfb, 0x46, 0x3e, 0x3f, 0x2c, 0x86, 0x47, 0x05,</div><div class="line">        0x7a, 0xff, 0xf3, 0xfb, 0xec, 0xec, 0xa1, 0xd2, 00};</div><div class="line">uint8_t NIST_SHA256ShortMsgLen200_expected[] = {</div><div class="line">        0x76, 0xe3, 0xac, 0xbc, 0x71, 0x88, 0x36, 0xf2, 0xdf, 0x8a, 0xd2, 0xd0, 0xd2, 0xd7, 0x6f, 0x0c,</div><div class="line">        0xfa, 0x5f, 0xea, 0x09, 0x86, 0xbe, 0x91, 0x8f, 0x10, 0xbc, 0xee, 0x73, 0x0d, 0xf4, 0x41, 0xb9};</div><div class="line"><span class="keywordtype">void</span> psa_crypto_sha256_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line">    psa_algorithm_t alg = PSA_ALG_SHA_256;</div><div class="line">    psa_hash_operation_t operation = {0};</div><div class="line">    <span class="keywordtype">size_t</span> expected_hash_len = PSA_HASH_SIZE(alg);</div><div class="line">    uint8_t actual_hash[PSA_HASH_MAX_SIZE];</div><div class="line">    <span class="keywordtype">size_t</span> actual_hash_len;</div><div class="line"></div><div class="line">    <span class="comment">/*Setup the platform; initialize the SCE*/</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Platform initialization failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_setup(&amp;operation, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash setup failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_update(&amp;operation, NIST_SHA256ShortMsgLen200, <span class="keyword">sizeof</span>(NIST_SHA256ShortMsgLen200)))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash calculation failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_finish(&amp;operation, &amp;actual_hash[0], <span class="keyword">sizeof</span>(actual_hash), &amp;actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Reading calculated hash failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;actual_hash[0], &amp;NIST_SHA256ShortMsgLen200_expected[0],actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash compare of calculated value with expected value failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;expected_hash_len, &amp;actual_hash_len, <span class="keyword">sizeof</span>(expected_hash_len)))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash size compare of calculated value with expected value failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/*SHA256 calculation succeeded*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="comment">/*Close the SCE*/</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line">}</div></div><!-- fragment --> <h2>AES Example</h2>
-<p>This is an example on using the PSA Crypto API to generate an AES256 key, encrypting and decrypting multi-block data and using PKCS7 padding.</p>
-<div class="fragment"><div class="line"><span class="keyword">static</span> psa_status_t cipher_operation( psa_cipher_operation_t *operation,</div><div class="line">        <span class="keyword">const</span> uint8_t * input,</div><div class="line">        <span class="keywordtype">size_t</span> input_size,</div><div class="line">        <span class="keywordtype">size_t</span> part_size,</div><div class="line">        uint8_t * output,</div><div class="line">        <span class="keywordtype">size_t</span> output_size,</div><div class="line">        <span class="keywordtype">size_t</span> *output_len )</div><div class="line">{</div><div class="line">    psa_status_t status;</div><div class="line">    <span class="keywordtype">size_t</span> bytes_to_write = 0;</div><div class="line">    <span class="keywordtype">size_t</span> bytes_written = 0;</div><div class="line">    <span class="keywordtype">size_t</span> len = 0;</div><div class="line"></div><div class="line">    *output_len = 0;</div><div class="line">    <span class="keywordflow">while</span>( bytes_written != input_size )</div><div class="line">    {</div><div class="line">        bytes_to_write = ( input_size - bytes_written &gt; part_size ?</div><div class="line">                part_size :</div><div class="line">                input_size - bytes_written );</div><div class="line"></div><div class="line">        status = psa_cipher_update( operation, input + bytes_written,</div><div class="line">                bytes_to_write, output + *output_len,</div><div class="line">                output_size - *output_len, &amp;len );</div><div class="line">        <span class="keywordflow">if</span> (PSA_SUCCESS != status )</div><div class="line">        {</div><div class="line">            <span class="keywordflow">return</span> status;</div><div class="line">        }</div><div class="line"></div><div class="line">        bytes_written += bytes_to_write;</div><div class="line">        *output_len += len;</div><div class="line">    }</div><div class="line"></div><div class="line">    status = psa_cipher_finish( operation, output + *output_len,</div><div class="line">            output_size - *output_len, &amp;len );</div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != status )</div><div class="line">    {</div><div class="line">        <span class="keywordflow">return</span> status;</div><div class="line">    }</div><div class="line">    *output_len += len;</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span>( status );</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> psa_status_t set_key_policy( psa_key_handle_t key_handle,</div><div class="line">        psa_key_usage_t key_usage,</div><div class="line">        psa_algorithm_t alg )</div><div class="line">{</div><div class="line">    psa_status_t status;</div><div class="line">    psa_key_policy_t policy = PSA_KEY_POLICY_INIT;</div><div class="line"></div><div class="line">    psa_key_policy_set_usage( &amp;policy, key_usage, alg );</div><div class="line">    status = psa_set_key_policy( key_handle, &amp;policy );</div><div class="line">    <span class="keywordflow">return</span>( status );</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> psa_crypto_aes256cbcmultipart_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">enum</span> {</div><div class="line">        block_size = PSA_BLOCK_CIPHER_BLOCK_SIZE( PSA_KEY_TYPE_AES ),</div><div class="line">        key_bits = 256,</div><div class="line">        input_size = 100,</div><div class="line">        part_size = 10,</div><div class="line">    };</div><div class="line"></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line">    psa_status_t status  = PSA_ERROR_GENERIC_ERROR;</div><div class="line">    <span class="keyword">const</span> psa_algorithm_t alg = PSA_ALG_CBC_PKCS7;</div><div class="line">    psa_cipher_operation_t operation_1 = PSA_CIPHER_OPERATION_INIT;</div><div class="line">    psa_cipher_operation_t operation_2 = PSA_CIPHER_OPERATION_INIT;</div><div class="line">    <span class="keywordtype">size_t</span> iv_len = 0;</div><div class="line"></div><div class="line">    psa_key_handle_t key_handle = 0;</div><div class="line">    <span class="keywordtype">size_t</span> encrypted_length = 0;</div><div class="line">    <span class="keywordtype">size_t</span> decrypted_length = 0;</div><div class="line">    uint8_t iv[block_size] = {0};</div><div class="line">    uint8_t input[input_size] = {0};</div><div class="line">    uint8_t encrypted_data[input_size + block_size] = {0};</div><div class="line">    uint8_t decrypted_data[input_size + block_size] = {0};</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/*Setup the platform; initialize the SCE*/</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Platform initialization failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_crypto_init())</div><div class="line">    {</div><div class="line">        <span class="comment">/* PSA Crypto Initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_random( input, <span class="keyword">sizeof</span>( input )))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Random number generation for input data failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_allocate_key( &amp;key_handle ))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Key slot allocation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != set_key_policy( key_handle,</div><div class="line">            PSA_KEY_USAGE_ENCRYPT | PSA_KEY_USAGE_DECRYPT,</div><div class="line">            alg ))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Setting key policy to allow encryption and decryption failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_key( key_handle, PSA_KEY_TYPE_AES, key_bits,</div><div class="line">            NULL, 0 ))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Generating AES 256 key and allocating to key slot failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_encrypt_setup( &amp;operation_1, key_handle, alg ))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Initializing the encryption (with PKCS7 padding) operation handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_generate_iv( &amp;operation_1, iv, <span class="keyword">sizeof</span>( iv ), &amp;iv_len ))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Generating the random IV failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != cipher_operation( &amp;operation_1, input, input_size, part_size,</div><div class="line">            encrypted_data, <span class="keyword">sizeof</span> (encrypted_data), &amp;encrypted_length ))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Encryption failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_abort( &amp;operation_1 ))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Terminating the encryption operation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_decrypt_setup( &amp;operation_2, key_handle, alg ))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Initializing the decryption (with PKCS7 padding) operation handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_set_iv( &amp;operation_2, iv, <span class="keyword">sizeof</span>( iv )))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Setting the IV failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != cipher_operation( &amp;operation_2, encrypted_data, encrypted_length, part_size,</div><div class="line">            decrypted_data, <span class="keyword">sizeof</span> (decrypted_data), &amp;decrypted_length ))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Decryption failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_abort( &amp;operation_2 ))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Terminating the decryption operation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> ( 0 != memcmp( input, decrypted_data, <span class="keyword">sizeof</span>( input )))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Comparing the input data with decrypted data failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_destroy_key( key_handle ))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Destroying the key handle failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/*All the operations succeeded*/</span></div><div class="line">        status = PSA_SUCCESS;</div><div class="line">    }</div><div class="line">    <span class="comment">/*Close the SCE*/</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line">}</div></div><!-- fragment --> <h2>RSA Example</h2>
-<p>This is an example on using the PSA Crypto API to generate an RSA2048 key, encrypting and decrypting multi-block data and using PKCS7 padding.</p>
-<div class="fragment"><div class="line">uint8_t exportedRSA2048Key[2048];</div><div class="line"><span class="keywordtype">size_t</span> exportedRSA2048Keylength = 0;</div><div class="line"><span class="keywordtype">void</span> psa_rsa2048_example(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="comment">/* This example generates an RSA2048 keypair, performs signing and verification operations.</span></div><div class="line"><span class="comment"> * It then exports the generated key into ASN1 DER format to a RAM array which can then be programmed to flash.</span></div><div class="line"><span class="comment"> * It then re-imports that key, and performs signing and verification operations. */</span></div><div class="line"></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line">    psa_key_handle_t key_handle = {0};</div><div class="line">    <span class="keywordtype">size_t</span> got_bits;</div><div class="line">    psa_key_type_t got_type = 0;</div><div class="line"></div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> payload[] = <span class="stringliteral">&quot;ASYMMETRIC_INPUT_FOR_SIGN&quot;</span>;</div><div class="line">    psa_key_policy_t policy = PSA_KEY_POLICY_INIT;</div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> signature1[PSA_ASYMMETRIC_SIGNATURE_MAX_SIZE] = {0};</div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> signature2[PSA_ASYMMETRIC_SIGNATURE_MAX_SIZE] = {0};</div><div class="line">    <span class="keywordtype">size_t</span> signature_length1, signature_length2 = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_crypto_init())</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_allocate_key(&amp;key_handle))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set the key usage policy */</span></div><div class="line">    psa_key_policy_set_usage(&amp;policy, PSA_KEY_USAGE_SIGN|PSA_KEY_USAGE_VERIFY|PSA_KEY_USAGE_EXPORT,</div><div class="line">                             PSA_ALG_RSA_PKCS1V15_SIGN_RAW);</div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_set_key_policy(key_handle, &amp;policy))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Generate RSA 2048 Key pair */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_generate_key( key_handle, PSA_KEY_TYPE_RSA_KEYPAIR, 2048,</div><div class="line">                               NULL, 0 ))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Test the key information */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_get_key_information(key_handle, &amp;got_type, &amp;got_bits))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Sign message using the private key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_asymmetric_sign(key_handle, PSA_ALG_RSA_PKCS1V15_SIGN_RAW,  payload, <span class="keyword">sizeof</span>(payload),</div><div class="line">                                 signature1, <span class="keyword">sizeof</span>(signature1),</div><div class="line">                                 &amp;signature_length1))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the signature1 using the public key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_asymmetric_verify(key_handle, PSA_ALG_RSA_PKCS1V15_SIGN_RAW,  payload, <span class="keyword">sizeof</span>(payload),</div><div class="line">            signature1, signature_length1))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/*Export the key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_export_key(key_handle, exportedRSA2048Key, <span class="keyword">sizeof</span>(exportedRSA2048Key), &amp;exportedRSA2048Keylength))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Destroy the key and handle */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_destroy_key(key_handle))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/*Reinitialize the handle for usage*/</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_allocate_key(&amp;key_handle))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set the key usage policy */</span></div><div class="line">    psa_key_policy_set_usage(&amp;policy, PSA_KEY_USAGE_SIGN|PSA_KEY_USAGE_VERIFY|PSA_KEY_USAGE_EXPORT,</div><div class="line">            PSA_ALG_RSA_PKCS1V15_SIGN_RAW);</div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_set_key_policy(key_handle, &amp;policy))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Import the previously exported key pair */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_import_key(key_handle, PSA_KEY_TYPE_RSA_KEYPAIR, exportedRSA2048Key, exportedRSA2048Keylength))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Sign message using the private key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_asymmetric_sign(key_handle, PSA_ALG_RSA_PKCS1V15_SIGN_RAW,  payload, <span class="keyword">sizeof</span>(payload),</div><div class="line">            signature2, <span class="keyword">sizeof</span>(signature2),</div><div class="line">            &amp;signature_length2))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify signature2 using the public key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=  psa_asymmetric_verify(key_handle, PSA_ALG_RSA_PKCS1V15_SIGN_RAW,  payload, <span class="keyword">sizeof</span>(payload),</div><div class="line">            signature2, signature_length2))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/*Compare signatures to verify that the same signature was generated*/</span></div><div class="line">    <span class="keywordflow">if</span>(0 != memcmp(signature2, signature1, signature_length2))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    mbedtls_psa_crypto_free();</div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line">}</div></div><!-- fragment --> <h2><a class="anchor" id="r-psa_crypto-platform-configuration"></a>
+<p>To enable hardware acceleration for the RSA2048 operation, the macro MBEDTLS_RSA_ALT must be defined in the configuration file. By default RSA is enabled. To disable RSA, undefine MBEDTLS_RSA_C, MBEDTLS_PK_C, MBEDTLS_PK_PARSE_C, MBEDTLS_PK_WRITE_C. This can be done using the configurator in an e2 studio project.</p>
+<h2><a class="anchor" id="rm-psa-crypto-wrapped-key-configuration"></a>
+Wrapped Key Usage</h2>
+<p>To use the Secure Crypto Engine to generate and use wrapped keys, use PSA_KEY_LIFETIME_VOLATILE_WRAPPED when setting the key lifetime. Wrapped keys can also be generated by using PSA_KEY_LIFETIME_PERSISTENT_WRAPPED to generate persistent keys as described in the next section. Setting the key's lifetime attribute using this value will cause the SCE to use wrapped key mode for all operations related to that key. The user can use the export functionality to save the wrapped keys to user ROM and import it later for usage. This mode requires that Wrapped Key functionality for the algorithm is enabled in the project configuration.</p>
+<h2><a class="anchor" id="rm-psa-crypto-persistent-key-storage"></a>
+Persistent Key Storage</h2>
+<p>Persistent key storage can be enabled by defining MBEDTLS_FS_IO, MBEDTLS_PSA_CRYPTO_STORAGE_C, and MBEDTLS_PSA_ITS_FILE_C. The key lifetime must also be specifed as either PSA_KEY_LIFETIME_PERSISTENT or PSA_KEY_LIFETIME_PERSISTENT_WRAPPED. A lower level storage module must be added in the configurator and initialized in the code before generating persistent keys. Persistent storage supports the use of plaintext and vendor keys. Refer to the lower level storage module documentation for information on how it should be initialized. To generate a persistent key the key must be assigned a unique id prior to calling generate using the psa_set_key_id api.<a class="anchor" id="um_PSA_ITS_persistent_storage"></a> </p><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (PSA_KEY_LIFETIME_IS_PERSISTENT(lifetime))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Set the id to a positive integer. */</span></div><div class="line">        psa_set_key_id(&amp;attributes, (psa_key_id_t) 5);</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="rm-psa-crypto-platform-configuration"></a>
 Platform Configuration</h2>
-<p>To run the mbedCrypto implementation of the PSA Crypto API on the MCU, the macro MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT must be defined in the configuration file. This enables code that will initialize the SCE.</p>
-<h2><a class="anchor" id="r-psa_crypto-entropy-configuration"></a>
+<p>To run the mbedCrypto implementation of the PSA Crypto API on the MCU, the macro MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT must be defined in the configuration file. This enables code that will initialize the SCE. Parameter checking (General|MBEDTLS_CHECK_PARAMS) is enabled by default. To reduce code size, disable parameter checking.</p>
+<h2><a class="anchor" id="rm-psa-crypto-entropy-configuration"></a>
 Random Number Configuration</h2>
 <p>To run the mbedCrypto implementation of the PSA Crypto API on the MCU, the macro MBEDTLS_ENTROPY_HARDWARE_ALT must be defined in the configuration file. This enables using the TRNG as an entropy source. None of the other cryptographic operations (even in software only mode) will work without this feature.</p>
-<h2 class="groupheader">Function Documentation</h2>
+<h1><a class="anchor" id="rm-psa-crypto-usage-notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm-psa-crypto-hardware-init"></a>
+Hardware Initialization</h2>
+<p><a class="el" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup()</a> must be invoked before using the PSA Crypto API to ensure that the SCE peripheral is initialized.</p>
+<h2><a class="anchor" id="rm-psa-crypto-memory-usage"></a>
+Memory Usage</h2>
+<p>In general, depending on the mbedCrypto features being used a heap size of 0x1000 to 0x5000 bytes is required. The total allocated heap should be the <b>sum</b> of the heap requirements of the individual algorithms:</p>
+<table class="doxtable">
+<tr>
+<th>Algorithm </th><th>Required Heap (bytes)  </th></tr>
+<tr>
+<td>SHA256/224 </td><td>None </td></tr>
+<tr>
+<td>AES </td><td>0x200 </td></tr>
+<tr>
+<td>Hardware ECC </td><td>0x400 </td></tr>
+<tr>
+<td>Software ECC </td><td>0x1800 </td></tr>
+<tr>
+<td>RSA </td><td>0x1500 </td></tr>
+</table>
+<p>A minimum stack of 0x1000 is required where the module is used. This is either the main stack in a bare metal application or the task stack of the task used for crypto operations.</p>
+<h2>Limitations</h2>
+<ul>
+<li>Only little endian mode is supported.</li>
+</ul>
+<h1><a class="anchor" id="rm-psa-crypto-examples"></a>
+Examples</h1>
+<h2>Hash Example</h2>
+<p>This is an example on calculating the SHA256 hash using the PSA Crypto API.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> uint8_t NIST_SHA256ShortMsgLen200[] =</div><div class="line">{</div><div class="line">    0x2e, 0x7e, 0xa8, 0x4d, 0xa4, 0xbc, 0x4d, 0x7c, 0xfb, 0x46, 0x3e, 0x3f, 0x2c, 0x86, 0x47, 0x05,</div><div class="line">    0x7a, 0xff, 0xf3, 0xfb, 0xec, 0xec, 0xa1, 0xd2, 00</div><div class="line">};</div><div class="line"><span class="keyword">const</span> uint8_t NIST_SHA256ShortMsgLen200_expected[] =</div><div class="line">{</div><div class="line">    0x76, 0xe3, 0xac, 0xbc, 0x71, 0x88, 0x36, 0xf2, 0xdf, 0x8a, 0xd2, 0xd0, 0xd2, 0xd7, 0x6f, 0x0c,</div><div class="line">    0xfa, 0x5f, 0xea, 0x09, 0x86, 0xbe, 0x91, 0x8f, 0x10, 0xbc, 0xee, 0x73, 0x0d, 0xf4, 0x41, 0xb9</div><div class="line">};</div><div class="line"><span class="keywordtype">void</span> psa_crypto_sha256_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    psa_algorithm_t      alg               = PSA_ALG_SHA_256;</div><div class="line">    psa_hash_operation_t operation         = {0};</div><div class="line">    <span class="keywordtype">size_t</span>               expected_hash_len = PSA_HASH_SIZE(alg);</div><div class="line">    uint8_t              actual_hash[PSA_HASH_MAX_SIZE];</div><div class="line">    <span class="keywordtype">size_t</span>               actual_hash_len;</div><div class="line"></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the SCE and the TRNG */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Platform initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_setup(&amp;operation, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash setup failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_update(&amp;operation, NIST_SHA256ShortMsgLen200, <span class="keyword">sizeof</span>(NIST_SHA256ShortMsgLen200)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash calculation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_finish(&amp;operation, &amp;actual_hash[0], <span class="keyword">sizeof</span>(actual_hash), &amp;actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Reading calculated hash failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;actual_hash[0], &amp;NIST_SHA256ShortMsgLen200_expected[0], actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash compare of calculated value with expected value failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;expected_hash_len, &amp;actual_hash_len, <span class="keyword">sizeof</span>(expected_hash_len)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Hash size compare of calculated value with expected value failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* SHA256 calculation succeeded */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* De-initialize the platform. This is currently a placeholder function which does not do anything. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>AES Example</h2>
+<p>This is an example on using the PSA Crypto API to generate an AES256 key, encrypting and decrypting multi-block data and using PKCS7 padding.</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> psa_status_t cipher_operation (psa_cipher_operation_t * operation,</div><div class="line">                                      <span class="keyword">const</span> uint8_t          * input,</div><div class="line">                                      <span class="keywordtype">size_t</span>                   input_size,</div><div class="line">                                      <span class="keywordtype">size_t</span>                   part_size,</div><div class="line">                                      uint8_t                * output,</div><div class="line">                                      <span class="keywordtype">size_t</span>                   output_size,</div><div class="line">                                      <span class="keywordtype">size_t</span>                 * output_len)</div><div class="line">{</div><div class="line">    psa_status_t status;</div><div class="line">    <span class="keywordtype">size_t</span>       bytes_to_write = 0;</div><div class="line">    <span class="keywordtype">size_t</span>       bytes_written  = 0;</div><div class="line">    <span class="keywordtype">size_t</span>       len            = 0;</div><div class="line"></div><div class="line">    *output_len = 0;</div><div class="line">    <span class="keywordflow">while</span> (bytes_written != input_size)</div><div class="line">    {</div><div class="line">        bytes_to_write = (input_size - bytes_written &gt; part_size ?</div><div class="line">                          part_size :</div><div class="line">                          input_size - bytes_written);</div><div class="line"></div><div class="line">        status = psa_cipher_update(operation,</div><div class="line">                                   input + bytes_written,</div><div class="line">                                   bytes_to_write,</div><div class="line">                                   output + *output_len,</div><div class="line">                                   output_size - *output_len,</div><div class="line">                                   &amp;len);</div><div class="line">        <span class="keywordflow">if</span> (PSA_SUCCESS != status)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">return</span> status;</div><div class="line">        }</div><div class="line"></div><div class="line">        bytes_written += bytes_to_write;</div><div class="line">        *output_len   += len;</div><div class="line">    }</div><div class="line"></div><div class="line">    status = psa_cipher_finish(operation, output + *output_len, output_size - *output_len, &amp;len);</div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != status)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">return</span> status;</div><div class="line">    }</div><div class="line"></div><div class="line">    *output_len += len;</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> status;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> psa_crypto_aes256cbcmultipart_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">enum</span></div><div class="line">    {</div><div class="line">        block_size = PSA_BLOCK_CIPHER_BLOCK_SIZE(PSA_KEY_TYPE_AES), </div><div class="line">        key_bits   = 256,</div><div class="line">        input_size = 100,</div><div class="line">        part_size  = 10,</div><div class="line">    };</div><div class="line"></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx         = {0};</div><div class="line">    <span class="keyword">const</span> psa_algorithm_t    alg         = PSA_ALG_CBC_PKCS7;</div><div class="line">    psa_cipher_operation_t   operation_1 = PSA_CIPHER_OPERATION_INIT;</div><div class="line">    psa_cipher_operation_t   operation_2 = PSA_CIPHER_OPERATION_INIT;</div><div class="line">    <span class="keywordtype">size_t</span> iv_len = 0;</div><div class="line"></div><div class="line">    psa_key_handle_t     key_handle        = 0;</div><div class="line">    <span class="keywordtype">size_t</span>               encrypted_length  = 0;</div><div class="line">    <span class="keywordtype">size_t</span>               decrypted_length  = 0;</div><div class="line">    uint8_t              iv[block_size]    = {0};</div><div class="line">    uint8_t              input[input_size] = {0};</div><div class="line">    uint8_t              encrypted_data[input_size + block_size] = {0};</div><div class="line">    uint8_t              decrypted_data[input_size + block_size] = {0};</div><div class="line">    psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;</div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the SCE */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Platform initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_crypto_init())</div><div class="line">    {</div><div class="line">        <span class="comment">/* PSA Crypto Initialization failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set key attributes */</span></div><div class="line">    psa_set_key_usage_flags(&amp;attributes, PSA_KEY_USAGE_ENCRYPT | PSA_KEY_USAGE_DECRYPT);</div><div class="line">    psa_set_key_algorithm(&amp;attributes, alg);</div><div class="line">    psa_set_key_type(&amp;attributes, PSA_KEY_TYPE_AES);</div><div class="line">    psa_set_key_bits(&amp;attributes, key_bits);</div><div class="line"></div><div class="line">    psa_key_lifetime_t lifetime = PSA_KEY_LIFETIME_VOLATILE;</div><div class="line"></div><div class="line">    <span class="comment">/* To use wrapped keys instead of plaintext:</span></div><div class="line"><span class="comment">     * - Use PSA_KEY_LIFETIME_VOLATILE_WRAPPED or PSA_KEY_LIFETIME_PERSISTENT_WRAPPED.</span></div><div class="line"><span class="comment">     * - To use persistent keys:</span></div><div class="line"><span class="comment">     * -    The file system must be initialized prior to calling the generate/import key functions.</span></div><div class="line"><span class="comment">     * -    Refer to the littlefs example to see how to format and mount the filesystem. */</span></div><div class="line">    psa_set_key_lifetime(&amp;attributes, lifetime);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_KEY_LIFETIME_IS_PERSISTENT(lifetime))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Set the id to a positive integer. */</span></div><div class="line">        psa_set_key_id(&amp;attributes, (psa_key_id_t) 5);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_random(input, <span class="keyword">sizeof</span>(input)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Random number generation for input data failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_key(&amp;attributes, &amp;key_handle))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Generating AES 256 key and allocating to key slot failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_encrypt_setup(&amp;operation_1, key_handle, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Initializing the encryption (with PKCS7 padding) operation handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_generate_iv(&amp;operation_1, iv, <span class="keyword">sizeof</span>(iv), &amp;iv_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Generating the random IV failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">             cipher_operation(&amp;operation_1, input, input_size, part_size, encrypted_data, <span class="keyword">sizeof</span>(encrypted_data),</div><div class="line">                              &amp;encrypted_length))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Encryption failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_abort(&amp;operation_1))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Terminating the encryption operation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_decrypt_setup(&amp;operation_2, key_handle, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Initializing the decryption (with PKCS7 padding) operation handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_set_iv(&amp;operation_2, iv, <span class="keyword">sizeof</span>(iv)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Setting the IV failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">             cipher_operation(&amp;operation_2, encrypted_data, encrypted_length, part_size, decrypted_data,</div><div class="line">                              <span class="keyword">sizeof</span>(decrypted_data), &amp;decrypted_length))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Decryption failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_cipher_abort(&amp;operation_2))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Terminating the decryption operation failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(input, decrypted_data, <span class="keyword">sizeof</span>(input)))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Comparing the input data with decrypted data failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_destroy_key(key_handle))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Destroying the key handle failed */</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* All the operations succeeded */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the SCE */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>ECC Example</h2>
+<p>This is an example on using the PSA Crypto API to generate an ECC-P256R1 key, signing and verifying data after hashing it first using SHA256. </p><dl class="section note"><dt>Note</dt><dd>Unlike RSA, ECDSA does not have any padding schemes. Thus the hash argument for the ECC sign operation MUST have a size larger than or equal to the curve size; i.e. for PSA_ECC_CURVE_SECP256R1 the payload size must be at least 256/8 bytes. nist.fips.186-4: " A hash function that provides a lower security strength than the security strength associated with the bit length of 'n' ordinarily should not be used, since this would reduce the security strength of the digital signature process to a level no greater than that provided by the hash function."</dd></dl>
+<div class="fragment"><div class="line"><span class="preprocessor">#define ECC_256_BIT_LENGTH       256</span></div><div class="line"><span class="preprocessor">#define ECC_256_EXPORTED_SIZE    500</span></div><div class="line">uint8_t exportedECC_SECP256R1Key[ECC_256_EXPORTED_SIZE];</div><div class="line"><span class="keywordtype">size_t</span>  exportedECC_SECP256R1Keylength = 0;</div><div class="line"><span class="keywordtype">void</span> psa_ecc256R1_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="comment">/* This example generates an ECC-P256R1 keypair, performs signing and verification operations.</span></div><div class="line"><span class="comment"> * It then exports the generated key into ASN1 DER format to a RAM array which can then be programmed to flash.</span></div><div class="line"><span class="comment"> * It then re-imports that key, and performs signing and verification operations. */</span></div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>            payload[] = <span class="stringliteral">&quot;ASYMMETRIC_INPUT_FOR_SIGN......&quot;</span>;</div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>            signature1[PSA_SIGNATURE_MAX_SIZE] = {0};</div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>            signature2[PSA_SIGNATURE_MAX_SIZE] = {0};</div><div class="line">    <span class="keywordtype">size_t</span>                   signature_length1 = 0;</div><div class="line">    <span class="keywordtype">size_t</span>                   signature_length2 = 0;</div><div class="line">    psa_key_attributes_t     attributes        = PSA_KEY_ATTRIBUTES_INIT;</div><div class="line">    psa_key_attributes_t     read_attributes   = PSA_KEY_ATTRIBUTES_INIT;</div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx               = {0};</div><div class="line">    psa_key_handle_t         ecc_key_handle    = {0};</div><div class="line"></div><div class="line">    psa_hash_operation_t hash_operation = {0};</div><div class="line">    uint8_t              payload_hash[PSA_HASH_MAX_SIZE];</div><div class="line">    <span class="keywordtype">size_t</span>               payload_hash_len;</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_crypto_init())</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set key attributes */</span></div><div class="line">    psa_set_key_usage_flags(&amp;attributes, PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH | PSA_KEY_USAGE_EXPORT);</div><div class="line">    psa_set_key_algorithm(&amp;attributes, PSA_ALG_ECDSA(PSA_ALG_SHA_256));</div><div class="line">    psa_set_key_type(&amp;attributes, PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_CURVE_SECP_R1));</div><div class="line">    psa_set_key_bits(&amp;attributes, ECC_256_BIT_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* To use wrapped keys instead of plaintext:</span></div><div class="line"><span class="comment">     * - Use PSA_KEY_LIFETIME_VOLATILE_WRAPPED or PSA_KEY_LIFETIME_PERSISTENT_WRAPPED.</span></div><div class="line"><span class="comment">     * - To use persistent keys:</span></div><div class="line"><span class="comment">     * -    The file system must be initialized prior to calling the generate/import key functions.</span></div><div class="line"><span class="comment">     * -    Refer to the littlefs example to see how to format and mount the filesystem. */</span></div><div class="line">    psa_set_key_lifetime(&amp;attributes, PSA_KEY_LIFETIME_VOLATILE);</div><div class="line"></div><div class="line">    <span class="comment">/* Generate ECC P256R1 Key pair */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_key(&amp;attributes, &amp;ecc_key_handle))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Test the key information */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_get_key_attributes(ecc_key_handle, &amp;read_attributes))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the hash of the message */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_setup(&amp;hash_operation, PSA_ALG_SHA_256))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_update(&amp;hash_operation, payload, <span class="keyword">sizeof</span>(payload)))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_hash_finish(&amp;hash_operation, &amp;payload_hash[0], <span class="keyword">sizeof</span>(payload_hash), &amp;payload_hash_len))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Sign message using the private key</span></div><div class="line"><span class="comment">     * NOTE: The hash argument (payload_hash here) MUST have a size equal to the curve size;</span></div><div class="line"><span class="comment">     * i.e. for SECP256R1 the payload size must be 256/8 bytes.</span></div><div class="line"><span class="comment">     * Similarly for SECP384R1 the payload size must be 384/8 bytes.</span></div><div class="line"><span class="comment">     * nist.fips.186-4: &quot; A hash function that provides a lower security strength than</span></div><div class="line"><span class="comment">     * the security strength associated with the bit length of &#39;n&#39; ordinarily should not be used, since this</span></div><div class="line"><span class="comment">     * would reduce the security strength of the digital signature process to a level no greater than that</span></div><div class="line"><span class="comment">     * provided by the hash function.&quot; */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_sign_hash(ecc_key_handle, PSA_ALG_ECDSA(PSA_ALG_SHA_256), payload_hash, payload_hash_len, signature1,</div><div class="line">                      <span class="keyword">sizeof</span>(signature1), &amp;signature_length1))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the signature1 using the public key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_verify_hash(ecc_key_handle, PSA_ALG_ECDSA(PSA_ALG_SHA_256), payload_hash, payload_hash_len, signature1,</div><div class="line">                        signature_length1))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Export the key. The exported key can then be save to flash for later usage.  */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_export_key(ecc_key_handle, exportedECC_SECP256R1Key, <span class="keyword">sizeof</span>(exportedECC_SECP256R1Key),</div><div class="line">                       &amp;exportedECC_SECP256R1Keylength))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Destroy the key and handle */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_destroy_key(ecc_key_handle))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Import the previously exported key pair */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_import_key(&amp;attributes, exportedECC_SECP256R1Key, exportedECC_SECP256R1Keylength, &amp;ecc_key_handle))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Sign message using the private key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_sign_hash(ecc_key_handle, PSA_ALG_ECDSA(PSA_ALG_SHA_256), payload_hash, payload_hash_len, signature2,</div><div class="line">                      <span class="keyword">sizeof</span>(signature2), &amp;signature_length2))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify signature2 using the public key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_verify_hash(ecc_key_handle, PSA_ALG_ECDSA(PSA_ALG_SHA_256), payload_hash, payload_hash_len, signature2,</div><div class="line">                        signature_length2))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Signatures cannot be compared since ECC signatures vary for the same data unless Deterministic ECC is used which is not supported by the HW.</span></div><div class="line"><span class="comment">     * Only the verification operation can be used to validate signatures. */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RSA Example</h2>
+<p>This is an example on using the PSA Crypto API to generate an RSA2048 key, encrypting and decrypting multi-block data and using PKCS7 padding.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define RSA_2048_BIT_LENGTH       2048</span></div><div class="line"><span class="preprocessor">#define RSA_2048_EXPORTED_SIZE    1210</span></div><div class="line"></div><div class="line"><span class="comment">/* The RSA 2048 key pair export in der format is roughly as follows</span></div><div class="line"><span class="comment"> * RSA private keys:</span></div><div class="line"><span class="comment"> *  RSAPrivateKey ::= SEQUENCE {   ---------------------------------------  1 + 3</span></div><div class="line"><span class="comment"> *      version           Version, ---------------------------------------  1 + 1 + 1</span></div><div class="line"><span class="comment"> *      modulus           INTEGER, ---------------- n  -------------------  1 + 3 + 256 + 1</span></div><div class="line"><span class="comment"> *      publicExponent    INTEGER, ---------------- e  -------------------  1 + 4</span></div><div class="line"><span class="comment"> *      privateExponent   INTEGER, ---------------- d  -------------------  1 + 3 + 256 (276 for Wrapped)</span></div><div class="line"><span class="comment"> *      prime1            INTEGER, ---------------- p  -------------------  1 + 3 + (256 / 2)</span></div><div class="line"><span class="comment"> *      prime2            INTEGER, ---------------- q  -------------------  1 + 3 + (256 / 2)</span></div><div class="line"><span class="comment"> *      exponent1         INTEGER, ---------------- d mod (p-1)  ---------  1 + 2 + (256 / 2) (4 for Wrapped)</span></div><div class="line"><span class="comment"> *      exponent2         INTEGER, ---------------- d mod (q-1)  ---------  1 + 2 + (256 / 2) (4 for Wrapped)</span></div><div class="line"><span class="comment"> *      coefficient       INTEGER, ---------------- (inverse of q) mod p -  1 + 2 + (256 / 2) (4 for Wrapped)</span></div><div class="line"><span class="comment"> *      otherPrimeInfos   OtherPrimeInfos OPTIONAL ------------------------ 0 (not supported)</span></div><div class="line"><span class="comment"> *  }</span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line">uint8_t exportedRSA2048Key[RSA_2048_EXPORTED_SIZE];</div><div class="line"><span class="keywordtype">size_t</span>  exportedRSA2048Keylength = 0;</div><div class="line"><span class="keywordtype">void</span> psa_rsa2048_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="comment">/* This example generates an RSA2048 keypair, performs signing and verification operations.</span></div><div class="line"><span class="comment"> * It then exports the generated key into ASN1 DER format to a RAM array which can then be programmed to flash.</span></div><div class="line"><span class="comment"> * It then re-imports that key, and performs signing and verification operations. */</span></div><div class="line"></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx        = {0};</div><div class="line">    psa_key_handle_t         key_handle = {0};</div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>            payload[]  = <span class="stringliteral">&quot;ASYMMETRIC_INPUT_FOR_SIGN&quot;</span>;</div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>            signature1[PSA_SIGNATURE_MAX_SIZE] = {0};</div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>            signature2[PSA_SIGNATURE_MAX_SIZE] = {0};</div><div class="line">    <span class="keywordtype">size_t</span>               signature_length1 = 0;</div><div class="line">    <span class="keywordtype">size_t</span>               signature_length2 = 0;</div><div class="line">    psa_key_attributes_t attributes        = PSA_KEY_ATTRIBUTES_INIT;</div><div class="line">    psa_key_attributes_t read_attributes   = PSA_KEY_ATTRIBUTES_INIT;</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_crypto_init())</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set key attributes */</span></div><div class="line">    psa_set_key_usage_flags(&amp;attributes, PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH | PSA_KEY_USAGE_EXPORT);</div><div class="line">    psa_set_key_algorithm(&amp;attributes, PSA_ALG_RSA_PKCS1V15_SIGN_RAW);</div><div class="line">    psa_set_key_type(&amp;attributes, PSA_KEY_TYPE_RSA_KEY_PAIR);</div><div class="line">    psa_set_key_bits(&amp;attributes, RSA_2048_BIT_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* To use wrapped keys instead of plaintext:</span></div><div class="line"><span class="comment">     * - Use PSA_KEY_LIFETIME_VOLATILE_WRAPPED or PSA_KEY_LIFETIME_PERSISTENT_WRAPPED.</span></div><div class="line"><span class="comment">     * - To use persistent keys:</span></div><div class="line"><span class="comment">     * -    The file system must be initialized prior to calling the generate/import key functions.</span></div><div class="line"><span class="comment">     * -    Refer to the littlefs example to see how to format and mount the filesystem. */</span></div><div class="line">    psa_set_key_lifetime(&amp;attributes, PSA_KEY_LIFETIME_VOLATILE);</div><div class="line"></div><div class="line">    <span class="comment">/* Generate RSA 2048 Key pair */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_generate_key(&amp;attributes, &amp;key_handle))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Test the key information */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_get_key_attributes(key_handle, &amp;read_attributes))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Sign message using the private key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_sign_hash(key_handle, PSA_ALG_RSA_PKCS1V15_SIGN_RAW, payload, <span class="keyword">sizeof</span>(payload), signature1,</div><div class="line">                      <span class="keyword">sizeof</span>(signature1), &amp;signature_length1))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the signature1 using the public key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_verify_hash(key_handle, PSA_ALG_RSA_PKCS1V15_SIGN_RAW, payload, <span class="keyword">sizeof</span>(payload), signature1,</div><div class="line">                        signature_length1))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Export the key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_export_key(key_handle, exportedRSA2048Key, <span class="keyword">sizeof</span>(exportedRSA2048Key), &amp;exportedRSA2048Keylength))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Destroy the key and handle */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_destroy_key(key_handle))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Import the previously exported key pair */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != psa_import_key(&amp;attributes, exportedRSA2048Key, exportedRSA2048Keylength, &amp;key_handle))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Sign message using the private key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_sign_hash(key_handle, PSA_ALG_RSA_PKCS1V15_SIGN_RAW, payload, <span class="keyword">sizeof</span>(payload), signature2,</div><div class="line">                      <span class="keyword">sizeof</span>(signature2), &amp;signature_length2))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify signature2 using the public key */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS !=</div><div class="line">        psa_verify_hash(key_handle, PSA_ALG_RSA_PKCS1V15_SIGN_RAW, payload, <span class="keyword">sizeof</span>(payload), signature2,</div><div class="line">                        signature_length2))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Compare signatures to verify that the same signature was generated */</span></div><div class="line">    <span class="keywordflow">if</span> (0 != memcmp(signature2, signature1, signature_length2))</div><div class="line">    {</div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line"></div><div class="line">    mbedtls_psa_crypto_free();</div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga3783884f7c0fbb23f8195d005f7e4494"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3783884f7c0fbb23f8195d005f7e4494">&#9670;&nbsp;</a></span>RM_PSA_CRYPTO_TRNG_Read()</h2>
 
@@ -2090,8 +2142,8 @@ Random Number Configuration</h2>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initializes the SCE. Implements mbedtls_platform_setup function.</p>
-<p>Example: </p><div class="fragment"><div class="line">uint8_t NIST_SHA256ShortMsgLen200[] = {</div><div class="line">        0x2e, 0x7e, 0xa8, 0x4d, 0xa4, 0xbc, 0x4d, 0x7c, 0xfb, 0x46, 0x3e, 0x3f, 0x2c, 0x86, 0x47, 0x05,</div><div class="line">        0x7a, 0xff, 0xf3, 0xfb, 0xec, 0xec, 0xa1, 0xd2, 00};</div><div class="line">uint8_t NIST_SHA256ShortMsgLen200_expected[] = {</div><div class="line">        0x76, 0xe3, 0xac, 0xbc, 0x71, 0x88, 0x36, 0xf2, 0xdf, 0x8a, 0xd2, 0xd0, 0xd2, 0xd7, 0x6f, 0x0c,</div><div class="line">        0xfa, 0x5f, 0xea, 0x09, 0x86, 0xbe, 0x91, 0x8f, 0x10, 0xbc, 0xee, 0x73, 0x0d, 0xf4, 0x41, 0xb9};</div><div class="line"><span class="keywordtype">void</span> psa_crypto_sha256_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line">    psa_algorithm_t alg = PSA_ALG_SHA_256;</div><div class="line">    psa_hash_operation_t operation = {0};</div><div class="line">    <span class="keywordtype">size_t</span> expected_hash_len = PSA_HASH_SIZE(alg);</div><div class="line">    uint8_t actual_hash[PSA_HASH_MAX_SIZE];</div><div class="line">    <span class="keywordtype">size_t</span> actual_hash_len;</div><div class="line"></div><div class="line">    <span class="comment">/*Setup the platform; initialize the SCE*/</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Platform initialization failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_setup(&amp;operation, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash setup failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_update(&amp;operation, NIST_SHA256ShortMsgLen200, <span class="keyword">sizeof</span>(NIST_SHA256ShortMsgLen200)))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash calculation failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_finish(&amp;operation, &amp;actual_hash[0], <span class="keyword">sizeof</span>(actual_hash), &amp;actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Reading calculated hash failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;actual_hash[0], &amp;NIST_SHA256ShortMsgLen200_expected[0],actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash compare of calculated value with expected value failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;expected_hash_len, &amp;actual_hash_len, <span class="keyword">sizeof</span>(expected_hash_len)))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash size compare of calculated value with expected value failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/*SHA256 calculation succeeded*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="comment">/*Close the SCE*/</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line">}</div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>This function initializes the SCE and the TRNG. It <b>must</b> be invoked before the crypto library can be used. This implementation is used if MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT is defined.</p>
+<p>Example: </p><div class="fragment"><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the SCE and the TRNG */</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">0</td><td>Initialization was successful. </td></tr>
     <tr><td class="paramname">MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED</td><td>SCE Initialization error. </td></tr>
@@ -2116,8 +2168,8 @@ Random Number Configuration</h2>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This is a placeholder function. Implements mbedtls_platform_teardown function.</p>
-<p>Example: </p><div class="fragment"><div class="line">uint8_t NIST_SHA256ShortMsgLen200[] = {</div><div class="line">        0x2e, 0x7e, 0xa8, 0x4d, 0xa4, 0xbc, 0x4d, 0x7c, 0xfb, 0x46, 0x3e, 0x3f, 0x2c, 0x86, 0x47, 0x05,</div><div class="line">        0x7a, 0xff, 0xf3, 0xfb, 0xec, 0xec, 0xa1, 0xd2, 00};</div><div class="line">uint8_t NIST_SHA256ShortMsgLen200_expected[] = {</div><div class="line">        0x76, 0xe3, 0xac, 0xbc, 0x71, 0x88, 0x36, 0xf2, 0xdf, 0x8a, 0xd2, 0xd0, 0xd2, 0xd7, 0x6f, 0x0c,</div><div class="line">        0xfa, 0x5f, 0xea, 0x09, 0x86, 0xbe, 0x91, 0x8f, 0x10, 0xbc, 0xee, 0x73, 0x0d, 0xf4, 0x41, 0xb9};</div><div class="line"><span class="keywordtype">void</span> psa_crypto_sha256_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line">    psa_algorithm_t alg = PSA_ALG_SHA_256;</div><div class="line">    psa_hash_operation_t operation = {0};</div><div class="line">    <span class="keywordtype">size_t</span> expected_hash_len = PSA_HASH_SIZE(alg);</div><div class="line">    uint8_t actual_hash[PSA_HASH_MAX_SIZE];</div><div class="line">    <span class="keywordtype">size_t</span> actual_hash_len;</div><div class="line"></div><div class="line">    <span class="comment">/*Setup the platform; initialize the SCE*/</span></div><div class="line">    <span class="keywordflow">if</span> (PSA_SUCCESS != <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Platform initialization failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_setup(&amp;operation, alg))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash setup failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_update(&amp;operation, NIST_SHA256ShortMsgLen200, <span class="keyword">sizeof</span>(NIST_SHA256ShortMsgLen200)))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash calculation failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (PSA_SUCCESS != psa_hash_finish(&amp;operation, &amp;actual_hash[0], <span class="keyword">sizeof</span>(actual_hash), &amp;actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Reading calculated hash failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;actual_hash[0], &amp;NIST_SHA256ShortMsgLen200_expected[0],actual_hash_len))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash compare of calculated value with expected value failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (0 != memcmp(&amp;expected_hash_len, &amp;actual_hash_len, <span class="keyword">sizeof</span>(expected_hash_len)))</div><div class="line">    {</div><div class="line">        <span class="comment">/*Hash size compare of calculated value with expected value failed*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/*SHA256 calculation succeeded*/</span></div><div class="line">        debugger_break();</div><div class="line">    }</div><div class="line">    <span class="comment">/*Close the SCE*/</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line">}</div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>This implementation is used if MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT is defined. It is intended to de-initialize any items that were initialized in the <a class="el" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup()</a> function, but currently is only a placeholder function.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* De-initialize the platform. This is currently a placeholder function which does not do anything. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#ga264d5dd442e32a262d331f8889a0997c">mbedtls_platform_teardown</a>(&amp;ctx);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">N/A</td><td></td></tr>
   </table>
@@ -2132,9 +2184,7 @@ Random Number Configuration</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

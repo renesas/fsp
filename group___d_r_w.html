@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -97,9 +97,9 @@ $(document).ready(function(){initNavTree('group___d_r_w.html','');});
 <p>Driver for the DRW peripheral on RA MCUs. This module is a port of D/AVE 2D. </p>
 <h1><a class="anchor" id="r-drw-overview"></a>
 Overview</h1>
-<dl class="section note"><dt>Note</dt><dd><b>The D/AVE 2D Port Interface (D1 layer) does not provide any interfaces to the user. Consult the D/AVE 2D driver documentation for further information.</b></dd>
+<dl class="section note"><dt>Note</dt><dd><b>The D/AVE 2D Port Interface (D1 layer) is a HAL layer for the D/AVE D2 layer API and does not provide any interfaces to the user. Consult the <a href="https://www.renesas.com/us/en/software/dave2d-driver-docs.html">TES Dave2D Driver Documentation</a> for further information on using the D2 API.</b></dd>
 <dd>
-For cross-platform compatibility purposes the D1 and D2 APIs are not bound by the Flex Software Package coding guidelines for function names and general module functionality.</dd></dl>
+For cross-platform compatibility purposes the D1 and D2 APIs are not bound by the FSP coding guidelines for function names and general module functionality.</dd></dl>
 <p><a class="anchor" id="um_drw_allocate_memory"></a><a class="anchor" id="um_drw_allocate_video_memory"></a><a class="anchor" id="um_drw_check_device_capability"></a><a class="anchor" id="um_drw_close_device"></a><a class="anchor" id="um_drw_copy_from_video_memory"></a><a class="anchor" id="um_drw_copy_to_video_memory"></a><a class="anchor" id="um_drw_disable_interrupt"></a><a class="anchor" id="um_drw_enable_interrupt"></a><a class="anchor" id="um_drw_flush_cache"></a><a class="anchor" id="um_drw_flush_cache_block"></a><a class="anchor" id="um_drw_free_memory"></a><a class="anchor" id="um_drw_free_video_memory"></a><a class="anchor" id="um_drw_get_memory_size"></a><a class="anchor" id="um_drw_get_register"></a><a class="anchor" id="um_drw_isr"></a><a class="anchor" id="um_drw_map_from_video_memory"></a><a class="anchor" id="um_drw_map_to_video_memory"></a><a class="anchor" id="um_drw_map_video_memory"></a><a class="anchor" id="um_drw_no_support_for_non_d1_dave2d"></a><a class="anchor" id="um_drw_open_device"></a><a class="anchor" id="um_drw_query_irq"></a><a class="anchor" id="um_drw_query_memory_architecture"></a><a class="anchor" id="um_drw_query_video_memory"></a><a class="anchor" id="um_drw_resume_a_thread"></a><a class="anchor" id="um_drw_return_d1_device_handle"></a><a class="anchor" id="um_drw_set_register"></a><a class="anchor" id="um_drw_support_d1_dave2d"></a><a class="anchor" id="um_drw_suspend_a_thread"></a><a class="anchor" id="um_drw_unmap_video_memory"></a><a class="anchor" id="um_drw_d2_layer"></a> </p>
 <h1><a class="anchor" id="r-drw-configuration"></a>
 Configuration</h1>
@@ -107,7 +107,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_drw_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Allow Indirect Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -115,7 +115,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enable indirect mode to allow no-copy mode for d2_adddlist (see the D/AVE 2D driver documentation for details). </td></tr>
+</td><td>Enabled </td><td>Enable indirect mode to allow no-copy mode for d2_adddlist (see the TES Dave2D Driver Documentation for details). </td></tr>
 <tr>
 <td>Memory Allocation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -123,19 +123,37 @@ Default</li>
 <li>
 Custom</li>
 </ul>
-</td><td>Set Memory Allocation to Default to use built-in dynamic memory allocation for the D2 heap. This will use an RTOS heap if configured; otherwise, standard C malloc and free will be used.<br />
+</td><td>Default </td><td>Set Memory Allocation to Default to use built-in dynamic memory allocation for the D2 heap. This will use an RTOS heap if configured; otherwise, standard C malloc and free will be used.<br />
 Set to Custom to define your own allocation scheme for the D2 heap. In this case, the developer will need to define the following functions:<br />
 <br />
  void * d1_malloc(size_t size)<br />
  void d1_free(void * ptr) </td></tr>
 </table>
+ <h2>Configurations for Driver &gt; Graphics &gt; D/AVE 2D Port Interface on r_drw</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Graphics &gt; D/AVE 2D Port Interface on r_drw:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>D2 Device Handle Name</td><td>Name must be a valid C symbol</td><td>d2_handle0 </td><td>Set the name for the d2_device handle used when calling D2 layer functions. </td></tr>
+<tr>
+<td>DRW Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the DRW_INT (display list completion) interrupt priority. </td></tr>
+</table>
 </p>
 <h2><a class="anchor" id="r-drw-heap"></a>
 Heap Size</h2>
-<p>The D1 port layer allows the D2 driver to allocate memory as needed. Currently the main heap is used for this task and its size must be increased to compensate for this additional workload. <b>It is recommended to add 32KB of additional heap space for the D2 driver until the actual usage can be determined in your application.</b></p>
+<p>The D1 port layer allows the D2 driver to allocate memory as needed. There are three ways the driver can accomplish this:</p>
+<ol type="1">
+<li>Allocate memory using the main heap</li>
+<li>Allocate memory using a heap provided by an RTOS</li>
+<li>Allocate memory via user-provided functions</li>
+</ol>
+<p>When the "Memory Allocation" configuration option is set to "Default" the driver will use an RTOS implementation if available and the main heap otherwise. Setting the option to "Custom" allows the user to define their own scheme using the following prototypes:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> * d1_malloc(<span class="keywordtype">size_t</span> size);</div><div class="line"><span class="keywordtype">void</span> d1_free(<span class="keywordtype">void</span> * ptr);</div></div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>If there is no RTOS-based allocation scheme the main heap will be used. Be sure that it is enabled by setting the "Heap size (bytes)" property under RA Common on the BSP tab of the configurator.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>It is recommended to add 32KB of additional heap space for the D2 driver until the actual usage can be determined in your application.</dd></dl>
 <h2><a class="anchor" id="r-drw-interrupt"></a>
 Interrupt</h2>
-<p>The D1 port includes one interrupt for display list completion. This interrupt is managed internally by the D2 driver and no callback function is available.</p>
+<p>The D1 port includes one interrupt to handle various events like display list completion or bus error. This interrupt is managed internally by the D2 driver and no callback function is available.</p>
 <h1><a class="anchor" id="r-drw-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="r-drw-limitations"></a>
@@ -143,7 +161,7 @@ Limitations</h2>
 <p>Developers should be aware of the following limitations when using the DRW engine:</p>
 <ul>
 <li>The DRW module supports two additional interrupt types - bus error and render complete. These interrupts are not needed for D2 layer operation and thus are not supported.</li>
-<li>If the DRW module is stopped while rendering is occuring the render will continue once the module is started again. If this behavior is undesirable in your application it is recommended to call <code>d2_flushframe</code> before stopping the peripheral.</li>
+<li>If the DRW module is stopped during rendering the render will continue once the module is started again. If this behavior is undesirable in your application it is recommended to call <code>d2_flushframe</code> before stopping the peripheral.</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -151,9 +169,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

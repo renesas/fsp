@@ -68,10 +68,9 @@ var group___l_p_m___a_p_i =
       [ "LPM_SNOOZE_END_SCI0_ADDRESS_MATCH", "group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3a83527fd738776770db1f1f74cc90dbe5", null ]
     ] ],
     [ "lpm_snooze_cancel_t", "group___l_p_m___a_p_i.html#ga4a91a996af007d54ca8ebccb0be76852", [
+      [ "LPM_SNOOZE_CANCEL_SOURCE_NONE", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a89494cec4dd3e8c031dc693e7119e0af", null ],
       [ "LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPM", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a50f7357fb280a7579aaaa35cf645d720", null ],
       [ "LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPUM", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a7857328876e43da789ea6cfee531172b", null ],
-      [ "LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPM", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a90e58a3a273e5417cc78aa7b0cfbf210", null ],
-      [ "LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPUM", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a70709e1986e62ec2418780f61430bd19", null ],
       [ "LPM_SNOOZE_CANCEL_SOURCE_SCI0_AM", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a85a194cc0fa66440e83f60f41ccb483a", null ],
       [ "LPM_SNOOZE_CANCEL_SOURCE_SCI0_RXI_OR_ERI", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a8d8b9b58ca6c6a30624728f10a70ce43", null ],
       [ "LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852abaf93a1f417375d09f6264b129b45852", null ],

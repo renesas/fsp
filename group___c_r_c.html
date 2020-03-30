@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -104,7 +104,7 @@ Functions</h2></td></tr>
 <tr class="separator:gae4cc2bba5d6aeaadd9f4d43948fca5ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab1ba556ab77f9f3d32ed5a448ebc7f9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c.html#gab1ba556ab77f9f3d32ed5a448ebc7f9c">R_CRC_Close</a> (<a class="el" href="group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0">crc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:gab1ba556ab77f9f3d32ed5a448ebc7f9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga89b0be959ce83ac6ca053329b1fddb75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c.html#ga89b0be959ce83ac6ca053329b1fddb75">R_CRC_Calculate</a> (<a class="el" href="group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0">crc_ctrl_t</a> *const p_ctrl, crc_input_t *const p_crc_input, uint32_t *calculatedValue)</td></tr>
+<tr class="memitem:ga89b0be959ce83ac6ca053329b1fddb75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c.html#ga89b0be959ce83ac6ca053329b1fddb75">R_CRC_Calculate</a> (<a class="el" href="group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0">crc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_r_c___a_p_i.html#structcrc__input__t">crc_input_t</a> *const p_crc_input, uint32_t *calculatedValue)</td></tr>
 <tr class="separator:ga89b0be959ce83ac6ca053329b1fddb75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5bb7766a9c3217d2da7b77ea203b8c74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c.html#ga5bb7766a9c3217d2da7b77ea203b8c74">R_CRC_CalculatedValueGet</a> (<a class="el" href="group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0">crc_ctrl_t</a> *const p_ctrl, uint32_t *calculatedValue)</td></tr>
 <tr class="separator:ga5bb7766a9c3217d2da7b77ea203b8c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,7 +143,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_crc_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -153,15 +153,15 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for CRC Driver on r_crc</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Monitoring -&gt; CRC Driver on r_crc:<br />
+ <h2>Configurations for Driver &gt; Monitoring &gt; CRC Driver on r_crc</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Monitoring &gt; CRC Driver on r_crc:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_crc0 </td><td>Module name. </td></tr>
 <tr>
 <td>CRC Polynomial</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -175,7 +175,7 @@ CRC-32</li>
 <li>
 CRC-32C</li>
 </ul>
-</td><td>Select the CRC polynomial. </td></tr>
+</td><td>CRC-32C </td><td>Select the CRC polynomial. </td></tr>
 <tr>
 <td>Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -183,9 +183,9 @@ LSB</li>
 <li>
 MSB</li>
 </ul>
-</td><td>Select the CRC bit order. </td></tr>
+</td><td>MSB </td><td>Select the CRC bit order. </td></tr>
 <tr>
-<td>Snoop Address</td><td>See e2 studio for available options.</td><td>Select the SCI register address CRC snoop </td></tr>
+<td>Snoop Address</td><td>Refer to the RA Configuration tool for available options.</td><td>NONE </td><td>Select the SCI register address CRC snoop </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-crc-clock-configuration"></a>
@@ -197,24 +197,25 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-crc-usage_notes"></a>
 Usage Notes</h1>
 <h2>CRC Snoop</h2>
-<p>The CRC snoop function monitors reads from and writes to a specified I/O register address and performs CRC calculation on the data read from and written to the register address automatically. Writing data to the CRCDIR_BY register is not required as CRC snoop recognizes writes to and reads from a specific register address as a trigger to automatically perform CRC calculation</p>
+<p>The CRC snoop function monitors reads from and writes to a specified I/O register address and performs CRC calculation on the data read from and written to the register address automatically. Instead of calling R_CRC_Calculate on a block of data, R_CRC_SnoopEnable is called to start monitoring reads/writes and R_CRC_CalculatedValueGet is used to obtain the current CRC.</p>
+<dl class="section note"><dt>Note</dt><dd>Snoop mode is available for transmit/receive operations on SCI only.</dd></dl>
 <p><a class="anchor" id="um_crc_snoop_configuration"></a><a class="anchor" id="um_crc_snoop_disable_functionality"></a> </p>
 <h2><a class="anchor" id="r-crc-limitations"></a>
 Limitations</h2>
-<p>The R_CRC with the CRC32 polynomial functions produces the same results as popular online CRC32 calculators, but it is important to remember a few important points.</p><ul>
+<p>When using CRC32 polynomial functions the CRC module produces the same results as popular online CRC32 calculators, but it is important to remember a few important points.</p><ul>
 <li>Online CRC32 calculators allow the input to be any number of bytes. The FSP CRC32 API function uses 32-bit words. This means the online calculations must be 'padded' to end on a 32-bit boundary.</li>
 <li>Online CRC32 calculators usually invert the output prior to presenting it as a result. It is up to the application program to include this step if needed.</li>
-<li>The seed value of 0xFFFFFFFF needs to be used by both the online calculator and the R_CRC module API(CRC32 polynomials)</li>
+<li>The seed value of 0xFFFFFFFF needs to be used by both the online calculator and the R_CRC module API (CRC32 polynomials)</li>
 <li>Make sure the bit orientation of the R_CRC CRC32 is set for LSB and that you have CRC32 selected and not CRC32C.</li>
-<li>Some online CRC tools XOR final result with 0xFFFFFFFF</li>
+<li>Some online CRC tools XOR the final result with 0xFFFFFFFF.</li>
 </ul>
 <h1><a class="anchor" id="r-crc-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
-<p>This is a basic example of minimal use of the CRC in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> crc_example ()</div><div class="line">{</div><div class="line">    uint32_t length;</div><div class="line">    uint32_t uint8_calculated_value;</div><div class="line"></div><div class="line">    length = <span class="keyword">sizeof</span>(data_8bit) / <span class="keyword">sizeof</span>(data_8bit[0]);</div><div class="line"></div><div class="line">    crc_input_t example_input =</div><div class="line">    {</div><div class="line">        .p_input_buffer = data_8bit,</div><div class="line">        .num_bytes      = length,</div><div class="line">        .crc_seed       = 0,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open CRC module with 8 bit polynomial */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;crc_ctrl, &amp;g_crc_test_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* 8-bit CRC calculation */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga89b0be959ce83ac6ca053329b1fddb75">R_CRC_Calculate</a>(&amp;crc_ctrl, &amp;example_input, &amp;uint8_calculated_value);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Snoop Example</h2>
-<p>This example shows crc snoop operation.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> crc_snoop_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Set the address for snoop operation&quot; */</span></div><div class="line">    g_crc_test_cfg.snoop_address = CRC_SNOOP_ADDRESS_SCI5_TDR;</div><div class="line"></div><div class="line">    <span class="comment">/* Open CRC module with 8 bit polynomial */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;crc_ctrl, &amp;g_crc_test_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Open SCI Driver */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Configure Snoop address and enable snoop mode */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga606b389497fa4cba30b0d8f9a658331f">R_CRC_SnoopEnable</a>(&amp;crc_ctrl, 0);</div><div class="line"></div><div class="line">    <span class="comment">/* Perfrom SCI read/Write operation depending on the SCI snoop address configure */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Read CRC value */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga5bb7766a9c3217d2da7b77ea203b8c74">R_CRC_CalculatedValueGet</a>(&amp;crc_ctrl, &amp;crc_buff);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<p>This is a basic example of minimal use of the CRC module in an application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> crc_example ()</div><div class="line">{</div><div class="line">    uint32_t length;</div><div class="line">    uint32_t uint8_calculated_value;</div><div class="line"></div><div class="line">    length = <span class="keyword">sizeof</span>(g_data_8bit) / <span class="keyword">sizeof</span>(g_data_8bit[0]);</div><div class="line"></div><div class="line">    <a class="code" href="group___c_r_c___a_p_i.html#structcrc__input__t">crc_input_t</a> example_input =</div><div class="line">    {</div><div class="line">        .p_input_buffer = g_data_8bit,</div><div class="line">        .num_bytes      = length,</div><div class="line">        .crc_seed       = 0,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open CRC module with 8 bit polynomial */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;crc_ctrl, &amp;g_crc_test_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* 8-bit CRC calculation */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga89b0be959ce83ac6ca053329b1fddb75">R_CRC_Calculate</a>(&amp;crc_ctrl, &amp;example_input, &amp;uint8_calculated_value);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Snoop Example</h2>
+<p>This example demonstrates CRC snoop operation.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> crc_snoop_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Open CRC module with 8 bit polynomial */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;crc_ctrl, &amp;g_crc_test_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Open SCI Driver */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Configure Snoop address and enable snoop mode */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga606b389497fa4cba30b0d8f9a658331f">R_CRC_SnoopEnable</a>(&amp;crc_ctrl, 0);</div><div class="line"></div><div class="line">    <span class="comment">/* Perfrom SCI read/Write operation depending on the SCI snoop address configure */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Read CRC value */</span></div><div class="line">    <a class="code" href="group___c_r_c.html#ga5bb7766a9c3217d2da7b77ea203b8c74">R_CRC_CalculatedValueGet</a>(&amp;crc_ctrl, &amp;g_crc_buff);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structcrc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_r_c.html#structcrc__instance__ctrl__t">crc_instance_ctrl_t</a></td></tr>
@@ -319,7 +320,7 @@ Data Structures</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">crc_input_t *const&#160;</td>
+          <td class="paramtype"><a class="el" href="group___c_r_c___a_p_i.html#structcrc__input__t">crc_input_t</a> *const&#160;</td>
           <td class="paramname"><em>p_crc_input</em>, </td>
         </tr>
         <tr>
@@ -414,8 +415,8 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Configure the snoop channel and direction.</p>
-<p>Implements crc_api_t::snoopCfg</p>
+<p>Configure the snoop channel and set the CRC seed.</p>
+<p>Implements <a class="el" href="group___c_r_c___a_p_i.html#a4d4efcfb06b59c92801320f31e8f2eb7">crc_api_t::snoopEnable</a></p>
 <p>The CRC calculator can operate on reads and writes over any of the first ten SCI channels. For example, if set to channel 0, transmit, every byte written out SCI channel 0 is also sent to the CRC calculator as if the value was explicitly written directly to the CRC calculator.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -489,9 +490,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

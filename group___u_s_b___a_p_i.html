@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('group___u_s_b___a_p_i.html','');});
 Summary</h1>
 <p>The USB interface provides USB functionality.</p>
 <p>The USB interface can be implemented by:</p><ul>
-<li><a class="el" href="group___u_s_b.html">Universal Serial Bus (r_usb_basic)</a> </li>
+<li><a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -536,414 +536,422 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>WDT functions implemented at the HAL layer will follow this API. </p>
+<div class="textblock"><p>Functions implemented at the HAL layer will follow this API. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aefa767fa78b481c328020e9b1a9b5812"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#aefa767fa78b481c328020e9b1a9b5812">open</a> )(usb_ctrl_t *const p_api_ctrl, usb_cfg_t const *const p_cfg, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:aefa767fa78b481c328020e9b1a9b5812"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8a301dd8818c614e85db36e7eec9d9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ad8a301dd8818c614e85db36e7eec9d9f">close</a> )(usb_ctrl_t *const p_api_ctrl, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:ad8a301dd8818c614e85db36e7eec9d9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a317d4d11197c2e1887130a6b1b29c35d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a317d4d11197c2e1887130a6b1b29c35d">read</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:a317d4d11197c2e1887130a6b1b29c35d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d33458c053260c73b63c11e413ca095"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a7d33458c053260c73b63c11e413ca095">write</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:a7d33458c053260c73b63c11e413ca095"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41b5f7c32cf32eaff6c298358f4be9dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a41b5f7c32cf32eaff6c298358f4be9dc">stop</a> )(usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga0c47f1426b999f2cd8aea9adca06fbde">usb_transfer_t</a> type, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:a41b5f7c32cf32eaff6c298358f4be9dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8588c335f92a5ba3bcd36f5874b118a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a8588c335f92a5ba3bcd36f5874b118a1">suspend</a> )(usb_ctrl_t *const p_api_ctrl, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:a8588c335f92a5ba3bcd36f5874b118a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee42fe69d478e00d9785b98ee95bef27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#aee42fe69d478e00d9785b98ee95bef27">resume</a> )(usb_ctrl_t *const p_api_ctrl, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:aee42fe69d478e00d9785b98ee95bef27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0072c5a6c8aece9f3c4ac55b925a834"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ab0072c5a6c8aece9f3c4ac55b925a834">vbusSet</a> )(usb_ctrl_t *const p_api_ctrl, uint16_t state, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:ab0072c5a6c8aece9f3c4ac55b925a834"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf8b313de313111aa65c5972f738a667"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#acf8b313de313111aa65c5972f738a667">infoGet</a> )(usb_ctrl_t *const p_api_ctrl, usb_info_t *p_info)</td></tr>
-<tr class="separator:acf8b313de313111aa65c5972f738a667"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0b02591b99866a358eef47066a400a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#aa0b02591b99866a358eef47066a400a2">pipeRead</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:aa0b02591b99866a358eef47066a400a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae07209f5cda6729d25e1c66a9598de05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ae07209f5cda6729d25e1c66a9598de05">pipeWrite</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:ae07209f5cda6729d25e1c66a9598de05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45b83f24821ca64fbda20c969c3cc0de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a45b83f24821ca64fbda20c969c3cc0de">pipeStop</a> )(usb_ctrl_t *const p_api_ctrl, usb_instance_transfer_t *p_api_trans)</td></tr>
-<tr class="separator:a45b83f24821ca64fbda20c969c3cc0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ab480118b06586e24121d40043b8d78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a7ab480118b06586e24121d40043b8d78">usedPipesGet</a> )(usb_ctrl_t *const p_api_ctrl, uint16_t *p_pipe)</td></tr>
-<tr class="separator:a7ab480118b06586e24121d40043b8d78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbc0b1053ea75c59226ae0a08b2f4764"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#abbc0b1053ea75c59226ae0a08b2f4764">pipeInfoGet</a> )(usb_ctrl_t *const p_api_ctrl, usb_pipe_t *p_info)</td></tr>
-<tr class="separator:abbc0b1053ea75c59226ae0a08b2f4764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad92d0a1d797e8e806082b4fb6cf65f03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03">open</a> )(usb_ctrl_t *const p_api_ctrl, usb_cfg_t const *const p_cfg)</td></tr>
+<tr class="separator:ad92d0a1d797e8e806082b4fb6cf65f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1d74faccf1b8d153bcaa2da00db0749"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ab1d74faccf1b8d153bcaa2da00db0749">close</a> )(usb_ctrl_t *const p_api_ctrl)</td></tr>
+<tr class="separator:ab1d74faccf1b8d153bcaa2da00db0749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f8293d27b1dee87d1e925800c70edb3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, uint8_t destination)</td></tr>
+<tr class="separator:a1f8293d27b1dee87d1e925800c70edb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6eb4c329c32333e7475202b7f5825bce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a6eb4c329c32333e7475202b7f5825bce">write</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t const *const p_buf, uint32_t size, uint8_t destination)</td></tr>
+<tr class="separator:a6eb4c329c32333e7475202b7f5825bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a153b5973329eb9f4e47583ec1ec38693"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a153b5973329eb9f4e47583ec1ec38693">stop</a> )(usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga0c47f1426b999f2cd8aea9adca06fbde">usb_transfer_t</a> direction, uint8_t destination)</td></tr>
+<tr class="separator:a153b5973329eb9f4e47583ec1ec38693"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae55ddb8c2097ea7bff10cbd1867b36b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ae55ddb8c2097ea7bff10cbd1867b36b3">suspend</a> )(usb_ctrl_t *const p_api_ctrl)</td></tr>
+<tr class="separator:ae55ddb8c2097ea7bff10cbd1867b36b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f4cfdc08fa7ca9dc4582c1f8e9ed81d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a4f4cfdc08fa7ca9dc4582c1f8e9ed81d">resume</a> )(usb_ctrl_t *const p_api_ctrl)</td></tr>
+<tr class="separator:a4f4cfdc08fa7ca9dc4582c1f8e9ed81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d8e182b1dd986e7fed13f7c09ca3943"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a1d8e182b1dd986e7fed13f7c09ca3943">vbusSet</a> )(usb_ctrl_t *const p_api_ctrl, uint16_t state)</td></tr>
+<tr class="separator:a1d8e182b1dd986e7fed13f7c09ca3943"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f7b41e1ab2bf7f46764a085b48d5577"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a3f7b41e1ab2bf7f46764a085b48d5577">infoGet</a> )(usb_ctrl_t *const p_api_ctrl, usb_info_t *p_info, uint8_t destination)</td></tr>
+<tr class="separator:a3f7b41e1ab2bf7f46764a085b48d5577"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49585c57311b3f22dd5ac4507a714eef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a49585c57311b3f22dd5ac4507a714eef">pipeRead</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, uint8_t pipe_number)</td></tr>
+<tr class="separator:a49585c57311b3f22dd5ac4507a714eef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9f2e3a015451b7b8f5445cdadf53852"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ae9f2e3a015451b7b8f5445cdadf53852">pipeWrite</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, uint8_t pipe_number)</td></tr>
+<tr class="separator:ae9f2e3a015451b7b8f5445cdadf53852"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a551e4c6ff3eaaed2ad13bdd91f977b37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a551e4c6ff3eaaed2ad13bdd91f977b37">pipeStop</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t pipe_number)</td></tr>
+<tr class="separator:a551e4c6ff3eaaed2ad13bdd91f977b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab928cf66d876276c77b44199c7204b05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ab928cf66d876276c77b44199c7204b05">usedPipesGet</a> )(usb_ctrl_t *const p_api_ctrl, uint16_t *p_pipe, uint8_t destination)</td></tr>
+<tr class="separator:ab928cf66d876276c77b44199c7204b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97dfef91a7453ab8012f1825b1a91218"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a97dfef91a7453ab8012f1825b1a91218">pipeInfoGet</a> )(usb_ctrl_t *const p_api_ctrl, usb_pipe_t *p_info, uint8_t pipe_number)</td></tr>
+<tr class="separator:a97dfef91a7453ab8012f1825b1a91218"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7879ef85722144dace2280e5ecaf809"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#aa7879ef85722144dace2280e5ecaf809">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
 <tr class="separator:aa7879ef85722144dace2280e5ecaf809"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3acf29ae5b0455d82149e36b5387d02d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a> )(usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> *event)</td></tr>
 <tr class="separator:a3acf29ae5b0455d82149e36b5387d02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2b08e856309f2cf0c94f185cdde741e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ab2b08e856309f2cf0c94f185cdde741e">pullup</a> )(uint8_t state)</td></tr>
-<tr class="separator:ab2b08e856309f2cf0c94f185cdde741e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b751c99a150237518e0329c0697e78a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a8b751c99a150237518e0329c0697e78a">modulenumberget</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *module_number)</td></tr>
-<tr class="separator:a8b751c99a150237518e0329c0697e78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bace8f3c29d2a82c46bd662d3e50382"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a7bace8f3c29d2a82c46bd662d3e50382">classtypeget</a> )(usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#gab1dc4a2240edf1a50cca3945f31dc9f2">usb_class_t</a> *class_type)</td></tr>
-<tr class="separator:a7bace8f3c29d2a82c46bd662d3e50382"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1004cddae85cd6c2d3fb6ce5071cea53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a1004cddae85cd6c2d3fb6ce5071cea53">deviceaddressget</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *device_address)</td></tr>
-<tr class="separator:a1004cddae85cd6c2d3fb6ce5071cea53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e4b6046758658f79e6e6ee698d7c40d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a3e4b6046758658f79e6e6ee698d7c40d">pipenumberget</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *pipe_number)</td></tr>
-<tr class="separator:a3e4b6046758658f79e6e6ee698d7c40d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab179cd979b7b4f21f259083d544fcbe8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ab179cd979b7b4f21f259083d544fcbe8">devicestateget</a> )(usb_ctrl_t *const p_api_ctrl, uint16_t *state)</td></tr>
-<tr class="separator:ab179cd979b7b4f21f259083d544fcbe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a111247ae7fcbfad04d6e116f92105d26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a111247ae7fcbfad04d6e116f92105d26">datasizeget</a> )(usb_ctrl_t *const p_api_ctrl, uint32_t *data_size)</td></tr>
-<tr class="separator:a111247ae7fcbfad04d6e116f92105d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8db912b4559ccc2868453044273c645"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ad8db912b4559ccc2868453044273c645">setupget</a> )(usb_ctrl_t *const p_api_ctrl, usb_setup_t *setup)</td></tr>
-<tr class="separator:ad8db912b4559ccc2868453044273c645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e941d116e48f8ce3d732be6bb1f8f6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a5e941d116e48f8ce3d732be6bb1f8f6e">callback</a> )(usb_callback_t *p_callback)</td></tr>
+<tr class="separator:a5e941d116e48f8ce3d732be6bb1f8f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63d51ef1777a77d9b041d931e70df77b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a63d51ef1777a77d9b041d931e70df77b">pullUp</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t state)</td></tr>
+<tr class="separator:a63d51ef1777a77d9b041d931e70df77b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6abce0db3b9a1afbf93a02c02e84b7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e">hostControlTransfer</a> )(usb_ctrl_t *const p_api_ctrl, usb_setup_t *p_setup, uint8_t *p_buf, uint8_t device_address)</td></tr>
+<tr class="separator:aa6abce0db3b9a1afbf93a02c02e84b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfd255be34c610f854f8bedb4a1a0a4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#acfd255be34c610f854f8bedb4a1a0a4f">periControlDataGet</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size)</td></tr>
+<tr class="separator:acfd255be34c610f854f8bedb4a1a0a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada9e58c96ca03bf9140ba2db36a4214c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ada9e58c96ca03bf9140ba2db36a4214c">periControlDataSet</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size)</td></tr>
+<tr class="separator:ada9e58c96ca03bf9140ba2db36a4214c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29903dba1e2952e264159322340db640"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a29903dba1e2952e264159322340db640">periControlStatusSet</a> )(usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga386cabe04206e06b3be8dbafc0bc3d86">usb_setup_status_t</a> status)</td></tr>
+<tr class="separator:a29903dba1e2952e264159322340db640"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac92e22abfd4381b9927f59d94e18903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#aac92e22abfd4381b9927f59d94e18903">moduleNumberGet</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *module_number)</td></tr>
+<tr class="separator:aac92e22abfd4381b9927f59d94e18903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4609b14b348657b9b574464f849d7e8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a4609b14b348657b9b574464f849d7e8f">classTypeGet</a> )(usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#gab1dc4a2240edf1a50cca3945f31dc9f2">usb_class_t</a> *class_type)</td></tr>
+<tr class="separator:a4609b14b348657b9b574464f849d7e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4be5025b142213cdc3c86b06e5ca3efd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a4be5025b142213cdc3c86b06e5ca3efd">deviceAddressGet</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *device_address)</td></tr>
+<tr class="separator:a4be5025b142213cdc3c86b06e5ca3efd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25d98b97877550ba5c87cef179612387"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a25d98b97877550ba5c87cef179612387">pipeNumberGet</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *pipe_number)</td></tr>
+<tr class="separator:a25d98b97877550ba5c87cef179612387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac00188c075546f27f2b9ba3fc6f452b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ac00188c075546f27f2b9ba3fc6f452b9">deviceStateGet</a> )(usb_ctrl_t *const p_api_ctrl, uint16_t *state)</td></tr>
+<tr class="separator:ac00188c075546f27f2b9ba3fc6f452b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2b9fd6871571a54b991b598cd5802a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#ac2b9fd6871571a54b991b598cd5802a7">dataSizeGet</a> )(usb_ctrl_t *const p_api_ctrl, uint32_t *data_size)</td></tr>
+<tr class="separator:ac2b9fd6871571a54b991b598cd5802a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4071ec30a3255c3ea18f8554bd68da50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a4071ec30a3255c3ea18f8554bd68da50">setupGet</a> )(usb_ctrl_t *const p_api_ctrl, usb_setup_t *setup)</td></tr>
+<tr class="separator:a4071ec30a3255c3ea18f8554bd68da50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="aefa767fa78b481c328020e9b1a9b5812"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefa767fa78b481c328020e9b1a9b5812">&#9670;&nbsp;</a></span>open</h2>
+<a id="ad92d0a1d797e8e806082b4fb6cf65f03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad92d0a1d797e8e806082b4fb6cf65f03">&#9670;&nbsp;</a></span>open</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::open) (usb_ctrl_t *const p_api_ctrl, usb_cfg_t const *const p_cfg, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::open) (usb_ctrl_t *const p_api_ctrl, usb_cfg_t const *const p_cfg)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Start the USB module </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga85b7a825ad20b3e211cdfe3ccfca74c4" title="Applies power to the USB module specified in the argument (p_ctrl). ">R_USB_Open()</a></li>
+<li><a class="el" href="group___u_s_b.html#gab9810a1d8e322cb89a9a7f9ca84a368f">R_USB_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ad8a301dd8818c614e85db36e7eec9d9f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8a301dd8818c614e85db36e7eec9d9f">&#9670;&nbsp;</a></span>close</h2>
+<a id="ab1d74faccf1b8d153bcaa2da00db0749"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1d74faccf1b8d153bcaa2da00db0749">&#9670;&nbsp;</a></span>close</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::close) (usb_ctrl_t *const p_api_ctrl, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::close) (usb_ctrl_t *const p_api_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Stop the USB module </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gae6762c6eccb45b491c51d0f3a843586d" title="Terminates power to the USB module specified in argument (p_ctrl). USB0 module stops when USB_IP0 is ...">R_USB_Close()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga42c6c75ae96e3860b726d1b0dcbf110d">R_USB_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a317d4d11197c2e1887130a6b1b29c35d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a317d4d11197c2e1887130a6b1b29c35d">&#9670;&nbsp;</a></span>read</h2>
+<a id="a1f8293d27b1dee87d1e925800c70edb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f8293d27b1dee87d1e925800c70edb3">&#9670;&nbsp;</a></span>read</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::read) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::read) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, uint8_t destination)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Request USB data read </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga980648af41a417cf4ee497c107866dad" title="Bulk/interrupt data transfer and control data transfer. ">R_USB_Read()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga42ad1cbad598d06023d83e8a91fd49d4">R_USB_Read()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to area that stores read data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Read request size. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>In Host, it represents the device address, and in Peri, it represents the device class. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a7d33458c053260c73b63c11e413ca095"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d33458c053260c73b63c11e413ca095">&#9670;&nbsp;</a></span>write</h2>
+<a id="a6eb4c329c32333e7475202b7f5825bce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6eb4c329c32333e7475202b7f5825bce">&#9670;&nbsp;</a></span>write</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::write) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::write) (usb_ctrl_t *const p_api_ctrl, uint8_t const *const p_buf, uint32_t size, uint8_t destination)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Request USB data write </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga27facc269c02909e5dc7f3124fc69ce6" title="Bulk/Interrupt data transfer and control data transfer. ">R_USB_Write()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga001f40866be6438435e65e78871a54d5">R_USB_Write()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to area that stores write data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Read request size. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>In Host, it represents the device address, and in Peri, it represents the device class. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a41b5f7c32cf32eaff6c298358f4be9dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41b5f7c32cf32eaff6c298358f4be9dc">&#9670;&nbsp;</a></span>stop</h2>
+<a id="a153b5973329eb9f4e47583ec1ec38693"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a153b5973329eb9f4e47583ec1ec38693">&#9670;&nbsp;</a></span>stop</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::stop) (usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga0c47f1426b999f2cd8aea9adca06fbde">usb_transfer_t</a> type, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::stop) (usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga0c47f1426b999f2cd8aea9adca06fbde">usb_transfer_t</a> direction, uint8_t destination)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Stop USB data read/write processing </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga03dbfd9f25f25bb2c31d6039cdef7ac9" title="Requests a data read/write transfer be terminated when a data read/write transfer is being performed...">R_USB_Stop()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga6b594879fb754ed4ae76685d6c261e5d">R_USB_Stop()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Receive (USB_READ) or send (USB_WRITE). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">direction</td><td>Receive (USB_TRANSFER_READ) or send (USB_TRANSFER_WRITE ). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>In Host, it represents the device address, and in Peri, it represents the device class. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a8588c335f92a5ba3bcd36f5874b118a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8588c335f92a5ba3bcd36f5874b118a1">&#9670;&nbsp;</a></span>suspend</h2>
+<a id="ae55ddb8c2097ea7bff10cbd1867b36b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae55ddb8c2097ea7bff10cbd1867b36b3">&#9670;&nbsp;</a></span>suspend</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::suspend) (usb_ctrl_t *const p_api_ctrl, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::suspend) (usb_ctrl_t *const p_api_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Request suspend </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gaeac8a6fb5be90e448c32e0c9b81ea1a9" title="Sends a SUSPEND signal from the USB module assigned to the member (module) of the usb_crtl_t structur...">R_USB_Suspend()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga78ea3782bd018162fc06e3d24dc46b83">R_USB_Suspend()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="aee42fe69d478e00d9785b98ee95bef27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee42fe69d478e00d9785b98ee95bef27">&#9670;&nbsp;</a></span>resume</h2>
+<a id="a4f4cfdc08fa7ca9dc4582c1f8e9ed81d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f4cfdc08fa7ca9dc4582c1f8e9ed81d">&#9670;&nbsp;</a></span>resume</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::resume) (usb_ctrl_t *const p_api_ctrl, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::resume) (usb_ctrl_t *const p_api_ctrl)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Request resume </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gab3d84b4f8923dd2831e8c57e9a4ff39e" title="Sends a RESUME signal from the USB module assigned to the member (module) of the usb_ctrl_tstructure...">R_USB_Resume()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga9851b21f1891e71de574a47589ea0282">R_USB_Resume()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ab0072c5a6c8aece9f3c4ac55b925a834"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0072c5a6c8aece9f3c4ac55b925a834">&#9670;&nbsp;</a></span>vbusSet</h2>
+<a id="a1d8e182b1dd986e7fed13f7c09ca3943"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d8e182b1dd986e7fed13f7c09ca3943">&#9670;&nbsp;</a></span>vbusSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::vbusSet) (usb_ctrl_t *const p_api_ctrl, uint16_t state, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::vbusSet) (usb_ctrl_t *const p_api_ctrl, uint16_t state)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Sets VBUS supply start/stop. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga225942c635bcdbad8e36aa28f297b812" title="Specifies starting or stopping the VBUS supply. ">R_USB_VbusSet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga0d8d4651d5f1fa839cc85d32374f9018">R_USB_VbusSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">state</td><td>VBUS supply start/stop specification </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="acf8b313de313111aa65c5972f738a667"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf8b313de313111aa65c5972f738a667">&#9670;&nbsp;</a></span>infoGet</h2>
+<a id="a3f7b41e1ab2bf7f46764a085b48d5577"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f7b41e1ab2bf7f46764a085b48d5577">&#9670;&nbsp;</a></span>infoGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::infoGet) (usb_ctrl_t *const p_api_ctrl, usb_info_t *p_info)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::infoGet) (usb_ctrl_t *const p_api_ctrl, usb_info_t *p_info, uint8_t destination)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Get information on USB device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li>R_USB_InfomationGet()</li>
+<li><a class="el" href="group___u_s_b.html#ga60b7dbef6ec571c6f2cacedcc5dccbcd">R_USB_InfoGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_info</td><td>Pointer to usb_info_t structure area. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Device address for Host. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="aa0b02591b99866a358eef47066a400a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0b02591b99866a358eef47066a400a2">&#9670;&nbsp;</a></span>pipeRead</h2>
+<a id="a49585c57311b3f22dd5ac4507a714eef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49585c57311b3f22dd5ac4507a714eef">&#9670;&nbsp;</a></span>pipeRead</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipeRead) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipeRead) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, uint8_t pipe_number)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Request data read from specified pipe </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gaa0274579d4b4b6d7702a49be28030b34" title="Requests a data read (bulk/interrupt transfer) via the pipe specified in the argument. ">R_USB_PipeRead()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga5bee47c1fb4dfb12eba430226122bd57">R_USB_PipeRead()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to area that stores read data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Read request size. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pipe_number</td><td>Pipe Number. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ae07209f5cda6729d25e1c66a9598de05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae07209f5cda6729d25e1c66a9598de05">&#9670;&nbsp;</a></span>pipeWrite</h2>
+<a id="ae9f2e3a015451b7b8f5445cdadf53852"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9f2e3a015451b7b8f5445cdadf53852">&#9670;&nbsp;</a></span>pipeWrite</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipeWrite) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipeWrite) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size, uint8_t pipe_number)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Request data write to specified pipe </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga19887d8ae55cdabbfdf38ca318aa0599" title="Requests a data write (bulk/interrupt transfer). ">R_USB_PipeWrite()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga4f800b5c189c92d58d23972142214d22">R_USB_PipeWrite()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to area that stores write data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Read request size. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pipe_number</td><td>Pipe Number. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a45b83f24821ca64fbda20c969c3cc0de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45b83f24821ca64fbda20c969c3cc0de">&#9670;&nbsp;</a></span>pipeStop</h2>
+<a id="a551e4c6ff3eaaed2ad13bdd91f977b37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a551e4c6ff3eaaed2ad13bdd91f977b37">&#9670;&nbsp;</a></span>pipeStop</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipeStop) (usb_ctrl_t *const p_api_ctrl, usb_instance_transfer_t *p_api_trans)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipeStop) (usb_ctrl_t *const p_api_ctrl, uint8_t pipe_number)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Stop USB data read/write processing to specified pipe </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga9967bbaca6a4d154ddcc0d4b6dd5eccb" title="Terminates a data read/write operation. ">R_USB_PipeStop()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga5311e5c477a72f6ac531516e49467d16">R_USB_PipeStop()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_trans</td><td>pointer to transfer structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pipe_number</td><td>Pipe Number. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a7ab480118b06586e24121d40043b8d78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ab480118b06586e24121d40043b8d78">&#9670;&nbsp;</a></span>usedPipesGet</h2>
+<a id="ab928cf66d876276c77b44199c7204b05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab928cf66d876276c77b44199c7204b05">&#9670;&nbsp;</a></span>usedPipesGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::usedPipesGet) (usb_ctrl_t *const p_api_ctrl, uint16_t *p_pipe)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::usedPipesGet) (usb_ctrl_t *const p_api_ctrl, uint16_t *p_pipe, uint8_t destination)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Get pipe number </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga9b62d0397972e12fe933d1ec5503f7c2" title="Gets the selected pipe number (number of the pipe that has completed initalization) via bit map infor...">R_USB_UsedPipesGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga112c7de01280de80c529ec61789c9cc0">R_USB_UsedPipesGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_pipe</td><td>Pointer to area that stores the selected pipe number (bit map information). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Device address for Host. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="abbc0b1053ea75c59226ae0a08b2f4764"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbc0b1053ea75c59226ae0a08b2f4764">&#9670;&nbsp;</a></span>pipeInfoGet</h2>
+<a id="a97dfef91a7453ab8012f1825b1a91218"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97dfef91a7453ab8012f1825b1a91218">&#9670;&nbsp;</a></span>pipeInfoGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipeInfoGet) (usb_ctrl_t *const p_api_ctrl, usb_pipe_t *p_info)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipeInfoGet) (usb_ctrl_t *const p_api_ctrl, usb_pipe_t *p_info, uint8_t pipe_number)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Get pipe information </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gac4fb3f68455949f056b56d7df8e33b7d" title="Gets the following pipe information regarding the pipe specified in the argument (p_ctrl) member (pip...">R_USB_PipeInfoGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga08f0810f299c825fae9a9f8ada2f9dbf">R_USB_PipeInfoGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_info</td><td>Pointer to usb_pipe_t structure area. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pipe_number</td><td>Pipe Number. </td></tr>
   </table>
   </dd>
 </dl>
@@ -962,12 +970,12 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Get the driver version </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gaf95e0ee001b1be6f998be42e4986f1c9" title="Returns the version of this module. ">R_USB_VersionGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#gaf95e0ee001b1be6f998be42e4986f1c9">R_USB_VersionGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">version</td><td>Version number. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_version</td><td>Version number. </td></tr>
   </table>
   </dd>
 </dl>
@@ -985,13 +993,13 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return USB-related completed events (Non-OS only) </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951" title="Obtains completed USB related events. ">R_USB_EventGet()</a></li>
+<p>Return USB-related completed events (OS less only) </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951">R_USB_EventGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">event</td><td>Pointer to event. </td></tr>
   </table>
   </dd>
@@ -999,23 +1007,48 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="ab2b08e856309f2cf0c94f185cdde741e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2b08e856309f2cf0c94f185cdde741e">&#9670;&nbsp;</a></span>pullup</h2>
+<a id="a5e941d116e48f8ce3d732be6bb1f8f6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e941d116e48f8ce3d732be6bb1f8f6e">&#9670;&nbsp;</a></span>callback</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pullup) (uint8_t state)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::callback) (usb_callback_t *p_callback)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pull-up enable/disable setting of D+/D- line. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga95ba117213b5391a907582cc300ba44d" title="This API enables or disables pull-up of D+/D- line. ">R_USB_PullUp()</a></li>
+<p>Register a callback function to be called upon completion of a USB related event. (RTOS only) </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#ga2560b302dca363895820a82ea6a2ba9c">R_USB_Callback()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Pointer to Callback function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a63d51ef1777a77d9b041d931e70df77b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63d51ef1777a77d9b041d931e70df77b">&#9670;&nbsp;</a></span>pullUp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pullUp) (usb_ctrl_t *const p_api_ctrl, uint8_t state)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pull-up enable/disable setting of D+/D- line. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#ga999a06f4569d82b8e18c2509e579a35f">R_USB_PullUp()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">state</td><td>Pull-up enable/disable setting. </td></tr>
   </table>
   </dd>
@@ -1023,19 +1056,123 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="a8b751c99a150237518e0329c0697e78a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b751c99a150237518e0329c0697e78a">&#9670;&nbsp;</a></span>modulenumberget</h2>
+<a id="aa6abce0db3b9a1afbf93a02c02e84b7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6abce0db3b9a1afbf93a02c02e84b7e">&#9670;&nbsp;</a></span>hostControlTransfer</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::modulenumberget) (usb_ctrl_t *const p_api_ctrl, uint8_t *module_number)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::hostControlTransfer) (usb_ctrl_t *const p_api_ctrl, usb_setup_t *p_setup, uint8_t *p_buf, uint8_t device_address)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Performs settings and transmission processing when transmitting a setup packet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#gaecba62e40820ec837fa0b285140ed13b" title="Performs settings and transmission processing when transmitting a setup packet. ">R_USB_HostControlTransfer()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_setup</td><td>Setup packet information. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Transfer area information. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device_address</td><td>Device address information. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acfd255be34c610f854f8bedb4a1a0a4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfd255be34c610f854f8bedb4a1a0a4f">&#9670;&nbsp;</a></span>periControlDataGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::periControlDataGet) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Receives data sent by control transfer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#ga1293995ba77495705db3a3adf703b7f1" title="Receives data sent by control transfer. ">R_USB_PeriControlDataGet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Data reception area information. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Data reception size information. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ada9e58c96ca03bf9140ba2db36a4214c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada9e58c96ca03bf9140ba2db36a4214c">&#9670;&nbsp;</a></span>periControlDataSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::periControlDataSet) (usb_ctrl_t *const p_api_ctrl, uint8_t *p_buf, uint32_t size)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Performs transfer processing for control transfer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#ga3fb9080601ee1041e35073e0538a21b0" title="Performs transfer processing for control transfer. ">R_USB_PeriControlDataSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Area information for data transfer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Transfer size information. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a29903dba1e2952e264159322340db640"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29903dba1e2952e264159322340db640">&#9670;&nbsp;</a></span>periControlStatusSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::periControlStatusSet) (usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga386cabe04206e06b3be8dbafc0bc3d86">usb_setup_status_t</a> status)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the response to the setup packet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#gaf8976d11f8be52c3f9422563188d6ab9" title="Set the response to the setup packet. ">R_USB_PeriControlStatusSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">status</td><td>USB port startup information. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aac92e22abfd4381b9927f59d94e18903"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac92e22abfd4381b9927f59d94e18903">&#9670;&nbsp;</a></span>moduleNumberGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::moduleNumberGet) (usb_ctrl_t *const p_api_ctrl, uint8_t *module_number)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This API gets the module number. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gad568903d7571f81da82b56d766bac46f" title="This API gets the module number. ">R_USB_ModuleNumberGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#gad568903d7571f81da82b56d766bac46f">R_USB_ModuleNumberGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1048,19 +1185,19 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="a7bace8f3c29d2a82c46bd662d3e50382"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7bace8f3c29d2a82c46bd662d3e50382">&#9670;&nbsp;</a></span>classtypeget</h2>
+<a id="a4609b14b348657b9b574464f849d7e8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4609b14b348657b9b574464f849d7e8f">&#9670;&nbsp;</a></span>classTypeGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::classtypeget) (usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#gab1dc4a2240edf1a50cca3945f31dc9f2">usb_class_t</a> *class_type)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::classTypeGet) (usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#gab1dc4a2240edf1a50cca3945f31dc9f2">usb_class_t</a> *class_type)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This API gets the module number. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gafe65188a89a926bcc12676c39ff587ea" title="This API gets the class type. ">R_USB_ClassTypeGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#gafe65188a89a926bcc12676c39ff587ea">R_USB_ClassTypeGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1073,19 +1210,19 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="a1004cddae85cd6c2d3fb6ce5071cea53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1004cddae85cd6c2d3fb6ce5071cea53">&#9670;&nbsp;</a></span>deviceaddressget</h2>
+<a id="a4be5025b142213cdc3c86b06e5ca3efd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4be5025b142213cdc3c86b06e5ca3efd">&#9670;&nbsp;</a></span>deviceAddressGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::deviceaddressget) (usb_ctrl_t *const p_api_ctrl, uint8_t *device_address)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::deviceAddressGet) (usb_ctrl_t *const p_api_ctrl, uint8_t *device_address)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This API gets the device address. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga5115f4b4a93c22485a82d753d5ca30b4" title="This API gets the device address. ">R_USB_DeviceAddressGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga5115f4b4a93c22485a82d753d5ca30b4">R_USB_DeviceAddressGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1098,19 +1235,19 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="a3e4b6046758658f79e6e6ee698d7c40d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e4b6046758658f79e6e6ee698d7c40d">&#9670;&nbsp;</a></span>pipenumberget</h2>
+<a id="a25d98b97877550ba5c87cef179612387"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25d98b97877550ba5c87cef179612387">&#9670;&nbsp;</a></span>pipeNumberGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipenumberget) (usb_ctrl_t *const p_api_ctrl, uint8_t *pipe_number)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::pipeNumberGet) (usb_ctrl_t *const p_api_ctrl, uint8_t *pipe_number)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This API gets the pipe number. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga8a525c37cda36063befdb9451db98489" title="This API gets the pipe number. ">R_USB_PipeNumberGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga8a525c37cda36063befdb9451db98489">R_USB_PipeNumberGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1123,19 +1260,19 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="ab179cd979b7b4f21f259083d544fcbe8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab179cd979b7b4f21f259083d544fcbe8">&#9670;&nbsp;</a></span>devicestateget</h2>
+<a id="ac00188c075546f27f2b9ba3fc6f452b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac00188c075546f27f2b9ba3fc6f452b9">&#9670;&nbsp;</a></span>deviceStateGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::devicestateget) (usb_ctrl_t *const p_api_ctrl, uint16_t *state)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::deviceStateGet) (usb_ctrl_t *const p_api_ctrl, uint16_t *state)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This API gets the state of the device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga3daaad1d2b7430e08a5c1bf87bfec38d" title="This API gets the state of the device. ">R_USB_DeviceStateGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga3daaad1d2b7430e08a5c1bf87bfec38d">R_USB_DeviceStateGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1148,19 +1285,19 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="a111247ae7fcbfad04d6e116f92105d26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a111247ae7fcbfad04d6e116f92105d26">&#9670;&nbsp;</a></span>datasizeget</h2>
+<a id="ac2b9fd6871571a54b991b598cd5802a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2b9fd6871571a54b991b598cd5802a7">&#9670;&nbsp;</a></span>dataSizeGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::datasizeget) (usb_ctrl_t *const p_api_ctrl, uint32_t *data_size)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::dataSizeGet) (usb_ctrl_t *const p_api_ctrl, uint32_t *data_size)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This API gets the data size. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga042d5b513be9896e593f023c8cb81cd1" title="This API gets the data size. ">R_USB_DataSizeGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga042d5b513be9896e593f023c8cb81cd1">R_USB_DataSizeGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1173,19 +1310,19 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="ad8db912b4559ccc2868453044273c645"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8db912b4559ccc2868453044273c645">&#9670;&nbsp;</a></span>setupget</h2>
+<a id="a4071ec30a3255c3ea18f8554bd68da50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4071ec30a3255c3ea18f8554bd68da50">&#9670;&nbsp;</a></span>setupGet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::setupget) (usb_ctrl_t *const p_api_ctrl, usb_setup_t *setup)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::setupGet) (usb_ctrl_t *const p_api_ctrl, usb_setup_t *setup)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This API gets the setup type. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga628af921919f90a9232c8c1713cc6c48" title="This API gets the setup type. ">R_USB_SetupGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga628af921919f90a9232c8c1713cc6c48">R_USB_SetupGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1366,6 +1503,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab1dc4a2240edf1a50cca3945f31dc9f2ac5ba0e58af39bb09ef467e27446a2d58"></a>USB_CLASS_REQUEST&#160;</td><td class="fielddoc"><p>USB Class Request. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggab1dc4a2240edf1a50cca3945f31dc9f2ada9301f70f2342c0853a2d41486fcdd9"></a>USB_CLASS_END&#160;</td><td class="fielddoc"><p>USB Class End Code. </p>
+</td></tr>
 </table>
 
 </div>
@@ -1516,9 +1655,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

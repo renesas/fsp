@@ -26,7 +26,9 @@ var group___t_o_u_c_h___a_p_i =
       [ "off_freq", "group___t_o_u_c_h___a_p_i.html#a9166cca9ce7dcf61759ea11aff1d288b", null ],
       [ "drift_freq", "group___t_o_u_c_h___a_p_i.html#a6cd92e4f6ed418ac60f9dd47e72d9c4e", null ],
       [ "cancel_freq", "group___t_o_u_c_h___a_p_i.html#a7b612e4a3b3bac372c554a73effc8d62", null ],
+      [ "number", "group___t_o_u_c_h___a_p_i.html#a49677f83aabedc934446bf9ee56e90b8", null ],
       [ "p_ctsu_instance", "group___t_o_u_c_h___a_p_i.html#ac2cb2fac0073113ab9eaed7adeffcd66", null ],
+      [ "p_uart_instance", "group___t_o_u_c_h___a_p_i.html#afa3a16ed62e957daf8fa92e0cef12b14", null ],
       [ "p_context", "group___t_o_u_c_h___a_p_i.html#a6009a627f9ad02ff149252e40221ba04", null ],
       [ "p_extend", "group___t_o_u_c_h___a_p_i.html#a1f3837c539e0aa61d4c5599548b64028", null ]
     ] ],

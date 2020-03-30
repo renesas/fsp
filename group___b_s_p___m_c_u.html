@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -128,7 +128,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The BSP is responsible for getting the MCU from reset to the user's application. Before reaching the user's application, the BSP sets up the stacks, heap, clocks, interrupts, C runtime environment, and stack monitor. </p>
-<p><a class="anchor" id="um_bsp_data_initialization"></a><a class="anchor" id="um_bsp_stacks_and_heap"></a><a class="anchor" id="um_stack_pointer_monitor"></a></p><ul>
+<p><a class="anchor" id="um_bsp_data_initialization"></a><a class="anchor" id="um_stack_pointer_monitor"></a></p><ul>
 <li>
 <a href="#bsp-features">BSP Features</a> </li>
 <li>
@@ -162,7 +162,7 @@ Overview</h1>
 BSP Features</h2>
 <h3><a class="anchor" id="bsp-clock-configuration"></a>
 BSP Clock Configuration</h3>
-<p><a class="anchor" id="um_bsp_clock_initialization"></a>All system clocks are set up during BSP initialization based on the settings in bsp_clock_cfg.h. These settings are derived from clock configuration information provided from the ISDE <b>Clocks</b> tab setting.</p>
+<p><a class="anchor" id="um_bsp_clock_initialization"></a>All system clocks are set up during BSP initialization based on the settings in bsp_clock_cfg.h. These settings are derived from clock configuration information provided from the RA Configuration tool <b>Clocks</b> tab setting.</p>
 <ul>
 <li>Clock configuration is performed prior to initializing the C runtime environment to speed up the startup process, as it is possible to start up on a relatively slow (that is, 32 kHz) clock.</li>
 <li>The BSP implements the required delays to allow the selected clock to stabilize.</li>
@@ -224,7 +224,11 @@ BSP Weak Symbols</h3>
 Warm Start Callbacks</h3>
 <p><a class="anchor" id="um_bsp_pre_clock_initialization_callback"></a><a class="anchor" id="um_bsp_post_clock_initialization_callback"></a><a class="anchor" id="um_bsp_post_data_initialization_callback"></a>As the BSP is in the process of bringing up the board out of reset, there are three points where the user can request a callback. These are defined as the 'Pre Clock Init', 'Post Clock Init' and 'Post C' warm start callbacks.</p>
 <p>As described above, this function is already weakly defined as <a class="el" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart()</a>, so it is a simple matter of redefining the function or copying the existing body from CMSIS system.c into the application code to get a callback. <a class="el" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart()</a> takes an event parameter of type <code>bsp_warm_start_event_t</code> which describes the type of warm start callback being made.</p>
-<p>This function is not enabled/disabled and is always called for both events as part of the BSP startup. Therefore it needs a function body, which will not be called if the user is overriding it. The function body is located in system. To use this function just copy this function into your own code and modify it to meet your needs.</p>
+<p>This function is not enabled/disabled and is always called for both events as part of the BSP startup. Therefore it needs a function body, which will not be called if the user is overriding it. The function body is located in system.c. To use this function just copy this function into your own code and modify it to meet your needs.</p>
+<h3><a class="anchor" id="heap-allocation"></a>
+Heap Allocation</h3>
+<p><a class="anchor" id="um_bsp_stacks_and_heap"></a>The relatively low amount of on-chip SRAM available and lack of memory protection in an MCU means that heap use must be very carefully controlled to avoid memory leaks, overruns and attempted overallocation. Further, many RTOSes provide their own dynamic memory allocation system. For these reasons the default heap size is set at 0 bytes, effectively disabling dynamic memory. If it is required for an application setting a positive value to the "Heap size (bytes)" option in the RA Common configurations on the BSP tab will allocate a heap.</p>
+<dl class="section note"><dt>Note</dt><dd>When using printf/sprintf (and other variants) to output floating point numbers a heap is required. A minimum size of 0x1000 (4096) bytes is recommended when starting development in this case.</dd></dl>
 <h3><a class="anchor" id="error-logging"></a>
 Error Logging</h3>
 <p><a class="anchor" id="um_bsp_error_logging"></a>When error logging is enabled, the error logging function can be redefined on the command line by defining <a class="el" href="group___b_s_p___m_c_u.html#ga960f46c44b67ba8ad5377cfc8e4e6a75">FSP_ERROR_LOG(err)</a> to the desired function call. The default function implementation is <a class="el" href="group___b_s_p___m_c_u.html#ga960f46c44b67ba8ad5377cfc8e4e6a75">FSP_ERROR_LOG(err)</a>=fsp_error_log(err, <b>FILE</b>, <b>LINE</b>). This implementation uses the predefined macros <b>FILE</b> and <b>LINE</b> to help identify the location where the error occurred. Removing the line from the function call can reduce code size when error logging is enabled. Some compilers may support other predefined macros like <b>FUNCTION</b>, which could be helpful for customizing the error logger.</p>
@@ -243,7 +247,7 @@ Software Delay</h3>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Delay at least 1 second. Depending on the number of wait states required for the region of memory</span></div><div class="line"><span class="comment">     * that the software_delay_loop has been linked in this could take longer. The default is 4 cycles per loop.</span></div><div class="line"><span class="comment">     * This can be modified by redefining DELAY_LOOP_CYCLES. BSP_DELAY_UNITS_SECONDS, BSP_DELAY_UNITS_MILLISECONDS,</span></div><div class="line"><span class="comment">     * and BSP_DELAY_UNITS_MICROSECONDS can all be used with R_BSP_SoftwareDelay. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d">BSP_DELAY_UNITS_SECONDS</a>);</div><div class="line"></div></div><!-- fragment --> <h3><a class="anchor" id="critical-section-macros"></a>
 Critical Section Macors</h3>
 <p><a class="anchor" id="um_bsp_critical_section"></a>Implements a critical section. Some MCUs (MCUs with the BASEPRI register) support allowing high priority interrupts to execute during critical sections. On these MCUs, interrupts with priority less than or equal to BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION are not serviced in critical sections. Interrupts with higher priority than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION still execute in critical sections.</p>
-<div class="fragment"><div class="line"></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga9892fcbd27f7a328e5624bee3eb2d8df">FSP_CRITICAL_SECTION_DEFINE</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Store the current interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaddc2260c1ce320f3aa1f1cb05b9a5620">FSP_CRITICAL_SECTION_ENTER</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Interrupts cannot run in this section unless their priority is less than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Restore saved interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga23338e06b1e1537017ef4f3f94cda354">FSP_CRITICAL_SECTION_EXIT</a>;</div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="board-features"></a>
+<div class="fragment"><div class="line"></div><div class="line">    FSP_CRITICAL_SECTION_DEFINE;</div><div class="line"></div><div class="line">    <span class="comment">/* Store the current interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaddc2260c1ce320f3aa1f1cb05b9a5620">FSP_CRITICAL_SECTION_ENTER</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Interrupts cannot run in this section unless their priority is less than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Restore saved interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga23338e06b1e1537017ef4f3f94cda354">FSP_CRITICAL_SECTION_EXIT</a>;</div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="board-features"></a>
 Board Specific Features</h1>
 <p>The BSP will call the board's initialization function (bsp_init) which can initialize board specific features. Possible board features are listed below.</p>
 <table class="doxtable">
@@ -256,18 +260,22 @@ Board Specific Features</h1>
 </table>
 <h1><a class="anchor" id="bsp-configuration"></a>
 Configuration</h1>
-<p>The BSP is heavily data driven with most features and functionality being configured based on the content from configuration files. Configuration files represent the settings specified by the user and are generated by the ISDE when the Generate Project Content button is clicked.</p>
+<p>The BSP is heavily data driven with most features and functionality being configured based on the content from configuration files. Configuration files represent the settings specified by the user and are generated by the RA Configuration tool when the Generate Project Content button is clicked.</p>
 <p><h2>Build Time Configurations for fsp_common</h2>
 The following build time configurations are defined in fsp_cfg/bsp/bsp_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Main stack size (bytes)</td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF</td><td></td></tr>
+<td>Main stack size (bytes)</td><td>Value must be an integer multiple of 8 and between 8 and 0xFFFFFFFF</td><td>0x400 </td><td>Set the size of the main program stack.<br />
+<br />
+NOTE: This entry is for the main stack. When using an RTOS, thread stacks can be configured in the properties for each thread. </td></tr>
 <tr>
-<td>Heap size (bytes) - A minimum of 4K (0x1000) is required if standard library functions are to be used.</td><td>Value must be 0 or an integer multiple of 8 between 8 and 0xFFFFFFFF. A minimum of 4K (0x1000) is required if standard library functions are to be used.</td><td></td></tr>
+<td>Heap size (bytes)</td><td>Value must be 0 or an integer multiple of 8 between 8 and 0xFFFFFFFF.</td><td>0 </td><td>The main heap is disabled by default. Set the heap size to a positive integer divisible by 8 to enable it.<br />
+<br />
+A minimum of 4K (0x1000) is recommended if standard library functions are to be used. </td></tr>
 <tr>
-<td>MCU Vcc (mV)</td><td>Value must between 0 and 4600 (4.6V)</td><td></td></tr>
+<td>MCU Vcc (mV)</td><td>Value must between 0 and 5500 (5.5V)</td><td>3300 </td><td>Some peripherals require different settings based on the supplied voltage. Entering Vcc here (in mV) allows the relevant driver modules to configure the associated peripherals accordingly. </td></tr>
 <tr>
 <td>Parameter checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -275,7 +283,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td></td></tr>
+</td><td>Disabled </td><td>When enabled, parameter checking for the BSP is turned on. In addition, any modules whose parameter checking configuration is set to 'Default (BSP)' will perform parameter checking as well. </td></tr>
 <tr>
 <td>Assert Failures</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -287,15 +295,15 @@ Use assert() to Halt Execution</li>
 <li>
 Disable checks that would return FSP_ERR_ASSERTION</li>
 </ul>
-</td><td></td></tr>
+</td><td>Return FSP_ERR_ASSERTION </td><td>Define the behavior of the <a class="el" href="group___b_s_p___m_c_u.html#gaa4fa8ae9390afa996af2dabee6552732">FSP_ASSERT()</a> macro. </td></tr>
 <tr>
 <td>Error Log</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 No Error Log</li>
 <li>
-Errors Logged in fsp_error_log</li>
+Errors Logged via fsp_error_log</li>
 </ul>
-</td><td></td></tr>
+</td><td>No Error Log </td><td>Specify error logging behavior. </td></tr>
 <tr>
 <td>ID Code Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -305,9 +313,9 @@ Locked with All Erase support</li>
 <li>
 Locked</li>
 </ul>
-</td><td></td></tr>
+</td><td>Unlocked (Ignore ID) </td><td>When set to 'Locked with All Erase support', the ID Code must be set in the debugger to read or write data to the MCU, but the All Erase command is still accepted regardless. When set to 'Locked', all erase/download/debug access is disabled unless the ID Code is provided. </td></tr>
 <tr>
-<td>ID Code (32 Hex Characters)</td><td>Value must be a 32 character long hex string</td><td></td></tr>
+<td>ID Code (32 Hex Characters)</td><td>Value must be a 32 character long hex string</td><td>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF </td><td>Set the ID Code for locking debug access. This setting is only used when the ID Code Mode is not set to Unlocked. </td></tr>
 <tr>
 <td>Soft Reset</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -315,7 +323,15 @@ Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Support for soft reset. If disabled, registers are assumed to be set to their default value during startup. </td></tr>
+</td><td>Disabled </td><td>Support for soft reset. If disabled, registers are assumed to be set to their default value during startup. </td></tr>
+<tr>
+<td>Main Oscillator Populated</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Populated</li>
+<li>
+Not Populated</li>
+</ul>
+</td><td>Populated </td><td>Select whether or not there is a main oscillator (XTAL) on the board. This setting can be overridden in board_cfg.h. </td></tr>
 <tr>
 <td>PFS Protect</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -323,7 +339,7 @@ Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Keep the PFS registers locked when they are not being modified. If disabled they will be unlocked during startup. </td></tr>
+</td><td>Enabled </td><td>Keep the PFS registers locked when they are not being modified. If disabled they will be unlocked during startup. </td></tr>
 <tr>
 <td>Main Oscillator Wait Time</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -347,7 +363,7 @@ Enabled</li>
 <li>
 32768 us</li>
 </ul>
-</td><td>Number of cycles to wait for the main oscillator clock to stabilize. This setting can be overridden in board_cfg.h </td></tr>
+</td><td>32768 us </td><td>Number of cycles to wait for the main oscillator clock to stabilize. This setting can be overridden in board_cfg.h </td></tr>
 <tr>
 <td>Main Oscillator Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -355,7 +371,7 @@ External Oscillator</li>
 <li>
 Crystal or Resonator</li>
 </ul>
-</td><td>Select the main oscillator clock source. This setting can be overridden in board_cfg.h </td></tr>
+</td><td>Crystal or Resonator </td><td>Select the main oscillator clock source. This setting can be overridden in board_cfg.h </td></tr>
 <tr>
 <td>Subclock Populated</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -363,7 +379,7 @@ Populated</li>
 <li>
 Not Populated</li>
 </ul>
-</td><td>Select whether or not there is a subclock on the board. This setting can be overridden in board_cfg.h. </td></tr>
+</td><td>Populated </td><td>Select whether or not there is a subclock crystal on the board. This setting can be overridden in board_cfg.h. </td></tr>
 <tr>
 <td>Subclock Drive</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -371,9 +387,9 @@ Middle (4.4pf)</li>
 <li>
 Standard (12.5pf)</li>
 </ul>
-</td><td>Select the subclock oscillator drive capacitance. This setting can be overridden in board_cfg.h </td></tr>
+</td><td>Standard (12.5pf) </td><td>Select the subclock oscillator drive capacitance. This setting can be overridden in board_cfg.h </td></tr>
 <tr>
-<td>Subclock Stabilization Time (ms)</td><td>Value must between 0 and 10000</td><td>Select the subclock oscillator stabilization time. This is only used in the startup code if the subclock is selected as the system clock on the Clocks tab. This setting can be overridden in board_cfg.h </td></tr>
+<td>Subclock Stabilization Time (ms)</td><td>Value must between 0 and 10000</td><td>1000 </td><td>Select the subclock oscillator stabilization time. This is only used in the startup code if the subclock is selected as the system clock on the Clocks tab. This setting can be overridden in board_cfg.h </td></tr>
 </table>
 </p>
 <table class="memberdecls">
@@ -402,16 +418,10 @@ Macros</h2></td></tr>
 <tr class="separator:gaa4fa8ae9390afa996af2dabee6552732"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga577e9b015e1b0794934fa4f2b229e52f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga577e9b015e1b0794934fa4f2b229e52f">FSP_ERROR_RETURN</a>(a,  err)</td></tr>
 <tr class="separator:ga577e9b015e1b0794934fa4f2b229e52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9892fcbd27f7a328e5624bee3eb2d8df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga9892fcbd27f7a328e5624bee3eb2d8df">FSP_CRITICAL_SECTION_DEFINE</a></td></tr>
-<tr class="separator:ga9892fcbd27f7a328e5624bee3eb2d8df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga338455b9f74d3f07969c7e57953fdc22"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga338455b9f74d3f07969c7e57953fdc22">FSP_CRITICAL_SECTION_GET_CURRENT_STATE</a></td></tr>
-<tr class="separator:ga338455b9f74d3f07969c7e57953fdc22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaddc2260c1ce320f3aa1f1cb05b9a5620"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaddc2260c1ce320f3aa1f1cb05b9a5620">FSP_CRITICAL_SECTION_ENTER</a></td></tr>
 <tr class="separator:gaddc2260c1ce320f3aa1f1cb05b9a5620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga23338e06b1e1537017ef4f3f94cda354"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga23338e06b1e1537017ef4f3f94cda354">FSP_CRITICAL_SECTION_EXIT</a></td></tr>
 <tr class="separator:ga23338e06b1e1537017ef4f3f94cda354"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga039f351210fa6aae1224ef910be7c983"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga039f351210fa6aae1224ef910be7c983">FSP_PRIV_CORTEX_PROCESSOR_EXCEPTIONS</a></td></tr>
-<tr class="separator:ga039f351210fa6aae1224ef910be7c983"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4e36b09bee515ff1b813e7ba0412e60d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a></td></tr>
 <tr class="separator:ga4e36b09bee515ff1b813e7ba0412e60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadecec24d538312129b60def6152f5992"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a></td></tr>
@@ -440,6 +450,9 @@ Enumerations</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:gaa3cd3e43291e81e795d642b79b6088e6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a></td></tr>
 <tr class="separator:gaa3cd3e43291e81e795d642b79b6088e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa2f4340010ddb682ca12fac46f83db8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaaa2f4340010ddb682ca12fac46f83db8">g_bsp_version</a></td></tr>
+<tr class="memdesc:gaaa2f4340010ddb682ca12fac46f83db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default initialization function.  <a href="#gaaa2f4340010ddb682ca12fac46f83db8">More...</a><br /></td></tr>
+<tr class="separator:gaaa2f4340010ddb682ca12fac46f83db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gae685ec20bc3579295878f1586478b54c"></a>
@@ -543,36 +556,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ga9892fcbd27f7a328e5624bee3eb2d8df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9892fcbd27f7a328e5624bee3eb2d8df">&#9670;&nbsp;</a></span>FSP_CRITICAL_SECTION_DEFINE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSP_CRITICAL_SECTION_DEFINE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This macro defines a variable for saving previous mask value </p>
-
-</div>
-</div>
-<a id="ga338455b9f74d3f07969c7e57953fdc22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga338455b9f74d3f07969c7e57953fdc22">&#9670;&nbsp;</a></span>FSP_CRITICAL_SECTION_GET_CURRENT_STATE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSP_CRITICAL_SECTION_GET_CURRENT_STATE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>These macros abstract methods to save and restore the interrupt state for different architectures. </p>
-
-</div>
-</div>
 <a id="gaddc2260c1ce320f3aa1f1cb05b9a5620"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaddc2260c1ce320f3aa1f1cb05b9a5620">&#9670;&nbsp;</a></span>FSP_CRITICAL_SECTION_ENTER</h2>
 
@@ -584,7 +567,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This macro defined to get the mask value </p>
+<p>This macro temporarily saves the current interrupt state and disables interrupts. </p>
 
 </div>
 </div>
@@ -599,22 +582,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This macro defined to restore the old mask value </p>
-
-</div>
-</div>
-<a id="ga039f351210fa6aae1224ef910be7c983"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga039f351210fa6aae1224ef910be7c983">&#9670;&nbsp;</a></span>FSP_PRIV_CORTEX_PROCESSOR_EXCEPTIONS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSP_PRIV_CORTEX_PROCESSOR_EXCEPTIONS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Number of Cortex processor exceptions, used as an offset from XPSR value for the IRQn_Type macro. </p>
+<p>This macro restores the previously saved interrupt state, reenabling interrupts. </p>
 
 </div>
 </div>
@@ -1391,7 +1359,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Setup MCU. </p>
+<p>Initialize the MCU and the runtime environment. </p>
 
 </div>
 </div>
@@ -1488,8 +1456,8 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The 'theoretical' maximum delay that may be obtained is determined by a full 32 bit loop count and the system clock rate. @240MHz: ((0xFFFFFFFF loops * 4 cycles /loop) / 240000000) = 71 seconds. @32MHz: ((0xFFFFFFFF loops * 4 cycles /loop) / 32000000) = 536 seconds</p>
-<p>Note that requests for very large delays will be affected by rounding in the calculations and the actual delay achieved may be slightly less. @32 MHz, for example, a request for 532 seconds will be closer to 536 seconds.</p>
+<p>The 'theoretical' maximum delay that may be obtained is determined by a full 32 bit loop count and the system clock rate. @120MHz: ((0xFFFFFFFF loops * 4 cycles /loop) / 120000000) = 143 seconds. @32MHz: ((0xFFFFFFFF loops * 4 cycles /loop) / 32000000) = 536 seconds</p>
+<p>Note that requests for very large delays will be affected by rounding in the calculations and the actual delay achieved may be slightly longer. @32 MHz, for example, a request for 532 seconds will be closer to 536 seconds.</p>
 <p>Note also that if the calculations result in a loop_cnt of zero, the bsp_prv_software_delay_loop() function is not called at all. In this case the requested delay is too small (nanoseconds) to be carried out by the loop itself, and the overhead associated with executing the code to just get to this point has certainly satisfied the requested delay.</p>
 <dl class="section note"><dt>Note</dt><dd>This function calls bsp_cpu_clock_get() which ultimately calls R_CGC_SystemClockFreqGet() and therefore requires that the BSP has already initialized the CGC (which it does as part of the Sysinit). Care should be taken to ensure this remains the case if in the future this function were to be called as part of the BSP initialization. </dd></dl>
 
@@ -1619,7 +1587,24 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>&lt; System Clock Frequency (Core Clock) </p>
+<p>System Clock Frequency (Core Clock) </p>
+
+</div>
+</div>
+<a id="gaaa2f4340010ddb682ca12fac46f83db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaa2f4340010ddb682ca12fac46f83db8">&#9670;&nbsp;</a></span>g_bsp_version</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> g_bsp_version</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default initialization function. </p>
+<p>Version data structure used by error logger macro. </p>
 
 </div>
 </div>
@@ -1629,9 +1614,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

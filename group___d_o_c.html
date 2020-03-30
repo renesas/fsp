@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -118,7 +118,7 @@ Overview</h1>
 Features</h2>
 <p>The DOC HAL module peripheral is used to compare, add or subtract 16-bit data and can detect the following events:</p>
 <ul>
-<li>A mismatch or match between data values</li>
+<li>A match or mismatch between data values</li>
 <li>Overflow of an addition operation</li>
 <li>Underflow of a subtraction operation</li>
 </ul>
@@ -130,7 +130,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_doc_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -140,15 +140,15 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Data Operation Circuit Driver on r_doc</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Monitoring -&gt; Data Operation Circuit Driver on r_doc:<br />
+ <h2>Configurations for Driver &gt; Monitoring &gt; Data Operation Circuit Driver on r_doc</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Monitoring &gt; Data Operation Circuit Driver on r_doc:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_doc0 </td><td>Module name. </td></tr>
 <tr>
 <td>Event</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -160,13 +160,13 @@ Addition overflow</li>
 <li>
 Subtraction underflow</li>
 </ul>
-</td><td>Select the event that will trigger the DOC interrupt. </td></tr>
+</td><td>Comparison mismatch </td><td>Select the event that will trigger the DOC interrupt. </td></tr>
 <tr>
-<td>Reference/Initial Data</td><td>Value must be a 16 bit integer between 0 and 65535</td><td>Enter Initial Value for Addition/Subtraction or enter reference value for comparison. </td></tr>
+<td>Reference/Initial Data</td><td>Value must be a 16 bit integer between 0 and 65535</td><td>0 </td><td>Enter Initial Value for Addition/Subtraction or enter reference value for comparison. </td></tr>
 <tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>A user callback function must be provided. This will be called from the interrupt service routine (ISR) when the configured DOC event occurs. </td></tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function must be provided. This will be called from the interrupt service routine (ISR) when the configured DOC event occurs. </td></tr>
 <tr>
-<td>DOC Interrupt Priority</td><td>MCU Specific Options</td><td>Select the DOC interrupt priority. </td></tr>
+<td>DOC Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the DOC interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-doc-clock-configuration"></a>
@@ -178,12 +178,12 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-doc-usage_notes"></a>
 Usage Notes</h1>
 <h2>DMAC/DTC Integration</h2>
-<p>DOC can be used with <a class="el" href="group___d_m_a_c.html">Direct Memory Access Controller (r_dmac)</a> or <a class="el" href="group___d_t_c.html">Data Transfer Controller (r_dtc)</a> to write to the input register without CPU intervention. DMAC is more useful for most DOC applications because it can be used with software start. To write DOC input data with DTC/DMAC, set <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a176dc2f3d1edfc321fa248a7e4c3b549" title="Destination pointer. ">transfer_info_t::p_dest</a> to R_DOC-&gt;DODIR.</p>
+<p>DOC can be used with <a class="el" href="group___d_m_a_c.html">Direct Memory Access Controller (r_dmac)</a> or <a class="el" href="group___d_t_c.html">Data Transfer Controller (r_dtc)</a> to write to the input register without CPU intervention. DMAC is more useful for most DOC applications because it can be started directly from software. To write DOC input data with DTC/DMAC, set <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a176dc2f3d1edfc321fa248a7e4c3b549" title="Destination pointer. ">transfer_info_t::p_dest</a> to R_DOC-&gt;DODIR.</p>
 <h1><a class="anchor" id="r-doc-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the R_DOC in an application. This example shows how this driver can be used for continuous 16 bit addition operation while reading the result at every overflow event.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define DOC_EXAMPLE_VALUE2    0xF000</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>    err;</div><div class="line">    <a class="code" href="group___d_o_c___a_p_i.html#structdoc__status__t">doc_status_t</a> result;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the DOC module for Addition Operation with Initial value written in DOC Data Setting Register*/</span></div><div class="line">    err = <a class="code" href="group___d_o_c.html#ga49ab0814d37fe40570ef1c379a51ce0b">R_DOC_Open</a>(&amp;g_doc_ctrl, &amp;g_doc_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* write continuous data to the DOC Data Input Register and read the result of addition from status register when interrupt occurs */</span></div><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 5; i++)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___d_o_c.html#gadf5d905089a1e46631a0a0338c29005c">R_DOC_Write</a>(&amp;g_doc_ctrl, DOC_EXAMPLE_VALUE2);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (callback_event_counter &gt;= 1)</div><div class="line">        {</div><div class="line"></div><div class="line">            <span class="comment">/* read the result of the operation */</span></div><div class="line">            err = <a class="code" href="group___d_o_c.html#gac28b24a2533c5cf4c5172e634c437176">R_DOC_StatusGet</a>(&amp;g_doc_ctrl, &amp;result);</div><div class="line">            handle_error(err);</div><div class="line"></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* close the module driver */</span></div><div class="line">    err = <a class="code" href="group___d_o_c.html#ga00abf8118e145197cb6dad5502d4e1e0">R_DOC_Close</a>(&amp;g_doc_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define DOC_EXAMPLE_VALUE    0xF000</span></div><div class="line"></div><div class="line">uint32_t g_callback_event_counter = 0;</div><div class="line"></div><div class="line"><span class="comment">/* This callback is called when DOC overflow event occurs. It is registered in doc_cfg_t when R_DOC_Open is</span></div><div class="line"><span class="comment"> * called. */</span></div><div class="line"><span class="keywordtype">void</span> doc_callback (<a class="code" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line"></div><div class="line">    g_callback_event_counter++;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>    err;</div><div class="line">    <a class="code" href="group___d_o_c___a_p_i.html#structdoc__status__t">doc_status_t</a> result;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the DOC module for addition with initial value specified in doc_cfg_t::doc_data. */</span></div><div class="line">    err = <a class="code" href="group___d_o_c.html#ga49ab0814d37fe40570ef1c379a51ce0b">R_DOC_Open</a>(&amp;g_doc_ctrl, &amp;g_doc_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Write data to the DOC Data Input Register and read the result of addition from status register when an</span></div><div class="line"><span class="comment">     * interrupt occurs. */</span></div><div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 5; i++)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___d_o_c.html#gadf5d905089a1e46631a0a0338c29005c">R_DOC_Write</a>(&amp;g_doc_ctrl, DOC_EXAMPLE_VALUE);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (g_callback_event_counter &gt;= 1)</div><div class="line">        {</div><div class="line"></div><div class="line">            <span class="comment">/* Read the result of the operation */</span></div><div class="line">            err = <a class="code" href="group___d_o_c.html#gac28b24a2533c5cf4c5172e634c437176">R_DOC_StatusGet</a>(&amp;g_doc_ctrl, &amp;result);</div><div class="line">            handle_error(err);</div><div class="line"></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga49ab0814d37fe40570ef1c379a51ce0b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga49ab0814d37fe40570ef1c379a51ce0b">&#9670;&nbsp;</a></span>R_DOC_Open()</h2>
 
@@ -210,7 +210,7 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Opens and configures the Data Operation Circuit (DOC) in comparison, addition or subtraction mode and sets initial data for addition or subtraction, or reference data for comparison.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initialize the DOC module for Addition Operation with Initial value written in DOC Data Setting Register*/</span></div><div class="line">    err = <a class="code" href="group___d_o_c.html#ga49ab0814d37fe40570ef1c379a51ce0b">R_DOC_Open</a>(&amp;g_doc_ctrl, &amp;g_doc_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initialize the DOC module for addition with initial value specified in doc_cfg_t::doc_data. */</span></div><div class="line">    err = <a class="code" href="group___d_o_c.html#ga49ab0814d37fe40570ef1c379a51ce0b">R_DOC_Open</a>(&amp;g_doc_ctrl, &amp;g_doc_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>DOC successfully configured. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module already open. </td></tr>
@@ -237,7 +237,7 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Closes the module driver. Enables module stop mode.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* close the module driver */</span></div><div class="line">    err = <a class="code" href="group___d_o_c.html#ga00abf8118e145197cb6dad5502d4e1e0">R_DOC_Close</a>(&amp;g_doc_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Module successfully closed. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open. </td></tr>
@@ -275,7 +275,7 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Returns the result of addition/subtraction.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">            <span class="comment">/* read the result of the operation */</span></div><div class="line">            err = <a class="code" href="group___d_o_c.html#gac28b24a2533c5cf4c5172e634c437176">R_DOC_StatusGet</a>(&amp;g_doc_ctrl, &amp;result);</div><div class="line">            handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">            <span class="comment">/* Read the result of the operation */</span></div><div class="line">            err = <a class="code" href="group___d_o_c.html#gac28b24a2533c5cf4c5172e634c437176">R_DOC_StatusGet</a>(&amp;g_doc_ctrl, &amp;result);</div><div class="line">            handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Status successfully read. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open. </td></tr>
@@ -312,7 +312,7 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Writes to the DODIR - DOC Input Register.</p>
-<p>Example: </p><div class="fragment"><div class="line">        err = <a class="code" href="group___d_o_c.html#gadf5d905089a1e46631a0a0338c29005c">R_DOC_Write</a>(&amp;g_doc_ctrl, DOC_EXAMPLE_VALUE2);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line">        err = <a class="code" href="group___d_o_c.html#gadf5d905089a1e46631a0a0338c29005c">R_DOC_Write</a>(&amp;g_doc_ctrl, DOC_EXAMPLE_VALUE);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Values successfully written to the registers. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver not open. </td></tr>
@@ -355,9 +355,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

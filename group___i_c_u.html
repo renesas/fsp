@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -115,7 +115,8 @@ Functions</h2></td></tr>
 <p>Driver for the ICU peripheral on RA MCUs. This module implements the <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html">External IRQ Interface</a>. </p>
 <h1><a class="anchor" id="r-icu-overview"></a>
 Overview</h1>
-<p>The Interrupt Controller Unit (ICU) controls which event signals are linked to the NVIC, DTC, and DMAC modules. R_ICU software module only implements the <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html">External IRQ Interface</a>. The external_irq interface is for configuring interrupts to fire when a trigger condition is detected on an external IRQ pin.</p>
+<p>The Interrupt Controller Unit (ICU) controls which event signals are linked to the NVIC, DTC, and DMAC modules. The R_ICU software module only implements the <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html">External IRQ Interface</a>. The external_irq interface is for configuring interrupts to fire when a trigger condition is detected on an external IRQ pin.</p>
+<dl class="section note"><dt>Note</dt><dd>Multiple instances are used when more than one external interrupt is needed. Configure each instance with different channels and properties as needed for the specific interrupt.</dd></dl>
 <h2><a class="anchor" id="r-icu-features"></a>
 Features</h2>
 <p><a class="anchor" id="um_icu_enable_external_irq"></a><a class="anchor" id="um_icu_disable_external_irq"></a><a class="anchor" id="um_icu_open_rising_edge"></a><a class="anchor" id="um_icu_open_falling_edge"></a><a class="anchor" id="um_icu_open_both_edge"></a><a class="anchor" id="um_icu_open_low_level"></a><a class="anchor" id="um_icu_open_callback"></a></p><ul>
@@ -133,7 +134,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_icu_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -143,17 +144,17 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for External IRQ Driver on r_icu</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Input -&gt; External IRQ Driver on r_icu:<br />
+ <h2>Configurations for Driver &gt; Input &gt; External IRQ Driver on r_icu</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Input &gt; External IRQ Driver on r_icu:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_external_irq0 </td><td>Module name. </td></tr>
 <tr>
-<td>Channel</td><td>Value must be an integer between 0 and 15</td><td>Specify the hardware channel. </td></tr>
+<td>Channel</td><td>Value must be an integer between 0 and 15</td><td>0 </td><td>Specify the hardware channel. </td></tr>
 <tr>
 <td>Trigger</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -165,7 +166,7 @@ Both Edges</li>
 <li>
 Low Level</li>
 </ul>
-</td><td>Select the signal edge or state that triggers an interrupt. </td></tr>
+</td><td>Rising </td><td>Select the signal edge or state that triggers an interrupt. </td></tr>
 <tr>
 <td>Digital Filtering</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -173,7 +174,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Select if the digital noise filter should be enabled. </td></tr>
+</td><td>Disabled </td><td>Select if the digital noise filter should be enabled. </td></tr>
 <tr>
 <td>Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -185,11 +186,11 @@ PCLK / 32</li>
 <li>
 PCLK / 64</li>
 </ul>
-</td><td>Select the clock divider for the digital noise filter. </td></tr>
+</td><td>PCLK / 64 </td><td>Select the clock divider for the digital noise filter. </td></tr>
 <tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>A user callback function can be provided here. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the IRQn triggers </td></tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided here. If this callback function is provided, it is called from the interrupt service routine (ISR) each time the IRQn triggers </td></tr>
 <tr>
-<td>Pin Interrupt Priority</td><td>MCU Specific Options</td><td>Select the PIN interrupt priority. </td></tr>
+<td>Pin Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the PIN interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-icu-clock-configuration"></a>
@@ -442,9 +443,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

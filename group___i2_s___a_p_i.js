@@ -4,7 +4,9 @@ var group___i2_s___a_p_i =
       [ "p_context", "group___i2_s___a_p_i.html#ac22a347d63d30262e72c5015c422cd16", null ],
       [ "event", "group___i2_s___a_p_i.html#a035583e3102b475a20517aca81920cd7", null ]
     ] ],
-    [ "i2s_status_t", "group___i2_s___a_p_i.html#structi2s__status__t", null ],
+    [ "i2s_status_t", "group___i2_s___a_p_i.html#structi2s__status__t", [
+      [ "state", "group___i2_s___a_p_i.html#a3ffcaf98ed8f2617ec328d6d19bd6fb0", null ]
+    ] ],
     [ "i2s_cfg_t", "group___i2_s___a_p_i.html#structi2s__cfg__t", [
       [ "channel", "group___i2_s___a_p_i.html#af59d460724a6eaf6383afe3e2f9d16de", null ],
       [ "pcm_width", "group___i2_s___a_p_i.html#a97756d5c5c3eeefdb72a5bc812ccba55", null ],
@@ -39,7 +41,6 @@ var group___i2_s___a_p_i =
       [ "p_cfg", "group___i2_s___a_p_i.html#a50a610c8f78c0a2e352e2a28eaff7c97", null ],
       [ "p_api", "group___i2_s___a_p_i.html#ad9909de3475a55565f042c3d44b9b72e", null ]
     ] ],
-    [ "I2S_API_VERSION_MAJOR", "group___i2_s___a_p_i.html#ga8fcd85727254e46adae47559cb8ae3bc", null ],
     [ "i2s_ctrl_t", "group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6", null ],
     [ "i2s_pcm_width_t", "group___i2_s___a_p_i.html#ga622c7c1c7f4e11569cedea578a839550", [
       [ "I2S_PCM_WIDTH_8_BITS", "group___i2_s___a_p_i.html#gga622c7c1c7f4e11569cedea578a839550ac918a2422a4c5c6f76c6cbe300897afe", null ],

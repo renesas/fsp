@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -137,7 +137,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_lpm_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -147,157 +147,43 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Low Power Modes Driver on r_lpm</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Power -&gt; Low Power Modes Driver on r_lpm:<br />
+ <h2>Configurations for Driver &gt; Power &gt; Low Power Modes Driver on r_lpm</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Power &gt; Low Power Modes Driver on r_lpm:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>General|Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_lpm0 </td><td>Module name. </td></tr>
 <tr>
-<td>General|Low Power Mode</td><td>MCU Specific Options</td><td>Power mode to be entered. </td></tr>
+<td>General &gt; Low Power Mode</td><td>MCU Specific Options</td><td></td><td>Power mode to be entered. </td></tr>
 <tr>
-<td>General|Output port state in standby and deep standby</td><td>MCU Specific Options</td><td>Select the state of output pins during standby. Applies to address output, data output, and other bus control output pins. </td></tr>
+<td>General &gt; Output port state in standby and deep standby</td><td>MCU Specific Options</td><td></td><td>Select the state of output pins during standby. Applies to address output, data output, and other bus control output pins. </td></tr>
 <tr>
-<td>Standby Options|Wake Sources|IRQ0</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
+<td>Standby Options &gt; Wake Sources</td><td>MCU Specific Options</td><td></td><td>Enable wake from standby from these Sources. </td></tr>
 <tr>
-<td>Standby Options|Wake Sources|IRQ1</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
+<td>Standby Options &gt; Snooze Request Source</td><td>MCU Specific Options</td><td></td><td>Select the event that will enter snooze. </td></tr>
 <tr>
-<td>Standby Options|Wake Sources|IRQ2</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
+<td>Standby Options &gt; Snooze End Sources</td><td>MCU Specific Options</td><td></td><td>Enable wake from snooze from these sources. </td></tr>
 <tr>
-<td>Standby Options|Wake Sources|IRQ3</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ4</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ5</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ6</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ7</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ8</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ9</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ10</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ11</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ12</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ13</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ14</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IRQ15</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|IWDT</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|Key Interrupt</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|LVD1 Interrupt</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|LVD2 Interrupt</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|VBATT Interrupt</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|Analog Comparator Low-Power 0 Interrupt</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|Analog Comparator High-speed 0 Interrupt</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|RTC Alarm</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|RTC Period</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|USB High-speed</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|USB Full-speed</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|AGT1 underflow</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|AGT1 Compare Match A</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|AGT1 Compare Match B</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Wake Sources|I2C 0</td><td>MCU Specific Options</td><td>Enable wake from standby from this source. </td></tr>
-<tr>
-<td>Standby Options|Snooze Request Source</td><td>MCU Specific Options</td><td>Select the event that will enter snooze. </td></tr>
-<tr>
-<td>Standby Options|Snooze End Sources|AGT1 Underflow</td><td>MCU Specific Options</td><td>Enable wake from snooze from this source. </td></tr>
-<tr>
-<td>Standby Options|Snooze End Sources|DTC Transfer Completion</td><td>MCU Specific Options</td><td>Enable wake from snooze from this source. </td></tr>
-<tr>
-<td>Standby Options|Snooze End Sources|DTC Transfer Completion Negated signal</td><td>MCU Specific Options</td><td>Enable wake from snooze from this source. </td></tr>
-<tr>
-<td>Standby Options|Snooze End Sources|ADC0 Compare Match</td><td>MCU Specific Options</td><td>Enable wake from snooze from this source. </td></tr>
-<tr>
-<td>Standby Options|Snooze End Sources|ADC0 Compare Mismatch</td><td>MCU Specific Options</td><td>Enable wake from snooze from this source. </td></tr>
-<tr>
-<td>Standby Options|Snooze End Sources|ADC1 Compare Match</td><td>MCU Specific Options</td><td>Enable wake from snooze from this source. </td></tr>
-<tr>
-<td>Standby Options|Snooze End Sources|ADC1 Compare Mismatch</td><td>MCU Specific Options</td><td>Enable wake from snooze from this source. </td></tr>
-<tr>
-<td>Standby Options|Snooze End Sources|SCI0 Address Match</td><td>MCU Specific Options</td><td>Enable wake from snooze from this source. </td></tr>
-<tr>
-<td>Standby Options|DTC state in Snooze Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Standby Options &gt; DTC state in Snooze Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Enable wake from snooze from this source. </td></tr>
+</td><td>Disabled </td><td>Enable wake from snooze from this source. </td></tr>
 <tr>
-<td>Deep Standby Options|Maintain or reset the IO port states on exit from deep standby mode</td><td>MCU Specific Options</td><td>Select the state of the IO Pins after exiting deep standby mode. </td></tr>
+<td>Standby Options &gt; Snooze Cancel Source</td><td>MCU Specific Options</td><td></td><td>Select an interrupt source to cancel snooze. </td></tr>
 <tr>
-<td>Deep Standby Options|Internal power supply control in deep standby mode</td><td>MCU Specific Options</td><td>Select the state of the internal power supply in deep standby mode. </td></tr>
+<td>Deep Standby Options &gt; Maintain or reset the IO port states on exit from deep standby mode</td><td>MCU Specific Options</td><td></td><td>Select the state of the IO Pins after exiting deep standby mode. </td></tr>
 <tr>
-<td>Deep Standby Options|Cancel Sources|IRQ0</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
+<td>Deep Standby Options &gt; Internal power supply control in deep standby mode</td><td>MCU Specific Options</td><td></td><td>Select the state of the internal power supply in deep standby mode. </td></tr>
 <tr>
-<td>Deep Standby Options|Cancel Sources|IRQ1</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
+<td>Deep Standby Options &gt; Cancel Sources</td><td>MCU Specific Options</td><td></td><td>Enable wake from deep standby using these sources. </td></tr>
 <tr>
-<td>Deep Standby Options|Cancel Sources|IRQ2</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ3</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ4</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ5</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ6</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ7</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ8</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ9</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ10</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ11</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ12</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ13</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|IRQ14</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|LVD1</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|LVD2</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|RTC Interval</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|RTC Alarm</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|NMI</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|USBFS</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|USBHS</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
-<tr>
-<td>Deep Standby Options|Cancel Sources|AGT1</td><td>MCU Specific Options</td><td>Enable wake from deep standby using this source. </td></tr>
+<td>Deep Standby Options &gt; Cancel Edges</td><td>MCU Specific Options</td><td></td><td>Falling edge trigger is default. Select sources to enable wake from deep standby with rising edge. </td></tr>
 </table>
 </p>
 <p><a class="anchor" id="um_lpm_address_bus_and_bus_control_signals_in_standby_or_deep_standby"></a><a class="anchor" id="um_lpm_internal_power_supply_control_while_in_deep_standby"></a><a class="anchor" id="um_lpm_io_port_states_deep_standby"></a><a class="anchor" id="um_lpm_module_initialization"></a><a class="anchor" id="um_lpm_s5d9_transition_to_low_power_mode"></a><a class="anchor" id="um_lpm_snooze_to_normal_transition_trigger_source"></a><a class="anchor" id="um_lpm_snooze_to_standby_transition_trigger_source"></a><a class="anchor" id="um_lpm_standby_to_snooze_transition_trigger_source"></a><a class="anchor" id="um_lpm_wake_from_deep_standby_trigger_source"></a><a class="anchor" id="um_lpm_support_deep_standby"></a><a class="anchor" id="um_lpm_support_sleep"></a><a class="anchor" id="um_lpm_support_snooze"></a><a class="anchor" id="um_lpm_support_standby"></a><a class="anchor" id="um_lpm_wake_from_standby_trigger_source"></a><a class="anchor" id="um_lpm_mode_entry"></a> </p>
@@ -314,15 +200,11 @@ Usage Notes</h1>
 <h2>Software Standby Mode</h2>
 <p>In software-standby mode, the CPU, as well as most of the on-chip peripheral functions and all of the internal oscillators, are stopped. The contents of the CPU internal registers and SRAM data, the states of on-chip peripheral functions, and I/O Ports are all retained. Software-standby mode allows significant reduction in power consumption, because most of the oscillators are stopped in this mode. Like sleep mode, standby mode requires an interrupt or event be configured and enabled to wake up.</p>
 <h2>Snooze Mode</h2>
-<p>Snooze mode is available through the standby mode LPM instance. Choose "Standby with Snooze Enabled" for "Choose the low power mode" in the Properties window. Snooze mode can be used with some MCU peripherals to execute basic tasks, while keeping the MCU in a low-power state. The snooze settings are below the standby settings in the Properties window. The ADC, DTC, and other peripherals can be enabled in snooze mode. All the settings for snooze are available through configuration properties for the standby instance Snooze is considered an advanced feature. Snooze mode can exit to normal or software standby modes. There are three ways to exit from Snooze mode:</p><ol type="1">
-<li>Select "Snooze Exit Sources" from the configurator (Transit from Snooze to Software standby mode)</li>
-<li>Select "Standby/Snooze Exit Sources" from the configurator (Transit from Snooze to Normal mode)</li>
-<li>Select "Additional snooze exit sources" from the configurator (Transit from Snooze to Normal mode)</li>
-</ol>
+<p>Snooze mode can be used with some MCU peripherals to execute basic tasks while keeping the MCU in a low-power state. Many core peripherals and all clocks can be selected to run during Snooze, allowing for more flexible low-power configuration than Software Standby mode. To enable Snooze, select "Software Standby mode with Snooze mode enabled" for the "Low Power Mode" configuration option. Snooze mode settings (including entry/exit sources) are available under "Standby Options".</p>
 <h2>Deep Software Standby Mode</h2>
-<p>Deep Software Standby Mode is only available on some MCU devices. The MCU device always wakes from Deep Software Standby Mode by going through reset, either by the negation of the reset pin or by one of a set of wake up events displayed in the configuration Properties window for the LPM deep standby instance.</p>
+<p>Deep Software Standby Mode is only available on some MCU devices. The MCU always wakes from Deep Software Standby Mode by going through reset, either by the negation of the reset pin or by one of the wakeup sources configurable in the "Deep Standby Options" configuration group.</p>
 <p>The Reset Status Registers can be used to determine if the reset occured after coming out of deep sofware standby. For example, R_SYSTEM-&gt;RSTSR0_b.DPSRSTF is set to 1 after a deep software standby reset.</p>
-<p>I/O Port Retention can be enabled to maintain I/O port configuration across a deep software standby reset. After a reset the R_SYSTEM-&gt;DPSBYCR_b.IOKEEP bit must be cleared before the I/O ports can be used. This can be done through the R_LPM_IoKeepClear API.</p>
+<p>I/O Port Retention can be enabled to maintain I/O port configuration across a deep software standby reset. Retention can be cancelled through the <a class="el" href="group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38">R_LPM_IoKeepClear</a> API.</p>
 <h2><a class="anchor" id="r-lpm-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the LPM:</p>
@@ -337,10 +219,9 @@ Limitations</h2>
 <h1><a class="anchor" id="r-lpm-examples"></a>
 Examples</h1>
 <h2>LPM Sleep Example</h2>
-<p>This is a basic example of minimal use of the LPM in an application.</p>
-<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> g_lpm_cfg_sleep =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___l_p_m___a_p_i.html#aea2b502b8e324f59cd122b015929147f">low_power_mode</a> = <a class="code" href="group___l_p_m___a_p_i.html#gga22283c51ece346b4ba08a30c7b0cc8dda88181762f1414a0fdd7e3d778a145784">LPM_MODE_SLEEP</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___l_p_m.html#structlpm__instance__ctrl__t">lpm_instance_ctrl_t</a> g_lpm_ctrl;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_sleep (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_sleep);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>LPM Software Standby Example</h2>
-<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Test enter and exit standby mode */</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> g_lpm_cfg_software_standby =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___l_p_m___a_p_i.html#aea2b502b8e324f59cd122b015929147f">low_power_mode</a>        = <a class="code" href="group___l_p_m___a_p_i.html#gga22283c51ece346b4ba08a30c7b0cc8dda74f737cd9d53ac41b98bdeba578f9921">LPM_MODE_STANDBY</a>,</div><div class="line">    .standby_wake_sources  = <a class="code" href="group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa5d03eb6b042dbac516295dfadedeca9d">LPM_STANDBY_WAKE_SOURCE_AGT1UD</a>,</div><div class="line">    .snooze_request_source = <a class="code" href="group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4a021c5bf35bfb8709a3cf9afb72fb009f">LPM_SNOOZE_REQUEST_RXD0_FALLING</a>,</div><div class="line">    .snooze_end_sources    = <a class="code" href="group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3a2d713059c1f391dec5658c5171606e69">LPM_SNOOZE_END_STANDBY_WAKE_SOURCES</a>,</div><div class="line">    .dtc_state_in_snooze   = <a class="code" href="group___l_p_m___a_p_i.html#gga954afb771b813cdb81e0511f604da765a440583d0c645e33f67552946fae680fa">LPM_SNOOZE_DTC_DISABLE</a>,</div><div class="line"></div><div class="line"><span class="preprocessor">#if BSP_FEATURE_LPM_HAS_SBYCR_OPE</span></div><div class="line">    .output_port_enable         = <a class="code" href="group___l_p_m___a_p_i.html#gga9a22437bbccfdcc6663e585db99eaf91ad37c1befe865a18a320c84e49cb2905a">LPM_OUTPUT_PORT_ENABLE_RETAIN</a>,</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"><span class="preprocessor">#if BSP_FEATURE_LPM_HAS_DEEP_STANDBY</span></div><div class="line">    .io_port_state              = <a class="code" href="group___l_p_m___a_p_i.html#gga93645998bccd96ec1dc8b97d84eea1a3a3371d2a3ae682b5f2af5e062eb02c4d1">LPM_IO_PORT_NO_CHANGE</a>,</div><div class="line">    .power_supply_state         = <a class="code" href="group___l_p_m___a_p_i.html#gga7dddfc8756ccb1fb6e9e430ecbcd4f18a439565c110009057be575e34bdb7fcbb">LPM_POWER_SUPPLY_DEEPCUT0</a>,</div><div class="line">    .deep_standby_cancel_source = <a class="code" href="group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438adc23d4a9678d667aa2c9b4022d29a546">LPM_DEEP_STANDBY_CANCEL_SOURCE_RESET_ONLY</a>,</div><div class="line">    .deep_standby_cancel_edge   = <a class="code" href="group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a818cc3febb5c40eac3c942c5445d8fd4">LPM_DEEP_STANDBY_CANCEL_SOURCE_EDGE_NONE</a>,</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">};</div><div class="line"><span class="keywordtype">void</span> r_lpm_software_standby (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_software_standby);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>LPM Deep Software Standby Example</h2>
-<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> g_lpm_cfg_deep_software_standby =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___l_p_m___a_p_i.html#aea2b502b8e324f59cd122b015929147f">low_power_mode</a>        = <a class="code" href="group___l_p_m___a_p_i.html#gga22283c51ece346b4ba08a30c7b0cc8dda3028cd84f8c7b598164d8e2936c6be96">LPM_MODE_DEEP</a>,</div><div class="line">    .standby_wake_sources  = <a class="code" href="group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa5d03eb6b042dbac516295dfadedeca9d">LPM_STANDBY_WAKE_SOURCE_AGT1UD</a>,</div><div class="line">    .snooze_request_source = <a class="code" href="group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4a021c5bf35bfb8709a3cf9afb72fb009f">LPM_SNOOZE_REQUEST_RXD0_FALLING</a>,</div><div class="line">    .snooze_end_sources    = <a class="code" href="group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3a2d713059c1f391dec5658c5171606e69">LPM_SNOOZE_END_STANDBY_WAKE_SOURCES</a>,</div><div class="line">    .dtc_state_in_snooze   = <a class="code" href="group___l_p_m___a_p_i.html#gga954afb771b813cdb81e0511f604da765a440583d0c645e33f67552946fae680fa">LPM_SNOOZE_DTC_DISABLE</a>,</div><div class="line"><span class="preprocessor">#if BSP_FEATURE_LPM_HAS_SBYCR_OPE</span></div><div class="line">    .output_port_enable         = <a class="code" href="group___l_p_m___a_p_i.html#gga9a22437bbccfdcc6663e585db99eaf91ad37c1befe865a18a320c84e49cb2905a">LPM_OUTPUT_PORT_ENABLE_RETAIN</a>,</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"><span class="preprocessor">#if BSP_FEATURE_LPM_HAS_DEEP_STANDBY</span></div><div class="line">    .io_port_state              = <a class="code" href="group___l_p_m___a_p_i.html#gga93645998bccd96ec1dc8b97d84eea1a3a3371d2a3ae682b5f2af5e062eb02c4d1">LPM_IO_PORT_NO_CHANGE</a>,</div><div class="line">    .power_supply_state         = <a class="code" href="group___l_p_m___a_p_i.html#gga7dddfc8756ccb1fb6e9e430ecbcd4f18a439565c110009057be575e34bdb7fcbb">LPM_POWER_SUPPLY_DEEPCUT0</a>,</div><div class="line">    .deep_standby_cancel_source = <a class="code" href="group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a8d970dbc574284c10ee277107830a932">LPM_DEEP_STANDBY_CANCEL_SOURCE_AGT1</a>,</div><div class="line">    .deep_standby_cancel_edge   = <a class="code" href="group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a818cc3febb5c40eac3c942c5445d8fd4">LPM_DEEP_STANDBY_CANCEL_SOURCE_EDGE_NONE</a>,</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">};</div><div class="line"><span class="keywordtype">void</span> r_lpm_deep_software_standby (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check the Deep Software Standby Reset Flag. */</span></div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.DPSRSTF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the IOKEEP bit to allow I/O Port use. */</span></div><div class="line">        err = <a class="code" href="group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38">R_LPM_IoKeepClear</a>(&amp;g_lpm_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Add user code here. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Reconfigure the module to set the IOKEEP bit before entering deep software standby. */</span></div><div class="line">    err = <a class="code" href="group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319">R_LPM_LowPowerReconfigure</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Code after R_LPM_LowPowerModeEnter when using Deep Software Standby never be executed.</span></div><div class="line"><span class="comment">     * Deep software standby exits by resetting the MCU. */</span></div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<p>This is a basic example of minimal use of the LPM in an application. The LPM instance is opened and the configured low-power mode is entered.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_sleep (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_sleep);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>LPM Deep Software Standby Example</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_deep_software_standby (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check the Deep Software Standby Reset Flag. */</span></div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.DPSRSTF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the IOKEEP bit to allow I/O Port use. */</span></div><div class="line">        err = <a class="code" href="group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38">R_LPM_IoKeepClear</a>(&amp;g_lpm_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Add user code here. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Reconfigure the module to set the IOKEEP bit before entering deep software standby. */</span></div><div class="line">    err = <a class="code" href="group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319">R_LPM_LowPowerReconfigure</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Code after R_LPM_LowPowerModeEnter when using Deep Software Standby never be executed.</span></div><div class="line"><span class="comment">     * Deep software standby exits by resetting the MCU. */</span></div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structlpm__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m.html#structlpm__instance__ctrl__t">lpm_instance_ctrl_t</a></td></tr>
@@ -558,9 +439,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

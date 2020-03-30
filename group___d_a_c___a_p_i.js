@@ -5,18 +5,15 @@ var group___d_a_c___a_p_i =
     ] ],
     [ "dac_cfg_t", "group___d_a_c___a_p_i.html#structdac__cfg__t", [
       [ "channel", "group___d_a_c___a_p_i.html#a8c9cbefc72cd82ce5b7645ee6a25cc2b", null ],
-      [ "ad_da_synchronized", "group___d_a_c___a_p_i.html#adf918d7b01b3285ea24d4a9ddbb4f00d", null ],
-      [ "data_format", "group___d_a_c___a_p_i.html#a6d1f382f6915ed9939f0327445f8bf8e", null ],
-      [ "output_amplifier_enabled", "group___d_a_c___a_p_i.html#a65af500de01ce34dcd5665f0b6aad85d", null ]
+      [ "ad_da_synchronized", "group___d_a_c___a_p_i.html#adf918d7b01b3285ea24d4a9ddbb4f00d", null ]
     ] ],
     [ "dac_api_t", "group___d_a_c___a_p_i.html#structdac__api__t", [
-      [ "open", "group___d_a_c___a_p_i.html#a9b1cc35b0ca7305f1f7ea794c7963f46", null ],
-      [ "close", "group___d_a_c___a_p_i.html#a0a0e96bc777533bf48559b73e6ab1856", null ],
-      [ "write", "group___d_a_c___a_p_i.html#a13ec6b32a45fcace1af36cf5fdc2f04b", null ],
-      [ "start", "group___d_a_c___a_p_i.html#aefc6027242d476a93b3f1b903f71f011", null ],
-      [ "stop", "group___d_a_c___a_p_i.html#a766efd2347a8dd233fe1ccea22ac2206", null ],
-      [ "versionGet", "group___d_a_c___a_p_i.html#a8662f9b4ad486920900b3f783b3ffe12", null ],
-      [ "infoGet", "group___d_a_c___a_p_i.html#afc35c64e0a034acaf440e2dfc4f6e57a", null ]
+      [ "open", "group___d_a_c___a_p_i.html#acf1499043008fef274392889f70be8a5", null ],
+      [ "close", "group___d_a_c___a_p_i.html#a56a4f3e70f9aa1e2d66c5c586f994c1a", null ],
+      [ "write", "group___d_a_c___a_p_i.html#ab1f3bfcf59391fda4d5a1b46db9892b8", null ],
+      [ "start", "group___d_a_c___a_p_i.html#ad65c88411b83c76ab1a3698402520496", null ],
+      [ "stop", "group___d_a_c___a_p_i.html#afc2c513b17daa37c5c84a639c1e74eb7", null ],
+      [ "versionGet", "group___d_a_c___a_p_i.html#a8662f9b4ad486920900b3f783b3ffe12", null ]
     ] ],
     [ "dac_instance_t", "group___d_a_c___a_p_i.html#structdac__instance__t", [
       [ "p_ctrl", "group___d_a_c___a_p_i.html#a8f502a56110113b181e99d1011b5759b", null ],

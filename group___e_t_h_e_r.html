@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,20 +107,20 @@ Functions</h2></td></tr>
 <tr class="memitem:gafbd25f2b961e8e2a807444f04e08d158"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158">R_ETHER_Close</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:gafbd25f2b961e8e2a807444f04e08d158"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables interrupts. Removes power and releases hardware lock. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a1c0bc3caef73e0a216c2fe2edc4fff4b">ether_api_t::close</a>.  <a href="#gafbd25f2b961e8e2a807444f04e08d158">More...</a><br /></td></tr>
 <tr class="separator:gafbd25f2b961e8e2a807444f04e08d158"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga705e2527edcde11a56d7b0114fcbf1f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga705e2527edcde11a56d7b0114fcbf1f2">R_ETHER_Read</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void **const pp_buffer, uint32_t *const length_bytes)</td></tr>
-<tr class="memdesc:ga705e2527edcde11a56d7b0114fcbf1f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive Ethernet frame. Receives data to the location specified by the pointer to the receive buffer, using non-zero-copy communication. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a2e3f4ad694c500a0d1cb7ed3cb4a6a92">ether_api_t::read</a>.  <a href="#ga705e2527edcde11a56d7b0114fcbf1f2">More...</a><br /></td></tr>
-<tr class="separator:ga705e2527edcde11a56d7b0114fcbf1f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga174de3d54336469ca7a1e5949820bd3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga174de3d54336469ca7a1e5949820bd3f">R_ETHER_Read</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer, uint32_t *const length_bytes)</td></tr>
+<tr class="memdesc:ga174de3d54336469ca7a1e5949820bd3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive Ethernet frame. Receives data to the location specified by the pointer to the receive buffer. In zero copy mode, the address of the receive buffer is returned. In non zero copy mode, the received data in the internal buffer is copied to the pointer passed by the argument. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a41d56c8843a454690b1969f8f766d65a">ether_api_t::read</a>.  <a href="#ga174de3d54336469ca7a1e5949820bd3f">More...</a><br /></td></tr>
+<tr class="separator:ga174de3d54336469ca7a1e5949820bd3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3bc8e53a14aa52d4d2b9b247ddd7cce8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga3bc8e53a14aa52d4d2b9b247ddd7cce8">R_ETHER_BufferRelease</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
-<tr class="memdesc:ga3bc8e53a14aa52d4d2b9b247ddd7cce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release the receive buffer. Implements ether_api_t::BufferRelease.  <a href="#ga3bc8e53a14aa52d4d2b9b247ddd7cce8">More...</a><br /></td></tr>
+<tr class="memdesc:ga3bc8e53a14aa52d4d2b9b247ddd7cce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move to the next buffer in the circular receive buffer list. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa38e7f82e66fd26fd8d51b11f46ae6e6">ether_api_t::bufferRelease</a>.  <a href="#ga3bc8e53a14aa52d4d2b9b247ddd7cce8">More...</a><br /></td></tr>
 <tr class="separator:ga3bc8e53a14aa52d4d2b9b247ddd7cce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaad54ccf1420a5c32afe90762eebde112"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer, uint32_t const frame_length)</td></tr>
-<tr class="memdesc:gaad54ccf1420a5c32afe90762eebde112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit Ethernet frame. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length, using non-zero-copy communication. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233">ether_api_t::write</a>.  <a href="#gaad54ccf1420a5c32afe90762eebde112">More...</a><br /></td></tr>
+<tr class="memdesc:gaad54ccf1420a5c32afe90762eebde112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit Ethernet frame. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length. In the non zero copy mode, transmits data after being copied to the internal buffer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233">ether_api_t::write</a>.  <a href="#gaad54ccf1420a5c32afe90762eebde112">More...</a><br /></td></tr>
 <tr class="separator:gaad54ccf1420a5c32afe90762eebde112"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab10af3abff76900b7895934685c43311"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311">R_ETHER_LinkProcess</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:gab10af3abff76900b7895934685c43311"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Link up processing, the Link down processing, and the magic packet detection processing are executed. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a125ca4ee69c6c63e1db42708324c0fb3">ether_api_t::linkProcess</a>.  <a href="#gab10af3abff76900b7895934685c43311">More...</a><br /></td></tr>
 <tr class="separator:gab10af3abff76900b7895934685c43311"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga992be578c310d212389be65762d1b6ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga992be578c310d212389be65762d1b6ea">R_ETHER_WakeOnLANEnable</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
-<tr class="memdesc:ga992be578c310d212389be65762d1b6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">The setting of ETHERC is changed from a usual sending and receiving mode to the magic packet detection mode. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad">ether_api_t::wakeOnLANEnable</a>.  <a href="#ga992be578c310d212389be65762d1b6ea">More...</a><br /></td></tr>
+<tr class="memdesc:ga992be578c310d212389be65762d1b6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">The setting of ETHERC is changed from normal sending and receiving mode to magic packet detection mode. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad">ether_api_t::wakeOnLANEnable</a>.  <a href="#ga992be578c310d212389be65762d1b6ea">More...</a><br /></td></tr>
 <tr class="separator:ga992be578c310d212389be65762d1b6ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaef9ae6460a191a602864a5b4da16cf45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gaef9ae6460a191a602864a5b4da16cf45">R_ETHER_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
 <tr class="memdesc:gaef9ae6460a191a602864a5b4da16cf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides API and code version in the user provided pointer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a2d7eb9db55c87bff39494408612fe766">ether_api_t::versionGet</a>.  <a href="#gaef9ae6460a191a602864a5b4da16cf45">More...</a><br /></td></tr>
@@ -134,47 +134,23 @@ Overview</h1>
 <h2><a class="anchor" id="r-ether-features"></a>
 Features</h2>
 <p>The Ethernet module supports the following features:</p><ul>
-<li>Transmit/receive processing(Zerocopy and Non-Zerocopy)</li>
+<li>Transmit/receive processing</li>
+<li>Optional zero-copy buffering</li>
 <li>Callback function with returned event code</li>
 <li>Magic packet detection mode support</li>
 <li>Auto negotiation support</li>
 <li>Flow control support</li>
 <li>Multicast filtering support<a class="anchor" id="um_ether_skipping_multicast_frame_when_multicast_filter_enabled"></a></li>
 <li>Broadcast filtering support<a class="anchor" id="um_ether_regurating_broadcast_packet_when_broadcast_filter_enable"></a></li>
-<li>Promiscuous mode support<a class="anchor" id="um_ether_receiving_all_frame_when_promiscuous_mode_enabled"></a></li>
+<li>Promiscuous mode support<a class="anchor" id="um_ether_receiving_all_frame_when_promiscuous_mode_enabled"></a> </li>
 </ul>
-<h2>Target Devices</h2>
-<p>The Ethernet module supports the following devices.</p><ul>
-<li>RA6M3</li>
-<li>RA6M2</li>
-</ul>
-<h2>Ethernet Frame Format</h2>
-<p>The Ethernet module supports the Ethernet II/IEEE 802.3 frame format.</p>
-<h3>Frame Format for Data Transmission and Reception</h3>
-<div class="image">
-<object type="image/svg+xml" data="frame_format_image.svg">frame_format_image.svg</object>
-<div class="caption">
-Frame Format Image</div></div>
-<p> The preamble and SFD signal the start of an Ethernet frame. The FCS contains the CRC of the Ethernet frame and is calculated on the transmitting side. When data is received the CRC value of the frame is calculated in hardware, and the Ethernet frame is discarded if the values do not match. When the hardware determines that the data is normal, the valid range of receive data is: (transmission destination address) + (transmission source address) + (length/type) + (data).</p>
-<h3>PAUSE Frame Format</h3>
-<div class="image">
-<object type="image/svg+xml" data="pause_frame_format_image.svg">pause_frame_format_image.svg</object>
-<div class="caption">
-Pause Frame Format Image</div></div>
-<p> The transmission destination address is specified as 01:80:C2:00:00:01 (a multicast address reserved for PAUSE frames). At the start of the payload the length/type is specified as 0x8808 and the operation code as 0x0001. The pause duration in the payload is specified by the value of the automatic PAUSE (AP) bits in the automatic PAUSE frame setting register (APR), or the manual PAUSE time setting (MP) bits in the manual PAUSE frame setting register (MPR).</p>
-<h3>Magic Packet Frame Format</h3>
-<div class="image">
-<object type="image/svg+xml" data="magic_packet_frame_format_image.svg">magic_packet_frame_format_image.svg</object>
-<div class="caption">
-Magic Packet Frame Format Image</div></div>
-<p> In a Magic Packet, the value FF:FF:FF:FF:FF:FF followed by the transmission destination address repeated 16 times is inserted somewhere in the Ethernet frame data.</p>
 <h1><a class="anchor" id="r-ether-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_ether</h2>
-The following build time configurations are defined in fsp_cfg/driver/r_ether_cfg.h:<br />
+The following build time configurations are defined in fsp_cfg/r_ether_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -184,7 +160,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
 <td>The polarity of the link signal output by the PHY-LSI</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -192,7 +168,7 @@ Fall -&gt; Rise</li>
 <li>
 Rise -&gt; Fall</li>
 </ul>
-</td><td>Specify the polarity of the link signal output by the PHY-LSI. When 0 is specified, link-up and link-down correspond respectively to the fall and rise of the LINKSTA signal. When 1 is specified, link-up and link-down correspond respectively to the rise and fall of the LINKSTA signal. </td></tr>
+</td><td>Fall -&gt; Rise </td><td>Specify the polarity of the link signal output by the PHY-LSI. When 0 is specified, link-up and link-down correspond respectively to the fall and rise of the LINKSTA signal. When 1 is specified, link-up and link-down correspond respectively to the rise and fall of the LINKSTA signal. </td></tr>
 <tr>
 <td>The link status is detected by LINKSTA signal</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -200,66 +176,66 @@ Unused</li>
 <li>
 Used</li>
 </ul>
-</td><td>Use LINKSTA signal for detect link status changes 0 = unused (use PHY-LSI status register) 1 = use (use LINKSTA signal) </td></tr>
+</td><td>Unused </td><td>Use LINKSTA signal for detect link status changes 0 = unused (use PHY-LSI status register) 1 = use (use LINKSTA signal) </td></tr>
 </table>
- <h2>Configurations for Ethernet Driver on r_ether</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Network -&gt; Ethernet Driver on r_ether:<br />
+ <h2>Configurations for Driver &gt; Network &gt; Ethernet Driver on r_ether</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Network &gt; Ethernet Driver on r_ether:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_ether0 </td><td>Module name. </td></tr>
 <tr>
-<td>MAC address</td><td>Configurable String</td><td>MAC address of this channel  </td></tr>
+<td>General &gt; Channel</td><td>0</td><td>0 </td><td>Select the ether channel number. </td></tr>
 <tr>
-<td>Ether channel</td><td>0</td><td>Select the ether channel number. </td></tr>
+<td>General &gt; MAC address</td><td>Must be a valid MAC address</td><td>00:11:22:33:44:55 </td><td>MAC address of this channel. </td></tr>
 <tr>
-<td>Zero copy Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; Zero-copy Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable</li>
 </ul>
-</td><td>Zerocopy enable or disable </td></tr>
+</td><td>Disable </td><td>Enable or disable zero-copy mode. </td></tr>
 <tr>
-<td>Multi cast Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; Flow control functionality</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable</li>
 </ul>
-</td><td>Multicast enable or disable </td></tr>
+</td><td>Disable </td><td>Enable or disable flow control. </td></tr>
 <tr>
-<td>Promiscuous Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Filters &gt; Multicast Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable</li>
 </ul>
-</td><td>Multicast enable or disable </td></tr>
+</td><td>Enable </td><td>Enable or disable multicast frame reception. </td></tr>
 <tr>
-<td>Flow control functionality</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Filters &gt; Promiscuous Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
 <li>
 Enable</li>
 </ul>
-</td><td>Flow control functionally enable or disable </td></tr>
+</td><td>Disable </td><td>Enable this option to receive packets addressed to other NICs. </td></tr>
 <tr>
-<td>Broadcast filter</td><td>Value must be a non-negative integer </td><td>Limit of the number of broadcast frames received continuously </td></tr>
+<td>Filters &gt; Broadcast filter</td><td>Must be a valid non-negative integer with maximum configurable value of 65535. </td><td>0 </td><td>Limit of the number of broadcast frames received continuously </td></tr>
 <tr>
-<td>Number of TX buffer</td><td>Value must be an integer from 1 to 8</td><td>Number of transmitter buffer </td></tr>
+<td>Buffers &gt; Number of TX buffer</td><td>Must be an integer from 1 to 8</td><td>1 </td><td>Number of transmit buffers </td></tr>
 <tr>
-<td>Number of RX buffer</td><td>Value must be an integer from 1 to 8</td><td>Number of receive buffer </td></tr>
+<td>Buffers &gt; Number of RX buffer</td><td>Must be an integer from 1 to 8</td><td>1 </td><td>Number of receive buffers </td></tr>
 <tr>
-<td>Buffer size</td><td>The value must be at least 1514 which is the maximum Ethernet frame size</td><td>Size of Ethernet buffer </td></tr>
+<td>Buffers &gt; Buffer size</td><td>Must be at least 1514 which is the maximum Ethernet frame size</td><td>1514 </td><td>Size of Ethernet buffer </td></tr>
 <tr>
-<td>Interrupt priority</td><td>MCU Specific Options</td><td>Select the EDMAC interrupt priority. </td></tr>
+<td>Interrupts &gt; Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the EDMAC interrupt priority. </td></tr>
 <tr>
-<td>Callback provided when an ISR occurs</td><td>Name must be a valid C symbol</td><td>Callback provided when an ISR occurs </td></tr>
+<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when an ISR occurs </td></tr>
 </table>
 </p>
-<p><a class="anchor" id="um_ether_configuration_for_connection_mode"></a><a class="anchor" id="um_ether_configuration_of_mac_address"></a></p>
+<p><a class="anchor" id="um_ether_configuration_for_connection_mode"></a><a class="anchor" id="um_ether_configuration_of_mac_address"></a> </p>
 <h2><a class="anchor" id="r-ether-interrupt-configuration"></a>
 Interrupt Configuration</h2>
 <p>The first <a class="el" href="group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd">R_ETHER_Open</a> function call sets EINT interrupts. The user could provide callback function which would be invoked when EINT interrupt handler has been completed. The callback arguments will contain information about a channel number, the ETHERC and EDMAC status, the event code, and a pointer to the user defined context.</p>
@@ -285,20 +261,40 @@ Pin Configuration</h2>
 <p>To use the Ethernet module, input/output signals of the peripheral function have to be allocated to pins with the multi-function pin controller (MPC). Please perform the pin setting before calling the <a class="el" href="group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd">R_ETHER_Open</a> function.</p>
 <h1><a class="anchor" id="r-ether-usage_notes"></a>
 Usage Notes</h1>
+<h2>Ethernet Frame Format</h2>
+<p>The Ethernet module supports the Ethernet II/IEEE 802.3 frame format.</p>
+<h3>Frame Format for Data Transmission and Reception</h3>
+<div class="image">
+<object type="image/svg+xml" data="frame_format_image.svg">frame_format_image.svg</object>
+<div class="caption">
+Frame Format Image</div></div>
+<p> The preamble and SFD signal the start of an Ethernet frame. The FCS contains the CRC of the Ethernet frame and is calculated on the transmitting side. When data is received the CRC value of the frame is calculated in hardware, and the Ethernet frame is discarded if the values do not match. When the hardware determines that the data is normal, the valid range of receive data is: (transmission destination address) + (transmission source address) + (length/type) + (data).</p>
+<h3>PAUSE Frame Format</h3>
+<div class="image">
+<object type="image/svg+xml" data="pause_frame_format_image.svg">pause_frame_format_image.svg</object>
+<div class="caption">
+Pause Frame Format Image</div></div>
+<p> The transmission destination address is specified as 01:80:C2:00:00:01 (a multicast address reserved for PAUSE frames). At the start of the payload the length/type is specified as 0x8808 and the operation code as 0x0001. The pause duration in the payload is specified by the value of the automatic PAUSE (AP) bits in the automatic PAUSE frame setting register (APR), or the manual PAUSE time setting (MP) bits in the manual PAUSE frame setting register (MPR).</p>
+<h3>Magic Packet Frame Format</h3>
+<div class="image">
+<object type="image/svg+xml" data="magic_packet_frame_format_image.svg">magic_packet_frame_format_image.svg</object>
+<div class="caption">
+Magic Packet Frame Format Image</div></div>
+<p> In a Magic Packet, the value FF:FF:FF:FF:FF:FF followed by the transmission destination address repeated 16 times is inserted somewhere in the Ethernet frame data.</p>
 <h2><a class="anchor" id="r-ether-limitations"></a>
 Limitations</h2>
-<dl class="section note"><dt>Note</dt><dd>Ethernet Dreiver has alignment constraints. </dd>
-<dd>
-1. Please follow the 16 byte alignment for the descriptor and 32 byte alignment for the transmit/receive buffer. </dd>
-<dd>
-2. Please pass a 32-byte aligned buffer as a parameter to the write function in zero copy mode.</dd></dl>
+<p>The Ethernet Driver has several alignment constraints:</p><ul>
+<li>16-byte alignment for the descriptor</li>
+<li>32-byte aligned write buffer for <a class="el" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write</a> when zero copy mode is enabled</li>
+</ul>
 <h1><a class="anchor" id="r-ether-examples"></a>
 Examples</h1>
 <h2>ETHER Basic Example</h2>
 <p>This is a basic example of minimal use of the ETHER in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_MAXIMUM_ETHERNET_FRAME_SIZE (1514)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE (60)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_SOURCE_MAC_ADDRESS          0x74,0x90,0x50,0x00,0x79,0x01</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_DESTINATION_MAC_ADDRESS     0x74,0x90,0x50,0x00,0x79,0x02</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_SOURCE_MAC_ADDRESS          0x74,0x90,0x50,0x00,0x79,0x01</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_FRAME_TYPE                  0x00,0x2E</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_PAYLOAD                     0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, \</span></div><div class="line"><span class="preprocessor">                                                  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, \</span></div><div class="line"><span class="preprocessor">                                                  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, \</span></div><div class="line"><span class="preprocessor">                                                  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00, \</span></div><div class="line"><span class="preprocessor"></span></div><div class="line"><span class="keywordtype">void</span> ether_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Source MAC Address */</span></div><div class="line">    <span class="keyword">static</span> uint8_t mac_address_source[6] = {ETHER_EXAMPLE_SOURCE_MAC_ADDRESS};</div><div class="line"></div><div class="line">    <span class="keyword">static</span> uint8_t read_buffer[ETHER_EXAMPLE_MAXIMUM_ETHERNET_FRAME_SIZE] = {0};</div><div class="line">    uint32_t read_data_size = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Transmit data */</span></div><div class="line">    <span class="keyword">static</span> uint8_t send_data[ETHER_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE] =</div><div class="line">    {</div><div class="line">    ETHER_EXAMPLE_DESTINATION_MAC_ADDRESS, <span class="comment">/* Destination MAC address */</span></div><div class="line">    ETHER_EXAMPLE_SOURCE_MAC_ADDRESS,      <span class="comment">/* Source MAC address */</span></div><div class="line">    ETHER_EXAMPLE_FRAME_TYPE,              <span class="comment">/* Type field */</span></div><div class="line">    ETHER_EXAMPLE_PAYLOAD                  <span class="comment">/* Payload value (46byte) */</span></div><div class="line">    };</div><div class="line"></div><div class="line">    g_ether0_cfg.p_mac_address     = mac_address_source;</div><div class="line"></div><div class="line">    rmii_pinconfig();</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the ether instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd">R_ETHER_Open</a>(&amp;g_ether0_ctrl, &amp;g_ether0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">do</span> {</div><div class="line"></div><div class="line">        <span class="comment">/* When the Ethernet link status read from the PHY-LSI Basic Status register is link-up,</span></div><div class="line"><span class="comment">         * Initializes the module and make auto negotiation. */</span></div><div class="line"></div><div class="line">        err = <a class="code" href="group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311">R_ETHER_LinkProcess</a>(&amp;g_ether0_ctrl);</div><div class="line"></div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *)send_data, <span class="keyword">sizeof</span>(send_data));</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">    {</div><div class="line">    <span class="comment">/* Transmission is non-blocking. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#ga705e2527edcde11a56d7b0114fcbf1f2">R_ETHER_Read</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> **) read_buffer, &amp;read_data_size);</div><div class="line">    <span class="keywordflow">if</span>(FSP_SUCCESS == err)</div><div class="line">    {</div><div class="line">    <span class="comment">/* Reading the receive data is completed. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the ether instance. */</span></div><div class="line">    <a class="code" href="group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158">R_ETHER_Close</a>(&amp;g_ether0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">}</div></div><!-- fragment --> <h2>ETHER Advanced Example</h2>
-<p>The example demonstrates using send and receive function in zero copy mode.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_FLAG_ON       (1U)</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_FLAG_OFF      (0U)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_ETHER_ISR_EE_FR_MASK  (1UL &lt;&lt; 18)</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_ETHER_ISR_EE_TC_MASK  (1UL &lt;&lt; 21)</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_ETHER_ISR_EC_MPD_MASK (1UL &lt;&lt; 1)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_ALIGNMENT_32_BYTE     (32)</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_example_receive_complete = 0;</div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_example_transfer_complete = 0;</div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_example_magic_packet_done = 0;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ether_example_callback (<a class="code" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> * p_args){</div><div class="line"></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___e_t_h_e_r___a_p_i.html#aa28fdd797448d1ed0d56604ec87b349a">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a1d528f77a7fdfb14f6fe93179ac2b5ee">ETHER_EVENT_INTERRUPT</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">if</span> (ETHER_EXAMPLE_ETHER_ISR_EC_MPD_MASK == (p_args-&gt;<a class="code" href="group___e_t_h_e_r___a_p_i.html#af3841da2d8c5298a41614fd264f429b3">status_ecsr</a> &amp; ETHER_EXAMPLE_ETHER_ISR_EC_MPD_MASK))</div><div class="line">            {</div><div class="line">                g_example_magic_packet_done = ETHER_EXAMPLE_FLAG_ON;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (ETHER_EXAMPLE_ETHER_ISR_EE_TC_MASK == (p_args-&gt;<a class="code" href="group___e_t_h_e_r___a_p_i.html#abf2b41c4e54e2e99bab4e00b131f8a7e">status_eesr</a> &amp; ETHER_EXAMPLE_ETHER_ISR_EE_TC_MASK))</div><div class="line">            {</div><div class="line">                g_example_transfer_complete = ETHER_EXAMPLE_FLAG_ON;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (ETHER_EXAMPLE_ETHER_ISR_EE_FR_MASK == (p_args-&gt;<a class="code" href="group___e_t_h_e_r___a_p_i.html#abf2b41c4e54e2e99bab4e00b131f8a7e">status_eesr</a> &amp; ETHER_EXAMPLE_ETHER_ISR_EE_FR_MASK))</div><div class="line">            {</div><div class="line">                g_example_receive_complete = ETHER_EXAMPLE_FLAG_ON;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ether_advanced_example (<span class="keywordtype">void</span>){</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Source MAC Address */</span></div><div class="line">    <span class="keyword">static</span> uint8_t mac_address_source[6] = {ETHER_EXAMPLE_SOURCE_MAC_ADDRESS};</div><div class="line"></div><div class="line">    <span class="keyword">static</span> uint8_t * p_read_buffer;</div><div class="line">    uint32_t read_data_size = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* The transmit data must follow 32-byte alignment</span></div><div class="line"><span class="comment">     * when use Ethernet driver as zero copy mode. */</span></div><div class="line">    BSP_ALIGN_VARIABLE(ETHER_EXAMPLE_ALIGNMENT_32_BYTE) <span class="keyword">static</span> uint8_t send_data[ETHER_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE] =</div><div class="line">    {</div><div class="line">    ETHER_EXAMPLE_DESTINATION_MAC_ADDRESS, <span class="comment">/* Destination MAC address */</span></div><div class="line">    ETHER_EXAMPLE_SOURCE_MAC_ADDRESS,      <span class="comment">/* Source MAC address */</span></div><div class="line">    ETHER_EXAMPLE_FRAME_TYPE,              <span class="comment">/* Type field */</span></div><div class="line">    ETHER_EXAMPLE_PAYLOAD                  <span class="comment">/* Payload value (46byte) */</span></div><div class="line">    };</div><div class="line"></div><div class="line">    g_ether0_cfg.p_mac_address = mac_address_source;</div><div class="line"></div><div class="line">    g_ether0_cfg.zerocopy      = <a class="code" href="group___e_t_h_e_r___a_p_i.html#ggad3c9ba84cbe05cc1ff9b37d25318dd07ae6b9b9b112795b5334d6198f088692ac">ETHER_ZEROCOPY_ENABLE</a>;</div><div class="line">    g_ether0_cfg.p_callback    = (void (*)(<a class="code" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *)) ether_example_callback;</div><div class="line"></div><div class="line">    rmii_pinconfig();</div><div class="line"></div><div class="line">    <span class="comment">/* Open the ether instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd">R_ETHER_Open</a>(&amp;g_ether0_ctrl, &amp;g_ether0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span> {</div><div class="line"></div><div class="line">        <span class="comment">/* When the Ethernet link status read from the PHY-LSI Basic Status register is link-up,</span></div><div class="line"><span class="comment">         * Initializes the module and make auto negotiation. */</span></div><div class="line"></div><div class="line">        err = <a class="code" href="group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311">R_ETHER_LinkProcess</a>(&amp;g_ether0_ctrl);</div><div class="line"></div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *)send_data, <span class="keyword">sizeof</span>(send_data));</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">    {</div><div class="line">    <span class="comment">/* Transmission is non-blocking. Wait for the transmission to complete</span></div><div class="line"><span class="comment">     * when use Ethernet driver as zero copy mode. */</span></div><div class="line">        <span class="keywordflow">while</span>(ETHER_EXAMPLE_FLAG_ON != g_example_transfer_complete){</div><div class="line">            ;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#ga705e2527edcde11a56d7b0114fcbf1f2">R_ETHER_Read</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> **) &amp;p_read_buffer, &amp;read_data_size);</div><div class="line">    <span class="keywordflow">if</span>(FSP_SUCCESS == err)</div><div class="line">    {</div><div class="line">    <span class="comment">/* Reading the receive data is completed. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the ether instance. */</span></div><div class="line">    <a class="code" href="group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158">R_ETHER_Close</a>(&amp;g_ether0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<dl class="section note"><dt>Note</dt><dd>In this example zero-copy mode is disabled and there are no restrictions on buffer alignment.</dd></dl>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_MAXIMUM_ETHERNET_FRAME_SIZE     (1514)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE    (60)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_SOURCE_MAC_ADDRESS              0x74, 0x90, 0x50, 0x00, 0x79, 0x01</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_DESTINATION_MAC_ADDRESS         0x74, 0x90, 0x50, 0x00, 0x79, 0x02</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_FRAME_TYPE                      0x00, 0x2E</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_PAYLOAD                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                   \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                   \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                   \</span></div><div class="line"><span class="preprocessor"></span></div><div class="line"></div><div class="line"><span class="comment">/* Receive data buffer */</span></div><div class="line"><span class="keyword">static</span> uint8_t gp_read_buffer[ETHER_EXAMPLE_MAXIMUM_ETHERNET_FRAME_SIZE] = {0};</div><div class="line"></div><div class="line"><span class="comment">/* Transmit data buffer */</span></div><div class="line"><span class="keyword">static</span> uint8_t gp_send_data[ETHER_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE] =</div><div class="line">{</div><div class="line">    ETHER_EXAMPLE_DESTINATION_MAC_ADDRESS, <span class="comment">/* Destination MAC address */</span></div><div class="line">    ETHER_EXAMPLE_SOURCE_MAC_ADDRESS,      <span class="comment">/* Source MAC address */</span></div><div class="line">    ETHER_EXAMPLE_FRAME_TYPE,              <span class="comment">/* Type field */</span></div><div class="line">    ETHER_EXAMPLE_PAYLOAD                  <span class="comment">/* Payload value (46byte) */</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ether_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Source MAC Address */</span></div><div class="line">    <span class="keyword">static</span> uint8_t mac_address_source[6] = {ETHER_EXAMPLE_SOURCE_MAC_ADDRESS};</div><div class="line"></div><div class="line">    uint32_t read_data_size = 0;</div><div class="line"></div><div class="line">    g_ether0_cfg.p_mac_address = mac_address_source;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the ether instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd">R_ETHER_Open</a>(&amp;g_ether0_ctrl, &amp;g_ether0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* When the Ethernet link status read from the PHY-LSI Basic Status register is link-up,</span></div><div class="line"><span class="comment">         * Initializes the module and make auto negotiation. */</span></div><div class="line">        err = <a class="code" href="group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311">R_ETHER_LinkProcess</a>(&amp;g_ether0_ctrl);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Transmission is non-blocking. */</span></div><div class="line">    <span class="comment">/* User data copy to internal buffer and is transferred by DMA in the background. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) gp_send_data, <span class="keyword">sizeof</span>(gp_send_data));</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* received data copy to user buffer from internal buffer. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#ga174de3d54336469ca7a1e5949820bd3f">R_ETHER_Read</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) gp_read_buffer, &amp;read_data_size);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the ether instance. */</span></div><div class="line">    <a class="code" href="group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158">R_ETHER_Close</a>(&amp;g_ether0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>ETHER Advanced Example</h2>
+<p>The example demonstrates using send and receive function in zero copy mode. Transmit buffers must be 32-byte aligned and the receive buffer must be released once its contents have been used.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_FLAG_ON                  (1U)</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_FLAG_OFF                 (0U)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_ETHER_ISR_EE_FR_MASK     (1UL &lt;&lt; 18)</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_ETHER_ISR_EE_TC_MASK     (1UL &lt;&lt; 21)</span></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_ETHER_ISR_EC_MPD_MASK    (1UL &lt;&lt; 1)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define ETHER_EXAMPLE_ALIGNMENT_32_BYTE        (32)</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_example_receive_complete  = 0;</div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_example_transfer_complete = 0;</div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_example_magic_packet_done = 0;</div><div class="line"></div><div class="line"><span class="comment">/* The data buffer must be 32-byte aligned when using zero copy mode. */</span></div><div class="line"><span class="keyword">static</span> uint8_t gp_send_data_nocopy[ETHER_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE] BSP_ALIGN_VARIABLE(32) =</div><div class="line">{</div><div class="line">    ETHER_EXAMPLE_DESTINATION_MAC_ADDRESS, <span class="comment">/* Destination MAC address */</span></div><div class="line">    ETHER_EXAMPLE_SOURCE_MAC_ADDRESS,      <span class="comment">/* Source MAC address */</span></div><div class="line">    ETHER_EXAMPLE_FRAME_TYPE,              <span class="comment">/* Type field */</span></div><div class="line">    ETHER_EXAMPLE_PAYLOAD                  <span class="comment">/* Payload value (46byte) */</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ether_example_callback (<a class="code" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> * p_args) {</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___e_t_h_e_r___a_p_i.html#aa28fdd797448d1ed0d56604ec87b349a">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a1d528f77a7fdfb14f6fe93179ac2b5ee">ETHER_EVENT_INTERRUPT</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">if</span> (ETHER_EXAMPLE_ETHER_ISR_EC_MPD_MASK == (p_args-&gt;<a class="code" href="group___e_t_h_e_r___a_p_i.html#af3841da2d8c5298a41614fd264f429b3">status_ecsr</a> &amp; ETHER_EXAMPLE_ETHER_ISR_EC_MPD_MASK))</div><div class="line">            {</div><div class="line">                g_example_magic_packet_done = ETHER_EXAMPLE_FLAG_ON;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (ETHER_EXAMPLE_ETHER_ISR_EE_TC_MASK == (p_args-&gt;<a class="code" href="group___e_t_h_e_r___a_p_i.html#abf2b41c4e54e2e99bab4e00b131f8a7e">status_eesr</a> &amp; ETHER_EXAMPLE_ETHER_ISR_EE_TC_MASK))</div><div class="line">            {</div><div class="line">                g_example_transfer_complete = ETHER_EXAMPLE_FLAG_ON;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (ETHER_EXAMPLE_ETHER_ISR_EE_FR_MASK == (p_args-&gt;<a class="code" href="group___e_t_h_e_r___a_p_i.html#abf2b41c4e54e2e99bab4e00b131f8a7e">status_eesr</a> &amp; ETHER_EXAMPLE_ETHER_ISR_EE_FR_MASK))</div><div class="line">            {</div><div class="line">                g_example_receive_complete = ETHER_EXAMPLE_FLAG_ON;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ether_advanced_example (<span class="keywordtype">void</span>) {</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Source MAC Address */</span></div><div class="line">    <span class="keyword">static</span> uint8_t mac_address_source[6] = {ETHER_EXAMPLE_SOURCE_MAC_ADDRESS};</div><div class="line"></div><div class="line">    <span class="keyword">static</span> uint8_t * p_read_buffer_nocopy;</div><div class="line">    uint32_t         read_data_size = 0;</div><div class="line"></div><div class="line">    g_ether0_cfg.p_mac_address = mac_address_source;</div><div class="line"></div><div class="line">    g_ether0_cfg.zerocopy   = <a class="code" href="group___e_t_h_e_r___a_p_i.html#ggad3c9ba84cbe05cc1ff9b37d25318dd07ae6b9b9b112795b5334d6198f088692ac">ETHER_ZEROCOPY_ENABLE</a>;</div><div class="line">    g_ether0_cfg.p_callback = (void (*)(<a class="code" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *))ether_example_callback;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the ether instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd">R_ETHER_Open</a>(&amp;g_ether0_ctrl, &amp;g_ether0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* When the Ethernet link status read from the PHY-LSI Basic Status register is link-up,</span></div><div class="line"><span class="comment">         * Initializes the module and make auto negotiation. */</span></div><div class="line">        err = <a class="code" href="group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311">R_ETHER_LinkProcess</a>(&amp;g_ether0_ctrl);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set user buffer to TX descriptor and enable transmission. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) gp_send_data_nocopy, <span class="keyword">sizeof</span>(gp_send_data_nocopy));</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for the transmission to complete. */</span></div><div class="line">        <span class="comment">/* Data array should not change in zero copy mode until transfer complete. */</span></div><div class="line">        <span class="keywordflow">while</span> (ETHER_EXAMPLE_FLAG_ON != g_example_transfer_complete)</div><div class="line">        {</div><div class="line">            ;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get receive buffer from RX descriptor. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#ga174de3d54336469ca7a1e5949820bd3f">R_ETHER_Read</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) &amp;p_read_buffer_nocopy, &amp;read_data_size);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Process received data here */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Release receive buffer to RX descriptor. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r.html#ga3bc8e53a14aa52d4d2b9b247ddd7cce8">R_ETHER_BufferRelease</a>(&amp;g_ether0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the ether instance. */</span></div><div class="line">    <a class="code" href="group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158">R_ETHER_Close</a>(&amp;g_ether0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structether__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#structether__instance__ctrl__t">ether_instance_ctrl_t</a></td></tr>
@@ -512,9 +508,9 @@ Current Link status. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened or channel is being used by another instance. Call close() then open() to reconfigure. </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION</td><td>Initialization of PHY-LSI failed. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>Invalid channel number is given. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to Mac address is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Irq number lower then 0. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_PHY_ERROR_LINK</td><td>Initialization of PHY-LSI failed. This error does not occur originally. This error is the PHY driver error and is used only within the Ether driver. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to MAC address is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Interrupt is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_PHY_ERROR_LINK</td><td>Initialization of PHY-LSI failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -549,8 +545,8 @@ Current Link status. </td></tr>
 
 </div>
 </div>
-<a id="ga705e2527edcde11a56d7b0114fcbf1f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga705e2527edcde11a56d7b0114fcbf1f2">&#9670;&nbsp;</a></span>R_ETHER_Read()</h2>
+<a id="ga174de3d54336469ca7a1e5949820bd3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga174de3d54336469ca7a1e5949820bd3f">&#9670;&nbsp;</a></span>R_ETHER_Read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -564,8 +560,8 @@ Current Link status. </td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void **const&#160;</td>
-          <td class="paramname"><em>pp_buffer</em>, </td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -581,7 +577,7 @@ Current Link status. </td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Receive Ethernet frame. Receives data to the location specified by the pointer to the receive buffer, using non-zero-copy communication. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a2e3f4ad694c500a0d1cb7ed3cb4a6a92">ether_api_t::read</a>. </p>
+<p>Receive Ethernet frame. Receives data to the location specified by the pointer to the receive buffer. In zero copy mode, the address of the receive buffer is returned. In non zero copy mode, the received data in the internal buffer is copied to the pointer passed by the argument. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a41d56c8843a454690b1969f8f766d65a">ether_api_t::read</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
@@ -589,7 +585,7 @@ Current Link status. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_NO_DATA</td><td>There is no data in receive buffer. </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKTE_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKET_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_FILTERING</td><td>Multicast Frame filter is enable, and Multicast Address Frame is received. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Value of the pointer is NULL. </td></tr>
   </table>
@@ -614,14 +610,14 @@ Current Link status. </td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Release the receive buffer. Implements ether_api_t::BufferRelease. </p>
+<p>Move to the next buffer in the circular receive buffer list. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa38e7f82e66fd26fd8d51b11f46ae6e6">ether_api_t::bufferRelease</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKTE_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKET_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
   </table>
   </dd>
 </dl>
@@ -660,14 +656,14 @@ Current Link status. </td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Transmit Ethernet frame. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length, using non-zero-copy communication. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233">ether_api_t::write</a>. </p>
+<p>Transmit Ethernet frame. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length. In the non zero copy mode, transmits data after being copied to the internal buffer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233">ether_api_t::write</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKTE_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKET_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL</td><td>Transmit buffer is not empty. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Value of the pointer is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Value of the send frame size is out of range. </td></tr>
@@ -700,12 +696,12 @@ Current Link status. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Link is down. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION</td><td>When reopen this module, initialization of PHY-LSI failed. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>When reopen this module, Control block has already been opened or channel is being used by another instance. This error does not occur originally, and if it occurs, a serious system error has occurred. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>When reopen this module, Invalid channel number is given. This error does not occur originally, and if it occurs, a serious system error has occurred. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>When reopen this module, Pointer to Mac address is NULL. This error does not occur originally, and if it occurs, a serious system error has occurred. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Irq number lower then 0. This error does not occur originally, and if it occurs, a serious system error has occurred. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_PHY_ERROR_LINK</td><td>Initialization of PHY-LSI failed. This error does not occur originally. This error is the PHY driver error and is used only within the Ether driver. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION</td><td>When reopening the PHY interface initialization of the PHY-LSI failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>When reopening the PHY interface it was already opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>When reopening the PHY interface an invalid channel was passed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>When reopening the PHY interface the MAC address pointer was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>When reopening the PHY interface the interrupt was not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_PHY_ERROR_LINK</td><td>Initialization of the PHY-LSI failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -728,14 +724,14 @@ Current Link status. </td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The setting of ETHERC is changed from a usual sending and receiving mode to the magic packet detection mode. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad">ether_api_t::wakeOnLANEnable</a>. </p>
+<p>The setting of ETHERC is changed from normal sending and receiving mode to magic packet detection mode. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad">ether_api_t::wakeOnLANEnable</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_PHY_ERROR_LINK</td><td>Initialization of PHY-LSI failed. This error does not occur originally. This error is the PHY driver error and is used only within the Ether driver. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_PHY_ERROR_LINK</td><td>Initialization of PHY-LSI failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -759,12 +755,6 @@ Current Link status. </td></tr>
 </div><div class="memdoc">
 
 <p>Provides API and code version in the user provided pointer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a2d7eb9db55c87bff39494408612fe766">ether_api_t::versionGet</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_version</td><td>Version number set here</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Version information stored in provided p_version. </td></tr>
@@ -781,9 +771,7 @@ Current Link status. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

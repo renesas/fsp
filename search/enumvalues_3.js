@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['dac8_5fmode_5fnormal',['DAC8_MODE_NORMAL',['../group___d_a_c8.html#ggaad896095c341ce32b42f85eee23d9c7fa2b91d42279306373dc39c96c6095881d',1,'r_dac8.h']]],
+  ['dac8_5fmode_5freal_5ftime',['DAC8_MODE_REAL_TIME',['../group___d_a_c8.html#ggaad896095c341ce32b42f85eee23d9c7fa95690a32bddbae03c4ceac834e3b7304',1,'r_dac8.h']]],
   ['dac_5fdata_5fformat_5fflush_5fleft',['DAC_DATA_FORMAT_FLUSH_LEFT',['../group___d_a_c___a_p_i.html#ggac447d1d0850297aefbec6e8be8b55591a2f54fec8d358877e52c825b19403ce4e',1,'r_dac_api.h']]],
   ['dac_5fdata_5fformat_5fflush_5fright',['DAC_DATA_FORMAT_FLUSH_RIGHT',['../group___d_a_c___a_p_i.html#ggac447d1d0850297aefbec6e8be8b55591a0a0260797a6ee32ac254076af73fccf0',1,'r_dac_api.h']]],
   ['display_5fcolor_5forder_5fbgr',['DISPLAY_COLOR_ORDER_BGR',['../group___d_i_s_p_l_a_y___a_p_i.html#gga1da943d9034f9b7adc58d689c04202c1a9f4eee6fcccbf99ef0d2b37a53160a4d',1,'r_display_api.h']]],

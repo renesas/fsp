@@ -10,6 +10,7 @@ var group___i2_c___s_l_a_v_e___a_p_i =
       [ "rate", "group___i2_c___s_l_a_v_e___a_p_i.html#a2abbee554bf1c554d96c8863eb3db77a", null ],
       [ "slave", "group___i2_c___s_l_a_v_e___a_p_i.html#a54f03c15c476b1e03c2e09232db9b92f", null ],
       [ "addr_mode", "group___i2_c___s_l_a_v_e___a_p_i.html#a459e8abd8d66a321b5c56f12590e8354", null ],
+      [ "general_call_enable", "group___i2_c___s_l_a_v_e___a_p_i.html#a7b1c0bee47fa93f32b4466b72c30f68c", null ],
       [ "rxi_irq", "group___i2_c___s_l_a_v_e___a_p_i.html#ad497920d5c927eff7d183500d8c21dd9", null ],
       [ "txi_irq", "group___i2_c___s_l_a_v_e___a_p_i.html#ac88cda39460d4a3d029e5c6e93bf7204", null ],
       [ "tei_irq", "group___i2_c___s_l_a_v_e___a_p_i.html#ad1cc54031228e56ffcbf398278e39e98", null ],
@@ -48,6 +49,7 @@ var group___i2_c___s_l_a_v_e___a_p_i =
       [ "I2C_SLAVE_EVENT_RX_REQUEST", "group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca35bbc925e0a13c90e6398f8df78a440a", null ],
       [ "I2C_SLAVE_EVENT_TX_REQUEST", "group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca9b0eb2a5a4dfdc44adf3838a6c2901c7", null ],
       [ "I2C_SLAVE_EVENT_RX_MORE_REQUEST", "group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca833bea612872cc350d74f6edb66e9fad", null ],
-      [ "I2C_SLAVE_EVENT_TX_MORE_REQUEST", "group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca6b2e105a581ceb4a55850b03d1d6fe2c", null ]
+      [ "I2C_SLAVE_EVENT_TX_MORE_REQUEST", "group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca6b2e105a581ceb4a55850b03d1d6fe2c", null ],
+      [ "I2C_SLAVE_EVENT_GENERAL_CALL", "group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8ca25d53326260faa954236b7af69b94852", null ]
     ] ]
 ];

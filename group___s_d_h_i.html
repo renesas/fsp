@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -149,7 +149,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_sdhi_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -159,7 +159,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
 <td>Unaligned Access Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -167,21 +167,21 @@ Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>If enabled, code for supporting buffers that are not aligned on a 4-byte boundary is included in the build. Only disable this if all buffers passed to the driver are 4-byte aligned. </td></tr>
+</td><td>Enabled </td><td>If enabled, code for supporting buffers that are not aligned on a 4-byte boundary is included in the build. Only disable this if all buffers passed to the driver are 4-byte aligned. </td></tr>
 </table>
- <h2>Configurations for SD/MMC Driver on r_sdhi</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Storage -&gt; SD/MMC Driver on r_sdhi:<br />
+ <h2>Configurations for Driver &gt; Storage &gt; SD/MMC Driver on r_sdhi</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Storage &gt; SD/MMC Driver on r_sdhi:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_sdmmc0 </td><td>Module name. </td></tr>
 <tr>
-<td>Channel</td><td>Value must be a non-negative integer</td><td>Select the channel. </td></tr>
+<td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Select the channel. </td></tr>
 <tr>
-<td>Bus Width</td><td>MCU Specific Options</td><td>Select the bus width. </td></tr>
+<td>Bus Width</td><td>MCU Specific Options</td><td></td><td>Select the bus width. </td></tr>
 <tr>
-<td>Block Size</td><td>Value must be an integer between 1 and 512</td><td>Select the media block size. Must be 512 for SD cards or eMMC devices. Must be 1-512 for SDIO. </td></tr>
+<td>Block Size</td><td>Value must be an integer between 1 and 512</td><td>512 </td><td>Select the media block size. Must be 512 for SD cards or eMMC devices. Must be 1-512 for SDIO. </td></tr>
 <tr>
 <td>Card Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -189,7 +189,7 @@ Not Used</li>
 <li>
 CD Pin</li>
 </ul>
-</td><td>Select the card detection method. </td></tr>
+</td><td>CD Pin </td><td>Select the card detection method. </td></tr>
 <tr>
 <td>Write Protection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -197,15 +197,15 @@ Not Used</li>
 <li>
 WP Pin</li>
 </ul>
-</td><td>Select whether or not to use the write protect pin. Select Not Used if the MCU or device does not have a write protect pin. </td></tr>
+</td><td>WP Pin </td><td>Select whether or not to use the write protect pin. Select Not Used if the MCU or device does not have a write protect pin. </td></tr>
 <tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
 <tr>
-<td>Access Interrupt Priority</td><td>MCU Specific Options</td><td>Select the access interrupt priority. </td></tr>
+<td>Access Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the access interrupt priority. </td></tr>
 <tr>
-<td>Card Interrupt Priority</td><td>MCU Specific Options</td><td>Select the card interrupt priority. </td></tr>
+<td>Card Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the card interrupt priority. </td></tr>
 <tr>
-<td>DTC Interrupt Priority</td><td>MCU Specific Options</td><td>Select the DTC interrupt priority. </td></tr>
+<td>DTC Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the DTC interrupt priority. </td></tr>
 </table>
 </p>
 <h2>Interrupt Configurations:</h2>
@@ -234,20 +234,31 @@ Pin Configuration</h2>
 <li>SDnCD (not available on all MCUs)</li>
 <li>SDnWP</li>
 </ul>
-<p>The drive capacity for each pin should be set to "Medium" or "High" for most hardware designs.</p>
+<p>The drive capacity for each pin should be set to "Medium" or "High" for most hardware designs. This can be configured in the Pins tab of the configurator by selecting the pin under Pin Selection -&gt; Ports.</p>
 <h1><a class="anchor" id="r-sdhi-usage_notes"></a>
 Usage Notes</h1>
 <h2>Card Detection</h2>
 <p><a class="anchor" id="um_sdmmc_card_removal_notification"></a><a class="anchor" id="um_sdmmc_card_insertion_notification"></a> When Card Detection is configured to "CD Pin" in the RA Configuration Tool, card detection is enabled during <a class="el" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open()</a>.</p>
-<p><a class="el" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet()</a> can be called to retrieve the current status of the card. If the Card Interrupt Priority is enabled, a callback is called when a card is inserted or removed.</p>
+<p><a class="el" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet()</a> can be called to retrieve the current status of the card (including whether a card is present). If the Card Interrupt Priority is enabled, a callback is called when a card is inserted or removed.</p>
 <p>If a card is removed and reinserted, <a class="el" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit()</a> must be called before reading from the card or writing to the card.</p>
 <h2>DMA Request Interrupt Priority</h2>
-<p>When data transfers are not 4-byte aligned or not a multiple of 4 bytes, a software copy of the block size (up to 512 bytes) is done in the DMA Request interrupt. This blocks other interrupts that are a lower or equal priority to the access interrupt until the software copy is complete.</p>
-<h2>Timing Notes for Open</h2>
-<p><a class="anchor" id="um_sdmmc_initialization"></a> The <a class="el" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open()</a> API completes the entire device identification and configuration process. This involves several command-response cycles at a bus width of 1 bit and a bus speed of 400 kHz or less.</p>
+<p>When data transfers are not 4-byte aligned or not a multiple of 4 bytes, a software copy of the block size (up to 512 bytes) is done in the DMA Request interrupt. This blocks all other interrupts that are a lower or equal priority to the access interrupt until the software copy is complete.</p>
+<h2>Timing Notes for R_SDHI_MediaInit</h2>
+<p><a class="anchor" id="um_sdmmc_initialization"></a> The <a class="el" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit()</a> API completes the entire device identification and configuration process. This involves several command-response cycles at a bus width of 1 bit and a bus speed of 400 kHz or less.</p>
 <h2><a class="anchor" id="r-sdhi-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the SDHI:</p>
+<h3>Blocking Calls</h3>
+<p>The following functions block execution until the response is received for at least one command:</p><ul>
+<li><a class="el" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a></li>
+<li><a class="el" href="group___s_d_h_i.html#ga844604588f44e8aa4495d27ffca74b0d">R_SDHI_ReadIo</a></li>
+<li><a class="el" href="group___s_d_h_i.html#ga111f9479ed25bba03ade5c6c40248e44">R_SDHI_WriteIo</a></li>
+<li><a class="el" href="group___s_d_h_i.html#gafd18fd8115dff4bfda4dadd5468783fd">R_SDHI_ReadIoExt</a></li>
+<li><a class="el" href="group___s_d_h_i.html#gaa73674cc979a40b00e4aed1ed9b5aa34">R_SDHI_WriteIoExt</a></li>
+<li><a class="el" href="group___s_d_h_i.html#gad954571b08da622a4b232680190b4313">R_SDHI_Erase</a></li>
+</ul>
+<p>Once the function returns the status of the operation can be determined via <a class="el" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet</a> or through receipt of a callback.</p>
+<dl class="section note"><dt>Note</dt><dd>Due to the variability in clocking configurations it is recommended to determine blocking delays experimentally on the target system.</dd></dl>
 <h3>Data Alignment and Size</h3>
 <p>Data transfers should be 4-byte aligned and a multiple of 4 bytes in size whenever possible. This recommendation applies to the read(), write(), readIoExt(), and writeIoExt() APIs. When data transfers are 4-byte aligned and a multiple of 4-bytes, the r_sdhi driver is zero copy and takes full advantage of hardware acceleration by the DMAC or DTC. When data transfers are not 4-byte aligned or not a multiple of 4 bytes an extra CPU interrupt is required for each block transferred and a software copy is used to move data to the destination buffer.</p>
 <h1><a class="anchor" id="r-sdhi-examples"></a>
@@ -256,7 +267,7 @@ Examples</h1>
 <p>This is a basic example of minimal use of the r_sdhi in an application.</p>
 <div class="fragment"><div class="line">uint8_t  g_dest[SDHI_MAX_BLOCK_SIZE] BSP_ALIGN_VARIABLE(4);</div><div class="line">uint8_t  g_src[SDHI_MAX_BLOCK_SIZE]  BSP_ALIGN_VARIABLE(4);</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line"><span class="keywordtype">void</span> r_sdhi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; SDHI_MAX_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the SDHI driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open</a>(&amp;g_sdmmc0_ctrl, &amp;g_sdmmc0_cfg);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card.  This should not be done until the card is plugged in for SD devices. */</span></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a>(&amp;g_sdmmc0_ctrl, NULL);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabb1d35740c235c80edf43549fa3427d7">R_SDHI_Write</a>(&amp;g_sdmmc0_ctrl, g_src, 3, 1);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for transfer. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#ga400250f503190acfb97e58a561feec69">R_SDHI_Read</a>(&amp;g_sdmmc0_ctrl, g_dest, 3, 1);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for transfer. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* The callback is called when a transfer completes. */</span></div><div class="line"><span class="keywordtype">void</span> r_sdhi_example_callback (<a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a07f4a417555c6cae25fc3d0ccfba499b">SDMMC_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_transfer_complete = 1;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Card Detection Example</h2>
 <p>This is an example of using SDHI when the card may not be plugged in. The card detection interrupt must be enabled to use this example.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">bool</span> g_card_inserted = <span class="keyword">false</span>;</div><div class="line"><span class="keywordtype">void</span> r_sdhi_card_detect_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the SDHI driver. This enables the card detection interrupt. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open</a>(&amp;g_sdmmc0_ctrl, &amp;g_sdmmc0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check if card is inserted. */</span></div><div class="line">    <a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__status__t">sdmmc_status_t</a> status;</div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet</a>(&amp;g_sdmmc0_ctrl, &amp;status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!status.<a class="code" href="group___s_d_m_m_c___a_p_i.html#a5cba3f15b550023a08fa16e446cf2a35">card_inserted</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">while</span> (!g_card_inserted)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for a card insertion interrupt. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card after card insertion is detected. */</span></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a>(&amp;g_sdmmc0_ctrl, NULL);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* The callback is called when a card detection event occurs if the card detection interrupt is enabled. */</span></div><div class="line"><span class="keywordtype">void</span> r_sdhi_card_detect_example_callback (<a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524af72a094283f5c4ed2bda7d27ec19df80">SDMMC_EVENT_CARD_INSERTED</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_card_inserted = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a878321ce4dc90270cc95f3019ee1aad6">SDMMC_EVENT_CARD_REMOVED</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_card_inserted = <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">bool</span> g_card_inserted = <span class="keyword">false</span>;</div><div class="line"><span class="keywordtype">void</span> r_sdhi_card_detect_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the SDHI driver. This enables the card detection interrupt. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open</a>(&amp;g_sdmmc0_ctrl, &amp;g_sdmmc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check if card is inserted. */</span></div><div class="line">    <a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__status__t">sdmmc_status_t</a> status;</div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet</a>(&amp;g_sdmmc0_ctrl, &amp;status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!status.<a class="code" href="group___s_d_m_m_c___a_p_i.html#a5cba3f15b550023a08fa16e446cf2a35">card_inserted</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">while</span> (!g_card_inserted)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for a card insertion interrupt. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card after card insertion is detected. */</span></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a>(&amp;g_sdmmc0_ctrl, NULL);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* The callback is called when a card detection event occurs if the card detection interrupt is enabled. */</span></div><div class="line"><span class="keywordtype">void</span> r_sdhi_card_detect_example_callback (<a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524af72a094283f5c4ed2bda7d27ec19df80">SDMMC_EVENT_CARD_INSERTED</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_card_inserted = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a878321ce4dc90270cc95f3019ee1aad6">SDMMC_EVENT_CARD_REMOVED</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_card_inserted = <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga37b6d1c11d0f6d92ef6ae985a420ffbb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga37b6d1c11d0f6d92ef6ae985a420ffbb">&#9670;&nbsp;</a></span>R_SDHI_Open()</h2>
 
@@ -282,11 +293,11 @@ Examples</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Opens the driver. Resets SDHI, and enables card detection interrupts if card detection is enabled. R_SDHI_MediaInit must be called after this function before any other functions can be used.</p>
+<p>Opens the driver. Resets SDHI, and enables card detection interrupts if card detection is enabled. <a class="el" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a> must be called after this function before any other functions can be used.</p>
 <p>Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#afa538bb4e713dfc116e12417376c5ce4">sdmmc_api_t::open()</a>.</p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open the SDHI driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open</a>(&amp;g_sdmmc0_ctrl, &amp;g_sdmmc0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Port is available and is now open for read/write/control access. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Module is now open. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer or block size is not in the valid range of 1-512. Block size must be 512 bytes for SD cards and eMMC devices. It is configurable for SDIO only. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Driver has already been opened with this instance of the control structure. </td></tr>
     <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td>Access interrupt is not enabled. </td></tr>
@@ -323,10 +334,10 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Initializes the SDHI hardware and completes identification and configuration for the SD or eMMC device. This procedure requires several sequential commands. This function blocks until all identification and configuration commands are complete.</p>
-<p>Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#afa538bb4e713dfc116e12417376c5ce4">sdmmc_api_t::open()</a>.</p>
+<p>Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#a2e756a69a66f0a6ae00eaa8a33f36243">sdmmc_api_t::mediaInit()</a>.</p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card.  This should not be done until the card is plugged in for SD devices. */</span></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a>(&amp;g_sdmmc0_ctrl, NULL);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Port is available and is now open for read/write/control access. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Module is now ready for read/write access. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer or block size is not in the valid range of 1-512. Block size must be 512 bytes for SD cards and eMMC devices. It is configurable for SDIO only. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
     <tr><td class="paramname">FSP_ERR_CARD_INIT_FAILED</td><td>Device was not identified as an SD card, eMMC device, or SDIO card. </td></tr>
@@ -376,7 +387,7 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Reads data from an SD or eMMC device. Up to 0x10000 sectors can be read at a time. Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#a932862661f24778adfa5302e1bc1f7ae">sdmmc_api_t::read()</a>.</p>
-<p>This function blocks until the command is sent and the response is received. A callback with the event SDMMC_EVENT_TRANSFER_COMPLETE is called when the read data is available.</p>
+<p>A callback with the event SDMMC_EVENT_TRANSFER_COMPLETE is called when the read data is available.</p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#ga400250f503190acfb97e58a561feec69">R_SDHI_Read</a>(&amp;g_sdmmc0_ctrl, g_dest, 3, 1);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Data read successfully. </td></tr>
@@ -428,7 +439,7 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Writes data to an SD or eMMC device. Up to 0x10000 sectors can be written at a time. Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#a5294db71da024eb9721ea38723ef5508">sdmmc_api_t::write()</a>.</p>
-<p>This function blocks until the command is sent and the response is received. A callback with the event SDMMC_EVENT_TRANSFER_COMPLETE is called when the all data has been written and the device is no longer holding DAT0 low to indicate it is busy.</p>
+<p>A callback with the event SDMMC_EVENT_TRANSFER_COMPLETE is called when the all data has been written and the device is no longer holding DAT0 low to indicate it is busy.</p>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabb1d35740c235c80edf43549fa3427d7">R_SDHI_Write</a>(&amp;g_sdmmc0_ctrl, g_src, 3, 1);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Card write finished successfully. </td></tr>
@@ -810,7 +821,7 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Erases sectors of an SD card or eMMC device. Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#adeb37ae1b226f926ffe36f5dc19f47b2">sdmmc_api_t::erase()</a>.</p>
-<p>This function blocks until erase is complete.</p>
+<p>This function blocks until the erase command is sent. Poll the status to determine when erase is complete.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Erase operation requested. </td></tr>
@@ -885,9 +896,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['digital_20to_20analog_20converter_20_28r_5fdac_29',['Digital to Analog Converter (r_dac)',['../group___d_a_c.html',1,'']]],
+  ['digital_20to_20analog_20converter_20_28r_5fdac8_29',['Digital to Analog Converter (r_dac8)',['../group___d_a_c8.html',1,'']]],
   ['dac_20interface',['DAC Interface',['../group___d_a_c___a_p_i.html',1,'']]],
   ['display_20interface',['Display Interface',['../group___d_i_s_p_l_a_y___a_p_i.html',1,'']]],
   ['direct_20memory_20access_20controller_20_28r_5fdmac_29',['Direct Memory Access Controller (r_dmac)',['../group___d_m_a_c.html',1,'']]],

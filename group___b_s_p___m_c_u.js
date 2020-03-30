@@ -10,11 +10,8 @@ var group___b_s_p___m_c_u =
     [ "FSP_ERROR_LOG", "group___b_s_p___m_c_u.html#ga960f46c44b67ba8ad5377cfc8e4e6a75", null ],
     [ "FSP_ASSERT", "group___b_s_p___m_c_u.html#gaa4fa8ae9390afa996af2dabee6552732", null ],
     [ "FSP_ERROR_RETURN", "group___b_s_p___m_c_u.html#ga577e9b015e1b0794934fa4f2b229e52f", null ],
-    [ "FSP_CRITICAL_SECTION_DEFINE", "group___b_s_p___m_c_u.html#ga9892fcbd27f7a328e5624bee3eb2d8df", null ],
-    [ "FSP_CRITICAL_SECTION_GET_CURRENT_STATE", "group___b_s_p___m_c_u.html#ga338455b9f74d3f07969c7e57953fdc22", null ],
     [ "FSP_CRITICAL_SECTION_ENTER", "group___b_s_p___m_c_u.html#gaddc2260c1ce320f3aa1f1cb05b9a5620", null ],
     [ "FSP_CRITICAL_SECTION_EXIT", "group___b_s_p___m_c_u.html#ga23338e06b1e1537017ef4f3f94cda354", null ],
-    [ "FSP_PRIV_CORTEX_PROCESSOR_EXCEPTIONS", "group___b_s_p___m_c_u.html#ga039f351210fa6aae1224ef910be7c983", null ],
     [ "FSP_INVALID_VECTOR", "group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d", null ],
     [ "BSP_STACK_ALIGNMENT", "group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992", null ],
     [ "R_BSP_MODULE_START", "group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000", null ],
@@ -283,5 +280,6 @@ var group___b_s_p___m_c_u =
     [ "NMI_Handler", "group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc", null ],
     [ "R_BSP_RegisterProtectEnable", "group___b_s_p___m_c_u.html#ga6a9c6b74983237446de75a9d9b65e752", null ],
     [ "R_BSP_RegisterProtectDisable", "group___b_s_p___m_c_u.html#ga1bb35164e7e044bd1878a4ce015199c3", null ],
-    [ "SystemCoreClock", "group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6", null ]
+    [ "SystemCoreClock", "group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6", null ],
+    [ "g_bsp_version", "group___b_s_p___m_c_u.html#gaaa2f4340010ddb682ca12fac46f83db8", null ]
 ];

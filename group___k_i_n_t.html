@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -119,9 +119,8 @@ Overview</h1>
 <h2><a class="anchor" id="r-kint-features"></a>
 Features</h2>
 <ul>
-<li>Rising and falling edges on KINT channels</li>
-<li>A callback for notifying the application when edges are detected on the configured channels</li>
-<li>Supports a matrix keypad with edges on any two channels</li>
+<li>Detect rising or falling edges on KINT channels</li>
+<li>Callback for notifying the application when edges are detected on the configured channels</li>
 </ul>
 <h1><a class="anchor" id="r-kint-configuration"></a>
 Configuration</h1>
@@ -129,7 +128,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_kint_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -139,91 +138,47 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Key Matrix Driver on r_kint</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Input -&gt; Key Matrix Driver on r_kint:<br />
+ <h2>Configurations for Driver &gt; Input &gt; Key Matrix Driver on r_kint</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Input &gt; Key Matrix Driver on r_kint:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>General|Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_kint0 </td><td>Module name. </td></tr>
 <tr>
-<td>Input|Keymatrix Channel Mask|Channel 0</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Input &gt; Key Interrupt Flag Mask</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Disable</li>
+Channel 0</li>
 <li>
-Enable</li>
+Channel 1</li>
+<li>
+Channel 2</li>
+<li>
+Channel 3</li>
+<li>
+Channel 4</li>
+<li>
+Channel 5</li>
+<li>
+Channel 6</li>
+<li>
+Channel 7</li>
 </ul>
-</td><td>Select to enable this channel. </td></tr>
+</td><td></td><td>Select channels to enable. </td></tr>
 <tr>
-<td>Input|Keymatrix Channel Mask|Channel 1</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable</li>
-</ul>
-</td><td>Select to enable this channel. </td></tr>
-<tr>
-<td>Input|Keymatrix Channel Mask|Channel 2</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable</li>
-</ul>
-</td><td>Select to enable this channel. </td></tr>
-<tr>
-<td>Input|Keymatrix Channel Mask|Channel 3</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable</li>
-</ul>
-</td><td>Select to enable this channel. </td></tr>
-<tr>
-<td>Input|Keymatrix Channel Mask|Channel 4</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable</li>
-</ul>
-</td><td>Select to enable this channel. </td></tr>
-<tr>
-<td>Input|Keymatrix Channel Mask|Channel 5</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable</li>
-</ul>
-</td><td>Select to enable this channel. </td></tr>
-<tr>
-<td>Input|Keymatrix Channel Mask|Channel 6</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable</li>
-</ul>
-</td><td>Select to enable this channel. </td></tr>
-<tr>
-<td>Input|Keymatrix Channel Mask|Channel 7</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable</li>
-</ul>
-</td><td>Select to enable this channel. </td></tr>
-<tr>
-<td>Interrupts|Trigger Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Interrupts &gt; Trigger Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Falling Edge</li>
 <li>
 Rising Edge</li>
 </ul>
-</td><td>Specifies if the enabled channels detect a rising edge or a falling edge. NOTE: either all channels detecting a rising edge or all channels detecting a falling edge. </td></tr>
+</td><td>Rising Edge </td><td>Specifies if the enabled channels detect a rising edge or a falling edge. NOTE: either all channels detecting a rising edge or all channels detecting a falling edge. </td></tr>
 <tr>
-<td>Interrupts|Callback</td><td>Name must be a valid C symbol</td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the IRQ triggers. </td></tr>
+<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>kint_callback </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the IRQ triggers. </td></tr>
 <tr>
-<td>Interrupts|Key Interrupt Priority</td><td>MCU Specific Options</td><td>Select the key interrupt priority. </td></tr>
+<td>Interrupts &gt; Key Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the key interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-kint-clock-configuration"></a>
@@ -231,16 +186,19 @@ Clock Configuration</h2>
 <p>The KINT peripheral runs on PCLKB.</p>
 <h2><a class="anchor" id="r-kint-pin-configuration"></a>
 Pin Configuration</h2>
-<p>The KINT peripheral function must be enabled for each KINT pin.</p>
+<p>The KRn pins are key switch matrix row input pins.</p>
 <h1><a class="anchor" id="r-kint-usage_notes"></a>
 Usage Notes</h1>
+<h2>Connecting a Switch Matrix</h2>
+<p>The KINT module is designed to scan the rows of a switch matrix where each row is connected to a number of columns through switches. A periodic timer (or other mechanism) sets one column pin high at a time. Any switches that are pressed on the driven column cause a rising (or falling) edge on the row pin (KRn) causing an interrupt.</p>
+<dl class="section note"><dt>Note</dt><dd>In applications where multiple keys may be pressed at the same time it is recommended to put a diode inline with each switch to prevent ghosting.</dd></dl>
 <h2>Handling Multiple Pins</h2>
 <p>When an edge is detected on multiple pins at the same time, a single IRQ will be generated. A mask of all the pins that detected an edge will be passed to the callback.</p>
 <h1><a class="anchor" id="r-kint-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the KINT in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_channel_mask;</div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_kint_edge_detected = 0U;</div><div class="line"></div><div class="line"><span class="comment">/* Called from key_int_isr */</span></div><div class="line"><span class="keywordtype">void</span> r_kint_callback (<a class="code" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__callback__args__t">keymatrix_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    g_channel_mask       = p_args-&gt;<a class="code" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#a4994759c01af15cc15cbc45bee71a0e5">channel_mask</a>;</div><div class="line">    g_kint_edge_detected = 1U;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_kint_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Configure the KINT. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___k_i_n_t.html#ga87199dfe1fe49aebd48afaea155194c6">R_KINT_Open</a>(&amp;g_kint_ctrl, &amp;g_kint_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the KINT. */</span></div><div class="line">    err = <a class="code" href="group___k_i_n_t.html#gabdfc969fd54b5bb9ea18aebe070ca9b2">R_KINT_Enable</a>(&amp;g_kint_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_kint_edge_detected)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_channel_mask;</div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint32_t g_kint_edge_detected = 0U;</div><div class="line"></div><div class="line"><span class="comment">/* Called from key_int_isr */</span></div><div class="line"><span class="keywordtype">void</span> r_kint_callback (<a class="code" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__callback__args__t">keymatrix_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    g_channel_mask       = p_args-&gt;<a class="code" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#a4994759c01af15cc15cbc45bee71a0e5">channel_mask</a>;</div><div class="line">    g_kint_edge_detected = 1U;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_kint_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Configure the KINT. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___k_i_n_t.html#ga87199dfe1fe49aebd48afaea155194c6">R_KINT_Open</a>(&amp;g_kint_ctrl, &amp;g_kint_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the KINT. */</span></div><div class="line">    err = <a class="code" href="group___k_i_n_t.html#gabdfc969fd54b5bb9ea18aebe070ca9b2">R_KINT_Enable</a>(&amp;g_kint_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_kint_edge_detected)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structkint__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_i_n_t.html#structkint__instance__ctrl__t">kint_instance_ctrl_t</a></td></tr>
@@ -414,9 +372,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

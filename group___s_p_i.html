@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -91,7 +91,9 @@ $(document).ready(function(){initNavTree('group___s_p_i.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Serial Peripheral Interface (r_spi)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
 </div><!--header-->
@@ -111,7 +113,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga2130d38f52a95911a8f0cec6018ec041"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1dab68b64b294d346c3ef3b69feba59b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga1dab68b64b294d346c3ef3b69feba59b">R_SPI_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
 <tr class="separator:ga1dab68b64b294d346c3ef3b69feba59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga06b45c13797497f90c7ef8a20f3bff7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga06b45c13797497f90c7ef8a20f3bff7f">R_SPI_CalculateBitrate</a> (uint32_t bitrate, <a class="el" href="structrspck__div__setting__t.html">rspck_div_setting_t</a> *spck_div)</td></tr>
+<tr class="memitem:ga06b45c13797497f90c7ef8a20f3bff7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga06b45c13797497f90c7ef8a20f3bff7f">R_SPI_CalculateBitrate</a> (uint32_t bitrate, <a class="el" href="group___s_p_i.html#structrspck__div__setting__t">rspck_div_setting_t</a> *spck_div)</td></tr>
 <tr class="separator:ga06b45c13797497f90c7ef8a20f3bff7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -138,7 +140,7 @@ Features</h2>
 <li>Hardware endian swap in 16-Bit and 32-Bit mode</li>
 </ul>
 </li>
-<li>3-Wire or 4-Wire Mode</li>
+<li>3-Wire (clock synchronous) or 4-Wire (SPI) Mode</li>
 </ul>
 </li>
 <li>Configurable bitrate</li>
@@ -158,7 +160,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_spi_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -168,7 +170,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
 <td>Enable Support for using DTC</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -176,7 +178,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If enabled, DTC instances will be included in the build for both transmission and reception. </td></tr>
+</td><td>Enabled </td><td>If enabled, DTC instances will be included in the build for both transmission and reception. </td></tr>
 <tr>
 <td>Enable Transmitting from RXI Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -184,25 +186,25 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If enabled, DTC instances will be included in the build for both transmission and reception. </td></tr>
+</td><td>Disabled </td><td>If enabled, all operations will be handled from the RX (receive) interrupt. This setting only provides a performance boost when DTC is not used. In addition, Transmit Only mode is not supported when this configuration is enabled. </td></tr>
 </table>
- <h2>Configurations for SPI Driver on r_spi</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Connectivity -&gt; SPI Driver on r_spi:<br />
+ <h2>Configurations for Driver &gt; Connectivity &gt; SPI Driver on r_spi</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; SPI Driver on r_spi:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_spi0 </td><td>Module name. </td></tr>
 <tr>
-<td>Channel</td><td>Select channel 0 or channel 1</td><td>Select the SPI channel. </td></tr>
+<td>Channel</td><td>Select channel 0 or channel 1</td><td>0 </td><td>Select the SPI channel. </td></tr>
 <tr>
-<td>Receive Interrupt Priority</td><td>MCU Specific Options</td><td>Select the interrupt priority for all SPI interrupts. </td></tr>
+<td>Receive Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for all SPI interrupts. </td></tr>
 <tr>
-<td>Transmit Buffer Empty Interrupt Priority</td><td>MCU Specific Options</td><td>Select the interrupt priority for all SPI interrupts. </td></tr>
+<td>Transmit Buffer Empty Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for all SPI interrupts. </td></tr>
 <tr>
-<td>Transfer Complete Interrupt Priority</td><td>MCU Specific Options</td><td>Select the interrupt priority for all SPI interrupts. </td></tr>
+<td>Transfer Complete Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for all SPI interrupts. </td></tr>
 <tr>
-<td>Error Interrupt Priority</td><td>MCU Specific Options</td><td>Select the interrupt priority for all SPI interrupts. </td></tr>
+<td>Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for all SPI interrupts. </td></tr>
 <tr>
 <td>Operating Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -210,7 +212,7 @@ Master</li>
 <li>
 Slave</li>
 </ul>
-</td><td>Select the SPI operating mode. </td></tr>
+</td><td>Master </td><td>Select the SPI operating mode. </td></tr>
 <tr>
 <td>Clock Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -218,7 +220,7 @@ Data sampling on odd edge, data variation on even edge</li>
 <li>
 Data sampling on even edge, data variation on odd edge</li>
 </ul>
-</td><td>Select the clock edge to sample data. </td></tr>
+</td><td>Data sampling on odd edge, data variation on even edge </td><td>Select the clock edge to sample data. </td></tr>
 <tr>
 <td>Clock Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -226,7 +228,7 @@ Low when idle</li>
 <li>
 High when idle</li>
 </ul>
-</td><td>Select clock level when idle. </td></tr>
+</td><td>Low when idle </td><td>Select clock level when idle. </td></tr>
 <tr>
 <td>Mode Fault Error</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -234,7 +236,7 @@ Enable</li>
 <li>
 Disable</li>
 </ul>
-</td><td>Detect master/slave mode conflicts. </td></tr>
+</td><td>Disable </td><td>Detect master/slave mode conflicts. </td></tr>
 <tr>
 <td>Bit Order</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -242,9 +244,9 @@ MSB First</li>
 <li>
 LSB First</li>
 </ul>
-</td><td>Select the data bit order. </td></tr>
+</td><td>MSB First </td><td>Select the data bit order. </td></tr>
 <tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>spi_callback </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
 <tr>
 <td>SPI Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -252,7 +254,7 @@ SPI Operation</li>
 <li>
 Clock Synchronous Operation</li>
 </ul>
-</td><td>Select the clock sync mode. </td></tr>
+</td><td>Clock Synchronous Operation </td><td>Select the clock sync mode. </td></tr>
 <tr>
 <td>Full or Transmit Only Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -260,7 +262,7 @@ Full Duplex</li>
 <li>
 Transmit Only</li>
 </ul>
-</td><td>Select Full Duplex or Transmit Only Mode. </td></tr>
+</td><td>Full Duplex </td><td>Select Full Duplex or Transmit Only Mode. </td></tr>
 <tr>
 <td>Slave Select Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -268,7 +270,7 @@ Active Low</li>
 <li>
 Active High</li>
 </ul>
-</td><td>Select the slave select active level. </td></tr>
+</td><td>Active Low </td><td>Select the slave select active level. </td></tr>
 <tr>
 <td>Select SSL(Slave Select)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -280,7 +282,7 @@ SSL2</li>
 <li>
 SSL3</li>
 </ul>
-</td><td>Select which slave to use. </td></tr>
+</td><td>SSL0 </td><td>Select which slave to use. </td></tr>
 <tr>
 <td>MOSI Idle State</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -290,7 +292,7 @@ MOSI Idle Value Fixing Low</li>
 <li>
 MOSI Idle Value Fixing High</li>
 </ul>
-</td><td>Select the MOSI idle level if MOSI idle is enabled. </td></tr>
+</td><td>MOSI Idle Value Fixing Disable </td><td>Select the MOSI idle level if MOSI idle is enabled. </td></tr>
 <tr>
 <td>Parity Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -300,17 +302,17 @@ Parity Odd</li>
 <li>
 Parity Even</li>
 </ul>
-</td><td>Select the parity mode if parity is enabled. </td></tr>
+</td><td>Parity Disabled </td><td>Select the parity mode if parity is enabled. </td></tr>
 <tr>
 <td>Byte Swapping</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Byte Swapping Disabled</li>
+Disable</li>
 <li>
-Byte Swapping Enabled</li>
+Enable</li>
 </ul>
-</td><td>Select the byte swap mode for 16/32-Bit Data Frames. </td></tr>
+</td><td>Disable </td><td>Select the byte swap mode for 16/32-Bit Data Frames. </td></tr>
 <tr>
-<td>Bitrate</td><td>Value must be an integer greater than 0</td><td>Enter the desired bitrate. </td></tr>
+<td>Bitrate</td><td>Value must be an integer greater than 0</td><td>30000000 </td><td>Enter the desired bitrate. </td></tr>
 <tr>
 <td>Clock Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -330,7 +332,7 @@ SPI_DELAY_COUNT_7</li>
 <li>
 SPI_DELAY_COUNT_8</li>
 </ul>
-</td><td>Configure the number of SPI clock cycles before each data frame. </td></tr>
+</td><td>SPI_DELAY_COUNT_1 </td><td>Configure the number of SPI clock cycles before each data frame. </td></tr>
 <tr>
 <td>SSL Negation Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -350,7 +352,7 @@ SPI_DELAY_COUNT_7</li>
 <li>
 SPI_DELAY_COUNT_8</li>
 </ul>
-</td><td>Configure the number of SPI clock cycles after each data frame. </td></tr>
+</td><td>SPI_DELAY_COUNT_1 </td><td>Configure the number of SPI clock cycles after each data frame. </td></tr>
 <tr>
 <td>Next Access Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -370,7 +372,7 @@ SPI_DELAY_COUNT_7</li>
 <li>
 SPI_DELAY_COUNT_8</li>
 </ul>
-</td><td>Configure the number of SPI clock cycles between each data frame. </td></tr>
+</td><td>SPI_DELAY_COUNT_1 </td><td>Configure the number of SPI clock cycles between each data frame. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-spi-clock-configuration"></a>
@@ -422,11 +424,22 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the SPI in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> spi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t tx_buffer[TRANSFER_SIZE];</div><div class="line">    uint8_t rx_buffer[TRANSFER_SIZE];</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI module. */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga4c30ef8817407bd4b394ee9cc8b90a0b">R_SPI_Open</a>(&amp;g_spi_ctrl, &amp;g_spi_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga459fb4dfcfc9ee278599ae431237f549">R_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_spi_callback (<a class="code" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_p_i___a_p_i.html#gga6e4960e8b344a8a8ec60f0c11d60f54ca2b456074a7304b0ac4be1cbe69d6dad1">SPI_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___s_p_i___a_p_i.html#ae1e14270178c91fb89697630627c1eee">event</a>)</div><div class="line">    {</div><div class="line">        g_transfer_complete = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Driving Software Slave Select Line</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> spi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t tx_buffer[TRANSFER_SIZE];</div><div class="line">    uint8_t rx_buffer[TRANSFER_SIZE];</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI module. */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga4c30ef8817407bd4b394ee9cc8b90a0b">R_SPI_Open</a>(&amp;g_spi_ctrl, &amp;g_spi_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga459fb4dfcfc9ee278599ae431237f549">R_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_spi_callback (<a class="code" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_p_i___a_p_i.html#gga6e4960e8b344a8a8ec60f0c11d60f54ca2b456074a7304b0ac4be1cbe69d6dad1">SPI_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___s_p_i___a_p_i.html#ae1e14270178c91fb89697630627c1eee">event</a>)</div><div class="line">    {</div><div class="line">        g_transfer_complete = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Driving Software Slave Select Line</h2>
 <p>This is an example of communicating with multiple slave devices by asserting SSL in software.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> spi_software_ssl_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t tx_buffer[TRANSFER_SIZE];</div><div class="line">    uint8_t rx_buffer[TRANSFER_SIZE];</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI module. */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga4c30ef8817407bd4b394ee9cc8b90a0b">R_SPI_Open</a>(&amp;g_spi_ctrl, &amp;g_spi_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line">    err                 = <a class="code" href="group___s_p_i.html#ga459fb4dfcfc9ee278599ae431237f549">R_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for minimum time required between transfers. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(SSL_NEXT_ACCESS_DELAY, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line">    err                 = <a class="code" href="group___s_p_i.html#ga459fb4dfcfc9ee278599ae431237f549">R_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Configuring the SPI Clock Divider Registers</h2>
-<p>This is an example of communicating with multiple slave devices by asserting SSL in software.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> spi_bitrate_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    g_spi_cfg.p_extend = &amp;g_spi_extended_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure SPI Clock divider to achieve largest bitrate less than or equal to the desired bitrate. */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga06b45c13797497f90c7ef8a20f3bff7f">R_SPI_CalculateBitrate</a>(BITRATE, &amp;(g_spi_extended_cfg.spck_div));</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI module. */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga4c30ef8817407bd4b394ee9cc8b90a0b">R_SPI_Open</a>(&amp;g_spi_ctrl, &amp;g_spi_cfg);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> spi_software_ssl_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t tx_buffer[TRANSFER_SIZE];</div><div class="line">    uint8_t rx_buffer[TRANSFER_SIZE];</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI module. */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga4c30ef8817407bd4b394ee9cc8b90a0b">R_SPI_Open</a>(&amp;g_spi_ctrl, &amp;g_spi_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line">    err                 = <a class="code" href="group___s_p_i.html#ga459fb4dfcfc9ee278599ae431237f549">R_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for minimum time required between transfers. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(SSL_NEXT_ACCESS_DELAY, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line">    err                 = <a class="code" href="group___s_p_i.html#ga459fb4dfcfc9ee278599ae431237f549">R_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Configuring the SPI Clock Divider Registers</h2>
+<p>This example demonstrates how to set the SPI clock divisors at runtime.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> spi_bitrate_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    g_spi_cfg.p_extend = &amp;g_spi_extended_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure SPI Clock divider to achieve largest bitrate less than or equal to the desired bitrate. */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga06b45c13797497f90c7ef8a20f3bff7f">R_SPI_CalculateBitrate</a>(BITRATE, &amp;(g_spi_extended_cfg.spck_div));</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI module. */</span></div><div class="line">    err = <a class="code" href="group___s_p_i.html#ga4c30ef8817407bd4b394ee9cc8b90a0b">R_SPI_Open</a>(&amp;g_spi_ctrl, &amp;g_spi_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structrspck__div__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#structrspck__div__setting__t">rspck_div_setting_t</a></td></tr>
+<tr class="separator:structrspck__div__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structspi__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#structspi__extended__cfg__t">spi_extended_cfg_t</a></td></tr>
+<tr class="separator:structspi__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structspi__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#structspi__instance__ctrl__t">spi_instance_ctrl_t</a></td></tr>
+<tr class="separator:structspi__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
 <tr class="memitem:ga1e93e8027d068a045c2334b026f75576"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga1e93e8027d068a045c2334b026f75576">spi_ssl_mode_t</a> </td></tr>
 <tr class="separator:ga1e93e8027d068a045c2334b026f75576"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5f3808f9dce40a385183acad20a04eb5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga5f3808f9dce40a385183acad20a04eb5">spi_communication_t</a> </td></tr>
@@ -444,6 +457,193 @@ Examples</h1>
 <tr class="memitem:ga8461cfe39f136055edd0efc7a83990f5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga8461cfe39f136055edd0efc7a83990f5">spi_delay_count_t</a> </td></tr>
 <tr class="separator:ga8461cfe39f136055edd0efc7a83990f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrspck__div__setting__t" id="structrspck__div__setting__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrspck__div__setting__t">&#9670;&nbsp;</a></span>rspck_div_setting_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rspck_div_setting_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>SPI Clock Divider settings. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a67df9d0b11ff15890c138596faaa6c03"></a>uint8_t</td>
+<td class="fieldname">
+spbr</td>
+<td class="fielddoc">
+SPBR register setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6bc3a03629a2f20e5b468f6ca7f54697"></a>uint8_t</td>
+<td class="fieldname">
+brdv: 2</td>
+<td class="fielddoc">
+BRDV setting in SPCMD0. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structspi__extended__cfg__t" id="structspi__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structspi__extended__cfg__t">&#9670;&nbsp;</a></span>spi_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct spi_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended SPI interface configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a5d854b9ba7a97a695d56ddbbb3f3f75d"></a><a class="el" href="group___s_p_i.html#ga1e93e8027d068a045c2334b026f75576">spi_ssl_mode_t</a></td>
+<td class="fieldname">
+spi_clksyn</td>
+<td class="fielddoc">
+Select spi or clock syn mode operation. </td></tr>
+<tr><td class="fieldtype">
+<a id="a27a1d35c131cecba8270decca293508c"></a><a class="el" href="group___s_p_i.html#ga5f3808f9dce40a385183acad20a04eb5">spi_communication_t</a></td>
+<td class="fieldname">
+spi_comm</td>
+<td class="fielddoc">
+Select full-duplex or transmit-only communication. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8525d4678b297771463263f624969974"></a><a class="el" href="group___s_p_i.html#gac319d4e8467280b16095a9d00e9c2606">spi_ssl_polarity_t</a></td>
+<td class="fieldname">
+ssl_polarity</td>
+<td class="fielddoc">
+Select SSLn signal polarity. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad0be27c96b5281e62f10424682b26180"></a><a class="el" href="group___s_p_i.html#ga1076d7126f44ab3450a4360b558c961b">spi_ssl_select_t</a></td>
+<td class="fieldname">
+ssl_select</td>
+<td class="fielddoc">
+Select which slave to use;0-SSL0;1-SSL1;2-SSL2;3-SSL3. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab68038f935c3fdc7c0fa921a67071b6d"></a><a class="el" href="group___s_p_i.html#gabd287afdffc5ca8a93608d21ba210465">spi_mosi_idle_value_fixing_t</a></td>
+<td class="fieldname">
+mosi_idle</td>
+<td class="fielddoc">
+Select mosi idle fixed value and selection. </td></tr>
+<tr><td class="fieldtype">
+<a id="aad6986d3ad4d3cb27f75daedd0340a2c"></a><a class="el" href="group___s_p_i.html#gaea392a0379a03fad6a1a3e40e66e5db3">spi_parity_t</a></td>
+<td class="fieldname">
+parity</td>
+<td class="fielddoc">
+Select parity and enable/disable parity. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa3f17ea0c2b813af6cc166d0f58e8530"></a><a class="el" href="group___s_p_i.html#ga83efd6c2d217481668d8d31cad4fb17e">spi_byte_swap_t</a></td>
+<td class="fieldname">
+byte_swap</td>
+<td class="fielddoc">
+Select byte swap mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="af0de98ae20df43c8120d7f52fb45812b"></a><a class="el" href="group___s_p_i.html#structrspck__div__setting__t">rspck_div_setting_t</a></td>
+<td class="fieldname">
+spck_div</td>
+<td class="fielddoc">
+Register values for configuring the SPI Clock Divider. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8bdda055f1a900d547f922e9f4f15e26"></a><a class="el" href="group___s_p_i.html#ga8461cfe39f136055edd0efc7a83990f5">spi_delay_count_t</a></td>
+<td class="fieldname">
+spck_delay</td>
+<td class="fielddoc">
+SPI Clock Delay Register Setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7ccba130a8c80270295601d0ddee67c3"></a><a class="el" href="group___s_p_i.html#ga8461cfe39f136055edd0efc7a83990f5">spi_delay_count_t</a></td>
+<td class="fieldname">
+ssl_negation_delay</td>
+<td class="fielddoc">
+SPI Slave Select Negation Delay Register Setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a60d68331597e3bce4f172ae22945aa26"></a><a class="el" href="group___s_p_i.html#ga8461cfe39f136055edd0efc7a83990f5">spi_delay_count_t</a></td>
+<td class="fieldname">
+next_access_delay</td>
+<td class="fielddoc">
+SPI Next-Access Delay Register Setting. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structspi__instance__ctrl__t" id="structspi__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structspi__instance__ctrl__t">&#9670;&nbsp;</a></span>spi_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct spi_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Channel control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___s_p_i___a_p_i.html#a97177a6162ebad73907c7f23c1411426">spi_api_t::open</a> is called. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ac9844deca6b567e54920c08c7106fe79"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Indicates whether the <a class="el" href="group___s_p_i.html#ac9844deca6b567e54920c08c7106fe79" title="Indicates whether the open() API has been successfully called. ">open()</a> API has been successfully called. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7cb96da456d8da01386d7be6f17a9f4d"></a><a class="el" href="group___s_p_i___a_p_i.html#structspi__cfg__t">spi_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to instance configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="a12f5faabc6d173ed19a8fa70f7103ecc"></a>R_SPI0_Type *</td>
+<td class="fieldname">
+p_regs</td>
+<td class="fielddoc">
+Base register for this channel. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4a0569c8791a283761d7872c69732bdd"></a>void const  *</td>
+<td class="fieldname">
+p_tx_data</td>
+<td class="fielddoc">
+Buffer to transmit. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae8178d3442e3a5e127f8f7aaae61bb71"></a>void *</td>
+<td class="fieldname">
+p_rx_data</td>
+<td class="fielddoc">
+Buffer to receive. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae130259a1d7b1bc333c0697edcea51d8"></a>uint32_t</td>
+<td class="fieldname">
+tx_count</td>
+<td class="fielddoc">
+Number of Data Frames to transfer (8-bit, 16-bit, 32-bit) </td></tr>
+<tr><td class="fieldtype">
+<a id="abe8eb56d5ed0739668b2f868e9a59826"></a>uint32_t</td>
+<td class="fieldname">
+rx_count</td>
+<td class="fielddoc">
+Number of Data Frames to transfer (8-bit, 16-bit, 32-bit) </td></tr>
+<tr><td class="fieldtype">
+<a id="a5100758244ed4221bac5ea2b332cbe1a"></a>uint32_t</td>
+<td class="fieldname">
+count</td>
+<td class="fielddoc">
+Number of Data Frames to transfer (8-bit, 16-bit, 32-bit) </td></tr>
+<tr><td class="fieldtype">
+<a id="a3cdfaf65f6b681f7130a966c065060b6"></a><a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a></td>
+<td class="fieldname">
+bit_width</td>
+<td class="fielddoc">
+Bits per Data frame (8-bit, 16-bit, 32-bit) </td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga1e93e8027d068a045c2334b026f75576"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga1e93e8027d068a045c2334b026f75576">&#9670;&nbsp;</a></span>spi_ssl_mode_t</h2>
@@ -457,6 +657,12 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>3-Wire or 4-Wire mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1e93e8027d068a045c2334b026f75576a09bd332dd1c1c2ce39a14b325da53ba6"></a>SPI_SSL_MODE_SPI&#160;</td><td class="fielddoc"><p>SPI operation (4-wire method) */. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1e93e8027d068a045c2334b026f75576ac1f94fe7856ca127298840e2441baebd"></a>SPI_SSL_MODE_CLK_SYN&#160;</td><td class="fielddoc"><p>Clock Synchronous operation (3-wire method) */. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -472,6 +678,12 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Transmit Only (Half Duplex), or Full Duplex. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5f3808f9dce40a385183acad20a04eb5a21f9e9107853cb9ad5512fd4a696c206"></a>SPI_COMMUNICATION_FULL_DUPLEX&#160;</td><td class="fielddoc"><p>Full-Duplex synchronous serial communication */. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f3808f9dce40a385183acad20a04eb5a59f8b253c8b1a65e4657afd97137e7ea"></a>SPI_COMMUNICATION_TRANSMIT_ONLY&#160;</td><td class="fielddoc"><p>Transit only serial communication */. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -487,6 +699,12 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Slave Select Polarity. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac319d4e8467280b16095a9d00e9c2606a04025ed30e225121a3a2ec996859e6d3"></a>SPI_SSLP_LOW&#160;</td><td class="fielddoc"><p>SSLP signal polarity active low */. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac319d4e8467280b16095a9d00e9c2606a9d811cbe20fe1212a5cda5eb03c8c12b"></a>SPI_SSLP_HIGH&#160;</td><td class="fielddoc"><p>SSLP signal polarity active high */. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -502,6 +720,16 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>The Slave Select Line </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1076d7126f44ab3450a4360b558c961bafd69c448dfafad51e8e6be435d142f5e"></a>SPI_SSL_SELECT_SSL0&#160;</td><td class="fielddoc"><p>Select SSL0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1076d7126f44ab3450a4360b558c961ba5da51906dd00e24b08eceed68a7e38f8"></a>SPI_SSL_SELECT_SSL1&#160;</td><td class="fielddoc"><p>Select SSL1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1076d7126f44ab3450a4360b558c961ba1ba50762e80e378608d35484b2785ac0"></a>SPI_SSL_SELECT_SSL2&#160;</td><td class="fielddoc"><p>Select SSL2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1076d7126f44ab3450a4360b558c961ba0dfe3cd2d6798828dbf5cdfb601ac0b5"></a>SPI_SSL_SELECT_SSL3&#160;</td><td class="fielddoc"><p>Select SSL3. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -517,6 +745,14 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>MOSI Idle Behavior. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggabd287afdffc5ca8a93608d21ba210465a44e8701259476e6c76e72ae7fffca5a6"></a>SPI_MOSI_IDLE_VALUE_FIXING_DISABLE&#160;</td><td class="fielddoc"><p>MOSI output value=value set in MOIFV bit. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggabd287afdffc5ca8a93608d21ba210465a5858b9e1b26460d10e519517ec10a590"></a>SPI_MOSI_IDLE_VALUE_FIXING_LOW&#160;</td><td class="fielddoc"><p>MOSIn level low during MOSI idling. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggabd287afdffc5ca8a93608d21ba210465aeab1004309e0e339c0dbaad6d2c48c61"></a>SPI_MOSI_IDLE_VALUE_FIXING_HIGH&#160;</td><td class="fielddoc"><p>MOSIn level high during MOSI idling. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -532,6 +768,14 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Parity Mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaea392a0379a03fad6a1a3e40e66e5db3ab9b7f30a1848423efa6d15714b354c26"></a>SPI_PARITY_MODE_DISABLE&#160;</td><td class="fielddoc"><p>Disable parity. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaea392a0379a03fad6a1a3e40e66e5db3ad549e532178122638656b86f42531065"></a>SPI_PARITY_MODE_ODD&#160;</td><td class="fielddoc"><p>Select even parity. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaea392a0379a03fad6a1a3e40e66e5db3aa556820f9296a6ff00788d231bda67af"></a>SPI_PARITY_MODE_EVEN&#160;</td><td class="fielddoc"><p>Select odd parity. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -547,6 +791,12 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Byte Swapping Enable/Disable. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga83efd6c2d217481668d8d31cad4fb17eac0d83859f5140c5f6d149f1cacfe1159"></a>SPI_BYTE_SWAP_DISABLE&#160;</td><td class="fielddoc"><p>Disable Byte swapping for 16/32-Bit transfers. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83efd6c2d217481668d8d31cad4fb17ea7157ae5c005d8677d17a5ca8a196c673"></a>SPI_BYTE_SWAP_ENABLE&#160;</td><td class="fielddoc"><p>Enable Byte swapping for 16/32-Bit transfers. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -562,6 +812,24 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Delay count for SPI delay settings. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8461cfe39f136055edd0efc7a83990f5a1807a588315dba9dc9e672e53f06d6cd"></a>SPI_DELAY_COUNT_1&#160;</td><td class="fielddoc"><p>Set RSPCK delay count to 1 RSPCK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8461cfe39f136055edd0efc7a83990f5a1020c16a56526238909d8d5b71afdf84"></a>SPI_DELAY_COUNT_2&#160;</td><td class="fielddoc"><p>Set RSPCK delay count to 2 RSPCK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8461cfe39f136055edd0efc7a83990f5a0048c4b5ad752474d47c50f0953808c2"></a>SPI_DELAY_COUNT_3&#160;</td><td class="fielddoc"><p>Set RSPCK delay count to 3 RSPCK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8461cfe39f136055edd0efc7a83990f5afd8e465c944ab9120858b5dba26f8ef0"></a>SPI_DELAY_COUNT_4&#160;</td><td class="fielddoc"><p>Set RSPCK delay count to 4 RSPCK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8461cfe39f136055edd0efc7a83990f5a5d0e70af94b5e9941fe7d74f95f26e66"></a>SPI_DELAY_COUNT_5&#160;</td><td class="fielddoc"><p>Set RSPCK delay count to 5 RSPCK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8461cfe39f136055edd0efc7a83990f5a1a2ff27f32634d7c5d4906aec67d1c7a"></a>SPI_DELAY_COUNT_6&#160;</td><td class="fielddoc"><p>Set RSPCK delay count to 6 RSPCK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8461cfe39f136055edd0efc7a83990f5a0f72bd478dc2ba089f14454b522db55d"></a>SPI_DELAY_COUNT_7&#160;</td><td class="fielddoc"><p>Set RSPCK delay count to 7 RSPCK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8461cfe39f136055edd0efc7a83990f5ad68c3dccc8f97c7358e6b94ec5556f9a"></a>SPI_DELAY_COUNT_8&#160;</td><td class="fielddoc"><p>Set RSPCK delay count to 8 RSPCK. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -763,7 +1031,7 @@ Examples</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function simultaneously transmits and receive data. Implements spi_api_t::writeread.</p>
+<p>This function simultaneously transmits and receive data. Implements <a class="el" href="group___s_p_i___a_p_i.html#a6ed153d8e5e54e417fda95b044ac2fd6">spi_api_t::writeRead</a>.</p>
 <p>The function performs the following tasks:</p><ul>
 <li>Performs parameter checking and processes error conditions.</li>
 <li>Sets up the instance to complete a SPI writeRead operation.</li>
@@ -827,7 +1095,7 @@ Examples</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function gets the version information of the underlying driver. Implements spi_api_t::versionget.</p>
+<p>This function gets the version information of the underlying driver. Implements <a class="el" href="group___s_p_i___a_p_i.html#a0f9ed0d51f93ea3630a5f5582604f0e5">spi_api_t::versionGet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successful version get. </td></tr>
@@ -853,7 +1121,7 @@ Examples</h1>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structrspck__div__setting__t.html">rspck_div_setting_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i.html#structrspck__div__setting__t">rspck_div_setting_t</a> *&#160;</td>
           <td class="paramname"><em>spck_div</em>&#160;</td>
         </tr>
         <tr>
@@ -887,9 +1155,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -1,47 +1,69 @@
 var group___j_p_e_g___a_p_i =
 [
-    [ "jpeg_decode_callback_args_t", "group___j_p_e_g___a_p_i.html#structjpeg__decode__callback__args__t", [
-      [ "status", "group___j_p_e_g___a_p_i.html#ac591378df16d71fc21178602cd6e37e2", null ],
-      [ "p_context", "group___j_p_e_g___a_p_i.html#a7698084b31c8c100c99703f38aaf8877", null ]
+    [ "jpeg_encode_image_size_t", "group___j_p_e_g___a_p_i.html#structjpeg__encode__image__size__t", [
+      [ "horizontal_stride_pixels", "group___j_p_e_g___a_p_i.html#a486d9445ff9e5ef2418ebc11e831aae5", null ],
+      [ "horizontal_resolution", "group___j_p_e_g___a_p_i.html#a8bb383e5229bca70346d4018eaea2458", null ],
+      [ "vertical_resolution", "group___j_p_e_g___a_p_i.html#a46d7f920adfd6dc7144b8672decf7b79", null ]
     ] ],
-    [ "jpeg_decode_cfg_t", "group___j_p_e_g___a_p_i.html#structjpeg__decode__cfg__t", [
-      [ "color_space", "group___j_p_e_g___a_p_i.html#a160c098df0d99265faf0839d0819452f", null ],
-      [ "input_data_order", "group___j_p_e_g___a_p_i.html#aafdbf5ac36c6d80b5c7b1db92df12fbe", null ],
-      [ "output_data_order", "group___j_p_e_g___a_p_i.html#a04fd05e4c26fe7a1e472e910941952af", null ],
-      [ "pixel_format", "group___j_p_e_g___a_p_i.html#abb166e79cfdd99fce7811d0f0feeab95", null ],
-      [ "alpha_value", "group___j_p_e_g___a_p_i.html#a31a7039a9757ea4e97ae6d0c08dac719", null ],
-      [ "jedi_irq", "group___j_p_e_g___a_p_i.html#a70d15710e21a6bf06a2bb40f4b9fcb1f", null ],
-      [ "jdti_irq", "group___j_p_e_g___a_p_i.html#a32209b6c72837d4b5c1f5c69bbe2f2dd", null ],
-      [ "jdti_ipl", "group___j_p_e_g___a_p_i.html#a5bab5b1abcd497992acbe9235554d8f3", null ],
-      [ "jedi_ipl", "group___j_p_e_g___a_p_i.html#a33103fb9bc5929896577116f7d3e865e", null ],
-      [ "p_callback", "group___j_p_e_g___a_p_i.html#aef4d0448480e98b782f3c882c39af805", null ],
-      [ "p_context", "group___j_p_e_g___a_p_i.html#a42cc80b2777da9ed796f66af381221c3", null ]
+    [ "jpeg_callback_args_t", "group___j_p_e_g___a_p_i.html#structjpeg__callback__args__t", [
+      [ "status", "group___j_p_e_g___a_p_i.html#a5e74ded10676c413e76915719eac3c91", null ],
+      [ "image_size", "group___j_p_e_g___a_p_i.html#a099502317869819025d4c106f7407482", null ],
+      [ "p_context", "group___j_p_e_g___a_p_i.html#ad237939cf7ce057010fc92b9cace23f8", null ]
     ] ],
-    [ "jpeg_decode_api_t", "group___j_p_e_g___a_p_i.html#structjpeg__decode__api__t", [
-      [ "open", "group___j_p_e_g___a_p_i.html#a235023b34f4c6ee8971b7402198cda98", null ],
-      [ "outputBufferSet", "group___j_p_e_g___a_p_i.html#a0f9400496e624f206b520febfcadc4a3", null ],
-      [ "horizontalStrideSet", "group___j_p_e_g___a_p_i.html#a91c5178f706fdaf0aa5636ae7ad379fb", null ],
-      [ "imageSubsampleSet", "group___j_p_e_g___a_p_i.html#ad564809fc5b0068a43296236dce450c9", null ],
-      [ "inputBufferSet", "group___j_p_e_g___a_p_i.html#a09ed8ae56bb97effd3cbd038ff024e40", null ],
-      [ "linesDecodedGet", "group___j_p_e_g___a_p_i.html#adf07317f7924e9cd0e507a12ae382f8e", null ],
-      [ "imageSizeGet", "group___j_p_e_g___a_p_i.html#aaf982c6dde7b6809df501520174903a5", null ],
-      [ "statusGet", "group___j_p_e_g___a_p_i.html#a7adeaa15d9bec3691d3dcb5ada716e79", null ],
-      [ "close", "group___j_p_e_g___a_p_i.html#a42c79be2aa2ac5f6da2060d3ed04e84a", null ],
-      [ "versionGet", "group___j_p_e_g___a_p_i.html#a8639b369b4a399d7a3affa83ccccc302", null ],
-      [ "pixelFormatGet", "group___j_p_e_g___a_p_i.html#ab0db1897dbdf286218a5f417e72679f0", null ]
+    [ "jpeg_cfg_t", "group___j_p_e_g___a_p_i.html#structjpeg__cfg__t", [
+      [ "jedi_irq", "group___j_p_e_g___a_p_i.html#ad303e421b740045cc55845ae49020ec4", null ],
+      [ "jdti_irq", "group___j_p_e_g___a_p_i.html#a260254f6a87de8952f58c6d3c57b7ca3", null ],
+      [ "jdti_ipl", "group___j_p_e_g___a_p_i.html#a4d2a7ce7ac1469e75b144a224969405a", null ],
+      [ "jedi_ipl", "group___j_p_e_g___a_p_i.html#a1afa0c9673a7d6c5dca03893e187906a", null ],
+      [ "default_mode", "group___j_p_e_g___a_p_i.html#a79409bc4d7eb49db78ef16a8b2222a12", null ],
+      [ "decode_input_data_order", "group___j_p_e_g___a_p_i.html#ac4fac9f714d6a60ff93626ab03638949", null ],
+      [ "decode_output_data_order", "group___j_p_e_g___a_p_i.html#aaa2084664b0085dcc96dacb50462a032", null ],
+      [ "pixel_format", "group___j_p_e_g___a_p_i.html#a7d8a9f4621943071bc4d88615f609a78", null ],
+      [ "alpha_value", "group___j_p_e_g___a_p_i.html#a322f2b515077a630ef146fd1b3bb3d8e", null ],
+      [ "p_decode_callback", "group___j_p_e_g___a_p_i.html#a67243de810472f802b59870db30ddcd3", null ],
+      [ "p_decode_context", "group___j_p_e_g___a_p_i.html#a887df506dad96908476f3e8e340159be", null ],
+      [ "encode_input_data_order", "group___j_p_e_g___a_p_i.html#a56be35f81ebc72b986b4b1894b8275a8", null ],
+      [ "encode_output_data_order", "group___j_p_e_g___a_p_i.html#a5ec520a3c6cf8378ade0a2b25cb64e4c", null ],
+      [ "dri_marker", "group___j_p_e_g___a_p_i.html#af234e6fa57c92f76fc6241b87a3014cc", null ],
+      [ "horizontal_resolution", "group___j_p_e_g___a_p_i.html#aba346fe8c5eb04ee00f6534e6c0d1ad4", null ],
+      [ "vertical_resolution", "group___j_p_e_g___a_p_i.html#a4bb89951df35729ace4d87e235ba0363", null ],
+      [ "horizontal_stride_pixels", "group___j_p_e_g___a_p_i.html#a1e1274fba776b6233c9752474ddfeebe", null ],
+      [ "p_quant_luma_table", "group___j_p_e_g___a_p_i.html#a50504b296dcd7e09d50e4140da2766f0", null ],
+      [ "p_quant_chroma_table", "group___j_p_e_g___a_p_i.html#aa226c5c97be414ba8c35bf8ecfa59cd2", null ],
+      [ "p_huffman_luma_ac_table", "group___j_p_e_g___a_p_i.html#ad9592957ef67064b7484e9da57475c7f", null ],
+      [ "p_huffman_luma_dc_table", "group___j_p_e_g___a_p_i.html#aa6e0b5698bb6f06ff00760d02a068857", null ],
+      [ "p_huffman_chroma_ac_table", "group___j_p_e_g___a_p_i.html#a4ed8df6f81d507229606308bf0711232", null ],
+      [ "p_huffman_chroma_dc_table", "group___j_p_e_g___a_p_i.html#a4be469c9f9618512c3210667bd0cb32b", null ],
+      [ "p_encode_callback", "group___j_p_e_g___a_p_i.html#ab82f75f20fbbe2a4603506cfb81e88d9", null ],
+      [ "p_encode_context", "group___j_p_e_g___a_p_i.html#a5b98541eb3e648bd0f2826df7abd6310", null ]
     ] ],
-    [ "jpeg_decode_instance_t", "group___j_p_e_g___a_p_i.html#structjpeg__decode__instance__t", [
-      [ "p_ctrl", "group___j_p_e_g___a_p_i.html#a32bd2e70c4daaaf2120862be4c97a83f", null ],
-      [ "p_cfg", "group___j_p_e_g___a_p_i.html#a2601f3bcc333e3025df9f3b1befa86c1", null ],
-      [ "p_api", "group___j_p_e_g___a_p_i.html#a85bb9305f077d9fb30bd0e308e556f07", null ]
+    [ "jpeg_api_t", "group___j_p_e_g___a_p_i.html#structjpeg__api__t", [
+      [ "open", "group___j_p_e_g___a_p_i.html#a1d5e667447fa87ac5a3940bf1da89ee5", null ],
+      [ "inputBufferSet", "group___j_p_e_g___a_p_i.html#a74677490cb9d154cf9e219829c244934", null ],
+      [ "outputBufferSet", "group___j_p_e_g___a_p_i.html#a04d7ffecb1d8d637096b9e4e7cd50b05", null ],
+      [ "statusGet", "group___j_p_e_g___a_p_i.html#ab06bec10d5cfe4c69a3b25487a320892", null ],
+      [ "close", "group___j_p_e_g___a_p_i.html#a7a5ce020b11dcf436538ba8782fcbb93", null ],
+      [ "versionGet", "group___j_p_e_g___a_p_i.html#ad093c2e521838e6515eb57fa939f7c86", null ],
+      [ "horizontalStrideSet", "group___j_p_e_g___a_p_i.html#a24f29f17b8f5ef47caac087acb198e16", null ],
+      [ "pixelFormatGet", "group___j_p_e_g___a_p_i.html#a949e297a0391a9beaa3c717c33a25299", null ],
+      [ "imageSubsampleSet", "group___j_p_e_g___a_p_i.html#a493b4b6b00ecb7a403246d67d4c65342", null ],
+      [ "linesDecodedGet", "group___j_p_e_g___a_p_i.html#a584987aaa0b85efc471a7626b68738fc", null ],
+      [ "imageSizeGet", "group___j_p_e_g___a_p_i.html#abe8025fe4e5e61bcdeccf7571d8d42f2", null ],
+      [ "imageSizeSet", "group___j_p_e_g___a_p_i.html#a7e821b7907bde5297691d811d8cb2f34", null ],
+      [ "modeSet", "group___j_p_e_g___a_p_i.html#a4d0399625dc1b77c9c31f06f1e85cc57", null ]
     ] ],
-    [ "JPEG_DECODE_API_VERSION_MAJOR", "group___j_p_e_g___a_p_i.html#ga1bb5f7700c0538ea506d4ddb14c86791", null ],
-    [ "jpeg_decode_ctrl_t", "group___j_p_e_g___a_p_i.html#gaa81bd8814f0719b4c731923faff8eebf", null ],
-    [ "jpeg_decode_color_space_t", "group___j_p_e_g___a_p_i.html#gaed3e86d8e72b7e3e9240140efeff89f9", [
-      [ "JPEG_DECODE_COLOR_SPACE_YCBCR444", "group___j_p_e_g___a_p_i.html#ggaed3e86d8e72b7e3e9240140efeff89f9aaff57526070a67b283f71dbce1fff2b3", null ],
-      [ "JPEG_DECODE_COLOR_SPACE_YCBCR422", "group___j_p_e_g___a_p_i.html#ggaed3e86d8e72b7e3e9240140efeff89f9a34765e68d06c9b020395ca7d9da1bb56", null ],
-      [ "JPEG_DECODE_COLOR_SPACE_YCBCR420", "group___j_p_e_g___a_p_i.html#ggaed3e86d8e72b7e3e9240140efeff89f9afdeedd565c3d72061539d3a3d4258901", null ],
-      [ "JPEG_DECODE_COLOR_SPACE_YCBCR411", "group___j_p_e_g___a_p_i.html#ggaed3e86d8e72b7e3e9240140efeff89f9a24ac3a0841d51a4f49760690fdb5abda", null ]
+    [ "jpeg_instance_t", "group___j_p_e_g___a_p_i.html#structjpeg__instance__t", [
+      [ "p_ctrl", "group___j_p_e_g___a_p_i.html#a2c733e4bbcd062c49bf7c3a196b0a681", null ],
+      [ "p_cfg", "group___j_p_e_g___a_p_i.html#ac8aaf9ddf96f05720b053288ab78ae76", null ],
+      [ "p_api", "group___j_p_e_g___a_p_i.html#aab523226c7c35455feccacecf8c52061", null ]
+    ] ],
+    [ "JPEG_API_VERSION_MAJOR", "group___j_p_e_g___a_p_i.html#ga3a6725908bc77508f31e477f838ca723", null ],
+    [ "jpeg_ctrl_t", "group___j_p_e_g___a_p_i.html#gadcda3a404659199f5fc9b90a8eb4b543", null ],
+    [ "jpeg_color_space_t", "group___j_p_e_g___a_p_i.html#ga3aed73edf47174b12b8b99e41437d696", [
+      [ "JPEG_COLOR_SPACE_YCBCR444", "group___j_p_e_g___a_p_i.html#gga3aed73edf47174b12b8b99e41437d696a378512585a77dd3d25ddb73ed7761fe0", null ],
+      [ "JPEG_COLOR_SPACE_YCBCR422", "group___j_p_e_g___a_p_i.html#gga3aed73edf47174b12b8b99e41437d696a27552e1b09ebafb42389d0734a9bcf02", null ],
+      [ "JPEG_COLOR_SPACE_YCBCR420", "group___j_p_e_g___a_p_i.html#gga3aed73edf47174b12b8b99e41437d696a4a30fad930595fc81a42685cbee7e6b5", null ],
+      [ "JPEG_COLOR_SPACE_YCBCR411", "group___j_p_e_g___a_p_i.html#gga3aed73edf47174b12b8b99e41437d696a7bd281de8ae95b15b94bdf402e11ea3d", null ]
     ] ],
     [ "jpeg_data_order_t", "group___j_p_e_g___a_p_i.html#ga25768b7fdea96c61ccc6ca2f8ca43b21", [
       [ "JPEG_DATA_ORDER_NORMAL", "group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21aa94e38c43f0b56ee14dcd879d457406b", null ],
@@ -53,33 +75,25 @@ var group___j_p_e_g___a_p_i =
       [ "JPEG_DATA_ORDER_LONGWORD_WORD_SWAP", "group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21aff83d7b89bae774f1f1b223133117f32", null ],
       [ "JPEG_DATA_ORDER_LONGWORD_WORD_BYTE_SWAP", "group___j_p_e_g___a_p_i.html#gga25768b7fdea96c61ccc6ca2f8ca43b21a5b526d686eba1bc5ea23eab8e1327d66", null ]
     ] ],
+    [ "jpeg_status_t", "group___j_p_e_g___a_p_i.html#ga16543f6924ee246961b2d293ca92ec36", [
+      [ "JPEG_STATUS_NONE", "group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36abba794c803930866203bfe367642df25", null ],
+      [ "JPEG_STATUS_IDLE", "group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36af4c72dc3358b3ff6130cf6200db7d908", null ],
+      [ "JPEG_STATUS_RUNNING", "group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a51669758a495c1e0e156e4b7696b470e", null ],
+      [ "JPEG_STATUS_HEADER_PROCESSING", "group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a1ea446598e442335c0ef84d83d2e696c", null ],
+      [ "JPEG_STATUS_INPUT_PAUSE", "group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36aaf5d858b56dc734e60bc429a5dbe7427", null ],
+      [ "JPEG_STATUS_OUTPUT_PAUSE", "group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a5394271c79d092343320eb5abdf824d3", null ],
+      [ "JPEG_STATUS_IMAGE_SIZE_READY", "group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a6da7cb3ae07290d77d5257f07032ae50", null ],
+      [ "JPEG_STATUS_ERROR", "group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36a3a0763f9ec7b19a9d9165413a8422cf6", null ],
+      [ "JPEG_STATUS_OPERATION_COMPLETE", "group___j_p_e_g___a_p_i.html#gga16543f6924ee246961b2d293ca92ec36ac90637a7c3ea7d4867526c51249fac4d", null ]
+    ] ],
     [ "jpeg_decode_pixel_format_t", "group___j_p_e_g___a_p_i.html#gaf255735f7f96e62d09a5af50736fe97c", [
       [ "JPEG_DECODE_PIXEL_FORMAT_ARGB8888", "group___j_p_e_g___a_p_i.html#ggaf255735f7f96e62d09a5af50736fe97ca28822a5d5a2729279132d36c55677457", null ],
       [ "JPEG_DECODE_PIXEL_FORMAT_RGB565", "group___j_p_e_g___a_p_i.html#ggaf255735f7f96e62d09a5af50736fe97ca1926f7da52a4fdfd5fd9aefaf8af2eb6", null ]
-    ] ],
-    [ "jpeg_decode_status_t", "group___j_p_e_g___a_p_i.html#gaabb22b7e67bac097bc3fbdd1586f0631", [
-      [ "JPEG_DECODE_STATUS_NOT_OPEN", "group___j_p_e_g___a_p_i.html#ggaabb22b7e67bac097bc3fbdd1586f0631a107e8ca1ca2adecb7db738a24dc3287a", null ],
-      [ "JPEG_DECODE_STATUS_OPEN", "group___j_p_e_g___a_p_i.html#ggaabb22b7e67bac097bc3fbdd1586f0631abdf106cb0fa7a226e582fb5a923838fb", null ],
-      [ "JPEG_DECODE_STATUS_RUNNING", "group___j_p_e_g___a_p_i.html#ggaabb22b7e67bac097bc3fbdd1586f0631aee505530518f6bc15caa05e9ea45c542", null ],
-      [ "JPEG_DECODE_STATUS_DONE", "group___j_p_e_g___a_p_i.html#ggaabb22b7e67bac097bc3fbdd1586f0631af9454ed2179f829908daea7122a9697d", null ],
-      [ "JPEG_DECODE_STATUS_INPUT_PAUSE", "group___j_p_e_g___a_p_i.html#ggaabb22b7e67bac097bc3fbdd1586f0631abf718386984833b01bcd4772afc5140a", null ],
-      [ "JPEG_DECODE_STATUS_OUTPUT_PAUSE", "group___j_p_e_g___a_p_i.html#ggaabb22b7e67bac097bc3fbdd1586f0631a100787c91d62e70fe730df10b57f7592", null ],
-      [ "JPEG_DECODE_STATUS_IMAGE_SIZE_READY", "group___j_p_e_g___a_p_i.html#ggaabb22b7e67bac097bc3fbdd1586f0631a39e5eb80a8a5afea0d5c5b019153643a", null ],
-      [ "JPEG_DECODE_STATUS_ERROR", "group___j_p_e_g___a_p_i.html#ggaabb22b7e67bac097bc3fbdd1586f0631a1be336dadbb2aa376702c12bb1ed44e1", null ],
-      [ "JPEG_DECODE_STATUS_HEADER_PROCESSING", "group___j_p_e_g___a_p_i.html#ggaabb22b7e67bac097bc3fbdd1586f0631a6db0e82f08e8ba50fdbcaec34bc6094d", null ]
     ] ],
     [ "jpeg_decode_subsample_t", "group___j_p_e_g___a_p_i.html#gac10fc46a5178859abd5d686389c5242c", [
       [ "JPEG_DECODE_OUTPUT_NO_SUBSAMPLE", "group___j_p_e_g___a_p_i.html#ggac10fc46a5178859abd5d686389c5242cae3cf50c8a6a6a55ab18063c1f459ec85", null ],
       [ "JPEG_DECODE_OUTPUT_SUBSAMPLE_HALF", "group___j_p_e_g___a_p_i.html#ggac10fc46a5178859abd5d686389c5242ca4f3d2870e970419b670860d0f20d8783", null ],
       [ "JPEG_DECODE_OUTPUT_SUBSAMPLE_ONE_QUARTER", "group___j_p_e_g___a_p_i.html#ggac10fc46a5178859abd5d686389c5242ca13aabd7266ead79810ccbdf20df99730", null ],
       [ "JPEG_DECODE_OUTPUT_SUBSAMPLE_ONE_EIGHTH", "group___j_p_e_g___a_p_i.html#ggac10fc46a5178859abd5d686389c5242cacac6446ba925a73768f6c7cedf155f8d", null ]
-    ] ],
-    [ "jpeg_decode_count_enable_t", "group___j_p_e_g___a_p_i.html#ga8c7a56332f3783acdce431bec690c021", [
-      [ "JPEG_DECODE_COUNT_DISABLE", "group___j_p_e_g___a_p_i.html#gga8c7a56332f3783acdce431bec690c021a3a5a8135af4fdb77b53690466d231204", null ],
-      [ "JPEG_DECODE_COUNT_ENABLE", "group___j_p_e_g___a_p_i.html#gga8c7a56332f3783acdce431bec690c021a52cd7be5005bee22489db644c564a1c8", null ]
-    ] ],
-    [ "jpeg_decode_resume_mode_t", "group___j_p_e_g___a_p_i.html#ga21d7678072b4e24bbf777f825ae8d28d", [
-      [ "JPEG_DECODE_COUNT_MODE_ADDRESS_CONTINUE", "group___j_p_e_g___a_p_i.html#gga21d7678072b4e24bbf777f825ae8d28da018e9f7f29fb7b44c0e973e3389b9d25", null ],
-      [ "JPEG_DECODE_COUNT_MODE_ADDRESS_REINITIALIZE", "group___j_p_e_g___a_p_i.html#gga21d7678072b4e24bbf777f825ae8d28da8e6e45345034412cc8dc10a8f07ea0fd", null ]
     ] ]
 ];

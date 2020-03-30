@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Universal Serial Bus Peripheral Communication Device Class (r_usb_pcdc)</title>
+<title>RA Flexible Software Package Documentation: USB Peripheral Communication Device Class (r_usb_pcdc)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -91,12 +91,13 @@ $(document).ready(function(){initNavTree('group___u_s_b___p_c_d_c.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Universal Serial Bus Peripheral Communication Device Class (r_usb_pcdc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">USB Peripheral Communication Device Class (r_usb_pcdc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p><br />
-This module is USB Peripheral Communication Device Class Driver (PCDC). <br />
+<p>This module is USB Peripheral Communication Device Class Driver (PCDC). It implements the <a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html">USB PCDC Interface</a>. <br />
 This module works in combination with (r_usb_basic module). </p>
+<p><a class="anchor" id="functionss"></a></p><h2 class="groupheader">Functions</h2>
+<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> for the common API (r_usb_basic) to be called from the application. <a class="anchor" id="details"></a></p><h2 class="groupheader">Detailed Description</h2>
 <h1><a class="anchor" id="r-usb_pcdc-overview"></a>
 Overview</h1>
 <p><br />
@@ -255,9 +256,9 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_usb_pcdc_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Select which pipe to use for bulk IN transfer during PCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Select which pipe to use for Bulk IN transfer during PCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Using USB PIPE1</li>
 <li>
@@ -269,9 +270,9 @@ Using USB PIPE4</li>
 <li>
 Using USB PIPE5</li>
 </ul>
-</td><td>Please choose between 1 and 5. </td></tr>
+</td><td>Using USB PIPE1 </td><td>Please choose between 1 and 5. </td></tr>
 <tr>
-<td>Select which pipe to use for bulk OUT transfer during PCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Select which pipe to use for Bulk OUT transfer during PCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Using USB PIPE1</li>
 <li>
@@ -283,7 +284,7 @@ Using USB PIPE4</li>
 <li>
 Using USB PIPE5</li>
 </ul>
-</td><td>Please choose between 1 and 5. </td></tr>
+</td><td>Using USB PIPE2 </td><td>Please choose between 1 and 5. </td></tr>
 <tr>
 <td>Select which pipe to use for Interrupt IN transfer during PCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -295,15 +296,15 @@ Using USB PIPE8</li>
 <li>
 Using USB PIPE9</li>
 </ul>
-</td><td>Please choose between 6 and 9. </td></tr>
+</td><td>Using USB PIPE6 </td><td>Please choose between 6 and 9. </td></tr>
 </table>
- <h2>Configurations for USB PCDC driver on r_usb_pcdc</h2>
-This module can be added to the Threads tab from New -&gt; Middleware -&gt; USB -&gt; USB PCDC driver on r_usb_pcdc:<br />
+ <h2>Configurations for Middleware &gt; USB &gt; USB PCDC driver on r_usb_pcdc</h2>
+This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; USB &gt; USB PCDC driver on r_usb_pcdc:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_pcdc0 </td><td>Module name. </td></tr>
 </table>
  Setting as r_usb_pcdc module is not necessary. <br />
 Refer to r_usb_basic module.</p>
@@ -362,19 +363,18 @@ b) When the USB is detached (disconnected), the APL transitions the MCU to softw
 <img src="r_usb_pcdc_task_flow_sample.png" alt="r_usb_pcdc_task_flow_sample.png"/>
 <div class="caption">
 Main Loop processing (Echo mode)</div></div>
- <h3>Descriptor</h3>
+<p> <br />
+Below is an example of minimal use of the USB PCDC module in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> usb_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> ctrl;</div><div class="line">    usb_event_info_t    event_info;</div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a>        event;</div><div class="line"></div><div class="line">    <a class="code" href="group___u_s_b.html#gab9810a1d8e322cb89a9a7f9ca84a368f">R_USB_Open</a>(&amp;ctrl, &amp;g_usb0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Loop back between PC(TerminalSoft) and USB MCU */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951">R_USB_EventGet</a>(&amp;event_info, &amp;event);</div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ad44448290b4f36868a09b48e4588b29d">USB_STATUS_WRITE_COMPLETE</a>:</div><div class="line">                <a class="code" href="group___u_s_b.html#ga42ad1cbad598d06023d83e8a91fd49d4">R_USB_Read</a>(&amp;ctrl, g_buf, DATA_LEN, <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>);</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a63dd4552584256ef9d1a0d5da2159e9c">USB_STATUS_READ_COMPLETE</a>:</div><div class="line">                <a class="code" href="group___u_s_b.html#ga001f40866be6438435e65e78871a54d5">R_USB_Write</a>(&amp;ctrl, g_buf, event_info.data_size, <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a8b49ebc4d15054963bdbe8d843a2cf5a">USB_STATUS_REQUEST</a>:   <span class="comment">/* Receive Class Request */</span></div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga9e76ac14dae5e5e44b5df6e8cbee6bd0">USB_PCDC_SET_LINE_CODING</a> == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    <a class="code" href="group___u_s_b.html#ga1293995ba77495705db3a3adf703b7f1">R_USB_PeriControlDataGet</a>(&amp;ctrl, (uint8_t *) &amp;g_line_coding, LINE_CODING_LENGTH);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga3e7ae95dcfc42bd8912fe18339893d82">USB_PCDC_GET_LINE_CODING</a> == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    <a class="code" href="group___u_s_b.html#ga3fb9080601ee1041e35073e0538a21b0">R_USB_PeriControlDataSet</a>(&amp;ctrl, (uint8_t *) &amp;g_line_coding, LINE_CODING_LENGTH);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a29903dba1e2952e264159322340db640">periControlStatusSet</a>(&amp;ctrl, <a class="code" href="group___u_s_b___a_p_i.html#gga386cabe04206e06b3be8dbafc0bc3d86a20a1e7b4a77141981d824649cab7554b">USB_SETUP_STATUS_ACK</a>);</div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40adb879552af43dda95b70261eaa810777">USB_STATUS_SUSPEND</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ae9bcf94bdb90960ca692b1dfecb98e78">USB_STATUS_DETACH</a>:</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main() */</span></div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="r-usb_pcdc-descriptor"></a>
+Descriptor</h1>
 <p>A template for PCDC descriptors can be found in ra/fsp/src/r_usb_pcdc/r_usb_pcdc_descriptor.c.template. Also, please be sure to use your vendor ID.</p>
-<p><br />
-This is a pcdc example of minimal use of the USB in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> usb_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___u_s_b.html#structusb__instance__ctrl__t">usb_instance_ctrl_t</a>     ctrl;</div><div class="line">    usb_instance_transfer_t trans;</div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a>            event;</div><div class="line">    usb_setup_t             setup;</div><div class="line"></div><div class="line">    trans.<a class="code" href="group___u_s_b.html#a4b47aee2b2f67c3ef24dabe958c57c39">module_number</a> = USB_CFG_USE_USBIP;</div><div class="line">    trans.type = <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>;</div><div class="line">    g_usb0_cfg.p_usb_reg  = (usb_descriptor_t *)&amp;usb_descriptor;</div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aefa767fa78b481c328020e9b1a9b5812">open</a>(&amp;ctrl, &amp;g_usb0_cfg, &amp;trans);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Loop back between PC(TerminalSoft) and USB MCU */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a>(&amp;ctrl, &amp;event);</div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a> :</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ad44448290b4f36868a09b48e4588b29d">USB_STATUS_WRITE_COMPLETE</a> :</div><div class="line">                trans.type = <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>;</div><div class="line">                g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a317d4d11197c2e1887130a6b1b29c35d">read</a>(&amp;ctrl, g_buf, DATA_LEN, &amp;trans);</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a63dd4552584256ef9d1a0d5da2159e9c">USB_STATUS_READ_COMPLETE</a> :</div><div class="line">                g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a7d33458c053260c73b63c11e413ca095">write</a>(&amp;ctrl, g_buf, ctrl.<a class="code" href="group___u_s_b.html#a98a330aeb2bc41c3294edfdade8d6aa2">data_size</a>, &amp;trans);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a8b49ebc4d15054963bdbe8d843a2cf5a">USB_STATUS_REQUEST</a> : <span class="comment">/* Receive Class Request */</span></div><div class="line">                g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ad8db912b4559ccc2868453044273c645">setupget</a>(&amp;ctrl, &amp;setup);</div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga9e76ac14dae5e5e44b5df6e8cbee6bd0">USB_PCDC_SET_LINE_CODING</a> == (setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    trans.type = <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2ac5ba0e58af39bb09ef467e27446a2d58">USB_CLASS_REQUEST</a>;</div><div class="line">                    trans.setup = setup;</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a317d4d11197c2e1887130a6b1b29c35d">read</a>(&amp;ctrl, (uint8_t *) &amp;g_line_coding, LINE_CODING_LENGTH, &amp;trans);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga3e7ae95dcfc42bd8912fe18339893d82">USB_PCDC_GET_LINE_CODING</a> == (setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    trans.type = <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2ac5ba0e58af39bb09ef467e27446a2d58">USB_CLASS_REQUEST</a>;</div><div class="line">                    trans.setup = setup;</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a7d33458c053260c73b63c11e413ca095">write</a>(&amp;ctrl, (uint8_t *) &amp;g_line_coding, LINE_CODING_LENGTH, &amp;trans);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    <span class="comment">/* none */</span></div><div class="line">                }</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40adb879552af43dda95b70261eaa810777">USB_STATUS_SUSPEND</a> :</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ae9bcf94bdb90960ca692b1dfecb98e78">USB_STATUS_DETACH</a> :</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            default :</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">} <span class="comment">/* End of function usb_main() */</span></div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

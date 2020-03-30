@@ -1,5 +1,19 @@
 var group___a_g_t =
 [
+    [ "agt_instance_ctrl_t", "group___a_g_t.html#structagt__instance__ctrl__t", [
+      [ "open", "group___a_g_t.html#a47294d2091aca6d4c57e05ba78f8a069", null ],
+      [ "p_cfg", "group___a_g_t.html#af45c7d6d16aabfe344c79d39811a6205", null ],
+      [ "p_reg", "group___a_g_t.html#a92df2ac4ec384e625fc22e9ed128a51d", null ],
+      [ "period", "group___a_g_t.html#a9aa32608b915c6751ba226e6d3b184a4", null ]
+    ] ],
+    [ "agt_extended_cfg_t", "group___a_g_t.html#structagt__extended__cfg__t", [
+      [ "count_source", "group___a_g_t.html#ae95824d50fa5abbc1479dbd8939b1df1", null ],
+      [ "agto", "group___a_g_t.html#a5e6fc342837c54c82e8ec84fee2c705a", null ],
+      [ "measurement_mode", "group___a_g_t.html#a4e7c2f097b585a98de264c40872b7780", null ],
+      [ "agtio_filter", "group___a_g_t.html#a01cf20505a0b410881c7a6ee20cfae9c", null ],
+      [ "enable_pin", "group___a_g_t.html#a1de9ee52b4fcb42c858e229c57ebe48c", null ],
+      [ "trigger_edge", "group___a_g_t.html#a037c0d66459f040e08d09ef9ac75e346", null ]
+    ] ],
     [ "agt_clock_t", "group___a_g_t.html#ga5281c5967b6830f430bdf20ac9424f1c", [
       [ "AGT_CLOCK_PCLKB", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1ca50fe24f4105e9689a219df33fcd0b843", null ],
       [ "AGT_CLOCK_LOCO", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1caf7d0a0fdf456dbbfef0858c256f80bc3", null ],
@@ -9,22 +23,47 @@ var group___a_g_t =
       [ "AGT_CLOCK_P403", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1ca394a0f7a588d28d6057351a7500a8444", null ],
       [ "AGT_CLOCK_AGTIO", "group___a_g_t.html#gga5281c5967b6830f430bdf20ac9424f1caa2c8871cf9c88c9c9feb669fb78df673", null ]
     ] ],
-    [ "agt_measure_t", "group___a_g_t.html#ga53f383c41ec6fc2cd240e67fab1b969f", null ],
-    [ "agt_agtio_filter_t", "group___a_g_t.html#ga511738730422c0c8cc2b9de318005d1b", null ],
-    [ "agt_enable_pin_t", "group___a_g_t.html#ga310d73c260c901d1b8e7585dcb8f7507", null ],
-    [ "agt_trigger_edge_t", "group___a_g_t.html#ga1d568085c1ce9738b532fde46c47d908", null ],
-    [ "agt_output_pin_t", "group___a_g_t.html#gab3f3aa0cc9a2951751e76f493dd429eb", null ],
-    [ "agt_pin_cfg_t", "group___a_g_t.html#gabb88a55a2156cdd322947f71189da627", null ],
-    [ "R_AGT_Open", "group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46", null ],
-    [ "R_AGT_Start", "group___a_g_t.html#ga6e5c0080a8a035351d920360d6e9fd4d", null ],
-    [ "R_AGT_Stop", "group___a_g_t.html#gaa2b20f0b2d6856813a3a76413e0083c0", null ],
-    [ "R_AGT_Reset", "group___a_g_t.html#ga1ae3d1d197e2a433939dc430dad05d99", null ],
-    [ "R_AGT_Enable", "group___a_g_t.html#ga548babc3a9f803374e70ba027935a086", null ],
-    [ "R_AGT_Disable", "group___a_g_t.html#gae27f425278e24c45345242a78a10d649", null ],
+    [ "agt_measure_t", "group___a_g_t.html#ga53f383c41ec6fc2cd240e67fab1b969f", [
+      [ "AGT_MEASURE_DISABLED", "group___a_g_t.html#gga53f383c41ec6fc2cd240e67fab1b969fa16fa4ef970d8f5bb5c3918392078b9d2", null ],
+      [ "AGT_MEASURE_PULSE_WIDTH_LOW_LEVEL", "group___a_g_t.html#gga53f383c41ec6fc2cd240e67fab1b969fa06e31914849d21ab05c262d413726aac", null ],
+      [ "AGT_MEASURE_PULSE_WIDTH_HIGH_LEVEL", "group___a_g_t.html#gga53f383c41ec6fc2cd240e67fab1b969fa8e118a74f28fec71addbc9ff60e48074", null ],
+      [ "AGT_MEASURE_PULSE_PERIOD", "group___a_g_t.html#gga53f383c41ec6fc2cd240e67fab1b969fa87cc744a8a59564d653ee3236e370352", null ]
+    ] ],
+    [ "agt_agtio_filter_t", "group___a_g_t.html#ga511738730422c0c8cc2b9de318005d1b", [
+      [ "AGT_AGTIO_FILTER_NONE", "group___a_g_t.html#gga511738730422c0c8cc2b9de318005d1ba393d4e243552a538853af0bb03925b8f", null ],
+      [ "AGT_AGTIO_FILTER_PCLKB", "group___a_g_t.html#gga511738730422c0c8cc2b9de318005d1ba01bf7e17c59c4a046e211a75783b0d68", null ],
+      [ "AGT_AGTIO_FILTER_PCLKB_DIV_8", "group___a_g_t.html#gga511738730422c0c8cc2b9de318005d1baa35612a000c813f5766c5751642e09c6", null ],
+      [ "AGT_AGTIO_FILTER_PCLKB_DIV_32", "group___a_g_t.html#gga511738730422c0c8cc2b9de318005d1ba4de5cc4468e6e368a44974c82d5d6a93", null ]
+    ] ],
+    [ "agt_enable_pin_t", "group___a_g_t.html#ga310d73c260c901d1b8e7585dcb8f7507", [
+      [ "AGT_ENABLE_PIN_NOT_USED", "group___a_g_t.html#gga310d73c260c901d1b8e7585dcb8f7507a4fc875b5aecebbce8bc1013aebb7f2bd", null ],
+      [ "AGT_ENABLE_PIN_ACTIVE_LOW", "group___a_g_t.html#gga310d73c260c901d1b8e7585dcb8f7507a50c2707c125a9626bf48c7c81140e184", null ],
+      [ "AGT_ENABLE_PIN_ACTIVE_HIGH", "group___a_g_t.html#gga310d73c260c901d1b8e7585dcb8f7507a2a3e88855635034ff05a84bafea94a26", null ]
+    ] ],
+    [ "agt_trigger_edge_t", "group___a_g_t.html#ga1d568085c1ce9738b532fde46c47d908", [
+      [ "AGT_TRIGGER_EDGE_RISING", "group___a_g_t.html#gga1d568085c1ce9738b532fde46c47d908a146dda2432ec6753d11b0a9da11cad06", null ],
+      [ "AGT_TRIGGER_EDGE_FALLING", "group___a_g_t.html#gga1d568085c1ce9738b532fde46c47d908a9fccbb321ba218243530c82a1d867e30", null ],
+      [ "AGT_TRIGGER_EDGE_BOTH", "group___a_g_t.html#gga1d568085c1ce9738b532fde46c47d908ae990ca758f4d7b309ceda49d6f251241", null ]
+    ] ],
+    [ "agt_output_pin_t", "group___a_g_t.html#gab3f3aa0cc9a2951751e76f493dd429eb", [
+      [ "AGT_OUTPUT_PIN_AGTOA", "group___a_g_t.html#ggab3f3aa0cc9a2951751e76f493dd429eba72a6691905b605006601da6a30039ab0", null ],
+      [ "AGT_OUTPUT_PIN_AGTOB", "group___a_g_t.html#ggab3f3aa0cc9a2951751e76f493dd429ebaf92849658e3a26042940fe9112ddd3a9", null ]
+    ] ],
+    [ "agt_pin_cfg_t", "group___a_g_t.html#gabb88a55a2156cdd322947f71189da627", [
+      [ "AGT_PIN_CFG_DISABLED", "group___a_g_t.html#ggabb88a55a2156cdd322947f71189da627a34ef90e5d639605e1f468af8df43094b", null ],
+      [ "AGT_PIN_CFG_START_LEVEL_LOW", "group___a_g_t.html#ggabb88a55a2156cdd322947f71189da627a3fab671eb8f52a392eeb9bb91896f5f5", null ],
+      [ "AGT_PIN_CFG_START_LEVEL_HIGH", "group___a_g_t.html#ggabb88a55a2156cdd322947f71189da627a49e8e6f466efe14a756d1f684b7c01bb", null ]
+    ] ],
+    [ "R_AGT_Close", "group___a_g_t.html#gabe0a42cc31ae911c5ac6fe78eeb21c8a", null ],
     [ "R_AGT_PeriodSet", "group___a_g_t.html#ga1b8a21776f618aaa1b8471592b4b5464", null ],
     [ "R_AGT_DutyCycleSet", "group___a_g_t.html#ga25f4904a0e4ce56c413364b7c21b76a3", null ],
+    [ "R_AGT_Reset", "group___a_g_t.html#ga1ae3d1d197e2a433939dc430dad05d99", null ],
+    [ "R_AGT_Start", "group___a_g_t.html#ga6e5c0080a8a035351d920360d6e9fd4d", null ],
+    [ "R_AGT_Enable", "group___a_g_t.html#ga548babc3a9f803374e70ba027935a086", null ],
+    [ "R_AGT_Disable", "group___a_g_t.html#gae27f425278e24c45345242a78a10d649", null ],
     [ "R_AGT_InfoGet", "group___a_g_t.html#ga91174b9feb94088512b85d2f020d3fe2", null ],
     [ "R_AGT_StatusGet", "group___a_g_t.html#ga11a30a7a093f91c09a340f7b301945fd", null ],
-    [ "R_AGT_Close", "group___a_g_t.html#gabe0a42cc31ae911c5ac6fe78eeb21c8a", null ],
+    [ "R_AGT_Stop", "group___a_g_t.html#gaa2b20f0b2d6856813a3a76413e0083c0", null ],
+    [ "R_AGT_Open", "group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46", null ],
     [ "R_AGT_VersionGet", "group___a_g_t.html#gad6d600521cfd1134e1fd5cd5fefe2819", null ]
 ];

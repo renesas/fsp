@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -143,6 +143,119 @@ Features</h2>
 </li>
 <li>Supports 1, 2, and 4 byte data units<a class="anchor" id="um_transfer_unit"></a></li>
 </ul>
+<h1><a class="anchor" id="r-dmac-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_transfer_normal_mode"></a><a class="anchor" id="um_transfer_repeat_mode"></a><a class="anchor" id="um_transfer_block_mode"></a><a class="anchor" id="um_transfer_activation_source"></a><a class="anchor" id="um_transfer_block_repeat_area"></a><a class="anchor" id="um_transfer_repeat_area"></a><a class="anchor" id="um_dmac_each_block_interrupt"></a><a class="anchor" id="um_dmac_end_interrupt"></a><a class="anchor" id="um_dmac_offset_mode"></a> <h2>Build Time Configurations for r_dmac</h2>
+The following build time configurations are defined in fsp_cfg/r_dmac_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Driver &gt; Transfer &gt; Transfer Driver on r_dmac</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Transfer &gt; Transfer Driver on r_dmac :<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_transfer0 </td><td>Module name. </td></tr>
+<tr>
+<td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the hardware channel. </td></tr>
+<tr>
+<td>Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Normal</li>
+<li>
+Repeat</li>
+<li>
+Block</li>
+</ul>
+</td><td>Normal </td><td>Select the transfer mode. Normal: One transfer per activation, transfer ends after Number of Transfers; Repeat: One transfer per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks; Block: Number of Blocks per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks. </td></tr>
+<tr>
+<td>Transfer Size</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 Byte</li>
+<li>
+2 Bytes</li>
+<li>
+4 Bytes</li>
+</ul>
+</td><td>2 Bytes </td><td>Select the transfer size. </td></tr>
+<tr>
+<td>Destination Address Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Fixed</li>
+<li>
+Offset addition</li>
+<li>
+Incremented</li>
+<li>
+Decremented</li>
+</ul>
+</td><td>Fixed </td><td>Select the address mode for the destination. </td></tr>
+<tr>
+<td>Source Address Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Fixed</li>
+<li>
+Offset addition</li>
+<li>
+Incremented</li>
+<li>
+Decremented</li>
+</ul>
+</td><td>Fixed </td><td>Select the address mode for the source. </td></tr>
+<tr>
+<td>Repeat Area (Unused in Normal Mode)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Destination</li>
+<li>
+Source</li>
+</ul>
+</td><td>Source </td><td>Select the repeat area. Either the source or destination address resets to its initial value after completing Number of Transfers in Repeat or Block mode. </td></tr>
+<tr>
+<td>Destination Pointer</td><td>Manual Entry</td><td>NULL </td><td>Specify the transfer destination pointer. </td></tr>
+<tr>
+<td>Source Pointer</td><td>Manual Entry</td><td>NULL </td><td>Specify the transfer source pointer. </td></tr>
+<tr>
+<td>Number of Transfers</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the number of transfers. </td></tr>
+<tr>
+<td>Number of Blocks (Valid only in Repeat and Block Mode)</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the number of blocks to transfer in Repeat or Block mode. </td></tr>
+<tr>
+<td>Activation Source</td><td>MCU Specific Options</td><td></td><td>Select the DMAC transfer start event. If no ELC event is chosen then software start can be used. </td></tr>
+<tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback that is called at the end of the transfer. </td></tr>
+<tr>
+<td>Transfer End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transfer end interrupt priority. </td></tr>
+<tr>
+<td>Interrupt Frequency</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Interrupt after all transfers have completed</li>
+<li>
+Interrupt after each block, or repeat size is transfered</li>
+</ul>
+</td><td>Interrupt after all transfers have completed </td><td>Select to have interrupt after each transfer or after last transfer. </td></tr>
+<tr>
+<td>Offset value (Valid only when address mode is \'Offset\')</td><td>Value must be a 24 bit signed integer.</td><td>1 </td><td>Offset value * transfer size is added to the address after each transfer. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-dmac-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The DMAC peripheral module uses ICLK as the clock source. The ICLK frequency is set by using the RA Configuration Clocks tab prior to a build, or by using the CGC module at run-time.</p>
+<h2><a class="anchor" id="r-dmac-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module does not use I/O pins.</p>
+<h1><a class="anchor" id="r-dmac-usage_notes"></a>
+Usage Notes</h1>
 <h2>Transfer Modes</h2>
 <p>The DMAC Module supports three modes of operation.</p>
 <ul>
@@ -258,116 +371,15 @@ Supported</li>
 <li>The DTC stores transfer information in RAM and writes back to RAM after each transfer whereas the DMAC stores all transfer information in registers.</li>
 <li>When transfers are configured for more than one activation source, the DTC must fetch the transfer info from RAM on each interrupt. This can cause a higher latency between transfers.</li>
 </ul>
-<h1><a class="anchor" id="r-dmac-configuration"></a>
-Configuration</h1>
-<p><a class="anchor" id="um_transfer_normal_mode"></a><a class="anchor" id="um_transfer_repeat_mode"></a><a class="anchor" id="um_transfer_block_mode"></a><a class="anchor" id="um_transfer_activation_source"></a><a class="anchor" id="um_transfer_block_repeat_area"></a><a class="anchor" id="um_transfer_repeat_area"></a><a class="anchor" id="um_dmac_each_block_interrupt"></a><a class="anchor" id="um_dmac_end_interrupt"></a><a class="anchor" id="um_dmac_offset_mode"></a> <h2>Build Time Configurations for r_dmac</h2>
-The following build time configurations are defined in fsp_cfg/r_dmac_cfg.h:<br />
-</p><table class="doxtable">
-<tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
-<tr>
-<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Default (BSP)</li>
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
-</table>
- <h2>Configurations for Transfer Driver on r_dmac</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Transfer -&gt; Transfer Driver on r_dmac :<br />
-</p><table class="doxtable">
-<tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
-<tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
-<tr>
-<td>Channel</td><td>Value must be a non-negative integer</td><td>Specify the hardware channel. </td></tr>
-<tr>
-<td>Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Normal</li>
-<li>
-Repeat</li>
-<li>
-Block</li>
-</ul>
-</td><td>Select the transfer mode. Normal: One transfer per activation, transfer ends after Number of Transfers; Repeat: One transfer per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks; Block: Number of Blocks per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks. </td></tr>
-<tr>
-<td>Transfer Size</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-1 Byte</li>
-<li>
-2 Bytes</li>
-<li>
-4 Bytes</li>
-</ul>
-</td><td>Select the transfer size. </td></tr>
-<tr>
-<td>Destination Address Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Fixed</li>
-<li>
-Incremented</li>
-<li>
-Decremented</li>
-</ul>
-</td><td>Select the address mode for the destination. </td></tr>
-<tr>
-<td>Source Address Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Fixed</li>
-<li>
-Offset</li>
-<li>
-Incremented</li>
-<li>
-Decremented</li>
-</ul>
-</td><td>Select the address mode for the source. </td></tr>
-<tr>
-<td>Repeat Area (Unused in Normal Mode)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Destination</li>
-<li>
-Source</li>
-</ul>
-</td><td>Select the repeat area. Either the source or destination address resets to its initial value after completing Number of Transfers in Repeat or Block mode. </td></tr>
-<tr>
-<td>Destination Pointer</td><td>Configurable String</td><td>Specify the transfer destination pointer. </td></tr>
-<tr>
-<td>Source Pointer</td><td>Configurable String</td><td>Specify the transfer source pointer. </td></tr>
-<tr>
-<td>Number of Transfers</td><td>Value must be a non-negative integer</td><td>Specify the number of transfers. </td></tr>
-<tr>
-<td>Number of Blocks (Valid only in Repeat and Block Mode)</td><td>Value must be a non-negative integer</td><td>Specify the number of blocks to transfer in Repeat or Block mode. </td></tr>
-<tr>
-<td>Activation Source</td><td>MCU Specific Options</td><td>Select the DMAC transfer start event. If no ELC event is chosen then software start can be used. </td></tr>
-<tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>A user callback that is called at the end of the transfer. </td></tr>
-<tr>
-<td>Transfer End Interrupt Priority</td><td>MCU Specific Options</td><td>Select the transfer end interrupt priority. </td></tr>
-<tr>
-<td>Offset value (Valid only when address mode is \'Offset\')</td><td>Value must be a 24 bit signed integer.</td><td>Offset value * transfer size is added to the address after each transfer. </td></tr>
-</table>
-</p>
-<h2><a class="anchor" id="r-dmac-clock-configuration"></a>
-Clock Configuration</h2>
-<p>The DMAC peripheral module uses ICLK as the clock source. The ICLK frequency is set by using the Flex configurator Clocks tab prior to a build, or by using the CGC module at run-time.</p>
-<h2><a class="anchor" id="r-dmac-pin-configuration"></a>
-Pin Configuration</h2>
-<p>This module does not use I/O pins.</p>
-<h1><a class="anchor" id="r-dmac-usage_notes"></a>
-Usage Notes</h1>
 <h2>Offset Address Mode</h2>
 <p>When the source or destination mode is configured to offset mode, a configurable offset is added to the source or destination pointer after each transfer. The offset is a signed 24 bit number.</p>
 <h1><a class="anchor" id="r-dmac-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
-<p>This is a basic example of minimal use of the DMAC in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> dmac_callback (<a class="code" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a> * cb_data)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(cb_data);</div><div class="line"></div><div class="line">    g_transfer_complete = 1;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dmac_crc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t p_src[TRANSFER_LENGTH];</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize p_src to [ABC..OP] */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        p_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Transfer info that tests can use when configuring a transfer instance. */</span></div><div class="line">    <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__info__t">transfer_info_t</a> transfer_info =</div><div class="line">    {</div><div class="line">        .chain_mode     = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga68f81dc8b9ca46fbe3a1e556c020436dae974453c306b4959252905e362d75067">TRANSFER_CHAIN_MODE_DISABLED</a>,</div><div class="line">        .dest_addr_mode = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadce62e6c2407d6ffd5a94636736f7c51abf18f9b3701e9e91f44055ee47d0ca47">TRANSFER_ADDR_MODE_FIXED</a>,</div><div class="line">        .src_addr_mode  = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadce62e6c2407d6ffd5a94636736f7c51a7665741e25c4cc78fd24745efbd2eaad">TRANSFER_ADDR_MODE_INCREMENTED</a>,</div><div class="line">        .length         = TRANSFER_LENGTH / 4,</div><div class="line">        .size           = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12a18482bfa86e737cde78042be4db54412">TRANSFER_SIZE_4_BYTE</a>,</div><div class="line">        .num_blocks     = 1,</div><div class="line">        .p_dest         = (<span class="keywordtype">void</span> *) &amp;R_CRC-&gt;CRCDIR,</div><div class="line">        .p_src          = p_src,</div><div class="line">        .irq            = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggad71bdadb7f486bb5d3ca6ff508dc0b08a0929782b61686db69e12b3cb18175b35">TRANSFER_IRQ_EACH</a>,</div><div class="line">        .mode           = <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <a class="code" href="group___d_m_a_c.html#structdmac__extended__cfg__t">dmac_extended_cfg_t</a> dmac_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___d_m_a_c.html#a96ee22f2e357c5098bbe67bbdf920371">channel</a>           = 0,</div><div class="line">        .irq               = BSP_VECTOR_DMAC_0,</div><div class="line">        .ipl               = 0,</div><div class="line">        .activation_source = ELC_EVENT_NONE, <span class="comment">// Transfer will be triggered with software</span></div><div class="line">        .p_callback        = dmac_callback,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Transfer config that tests can use when configuring a transfer instance. */</span></div><div class="line">    <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__cfg__t">transfer_cfg_t</a> transfer_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#af99b114594ac2d55aae0c9e11f703164">p_info</a>   = &amp;transfer_info,</div><div class="line">        .p_extend = &amp;dmac_cfg,</div><div class="line">    };</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_m_a_c.html#ga448a013ad5b91097e45833313d5df354">R_DMAC_Open</a>(&amp;g_transfer_ctrl, &amp;transfer_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Enable DMAC transfers. */</span></div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#gaf72221183919d50cbd8ee1ca528aa20b">R_DMAC_Enable</a>(&amp;g_transfer_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Configure the CRC module for crc32 and clear CRCDOR. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a66f3b5b31f294d50f964990b205cb92b">FSP_IP_CRC</a>, 0);</div><div class="line">    R_CRC-&gt;CRCCR0 = CRC_CLEAR_BIT | CRC_MODE_CRC32;</div><div class="line">    R_CRC-&gt;CRCDOR = CRC32_INITIAL_VALUE;</div><div class="line"></div><div class="line">    <span class="comment">/* Trigger the transfer using software. */</span></div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#ga476c8ffd7c603f3c298a422e4f39b571">R_DMAC_SoftwareStart</a>(&amp;g_transfer_ctrl, <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga11917a0ab2cb8b878937c97691b07fd9aca210983d734307a694af55fbf11ed7e">TRANSFER_START_MODE_SINGLE</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Final XOR at the end of CRC calculation. */</span></div><div class="line">    uint32_t crc32 = R_CRC-&gt;CRCDOR ^ CRC32_FINAL_XOR_VALUE;</div><div class="line"></div><div class="line">    <span class="comment">/* Verify that the crc32 is calculated correctly. */</span></div><div class="line">    <span class="comment">/* CRC32(&quot;ABCD...NOP&quot;) = 0xE0E8FF4D. */</span></div><div class="line">    <span class="keyword">const</span> uint32_t expected_crc32 = 0xE0E8FF4D;</div><div class="line">    <span class="keywordflow">if</span> (expected_crc32 != crc32)</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<p>This is a basic example of minimal use of the DMAC in an application. In this case, one or more events have been routed to the DMAC for handling so it only needs to be enabled to start accepting transfers.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> dmac_minimal_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_m_a_c.html#ga448a013ad5b91097e45833313d5df354">R_DMAC_Open</a>(&amp;g_transfer_ctrl, &amp;g_transfer_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Enable the DMAC so that it responds to transfer requests. */</span></div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#gaf72221183919d50cbd8ee1ca528aa20b">R_DMAC_Enable</a>(&amp;g_transfer_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>CRC32 Example</h2>
+<p>In this example the DMAC is used to feed the CRC peripheral to perform a CRC32 operation.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dmac_callback (<a class="code" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a> * cb_data)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(cb_data);</div><div class="line"></div><div class="line">    g_transfer_complete = <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dmac_crc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t p_src[TRANSFER_LENGTH];</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize p_src to [ABC..OP] */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        p_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set transfer source address to p_src */</span></div><div class="line">    g_transfer_cfg.p_info-&gt;p_src = (<span class="keywordtype">void</span> *) p_src;</div><div class="line"></div><div class="line">    <span class="comment">/* Set transfer destination address to the CRC data input register */</span></div><div class="line">    g_transfer_cfg.p_info-&gt;p_dest = (<span class="keywordtype">void</span> *) &amp;R_CRC-&gt;CRCDIR;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_m_a_c.html#ga448a013ad5b91097e45833313d5df354">R_DMAC_Open</a>(&amp;g_transfer_ctrl, &amp;g_transfer_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable DMAC transfers. */</span></div><div class="line">    (void) <a class="code" href="group___d_m_a_c.html#gaf72221183919d50cbd8ee1ca528aa20b">R_DMAC_Enable</a>(&amp;g_transfer_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Open the CRC module. */</span></div><div class="line">    err = <a class="code" href="group___c_r_c.html#gae4cc2bba5d6aeaadd9f4d43948fca5ac">R_CRC_Open</a>(&amp;g_crc_ctrl, &amp;g_crc_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Clear the transfer complete flag. */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Trigger the transfer using software. */</span></div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#ga476c8ffd7c603f3c298a422e4f39b571">R_DMAC_SoftwareStart</a>(&amp;g_transfer_ctrl, <a class="code" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gga11917a0ab2cb8b878937c97691b07fd9aca210983d734307a694af55fbf11ed7e">TRANSFER_START_MODE_SINGLE</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for transfer complete interrupt */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Get CRC result and perform final XOR. */</span></div><div class="line">    uint32_t crc32;</div><div class="line">    (void) <a class="code" href="group___c_r_c.html#ga5bb7766a9c3217d2da7b77ea203b8c74">R_CRC_CalculatedValueGet</a>(&amp;g_crc_ctrl, &amp;crc32);</div><div class="line">    crc32 ^= CRC32_FINAL_XOR_VALUE;</div><div class="line"></div><div class="line">    <span class="comment">/* Verify that the CRC32 is calculated correctly. */</span></div><div class="line">    <span class="comment">/* CRC32(&quot;ABCD...NOP&quot;) = 0xE0E8FF4D. */</span></div><div class="line">    <span class="keyword">const</span> uint32_t expected_crc32 = 0xE0E8FF4D;</div><div class="line">    <span class="keywordflow">if</span> (expected_crc32 != crc32)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle any CRC errors. This function should be defined by the user. */</span></div><div class="line">        handle_crc_error();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structdmac__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_m_a_c.html#structdmac__instance__ctrl__t">dmac_instance_ctrl_t</a></td></tr>
@@ -935,9 +947,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

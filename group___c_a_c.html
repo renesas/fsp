@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -133,7 +133,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_cac_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -143,15 +143,15 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Clock Accuracy Circuit Driver on r_cac</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Monitoring -&gt; Clock Accuracy Circuit Driver on r_cac:<br />
+ <h2>Configurations for Driver &gt; Monitoring &gt; Clock Accuracy Circuit Driver on r_cac</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Monitoring &gt; Clock Accuracy Circuit Driver on r_cac:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_cac0 </td><td>Module name. </td></tr>
 <tr>
 <td>Reference clock divider</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -163,7 +163,7 @@ This module can be added to the Threads tab from New -&gt; Driver -&gt; Monitori
 <li>
 8192</li>
 </ul>
-</td><td>Reference clock divider. </td></tr>
+</td><td>32 </td><td>Reference clock divider. </td></tr>
 <tr>
 <td>Reference clock source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -183,7 +183,7 @@ IWDT</li>
 <li>
 External</li>
 </ul>
-</td><td>Reference clock source. </td></tr>
+</td><td>Main Oscillator </td><td>Reference clock source. </td></tr>
 <tr>
 <td>Reference clock digital filter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -195,7 +195,7 @@ Sampling clock=Measuring freq/4</li>
 <li>
 Sampling clock=Measuring freq/16</li>
 </ul>
-</td><td>Reference clock digital filter. </td></tr>
+</td><td>Disabled </td><td>Reference clock digital filter. </td></tr>
 <tr>
 <td>Reference clock edge detect</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -205,7 +205,7 @@ Falling</li>
 <li>
 Both</li>
 </ul>
-</td><td>Reference clock edge detection. </td></tr>
+</td><td>Rising </td><td>Reference clock edge detection. </td></tr>
 <tr>
 <td>Measurement clock divider</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -217,7 +217,7 @@ Both</li>
 <li>
 32</li>
 </ul>
-</td><td>Measurement clock divider. </td></tr>
+</td><td>1 </td><td>Measurement clock divider. </td></tr>
 <tr>
 <td>Measurement clock source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -235,19 +235,19 @@ PCLKB</li>
 <li>
 IWDT</li>
 </ul>
-</td><td>Measurement clock source. </td></tr>
+</td><td>HOCO </td><td>Measurement clock source. </td></tr>
 <tr>
-<td>Upper Limit Threshold</td><td>Value must be a non-negative integer</td><td>Top end of allowable range for measurement completion. </td></tr>
+<td>Upper Limit Threshold</td><td>Value must be a non-negative integer, between 0 to 65535</td><td>0 </td><td>Top end of allowable range for measurement completion. </td></tr>
 <tr>
-<td>Lower Limit Threshold</td><td>Value must be a non-negative integer</td><td>Bottom end of allowable range for measurement completion. </td></tr>
+<td>Lower Limit Threshold</td><td>Value must be a non-negative integer, between 0 to 65535</td><td>0 </td><td>Bottom end of allowable range for measurement completion. </td></tr>
 <tr>
-<td>Frequency Error Interrupt Priority</td><td>MCU Specific Options</td><td>CAC frequency error interrupt priority. </td></tr>
+<td>Frequency Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>CAC frequency error interrupt priority. </td></tr>
 <tr>
-<td>Measurement End Interrupt Priority</td><td>MCU Specific Options</td><td>CAC measurement end interrupt priority. </td></tr>
+<td>Measurement End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>CAC measurement end interrupt priority. </td></tr>
 <tr>
-<td>Overflow Interrupt Priority</td><td>MCU Specific Options</td><td>CAC overflow interrupt priority. </td></tr>
+<td>Overflow Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>CAC overflow interrupt priority. </td></tr>
 <tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>Function name for callback </td></tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Function name for callback </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-cac-clock-configuration"></a>
@@ -286,7 +286,7 @@ Usage Notes</h1>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the CAC in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">volatile</span> uint32_t g_callback_complete;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> cac_basic_example ()</div><div class="line">{</div><div class="line">    g_callback_complete = 0;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___c_a_c.html#gab9f5ff72d2829d52ed335a92b12493e2">R_CAC_Open</a>(&amp;g_cac_ctrl, &amp;g_cac_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_a_c.html#ga4b5ab0d272e1893197f9bcfd3c53b370">R_CAC_StartMeasurement</a>(&amp;g_cac_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for measurement to complete. */</span></div><div class="line">    <span class="keywordflow">while</span> (0 == g_callback_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    uint16_t value;</div><div class="line"></div><div class="line">    <span class="comment">/* Read the CAC measurement. */</span></div><div class="line">    err = <a class="code" href="group___c_a_c.html#gaf21e6d7a9df9c765fb43d512d29a3197">R_CAC_Read</a>(&amp;g_cac_ctrl, &amp;value);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Called when measurement is completed. */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_cac_callback (<a class="code" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___c_a_c___a_p_i.html#ggabd94bb52c9df9b335173008fb5094f52a3d06755039a255ba6bc044ef922e2935">CAC_EVENT_MEASUREMENT_COMPLETE</a> == p_args-&gt;<a class="code" href="group___c_a_c___a_p_i.html#a30235d33a7f1e9ed1885c73f9fa95195">event</a>)</div><div class="line">    {</div><div class="line">        g_callback_complete = 1U;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">volatile</span> uint32_t g_callback_complete;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> cac_basic_example ()</div><div class="line">{</div><div class="line">    g_callback_complete = 0;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___c_a_c.html#gab9f5ff72d2829d52ed335a92b12493e2">R_CAC_Open</a>(&amp;g_cac_ctrl, &amp;g_cac_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    (void) <a class="code" href="group___c_a_c.html#ga4b5ab0d272e1893197f9bcfd3c53b370">R_CAC_StartMeasurement</a>(&amp;g_cac_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for measurement to complete. */</span></div><div class="line">    <span class="keywordflow">while</span> (0 == g_callback_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    uint16_t value;</div><div class="line"></div><div class="line">    <span class="comment">/* Read the CAC measurement. */</span></div><div class="line">    (void) <a class="code" href="group___c_a_c.html#gaf21e6d7a9df9c765fb43d512d29a3197">R_CAC_Read</a>(&amp;g_cac_ctrl, &amp;value);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Called when measurement is completed. */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_cac_callback (<a class="code" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___c_a_c___a_p_i.html#ggabd94bb52c9df9b335173008fb5094f52a3d06755039a255ba6bc044ef922e2935">CAC_EVENT_MEASUREMENT_COMPLETE</a> == p_args-&gt;<a class="code" href="group___c_a_c___a_p_i.html#a30235d33a7f1e9ed1885c73f9fa95195">event</a>)</div><div class="line">    {</div><div class="line">        g_callback_complete = 1U;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structcac__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c.html#structcac__instance__ctrl__t">cac_instance_ctrl_t</a></td></tr>
@@ -497,9 +497,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

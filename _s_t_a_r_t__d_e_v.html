@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -95,13 +95,13 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#starting-development-introduction">Starting Development Introduction</a><ul><li class="level2"><a href="#getting-started-with-the-e2-studio-isde-and-fsp">Getting Started with the e2 studio ISDE and FSP</a></li>
+<ul><li class="level1"><a href="#starting-development-introduction">Starting Development Introduction</a><ul><li class="level2"><a href="#getting-started-with-e2-studio-and-fsp">Getting Started with e2 studio and FSP</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#e2studio-isde-user-guide">e2 studio ISDE User Guide</a><ul><li class="level2"><a href="#what-is-the-e2studio-isde">What is e2 studio ISDE?</a></li>
-<li class="level2"><a href="#e2studio-isde-prerequisites">e2 studio ISDE Prerequisites</a><ul><li class="level3"><a href="#obtaining-a-ra-mcu-kit">Obtaining an RA MCU Kit</a></li>
+<li class="level1"><a href="#e2studio-user-guide">e2 studio User Guide</a><ul><li class="level2"><a href="#what-is-e2studio">What is e2 studio?</a></li>
+<li class="level2"><a href="#e2studio-prerequisites">e2 studio Prerequisites</a><ul><li class="level3"><a href="#obtaining-a-ra-mcu-kit">Obtaining an RA MCU Kit</a></li>
 <li class="level3"><a href="#pc-requirements">PC Requirements</a></li>
-<li class="level3"><a href="#installing-e2studio-and-fsp">Installing e2 studio, platform installer and  the FSP package</a></li>
+<li class="level3"><a href="#installing-e2studio-and-fsp">Installing e2 studio, platform installer and the FSP package</a></li>
 <li class="level3"><a href="#choosing-a-toolchain">Choosing a Toolchain</a></li>
 <li class="level3"><a href="#licensing">Licensing</a></li>
 </ul>
@@ -112,7 +112,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level3"><a href="#selecting-a-project-template">Selecting a Project Template</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#configuring-a-project">Configuring a Project</a><ul><li class="level3"><a href="#configuring-the-bsp-with-the-isde">Configuring the BSP with the ISDE</a></li>
+<li class="level2"><a href="#configuring-a-project">Configuring a Project</a><ul><li class="level3"><a href="#configuring-the-bsp-with-e2-studio">Configuring the BSP with e2 studio</a></li>
 <li class="level3"><a href="#configuring-clocks">Configuring Clocks</a></li>
 <li class="level3"><a href="#configuring-pins">Configuring Pins</a></li>
 <li class="level3"><a href="#configuring-interrupts">Configuring Interrupts</a><ul><li class="level4"><a href="#interrupts">Interrupts</a></li>
@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </li>
 <li class="level2"><a href="#debugging-the-project">Debugging the Project</a></li>
 <li class="level2"><a href="#modifying-toolchain-settings">Modifying Toolchain Settings</a></li>
-<li class="level2"><a href="#importing-an-existing-project-into-e2-studio-isde">Importing an Existing Project into e2 studio ISDE</a></li>
+<li class="level2"><a href="#importing-an-existing-project-into-e2-studio">Importing an Existing Project into e2 studio</a></li>
 </ul>
 </li>
 <li class="level1"><a href="#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a><ul><li class="level2"><a href="#tutorial-blinky">Tutorial Blinky</a></li>
@@ -165,13 +165,13 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </ul>
 </li>
 <li class="level1"><a href="#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a><ul><li class="level2"><a href="#application-wdt">Application WDT</a></li>
-<li class="level2"><a href="#creating-a-wdt-application-using-the-ra-fsp-and-isde">Creating a WDT Application Using the RA MCU FSP and ISDE</a><ul><li class="level3"><a href="#using-the-fsp-and-the-e2-studio-isde">Using the FSP and the e2 studio ISDE</a></li>
+<li class="level2"><a href="#creating-a-wdt-application-using-the-ra-fsp-and-e2-studio">Creating a WDT Application Using the RA MCU FSP and e2 studio</a><ul><li class="level3"><a href="#using-the-fsp-and-e2-studio">Using the FSP and e2 studio</a></li>
 <li class="level3"><a href="#the-wdt-application">The WDT Application</a></li>
 <li class="level3"><a href="#wdt-application-flow">WDT Application flow</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#creating-the-project-with-the-isde">Creating the Project with the ISDE</a></li>
-<li class="level2"><a href="#configuring-the-project-with-the-isde">Configuring the Project with the ISDE</a><ul><li class="level3"><a href="#bsp-tab">BSP Tab</a></li>
+<li class="level2"><a href="#creating-the-project-with-e2-studio">Creating the Project with e2 studio</a></li>
+<li class="level2"><a href="#configuring-the-project-with-e2-studio">Configuring the Project with e2 studio</a><ul><li class="level3"><a href="#bsp-tab">BSP Tab</a></li>
 <li class="level3"><a href="#clocks-tab">Clocks Tab</a></li>
 <li class="level3"><a href="#pins-tab">Pins Tab</a></li>
 <li class="level3"><a href="#stacks-tab">Stacks Tab</a></li>
@@ -187,23 +187,37 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level2"><a href="#building-and-testing-the-project">Building and Testing the Project</a></li>
 </ul>
 </li>
+<li class="level1"><a href="#RASC-MDK-IAR-user-guide">RA SC User Guide for MDK and IAR</a><ul><li class="level2"><a href="#RASC">What is RA SC?</a></li>
+<li class="level2"><a href="#using-ra-smart-configurator-with-keil-mdk">Using RA Smart Configurator with Keil MDK</a><ul><li class="level3"><a href="#RASC-MDK-prerequisites">Prerequisites</a></li>
+<li class="level3"><a href="#using-ra-smart-configurator-with-keil-mdk-create-project">Create new RA project</a></li>
+<li class="level3"><a href="#using-ra-smart-configurator-with-keil-mdk-modify-project">Modify existing RA project</a></li>
+<li class="level3"><a href="#using-ra-smart-configurator-with-keil-mdk-build-project">Build and Debug RA project</a></li>
+<li class="level3"><a href="#using-ra-smart-configurator-with-keil-mdk-notes-restrictions">Notes and Restrictions</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#using-ra-smart-configurator-with-ewarm">Using RA Smart Configurator with IAR EWARM</a><ul><li class="level3"><a href="#RASC-EWARM-prerequisites">Prerequisites</a></li>
+<li class="level3"><a href="#using-ra-smart-configurator-with-ewarm-create-project">Create new RA project</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="textblock"><h1><a class="anchor" id="starting-development-introduction"></a>
 Starting Development Introduction</h1>
-<p>The Renesas Flexible Software Package (FSP) provides a host of efficiency enhancing tools for developing projects targeting the Renesas RA series of MCU devices. The e<sup>2</sup> studio Integrated System Development Environment (ISDE) provides a familiar development cockpit from which the key steps of project creation, module selection and configuration, code development, code generation, and debugging are all managed. FSP runs within e<sup>2</sup> studio and enables the module selection, configuration, and code generation steps. FSP uses a Graphical User Interface (GUI) to simplify the selection, configuration, code generation and code development of high level modules and their associated Application Program Interfaces (APIs) to dramatically accelerate the development process.</p>
-<p>The wealth of resources available to learn about and use e<sup>2</sup> studio and FSP can be overwhelming on first inspection, so the following section provides a Getting Started Guide with a list of the most important first steps. Following these highly recommended first 10 steps will bring you up to speed on the development environment in record time. Even experienced developers can benefit from the use of this guide, to learn the terminology that might be unfamiliar or different from previous environments.</p>
-<h2><a class="anchor" id="getting-started-with-the-e2-studio-isde-and-fsp"></a>
-Getting Started with the e2 studio ISDE and FSP</h2>
-<p>This section describes how to use the Renesas e<sup>2</sup> Integrated Solutions Development Environment (ISDE) to develop applications with the Renesas Flexible Software Package (FSP). Here is the recommended sequence for quickly Getting Started with using e<sup>2</sup> when developing with the RA MCU Family:</p>
+<p>The Renesas Flexible Software Package (FSP) provides a host of efficiency enhancing tools for developing projects targeting the Renesas RA series of MCU devices. e2 studio provides a familiar development cockpit from which the key steps of project creation, module selection and configuration, code development, code generation, and debugging are all managed. FSP runs within e2 studio and enables the module selection, configuration, and code generation steps. FSP uses a Graphical User Interface (GUI) to simplify the selection, configuration, code generation and code development of high level modules and their associated Application Program Interfaces (APIs) to dramatically accelerate the development process.</p>
+<p>The wealth of resources available to learn about and use e2 studio and FSP can be overwhelming on first inspection, so the following section provides a Getting Started Guide with a list of the most important first steps. Following these highly recommended first 10 steps will bring you up to speed on the development environment in record time. Even experienced developers can benefit from the use of this guide, to learn the terminology that might be unfamiliar or different from previous environments.</p>
+<h2><a class="anchor" id="getting-started-with-e2-studio-and-fsp"></a>
+Getting Started with e2 studio and FSP</h2>
+<p>This section describes how to use Renesas e2 studio to develop applications with the Renesas Flexible Software Package (FSP). Here is the recommended sequence for quickly Getting Started with using e2 when developing with the RA MCU Family:</p>
 <ol type="1">
-<li>Read over the section <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-the-e2studio-isde">What is e2 studio ISDE?</a>, up to but not including <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-isde-prerequisites">e2 studio ISDE Prerequisites</a>. This will provide a description of the various windows and views to use e<sup>2</sup> to create a project, add modules and threads, configure module properties, add code, and debug a project. It also describes how to use key coding 'accelerators' like Developer Assist (to drag and drop parameter populated API function calls right into your code), a context aware Autocomplete (to easily find and select from suggested enumerations, functions, types, and many other coding elements), and many other similar productivity enhancers.</li>
+<li>Read over the section <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-e2studio">What is e2 studio?</a>, up to but not including <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a>. This will provide a description of the various windows and views to use e2 to create a project, add modules and threads, configure module properties, add code, and debug a project. It also describes how to use key coding 'accelerators' like Developer Assist (to drag and drop parameter populated API function calls right into your code), a context aware Autocomplete (to easily find and select from suggested enumerations, functions, types, and many other coding elements), and many other similar productivity enhancers.</li>
 <li>Read over the FSP Architecture sections <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a>, <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-modules">FSP Modules</a> and <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-stacks">FSP Stacks</a>. These provide the basic background on how FSP modules and stacks are used to construct your application. Understanding their definitions and the theory behind how they combine will make it easier to develop with FSP.</li>
 <li>Read over a few "Module User Guide" sections to see how to use API function calls, structures, enumerations, types and callbacks. These user guides provide the information you will use to implement your project code. (Much of the details are provided with Developer Assistance, covered in step 5, below.</li>
-<li>If you don't have a kit. you can order one using the link included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-isde-prerequisites">e2 studio ISDE Prerequisites</a> section. Then, if you haven't yet downloaded and installed e<sup>2</sup> studio and FSP, use the link included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-isde-prerequisites">e2 studio ISDE Prerequisites</a> section to download the tools. Then you can build and debug a simple project to prove out you installation, tool flow, and the kit. The simple "Blinky" project, that blinks an LED on and off, is located in the <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> section. Follow the instructions for importing and running this project. It will use some of the key steps for managing projects within e<sup>2</sup> and is a good way to learn the basics.</li>
+<li>If you don't have a kit. you can order one using the link included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a> section. Then, if you haven't yet downloaded and installed e2 studio and FSP, use the link included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a> section to download the tools. Then you can build and debug a simple project to prove out you installation, tool flow, and the kit. The simple "Blinky" project, that blinks an LED on and off, is located in the <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> section. Follow the instructions for importing and running this project. It will use some of the key steps for managing projects within e2 and is a good way to learn the basics.</li>
 <li>Once you have successfully run Blinky you have a good starting point for using FSP for more complex projects. The Watchdog Timer hands-on lab, available in the <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a> section, shows how to create a project from scratch and use FSP API functions, and demonstrates the use of some of the coding efficiency tools like Developer Assistance and Autocomplete. Run through this lab to establish a good starting point for developing custom projects.</li>
 <li>The balance of the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> sections, those not called out in step 2 above, contain additional reference material that may be helpful in the future. Scan them over so you know what they contain, in case you need them.</li>
-<li>The balance of the e<sup>2</sup> ISDE User Guide, starting with the <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-a-project">What is a Project?</a> section up to <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section, provides a detailed description of each of the key steps, windows, and entries used to create, manage, configure, build and debug a project. Most of this will be familiar after doing the Blinky and WDT exercises from steps 4 and 5 above. Skim over these references so you know to come back to them when questions come up. Make sure you have a good grasp of what each of the configuration tabs are used for since that is where the bulk of the project preparation work takes place prior to writing code.</li>
+<li>The balance of the e2 studio User Guide, starting with the <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-a-project">What is a Project?</a> section up to <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section, provides a detailed description of each of the key steps, windows, and entries used to create, manage, configure, build and debug a project. Most of this will be familiar after doing the Blinky and WDT exercises from steps 4 and 5 above. Skim over these references so you know to come back to them when questions come up. Make sure you have a good grasp of what each of the configuration tabs are used for since that is where the bulk of the project preparation work takes place prior to writing code.</li>
 <li>Read over the <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section to get a short introduction to the steps used when creating application code with FSP. It covers both RTOS-independent and RTOS-dependent applications. The <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a> section is a good introduction to the key steps for an RTOS-independent application. Make sure you have run through it at least once before doing a custom project.</li>
 <li>Scan the <a class="el" href="_s_t_a_r_t__d_e_v.html#debugging-the-project">Debugging the Project</a> section to see the steps required to download and start a debug session.</li>
 <li>Explore the additional material available on the following web pages and bookmark the resources that look most valuable to you:<ol type="a">
@@ -212,12 +226,12 @@ Getting Started with the e2 studio ISDE and FSP</h2>
 </ol>
 </li>
 </ol>
-<h1><a class="anchor" id="e2studio-isde-user-guide"></a>
-e2 studio ISDE User Guide</h1>
-<h2><a class="anchor" id="what-is-the-e2studio-isde"></a>
-What is e2 studio ISDE?</h2>
-<p>The Renesas e<sup>2</sup> studio ISDE, or Integrated Solution Development Environment, is a development tool encompassing code development, build, and debug. The ISDE is based on the open-source Eclipse IDE and the associated C/C++ Development Tooling (CDT).</p>
-<p>When developing for RA MCUs, the ISDE hosts the Renesas Flexible Software Package (FSP). FSP provides a wide range of time saving tools to simplify the selection, configuration, and management of modules and threads, to easily implement complex applications. The time saving tools available in e<sup>2</sup> studio and FSP include the following:</p>
+<h1><a class="anchor" id="e2studio-user-guide"></a>
+e2 studio User Guide</h1>
+<h2><a class="anchor" id="what-is-e2studio"></a>
+What is e2 studio?</h2>
+<p>Renesas e2 studio is a development tool encompassing code development, build, and debug. e2 studio is based on the open-source Eclipse IDE and the associated C/C++ Development Tooling (CDT).</p>
+<p>When developing for RA MCUs, e2 studio hosts the Renesas Flexible Software Package (FSP). FSP provides a wide range of time saving tools to simplify the selection, configuration, and management of modules and threads, to easily implement complex applications. The time saving tools available in e2 studio and FSP include the following:</p>
 <ul>
 <li>A Graphical User Interface (GUI) (see <a class="el" href="_s_t_a_r_t__d_e_v.html#adding-threads-and-drivers">Adding Threads and Drivers</a>) with numerous wizards for configuring and auto-generating code</li>
 <li>A context sensitive Autocomplete (see <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>) feature that provides intelligent options for completing a programming element</li>
@@ -231,53 +245,53 @@ What is e2 studio ISDE?</h2>
 <img src="sd-splash.png" alt="sd-splash.png"/>
 <div class="caption">
 e2 studio Splash Screen</div></div>
-<p> The e<sup>2</sup> studio ISDE organizes project work based on Perspectives, Views, Windows, Panes, and Pages (sometimes called Tabs). Windows are a section of the ISDE GUI that presents information on a key topic. Windows often use tabs to select sub-topics. For example, an editor window might have a tab available for each open file, so it is easy to switch back and forth between them. A window Pane is a section of a window. Within a window, multiple Panes can be opened and viewed simultaneously, as opposed to a tabbed window, where only individual content is displayed. A memory-display Window, for example, might have multiple Panes that allow the data to be displayed in different formats, simultaneously. A Perspective is a collection of Views and Windows typical for a specific stage of development. The default perspectives are a C/C++ Perspective, an FSP Configuration Perspective and a Debug Perspective. These provide specific Views, Windows, Tabs, and Panes tailored for the common tasks needed during the specific development stage. These three default perspectives are each illustrated in the below screen shots, along with graphic indicators helpful in identifying example Views, Windows, Tabs and Panes.</p>
+<p> e2 studio organizes project work based on Perspectives, Views, Windows, Panes, and Pages (sometimes called Tabs). A window is a section of the e2 studio GUI that presents information on a key topic. Windows often use tabs to select sub-topics. For example, an editor window might have a tab available for each open file, so it is easy to switch back and forth between them. A window Pane is a section of a window. Within a window, multiple Panes can be opened and viewed simultaneously, as opposed to a tabbed window, where only individual content is displayed. A memory-display Window, for example, might have multiple Panes that allow the data to be displayed in different formats, simultaneously. A Perspective is a collection of Views and Windows typical for a specific stage of development. The default perspectives are a C/C++ Perspective, an FSP Configuration Perspective and a Debug Perspective. These provide specific Views, Windows, Tabs, and Panes tailored for the common tasks needed during the specific development stage. These three default perspectives are each illustrated in the below screen shots, along with graphic indicators helpful in identifying example Views, Windows, Tabs and Panes.</p>
 <div class="image">
 <img src="sd-default-perspective.png" alt="sd-default-perspective.png"/>
 <div class="caption">
 Default Perspective</div></div>
-<p> In addition to managing project development, selecting modules, configuring them and simplifying code development, e<sup>2</sup> studio also hosts the engine for automatically generating code based on module selections and configurations. The engine continually checks for dependencies and automatically adds any needed lower level modules to the module stack. It also identifies any lower level modules that require configuration (for example, an interrupt that needs to have a priority assigned). It also provides a guide for selecting between multiple choices or options to make it easy to complete a fully functional module stack.</p>
-<p>The Generate Project Content function takes the selected and configured modules and automatically generates the complete and correct configuration code. The code is added to the folders visible in the <b>Project Explorer</b> window in e<sup>2</sup> studio. The <code>configuration.xml</code> file in the project folder holds all the configuration settings generated by the ISDE. This file can be opened in the GUI-based configuration editor to make further edits and changes. Once a project has been generated, you can go back and reconfigure any of the modules and settings if required using this editor.</p>
+<p> In addition to managing project development, selecting modules, configuring them and simplifying code development, e2 studio also hosts the engine for automatically generating code based on module selections and configurations. The engine continually checks for dependencies and automatically adds any needed lower level modules to the module stack. It also identifies any lower level modules that require configuration (for example, an interrupt that needs to have a priority assigned). It also provides a guide for selecting between multiple choices or options to make it easy to complete a fully functional module stack.</p>
+<p>The Generate Project Content function takes the selected and configured modules and automatically generates the complete and correct configuration code. The code is added to the folders visible in the <b>Project Explorer</b> window in e2 studio. The <code>configuration.xml</code> file in the project folder holds all the generated configuration settings. This file can be opened in the GUI-based configuration editor to make further edits and changes. Once a project has been generated, you can go back and reconfigure any of the modules and settings if required using this editor.</p>
 <div class="image">
 <img src="sd-e2studio-proj-config.jpg" alt="sd-e2studio-proj-config.jpg"/>
 <div class="caption">
 Project Explorer Window showing generated folders and configuration.xml file</div></div>
-<h2><a class="anchor" id="e2studio-isde-prerequisites"></a>
-e2 studio ISDE Prerequisites</h2>
+<h2><a class="anchor" id="e2studio-prerequisites"></a>
+e2 studio Prerequisites</h2>
 <h3><a class="anchor" id="obtaining-a-ra-mcu-kit"></a>
 Obtaining an RA MCU Kit</h3>
-<p>To develop applications with FSP, start with one of the Renesas RA MCU Evaluation Kits. The Renesas RA MCU Evaluation Kits are designed to seamlessly integrate with the e<sup>2</sup> studio ISDE.</p>
+<p>To develop applications with FSP, start with one of the Renesas RA MCU Evaluation Kits. The Renesas RA MCU Evaluation Kits are designed to seamlessly integrate with the e2 studio.</p>
 <p>Ordering information, Quick Start Guides, User Manuals, and other related documents for all RA MCU Evaluation Kits are available at <a href="https://www.renesas.com/ra">https://www.renesas.com/ra</a>.</p>
 <h3><a class="anchor" id="pc-requirements"></a>
 PC Requirements</h3>
-<p>The following are the minimum PC requirements to use the e<sup>2</sup> studio ISDE:</p>
+<p>The following are the minimum PC requirements to use e2 studio:</p>
 <ul>
 <li>Windows 10 with Intel i5 or i7, or AMD A10-7850K or FX</li>
 <li>Memory: 8-GB DDR3 or DDR4 DRAM (16-GB DDR4/2400-MHz RAM is preferred)</li>
 <li>Minimum 250-GB hard disk</li>
 </ul>
 <h3><a class="anchor" id="installing-e2studio-and-fsp"></a>
-Installing e2 studio, platform installer and  the FSP package</h3>
-<p>Detailed installation instructions for the e<sup>2</sup> studio ISDE and the FSP are available on the Renesas website <a href="https://www.renesas.com/fsp">https://www.renesas.com/fsp</a>. Review the release notes for e<sup>2</sup> studio to ensure that the e<sup>2</sup> studio version supports the selected FSP version. The starting version of the installer includes all features of the RA MCUs.</p>
+Installing e2 studio, platform installer and the FSP package</h3>
+<p>Detailed installation instructions for the e2 studio and the FSP are available on the Renesas website <a href="https://www.renesas.com/fsp">https://www.renesas.com/fsp</a>. Review the release notes for e2 studio to ensure that the e2 studio version supports the selected FSP version. The starting version of the installer includes all features of the RA MCUs.</p>
 <h3><a class="anchor" id="choosing-a-toolchain"></a>
 Choosing a Toolchain</h3>
-<p>The e<sup>2</sup> studio ISDE can work with several toolchains and toolchain versions such as the GNU ARM compiler, AC6. A version of the GNU ARM compiler is included in the e<sup>2</sup> studio installer and has been verified to run with the FSP version.</p>
+<p>e2 studio can work with several toolchains and toolchain versions such as the GNU ARM compiler, AC6. A version of the GNU ARM compiler is included in the e2 studio installer and has been verified to run with the FSP version.</p>
 <h3><a class="anchor" id="licensing"></a>
 Licensing</h3>
 <p>FSP licensing includes full source code, limited to Renesas hardware only.</p>
 <h2><a class="anchor" id="what-is-a-project"></a>
 What is a Project?</h2>
-<p>In e<sup>2</sup> studio, all FSP applications are organized in RA MCU projects. Setting up an RA MCU project involves:</p>
+<p>In e2 studio, all FSP applications are organized in RA MCU projects. Setting up an RA MCU project involves:</p>
 <ol type="1">
 <li><a class="el" href="_s_t_a_r_t__d_e_v.html#creating-a-project">Creating a Project</a></li>
 <li><a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a></li>
 </ol>
-<p>These steps are described in detail in the next two sections. When you have existing projects already, after you launch e<sup>2</sup> studio and select a workspace, all projects previously saved in the selected workspace are loaded and displayed in the <b>Project Explorer</b> window. Each project has an associated configuration file named <code>configuration.xml</code>, which is located in the project's root directory.</p>
+<p>These steps are described in detail in the next two sections. When you have existing projects already, after you launch e2 studio and select a workspace, all projects previously saved in the selected workspace are loaded and displayed in the <b>Project Explorer</b> window. Each project has an associated configuration file named <code>configuration.xml</code>, which is located in the project's root directory.</p>
 <div class="image">
 <img src="sd-e2studio-proj-config.jpg" alt="sd-e2studio-proj-config.jpg"/>
 <div class="caption">
 e2 studio Project Configuration file</div></div>
-<p>Double-click on the <code>configuration.xml</code> file to open the RA MCU Project Editor. To edit the project configuration, make sure that the <b>RA Configuration</b> perspective is selected in the upper right hand corner of the e<sup>2</sup> studio window. Once selected, you can use the editor to view or modify the configuration settings associated with this project.</p>
+<p>Double-click on the <code>configuration.xml</code> file to open the RA MCU Project Editor. To edit the project configuration, make sure that the <b>RA Configuration</b> perspective is selected in the upper right hand corner of the e2 studio window. Once selected, you can use the editor to view or modify the configuration settings associated with this project.</p>
 <div class="image">
 <img src="sd-e2studio-ra-config.png" alt="sd-e2studio-ra-config.png"/>
 <div class="caption">
@@ -288,7 +302,7 @@ e2 studio RA Configuration Perspective</div></div>
 <div class="caption">
 RA Project Report</div></div>
 <p> The RA Project Editor has a number of tabs. The configuration steps and options for individual tabs are discussed in the following sections.</p>
-<dl class="section note"><dt>Note</dt><dd>Which tabs are available with the RA Project Editor depends on the e<sup>2</sup> studio version.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The tabs available in the RA Project Editor depend on the e2 studio version.</dd></dl>
 <div class="image">
 <img src="sd-proj-ed-tabs.jpg" alt="sd-proj-ed-tabs.jpg"/>
 <div class="caption">
@@ -351,7 +365,7 @@ Selecting a Project Template</h3>
 <img src="sd-ra-proj-3.png" alt="sd-ra-proj-3.png"/>
 <div class="caption">
 RA MCU Project Generator (Screen 3)</div></div>
-<p> When the project is created, the ISDE displays a summary of the current project configuration in the RA MCU Project Editor.</p>
+<p> When the project is created, e2 studio displays a summary of the current project configuration in the RA MCU Project Editor.</p>
 <div class="image">
 <img src="sd-proj-ed-tabs.jpg" alt="sd-proj-ed-tabs.jpg"/>
 <div class="caption">
@@ -369,20 +383,20 @@ RA MCU Project Editor and available editor tabs</div></div>
 <p>The functions and use of each of these tabs is explained in detail in the next section.</p>
 <h2><a class="anchor" id="configuring-a-project"></a>
 Configuring a Project</h2>
-<p>Each of the configurable elements in an FSP project can be edited using the appropriate tab in the configuration editor window. Importantly, the initial configuration of the MCU after reset and before any user code is executed is set by the configuration settings in the <b>BSP</b>, <b>Clocks</b> and <b>Pins</b> tabs. When you select a project template during project creation, the ISDE configures default values that are appropriate for the associated board. You can change those default values as needed. The following sections detail the process of configuring each of the project elements for each of the associated tabs.</p>
+<p>Each of the configurable elements in an FSP project can be edited using the appropriate tab in the configuration editor window. Importantly, the initial configuration of the MCU after reset and before any user code is executed is set by the configuration settings in the <b>BSP</b>, <b>Clocks</b> and <b>Pins</b> tabs. When you select a project template during project creation, e2 studio configures default values that are appropriate for the associated board. You can change those default values as needed. The following sections detail the process of configuring each of the project elements for each of the associated tabs.</p>
 <div class="image">
 <img src="sd-proj-ed-tabs.jpg" alt="sd-proj-ed-tabs.jpg"/>
 <div class="caption">
 RA MCU Project Editor and available editor tabs</div></div>
- <h3><a class="anchor" id="configuring-the-bsp-with-the-isde"></a>
-Configuring the BSP with the ISDE</h3>
+ <h3><a class="anchor" id="configuring-the-bsp-with-e2-studio"></a>
+Configuring the BSP with e2 studio</h3>
 <p>The <b>BSP</b> tab shows the currently selected board (if any) and device. The Properties view is located in the lower left of the Project Configurations view as shown below.</p>
 <dl class="section note"><dt>Note</dt><dd>If the Properties view is not visible, click <b>Window &gt; Show View &gt; Properties</b> in the top menu bar.</dd></dl>
 <div class="image">
-<img src="sd-isde-bsp-tab.jpg" alt="sd-isde-bsp-tab.jpg"/>
+<img src="sd-e2-bsp-tab.jpg" alt="sd-e2-bsp-tab.jpg"/>
 <div class="caption">
-ISDE BSP tab</div></div>
-<p> The <b>Properties</b> view shows the configurable options available for the BSP. These can be changed as required. The BSP is the FSP layer above the MCU hardware. The ISDE checks the entry fields to flag invalid entries. For example, only valid numeric values can be entered for the stack size.</p>
+Configuration BSP tab</div></div>
+<p> The <b>Properties</b> view shows the configurable options available for the BSP. These can be changed as required. The BSP is the FSP layer above the MCU hardware. e2 studio checks the entry fields to flag invalid entries. For example, only valid numeric values can be entered for the stack size.</p>
 <p>When you click the <b>Generate Project Content</b> button, the BSP configuration contents are written to <code>ra_cfg/fsp_cfg/bsp/bsp_cfg.h</code></p>
 <p>This file is created if it does not already exist.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Do not edit this file as it is overwritten whenever the <b>Generate Project Content</b> button is clicked.</dd></dl>
@@ -392,14 +406,14 @@ Configuring Clocks</h3>
 <div class="image">
 <img src="sd-clocks-tab.png" alt="sd-clocks-tab.png"/>
 <div class="caption">
-ISDE Clocks tab</div></div>
+Configuration Clocks tab</div></div>
 <p> When you click the <b>Generate Project Content</b> button, the clock configuration contents are written to: <code>ra_gen/bsp_clock_cfg.h</code></p>
 <p>This file will be created if it does not already exist.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Do not edit this file as it is overwritten whenever the <b>Generate Project Content</b> button is clicked.</dd></dl>
 <h3><a class="anchor" id="configuring-pins"></a>
 Configuring Pins</h3>
 <p>The <b>Pins</b> tab provides flexible configuration of the MCU's pins. As many pins are able to provide multiple functions, they can be configured on a peripheral basis. For example, selecting a serial channel via the SCI peripheral offers multiple options for the location of the receive and transmit pins for that module and channel. Once a pin is configured, it is shown as green in the <b>Package</b> view.</p>
-<dl class="section note"><dt>Note</dt><dd>If the <b>Package</b> view window is not open in the ISDE, select <b>Window &gt; Show View &gt; Pin Configurator &gt; Package</b> from the top menu bar to open it.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the <b>Package</b> view window is not open in e2 studio, select <b>Window &gt; Show View &gt; Pin Configurator &gt; Package</b> from the top menu bar to open it.</dd></dl>
 <p>The <b>Pins</b> tab simplifies the configuration of large packages with highly multiplexed pins by highlighting errors and presenting the options for each pin or for each peripheral. If you selected a project template for a specific board such as the RA6M3, some peripherals connected on the board are preselected.</p>
 <div class="image">
 <img src="sd-pins-tab.jpg" alt="sd-pins-tab.jpg"/>
@@ -408,18 +422,18 @@ Pins Configuration</div></div>
 <p> The pin configurator includes a built-in conflict checker, so if the same pin is allocated to another peripheral or I/O function the pin will be shown as red in the package view and also with white cross in a red square in the <b>Pin Selection</b> pane and <b>Pin Configuration</b> pane in the main <b>Pins</b> tab. The <b>Pin Conflicts</b> view provides a list of conflicts, so conflicts can be quickly identified and fixed.</p>
 <p>In the example shown below, port P611 is already used by the CAC, and the attempt to connect this port to the Serial Communications Interface (SCI) results in a dangling connection error. To fix this error, select another port from the pin drop-down list or disable the CAC in the <b>Pin Selection</b> pane on the left side of the tab.</p>
 <div class="image">
-<img src="sd-isde-pin-config.png" alt="sd-isde-pin-config.png"/>
+<img src="sd-e2-pin-config.png" alt="sd-e2-pin-config.png"/>
 <div class="caption">
-ISDE Pin configurator</div></div>
+e2 studio Pin configurator</div></div>
 <p>The pin configurator also shows a package view and the selected electrical or functional characteristics of each pin.</p>
 <div class="image">
 <img src="sd-pin-config-pkg-view.png" alt="sd-pin-config-pkg-view.png"/>
 <div class="caption">
-ISDE Pin configurator package view</div></div>
+e2 studio Pin configurator package view</div></div>
 <p> When you click the <b>Generate Project Content</b> button, the pin configuration contents are written to: <code>ra_gen\bsp_pin_cfg.h</code></p>
 <p>This file will be created if it does not already exist.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Do not edit this file as it is overwritten whenever the <b>Generate Project Content</b> button is clicked.</dd></dl>
-<p>To make it easy to share pinning information for your project, the ISDE exports your pin configuration settings to a csv format and copies the csv file to <code>ra_gen/&lt;MCU package&gt;.csv</code>.</p>
+<p>To make it easy to share pinning information for your project, e2 studio exports your pin configuration settings to a csv format and copies the csv file to <code>ra_gen/&lt;MCU package&gt;.csv</code>.</p>
 <h3><a class="anchor" id="configuring-interrupts"></a>
 Configuring Interrupts</h3>
 <p>You can use the <b>Properties</b> view in the <b>Stacks</b> tab to enable interrupts by setting the interrupt priority. Select the driver in the <b>Stacks</b> pane to view and edit its properties.</p>
@@ -438,7 +452,7 @@ Configuring interrupt in Interrupt Tab</div></div>
 <img src="sd-adding-user-defined-event.png" alt="sd-adding-user-defined-event.png"/>
 <div class="caption">
 Adding user-defined event</div></div>
-<p> Enter the name of ISR for new user event.</p>
+<p> Enter the name of ISR for the new user event.</p>
 <div class="image">
 <img src="sd-new-user-event-isr.jpg" alt="sd-new-user-event-isr.jpg"/>
 <div class="caption">
@@ -454,11 +468,13 @@ Viewing Event Links</h3>
 <img src="sd-viewing-event-links.png" alt="sd-viewing-event-links.png"/>
 <div class="caption">
 Viewing Event Links</div></div>
- <h2><a class="anchor" id="adding-threads-and-drivers"></a>
+<p> Like the Interrupts tab, user-defined event sources and destinations (producers and consumers) can be defined by clicking the relevant <b>New User Event</b> button.</p>
+<dl class="section note"><dt>Note</dt><dd>When selecting an ELC event to receive for a module (or when manually defining an event link), only the events that are made available by the modules configured in the project will be shown.</dd></dl>
+<h2><a class="anchor" id="adding-threads-and-drivers"></a>
 Adding Threads and Drivers</h2>
-<p>Every FreeRTOS-based RA Project includes at least one RTOS Thread and a stack of FSP modules running in that thread. The <b>Stacks</b> tab is a graphical user interface which helps you to add the right modules to a thread and configure the properties of both the threads and the modules associated with each thread. Once you have configured the thread, the ISDE automatically generates the code reflecting your configuration choices.</p>
-<p>For any driver, or, more generally, any module that you add to a thread, the ISDE automatically resolves all dependencies with other modules and creates the appropriate stack. This stack is displayed in the Stacks pane, which the ISDE populates with the selected modules and module options for the selected thread.</p>
-<p>The default view of the <b>Stacks</b> tab includes a Common Thread called <b>HAL/Common</b>. This thread includes the driver for I/O control (IOPORT). The default stack is shown in the <b>HAL/Common Stacks</b> pane. The default modules added to the HAL/Common driver are special in that the FSP only requires a single instance of each, which the ISDE then includes in every user-defined thread by default.</p>
+<p>Every FreeRTOS-based RA Project includes at least one RTOS Thread and a stack of FSP modules running in that thread. The <b>Stacks</b> tab is a graphical user interface which helps you to add the right modules to a thread and configure the properties of both the threads and the modules associated with each thread. Once you have configured the thread, e2 studio automatically generates the code reflecting your configuration choices.</p>
+<p>For any driver, or, more generally, any module that you add to a thread, e2 studio automatically resolves all dependencies with other modules and creates the appropriate stack. This stack is displayed in the Stacks pane, which e2 studio populates with the selected modules and module options for the selected thread.</p>
+<p>The default view of the <b>Stacks</b> tab includes a Common Thread called <b>HAL/Common</b>. This thread includes the driver for I/O control (IOPORT). The default stack is shown in the <b>HAL/Common Stacks</b> pane. The default modules added to the HAL/Common driver are special in that the FSP only requires a single instance of each, which e2 studio then includes in every user-defined thread by default.</p>
 <p>In applications that do not use an RTOS or run outside of the RTOS, the HAL/Common thread becomes the default location where you can add additional drivers to your application.</p>
 <p>For a detailed description on how to add and configure modules and stacks, see the following sections:</p>
 <ul>
@@ -476,7 +492,7 @@ Adding and Configuring HAL Drivers</h3>
 <div class="image">
 <img src="sd-proj-config-add-drivers.png" alt="sd-proj-config-add-drivers.png"/>
 <div class="caption">
-ISDE Project configurator - Adding drivers</div></div>
+e2 studio Project configurator - Adding drivers</div></div>
 </li>
 <li>Click <b>New Stack</b> to see a drop-down list of HAL level drivers available in the FSP.</li>
 <li><p class="startli">Select a driver from the menu <b>New Stack &gt; Driver</b>.</p>
@@ -487,7 +503,7 @@ Select a driver</div></div>
 </li>
 <li>Select the driver module in the <b>HAL/Common Modules</b> pane and configure the driver properties in the <b>Properties</b> view.</li>
 </ol>
-<p>The ISDE adds the following files when you click the <b>Generate Project Content</b> button:</p>
+<p>e2 studio adds the following files when you click the <b>Generate Project Content</b> button:</p>
 <ul>
 <li>The selected driver module and its files to the <code>ra/fsp</code> directory</li>
 <li>The <code>main()</code> function and configuration structures and header files for your application as shown in the table below.</li>
@@ -516,7 +532,7 @@ Adding Drivers to a Thread and Configuring the Drivers</h3>
 Adding a new RTOS Thread on the Stacks tab</div></div>
 </li>
 <li><p class="startli">In the <b>Properties</b> view, click on the <b>Name</b> and <b>Symbol</b> entries and enter a distinctive name and symbol for the new thread.</p>
-<dl class="section note"><dt>Note</dt><dd>The ISDE updates the name of the thread stacks pane to <b>My Thread Stacks</b>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>e2 studio updates the name of the thread stacks pane to <b>My Thread Stacks</b>.</dd></dl>
 </li>
 <li><p class="startli">In the <b>My Thread Stacks</b> pane, click on <b>New</b> <b>Stack</b> to see a list of modules and drivers. HAL-level drivers can be added here.</p>
 <div class="image">
@@ -533,7 +549,7 @@ Configuring Module or Driver properties</div></div>
 </li>
 <li>If needed, add another thread by clicking <b>New Thread</b> in the <b>Threads</b> pane.</li>
 </ol>
-<p>When you press the <b>Generate Project Content</b> button for the example above, the ISDE creates the files as shown in the following table:</p>
+<p>When you press the <b>Generate Project Content</b> button for the example above, e2 studio creates the files as shown in the following table:</p>
 <table class="doxtable">
 <tr>
 <th>File </th><th>Contents </th><th>Overwritten by Generate Project Content?  </th></tr>
@@ -562,7 +578,7 @@ Configuring Threads</h3>
 <div class="caption">
 New Thread Properties</div></div>
 <p> The <b>Properties</b> view contains settings common for all Threads (<b>Common</b>) and settings for this particular thread (<b>Thread</b>).</p>
-<p>For this thread instance, the thread's name and properties (such as priority level or stack size) can be easily configured. The ISDE checks that the entries in the property field are valid. For example, the ISDE ensures that the field <b>Priority</b>, which requires an integer value, only contains numeric values between 0 and 9.</p>
+<p>For this thread instance, the thread's name and properties (such as priority level or stack size) can be easily configured. e2 studio checks that the entries in the property field are valid. For example, it will verify that the field <b>Priority</b>, which requires an integer value, only contains numeric values between 0 and 9.</p>
 <p>To add FreeRTOS resources to a Thread, select a thread and click on <b>New Object</b> in the Thread Objects pane. The pane takes on the name of the selected thread, in this case <b>My Thread Objects</b>.</p>
 <div class="image">
 <img src="sd-configuring-thread-object-properties.png" alt="sd-configuring-thread-object-properties.png"/>
@@ -583,17 +599,17 @@ Components Tab</div></div>
 <li><code>ra/fsp/src/bsp</code></li>
 <li><code>ra/fsp/src/&lt;Driver_Name&gt;</code></li>
 </ul>
-<p>The ISDE also creates configuration files in the <code>ra_cfg/fsp_cfg</code> folder with configuration options included from the remaining <b>Stacks</b> tabs.</p>
+<p>e2 studio also creates configuration files in the <code>ra_cfg/fsp_cfg</code> folder with configuration options included from the remaining <b>Stacks</b> tabs.</p>
 <h2><a class="anchor" id="writing-the-application"></a>
 Writing the Application</h2>
 <p>Once you have added Modules and drivers and set their configuration parameters in the <b>Stacks</b> tab, you can add the application code that calls the Modules and drivers.</p>
 <dl class="section note"><dt>Note</dt><dd>To check your configuration, build the project once without errors before adding any of your own application code.</dd></dl>
 <h3><a class="anchor" id="coding-features"></a>
 Coding Features</h3>
-<p>The ISDE provides several efficiency improving features that help write code. Review these features prior to digging into the code development step-by-step sections that follow.</p>
+<p>e2 studio provides several efficiency improving features that help write code. Review these features prior to digging into the code development step-by-step sections that follow.</p>
 <h4><a class="anchor" id="edit-hover"></a>
 Edit Hover</h4>
-<p>e<sup>2</sup> studio supports hovers in the textual editor. This function can be enabled or disabled via <b>Window &gt; Preferences &gt; C/C++ &gt; Editor &gt; Hovers</b>.</p>
+<p>e2 studio supports hovers in the textual editor. This function can be enabled or disabled via <b>Window &gt; Preferences &gt; C/C++ &gt; Editor &gt; Hovers</b>.</p>
 <div class="image">
 <img src="sd-hovers-pref.png" alt="sd-hovers-pref.png"/>
 <div class="caption">
@@ -605,7 +621,7 @@ Hover preference</div></div>
 Hover Example</div></div>
  <h4><a class="anchor" id="welcome-window"></a>
 Welcome Window</h4>
-<p>The e<sup>2</sup> studio Welcome window displays useful information and common links to assist in development. Check out these resources to see what is available. They are updated with each release, so check back to see what has been added after a new release.</p>
+<p>The e2 studio Welcome window displays useful information and common links to assist in development. Check out these resources to see what is available. They are updated with each release, so check back to see what has been added after a new release.</p>
 <div class="image">
 <img src="sd-welcome-window.png" alt="sd-welcome-window.png"/>
 <div class="caption">
@@ -617,9 +633,9 @@ Cheat Sheets</h4>
 <img src="sd-cheat-sheets.png" alt="sd-cheat-sheets.png"/>
 <div class="caption">
 Cheat Sheets</div></div>
-<h4><a class="anchor" id="developer-assistance"></a>
+ <h4><a class="anchor" id="developer-assistance"></a>
 Developer Assistance</h4>
-<p>FSP Developer Assistance provides developers with module and Application Programming Interface (API) reference documentation in e<sup>2</sup> studio. After configuring the threads and software stacks for an FSP project with the Configuration Editor, Developer Assistance quickly helps you get started writing C/C++ application code for the project using the configured stack modules.</p>
+<p>FSP Developer Assistance provides developers with module and Application Programming Interface (API) reference documentation in e2 studio. After configuring the threads and software stacks for an FSP project with the Configuration Editor, Developer Assistance quickly helps you get started writing C/C++ application code for the project using the configured stack modules.</p>
 <ol type="1">
 <li><p class="startli">Expand the project explorer to view Developer Assistance</p>
 <div class="image">
@@ -658,7 +674,7 @@ Smart Manual</div></div>
 RTOS-independent Applications</h3>
 <p>To write application code:</p>
 <ol type="1">
-<li>Add all drivers and modules in the <b>Stacks</b> tab and resolve all dependencies flagged by the ISDE such as missing interrupts or drivers.</li>
+<li>Add all drivers and modules in the <b>Stacks</b> tab and resolve all dependencies flagged by e2 studio such as missing interrupts or drivers.</li>
 <li>Configure the drivers in the <b>Properties</b> view.</li>
 <li>In the Project Configuration view, click the <b>Generate Project Content</b> button.</li>
 <li><p class="startli">In the <b>Project Explorer</b> view, double-click on the <code>src/hal_entry.c</code> file to edit the source file.</p>
@@ -684,7 +700,7 @@ RTOS Applications</h3>
 <ol type="1">
 <li>Add a thread using the <b>Stacks</b> tab.</li>
 <li>Provide a unique name for the thread in the <b>Properties</b> view for this thread.</li>
-<li>Configure all drivers and resources for this thread and resolve all dependencies flagged by the ISDE such as missing interrupts or drivers.</li>
+<li>Configure all drivers and resources for this thread and resolve all dependencies flagged by e2 studio such as missing interrupts or drivers.</li>
 <li>Configure the thread objects.</li>
 <li>Provide unique names for each thread object in the <b>Properties</b> view for each object.</li>
 <li>Add more threads if needed and repeat steps 1 to 5.</li>
@@ -693,7 +709,7 @@ RTOS Applications</h3>
 <div class="image">
 <img src="sd-gen-files-for-rtos.png" alt="sd-gen-files-for-rtos.png"/>
 <div class="caption">
-ISDE generated files for an RTOS application</div></div>
+Generated files for an RTOS application</div></div>
  <dl class="section note"><dt>Note</dt><dd>All configuration structures necessary for the driver to be called in the application are initialized in <code>ra_gen/my_thread_1.c</code> and <code>my_thread_2.c</code></dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not modify the files in the directory <code>ra_gen</code>. These files are overwritten every time you push the <b>Generate Project Content</b> button.</dd></dl>
 </li>
@@ -726,25 +742,25 @@ Debugging the Project</h2>
 <dl class="section note"><dt>Note</dt><dd>For details on using J-Link and connecting the board to the PC, see the Quick Start Guide included in the RA MCU Kit.</dd></dl>
 <h2><a class="anchor" id="modifying-toolchain-settings"></a>
 Modifying Toolchain Settings</h2>
-<p>There are instances where it may be necessary to make changes to the toolchain being used (for example, to change optimization level of the compiler or add a library to the linker). Such modifications can be made from within the ISDE through the menu <b>Project &gt; Properties &gt; Settings</b> when the project is selected. The following screenshot shows the settings dialog for the GNU ARM toolchain. This dialog will look slightly different depending upon the toolchain being used.</p>
+<p>There are instances where it may be necessary to make changes to the toolchain being used (for example, to change optimization level of the compiler or add a library to the linker). Such modifications can be made from within e2 studio through the menu <b>Project &gt; Properties &gt; Settings</b> when the project is selected. The following screenshot shows the settings dialog for the GNU ARM toolchain. This dialog will look slightly different depending upon the toolchain being used.</p>
 <div class="image">
-<img src="sd-isde-proj-toolchain.png" alt="sd-isde-proj-toolchain.png"/>
+<img src="sd-e2-proj-toolchain.png" alt="sd-e2-proj-toolchain.png"/>
 <div class="caption">
-ISDE Project toolchain settings</div></div>
+e2 studio Project toolchain settings</div></div>
 <p> The scope for the settings is project scope which means that the settings are valid only for the project being modified.</p>
 <p>The settings for the linker which control the location of the various memory sections are contained in a script file specific for the device being used. This script file is included in the project when it is created and is found in the script folder (for example, <code>/script/a6m3.ld</code>).</p>
-<h2><a class="anchor" id="importing-an-existing-project-into-e2-studio-isde"></a>
-Importing an Existing Project into e2 studio ISDE</h2>
+<h2><a class="anchor" id="importing-an-existing-project-into-e2-studio"></a>
+Importing an Existing Project into e2 studio</h2>
 <ol type="1">
-<li>Start by opening e<sup>2</sup> studio.</li>
+<li>Start by opening e2 studio.</li>
 <li>Open an existing Workspace to import the project and skip to step d. If the workspace doesn't exist, proceed with the following steps:<ol type="a">
-<li><p class="startli">At the end of e<sup>2</sup> studio startup, you will see the Workspace Launcher Dialog box as shown in the following figure.</p>
+<li><p class="startli">At the end of e2 studio startup, you will see the Workspace Launcher Dialog box as shown in the following figure.</p>
 <div class="image">
 <img src="sd-workspace-launcher-dialog.png" alt="sd-workspace-launcher-dialog.png"/>
 <div class="caption">
 Workspace Launcher dialog</div></div>
 </li>
-<li><p class="startli">Enter a new workspace name in the Workspace Launcher Dialog as shown in the following figure. e<sup>2</sup> studio creates a new workspace with this name.</p>
+<li><p class="startli">Enter a new workspace name in the Workspace Launcher Dialog as shown in the following figure. e2 studio creates a new workspace with this name.</p>
 <div class="image">
 <img src="sd-workspace-launcher-select-workspace.png" alt="sd-workspace-launcher-select-workspace.png"/>
 <div class="caption">
@@ -810,7 +826,7 @@ Import Existing Project dialog 2</div></div>
 Tutorial: Your First RA MCU Project - Blinky</h1>
 <h2><a class="anchor" id="tutorial-blinky"></a>
 Tutorial Blinky</h2>
-<p>The goal of this tutorial is to quickly get acquainted with the Flexible Platform by moving through the steps of creating a simple application using e<sup>2</sup> studio and running that application on an RA MCU board.</p>
+<p>The goal of this tutorial is to quickly get acquainted with the Flexible Platform by moving through the steps of creating a simple application using e2 studio and running that application on an RA MCU board.</p>
 <h2><a class="anchor" id="what-does-blinky-do"></a>
 What Does Blinky Do?</h2>
 <p>The application used in this tutorial is Blinky, traditionally the first program run in a new embedded development environment.</p>
@@ -832,7 +848,7 @@ Prerequisites</h2>
 <p>To follow this tutorial, you need:</p>
 <ul>
 <li>Windows based PC</li>
-<li>e<sup>2</sup> studio</li>
+<li>e2 studio</li>
 <li>Flexible Software Package</li>
 <li>An RA MCU board kit</li>
 </ul>
@@ -841,30 +857,30 @@ Create a New Project for Blinky</h2>
 <p>The creation and configuration of an RA MCU project is the first step in the creation of an application. The base RA MCU pack includes a pre-written Blinky example application that is simple and works on all Renesas RA MCU boards.</p>
 <p>Follow these steps to create an RA MCU project:</p>
 <ol type="1">
-<li>In e<sup>2</sup> studio ISDE, click <b>File &gt; New &gt; RA Project</b> and select <b>Renesas RA C Executable Project</b>.</li>
+<li>In e2 studio, click <b>File &gt; New &gt; RA Project</b> and select <b>Renesas RA C Executable Project</b>.</li>
 <li>Assign a name to this new project. Blinky is a good name to use for this tutorial.</li>
 <li><p class="startli">Click <b>Next</b>. The <b>Project Configuration</b> window shows your selection.</p>
 <div class="image">
 <img src="sd-proj-config-1.png" alt="sd-proj-config-1.png"/>
 <div class="caption">
-e2 studio ISDE Project Configuration window (part 1)</div></div>
+e2 studio Project Configuration window (part 1)</div></div>
 </li>
 <li><p class="startli">Select the board support package by selecting the name of your board from the <b>Device Selection</b> drop-down list and click <b>Next</b>.</p>
 <div class="image">
 <img src="sd-proj-config-2.png" alt="sd-proj-config-2.png"/>
 <div class="caption">
-e2 studio ISDE Project Configuration window (part 2)</div></div>
+e2 studio Project Configuration window (part 2)</div></div>
 </li>
 <li><p class="startli">Select the Blinky template for your board and click <b>Finish</b>.</p>
 <div class="image">
 <img src="sd-proj-config-3.png" alt="sd-proj-config-3.png"/>
 <div class="caption">
-e2 studio ISDE Project Configuration window (part 3)</div></div>
-<p> Once the project has been created, the name of the project will show up in the <b>Project Explorer</b> window of the ISDE. Now click the <b>Generate Project Content</b> button in the top right corner of the <b>Project Configuration</b> window to generate your board specific files.</p>
+e2 studio Project Configuration window (part 3)</div></div>
+<p> Once the project has been created, the name of the project will show up in the <b>Project Explorer</b> window of e2 studio. Now click the <b>Generate Project Content</b> button in the top right corner of the <b>Project Configuration</b> window to generate your board specific files.</p>
 <div class="image">
 <img src="sd-proj-config-tab.png" alt="sd-proj-config-tab.png"/>
 <div class="caption">
-e2 studio ISDE Project Configuration tab</div></div>
+e2 studio Project Configuration tab</div></div>
 <p> Your new project is now created, configured, and ready to build.</p>
 </li>
 </ol>
@@ -874,13 +890,13 @@ Details about the Blinky Configuration</h3>
 <p>For example, if you check a box next to a module in the <b>Components</b> tab and click the <b>Generate Project Content</b> button, all the files necessary for the inclusion of that module into the project will be copied or created. If that same check box is then unchecked those files will be deleted.</p>
 <h3><a class="anchor" id="configuring-the-blinky-clocks"></a>
 Configuring the Blinky Clocks</h3>
-<p>By selecting the Blinky template, the clocks are configured by the ISDE for the Blinky application. The ISDE clock configuration tab (see <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-clocks">Configuring Clocks</a>) shows the Blinky clock configuration. The Blinky clock configuration is stored in the BSP clock configuration file (see BSP Clock Configuration).</p>
+<p>By selecting the Blinky template, the clocks are configured by e2 studio for the Blinky application. The clock configuration tab (see <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-clocks">Configuring Clocks</a>) shows the Blinky clock configuration. The Blinky clock configuration is stored in the BSP clock configuration file (see BSP Clock Configuration).</p>
 <h3><a class="anchor" id="configuring-the-blinky-pins"></a>
 Configuring the Blinky Pins</h3>
-<p>By selecting the Blinky template, the GPIO pins used to toggle the LED1 are configured by the ISDE for the Blinky application. The ISDE pin configuration tab shows the pin configuration for the Blinky application (see <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-pins">Configuring Pins</a>). The Blinky pin configuration is stored in the BSP configuration file (see BSP Pin Configuration).</p>
+<p>By selecting the Blinky template, the GPIO pins used to toggle the LED1 are configured by e2 studio for the Blinky application. The pin configuration tab shows the pin configuration for the Blinky application (see <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-pins">Configuring Pins</a>). The Blinky pin configuration is stored in the BSP configuration file (see BSP Pin Configuration).</p>
 <h3><a class="anchor" id="configuring-the-parameters-for-blinky-components"></a>
 Configuring the Parameters for Blinky Components</h3>
-<p>The Blinky project automatically selects the following HAL components in the ISDE Component:</p>
+<p>The Blinky project automatically selects the following HAL components in the Components tab:</p>
 <ul>
 <li>r_ioport</li>
 </ul>
@@ -890,7 +906,7 @@ Where is main()?</h3>
 <p>The main function is located in <code>&lt; project &gt;/ra_gen/main.c</code>. It is one of the files that are generated during the project creation stage and only contains a call to <code>hal_entry()</code>. For more information on generated files, see <a class="el" href="_s_t_a_r_t__d_e_v.html#adding-and-configuring-hal-drivers">Adding and Configuring HAL Drivers</a>.</p>
 <h3><a class="anchor" id="blinky-example-code"></a>
 Blinky Example Code</h3>
-<p>The blinky application is stored in the <code>hal_entry.c</code> file. This file is generated by the ISDE when you select the Blinky Project template and is located in the project's <code>src/</code> folder.</p>
+<p>The blinky application is stored in the <code>hal_entry.c</code> file. This file is generated by e2 studio when you select the Blinky Project template and is located in the project's <code>src/</code> folder.</p>
 <p>The application performs the following steps:</p>
 <ol type="1">
 <li>Get the LED information for the selected board by bsp_leds_t structure.</li>
@@ -908,19 +924,19 @@ Build the Blinky Project</h2>
 <div class="image">
 <img src="sd-proj-explorer.jpg" alt="sd-proj-explorer.jpg"/>
 <div class="caption">
-e2 studio ISDE Project Explorer window</div></div>
+e2 studio Project Explorer window</div></div>
 <p> Once the build is complete a message is displayed in the build <b>Console</b> window that displays the final image file name and section sizes in that image.</p>
 <div class="image">
 <img src="sd-proj-build-console.png" alt="sd-proj-build-console.png"/>
 <div class="caption">
-e2 studio ISDE Project Build console</div></div>
+e2 studio Project Build console</div></div>
  <h2><a class="anchor" id="debug-the-blinky-project"></a>
 Debug the Blinky Project</h2>
 <h3><a class="anchor" id="debug-prerequisites"></a>
 Debug prerequisites</h3>
 <p>To debug the project on a board, you need</p>
 <ul>
-<li>The board to be connected to the ISDE</li>
+<li>The board to be connected to e2 studio</li>
 <li>The debugger to be configured to talk to the board</li>
 <li>The application to be programmed to the microcontroller</li>
 </ul>
@@ -930,7 +946,7 @@ Debug prerequisites</h3>
 <li>Built-in boot-loader via UART or USB</li>
 </ul>
 <p>Some boards have an on-board JTAG debugger and others require an external JTAG debugger connected to a header on the board.</p>
-<p>Refer to your board's user manual to learn how to connect the JTAG debugger to your ISDE.</p>
+<p>Refer to your board's user manual to learn how to connect the JTAG debugger to e2 studio.</p>
 <h3><a class="anchor" id="debug-steps"></a>
 Debug steps</h3>
 <p>To debug the Blinky application, follow these steps:</p>
@@ -939,18 +955,18 @@ Debug steps</h3>
 <div class="image">
 <img src="sd-debug-icon.png" alt="sd-debug-icon.png"/>
 <div class="caption">
-e2 studio ISDE Debug icon</div></div>
+e2 studio Debug icon</div></div>
 <p> or by selecting the drop-down menu next to the bug icon and selecting <b>Debugger Configurations ...</b></p>
 <div class="image">
 <img src="sd-debug-config-window.jpg" alt="sd-debug-config-window.jpg"/>
 <div class="caption">
-e2 studio ISDE Debugger Configurations selection option</div></div>
+e2 studio Debugger Configurations selection option</div></div>
 </li>
 <li><p class="startli">Select your debugger configuration in the window. If it is not visible then it must be created by clicking the <b>New</b> icon in the top left corner of the window. Once selected, the <b>Debug Configuration</b> window displays the Debug configuration for your Blinky project.</p>
 <div class="image">
 <img src="sd-debug-config-with-blinky.jpg" alt="sd-debug-config-with-blinky.jpg"/>
 <div class="caption">
-e2 studio ISDE Debugger Configurations window with Blinky project</div></div>
+e2 studio Debugger Configurations window with Blinky project</div></div>
 </li>
 <li>Click <b>Debug</b> to begin debugging the application.</li>
 <li><p class="startli">Extracting RA Debug.</p>
@@ -961,7 +977,7 @@ e2 studio ISDE Debugger Configurations window with Blinky project</div></div>
 </ol>
 <h3><a class="anchor" id="details-about-the-debug-process"></a>
 Details about the Debug Process</h3>
-<p>In debug mode, the ISDE executes the following tasks:</p>
+<p>In debug mode, e2 studio executes the following tasks:</p>
 <ol type="1">
 <li>Downloading the application image to the microcontroller and programming the image to the internal flash memory.</li>
 <li>Setting a breakpoint at main().</li>
@@ -972,30 +988,30 @@ Details about the Debug Process</h3>
 <div class="image">
 <img src="sd-debug-mem-window.png" alt="sd-debug-mem-window.png"/>
 <div class="caption">
-e2 studio ISDE Debugger memory window</div></div>
+e2 studio Debugger memory window</div></div>
  <h2><a class="anchor" id="run-the-blinky-project"></a>
 Run the Blinky Project</h2>
 <p>While in Debug mode, click <b>Run &gt; Resume</b> or click on the <b>Play</b> icon twice.</p>
 <div class="image">
 <img src="sd-debug-play-icon.jpg" alt="sd-debug-play-icon.jpg"/>
 <div class="caption">
-e2 studio ISDE Debugger Play icon</div></div>
+e2 studio Debugger Play icon</div></div>
 <p> The LEDs on the board marked LED1, LED2, and LED3 should now be blinking.</p>
 <h1><a class="anchor" id="tutorial-using-hal-drivers-programming-the-wdt"></a>
 Tutorial: Using HAL Drivers - Programming the WDT</h1>
 <h2><a class="anchor" id="application-wdt"></a>
 Application WDT</h2>
-<p>This application uses the WDT Interface implemented by the WDT HAL Driver WDT. This document describes how to use the ISDE and FSP to create an application for the RA MCU Watchdog Timer (WDT) peripheral. This application makes use of the following FSP modules:</p>
+<p>This application uses the WDT Interface implemented by the WDT HAL Driver WDT. This document describes how to use e2 studio and FSP to create an application for the RA MCU Watchdog Timer (WDT) peripheral. This application makes use of the following FSP modules:</p>
 <ul>
 <li><a class="el" href="group___b_s_p___m_c_u.html">MCU Board Support Package</a></li>
 <li><a class="el" href="group___w_d_t.html">Watchdog Timer (r_wdt)</a></li>
 <li><a class="el" href="group___i_o_p_o_r_t.html">I/O Ports (r_ioport)</a></li>
 </ul>
-<h2><a class="anchor" id="creating-a-wdt-application-using-the-ra-fsp-and-isde"></a>
-Creating a WDT Application Using the RA MCU FSP and ISDE</h2>
-<h3><a class="anchor" id="using-the-fsp-and-the-e2-studio-isde"></a>
-Using the FSP and the e2 studio ISDE</h3>
-<p>The Flexible Software Package (FSP) from Renesas provides a complete driver library for developing RA MCU applications. The FSP provides Hardware Abstraction Layer (HAL) drivers, Board Support Package (BSP) drivers for the developer to use to create applications. The FSP is integrated into the Renesas e<sup>2</sup> studio Integrated Solution Development Environment (ISDE) based on eclipse providing build (editor, compiler and linker) and debug phases with an extended GNU Debug (GDB) interface.</p>
+<h2><a class="anchor" id="creating-a-wdt-application-using-the-ra-fsp-and-e2-studio"></a>
+Creating a WDT Application Using the RA MCU FSP and e2 studio</h2>
+<h3><a class="anchor" id="using-the-fsp-and-e2-studio"></a>
+Using the FSP and e2 studio</h3>
+<p>The Flexible Software Package (FSP) from Renesas provides a complete driver library for developing RA MCU applications. The FSP provides Hardware Abstraction Layer (HAL) drivers, Board Support Package (BSP) drivers for the developer to use to create applications. The FSP is integrated into Renesas e2 studio based on eclipse providing build (editor, compiler and linker) and debug phases with an extended GNU Debug (GDB) interface.</p>
 <h3><a class="anchor" id="the-wdt-application"></a>
 The WDT Application</h3>
 <p>The flowchart for the WDT application is shown below.</p>
@@ -1013,9 +1029,9 @@ WDT Application flow</h3>
 <li>The red LED is flashed 30 times and refreshes the watchdog each time the LED state is changed.</li>
 <li>Flash the green LED but DO NOT refresh the watchdog. After the timeout period of the watchdog the device will reset which can be observed by the flashing red LED again as the sequence repeats.</li>
 </ol>
-<h2><a class="anchor" id="creating-the-project-with-the-isde"></a>
-Creating the Project with the ISDE</h2>
-<p>Start the ISDE and choose a workspace folder in the Workspace Launcher. Configure a new RA MCU project as follows.</p>
+<h2><a class="anchor" id="creating-the-project-with-e2-studio"></a>
+Creating the Project with e2 studio</h2>
+<p>Start e2 studio and choose a workspace folder in the Workspace Launcher. Configure a new RA MCU project as follows.</p>
 <ol type="1">
 <li><p class="startli">Select <b>File &gt; New &gt; RA C/C++ Project</b>. Then select the template for the project.</p>
 <div class="image">
@@ -1026,7 +1042,7 @@ Creating the Project with the ISDE</h2>
 <div class="caption">
 Creating a new project</div></div>
 </li>
-<li><p class="startli">In the ISDE Project <b>Configuration (RA Project)</b> window enter a project name, for example, WDT_Application. In addition select the toolchain. If you want to choose new locations for the project unselect <b>Use default location</b>. Click <b>Next</b>.</p>
+<li><p class="startli">In e2 studio Project <b>Configuration (RA Project)</b> window enter a project name, for example, WDT_Application. In addition select the toolchain. If you want to choose new locations for the project unselect <b>Use default location</b>. Click <b>Next</b>.</p>
 <div class="image">
 <img src="sd-proj-config-1.jpg" alt="sd-proj-config-1.jpg"/>
 <div class="caption">
@@ -1045,13 +1061,13 @@ Project configuration (part 2)</div></div>
 Project configuration (part 3)</div></div>
 </li>
 <li><p class="startli">Click <b>Finish</b>.</p>
-<p class="startli">The ISDE creates the project and opens the <b>Project Explorer</b> and <b>Project Configuration Settings</b> views with the <b>Summary</b> page showing a summary of the project configuration.</p>
+<p class="startli">e2 studio creates the project and opens the <b>Project Explorer</b> and <b>Project Configuration Settings</b> views with the <b>Summary</b> page showing a summary of the project configuration.</p>
 </li>
 </ol>
-<h2><a class="anchor" id="configuring-the-project-with-the-isde"></a>
-Configuring the Project with the ISDE</h2>
-<p>The e<sup>2</sup> studio ISDE simplifies and accelerates the project configuration process by providing a GUI interface for selecting the options to configure the project.</p>
-<p>The ISDE offers a selection of perspectives presenting different windows to the user depending on the operation in progress. The default perspectives are <b>C/C++</b>, <b>RA Configuration</b> and <b>Debug</b>. The perspective can be changed by selecting a new one from the buttons at the top right of the ISDE.</p>
+<h2><a class="anchor" id="configuring-the-project-with-e2-studio"></a>
+Configuring the Project with e2 studio</h2>
+<p>e2 studio simplifies and accelerates the project configuration process by providing a GUI interface for selecting the options to configure the project.</p>
+<p>e2 studio offers a selection of perspectives presenting different windows to the user depending on the operation in progress. The default perspectives are <b>C/C++</b>, <b>RA Configuration</b> and <b>Debug</b>. The perspective can be changed by selecting a new one from the buttons at the top right.</p>
 <div class="image">
 <img src="sd-select-param.jpg" alt="sd-select-param.jpg"/>
 <div class="caption">
@@ -1059,7 +1075,7 @@ Selecting a perspective</div></div>
 <p> The <b>C/C++</b> perspective provides a layout selected for code editing. The <b>RA Configuration</b> perspective provides elements for configuring a RA MCU project, and the <b>Debug</b> perspective provides a view suited for debugging.</p>
 <ol type="1">
 <li>In order to configure the project settings ensure the <b>RA Configuration</b> perspective is selected.</li>
-<li>Ensure the <b>Project Configuration [WDT Application]</b> is open. It is already open if the Summary information is visible. To open the Project Configuration now or at any time make sure the <b>RA Configuration</b> perspective is selected and double-click on the <code>configuration.xml</code> file in the Project Explorer pane on the right side of the ISDE.</li>
+<li>Ensure the <b>Project Configuration [WDT Application]</b> is open. It is already open if the Summary information is visible. To open the Project Configuration now or at any time make sure the <b>RA Configuration</b> perspective is selected and double-click on the <code>configuration.xml</code> file in the Project Explorer pane on the right side of e2 studio.</li>
 </ol>
 <div class="image">
 <img src="sd-ra-proj-config.jpg" alt="sd-ra-proj-config.jpg"/>
@@ -1085,14 +1101,14 @@ Pins Tab</h3>
 <p>The <b>Pins</b> tab provides a graphical tool for configuring the functionality of the pins of the device. For the WDT project no pin configuration is required. Although the project uses two LEDs connected to pins on the device, these pins are pre-configured as output GPIO pins by the BSP.</p>
 <h3><a class="anchor" id="stacks-tab"></a>
 Stacks Tab</h3>
-<p>You can add any driver to the project using the <b>Stacks</b> tab. The HAL driver IO port pins are added automatically by the ISDE when the project is configured. The WDT application uses no RTOS Resources, so you only need to add the HAL WDT driver.</p>
+<p>You can add any driver to the project using the <b>Stacks</b> tab. The HAL driver IO port pins are added automatically by e2 studio when the project is configured. The WDT application uses no RTOS Resources, so you only need to add the HAL WDT driver.</p>
 <div class="image">
 <img src="sd-stacks-tab.jpg" alt="sd-stacks-tab.jpg"/>
 <div class="caption">
 Stacks tab</div></div>
 <ol type="1">
 <li><p class="startli">Click on the <b>HAL/Common Panel</b> in the Threads Window as indicated in the figure above.</p>
-<p class="startli">The Stacks Panel becomes a <b>HAL/Common Stacks</b> panel and is populated with the modules preselected by the ISDE.</p>
+<p class="startli">The Stacks Panel becomes a <b>HAL/Common Stacks</b> panel and is populated with the modules preselected by e2 studio.</p>
 </li>
 <li>Click on <b>New Stack</b> to find a pop-up window with the available HAL level drivers.</li>
 <li>Select <b>WATCHDOG Driver on r_wdt</b>.</li>
@@ -1120,7 +1136,7 @@ g_wdt WATCHDOG Driver on WDT properties</div></div>
 <img src="gen-proj-content.jpg" alt="gen-proj-content.jpg"/>
 <div class="caption">
 Generate Project Content button</div></div>
-<p> The ISDE generates the project files.</p>
+<p> e2 studio generates the project files.</p>
 <h3><a class="anchor" id="components-tab"></a>
 Components Tab</h3>
 <p>The components tab is included for reference to see which modules are included in the project. Modules are selected automatically in the Components view after they are added in the Stacks Tab.</p>
@@ -1158,7 +1174,7 @@ WDT Generated Project Files</h2>
 r_wdt_cfg.h contents</div></div>
  <dl class="section warning"><dt>Warning</dt><dd>Do not edit any of these files as they are recreated every time the Generate Project Content button is clicked and so any changes will be overwritten.</dd></dl>
 <p>The <code>r_ioport</code> folder is not created at <code>ra/fsp/src</code> as this module is required by the BSP and so already exists. It is included in the WDT project in order to include the correct header file in <code>ra_gen/hal_data.c</code>&ndash;see later in this document for further details. For the same reason the other IOPORT header files&ndash; <code>ra/fsp/inc/api/r_ioport_api.h</code>and<code>ra/fsp/inc/instances/r_ioport.h</code>&ndash;are not created as they already exist.</p>
-<p>In addition to generating the HAL driver files for the WDT and IOPORT files the ISDE also generates files containing configuration data for the WDT and a file where user code can safely be added. These files are shown below.</p>
+<p>In addition to generating the HAL driver files for the WDT and IOPORT files e2 studio also generates files containing configuration data for the WDT and a file where user code can safely be added. These files are shown below.</p>
 <div class="image">
 <img src="sd-wdt-proj-files.jpg" alt="sd-wdt-proj-files.jpg"/>
 <div class="caption">
@@ -1166,13 +1182,13 @@ WDT project files</div></div>
  <h3><a class="anchor" id="wdt-hal-data-h"></a>
 WDT hal_data.h</h3>
 <p>The contents of <code>hal_data.h</code> are shown below.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* generated HAL header file - do not edit */</span></div><div class="line"></div><div class="line"><span class="preprocessor">#ifndef HAL_DATA_H_</span></div><div class="line"><span class="preprocessor"> #define HAL_DATA_H_</span></div><div class="line"></div><div class="line"><span class="preprocessor"> #include &lt;stdint.h&gt;</span></div><div class="line"><span class="preprocessor"> #include &quot;bsp_api.h&quot;</span></div><div class="line"><span class="preprocessor"> #include &quot;common_data.h&quot;</span></div><div class="line"><span class="preprocessor"> #include &quot;r_wdt.h&quot;</span></div><div class="line"><span class="preprocessor"> #include &quot;r_wdt_api.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor"> #ifdef __cplusplus</span></div><div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div><div class="line">{</div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="group___w_d_t___a_p_i.html#structwdt__instance__t">wdt_instance_t</a> g_wdt0;</div><div class="line"></div><div class="line"><span class="preprocessor"> #ifndef NULL</span></div><div class="line"><span class="keywordtype">void</span> NULL(<a class="code" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> * p_args);</div><div class="line"></div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___w_d_t.html#structwdt__instance__ctrl__t">wdt_instance_ctrl_t</a> g_wdt0_ctrl;</div><div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="group___w_d_t___a_p_i.html#structwdt__cfg__t">wdt_cfg_t</a>     g_wdt0_cfg;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> hal_entry(<span class="keywordtype">void</span>);</div><div class="line"><span class="keywordtype">void</span> g_hal_init(<span class="keywordtype">void</span>);</div><div class="line"></div><div class="line"><span class="preprocessor"> #ifdef __cplusplus</span></div><div class="line">}                                      <span class="comment">/* extern &quot;C&quot; */</span></div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line"></div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* HAL_DATA_H_ */</span><span class="preprocessor"></span></div><div class="line"></div></div><!-- fragment --><p> <code>hal_data.h</code> contains the header files required by the ISDE generated project. In addition this file includes external references to the <b>g_wdt</b> instance structure which contains pointers to the configuration, control, api structures used for WDT HAL driver.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* generated HAL header file - do not edit */</span></div><div class="line"></div><div class="line"><span class="preprocessor">#ifndef HAL_DATA_H_</span></div><div class="line"><span class="preprocessor"> #define HAL_DATA_H_</span></div><div class="line"></div><div class="line"><span class="preprocessor"> #include &lt;stdint.h&gt;</span></div><div class="line"><span class="preprocessor"> #include &quot;bsp_api.h&quot;</span></div><div class="line"><span class="preprocessor"> #include &quot;common_data.h&quot;</span></div><div class="line"><span class="preprocessor"> #include &quot;r_wdt.h&quot;</span></div><div class="line"><span class="preprocessor"> #include &quot;r_wdt_api.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor"> #ifdef __cplusplus</span></div><div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div><div class="line">{</div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="group___w_d_t___a_p_i.html#structwdt__instance__t">wdt_instance_t</a> g_wdt0;</div><div class="line"></div><div class="line"><span class="preprocessor"> #ifndef NULL</span></div><div class="line"><span class="keywordtype">void</span> NULL(<a class="code" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> * p_args);</div><div class="line"></div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___w_d_t.html#structwdt__instance__ctrl__t">wdt_instance_ctrl_t</a> g_wdt0_ctrl;</div><div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="group___w_d_t___a_p_i.html#structwdt__cfg__t">wdt_cfg_t</a>     g_wdt0_cfg;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> hal_entry(<span class="keywordtype">void</span>);</div><div class="line"><span class="keywordtype">void</span> g_hal_init(<span class="keywordtype">void</span>);</div><div class="line"></div><div class="line"><span class="preprocessor"> #ifdef __cplusplus</span></div><div class="line">}                                      <span class="comment">/* extern &quot;C&quot; */</span></div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line"></div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* HAL_DATA_H_ */</span><span class="preprocessor"></span></div><div class="line"></div></div><!-- fragment --><p> <code>hal_data.h</code> contains the header files required by the generated project. In addition this file includes external references to the <b>g_wdt</b> instance structure which contains pointers to the configuration, control, api structures used for WDT HAL driver.</p>
 <dl class="section warning"><dt>Warning</dt><dd>This file is regenerated each time Generate Project Content is clicked and must not be edited.</dd></dl>
 <h3><a class="anchor" id="wdt-hal-data-c"></a>
 WDT hal_data.c</h3>
 <p>The contents of <code>hal_data.c</code> are shown below.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* generated HAL source file - do not edit */</span></div><div class="line"><span class="preprocessor">#include &quot;hal_data.h&quot;</span></div><div class="line"><a class="code" href="group___w_d_t.html#structwdt__instance__ctrl__t">wdt_instance_ctrl_t</a> g_wdt0_ctrl;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <a class="code" href="group___w_d_t___a_p_i.html#structwdt__cfg__t">wdt_cfg_t</a> g_wdt0_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___w_d_t___a_p_i.html#a32ddaf9b3fd7bab2b654e660588ac680">timeout</a>        = <a class="code" href="group___w_d_t___a_p_i.html#gga880fcf63a5220c6618a0cf380268a76cacd016302c00b39880d3828d18467833e">WDT_TIMEOUT_16384</a>,</div><div class="line">    .clock_division = <a class="code" href="group___w_d_t___a_p_i.html#gga6b0f563a6311763e6204add68a018089a379cad22ab77f5b144788ae4fb82e7af">WDT_CLOCK_DIVISION_8192</a>,</div><div class="line">    .window_start   = <a class="code" href="group___w_d_t___a_p_i.html#gga9e0c1284f5d75d4a090d988536e3f633a8677bab323b9b04737bf003bc8c68703">WDT_WINDOW_START_100</a>,</div><div class="line">    .window_end     = <a class="code" href="group___w_d_t___a_p_i.html#gga62d4360afabd1652aa7a1b9f624d7f61ad9fd7f9a41a89a9d67f0b8c37cbfdc12">WDT_WINDOW_END_0</a>,</div><div class="line">    .reset_control  = <a class="code" href="group___w_d_t___a_p_i.html#gga7624d80dde311cb1289f558ea464fa63a71f32c409072999582d4e4afb789b096">WDT_RESET_CONTROL_RESET</a>,</div><div class="line">    .stop_control   = <a class="code" href="group___w_d_t___a_p_i.html#gga803dd68cafce3a3d9ca5630b8c4838daa7dda22fd5a14857cc859222620b71368">WDT_STOP_CONTROL_ENABLE</a>,</div><div class="line">    .p_callback     = NULL,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Instance structure to use this module. */</span></div><div class="line"><span class="keyword">const</span> <a class="code" href="group___w_d_t___a_p_i.html#structwdt__instance__t">wdt_instance_t</a> g_wdt0 =</div><div class="line">{.<a class="code" href="group___w_d_t___a_p_i.html#ac301430918784342b3f136d2afc705a7">p_ctrl</a> = &amp;g_wdt0_ctrl, .p_cfg = &amp;g_wdt0_cfg, .p_api = &amp;g_wdt_on_wdt};</div><div class="line"><span class="keywordtype">void</span> g_hal_init (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    g_common_init();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> <code>hal_data.c</code> contains <code>g_wdt_ctrl</code> which is the control structure for this instance of the WDT HAL driver. This structure should not be initialized as this is done by the driver when it is opened.</p>
-<p>The contents of <code>g_wdt_cfg</code> are populated in this file using the <b>g_wdt WATCHDOG Driver on WDT Properties</b> pane in the <b>ISDE Project Configuration HAL</b> tab. If the contents of this structure do not reflect the settings made in the ISDE, ensure the <b>Project Configuration</b> settings are saved in the ISDE before clicking the <b>Generate Project Content</b> button.</p>
+<p>The contents of <code>g_wdt_cfg</code> are populated in this file using the <b>g_wdt WATCHDOG Driver on WDT Properties</b> pane in the <b>e2 studio Project Configuration HAL</b> tab. If the contents of this structure do not reflect the settings made in e2 studio, ensure the <b>Project Configuration</b> settings are saved before clicking the <b>Generate Project Content</b> button.</p>
 <dl class="section warning"><dt>Warning</dt><dd>This file is regenerated each time Generate Project Content is clicked and so should not be edited.</dd></dl>
 <h3><a class="anchor" id="wdt-main-c"></a>
 WDT main.c</h3>
@@ -1182,17 +1198,17 @@ WDT main.c</h3>
 WDT hal_entry.c</h3>
 <p>This file contains the function <code>hal_entry()</code> called from <code>main()</code>. User developed code should be placed in this file and function.</p>
 <p>For the WDT project edit the contents of this file to contain the code below. This code implements the flowchart in overview section of this document.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;hal_data.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;bsp_pin_cfg.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;r_ioport.h&quot;</span></div><div class="line"><span class="preprocessor">#define RED_LED_NO_OF_FLASHES    30</span></div><div class="line"><span class="preprocessor">#define RED_LED_PIN              BSP_IO_PORT_01_PIN_00</span></div><div class="line"><span class="preprocessor">#define GREEN_LED_PIN            BSP_IO_PORT_04_PIN_00</span></div><div class="line"><span class="preprocessor">#define RED_LED_DELAY_COUNT      1500000</span></div><div class="line"><span class="preprocessor">#define GRN_LED_DELAY_COUNT      1200000</span></div><div class="line"><span class="keyword">volatile</span> uint32_t delay_counter;</div><div class="line"><span class="keyword">volatile</span> uint16_t loop_counter;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a>(<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event);</div><div class="line"></div><div class="line"><span class="comment">/* global variable to access board LEDs */</span></div><div class="line"><span class="keyword">extern</span> bsp_leds_t g_bsp_leds;</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> hal_entry (<span class="keywordtype">void</span>) {</div><div class="line"></div><div class="line">    <span class="comment">/* Open the WDT */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the WDT by refreshing it */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Flash the red LED and tickle the WDT for a few seconds */</span></div><div class="line">    <span class="keywordflow">for</span> (loop_counter = 0; loop_counter &lt; RED_LED_NO_OF_FLASHES; loop_counter++)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn red LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <span class="keywordflow">for</span> (delay_counter = 0; delay_counter &lt; RED_LED_DELAY_COUNT; delay_counter++)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <span class="keywordflow">for</span> (delay_counter = 0; delay_counter &lt; RED_LED_DELAY_COUNT; delay_counter++)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Flash green LED but STOP tickling the WDT. WDT should reset the</span></div><div class="line"><span class="comment">     * device */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn green LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <span class="keywordflow">for</span> (delay_counter = 0; delay_counter &lt; GRN_LED_DELAY_COUNT; delay_counter++)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Turn green off */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <span class="keywordflow">for</span> (delay_counter = 0; delay_counter &lt; GRN_LED_DELAY_COUNT; delay_counter++)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a> (<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811">BSP_WARM_START_POST_C</a> == event)</div><div class="line">    {</div><div class="line">        <span class="comment">/* C runtime environment and system clocks are setup. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Configure pins. */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open</a>(&amp;g_ioport_ctrl, &amp;g_bsp_pin_cfg);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> The WDT HAL driver is called through the interface <b>g_wdt_on_wdt</b> defined in <b>r_wdt.h</b>. The WDT HAL driver is opened through the open API call using the instance defined in <code>r_wdt_api.h</code>:</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;hal_data.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;bsp_pin_cfg.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;r_ioport.h&quot;</span></div><div class="line"><span class="preprocessor">#define RED_LED_NO_OF_FLASHES    30</span></div><div class="line"><span class="preprocessor">#define RED_LED_PIN              BSP_IO_PORT_01_PIN_00</span></div><div class="line"><span class="preprocessor">#define GREEN_LED_PIN            BSP_IO_PORT_04_PIN_00</span></div><div class="line"><span class="preprocessor">#define RED_LED_DELAY_COUNT      1500000</span></div><div class="line"><span class="preprocessor">#define GRN_LED_DELAY_COUNT      1200000</span></div><div class="line"><span class="keyword">volatile</span> uint32_t delay_counter;</div><div class="line"><span class="keyword">volatile</span> uint16_t loop_counter;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a>(<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event);</div><div class="line"></div><div class="line"><span class="comment">/* global variable to access board LEDs */</span></div><div class="line"><span class="keyword">extern</span> bsp_leds_t g_bsp_leds;</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> hal_entry (<span class="keywordtype">void</span>) {</div><div class="line"></div><div class="line">    <span class="comment">/* Open the WDT */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the WDT by refreshing it */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Flash the red LED and tickle the WDT for a few seconds */</span></div><div class="line">    <span class="keywordflow">for</span> (loop_counter = 0; loop_counter &lt; RED_LED_NO_OF_FLASHES; loop_counter++)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn red LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <span class="keywordflow">for</span> (delay_counter = 0; delay_counter &lt; RED_LED_DELAY_COUNT; delay_counter++)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <span class="keywordflow">for</span> (delay_counter = 0; delay_counter &lt; RED_LED_DELAY_COUNT; delay_counter++)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Flash green LED but STOP tickling the WDT. WDT should reset the</span></div><div class="line"><span class="comment">     * device */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn green LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <span class="keywordflow">for</span> (delay_counter = 0; delay_counter &lt; GRN_LED_DELAY_COUNT; delay_counter++)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Turn green off */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <span class="keywordflow">for</span> (delay_counter = 0; delay_counter &lt; GRN_LED_DELAY_COUNT; delay_counter++)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a> (<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4a682d5dad980652c1acbc5b04531f6da2">BSP_WARM_START_RESET</a> == event)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if BSP_FEATURE_FLASH_LP_VERSION != 0</span></div><div class="line"></div><div class="line">        <span class="comment">/* Enable reading from data flash. */</span></div><div class="line">        R_FACI_LP-&gt;DFLCTL = 1U;</div><div class="line"></div><div class="line">        <span class="comment">/* Would normally have to wait for tDSTOP(6us) for data flash recovery. Placing the enable here, before clock and</span></div><div class="line"><span class="comment">         * C runtime initialization, should negate the need for a delay since the initialization will typically take more than 6us. */</span></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811">BSP_WARM_START_POST_C</a> == event)</div><div class="line">    {</div><div class="line">        <span class="comment">/* C runtime environment and system clocks are setup. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Configure pins. */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open</a>(&amp;g_ioport_ctrl, &amp;g_bsp_pin_cfg);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> The WDT HAL driver is called through the interface <b>g_wdt_on_wdt</b> defined in <b>r_wdt.h</b>. The WDT HAL driver is opened through the open API call using the instance defined in <code>r_wdt_api.h</code>:</p>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open the WDT */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div></div><!-- fragment --><p> The first passed parameter is the pointer to the control structure <code>g_wdt_ctrl</code> instantiated in<code>hal_data.c</code>. The second parameter is the pointer to the configuration data <code>g_wdt_cfg</code> instantiated in the same <code>hal_data.c</code> file.</p>
 <p>The WDT is started and refreshed through the API call:</p>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start the WDT by refreshing it */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div></div><!-- fragment --><p> Again the first (and only in this case) parameter passed to this API is the pointer to the control structure of this instance of the driver.</p>
 <h2><a class="anchor" id="building-and-testing-the-project"></a>
 Building and Testing the Project</h2>
-<p>Build the project in the ISDE <b>Build &gt; Build Project</b>. The project should build without errors.</p>
+<p>Build the project by clicking <b>Build &gt; Build Project</b>. The project should build without errors.</p>
 <p>To debug the project</p>
 <ol type="1">
 <li>Connect the JLink debugger between the target board and host PC. Apply power to the board.</li>
-<li>In the <b>Project Explorer</b> pane on the right side of the ISDE right-click on the WDT project <b>WDT_Application</b> and select <b>Debug As &gt; Debug Configurations</b>.</li>
+<li>In the <b>Project Explorer</b> pane on the right side of e2 studio right-click on the WDT project <b>WDT_Application</b> and select <b>Debug As &gt; Debug Configurations</b>.</li>
 <li><p class="startli">Under <b>Renesas GDB Hardware Debugging</b> select <b>WDT_Application Debug</b> as shown below.</p>
 <div class="image">
 <img src="sd-debug-config.jpg" alt="sd-debug-config.jpg"/>
@@ -1211,8 +1227,151 @@ Debug configuration</div></div>
 <p>The red LED should start flashing. After 30 flashes the green LED will start flashing and the red LED will stop flashing.</p>
 <p>While the green LED is flashing the WDT will underflow and reset the device resulting in the red LED to flash again as the sequence repeats. However, this sequence does not occur when using the debugger because the WDT does not run when connected to the debugger.</p>
 <ol type="1">
-<li>Stop the debugger in the ISDE via <b>Run &gt; Terminate</b>.</li>
-<li>Click the reset button on the target board. The LEDs begin flashing. </li>
+<li>Stop the debugger in e2 studio via <b>Run &gt; Terminate</b>.</li>
+<li>Click the reset button on the target board. The LEDs begin flashing.</li>
+</ol>
+<h1><a class="anchor" id="RASC-MDK-IAR-user-guide"></a>
+RA SC User Guide for MDK and IAR</h1>
+<h2><a class="anchor" id="RASC"></a>
+What is RA SC?</h2>
+<p>The Renesas RA Smart Configurator (RA SC) is a desktop application designed to configure device hardware such as clock set up and pin assignment as well as initialization of FSP software components for a Renesas RA microcontroller project when using a 3rd-party IDE and toolchain.</p>
+<p>The RA Smart Configurator can currently be used with</p><ol type="1">
+<li>Keil MDK and the ARM compiler toolchain.</li>
+<li>IAR EWARM with IAR toolchain for ARM</li>
+</ol>
+<p>Projects can be configured and the project content generated in the same way as in e2 studio. Please refer to <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a> section for more details.</p>
+<h2><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk"></a>
+Using RA Smart Configurator with Keil MDK</h2>
+<h3><a class="anchor" id="RASC-MDK-prerequisites"></a>
+Prerequisites</h3>
+<ul>
+<li>Keil MDK and ARM compiler are installed and licensed. Please refer to the Release notes for the version to be installed.</li>
+<li>Import the RA device pack. Download the RA device pack archive file (ex: MDK_Device_Packs_x.x.x.zip) from the <a href="https://github.com/renesas/fsp/releases">FSP GitHub release page</a>. Extract the archive file to locate the RA device pack. To import the RA device pack, launch the PackInstaller.exe from "&lt;keil_mdk_install_dir&gt;\UV4". Select the menu item "File|Import..." and browse to the extracted .pack file.</li>
+<li>Verify that the latest updates for RA devices are included in Keil MDK. To verify, select the menu "Packs" in Pack Installer and verify that the menu item "Check for Updates on Launch" is selected. If not, select "Check for Updates on Launch" and relaunch Pack Installer.</li>
+<li>For flashing and debugging, the latest Segger J-Link DLL is installed into Keil MDK.</li>
+<li>Install RA SC and FSP using the Platform Installer from the GitHub release page.</li>
+</ul>
+<h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-create-project"></a>
+Create new RA project</h3>
+<p>The following steps are required to create an RA project using Keil MDK, RA SC and FSP:</p>
+<ol type="1">
+<li>To create an RA project in Keil MDK, an example template needs to be copied from the Pack Installer. The Pack Installer can be launched by running PackInstaller.exe from "&lt;keil_mdk_install_dir&gt;\UV4".</li>
+<li><p class="startli">Select the device family or a device in the left pane of pack installer to filter the example templates in Examples tab in the right pane. The search bar in left pane helps to easily find a device. It is important to select the correct device and package type as this will be used by RA SC to configure pins.</p>
+<div class="image">
+<img src="mdk-pack-installer-example-template.png" alt="mdk-pack-installer-example-template.png"/>
+<div class="caption">
+PackInstaller device example template</div></div>
+</li>
+<li><p class="startli">Click the "Copy" button for the example template to launch a dialog box and select where to copy the example project. The default project name will be the target device name.</p>
+<div class="image">
+<img src="mdk-new-project-folder.png" alt="mdk-new-project-folder.png"/>
+<div class="caption">
+Copy Example dialog</div></div>
+<p> Click "OK" to launch Keil uVision with the new project.</p>
+<div class="image">
+<img src="uVision-with-new-project.png" alt="uVision-with-new-project.png"/>
+<div class="caption">
+uVision</div></div>
+<p> If the project name needs to be changed then deselect "Launch uVision" in Copy Example dialog and click "OK". Follow project rename instructions here: <a href="http://www.keil.com/support/docs/3579.htm">http://www.keil.com/support/docs/3579.htm</a> Once renamed, open the project using menu item "Project|Open Project..." in uVision and continue with steps in <a class="el" href="_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-modify-project">Modify existing RA project</a>.</p>
+</li>
+<li><p class="startli">uVision offers to start RA Smart Configurator(RA SC). Click "Start Renesas RA Smart Configurator" to launch the RA smart configurator.</p>
+<div class="image">
+<img src="launch-rasc.png" alt="launch-rasc.png"/>
+<div class="caption">
+Launch RA SC confirmation dialog</div></div>
+</li>
+<li><p class="startli">If multiple versions of RA SC are installed, select the appropriate version of RA SC to run.</p>
+<div class="image">
+<img src="rasc-version-selection.png" alt="rasc-version-selection.png"/>
+<div class="caption">
+RA SC version selection</div></div>
+</li>
+<li>RA SC will be launched with project generator wizard.</li>
+<li>The configuration window opens once the project wizard is closed. Refer to <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a> for more details on how to configure the project.</li>
+<li><p class="startli">After clicking "Generate Project Content" in the RA Smart Configurator, return to uVision. uVision offers a dialog to import the changes and updates to the project made in RA SC. Select "Yes" to import the updated project and the project is ready to build.</p>
+<div class="image">
+<img src="uVision-import-generated-code.png" alt="uVision-import-generated-code.png"/>
+<div class="caption">
+Import project data</div></div>
+<p> RA SC will place the necessary FSP source code and header files into the project workspace. The folder structure is defined as below.</p>
+</li>
+</ol>
+<ul>
+<li>Source Group 1 User source code should be added to the project in this folder</li>
+<li>Renesas RA Smart Configurator: Common Sources These source files are generated by RA Smart Configurator and can be edited as necessary</li>
+<li><p class="startli">Flex Software These are the source files from FSP and can be modified if needed. However, it is recommended NOT to edit these files as this may impact dependencies or functionality.</p>
+<div class="image">
+<img src="uVision-imported-data.png" alt="uVision-imported-data.png"/>
+<div class="caption">
+uVision project workspace with imported project data</div></div>
+ </li>
+</ul>
+<h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-modify-project"></a>
+Modify existing RA project</h3>
+<p>Once an initial project has been generated and configured, it is also possible to make changes using RA SC as follows:</p>
+<ol type="1">
+<li>If the desired project is not already open in uVision, the project can be opened using menu item "Project|Open project..." or selecting from the list of previous projects.</li>
+<li>Select menu item "Project|Manage|Run-time Environment..." or tool bar button "Manage Run-Time Environment".</li>
+<li><p class="startli">Expand the "Flex Software" tree item in the dialog shown and click the green run button next to "RA Configuration". This launches RA SC and the FSP project configuration can be modified and updated.</p>
+<div class="image">
+<img src="manage-runtime-environment.png" alt="manage-runtime-environment.png"/>
+<div class="caption">
+Manage run-time environment</div></div>
+ </li>
+</ol>
+<h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-build-project"></a>
+Build and Debug RA project</h3>
+<p>The project can be built by selecting the menu item "Project|Build Target" or tool bar item "Rebuild" or the keyboard shortcut F7.</p>
+<p>Assembler, Compiler, Linker and Debugger settings can be changed in "Options for Target" dialog, which can be launched using the menu item "Project|Options for Target", the tool bar item "Options for Target" or the keyboard shortcut Alt+F7.</p>
+<div class="image">
+<img src="uVision-target-options.png" alt="uVision-target-options.png"/>
+<div class="caption">
+Options for Target</div></div>
+<p> RA SC will set up the uVision project to debug the selected device using J-Link or J-Link OB debugger by default.</p>
+<p>A Debug session can be started or stopped by selecting the menu item "Debug|Start/Stop Debug Session" or keyboard shortcut CTRL+F5. When debugging for the first time, J-Link firmware update may be needed if requested by the tool.</p>
+<p>Refer to the documentation from Keil to get more information on the debug features in uVision. Note that not all features supported by uVision debugger are implemented in the J-Link interface. Consult SEGGER J-Link documentation for more information.</p>
+<h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-notes-restrictions"></a>
+Notes and Restrictions</h3>
+<ol type="1">
+<li>When creating a new RA project, do not create a new project directly inside uVision. Follow the steps as mentioned in <a class="el" href="_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-create-project">Create new RA project</a></li>
+<li>RA FSP contains a full set of drivers and middleware and may not be compatible with other CMSIS packs from Keil, Arm or third parties.</li>
+<li>Flash programming is currently only supported through the debugger connection.</li>
+</ol>
+<h2><a class="anchor" id="using-ra-smart-configurator-with-ewarm"></a>
+Using RA Smart Configurator with IAR EWARM</h2>
+<p>IAR Systems Embedded Workbench for Arm (EWARM) includes support for Renesas RA devices. These can be set up as bare metal designs within EWARM. However, most RA developers will want to integrate RA FSP drivers and middleware into their designs. RA SC will facilitate this.</p>
+<p>RA SC generates a "Project Connection" file that can be loaded directly into EWARM to update project files.</p>
+<h3><a class="anchor" id="RASC-EWARM-prerequisites"></a>
+Prerequisites</h3>
+<ul>
+<li>IAR EWARM installed and licensed. Pleae refer to the Release notes for the version to be installed.</li>
+<li>RA SC and FSP Installed</li>
+</ul>
+<h3><a class="anchor" id="using-ra-smart-configurator-with-ewarm-create-project"></a>
+Create new RA project</h3>
+<p>The following steps are required to create an RA project using IAR EWARM, RA SC and FSP:</p>
+<ol type="1">
+<li><p class="startli">To Use RA SC with EWARM, RA SC needs to configured as a tool in EWARM by selecting the menu item "Tools|Configure Tools...". Select "New" to create a new tool in the dialog shown and add the following information:</p><ul>
+<li>Menu Text: RA Smart Configurator</li>
+<li>Command: Select Browse... and navigate to rasc.exe in the installed RA SC</li>
+<li>Argument: &ndash;compiler IAR configuration.xml</li>
+<li>Initial Directory: $PROJ_DIR$</li>
+<li>Tool Available: Always</li>
+</ul>
+<div class="image">
+<img src="ewarm-tool-setup.png" alt="ewarm-tool-setup.png"/>
+<div class="caption">
+Tool_setup</div></div>
+</li>
+<li>A new EWARM project can be created using the menu item "Project|Create New Project..." and selecting the "Empty Project" and toolchain as ARM. Save the project to an empty folder.</li>
+<li><p class="startli">RA SC can now be launched from EWARM using the menu item "Tools|RA Smart Configurator".</p>
+<div class="image">
+<img src="configured-rasc-menu-item.png" alt="configured-rasc-menu-item.png"/>
+<div class="caption">
+RA SC Menu Item</div></div>
+<p> RA SC will be launched with project generator wizard. The configuration window opens once the project wizard is closed. Refer to <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a> for more details on how to configure the project. After configuring the project, click "Generate Project Content". Changes to the RA configuration will be reflected in the EWARM project.</p>
+</li>
+<li>A Project connection needs to be set up in EWARM to build the project. Select "Project|Add Project Connection" in EWARM and select "IAR Project Connection". Navigate to the project folder and select buildinfo.ipcf and click open. The project can now build in EWARM. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -1220,9 +1379,7 @@ Debug configuration</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,7 +144,7 @@ Configuration</h1>
 The following build time configurations are defined in fsp_cfg/r_sci_uart_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -154,7 +154,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
 <td>FIFO Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -162,7 +162,7 @@ Enable</li>
 <li>
 Disable</li>
 </ul>
-</td><td>Enable FIFO support for the SCI_UART module. </td></tr>
+</td><td>Disable </td><td>Enable FIFO support for the SCI_UART module. </td></tr>
 <tr>
 <td>DTC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -170,7 +170,7 @@ Enable</li>
 <li>
 Disable</li>
 </ul>
-</td><td>Enable DTC support for the SCI_UART module. </td></tr>
+</td><td>Disable </td><td>Enable DTC support for the SCI_UART module. </td></tr>
 <tr>
 <td>RS232/RS485 Flow Control Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -178,19 +178,19 @@ Enable</li>
 <li>
 Disable</li>
 </ul>
-</td><td>Enable RS232 and RS485 flow control support using a user provided pin. </td></tr>
+</td><td>Disable </td><td>Enable RS232 and RS485 flow control support using a user provided pin. </td></tr>
 </table>
- <h2>Configurations for UART Driver on r_sci_uart</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Connectivity -&gt; UART Driver on r_sci_uart:<br />
+ <h2>Configurations for Driver &gt; Connectivity &gt; UART Driver on r_sci_uart</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; UART Driver on r_sci_uart:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>General|Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_uart0 </td><td>Module name. </td></tr>
 <tr>
-<td>General|Channel</td><td>Value must be an integer between 0 and 9</td><td>Select the SCI channel. </td></tr>
+<td>General &gt; Channel</td><td>Value must be an integer between 0 and 9</td><td>0 </td><td>Select the SCI channel. </td></tr>
 <tr>
-<td>General|Data Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; Data Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 8bits</li>
 <li>
@@ -198,9 +198,9 @@ This module can be added to the Threads tab from New -&gt; Driver -&gt; Connecti
 <li>
 9bits</li>
 </ul>
-</td><td>Select the number of bits per word. </td></tr>
+</td><td>8bits </td><td>Select the number of bits per word. </td></tr>
 <tr>
-<td>General|Parity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; Parity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -208,39 +208,39 @@ Odd</li>
 <li>
 Even</li>
 </ul>
-</td><td>Select the parity mode. </td></tr>
+</td><td>None </td><td>Select the parity mode. </td></tr>
 <tr>
-<td>General|Stop Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>General &gt; Stop Bits</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1bit</li>
 <li>
 2bits</li>
 </ul>
-</td><td>Select the number of stop bits. </td></tr>
+</td><td>1bit </td><td>Select the number of stop bits. </td></tr>
 <tr>
-<td>Baud|Baud Rate</td><td>Value must be an integer greater than 0</td><td>Enter the desired baud rate. </td></tr>
+<td>Baud &gt; Baud Rate</td><td>Value must be an integer greater than 0</td><td>115200 </td><td>Enter the desired baud rate. </td></tr>
 <tr>
-<td>Baud|Enable Baud Rate Modulation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Baud &gt; Baud Rate Modulation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Enabling baud rate modulation reduces the percent error of the actual baud rate with respect to the requested baud rate. It does this by modulating the number of cycles per clock, so some bits are slightly longer than others. </td></tr>
+</td><td>Disabled </td><td>Enabling baud rate modulation reduces the percent error of the actual baud rate with respect to the requested baud rate. It does this by modulating the number of cycles per clock, so some bits are slightly longer than others. </td></tr>
 <tr>
-<td>Baud|Max Error (%)</td><td>Value must be a number greater than 0</td><td>Maximum percent error allowed during baud calculation. This is used by the algorithm to determine whether or not to consider setting ABSC or ABSCE, which is discouraged if an acceptable rate can be obtains without setting it.<br />
+<td>Baud &gt; Max Error (%)</td><td>Must be a valid non negative integer with a maximum configurable value of 100</td><td>5 </td><td>Maximum percent error allowed during baud calculation. This is used by the algorithm to determine whether or not to consider using less accurate alternative register settings.<br />
 <br />
 NOTE: The baud calculation does not show an error in the tool if this percent error was not achieved. The calculated percent error is recorded in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
 <tr>
-<td>Flow Control|CTS/RTS Selection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Flow Control &gt; CTS/RTS Selection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 RTS (CTS is disabled)</li>
 <li>
 CTS (Note that RTS is available when enabling External RTS Operation mode which uses 1 GPIO pin)</li>
 </ul>
-</td><td>Select CTS or RTS for the CTSn/RTSn pin of SCI channel n. The SCI hardware supports either the CTS or the RTS control signal on this pin but not both. </td></tr>
+</td><td>RTS (CTS is disabled) </td><td>Select CTS or RTS for the CTSn/RTSn pin of SCI channel n. The SCI hardware supports either the CTS or the RTS control signal on this pin but not both. </td></tr>
 <tr>
-<td>Flow Control|UART Communication Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Flow Control &gt; UART Communication Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 RS232</li>
 <li>
@@ -248,21 +248,21 @@ RS485 Half Duplex</li>
 <li>
 RS485 Full Duplex</li>
 </ul>
-</td><td>Select the UART communication mode as either RS232 or RS485. </td></tr>
+</td><td>RS232 </td><td>Select the UART communication mode as either RS232 or RS485. </td></tr>
 <tr>
-<td>Flow Control|Pin Control</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Flow Control &gt; Pin Control</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enables pin control for external RTS in RS232 mode RS485 mode. </td></tr>
+</td><td>Disabled </td><td>Enables pin control for external RTS in RS232 mode RS485 mode. </td></tr>
 <tr>
-<td>Flow Control|RTS Pin Port</td><td>See e2 studio for available options.</td><td>Specify the flow control pin port for the MCU. </td></tr>
+<td>Flow Control &gt; RTS Port</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin port for the MCU. </td></tr>
 <tr>
-<td>Flow Control|RTS Pin Pin</td><td>See e2 studio for available options.</td><td>Specify the flow control pin for the MCU. </td></tr>
+<td>Flow Control &gt; RTS Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin for the MCU. </td></tr>
 <tr>
-<td>Extra|Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Extra &gt; Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Internal Clock</li>
 <li>
@@ -272,41 +272,41 @@ External Clock 8x baud rate</li>
 <li>
 External Clock 16x baud rate</li>
 </ul>
-</td><td>Selection of the clock source to be used in the baud-rate clock generator. When internal clock is used the baud rate can be output on the SCK pin. </td></tr>
+</td><td>Internal Clock </td><td>Selection of the clock source to be used in the baud-rate clock generator. When internal clock is used the baud rate can be output on the SCK pin. </td></tr>
 <tr>
-<td>Extra|Start bit detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Extra &gt; Start bit detection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Falling Edge</li>
 <li>
 Low Level</li>
 </ul>
-</td><td>Start bit detected as falling edge or low level. </td></tr>
+</td><td>Falling Edge </td><td>Start bit detected as falling edge or low level. </td></tr>
 <tr>
-<td>Extra|Noise Cancel</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Extra &gt; Noise Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
 <li>
 Disable</li>
 </ul>
-</td><td>Enable the digital noise cancellation on RXDn pin. The digital noise filter block in SCI consists of two-stage flipflop circuits. </td></tr>
+</td><td>Disable </td><td>Enable the digital noise filter on RXDn pin. The digital noise filter block in SCI consists of two-stage flipflop circuits. </td></tr>
 <tr>
-<td>Extra|Receive FIFO Trigger Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Extra &gt; Receive FIFO Trigger Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 One</li>
 <li>
 Max</li>
 </ul>
-</td><td>Unused if the channel has no FIFO or if DTC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 15 bit times with no data (fewer interrupts). </td></tr>
+</td><td>Max </td><td>Unused if the channel has no FIFO or if DTC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 15 bit times with no data (fewer interrupts). </td></tr>
 <tr>
-<td>Interrupts|Callback</td><td>Name must be a valid C symbol</td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>user_uart_callback </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
 <tr>
-<td>Interrupts|Receive Interrupt Priority</td><td>MCU Specific Options</td><td>Select the receive interrupt priority. </td></tr>
+<td>Interrupts &gt; Receive Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
 <tr>
-<td>Interrupts|Transmit Data Empty Interrupt Priority</td><td>MCU Specific Options</td><td>Select the transmit interrupt priority. </td></tr>
+<td>Interrupts &gt; Transmit Data Empty Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit interrupt priority. </td></tr>
 <tr>
-<td>Interrupts|Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td>Select the transmit end interrupt priority. </td></tr>
+<td>Interrupts &gt; Transmit End Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit end interrupt priority. </td></tr>
 <tr>
-<td>Interrupts|Error Interrupt Priority</td><td>MCU Specific Options</td><td>Select the error interrupt priority. </td></tr>
+<td>Interrupts &gt; Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the error interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-sci-uart-clock-configuration"></a>
@@ -337,11 +337,12 @@ Limitations</h2>
 <ul>
 <li>Transfer size must be less than or equal to 64K bytes if DTC interface is used for transfer. <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">uart_api_t::infoGet</a> API can be used to get the max transfer size allowed.</li>
 <li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read, will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
+<li>When using 9-bit reception with DTC, clear the upper 7 bits of data before processing the read data. The upper 7 bits contain status flags that are part of the register used to read data in 9-bit mode.</li>
 </ul>
 <h1><a class="anchor" id="r-sci-uart-examples"></a>
 Examples</h1>
 <h2>SCI UART Example</h2>
-<div class="fragment"><div class="line">uint8_t  g_dest[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_src[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_out_of_band_received[TRANSFER_LENGTH];</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line">uint32_t g_receive_complete  = 0;</div><div class="line">uint32_t g_out_of_band_index = 0;</div><div class="line"><span class="keywordtype">void</span> r_sci_uart_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open</a>(&amp;g_uart0_ctrl, &amp;g_uart0_cfg);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read</a>(&amp;g_uart0_ctrl, g_dest, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga8916449e6e6de86681c04d1931645e7c">R_SCI_UART_Write</a>(&amp;g_uart0_ctrl, g_src, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_receive_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> example_callback (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a558f63e26549462cf3a893ed73fd26ad">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da794925d1c74f16bde84152508e66a6bd">UART_EVENT_RX_CHAR</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(g_out_of_band_received) &gt; g_out_of_band_index)</div><div class="line">            {</div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db">UART_DATA_BITS_8</a> &gt;= g_uart0_cfg.data_bits)</div><div class="line">                {</div><div class="line">                    g_out_of_band_received[g_out_of_band_index++] = (uint8_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    uint16_t * p_dest = (uint16_t *) &amp;g_out_of_band_received[g_out_of_band_index];</div><div class="line">                    *p_dest              = (uint16_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                    g_out_of_band_index += 2;</div><div class="line">                }</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8dabe2b1428416bd300ee15a2608df30837">UART_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_receive_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da56867c1db03ea3ee2c704604ac94b767">UART_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_transfer_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>SCI UART Baud Set Example</h2>
+<div class="fragment"><div class="line">uint8_t  g_dest[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_src[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_out_of_band_received[TRANSFER_LENGTH];</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line">uint32_t g_receive_complete  = 0;</div><div class="line">uint32_t g_out_of_band_index = 0;</div><div class="line"><span class="keywordtype">void</span> r_sci_uart_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open</a>(&amp;g_uart0_ctrl, &amp;g_uart0_cfg);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read</a>(&amp;g_uart0_ctrl, g_dest, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga8916449e6e6de86681c04d1931645e7c">R_SCI_UART_Write</a>(&amp;g_uart0_ctrl, g_src, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_receive_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> example_callback (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Handle the UART event */</span></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a558f63e26549462cf3a893ed73fd26ad">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Received a character */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da794925d1c74f16bde84152508e66a6bd">UART_EVENT_RX_CHAR</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Only put the next character in the receive buffer if there is space for it */</span></div><div class="line">            <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(g_out_of_band_received) &gt; g_out_of_band_index)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Write either the next one or two bytes depending on the receive data size */</span></div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db">UART_DATA_BITS_8</a> &gt;= g_uart0_cfg.data_bits)</div><div class="line">                {</div><div class="line">                    g_out_of_band_received[g_out_of_band_index++] = (uint8_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    uint16_t * p_dest = (uint16_t *) &amp;g_out_of_band_received[g_out_of_band_index];</div><div class="line">                    *p_dest              = (uint16_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                    g_out_of_band_index += 2;</div><div class="line">                }</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Receive complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8dabe2b1428416bd300ee15a2608df30837">UART_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_receive_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Transmit complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da56867c1db03ea3ee2c704604ac94b767">UART_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_transfer_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>SCI UART Baud Set Example</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#define SCI_UART_BAUDRATE_19200    (19200)</span></div><div class="line"><span class="keywordtype">void</span> r_sci_uart_baud_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> baud_setting;</div><div class="line">    uint32_t       baud_rate                 = SCI_UART_BAUDRATE_19200;</div><div class="line">    <span class="keywordtype">bool</span>           enable_bitrate_modulation = <span class="keyword">false</span>;</div><div class="line">    uint32_t       error_rate_x_1000         = 5;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2">R_SCI_UART_BaudCalculate</a>(baud_rate, enable_bitrate_modulation, error_rate_x_1000, &amp;baud_setting);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga3b3a6c761a66c6cbcca3c72a451b3371">R_SCI_UART_BaudSet</a>(&amp;g_uart0_ctrl, (<span class="keywordtype">void</span> *) &amp;baud_setting);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -1009,9 +1010,7 @@ CTS/RTS function of the SSn pin. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

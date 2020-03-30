@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['dac8_5fmode_5ft',['dac8_mode_t',['../group___d_a_c8.html#gaad896095c341ce32b42f85eee23d9c7f',1,'r_dac8.h']]],
   ['dac_5fdata_5fformat_5ft',['dac_data_format_t',['../group___d_a_c___a_p_i.html#gac447d1d0850297aefbec6e8be8b55591',1,'r_dac_api.h']]],
   ['display_5fcolor_5forder_5ft',['display_color_order_t',['../group___d_i_s_p_l_a_y___a_p_i.html#ga1da943d9034f9b7adc58d689c04202c1',1,'r_display_api.h']]],
   ['display_5fendian_5ft',['display_endian_t',['../group___d_i_s_p_l_a_y___a_p_i.html#gadb038a620833950fb85c4d8397230762',1,'r_display_api.h']]],

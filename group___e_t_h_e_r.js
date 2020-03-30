@@ -31,7 +31,7 @@ var group___e_t_h_e_r =
     ] ],
     [ "R_ETHER_Open", "group___e_t_h_e_r.html#gab2b878c7b67357c06e1f9231265819fd", null ],
     [ "R_ETHER_Close", "group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158", null ],
-    [ "R_ETHER_Read", "group___e_t_h_e_r.html#ga705e2527edcde11a56d7b0114fcbf1f2", null ],
+    [ "R_ETHER_Read", "group___e_t_h_e_r.html#ga174de3d54336469ca7a1e5949820bd3f", null ],
     [ "R_ETHER_BufferRelease", "group___e_t_h_e_r.html#ga3bc8e53a14aa52d4d2b9b247ddd7cce8", null ],
     [ "R_ETHER_Write", "group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112", null ],
     [ "R_ETHER_LinkProcess", "group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311", null ],

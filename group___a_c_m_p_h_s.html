@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v0.8.0</span>
+   &#160;<span id="projectnumber">Release v1.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -113,7 +113,7 @@ Functions</h2></td></tr>
 <tr class="separator:gabbfb5efe9e33636a46a828b076f798a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This module implements the <a class="el" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html">Comparator Interface</a> using the high-speed analog comparator. </p>
+<p>Driver for the ACMPHS peripheral on RA MCUs. This module implements the <a class="el" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html">Comparator Interface</a>. </p>
 <h1><a class="anchor" id="r-acmphs-overview"></a>
 Overview</h1>
 <h2><a class="anchor" id="r-acmphs-features"></a>
@@ -122,16 +122,17 @@ Features</h2>
 <ul>
 <li>Callback on rising edge, falling edge or both</li>
 <li>Configurable debounce filter</li>
-<li>Option to include comparator output on VCOUT pin or ELC events</li>
+<li>Option for comparator output on VCOUT pin</li>
+<li>ELC event output</li>
 </ul>
-<p><a class="anchor" id="um_comparator_notification_of_rising_edge"></a><a class="anchor" id="um_comparator_notification_of_falling_edge"></a><a class="anchor" id="um_comparator_debounce_filter"></a><a class="anchor" id="um_comparator_output_enable"></a><a class="anchor" id="um_comparator_pin_output"></a> </p>
+<p><a class="anchor" id="um_comparator_notification_of_rising_edge"></a><a class="anchor" id="um_comparator_notification_of_falling_edge"></a><a class="anchor" id="um_comparator_debounce_filter"></a><a class="anchor" id="um_comparator_output_enable"></a><a class="anchor" id="um_comparator_pin_output"></a><a class="anchor" id="um_comparator_output_inverted"></a> </p>
 <h1><a class="anchor" id="r-acmphs-configuration"></a>
 Configuration</h1>
-<p><a class="anchor" id="um_comparator_output_inverted"></a> <h2>Build Time Configurations for r_acmphs</h2>
+<p><h2>Build Time Configurations for r_acmphs</h2>
 The following build time configurations are defined in fsp_cfg/r_acmphs_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -141,19 +142,19 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>If selected code for parameter checking is included in the build. </td></tr>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Comparator Driver on r_acmphs</h2>
-This module can be added to the Threads tab from New -&gt; Driver -&gt; Analog -&gt; Comparator Driver on r_acmphs:<br />
+ <h2>Configurations for Driver &gt; Analog &gt; Comparator Driver on r_acmphs</h2>
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Analog &gt; Comparator Driver on r_acmphs:<br />
 </p><table class="doxtable">
 <tr>
-<th>Configuration</th><th>Options</th><th>Description </th></tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>Module name. </td></tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_comparator0 </td><td>Module name. </td></tr>
 <tr>
-<td>Channel</td><td>Value must be a non-negative integer</td><td>Select the hardware channel. </td></tr>
+<td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Select the hardware channel. </td></tr>
 <tr>
-<td>Trigger Edge</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Trigger Edge Selector</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Rising</li>
 <li>
@@ -161,9 +162,9 @@ Falling</li>
 <li>
 Both Edge</li>
 </ul>
-</td><td>The trigger specifies when a comparator callback event should occur. Unused if the interrupt priority is disabled or the callback is NULL. </td></tr>
+</td><td>Both Edge </td><td>The trigger specifies when a comparator callback event should occur. Unused if the interrupt priority is disabled or the callback is NULL. </td></tr>
 <tr>
-<td>Debounce Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Noise Filter</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 No Filter</li>
 <li>
@@ -173,58 +174,61 @@ No Filter</li>
 <li>
 32</li>
 </ul>
-</td><td>Select the PCLK divisor for the hardware digital debounce filter. Larger divisors provide a longer debounce and take longer for the output to update. </td></tr>
+</td><td>No Filter </td><td>Select the PCLK divisor for the hardware digital debounce filter. Larger divisors provide a longer debounce and take longer for the output to update. </td></tr>
 <tr>
-<td>Maximum status retries (ACMPHS only)</td><td>Value must be a non-negative integer</td><td>Maximum number of status retries. </td></tr>
+<td>Maximum status retries (CMPMON)</td><td>Must be a valid non-negative integer between 2 and 32-bit maximum value</td><td>1024 </td><td>Maximum number of status retries. </td></tr>
 <tr>
-<td>Invert</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Output Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Not Inverted</li>
 <li>
 Inverted</li>
 </ul>
-</td><td>Turn this on to invert the comparator output. This affects the output read from statusGet(), the pin output level, and the edge trigger. </td></tr>
+</td><td>Not Inverted </td><td>When enabled comparator output is inverted. This affects the output read from <a class="el" href="group___a_c_m_p_h_s.html#gaec510482bbca5aaa1357960079c30e23">R_ACMPHS_StatusGet()</a>, the pin output level, and the edge trigger. </td></tr>
 <tr>
-<td>Pin Output</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Pin Output(VCOUT)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Turn this on to include the output from this comparator on VCOUT. The comparator output on VCOUT is OR'd with output from all other ACMPHS and ACMPLP comparators. </td></tr>
+</td><td>Disabled </td><td>Turn this on to include the output from this comparator on VCOUT. The comparator output on VCOUT is OR'd with output from all other ACMPHS and ACMPLP comparators. </td></tr>
 <tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>Define this function in the application. It is called when the Trigger event occurs. </td></tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Define this function in the application. It is called when the Trigger event occurs. </td></tr>
 <tr>
-<td>Comparator Interrupt Priority</td><td>MCU Specific Options</td><td>Select the interrupt priority for the comparator interrupt. </td></tr>
+<td>Comparator Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for the comparator interrupt. </td></tr>
 <tr>
-<td>ACMPHS IVCMP</td><td>MCU Specific Options</td><td>Select the Analog input voltage source. Channel mentioned in the options represents channel in ACMPHS </td></tr>
+<td>Analog Input Voltage Source (IVCMP)</td><td>MCU Specific Options</td><td></td><td>Select the Analog input voltage source. Channel mentioned in the options represents channel in ACMPHS </td></tr>
 <tr>
-<td>ACMPHS IVREF</td><td>MCU Specific Options</td><td>Select the Analog reference voltage source. Channel mentioned in the options represents channel in ACMPHS </td></tr>
+<td>Reference Voltage Input Source (IVREF)</td><td>MCU Specific Options</td><td></td><td>Select the Analog reference voltage source. Channel mentioned in the options represents channel in ACMPHS </td></tr>
 </table>
 </p>
-<dl class="section note"><dt>Note</dt><dd>: Set the CSTEN bit to 1 and the CDFS[1:0] bits to 00b if the ACMPHS interrupt causes release of Software Standby or Snooze modes. Refer MCU manual for more information.</dd></dl>
-<h2>Output Polarity</h2>
-<p>If output polarity is configured as "Inverted" then the VCOUT will be inverted and the <a class="el" href="group___a_c_m_p_h_s.html#gaec510482bbca5aaa1357960079c30e23">R_ACMPHS_StatusGet()</a> will result an inverted status.</p>
 <h2><a class="anchor" id="r-acmphs-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The ACMPHS peripheral module requires PCLKB as clock source</p>
+<p>The ACMPHS peripheral is clocked from PCLKB. You can set the PCLKB frequency using the clock configurator in e2 studio or using the CGC Interface at run-time.</p>
 <h2><a class="anchor" id="r-acmphs-pin-configuration"></a>
 Pin Configuration</h2>
-<p>Configure the comparator pins as analog from the pins tab in configurator.</p>
+<p>Comparator output can be enabled or disabled on each channel individually. The VCOUT pin is a logical OR of all comparator outputs.</p>
+<p>The IVCMPn pins are used as comparator inputs. The IVREFn pins are used as comparator reference values.</p>
 <h1><a class="anchor" id="r-acmphs-usage_notes"></a>
 Usage Notes</h1>
-<h2>Debounce Filter</h2>
-<p>The ACMPHS signal is sampled on each sampling clock. If the same value is sampled three times, the noise filter output at the next sampling clock cycle is used as the ACMPHS output.</p>
-<h2>Comparator Output on VCOUT Pin</h2>
-<p>The signal on the VCOUT pin is a logical 'OR' of the outputs of all comparators (ACMPHS0-5) with their output pin enabled.</p>
+<h2>Noise Filter</h2>
+<p>When the noise filter is enabled, the ACMPHP0/ACMPHP1 signal is sampled three times based on the sampling clock selected. The filter clock frequency is determined by PCLKB and the comparator_filter_t setting.</p>
+<h2>Output Polarity</h2>
+<p>If output polarity is configured as "Inverted" then the VCOUT signal will be inverted and the <a class="el" href="group___a_c_m_p_h_s.html#gaec510482bbca5aaa1357960079c30e23">R_ACMPHS_StatusGet()</a> will return an inverted status.</p>
 <h2><a class="anchor" id="r-acmphs-limitations"></a>
 Limitations</h2>
-<p>Constraints apply on the simultaneous use of ACMPHS analog input and ADC analog input. For details, refer MCU user manual's "Usage Notes" section for ACMPHS</p>
+<ul>
+<li>Once the analog comparator is configured, the program must wait for the stabilization time to elapse before using the comparator.</li>
+<li>When the noise filter is not enabled the hardware requires software debouncing of the output (two consecutive equal values). This is automatically managed in <a class="el" href="group___a_c_m_p_h_s.html#gaec510482bbca5aaa1357960079c30e23">R_ACMPHS_StatusGet</a> but may result in delay or an API error in rare edge cases.</li>
+<li>Constraints apply on the simultaneous use of ACMPHS analog input and ADC analog input. Refer to the "Usage Notes" section in your MCU's User's Manual for the ADC unit(s) for more details.</li>
+<li>To allow ACMPHS0 to cancel Software Standby mode or enter Snooze, set the CSTEN bit to 1 and the CDFS bits to 00 in the CMPCTL0 register.</li>
+</ul>
 <h1><a class="anchor" id="r-acmphs-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
-<p>This is a basic example of minimal use of the ACMPHS in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> acmphs_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga0ad2123f7a5152cf108883163581f11b">R_BSP_PinAccessEnable</a>();</div><div class="line"></div><div class="line">    <span class="comment">/* Set compare pin low. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(TEST_COMPARATOR_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the ACMPHS module */</span></div><div class="line">    err = <a class="code" href="group___a_c_m_p_h_s.html#gaa102887a051c756aea5ebd00aca55d7d">R_ACMPHS_Open</a>(&amp;g_comparator_ctrl, &amp;g_comparator_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Bypass PGA on ADC unit 0.</span></div><div class="line"><span class="comment">     * See section Table 50.2 Input source configuration of the ACMPHS */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ac49bfca1e1ccf88f53586fc28bd54250">FSP_IP_ADC</a>, 0);</div><div class="line">    R_ADC0-&gt;ADPGACR   = PGA_BYPASS_VALUE;</div><div class="line">    R_ADC0-&gt;ADPGADCR0 = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Bypass PGA on ADC unit 1. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ac49bfca1e1ccf88f53586fc28bd54250">FSP_IP_ADC</a>, 1);</div><div class="line">    R_ADC1-&gt;ADPGACR   = PGA_BYPASS_VALUE;</div><div class="line">    R_ADC1-&gt;ADPGADCR0 = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the minimum stabilization wait time before enabling output. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(BSP_FEATURE_ACMPHS_MIN_WAIT_TIME_US, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the comparator output */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_h_s.html#gae6cceb0647ded468eb7da79d02136e89">R_ACMPHS_OutputEnable</a>(&amp;g_comparator_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Set compare pin high. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(TEST_COMPARATOR_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_comparator_events)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__status__t">comparator_status_t</a> status;</div><div class="line"></div><div class="line">    <span class="comment">/* Check status of comparator, Status will be High */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_h_s.html#gaec510482bbca5aaa1357960079c30e23">R_ACMPHS_StatusGet</a>(&amp;g_comparator_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<p>The following is a basic example of minimal use of the ACMPHS. The comparator is configured to trigger a callback when the input rises above the internal reference voltage (VREF). A GPIO output acts as the comparator input and is externally connected to the IVCMP input of the ACMPHS.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Connect this control pin to the VCMP input of the comparator. This can be any GPIO pin</span></div><div class="line"><span class="comment"> * that is not input only. */</span></div><div class="line"><span class="preprocessor">#define ACMPHS_EXAMPLE_CONTROL_PIN    (BSP_IO_PORT_05_PIN_03)</span></div><div class="line"><span class="preprocessor">#define ADC_PGA_BYPASS_VALUE          (0x9999)</span></div><div class="line"></div><div class="line"><span class="keyword">volatile</span> uint32_t g_comparator_events = 0U;</div><div class="line"></div><div class="line"><span class="comment">/* This callback is called when a comparator event occurs. */</span></div><div class="line"><span class="keywordtype">void</span> acmphs_example_callback (<a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__callback__args__t">comparator_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line">    g_comparator_events++;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> acmphs_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Disable pin register write protection, if enabled */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga0ad2123f7a5152cf108883163581f11b">R_BSP_PinAccessEnable</a>();</div><div class="line"></div><div class="line">    <span class="comment">/* Start with the VCMP pin low. This example assumes the comparator is configured to trigger</span></div><div class="line"><span class="comment">     * when VCMP rises above VREF. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(ACMPHS_EXAMPLE_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the ACMPHS module */</span></div><div class="line">    err = <a class="code" href="group___a_c_m_p_h_s.html#gaa102887a051c756aea5ebd00aca55d7d">R_ACMPHS_Open</a>(&amp;g_comparator_ctrl, &amp;g_comparator_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Bypass PGA on ADC unit 0.</span></div><div class="line"><span class="comment">     * (See Table 50.2 &quot;Input source configuration of the ACMPHS&quot; in the RA6M3 User&#39;s Manual (R01UH0886EJ0100)) */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ac49bfca1e1ccf88f53586fc28bd54250">FSP_IP_ADC</a>, 0);</div><div class="line">    R_ADC0-&gt;ADPGACR   = ADC_PGA_BYPASS_VALUE;</div><div class="line">    R_ADC0-&gt;ADPGADCR0 = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the minimum stabilization wait time before enabling output. */</span></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__info__t">comparator_info_t</a> info;</div><div class="line">    <a class="code" href="group___a_c_m_p_h_s.html#ga4c3e2f1898bc9a020367cd0b5285edda">R_ACMPHS_InfoGet</a>(&amp;g_comparator_ctrl, &amp;info);</div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(info.<a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ad0c2dd54f8ae5b8a775385bd46036ada">min_stabilization_wait_us</a>, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the comparator output */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_h_s.html#gae6cceb0647ded468eb7da79d02136e89">R_ACMPHS_OutputEnable</a>(&amp;g_comparator_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the VCMP pin high. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(ACMPHS_EXAMPLE_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_comparator_events)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__status__t">comparator_status_t</a> status;</div><div class="line"></div><div class="line">    <span class="comment">/* Check status of comparator, Status will be COMPARATOR_STATE_OUTPUT_HIGH */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_h_s.html#gaec510482bbca5aaa1357960079c30e23">R_ACMPHS_StatusGet</a>(&amp;g_comparator_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="gaa102887a051c756aea5ebd00aca55d7d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa102887a051c756aea5ebd00aca55d7d">&#9670;&nbsp;</a></span>R_ACMPHS_Open()</h2>
 
@@ -425,9 +429,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP v0.8.0 User's Manual Rev0.80 R11UM0137EU0080 Copyright © (2019) Renesas Electronics Corporation. All Rights Reserved.</li>
-    <li class="footer">Generated by FSP v0.8.0
-    </li>
+        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
