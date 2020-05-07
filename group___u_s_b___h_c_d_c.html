@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,14 +94,12 @@ $(document).ready(function(){initNavTree('group___u_s_b___h_c_d_c.html','');});
 <div class="title">USB Host Communications Device Class Driver (r_usb_hcdc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This module is USB Host Communication Device Class Driver (HCDC). It implements the <a class="el" href="group___u_s_b___h_c_d_c___a_p_i.html">USB HCDC Interface</a>. <br />
-This module works in combination with (r_usb_basic module). </p>
+<p>This module is USB Host Communication Device Class Driver (HCDC). It implements the <a class="el" href="group___u_s_b___h_c_d_c___a_p_i.html">USB HCDC Interface</a>. This module works in combination with (r_usb_basic module). </p>
 <p><a class="anchor" id="functionss"></a></p><h2 class="groupheader">Functions</h2>
 <p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> for the common API (r_usb_basic) to be called from the application. <a class="anchor" id="details"></a></p><h2 class="groupheader">Detailed Description</h2>
 <h1><a class="anchor" id="r-usb-overview"></a>
 Overview</h1>
-<p>The r_usb_hcdc module, when used in combination with the r_usb_basic module, operates as a USB host communications device class driver (HCDC). <br />
-The HCDC conforms to the PSTN device subclass abstract control model of the USB communication device class specification (CDC) and enables communication with a CDC peripheral device.</p>
+<p>The r_usb_hcdc module, when used in combination with the r_usb_basic module, operates as a USB host communications device class driver (HCDC). The HCDC conforms to the PSTN device subclass abstract control model of the USB communication device class specification (CDC) and enables communication with a CDC peripheral device.</p>
 <h2><a class="anchor" id="r-usb-features"></a>
 Features</h2>
 <p>The r_usb_hcdc module has the following key features:</p><ul>
@@ -112,20 +110,20 @@ Features</h2>
 <li>HCDC can connect maximum 2 CDC devices to 1 USB module by using USB Hub.</li>
 </ul>
 <h3>Communication Device Class (CDC), PSTN and ACM</h3>
-<p>This software conforms to the Abstract Control Model (ACM) subclass of the Communication Device Class specification, as specified in detail in the PSTN Subclass document listed in 'Related Documents'. <br />
-The Abstract Control Model subclass is a technology that bridges the gap between USB devices and earlier modems (employing RS-232C connections), enabling use of application programs designed for older modems.</p>
+<p>This software conforms to the Abstract Control Model (ACM) subclass of the Communication Device Class specification, as specified in detail in the PSTN Subclass document listed in 'Related Documents'.</p>
+<p>The Abstract Control Model subclass is a technology that bridges the gap between USB devices and earlier modems (employing RS-232C connections), enabling use of application programs designed for older modems.</p>
 <p><b>Basic Functions</b></p>
-<p>The main functions of HCDC are as follows. <br />
-</p><ul>
+<p>The main functions of HCDC are as follows.</p>
+<ul>
 <li>Verify connected devices</li>
 <li>Make communication line settings</li>
 <li>Acquire the communication line state</li>
 <li>Transfer data to and from the CDC peripheral device</li>
 </ul>
 <p><b>Abstract Control Model Class Requests - Host to Device</b></p>
-<p>This driver supports the following class requests. <br />
-CDC Class Requests <br />
-</p><table class="doxtable">
+<p>This driver supports the following class requests.</p>
+<p>CDC Class Requests</p>
+<table class="doxtable">
 <tr>
 <th align="left">Request </th><th align="left">Code </th><th align="left">Description  </th></tr>
 <tr>
@@ -147,11 +145,10 @@ CDC Class Requests <br />
 <tr>
 <td align="left">SendBreak </td><td align="left">0x23 </td><td align="left">Transmits a break signal. </td></tr>
 </table>
-<p><br />
-For details concerning the Abstract Control Model requests, refer to Table 11, 'Requests - Abstract Control Model' in 'USB Communications Class Subclass Specification for PSTN Devices', Revision 1.2.</p>
-<p><b>SendEncapsulatedCommand</b> <br />
-The SendEncapsulatedCommand data format is shown below. <br />
-SendEncapsulatedCommand Data Format</p>
+<p>For details concerning the Abstract Control Model requests, refer to Table 11, 'Requests - Abstract Control Model' in 'USB Communications Class Subclass Specification for PSTN Devices', Revision 1.2.</p>
+<p><b>SendEncapsulatedCommand</b></p>
+<p>The SendEncapsulatedCommand data format is shown below.</p>
+<p>SendEncapsulatedCommand Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="center">bRequest </th><th align="center">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
@@ -159,9 +156,9 @@ SendEncapsulatedCommand Data Format</p>
 <td align="center">0x21 </td><td align="center">SEND_ENCAPSULATED_COMMAND(0x00) </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="center">Data length </td><td align="left">Control protoco command </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>Items such as AT commands for modem control are set as Data, and wLength is set to match the length of the data.</dd></dl>
-<p><b>GetEncapsulatedResponse</b> <br />
-The GetEncapsulatedResponse data format is shown below. <br />
-GetEncapsulatedResponse Data Format</p>
+<p><b>GetEncapsulatedResponse</b></p>
+<p>The GetEncapsulatedResponse data format is shown below.</p>
+<p>GetEncapsulatedResponse Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="center">bRequest </th><th align="center">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
@@ -169,34 +166,26 @@ GetEncapsulatedResponse Data Format</p>
 <td align="center">0x21 </td><td align="center">GET_ENCAPSULATED_RESPONSE (0x01) </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="center">Data length </td><td align="left">The data depends on the protocol. </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>The response data to SendEncapsulatedCommand is set as Data, and wLength is set to match the length of the data.</dd></dl>
-<p><b>SetCommFeature</b> <br />
-The SetCommFeature data format is shown below. <br />
-SetCommFeature Data Format</p>
+<p><b>SetCommFeature</b></p>
+<p>The SetCommFeature data format is shown below.</p>
+<p>SetCommFeature Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="center">bRequest </th><th align="center">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
 <tr>
 <td align="center">0x21 </td><td align="center">SET_COMM_FEATURE(0x02) </td><td align="center">Feature Selector </td><td align="center">0x0000 </td><td align="center">Data length </td><td align="left">Status<br />
- Either the country<br />
- code or the Abstract<br />
- Control Model idle<br />
- setting/multiplexing<br />
- setting for Feature Selector. </td></tr>
+ Either the country code or the Abstract Control Model idle setting/multiplexing setting for Feature Selector. </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>See Feature Selector setting list.</dd></dl>
-<p><b>GetCommFeature Data Format</b> <br />
-The GetCommFeature data format is shown below. <br />
-GetCommFeature Data Format</p>
+<p><b>GetCommFeature Data Format</b></p>
+<p>The GetCommFeature data format is shown below.</p>
+<p>GetCommFeature Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="center">bRequest </th><th align="center">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
 <tr>
 <td align="center">0x21 </td><td align="center">GET_COMM_FEATURE(0x03) </td><td align="center">Feature Selector </td><td align="center">0x0000 </td><td align="center">Data length </td><td align="left">Status<br />
- Either the country<br />
- code or the Abstract<br />
- Control Model idle<br />
- setting/multiplexing<br />
- setting for Feature Selector. </td></tr>
+ Either the country code or the Abstract Control Model idle setting/multiplexing setting for Feature Selector. </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>See Feature Selector setting list.</dd></dl>
 <p>Feature Selector Settings</p>
@@ -210,8 +199,7 @@ GetCommFeature Data Format</p>
 <tr>
 <td align="left">COUNTRY_SETTING </td><td align="center">0x02 </td><td align="center">Interface </td><td align="center">2 </td><td align="left">Selects the country code in hexadecimal format, as defined by ISO 3166. </td></tr>
 </table>
-<p><br />
-Status Format when ABSTRACT_STATE Selected</p>
+<p>Status Format when ABSTRACT_STATE Selected</p>
 <table class="doxtable">
 <tr>
 <th align="left">Bit Position </th><th align="left">Description  </th></tr>
@@ -226,9 +214,9 @@ Status Format when ABSTRACT_STATE Selected</p>
 1: No endpoints of the target interface accept data from the host, and data is not supplied to the host.<br />
 0: Endpoints continue to accept data and it is supplied to the host. </td></tr>
 </table>
-<p><b>ClearCommFeature</b> <br />
-The ClearCommFeature data format is shown below. <br />
-ClearCommFeature Data Format</p>
+<p><b>ClearCommFeature</b></p>
+<p>The ClearCommFeature data format is shown below.</p>
+<p>ClearCommFeature Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="center">bRequest </th><th align="center">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
@@ -236,9 +224,9 @@ ClearCommFeature Data Format</p>
 <td align="center">0x21 </td><td align="center">CLEAR_COMM_FEATURE (0x04) </td><td align="center">Feature Selector </td><td align="center">0x0000 </td><td align="center">Data length </td><td align="left">None </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>See Feature Selector setting list.</dd></dl>
-<p><b>SetLineCoding</b> <br />
-The SetLineCoding data format is shown below. <br />
-SetLineCoding Data Format</p>
+<p><b>SetLineCoding</b></p>
+<p>The SetLineCoding data format is shown below.</p>
+<p>SetLineCoding Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="center">bRequest </th><th align="center">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
@@ -246,8 +234,7 @@ SetLineCoding Data Format</p>
 <td align="center">0x21 </td><td align="center">SET_LINE_CODING(0x20) </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="left">Line Coding Structure<br />
 See Line Coding Structure format. </td></tr>
 </table>
-<p><br />
-Line Coding Structure Format</p>
+<p>Line Coding Structure Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">Offset </th><th align="center">Field </th><th align="center">size </th><th align="center">Value </th><th align="left">Description  </th></tr>
@@ -268,10 +255,9 @@ Line Coding Structure Format</p>
 <tr>
 <td align="center">6 </td><td align="center">bDataBits </td><td align="center">1 </td><td align="center">Number </td><td align="left">Data bits (5, 6, 7, 8) </td></tr>
 </table>
-<p><br />
-<b>GetLineCoding</b> <br />
-The GetLineCoding data format is shown below. <br />
-GetLineCoding Data Format</p>
+<p><b>GetLineCoding</b></p>
+<p>The GetLineCoding data format is shown below.</p>
+<p>GetLineCoding Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="left">bRequest </th><th align="left">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
@@ -279,10 +265,9 @@ GetLineCoding Data Format</p>
 <td align="center">0xA1 </td><td align="left">GET_LINE_CODING(0x21) </td><td align="left">0x0000 </td><td align="center">0x0000 </td><td align="center">0x0007 </td><td align="left">Line Coding Structure<br />
 See Line Coding Structure format. </td></tr>
 </table>
-<p><br />
-<b>SetControlLineState</b> <br />
-The SetControlLineState data format is shown below. <br />
-SetControlLineState Data Format</p>
+<p><b>SetControlLineState</b></p>
+<p>The SetControlLineState data format is shown below.</p>
+<p>SetControlLineState Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="left">bRequest </th><th align="left">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
@@ -307,20 +292,17 @@ Control Signal Refer to bit map format. </td><td align="center">0x0000 </td><td 
 0 - DTR OFF<br />
 1 - DTR ON </td></tr>
 </table>
-<p><b>SendBreak</b> <br />
-The SendBreak data format is shown below. <br />
-SendBreak Data Format </p><table class="doxtable">
+<p><b>SendBreak</b></p>
+<p>The SendBreak data format is shown below.</p>
+<p>SendBreak Data Format </p><table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="left">bRequest </th><th align="center">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="center">Data  </th></tr>
 <tr>
-<td align="center">0x21 </td><td align="left">SEND_BREAK (0x23) </td><td align="center">Break<br />
-signal<br />
-output<br />
-duration </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="center">None </td></tr>
+<td align="center">0x21 </td><td align="left">SEND_BREAK (0x23) </td><td align="center">Break signal output duration </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="center">None </td></tr>
 </table>
-<p><b>ACM Notifications from Device to Host</b> <br />
-The following are the class notifications supported and not supported by the software. <br />
-CDC Class Notifications</p>
+<p><b>ACM Notifications from Device to Host</b></p>
+<p>The following are the class notifications supported and not supported by the software.</p>
+<p>CDC Class Notifications</p>
 <table class="doxtable">
 <tr>
 <th align="left">Notification </th><th align="center">Code </th><th align="left">Description </th><th align="center">Supported  </th></tr>
@@ -331,9 +313,9 @@ CDC Class Notifications</p>
 <tr>
 <td align="left">SERIAL_STATE </td><td align="center">0x20 </td><td align="left">Notification of serial line state </td><td align="center">Yes </td></tr>
 </table>
-<p><b>SerialState</b> <br />
-The SerialState data format is shown below. <br />
-SerialState Data Format</p>
+<p><b>SerialState</b></p>
+<p>The SerialState data format is shown below.</p>
+<p>SerialState Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="left">bRequest </th><th align="center">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
@@ -341,8 +323,7 @@ SerialState Data Format</p>
 <td align="center">0xA1 </td><td align="left">SERIAL_STATE(0x20) </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="left">UART State bitmap<br />
 See UART State bitmap format. </td></tr>
 </table>
-<p><br />
-UART State bitmap format is shown below.</p>
+<p>UART State bitmap format is shown below.</p>
 <table class="doxtable">
 <tr>
 <th align="left">Bit Position </th><th align="left">Field </th><th align="left">Description  </th></tr>
@@ -363,30 +344,28 @@ UART State bitmap format is shown below.</p>
 <tr>
 <td align="left">D0 </td><td align="left">bRxCarrier </td><td align="left">Data Carrier Detect: Carrier detected on line </td></tr>
 </table>
-<p><br />
-<b>ResponseAvailable</b> <br />
-The ResponseAvailable data format is shown below. <br />
-ResponseAvailable Data Format</p>
+<p><b>ResponseAvailable</b></p>
+<p>The ResponseAvailable data format is shown below.</p>
+<p>ResponseAvailable Data Format</p>
 <table class="doxtable">
 <tr>
 <th align="center">bmRequestType </th><th align="left">bRequest </th><th align="center">wValue </th><th align="center">wIndex </th><th align="center">wLength </th><th align="left">Data  </th></tr>
 <tr>
 <td align="center">0xA1 </td><td align="left">RESPONSE_AVAILABLE(0x01) </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="center">0x0000 </td><td align="left">None </td></tr>
 </table>
-<p><br />
-</p><h3>USB Host Communication Device Class Driver (HCDC)</h3>
-<p><b>Basic Functions</b> <br />
-This software conforms to the Abstract Control Model subclass of the communication device class specification. <br />
-The main functions of HCDC are to:</p><ul>
+<h3>USB Host Communication Device Class Driver (HCDC)</h3>
+<p><b>Basic Functions</b></p>
+<p>This software conforms to the Abstract Control Model subclass of the communication device class specification.</p>
+<p>The main functions of HCDC are to:</p><ul>
 <li>Send class requests to the CDC peripheral</li>
 <li>Transfer data to and from the CDC peripheral</li>
 <li>Receive communication error information from the CDC peripheral</li>
 </ul>
-<p><b>Structure / Union</b> <br />
-The following structure or union is defined in r_usb_hcdc_api.h. <br />
-<b>HCDC Request Structure</b> <br />
-Below describes the 'UART settings' parameter structure used for the CDC requests SetLineCoding and GetLineCoding. <br />
-usb_hcdc_linecoding_t Structure</p>
+<p><b>Structure / Union</b></p>
+<p>The following structure or union is defined in r_usb_hcdc_api.h.</p>
+<p><b>HCDC Request Structure</b></p>
+<p>Below describes the 'UART settings' parameter structure used for the CDC requests SetLineCoding and GetLineCoding.</p>
+<p>usb_hcdc_linecoding_t Structure</p>
 <table class="doxtable">
 <tr>
 <th align="left">Type </th><th align="left">Member </th><th align="left">Description </th><th align="left">Remarks  </th></tr>
@@ -537,45 +516,45 @@ Vendor class device</li>
 </ul>
 </td><td>CDC class supported device </td><td>Specify the device class ID of the CDC device to be connected. </td></tr>
 <tr>
-<td>Select which pipe to use for Bulk IN transfer during HCDC operation..</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Pipe to use for Bulk IN transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Using USB PIPE1</li>
+USB PIPE1</li>
 <li>
-Using USB PIPE2</li>
+USB PIPE2</li>
 <li>
-Using USB PIPE3</li>
+USB PIPE3</li>
 <li>
-Using USB PIPE4</li>
+USB PIPE4</li>
 <li>
-Using USB PIPE5</li>
+USB PIPE5</li>
 </ul>
-</td><td>Using USB PIPE1 </td><td>Please choose between 1 and 5. </td></tr>
+</td><td>USB PIPE1 </td><td>Please choose between 1 and 5. </td></tr>
 <tr>
-<td>Select which pipe to use for Bulk OUT transfer during HCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Pipe to use for Bulk OUT transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Using USB PIPE1</li>
+USB PIPE1</li>
 <li>
-Using USB PIPE2</li>
+USB PIPE2</li>
 <li>
-Using USB PIPE3</li>
+USB PIPE3</li>
 <li>
-Using USB PIPE4</li>
+USB PIPE4</li>
 <li>
-Using USB PIPE5</li>
+USB PIPE5</li>
 </ul>
-</td><td>Using USB PIPE2 </td><td>Please choose between 1 and 5. </td></tr>
+</td><td>USB PIPE2 </td><td>Please choose between 1 and 5. </td></tr>
 <tr>
-<td>Select which pipe to use for Interrupt IN transfer during HCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Pipe to use for Interrupt IN transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Using USB PIPE6</li>
+USB PIPE6</li>
 <li>
-Using USB PIPE7</li>
+USB PIPE7</li>
 <li>
-Using USB PIPE8</li>
+USB PIPE8</li>
 <li>
-Using USB PIPE9</li>
+USB PIPE9</li>
 </ul>
-</td><td>Using USB PIPE6 </td><td>Please choose between 6 and 9. </td></tr>
+</td><td>USB PIPE6 </td><td>Please choose between 6 and 9. </td></tr>
 </table>
  <h2>Configurations for Middleware &gt; USB &gt; USB HCDC driver on r_usb_hcdc</h2>
 This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; USB &gt; USB HCDC driver on r_usb_hcdc:<br />
@@ -598,22 +577,17 @@ Usage Notes</h1>
 Limitations</h2>
 <p>This driver is subject to the following limitations.</p>
 <ol type="1">
-<li>Only one stage of the USB hub can be used. <br />
-</li>
-<li>Suspend and resume are not supported for CDC devices connected to the USB hub and USB hub downstream ports. <br />
-</li>
-<li>Suspend is not supported when data transfer is in progress. Confirm that data transfer has completed before executing suspend. <br />
-</li>
-<li>Use of compound USB devices with CDC class support is not supported. <br />
-</li>
-<li>This module needs to be incorporated into a project using r_usb_basic. Once incorporated into a project, use the API to perform USB H / W control.</li>
+<li>Only one stage of the USB hub can be used.</li>
+<li>Suspend and resume are not supported for CDC devices connected to the USB hub and USB hub downstream ports.</li>
+<li>Suspend is not supported when data transfer is in progress. Confirm that data transfer has completed before executing suspend.</li>
+<li>Use of compound USB devices with CDC class support is not supported.</li>
+<li>This module needs to be incorporated into a project using r_usb_basic. Once incorporated into a project, use the API to perform USB hardware control.</li>
 </ol>
 <h1><a class="anchor" id="r-usb-examples"></a>
 Examples</h1>
 <h2>USB HCDC Example</h2>
 <h3>Application Specifications</h3>
-<p><br />
-The main functions of the APL are as follows:</p>
+<p>The main functions of the APL are as follows:</p>
 <ol type="1">
 <li>Sends receive (Bulk In transfer) requests to the CDC device and receives data.</li>
 <li>Transfers received data to the CDC device by means of Bulk Out transfers (loopback).</li>
@@ -624,8 +598,7 @@ The main functions of the APL are as follows:</p>
 <object type="image/svg+xml" data="r_usb_hcdc_data_Transfer.svg">r_usb_hcdc_data_Transfer.svg</object>
 <div class="caption">
 Data Transfer (Loopback)</div></div>
-<p> <br />
- </p><h3>Application Processing</h3>
+<h3>Application Processing</h3>
 <p>The application comprises two parts: initial settings and main loop. An overview of the processing in these two parts is provided below.</p>
 <p><b>Initial setting</b></p>
 <p>Initial settings consist of MCU pin settings, USB driver settings, and initial settings to the USB controller.</p>
@@ -646,15 +619,14 @@ Data Transfer (Loopback)</div></div>
 <div class="caption">
 Main Loop processing (for RTOS)</div></div>
  <h3>Connecting Multiple CDC Devices</h3>
-<p><br />
-This is a hcdc example of minimal use of the USB in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define SET_LINE_CODING           (USB_CDC_SET_LINE_CODING | USB_HOST_TO_DEV | USB_CLASS | USB_INTERFACE)</span></div><div class="line"><span class="preprocessor">#define GET_LINE_CODING           (USB_CDC_GET_LINE_CODING | USB_DEV_TO_HOST | USB_CLASS | USB_INTERFACE)</span></div><div class="line"><span class="preprocessor">#define SET_CONTROL_LINE_STATE    (USB_CDC_SET_CONTROL_LINE_STATE | USB_HOST_TO_DEV | USB_CLASS | USB_INTERFACE)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> usb_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> ctrl;          <span class="comment">/* Variable that stores the contents of the received message. */</span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a>        event;</div><div class="line">    usb_event_info_t    event_info;</div><div class="line"></div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03">open</a>(&amp;ctrl, &amp;g_basic0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Message reception processing is performed here. */</span></div><div class="line">        <span class="comment">/* Analyzing the received message */</span></div><div class="line"></div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a>(&amp;event_info, &amp;event);</div><div class="line"></div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">                set_line_coding(&amp;ctrl, event_info.device_address); <span class="comment">/* CDC Class request &quot;SetLineCoding&quot; */</span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a63dd4552584256ef9d1a0d5da2159e9c">USB_STATUS_READ_COMPLETE</a>:</div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2aa31d93178a24f042fb19db6da3b5a2d8">USB_CLASS_HCDC</a> == event_info.type)</div><div class="line">                {</div><div class="line">                    <span class="keywordflow">if</span> (event_info.data_size &gt; 0)</div><div class="line">                    {</div><div class="line">                        <span class="comment">/* Send the received data to USB Host */</span></div><div class="line"></div><div class="line">                        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a6eb4c329c32333e7475202b7f5825bce">write</a>(&amp;ctrl, g_snd_buf, event_info.data_size, USB_DEVICE_ADDRESS_1);</div><div class="line"></div><div class="line">                    }</div><div class="line">                    <span class="keywordflow">else</span></div><div class="line">                    {</div><div class="line"></div><div class="line">                        <span class="comment">/* Send the data reception request when the zero-length packet is received. */</span></div><div class="line">                        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;ctrl, g_snd_buf, CDC_DATA_LEN, USB_DEVICE_ADDRESS_1);</div><div class="line"></div><div class="line">                    }</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line"></div><div class="line">                <span class="comment">/* USB_HCDCC */</span></div><div class="line">                {</div><div class="line">                    <span class="comment">/* Class notification &quot;SerialState&quot; receive start */</span></div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;ctrl,</div><div class="line">                                      (uint8_t *) &amp;g_serial_state,</div><div class="line">                                      USB_HCDC_SERIAL_STATE_MSG_LEN,</div><div class="line">                                      USB_DEVICE_ADDRESS_1);</div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ad44448290b4f36868a09b48e4588b29d">USB_STATUS_WRITE_COMPLETE</a>:</div><div class="line"></div><div class="line">                <span class="comment">/* Report receive start */</span></div><div class="line">                g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;ctrl, g_rcv_buf, CDC_DATA_LEN, USB_DEVICE_ADDRESS_1);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a24e9ad4653245663e5e89bda173141fd">USB_STATUS_REQUEST_COMPLETE</a>:</div><div class="line"></div><div class="line">                <span class="comment">/* Check Complete request &quot;SetLineCoding&quot; */</span></div><div class="line">                <span class="keywordflow">if</span> (USB_CDC_SET_LINE_CODING == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    <span class="comment">/* Class notification &quot;SerialState&quot; receive start */</span></div><div class="line">                    set_control_line_state(&amp;ctrl, event_info.device_address); <span class="comment">/* CDC Class request &quot;SetControlLineState&quot; */</span></div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="comment">/* Check Complete request &quot;SetControlLineState&quot; */</span></div><div class="line">                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (USB_CDC_SET_CONTROL_LINE_STATE == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    get_line_coding(&amp;ctrl, event_info.device_address); <span class="comment">/* CDC Class request &quot;SetLineCoding&quot; */</span></div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (USB_CDC_GET_LINE_CODING == (ctrl.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a6eb4c329c32333e7475202b7f5825bce">write</a>(&amp;ctrl, g_snd_buf, CDC_DATA_LEN, USB_DEVICE_ADDRESS_1);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    <span class="comment">/* Not support request */</span></div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:                   <span class="comment">/* Other event */</span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">} <span class="comment">/* End of function usb_main */</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> set_control_line_state (<a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> * p_ctrl, uint8_t device_address)</div><div class="line">{</div><div class="line">    usb_setup_t setup;</div><div class="line"></div><div class="line">    setup.request_type   = SET_CONTROL_LINE_STATE; <span class="comment">/* bRequestCode:SET_CONTROL_LINE_STATE, bmRequestType */</span></div><div class="line">    setup.request_value  = 0x0000;                 <span class="comment">/* wValue:Zero */</span></div><div class="line">    setup.request_index  = 0x0000;                 <span class="comment">/* wIndex:Interface */</span></div><div class="line">    setup.request_length = 0x0000;                 <span class="comment">/* wLength:Zero */</span></div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e">hostControlTransfer</a>(p_ctrl, &amp;setup, (uint8_t *) &amp;g_usb_dummy, device_address);</div><div class="line">} <span class="comment">/* End of function cdc_set_control_line_state */</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> set_line_coding (<a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> * p_ctrl, uint8_t device_address)</div><div class="line">{</div><div class="line">    usb_setup_t setup;</div><div class="line"></div><div class="line">    g_com_parm.dwdte_rate   = (uint32_t) COM_SPEED;</div><div class="line">    g_com_parm.bdata_bits   = COM_DATA_BIT;</div><div class="line">    g_com_parm.bchar_format = COM_STOP_BIT;</div><div class="line">    g_com_parm.bparity_type = COM_PARITY_BIT;</div><div class="line"></div><div class="line">    setup.request_type   = SET_LINE_CODING;    <span class="comment">/* bRequestCode:SET_LINE_CODING, bmRequestType */</span></div><div class="line">    setup.request_value  = 0x0000;             <span class="comment">/* wValue:Zero */</span></div><div class="line">    setup.request_index  = 0x0000;             <span class="comment">/* wIndex:Interface */</span></div><div class="line">    setup.request_length = LINE_CODING_LENGTH; <span class="comment">/* Data:Line Coding Structure */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Request Control transfer */</span></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e">hostControlTransfer</a>(p_ctrl, &amp;setup, (uint8_t *) &amp;g_com_parm, device_address);</div><div class="line">} <span class="comment">/* End of function cdc_set_line_coding */</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> get_line_coding (<a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> * p_ctrl, uint8_t device_address)</div><div class="line">{</div><div class="line">    usb_setup_t setup;</div><div class="line"></div><div class="line">    setup.request_type   = GET_LINE_CODING;    <span class="comment">/* bRequestCode:GET_LINE_CODING, bmRequestType */</span></div><div class="line">    setup.request_value  = 0x0000;             <span class="comment">/* wValue:Zero */</span></div><div class="line">    setup.request_index  = 0x0000;             <span class="comment">/* wIndex:Interface */</span></div><div class="line">    setup.request_length = LINE_CODING_LENGTH; <span class="comment">/* Data:Line Coding Structure */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Request Control transfer */</span></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e">hostControlTransfer</a>(p_ctrl, &amp;setup, (uint8_t *) &amp;g_com_parm, device_address);</div><div class="line">} <span class="comment">/* End of function cdc_get_line_coding */</span></div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+<p>This is a hcdc example of minimal use of the USB in an application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define SET_LINE_CODING           (USB_CDC_SET_LINE_CODING | USB_HOST_TO_DEV | USB_CLASS | USB_INTERFACE)</span></div><div class="line"><span class="preprocessor">#define GET_LINE_CODING           (USB_CDC_GET_LINE_CODING | USB_DEV_TO_HOST | USB_CLASS | USB_INTERFACE)</span></div><div class="line"><span class="preprocessor">#define SET_CONTROL_LINE_STATE    (USB_CDC_SET_CONTROL_LINE_STATE | USB_HOST_TO_DEV | USB_CLASS | USB_INTERFACE)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> usb_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a>     event;</div><div class="line">    usb_event_info_t event_info;</div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03">open</a>(&amp;g_basic0_ctrl, &amp;g_basic0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Message reception processing is performed here. */</span></div><div class="line">        <span class="comment">/* Analyzing the received message */</span></div><div class="line"></div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a>(&amp;event_info, &amp;event);</div><div class="line"></div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">                set_line_coding(&amp;g_basic0_ctrl, event_info.device_address); <span class="comment">/* CDC Class request &quot;SetLineCoding&quot; */</span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a63dd4552584256ef9d1a0d5da2159e9c">USB_STATUS_READ_COMPLETE</a>:</div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2aa31d93178a24f042fb19db6da3b5a2d8">USB_CLASS_HCDC</a> == event_info.type)</div><div class="line">                {</div><div class="line">                    <span class="keywordflow">if</span> (event_info.data_size &gt; 0)</div><div class="line">                    {</div><div class="line">                        <span class="comment">/* Send the received data to USB Host */</span></div><div class="line"></div><div class="line">                        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a6eb4c329c32333e7475202b7f5825bce">write</a>(&amp;g_basic0_ctrl, g_snd_buf, event_info.data_size, USB_DEVICE_ADDRESS_1);</div><div class="line"></div><div class="line">                    }</div><div class="line">                    <span class="keywordflow">else</span></div><div class="line">                    {</div><div class="line"></div><div class="line">                        <span class="comment">/* Send the data reception request when the zero-length packet is received. */</span></div><div class="line">                        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;g_basic0_ctrl, g_rcv_buf, CDC_DATA_LEN, USB_DEVICE_ADDRESS_1);</div><div class="line"></div><div class="line">                    }</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                <span class="comment">/* USB_HCDCC */</span></div><div class="line">                {</div><div class="line">                    <span class="comment">/* Class notification &quot;SerialState&quot; receive start */</span></div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;g_basic0_ctrl,</div><div class="line">                                      (uint8_t *) &amp;g_serial_state,</div><div class="line">                                      USB_HCDC_SERIAL_STATE_MSG_LEN,</div><div class="line">                                      USB_DEVICE_ADDRESS_1);</div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ad44448290b4f36868a09b48e4588b29d">USB_STATUS_WRITE_COMPLETE</a>:</div><div class="line"></div><div class="line">                <span class="comment">/* Report receive start */</span></div><div class="line">                g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;g_basic0_ctrl, g_rcv_buf, CDC_DATA_LEN, USB_DEVICE_ADDRESS_1);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a24e9ad4653245663e5e89bda173141fd">USB_STATUS_REQUEST_COMPLETE</a>:</div><div class="line"></div><div class="line">                <span class="comment">/* Check Complete request &quot;SetLineCoding&quot; */</span></div><div class="line">                <span class="keywordflow">if</span> (USB_CDC_SET_LINE_CODING == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    <span class="comment">/* Class notification &quot;SerialState&quot; receive start */</span></div><div class="line">                    set_control_line_state(&amp;g_basic0_ctrl, event_info.device_address); <span class="comment">/* CDC Class request &quot;SetControlLineState&quot; */</span></div><div class="line">                }</div><div class="line">                <span class="comment">/* Check Complete request &quot;SetControlLineState&quot; */</span></div><div class="line">                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (USB_CDC_SET_CONTROL_LINE_STATE == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    get_line_coding(&amp;g_basic0_ctrl, event_info.device_address); <span class="comment">/* CDC Class request &quot;SetLineCoding&quot; */</span></div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (USB_CDC_GET_LINE_CODING == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a6eb4c329c32333e7475202b7f5825bce">write</a>(&amp;g_basic0_ctrl, g_snd_buf, CDC_DATA_LEN, USB_DEVICE_ADDRESS_1);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    <span class="comment">/* Not support request */</span></div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:                   <span class="comment">/* Other event */</span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main */</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> set_control_line_state (<a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> * p_ctrl, uint8_t device_address)</div><div class="line">{</div><div class="line">    usb_setup_t setup;</div><div class="line"></div><div class="line">    setup.request_type   = SET_CONTROL_LINE_STATE; <span class="comment">/* bRequestCode:SET_CONTROL_LINE_STATE, bmRequestType */</span></div><div class="line">    setup.request_value  = 0x0000;                 <span class="comment">/* wValue:Zero */</span></div><div class="line">    setup.request_index  = 0x0000;                 <span class="comment">/* wIndex:Interface */</span></div><div class="line">    setup.request_length = 0x0000;                 <span class="comment">/* wLength:Zero */</span></div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e">hostControlTransfer</a>(p_ctrl, &amp;setup, (uint8_t *) &amp;g_usb_dummy, device_address);</div><div class="line">} <span class="comment">/* End of function cdc_set_control_line_state */</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> set_line_coding (<a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> * p_ctrl, uint8_t device_address)</div><div class="line">{</div><div class="line">    usb_setup_t setup;</div><div class="line"></div><div class="line">    g_com_parm.dwdte_rate   = (uint32_t) COM_SPEED;</div><div class="line">    g_com_parm.bdata_bits   = COM_DATA_BIT;</div><div class="line">    g_com_parm.bchar_format = COM_STOP_BIT;</div><div class="line">    g_com_parm.bparity_type = COM_PARITY_BIT;</div><div class="line"></div><div class="line">    setup.request_type   = SET_LINE_CODING;    <span class="comment">/* bRequestCode:SET_LINE_CODING, bmRequestType */</span></div><div class="line">    setup.request_value  = 0x0000;             <span class="comment">/* wValue:Zero */</span></div><div class="line">    setup.request_index  = 0x0000;             <span class="comment">/* wIndex:Interface */</span></div><div class="line">    setup.request_length = LINE_CODING_LENGTH; <span class="comment">/* Data:Line Coding Structure */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Request Control transfer */</span></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e">hostControlTransfer</a>(p_ctrl, &amp;setup, (uint8_t *) &amp;g_com_parm, device_address);</div><div class="line">} <span class="comment">/* End of function cdc_set_line_coding */</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> get_line_coding (<a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> * p_ctrl, uint8_t device_address)</div><div class="line">{</div><div class="line">    usb_setup_t setup;</div><div class="line"></div><div class="line">    setup.request_type   = GET_LINE_CODING;    <span class="comment">/* bRequestCode:GET_LINE_CODING, bmRequestType */</span></div><div class="line">    setup.request_value  = 0x0000;             <span class="comment">/* wValue:Zero */</span></div><div class="line">    setup.request_index  = 0x0000;             <span class="comment">/* wIndex:Interface */</span></div><div class="line">    setup.request_length = LINE_CODING_LENGTH; <span class="comment">/* Data:Line Coding Structure */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Request Control transfer */</span></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e">hostControlTransfer</a>(p_ctrl, &amp;setup, (uint8_t *) &amp;g_com_parm, device_address);</div><div class="line">} <span class="comment">/* End of function cdc_get_line_coding */</span></div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

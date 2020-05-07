@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -119,8 +119,7 @@ Functions</h2></td></tr>
 <p>This module supports the Capacitive Touch Sensing Unit (CTSU). It implements the <a class="el" href="group___t_o_u_c_h___a_p_i.html">Touch Middleware Interface</a>. </p>
 <h1><a class="anchor" id="r-touch-overview"></a>
 Overview</h1>
-<p>The Touch Middleware uses the <a class="el" href="group___c_t_s_u.html">Capacitive Touch Sensing Unit (r_ctsu)</a> API and provides application-level APIs for scanning touch buttons, sliders, and wheels.</p>
-<p>Configure this module with the <a href="https://www.renesas.com/qe-capacitive-touch">QE for Capacitive Touch</a> tool.</p>
+<p>The Touch Middleware uses the <a class="el" href="group___c_t_s_u.html">Capacitive Touch Sensing Unit (r_ctsu)</a> API and provides application-level APIs for scanning touch buttons, sliders, and wheels. This module is configured via the <a href="https://www.renesas.com/qe-capacitive-touch">QE for Capacitive Touch</a>.</p>
 <h2><a class="anchor" id="r-touch-features"></a>
 Features</h2>
 <p><a class="anchor" id="um_touch_slider_5position"></a><a class="anchor" id="um_touch_button_on_off"></a></p><ul>
@@ -137,7 +136,7 @@ Features</h2>
 </ul>
 <h1><a class="anchor" id="r-touch-configuration"></a>
 Configuration</h1>
-<dl class="section note"><dt>Note</dt><dd><b>This module is configured via the <a href="https://www.renesas.com/qe-capacitive-touch">QE for Capacitive Touch</a> tool. For information on how to use the QE tool, once the tool is installed click Help -&gt; Help Contents in e2 studio and search for "QE".</b></dd>
+<dl class="section note"><dt>Note</dt><dd><b>This module is configured via the <a href="https://www.renesas.com/qe-capacitive-touch">QE for Capacitive Touch</a>. For information on how to use the QE tool, once the tool is installed click Help -&gt; Help Contents in e2 studio and search for "QE".</b></dd>
 <dd>
 Multiple configurations can be defined within a single project allowing for different scan procedures or button layouts.</dd></dl>
 <p><h2>Build Time Configurations for rm_touch</h2>
@@ -162,15 +161,13 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Disabled </td><td>If selected enable supporting for using UART at QE monitoring . </td></tr>
+</td><td>Disabled </td><td>Enable SCI_UART support for QE monitoring. </td></tr>
 </table>
  <h2>Configurations for Middleware &gt; CapTouch &gt; TOUCH Driver on rm_touch</h2>
 This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; CapTouch &gt; TOUCH Driver on rm_touch:<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>g_touch0 </td><td>Module name. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-touch-interrupt-configuration"></a>
@@ -209,7 +206,7 @@ Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the TOUCH in an application.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> touch_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___t_o_u_c_h.html#gafa9a9e5c3000e3daedd1050fa0d942fd">RM_TOUCH_Open</a>(&amp;g_touch_ctrl, &amp;g_touch_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___t_o_u_c_h.html#gad399083eda1add2a5f1e133df1089b82">RM_TOUCH_ScanStart</a>(&amp;g_touch_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_flag = 0;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1">RM_TOUCH_DataGet</a>(&amp;g_touch_ctrl, &amp;button, slider, wheel);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Multi Mode Example</h2>
-<p>This is a optional exmaple of using both Self-capacitance and Mutual-capacitance. Refer to the Multi Mode Example in CTSU usage notes.</p>
+<p>This is a optional example of using both Self-capacitance and Mutual-capacitance. Refer to the Multi Mode Example in CTSU usage notes.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> touch_optional_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___t_o_u_c_h.html#gafa9a9e5c3000e3daedd1050fa0d942fd">RM_TOUCH_Open</a>(&amp;g_touch_ctrl, &amp;g_touch_cfg);</div><div class="line">    handle_error(err);</div><div class="line">    err = <a class="code" href="group___t_o_u_c_h.html#gafa9a9e5c3000e3daedd1050fa0d942fd">RM_TOUCH_Open</a>(&amp;g_touch_ctrl_mutual, &amp;g_touch_cfg_mutual);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___t_o_u_c_h.html#gad399083eda1add2a5f1e133df1089b82">RM_TOUCH_ScanStart</a>(&amp;g_touch_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_flag = 0;</div><div class="line">        <a class="code" href="group___t_o_u_c_h.html#gad399083eda1add2a5f1e133df1089b82">RM_TOUCH_ScanStart</a>(&amp;g_touch_ctrl_mutual);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_flag = 0;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1">RM_TOUCH_DataGet</a>(&amp;g_touch_ctrl, &amp;button, slider, wheel);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        err = <a class="code" href="group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1">RM_TOUCH_DataGet</a>(&amp;g_touch_ctrl_mutual, &amp;button, slider, wheel);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -490,7 +487,7 @@ Pointer to CTSU instance. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_SCANNING</td><td>Scanning this instance or other. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CTSU_NOT_GET_DATA</td><td>The previous data does not been getted by DataGet. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_NOT_GET_DATA</td><td>The previous data has not been retrieved by DataGet. </td></tr>
   </table>
   </dd>
 </dl>
@@ -609,7 +606,7 @@ Pointer to CTSU instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

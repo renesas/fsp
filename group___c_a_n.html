@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -137,7 +137,7 @@ The following build time configurations are defined in fsp_cfg/r_can_cfg.h:<br /
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Parameter Checking Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
 <li>
@@ -155,19 +155,13 @@ This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connec
 <tr>
 <td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_can0 </td><td>Module name. </td></tr>
 <tr>
-<td>General &gt; Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the CAN channel to use. </td></tr>
+<td>General &gt; Channel</td><td>Channel should be 0 or 1</td><td>0 </td><td>Specify the CAN channel to use. </td></tr>
 <tr>
-<td>General &gt; Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-PCLKB</li>
-<li>
-CANMCLK</li>
-</ul>
-</td><td>CANMCLK </td><td>Select the CAN clock source. </td></tr>
+<td>General &gt; Clock Source</td><td>MCU Specific Options</td><td></td><td>Select the CAN clock source. </td></tr>
 <tr>
-<td>General &gt; Sample-Point (%)</td><td>Value must be a non-negative integer.</td><td>75 </td><td>Sample-Point = (TSEG1 + 1) / (TSEG1 + TSEG2 + 1). </td></tr>
+<td>General &gt; Sample-Point (%)</td><td>Must be a valid integer between 0 and 100.</td><td>75 </td><td>Sample-Point = (TSEG1 + 1) / (TSEG1 + TSEG2 + 1). </td></tr>
 <tr>
-<td>General &gt; CAN Baud Rate (Hz)</td><td>Value must be a non-negative integer.</td><td>500000 </td><td>Specify baud rate in Hz. </td></tr>
+<td>General &gt; CAN Baud Rate (Hz)</td><td>Must be a valid integer configurable upto maximum 4MHz.</td><td>500000 </td><td>Specify baud rate in Hz. </td></tr>
 <tr>
 <td>General &gt; Overwrite/Overrrun Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -796,7 +790,7 @@ Remote Mailbox</li>
 </p>
 <h2><a class="anchor" id="r-can-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The CAN peripheral uses the CANMCLK (main-clock oscillator) or PCLKB as its clock source (fCAN, CAN System Clock.) Using the PCLKB with the default of 60 MHz and the default CAN configuration will provide a CAN bit rate of 500 Kbit. To set the PCLKB frequency, use the clock configurator in e2 studio. To change the clock frequency at run-time, use the CGC Interface. Refer to the CGC module guide for more information on configuring clocks.</p>
+<p>The CAN peripheral uses the CANMCLK (main-clock oscillator) or PCLKB as its clock source (fCAN, CAN System Clock.) Using the PCLKB with the default of 60 MHz and the default CAN configuration will provide a CAN bit rate of 500 Kbit. To set the PCLKB frequency, use the <b>Clocks</b> tab of the RA Configuration editor. To change the clock frequency at run-time, use the CGC Interface. Refer to the CGC module guide for more information on configuring clocks.</p>
 <ul>
 <li>The user application must start the main-clock oscillator (CANMCLK or XTAL) at run-time using the CGC Interface if it has not already started (for example, if it is not used as the MCU clock source.)</li>
 <li>For RA6, RA4 and RA2 MCUs, the following clock restriction must be satisfied for the CAN HAL module when the clock source is the main-clock oscillator (CANMCLK):<ul>
@@ -813,7 +807,7 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-can-usage_notes"></a>
 Usage Notes</h1>
 <h2>Bit Rate Calculation</h2>
-<p>The baudrate of the CAN peripheral is automatically set through the FSP configurator in e2 studio. For more details on how the baudrate is set refer to section 37.4 "Data Transfer Rate Configuration" of the RA6M3 User's Manual (R01UH0886EJ0100).</p>
+<p>The baudrate of the CAN peripheral is automatically set through the RA Configuration editor. For more details on how the baudrate is set refer to section 37.4 "Data Transfer Rate Configuration" of the RA6M3 User's Manual (R01UH0886EJ0100).</p>
 <h1><a class="anchor" id="r-can-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -1041,7 +1035,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

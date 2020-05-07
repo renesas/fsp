@@ -22,7 +22,6 @@ var group___l_p_m___a_p_i =
       [ "p_cfg", "group___l_p_m___a_p_i.html#affe6de86ae6544e220f90b33b013b405", null ],
       [ "p_api", "group___l_p_m___a_p_i.html#ae0a6371cd7a482200ced96a93c8a4140", null ]
     ] ],
-    [ "LPM_API_VERSION_MAJOR", "group___l_p_m___a_p_i.html#ga85bb98ba8003c1b35df91b08c0ebf406", null ],
     [ "lpm_ctrl_t", "group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f", null ],
     [ "lpm_mode_t", "group___l_p_m___a_p_i.html#ga22283c51ece346b4ba08a30c7b0cc8dd", [
       [ "LPM_MODE_SLEEP", "group___l_p_m___a_p_i.html#gga22283c51ece346b4ba08a30c7b0cc8dda88181762f1414a0fdd7e3d778a145784", null ],

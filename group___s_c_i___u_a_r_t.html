@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -336,7 +336,7 @@ Usage Notes</h1>
 Limitations</h2>
 <ul>
 <li>Transfer size must be less than or equal to 64K bytes if DTC interface is used for transfer. <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">uart_api_t::infoGet</a> API can be used to get the max transfer size allowed.</li>
-<li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read, will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
+<li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
 <li>When using 9-bit reception with DTC, clear the upper 7 bits of data before processing the read data. The upper 7 bits contain status flags that are part of the register used to read data in 9-bit mode.</li>
 </ul>
 <h1><a class="anchor" id="r-sci-uart-examples"></a>
@@ -399,7 +399,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="aec1df57f90aef0ee26518bfe02fb6b13"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
+<a id="af0bd2894ed72b6ea36fc08fa10c27ad3"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -986,7 +986,7 @@ CTS/RTS function of the SSn pin. </td></tr>
 <p>Calculates baud rate register settings. Evaluates and determines the best possible settings set to the baud rate related registers.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">baudrate</td><td>Baud rate[bps] e.g. 19200, 57600, 115200, etc. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">baudrate</td><td>Baud rate [bps]. For example, 19200, 57600, 115200, etc. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bitrate_modulation</td><td>Enable bitrate modulation </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">baud_rate_error_x_1000</td><td>&lt;baud_rate_percent_error&gt; x 1000 required for module to function. Absolute max baud_rate_error is 15000 (15%). </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_baud_setting</td><td>Baud setting information stored here if successful</td></tr>
@@ -1010,7 +1010,7 @@ CTS/RTS function of the SSn pin. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

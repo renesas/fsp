@@ -3,7 +3,6 @@ var searchData=
   ['acmplp_5finput_5fampo',['ACMPLP_INPUT_AMPO',['../group___a_c_m_p_l_p.html#ggacf5f338d07b27f3f740a174e0f0c9159af2b3f9a72cd6d96fba8caff635c3bd0e',1,'r_acmplp.h']]],
   ['acmplp_5finput_5fcmpin_5f1',['ACMPLP_INPUT_CMPIN_1',['../group___a_c_m_p_l_p.html#ggacf5f338d07b27f3f740a174e0f0c9159a05bc693d58f275656e41f5ed36e72551',1,'r_acmplp.h']]],
   ['acmplp_5freference_5fcmpref_5f1',['ACMPLP_REFERENCE_CMPREF_1',['../group___a_c_m_p_l_p.html#gga6193f6c24e0910b6904acfad8767464daf7702670656e0a6733851763d5573c6c',1,'r_acmplp.h']]],
-  ['acmplp_5freference_5fivref0',['ACMPLP_REFERENCE_IVREF0',['../group___a_c_m_p_l_p.html#gga6193f6c24e0910b6904acfad8767464dada7341bed23c7c5ad97332d113475ab9',1,'r_acmplp.h']]],
   ['adc_5fadd_5faverage_5feight',['ADC_ADD_AVERAGE_EIGHT',['../group___a_d_c.html#ggae9ce774d7384e84ac724f5a1c6ca0d21ad2c5445357f4973b69afbab249fc9e83',1,'r_adc.h']]],
   ['adc_5fadd_5faverage_5ffour',['ADC_ADD_AVERAGE_FOUR',['../group___a_d_c.html#ggae9ce774d7384e84ac724f5a1c6ca0d21aa5551fce055385439e74076ea349ca38',1,'r_adc.h']]],
   ['adc_5fadd_5faverage_5fsixteen',['ADC_ADD_AVERAGE_SIXTEEN',['../group___a_d_c.html#ggae9ce774d7384e84ac724f5a1c6ca0d21a9026625853db106940c2418a1d65226e',1,'r_adc.h']]],

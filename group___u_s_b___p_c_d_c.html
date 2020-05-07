@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,26 +94,21 @@ $(document).ready(function(){initNavTree('group___u_s_b___p_c_d_c.html','');});
 <div class="title">USB Peripheral Communication Device Class (r_usb_pcdc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This module is USB Peripheral Communication Device Class Driver (PCDC). It implements the <a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html">USB PCDC Interface</a>. <br />
-This module works in combination with (r_usb_basic module). </p>
+<p>This module is USB Peripheral Communication Device Class Driver (PCDC). It implements the <a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html">USB PCDC Interface</a>. This module works in combination with (r_usb_basic module). </p>
 <p><a class="anchor" id="functionss"></a></p><h2 class="groupheader">Functions</h2>
 <p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> for the common API (r_usb_basic) to be called from the application. <a class="anchor" id="details"></a></p><h2 class="groupheader">Detailed Description</h2>
 <h1><a class="anchor" id="r-usb_pcdc-overview"></a>
 Overview</h1>
-<p><br />
-The r_usb_pcdc module combines with the r_usb_basic module to provide USB Peripheral It operates as a communication device class driver (hereinafter referred to as PCDC). <br />
-PCDC conforms to Abstract Control Model of USB communication device class specification (hereinafter referred to as CDC) and can communicate with USB host.</p>
+<p>The r_usb_pcdc module combines with the r_usb_basic module to provide USB Peripheral It operates as a communication device class driver (hereinafter referred to as PCDC). PCDC conforms to Abstract Control Model of USB communication device class specification (hereinafter referred to as CDC) and can communicate with USB host.</p>
 <h2><a class="anchor" id="r-usb_pcdc-features"></a>
 Features</h2>
-<p><br />
-The r_usb_pcdc module has the following key features:</p><ul>
+<p>The r_usb_pcdc module has the following key features:</p><ul>
 <li>Data transfer to and from a USB host.</li>
 <li>Response to CDC class requests.</li>
 <li>Provision of communication device class notification transmit service.</li>
 </ul>
 <h3>Basic Functions</h3>
-<p><br />
-CDC conforms to the communication device class specification Abstract Control Model subclass.</p>
+<p>CDC conforms to the communication device class specification Abstract Control Model subclass.</p>
 <h3>Abstract Control Model Overview</h3>
 <p>The Abstract Control Model subclass of CDC is a technology that bridges the gap between USB devices and earlier modems (employing RS-232C connections), enabling use of application programs designed for older modems. The class requests and class notifications supported are listed below.</p>
 <h3>Class Requests (Host to Peripheral)</h3>
@@ -122,8 +117,7 @@ CDC conforms to the communication device class specification Abstract Control Mo
 <tr>
 <th align="left">Request </th><th align="left">Code </th><th align="left">Description  </th></tr>
 <tr>
-<td align="left">SetLineCoding </td><td align="left">0x20 </td><td align="left">Makes communication line settings <br />
- (communication speed, data length,parity bit, and stop bit length). </td></tr>
+<td align="left">SetLineCoding </td><td align="left">0x20 </td><td align="left">Makes communication line settings (communication speed, data length,parity bit, and stop bit length). </td></tr>
 <tr>
 <td align="left">GetLineCoding </td><td align="left">0x21 </td><td align="left">Acquires the communication line setting state. </td></tr>
 <tr>
@@ -132,9 +126,8 @@ CDC conforms to the communication device class specification Abstract Control Mo
 <p>For details concerning the Abstract Control Model requests, refer to Table 11, [Requests - Abstract Control Model] in [USB Communications Class Subclass Specification for PSTN Devices], Revision 1.2.</p>
 <h3>Data Format of Class Requests</h3>
 <p>The data format of the class requests supported by the class driver software is described below.</p>
-<p><b>1.SetLineCoding</b></p>
-<p>This is the class request the host transmits to perform the UART line setting. <br />
-The SetLineCoding data format is shown below.</p>
+<p><b>SetLineCoding</b></p>
+<p>This is the class request the host transmits to perform the UART line setting. The SetLineCoding data format is shown below.</p>
 <p>SetLineCoding Format</p>
 <table class="doxtable">
 <tr>
@@ -162,9 +155,8 @@ The SetLineCoding data format is shown below.</p>
 <tr>
 <td align="center">6 </td><td align="center">BdataBits </td><td align="center">1 </td><td align="center"></td><td align="left">Data bits (5, 6, 7, 8) </td></tr>
 </table>
-<p><b>2.GetLineCoding</b></p>
-<p>This is the class request the host transmits to request the UART line state. <br />
- The GetLineCoding data format is shown below.</p>
+<p><b>GetLineCoding</b></p>
+<p>This is the class request the host transmits to request the UART line state. The GetLineCoding data format is shown below.</p>
 <p>GetLineCoding Format</p>
 <table class="doxtable">
 <tr>
@@ -172,10 +164,8 @@ The SetLineCoding data format is shown below.</p>
 <tr>
 <td align="center">0xA1 </td><td align="center">GET_LINE_CODING(0x21) </td><td align="center">0x00 </td><td align="center">0x0 </td><td align="center">0x07 </td><td align="left">Line Coding Structure </td></tr>
 </table>
-<p><b>3.SetControlLineState</b></p>
-<p>This is a class request that the host sends to set up the signal for flow controls of UART. <br />
-This software does not support RTS/DTR control. <br />
-The SET_CONTROL_LINE_STATE data format is shown below.</p>
+<p><b>SetControlLineState</b></p>
+<p>This is a class request that the host sends to set up the signal for flow controls of UART. This software does not support RTS/DTR control. The SET_CONTROL_LINE_STATE data format is shown below.</p>
 <p>SET_CONTROL_LINE_STATE Format</p>
 <table class="doxtable">
 <tr>
@@ -199,7 +189,7 @@ The SET_CONTROL_LINE_STATE data format is shown below.</p>
 1 - DTR On </td></tr>
 </table>
 <h3>Class Notifications (Peripheral to Host)</h3>
-<p>The table below shows the class notification support / non-support of this S / W.</p>
+<p>The table below shows the class notification support/non-support of this software.</p>
 <table class="doxtable">
 <tr>
 <th align="left">Notification </th><th align="center">Code </th><th align="left">Description </th><th align="left">Supported  </th></tr>
@@ -211,8 +201,8 @@ The SET_CONTROL_LINE_STATE data format is shown below.</p>
 <td align="left">SERIAL_STATE </td><td align="center">0x20 </td><td align="left">Notification of serial line state </td><td align="left">Yes </td></tr>
 </table>
 <p><b>1.Serial State</b></p>
-<p>The host is notified of the serial state when a change in the UART port state is detected. <br />
-This software supports the detection of overrun, parity and framing errors. A state notification is performed when a change from normal state to error is detected. However, notification is not continually transmitted when an error is continually detected.</p>
+<p>The host is notified of the serial state when a change in the UART port state is detected.</p>
+<p>This software supports the detection of overrun, parity and framing errors. A state notification is performed when a change from normal state to error is detected. However, notification is not continually transmitted when an error is continually detected.</p>
 <p>SerialState Format</p>
 <table class="doxtable">
 <tr>
@@ -242,61 +232,59 @@ This software supports the detection of overrun, parity and framing errors. A st
 <td align="left">D0 </td><td align="left">brx_carrier </td><td align="left">Data Carrier Detect: Carrier detected on line </td><td align="center">No </td></tr>
 </table>
 <h3>PC Virtual COM-port Usage</h3>
-<p>The CDC device can be used as a virtual COM port when operating in Windows OS. <br />
-Use a PC running Windows OS, and connect an board. After USB enumeration, the CDC class requests GetLineCoding and SetControlLineState are executed by the target, and the CDC device is registered in Windows Device Manager as a virtual COM device. <br />
-Registering the CDC device as a virtual COM-port in Windows Device Manager enables data communication with the CDC device via a terminal app such as [HyperTerminal] which comes standard with Windows OS. When changing settings of the serial port in the Windows terminal application, the UART setting is propagated to the firmware via the class request SetLineCoding. <br />
-Data input (or file transmission) from the terminal app window is transmitted to the board using endpoint 2 (EP2); data from the board side is transmitted to the PC using EP1. <br />
-When the last packet of data received is the maximum packet size, and the terminal determines that there is continuous data, the received data may not be displayed in the terminal. If the received data is smaller than the maximum packet size, the data received up to that point is displayed in the terminal. <br />
-The received data is outputted on the terminal when the data less than Maximum packet size is received. <br />
- </p>
+<p>The CDC device can be used as a virtual COM port when operating in Windows OS.</p>
+<p>Use a PC running Windows OS, and connect an board. After USB enumeration, the CDC class requests GetLineCoding and SetControlLineState are executed by the target, and the CDC device is registered in Windows Device Manager as a virtual COM device.</p>
+<p>Registering the CDC device as a virtual COM-port in Windows Device Manager enables data communication with the CDC device via a terminal app such as HyperTerminal which comes standard with Windows OS. When changing settings of the serial port in the Windows terminal application, the UART setting is propagated to the firmware via the class request SetLineCoding.</p>
+<p>Data input (or file transmission) from the terminal app window is transmitted to the board using endpoint 2 (EP2); data from the board side is transmitted to the PC using EP1.</p>
+<p>When the last packet of data received is the maximum packet size, and the terminal determines that there is continuous data, the received data may not be displayed in the terminal. If the received data is smaller than the maximum packet size, the data received up to that point is displayed in the terminal.</p>
+<p>The received data is outputted on the terminal when the data less than Maximum packet size is received.</p>
 <h1><a class="anchor" id="r-usb_pcdc-configuration"></a>
 Configuration</h1>
-<p><br />
-<h2>Build Time Configurations for r_usb_pcdc</h2>
+<p><h2>Build Time Configurations for r_usb_pcdc</h2>
 The following build time configurations are defined in fsp_cfg/r_usb_pcdc_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Select which pipe to use for Bulk IN transfer during PCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Pipe to use for Bulk IN transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Using USB PIPE1</li>
+USB PIPE1</li>
 <li>
-Using USB PIPE2</li>
+USB PIPE2</li>
 <li>
-Using USB PIPE3</li>
+USB PIPE3</li>
 <li>
-Using USB PIPE4</li>
+USB PIPE4</li>
 <li>
-Using USB PIPE5</li>
+USB PIPE5</li>
 </ul>
-</td><td>Using USB PIPE1 </td><td>Please choose between 1 and 5. </td></tr>
+</td><td>USB PIPE1 </td><td>Please choose between 1 and 5. </td></tr>
 <tr>
-<td>Select which pipe to use for Bulk OUT transfer during PCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Pipe to use for Bulk OUT transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Using USB PIPE1</li>
+USB PIPE1</li>
 <li>
-Using USB PIPE2</li>
+USB PIPE2</li>
 <li>
-Using USB PIPE3</li>
+USB PIPE3</li>
 <li>
-Using USB PIPE4</li>
+USB PIPE4</li>
 <li>
-Using USB PIPE5</li>
+USB PIPE5</li>
 </ul>
-</td><td>Using USB PIPE2 </td><td>Please choose between 1 and 5. </td></tr>
+</td><td>USB PIPE2 </td><td>Please choose between 1 and 5. </td></tr>
 <tr>
-<td>Select which pipe to use for Interrupt IN transfer during PCDC operation.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Pipe to use for Interrupt IN transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Using USB PIPE6</li>
+USB PIPE6</li>
 <li>
-Using USB PIPE7</li>
+USB PIPE7</li>
 <li>
-Using USB PIPE8</li>
+USB PIPE8</li>
 <li>
-Using USB PIPE9</li>
+USB PIPE9</li>
 </ul>
-</td><td>Using USB PIPE6 </td><td>Please choose between 6 and 9. </td></tr>
+</td><td>USB PIPE6 </td><td>Please choose between 6 and 9. </td></tr>
 </table>
  <h2>Configurations for Middleware &gt; USB &gt; USB PCDC driver on r_usb_pcdc</h2>
 This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; USB &gt; USB PCDC driver on r_usb_pcdc:<br />
@@ -306,35 +294,30 @@ This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; US
 <tr>
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_pcdc0 </td><td>Module name. </td></tr>
 </table>
- Setting as r_usb_pcdc module is not necessary. <br />
-Refer to r_usb_basic module.</p>
+ Setting as r_usb_pcdc module is not necessary. Refer to r_usb_basic module.</p>
 <h2><a class="anchor" id="r-usb_pcdc-clock-configuration"></a>
 Clock Configuration</h2>
-<p><br />
-Refer to r_usb_basic module.</p>
+<p>Refer to r_usb_basic module.</p>
 <h2><a class="anchor" id="r-usb_pcdc-pin-configuration"></a>
 Pin Configuration</h2>
-<p><br />
-Refer to r_usb_basic module.</p>
+<p>Refer to r_usb_basic module.</p>
 <h1><a class="anchor" id="r-usb_pcdc-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="r-usb_pcdc-limitations"></a>
 Limitations</h2>
-<p><br />
-This module needs to be incorporated into a project using r_usb_basic. Once incorporated into a project, use the API to perform USB H / W control.</p>
+<p>This module needs to be incorporated into a project using r_usb_basic. Once incorporated into a project, use the API to perform USB hardware control.</p>
 <h1><a class="anchor" id="r-usb_pcdc-examples"></a>
 Examples</h1>
 <h2>USB PCDC Example</h2>
-<p><b>Example Operating Environment</b> <br />
-The following shows an example of the operating environment for the PCDC echo mode. <br />
-Refer to the associated instruction manuals for details on setting up the evaluation board and using the emulator, etc. <br />
- </p><div class="image">
+<p><b>Example Operating Environment</b></p>
+<p>The following shows an example of the operating environment for the PCDC echo mode.</p>
+<p>Refer to the associated instruction manuals for details on setting up the evaluation board and using the emulator, etc.</p>
+<div class="image">
 <img src="r_usb_pcdc_operating_environment_echo.png" alt="r_usb_pcdc_operating_environment_echo.png"/>
 <div class="caption">
 Example Operating Environment</div></div>
  <h3>Application Specifications</h3>
-<p><br />
-The main functions of the APL are as follows:</p>
+<p>The main functions of the APL are as follows:</p>
 <ol type="1">
 <li>Echo mode (Loopback mode) <br />
 Transmits data received from the USB host back to the USB host. <br />
@@ -363,9 +346,8 @@ b) When the USB is detached (disconnected), the APL transitions the MCU to softw
 <img src="r_usb_pcdc_task_flow_sample.png" alt="r_usb_pcdc_task_flow_sample.png"/>
 <div class="caption">
 Main Loop processing (Echo mode)</div></div>
-<p> <br />
-Below is an example of minimal use of the USB PCDC module in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> usb_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> ctrl;</div><div class="line">    usb_event_info_t    event_info;</div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a>        event;</div><div class="line"></div><div class="line">    <a class="code" href="group___u_s_b.html#gab9810a1d8e322cb89a9a7f9ca84a368f">R_USB_Open</a>(&amp;ctrl, &amp;g_usb0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Loop back between PC(TerminalSoft) and USB MCU */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951">R_USB_EventGet</a>(&amp;event_info, &amp;event);</div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ad44448290b4f36868a09b48e4588b29d">USB_STATUS_WRITE_COMPLETE</a>:</div><div class="line">                <a class="code" href="group___u_s_b.html#ga42ad1cbad598d06023d83e8a91fd49d4">R_USB_Read</a>(&amp;ctrl, g_buf, DATA_LEN, <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>);</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a63dd4552584256ef9d1a0d5da2159e9c">USB_STATUS_READ_COMPLETE</a>:</div><div class="line">                <a class="code" href="group___u_s_b.html#ga001f40866be6438435e65e78871a54d5">R_USB_Write</a>(&amp;ctrl, g_buf, event_info.data_size, <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a8b49ebc4d15054963bdbe8d843a2cf5a">USB_STATUS_REQUEST</a>:   <span class="comment">/* Receive Class Request */</span></div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga9e76ac14dae5e5e44b5df6e8cbee6bd0">USB_PCDC_SET_LINE_CODING</a> == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    <a class="code" href="group___u_s_b.html#ga1293995ba77495705db3a3adf703b7f1">R_USB_PeriControlDataGet</a>(&amp;ctrl, (uint8_t *) &amp;g_line_coding, LINE_CODING_LENGTH);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga3e7ae95dcfc42bd8912fe18339893d82">USB_PCDC_GET_LINE_CODING</a> == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    <a class="code" href="group___u_s_b.html#ga3fb9080601ee1041e35073e0538a21b0">R_USB_PeriControlDataSet</a>(&amp;ctrl, (uint8_t *) &amp;g_line_coding, LINE_CODING_LENGTH);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a29903dba1e2952e264159322340db640">periControlStatusSet</a>(&amp;ctrl, <a class="code" href="group___u_s_b___a_p_i.html#gga386cabe04206e06b3be8dbafc0bc3d86a20a1e7b4a77141981d824649cab7554b">USB_SETUP_STATUS_ACK</a>);</div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40adb879552af43dda95b70261eaa810777">USB_STATUS_SUSPEND</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ae9bcf94bdb90960ca692b1dfecb98e78">USB_STATUS_DETACH</a>:</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main() */</span></div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="r-usb_pcdc-descriptor"></a>
+<p>Below is an example of minimal use of the USB PCDC module in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> usb_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    usb_event_info_t event_info;</div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a>     event;</div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03">open</a>(&amp;g_basic0_ctrl, &amp;g_basic0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Loop back between PC(TerminalSoft) and USB MCU */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a>(&amp;event_info, &amp;event);</div><div class="line"></div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ad44448290b4f36868a09b48e4588b29d">USB_STATUS_WRITE_COMPLETE</a>:</div><div class="line">                g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;g_basic0_ctrl, g_buf, DATA_LEN, <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a63dd4552584256ef9d1a0d5da2159e9c">USB_STATUS_READ_COMPLETE</a>:</div><div class="line">                g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a6eb4c329c32333e7475202b7f5825bce">write</a>(&amp;g_basic0_ctrl, g_buf, event_info.data_size, <a class="code" href="group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e">USB_CLASS_PCDC</a>);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a8b49ebc4d15054963bdbe8d843a2cf5a">USB_STATUS_REQUEST</a>:   <span class="comment">/* Receive Class Request */</span></div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga9e76ac14dae5e5e44b5df6e8cbee6bd0">USB_PCDC_SET_LINE_CODING</a> == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#acfd255be34c610f854f8bedb4a1a0a4f">periControlDataGet</a>(&amp;g_basic0_ctrl, (uint8_t *) &amp;g_line_coding, LINE_CODING_LENGTH);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___p_c_d_c___a_p_i.html#ga3e7ae95dcfc42bd8912fe18339893d82">USB_PCDC_GET_LINE_CODING</a> == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ada9e58c96ca03bf9140ba2db36a4214c">periControlDataSet</a>(&amp;g_basic0_ctrl, (uint8_t *) &amp;g_line_coding, LINE_CODING_LENGTH);</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a29903dba1e2952e264159322340db640">periControlStatusSet</a>(&amp;g_basic0_ctrl, <a class="code" href="group___u_s_b___a_p_i.html#gga386cabe04206e06b3be8dbafc0bc3d86a20a1e7b4a77141981d824649cab7554b">USB_SETUP_STATUS_ACK</a>);</div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40adb879552af43dda95b70261eaa810777">USB_STATUS_SUSPEND</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ae9bcf94bdb90960ca692b1dfecb98e78">USB_STATUS_DETACH</a>:</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main() */</span></div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="r-usb_pcdc-descriptor"></a>
 Descriptor</h1>
 <p>A template for PCDC descriptors can be found in ra/fsp/src/r_usb_pcdc/r_usb_pcdc_descriptor.c.template. Also, please be sure to use your vendor ID.</p>
 </div><!-- contents -->
@@ -374,7 +356,7 @@ Descriptor</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

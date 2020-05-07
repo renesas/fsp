@@ -24,7 +24,6 @@ var group___d_o_c___a_p_i =
       [ "p_cfg", "group___d_o_c___a_p_i.html#abeea89b7f765520e66a8f535115d9436", null ],
       [ "p_api", "group___d_o_c___a_p_i.html#ad92748002780c7bd7d8b73c6a1f4a931", null ]
     ] ],
-    [ "DOC_API_VERSION_MAJOR", "group___d_o_c___a_p_i.html#gad4baadd8020c9c3d45a836203fa55dfa", null ],
     [ "doc_ctrl_t", "group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6", null ],
     [ "doc_event_t", "group___d_o_c___a_p_i.html#ga0ff188142746d68859b2acb3c3d0f2fe", [
       [ "DOC_EVENT_COMPARISON_MISMATCH", "group___d_o_c___a_p_i.html#gga0ff188142746d68859b2acb3c3d0f2fea576179771341175f50daa22aeeaf0dd8", null ],

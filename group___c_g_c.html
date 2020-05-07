@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -127,7 +127,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the CGC peripheral on RA MCUs. This module implements the <a class="el" href="group___c_g_c___a_p_i.html">CGC Interface</a>. </p>
-<dl class="section note"><dt>Note</dt><dd><b>This module is not required for the initial clock configuration. Initial clock settings are configurable on the Clocks tab of the configuration tool. The initial clock settings are applied by the BSP during the startup process before main.</b></dd></dl>
+<dl class="section note"><dt>Note</dt><dd><b>This module is not required for the initial clock configuration. Initial clock settings are configurable on the **Clocks</b> tab of the RA Configuration editor. The initial clock settings are applied by the BSP during the startup process before main.**</dd></dl>
 <h1><a class="anchor" id="r-cgc-overview"></a>
 Overview</h1>
 <h2><a class="anchor" id="r-cgc-features"></a>
@@ -146,17 +146,11 @@ Features</h2>
 <li>When the system core clock frequency changes, the following things are updated:<ul>
 <li>The CMSIS standard global variable SystemCoreClock is updated to reflect the new clock frequency.<a class="anchor" id="um_cgc_system_clock_set_systemcoreclock"></a></li>
 <li>Wait states for ROM and RAM are adjusted to the minimum supported value for the new clock frequency.</li>
-<li>The operating power control mode is updated to the minimum supported value for the new clock settings.</li>
+<li>The operating power control mode is updated to the minimum supported value for the new clock settings. <a class="anchor" id="um_cgc_clock_start_hoco"></a><a class="anchor" id="um_cgc_clock_start_moco"></a><a class="anchor" id="um_cgc_clock_start_loco"></a><a class="anchor" id="um_cgc_clock_start_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll_on_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll_on_hoco"></a><a class="anchor" id="um_cgc_clock_start_pll_cfg"></a><a class="anchor" id="um_cgc_clock_stop_hoco"></a><a class="anchor" id="um_cgc_clock_stop_moco"></a><a class="anchor" id="um_cgc_clock_stop_loco"></a><a class="anchor" id="um_cgc_clock_stop_main_osc"></a><a class="anchor" id="um_cgc_clock_stop_pll"></a></li>
 </ul>
 </li>
-</ul>
-<p><a class="anchor" id="um_cgc_clock_start_hoco"></a><a class="anchor" id="um_cgc_clock_start_moco"></a><a class="anchor" id="um_cgc_clock_start_loco"></a><a class="anchor" id="um_cgc_clock_start_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll_on_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll_on_hoco"></a><a class="anchor" id="um_cgc_clock_start_pll_cfg"></a><a class="anchor" id="um_cgc_clock_stop_hoco"></a><a class="anchor" id="um_cgc_clock_stop_moco"></a><a class="anchor" id="um_cgc_clock_stop_loco"></a><a class="anchor" id="um_cgc_clock_stop_main_osc"></a><a class="anchor" id="um_cgc_clock_stop_pll"></a></p><ul>
-<li>Supports starting or stopping any of the system clock sources</li>
-</ul>
-<p><a class="anchor" id="um_cgc_system_clock_set_dividers"></a></p><ul>
-<li>Supports changing dividers for the internal clocks</li>
-</ul>
-<p><a class="anchor" id="um_cgc_osc_stop_detect_enable"></a><a class="anchor" id="um_cgc_osc_stop_detect_disable"></a><a class="anchor" id="um_cgc_osc_stop_detect_status_clear"></a></p><ul>
+<li>Supports starting or stopping any of the system clock sources <a class="anchor" id="um_cgc_system_clock_set_dividers"></a></li>
+<li>Supports changing dividers for the internal clocks <a class="anchor" id="um_cgc_osc_stop_detect_enable"></a><a class="anchor" id="um_cgc_osc_stop_detect_disable"></a><a class="anchor" id="um_cgc_osc_stop_detect_status_clear"></a></li>
 <li>Supports the oscillation stop detection feature</li>
 </ul>
 <h2>Internal Clocks</h2>
@@ -172,7 +166,7 @@ clocks" in the hardware manual to see which peripherals are controlled by which 
 </ul>
 <h1><a class="anchor" id="r-cgc-configuration"></a>
 Configuration</h1>
-<dl class="section note"><dt>Note</dt><dd>The initial clock settings are configurable on the Clocks tab of the configuration tool.</dd>
+<dl class="section note"><dt>Note</dt><dd>The initial clock settings are configurable on the <b>Clocks</b> tab of the RA Configuration editor.</dd>
 <dd>
 There is a configuration to enable the HOCO on reset in the OFS1 settings on the BSP tab.</dd>
 <dd>
@@ -219,8 +213,8 @@ Clock Configuration</h2>
 <h2><a class="anchor" id="r-cgc-pin-configuration"></a>
 Pin Configuration</h2>
 <p>The CGC module controls the output of the CLOCKOUT signal.</p>
-<p>If an external oscillator is used the XTAL and EXTAL pins must be configured accordingly. When running from an on chip oscillator there is no requirement for the main clock external oscillator. In this case, the XTAL and EXTAL pins can be set to a different function in the configurator.</p>
-<p>The functionality of the sub clock external oscillator pins XCIN and XCOUT is fixed.</p>
+<p>If an external oscillator is used the XTAL and EXTAL pins must be configured accordingly. When running from an on chip oscillator there is no requirement for the main clock external oscillator. In this case, the XTAL and EXTAL pins can be set to a different function in the RA Configuration editor.</p>
+<p>The functionality of the subclock external oscillator pins XCIN and XCOUT is fixed.</p>
 <h1><a class="anchor" id="r-cgc-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="r-cgc-nmi-interrupt"></a>
@@ -765,7 +759,7 @@ the internal clocks".</p>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

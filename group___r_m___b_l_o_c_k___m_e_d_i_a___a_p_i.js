@@ -36,7 +36,6 @@ var group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i =
       [ "p_cfg", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a742078ddcdd3e028566548fee77204a8", null ],
       [ "p_api", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a842bb35277df2dfbe5c79d7b146ae230", null ]
     ] ],
-    [ "RM_BLOCK_MEDIA_API_VERSION_MAJOR", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga3f93685e61d90fee05a579d02eafc7a6", null ],
     [ "rm_block_media_ctrl_t", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0", null ],
     [ "rm_block_media_event_t", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#gaa3f328da3b53e36f2682f63d0ae1c96c", [
       [ "RM_BLOCK_MEDIA_EVENT_MEDIA_REMOVED", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96cae1eaef4a8e7225d6ccee904c4e6795df", null ],

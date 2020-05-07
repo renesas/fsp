@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('group___r_m___f_r_e_e_r_t_o_s___p_o_r_
 <p>FreeRTOS port for RA MCUs. </p>
 <h1><a class="anchor" id="r-freertos-port-overview"></a>
 Overview</h1>
-<dl class="section note"><dt>Note</dt><dd><b>The FreeRTOS Port does not provide any interfaces to the user. Consult the FreeRTOS documentation at <a href="https://www.freertos.org/">https://www.freertos.org/</a> for further information.</b></dd></dl>
+<dl class="section note"><dt>Note</dt><dd><b>The FreeRTOS Port does not provide any interfaces to the user. Consult the FreeRTOS documentation at <a href="https://www.freertos.org/Documentation">https://www.freertos.org/Documentation</a> for further information.</b></dd></dl>
 <h2><a class="anchor" id="r-freertos-port-features"></a>
 Features</h2>
 <p>The RA FreeRTOS port supports the following features:</p><ul>
@@ -129,14 +129,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Some FreeRTOS ports have two methods of selecting the next task to execute - a generic method, and a method that is specific to that port.<br />
-The Generic method:<br />
 <br />
+The Generic method:<br />
 Is used when Use Port Optimized Task Selection is set to 0, or when a port specific method is not implemented.<br />
 Can be used with all FreeRTOS ports.<br />
 Is completely written in C, making it less efficient than a port specific method.<br />
 Does not impose a limit on the maximum number of available priorities.<br />
-A port specific method:<br />
 <br />
+A port specific method:<br />
 Is not available for all ports.<br />
 Is used when Use Port Optimized Task Selection is Enabled.<br />
 Relies on one or more architecture specific assembly instructions (typically a Count Leading Zeros [CLZ] or equivalent instruction) so can only be used with the architecture for which it was specifically written.<br />
@@ -166,10 +166,10 @@ Like the stack size parameter to the xTaskCreate() and xTaskCreateStatic() funct
 <tr>
 <td>General &gt; Max Task Name Len</td><td>Must be an integer and greater than 0</td><td>16 </td><td>The maximum permissible length of the descriptive name given to a task when the task is created. The length is specified in the number of characters including the NULL termination byte. </td></tr>
 <tr>
-<td>General &gt; Use 16 Bit Ticks</td><td>Disabled</td><td>Disabled </td><td>Time is measured in 'ticks' - which is the number of times the tick interrupt has executed since the RTOS kernel was started. The tick count is held in a variable of type TickType_t.<br />
+<td>General &gt; Use 16-bit Ticks</td><td>Disabled</td><td>Disabled </td><td>Time is measured in 'ticks' - which is the number of times the tick interrupt has executed since the RTOS kernel was started. The tick count is held in a variable of type TickType_t.<br />
 Defining configUSE_16_BIT_TICKS as 1 causes TickType_t to be defined (typedef'ed) as an unsigned 16bit type. Defining configUSE_16_BIT_TICKS as 0 causes TickType_t to be defined (typedef'ed) as an unsigned 32bit type.<br />
 <br />
-Using a 16 bit type will greatly improve performance on 8 and 16 bit architectures, but limits the maximum specifiable time period to 65535 'ticks'. Therefore, assuming a tick frequency of 250Hz, the maximum time a task can delay or block when a 16bit counter is used is 262 seconds, compared to 17179869 seconds when using a 32bit counter. </td></tr>
+Using a 16-bit type will greatly improve performance on 8- and 16-bit architectures, but limits the maximum specifiable time period to 65535 'ticks'. Therefore, assuming a tick frequency of 250Hz, the maximum time a task can delay or block when a 16bit counter is used is 262 seconds, compared to 17179869 seconds when using a 32-bit counter. </td></tr>
 <tr>
 <td>General &gt; Idle Should Yield</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -694,7 +694,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

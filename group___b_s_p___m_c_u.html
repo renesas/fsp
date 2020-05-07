@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('group___b_s_p___m_c_u.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf3ee66233fc75acfcc21a97d7a767aa1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf3ee66233fc75acfcc21a97d7a767aa1">R_FSP_VersionGet</a> (fsp_pack_version_t *const p_version)</td></tr>
+<tr class="memitem:gaf3ee66233fc75acfcc21a97d7a767aa1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf3ee66233fc75acfcc21a97d7a767aa1">R_FSP_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#unionfsp__pack__version__t">fsp_pack_version_t</a> *const p_version)</td></tr>
 <tr class="separator:gaf3ee66233fc75acfcc21a97d7a767aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae7ee340978f5c25f52f0cad1457c6616"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gae7ee340978f5c25f52f0cad1457c6616">Reset_Handler</a> (void)</td></tr>
 <tr class="separator:gae7ee340978f5c25f52f0cad1457c6616"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,7 +162,7 @@ Overview</h1>
 BSP Features</h2>
 <h3><a class="anchor" id="bsp-clock-configuration"></a>
 BSP Clock Configuration</h3>
-<p><a class="anchor" id="um_bsp_clock_initialization"></a>All system clocks are set up during BSP initialization based on the settings in bsp_clock_cfg.h. These settings are derived from clock configuration information provided from the RA Configuration tool <b>Clocks</b> tab setting.</p>
+<p><a class="anchor" id="um_bsp_clock_initialization"></a>All system clocks are set up during BSP initialization based on the settings in bsp_clock_cfg.h. These settings are derived from clock configuration information provided from the RA Configuration editor <b>Clocks</b> tab.</p>
 <ul>
 <li>Clock configuration is performed prior to initializing the C runtime environment to speed up the startup process, as it is possible to start up on a relatively slow (that is, 32 kHz) clock.</li>
 <li>The BSP implements the required delays to allow the selected clock to stabilize.</li>
@@ -227,7 +227,7 @@ Warm Start Callbacks</h3>
 <p>This function is not enabled/disabled and is always called for both events as part of the BSP startup. Therefore it needs a function body, which will not be called if the user is overriding it. The function body is located in system.c. To use this function just copy this function into your own code and modify it to meet your needs.</p>
 <h3><a class="anchor" id="heap-allocation"></a>
 Heap Allocation</h3>
-<p><a class="anchor" id="um_bsp_stacks_and_heap"></a>The relatively low amount of on-chip SRAM available and lack of memory protection in an MCU means that heap use must be very carefully controlled to avoid memory leaks, overruns and attempted overallocation. Further, many RTOSes provide their own dynamic memory allocation system. For these reasons the default heap size is set at 0 bytes, effectively disabling dynamic memory. If it is required for an application setting a positive value to the "Heap size (bytes)" option in the RA Common configurations on the BSP tab will allocate a heap.</p>
+<p><a class="anchor" id="um_bsp_stacks_and_heap"></a>The relatively low amount of on-chip SRAM available and lack of memory protection in an MCU means that heap use must be very carefully controlled to avoid memory leaks, overruns and attempted overallocation. Further, many RTOSes provide their own dynamic memory allocation system. For these reasons the default heap size is set at 0 bytes, effectively disabling dynamic memory. If it is required for an application setting a positive value to the "Heap size (bytes)" option in the RA Common configurations on the <b>BSP</b> tab will allocate a heap.</p>
 <dl class="section note"><dt>Note</dt><dd>When using printf/sprintf (and other variants) to output floating point numbers a heap is required. A minimum size of 0x1000 (4096) bytes is recommended when starting development in this case.</dd></dl>
 <h3><a class="anchor" id="error-logging"></a>
 Error Logging</h3>
@@ -235,12 +235,12 @@ Error Logging</h3>
 <h3><a class="anchor" id="register-protection"></a>
 Register Protection</h3>
 <p><a class="anchor" id="um_bsp_register_protection"></a>The BSP register protection functions utilize reference counters to ensure that an application which has specified a certain register and subsequently calls another function doesn't have its register protection settings inadvertently modified.</p>
-<p>Each time RegisterProtectDisable() is called, the respective reference counter is incremented.</p>
-<p>Each time RegisterProtectEnable() is called, the respective reference counter is decremented.</p>
+<p>Each time <a class="el" href="group___b_s_p___m_c_u.html#ga1bb35164e7e044bd1878a4ce015199c3">R_BSP_RegisterProtectDisable()</a> is called, the respective reference counter is incremented.</p>
+<p>Each time <a class="el" href="group___b_s_p___m_c_u.html#ga6a9c6b74983237446de75a9d9b65e752">R_BSP_RegisterProtectEnable()</a> is called, the respective reference counter is decremented.</p>
 <p>Both functions will only modify the protection state if their reference counter is zero.</p>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Enable writing to protected CGC registers */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga1bb35164e7e044bd1878a4ce015199c3">R_BSP_RegisterProtectDisable</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga8f69caf459fd80173db15fdee8bc6fa3a331f34f99c7a66ca791edd7271144b3c">BSP_REG_PROTECT_CGC</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Insert code to modify protected CGC registers. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Disable writing to protected CGC registers */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga6a9c6b74983237446de75a9d9b65e752">R_BSP_RegisterProtectEnable</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga8f69caf459fd80173db15fdee8bc6fa3a331f34f99c7a66ca791edd7271144b3c">BSP_REG_PROTECT_CGC</a>);</div><div class="line"></div></div><!-- fragment --> <h3><a class="anchor" id="id-code"></a>
 ID Codes</h3>
-<p><a class="anchor" id="um_bsp_id_codes"></a>The ID code is 16 byte value that can be used to protect the MCU from being connected to a debugger or from connecting in Serial Boot Mode. There are different settings that can be set for the ID code; please refer to the hardware manual for your device for available options.</p>
+<p><a class="anchor" id="um_bsp_id_codes"></a>The ID code is a 16-byte value that can be used to protect the MCU from being connected to a debugger or from connecting in Serial Boot Mode. There are different settings that can be set for the ID code; please refer to the hardware manual for your device for available options.</p>
 <h3><a class="anchor" id="software-delay"></a>
 Software Delay</h3>
 <p><a class="anchor" id="um_bsp_software_delay"></a>Implements a blocking software delay. A delay can be specified in microseconds, milliseconds or seconds. The delay is implemented based on the system clock rate.</p>
@@ -260,7 +260,7 @@ Board Specific Features</h1>
 </table>
 <h1><a class="anchor" id="bsp-configuration"></a>
 Configuration</h1>
-<p>The BSP is heavily data driven with most features and functionality being configured based on the content from configuration files. Configuration files represent the settings specified by the user and are generated by the RA Configuration tool when the Generate Project Content button is clicked.</p>
+<p>The BSP is heavily data driven with most features and functionality being configured based on the content from configuration files. Configuration files represent the settings specified by the user and are generated when the project is built and/or when the Generate Project Content button is clicked in the RA Configuration editor.</p>
 <p><h2>Build Time Configurations for fsp_common</h2>
 The following build time configurations are defined in fsp_cfg/bsp/bsp_cfg.h:<br />
 </p><table class="doxtable">
@@ -383,11 +383,11 @@ Not Populated</li>
 <tr>
 <td>Subclock Drive</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Middle (4.4pf)</li>
+Low</li>
 <li>
-Standard (12.5pf)</li>
+Standard</li>
 </ul>
-</td><td>Standard (12.5pf) </td><td>Select the subclock oscillator drive capacitance. This setting can be overridden in board_cfg.h </td></tr>
+</td><td>Standard </td><td>Select the subclock oscillator drive capacitance. This setting can be overridden in board_cfg.h </td></tr>
 <tr>
 <td>Subclock Stabilization Time (ms)</td><td>Value must between 0 and 10000</td><td>1000 </td><td>Select the subclock oscillator stabilization time. This is only used in the startup code if the subclock is selected as the system clock on the Clocks tab. This setting can be overridden in board_cfg.h </td></tr>
 </table>
@@ -1178,9 +1178,9 @@ Variables</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6fe6dc3c0813eeae8665430a31c005b4a682d5dad980652c1acbc5b04531f6da2"></a>BSP_WARM_START_RESET&#160;</td><td class="fielddoc"><p>Called almost immediately after reset. No C runtime environment, clocks, or IRQs. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6fe6dc3c0813eeae8665430a31c005b4a0ac1a271ef413302af1558941563f3e7"></a>BSP_WARM_START_POST_CLOCK&#160;</td><td class="fielddoc"><p>Called after clock initialization. No C runtime environment, or IRQs. </p>
+<tr><td class="fieldname"><a id="gga6fe6dc3c0813eeae8665430a31c005b4a0ac1a271ef413302af1558941563f3e7"></a>BSP_WARM_START_POST_CLOCK&#160;</td><td class="fielddoc"><p>Called after clock initialization. No C runtime environment or IRQs. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811"></a>BSP_WARM_START_POST_C&#160;</td><td class="fielddoc"><p>Called after clocks and C runtime environment have been setup. </p>
+<tr><td class="fieldname"><a id="gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811"></a>BSP_WARM_START_POST_C&#160;</td><td class="fielddoc"><p>Called after clocks and C runtime environment have been set up. </p>
 </td></tr>
 </table>
 
@@ -1267,7 +1267,7 @@ Variables</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3adfe89bf34b6c640adc136d06eab2be66"></a>BSP_REG_PROTECT_OM_LPC_BATT&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to operating modes, low power consumption, and battery backup function. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3aa0d59a00dd2ad61700675b0516ae7a7a"></a>BSP_REG_PROTECT_LVD&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to the LVD:LVCMPCR, LVDLVLR, LVD1CR0, LVD1CR1, LVD1SR, LVD2CR0, LVD2CR1, LVD2SR. </p>
+<tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3aa0d59a00dd2ad61700675b0516ae7a7a"></a>BSP_REG_PROTECT_LVD&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to the LVD: LVCMPCR, LVDLVLR, LVD1CR0, LVD1CR1, LVD1SR, LVD2CR0, LVD2CR1, LVD2SR. </p>
 </td></tr>
 </table>
 
@@ -1283,7 +1283,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_FSP_VersionGet </td>
           <td>(</td>
-          <td class="paramtype">fsp_pack_version_t *const&#160;</td>
+          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#unionfsp__pack__version__t">fsp_pack_version_t</a> *const&#160;</td>
           <td class="paramname"><em>p_version</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1321,7 +1321,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>MCU starts executing here out of reset. Main stack pointer is setup already. </p>
+<p>MCU starts executing here out of reset. Main stack pointer is set up already. </p>
 
 </div>
 </div>
@@ -1381,7 +1381,7 @@ Variables</h2></td></tr>
 <p>This function is called at various points during the startup process. This function is declared as a weak symbol higher up in this file because it is meant to be overridden by a user implemented version. One of the main uses for this function is to call functional safety code during the startup process. To use this function just copy this function into your own code and modify it to meet your needs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Where at in the start up process the code is currently at </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Where the code currently is in the start up process </td></tr>
   </table>
   </dd>
 </dl>
@@ -1445,7 +1445,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Delay the at least specified duration in units and return. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Delay for at least the specified duration in units and return. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">delay</td><td>The number of 'units' to delay. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">units</td><td>The 'base' (bsp_delay_units_t) for the units specified. Valid values are: BSP_DELAY_UNITS_SECONDS, BSP_DELAY_UNITS_MILLISECONDS, BSP_DELAY_UNITS_MICROSECONDS.<br />
@@ -1614,7 +1614,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['keymatrix_5fctrl_5ft',['keymatrix_ctrl_t',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#ga74eaead2fb2e21ea4242f3318df0b7a1',1,'r_keymatrix_api.h']]]
+  ['jpeg_5fctrl_5ft',['jpeg_ctrl_t',['../group___j_p_e_g___a_p_i.html#gadcda3a404659199f5fc9b90a8eb4b543',1,'r_jpeg_api.h']]]
 ];

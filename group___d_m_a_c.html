@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -227,7 +227,7 @@ Source</li>
 <tr>
 <td>Source Pointer</td><td>Manual Entry</td><td>NULL </td><td>Specify the transfer source pointer. </td></tr>
 <tr>
-<td>Number of Transfers</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the number of transfers. </td></tr>
+<td>Number of Transfers</td><td>Value must be a non-negative integer</td><td>1 </td><td>Specify the number of transfers. </td></tr>
 <tr>
 <td>Number of Blocks (Valid only in Repeat and Block Mode)</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the number of blocks to transfer in Repeat or Block mode. </td></tr>
 <tr>
@@ -250,7 +250,7 @@ Interrupt after each block, or repeat size is transfered</li>
 </p>
 <h2><a class="anchor" id="r-dmac-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The DMAC peripheral module uses ICLK as the clock source. The ICLK frequency is set by using the RA Configuration Clocks tab prior to a build, or by using the CGC module at run-time.</p>
+<p>The DMAC peripheral module uses ICLK as the clock source. The ICLK frequency is set by using the <b>Clocks</b> tab of the RA Configuration editor prior to a build, or by using the CGC module at run-time.</p>
 <h2><a class="anchor" id="r-dmac-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
@@ -260,8 +260,8 @@ Usage Notes</h1>
 <p>The DMAC Module supports three modes of operation.</p>
 <ul>
 <li><b>Normal Mode</b> - In normal mode, a single data unit is transfered every time the configured ELC event is received by the DMAC channel. A data unit can be 1-byte, 2-bytes, or 4-bytes. The source and destination addresses can be fixed, increment, decrement, or add an offset to the next data unit after each transfer. A 16-bit counter decrements after each transfer. When the counter reaches 0, transfers will no longer be triggered by the ELC event and the CPU can be interrupted to signal that all transfers have finished.</li>
-<li><b>Repeat Mode</b> - Repeat mode works the same way as normal mode, however the length is limited to an integer in the range[1,1024]. When the transfer counter reaches 0, the counter is reset to its configured value, the repeat area(source or destination address) resets to its starting address and the block count remaining will decrement by 1. When the block count reaches 0, transfers will no longer be triggered by the ELC event and the CPU may be interrupted to signal that all transfers have finished.</li>
-<li><b>Block Mode</b> - In block mode, the amount of data units transfered by each interrupt can be set to an integer in the range [1,1024]. The number of blocks to transfer can also be configured to a 16-bit number. After each block transfer the repeat area(source or destination address) will reset to the original address and the other address will be incremented or decremented to the next block.</li>
+<li><b>Repeat Mode</b> - Repeat mode works the same way as normal mode, however the length is limited to an integer in the range[1,1024]. When the transfer counter reaches 0, the counter is reset to its configured value, the repeat area (source or destination address) resets to its starting address and the block count remaining will decrement by 1. When the block count reaches 0, transfers will no longer be triggered by the ELC event and the CPU may be interrupted to signal that all transfers have finished.</li>
+<li><b>Block Mode</b> - In block mode, the amount of data units transfered by each interrupt can be set to an integer in the range [1,1024]. The number of blocks to transfer can also be configured to a 16-bit number. After each block transfer the repeat area (source or destination address) will reset to the original address and the other address will be incremented or decremented to the next block.</li>
 </ul>
 <h2>Selecting the DTC or DMAC</h2>
 <p>The Transfer API is implemented by both DTC and the DMAC so that applications can switch between the DTC and the DMAC. When selecting between them, consider these factors:</p>
@@ -947,7 +947,7 @@ int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

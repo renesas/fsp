@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -135,7 +135,7 @@ Features</h2>
 <li>Maximum 4 USB storage devices can be connected</li>
 </ul>
 <h3>Class Driver Overview</h3>
-<p><b>1. Class Requests</b></p>
+<p><b>Class Requests</b></p>
 <p>The class requests supported by this driver are shown below.</p>
 <table class="doxtable">
 <tr>
@@ -145,11 +145,11 @@ Features</h2>
 <tr>
 <td align="left">MassStorageReset </td><td align="left">Cancels a protocol error. </td></tr>
 </table>
-<p><b>2. Storage Commands</b></p>
+<p><b>Storage Commands</b></p>
 <p>This driver supports the following storage commands:</p>
 <ul>
 <li>TEST_UNIT_READY</li>
-<li>REQUEST_SENSE</li>
+<li>This module is USB Peripheral Communication Device Class Driver</li>
 <li>MODE_SELECT10</li>
 <li>MODE_SENSE10</li>
 <li>PREVENT_ALLOW</li>
@@ -180,6 +180,7 @@ Limitations</h2>
 <li>Maximum 4 USB storage devices can be connected.</li>
 <li>Only USB storage devices with a sector size of 512 bytes can be connected.</li>
 <li>A device that does not respond to the READ_CAPACITY command operates as a device with a sector size of 512 bytes.</li>
+<li>The continuous transfer mode cannot be used when using DMA.</li>
 </ol>
 <h1><a class="anchor" id="r-usb_hmsc-examples"></a>
 Examples</h1>
@@ -477,7 +478,7 @@ usb_apl_task</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

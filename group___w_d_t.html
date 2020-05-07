@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -152,7 +152,7 @@ Selecting a Watchdog</h2>
 <h1><a class="anchor" id="r-wdt-configuration"></a>
 Configuration</h1>
 <p>When using register start mode, configure the watchdog timer on the Stacks tab.</p>
-<dl class="section note"><dt>Note</dt><dd>When using auto start mode, configurations on the Stacks tab are ignored. Configure the watchdog using the OFS settings on the BSP tab.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When using auto start mode, configurations on the <b>Stacks</b> tab are ignored. Configure the watchdog using the OFS settings on the BSP tab.</dd></dl>
 <p><a class="anchor" id="um_wdt_nmi_callback_required"></a><a class="anchor" id="um_wdt_configuration_for_refresh_window_start_position"></a><a class="anchor" id="um_wdt_configuration_for_refresh_window_end_position"></a><a class="anchor" id="um_wdt_configuration_for_wdt_clock_division"></a><a class="anchor" id="um_wdt_configuration_for_wdt_timeout_period"></a> <h2>Build Time Configurations for r_wdt</h2>
 The following build time configurations are defined in fsp_cfg/r_wdt_cfg.h:<br />
 </p><table class="doxtable">
@@ -258,7 +258,7 @@ WDT Count Disabled in Low Power Mode</li>
 </p>
 <h2><a class="anchor" id="r-wdt-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The WDT clock is based on the PCLKB frequency. You can set the PCLKB frequency using the clock configurator in e2 studio or using the CGC Interface at run-time. The maximum timeout period with PCLKB running at 60 MHz is approximately 2.2 seconds.</p>
+<p>The WDT clock is based on the PCLKB frequency. You can set the PCLKB frequency using the <b>Clocks</b> tab of the RA Configuration editor or by using the CGC Interface at run-time. The maximum timeout period with PCLKB running at 60 MHz is approximately 2.2 seconds.</p>
 <h2><a class="anchor" id="r-wdt-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
@@ -267,6 +267,7 @@ Usage Notes</h1>
 <h2><a class="anchor" id="r-wdt-nmi-interrupt"></a>
 NMI Interrupt</h2>
 <p>The watchdog timer uses the NMI, which is enabled by default. No special configuration is required. When the NMI is triggered, the callback function registered during open is called.</p>
+<dl class="section note"><dt>Note</dt><dd>When using the WDT in software start mode with NMI and the timer underflows, the WDT status must be reset by calling <a class="el" href="group___w_d_t.html#gacd5b9ff42df96b9fd4603dda47b946cb">R_WDT_StatusClear</a> before restarting the timer via <a class="el" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>.</dd></dl>
 <h2>Period Calculation</h2>
 <p>The WDT operates from PCLKB. With a PCLKB of 60 MHz, the maximum time from the last refresh to device reset or NMI generation will be just over 2.2 seconds as detailed below.</p>
 <p>PLCKB = 60 MHz<br />
@@ -564,7 +565,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

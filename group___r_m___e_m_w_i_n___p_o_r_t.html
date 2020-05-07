@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -217,6 +217,16 @@ Log all messages (5)</li>
 </ul>
 </td><td>All checks enabled (2) </td><td>Set the debug logging level. </td></tr>
 <tr>
+<td>LCD Settings &gt; Wait for Vertical Sync</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>When enabled emWin will wait for a vertical sync event each time the display is updated. If an RTOS is used the thread will yield; otherwise each frame will block until Vsync.<br />
+<br />
+WARNING: Disabling vertical sync will result in tearing. It is recommended to always leave this setting Enabled if an RTOS is used. </td></tr>
+<tr>
 <td>JPEG Decoding &gt; General &gt; Input Alignment</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 8-byte aligned (faster)</li>
@@ -255,9 +265,9 @@ Hardware Configuration</h2>
 Usage Notes</h1>
 <h2><a class="anchor" id="rm-emwin-port-getting_started"></a>
 Getting Started</h2>
-<p>To get started with emWin in an e2 studio project the following must be performed:</p>
+<p>To get started with emWin in an RA project the following must be performed:</p>
 <ol type="1">
-<li>Open the configuration.xml file for your project</li>
+<li>Open the RA Configuration editor for your project</li>
 <li>Add emWin to your project in the Stacks view by clicking <b>New Stack -&gt; SEGGER -&gt; SEGGER emWin</b></li>
 <li>Ensure the configuration options for emWin are set as necessary for your application</li>
 <li>Set the proporties for the GLCDC module to match the timing and memory requirements of your display panel</li>
@@ -269,6 +279,7 @@ Getting Started</h2>
 </ul>
 </li>
 <li>Click Generate Project Content to save and commit configuration changes</li>
+<li>(Non-RTOS projects only) Before calling GUI_Init, call g_hal_init to initialize the framebuffer address.</li>
 </ol>
 <p>At this point the project is now ready to build with emWin. Please refer to the SEGGER emWin User Guide (UM03001) as well as demo and sample code for details on how to create a GUI application.</p>
 <h2>Using Hardware Acceleration</h2>
@@ -292,7 +303,7 @@ Getting Started</h2>
 </ul>
 </li>
 <li>RLE-encoded images:<ul>
-<li>Hardware acceleration is not available for SEGGER's RLE format at this time.</li>
+<li>Hardware acceleration is not available for SEGGER's RLE format.</li>
 </ul>
 </li>
 </ul>
@@ -311,9 +322,9 @@ Getting Started</h2>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using SEGGER emWin with FSP:</p>
 <ul>
-<li>Color modes lower than 16 bits are not currently optimized for hardware acceleration.</li>
+<li>Hardware acceleration is not available when using color modes lower than 16 bits.</li>
 <li>Support for rotated screen modes is in development.</li>
-<li>Hardware acceleration is not available for SEGGER's RLE image format at this time.</li>
+<li>Hardware acceleration is not available for SEGGER's RLE image format.</li>
 </ul>
 <hr/>
 <h1><a class="anchor" id="rm-emwin-port-examples"></a>
@@ -329,7 +340,7 @@ Basic Example</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

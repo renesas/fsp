@@ -55,7 +55,6 @@ var group___r_t_c___a_p_i =
       [ "p_cfg", "group___r_t_c___a_p_i.html#af39ca95036c2304e17a64a8fac0e1a0b", null ],
       [ "p_api", "group___r_t_c___a_p_i.html#a8d5beb93c07f858029d0d77e8e5b770e", null ]
     ] ],
-    [ "RTC_API_VERSION_MAJOR", "group___r_t_c___a_p_i.html#ga582eb6b1cd22308d4befc130bfaec81a", null ],
     [ "rtc_time_t", "group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d", null ],
     [ "rtc_ctrl_t", "group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e", null ],
     [ "rtc_event_t", "group___r_t_c___a_p_i.html#gad2e192ed9a33b6c005c2c19ccbd6a21b", [

@@ -2,11 +2,13 @@ var group___t_i_m_e_r___a_p_i =
 [
     [ "timer_callback_args_t", "group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t", [
       [ "p_context", "group___t_i_m_e_r___a_p_i.html#a83bdbe351fc323e334f96bbf41420a07", null ],
-      [ "event", "group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf", null ]
+      [ "event", "group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf", null ],
+      [ "capture", "group___t_i_m_e_r___a_p_i.html#a8abd12cdf1a993cf8054be6ba9d96a6f", null ]
     ] ],
     [ "timer_info_t", "group___t_i_m_e_r___a_p_i.html#structtimer__info__t", [
       [ "count_direction", "group___t_i_m_e_r___a_p_i.html#af333f19bba6c3962a91fe3beb90482a8", null ],
-      [ "clock_frequency", "group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345", null ]
+      [ "clock_frequency", "group___t_i_m_e_r___a_p_i.html#a85205f345201aaf1d25b5ee1257f8345", null ],
+      [ "period_counts", "group___t_i_m_e_r___a_p_i.html#a08b897cfbf2d0cefafe8d3abb1afc747", null ]
     ] ],
     [ "timer_status_t", "group___t_i_m_e_r___a_p_i.html#structtimer__status__t", [
       [ "counter", "group___t_i_m_e_r___a_p_i.html#ab3892976d7757fae081e19023e155006", null ],

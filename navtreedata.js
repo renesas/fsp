@@ -150,40 +150,45 @@ var NAVTREE =
       [ "FSP Architecture in Practice", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-architecture-in-practice", [
         [ "FSP Connecting Layers", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-connecting-layers", null ],
         [ "Using FSP Modules in an Application", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#using-fsp-modules-in-an-application", [
-          [ "Create a Module Instance in the RA Configuration Tool", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#create-a-module-instance", null ],
+          [ "Create a Module Instance in the RA Configuration Editor", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#create-a-module-instance", null ],
           [ "Use the Instance API in the Application", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#use-the-instance-api", null ]
         ] ]
       ] ]
     ] ],
-    [ "Copyright", "_c_o_p_y_r_i_g_h_t.html", null ],
-    [ "API Reference", "modules.html", "modules" ]
+    [ "API Reference", "modules.html", "modules" ],
+    [ "Copyright", "_c_o_p_y_r_i_g_h_t.html", null ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
 "_c_o_p_y_r_i_g_h_t.html",
-"group___a_d_c___a_p_i.html",
-"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa660242e9eb38f89723d32a8663bb2d22",
-"group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a81f609a8552e4f09d721bcee73d130ff",
-"group___c_a_n.html#ga30d9371c5b32915b17834d0616ca893c",
-"group___c_g_c___a_p_i.html#ggac42ad637386383ab22a111e33b4d3892ac011461b3f505df97fdb3fffc43bc30b",
-"group___c_t_s_u___a_p_i.html#a4e772870c7fdd16a6af6acfebb03fcfe",
-"group___d_i_s_p_l_a_y___a_p_i.html#ggad42f0f62fa80ea5432d2c19bde0e4675a0f6b6a389b5462f9f8b32e11419fe270",
-"group___e_t_h_e_r___p_h_y___a_p_i.html#a339809c3abd9e0aef94670716425d5b9",
-"group___g_l_c_d_c.html#ggaf4c632aa5e2e15803a911e4349ff6500a92ebefc07736ac1af2b995a094eaf68c",
-"group___i2_s___a_p_i.html#a0268adf9536947ac5cd8ac2795416a18",
-"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840eab52bfe38ab8f85dc73ff58c440224ab5",
-"group___j_p_e_g___a_p_i.html#ga25768b7fdea96c61ccc6ca2f8ca43b21",
-"group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70ad97462ffbf5716e626df680cceceaf51",
-"group___p_o_e_g___a_p_i.html#structpoeg__cfg__t",
-"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aef76cb06aecdf33a1186e2b1dd830b1a",
-"group___s_c_i___s_p_i.html#ga7f7f0fbe5dc85ac7dac6c5676965e432",
-"group___s_l_c_d_c___a_p_i.html#a175274a05a50ae9b46f0c6aa6797ba09",
-"group___s_p_i___f_l_a_s_h___a_p_i.html#a8e3c8b055e778827f187f213a725de1e",
-"group___t_o_u_c_h___a_p_i.html#af52189bee95aded73e48319bf264085e",
-"group___u_s_b___a_p_i.html#ga7f2f5f181f29bec3e73afb0cd933caa1",
-"group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a64c6d100c73279cb794db805b1ece673"
+"group___a_d_c___a_p_i.html#a00e0f32e4dfb5790b1dbdd3723dd38cf",
+"group___b_l_e___a_b_s___a_p_i.html#a30a829f4df49f4aa67e104e43f5de0ce",
+"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa8627dee9160a98ed1777e759ab743f10",
+"group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8ab095fd14f55d0af4a91dde1224b9e746",
+"group___c_a_n___a_p_i.html#a7127ea5ba7d0c09da9c5c7db44682b99",
+"group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a6ea738d1ad125361615052376516a53f",
+"group___c_t_s_u___a_p_i.html#ga3dfa24423192f44e90ac6b9fabf3ab89",
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__status__t",
+"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfbaf909885cf5d2e9a00a3be13e8be01a02",
+"group___g_a_p___a_p_i.html#a6e487249ac6ba2d7c772b386e82efc33",
+"group___g_a_p___a_p_i.html#gaa1ce01501d5a4527029a5b7f4f7d926b",
+"group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga06c83d68cb14df97024976d44b9bffaa",
+"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#gga451fe37541a881679ed7aa3eb2b270bbaf001546a1bac8b73e71709c5add958f3",
+"group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3a46d2a195d3c9ab5c94c949ce243fbc46",
+"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840ea1343ff3523554da01ec019f553fb623e",
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8aa104329a7773f8ffbed0f7fbad258e6d",
+"group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319",
+"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca848e4be7c2ed1c7f8f4af0f661c51189",
+"group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#unionfsp__pack__version__t",
+"group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#ga950aac820f1e35ca5592b021006f7a55",
+"group___s_d_a_d_c.html#ga77dc084a35379f65d2e2084e9a9c5806",
+"group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba9120fc7eb47bbc91b554b68089a873a7",
+"group___s_s_i.html#gga57213e467410bf6c3afe0c2338820260aecaf4e604947446acc0ca94f49f649b7",
+"group___u_a_r_t___a_p_i.html#a07bd6b0ef728681a3abee96ada2ea79d",
+"group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a371560d9894f862cdbc8bb288655a64e",
+"group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a4b045e0cf22adf889286b3184bb212bf"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,7 +92,6 @@ $(document).ready(function(){initNavTree('group___l_p_m___a_p_i.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
@@ -117,11 +116,6 @@ Data Structures</h2></td></tr>
 <tr class="separator:structlpm__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlpm__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#structlpm__instance__t">lpm_instance_t</a></td></tr>
 <tr class="separator:structlpm__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga85bb98ba8003c1b35df91b08c0ebf406"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#ga85bb98ba8003c1b35df91b08c0ebf406">LPM_API_VERSION_MAJOR</a></td></tr>
-<tr class="separator:ga85bb98ba8003c1b35df91b08c0ebf406"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -201,7 +195,7 @@ snooze_end_sources</td>
 <td class="fieldname">
 snooze_cancel_sources</td>
 <td class="fielddoc">
-<p>list of snooze cancel sources </p>
+<p>List of snooze cancel sources </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="abef017cb36a71d7d3c2625df8eb0f4c1"></a><a class="el" href="group___l_p_m___a_p_i.html#ga954afb771b813cdb81e0511f604da765">lpm_snooze_dtc_t</a></td>
@@ -232,7 +226,7 @@ p_extend</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>lpm driver structure. General lpm functions implemented at the HAL layer will follow this API. </p>
+<div class="textblock"><p>LPM driver structure. General LPM functions implemented at the HAL layer will follow this API. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:a83ef7de188578486fd6ebfca1c2ff443"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m___a_p_i.html#a83ef7de188578486fd6ebfca1c2ff443">open</a> )(<a class="el" href="group___l_p_m___a_p_i.html#ga5778a5063c007a056f3266d298498d4f">lpm_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___l_p_m___a_p_i.html#structlpm__cfg__t">lpm_cfg_t</a> const *const p_cfg)</td></tr>
@@ -406,22 +400,6 @@ p_api</td>
 <td class="fielddoc">
 Pointer to the API structure for this instance. </td></tr>
 </table>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga85bb98ba8003c1b35df91b08c0ebf406"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga85bb98ba8003c1b35df91b08c0ebf406">&#9670;&nbsp;</a></span>LPM_API_VERSION_MAJOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LPM_API_VERSION_MAJOR</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Register definitions, common services and error codes. </p>
 
 </div>
 </div>
@@ -930,7 +908,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

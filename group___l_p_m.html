@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -276,8 +276,26 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>LPM instance is already open </td></tr>
     <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This MCU does not support Deep Software Standby </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid snooze entry source Invalid snooze end sources </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Invalid low power mode Invalid DTC option for snooze mode Invalid deep standby end sources Invalid deep standby end sources edges Invalid power supply option for deep standby Invalid IO port option for deep standby Invalid output port state setting for standby or deep standby Invalid sources for wake from standby mode Invalid power supply option for standby Invalid IO port option for standby Invalid standby end sources Invalid standby end sources edges </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>One of the following:<ul>
+<li>Invalid snooze entry source</li>
+<li>Invalid snooze end sources </li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>One of the following:<ul>
+<li>Invalid low power mode</li>
+<li>Invalid DTC option for snooze mode</li>
+<li>Invalid deep standby end sources</li>
+<li>Invalid deep standby end sources edges</li>
+<li>Invalid power supply option for deep standby</li>
+<li>Invalid IO port option for deep standby</li>
+<li>Invalid output port state setting for standby or deep standby</li>
+<li>Invalid sources for wake from standby mode</li>
+<li>Invalid power supply option for standby</li>
+<li>Invalid IO port option for standby</li>
+<li>Invalid standby end sources</li>
+<li>Invalid standby end sources edges </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -344,8 +362,26 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>LPM instance is not open </td></tr>
     <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This MCU does not support Deep Software Standby </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid snooze entry source Invalid snooze end sources </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Invalid low power mode Invalid DTC option for snooze mode Invalid deep standby end sources Invalid deep standby end sources edges Invalid power supply option for deep standby Invalid IO port option for deep standby Invalid output port state setting for standby or deep standby Invalid sources for wake from standby mode Invalid power supply option for standby Invalid IO port option for standby Invalid standby end sources Invalid standby end sources edges </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>One of the following:<ul>
+<li>Invalid snooze entry source</li>
+<li>Invalid snooze end sources </li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>One of the following:<ul>
+<li>Invalid low power mode</li>
+<li>Invalid DTC option for snooze mode</li>
+<li>Invalid deep standby end sources</li>
+<li>Invalid deep standby end sources edges</li>
+<li>Invalid power supply option for deep standby</li>
+<li>Invalid IO port option for deep standby</li>
+<li>Invalid output port state setting for standby or deep standby</li>
+<li>Invalid sources for wake from standby mode</li>
+<li>Invalid power supply option for standby</li>
+<li>Invalid IO port option for standby</li>
+<li>Invalid standby end sources</li>
+<li>Invalid standby end sources edges </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -374,7 +410,15 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successful. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>LPM instance is not open </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>HOCO was not system clock when using snooze mode with SCI0/RXD0. HOCO was not stable when using snooze mode with SCI0/RXD0. MOCO was running when using snooze mode with SCI0/RXD0. MAIN OSCILLATOR was running when using snooze mode with SCI0/RXD0. PLL was running when using snooze mode with SCI0/RXD0. Unable to disable ocillator stop detect when using standby or deep standby. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>One of the following:<ul>
+<li>HOCO was not system clock when using snooze mode with SCI0/RXD0.</li>
+<li>HOCO was not stable when using snooze mode with SCI0/RXD0.</li>
+<li>MOCO was running when using snooze mode with SCI0/RXD0.</li>
+<li>MAIN OSCILLATOR was running when using snooze mode with SCI0/RXD0.</li>
+<li>PLL was running when using snooze mode with SCI0/RXD0.</li>
+<li>Unable to disable ocillator stop detect when using standby or deep standby. </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -422,11 +466,11 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clear the IOKEEP bit after deep software stand by</p>
+<p>Clear the IOKEEP bit after deep software standby</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>DPSBYCR_b.IOKEEP bit cleared Successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Deep stand by mode not supported on this MCU. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Deep standby mode not supported on this MCU. </td></tr>
   </table>
   </dd>
 </dl>
@@ -439,7 +483,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

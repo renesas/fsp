@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -241,7 +241,7 @@ Interrupt Configuration</h2>
 <h2><a class="anchor" id="r-iic_master-rate_calculation"></a>
 IIC Master Rate Calculation</h2>
 <ul>
-<li>The configuration tool calculates the internal baud-rate setting based on the configured transfer rate. The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLKB settings is calculated and used.</li>
+<li>The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate. The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLKB settings is calculated and used.</li>
 <li>If a valid clock rate could not be calculated, an error is returned by the tool.</li>
 </ul>
 <h2><a class="anchor" id="r-iic_master-enabling-dtc"></a>
@@ -478,8 +478,8 @@ I2C Clock settings. </td></tr>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Function executed without issue. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl, p_dest or bytes is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Provided number of bytes more than uint16_t size(65535) while DTC is used for data transfer. </td></tr>
-    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Another transfer was in progress. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Provided number of bytes more than uint16_t size (65535) while DTC is used for data transfer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Bus busy condition. Another transfer was in progress. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Handle is not initialized. Call R_IIC_MASTER_Open to initialize the control block. </td></tr>
   </table>
   </dd>
@@ -529,8 +529,8 @@ I2C Clock settings. </td></tr>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Function executed without issue. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl or p_src is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Provided number of bytes more than uint16_t size(65535) while DTC is used for data transfer. </td></tr>
-    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Another transfer was in progress. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Provided number of bytes more than uint16_t size (65535) while DTC is used for data transfer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Bus busy condition. Another transfer was in progress. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Handle is not initialized. Call R_IIC_MASTER_Open to initialize the control block. </td></tr>
   </table>
   </dd>
@@ -670,7 +670,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

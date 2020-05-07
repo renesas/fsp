@@ -1,6 +1,7 @@
 var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
 [
     [ "ADC Interface", "group___a_d_c___a_p_i.html", "group___a_d_c___a_p_i" ],
+    [ "BLE Interface", "group___b_l_e___a_p_i.html", "group___b_l_e___a_p_i" ],
     [ "CAC Interface", "group___c_a_c___a_p_i.html", "group___c_a_c___a_p_i" ],
     [ "CAN Interface", "group___c_a_n___a_p_i.html", "group___c_a_n___a_p_i" ],
     [ "CGC Interface", "group___c_g_c___a_p_i.html", "group___c_g_c___a_p_i" ],
@@ -36,10 +37,13 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "UART Interface", "group___u_a_r_t___a_p_i.html", "group___u_a_r_t___a_p_i" ],
     [ "USB Interface", "group___u_s_b___a_p_i.html", "group___u_s_b___a_p_i" ],
     [ "USB HCDC Interface", "group___u_s_b___h_c_d_c___a_p_i.html", null ],
+    [ "USB HHID Interface", "group___u_s_b___h_h_i_d___a_p_i.html", "group___u_s_b___h_h_i_d___a_p_i" ],
     [ "USB HMSC Interface", "group___u_s_b___h_m_s_c___a_p_i.html", "group___u_s_b___h_m_s_c___a_p_i" ],
     [ "USB PCDC Interface", "group___u_s_b___p_c_d_c___a_p_i.html", "group___u_s_b___p_c_d_c___a_p_i" ],
+    [ "USB PHID Interface", "group___u_s_b___p_h_i_d___a_p_i.html", null ],
     [ "USB PMSC Interface", "group___u_s_b___p_m_s_c___a_p_i.html", null ],
     [ "WDT Interface", "group___w_d_t___a_p_i.html", "group___w_d_t___a_p_i" ],
+    [ "BLE ABS Interface", "group___b_l_e___a_b_s___a_p_i.html", "group___b_l_e___a_b_s___a_p_i" ],
     [ "Block Media Interface", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i" ],
     [ "FreeRTOS+FAT Port Interface", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i" ],
     [ "LittleFS Interface", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html", "group___r_m___l_i_t_t_l_e_f_s___a_p_i" ],

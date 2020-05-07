@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -238,7 +238,7 @@ After each transfer</li>
 </p>
 <h2><a class="anchor" id="r-dtc-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The DTC peripheral module uses ICLK as the clock source. The ICLK frequency is set by using the FSP configurator Clocks tab prior to a build or by using the CGC module at runtime.</p>
+<p>The DTC peripheral module uses ICLK as the clock source. The ICLK frequency is set by using the <b>Clocks</b> tab of the RA Configuration editor prior to a build or by using the CGC module at runtime.</p>
 <h2><a class="anchor" id="r-dtc-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
@@ -247,9 +247,9 @@ Usage Notes</h1>
 <h2>Transfer Modes</h2>
 <p>The DTC Module supports three modes of operation.</p>
 <ul>
-<li><b>Normal Mode</b> - In normal mode, a single data unit is transfered every time an interrupt is received by the DTC. A data unit can be 1-byte, 2-bytes, or 4-bytes. The source and destination addresses can be fixed, increment or decrement to the next data unit after each transfer. A 16-bit counter(length) decrements after each transfer. When the counter reaches 0, transfers will no longer be triggered by the interrupt source and the CPU can be interrupted to signal that all transfers have finished.</li>
-<li><b>Repeat Mode</b> - Repeat mode works the same way as normal mode, however the length is limited to an integer in the range[1,256]. When the tranfer counter reaches 0, the counter is reset to its configured value and the repeat area(source or destination address) resets to its starting address and transfers will still be triggered by the interrupt.</li>
-<li><b>Block Mode</b> - In block mode, the amount of data units transfered by each interrupt can be set to an integer in the range [1,256]. The number of blocks to transfer can also be configured to a 16-bit number. After each block transfer the repeat area(source or destination address) will reset to the original address and the other address will be incremented or decremented to the next block.</li>
+<li><b>Normal Mode</b> - In normal mode, a single data unit is transfered every time an interrupt is received by the DTC. A data unit can be 1-byte, 2-bytes, or 4-bytes. The source and destination addresses can be fixed, increment or decrement to the next data unit after each transfer. A 16-bit counter (length) decrements after each transfer. When the counter reaches 0, transfers will no longer be triggered by the interrupt source and the CPU can be interrupted to signal that all transfers have finished.</li>
+<li><b>Repeat Mode</b> - Repeat mode works the same way as normal mode, however the length is limited to an integer in the range[1,256]. When the tranfer counter reaches 0, the counter is reset to its configured value and the repeat area (source or destination address) resets to its starting address and transfers will still be triggered by the interrupt.</li>
+<li><b>Block Mode</b> - In block mode, the amount of data units transfered by each interrupt can be set to an integer in the range [1,256]. The number of blocks to transfer can also be configured to a 16-bit number. After each block transfer the repeat area (source or destination address) will reset to the original address and the other address will be incremented or decremented to the next block.</li>
 </ul>
 <p><a class="anchor" id="um_transfer_max_length"></a></p><dl class="section note"><dt>Note</dt><dd>1. The source and destination address of the transfer must be aligned to the configured data unit. </dd>
 <dd>
@@ -863,7 +863,7 @@ activation_source</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

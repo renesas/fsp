@@ -25,7 +25,6 @@ var group___s_l_c_d_c___a_p_i =
       [ "p_cfg", "group___s_l_c_d_c___a_p_i.html#a192e619f8e4f2606b1f48fb6350017b7", null ],
       [ "p_api", "group___s_l_c_d_c___a_p_i.html#a5f8a26305b21679cb114a365d1050c58", null ]
     ] ],
-    [ "SLCDC_API_VERSION_MAJOR", "group___s_l_c_d_c___a_p_i.html#ga408efb076c8ab95d3aaf6d4956618271", null ],
     [ "slcdc_ctrl_t", "group___s_l_c_d_c___a_p_i.html#gadfafced9e035ee236a1c4aa178cf1351", null ],
     [ "slcdc_bias_method_t", "group___s_l_c_d_c___a_p_i.html#gac2bcd5672ab1b5837e4042a025bb3909", [
       [ "SLCDC_BIAS_2", "group___s_l_c_d_c___a_p_i.html#ggac2bcd5672ab1b5837e4042a025bb3909a50af251f3a842a682ad2014dffe7932d", null ],

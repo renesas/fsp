@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,7 +92,6 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_o_c_k___m_e_d_i_a___
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
@@ -104,7 +103,10 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_o_c_k___m_e_d_i_a___
 <h1><a class="anchor" id="RM_BLOCK_MEDIA_API_SUMMARY"></a>
 Summary</h1>
 <p>The block media interface supports reading, writing, and erasing media devices. All functions are non-blocking if possible. The callback is used to determine when an operation completes.</p>
-<p>Implemented by: <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html">SD/MMC Block Media Implementation (rm_block_media_sdmmc)</a> <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html">USB HMSC Block Media Implementation (rm_block_media_usb)</a> </p>
+<p>Implemented by:</p><ul>
+<li><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html">SD/MMC Block Media Implementation (rm_block_media_sdmmc)</a></li>
+<li><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html">USB HMSC Block Media Implementation (rm_block_media_usb)</a> </li>
+</ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -120,11 +122,6 @@ Data Structures</h2></td></tr>
 <tr class="separator:structrm__block__media__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__block__media__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__instance__t">rm_block_media_instance_t</a></td></tr>
 <tr class="separator:structrm__block__media__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga3f93685e61d90fee05a579d02eafc7a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga3f93685e61d90fee05a579d02eafc7a6">RM_BLOCK_MEDIA_API_VERSION_MAJOR</a></td></tr>
-<tr class="separator:ga3f93685e61d90fee05a579d02eafc7a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -263,7 +260,7 @@ initialized</td>
 <td class="fieldname">
 busy</td>
 <td class="fielddoc">
-true if media is busy with a previous write/erase operation </td></tr>
+True if media is busy with a previous write/erase operation. </td></tr>
 <tr><td class="fieldtype">
 <a id="ac25f2f253126a6522ac0147593e719da"></a>bool</td>
 <td class="fieldname">
@@ -584,22 +581,6 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga3f93685e61d90fee05a579d02eafc7a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3f93685e61d90fee05a579d02eafc7a6">&#9670;&nbsp;</a></span>RM_BLOCK_MEDIA_API_VERSION_MAJOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RM_BLOCK_MEDIA_API_VERSION_MAJOR</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Register definitions, common services and error codes. </p>
-
-</div>
-</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga19bc09de5e45b09066d0bddcc46956b0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga19bc09de5e45b09066d0bddcc46956b0">&#9670;&nbsp;</a></span>rm_block_media_ctrl_t</h2>
@@ -654,7 +635,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

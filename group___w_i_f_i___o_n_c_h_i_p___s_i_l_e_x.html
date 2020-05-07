@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -221,7 +221,7 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
-<td>Number of supported socket instances</td><td>Refer to the RA Configuration tool for available options.</td><td>16 </td><td>Enable number of socket instances </td></tr>
+<td>Number of supported socket instances</td><td>Refer to the RA Configuration tool for available options.</td><td>1 </td><td>Enable number of socket instances </td></tr>
 <tr>
 <td>Size of RX buffer for socket</td><td>Manual Entry</td><td>4096 </td><td></td></tr>
 <tr>
@@ -247,8 +247,8 @@ This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Wi
 </table>
 </p>
 <p>Note: When configuring the two UART components you will need to make sure that DTC and FIFO are both enabled in the UART configuration. Also, you must create both TX/RX DTC components per UART.</p>
-<p>Note: If you wish to use flow control then you must enable flow control in the configurator. This can be found in the UART setting. It is advantageous to use flow control all the time since it allows the hardware to gate the flow of data across the serial bus. Without hardware flow control for faster data rate you will most likely see an overflow condition between MCU and the module device.</p>
-<p>Note: Higher baud rates are now support in the configurator and should be changed in the first UART configuration. There is no need to change the second UART baud rate since it is only used as a AT command channel.</p>
+<p>Note: If you wish to use flow control then you must enable flow control in the RA Configuration editor. This can be found in the UART setting. It is advantageous to use flow control all the time since it allows the hardware to gate the flow of data across the serial bus. Without hardware flow control for faster data rate you will most likely see an overflow condition between MCU and the module device.</p>
+<p>Note: Higher baud rates are supported in the RA Configuration editor and should be changed in the first UART configuration. There is no need to change the second UART baud rate since it is only used as an AT command channel.</p>
 <p>Note: It is a good idea to also enable the FIFO in the UART configuration settings if you plan to use higher baud rates.</p>
 <h2><a class="anchor" id="r-wifi-onchip-silex-interrupt-configuration"></a>
 Interrupt Configuration</h2>
@@ -1554,7 +1554,7 @@ Internal socket instances. </td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><ul>
 <li>SOCKETS_ERROR_NONE if a connection is established.</li>
-<li>If an error occured, a negative value is returned. SocketsErrors </li>
+<li>If an error occured, a negative value is returned. </li>
 </ul>
 </dd></dl>
 
@@ -1611,7 +1611,7 @@ Internal socket instances. </td></tr>
 <dl class="section return"><dt>Returns</dt><dd><ul>
 <li>If the receive was successful then the number of bytes received (placed in the buffer pointed to by pvBuffer) is returned.</li>
 <li>If a timeout occurred before data could be received then 0 is returned (timeout is set using SOCKETS_SO_RCVTIMEO).</li>
-<li>If an error occured, a negative value is returned. SocketsErrors </li>
+<li>If an error occured, a negative value is returned. </li>
 </ul>
 </dd></dl>
 
@@ -1667,7 +1667,7 @@ Internal socket instances. </td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><ul>
 <li>On success, the number of bytes actually sent is returned.</li>
-<li>If an error occured, a negative value is returned. SocketsErrors </li>
+<li>If an error occured, a negative value is returned. </li>
 </ul>
 </dd></dl>
 
@@ -1708,7 +1708,7 @@ Internal socket instances. </td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><ul>
 <li>If the operation was successful, 0 is returned.</li>
-<li>If an error occured, a negative value is returned. SocketsErrors </li>
+<li>If an error occured, a negative value is returned. </li>
 </ul>
 </dd></dl>
 
@@ -1738,7 +1738,7 @@ Internal socket instances. </td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><ul>
 <li>On success, 0 is returned.</li>
-<li>If an error occurred, a negative value is returned. SocketsErrors </li>
+<li>If an error occurred, a negative value is returned. </li>
 </ul>
 </dd></dl>
 
@@ -1852,7 +1852,7 @@ Internal socket instances. </td></tr>
 </ul>
 <dl class="section return"><dt>Returns</dt><dd><ul>
 <li>On success, 0 is returned.</li>
-<li>If an error occured, a negative value is returned. SocketsErrors </li>
+<li>If an error occured, a negative value is returned. </li>
 </ul>
 </dd></dl>
 
@@ -2261,7 +2261,7 @@ Internal socket instances. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

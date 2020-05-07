@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -149,7 +149,7 @@ Heap Size</h2>
 <li>Allocate memory via user-provided functions</li>
 </ol>
 <p>When the "Memory Allocation" configuration option is set to "Default" the driver will use an RTOS implementation if available and the main heap otherwise. Setting the option to "Custom" allows the user to define their own scheme using the following prototypes:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> * d1_malloc(<span class="keywordtype">size_t</span> size);</div><div class="line"><span class="keywordtype">void</span> d1_free(<span class="keywordtype">void</span> * ptr);</div></div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>If there is no RTOS-based allocation scheme the main heap will be used. Be sure that it is enabled by setting the "Heap size (bytes)" property under RA Common on the BSP tab of the configurator.</dd></dl>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> * d1_malloc(<span class="keywordtype">size_t</span> size);</div><div class="line"><span class="keywordtype">void</span> d1_free(<span class="keywordtype">void</span> * ptr);</div></div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>If there is no RTOS-based allocation scheme the main heap will be used. Be sure that it is enabled by setting the "Heap size (bytes)" property under RA Common on the <b>BSP</b> tab of the RA Configuration editor.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>It is recommended to add 32KB of additional heap space for the D2 driver until the actual usage can be determined in your application.</dd></dl>
 <h2><a class="anchor" id="r-drw-interrupt"></a>
 Interrupt</h2>
@@ -169,7 +169,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

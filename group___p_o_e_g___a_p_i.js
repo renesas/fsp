@@ -29,7 +29,6 @@ var group___p_o_e_g___a_p_i =
       [ "p_cfg", "group___p_o_e_g___a_p_i.html#a3952f94b0ec56e7d66d5e806578be4f4", null ],
       [ "p_api", "group___p_o_e_g___a_p_i.html#aa5e1aa9d5416c9ca24132cddae7565f3", null ]
     ] ],
-    [ "POEG_API_VERSION_MAJOR", "group___p_o_e_g___a_p_i.html#gaee9118f26d8fe5ab748f090639c34ccb", null ],
     [ "poeg_ctrl_t", "group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7", null ],
     [ "poeg_state_t", "group___p_o_e_g___a_p_i.html#ga6964e3b0b8b2d32d2428d86b32dfeef2", [
       [ "POEG_STATE_NO_DISABLE_REQUEST", "group___p_o_e_g___a_p_i.html#gga6964e3b0b8b2d32d2428d86b32dfeef2a929680a05ecd96bb24dd053fb6dcc8b5", null ],

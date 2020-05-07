@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -239,7 +239,7 @@ Clock Configuration</h2>
 <p>The OPAMP runs on PCLKB.</p>
 <h2><a class="anchor" id="r-opamp-pin-configuration"></a>
 Pin Configuration</h2>
-<p>To use the OPAMP HAL module, the port pins for the channels receiving the analog input must be set as input pins in the pin configurator in e2 studio.</p>
+<p>To use the OPAMP HAL module, the port pins for the channels receiving the analog input must be set as inputs on the <b>Pins</b> tab of the RA Configuration editor.</p>
 <p>Refer to the most recent FSP Release Notes for any additional operational limitations for this module.</p>
 <h1><a class="anchor" id="r-opamp-usage_notes"></a>
 Usage Notes</h1>
@@ -248,7 +248,7 @@ Usage Notes</h1>
 <li>On MCUs that support trimming, the op-amp trim register is set to the factory default after the Open API is called.</li>
 <li>This function allows the application to trim the operational amplifier to a user setting, which overwrites the factory default trim values.</li>
 <li>Supported on selected MCUs. See hardware manual for details.</li>
-<li>Not supported if configured for low power mode(OPAMP_MODE_LOW_POWER).</li>
+<li>Not supported if configured for low power mode (OPAMP_MODE_LOW_POWER).</li>
 <li>This function is not reentrant. Only one side of one op-amp can be trimmed at a time. Complete the procedure for one side of one channel before calling the trim API with the command OPAMP_TRIM_CMD_START again.<ul>
 <li>The trim procedure works as follows:</li>
 <li>Call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_START.</li>
@@ -829,22 +829,28 @@ OPAMP2- connection. </td></tr>
 <p>Not supported on all MCUs. See hardware manual for details. Not supported if configured for low power mode (OPAMP_MODE_LOW_POWER).</p>
 <p>This function is not reentrant. Only one side of one op-amp can be trimmed at a time. Complete the procedure for one side of one channel before calling trim() with command OPAMP_TRIM_CMD_START again.</p>
 <p>Implements <a class="el" href="group___o_p_a_m_p___a_p_i.html#ac782f4e26e8e1f22cc47f2659dcf6989">opamp_api_t::trim</a>.</p>
-<p>Reference: Section 37.9 "User Offset Trimming" RA2A1 hardware manual R01UM0008EU0130. The trim procedure works as follows: </p><h1>Call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_START.</h1>
-<h1>Connect a fixed voltage to the Pch (+) input.</h1>
-<h1>Connect the Nch (-) input to the op-amp output to create a voltage follower.</h1>
-<h1>Ensure the op-amp is operating and stabilized.</h1>
-<h1>Call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_START.</h1>
-<h1>Measure the fixed voltage connected to the Pch (+) input using the SAR ADC and save the value (referred to as A</h1>
-<p>later in this procedure). </p><h1>Iterate over the following loop 5 times:</h1>
-<h2>Call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_NEXT_STEP.</h2>
-<h2>Measure the op-amp output using the SAR ADC (referred to as B in the next step).</h2>
-<h2>If A &lt;= B, call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_CLEAR_BIT.</h2>
-<h1>Call trim() for the Nch (-) side input with command OPAMP_TRIM_CMD_START.</h1>
-<h1>Measure the fixed voltage connected to the Pch (+) input using the SAR ADC and save the value (referred to as A</h1>
-<p>later in this procedure). </p><h1>Iterate over the following loop 5 times:</h1>
-<h2>Call trim() for the Nch (-) side input with command OPAMP_TRIM_CMD_NEXT_STEP.</h2>
-<h2>Measure the op-amp output using the SAR ADC (referred to as B in the next step).</h2>
-<h2>If A &lt;= B, call trim() for the Nch (-) side input with command OPAMP_TRIM_CMD_CLEAR_BIT.</h2>
+<p>Reference: Section 37.9 "User Offset Trimming" RA2A1 hardware manual R01UM0008EU0130. The trim procedure works as follows:</p><ul>
+<li>Call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_START.</li>
+<li>Connect a fixed voltage to the Pch (+) input.</li>
+<li>Connect the Nch (-) input to the op-amp output to create a voltage follower.</li>
+<li>Ensure the op-amp is operating and stabilized.</li>
+<li>Call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_START.</li>
+<li>Measure the fixed voltage connected to the Pch (+) input using the SAR ADC and save the value (referred to as A later in this procedure).</li>
+<li>Iterate over the following loop 5 times:<ul>
+<li>Call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_NEXT_STEP.</li>
+<li>Measure the op-amp output using the SAR ADC (referred to as B in the next step).</li>
+<li>If A &lt;= B, call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_CLEAR_BIT.</li>
+</ul>
+</li>
+<li>Call trim() for the Nch (-) side input with command OPAMP_TRIM_CMD_START.</li>
+<li>Measure the fixed voltage connected to the Pch (+) input using the SAR ADC and save the value (referred to as A later in this procedure).</li>
+<li>Iterate over the following loop 5 times:<ul>
+<li>Call trim() for the Nch (-) side input with command OPAMP_TRIM_CMD_NEXT_STEP.</li>
+<li>Measure the op-amp output using the SAR ADC (referred to as B in the next step).</li>
+<li>If A &lt;= B, call trim() for the Nch (-) side input with command OPAMP_TRIM_CMD_CLEAR_BIT.</li>
+</ul>
+</li>
+</ul>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Conversion result in p_data. </td></tr>
@@ -935,7 +941,7 @@ OPAMP2- connection. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

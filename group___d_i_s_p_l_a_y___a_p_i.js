@@ -111,7 +111,8 @@ var group___d_i_s_p_l_a_y___a_p_i =
       [ "layerChange", "group___d_i_s_p_l_a_y___a_p_i.html#ac012f204038e500efa90632c7c8ce5a8", null ],
       [ "bufferChange", "group___d_i_s_p_l_a_y___a_p_i.html#a6551b58832a32c7767f078ee7bce31ac", null ],
       [ "correction", "group___d_i_s_p_l_a_y___a_p_i.html#a33e37feda5af926e37370700569d0450", null ],
-      [ "clut", "group___d_i_s_p_l_a_y___a_p_i.html#a61682d4743a2d2915535ee47a46539b6", null ],
+      [ "clut", "group___d_i_s_p_l_a_y___a_p_i.html#a5a2c9cd2bae48a2a69da0bbc45cb340f", null ],
+      [ "clutEdit", "group___d_i_s_p_l_a_y___a_p_i.html#adf095eb456db9e413a39ce5cb6042ced", null ],
       [ "statusGet", "group___d_i_s_p_l_a_y___a_p_i.html#a58901881db804c805aa9dbe363200393", null ],
       [ "versionGet", "group___d_i_s_p_l_a_y___a_p_i.html#aa3baf9d0678a5499e2960cf3137d17ff", null ]
     ] ],

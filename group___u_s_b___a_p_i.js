@@ -23,6 +23,7 @@ var group___u_s_b___a_p_i =
       [ "periControlDataGet", "group___u_s_b___a_p_i.html#acfd255be34c610f854f8bedb4a1a0a4f", null ],
       [ "periControlDataSet", "group___u_s_b___a_p_i.html#ada9e58c96ca03bf9140ba2db36a4214c", null ],
       [ "periControlStatusSet", "group___u_s_b___a_p_i.html#a29903dba1e2952e264159322340db640", null ],
+      [ "remoteWakeup", "group___u_s_b___a_p_i.html#adac11f28d21ee7e3fee05b6689a8a851", null ],
       [ "moduleNumberGet", "group___u_s_b___a_p_i.html#aac92e22abfd4381b9927f59d94e18903", null ],
       [ "classTypeGet", "group___u_s_b___a_p_i.html#a4609b14b348657b9b574464f849d7e8f", null ],
       [ "deviceAddressGet", "group___u_s_b___a_p_i.html#a4be5025b142213cdc3c86b06e5ca3efd", null ],

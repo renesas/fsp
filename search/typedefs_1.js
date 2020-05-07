@@ -1,10 +1,18 @@
 var searchData=
 [
-  ['cac_5fctrl_5ft',['cac_ctrl_t',['../group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1',1,'r_cac_api.h']]],
-  ['can_5fctrl_5ft',['can_ctrl_t',['../group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049',1,'r_can_api.h']]],
-  ['can_5fid_5ft',['can_id_t',['../group___c_a_n___a_p_i.html#gad4cb716102402e9be0b5919cd2dd6ead',1,'r_can_api.h']]],
-  ['cgc_5fctrl_5ft',['cgc_ctrl_t',['../group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7',1,'r_cgc_api.h']]],
-  ['comparator_5fctrl_5ft',['comparator_ctrl_t',['../group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#gaa8093c248f21f1012385b4c0099a22c9',1,'r_comparator_api.h']]],
-  ['crc_5fctrl_5ft',['crc_ctrl_t',['../group___c_r_c___a_p_i.html#ga4c9c5ebe6bb4522f76618993434459e0',1,'r_crc_api.h']]],
-  ['ctsu_5fctrl_5ft',['ctsu_ctrl_t',['../group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98',1,'r_ctsu_api.h']]]
+  ['ble_5fabs_5fctrl_5ft',['ble_abs_ctrl_t',['../group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923',1,'rm_ble_abs_api.h']]],
+  ['ble_5fabs_5ftimer_5fcb_5ft',['ble_abs_timer_cb_t',['../group___b_l_e___a_b_s.html#ga8768f046a3e7483970d6924283d100d0',1,'rm_ble_abs.h']]],
+  ['ble_5fevent_5fcb_5ft',['ble_event_cb_t',['../group___b_l_e.html#gaa6c920c309a2765c1c27954de0cfcb4b',1,'r_ble_api.h']]],
+  ['ble_5fgap_5fapp_5fcb_5ft',['ble_gap_app_cb_t',['../group___g_a_p___a_p_i.html#gae01644d1e17b1817fd3da317def1f7a0',1,'r_ble_api.h']]],
+  ['ble_5fgap_5fapplication_5fcallback_5ft',['ble_gap_application_callback_t',['../group___b_l_e___a_b_s___a_p_i.html#ga423d7479d7d81c474ad321f5aa76e939',1,'rm_ble_abs_api.h']]],
+  ['ble_5fgap_5fdel_5fbond_5fcb_5ft',['ble_gap_del_bond_cb_t',['../group___g_a_p___a_p_i.html#ga783a033dd7ddeb949179bee45941e03a',1,'r_ble_api.h']]],
+  ['ble_5fgatt_5fclient_5fapplication_5fcallback_5ft',['ble_gatt_client_application_callback_t',['../group___b_l_e___a_b_s___a_p_i.html#gad877e721a58a6783c472f3022304f7f9',1,'rm_ble_abs_api.h']]],
+  ['ble_5fgatt_5fserver_5fapplication_5fcallback_5ft',['ble_gatt_server_application_callback_t',['../group___b_l_e___a_b_s___a_p_i.html#ga69790145005d03f5503c4d1338956e83',1,'rm_ble_abs_api.h']]],
+  ['ble_5fgattc_5fapp_5fcb_5ft',['ble_gattc_app_cb_t',['../group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga7b236d97c7f984ee62215b33b0feab89',1,'r_ble_api.h']]],
+  ['ble_5fgatts_5fapp_5fcb_5ft',['ble_gatts_app_cb_t',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#gaddd939a01a1e5499c47e142e89798be8',1,'r_ble_api.h']]],
+  ['ble_5fl2cap_5fcf_5fapp_5fcb_5ft',['ble_l2cap_cf_app_cb_t',['../group___l2_c_a_p___a_p_i.html#gacf0bb80f1c897a2c7096ae83ca675dcf',1,'r_ble_api.h']]],
+  ['ble_5fmcu_5fclock_5fchange_5fcb_5ft',['ble_mcu_clock_change_cb_t',['../group___b_l_e___a_b_s.html#gab865cd3aaf770851d0ef9658be418099',1,'rm_ble_abs.h']]],
+  ['ble_5frf_5fnotify_5fcb_5ft',['ble_rf_notify_cb_t',['../group___b_l_e___a_b_s.html#gafba5bc1961ba37dfcc185edf6481678b',1,'rm_ble_abs.h']]],
+  ['ble_5fvendor_5fspecific_5fapplication_5fcallback_5ft',['ble_vendor_specific_application_callback_t',['../group___b_l_e___a_b_s___a_p_i.html#ga0ce85fc03a2dab118c422d5cbcdc178c',1,'rm_ble_abs_api.h']]],
+  ['ble_5fvs_5fapp_5fcb_5ft',['ble_vs_app_cb_t',['../group___v_s___a_p_i.html#ga35cfc1fb6715e37ceb8d4f2b67031b36',1,'r_ble_api.h']]]
 ];

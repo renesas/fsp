@@ -168,6 +168,8 @@ var group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s =
       [ "FSP_ERR_BLE_CONFIG_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aace5674d992838bd8dac5926188ea88c", null ],
       [ "FSP_ERR_BLE_PRF_ALREADY_ENABLED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a0bbf60d9eede358d4ebbdbd17eaf8854", null ],
       [ "FSP_ERR_BLE_PRF_NOT_ENABLED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a517f6eb396408044e70353bedd2983e8", null ],
+      [ "FSP_ERR_BLE_ABS_INVALID_OPERATION", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ad1049f36b3561899a547421a6117138c", null ],
+      [ "FSP_ERR_BLE_ABS_NOT_FOUND", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ad9c985872f1eee4c41ae4a30789c0761", null ],
       [ "FSP_ERR_CRYPTO_CONTINUE", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a479e63b946d94636f905fd9bace227e9", null ],
       [ "FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a558889b250c4c0dfa10cbce827f5b47e", null ],
       [ "FSP_ERR_CRYPTO_SCE_FAIL", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a2c7fd435f27316b840546c51d0e7658d", null ],

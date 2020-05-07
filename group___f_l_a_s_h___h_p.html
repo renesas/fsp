@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -140,7 +140,7 @@ Features</h2>
 <p>The R_FLASH_HP module has the following key features:</p><ul>
 <li>Blocking and non-blocking erasing, writing and blank-checking of data flash.<a class="anchor" id="um_flash_data_flash_blank_check_non_blocking"></a><a class="anchor" id="um_flash_data_flash_erase_non_blocking"></a><a class="anchor" id="um_flash_data_flash_write_non_blocking"></a></li>
 <li>Blocking erasing, writing and blank-checking of code flash.</li>
-<li>Callback functions for completion of non-blocking data-flash operations.</li>
+<li>Callback functions for completion of non-blocking data flash operations.</li>
 <li>Access window (write protection) for ROM Flash, allowing only specified areas of code flash to be erased or written.</li>
 <li>Boot block-swapping.</li>
 <li>ID code programming support.</li>
@@ -213,9 +213,9 @@ Usage Notes</h1>
 <dl class="section warning"><dt>Warning</dt><dd>It is highly recommended that the developer reviews sections 5 and 6 of the Flash Memory section of the target MCUs Hardware User’s Manual prior to using the r_flash_hp module. In particular, understanding ID Code and Access Window functionality can help avoid unrecoverable flash scenarios.</dd></dl>
 <h2><a class="anchor" id="r-flash-hp-data-precautions"></a>
 Data Flash Background Operation (BGO) Precautions</h2>
-<p>When using the data-flash BGO (Background Operation) mode, you can still access the user ROM, RAM and external memory. You must ensure that the data-flash is not accessed during a data-flash operation. This includes interrupts that may access the data-flash.</p>
+<p>When using the data flash BGO (Background Operation) mode, you can still access the user ROM, RAM and external memory. You must ensure that the data flash is not accessed during a data flash operation. This includes interrupts that may access the data flash.</p>
 <h2><a class="anchor" id="r-flash-hp-code-precautions"></a>
-Code-Flash Precautions</h2>
+Code Flash Precautions</h2>
 <p>Code flash cannot be accessed while writing, erasing or blank checking code flash. Code flash cannot be accessed while modifying the access window, selecting the startup area or setting the ID code. In order to support modifying code flash all supporting code must reside in RAM. This is only done when code flash programming is enabled. BGO mode is not supported for code flash, so a code flash operation will not return before the operation has completed. By default, the vector table resides in the code flash. If an interrupt occurs during the code flash operation, then code flash will be accessed to fetch the interrupt's starting address and an error will occur. The simplest work-around is to disable interrupts during code flash operations. Another option is to copy the vector table to RAM, update the VTOR (Vector Table Offset Register) accordingly and ensure that any interrupt service routines execute out of RAM. Similarly, you must insure that if in a multi-threaded environment, threads running from code flash cannot become active while a code flash operation is in progress.</p>
 <h2><a class="anchor" id="r-flash-hp-flash-clock"></a>
 Flash Clock (FCLK)</h2>
@@ -273,7 +273,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="separator:ac6ad507f328b170af1342d487969042b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecd09c39ddf5233ecdd713a14cdd4b4e"><td class="memItemLeft" align="right" valign="top"><a id="aecd09c39ddf5233ecdd713a14cdd4b4e"></a>
 <a class="el" href="group___f_l_a_s_h___h_p.html#gaf2df0780f6e32a857a43f00d2a34f5f6">flash_bgo_operation_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#aecd09c39ddf5233ecdd713a14cdd4b4e">current_operation</a></td></tr>
-<tr class="memdesc:aecd09c39ddf5233ecdd713a14cdd4b4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation in progress, ie. FLASH_OPERATION_CF_ERASE. <br /></td></tr>
+<tr class="memdesc:aecd09c39ddf5233ecdd713a14cdd4b4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation in progress, for example, FLASH_OPERATION_CF_ERASE. <br /></td></tr>
 <tr class="separator:aecd09c39ddf5233ecdd713a14cdd4b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
@@ -874,7 +874,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

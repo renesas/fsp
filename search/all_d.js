@@ -1,15 +1,20 @@
 var searchData=
 [
   ['negation_5fdelay',['negation_delay',['../group___l_v_d___a_p_i.html#a4ee0cbde3ba8457e75b8475161a29704',1,'lvd_cfg_t']]],
+  ['next',['next',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a19f157546e7ca16e3c974fc14c0c7f2b',1,'st_ble_gatts_db_attr_cfg_t']]],
   ['next_5faccess_5fdelay',['next_access_delay',['../group___s_p_i.html#a60d68331597e3bce4f172ae22945aa26',1,'spi_extended_cfg_t']]],
   ['nmi_5fhandler',['NMI_Handler',['../group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc',1,'bsp_group_irq.c']]],
   ['noise_5fcancel',['noise_cancel',['../group___s_c_i___u_a_r_t.html#a0bbbfe8b19551f087925eed6409634e4',1,'sci_uart_extended_cfg_t']]],
   ['noise_5ffilter',['noise_filter',['../group___p_o_e_g___a_p_i.html#a7f4c9f27604cdf1b772dc2d4ed8c3a2f',1,'poeg_cfg_t']]],
+  ['num',['num',['../group___g_a_p___a_p_i.html#a25349bfdeb0fd44928f395bf86983b60',1,'st_ble_gap_adv_rept_t::num()'],['../group___g_a_p___a_p_i.html#a4373446ffa081eb5a15652449d7c9560',1,'st_ble_gap_ext_adv_rept_t::num()'],['../group___g_a_p___a_p_i.html#ad00741668ce51921a2f2db82be88c29d',1,'st_ble_gap_white_list_conf_evt_t::num()'],['../group___g_a_p___a_p_i.html#abc309368ed9684c8f4125239f6080bff',1,'st_ble_gap_rslv_list_conf_evt_t::num()'],['../group___g_a_p___a_p_i.html#ac84255f57e31ce102b81bd574ca45d0a',1,'st_ble_gap_perd_list_conf_evt_t::num()'],['../group___g_a_p___a_p_i.html#a51fe52747859dc29a31991e247af90d6',1,'st_ble_gap_set_priv_mode_evt_t::num()']]],
   ['num_5fblocks',['num_blocks',['../group___t_r_a_n_s_f_e_r___a_p_i.html#a9781e58bb7cb2ee40de446936d523814',1,'transfer_info_t']]],
   ['num_5fbuttons',['num_buttons',['../group___t_o_u_c_h___a_p_i.html#a68265729f298e4df5fd06dc7327a7b09',1,'touch_cfg_t']]],
+  ['num_5fcomp_5fext_5fadv_5fevts',['num_comp_ext_adv_evts',['../group___g_a_p___a_p_i.html#a5200bc70721b264a5b011884e122ae84',1,'st_ble_gap_adv_off_evt_t']]],
   ['num_5fcreatable_5fsockets',['num_creatable_sockets',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#acfe7cadd1f2fb8d3461f50baa3e32389',1,'wifi_onchip_silex_instance_ctrl_t']]],
   ['num_5felements',['num_elements',['../group___t_o_u_c_h___a_p_i.html#a54240a6fcd14f4eecab0c38643c477fa',1,'touch_slider_cfg_t::num_elements()'],['../group___t_o_u_c_h___a_p_i.html#a2a7ce7245bcdada0b7952c7aa2f54751',1,'touch_wheel_cfg_t::num_elements()'],['../group___c_t_s_u.html#a67a41db2c42e9d1e46a7547d803b8296',1,'ctsu_instance_ctrl_t::num_elements()']]],
   ['num_5fmoving_5faverage',['num_moving_average',['../group___c_t_s_u___a_p_i.html#abfff39da3a865d91b1d6e25e9d6b2933',1,'ctsu_cfg_t::num_moving_average()'],['../group___c_t_s_u.html#aaaf1fa1d2eae6508aeb04433bd02be27',1,'ctsu_instance_ctrl_t::num_moving_average()']]],
+  ['num_5fof_5fcrc_5ferr_5fpacket',['num_of_crc_err_packet',['../group___v_s___a_p_i.html#a0a490999d0f0dc3fedc7205260a0bc03',1,'st_ble_vs_test_end_evt_t']]],
+  ['num_5fof_5fpacket',['num_of_packet',['../group___v_s___a_p_i.html#a747699d0f966f0f1bb5a4e7cb332c12e',1,'st_ble_vs_tx_test_param_t::num_of_packet()'],['../group___v_s___a_p_i.html#a3b50f0bd1eb723c337e5072e83f0aa35',1,'st_ble_vs_test_end_evt_t::num_of_packet()']]],
   ['num_5fregions',['num_regions',['../group___f_l_a_s_h___a_p_i.html#a4be46b2f7b0f62065e6f12391b2a2b78',1,'flash_regions_t']]],
   ['num_5frx',['num_rx',['../group___c_t_s_u___a_p_i.html#aa56acc1bedbf92f8a188631e6321f081',1,'ctsu_cfg_t']]],
   ['num_5frx_5fdescriptors',['num_rx_descriptors',['../group___e_t_h_e_r___a_p_i.html#ae672b5a15f85774b5b136a6e50073f68',1,'ether_cfg_t']]],
@@ -22,5 +27,6 @@ var searchData=
   ['num_5fuarts',['num_uarts',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a3f03a334cf6b137dc9233814d4d5d4ec',1,'wifi_onchip_silex_cfg_t::num_uarts()'],['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a37d2a47085b2445643b9d1ce75c34117',1,'wifi_onchip_silex_instance_ctrl_t::num_uarts()']]],
   ['num_5fwheels',['num_wheels',['../group___t_o_u_c_h___a_p_i.html#acfc38d50a81ed250cab31fad7aa65b37',1,'touch_cfg_t']]],
   ['number',['number',['../group___t_o_u_c_h___a_p_i.html#a49677f83aabedc934446bf9ee56e90b8',1,'touch_cfg_t']]],
-  ['number_5fof_5fpins',['number_of_pins',['../group___i_o_p_o_r_t___a_p_i.html#af5b820497125b07a94537deb03a37f0d',1,'ioport_cfg_t']]]
+  ['number_5fof_5fpins',['number_of_pins',['../group___i_o_p_o_r_t___a_p_i.html#af5b820497125b07a94537deb03a37f0d',1,'ioport_cfg_t']]],
+  ['numeric',['numeric',['../group___g_a_p___a_p_i.html#aedd027b6c1d5108224ae989a83c9780d',1,'st_ble_gap_num_comp_evt_t']]]
 ];

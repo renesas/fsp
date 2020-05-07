@@ -14,6 +14,5 @@ var group___r_m___l_i_t_t_l_e_f_s___a_p_i =
       [ "p_cfg", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#a32e202a41d3e95a83ccb73648551b2f2", null ],
       [ "p_api", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#ae15dee1ad7962f17c4deb3db360700d4", null ]
     ] ],
-    [ "RM_LITTLEFS_API_VERSION_MAJOR", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#gab9535f309c90662b699ba2b2c0dca597", null ],
     [ "rm_littlefs_ctrl_t", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#ga343f6d7a2dffa306f3ab00c0eb9391b2", null ]
 ];

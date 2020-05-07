@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('group___a_w_s___s_e_c_u_r_e___s_o_c_k_
 <h1>Overview</h1>
 <h2>Features</h2>
 <p>Information about the features provided by the AWS Secure Sockets Library is available in the <a href="https://docs.aws.amazon.com/freertos/latest/userguide/secure-sockets.html">FreeRTOS Libraries User Guide.</a></p>
-<p>The FSP implementation supports using Secure Sockets with either Ethernet or WiFi. These stacks can be added in FSP via the configurator under FreeRTOS | Secure Sockets.</p>
+<p>The FSP implementation supports using Secure Sockets with either Ethernet or WiFi. These stacks can be added in FSP via the RA Configuration editor under FreeRTOS | Secure Sockets.</p>
 <h2>Dependencies</h2>
 <p>The Secure Sockets library has two dependencies:</p>
 <ol type="1">
@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('group___a_w_s___s_e_c_u_r_e___s_o_c_k_
 </ol>
 <p>For TCP/IP, AWS have provided the FreeRTOS TCP/IP implementation.  For TLS, AWS have chosen mbedTLS, but use PKCS11 for storage and invoking the crypto portion of mbedTLS. For more information about AWS Secure Sockets, refer to the <a href="https://docs.aws.amazon.com/freertos/latest/userguide/secure-sockets.html">AWS documentation</a>. An example of Secure Sockets usage is on the same page.</p>
 <h2>mbedTLS</h2>
-<p><a href="https://tls.mbed.org/">mbedTLS</a> is ARM's implementation of the TLS and SSP protocols as well as the cryptographic primitives required by those implementations. mbedTLS is also solely used for its cryptographic features even if the TLS/SSL portions are not used.  With <a href="https://developer.arm.com/architectures/security-architectures/platform-security-architecture">PSA</a>, ARM have created a separate API for cryptography. Starting with mbedTLS3, crypto implementation has been moved out to a new module called mbedCrypto (PSA Crypto API) and a build time configuration can direct the mbedTLS3 implementation to use either the old mbedtls cryptography functions or use the new PSA Crypto API. Since the current version of mbedCrypto (PSA Crypto API) implements both the old mbedtls crypto API as well as the new PSA Crypto API, either option is functional for now. </p>
+<p><a href="https://tls.mbed.org/">mbedTLS</a> is ARM's implementation of the TLS and SSL protocols as well as the cryptographic primitives required by those implementations. mbedTLS is also solely used for its cryptographic features even if the TLS/SSL portions are not used.  With <a href="https://developer.arm.com/architectures/security-architectures/platform-security-architecture">PSA</a>, ARM have created a separate API for cryptography. Starting with mbedTLS3, crypto implementation has been moved out to a new module called mbedCrypto (PSA Crypto API) and a build time configuration can direct the mbedTLS3 implementation to use either the old mbedtls cryptography functions or use the new PSA Crypto API. Since the current version of mbedCrypto (PSA Crypto API) implements both the old mbedtls crypto API as well as the new PSA Crypto API, either option is functional for now. </p>
 <h2>CipherSuites</h2>
 <p>During the TLS connection setup stage, the client has to indicate to the server the type of cryptographic operations that it supports. This is referred to as the ciphersuite. The entire list of ciphersuites supported by mbedTLS can be found in mbedtls/ssl_ciphersuites.h.</p>
 <h2>Configuration</h2>
@@ -127,7 +127,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

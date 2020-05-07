@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -583,6 +583,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ada9e58c96ca03bf9140ba2db36a4214c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29903dba1e2952e264159322340db640"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a29903dba1e2952e264159322340db640">periControlStatusSet</a> )(usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga386cabe04206e06b3be8dbafc0bc3d86">usb_setup_status_t</a> status)</td></tr>
 <tr class="separator:a29903dba1e2952e264159322340db640"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adac11f28d21ee7e3fee05b6689a8a851"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#adac11f28d21ee7e3fee05b6689a8a851">remoteWakeup</a> )(usb_ctrl_t *const p_api_ctrl)</td></tr>
+<tr class="separator:adac11f28d21ee7e3fee05b6689a8a851"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac92e22abfd4381b9927f59d94e18903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#aac92e22abfd4381b9927f59d94e18903">moduleNumberGet</a> )(usb_ctrl_t *const p_api_ctrl, uint8_t *module_number)</td></tr>
 <tr class="separator:aac92e22abfd4381b9927f59d94e18903"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4609b14b348657b9b574464f849d7e8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a4609b14b348657b9b574464f849d7e8f">classTypeGet</a> )(usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#gab1dc4a2240edf1a50cca3945f31dc9f2">usb_class_t</a> *class_type)</td></tr>
@@ -668,7 +670,7 @@ Enumerations</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to area that stores read data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Read request size. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>In Host, it represents the device address, and in Peri, it represents the device class. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>In Host mode, it represents the device address, and in Peripheral mode, it represents the device class. </td></tr>
   </table>
   </dd>
 </dl>
@@ -695,7 +697,7 @@ Enumerations</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to area that stores write data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Read request size. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>In Host, it represents the device address, and in Peri, it represents the device class. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>In Host mode, it represents the device address, and in Peripheral mode, it represents the device class. </td></tr>
   </table>
   </dd>
 </dl>
@@ -720,8 +722,8 @@ Enumerations</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">direction</td><td>Receive (USB_TRANSFER_READ) or send (USB_TRANSFER_WRITE ). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>In Host, it represents the device address, and in Peri, it represents the device class. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">direction</td><td>Receive (USB_TRANSFER_READ) or send (USB_TRANSFER_WRITE). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>In Host mode, it represents the device address, and in Peripheral mode, it represents the device class. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1068,7 +1070,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Performs settings and transmission processing when transmitting a setup packet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gaecba62e40820ec837fa0b285140ed13b" title="Performs settings and transmission processing when transmitting a setup packet. ">R_USB_HostControlTransfer()</a></li>
+<li><a class="el" href="group___u_s_b.html#gaecba62e40820ec837fa0b285140ed13b">R_USB_HostControlTransfer()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1095,7 +1097,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Receives data sent by control transfer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga1293995ba77495705db3a3adf703b7f1" title="Receives data sent by control transfer. ">R_USB_PeriControlDataGet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga1293995ba77495705db3a3adf703b7f1">R_USB_PeriControlDataGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1121,7 +1123,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Performs transfer processing for control transfer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#ga3fb9080601ee1041e35073e0538a21b0" title="Performs transfer processing for control transfer. ">R_USB_PeriControlDataSet()</a></li>
+<li><a class="el" href="group___u_s_b.html#ga3fb9080601ee1041e35073e0538a21b0">R_USB_PeriControlDataSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1147,13 +1149,37 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Set the response to the setup packet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___u_s_b.html#gaf8976d11f8be52c3f9422563188d6ab9" title="Set the response to the setup packet. ">R_USB_PeriControlStatusSet()</a></li>
+<li><a class="el" href="group___u_s_b.html#gaf8976d11f8be52c3f9422563188d6ab9">R_USB_PeriControlStatusSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">status</td><td>USB port startup information. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adac11f28d21ee7e3fee05b6689a8a851"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adac11f28d21ee7e3fee05b6689a8a851">&#9670;&nbsp;</a></span>remoteWakeup</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::remoteWakeup) (usb_ctrl_t *const p_api_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sends a remote wake-up signal to the connected Host. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#ga66ee4c6ec542965dbac67020bd135179">R_USB_RemoteWakeup()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1228,7 +1254,7 @@ Enumerations</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">device_address</td><td>device address to get. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">device_address</td><td>Device address to get. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1278,7 +1304,7 @@ Enumerations</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">state</td><td>device state to get. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">state</td><td>Device state to get. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1564,7 +1590,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>USB read / write type </p>
+<p>USB read/write type </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga0c47f1426b999f2cd8aea9adca06fbdea015f71301782b17122b45abba5e47f87"></a>USB_TRANSFER_READ&#160;</td><td class="fielddoc"><p>Data Receive communication. </p>
 </td></tr>
@@ -1655,7 +1681,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

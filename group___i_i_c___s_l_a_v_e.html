@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.0.0</span>
+   &#160;<span id="projectnumber">Release v1.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -248,12 +248,12 @@ Callback</h2>
 <li>A Transmission or reception has been completed: I2C_SLAVE_EVENT_TX_COMPLETE; I2C_SLAVE_EVENT_RX_COMPLETE</li>
 <li>An I2C Master is requesting to read or write more data: I2C_SLAVE_EVENT_TX_MORE_REQUEST; I2C_SLAVE_EVENT_RX_MORE_REQUEST</li>
 <li>Error conditions: I2C_SLAVE_EVENT_ABORTED</li>
-<li>An I2C master initiates a general call by passing 0x00 as slave address: I2C_SLAVE_EVENT_GENERAL_CALL</li>
+<li>An I2C Master initiates a general call by passing 0x00 as slave address: I2C_SLAVE_EVENT_GENERAL_CALL</li>
 </ul>
 </li>
 <li>The callback arguments will contain information about the transaction status/events, bytes transferred and a pointer to the user defined context.</li>
-<li>Clock stretching is enabled by the use of callbacks. This means that the IIC slave can hold the clock line SCL LOW to force the I2C master into a wait state.</li>
-<li>The table below shows I2C slave event handling expected in user code:</li>
+<li>Clock stretching is enabled by the use of callbacks. This means that the IIC slave can hold the clock line SCL LOW to force the I2C Master into a wait state.</li>
+<li>The table below shows I2C Slave event handling expected in user code:</li>
 </ul>
 <p><a class="anchor" id="um_iic_slave_send_nack_support"></a> </p><table class="doxtable">
 <tr>
@@ -286,7 +286,7 @@ Callback</h2>
 <h2><a class="anchor" id="r-iic_slave-rate_calculation"></a>
 IIC Slave Rate Calculation</h2>
 <ul>
-<li>The configuration tool calculates the internal baud-rate setting based on the configured transfer rate. The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLKB settings is calculated and used.</li>
+<li>The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate. The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLKB settings is calculated and used.</li>
 </ul>
 <h1><a class="anchor" id="r-iic_slave-examples"></a>
 Examples</h1>
@@ -555,7 +555,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
