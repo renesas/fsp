@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -36,7 +40,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define CTSU_CODE_VERSION_MAJOR       (1U)
-#define CTSU_CODE_VERSION_MINOR       (0U)
+#define CTSU_CODE_VERSION_MINOR       (1U)
 
 #if (BSP_FEATURE_CTSU_VERSION == 2)
  #define CTSU_CORRECTION_POINT_NUM    (12) ///< number of correction table
@@ -180,14 +184,14 @@ typedef struct st_ctsu_instance_ctrl
     uint8_t                  ctsucr1;                   ///< Copy from (atune1 << 3, md << 6) by Open API. CLK, ATUNE0, CSW, and PON is set by HAL driver.
     ctsu_ctsuwr_t          * p_ctsuwr;                  ///< CTSUWR write register value. g_ctsu_ctsuwr[] is set by Open API.
     ctsu_self_buf_t        * p_self_raw;                ///< Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API.
-    uint16_t               * p_self_work;               ///< pointer to Self work buffer. g_ctsu_self_work[] is set by Open API.
-    uint16_t               * p_self_data;               ///< pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
-    ctsu_mutual_buf_t      * p_mutual_raw;              ///< pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API.
-    uint16_t               * p_mutual_pri_work;         ///< pointer to Mutual primary work buffer. g_ctsu_mutual_pri_work[] is set by Open API.
-    uint16_t               * p_mutual_snd_work;         ///< pointer to Mutual secondary work buffer. g_ctsu_mutual_snd_work[] is set by Open API.
-    uint16_t               * p_mutual_pri_data;         ///< pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
-    uint16_t               * p_mutual_snd_data;         ///< pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
-    ctsu_correction_info_t * p_correction_info;         ///< pointer to correction info
+    uint16_t               * p_self_work;               ///< Pointer to Self work buffer. g_ctsu_self_work[] is set by Open API.
+    uint16_t               * p_self_data;               ///< Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
+    ctsu_mutual_buf_t      * p_mutual_raw;              ///< Pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API.
+    uint16_t               * p_mutual_pri_work;         ///< Pointer to Mutual primary work buffer. g_ctsu_mutual_pri_work[] is set by Open API.
+    uint16_t               * p_mutual_snd_work;         ///< Pointer to Mutual secondary work buffer. g_ctsu_mutual_snd_work[] is set by Open API.
+    uint16_t               * p_mutual_pri_data;         ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
+    uint16_t               * p_mutual_snd_data;         ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
+    ctsu_correction_info_t * p_correction_info;         ///< Pointer to correction info
 #if (BSP_FEATURE_CTSU_VERSION == 2)
     ctsu_range_t          range;                        ///< According to atune12. (20uA : 0, 40uA : 1, 80uA : 2, 160uA : 3)
     uint8_t               ctsucr2;                      ///< Copy from (posel, atune1, md) by Open API. FCMODE and SDPSEL and LOAD is set by HAL driver.

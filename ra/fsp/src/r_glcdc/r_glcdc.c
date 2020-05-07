@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -267,6 +271,7 @@ const display_api_t g_display_on_glcdc =
     .layerChange  = R_GLCDC_LayerChange,
     .bufferChange = R_GLCDC_BufferChange,
     .clut         = R_GLCDC_ClutUpdate,
+    .clutEdit     = R_GLCDC_ClutEdit,
 #if GLCDC_CFG_COLOR_CORRECTION_ENABLE
     .correction   = R_GLCDC_ColorCorrection,
 #endif
@@ -288,9 +293,11 @@ void glcdc_underflow_1_isr(void);
 void glcdc_underflow_2_isr(void);
 
 /* Needed to track fade status */
-static uint32_t g_fade_pending[2] = {false, false};
+static uint32_t          g_fade_pending[2] = {false, false};
+static volatile uint32_t g_frame_ctr       = 0;
 
-static volatile uint32_t g_frame_ctr = 0;
+/* Tracks when an edited CLUT has been latched in */
+static volatile bool g_clut_data_latched[2] = {true, true};
 
 /* Look-up table for r_glcdc_tcon_set */
 static uint32_t volatile * g_tcon_lut[] =
@@ -724,12 +731,13 @@ fsp_err_t R_GLCDC_ColorCorrection (display_ctrl_t const * const       p_api_ctrl
 #endif
 
 /*******************************************************************************************************************//**
- * Update a color look-up table (CLUT) in the GLCDC module. Implements display_api_t::clut.
+ * Write an entire color look-up table (CLUT) in the GLCDC module. Implements display_api_t::clut.
  *
- * @retval  FSP_SUCCESS                  CLUT updated successfully.
- * @retval  FSP_ERR_ASSERTION            Pointer to the control block or CLUT source data is NULL.
- * @retval  FSP_ERR_INVALID_CLUT_ACCESS  Illegal CLUT entry or size is specified.
- * @note    This API can be called any time.
+ * @retval  FSP_SUCCESS                    CLUT written successfully.
+ * @retval  FSP_ERR_ASSERTION              Pointer to the control block or CLUT source data is NULL.
+ * @retval  FSP_ERR_INVALID_UPDATE_TIMING  R_GLCDC_ClutEdit was already used to edit the specified CLUT this frame.
+ * @retval  FSP_ERR_INVALID_CLUT_ACCESS    Illegal CLUT entry or size is specified.
+ * @note    This API can be called any time. The written data will be used after the next vertical sync event.
  **********************************************************************************************************************/
 fsp_err_t R_GLCDC_ClutUpdate (display_ctrl_t const * const     p_api_ctrl,
                               display_clut_cfg_t const * const p_clut_cfg,
@@ -741,6 +749,7 @@ fsp_err_t R_GLCDC_ClutUpdate (display_ctrl_t const * const     p_api_ctrl,
 #if (GLCDC_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_ctrl);
     FSP_ASSERT(p_clut_cfg);
+    FSP_ERROR_RETURN(g_clut_data_latched[layer], FSP_ERR_INVALID_UPDATE_TIMING);
     FSP_ERROR_RETURN((GLCDC_PRV_CLUT_ENTRY_SIZE > p_clut_cfg->start), FSP_ERR_INVALID_CLUT_ACCESS);
     FSP_ERROR_RETURN((GLCDC_PRV_CLUT_ENTRY_SIZE >= p_clut_cfg->size), FSP_ERR_INVALID_CLUT_ACCESS);
 #endif
@@ -758,6 +767,53 @@ fsp_err_t R_GLCDC_ClutUpdate (display_ctrl_t const * const     p_api_ctrl,
 
     /* Swap to the new CLUT table data on the next frame */
     R_GLCDC->GR[layer].CLUTINT_b.SEL = target_plane & 1;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Update an element of a color look-up table (CLUT) in the GLCDC module. Implements display_api_t::clutEdit.
+ *
+ * @retval  FSP_SUCCESS                  CLUT element updated successfully.
+ * @retval  FSP_ERR_ASSERTION            Pointer to the control block is NULL.
+ * @note    This API can be called any time. The written data will be used after the next vertical sync event.
+ **********************************************************************************************************************/
+fsp_err_t R_GLCDC_ClutEdit (display_ctrl_t const * const p_api_ctrl,
+                            display_frame_layer_t        layer,
+                            uint8_t                      index,
+                            uint32_t                     color)
+{
+    glcdc_instance_ctrl_t * p_ctrl = (glcdc_instance_ctrl_t *) p_api_ctrl;
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+
+#if (GLCDC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+#endif
+
+    static uint32_t volatile * clut_hw[2] = {R_GLCDC->GR1_CLUT0, R_GLCDC->GR2_CLUT0};
+
+    /* If the previously written CLUT has been selected, switch to the unused one */
+    if (g_clut_data_latched[layer])
+    {
+        g_clut_data_latched[layer] = false;
+
+        /* Get the index of the CLUT not in use */
+        uint32_t target_plane = R_GLCDC->GR[layer].CLUTINT_b.SEL ? 0 : 1;
+
+        /* Get the start address of the destination CLUT hardware array */
+        uint32_t volatile * clut_hw_new = R_GLCDC->GR1_CLUT0 +
+                                          ((target_plane + (uint32_t) (layer << 1)) * GLCDC_PRV_CLUT_ENTRY_SIZE);
+
+        /* Copy the old data to the new table then save the new table address */
+        memcpy((void *) clut_hw_new, (void *) clut_hw[layer], GLCDC_PRV_CLUT_ENTRY_SIZE * 4U);
+        clut_hw[layer] = clut_hw_new;
+
+        /* Swap to the new CLUT table data on the next frame */
+        R_GLCDC->GR[layer].CLUTINT_b.SEL = target_plane & 1;
+    }
+
+    /* Set the CLUT element */
+    clut_hw[layer][index] = color;
 
     return FSP_SUCCESS;
 }
@@ -828,7 +884,6 @@ fsp_err_t R_GLCDC_VersionGet (fsp_version_t * p_version)
  * Private Functions
  **********************************************************************************************************************/
 #if (GLCDC_CFG_PARAM_CHECKING_ENABLE)
-
  #if GLCDC_CFG_COLOR_CORRECTION_ENABLE
 
 /*******************************************************************************************************************//**
@@ -1025,7 +1080,8 @@ static fsp_err_t r_glcdc_open_param_check_layer_setting (display_cfg_t const * c
             /* Check the number of data transfer times per a line (64bytes/transfer) */
             FSP_ERROR_RETURN((GLCDC_PRV_GR_PLANE_TOTAL_TRANSFER_TIMES_MAX >=
                               (((p_cfg->input[i].hstride *
-                                 r_glcdc_get_bit_size(p_cfg->input[i].format)) / 8) / GLCDC_PRV_ADDRESS_ALIGNMENT_64B)),
+                                 r_glcdc_get_bit_size(p_cfg->input[i].format)) / 8) /
+                               GLCDC_PRV_ADDRESS_ALIGNMENT_64B)),
                              FSP_ERR_INVALID_LAYER_SETTING);
         }
     }
@@ -1134,7 +1190,8 @@ static void r_glcdc_clock_set (display_cfg_t const * const p_cfg)
 
     /* Build PANEL_CLK bitfields */
     uint32_t pixsel =
-        ((DISPLAY_OUT_FORMAT_8BITS_SERIAL != p_cfg->output.format) ? 0 : GLCDC_PRV_SYSCNT_PANEL_CLK_PIXSEL_SERIALRGB);
+        ((DISPLAY_OUT_FORMAT_8BITS_SERIAL !=
+          p_cfg->output.format) ? 0 : GLCDC_PRV_SYSCNT_PANEL_CLK_PIXSEL_SERIALRGB);
     uint32_t clksel = ((GLCDC_CLK_SRC_INTERNAL == pextend->clksrc) ? GLCDC_PRV_SYSCNT_PANEL_CLK_CLKSEL_PLL : 0);
     uint32_t clken  = GLCDC_PRV_SYSCNT_PANEL_CLK_CLKEN_ENABLE;
     uint32_t dcdr   = (pextend->clock_div_ratio & GLCDC_PRV_SYSCNT_PANEL_CLK_DCDR_MASK);
@@ -1509,6 +1566,11 @@ static void r_glcdc_graphics_layer_set (display_input_cfg_t const * const p_inpu
 
     /* Set the alpha blending condition */
     r_glcdc_graphics_layer_blend_condition_set(p_layer, layer);
+
+    /* Reset CLUT table selection */
+    R_GLCDC->GR[layer].CLUTINT = 0;
+    g_clut_data_latched[0]     = true;
+    g_clut_data_latched[1]     = true;
 }
 
 /*******************************************************************************************************************//**
@@ -1787,6 +1849,10 @@ void glcdc_line_detect_isr (void)
         g_fade_pending[0] = 0;
         g_fade_pending[1] = 0;
     }
+
+    /* Set CLUT state to latched */
+    g_clut_data_latched[0] = true;
+    g_clut_data_latched[1] = true;
 
     /* Call back callback function if it is registered */
     if (NULL != p_ctrl->p_callback)

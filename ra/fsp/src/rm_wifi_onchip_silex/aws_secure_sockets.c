@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -226,7 +230,7 @@ Socket_t SOCKETS_Socket (int32_t lDomain, int32_t lType, int32_t lProtocol)
  *
  * @return
  * *  SOCKETS_ERROR_NONE if a connection is established.
- * * If an error occured, a negative value is returned.  SocketsErrors
+ * * If an error occured, a negative value is returned.  
  */
 int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Socklen_t xAddressLength)
 {
@@ -298,7 +302,7 @@ int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Sockle
  *   buffer pointed to by pvBuffer) is returned.
  * * If a timeout occurred before data could be received then 0 is returned (timeout
  *   is set using  SOCKETS_SO_RCVTIMEO).
- * * If an error occured, a negative value is returned.  SocketsErrors
+ * * If an error occured, a negative value is returned.  
  */
 int32_t SOCKETS_Recv (Socket_t xSocket, void * pvBuffer, size_t xBufferLength, uint32_t ulFlags)
 {
@@ -337,7 +341,7 @@ int32_t SOCKETS_Recv (Socket_t xSocket, void * pvBuffer, size_t xBufferLength, u
  *
  * @return
  * * On success, the number of bytes actually sent is returned.
- * * If an error occured, a negative value is returned.  SocketsErrors
+ * * If an error occured, a negative value is returned.  
  */
 int32_t SOCKETS_Send (Socket_t xSocket, const void * pvBuffer, size_t xDataLength, uint32_t ulFlags)
 {
@@ -372,7 +376,7 @@ int32_t SOCKETS_Send (Socket_t xSocket, const void * pvBuffer, size_t xDataLengt
  *
  * @return
  * * If the operation was successful, 0 is returned.
- * * If an error occured, a negative value is returned.  SocketsErrors
+ * * If an error occured, a negative value is returned.  
  *
  */
 int32_t SOCKETS_Shutdown (Socket_t xSocket, uint32_t ulHow)
@@ -422,7 +426,7 @@ int32_t SOCKETS_Shutdown (Socket_t xSocket, uint32_t ulHow)
  *
  * @return
  * * On success, 0 is returned.
- * * If an error occurred, a negative value is returned.  SocketsErrors
+ * * If an error occurred, a negative value is returned.  
  */
 int32_t SOCKETS_Close (Socket_t xSocket)
 {
@@ -524,7 +528,7 @@ int32_t SOCKETS_Close (Socket_t xSocket)
  *
  * @return
  * * On success, 0 is returned.
- * * If an error occured, a negative value is returned.  SocketsErrors
+ * * If an error occured, a negative value is returned.  
  */
 int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
                             int32_t      lLevel,

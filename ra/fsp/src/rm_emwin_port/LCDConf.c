@@ -1,16 +1,24 @@
+#include <stdlib.h>
+#include <string.h>
+
 #include "GUI.h"
 #include "WM.h"
 #include "GUIDRV_Lin.h"
 #include "LCDConf.h"
-#include "JPEGConf.h"
+
+#if EMWIN_LCD_USE_DAVE
+ #include "dave_driver.h"
+ #if EMWIN_JPEG_USE_HW
+  #include "JPEGConf.h"
+ #endif
+#endif
 
 #include "r_glcdc.h"
-#include "dave_driver.h"
-#include "FreeRTOS.h"
-#include "semphr.h"
 
-#include <stdlib.h>
-#include <string.h>
+#if EMWIN_CFG_RTOS == 2
+ #include "FreeRTOS.h"
+ #include "semphr.h"
+#endif
 
 /*********************************************************************
  *
@@ -61,20 +69,35 @@ static volatile int32_t _PendingBuffer = -1;
 #endif
 
 #if (EMWIN_LCD_BITS_PER_PIXEL <= 8)
- #define NUM_COLORS    (1 << EMWIN_LCD_BITS_PER_PIXEL)
-static uint32_t _aClut[NUM_COLORS];
+ #define NUM_COLORS      (1 << EMWIN_LCD_BITS_PER_PIXEL)
 #else
- #define NUM_COLORS    (256)
+ #define NUM_COLORS      (256)
 #endif
+
+#if (EMWIN_CFG_RTOS == 2)              // FreeRTOS
+ #if configSUPPORT_DYNAMIC_ALLOCATION
+  #define EMWIN_ALLOC    pvPortMalloc
+  #define EMWIN_FREE     vPortFree
+ #else
+  #define EMWIN_ALLOC    malloc
+  #define EMWIN_FREE     free
+ #endif
+#else
+ #define EMWIN_ALLOC     malloc
+ #define EMWIN_FREE      free
+#endif
+
+//
+// Framebuffer management
+//
+static uint32_t pp_buffer_address[EMWIN_LCD_NUM_FRAMEBUFFERS];
 
 //
 // Dave2D
 //
-static uint32_t _WriteBufferIndex;
-
 #if EMWIN_LCD_USE_DAVE
+static uint32_t          _WriteBufferIndex;
 static d2_renderbuffer * renderbuffer;
-static uint32_t          pp_buffer_address[EMWIN_LCD_NUM_FRAMEBUFFERS];
 
 //
 // Array for swapped nibble data
@@ -117,11 +140,17 @@ static const uint32_t clut_i4[] =
 
 #endif
 
+#if EMWIN_LCD_VSYNC_WAIT
+ #if EMWIN_CFG_RTOS == 2               // FreeRTOS
 //
 // Semaphores
 //
 static SemaphoreHandle_t _SemaphoreVsync;
 static StaticSemaphore_t _SemaphoreVsync_Memory;
+ #else
+static volatile uint8_t _vsync_flag = 0;
+ #endif
+#endif
 
 //
 // Function Prototypes
@@ -131,8 +160,9 @@ void * LCDCONF_GetWriteBuffer(void);
 void * LCDCONF_GetBufferAddr(void);
 
 #if EMWIN_LCD_USE_DAVE
-void LCDCONF_DisableDave2D(void);
-void LCDCONF_EnableDave2D(void);
+static uint32_t _GetD2Mode(void);
+void            LCDCONF_DisableDave2D(void);
+void            LCDCONF_EnableDave2D(void);
 
  #if EMWIN_JPEG_USE_HW
 extern void JPEG_X_Init(JPEG_X_CONTEXT * pContext);
@@ -165,6 +195,8 @@ void LCDCONF_FlushJPEG(void);
 void _DisplayVsyncCallback (display_callback_args_t * p_args)
 {
     FSP_PARAMETER_NOT_USED(p_args);
+#if EMWIN_LCD_VSYNC_WAIT
+ #if EMWIN_CFG_RTOS == 2               // FreeRTOS
     BaseType_t context_switch;
 
     //
@@ -176,6 +208,10 @@ void _DisplayVsyncCallback (display_callback_args_t * p_args)
     // Return to the highest priority available task
     //
     portYIELD_FROM_ISR(context_switch);
+ #else
+    _vsync_flag = 1;
+ #endif
+#endif
 }
 
 /*********************************************************************
@@ -197,10 +233,10 @@ static void _GraphicsHWInit (void)
     //
     d2_framebuffer(*_d2_handle_emwin,
                    _fb_emwin,
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS * EMWIN_LCD_NUM_FRAMEBUFFERS,
-                   d2_mode_rgb565);
+                   (d2_s32) _GetD2Mode());
     d2_clear(*_d2_handle_emwin, 0x000000);
 
     //
@@ -221,10 +257,14 @@ static void _GraphicsHWInit (void)
  #endif
 #endif
 
+#if EMWIN_LCD_VSYNC_WAIT
+ #if EMWIN_CFG_RTOS == 2               // FreeRTOS
     //
     // Initialize LCD controller semaphore
     //
     _SemaphoreVsync = xSemaphoreCreateBinaryStatic(&_SemaphoreVsync_Memory);
+ #endif
+#endif
 
     //
     // Start graphics LCD controller
@@ -243,18 +283,9 @@ static void _GraphicsHWInit (void)
 static void _SetLUTEntry (LCD_COLOR Color, uint8_t Pos)
 {
 #if (EMWIN_LCD_BITS_PER_PIXEL < 16)
-    display_clut_cfg_t p_clut_cfg;
-    int                err;
 
-    _aClut[Pos] = Color;
-    if (Pos == NUM_COLORS - 1)
-    {
-        p_clut_cfg.p_base = _aClut;
-        p_clut_cfg.size   = NUM_COLORS;
-        p_clut_cfg.start  = 0;
-        R_GLCDC_ClutUpdate(_g_display_emwin->p_ctrl, &p_clut_cfg, DISPLAY_FRAME_LAYER_1);
-    }
-
+    /* Set GLCDC CLUT entry */
+    R_GLCDC_ClutEdit(_g_display_emwin->p_ctrl, DISPLAY_FRAME_LAYER_1, Pos, Color);
 #else
     GUI_USE_PARA(Color);
     GUI_USE_PARA(Pos);
@@ -272,12 +303,11 @@ static void _SwitchBuffersOnVSYNC (int32_t Index)
     //
     // Swap buffer
     //
-    R_GLCDC_BufferChange(_g_display_emwin->p_ctrl,
-                         _fb_emwin +
-                         (_WriteBufferIndex * EMWIN_LCD_XSIZE_PHYS * EMWIN_LCD_YSIZE_PHYS * EMWIN_LCD_BITS_PER_PIXEL / 8),
-                         (display_frame_layer_t) 0);
+    R_GLCDC_BufferChange(_g_display_emwin->p_ctrl, (uint8_t *) pp_buffer_address[Index], (display_frame_layer_t) 0);
     GUI_MULTIBUF_ConfirmEx(0, Index);  // Tell emWin that buffer is used
 
+ #if EMWIN_LCD_VSYNC_WAIT
+  #if EMWIN_CFG_RTOS == 2              // FreeRTOS
     //
     // If Vsync semaphore has already been set, clear it then wait to avoid tearing
     //
@@ -287,6 +317,14 @@ static void _SwitchBuffersOnVSYNC (int32_t Index)
     }
 
     xSemaphoreTake(_SemaphoreVsync, portMAX_DELAY);
+  #else
+    _vsync_flag = 0;
+    while (!_vsync_flag)
+    {
+        /* Do nothing. */
+    }
+  #endif
+ #endif
 }
 
 #endif
@@ -298,7 +336,7 @@ static void _SwitchBuffersOnVSYNC (int32_t Index)
  **********************************************************************
  */
 
-#if EMWIN_LCD_USE_DAVE
+#if EMWIN_LCD_USE_DAVE && (EMWIN_LCD_BITS_PER_PIXEL > 8)
 
 /*********************************************************************
  *
@@ -309,14 +347,10 @@ static uint32_t _GetD2Mode (void)
     uint32_t r;
  #if   (EMWIN_LCD_BITS_PER_PIXEL == 32)
     r = d2_mode_argb8888;
- #elif (EMWIN_LCD_BITS_PER_PIXEL == 16)
+ #elif defined(DISPLAY_IN_FORMAT_16BITS_ARGB4444_0)
+    r = d2_mode_argb4444;
+ #else
     r = d2_mode_rgb565;
- #elif (EMWIN_LCD_BITS_PER_PIXEL == 8)
-    r = d2_mode_i8;
- #elif (EMWIN_LCD_BITS_PER_PIXEL == 4)
-    r = d2_mode_i4;
- #elif (EMWIN_LCD_BITS_PER_PIXEL == 1)
-    r = d2_mode_i1;
  #endif
 
     return r;
@@ -341,7 +375,7 @@ static void _LCD_FillRect (int32_t LayerIndex, int32_t x0, int32_t y0, int32_t x
     //
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -414,7 +448,7 @@ static void _DrawMemdevAlpha (void       * pDst,
     //
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -436,7 +470,7 @@ static void _DrawBitmapAlpha (int LayerIndex, int x, int y, const void * p, int 
     //
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   (d2_s32) EMWIN_LCD_XSIZE_PHYS,
+                   (d2_s32) EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -471,7 +505,7 @@ static void _DrawBitmap16bpp (int LayerIndex, int x, int y, const void * p, int 
     //
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -548,7 +582,7 @@ static void _DrawBitmap8bpp (int                    LayerIndex,
     //
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -609,7 +643,7 @@ static int _DrawChar4bpp (int LayerIndex, int x, int y, U8 const * p, int xSize,
 
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -699,7 +733,7 @@ void LCDCONF_DrawJPEG (int32_t      LayerIndex,
     //
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -767,7 +801,7 @@ static int32_t _CircleAA (int32_t x0, int32_t y0, int32_t r, int32_t w)
     //
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -832,8 +866,9 @@ static int _FillPolygonAA (const GUI_POINT * pPoints, int NumPoints, int x0, int
     const GUI_RECT * pRect;
 
     Mode  = _GetD2Mode();
-    pData = malloc(sizeof(d2_point) * (uint32_t) NumPoints * 2);
-    ret   = 1;
+    pData = EMWIN_ALLOC(sizeof(d2_point) * (uint32_t) NumPoints * 2);
+
+    ret = 1;
     if (pData)
     {
         pDataI = pData;
@@ -849,7 +884,7 @@ static int _FillPolygonAA (const GUI_POINT * pPoints, int NumPoints, int x0, int
         //
         d2_framebuffer(*_d2_handle_emwin,
                        (void *) pp_buffer_address[_WriteBufferIndex],
-                       EMWIN_LCD_XSIZE_PHYS,
+                       EMWIN_LCD_XSTRIDE_PHYS,
                        EMWIN_LCD_XSIZE_PHYS,
                        EMWIN_LCD_YSIZE_PHYS,
                        (d2_s32) Mode);
@@ -865,7 +900,7 @@ static int _FillPolygonAA (const GUI_POINT * pPoints, int NumPoints, int x0, int
         //
         d2_executerenderbuffer(*_d2_handle_emwin, renderbuffer, 0);
         d2_flushframe(*_d2_handle_emwin);
-        free(pData);
+        EMWIN_FREE(pData);
     }
 
     return ret;
@@ -886,8 +921,9 @@ static int _DrawPolyOutlineAA (const GUI_POINT * pPoints, int NumPoints, int Thi
     const GUI_RECT * pRect;
 
     Mode  = _GetD2Mode();
-    pData = malloc(sizeof(d2_point) * (uint32_t) NumPoints * 2);
-    ret   = 1;
+    pData = EMWIN_ALLOC(sizeof(d2_point) * (uint32_t) NumPoints * 2);
+
+    ret = 1;
     if (pData)
     {
         pDataI = pData;
@@ -903,7 +939,7 @@ static int _DrawPolyOutlineAA (const GUI_POINT * pPoints, int NumPoints, int Thi
         //
         d2_framebuffer(*_d2_handle_emwin,
                        (void *) pp_buffer_address[_WriteBufferIndex],
-                       EMWIN_LCD_XSIZE_PHYS,
+                       EMWIN_LCD_XSTRIDE_PHYS,
                        EMWIN_LCD_XSIZE_PHYS,
                        EMWIN_LCD_YSIZE_PHYS,
                        (d2_s32) Mode);
@@ -922,7 +958,7 @@ static int _DrawPolyOutlineAA (const GUI_POINT * pPoints, int NumPoints, int Thi
         //
         d2_executerenderbuffer(*_d2_handle_emwin, renderbuffer, 0);
         d2_flushframe(*_d2_handle_emwin);
-        free(pData);
+        EMWIN_FREE(pData);
     }
 
     return ret;
@@ -948,7 +984,7 @@ static int _DrawLineAA (int x0, int y0, int x1, int y1)
     //
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -1011,7 +1047,7 @@ static int _DrawArcAA (int x0, int y0, int rx, int ry, int a0, int a1)
     //
     d2_framebuffer(*_d2_handle_emwin,
                    (void *) pp_buffer_address[_WriteBufferIndex],
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
@@ -1061,12 +1097,12 @@ static void _CopyBuffer (int LayerIndex, int IndexSrc, int IndexDst)
     //
     d2_framebuffer(*_d2_handle_emwin,
                    pDst,
-                   EMWIN_LCD_XSIZE_PHYS,
+                   EMWIN_LCD_XSTRIDE_PHYS,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
     d2_selectrenderbuffer(*_d2_handle_emwin, renderbuffer);
-    d2_setblitsrc(*_d2_handle_emwin, pSrc, EMWIN_LCD_XSIZE_PHYS, EMWIN_LCD_XSIZE_PHYS, EMWIN_LCD_YSIZE_PHYS, Mode);
+    d2_setblitsrc(*_d2_handle_emwin, pSrc, EMWIN_LCD_XSTRIDE_PHYS, EMWIN_LCD_XSIZE_PHYS, EMWIN_LCD_YSIZE_PHYS, Mode);
     d2_blitcopy(*_d2_handle_emwin, EMWIN_LCD_XSIZE_PHYS, EMWIN_LCD_YSIZE_PHYS, 0, 0,
                 (d2_width) (EMWIN_LCD_XSIZE_PHYS << 4), (d2_width) (EMWIN_LCD_YSIZE_PHYS << 4), 0, 0, 0);
 
@@ -1092,6 +1128,7 @@ static void _CopyBuffer (int LayerIndex, int IndexSrc, int IndexDst)
  */
 void LCDCONF_EnableDave2D (void)
 {
+    /* D/AVE 2D does not support output to LUT formats */
  #if (EMWIN_LCD_BITS_PER_PIXEL > 8)
     GUI_SetFuncDrawAlpha(_DrawMemdevAlpha, _DrawBitmapAlpha);
     GUI_SetFuncDrawM565(_DrawMemdevAlpha, _DrawBitmapAlpha);
@@ -1116,6 +1153,7 @@ void LCDCONF_EnableDave2D (void)
  */
 void LCDCONF_DisableDave2D (void)
 {
+    /* D/AVE 2D does not support output to LUT formats */
  #if (EMWIN_LCD_BITS_PER_PIXEL > 8)
     GUI_SetFuncDrawAlpha(NULL, NULL);
     GUI_SetFuncDrawM565(NULL, NULL);
@@ -1177,7 +1215,7 @@ void LCD_X_Config (void)
     else
     {
         LCD_SetSizeEx(0, EMWIN_LCD_XSIZE_PHYS, EMWIN_LCD_YSIZE_PHYS);
-        LCD_SetVSizeEx(0, EMWIN_LCD_XSIZE_PHYS, EMWIN_LCD_YSIZE_PHYS);
+        LCD_SetVSizeEx(0, EMWIN_LCD_XSTRIDE_PHYS, EMWIN_LCD_YSIZE_PHYS);
     }
 
     LCD_SetVRAMAddrEx(0, VRAM_ADDR);
@@ -1228,16 +1266,20 @@ int LCD_X_DisplayDriver (unsigned LayerIndex, unsigned Cmd, void * pData)
         //
         case LCD_X_INITCONTROLLER:
         {
-#if EMWIN_LCD_USE_DAVE
-
             //
             // Controller initialization is already done so we simply store the frame buffer addresses
             //
+#if (EMWIN_LCD_NUM_FRAMEBUFFERS > 1)
+            for (uint32_t i = 0; i < EMWIN_LCD_NUM_FRAMEBUFFERS; i++)
+            {
+                pp_buffer_address[i] = (uint32_t) _fb_emwin +
+                                       (i *
+                                        ((EMWIN_LCD_XSTRIDE_PHYS * EMWIN_LCD_YSIZE_PHYS * EMWIN_LCD_BITS_PER_PIXEL) >>
+                                         3));
+            }
+
+#else
             pp_buffer_address[0] = (uint32_t) _fb_emwin;
- #if (EMWIN_LCD_NUM_FRAMEBUFFERS > 1)
-            pp_buffer_address[1] = (uint32_t) _fb_emwin +
-                                   ((EMWIN_LCD_XSIZE_PHYS * EMWIN_LCD_YSIZE_PHYS * EMWIN_LCD_BITS_PER_PIXEL) >> 3);
- #endif
 #endif
 
             return 0;
@@ -1251,10 +1293,11 @@ int LCD_X_DisplayDriver (unsigned LayerIndex, unsigned Cmd, void * pData)
             LCD_X_SHOWBUFFER_INFO * p;
 
             p = (LCD_X_SHOWBUFFER_INFO *) pData;
-#if (EMWIN_LCD_NUM_FRAMEBUFFERS == 2)
+#if (EMWIN_LCD_NUM_FRAMEBUFFERS > 1)
             _SwitchBuffersOnVSYNC(p->Index);
-#else
+ #if (EMWIN_LCD_NUM_FRAMEBUFFERS > 2)
             _PendingBuffer = p->Index;
+ #endif
 #endif
 
             return 0;

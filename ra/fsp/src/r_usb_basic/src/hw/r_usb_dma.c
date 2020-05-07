@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -51,9 +55,12 @@ uint32_t g_fifo_address[USB_NUM_USBIP][USB_FIFO_ACCESS_NUM_MAX][USB_FIFO_ACCSESS
     {
         /* IP0 */
         /* 32bit                        16bit                           8bit */
-        {(uint32_t) 0,               (uint32_t) &USB_M0->CFIFOL,  (uint32_t) &USB_M0->CFIFOLL }, /* USB0 CFIFO  address */
-        {(uint32_t) 0,               (uint32_t) &USB_M0->D0FIFOL, (uint32_t) &USB_M0->D0FIFOLL}, /* USB0 D0FIFO address */
-        {(uint32_t) 0,               (uint32_t) &USB_M0->D1FIFOL, (uint32_t) &USB_M0->D1FIFOLL},
+        {(uint32_t) 0,               (uint32_t) &USB_M0->CFIFOL,
+         (uint32_t) &USB_M0->CFIFOLL},  /* USB0 CFIFO  address */
+        {(uint32_t) 0,               (uint32_t) &USB_M0->D0FIFOL,
+         (uint32_t) &USB_M0->D0FIFOLL}, /* USB0 D0FIFO address */
+        {(uint32_t) 0,               (uint32_t) &USB_M0->D1FIFOL,
+         (uint32_t) &USB_M0->D1FIFOLL},
     },
  #if USB_NUM_USBIP == 2
     {
@@ -63,24 +70,33 @@ uint32_t g_fifo_address[USB_NUM_USBIP][USB_FIFO_ACCESS_NUM_MAX][USB_FIFO_ACCSESS
 
         /* Little */
    #if USB_CFG_ENDIAN == USB_CFG_LITTLE
-        {(uint32_t) &USB_M1->CFIFO,  (uint32_t) &USB_M1->CFIFOH,  (uint32_t) &USB_M1->CFIFOHH }, /* USBA CFIFO  adr Little */
-        {(uint32_t) &USB_M1->D0FIFO, (uint32_t) &USB_M1->D0FIFOH, (uint32_t) &USB_M1->D0FIFOHH}, /* USBA D0FIFO adr Little */
-        {(uint32_t) &USB_M1->D1FIFO, (uint32_t) &USB_M1->D1FIFOH, (uint32_t) &USB_M1->D1FIFOHH}  /* USBA D1FIFO adr Little */
+        {(uint32_t) &USB_M1->CFIFO,  (uint32_t) &USB_M1->CFIFOH,
+         (uint32_t) &USB_M1->CFIFOHH},  /* USBA CFIFO  adr Little */
+        {(uint32_t) &USB_M1->D0FIFO, (uint32_t) &USB_M1->D0FIFOH,
+         (uint32_t) &USB_M1->D0FIFOHH}, /* USBA D0FIFO adr Little */
+        {(uint32_t) &USB_M1->D1FIFO, (uint32_t) &USB_M1->D1FIFOH,
+         (uint32_t) &USB_M1->D1FIFOHH}  /* USBA D1FIFO adr Little */
    #endif /* USB_CFG_ENDIAN == USB_CFG_LITTLE */
 
         /* Big */
    #if USB_CFG_ENDIAN == USB_CFG_BIG
-        {(uint32_t) &USB_M1->CFIFO,  (uint32_t) &USB_M1->CFIFOL,  (uint32_t) &USB_M1->CFIFOLL }, /* USBA CFIFO  adr Big */
-        {(uint32_t) &USB_M1->D0FIFO, (uint32_t) &USB_M1->D0FIFOL, (uint32_t) &USB_M1->D0FIFOLL}, /* USBA D0FIFO adr Big */
-        {(uint32_t) &USB_M1->D1FIFO, (uint32_t) &USB_M1->D1FIFOL, (uint32_t) &USB_M1->D1FIFOLL}  /* USBA D1FIFO adr Big */
+        {(uint32_t) &USB_M1->CFIFO,  (uint32_t) &USB_M1->CFIFOL,
+         (uint32_t) &USB_M1->CFIFOLL},  /* USBA CFIFO  adr Big */
+        {(uint32_t) &USB_M1->D0FIFO, (uint32_t) &USB_M1->D0FIFOL,
+         (uint32_t) &USB_M1->D0FIFOLL}, /* USBA D0FIFO adr Big */
+        {(uint32_t) &USB_M1->D1FIFO, (uint32_t) &USB_M1->D1FIFOL,
+         (uint32_t) &USB_M1->D1FIFOLL}  /* USBA D1FIFO adr Big */
    #endif /* USB_CFG_ENDIAN == USB_CFG_BIG */
   #else /* defined(BSP_MCU_GROUP_RA6M3) */
-        {(uint32_t) 0,               (uint32_t) &USB_M1->CFIFOL,  (uint32_t) &USB_M1->CFIFOLL }, /* USB0 CFIFO  address */
-        {(uint32_t) 0,               (uint32_t) &USB_M1->D0FIFOL, (uint32_t) &USB_M1->D0FIFOLL}, /* USB0 D0FIFO address */
-        {(uint32_t) 0,               (uint32_t) &USB_M1->D1FIFOL, (uint32_t) &USB_M1->D1FIFOLL},
+        {(uint32_t) 0,               (uint32_t) &USB_M1->CFIFOL,
+         (uint32_t) &USB_M1->CFIFOLL},  /* USB0 CFIFO  address */
+        {(uint32_t) 0,               (uint32_t) &USB_M1->D0FIFOL,
+         (uint32_t) &USB_M1->D0FIFOLL}, /* USB0 D0FIFO address */
+        {(uint32_t) 0,               (uint32_t) &USB_M1->D1FIFOL,
+         (uint32_t) &USB_M1->D1FIFOLL},
   #endif /* defined(BSP_MCU_GROUP_RA6M3) */
     }
- #endif                                                                                          /* USB_NUM_USBIP == 2 */
+ #endif                                /* USB_NUM_USBIP == 2 */
 };
 
 /******************************************************************************
@@ -652,7 +668,7 @@ uint16_t usb_cstd_dma_get_ir_vect (usb_utr_t * ptr, uint16_t use_port)
         {
             vect = ELC_EVENT_USBFS_FIFO_1;
         }
-  #endif                               /* defined(BSP_MCU_RX63N) */
+  #endif                               /* !defined(BSP_MCU_GROUP_RA6M3) */
     }
  #endif                                /* USB_NUM_USBIP == 2 */
 
@@ -718,7 +734,7 @@ void usb_cstd_dma_clear_ir (usb_utr_t * ptr, uint16_t use_port)
             irq = (IRQn_Type) VECTOR_NUMBER_USBFS_FIFO_1;
             R_BSP_IrqStatusClear(irq);
         }
-  #endif                               /* defined(BSP_MCU_RX63N) */
+  #endif                               /* !defined(BSP_MCU_GROUP_RA6M3) */
     }
  #endif                                /* USB_NUM_USBIP == 2 */
 }
@@ -830,6 +846,7 @@ void usb_cstd_dma_send_complete (uint8_t ip_no, uint16_t use_port)
         USB_ISND_MSG(USB_PCD_MBX, (usb_msg_t *) p_peri);
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
     }
+
  #else  /* (BSP_CFG_RTOS == 2) */
     gs_usb_cstd_dma_int.buf[gs_usb_cstd_dma_int.wp].ip        = ip_no;
     gs_usb_cstd_dma_int.buf[gs_usb_cstd_dma_int.wp].fifo_type = use_port;
@@ -1004,9 +1021,7 @@ void usb_cstd_dma_rcv_setting (usb_utr_t * ptr, uint32_t des_addr, uint16_t usep
          * DMAC transfer mode is Repeat mode & Source side is repeat area
          * At the beginning of transfer, clear the interrupt flag of the activation source
          * to 0.
-         * Transfer Request source is software. */
-
-        /* Set Transfer data configuration. */
+         * Transfer Request source is software. *//* Set Transfer data configuration. */
  #if defined(BSP_MCU_GROUP_RA6M3)
         if (USB_IP1 == ip)
         {
@@ -1022,6 +1037,7 @@ void usb_cstd_dma_rcv_setting (usb_utr_t * ptr, uint32_t des_addr, uint16_t usep
                                                                                       USB_FIFO_ACCESS_TYPE_16BIT);
             block_size = (uint16_t) (((g_usb_cstd_dma_fifo[ip][dma_ch] - 1) / 2) + 1);
         }
+
  #else                                 /* defined(BSP_MCU_GROUP_RA6M3) */
         ptr->p_transfer_rx->p_cfg->p_info->p_src = (void *) hw_usb_get_dxfifo_adr(ptr,
                                                                                   useport,
@@ -1091,6 +1107,7 @@ void usb_cstd_dma_send_setting (usb_utr_t * ptr, uint32_t src_adr, uint16_t usep
                                                                                        USB_FIFO_ACCESS_TYPE_16BIT);
             block_size = (block_size / USB_BIT_16_WIDTH);
         }
+
  #else                                 /* defined(BSP_MCU_GROUP_RA6M3) */
         ptr->p_transfer_tx->p_cfg->p_info->p_dest = (void *) hw_usb_get_dxfifo_adr(ptr,
                                                                                    useport,
@@ -1125,10 +1142,7 @@ void usb_cstd_dma_send_setting (usb_utr_t * ptr, uint32_t src_adr, uint16_t usep
          * DMAC transfer mode is Repeat mode & Source side is repeat area
          * At the beginning of transfer, clear the interrupt flag of the activation source
          * to 0.
-         * Transfer Request source is software. */
-
-        /* Set Transfer data configuration. */
-
+         * Transfer Request source is software. *//* Set Transfer data configuration. */
         ptr->p_transfer_tx->p_cfg->p_info->p_src      = (void *) src_adr;
         ptr->p_transfer_tx->p_cfg->p_info->length     = (uint16_t) block_size;
         ptr->p_transfer_tx->p_cfg->p_info->num_blocks =

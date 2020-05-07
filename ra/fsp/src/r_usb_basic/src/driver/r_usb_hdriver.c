@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -29,12 +33,12 @@
 #if defined(USB_CFG_HCDC_USE)
  #include "r_usb_hcdc_api.h"
 
-#endif                                 /* defined(USB_CFG_PCDC_USE) */
+#endif                                 /* defined(USB_CFG_HCDC_USE) */
 
 #if defined(USB_CFG_HHID_USE)
- #include "r_usb_hhid_if.h"
+ #include "r_usb_hhid_api.h"
 
-#endif                                 /* defined(USB_CFG_HMSC_USE) */
+#endif                                 /* defined(USB_CFG_HHID_USE) */
 
 #if defined(USB_CFG_HMSC_USE)
  #include "r_usb_hmsc_api.h"
@@ -280,6 +284,7 @@ usb_er_t usb_hstd_transfer_start_req (usb_utr_t * ptr)
     {
         USB_PRINTF1("### usb_hstd_transfer_start_req snd_msg error (%ld)\n", err);
     }
+
  #else                                 /* (BSP_CFG_RTOS == 0) */
     p_tran_data = (usb_utr_t *) pvPortMalloc(sizeof(usb_utr_t));
     if (NULL == p_tran_data)
@@ -566,6 +571,7 @@ static void usb_hstd_set_submitutr (usb_utr_t * ptr)
         {
             usb_cstd_pipe_msg_clear(ptr, pipenum);
         }
+
  #else                                 /* #if (BSP_CFG_RTOS == 2) */
         if (USB_PIPE0 == pipenum)
         {
@@ -618,14 +624,12 @@ static void usb_hstd_set_submitutr (usb_utr_t * ptr)
         {
             usb_hstd_setup_start(ptr);
         }
-
         /* Control Read Data */
         else if (USB_DATARDCNT == g_usb_hstd_ctsq[ptr->ip])
         {
             pp = g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0];
             usb_hstd_ctrl_read_start(ptr, pp->tranlen, (uint8_t *) pp->p_tranadr); /* Control read start */
         }
-
         /* Control Write Data */
         else if (USB_DATAWRCNT == g_usb_hstd_ctsq[ptr->ip])
         {
@@ -922,6 +926,7 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
                 usb_compliance_disp((void *) &disp_param);
                 usb_hstd_ctrl_end(ptr, (uint16_t) USB_DATA_STOP);
             }
+
  #else                                 /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
             /* User program */
             hw_usb_clear_enb_sofe(ptr);
@@ -1482,6 +1487,7 @@ void usb_hstd_hcd_task (void * stacd)
     {
         continue;
     }
+
  #else
     if (result == 2)
     {
@@ -2338,11 +2344,11 @@ void usb_host_registration (usb_utr_t * ptr)
 
  #if defined(USB_CFG_HCDC_USE)
     usb_hcdc_registration(ptr);
- #endif                                /* defined(USB_CFG_PCDC_USE) */
+ #endif                                /* defined(USB_CFG_HCDC_USE) */
 
  #if defined(USB_CFG_HHID_USE)
     usb_hhid_registration(ptr);
- #endif                                /* defined(USB_CFG_HMSC_USE) */
+ #endif                                /* defined(USB_CFG_HHID_USE) */
 
  #if defined(USB_CFG_HMSC_USE)
     usb_hmsc_registration(ptr);

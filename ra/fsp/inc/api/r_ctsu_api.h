@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -47,7 +51,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define CTSU_API_VERSION_MAJOR    (1U)
-#define CTSU_API_VERSION_MINOR    (0U)
+#define CTSU_API_VERSION_MINOR    (1U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -86,17 +90,17 @@ typedef enum e_ctsu_txvsel2
 /** CTSU Power Supply Capacity Adjustment (CTSU Only) */
 typedef enum e_ctsu_atune1
 {
-    CTSU_ATUNE1_NORMAL,                ///< Normal output(40uA)
-    CTSU_ATUNE1_HIGH                   ///< High-current output(80uA)
+    CTSU_ATUNE1_NORMAL,                ///< Normal output (40uA)
+    CTSU_ATUNE1_HIGH                   ///< High-current output (80uA)
 } ctsu_atune1_t;
 
 /** CTSU Power Supply Capacity Adjustment (CTSU2 Only) */
 typedef enum e_ctsu_atune12
 {
-    CTSU_ATUNE12_80UA,                 ///< High-current output(80uA)
-    CTSU_ATUNE12_40UA,                 ///< Normal output(40uA)
-    CTSU_ATUNE12_20UA,                 ///< Low-current output(20uA)
-    CTSU_ATUNE12_160UA                 ///< Very high-current output(160uA)
+    CTSU_ATUNE12_80UA,                 ///< High-current output (80uA)
+    CTSU_ATUNE12_40UA,                 ///< Normal output (40uA)
+    CTSU_ATUNE12_20UA,                 ///< Low-current output (20uA)
+    CTSU_ATUNE12_160UA                 ///< Very high-current output (160uA)
 } ctsu_atune12_t;
 
 /** CTSU Measurement Mode Select */
@@ -121,29 +125,29 @@ typedef enum e_ctsu_posel
 /** CTSU Spectrum Diffusion Frequency Division Setting (CTSU Only) */
 typedef enum e_ctsu_ssdiv
 {
-    CTSU_SSDIV_4000,                   ///< 4.00 <= Base clock frequency(MHz)
-    CTSU_SSDIV_2000,                   ///< 2.00 <= Base clock frequency(MHz) < 4.00
-    CTSU_SSDIV_1330,                   ///< 1.33 <= Base clock frequency(MHz) < 2.00
-    CTSU_SSDIV_1000,                   ///< 1.00 <= Base clock frequency(MHz) < 1.33
-    CTSU_SSDIV_0800,                   ///< 0.80 <= Base clock frequency(MHz) < 1.00
-    CTSU_SSDIV_0670,                   ///< 0.67 <= Base clock frequency(MHz) < 0.80
-    CTSU_SSDIV_0570,                   ///< 0.57 <= Base clock frequency(MHz) < 0.67
-    CTSU_SSDIV_0500,                   ///< 0.50 <= Base clock frequency(MHz) < 0.57
-    CTSU_SSDIV_0440,                   ///< 0.44 <= Base clock frequency(MHz) < 0.50
-    CTSU_SSDIV_0400,                   ///< 0.40 <= Base clock frequency(MHz) < 0.44
-    CTSU_SSDIV_0360,                   ///< 0.36 <= Base clock frequency(MHz) < 0.40
-    CTSU_SSDIV_0330,                   ///< 0.33 <= Base clock frequency(MHz) < 0.36
-    CTSU_SSDIV_0310,                   ///< 0.31 <= Base clock frequency(MHz) < 0.33
-    CTSU_SSDIV_0290,                   ///< 0.29 <= Base clock frequency(MHz) < 0.31
-    CTSU_SSDIV_0270,                   ///< 0.27 <= Base clock frequency(MHz) < 0.29
-    CTSU_SSDIV_0000                    ///< 0.00 <= Base clock frequency(MHz) < 0.27
+    CTSU_SSDIV_4000,                   ///< 4.00 <= Base clock frequency (MHz)
+    CTSU_SSDIV_2000,                   ///< 2.00 <= Base clock frequency (MHz) < 4.00
+    CTSU_SSDIV_1330,                   ///< 1.33 <= Base clock frequency (MHz) < 2.00
+    CTSU_SSDIV_1000,                   ///< 1.00 <= Base clock frequency (MHz) < 1.33
+    CTSU_SSDIV_0800,                   ///< 0.80 <= Base clock frequency (MHz) < 1.00
+    CTSU_SSDIV_0670,                   ///< 0.67 <= Base clock frequency (MHz) < 0.80
+    CTSU_SSDIV_0570,                   ///< 0.57 <= Base clock frequency (MHz) < 0.67
+    CTSU_SSDIV_0500,                   ///< 0.50 <= Base clock frequency (MHz) < 0.57
+    CTSU_SSDIV_0440,                   ///< 0.44 <= Base clock frequency (MHz) < 0.50
+    CTSU_SSDIV_0400,                   ///< 0.40 <= Base clock frequency (MHz) < 0.44
+    CTSU_SSDIV_0360,                   ///< 0.36 <= Base clock frequency (MHz) < 0.40
+    CTSU_SSDIV_0330,                   ///< 0.33 <= Base clock frequency (MHz) < 0.36
+    CTSU_SSDIV_0310,                   ///< 0.31 <= Base clock frequency (MHz) < 0.33
+    CTSU_SSDIV_0290,                   ///< 0.29 <= Base clock frequency (MHz) < 0.31
+    CTSU_SSDIV_0270,                   ///< 0.27 <= Base clock frequency (MHz) < 0.29
+    CTSU_SSDIV_0000                    ///< 0.00 <= Base clock frequency (MHz) < 0.27
 } ctsu_ssdiv_t;
 
 /** Callback function parameter data */
 typedef struct st_ctsu_callback_args
 {
     ctsu_event_t event;                ///< The event can be used to identify what caused the callback.
-    void const * p_context;            ///< Placeholder for user data. Set in CTSU_api_t::open function in ::ctsu_cfg_t.
+    void const * p_context;            ///< Placeholder for user data. Set in ctsu_api_t::open function in ::ctsu_cfg_t.
 } ctsu_callback_args_t;
 
 /** CTSU Control block. Allocate an instance specific control block to pass into the API calls.

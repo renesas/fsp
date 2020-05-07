@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -48,13 +52,16 @@ static void usb_pstd_interrupt(uint16_t type, uint16_t status, usb_cfg_t * p_cfg
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
  ******************************************************************************/
-uint16_t g_usb_pstd_stall_pipe[USB_MAX_PIPE_NO + 1U];   /* Stall Pipe info */
-usb_cb_t g_usb_pstd_stall_cb;                           /* Stall Callback function */
 uint16_t g_usb_pstd_config_num = 0;                     /* Current configuration number */
 uint16_t g_usb_pstd_alt_num[USB_ALT_NO];                /* Alternate number */
+#endif /* ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
+
+usb_cb_t g_usb_pstd_stall_cb;                           /* Stall Callback function */
+uint16_t g_usb_pstd_stall_pipe[USB_MAX_PIPE_NO + 1U];   /* Stall Pipe info */
 uint16_t g_usb_pstd_remote_wakeup = USB_FALSE;          /* Remote wake up enable flag */
 uint16_t g_usb_pstd_remote_wakeup_state;                /* Result for Remote wake up */
 
+#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 uint16_t g_usb_pstd_test_mode_select;                   /* Test mode selectors */
 uint16_t g_usb_pstd_test_mode_flag = USB_FALSE;         /* Test mode flag */
 
@@ -1390,7 +1397,9 @@ usb_er_t usb_pstd_transfer_end (usb_utr_t * p_utr, uint16_t pipe)
 /******************************************************************************
  * End of function usb_pstd_transfer_end
  ******************************************************************************/
- #endif                                /* #if (USB_UT_MODE == 0) */
+ #endif                                /* (USB_UT_MODE == 0) */
+
+ #if   (USB_UT_MODE == 0)
 
 /******************************************************************************
  * Function Name   : usb_pstd_change_device_state
@@ -1403,10 +1412,10 @@ usb_er_t usb_pstd_transfer_end (usb_utr_t * p_utr, uint16_t pipe)
 void usb_pstd_change_device_state (uint16_t state, uint16_t keyword, usb_cb_t complete, usb_utr_t * p_utr)
 {
     uint16_t pipenum;
- #if (BSP_CFG_RTOS == 2)
+  #if (BSP_CFG_RTOS == 2)
     static usb_utr_t utr;
     uint16_t         err;
- #endif                                /* (BSP_CFG_RTOS == 2) */
+  #endif                               /* (BSP_CFG_RTOS == 2) */
 
     pipenum = keyword;
     switch (state)
@@ -1421,10 +1430,10 @@ void usb_pstd_change_device_state (uint16_t state, uint16_t keyword, usb_cb_t co
 
         case USB_DO_REMOTEWAKEUP:
         {
- #if (BSP_CFG_RTOS == 0)
+  #if (BSP_CFG_RTOS == 0)
             usb_pstd_self_clock(p_utr->ip);
             usb_pstd_remote_wakeup(p_utr->ip);
- #else                                 /* BSP_CFG_RTOS == 0 */
+  #else                                /* BSP_CFG_RTOS == 0 */
             utr.msghead = (usb_mh_t) USB_NULL;
             utr.msginfo = USB_MSG_PCD_REMOTEWAKEUP;
 
@@ -1434,7 +1443,7 @@ void usb_pstd_change_device_state (uint16_t state, uint16_t keyword, usb_cb_t co
             {
                 g_usb_pstd_remote_wakeup_state = USB_ERROR;
             }
- #endif                                /* BSP_CFG_RTOS == 0 */
+  #endif                               /* BSP_CFG_RTOS == 0 */
             break;
         }
 
@@ -1460,6 +1469,7 @@ void usb_pstd_change_device_state (uint16_t state, uint16_t keyword, usb_cb_t co
 /******************************************************************************
  * End of function usb_pstd_change_device_state
  ******************************************************************************/
+ #endif                                /* #if (USB_UT_MODE == 0) */
 
 /******************************************************************************
  * Function Name   : usb_pstd_driver_registration

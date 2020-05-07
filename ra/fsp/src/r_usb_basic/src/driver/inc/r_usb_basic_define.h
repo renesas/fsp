@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -18,18 +22,10 @@
 
 #include "r_usb_basic_cfg.h"
 
-#define USB_CFG_LITTLE         (0U)
-#define USB_CFG_BIG            (1U)
+#define USB_CFG_LITTLE    (0U)
+#define USB_CFG_BIG       (1U)
 
-#if defined(__GNUC__)
-
- #ifdef __RX_BIG_ENDIAN__
-  #define    USB_CFG_ENDIAN    (USB_CFG_BIG)
- #else                                 /* __RX_BIG_ENDIAN__ */
-  #define    USB_CFG_ENDIAN    (USB_CFG_LITTLE)
- #endif                                /* __RX_BIG_ENDIAN__ */
-
-#endif /* defined(__GNUC__) */
+#define USB_CFG_ENDIAN    (USB_CFG_LITTLE)
 
 #if defined(USB_DEBUG_ON)
  #include    <stdlib.h>                /* @@@MISRA del */
@@ -280,6 +276,7 @@
 #define USB_CFG_24MHZ                          (0)
 #define USB_CFG_20MHZ                          (1)
 #define USB_CFG_OTHER                          (2)
+#define USB_CFG_12MHZ                          (3)
 
 /* Channel Number */
 #define USB_CFG_CH0                            (0U)
@@ -849,22 +846,15 @@
  #define USB_PRINTF5(FORM, x1, x2, x3, x4, x5)            (printf((FORM), (x1), (x2), (x3), (x4), (x5)))
  #define USB_PRINTF6(FORM, x1, x2, x3, x4, x5, x6)        (printf((FORM), (x1), (x2), (x3), (x4), (x5), (x6)))
  #define USB_PRINTF7(FORM, x1, x2, x3, x4, x5, x6, x7)    (printf((FORM), (x1), (x2), (x3), (x4), (x5), (x6), (x7)))
- #define USB_PRINTF8(FORM,                                                \
-                     x1,                                                  \
-                     x2,                                                  \
-                     x3,                                                  \
-                     x4,                                                  \
-                     x5,                                                  \
-                     x6,                                                  \
-                     x7,                                                  \
-                     x8)                                  (printf((FORM), \
-                                                                  (x1),   \
-                                                                  (x2),   \
-                                                                  (x3),   \
-                                                                  (x4),   \
-                                                                  (x5),   \
-                                                                  (x6),   \
-                                                                  (x7),   \
+ #define USB_PRINTF8(FORM,                                                                                          \
+                     x1,                                                                                            \
+                     x2,                                                                                            \
+                     x3,                                                                                            \
+                     x4,                                                                                            \
+                     x5,                                                                                            \
+                     x6,                                                                                            \
+                     x7,                                                                                            \
+                     x8)                                  (printf((FORM), (x1), (x2), (x3), (x4), (x5), (x6), (x7), \
                                                                   (x8)))
 #else                                  /* defined(USB_DEBUG_ON) */
  #define USB_PRINTF0(FORM)

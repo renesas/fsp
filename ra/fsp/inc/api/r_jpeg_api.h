@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -34,7 +38,7 @@
  * Includes
  **********************************************************************************************************************/
 
-/** Register definitions, common services and error codes. */
+/* Register definitions, common services and error codes. */
 #include "bsp_api.h"
 
 /** Configuration for this module */
@@ -47,7 +51,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define JPEG_API_VERSION_MAJOR    (1U)
-#define JPEG_API_VERSION_MINOR    (0U)
+#define JPEG_API_VERSION_MINOR    (1U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -89,7 +93,7 @@ typedef enum e_jpeg_status
     JPEG_STATUS_RUNNING            = 0x2,  ///< JPEG Codec is running.
     JPEG_STATUS_HEADER_PROCESSING  = 0x4,  ///< JPEG Codec module is reading the JPEG header information.
     JPEG_STATUS_INPUT_PAUSE        = 0x8,  ///< JPEG Codec paused waiting for more input data.
-    JPEG_STATUS_OUTPUT_PAUSE       = 0x10, ///< JPEG Codec paused after decoded the number of lines specified by user.
+    JPEG_STATUS_OUTPUT_PAUSE       = 0x10, ///< JPEG Codec paused after it decoded the number of lines specified by user.
     JPEG_STATUS_IMAGE_SIZE_READY   = 0x20, ///< JPEG decoding operation obtained image size, and paused.
     JPEG_STATUS_ERROR              = 0x40, ///< JPEG Codec module encountered an error.
     JPEG_STATUS_OPERATION_COMPLETE = 0x80, ///< JPEG Codec has completed the operation.
@@ -121,8 +125,8 @@ typedef enum e_jpeg_decode_subsample
 typedef struct st_jpeg_encode_image_size
 {
     uint16_t horizontal_stride_pixels; ///< Horizontal stride
-    uint16_t horizontal_resolution;    ///< Horizontal Resolution in pixel
-    uint16_t vertical_resolution;      ///< Vertical Resolution in pixel
+    uint16_t horizontal_resolution;    ///< Horizontal Resolution in pixels
+    uint16_t vertical_resolution;      ///< Vertical Resolution in pixels
 } jpeg_encode_image_size_t;
 
 /** Callback status structure */

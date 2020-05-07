@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -34,7 +38,7 @@
 #endif                                 /* defined(USB_CFG_HCDC_USE) */
 
 #if defined(USB_CFG_HHID_USE)
- #include "r_usb_hhid_if.h"
+ #include "r_usb_hhid_api.h"
 #endif                                 /* defined(USB_CFG_HHID_USE) */
 
 #if defined(USB_CFG_HMSC_USE)
@@ -47,7 +51,7 @@
 #endif                                 /* defined(USB_CFG_HVND_USE) */
 
 #if defined(USB_CFG_PHID_USE)
- #include "r_usb_phid_if.h"
+ #include "r_usb_phid_api.h"
 #endif                                 /* defined(USB_CFG_PHID_USE) */
 
 #if defined(USB_CFG_PCDC_USE)
@@ -115,15 +119,15 @@ static uint8_t gs_usb_suspend_ing[USB_NUM_USBIP] =
     USB_NO,
   #endif
 };
+ #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
-static uint8_t gs_usb_resume_ing[USB_NUM_USBIP] =
+uint8_t g_usb_resume_ing[USB_NUM_USBIP] =
 {
     USB_NO,
-  #if USB_NUM_USBIP == 2
+ #if USB_NUM_USBIP == 2
     USB_NO,
-  #endif
+ #endif
 };
- #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 #endif                                 /*(BSP_CFG_RTOS == 2)*/
 
 /***********************************************************************************************************************
@@ -171,6 +175,7 @@ const usb_api_t g_usb_on_usb =
     .periControlDataGet   = R_USB_PeriControlDataGet,
     .periControlDataSet   = R_USB_PeriControlDataSet,
     .periControlStatusSet = R_USB_PeriControlStatusSet,
+    .remoteWakeup         = R_USB_RemoteWakeup,
     .moduleNumberGet      = R_USB_ModuleNumberGet,
     .classTypeGet         = R_USB_ClassTypeGet,
     .deviceAddressGet     = R_USB_DeviceAddressGet,
@@ -211,7 +216,7 @@ fsp_err_t R_USB_VersionGet (fsp_version_t * const p_version)
 }
 
 /**************************************************************************//**
- * @brief Obtains completed USB related events. (OS less Only)
+ * @brief Obtains completed USB related events. (OS-less Only)
  *
  * In USB host mode, the device address value of the USB device that completed
  * an event is specified in the usb_ctrl_t structure member (address) specified
@@ -257,10 +262,10 @@ fsp_err_t R_USB_EventGet (usb_ctrl_t * const p_api_ctrl, usb_status_t * event)
  * USB related event. (RTOS only)
  *
  * This function registers a callback function to be called when a USB-related event has completed.
- * If this function is called in the OS less execution environment, a failure is returned.
+ * If this function is called in the OS-less execution environment, a failure is returned.
  *
  * @retval FSP_SUCCESS        Successfully completed.
- * @retval FSP_ERR_USB_FAILED If this function is called in the OS less execution environment, a failure is returned.
+ * @retval FSP_ERR_USB_FAILED If this function is called in the OS-less execution environment, a failure is returned.
  * @retval FSP_ERR_ASSERTION  Parameter is NULL error.
  ******************************************************************************/
 fsp_err_t R_USB_Callback (usb_callback_t * p_callback)
@@ -699,6 +704,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
  * @brief Bulk/interrupt data transfer and control data transfer
  *
  * 1. Bulk/interrupt data transfer
+ *
  *   Requests USB data read (bulk/interrupt transfer).
  *   The read data is stored in the area specified by argument (p_buf).
  *   After data read is completed, confirm the operation by checking the return value
@@ -708,6 +714,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
  *   refer to the member (size) of the usb_crtl_t structure.
  *
  * 2. Control data transfer
+ *
  *   The R_USB_Read function is used to receive data in the data stage and the
  *   R_USB_Write function is used to send data to the USB host.
  *
@@ -795,6 +802,7 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
  * @brief Bulk/Interrupt data transfer and control data transfer
  *
  * 1. Bulk/Interrupt data transfer
+ *
  *   Requests USB data write (bulk/interrupt transfer).
  *   Stores write data in area specified by argument (p_buf).
  *   Set the device class type in usb_ctrl_t structure member (type).
@@ -803,6 +811,7 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
  *   To request the transmission of a NULL packet, assign USB_NULL(0) to the third argument (size).
  *
  * 2. Control data transfer
+ *
  *   The R_USB_Read function is used to receive data in the data stage and
  *   the R_USB_Write function is used to send data to the USB host.
  *
@@ -1142,13 +1151,13 @@ fsp_err_t R_USB_Resume (usb_ctrl_t * const p_api_ctrl)
         }
 
  #else                                 /* (BSP_CFG_RTOS == 0) */
-        if (USB_YES == gs_usb_resume_ing[p_ctrl->module_number])
+        if (USB_YES == g_usb_resume_ing[p_ctrl->module_number])
         {
             ret_code = FSP_ERR_USB_BUSY;
         }
         else
         {
-            gs_usb_resume_ing[p_ctrl->module_number] = USB_YES;
+            g_usb_resume_ing[p_ctrl->module_number] = USB_YES;
         }
 
         if (FSP_ERR_USB_BUSY == ret_code)
@@ -1164,7 +1173,7 @@ fsp_err_t R_USB_Resume (usb_ctrl_t * const p_api_ctrl)
         {
             ret_code = FSP_ERR_USB_FAILED;
         }
-        gs_usb_resume_ing[p_ctrl->module_number] = USB_NO;
+        g_usb_resume_ing[p_ctrl->module_number] = USB_NO;
  #endif                                /* (BSP_CFG_RTOS == 0) */
     }
     return ret_code;
@@ -1779,7 +1788,7 @@ fsp_err_t R_USB_PipeWrite (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint3
 /**************************************************************************//**
  * @brief Terminates a data read/write operation.
  *
- * @retval FSP_SUCCESS              Successfully completed. (stop request completed)
+ * @retval FSP_SUCCESS              Successfully completed. (Stop request completed)
  * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
  * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
  * @retval FSP_ERR_USB_PARAMETER    Parameter error.
@@ -1917,8 +1926,8 @@ fsp_err_t R_USB_UsedPipesGet (usb_ctrl_t * const p_api_ctrl, uint16_t * p_pipe, 
         {
             if (USB_TRUE == g_usb_pipe_table[utr.ip][pipe_no].use_flag)
             {
-                if ((p_ctrl->device_address << USB_DEVADDRBIT) ==
-                    (uint8_t) (g_usb_pipe_table[utr.ip][pipe_no].pipe_maxp & USB_DEVSEL))
+                if ((((uint16_t) p_ctrl->device_address) << USB_DEVADDRBIT) ==
+                    (uint16_t) (g_usb_pipe_table[utr.ip][pipe_no].pipe_maxp & USB_DEVSEL))
                 {
                     (*p_pipe) = (uint16_t) ((*p_pipe) | (uint16_t) 1 << pipe_no);
                 }
@@ -2288,6 +2297,99 @@ fsp_err_t R_USB_PeriControlStatusSet (usb_ctrl_t * const p_api_ctrl, usb_setup_s
 
     return FSP_SUCCESS;
 #endif                                 /* #if (USB_CFG_MODE == USB_CFG_HOST) */
+}
+
+/**************************************************************************//**
+ * @brief Sends a remote wake-up signal to the connected Host.
+ *
+ * @retval FSP_SUCCESS              Successful completion.
+ * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
+ * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
+ * @retval FSP_ERR_USB_NOT_SUSPEND  Device is not suspended.
+ * @retval FSP_ERR_USB_BUSY         The device is in resume operation.
+ ******************************************************************************/
+fsp_err_t R_USB_RemoteWakeup (usb_ctrl_t * const p_api_ctrl)
+{
+    fsp_err_t ret_code = FSP_ERR_USB_FAILED;
+#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+    usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
+    usb_utr_t             utr;
+    uint16_t              ret_val;
+
+ #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_api_ctrl)
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+
+    utr.ip = p_ctrl->module_number;
+
+ #if (BSP_CFG_RTOS == 0)
+    ret_val = usb_cstd_remote_wakeup(&utr);
+    switch (ret_val)
+    {
+        case USB_OK:
+        {
+            ret_code = FSP_SUCCESS;
+            break;
+        }
+
+        case USB_QOVR:
+        {
+            ret_code = FSP_ERR_USB_NOT_SUSPEND;
+            break;
+        }
+
+        case USB_ERROR:
+        default:
+        {
+            ret_code = FSP_ERR_USB_FAILED;
+            break;
+        }
+    }
+
+ #else                                 /* (BSP_CFG_RTOS == 0) */
+    if (USB_YES == g_usb_resume_ing[p_ctrl->module_number])
+    {
+        ret_code = FSP_ERR_USB_BUSY;
+    }
+    else
+    {
+        g_usb_resume_ing[p_ctrl->module_number] = USB_YES;
+    }
+
+    if (FSP_ERR_USB_BUSY == ret_code)
+    {
+        return ret_code;
+    }
+
+    ret_val = usb_cstd_remote_wakeup(&utr);
+    switch (ret_val)
+    {
+        case USB_OK:
+        {
+            ret_code = FSP_SUCCESS;
+            break;
+        }
+
+        case USB_QOVR:
+        {
+            ret_code = FSP_ERR_USB_NOT_SUSPEND;
+            break;
+        }
+
+        case USB_ERROR:
+        default:
+        {
+            ret_code = FSP_ERR_USB_FAILED;
+            break;
+        }
+    }
+    g_usb_resume_ing[p_ctrl->module_number] = USB_NO;
+ #endif                                /* BSP_CFG_RTOS == 0 */
+#else /*((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)*/
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+#endif /*((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)*/
+
+    return ret_code;
 }
 
 /**************************************************************************//**

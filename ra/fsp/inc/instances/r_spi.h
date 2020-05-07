@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -35,7 +39,7 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 #define SPI_CODE_VERSION_MAJOR    (1U)
-#define SPI_CODE_VERSION_MINOR    (0U)
+#define SPI_CODE_VERSION_MINOR    (1U)
 
 /*************************************************************************************************
  * Type defines for the SPI interface API
@@ -44,22 +48,22 @@ FSP_HEADER
 /** 3-Wire or 4-Wire mode. */
 typedef enum e_spi_ssl_mode
 {
-    SPI_SSL_MODE_SPI,                  ///< SPI operation (4-wire method) */
-    SPI_SSL_MODE_CLK_SYN               ///< Clock Synchronous operation (3-wire method) */
+    SPI_SSL_MODE_SPI,                  ///< SPI operation (4-wire method)
+    SPI_SSL_MODE_CLK_SYN               ///< Clock Synchronous operation (3-wire method)
 } spi_ssl_mode_t;
 
 /** Transmit Only (Half Duplex), or Full Duplex. */
 typedef enum e_spi_communication
 {
-    SPI_COMMUNICATION_FULL_DUPLEX,     ///< Full-Duplex synchronous serial communication */
-    SPI_COMMUNICATION_TRANSMIT_ONLY    ///< Transit only serial communication */
+    SPI_COMMUNICATION_FULL_DUPLEX,     ///< Full-Duplex synchronous serial communication
+    SPI_COMMUNICATION_TRANSMIT_ONLY    ///< Transit only serial communication
 } spi_communication_t;
 
 /** Slave Select Polarity. */
 typedef enum e_spi_sslp
 {
-    SPI_SSLP_LOW,                      ///< SSLP signal polarity active low */
-    SPI_SSLP_HIGH                      ///< SSLP signal polarity active high */
+    SPI_SSLP_LOW,                      ///< SSLP signal polarity active low
+    SPI_SSLP_HIGH                      ///< SSLP signal polarity active high
 } spi_ssl_polarity_t;
 
 /** The Slave Select Line */
@@ -120,8 +124,8 @@ typedef struct st_spi_extended_cfg
     spi_ssl_mode_t               spi_clksyn;         ///< Select spi or clock syn mode operation
     spi_communication_t          spi_comm;           ///< Select full-duplex or transmit-only communication
     spi_ssl_polarity_t           ssl_polarity;       ///< Select SSLn signal polarity
-    spi_ssl_select_t             ssl_select;         ///< Select which slave to use;0-SSL0;1-SSL1;2-SSL2;3-SSL3
-    spi_mosi_idle_value_fixing_t mosi_idle;          ///< Select mosi idle fixed value and selection
+    spi_ssl_select_t             ssl_select;         ///< Select which slave to use: 0-SSL0, 1-SSL1, 2-SSL2, 3-SSL3
+    spi_mosi_idle_value_fixing_t mosi_idle;          ///< Select MOSI idle fixed value and selection
     spi_parity_t                 parity;             ///< Select parity and enable/disable parity
     spi_byte_swap_t              byte_swap;          ///< Select byte swap mode
     rspck_div_setting_t          spck_div;           ///< Register values for configuring the SPI Clock Divider.

@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -38,21 +42,21 @@
                                               WDT_PRV_WDTCR_ ## setting ## _BIT);
 
 /* OFS0 register settings. */
-#define WDT_PRV_OSF0_AUTO_START_BIT          (17)
+#define WDT_PRV_OFS0_AUTO_START_BIT          (17)
 #define WDT_PRV_OFS0_TIMEOUT_BIT             (18)
 #define WDT_PRV_OFS0_CLOCK_DIVISION_BIT      (20)
 #define WDT_PRV_OFS0_WINDOW_END_BIT          (24)
 #define WDT_PRV_OFS0_WINDOW_START_BIT        (26)
-#define WDT_PRV_OSF0_NMI_REQUEST_BIT         (28)
+#define WDT_PRV_OFS0_NMI_REQUEST_BIT         (28)
 #define WDT_PRV_OFS0_RESET_CONTROL_BIT       (28)
 #define WDT_PRV_OFS0_STOP_CONTROL_BIT        (30)
 
-#define WDT_PRV_OSF0_AUTO_START_MASK         (0x1U) // Bit 17
+#define WDT_PRV_OFS0_AUTO_START_MASK         (0x1U) // Bit 17
 #define WDT_PRV_OFS0_TIMEOUT_MASK            (0x3U) // Bits 18-19
 #define WDT_PRV_OFS0_CLOCK_DIVISION_MASK     (0xFU) // Bits 20-23
 #define WDT_PRV_OFS0_WINDOW_END_MASK         (0x3U) // Bits 24-25
 #define WDT_PRV_OFS0_WINDOW_START_MASK       (0x3U) // Bits 26-27
-#define WDT_PRV_OSF0_NMI_REQUEST_MASK        (0x1U) // Bit 28
+#define WDT_PRV_OFS0_NMI_REQUEST_MASK        (0x1U) // Bit 28
 #define WDT_PRV_OFS0_RESET_CONTROL_MASK      (0x1U) // Bit 28
 #define WDT_PRV_OFS0_STOP_CONTROL_MASK       (0x1U) // Bit 30
 #define WDT_PRV_NMI_EN_MASK                  (0x2)
@@ -75,14 +79,14 @@
 #define WDT_PRV_WDTCR_WINDOW_START_MASK      (0x3U) // Bits 12-13
 
 /* Macros for start mode and NMI support. */
-#if (BSP_CFG_ROM_REG_OFS0 >> WDT_PRV_OSF0_AUTO_START_BIT) & WDT_PRV_OSF0_AUTO_START_MASK
+#if (BSP_CFG_ROM_REG_OFS0 >> WDT_PRV_OFS0_AUTO_START_BIT) & WDT_PRV_OFS0_AUTO_START_MASK
  #define WDT_PRV_REGISTER_START_MODE         (1)
  #define WDT_PRV_NMI_SUPPORTED               (WDT_CFG_REGISTER_START_NMI_SUPPORTED)
 #else
 
 /* Auto start mode */
  #define WDT_PRV_REGISTER_START_MODE         (0)
- #if (BSP_CFG_ROM_REG_OFS0 >> WDT_PRV_OSF0_NMI_REQUEST_BIT) & WDT_PRV_OSF0_NMI_REQUEST_MASK
+ #if (BSP_CFG_ROM_REG_OFS0 >> WDT_PRV_OFS0_NMI_REQUEST_BIT) & WDT_PRV_OFS0_NMI_REQUEST_MASK
   #define WDT_PRV_NMI_SUPPORTED              (0)
  #else
   #define WDT_PRV_NMI_SUPPORTED              (1)

@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -126,20 +130,22 @@ static fsp_err_t r_lpm_mcu_specific_low_power_check(lpm_cfg_t const * const p_cf
  * @retval     FSP_ERR_ASSERTION             Null Pointer
  * @retval     FSP_ERR_ALREADY_OPEN          LPM instance is already open
  * @retval     FSP_ERR_UNSUPPORTED           This MCU does not support Deep Software Standby
- * @retval     FSP_ERR_INVALID_ARGUMENT      Invalid snooze entry source
- *                                           Invalid snooze end sources
- * @retval     FSP_ERR_INVALID_MODE          Invalid low power mode
- *                                           Invalid DTC option for snooze mode
- *                                           Invalid deep standby end sources
- *                                           Invalid deep standby end sources edges
- *                                           Invalid power supply option for deep standby
- *                                           Invalid IO port option for deep standby
- *                                           Invalid output port state setting for standby or deep standby
- *                                           Invalid sources for wake from standby mode
- *                                           Invalid power supply option for standby
- *                                           Invalid IO port option for standby
- *                                           Invalid standby end sources
- *                                           Invalid standby end sources edges
+ * @retval     FSP_ERR_INVALID_ARGUMENT      One of the following:
+ *                                           - Invalid snooze entry source
+ *                                           - Invalid snooze end sources
+ * @retval     FSP_ERR_INVALID_MODE          One of the following:
+ *                                           - Invalid low power mode
+ *                                           - Invalid DTC option for snooze mode
+ *                                           - Invalid deep standby end sources
+ *                                           - Invalid deep standby end sources edges
+ *                                           - Invalid power supply option for deep standby
+ *                                           - Invalid IO port option for deep standby
+ *                                           - Invalid output port state setting for standby or deep standby
+ *                                           - Invalid sources for wake from standby mode
+ *                                           - Invalid power supply option for standby
+ *                                           - Invalid IO port option for standby
+ *                                           - Invalid standby end sources
+ *                                           - Invalid standby end sources edges
  **********************************************************************************************************************/
 fsp_err_t R_LPM_Open (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_cfg)
 {
@@ -170,20 +176,22 @@ fsp_err_t R_LPM_Open (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_c
  * @retval     FSP_ERR_ASSERTION             Null Pointer
  * @retval     FSP_ERR_NOT_OPEN              LPM instance is not open
  * @retval     FSP_ERR_UNSUPPORTED           This MCU does not support Deep Software Standby
- * @retval     FSP_ERR_INVALID_ARGUMENT      Invalid snooze entry source
- *                                           Invalid snooze end sources
- * @retval     FSP_ERR_INVALID_MODE          Invalid low power mode
- *                                           Invalid DTC option for snooze mode
- *                                           Invalid deep standby end sources
- *                                           Invalid deep standby end sources edges
- *                                           Invalid power supply option for deep standby
- *                                           Invalid IO port option for deep standby
- *                                           Invalid output port state setting for standby or deep standby
- *                                           Invalid sources for wake from standby mode
- *                                           Invalid power supply option for standby
- *                                           Invalid IO port option for standby
- *                                           Invalid standby end sources
- *                                           Invalid standby end sources edges
+ * @retval     FSP_ERR_INVALID_ARGUMENT      One of the following:
+ *                                           - Invalid snooze entry source
+ *                                           - Invalid snooze end sources
+ * @retval     FSP_ERR_INVALID_MODE          One of the following:
+ *                                           - Invalid low power mode
+ *                                           - Invalid DTC option for snooze mode
+ *                                           - Invalid deep standby end sources
+ *                                           - Invalid deep standby end sources edges
+ *                                           - Invalid power supply option for deep standby
+ *                                           - Invalid IO port option for deep standby
+ *                                           - Invalid output port state setting for standby or deep standby
+ *                                           - Invalid sources for wake from standby mode
+ *                                           - Invalid power supply option for standby
+ *                                           - Invalid IO port option for standby
+ *                                           - Invalid standby end sources
+ *                                           - Invalid standby end sources edges
  **********************************************************************************************************************/
 fsp_err_t R_LPM_LowPowerReconfigure (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_cfg)
 {
@@ -208,12 +216,13 @@ fsp_err_t R_LPM_LowPowerReconfigure (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t co
  * @retval     FSP_SUCCESS                   Successful.
  * @retval     FSP_ERR_ASSERTION             Null pointer.
  * @retval     FSP_ERR_NOT_OPEN              LPM instance is not open
- * @retval     FSP_ERR_INVALID_MODE          HOCO was not system clock when using snooze mode with SCI0/RXD0.
- *                                           HOCO was not stable when using snooze mode with SCI0/RXD0.
- *                                           MOCO was running when using snooze mode with SCI0/RXD0.
- *                                           MAIN OSCILLATOR was running when using snooze mode with SCI0/RXD0.
- *                                           PLL was running when using snooze mode with SCI0/RXD0.
- *                                           Unable to disable ocillator stop detect when using standby or deep standby.
+ * @retval     FSP_ERR_INVALID_MODE          One of the following:
+ *                                           - HOCO was not system clock when using snooze mode with SCI0/RXD0.
+ *                                           - HOCO was not stable when using snooze mode with SCI0/RXD0.
+ *                                           - MOCO was running when using snooze mode with SCI0/RXD0.
+ *                                           - MAIN OSCILLATOR was running when using snooze mode with SCI0/RXD0.
+ *                                           - PLL was running when using snooze mode with SCI0/RXD0.
+ *                                           - Unable to disable ocillator stop detect when using standby or deep standby.
  **********************************************************************************************************************/
 fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
 {
@@ -240,10 +249,10 @@ fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Clear the IOKEEP bit after deep software stand by
+ * Clear the IOKEEP bit after deep software standby
  *
  * @retval     FSP_SUCCESS          DPSBYCR_b.IOKEEP bit cleared Successfully.
- * @retval     FSP_ERR_UNSUPPORTED  Deep stand by mode not supported on this MCU.
+ * @retval     FSP_ERR_UNSUPPORTED  Deep standby mode not supported on this MCU.
  **********************************************************************************************************************/
 fsp_err_t R_LPM_IoKeepClear (lpm_ctrl_t * const p_api_ctrl)
 {
@@ -311,20 +320,22 @@ fsp_err_t R_LPM_VersionGet (fsp_version_t * const p_version)
  *
  * @retval     FSP_SUCCESS              Configuration is valid
  * @retval     FSP_ERR_UNSUPPORTED      This MCU does not support Deep Software Standby
- * @retval     FSP_ERR_INVALID_ARGUMENT Invalid snooze entry source
- *                                      Invalid snooze end sources
- * @retval     FSP_ERR_INVALID_MODE     Invalid low power mode
- *                                      Invalid DTC option for snooze mode
- *                                      Invalid deep standby end sources
- *                                      Invalid deep standby end sources edges
- *                                      Invalid power supply option for deep standby
- *                                      Invalid IO port option for deep standby
- *                                      Invalid output port state setting for standby or deep standby
- *                                      Invalid sources for wake from standby mode
- *                                      Invalid power supply option for standby
- *                                      Invalid IO port option for standby
- *                                      Invalid standby end sources
- *                                      Invalid standby end sources edges
+ * @retval     FSP_ERR_INVALID_ARGUMENT One of the following:
+ *                                      - Invalid snooze entry source
+ *                                      - Invalid snooze end sources
+ * @retval     FSP_ERR_INVALID_MODE     One of the following:
+ *                                      - Invalid low power mode
+ *                                      - Invalid DTC option for snooze mode
+ *                                      - Invalid deep standby end sources
+ *                                      - Invalid deep standby end sources edges
+ *                                      - Invalid power supply option for deep standby
+ *                                      - Invalid IO port option for deep standby
+ *                                      - Invalid output port state setting for standby or deep standby
+ *                                      - Invalid sources for wake from standby mode
+ *                                      - Invalid power supply option for standby
+ *                                      - Invalid IO port option for standby
+ *                                      - Invalid standby end sources
+ *                                      - Invalid standby end sources edges
  *
  * @note       This function assumes the register has been unlocked by the calling application
  **********************************************************************************************************************/
@@ -384,20 +395,22 @@ fsp_err_t r_lpm_mcu_specific_low_power_check (lpm_cfg_t const * const p_cfg)
  * @retval     FSP_SUCCESS                   Configuration is valid
  * @retval     FSP_ERR_UNSUPPORTED           This MCU does not support Deep Software Standby
  * @retval     FSP_ERR_ASSERTION             NULL p_extend when low power mode is not Sleep
- * @retval     FSP_ERR_INVALID_ARGUMENT      Invalid snooze entry source
- *                                           Invalid snooze end sources
- * @retval     FSP_ERR_INVALID_MODE          Invalid low power mode
- *                                           Invalid DTC option for snooze mode
- *                                           Invalid deep standby end sources
- *                                           Invalid deep standby end sources edges
- *                                           Invalid power supply option for deep standby
- *                                           Invalid IO port option for deep standby
- *                                           Invalid output port state setting for standby or deep standby
- *                                           Invalid sources for wake from standby mode
- *                                           Invalid power supply option for standby
- *                                           Invalid IO port option for standby
- *                                           Invalid standby end sources
- *                                           Invalid standby end sources edges
+ * @retval     FSP_ERR_INVALID_ARGUMENT      One of the following:
+ *                                           - Invalid snooze entry source
+ *                                           - Invalid snooze end sources
+ * @retval     FSP_ERR_INVALID_MODE          One of the following:
+ *                                           - Invalid low power mode
+ *                                           - Invalid DTC option for snooze mode
+ *                                           - Invalid deep standby end sources
+ *                                           - Invalid deep standby end sources edges
+ *                                           - Invalid power supply option for deep standby
+ *                                           - Invalid IO port option for deep standby
+ *                                           - Invalid output port state setting for standby or deep standby
+ *                                           - Invalid sources for wake from standby mode
+ *                                           - Invalid power supply option for standby
+ *                                           - Invalid IO port option for standby
+ *                                           - Invalid standby end sources
+ *                                           - Invalid standby end sources edges
  **********************************************************************************************************************/
 fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
 {
@@ -503,11 +516,12 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
  * @param[in]  clock_source  The clock source
  *
  * @retval     FSP_SUCCESS                   Clock settings are valid.
- * @retval     FSP_ERR_INVALID_MODE          HOCO was not system clock when using snooze mode with SCI0/RXD0.
- *                                           HOCO was not stable when using snooze mode with SCI0/RXD0.
- *                                           MOCO was running when using snooze mode with SCI0/RXD0.
- *                                           MAIN OSCILLATOR was running when using snooze mode with SCI0/RXD0.
- *                                           PLL was running when using snooze mode with SCI0/RXD0.
+ * @retval     FSP_ERR_INVALID_MODE          One of the following:
+ *                                           - HOCO was not system clock when using snooze mode with SCI0/RXD0.
+ *                                           - HOCO was not stable when using snooze mode with SCI0/RXD0.
+ *                                           - MOCO was running when using snooze mode with SCI0/RXD0.
+ *                                           - MAIN OSCILLATOR was running when using snooze mode with SCI0/RXD0.
+ *                                           - PLL was running when using snooze mode with SCI0/RXD0.
  **********************************************************************************************************************/
 fsp_err_t r_lpm_check_clocks (uint32_t clock_source)
 {
@@ -530,12 +544,13 @@ fsp_err_t r_lpm_check_clocks (uint32_t clock_source)
  * @note       This function will unlock and lock registers as needed
  *
  * @retval     FSP_SUCCESS                   Successfully entered and woke from low power mode.
- * @retval     FSP_ERR_INVALID_MODE          HOCO was not system clock when using snooze mode with SCI0/RXD0.
- *                                           HOCO was not stable when using snooze mode with SCI0/RXD0.
- *                                           MOCO was running when using snooze mode with SCI0/RXD0.
- *                                           MAIN OSCILLATOR was running when using snooze mode with SCI0/RXD0.
- *                                           PLL was running when using snooze mode with SCI0/RXD0.
- *                                           Unable to disable ocillator stop detect when using standby or deep standby.
+ * @retval     FSP_ERR_INVALID_MODE          One of the following:
+ *                                           - HOCO was not system clock when using snooze mode with SCI0/RXD0.
+ *                                           - HOCO was not stable when using snooze mode with SCI0/RXD0.
+ *                                           - MOCO was running when using snooze mode with SCI0/RXD0.
+ *                                           - MAIN OSCILLATOR was running when using snooze mode with SCI0/RXD0.
+ *                                           - PLL was running when using snooze mode with SCI0/RXD0.
+ *                                           - Unable to disable ocillator stop detect when using standby or deep standby.
  **********************************************************************************************************************/
 fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 {

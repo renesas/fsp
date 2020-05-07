@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -41,7 +45,6 @@ static const fsp_version_t g_wifi_onchip_version =
 };
 
 extern char * g_wifi_onchip_silex_uart_cmd_baud;
-extern sci_uart_extended_cfg_t g_uart0_cfg_extend;
 
 /***********************************************************************************************************************
  * Enumerations
@@ -451,7 +454,10 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, "ATB=", 5);
     strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, g_wifi_onchip_silex_uart_cmd_baud, 10);
     strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, ",,,,", 5);
-    if ((uint32_t) g_uart0_cfg_extend.flow_control_pin == (uint32_t) WIFI_ONCHIP_SILEX_BSP_PIN_PORT_INVALID)
+
+    if ((uint32_t) (((sci_uart_extended_cfg_t *) p_instance_ctrl->uart_instance_objects[
+                         WIFI_ONCHIP_SILEX_UART_INITIAL_PORT]->p_cfg->p_extend)->flow_control_pin) ==
+        (uint32_t) WIFI_ONCHIP_SILEX_BSP_PIN_PORT_INVALID)
     {
         strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, "n\r", 3);
     }

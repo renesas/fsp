@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -41,11 +45,11 @@
 
 #if defined(USB_CFG_HHID_USE) || defined(USB_CFG_PHID_USE)
  #if USB_CFG_DTC == USB_CFG_ENABLE
-  #error  In HID class, can not set USB_CFG_ENABLE to USB_CFG_DTC in r_usb_basic_config.h.
+  #error  In HID class, can not set USB_CFG_ENABLE to USB_CFG_DTC in r_usb_basic_cfg.h.
  #endif                                /* USB_CFG_DTC == USB_CFG_ENABLE */
 
  #if USB_CFG_DMA == USB_CFG_ENABLE
-  #error  In HID class, can not set USB_CFG_ENABLE to USB_CFG_DMA in r_usb_basic_config.h.
+  #error  In HID class, can not set USB_CFG_ENABLE to USB_CFG_DMA in r_usb_basic_cfg.h.
  #endif                                /* USB_CFG_DMA == USB_CFG_ENABLE */
 
 #endif                                 /* defined(USB_CFG_HHID_USE) || defined(USB_CFG_PHID_USE) */
@@ -53,7 +57,7 @@
 #if USB_CFG_COMPLIANCE == USB_CFG_DISABLE
  #if USB_CFG_ELECTRICAL == USB_CFG_ENABLE
   #error  Can not set USB_CFG_DISABLE to USB_CFG_COMPLIANCE when setting USB_CFG_ENABLE to USB_CFG_ELECTRICAL \
-    in r_usb_basic_config.h.
+    in r_usb_basic_cfg.h.
 
  #endif                                /* USB_CFG_ELECTRICAL == USB_CFG_ENABLE */
 #endif                                 /* USB_CFG_COMPLIANCE == USB_CFG_DISABLE */
@@ -61,7 +65,7 @@
 #if USB_CFG_BC == USB_CFG_DISABLE
  #if USB_CFG_DCP == USB_CFG_ENABLE
   #error  Can not set USB_CFG_DISABLE to USB_CFG_BC when setting USB_CFG_ENABLE to USB_CFG_DCP \
-    in r_usb_basic_config.h.
+    in r_usb_basic_cfg.h.
 
  #endif                                /* USB_CFG_DCP == USB_CFG_ENABLE */
 #endif                                 /* USB_CFG_BC == USB_CFG_DISABLE */
@@ -69,7 +73,7 @@
 #if USB_CFG_DMA == USB_CFG_ENABLE
  #if USB_CFG_DTC == USB_CFG_ENABLE
   #error  Can not set USB_CFG_ENABLE to the definitions (USB_CFG_DMA and USB_CFG_DTC) at the same time \
-    in r_usb_basic_config.h.
+    in r_usb_basic_cfg.h.
 
  #endif                                /* USB_CFG_DTC == USB_CFG_ENABLE */
 #endif                                 /* USB_CFG_DMA == USB_CFG_ENABLE */
@@ -77,7 +81,7 @@
 #if USB_CFG_MODE == USB_CFG_HOST
  #if defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PHID_USE) || defined(USB_CFG_PMSC_USE) || defined(USB_CFG_PVNDR_USE)
   #error  Can not enable these definitions(USB_CFG_PCDC_USE/USB_CFG_PHID_USE/USB_CFG_PMSC_USE/USB_CFG_PVNDR_USE) \
-    when setting USB_HOST to USB_CFG_MODE in r_usb_basic_config.h.
+    when setting USB_HOST to USB_CFG_MODE in r_usb_basic_cfg.h.
 
  #endif                                /* defined(USB_CFG_PCDC_USE || USB_CFG_PHID_USE || USB_CFG_PMSC_USE || USB_CFG_PVNDR_USE) */
 #endif                                 /* USB_CFG_MODE == USB_HOST */
@@ -85,17 +89,17 @@
 #if USB_CFG_MODE == USB_CFG_PERI
  #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || defined(USB_CFG_HVNDR_USE)
   #error  Can not enable these definitions(USB_CFG_HCDC_USE/USB_CFG_HHID_USE/USB_CFG_HMSC_USE/USB_CFG_HVNDR_USE) \
-    when setting USB_PERI to USB_CFG_MODE in r_usb_basic_config.h.
+    when setting USB_PERI to USB_CFG_MODE in r_usb_basic_cfg.h.
 
  #endif                                /* defined(USB_CFG_HCDC_USE || USB_CFG_HHID_USE || USB_CFG_HMSC_USE || USB_CFG_HVNDR_USE) */
 #endif                                 /* USB_CFG_MODE == USB_PERI */
 
 #if !defined(BSP_MCU_GROUP_RA6M3)
  #if USB_CFG_ELECTRICAL == USB_CFG_ENABLE
-  #error  Can not set USB_CFG_ENABLE to USB_CFG_ELECTRICAL when using MCU other than RX71M in r_usb_basic_config.h.
+  #error  Can not set USB_CFG_ENABLE to USB_CFG_ELECTRICAL when using other than Hi-speed module in r_usb_basic_cfg.h.
  #endif                                /* USB_CFG_ELECTRICAL == USB_CFG_ENABLE */
 
-#endif                                 /* !defined(BSP_MCU_GROUP_A6M3) */
+#endif                                 /* !defined(BSP_MCU_GROUP_RA6M3) */
 
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
@@ -254,17 +258,17 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
 {
     if (USB_IP0 == ip_type)
     {
-#if (!defined(BSP_MCU_RX63T)) && (!defined(BSP_MCU_RX72T))
+#if (!defined(BSP_MCU_GROUP_RA4M1)) && (!defined(BSP_MCU_GROUP_RA2A1))
 
         /* Deep standby USB monitor register
          * b0      SRPC0    USB0 single end control
-         * b3-b1   Reserved 0
+         * b1      PRUE0    DP Pull-Up Resistor control
+         *         (Use this bit during operation in Deep Software Standby mode.)
+         * b2      Reserved 0
+         * b3      DRPD0    DP/DM Pull-Down Resistor control
+         *         (Use this bit during operation in Deep Software Standby mode.)
          * b4      FIXPHY0  USB0 transceiver output fix
-         * b7-b5   Reserved 0
-         * b8      SRPC1    USB1 single end control
-         * b11-b9  Reserved 0
-         * b12     FIXPHY1  USB1 transceiver output fix
-         * b15-b13 Reserved 0
+         * b15-b5   Reserved 0
          * b16     DP0      USB0 DP input
          * b17     DM0      USB0 DM input
          * b19-b18 Reserved 0
@@ -272,16 +276,10 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
          * b21     DOVCB0   USB0 OVRCURB input
          * b22     Reserved 0
          * b23     DVBSTS0  USB1 VBUS input
-         * b24     DP1      USB1 DP input
-         * b25     DM1      USB1 DM input
-         * b27-b26 Reserved 0
-         * b28     DOVCA1   USB1 OVRCURA input
-         * b29     DOVCB1   USB1 OVRCURB input
-         * b30     Reserved 0
-         * b31     DVBSTS1  USB1 VBUS input
+         * b31-b24 Reserved 0
          */
         USB_M0->DPUSR0R_FS_b.FIXPHY0 = 0U; /* USB0 Transceiver Output fixed */
-#endif /* (!defined (BSP_MCU_RX63T)) && (!defined (BSP_MCU_RX72T)) */
+#endif /* (!defined(BSP_MCU_GROUP_RA4M1)) && (!defined(BSP_MCU_GROUP_RA2A1)) */
 
         /* Interrupt enable register
          * b0 IEN0 Interrupt enable bit
@@ -565,21 +563,6 @@ static void usb_cpu_usb_int_hand_isr (uint8_t usb_ip)
 {
     hw_usb_pclear_sts_resm(usb_ip);
 }                                      /* End of function usb_cpu_usb_int_hand_isr */
-
- #if defined(BSP_MCU_RX63N) || defined(BSP_MCU_RX62N)
-
-/******************************************************************************
- * Function Name   : usb2_cpu_usb_int_hand_isr
- * Description     :
- * Arguments       : none
- * Return value    : none
- ******************************************************************************/
-void usb2_cpu_usb_int_hand_isr (void)
-{
-    hw_usb_pclear_sts_resm();
-}                                      /* eof usb2_cpu_usb_int_hand_isr() */
-
- #endif /* defined (BSP_MCU_RX63N) || defined (BSP_MCU_RX62N) */
 
 #endif  /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 

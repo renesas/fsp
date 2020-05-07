@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -33,7 +37,7 @@ FSP_HEADER
 
 /* Leading zeroes removed to avoid coding standards violation. */
 #define AGT_CODE_VERSION_MAJOR    (1U)
-#define AGT_CODE_VERSION_MINOR    (0U)
+#define AGT_CODE_VERSION_MINOR    (1U)
 
 /** Maximum number of clock counts in 16 bit timer. */
 #define AGT_MAX_CLOCK_COUNTS      (UINT16_MAX)
@@ -53,11 +57,6 @@ FSP_HEADER
 /** Count source */
 typedef enum e_agt_clock
 {
-    /** Counter clock source is PCLKB when AGT_CLOCK_PCLKB, AGT_CLOCK_PCLKB_DIV_2, or AGT_CLOCK_PCLKB_DIV_8 is selected.
-     *  The PCLKB divisor is selected automatically by the configurator as either PCLKB/1, PCLKB/2, or PCLKB/8.
-     *  If the timer_cfg_t::unit is TIMER_UNIT_PERIOD_RAW_COUNTS, the timer_cfg_t::period should be the desired value
-     *  in PCLKB counts, even if the value would exceed 16 bits.  For example, if a period of 0x30000 counts is
-     *  requested, a divisor of PCLKB/8 is be selected and the counter underflows after 0x6000 counts. */
     AGT_CLOCK_PCLKB          = 0x00,   ///< PCLKB count source, division by 1, 2, or 8 allowed
     AGT_CLOCK_LOCO           = 0x40,   ///< LOCO count source, division by 1, 2, 4, 8, 16, 32, 64, or 128 allowed
     AGT_CLOCK_AGT0_UNDERFLOW = 0x50,   ///< Underflow event signal from AGT0, division must be 1
@@ -142,7 +141,7 @@ typedef struct st_agt_extended_cfg
             agt_pin_cfg_t agtob : 3;     ///< Configure AGTOB pin
         };
     };
-    agt_pin_cfg_t agto : 3;              ///< Configure AGTO pin, @note AGTIO polarity is opposite AGTO
+    agt_pin_cfg_t agto : 3;              ///< Configure AGTO pin @note AGTIO polarity is opposite AGTO
 
     /* Input pin settings. */
     agt_measure_t      measurement_mode; ///< Measurement mode

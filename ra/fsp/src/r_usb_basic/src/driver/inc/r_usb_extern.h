@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -85,12 +89,10 @@ extern void            (* usb_hstd_bc_func[USB_BC_STATE_MAX][USB_BC_EVENT_MAX])(
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /* r_usb_pdriver.c */
-extern uint16_t     g_usb_pstd_stall_pipe[USB_MAX_PIPE_NO + 1U];   /* Stall Pipe info */
 extern usb_cb_t     g_usb_pstd_stall_cb;                           /* Stall Callback function */
 extern uint16_t     g_usb_pstd_config_num;                         /* Configuration Number */
+extern uint16_t     g_usb_pstd_stall_pipe[USB_MAX_PIPE_NO + 1U];   /* Stall Pipe info */
 extern uint16_t     g_usb_pstd_alt_num[];                          /* Alternate */
-extern uint16_t     g_usb_pstd_remote_wakeup;                      /* Remote Wake up Enable Flag */
-extern uint16_t     g_usb_pstd_remote_wakeup_state;                /* Result for Remote wake up */
 extern uint16_t     g_usb_pstd_test_mode_select;                   /* Test Mode Selectors */
 extern uint16_t     g_usb_pstd_test_mode_flag;                     /* Test Mode Flag */
 extern uint16_t     g_usb_pstd_eptbl_index[2][USB_MAX_EP_NO + 1U]; /* Index of Endpoint Information table */
@@ -107,8 +109,11 @@ extern uint16_t     g_usb_peri_connected;                          /* Peri CDC a
 
 #endif  /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 
+extern uint16_t g_usb_pstd_remote_wakeup;                          /* Remote Wake up Enable Flag */
+extern uint16_t g_usb_pstd_remote_wakeup_state;                    /* Result for Remote wake up */
+
 /* r_usb.c */
-extern volatile uint16_t g_usb_usbmode; /* USB mode HOST/PERI */
+extern volatile uint16_t g_usb_usbmode;                            /* USB mode HOST/PERI */
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 extern usb_utr_t g_usb_hdata[USB_NUM_USBIP][USB_MAXPIPE_NUM + 1];
 
@@ -196,7 +201,7 @@ usb_er_t usb_data_stop(usb_instance_ctrl_t * p_ctrl, usb_transfer_t type);
 usb_er_t usb_ctrl_stop(usb_instance_ctrl_t * p_ctrl);
 void     usb_cstd_debug_hook(uint16_t error_code);
 
-uint16_t usb_cstd_get_pipe_buf_value(uint16_t pipe_no); // @@
+uint16_t usb_cstd_get_pipe_buf_value(uint16_t pipe_no);
 
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 usb_er_t usb_pstd_transfer_start(usb_utr_t * ptr);
@@ -275,6 +280,7 @@ void     usb_cstd_clr_stall(usb_utr_t * ptr, uint16_t pipe);
 void     usb_cstd_usb_task(uint8_t module_number);
 void     usb_class_task(void);
 void     usb_set_event(usb_status_t event, usb_instance_ctrl_t * ctrl);
+uint16_t usb_cstd_remote_wakeup(usb_utr_t * p_utr);
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 uint8_t  usb_hstd_pipe_to_epadr(usb_utr_t * ptr, uint16_t pipe);
@@ -625,8 +631,8 @@ extern void usb_hcdc_driver_start(usb_utr_t * ptr);
 #endif                                 /* defined(USB_CFG_HCDC_USE) */
 
 #if defined(USB_CFG_HHID_USE)
-extern void usb_hhid_read_complete(usb_utr_t * mess, uint16_t devadr, uint16_t data2);
-extern void usb_hhid_write_complete(usb_utr_t * mess, uint16_t devadr, uint16_t data2);
+extern void usb_hhid_read_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
+extern void usb_hhid_write_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
 extern void usb_hhid_registration(usb_utr_t * ptr);
 extern void usb_hhid_task(usb_vp_int_t stacd);
 extern void usb_hhid_driver_start(usb_utr_t * ptr);

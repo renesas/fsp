@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -42,13 +46,13 @@ FSP_HEADER
  Macro definitions
  ******************************************************************************/
 /* CDC Class Requests IDs*/
-#define USB_PCDC_SET_LINE_CODING            (0x2000U)  ///< Command code for Set Line Codeing.
-#define USB_PCDC_GET_LINE_CODING            (0x2100U)  ///< Command code for Get Line Codeing.
+#define USB_PCDC_SET_LINE_CODING            (0x2000U)  ///< Command code for Set Line Coding.
+#define USB_PCDC_GET_LINE_CODING            (0x2100U)  ///< Command code for Get Line Coding.
 #define USB_PCDC_SET_CONTROL_LINE_STATE     (0x2200U)  ///< Command code for Control Line State.
     
 #define USB_PCDC_SERIAL_STATE               (0x20)     ///< Serial State Code.
 
-#define USB_PCDC_SETUP_TBL_BSIZE            (10U)      ///< setup packet table size (uint16_t * 5)
+#define USB_PCDC_SETUP_TBL_BSIZE            (10U)      ///< Setup packet table size (uint16_t * 5)
 
 
 /*******************************************************************************
@@ -63,7 +67,7 @@ typedef struct
     uint16_t b_framing     :1;     ///< Framing error 
     uint16_t b_parity      :1;     ///< Parity error 
     uint16_t b_over_run    :1;     ///< Over Run error 
-    uint16_t rsv           :9;     ///< reserve 
+    uint16_t rsv           :9;     ///< Reserved 
 } usb_serial_state_bitmap_t;
     
 /* Class Notification Serial State */

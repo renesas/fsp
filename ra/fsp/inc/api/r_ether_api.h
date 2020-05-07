@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -22,7 +26,7 @@
  * @section ETHER_API_Summary Summary
  * The Ethernet interface provides Ethernet functionality.
  * The Ethernet interface supports the following features:
- * - Transmit/receive processing(Blocking and Non-Bloking)
+ * - Transmit/receive processing (Blocking and Non-Blocking)
  * - Callback function with returned event code
  * - Magic packet detection mode support
  * - Auto negotiation support
@@ -53,17 +57,17 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define ETHER_API_VERSION_MAJOR    (1U)
-#define ETHER_API_VERSION_MINOR    (0U)
+#define ETHER_API_VERSION_MINOR    (1U)
 
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** Wake on Lan */
+/** Wake on LAN */
 typedef enum e_ether_wake_on_lan
 {
-    ETHER_WAKE_ON_LAN_DISABLE = 0,     ///< Disable Wake on Lan
-    ETHER_WAKE_ON_LAN_ENABLE  = 1,     ///< Enable Wake on Lan
+    ETHER_WAKE_ON_LAN_DISABLE = 0,     ///< Disable Wake on LAN
+    ETHER_WAKE_ON_LAN_ENABLE  = 1,     ///< Enable Wake on LAN
 } ether_wake_on_lan_t;
 
 /** Flow control functionality  */
@@ -171,7 +175,7 @@ typedef struct st_ether_cfg
     ether_phy_instance_t const * p_ether_phy_instance;   ///< Pointer to ETHER_PHY instance
 
     /** Placeholder for user data.  Passed to the user callback in ether_callback_args_t. */
-    void const * p_context;
+    void const * p_context;                              ///< Placeholder for user data.
     void const * p_extend;                               ///< Placeholder for user extension.
 } ether_cfg_t;
 
@@ -219,7 +223,7 @@ typedef struct st_ether_api
      *
      * @param[in]  p_api_ctrl       Pointer to control structure.
      * @param[in]  p_buffer     Pointer to data to write.
-     * @param[in]  frame_length Send ethernet frame size(without 4 bytes of CRC data size).
+     * @param[in]  frame_length Send ethernet frame size (without 4 bytes of CRC data size).
      */
     fsp_err_t (* write)(ether_ctrl_t * const p_api_ctrl, void * const p_buffer, uint32_t const frame_length);
 

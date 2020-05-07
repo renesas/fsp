@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -46,7 +50,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define CAC_API_VERSION_MAJOR    (1U)
-#define CAC_API_VERSION_MINOR    (0U)
+#define CAC_API_VERSION_MINOR    (1U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -80,9 +84,9 @@ typedef enum e_cac_clock_source
     CAC_CLOCK_SOURCE_SUBCLOCK = 0x01,  ///< Sub-clock
     CAC_CLOCK_SOURCE_HOCO     = 0x02,  ///< HOCO (High speed on chip oscillator)
     CAC_CLOCK_SOURCE_MOCO     = 0x03,  ///< MOCO (Middle speed on chip oscillator)
-    CAC_CLOCK_SOURCE_LOCO     = 0x04,  ///< LOCO (Middle speed on chip oscillator)
+    CAC_CLOCK_SOURCE_LOCO     = 0x04,  ///< LOCO (Low speed on chip oscillator)
     CAC_CLOCK_SOURCE_PCLKB    = 0x05,  ///< PCLKB (Peripheral Clock B)
-    CAC_CLOCK_SOURCE_IWDT     = 0x06,  ///< IWDT- Dedicated on-chip oscillator
+    CAC_CLOCK_SOURCE_IWDT     = 0x06,  ///< IWDT-dedicated on-chip oscillator
     CAC_CLOCK_SOURCE_EXTERNAL = 0x07,  ///< Externally supplied measurement clock on CACREF pin
 } cac_clock_source_t;
 
@@ -147,10 +151,10 @@ typedef struct st_cac_user_cb_data
 /** CAC Configuration */
 typedef struct st_cac_cfg
 {
-    cac_ref_clock_config_t  cac_ref_clock;             ///< reference clock specific settings
-    cac_meas_clock_config_t cac_meas_clock;            ///< measurement clock specific settings
-    uint16_t                cac_upper_limit;           ///< the upper limit counter threshold
-    uint16_t                cac_lower_limit;           ///< the lower limit counter threshold
+    cac_ref_clock_config_t  cac_ref_clock;             ///< Reference clock specific settings
+    cac_meas_clock_config_t cac_meas_clock;            ///< Measurement clock specific settings
+    uint16_t                cac_upper_limit;           ///< The upper limit counter threshold
+    uint16_t                cac_lower_limit;           ///< The lower limit counter threshold
 
     IRQn_Type mendi_irq;                               ///< Measurement End IRQ number
     IRQn_Type ovfi_irq;                                ///< Measurement Overflow IRQ number

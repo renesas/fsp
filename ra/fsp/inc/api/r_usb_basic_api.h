@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -54,7 +58,7 @@ FSP_HEADER
  ******************************************************************************/
 
 /* USB Version Info */
-#define USB_API_VERSION_MINOR      (0U)      ///< Minor version of the API.
+#define USB_API_VERSION_MINOR      (1U)      ///< Minor version of the API.
 #define USB_API_VERSION_MAJOR      (1U)      ///< Major version of the API.
 
 /* USB Request Type Register */
@@ -248,7 +252,7 @@ typedef enum e_usb_onoff
     USB_ON,                            ///< USB On State
 } usb_onoff_t;
 
-/** USB read / write type */
+/** USB read/write type */
 typedef enum e_usb_transfer
 {
     USB_TRANSFER_READ = 0,             ///< Data Receive communication
@@ -412,7 +416,7 @@ typedef struct st_usb_api
      * @param[in]  p_api_ctrl   Pointer to control structure.
      * @param[in]  p_buf        Pointer to area that stores read data.
      * @param[in]  size         Read request size.
-     * @param[in]  destination  In Host, it represents the device address, and in Peri, it represents the device class.
+     * @param[in]  destination  In Host mode, it represents the device address, and in Peripheral mode, it represents the device class.
      */
     fsp_err_t (* read)(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size, uint8_t destination);
 
@@ -423,7 +427,7 @@ typedef struct st_usb_api
      * @param[in]  p_api_ctrl       Pointer to control structure.
      * @param[in]  p_buf        Pointer to area that stores write data.
      * @param[in]  size         Read request size.
-     * @param[in]  destination  In Host, it represents the device address, and in Peri, it represents the device class.
+     * @param[in]  destination  In Host mode, it represents the device address, and in Peripheral mode, it represents the device class.
      */
     fsp_err_t (* write)(usb_ctrl_t * const p_api_ctrl, uint8_t const * const p_buf, uint32_t size, uint8_t destination);
 
@@ -432,8 +436,8 @@ typedef struct st_usb_api
      * - @ref R_USB_Stop()
      *
      * @param[in]  p_api_ctrl    Pointer to control structure.
-     * @param[in]  direction     Receive (USB_TRANSFER_READ) or send (USB_TRANSFER_WRITE ).
-     * @param[in]  destination   In Host, it represents the device address, and in Peri, it represents the device class.
+     * @param[in]  direction     Receive (USB_TRANSFER_READ) or send (USB_TRANSFER_WRITE).
+     * @param[in]  destination   In Host mode, it represents the device address, and in Peripheral mode, it represents the device class.
      */
     fsp_err_t (* stop)(usb_ctrl_t * const p_api_ctrl, usb_transfer_t direction, uint8_t destination);
 
@@ -559,7 +563,7 @@ typedef struct st_usb_api
 
     /** Performs settings and transmission processing when transmitting a setup packet.
      * @par Implemented as
-     * - R_USB_HostControlTransfer()
+     * - @ref R_USB_HostControlTransfer()
      *
      * @param[in]     p_api_ctrl     USB control structure.
      * @param[in]     p_setup        Setup packet information.
@@ -571,7 +575,7 @@ typedef struct st_usb_api
 
     /** Receives data sent by control transfer.
      * @par Implemented as
-     * - R_USB_PeriControlDataGet()
+     * - @ref R_USB_PeriControlDataGet()
      *
      * @param[in]     p_api_ctrl  USB control structure.
      * @param[in]     p_buf       Data reception area information.
@@ -581,7 +585,7 @@ typedef struct st_usb_api
 
     /** Performs transfer processing for control transfer.
      * @par Implemented as
-     * - R_USB_PeriControlDataSet()
+     * - @ref R_USB_PeriControlDataSet()
      *
      * @param[in]     p_api_ctrl  USB control structure.
      * @param[in]     p_buf       Area information for data transfer.
@@ -591,12 +595,20 @@ typedef struct st_usb_api
 
     /** Set the response to the setup packet.
      * @par Implemented as
-     * - R_USB_PeriControlStatusSet()
+     * - @ref R_USB_PeriControlStatusSet()
      *
      * @param[in]     p_api_ctrl  USB control structure.
      * @param[in]     status      USB port startup information.
      */
     fsp_err_t (* periControlStatusSet)(usb_ctrl_t * const p_api_ctrl, usb_setup_status_t status);
+
+    /** Sends a remote wake-up signal to the connected Host.
+     * @par Implemented as
+     * - @ref R_USB_RemoteWakeup()
+     *
+     * @param[in]     p_api_ctrl  USB control structure.
+     */
+    fsp_err_t (* remoteWakeup)(usb_ctrl_t * const p_api_ctrl);
 
     /** This API gets the module number.
      * @par Implemented as
@@ -621,7 +633,7 @@ typedef struct st_usb_api
      * - @ref R_USB_DeviceAddressGet()
      *
      * @param[in]  p_api_ctrl       USB control structure.
-     * @param[out] device_address   device address to get.
+     * @param[out] device_address   Device address to get.
      */
     fsp_err_t (* deviceAddressGet)(usb_ctrl_t * const p_api_ctrl, uint8_t * device_address);
 
@@ -639,7 +651,7 @@ typedef struct st_usb_api
      * - @ref R_USB_DeviceStateGet()
      *
      * @param[in]  p_api_ctrl       USB control structure.
-     * @param[out] state            device state to get.
+     * @param[out] state            Device state to get.
      */
     fsp_err_t (* deviceStateGet)(usb_ctrl_t * const p_api_ctrl, uint16_t * state);
 

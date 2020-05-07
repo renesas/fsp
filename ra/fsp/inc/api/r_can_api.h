@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -30,7 +34,7 @@
  * - Callback function support with returning event code
  * - Hardware resource locking during a transaction
  *
- * @ref CAN
+ * Implemented by: @ref CAN
  * @{
  **********************************************************************************************************************/
 
@@ -48,7 +52,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define CAN_API_VERSION_MAJOR    (1U)
-#define CAN_API_VERSION_MINOR    (0U)
+#define CAN_API_VERSION_MINOR    (1U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -246,8 +250,8 @@ typedef struct st_can_cfg
     uint32_t               mailbox_count;              ///< Number of mailboxes.
     can_mailbox_t        * p_mailbox;                  ///< Pointer to mailboxes.
     can_message_mode_t     message_mode;               ///< Overwrite message or overrun.
-    can_operation_mode_t   operation_mode;             ///< Can operation mode.
-    can_test_mode_t        test_mode;                  ///< Can operation mode.
+    can_operation_mode_t   operation_mode;             ///< CAN operation mode.
+    can_test_mode_t        test_mode;                  ///< CAN operation mode.
 
     /* Configuration for CAN Event processing */
     void (* p_callback)(can_callback_args_t * p_args); ///< Pointer to callback function
@@ -274,7 +278,7 @@ typedef struct st_can_api
      * @par Implemented as
      * - R_CAN_Open()
      *
-     * @param[in,out]  p_ctrl     Pointer to the CAN control block Must be declared by user. Value set here.
+     * @param[in,out]  p_ctrl     Pointer to the CAN control block. Must be declared by user. Value set here.
      * @param[in]      can_cfg_t  Pointer to CAN configuration structure. All elements of this structure must be set by
      *                            user.
      */

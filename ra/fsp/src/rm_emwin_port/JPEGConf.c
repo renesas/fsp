@@ -13,18 +13,21 @@
  * Purpose : Configuration file for emWin.
  * --------  END-OF-HEADER  ------------------------------------------
  */
+
 #include <stdlib.h>
+#include <string.h>
+
 #include "GUI_Private.h"
-#include "JPEGConf.h"
 #include "LCDConf.h"
 
-#include "FreeRTOS.h"
-#include "semphr.h"
-
-#include <string.h>
+#if EMWIN_CFG_RTOS == 2
+ #include "FreeRTOS.h"
+ #include "semphr.h"
+#endif
 
 #if EMWIN_JPEG_USE_HW && EMWIN_LCD_USE_DAVE
 
+ #include "JPEGConf.h"
  #include "r_jpeg.h"
 
 void _JPEGDecodeCallback(jpeg_callback_args_t * p_args);
@@ -80,8 +83,12 @@ BSP_ALIGN_VARIABLE(8);
 
 static volatile jpeg_status_t g_jpeg_status = JPEG_STATUS_NONE;
 
+ #if EMWIN_CFG_RTOS == 2               // FreeRTOS
 static SemaphoreHandle_t _SemaphoreJPEG;
 static StaticSemaphore_t _SemaphoreJPEG_Memory;
+ #else
+static volatile uint8_t _jpeg_done = 0;
+ #endif
 
 /*********************************************************************
  *
@@ -97,12 +104,14 @@ static StaticSemaphore_t _SemaphoreJPEG_Memory;
 void _JPEGDecodeCallback (jpeg_callback_args_t * p_args)
 {
     FSP_PARAMETER_NOT_USED(p_args);
-    BaseType_t context_switch;
 
     //
     // Get status
     //
     g_jpeg_status = p_args->status;
+
+ #if EMWIN_CFG_RTOS == 2               // FreeRTOS
+    BaseType_t context_switch;
 
     //
     // Set JPEG semaphore
@@ -113,6 +122,9 @@ void _JPEGDecodeCallback (jpeg_callback_args_t * p_args)
     // Return to the highest priority available task
     //
     portYIELD_FROM_ISR(context_switch);
+ #else
+    _jpeg_done = 1;
+ #endif
 }
 
 /*********************************************************************
@@ -159,7 +171,18 @@ static void _FlushBitmap (void)
  */
 static int32_t _WaitForCallbackTimed (uint32_t TimeOut)
 {
+ #if EMWIN_CFG_RTOS == 2               // FreeRTOS
     return xSemaphoreTake(_SemaphoreJPEG, TimeOut) ? 0 : 1;
+ #else
+    while (!_jpeg_done && TimeOut--)
+    {
+        GUI_X_Delay(1);
+    }
+
+    _jpeg_done = 0;
+
+    return !TimeOut;
+ #endif
 }
 
 /*********************************************************************
@@ -176,7 +199,9 @@ static int32_t _WaitForCallbackTimed (uint32_t TimeOut)
 void JPEG_X_Init (JPEG_X_CONTEXT * pContext)
 {
     GUI_USE_PARA(pContext);
+ #if EMWIN_CFG_RTOS == 2               // FreeRTOS
     _SemaphoreJPEG = xSemaphoreCreateBinaryStatic(&_SemaphoreJPEG_Memory);
+ #endif
     GUI_JPEG_SetpfDrawEx(JPEG_X_Draw);
 }
 

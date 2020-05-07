@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -161,8 +165,8 @@ typedef enum e_fsp_err
     FSP_ERR_JPEG_UNSUPPORTED_PIXEL_FORMAT           = 1103, ///< Unprovided pixel format detected.
     FSP_ERR_JPEG_SOF_ACCURACY_ERROR                 = 1104, ///< SOF accuracy error: other than 8 detected.
     FSP_ERR_JPEG_DQT_ACCURACY_ERROR                 = 1105, ///< DQT accuracy error: other than 0 detected.
-    FSP_ERR_JPEG_COMPONENT_ERROR1                   = 1106, ///< Component error1: the number of SOF0 header components detected is other than 1,3,or 4.
-    FSP_ERR_JPEG_COMPONENT_ERROR2                   = 1107, ///< Component error2: the number of components differs between SOF0 header and SOS.
+    FSP_ERR_JPEG_COMPONENT_ERROR1                   = 1106, ///< Component error 1: the number of SOF0 header components detected is other than 1, 3, or 4.
+    FSP_ERR_JPEG_COMPONENT_ERROR2                   = 1107, ///< Component error 2: the number of components differs between SOF0 header and SOS.
     FSP_ERR_JPEG_SOF0_DQT_DHT_NOT_DETECTED          = 1108, ///< SOF0, DQT, and DHT not detected when SOS detected.
     FSP_ERR_JPEG_SOS_NOT_DETECTED                   = 1109, ///< SOS not detected: SOS not detected until EOI detected.
     FSP_ERR_JPEG_EOI_NOT_DETECTED                   = 1110, ///< EOI not detected (default)
@@ -203,10 +207,10 @@ typedef enum e_fsp_err
     FSP_ERR_BUFFER_RELEASED          = 2009,         ///< Buffer has been released
 
     /* Start of 2DG Driver specific */
-    FSP_ERR_D2D_ERROR_INIT      = 3000,              ///< Dave/2d has an error in the initialization
-    FSP_ERR_D2D_ERROR_DEINIT    = 3001,              ///< Dave/2d has an error in the initialization
-    FSP_ERR_D2D_ERROR_RENDERING = 3002,              ///< Dave/2d has an error in the rendering
-    FSP_ERR_D2D_ERROR_SIZE      = 3003,              ///< Dave/2d has an error in the rendering
+    FSP_ERR_D2D_ERROR_INIT      = 3000,              ///< D/AVE 2D has an error in the initialization
+    FSP_ERR_D2D_ERROR_DEINIT    = 3001,              ///< D/AVE 2D has an error in the initialization
+    FSP_ERR_D2D_ERROR_RENDERING = 3002,              ///< D/AVE 2D has an error in the rendering
+    FSP_ERR_D2D_ERROR_SIZE      = 3003,              ///< D/AVE 2D has an error in the rendering
 
     /* Start of ETHER Driver specific */
     FSP_ERR_ETHER_ERROR_NO_DATA              = 4000, ///< No Data in Receive buffer.
@@ -274,6 +278,10 @@ typedef enum e_fsp_err
     FSP_ERR_BLE_CONFIG_FAILED       = 90003,         ///< BLE device configuration failed
     FSP_ERR_BLE_PRF_ALREADY_ENABLED = 90004,         ///< BLE device Profile already enabled
     FSP_ERR_BLE_PRF_NOT_ENABLED     = 90005,         ///< BLE device not enabled
+
+    /* Start of SF_BLE_ABS specific */
+    FSP_ERR_BLE_ABS_INVALID_OPERATION = 91001,       ///< Invalid operation is executed.
+    FSP_ERR_BLE_ABS_NOT_FOUND         = 91002,       ///< Valid data or free space is not found.
 
     /* Start of Crypto specific (0x10000) @note Refer to sf_cryoto_err.h for Crypto error code. */
     FSP_ERR_CRYPTO_CONTINUE              = 0x10000,  ///< Continue executing function

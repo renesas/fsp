@@ -1,13 +1,17 @@
 /***********************************************************************************************************************
  * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * This software is supplied by Renesas Electronics America Inc. and may only be used with products of Renesas
- * Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  This software is protected under
- * all applicable laws, including copyright laws. Renesas reserves the right to change or discontinue this software.
- * THE SOFTWARE IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST
- * EXTENT PERMISSIBLE UNDER APPLICABLE LAW,DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE.
- * TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
  * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
@@ -402,7 +406,7 @@ static void acmplp_hardware_initialize (acmplp_instance_ctrl_t * const p_instanc
 
         /* Configure the input voltage to the comparator */
         R_ACMPLP->COMPSEL0 &= ACMPLP_COMPSEL_CH0_CLEAR;
-        R_ACMPLP->COMPSEL0  = (uint8_t) p_extend->input_voltage;
+        R_ACMPLP->COMPSEL0 |= (uint8_t) p_extend->input_voltage;
 
         /* Clear the COMPSEL1 to update the CiWDE bit
          * See note 5 & 6 in section "39.2.1 ACMPLP Mode Setting Register (COMPMDR)" of the RA4M1 manual R01UH0887EJ0100*/
@@ -443,7 +447,7 @@ static void acmplp_hardware_initialize (acmplp_instance_ctrl_t * const p_instanc
 
         /* Configure the input voltage to the comparator */
         R_ACMPLP->COMPSEL0 &= ACMPLP_COMPSEL_CH1_CLEAR;
-        R_ACMPLP->COMPSEL0  = (uint8_t) (p_extend->input_voltage << R_ACMPLP_COMPSEL0_IVCMP1_Pos);
+        R_ACMPLP->COMPSEL0 |= (uint8_t) (p_extend->input_voltage << R_ACMPLP_COMPSEL0_IVCMP1_Pos);
 
         compsel1  = R_ACMPLP->COMPSEL1;
         compsel1 &= ACMPLP_COMPSEL_CH1_CLEAR;
