@@ -13,6 +13,7 @@ Download the latest FSP version from the [Releases page](https://github.com/rene
 ### Supported RA MCU Kits
 - EK-RA2A1
 - EK-RA4M1
+- EK-RA4W1
 - EK-RA6M1
 - EK-RA6M2
 - EK-RA6M3
@@ -20,7 +21,11 @@ Download the latest FSP version from the [Releases page](https://github.com/rene
 
 ### Setup Instructions
 
-#### If using FSP with e2 studio
+#### For existing users that are using FSP with e² studio
+
+If you have already installed a previous FSP release that included e² studio then you can download the packs separately. These are available for download under the Assets section for each release. There is a zipped version, FSP_Packs_\<version\>.zip, and an installer version, FSP_Packs_\<version\>.exe.
+
+#### For new users that are using FSP with e² studio
 1.	Download the FSP with e² studio Installer from the Assets section of the [latest release](https://github.com/renesas/fsp/releases).
 2.	Run the installer. This will install the e² studio tool, FSP packs, GCC toolchain and other tools required to use this software. No additional installations are required.
 
