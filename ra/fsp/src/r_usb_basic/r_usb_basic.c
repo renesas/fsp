@@ -272,9 +272,9 @@ fsp_err_t R_USB_Callback (usb_callback_t * p_callback)
 {
     fsp_err_t err;
 #if (BSP_CFG_RTOS == 2)
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_callback)
- #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
     g_usb_apl_callback = p_callback;
     err                = FSP_SUCCESS;
 #else /* (BSP_CFG_RTOS == 2) */
@@ -307,10 +307,10 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ASSERT(p_cfg)
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     p_ctrl->module_number = p_cfg->module_number;
     p_ctrl->type          = (usb_class_t) (p_cfg->type & USB_VALUE_7FH);
@@ -319,7 +319,7 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
     g_usb_apl_callback = p_cfg->p_usb_apl_callback;
 #endif
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
 
     /* Argument Checking */
     FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number)), FSP_ERR_USB_PARAMETER)
@@ -384,7 +384,7 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
             break;
         }
     }
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
 #if (USB_CFG_DMA == USB_CFG_ENABLE)
     p_ctrl->p_transfer_tx = p_cfg->p_transfer_tx;
@@ -579,7 +579,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
     info.speed      = 0;
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(USB_NULL != p_api_ctrl)
 
     /* Argument Checking */
@@ -626,7 +626,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
         }
  #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     ret_code = usb_module_stop(p_ctrl->module_number);
     if (FSP_SUCCESS == ret_code)
@@ -734,7 +734,7 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
 
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(USB_NULL != p_api_ctrl)
 
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -743,7 +743,7 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
     FSP_ASSERT(destination)
     FSP_ERROR_RETURN(USB_ADDRESS5 >= destination, FSP_ERR_USB_PARAMETER)
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
     p_ctrl->type = (usb_class_t) (destination & USB_VALUE_7FH);
@@ -751,7 +751,7 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
     p_ctrl->device_address = destination;
 #endif                                 /* USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(!(((USB_NULL == p_buf)) || (USB_NULL == size)))
     FSP_ERROR_RETURN((((uint32_t) p_buf & 0x03) == 0), FSP_ERR_USB_PARAMETER)
 
@@ -774,7 +774,7 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
     FSP_ERROR_RETURN(USB_NULL != (g_usb_open_class[p_ctrl->module_number] &
                                   (1 << p_ctrl->type)),
                      FSP_ERR_USB_PARAMETER) /* Check USB Open device class */
-#endif  /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif  /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     (void) R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
     if (USB_STATUS_CONFIGURED == info.device_status)
@@ -831,7 +831,7 @@ fsp_err_t R_USB_Write (usb_ctrl_t * const p_api_ctrl, uint8_t const * const p_bu
 
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(USB_NULL != p_api_ctrl)
 
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -840,7 +840,7 @@ fsp_err_t R_USB_Write (usb_ctrl_t * const p_api_ctrl, uint8_t const * const p_bu
     FSP_ASSERT(destination)
     FSP_ERROR_RETURN(USB_ADDRESS5 >= destination, FSP_ERR_USB_PARAMETER)
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
     p_ctrl->type = (usb_class_t) (destination & USB_VALUE_7FH);
@@ -848,7 +848,7 @@ fsp_err_t R_USB_Write (usb_ctrl_t * const p_api_ctrl, uint8_t const * const p_bu
     p_ctrl->device_address = destination;
 #endif                                 /* USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(!((USB_NULL == p_buf) && (0 != size)))
     FSP_ERROR_RETURN((((uint32_t) p_buf & 0x03) == 0), FSP_ERR_USB_PARAMETER)
 
@@ -871,7 +871,7 @@ fsp_err_t R_USB_Write (usb_ctrl_t * const p_api_ctrl, uint8_t const * const p_bu
     FSP_ERROR_RETURN(USB_NULL != (g_usb_open_class[p_ctrl->module_number] &
                                   (1 << p_ctrl->type)),
                      FSP_ERR_USB_PARAMETER) /* Check USB Open device class */
-#endif  /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif  /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     (void) R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
     if (USB_STATUS_CONFIGURED == info.device_status)
@@ -916,7 +916,7 @@ fsp_err_t R_USB_Stop (usb_ctrl_t * const p_api_ctrl, usb_transfer_t direction, u
 
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(USB_NULL != p_api_ctrl)
 
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
@@ -925,7 +925,7 @@ fsp_err_t R_USB_Stop (usb_ctrl_t * const p_api_ctrl, usb_transfer_t direction, u
     FSP_ASSERT(destination)
     FSP_ERROR_RETURN(USB_ADDRESS5 >= destination, FSP_ERR_USB_PARAMETER)
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
     p_ctrl->type = (usb_class_t) (destination & USB_VALUE_7FH);
@@ -933,7 +933,7 @@ fsp_err_t R_USB_Stop (usb_ctrl_t * const p_api_ctrl, usb_transfer_t direction, u
     p_ctrl->device_address = destination;
 #endif                                 /* USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ERROR_RETURN(!((USB_TRANSFER_WRITE != direction) && (USB_TRANSFER_READ != direction)), FSP_ERR_USB_PARAMETER)
 
     /* Argument Checking */
@@ -956,7 +956,7 @@ fsp_err_t R_USB_Stop (usb_ctrl_t * const p_api_ctrl, usb_transfer_t direction, u
                        ((USB_CLASS_INTERNAL_PCDCC == (usb_class_internal_t) p_ctrl->type) &&
                         (USB_TRANSFER_READ == direction))),
                      FSP_ERR_USB_PARAMETER)
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     (void) R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
     FSP_ERROR_RETURN(USB_STATUS_CONFIGURED == info.device_status, FSP_ERR_USB_FAILED)
@@ -1013,7 +1013,7 @@ fsp_err_t R_USB_Suspend (usb_ctrl_t * const p_api_ctrl)
 
     FSP_ERROR_RETURN(USB_PERI != g_usb_usbmode, FSP_ERR_USB_FAILED)
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(USB_NULL != p_api_ctrl)
 
     /* Argument Checking */
@@ -1022,7 +1022,7 @@ fsp_err_t R_USB_Suspend (usb_ctrl_t * const p_api_ctrl)
   #if defined(BSP_BOARD_GROUP_RA2A1)
     FSP_ERROR_RETURN(USB_IP1 != p_ctrl->module_number, FSP_ERR_USB_PARAMETER)
   #endif
- #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
     p_ctrl->device_address = USB_DEVICEADDR;
@@ -1110,7 +1110,7 @@ fsp_err_t R_USB_Resume (usb_ctrl_t * const p_api_ctrl)
     usb_info_t info;
     info.device_status = 0;
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(USB_NULL != p_api_ctrl)
 
     /* Argument Checking */
@@ -1121,7 +1121,7 @@ fsp_err_t R_USB_Resume (usb_ctrl_t * const p_api_ctrl)
   #endif
 
     FSP_ERROR_RETURN(USB_PERI != g_usb_usbmode, FSP_ERR_USB_PARAMETER)
- #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     ret_code = R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
     FSP_ERROR_RETURN(USB_STATUS_SUSPEND == info.device_status, FSP_ERR_USB_NOT_SUSPEND)
@@ -1202,7 +1202,7 @@ fsp_err_t R_USB_VbusSet (usb_ctrl_t * const p_api_ctrl, uint16_t state)
 
     FSP_ERROR_RETURN(USB_PERI != g_usb_usbmode, FSP_ERR_USB_FAILED)
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(USB_NULL != p_api_ctrl)
 
     /* Argument Checking */
@@ -1213,7 +1213,7 @@ fsp_err_t R_USB_VbusSet (usb_ctrl_t * const p_api_ctrl, uint16_t state)
   #endif                               /* defined(BSP_BOARD_GROUP_RA2A1)  */
 
     FSP_ERROR_RETURN(!((USB_ON != state) && (USB_OFF != state)), FSP_ERR_USB_PARAMETER)
- #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     utr.ip  = p_ctrl->module_number;
     utr.ipp = usb_hstd_get_usb_ip_adr(utr.ip);
@@ -1249,7 +1249,7 @@ fsp_err_t R_USB_InfoGet (usb_ctrl_t * const p_api_ctrl, usb_info_t * p_info, uin
     FSP_PARAMETER_NOT_USED(destination);
 #endif                                 /* ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ASSERT(p_info)
 
@@ -1266,9 +1266,9 @@ fsp_err_t R_USB_InfoGet (usb_ctrl_t * const p_api_ctrl, usb_info_t * p_info, uin
  #if defined(BSP_BOARD_GROUP_RA2A1)
     FSP_ERROR_RETURN(USB_IP1 != p_ctrl->module_number, FSP_ERR_USB_PARAMETER)
  #endif                                        /* #if defined(BSP_BOARD_GROUP_RA2A1) */
-#else                                          /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#else                                          /* USB_CFG_PARAM_CHECKING_ENABLE */
     FSP_PARAMETER_NOT_USED(*p_ctrl);
-#endif                                         /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                         /* USB_CFG_PARAM_CHECKING_ENABLE */
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
     p_ctrl->device_address = destination;
@@ -1550,13 +1550,13 @@ fsp_err_t R_USB_PipeRead (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32
     usb_er_t   err;
     usb_info_t info;
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
- #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     p_ctrl->pipe = pipe_number;
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ERROR_RETURN((((USB_PIPE0 != p_ctrl->pipe)) || (USB_MAXPIPE_NUM < p_ctrl->pipe)), FSP_ERR_USB_PARAMETER)
 
     FSP_ASSERT(!((USB_NULL == p_buf) || (USB_NULL == size)))
@@ -1570,7 +1570,7 @@ fsp_err_t R_USB_PipeRead (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32
     FSP_ERROR_RETURN(USB_NULL != (g_usb_open_class[p_ctrl->module_number] &
                                   (1 << p_ctrl->type)),
                      FSP_ERR_USB_PARAMETER) /* Check USB Open device class */
- #endif /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     ret_code = R_USB_InfoGet(p_ctrl, &info);
     if (USB_STATUS_CONFIGURED == info.device_status)
@@ -1683,14 +1683,14 @@ fsp_err_t R_USB_PipeWrite (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint3
     usb_utr_t tran_data;
  #endif                                /* (BSP_CFG_RTOS == 2) */
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ERROR_RETURN((((uint32_t) p_buf & 0x03) == 0), FSP_ERR_USB_PARAMETER)
- #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     p_ctrl->pipe = pipe_number;
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
 
     /* Argument Checking */
     FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number) &&
@@ -1711,7 +1711,7 @@ fsp_err_t R_USB_PipeWrite (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint3
     FSP_ERROR_RETURN(USB_NULL == (g_usb_open_class[p_ctrl->module_number] &
                                   (1 << p_ctrl->type)),
                      FSP_ERR_USB_PARAMETER) /* Check USB Open device class */
- #endif                                     /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                     /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     ret_code = R_USB_InfoGet(p_ctrl, &info);
     if (USB_STATUS_CONFIGURED == info.device_status)
@@ -1807,9 +1807,9 @@ fsp_err_t R_USB_PipeStop (usb_ctrl_t * const p_api_ctrl, uint8_t pipe_number)
     fsp_err_t  ret_code = FSP_ERR_USB_FAILED;
     usb_info_t info;
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
- #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
     usb_utr_t utr;
@@ -1822,7 +1822,7 @@ fsp_err_t R_USB_PipeStop (usb_ctrl_t * const p_api_ctrl, uint8_t pipe_number)
  #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     p_ctrl->pipe = pipe_number;
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
 
     /* Argument Checking */
     FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number) &&
@@ -1836,7 +1836,7 @@ fsp_err_t R_USB_PipeStop (usb_ctrl_t * const p_api_ctrl, uint8_t pipe_number)
     FSP_ERROR_RETURN(USB_NULL != (g_usb_open_class[p_ctrl->module_number] &
                                   (1 << p_ctrl->type)),
                      FSP_ERR_USB_PARAMETER) /* Check USB Open device class */
- #endif /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     err = R_USB_InfoGet(p_ctrl, &info);
     FSP_ERROR_RETURN(USB_STATUS_CONFIGURED == info.device_status, FSP_ERR_USB_FAILED)
@@ -1890,7 +1890,7 @@ fsp_err_t R_USB_UsedPipesGet (usb_ctrl_t * const p_api_ctrl, uint16_t * p_pipe, 
     FSP_PARAMETER_NOT_USED(destination);
 #endif /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(!((USB_NULL == p_ctrl) || (USB_NULL == p_pipe)))
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
@@ -1906,7 +1906,7 @@ fsp_err_t R_USB_UsedPipesGet (usb_ctrl_t * const p_api_ctrl, uint16_t * p_pipe, 
  #if defined(BSP_BOARD_GROUP_RA2A1)
     FSP_ERROR_RETURN(USB_IP1 != p_ctrl->module_number, FSP_ERR_USB_PARAMETER)
  #endif                                /* defined(BSP_BOARD_GROUP_RA2A1)  */
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
     utr.ip                 = p_ctrl->module_number;
@@ -1973,15 +1973,15 @@ fsp_err_t R_USB_PipeInfoGet (usb_ctrl_t * const p_api_ctrl, usb_pipe_t * p_info,
     fsp_err_t result = FSP_ERR_ASSERTION;
     usb_utr_t utr;
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ASSERT(p_info)
     FSP_ASSERT(pipe_number)
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     p_ctrl->pipe = pipe_number;
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
 
     /* Argument Checking */
     FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number) &&
@@ -1993,7 +1993,7 @@ fsp_err_t R_USB_PipeInfoGet (usb_ctrl_t * const p_api_ctrl, usb_pipe_t * p_info,
  #if defined(BSP_BOARD_GROUP_RA2A1)
     FSP_ERROR_RETURN(!((USB_IP1 == p_ctrl->module_number) && (USB_HOST == g_usb_usbmode)), FSP_ERR_USB_PARAMETER)
  #endif
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     utr.ip = p_ctrl->module_number;
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
@@ -2114,12 +2114,12 @@ fsp_err_t R_USB_PullUp (usb_ctrl_t * const p_api_ctrl, uint8_t state)
 
     return FSP_ERR_USB_FAILED;
 #else                                  /* USB_CFG_MODE == USB_CFG_HOST */
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
 
     /* Argument Checking */
     FSP_ERROR_RETURN(!((USB_ON != state) && (USB_OFF != state)), FSP_ERR_USB_PARAMETER)
- #endif                                                                /* #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                                                /* #if USB_CFG_PARAM_CHECKING_ENABLE */
 
     FSP_ERROR_RETURN(!(USB_HOST == g_usb_usbmode), FSP_ERR_USB_FAILED) /* Support Peri only. */
 
@@ -2149,7 +2149,7 @@ fsp_err_t R_USB_HostControlTransfer (usb_ctrl_t * const p_api_ctrl,
     usb_er_t  err    = USB_ERROR;
     fsp_err_t result = FSP_ERR_USB_FAILED;
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ASSERT(p_setup)
     FSP_ASSERT(!((USB_NULL == p_buf) && (0 != p_setup->request_length)))
@@ -2157,7 +2157,7 @@ fsp_err_t R_USB_HostControlTransfer (usb_ctrl_t * const p_api_ctrl,
     FSP_ERROR_RETURN((((uint32_t) p_buf & 0x03) == 0), FSP_ERR_USB_PARAMETER)
 
     FSP_ERROR_RETURN(USB_MAXDEVADDR >= device_address, FSP_ERR_USB_PARAMETER)
-#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     p_ctrl->device_address       = device_address;
     p_ctrl->setup.request_type   = p_setup->request_type;
@@ -2207,11 +2207,11 @@ fsp_err_t R_USB_PeriControlDataGet (usb_ctrl_t * const p_api_ctrl, uint8_t * p_b
     usb_er_t  err    = USB_ERROR;
     fsp_err_t result = FSP_ERR_USB_FAILED;
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ASSERT(p_buf)
     FSP_ERROR_RETURN((((uint32_t) p_buf & 0x03) == 0), FSP_ERR_USB_PARAMETER)
-#endif                                        /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                        /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     err = usb_ctrl_read(p_ctrl, p_buf, size); /* Request Control transfer */
     if (err == USB_QOVR)
@@ -2247,11 +2247,11 @@ fsp_err_t R_USB_PeriControlDataSet (usb_ctrl_t * const p_api_ctrl, uint8_t * p_b
     usb_er_t  err    = USB_ERROR;
     fsp_err_t result = FSP_ERR_USB_FAILED;
 
-#if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+#if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ASSERT(p_buf)
     FSP_ERROR_RETURN((((uint32_t) p_buf & 0x03) == 0), FSP_ERR_USB_PARAMETER)
-#endif                                         /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+#endif                                         /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     err = usb_ctrl_write(p_ctrl, p_buf, size); /* Request Control transfer */
     if (err == USB_QOVR)
@@ -2287,9 +2287,9 @@ fsp_err_t R_USB_PeriControlStatusSet (usb_ctrl_t * const p_api_ctrl, usb_setup_s
 
     return FSP_ERR_USB_FAILED;
 #else                                  /* USB_CFG_MODE == USB_CFG_HOST */
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
- #endif /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     p_ctrl->status = (uint16_t) status;
 
@@ -2316,9 +2316,9 @@ fsp_err_t R_USB_RemoteWakeup (usb_ctrl_t * const p_api_ctrl)
     usb_utr_t             utr;
     uint16_t              ret_val;
 
- #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
+ #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
- #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
 
     utr.ip = p_ctrl->module_number;
 
