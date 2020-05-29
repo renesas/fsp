@@ -1,5 +1,12 @@
 var NAVTREEINDEX17 =
 {
+"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__rej__evt__t":[4,1,4,4,6],
+"group___l_p_m.html":[4,1,31],
+"group___l_p_m.html#ga1310be82317a24695db2816a6db55330":[4,1,31,2],
+"group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5":[4,1,31,1],
+"group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07":[4,1,31,4],
+"group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38":[4,1,31,6],
+"group___l_p_m.html#gac40db5772f7a9d59b56df2ff71f060cb":[4,1,31,5],
 "group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319":[4,1,31,3],
 "group___l_p_m.html#structlpm__instance__ctrl__t":[4,1,31,0],
 "group___l_p_m___a_p_i.html":[4,2,22],
@@ -242,12 +249,5 @@ var NAVTREEINDEX17 =
 "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca0b8008cee644a875a386783ebb3f2e74":[4,2,23,7,6],
 "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca0bb1747e9be9c1cb09402c519a7be44c":[4,2,23,7,25],
 "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca269c8f77dee2e99fb7e37d253ed4a097":[4,2,23,7,22],
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca2a171125d262bb0f74f5d1fdba340219":[4,2,23,7,23],
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca34fe61981b55c67f75a10fa40b23a71d":[4,2,23,7,13],
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca35023b4e86753c1eee8c65a4cfcca455":[4,2,23,7,1],
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca443fed92ad21c3eddaa6234f61ccce98":[4,2,23,7,0],
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca59bb65cb5494fc7732a906781347e772":[4,2,23,7,10],
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca5eb5122d20b3547b6c66029fee6e97c1":[4,2,23,7,5],
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca7b0f4d367a9ee9e29d181e216dea8765":[4,2,23,7,20],
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca844c83da1f86ec48f44d7738ba414b69":[4,2,23,7,2]
+"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca2a171125d262bb0f74f5d1fdba340219":[4,2,23,7,23]
 };

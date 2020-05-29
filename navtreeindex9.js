@@ -1,5 +1,12 @@
 var NAVTREEINDEX9 =
 {
+"group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea7bf987185751192bc208fd008e45b2a2":[4,2,13,4,0],
+"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122a4a69b11865eb1f04c1e6726f34d32aeb":[4,2,13,6,1],
+"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122ac5d63c5121e9f1c56dd5677a1b920d55":[4,2,13,6,0],
+"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba2684a2689b58013359ba1808441acb6d":[4,2,13,5,3],
+"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba5cee7908e75732d124fc39dce354a124":[4,2,13,5,1],
+"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba6c5f40dcccd2e324a1121b1d71e55b0e":[4,2,13,5,0],
+"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfbaf2ebb34cc153d82857065c0ba8372144":[4,2,13,5,2],
 "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfbaf909885cf5d2e9a00a3be13e8be01a02":[4,2,13,5,4],
 "group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__api__t":[4,2,13,1],
 "group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t":[4,2,13,0],
@@ -242,12 +249,5 @@ var NAVTREEINDEX9 =
 "group___g_a_p___a_p_i.html#a681b9bfaa86e2d2d790ce8744e47b555":[4,1,4,0,2,2],
 "group___g_a_p___a_p_i.html#a685f848ef52d9653281c27db98a07ee1":[4,1,4,0,27,1],
 "group___g_a_p___a_p_i.html#a687ec46fb30d0ced9fd64c3feed0961a":[4,1,4,0,3,0],
-"group___g_a_p___a_p_i.html#a6a31e58b558dc14a37572a35bb728bd7":[4,1,4,0,10,1],
-"group___g_a_p___a_p_i.html#a6aaa0bda0bcbfdcd423b5353baf579de":[4,1,4,0,25,3],
-"group___g_a_p___a_p_i.html#a6b04c2cbd5fa4cc8945281b0512340c3":[4,1,4,0,46,3],
-"group___g_a_p___a_p_i.html#a6bac143e044647fe7fb8bd9a9835f572":[4,1,4,0,24,5],
-"group___g_a_p___a_p_i.html#a6bdf0f98e0cdcd6a0e160327d373fb88":[4,1,4,0,2,1],
-"group___g_a_p___a_p_i.html#a6cf87c8512934d2d6a1067a561928c10":[4,1,4,0,9,2],
-"group___g_a_p___a_p_i.html#a6cff6ff19bd20d3b0df5d3fd958666b1":[4,1,4,0,18,1],
-"group___g_a_p___a_p_i.html#a6e39fe7200fa30251f31fce1167b2e87":[4,1,4,0,3,3]
+"group___g_a_p___a_p_i.html#a6a31e58b558dc14a37572a35bb728bd7":[4,1,4,0,10,1]
 };

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.0</span>
+   &#160;<span id="projectnumber">Release v1.1.1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -550,73 +550,133 @@ The priority number of GATT Client callback function. </td></tr>
 <td class="fieldname">
 p_peer_address</td>
 <td class="fielddoc">
-Peer address. </td></tr>
+The remote device address.<br />
+If the p_peer_address parameter is not NULL, Direct Connectable Advertising is performed to the remote address. <br />
+If the p_peer_address parameter is NULL, Undirect Connectable Advertising is performed according to <br />
+the advertising filter policy specified by the filter parameter. </td></tr>
 <tr><td class="fieldtype">
 <a id="aa047fc1d5ba117feb584b60968f716df"></a>uint8_t *</td>
 <td class="fieldname">
 p_advertising_data</td>
 <td class="fielddoc">
-Advertising data. If p_advertising_data is specified as NULL, advertising data is not set. </td></tr>
+Advertising Data. <br />
+If the p_advertising_data is specified as NULL, Advertising Data is not included in the advertising PDU. </td></tr>
 <tr><td class="fieldtype">
 <a id="a267b7dc6b82c5deb36f061123a4d3361"></a>uint8_t *</td>
 <td class="fieldname">
 p_scan_response_data</td>
 <td class="fielddoc">
-Scan response data. If p_scan_response_data is specified as NULL, scan response data is not set. </td></tr>
+Scan Response Data. <br />
+If the p_scan_response_data is specified as NULL, Scan Response Data is not included in the advertising PDU. </td></tr>
 <tr><td class="fieldtype">
 <a id="aceb0d0f5219f668f7cb3f5f4cce528ec"></a>uint32_t</td>
 <td class="fieldname">
 fast_advertising_interval</td>
 <td class="fielddoc">
-Fast advertising interval. </td></tr>
+Advertising with the fast_advertising_interval parameter continues for the period specified <br />
+by the fast_period parameter.<br />
+Time(ms) = fast_advertising_interval * 0.625. <br />
+If the fast_period parameter is 0, this parameter is ignored.<br />
+Valid range is 0x00000020 - 0x00FFFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="a0bf4026c588d7df66eeaa89e89a0c77d"></a>uint32_t</td>
 <td class="fieldname">
 slow_advertising_interval</td>
 <td class="fielddoc">
-Slow advertising interval. </td></tr>
+After the elapse of the fast_period, advertising with the slow_advertising_interval parameter continues <br />
+for the period specified by the slow_advertising_interval parameter.<br />
+Time(ms) = slow_advertising_interval * 0.625. <br />
+If the slow_advertising_interval parameter is 0, this parameter is ignored.<br />
+Valid range is 0x00000020 - 0x00FFFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="aa60c5b227db005d12f08b230d33957a7"></a>uint16_t</td>
 <td class="fieldname">
 fast_advertising_period</td>
 <td class="fielddoc">
-Fast advertising period. </td></tr>
+The period which advertising with the fast_advertising_interval parameter continues for. <br />
+Time = duration * 10ms.<br />
+After the elapse of the fast_advertising_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped.<br />
+Valid range is 0x0000 - 0xFFFF. <br />
+If the fast_advertising_period parameter is 0x0000, advertising with the fast_advertising_interval parameter is not performed. </td></tr>
 <tr><td class="fieldtype">
 <a id="a4089b4f63cdb65248bae31b53072ace5"></a>uint16_t</td>
 <td class="fieldname">
 slow_advertising_period</td>
 <td class="fielddoc">
-Slow advertising period. </td></tr>
+The period which advertising with the slow_advertising_interval parameter continues for. Time = duration * 10ms. <br />
+After the elapse of the slow_advertising_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
+Valid range is 0x0000 - 0xFFFF. <br />
+If the slow_advertising_period parameter is 0x0000, the advertising continues. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7f7d1f671a851ece4facf1605ed9c23f"></a>uint16_t</td>
 <td class="fieldname">
 advertising_data_length</td>
 <td class="fielddoc">
-Advertising data length (in bytes). </td></tr>
+Advertising data length(byte). <br />
+Valid range is 0-31. <br />
+If the advertising_data_length is 0, Advertising Data is not included in the advertising PDU. </td></tr>
 <tr><td class="fieldtype">
 <a id="a8fea198319dffde4e58bde7eaea818c1"></a>uint16_t</td>
 <td class="fieldname">
 scan_response_data_length</td>
 <td class="fielddoc">
-Scan response data length (in bytes). </td></tr>
+Scan response data length (in bytes). <br />
+Scan Response Data(byte). <br />
+Valid range is 0-31. <br />
+If the scan_response_data_length is 0, Scan Response Data is not included in the advertising PDU. </td></tr>
 <tr><td class="fieldtype">
 <a id="adc2360bab7a643ef3b87480688713648"></a>uint8_t</td>
 <td class="fieldname">
 advertising_channel_map</td>
 <td class="fielddoc">
-Channel Map. </td></tr>
+The channel map used for the advertising packet transmission. <br />
+It is a bitwise OR of the following values.<br />
+</p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga363fedd67d5094e8849374e24092506f" title="Use 37 CH. ">BLE_GAP_ADV_CH_37(0x01)</a> </td><td align="left">Use 37 CH. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga6ae20f2ddea23255c21344c417b23c5c" title="Use 38 CH. ">BLE_GAP_ADV_CH_38(0x02)</a> </td><td align="left">Use 38 CH. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga9f93462459e29deb5f1ee4ae853675ef" title="Use 39 CH. ">BLE_GAP_ADV_CH_39(0x04)</a> </td><td align="left">Use 38 CH. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gad7210a9b041b1bf67a702ad158c6028e" title="Use 37 - 39 CH. ">BLE_GAP_ADV_CH_ALL(0x07)</a> </td><td align="left">Use 37 - 39 CH. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="ac6295a200ef37e0cd040fcc3406ff2fa"></a>uint8_t</td>
 <td class="fieldname">
 advertising_filter_policy</td>
 <td class="fielddoc">
-Advertising Filter Policy. </td></tr>
+Advertising filter policy. <br />
+If the p_peer_address parameter is NULL, the advertising is performed according to the advertising filter policy. <br />
+If the p_peer_address parameter is not NULL, this parameter is ignored. <br />
+</p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left">BLE_ABS_ADVERTISING_FILTER_ALLOW_ANY(0x00) </td><td align="left">Process scan and connection requests from all devices. </td></tr>
+<tr>
+<td align="left">BLE_ABS_ADVERTISING_FILTER_ALLOW_WHITE_LIST(0x01) </td><td align="left">Process scan and connection requests from only devices in the White List. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a620d8776cb88b066a2bf17117ff235e0"></a>uint8_t</td>
 <td class="fieldname">
 own_bluetooth_address_type</td>
 <td class="fielddoc">
-Own Bluetooth address type. </td></tr>
+Own Bluetooth address type. <br />
+ Select one of the following. </p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaf6e63e384a70bf085ad012ef48c38281">BLE_GAP_ADDR_PUBLIC(0x00)</a> </td><td align="left">Public Address </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">Resolvable Private Address. <br />
+ If the IRK of local device has not been registered in Resolving List, public address is used. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a7736a2335c51d2e7f5260258263c2d78"></a>uint8_t</td>
 <td class="fieldname">
@@ -652,61 +712,116 @@ padding </td></tr>
 <td class="fieldname">
 p_peer_address</td>
 <td class="fielddoc">
-Peer address. </td></tr>
+The remote device address. <br />
+If the p_addr parameter is not NULL, Direct Connectable Advertising is performed to the remote address. <br />
+If the p_addr parameter is NULL, Undirect Connectable Advertising is performed <br />
+according to the advertising filter policy specified by the filter parameter. </td></tr>
 <tr><td class="fieldtype">
 <a id="a459c623731815c6d350906be9359436e"></a>uint8_t *</td>
 <td class="fieldname">
 p_advertising_data</td>
 <td class="fielddoc">
-Advertising data. If p_advertising_data is specified as NULL, advertising data is not set. </td></tr>
+Advertising data. If p_adv_data is specified as NULL, advertising data is not set. </td></tr>
 <tr><td class="fieldtype">
 <a id="a70126a0241219b40414e7edf08bb72bd"></a>uint32_t</td>
 <td class="fieldname">
 fast_advertising_interval</td>
 <td class="fielddoc">
-Fast advertising interval. </td></tr>
+Advertising with the fast_advertising_interval parameter continues for <br />
+the period specified by the fast_advertising_period parameter. <br />
+Time(ms) = fast_advertising_interval * 0.625. <br />
+If the fast_advertising_period parameter is 0, this parameter is ignored. <br />
+Valid range is 0x00000020 - 0x00FFFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="a0a6e67ba6debdfbb031e17140c17f2cb"></a>uint32_t</td>
 <td class="fieldname">
 slow_advertising_interval</td>
 <td class="fielddoc">
-Slow advertising interval. </td></tr>
+After the elapse of the fast_advertising_period, advertising with the slow_advertising_interval parameter <br />
+continues for the period specified by the slow_advertising_period parameter. <br />
+Time(ms) = fast_advertising_interval * 0.625. <br />
+If the fast_advertising_period parameter is 0, this parameter is ignored. <br />
+Valid range is 0x00000020 - 0x00FFFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7ec4dfbd8ed04ebe41015f4d0ac3bb38"></a>uint16_t</td>
 <td class="fieldname">
 fast_advertising_period</td>
 <td class="fielddoc">
-Fast advertising period. </td></tr>
+The period which advertising with the fast_advertising_interval parameter continues for. <br />
+Time = duration * 10ms. <br />
+After the elapse of the fast_advertising_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
+Valid range is 0x0000 - 0xFFFF. <br />
+If the fast_advertising_period parameter is 0x0000, the fast_advertising_interval parameter is ignored. </td></tr>
 <tr><td class="fieldtype">
 <a id="ad7a6da96e6ca0d13892cc7aa1f2428bb"></a>uint16_t</td>
 <td class="fieldname">
 slow_advertising_period</td>
 <td class="fielddoc">
-Slow advertising period. </td></tr>
+The period which advertising with the slow_advertising_interval parameter continues for. <br />
+Time = duration * 10ms. <br />
+After the elapse of the slow_advertising_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
+Valid range is 0x0000 - 0xFFFF. <br />
+If the slow_advertising_period parameter is 0x0000, the advertising continues. </td></tr>
 <tr><td class="fieldtype">
 <a id="ae0be5b133d30b92c241b6515bc7b7830"></a>uint16_t</td>
 <td class="fieldname">
 advertising_data_length</td>
 <td class="fielddoc">
-Advertising data length (in bytes). </td></tr>
+Advertising data length (in bytes). <br />
+Valid range is 0-229. <br />
+If the adv_data_length is 0, Advertising Data is not included in the advertising PDU. </td></tr>
 <tr><td class="fieldtype">
 <a id="a59fca89dba9679b7612e7ad278e652b9"></a>uint8_t</td>
 <td class="fieldname">
 advertising_channel_map</td>
 <td class="fielddoc">
-Channel Map. </td></tr>
+The channel map used for the advertising packet transmission. <br />
+It is a bitwise OR of the following values. </p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga363fedd67d5094e8849374e24092506f" title="Use 37 CH. ">BLE_GAP_ADV_CH_37(0x01)</a> </td><td align="left">Use 37 CH. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga6ae20f2ddea23255c21344c417b23c5c" title="Use 38 CH. ">BLE_GAP_ADV_CH_38(0x02)</a> </td><td align="left">Use 38 CH. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga9f93462459e29deb5f1ee4ae853675ef" title="Use 39 CH. ">BLE_GAP_ADV_CH_39(0x04)</a> </td><td align="left">Use 38 CH. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gad7210a9b041b1bf67a702ad158c6028e" title="Use 37 - 39 CH. ">BLE_GAP_ADV_CH_ALL(0x07)</a> </td><td align="left">Use 37 - 39 CH. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a6f599f4754f776b61ba050d2b5c7b613"></a>uint8_t</td>
 <td class="fieldname">
 advertising_filter_policy</td>
 <td class="fielddoc">
-Advertising Filter Policy. </td></tr>
+Advertising filter policy. <br />
+If the p_peer_address parameter is NULL, the advertising is performed according to the advertising filter policy. <br />
+If the p_peer_address parameter is not NULL, this parameter is ignored. <br />
+</p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left">BLE_ABS_ADVERTISING_FILTER_ALLOW_ANY(0x00) </td><td align="left">Process scan and connection requests from all devices. </td></tr>
+<tr>
+<td align="left">BLE_ABS_ADVERTISING_FILTER_ALLOW_WHITE_LIST(0x01) </td><td align="left">Process scan and connection requests from only devices in the White List. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="ac8762071d7f70948eea90a8720b5ca01"></a>uint8_t</td>
 <td class="fieldname">
 own_bluetooth_address_type</td>
 <td class="fielddoc">
-Own Bluetooth address type. </td></tr>
+Own Bluetooth address type. Select one of the following. <br />
+</p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaf6e63e384a70bf085ad012ef48c38281">BLE_GAP_ADDR_PUBLIC(0x00)</a> </td><td align="left">Public Address </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">Resolvable Private Address. <br />
+ If the IRK of local device has not been registered in Resolving List, public address is used. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a38862ae563c53f26041bdf4ba76c1a86"></a>uint8_t</td>
 <td class="fieldname">
@@ -718,13 +833,36 @@ Own Bluetooth address. </td></tr>
 <td class="fieldname">
 primary_advertising_phy</td>
 <td class="fielddoc">
-Primary ADV PHY. </td></tr>
+Primary advertising PHY. <br />
+In this parameter, only 1M PHY and Coded PHY can be specified, and 2M PHY cannot be specified. <br />
+</p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga1fbdd0bde9e09e398a6056b5420f75e8" title="Use 1M PHY. ">BLE_GAP_ADV_PHY_1M(0x01)</a> </td><td align="left">Use 1M PHY as Primary Advertising PHY. <br />
+ When the adv_prop_type field is Legacy Advertising PDU type, this field shall be set to BLE_GAP_ADV_PHY_1M. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gab5bf4b5cf1883ac0b192a6292b5a7a09" title="Use Coded PHY. ">BLE_GAP_ADV_PHY_CD(0x03)</a> </td><td align="left">Use Coded PHY as Primary Advertising PHY. <br />
+ Coding scheme is configured by <a class="el" href="group___v_s___a_p_i.html#ga2d6f33cab97a873d8471fe52f33ed97d">R_BLE_VS_SetCodingScheme()</a>. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a50c297464a06c1c6b6ff725ebdba50f2"></a>uint8_t</td>
 <td class="fieldname">
 secondary_advertising_phy</td>
 <td class="fielddoc">
-Secondary ADV Max Skip. </td></tr>
+Secondary advertising Phy. Select one of the following. </p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga1fbdd0bde9e09e398a6056b5420f75e8" title="Use 1M PHY. ">BLE_GAP_ADV_PHY_1M(0x01)</a> </td><td align="left">Use 1M PHY as Secondary Advertising PHY. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gacd6807d43a9b5c898d6253a9e20962cc" title="Use 2M PHY. ">BLE_GAP_ADV_PHY_2M(0x02)</a> </td><td align="left">Use 2M PHY as Secondary Advertising PHY. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gab5bf4b5cf1883ac0b192a6292b5a7a09" title="Use Coded PHY. ">BLE_GAP_ADV_PHY_CD(0x03)</a> </td><td align="left">Use Coded PHY(S=8) as Secondary Advertising PHY. <br />
+ Coding scheme is configured by <a class="el" href="group___v_s___a_p_i.html#ga2d6f33cab97a873d8471fe52f33ed97d">R_BLE_VS_SetCodingScheme()</a>. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="ae582bf2de9337c297a12ca91ac11077c"></a>uint8_t</td>
 <td class="fieldname">
@@ -754,44 +892,79 @@ padding </td></tr>
 <td class="fieldname">
 p_peer_address</td>
 <td class="fielddoc">
-Peer address. <p>Peer address. </p>
-</td></tr>
+The remote device address. <br />
+If the p_peer_address parameter is not NULL, Direct Connectable Advertising is performed to the remote address. <br />
+If the p_peer_address parameter is NULL, Undirect Connectable Advertising is performed <br />
+according to the advertising filter policy specified by the filter parameter. </td></tr>
 <tr><td class="fieldtype">
 <a id="a3ac9061dce8abf995d0a734f8d8ff432"></a>uint8_t *</td>
 <td class="fieldname">
 p_advertising_data</td>
 <td class="fielddoc">
-Advertising data. If p_advertising_data is specified as NULL, advertising data is not set. </td></tr>
+Advertising data. If p_adv_data is specified as NULL, advertising data is not set. </td></tr>
 <tr><td class="fieldtype">
 <a id="ac92e4c17cabe8fca671db7a5c2bd95bd"></a>uint32_t</td>
 <td class="fieldname">
 advertising_interval</td>
 <td class="fielddoc">
-Advertising interval. </td></tr>
+Advertising with the advertising_interval parameter continues for the period specified by the duration parameter.<br />
+Time(ms) = advertising_interval * 0.625. <br />
+If the duration parameter is 0x0000, the advertising with the advertising_interval parameter continue. <br />
+Valid range is 0x00000020 - 0x00FFFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="afe73c4f7a21dbb26aaf70bc0f7a21377"></a>uint16_t</td>
 <td class="fieldname">
 advertising_duration</td>
 <td class="fielddoc">
-Advertising duration. </td></tr>
+The period which advertising with the advertising_interval parameter continues for. <br />
+Time = advertising_duration * 10ms.<br />
+After the elapse of the advertising_duration, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791ad5aa4042475ab2fb29a8a00b4e6e192b">BLE_GAP_EVENT_ADV_OFF</a> event notifies that the advertising has stopped. <br />
+Valid range is 0x0000 - 0xFFFF. <br />
+If the advertising_duration parameter is 0x0000, the advertising continues. </td></tr>
 <tr><td class="fieldtype">
 <a id="ad2eddff7ce35cea9ff55369a01d8f20f"></a>uint16_t</td>
 <td class="fieldname">
 advertising_data_length</td>
 <td class="fielddoc">
-Advertising data length (in bytes). </td></tr>
+Advertising data length (in bytes).<br />
+If the primary_advertising_phy parameter is <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga0a65defedf447cedd4296620694528cf">BLE_ABS_ADVERTISING_PHY_LEGACY(0x00)</a>, the valid range is 0-31. <br />
+If the primary_advertising_phy parameter is the other values, the valid range is 0-1650. <br />
+If the advertising_data_length parameter is 0, Advertising Data is not included in the advertising PDU. </td></tr>
 <tr><td class="fieldtype">
 <a id="a891a38a02d8113f1be25bee047efba1f"></a>uint8_t</td>
 <td class="fieldname">
 advertising_channel_map</td>
 <td class="fielddoc">
-Channel Map. </td></tr>
+The channel map used for the advertising packet transmission. <br />
+It is a bitwise OR of the following values. </p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga363fedd67d5094e8849374e24092506f" title="Use 37 CH. ">BLE_GAP_ADV_CH_37(0x01)</a> </td><td align="left">Use 37 CH. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga6ae20f2ddea23255c21344c417b23c5c" title="Use 38 CH. ">BLE_GAP_ADV_CH_38(0x02)</a> </td><td align="left">Use 38 CH. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga9f93462459e29deb5f1ee4ae853675ef" title="Use 39 CH. ">BLE_GAP_ADV_CH_39(0x04)</a> </td><td align="left">Use 38 CH. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gad7210a9b041b1bf67a702ad158c6028e" title="Use 37 - 39 CH. ">BLE_GAP_ADV_CH_ALL(0x07)</a> </td><td align="left">Use 37 - 39 CH. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="ad9cc941edfdea4a4aa871581d6a17845"></a>uint8_t</td>
 <td class="fieldname">
 own_bluetooth_address_type</td>
 <td class="fielddoc">
-Own Bluetooth address type. </td></tr>
+Own Bluetooth address type. Select one of the following. <br />
+</p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaf6e63e384a70bf085ad012ef48c38281">BLE_GAP_ADDR_PUBLIC(0x00)</a> </td><td align="left">Public Address </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">Resolvable Private Address. <br />
+ If the IRK of local device has not been registered in Resolving List, public address is used. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a2896b77fc4edb71758563b54f3d965e7"></a>uint8_t</td>
 <td class="fieldname">
@@ -803,13 +976,39 @@ Own Bluetooth address. </td></tr>
 <td class="fieldname">
 primary_advertising_phy</td>
 <td class="fielddoc">
-Primary ADV PHY. </td></tr>
+Primary advertising PHY. <br />
+In this parameter, only 1M PHY and Coded PHY can be specified, and 2M PHY cannot be specified. <br />
+</p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga0a65defedf447cedd4296620694528cf" title="Non-Connectable Legacy Advertising phy setting. ">BLE_ABS_ADVERTISING_PHY_LEGACY(0x00)</a> </td><td align="left">Use 1M PHY as Primary Advertising PHY for Non-Connectable Legacy Advertising. <br />
+ If Periodic Advertising is performed, this value shall not set to the adv_phy parameter. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga1fbdd0bde9e09e398a6056b5420f75e8" title="Use 1M PHY. ">BLE_GAP_ADV_PHY_1M(0x01)</a> </td><td align="left">Use 1M PHY as Primary Advertising PHY. <br />
+ When the adv_prop_type field is Legacy Advertising PDU type, this field shall be set to BLE_GAP_ADV_PHY_1M. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gab5bf4b5cf1883ac0b192a6292b5a7a09" title="Use Coded PHY. ">BLE_GAP_ADV_PHY_CD(0x03)</a> </td><td align="left">Use Coded PHY as Primary Advertising PHY. <br />
+ Coding scheme is configured by <a class="el" href="group___v_s___a_p_i.html#ga2d6f33cab97a873d8471fe52f33ed97d">R_BLE_VS_SetCodingScheme()</a>. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a2c32a344fb45fd9da0341dbb9a2156ed"></a>uint8_t</td>
 <td class="fieldname">
 secondary_advertising_phy</td>
 <td class="fielddoc">
-Secondary ADV Max Skip. </td></tr>
+Secondary advertising Phy. Select one of the following. </p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga1fbdd0bde9e09e398a6056b5420f75e8" title="Use 1M PHY. ">BLE_GAP_ADV_PHY_1M(0x01)</a> </td><td align="left">Use 1M PHY as Secondary Advertising PHY. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gacd6807d43a9b5c898d6253a9e20962cc" title="Use 2M PHY. ">BLE_GAP_ADV_PHY_2M(0x02)</a> </td><td align="left">Use 2M PHY as Secondary Advertising PHY. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gab5bf4b5cf1883ac0b192a6292b5a7a09" title="Use Coded PHY. ">BLE_GAP_ADV_PHY_CD(0x03)</a> </td><td align="left">Use Coded PHY(S=8) as Secondary Advertising PHY. <br />
+ Coding scheme is configured by <a class="el" href="group___v_s___a_p_i.html#ga2d6f33cab97a873d8471fe52f33ed97d">R_BLE_VS_SetCodingScheme()</a>. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a9713f797b30e762fea0c96263c43d59f"></a>uint8_t</td>
 <td class="fieldname">
@@ -851,13 +1050,17 @@ Periodic advertising data. If p_perd_adv_data is specified as NULL, periodic adv
 <td class="fieldname">
 periodic_advertising_interval</td>
 <td class="fielddoc">
-Periodic advertising interval. Time(ms) = perd_intv_min * 1.25. </td></tr>
+Periodic advertising interval. <br />
+Time(ms) = periodic_advertising_interval * 1.25. <br />
+Valid range is 0x0006 - 0xFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="aa8ff1ca8ea4c2dc028deeab1724e0407"></a>uint16_t</td>
 <td class="fieldname">
 periodic_advertising_data_length</td>
 <td class="fielddoc">
-Periodic advertising data length (in bytes). </td></tr>
+Periodic advertising data length (in bytes). <br />
+Valid range is 0 - 1650. <br />
+If the periodic_advertising_data_length is 0, Periodic Advertising Data is not included in the advertising PDU. </td></tr>
 </table>
 
 </div>
@@ -881,31 +1084,47 @@ Periodic advertising data length (in bytes). </td></tr>
 <td class="fieldname">
 fast_scan_interval</td>
 <td class="fielddoc">
-Fast scan interval. Interval(ms) = fast_scan_interval * 0.625. </td></tr>
+Fast scan interval. <br />
+Interval(ms) = fast_scan_interval * 0.625. <br />
+Valid range is 0x0004 - 0xFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7628d2f985b5b7cba1573b641b045db9"></a>uint16_t</td>
 <td class="fieldname">
 slow_scan_interval</td>
 <td class="fielddoc">
-Slow scan interval. Interval(ms) = slow_scan_interval * 0.625. </td></tr>
+Slow Scan interval. <br />
+Slow Scan interval(ms) = slow_scan_interval * 0.625. <br />
+Valid range is 0x0004 - 0xFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="a717c67b4bdd76053c9a2027261a638b4"></a>uint16_t</td>
 <td class="fieldname">
 fast_scan_window</td>
 <td class="fielddoc">
-Fast scan window. Window(ms) = fast_scan_window * 0.625. </td></tr>
+Fast Scan window. <br />
+Fast Scan window(ms) = fast_scan_window * 0.625. <br />
+Valid range is 0x0004 - 0xFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="a33a1c4fe7e79a568775beedd4f65dc57"></a>uint16_t</td>
 <td class="fieldname">
 slow_scan_window</td>
 <td class="fielddoc">
-Slow scan window. Window(ms) = slow_scan_window * 0.625. </td></tr>
+Slow Scan window. <br />
+Slow Scan window(ms) = slow_scan_window * 0.625. <br />
+Valid range is 0x0004 - 0xFFFF. </td></tr>
 <tr><td class="fieldtype">
 <a id="acc114c3751a0c9f034a22e50df3a58f7"></a>uint8_t</td>
 <td class="fieldname">
 scan_type</td>
 <td class="fielddoc">
-Scan type. </td></tr>
+Scan type. </p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga5c065921bac8d2a6108e930e16c5f4ce" title="Passive Scan. ">BLE_GAP_SCAN_PASSIVE(0x00)</a> </td><td align="left">Passive Scan. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gafada4216232197784d8d131a25cc8c97" title="Active Scan. ">BLE_GAP_SCAN_ACTIVE(0x01)</a> </td><td align="left">Active Scan. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a406ed7d187154c5385903e3c88cabf66"></a>uint8_t</td>
 <td class="fieldname">
@@ -935,55 +1154,106 @@ padding. </td></tr>
 <td class="fieldname">
 p_phy_parameter_1M</td>
 <td class="fielddoc">
-1M phy parameters for scan. </td></tr>
+Scan parameters for receiving the advertising packets in 1M PHY. <br />
+In case of not receiving the advertising packets in 1M PHY, this field is specified as NULL. <br />
+p_phy_parameter_1M or p_phy_parameter_coded field shall be set to scan parameters. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7f3a0d97eff54e5a36b8c2a38669e712"></a><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__scan__phy__parameter__t">ble_abs_scan_phy_parameter_t</a> *</td>
 <td class="fieldname">
 p_phy_parameter_coded</td>
 <td class="fielddoc">
-Coded phy parameters for scan. </td></tr>
+Scan parameters for receiving the advertising packets in Coded PHY. <br />
+In case of not receiving the advertising packets in Coded PHY, this field is specified as NULL. <br />
+p_phy_parameter_1M or p_phy_parameter_coded field shall be set to scan parameters. </td></tr>
 <tr><td class="fieldtype">
 <a id="a1145d8bc872dd0f52d6cba043878db1b"></a>uint8_t *</td>
 <td class="fieldname">
 p_filter_data</td>
 <td class="fielddoc">
-Filter data. </td></tr>
+Data for Advertising Data filtering. <br />
+The p_filter_data parameter is used for the advertising data in single advertising report. <br />
+The advertising data composed of multiple advertising reports is not filtered by this parameter. <br />
+If the p_filter_data parameter is specified as NULL, the filtering is not done. </td></tr>
 <tr><td class="fieldtype">
 <a id="a720e1811a9ea867d752d24e481729c37"></a>uint16_t</td>
 <td class="fieldname">
 fast_scan_period</td>
 <td class="fielddoc">
-Fast scan period (in sec). </td></tr>
+The period which scan with the fast scan interval/fast scan window continues for. <br />
+Time(ms) = fast_scan_period * 10. <br />
+Valid range is 0x0000 - 0xFFFF. <br />
+If the fast_scan_period parameter is 0x0000, scan with the fast scan interval/fast scan window is not performed. <br />
+After the elapse of the fast_scan_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791adaf4d3bebeb5c8e7f8042061472ea853">BLE_GAP_EVENT_SCAN_TO</a> event notifies that the scan has stopped. </td></tr>
 <tr><td class="fieldtype">
 <a id="a98d9e75c976d90dea9dece0123ed12d9"></a>uint16_t</td>
 <td class="fieldname">
 slow_scan_period</td>
 <td class="fielddoc">
-Slow scan period (in sec). </td></tr>
+The period which scan with the slow scan interval/slow scan window continues for. <br />
+Time = slow_scan_period * 10ms. <br />
+Valid range is 0x0000 - 0xFFFF. <br />
+If the slow_scan_period parameter is 0x0000, the scan continues. <br />
+After the elapse of the slow_scan_period, <a class="el" href="group___g_a_p___a_p_i.html#ggae2663e6d4f0cb98892400997e4479791adaf4d3bebeb5c8e7f8042061472ea853">BLE_GAP_EVENT_SCAN_TO</a> event notifies that the scan has stopped. </td></tr>
 <tr><td class="fieldtype">
 <a id="ad2ccfcf15b4dc1dd87d7443839622399"></a>uint16_t</td>
 <td class="fieldname">
 filter_data_length</td>
 <td class="fielddoc">
-Filter data length. </td></tr>
+The length of the data specified by the p_filter_data parameter. <br />
+Valid range is 0x0000-0x0010. <br />
+If the filter_data_length parameter is 0, the filtering is not done. </td></tr>
 <tr><td class="fieldtype">
 <a id="a501555d708a0c8398d912598487445ff"></a>uint8_t</td>
 <td class="fieldname">
 device_scan_filter_policy</td>
 <td class="fielddoc">
-Scan Filter Policy. </td></tr>
+Scan Filter Policy. Select one of the following. </p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gab53d509592cb3c9993f4edc71e325d40" title="Accept all advertising and scan response PDUs except directed advertising PDUs not addressed to local...">BLE_GAP_SCAN_ALLOW_ADV_ALL(0x00)</a> </td><td align="left">Accept all advertising and scan response PDUs except directed advertising PDUs not addressed to local device. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga6faf5c678879f323e1934da0de08b3e6" title="Accept only advertising and scan response PDUs from remote devices whose address is registered in the...">BLE_GAP_SCAN_ALLOW_ADV_WLST(0x01)</a> </td><td align="left">Accept only advertising and scan response PDUs from remote devices whose address is registered in the White List. <br />
+ Directed advertising PDUs which are not addressed to local device is ignored. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga06eb39bdfa05367800882f1377397792" title="Accept all advertising and scan response PDUs except directed advertising PDUs whose the target addre...">BLE_GAP_SCAN_ALLOW_ADV_EXCEPT_DIRECTED(0x02)</a> </td><td align="left">Accept all advertising and scan response PDUs except directed advertising PDUs whose the target address is identity address but doesn't address local device. However directed advertising PDUs whose the target address is the local resolvable private address are accepted. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaffc095c73712cb64849cba8d83f4ee3d" title="Accept all advertising and scan response PDUs.  The following are excluded. ">BLE_GAP_SCAN_ALLOW_ADV_EXCEPT_DIRECTED_WLST(0x03)</a> </td><td align="left">Accept all advertising and scan response PDUs. The following are excluded. <br />
+</td></tr>
+</table>
+<ul>
+<li>Advertising and scan response PDUs where the advertiser's identity address is not in the White List. <br />
+ </li>
+<li>Directed advertising PDUs whose the target address is identity address but doesn't address local device. However directed advertising PDUs whose the target address is the local resolvable private address are accepted. | </li>
+</ul>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a2a0e2e70352ff320d84f39f2bd93bdd6"></a>uint8_t</td>
 <td class="fieldname">
 filter_duplicate</td>
 <td class="fielddoc">
-Filter duplicates. </td></tr>
+Filter duplicates. <br />
+Maximum number of filtered devices is 8. <br />
+The 9th and subsequent devices are not filtered by this parameter. <br />
+</p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga3b631288b6a4fbd71cba210fd44c1a12" title="Duplicate filter disabled. ">BLE_GAP_SCAN_FILT_DUPLIC_DISABLE(0x00)</a> </td><td align="left">Duplicate filter disabled. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga5d816bfe5c9c25d2ea98f6c94b6f2a55" title="Duplicate filter enabled. ">BLE_GAP_SCAN_FILT_DUPLIC_ENABLE(0x01)</a> </td><td align="left">Duplicate filter enabled. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gae05180af9cccf10d61cbe13f2bcad52c" title="Duplicate filtering enabled, reset for each scan period. ">BLE_GAP_SCAN_FILT_DUPLIC_ENABLE_FOR_PERIOD(0x02)</a>) </td><td align="left">Duplicate filtering enabled, reset for each scan period. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="aedbe31e58f486dd5fd8df8ad5b2bd7a4"></a>uint8_t</td>
 <td class="fieldname">
 filter_ad_type</td>
 <td class="fielddoc">
-The AD type of the data specified by the p_filter_data parameter. </td></tr>
+The AD type of the data specified by the p_filter_data parameter.<br />
+The AD type identifier values are defined in Bluetooth SIG Assigned Number <br />
+(<a href="https://www.bluetooth.com/specifications/assigned-numbers">https://www.bluetooth.com/specifications/assigned-numbers</a>). </td></tr>
 <tr><td class="fieldtype">
 <a id="a01f73da78291ad9f909bf83cf6e48dee"></a>uint8_t</td>
 <td class="fieldname">
@@ -1013,19 +1283,24 @@ Padding. </td></tr>
 <td class="fieldname">
 connection_interval</td>
 <td class="fielddoc">
-Connection interval. Time(ms) = connection_interval * 1.25. </td></tr>
+Connection interval. <br />
+Time(ms) = connection_interval * 1.25. <br />
+Valid range is 0x0006 - 0x0C80. </td></tr>
 <tr><td class="fieldtype">
 <a id="af0677cf23c42fd6b39a6dd4fae000b67"></a>uint16_t</td>
 <td class="fieldname">
 connection_slave_latency</td>
 <td class="fielddoc">
-Slave latency. </td></tr>
+Slave latency. <br />
+Valid range is 0x0000 - 0x01F3. </td></tr>
 <tr><td class="fieldtype">
 <a id="a60076e3c3bed59417b975a5b267affb7"></a>uint16_t</td>
 <td class="fieldname">
 supervision_timeout</td>
 <td class="fielddoc">
-Supervision timeout. </td></tr>
+Supervision timeout. <br />
+Time(ms) = supervision_timeout * 10. <br />
+Valid range is 0x000A - 0x0C80. </td></tr>
 <tr><td class="fieldtype">
 <a id="a5e03abfab0d325177ecb5992639ffc78"></a>uint8_t</td>
 <td class="fieldname">
@@ -1055,37 +1330,56 @@ Padding. </td></tr>
 <td class="fieldname">
 p_connection_phy_parameter_1M</td>
 <td class="fielddoc">
-1M phy parameters for create connection. </td></tr>
+Connection interval, slave latency, supervision timeout for 1M PHY. <br />
+The p_connection_phy_parameter_1M is specified as NULL, a connection request is not sent with 1M PHY. </td></tr>
 <tr><td class="fieldtype">
 <a id="a556612658845833cdabdf36e61b121cf"></a><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__connection__phy__parameter__t">ble_abs_connection_phy_parameter_t</a> *</td>
 <td class="fieldname">
 p_connection_phy_parameter_2M</td>
 <td class="fielddoc">
-2M phy parameters for create connection. </td></tr>
+Connection interval, slave latency, supervision timeout for 2M PHY. <br />
+The p_connection_phy_parameter_2M is specified as NULL, a connection request is not sent with 2M PHY. </td></tr>
 <tr><td class="fieldtype">
 <a id="a162c2cd5d5b65d21158701b0720ad905"></a><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__connection__phy__parameter__t">ble_abs_connection_phy_parameter_t</a> *</td>
 <td class="fieldname">
 p_connection_phy_parameter_coded</td>
 <td class="fielddoc">
-Coded phy parameters for create connection. </td></tr>
+Connection interval, slave latency, supervision timeout for Coded PHY. <br />
+The p_connection_phy_parameter_coded is specified as NULL, a connection request is not sent with Coded PHY. </td></tr>
 <tr><td class="fieldtype">
 <a id="a65df6d3db816da335df8d0e1909621f6"></a><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__device__address__t">ble_device_address_t</a> *</td>
 <td class="fieldname">
 p_device_address</td>
 <td class="fielddoc">
-Remote device address. </td></tr>
+Address of the device to be connected. <br />
+If the filter field is <a class="el" href="group___g_a_p___a_p_i.html#ga54e2578f269da0d8866444d8d0799cef">BLE_GAP_INIT_FILT_USE_WLST(0x01)</a>, this parameter is ignored. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7373c1032f3d68c27b26f65eaf657de2"></a>uint8_t</td>
 <td class="fieldname">
 filter_parameter</td>
 <td class="fielddoc">
-The filter parameter specifies whether the White List is used or not. </td></tr>
+The filter field specifies whether the White List is used or not, when connecting with a remote device.<br />
+</p><table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga867a5b2baea6ebb94f38ac60cd39c09c" title="White List is not used. ">BLE_GAP_INIT_FILT_USE_ADDR(0x00)</a> </td><td align="left">White List is not used. <br />
+ The remote device to be connected is specified by the p_addr field is used. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga54e2578f269da0d8866444d8d0799cef" title="White List is used. ">BLE_GAP_INIT_FILT_USE_WLST(0x01)</a> </td><td align="left">White List is used. <br />
+ The remote device registered in White List is connected with local device. <br />
+ The p_addr field is ignored. </td></tr>
+</table>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="acf8c8ad5befb71c824b8ceece1854c39"></a>uint8_t</td>
 <td class="fieldname">
 connection_timeout</td>
 <td class="fielddoc">
-GAP Event parameters. This parameter differs in each GAP Event. </td></tr>
+The time(sec) to cancel the create connection request. <br />
+Valid range is 0 &lt;= connection_timeout &lt;= 10. <br />
+If the connection_timeout field is 0, the create connection request is not canceled. <br />
+. </td></tr>
 <tr><td class="fieldtype">
 <a id="aa760c366eabd54d7b2a5e1a5637d3bd4"></a>uint8_t</td>
 <td class="fieldname">
@@ -1668,7 +1962,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

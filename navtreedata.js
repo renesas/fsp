@@ -3,13 +3,19 @@ var NAVTREE =
   [ "RA Flexible Software Package Documentation", "index.html", [
     [ "Introduction", "index.html", [
       [ "Overview", "index.html#introduction-overview", null ],
-      [ "How to Read this Manual", "index.html#how-to-read", null ],
-      [ "Documentation Standard", "index.html#documentation-standard", null ]
+      [ "Using this Manual", "index.html#how-to-read", null ],
+      [ "Documentation Standard", "index.html#documentation-standard", null ],
+      [ "Introduction to FSP", "index.html#introduction-to-fsp", [
+        [ "Purpose", "index.html#purpose-fsp", null ],
+        [ "Quality", "index.html#quality-fsp", null ],
+        [ "Ease of Use", "index.html#ease-of-use-fsp", null ],
+        [ "Scalability", "index.html#scalability", null ],
+        [ "Build Time Configurations", "index.html#build-time-configurations", null ],
+        [ "e2 studio IDE", "index.html#e2-studio-ide", null ]
+      ] ]
     ] ],
     [ "Starting Development", "_s_t_a_r_t__d_e_v.html", [
-      [ "Starting Development Introduction", "_s_t_a_r_t__d_e_v.html#starting-development-introduction", [
-        [ "Getting Started with e2 studio and FSP", "_s_t_a_r_t__d_e_v.html#getting-started-with-e2-studio-and-fsp", null ]
-      ] ],
+      [ "Starting Development Introduction", "_s_t_a_r_t__d_e_v.html#starting-development-introduction", null ],
       [ "e2 studio User Guide", "_s_t_a_r_t__d_e_v.html#e2studio-user-guide", [
         [ "What is e2 studio?", "_s_t_a_r_t__d_e_v.html#what-is-e2studio", null ],
         [ "e2 studio Prerequisites", "_s_t_a_r_t__d_e_v.html#e2studio-prerequisites", [
@@ -26,11 +32,11 @@ var NAVTREE =
           [ "Selecting a Project Template", "_s_t_a_r_t__d_e_v.html#selecting-a-project-template", null ]
         ] ],
         [ "Configuring a Project", "_s_t_a_r_t__d_e_v.html#configuring-a-project", [
-          [ "Configuring the BSP with e2 studio", "_s_t_a_r_t__d_e_v.html#configuring-the-bsp-with-e2-studio", null ],
+          [ "Configuring the BSP", "_s_t_a_r_t__d_e_v.html#configuring-the-bsp", null ],
           [ "Configuring Clocks", "_s_t_a_r_t__d_e_v.html#configuring-clocks", null ],
           [ "Configuring Pins", "_s_t_a_r_t__d_e_v.html#configuring-pins", null ],
-          [ "Configuring Interrupts", "_s_t_a_r_t__d_e_v.html#configuring-interrupts", [
-            [ "Interrupts", "_s_t_a_r_t__d_e_v.html#interrupts", null ]
+          [ "Configuring Interrupts from the Stacks Tab", "_s_t_a_r_t__d_e_v.html#configuring-interrupts", [
+            [ "Creating Interrupts from the Interrupts Tab", "_s_t_a_r_t__d_e_v.html#interrupts", null ]
           ] ],
           [ "Viewing Event Links", "_s_t_a_r_t__d_e_v.html#viewing-event-links", null ]
         ] ],
@@ -49,7 +55,12 @@ var NAVTREE =
             [ "Information Icon", "_s_t_a_r_t__d_e_v.html#information-icon", null ],
             [ "Smart Manual", "_s_t_a_r_t__d_e_v.html#smart-manual", null ]
           ] ],
-          [ "RTOS-independent Applications", "_s_t_a_r_t__d_e_v.html#rtos-independent-applications", null ],
+          [ "HAL Modules in FSP: A Practcal Description", "_s_t_a_r_t__d_e_v.html#hal-modules-in-fsp", [
+            [ "Introduction to HAL Modules", "_s_t_a_r_t__d_e_v.html#introduction-to-hal-modules", null ],
+            [ "HAL Driver API Function Call Formats", "_s_t_a_r_t__d_e_v.html#hal-drvier-api-function-call-formats", null ],
+            [ "HAL Driver API Call Reference Information", "_s_t_a_r_t__d_e_v.html#hal-driver-api-call-reference-information", null ]
+          ] ],
+          [ "RTOS-Independent Applications", "_s_t_a_r_t__d_e_v.html#rtos-independent-applications", null ],
           [ "RTOS Applications", "_s_t_a_r_t__d_e_v.html#rtos-applications", null ]
         ] ],
         [ "Debugging the Project", "_s_t_a_r_t__d_e_v.html#debugging-the-project", null ],
@@ -87,6 +98,8 @@ var NAVTREE =
         [ "Configuring the Project with e2 studio", "_s_t_a_r_t__d_e_v.html#configuring-the-project-with-e2-studio", [
           [ "BSP Tab", "_s_t_a_r_t__d_e_v.html#bsp-tab", null ],
           [ "Clocks Tab", "_s_t_a_r_t__d_e_v.html#clocks-tab", null ],
+          [ "Interrupts Tab", "_s_t_a_r_t__d_e_v.html#interrupts-tab", null ],
+          [ "Event Links Tab", "_s_t_a_r_t__d_e_v.html#event-links-tab", null ],
           [ "Pins Tab", "_s_t_a_r_t__d_e_v.html#pins-tab", null ],
           [ "Stacks Tab", "_s_t_a_r_t__d_e_v.html#stacks-tab", null ],
           [ "Components Tab", "_s_t_a_r_t__d_e_v.html#components-tab", null ]
@@ -163,32 +176,32 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_o_p_y_r_i_g_h_t.html",
-"group___a_d_c___a_p_i.html#a00e0f32e4dfb5790b1dbdd3723dd38cf",
-"group___b_l_e___a_b_s___a_p_i.html#a30a829f4df49f4aa67e104e43f5de0ce",
-"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa8627dee9160a98ed1777e759ab743f10",
-"group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8ab095fd14f55d0af4a91dde1224b9e746",
-"group___c_a_n___a_p_i.html#a7127ea5ba7d0c09da9c5c7db44682b99",
-"group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a6ea738d1ad125361615052376516a53f",
-"group___c_t_s_u___a_p_i.html#ga3dfa24423192f44e90ac6b9fabf3ab89",
-"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__status__t",
-"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfbaf909885cf5d2e9a00a3be13e8be01a02",
-"group___g_a_p___a_p_i.html#a6e487249ac6ba2d7c772b386e82efc33",
-"group___g_a_p___a_p_i.html#gaa1ce01501d5a4527029a5b7f4f7d926b",
-"group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga06c83d68cb14df97024976d44b9bffaa",
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#gga451fe37541a881679ed7aa3eb2b270bbaf001546a1bac8b73e71709c5add958f3",
-"group___g_p_t.html#ggac737ceea25e4989a9afbf47969a71ba3a46d2a195d3c9ab5c94c949ce243fbc46",
-"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840ea1343ff3523554da01ec019f553fb623e",
-"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8aa104329a7773f8ffbed0f7fbad258e6d",
-"group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319",
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca848e4be7c2ed1c7f8f4af0f661c51189",
-"group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#unionfsp__pack__version__t",
-"group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#ga950aac820f1e35ca5592b021006f7a55",
-"group___s_d_a_d_c.html#ga77dc084a35379f65d2e2084e9a9c5806",
-"group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba9120fc7eb47bbc91b554b68089a873a7",
-"group___s_s_i.html#gga57213e467410bf6c3afe0c2338820260aecaf4e604947446acc0ca94f49f649b7",
-"group___u_a_r_t___a_p_i.html#a07bd6b0ef728681a3abee96ada2ea79d",
-"group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a371560d9894f862cdbc8bb288655a64e",
-"group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a4b045e0cf22adf889286b3184bb212bf"
+"group___a_d_c.html#structadc__channel__cfg__t",
+"group___b_l_e___a_b_s___a_p_i.html#a2c32a344fb45fd9da0341dbb9a2156ed",
+"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa812c61e1a23fee3b7d98b111e3ce1e10",
+"group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8aa953a980e96c1a820b5884990eb107bc",
+"group___c_a_n___a_p_i.html#a48fa3cf4c8c7e608c25ac8b907450096",
+"group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a19eb1089b736bac6fd1418f6c57ac39f",
+"group___c_t_s_u___a_p_i.html#ae84a8915368af6932e37de7d8b9d7df9",
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__correction__t",
+"group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea7bf987185751192bc208fd008e45b2a2",
+"group___g_a_p___a_p_i.html#a6aaa0bda0bcbfdcd423b5353baf579de",
+"group___g_a_p___a_p_i.html#ga9957d176d609a56a79c11d226e25d4d7",
+"group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ae7e3fae66b0c7236b7dd5cd6f01f2e2c",
+"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#gga451fe37541a881679ed7aa3eb2b270bba98418fa42a78b9f7cf66aeb04fb9e027",
+"group___g_p_t.html#ggac13c16f82e0b7cafcdb8eb6892722943a7d98bec67e920f1f0f8a98ac18aaa7b5",
+"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840ea0bce186d580888f2f38852144085d702",
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a57bd915b4be73b08e72d9a059b1e8ac0",
+"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__rej__evt__t",
+"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca34fe61981b55c67f75a10fa40b23a71d",
+"group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#ga6e7b87c8da88649d8760d1d6336da667",
+"group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#gabcc62bc0a0fa851a3e9d34003768280e",
+"group___s_d_a_d_c.html#ga4718f5548b17c10b99741a3115afcb17",
+"group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba454b1f2d9f47b4465b3e85da924e65ac",
+"group___s_s_i.html#gab2ee4147d471591bc86faf6ae993ccff",
+"group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__api__t",
+"group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302abf6fb86e88281a4c9d441b6c923b3111",
+"group___w_d_t___a_p_i.html#ga6b0f563a6311763e6204add68a018089"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

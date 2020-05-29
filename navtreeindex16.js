@@ -1,5 +1,12 @@
 var NAVTREEINDEX16 =
 {
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a57bd915b4be73b08e72d9a059b1e8ac0":[4,2,19,6,11],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a64d1b8cceeda767076613c173c787cf9":[4,2,19,6,2],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a66b5b7838b3c4b965e06bd030e78878a":[4,2,19,6,1],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a85992fdc078e24d3dd245eba9e2794a0":[4,2,19,6,3],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a90c6c9da7046edfa46f22a16994d13f9":[4,2,19,6,25],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a9717b9d492c8f817c8c0fc7eae8f1434":[4,2,19,6,17],
+"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a9885514f43d9d1c466ae689ef3608a9a":[4,2,19,6,27],
 "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8aa104329a7773f8ffbed0f7fbad258e6d":[4,2,19,6,26],
 "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8ab770cd7374758858d40474812845564d":[4,2,19,6,8],
 "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8ab8aa7fa82f2c3eb0ac80e20e8f918304":[4,2,19,6,24],
@@ -242,12 +249,5 @@ var NAVTREEINDEX16 =
 "group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__cf__disconn__evt__t":[4,1,4,4,5],
 "group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__cf__evt__data__t":[4,1,4,4,7],
 "group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__conn__req__param__t":[4,1,4,4,0],
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__conn__rsp__param__t":[4,1,4,4,1],
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__rej__evt__t":[4,1,4,4,6],
-"group___l_p_m.html":[4,1,31],
-"group___l_p_m.html#ga1310be82317a24695db2816a6db55330":[4,1,31,2],
-"group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5":[4,1,31,1],
-"group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07":[4,1,31,4],
-"group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38":[4,1,31,6],
-"group___l_p_m.html#gac40db5772f7a9d59b56df2ff71f060cb":[4,1,31,5]
+"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__conn__rsp__param__t":[4,1,4,4,1]
 };

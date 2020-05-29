@@ -1,5 +1,12 @@
 var NAVTREEINDEX8 =
 {
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__correction__t":[4,2,9,5],
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__gamma__correction__t":[4,2,9,7],
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__input__cfg__t":[4,2,9,9],
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__instance__t":[4,2,9,18],
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__layer__t":[4,2,9,11],
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__output__cfg__t":[4,2,9,10],
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__runtime__cfg__t":[4,2,9,14],
 "group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__status__t":[4,2,9,16],
 "group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__timing__t":[4,2,9,0],
 "group___d_i_s_p_l_a_y___a_p_i.html#structgamma__correction__t":[4,2,9,6],
@@ -242,12 +249,5 @@ var NAVTREEINDEX8 =
 "group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c":[4,2,13,3],
 "group___e_t_h_e_r___p_h_y___a_p_i.html#gaafbecb98180b1f07abe8449332b5a122":[4,2,13,6],
 "group___e_t_h_e_r___p_h_y___a_p_i.html#gaf227c12b47e90edc8ec5729bfccf9bfb":[4,2,13,5],
-"group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea72cae4de16169f3d9d11aa3436947232":[4,2,13,4,1],
-"group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea7bf987185751192bc208fd008e45b2a2":[4,2,13,4,0],
-"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122a4a69b11865eb1f04c1e6726f34d32aeb":[4,2,13,6,1],
-"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122ac5d63c5121e9f1c56dd5677a1b920d55":[4,2,13,6,0],
-"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba2684a2689b58013359ba1808441acb6d":[4,2,13,5,3],
-"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba5cee7908e75732d124fc39dce354a124":[4,2,13,5,1],
-"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfba6c5f40dcccd2e324a1121b1d71e55b0e":[4,2,13,5,0],
-"group___e_t_h_e_r___p_h_y___a_p_i.html#ggaf227c12b47e90edc8ec5729bfccf9bfbaf2ebb34cc153d82857065c0ba8372144":[4,2,13,5,2]
+"group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea72cae4de16169f3d9d11aa3436947232":[4,2,13,4,1]
 };
