@@ -363,7 +363,7 @@ typedef void (usb_callback_t)(void *);
 
 typedef struct st_usb_cfg
 {
-    usb_mode_t                  usb_mode;           ///< USB_HOST/USB_PERI
+    usb_mode_t                  usb_mode;           ///< USB_MODE_HOST/USB_MODE_PERI
     usb_speed_t                 usb_speed;          ///< USB speed (USB_HS/USB_FS/USB_LS)
     uint8_t                     module_number;      ///< USB module number (USB_IP0/USB_IP1)
     usb_class_t                 type;               ///< USB device class etc

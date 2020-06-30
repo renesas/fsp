@@ -401,7 +401,7 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
         case USB_STATUS_SUSPEND:
         case USB_STATUS_RESUME:
         {
-            if (USB_HOST == g_usb_usbmode)
+            if (USB_MODE_HOST == g_usb_usbmode)
             {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
                 (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data, USB_OFF);
@@ -419,7 +419,7 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
 
         case USB_STATUS_REQUEST_COMPLETE:
         {
-            if (USB_HOST == g_usb_usbmode)
+            if (USB_MODE_HOST == g_usb_usbmode)
             {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
                 (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data, USB_OFF);
@@ -557,7 +557,7 @@ fsp_err_t usb_cstd_rel_semaphore (usb_instance_ctrl_t * p_ctrl)
  ******************************************************************************/
 void usb_cstd_usb_task (uint8_t module_number)
 {
-    if (USB_HOST == g_usb_usbmode)
+    if (USB_MODE_HOST == g_usb_usbmode)
     {
         FSP_PARAMETER_NOT_USED(module_number);
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)

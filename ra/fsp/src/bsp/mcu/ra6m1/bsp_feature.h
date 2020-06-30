@@ -69,7 +69,7 @@
 #define BSP_FEATURE_ADC_MAX_RESOLUTION_BITS            (12U)
 #define BSP_FEATURE_ADC_SENSORS_EXCLUSIVE              (0U)
 #define BSP_FEATURE_ADC_SENSOR_MIN_SAMPLING_TIME       (4150U)
-#define BSP_FEATURE_ADC_TSN_CALIBRATION_AVAILABLE      (1U)
+#define BSP_FEATURE_ADC_TSN_CALIBRATION_AVAILABLE      (0U)
 #define BSP_FEATURE_ADC_TSN_CONTROL_AVAILABLE          (1U)
 #define BSP_FEATURE_ADC_TSN_SLOPE                      (4000)
 #define BSP_FEATURE_ADC_UNIT_0_CHANNELS                (0x1700EF) // 0 to 3, 5 to 7, 16 to 18, and 20 in unit 0 and 0 to 2, 5 to 7, 16 to 17 in unit 1
@@ -219,6 +219,8 @@
 #define BSP_FEATURE_SDHI_VALID_CHANNEL_MASK            (0x3U)
 
 #define BSP_FEATURE_SLCDC_MAX_NUM_SEG                  (0) // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE             (0) // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN        (0) // Feature not available on this MCU
 
 #define BSP_FEATURE_SPI_CLK                            (FSP_PRIV_CLOCK_PCLKA)
 #define BSP_FEATURE_SPI_HAS_BYTE_SWAP                  (1U)

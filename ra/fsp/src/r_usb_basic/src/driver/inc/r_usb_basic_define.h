@@ -140,10 +140,6 @@
 #endif
 
 /* H/W function type */
-#define USB_HOST                               ((uint16_t) 1U) /* Host mode */
-#define USB_PERI                               ((uint16_t) 2U) /* Peripheral mode */
-
-/* H/W function type */
 #define USB_BIT0                               ((uint16_t) 0x0001)
 #define USB_BIT1                               ((uint16_t) 0x0002)
 #define USB_BIT2                               ((uint16_t) 0x0004)

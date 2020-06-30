@@ -52,7 +52,7 @@ uint16_t hw_usb_read_syscfg (usb_utr_t * ptr)
 {
     uint16_t ret_code = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -130,7 +130,7 @@ void hw_usb_set_cnen (uint8_t usb_ip)
  ******************************************************************************/
 void hw_usb_clear_cnen (usb_utr_t * ptr)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP1 == ptr->ip)
@@ -159,7 +159,7 @@ void hw_usb_clear_cnen (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_set_hse (usb_utr_t * ptr)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP1 == ptr->ip)
@@ -191,7 +191,7 @@ void hw_usb_set_hse (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_clear_hse (usb_utr_t * ptr)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP1 == ptr->ip)
@@ -251,7 +251,7 @@ void hw_usb_set_dcfm (usb_utr_t * p_utr)
  ******************************************************************************/
 void hw_usb_clear_dcfm (usb_utr_t * ptr)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -303,7 +303,7 @@ void hw_usb_clear_drpd (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_set_usbe (usb_utr_t * ptr)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -336,7 +336,7 @@ void hw_usb_set_usbe (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_clear_usbe (usb_utr_t * ptr)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -391,7 +391,7 @@ void hw_usb_set_bcctrl (usb_utr_t * ptr, uint16_t data)
 {
     FSP_PARAMETER_NOT_USED(data);
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP1 == ptr->ip)
@@ -426,7 +426,7 @@ void hw_usb_clear_bcctrl (usb_utr_t * ptr, uint16_t data)
 {
     FSP_PARAMETER_NOT_USED(data);
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP1 == ptr->ip)
@@ -461,7 +461,7 @@ uint16_t hw_usb_read_syssts (usb_utr_t * ptr)
 {
     uint16_t result = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -498,7 +498,7 @@ uint16_t hw_usb_read_dvstctr (usb_utr_t * ptr)
 {
     uint16_t result = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -635,7 +635,7 @@ void hw_usb_clear_vbout (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_set_utst (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -675,7 +675,7 @@ uint32_t hw_usb_read_fifo32 (usb_utr_t * ptr, uint16_t pipemode)
 {
     uint32_t data = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         switch (pipemode)
@@ -752,7 +752,7 @@ uint32_t hw_usb_read_fifo32 (usb_utr_t * ptr, uint16_t pipemode)
  ******************************************************************************/
 void hw_usb_write_fifo32 (usb_utr_t * ptr, uint16_t pipemode, uint32_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         switch (pipemode)
@@ -830,7 +830,7 @@ uint16_t hw_usb_read_fifo16 (usb_utr_t * ptr, uint16_t pipemode)
 {
     uint16_t data = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         switch (pipemode)
@@ -992,7 +992,7 @@ void hw_usb_write_fifo16 (usb_utr_t * ptr, uint16_t pipemode, uint16_t data)
 {
     uint16_t ip = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP1 == ptr->ip)
@@ -1096,7 +1096,7 @@ void hw_usb_write_fifo8 (usb_utr_t * ptr, uint16_t pipemode, uint8_t data)
 {
     uint16_t ip = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP1 == ptr->ip)
@@ -1199,7 +1199,7 @@ static void * hw_usb_get_fifosel_adr (usb_utr_t * ptr, uint16_t pipemode)
 {
     void * p_reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         switch (pipemode)
@@ -1457,7 +1457,7 @@ void hw_usb_set_mbw (usb_utr_t * ptr, uint16_t pipemode, uint16_t data)
 
     p_reg = hw_usb_get_fifosel_adr(ptr, pipemode);
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         (*p_reg) = (uint16_t) ((*p_reg) & (~USB_MBW));
@@ -1558,7 +1558,7 @@ static void * hw_usb_get_fifoctr_adr (usb_utr_t * ptr, uint16_t pipemode)
 {
     void * p_reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         switch (pipemode)
@@ -1725,7 +1725,7 @@ void hw_usb_set_bclr (usb_utr_t * ptr, uint16_t pipemode)
  ******************************************************************************/
 void hw_usb_write_intenb (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -1761,7 +1761,7 @@ void hw_usb_write_intenb (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_set_intenb (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -1850,7 +1850,7 @@ void hw_usb_write_brdyenb (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_set_brdyenb (usb_utr_t * ptr, uint16_t pipeno)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -1885,7 +1885,7 @@ void hw_usb_set_brdyenb (usb_utr_t * ptr, uint16_t pipeno)
  ******************************************************************************/
 void hw_usb_clear_brdyenb (usb_utr_t * ptr, uint16_t pipeno)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -1941,7 +1941,7 @@ void hw_usb_write_nrdyenb (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_set_nrdyenb (usb_utr_t * ptr, uint16_t pipeno)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -1976,7 +1976,7 @@ void hw_usb_set_nrdyenb (usb_utr_t * ptr, uint16_t pipeno)
  ******************************************************************************/
 void hw_usb_clear_nrdyenb (usb_utr_t * ptr, uint16_t pipeno)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2034,7 +2034,7 @@ void hw_usb_write_bempenb (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_set_bempenb (usb_utr_t * ptr, uint16_t pipeno)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2072,7 +2072,7 @@ void hw_usb_set_bempenb (usb_utr_t * ptr, uint16_t pipeno)
  ******************************************************************************/
 void hw_usb_clear_bempenb (usb_utr_t * ptr, uint16_t pipeno)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2108,7 +2108,7 @@ void hw_usb_set_sofcfg (usb_utr_t * ptr, uint16_t data)
 {
     FSP_PARAMETER_NOT_USED(data);
     FSP_PARAMETER_NOT_USED(*ptr);
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
@@ -2166,7 +2166,7 @@ uint16_t hw_usb_read_intsts (uint8_t usb_ip)
  ******************************************************************************/
 void hw_usb_write_intsts (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2251,7 +2251,7 @@ void hw_usb_write_brdysts (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_clear_sts_brdy (usb_utr_t * ptr, uint16_t pipeno)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2307,7 +2307,7 @@ void hw_usb_write_nrdy_sts (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_clear_status_nrdy (usb_utr_t * ptr, uint16_t pipeno)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2362,7 +2362,7 @@ void hw_usb_write_bempsts (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_clear_status_bemp (usb_utr_t * ptr, uint16_t pipeno)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2397,7 +2397,7 @@ uint16_t hw_usb_read_frmnum (usb_utr_t * ptr)
 {
     uint16_t result = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2541,7 +2541,7 @@ uint16_t hw_usb_read_dcpcfg (usb_utr_t * ptr)
 {
     uint16_t result = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2577,7 +2577,7 @@ uint16_t hw_usb_read_dcpcfg (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_write_dcpcfg (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2612,7 +2612,7 @@ uint16_t hw_usb_read_dcpmaxp (usb_utr_t * ptr)
 {
     uint16_t result = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2648,7 +2648,7 @@ uint16_t hw_usb_read_dcpmaxp (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_write_dcpmxps (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2712,7 +2712,7 @@ uint16_t hw_usb_read_dcpctr (uint8_t usb_ip)
  ******************************************************************************/
 void hw_usb_write_pipesel (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2747,7 +2747,7 @@ uint16_t hw_usb_read_pipecfg (usb_utr_t * ptr)
 {
     uint16_t result = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2783,7 +2783,7 @@ uint16_t hw_usb_read_pipecfg (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_write_pipecfg (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2820,7 +2820,7 @@ void hw_usb_write_pipecfg (usb_utr_t * ptr, uint16_t data)
 void hw_usb_write_pipebuf (usb_utr_t * ptr, uint16_t data)
 {
     FSP_PARAMETER_NOT_USED(data);
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP1 == ptr->ip)
@@ -2854,7 +2854,7 @@ uint16_t hw_usb_read_pipebuf (usb_utr_t * ptr)
 {
     uint16_t result = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2900,7 +2900,7 @@ uint16_t hw_usb_read_pipemaxp (usb_utr_t * ptr)
 {
     uint16_t result = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2936,7 +2936,7 @@ uint16_t hw_usb_read_pipemaxp (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_write_pipemaxp (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -2970,7 +2970,7 @@ void hw_usb_write_pipemaxp (usb_utr_t * ptr, uint16_t data)
  ******************************************************************************/
 void hw_usb_write_pipeperi (usb_utr_t * ptr, uint16_t data)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3009,7 +3009,7 @@ uint16_t hw_usb_read_pipectr (usb_utr_t * ptr, uint16_t pipeno)
     volatile uint16_t * p_reg;
     volatile uint16_t   reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3105,7 +3105,7 @@ void hw_usb_set_csclr (usb_utr_t * ptr, uint16_t pipeno)
 {
     volatile uint16_t * p_reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3144,7 +3144,7 @@ void hw_usb_set_aclrm (usb_utr_t * ptr, uint16_t pipeno)
 {
     volatile uint16_t * p_reg;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3185,7 +3185,7 @@ void hw_usb_clear_aclrm (usb_utr_t * ptr, uint16_t pipeno)
 {
     volatile uint16_t * p_reg;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3225,7 +3225,7 @@ void hw_usb_set_sqclr (usb_utr_t * ptr, uint16_t pipeno)
 {
     volatile uint16_t * p_reg;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3287,7 +3287,7 @@ void hw_usb_set_sqset (usb_utr_t * ptr, uint16_t pipeno)
 {
     volatile uint16_t * p_reg;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3349,7 +3349,7 @@ void hw_usb_set_pid (usb_utr_t * ptr, uint16_t pipeno, uint16_t data)
 {
     volatile uint16_t * p_reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3417,7 +3417,7 @@ void hw_usb_clear_pid (usb_utr_t * ptr, uint16_t pipeno, uint16_t data)
 {
     volatile uint16_t * p_reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3477,7 +3477,7 @@ void hw_usb_set_trenb (usb_utr_t * ptr, uint16_t pipeno)
 {
     volatile uint16_t * p_reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3516,7 +3516,7 @@ void hw_usb_clear_trenb (usb_utr_t * ptr, uint16_t pipeno)
 {
     volatile uint16_t * p_reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3556,7 +3556,7 @@ void hw_usb_set_trclr (usb_utr_t * ptr, uint16_t pipeno)
 {
     volatile uint16_t * p_reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3596,7 +3596,7 @@ void hw_usb_write_pipetrn (usb_utr_t * ptr, uint16_t pipeno, uint16_t data)
 {
     volatile uint16_t * p_reg = 0;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP0 == ptr->ip)
@@ -3637,7 +3637,7 @@ uint16_t hw_usb_read_bcctrl (usb_utr_t * ptr)
 
     FSP_PARAMETER_NOT_USED(*ptr);
  #if defined(BSP_MCU_GROUP_RA6M3)
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
   #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
         if (USB_CFG_IP1 == ptr->ip)

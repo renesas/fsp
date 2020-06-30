@@ -48741,6 +48741,25 @@ FMS2,1,0:
               </enumeratedValues>
             </field>
             <field>
+              <name>MSTPC2</name>
+              <description>Parallel Data Capture Module Stop</description>
+              <lsb>2</lsb>
+              <msb>2</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Cancel the module-stop state</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Enter the module-stop state</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
               <name>MSTPC1</name>
               <description>CRC Calculator Module Stop</description>
               <lsb>1</lsb>
@@ -60138,7 +60157,7 @@ FMS2,1,0:
           </fields>
         </register>
         <register>
-          <dim>38</dim>
+          <dim>64</dim>
           <dimIncrement>0x1</dimIncrement>
           <name>SEG[%s]</name>
           <description>LCD Display Data Array</description>

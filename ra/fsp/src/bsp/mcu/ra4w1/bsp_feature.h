@@ -204,9 +204,9 @@
 #define BSP_FEATURE_OPAMP_MIN_WAIT_TIME_HS_US          (13U)
 #define BSP_FEATURE_OPAMP_MIN_WAIT_TIME_LP_US          (650U)                                // This information comes from the Electrical Characteristics chapter of the hardware manual.
 #define BSP_FEATURE_OPAMP_MIN_WAIT_TIME_MS_US          (0xFFFFU)                             // Middle speed mode not supported
-#define BSP_FEATURE_OPAMP_VARIANT_CHANNEL_MASK         (0xFU)
+#define BSP_FEATURE_OPAMP_VARIANT_CHANNEL_MASK         (0x4U)
 #define BSP_FEATURE_OPAMP_HAS_SWITCHES                 (0U)
-#define BSP_FEATURE_OPAMP_HAS_THIRD_CHANNEL            (1U)
+#define BSP_FEATURE_OPAMP_HAS_MIDDLE_SPEED             (0U)
 #define BSP_FEATURE_OPAMP_TRIM_CAPABLE                 (0U)
 #define BSP_FEATURE_OPAMP_BASE_ADDRESS                 (1U)
 
@@ -222,6 +222,8 @@
 #define BSP_FEATURE_SDHI_VALID_CHANNEL_MASK            (0) // Feature not available on this MCU
 
 #define BSP_FEATURE_SLCDC_MAX_NUM_SEG                  (54U)
+#define BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE             (0U)
+#define BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN        (0U)
 
 #define BSP_FEATURE_SPI_CLK                            (FSP_PRIV_CLOCK_PCLKA)
 #define BSP_FEATURE_SPI_HAS_BYTE_SWAP                  (1U)

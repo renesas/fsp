@@ -556,7 +556,7 @@ size_t mbedtls_rsa_get_len( const mbedtls_rsa_context *ctx )
 
 
   #if defined(MBEDTLS_GENPRIME)
-#if 0 // The HW accelerated version is defined in rsa_alt_process.c
+#ifdef FSP_NOT_DEFINED // The HW accelerated version is defined in rsa_alt_process.c
 /*
  * Generate an RSA keypair
  *
@@ -671,7 +671,7 @@ cleanup:
 
     return( 0 );
 }
-#endif //0
+#endif // FSP_NOT_DEFINED
 #endif /* MBEDTLS_GENPRIME */
 
 /*
@@ -756,7 +756,7 @@ int mbedtls_rsa_check_pub_priv( const mbedtls_rsa_context *pub,
 /*
  * Do an RSA public key operation
  */
-#if 0 // The HW accelerated version is defined in rsa_alt_process.c
+#ifdef FSP_NOT_DEFINED // The HW accelerated version is defined in rsa_alt_process.c
 int mbedtls_rsa_public( mbedtls_rsa_context *ctx,
                 const unsigned char *input,
                 unsigned char *output )
@@ -803,7 +803,7 @@ cleanup:
 
     return( 0 );
 }
-#endif //0
+#endif // FSP_NOT_DEFINED
 /*
  * Generate or update blinding values, see section 10 of:
  *  KOCHER, Paul C. Timing attacks on implementations of Diffie-Hellman, RSA,
@@ -864,7 +864,7 @@ cleanup:
  * single trace.
  */
 #define RSA_EXPONENT_BLINDING 28
-#if 0 // The HW accelerated version is defined in rsa_alt_process.c
+#ifdef FSP_NOT_DEFINED // The HW accelerated version is defined in rsa_alt_process.c
 /*
  * Do an RSA private key operation
  */
@@ -1094,7 +1094,7 @@ cleanup:
 
     return( 0 );
 }
-#endif //0
+#endif // FSP_NOT_DEFINED
 #if defined(MBEDTLS_PKCS1_V21)
 /**
  * Generate and apply the MGF1 operation (from PKCS#1 v2.1) to a buffer.

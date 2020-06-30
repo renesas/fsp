@@ -86,7 +86,7 @@
     (b)[(i) + 3] = (unsigned char) ( ( (n) >> 24 ) & 0xFF );    \
     }
   #endif
-#if 0
+#ifdef FSP_NOT_DEFINED
 #if defined(MBEDTLS_PADLOCK_C) &&                      \
     ( defined(MBEDTLS_HAVE_X86) || defined(MBEDTLS_PADLOCK_ALIGN16) )
 static int aes_padlock_ace = -1;
@@ -517,7 +517,7 @@ static void aes_gen_tables( void )
 
 #endif /* MBEDTLS_AES_FEWER_TABLES */
 
-#endif //0
+#endif // FSP_NOT_DEFINED
 
 void mbedtls_aes_init( mbedtls_aes_context *ctx )
 {
@@ -553,7 +553,7 @@ void mbedtls_aes_xts_free( mbedtls_aes_xts_context *ctx )
 }
 #endif /* MBEDTLS_CIPHER_MODE_XTS */
 
-#if 0
+#ifdef FSP_NOT_DEFINED
 /*
  * AES key schedule (encryption)
  */
@@ -1018,7 +1018,8 @@ int mbedtls_internal_aes_decrypt( mbedtls_aes_context *ctx,
     return( 0 );
 }
 #endif /* !MBEDTLS_AES_DECRYPT_ALT */
-#endif 
+#endif // FSP_NOT_DEFINED
+
 #if !defined(MBEDTLS_DEPRECATED_REMOVED)
 void mbedtls_aes_decrypt( mbedtls_aes_context *ctx,
                           const unsigned char input[16],

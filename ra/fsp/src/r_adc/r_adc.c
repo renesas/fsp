@@ -73,8 +73,6 @@
 /* Stabilization time when BGR is enabled */
 #define ADC_BGR_STABILIZATION_DELAY_US              (150U)
 
-#define ADC_PRV_VREFAMPCNT_BGR_VREFADCG_MASK        (0x16U)
-
 #define ADC_PRV_ADCSR_ADST_TRGE_MASK                (R_ADC0_ADCSR_ADST_Msk | R_ADC0_ADCSR_TRGE_Msk)
 #define ADC_PRV_ADCSR_CLEAR_ADST_TRGE               (~ADC_PRV_ADCSR_ADST_TRGE_MASK)
 
@@ -1088,18 +1086,21 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
 #endif
 
 #if BSP_FEATURE_ADC_HAS_VREFAMPCNT
-    uint32_t vrefampcnt = 0;
 
-    /* Configure Reference Voltage controls
-     * Reference section "32.6 Selecting Reference Voltage" in the RA2A1 manual R01UH0888EJ0100. */
-    vrefampcnt = (uint32_t) (p_cfg_extend->adc_vref_control & ADC_PRV_VREFAMPCNT_BGR_VREFADCG_MASK);
-    p_instance_ctrl->p_reg->VREFAMPCNT = (uint8_t) vrefampcnt;
+    /* If VREFADC is selected as the high-potential reference voltage. */
+    if (ADC_VREF_CONTROL_VREFH != p_cfg_extend->adc_vref_control)
+    {
+        /* Configure Reference Voltage controls
+         * Reference section "32.6 Selecting Reference Voltage" in the RA2A1 manual R01UH0888EJ0100. */
+        p_instance_ctrl->p_reg->VREFAMPCNT =
+            (uint8_t) (p_cfg_extend->adc_vref_control &
+                       (R_ADC0_VREFAMPCNT_BGREN_Msk | R_ADC0_VREFAMPCNT_VREFADCG_Msk));
 
-    R_BSP_SoftwareDelay(ADC_BGR_STABILIZATION_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+        R_BSP_SoftwareDelay(ADC_BGR_STABILIZATION_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
 
-    /* Enable Over current detection and VREFADC output */
-    p_instance_ctrl->p_reg->VREFAMPCNT = (uint8_t) (vrefampcnt | R_ADC0_VREFAMPCNT_VREFADCEN_Msk |
-                                                    R_ADC0_VREFAMPCNT_OLDETEN_Msk);
+        /* Enable Over current detection and VREFADC output */
+        p_instance_ctrl->p_reg->VREFAMPCNT = (uint8_t) (p_cfg_extend->adc_vref_control);
+    }
 #endif
 }
 

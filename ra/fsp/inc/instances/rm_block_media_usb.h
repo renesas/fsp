@@ -67,8 +67,7 @@ typedef struct st_rm_block_media_usb_instance_ctrl
     uint32_t           sector_size_bytes;
     uint8_t            device_address;
     bool               initialized;
-    uint8_t            p_read_buffer[USB_HMSC_SECTOR_SIZE]  __attribute__((__aligned__(4)));
-    uint8_t            p_write_buffer[USB_HMSC_SECTOR_SIZE] __attribute__((__aligned__(4)));
+    uint8_t            p_read_buffer[USB_HMSC_SECTOR_SIZE] __attribute__((__aligned__(4)));
     EventGroupHandle_t event_group;
 } rm_block_media_usb_instance_ctrl_t;
 

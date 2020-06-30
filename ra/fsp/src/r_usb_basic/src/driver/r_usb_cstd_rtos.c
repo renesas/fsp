@@ -1255,7 +1255,7 @@ void usb_cstd_pipe_msg_re_forward (uint16_t ip_no, uint16_t pipe_no)
     err = xQueueReceive(g_pipe_hdl[ip_no][pipe_no], (void *) &mess, (TickType_t) (0));
     if ((pdTRUE == err) && (NULL != (mess)))
     {
-        if (USB_HOST == g_usb_usbmode)
+        if (USB_MODE_HOST == g_usb_usbmode)
         {
             id = USB_HCD_MBX;
         }
@@ -1296,7 +1296,7 @@ void usb_cstd_pipe0_msg_re_forward (uint16_t ip_no)
         err = xQueueReceive(g_pipe0_hdl[ip_no][dev_addr], (void *) &mess, (TickType_t) (0));
         if ((pdTRUE == err) && (NULL != (mess)))
         {
-            if (USB_HOST == g_usb_usbmode)
+            if (USB_MODE_HOST == g_usb_usbmode)
             {
                 id = USB_HCD_MBX;
             }

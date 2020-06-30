@@ -42,9 +42,9 @@
  */
 
 #if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
+ #include "mbedtls/config.h"
 #else
-#include MBEDTLS_CONFIG_FILE
+ #include MBEDTLS_CONFIG_FILE
 #endif
 
 /**
@@ -2401,6 +2401,7 @@ cleanup:
 
 #endif /* ECP_MONTGOMERY */
 
+#ifdef FSP_NOT_DEFINED // Alternate HW implementation in ecp_alt_process.c
 /*
  * Restartable multiplication R = m * P
  */
@@ -2466,8 +2467,8 @@ cleanup:
 
     return( ret );
 }
+#endif // FSP_NOT_DEFINED
 
-#if 0 // Alternate HW implementation in ecp_alt_process.c
 /*
  * Multiplication R = m * P
  */
@@ -2481,7 +2482,7 @@ int mbedtls_ecp_mul( mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
     ECP_VALIDATE_RET( P   != NULL );
     return( mbedtls_ecp_mul_restartable( grp, R, m, P, f_rng, p_rng, NULL ) );
 }
-#endif // 0
+
 #if defined(ECP_SHORTWEIERSTRASS)
 /*
  * Check that an affine point is valid as a public key,
@@ -2758,7 +2759,7 @@ int mbedtls_ecp_check_privkey( const mbedtls_ecp_group *grp,
     return( MBEDTLS_ERR_ECP_BAD_INPUT_DATA );
 }
 
-#if 0 // Alternate HW implementation in ecp_alt_process.c
+#ifdef FSP_NOT_DEFINED // Alternate HW implementation in ecp_alt_process.c
 /*
  * Generate a private key
  */
@@ -2849,7 +2850,7 @@ cleanup:
     return( ret );
 }
 
-#endif // 0
+#endif // FSP_NOT_DEFINED
 /*
  * Generate a keypair with configurable base point
  */

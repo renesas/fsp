@@ -1010,7 +1010,7 @@ static int _DrawLineAA (int x0, int y0, int x1, int y1)
  *
  *       _DrawArcAA
  */
-static int _DrawArcAA (int x0, int y0, int rx, int ry, int a0, int a1)
+static int _DrawArcAA (int x0, int y0, int rx, int ry, long a0, long a1)
 {
     uint32_t         Mode;
     int32_t          ret;
@@ -1027,11 +1027,9 @@ static int _DrawArcAA (int x0, int y0, int rx, int ry, int a0, int a1)
     Mode    = _GetD2Mode();
     while (a1 < a0)
     {
-        a1 += 360;
+        a1 += 360000;
     }
 
-    a0 *= 1000;
-    a1 *= 1000;
     nx0 = GUI__SinHQ(a0);
     ny0 = GUI__CosHQ(a0);
     nx1 = GUI__SinHQ(a1);

@@ -125,7 +125,9 @@ typedef enum e_lpm_snooze_cancel
     LPM_SNOOZE_CANCEL_SOURCE_SCI0_RXI_OR_ERI = ELC_EVENT_SCI0_RXI_OR_ERI,   ///< SCI0 receive error
     LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE    = ELC_EVENT_DTC_COMPLETE,      ///< DTC transfer completion
     LPM_SNOOZE_CANCEL_SOURCE_DOC_DOPCI       = ELC_EVENT_DOC_INT,           ///< Data operation circuit interrupt
-    LPM_SNOOZE_CANCEL_SOURCE_CTSU_CTSUFN     = ELC_EVENT_CTSU_END,          ///< CTSU measurement end interrupt
+#if BSP_FEATURE_CTSU_VERSION
+    LPM_SNOOZE_CANCEL_SOURCE_CTSU_CTSUFN = ELC_EVENT_CTSU_END,              ///< CTSU measurement end interrupt
+#endif
 } lpm_snooze_cancel_t;
 
 /** DTC Enable in Snooze Mode */

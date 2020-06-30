@@ -65,6 +65,8 @@ typedef enum e_rm_block_media_event
     RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE = 1U << 2, ///< Read, write, or erase completed
     RM_BLOCK_MEDIA_EVENT_ERROR              = 1U << 3, ///< Media inserted event
     RM_BLOCK_MEDIA_EVENT_POLL_STATUS        = 1U << 4, ///< Poll @ref rm_block_media_api_t::statusGet for write/erase completion
+    RM_BLOCK_MEDIA_EVENT_MEDIA_SUSPEND      = 1U << 5, ///< Media suspended event
+    RM_BLOCK_MEDIA_EVENT_MEDIA_RESUME       = 1U << 6, ///< Media resumed event
 } rm_block_media_event_t;
 
 /** Block media device information supported by the instance */

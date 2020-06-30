@@ -194,7 +194,7 @@ void usb_cstd_dma_send_start (usb_utr_t * ptr, uint16_t pipe, uint16_t useport)
         }
         else
         {
-            if (USB_HOST == g_usb_usbmode)
+            if (USB_MODE_HOST == g_usb_usbmode)
             {
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
                 usb_hstd_buf_to_fifo(ptr, pipe, useport);
@@ -205,7 +205,7 @@ void usb_cstd_dma_send_start (usb_utr_t * ptr, uint16_t pipe, uint16_t useport)
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
                 usb_pstd_buf_to_fifo(pipe, useport, ptr);
  #endif                                /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
-            } /* if (USB_HOST == g_usb_usbmode) */
+            } /* if (USB_MODE_HOST == g_usb_usbmode) */
         } /* if (0U != dma_size) */
     } /* if (USB_NULL != ptr) */
 }
@@ -230,7 +230,7 @@ void usb_cstd_dma_rcv_start (usb_utr_t * ptr, uint16_t pipe, uint16_t useport)
     uint16_t  ch;
     uint16_t  trncnt;
 
-    if (g_usb_usbmode == USB_HOST)
+    if (g_usb_usbmode == USB_MODE_HOST)
     {
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         p_data_ptr = gp_usb_hstd_data_ptr[ptr->ip][pipe];
@@ -309,7 +309,7 @@ void usb_cstd_dfifo_end (usb_utr_t * ptr, uint16_t useport)
     uint16_t ip;
     uint16_t channel;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
         if (USB_CFG_IP0 == ptr->ip)
         {
@@ -328,7 +328,7 @@ void usb_cstd_dfifo_end (usb_utr_t * ptr, uint16_t useport)
     channel = usb_cstd_dma_ref_ch_no(ptr, useport);
     pipe    = g_usb_cstd_dma_pipe[ip][channel];
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
@@ -367,7 +367,7 @@ void usb_cstd_dma_driver (void)
         utr.ip            = (uint8_t) gs_usb_cstd_dma_int.buf[gs_usb_cstd_dma_int.rp].ip;
         utr.p_transfer_tx = gs_usb_cstd_dma_int.buf[gs_usb_cstd_dma_int.wp].p_cfg->p_transfer_tx;
         utr.p_transfer_rx = gs_usb_cstd_dma_int.buf[gs_usb_cstd_dma_int.wp].p_cfg->p_transfer_rx;
-        if (USB_HOST == g_usb_usbmode)
+        if (USB_MODE_HOST == g_usb_usbmode)
         {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
             utr.ipp = usb_hstd_get_usb_ip_adr(utr.ip);
@@ -476,7 +476,7 @@ void usb_cstd_dma_send_continue (usb_utr_t * ptr, uint16_t useport)
     channel = usb_cstd_dma_ref_ch_no(ptr, useport);
     pipe    = (uint8_t) g_usb_cstd_dma_pipe[ip][channel];
 
-    if (g_usb_usbmode == USB_HOST)
+    if (g_usb_usbmode == USB_MODE_HOST)
     {
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         p_data_cnt = &g_usb_hstd_data_cnt[ptr->ip][pipe];
@@ -529,7 +529,7 @@ void usb_cstd_dma_send_continue (usb_utr_t * ptr, uint16_t useport)
                 {
                     /* DMA transfer function end. call callback function */
 
-                    if (g_usb_usbmode == USB_HOST)
+                    if (g_usb_usbmode == USB_MODE_HOST)
                     {
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
                         usb_hstd_data_end(ptr, pipe, (uint16_t) USB_DATA_NONE);
@@ -594,7 +594,7 @@ void usb_cstd_dma_send_continue (usb_utr_t * ptr, uint16_t useport)
 
     if (true == cpu_write)
     {
-        if (USB_HOST == g_usb_usbmode)
+        if (USB_MODE_HOST == g_usb_usbmode)
         {
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
             g_usb_hstd_data_cnt[ptr->ip][pipe]  = (uint32_t) g_usb_cstd_dma_fraction_size[ip][channel]; /* fraction size(1-3) */
@@ -810,7 +810,7 @@ void usb_cstd_dma_send_complete (uint8_t ip_no, uint16_t use_port)
     }
 
  #if (BSP_CFG_RTOS == 2)
-    if (USB_HOST == g_usb_usbmode)
+    if (USB_MODE_HOST == g_usb_usbmode)
     {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         utr.ip  = ip_no;
@@ -854,7 +854,7 @@ void usb_cstd_dma_send_complete (uint8_t ip_no, uint16_t use_port)
     gs_usb_cstd_dma_int.buf[gs_usb_cstd_dma_int.wp].p_cfg = p_cfg;
 
     utr.ip = ip_no;
-    if (USB_HOST == g_usb_usbmode)
+    if (USB_MODE_HOST == g_usb_usbmode)
     {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         utr.ipp = usb_hstd_get_usb_ip_adr(utr.ip);

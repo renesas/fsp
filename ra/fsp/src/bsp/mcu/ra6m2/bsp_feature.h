@@ -221,6 +221,8 @@
 #define BSP_FEATURE_SDHI_VALID_CHANNEL_MASK            (0x3U)
 
 #define BSP_FEATURE_SLCDC_MAX_NUM_SEG                  (0) // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE             (0) // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN        (0) // Feature not available on this MCU
 
 #define BSP_FEATURE_SPI_CLK                            (FSP_PRIV_CLOCK_PCLKA)
 #define BSP_FEATURE_SPI_HAS_BYTE_SWAP                  (1U)

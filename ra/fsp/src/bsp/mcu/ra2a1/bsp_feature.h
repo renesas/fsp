@@ -177,7 +177,7 @@
 #define BSP_FEATURE_GPT_VALID_CHANNEL_MASK             (0x7F)
 #define BSP_FEATURE_OPAMP_VARIANT_CHANNEL_MASK         (0x7U)
 #define BSP_FEATURE_OPAMP_HAS_SWITCHES                 (1U)
-#define BSP_FEATURE_OPAMP_HAS_THIRD_CHANNEL            (0U)
+#define BSP_FEATURE_OPAMP_HAS_MIDDLE_SPEED             (1U)
 #define BSP_FEATURE_OPAMP_TRIM_CAPABLE                 (1U)
 #define BSP_FEATURE_OPAMP_BASE_ADDRESS                 (2U)
 
@@ -222,6 +222,8 @@
 #define BSP_FEATURE_SDHI_VALID_CHANNEL_MASK            (0) // Feature not available on this MCU
 
 #define BSP_FEATURE_SLCDC_MAX_NUM_SEG                  (0) // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE             (0) // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN        (0) // Feature not available on this MCU
 
 #define BSP_FEATURE_SPI_CLK                            (FSP_PRIV_CLOCK_PCLKB)
 #define BSP_FEATURE_SPI_HAS_BYTE_SWAP                  (1U)

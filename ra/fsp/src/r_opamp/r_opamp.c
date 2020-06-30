@@ -139,7 +139,8 @@ fsp_err_t R_OPAMP_Open (opamp_ctrl_t * const p_api_ctrl, opamp_cfg_t const * con
     /* Verify the control block has not already been initialized. */
     FSP_ERROR_RETURN(OPAMP_OPEN != p_ctrl->opened, FSP_ERR_ALREADY_OPEN);
 
- #if (BSP_FEATURE_OPAMP_HAS_THIRD_CHANNEL)
+/* If the MCU does not have middle speed */
+ #if (!BSP_FEATURE_OPAMP_HAS_MIDDLE_SPEED)
 
     /* This variant does not support middle speed mode. */
     FSP_ERROR_RETURN(OPAMP_MODE_MIDDLE_SPEED != ((opamp_extended_cfg_t *) p_cfg->p_extend)->mode,
@@ -152,20 +153,20 @@ fsp_err_t R_OPAMP_Open (opamp_ctrl_t * const p_api_ctrl, opamp_cfg_t const * con
     opamp_extended_cfg_t * p_cfg_extend = (opamp_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
     uint8_t amptrm_val = 0U;
+    uint8_t ampmc_val  = 0U;
 
+    /* Appropriately set the available channel based on the MCU */
     amptrm_val |= (uint8_t) p_cfg_extend->trigger_channel_0;
     amptrm_val |= (uint8_t) (p_cfg_extend->trigger_channel_1 << 2U);
     amptrm_val |= (uint8_t) (p_cfg_extend->trigger_channel_2 << 4U);
-
-    uint8_t ampmc_val = (uint8_t) (p_cfg_extend->mode << 6U);
-
-#if (BSP_FEATURE_OPAMP_HAS_THIRD_CHANNEL)
-
-    /* This variant has channel 3. */
     amptrm_val |= (uint8_t) (p_cfg_extend->trigger_channel_3 << 6U);
 
-    /* This variant only uses bit 7 for power mode. */
-    ampmc_val &= R_OPAMP_AMPMC_AMPSP_Msk;
+#if (BSP_FEATURE_OPAMP_HAS_MIDDLE_SPEED)
+    ampmc_val = (uint8_t) (p_cfg_extend->mode << 6U);
+#else
+
+    /* This variant only uses bit 7 for power mode. Clear 6th bit. */
+    ampmc_val = (uint8_t) (p_cfg_extend->mode << 6U) & R_OPAMP_AMPMC_AMPSP_Msk;
 #endif
 
     p_ctrl->trim_state = OPAMP_PRIV_TRIM_STATE_INVALID;

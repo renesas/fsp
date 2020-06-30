@@ -122,7 +122,7 @@ FSP_HEADER
 #define BSP_MSTP_REG_FSP_IP_SDADC      R_MSTP->MSTPCRD
 #define BSP_MSTP_BIT_FSP_IP_SDADC(channel)      (1U << (17U - channel));
 #define BSP_MSTP_REG_FSP_IP_DAC8       R_MSTP->MSTPCRD
-#define BSP_MSTP_BIT_FSP_IP_DAC8(channel)       (1U << (19U - channel));
+#define BSP_MSTP_BIT_FSP_IP_DAC8(channel)       (1U << (19U));
 #define BSP_MSTP_REG_FSP_IP_DAC        R_MSTP->MSTPCRD
 #define BSP_MSTP_BIT_FSP_IP_DAC(channel)        (1U << (20U));
 #define BSP_MSTP_REG_FSP_IP_TSN        R_MSTP->MSTPCRD

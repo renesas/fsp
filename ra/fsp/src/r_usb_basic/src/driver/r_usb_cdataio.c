@@ -260,7 +260,7 @@ usb_er_t usb_ctrl_read (usb_instance_ctrl_t * p_ctrl, uint8_t * buf, uint32_t si
     usb_utr_t tran_data;
   #endif                               /* #if (BSP_CFG_RTOS == 2) */
 
-    if (USB_HOST == g_usb_usbmode)
+    if (USB_MODE_HOST == g_usb_usbmode)
     {
   #if (BSP_CFG_RTOS == 2)
         p_tran_data = &tran_data;
@@ -292,7 +292,7 @@ usb_er_t usb_ctrl_read (usb_instance_ctrl_t * p_ctrl, uint8_t * buf, uint32_t si
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
     usb_utr_t tran_data;
 
-    if (USB_PERI == g_usb_usbmode)
+    if (USB_MODE_PERI == g_usb_usbmode)
     {
         if (USB_ON == g_usb_pstd_pipe0_request)
         {
@@ -324,7 +324,7 @@ usb_er_t usb_ctrl_write (usb_instance_ctrl_t * p_ctrl, uint8_t * buf, uint32_t s
     usb_utr_t tran_data;
   #endif                               /* #if (BSP_CFG_RTOS == 2) */
 
-    if (USB_HOST == g_usb_usbmode)
+    if (USB_MODE_HOST == g_usb_usbmode)
     {
   #if (BSP_CFG_RTOS == 2)
         p_tran_data = &tran_data;
@@ -360,7 +360,7 @@ usb_er_t usb_ctrl_write (usb_instance_ctrl_t * p_ctrl, uint8_t * buf, uint32_t s
 
     tran_data.ip = p_ctrl->module_number;
 
-    if (USB_PERI == g_usb_usbmode)
+    if (USB_MODE_PERI == g_usb_usbmode)
     {
         if ((USB_NULL == buf) && (USB_NULL == size))
         {

@@ -63,6 +63,8 @@ typedef enum e_rm_freertos_plus_fat_event
 {
     RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_REMOVED  = RM_BLOCK_MEDIA_EVENT_MEDIA_REMOVED,  ///< Media removed event.
     RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_INSERTED = RM_BLOCK_MEDIA_EVENT_MEDIA_INSERTED, ///< Media inserted event.
+    RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_SUSPEND  = RM_BLOCK_MEDIA_EVENT_MEDIA_SUSPEND,  ///< Media suspended event.
+    RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_RESUME   = RM_BLOCK_MEDIA_EVENT_MEDIA_RESUME,   ///< Media resumed event.
 } rm_freertos_plus_fat_event_t;
 
 typedef enum e_rm_freertos_plus_fat_type

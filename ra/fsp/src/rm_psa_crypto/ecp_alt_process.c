@@ -274,15 +274,17 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     return ret;
 }
 
-int mbedtls_ecp_mul (mbedtls_ecp_group * grp,
-                     mbedtls_ecp_point * R,
-                     const mbedtls_mpi * m,
-                     const mbedtls_ecp_point * P,
-                     int (* f_rng)(void *, unsigned char *, size_t),
-                     void * p_rng)
+int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
+                                 mbedtls_ecp_point * R,
+                                 const mbedtls_mpi * m,
+                                 const mbedtls_ecp_point * P,
+                                 int (* f_rng)(void *, unsigned char *, size_t),
+                                 void * p_rng,
+                                 mbedtls_ecp_restart_ctx * rs_ctx)
 {
     (void) f_rng;
     (void) p_rng;
+    (void) rs_ctx;
 
     ECP_VALIDATE_RET(grp != NULL);
     ECP_VALIDATE_RET(R != NULL);

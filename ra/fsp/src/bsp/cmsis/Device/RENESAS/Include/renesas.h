@@ -11652,7 +11652,7 @@ typedef struct                         /*!< (@ 0x40047000) R_MSTP Structure     
         {
             __IOM uint32_t MSTPC0  : 1; /*!< [0..0] CAC Module Stop                                                    */
             __IOM uint32_t MSTPC1  : 1; /*!< [1..1] CRC Calculator Module Stop                                         */
-            uint32_t               : 1;
+            __IOM uint32_t MSTPC2  : 1; /*!< [2..2] Parallel Data Capture Module Stop                                  */
             __IOM uint32_t MSTPC3  : 1; /*!< [3..3] Capacitive Touch Sensing Unit Module Stop                          */
             __IOM uint32_t MSTPC4  : 1; /*!< [4..4] Segment LCD Controller Module Stop                                 */
             uint32_t               : 8;
@@ -14233,13 +14233,13 @@ typedef struct                         /*!< (@ 0x40082000) R_SLCDC Structure    
 
     union
     {
-        __IOM uint8_t SEG[38];         /*!< (@ 0x00000100) LCD Display Data Array                                     */
+        __IOM uint8_t SEG[64];         /*!< (@ 0x00000100) LCD Display Data Array                                     */
 
         struct
         {
             __IOM uint8_t A : 4;       /*!< [3..0] A-Pattern Area                                                     */
             __IOM uint8_t B : 4;       /*!< [7..4] B-Pattern Area                                                     */
-        } SEG_b[38];
+        } SEG_b[64];
     };
 } R_SLCDC_Type;                        /*!< Size = 294 (0x126)                                                        */
 

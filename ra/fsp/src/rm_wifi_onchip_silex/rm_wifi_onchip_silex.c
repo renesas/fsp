@@ -1145,17 +1145,25 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
                                           WIFI_ONCHIP_SILEX_TIMEOUT_8SEC,
                                           WIFI_ONCHIP_SILEX_RETURN_OK);
 
-    rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+    if (FSP_SUCCESS != ret)
+    {
+        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
-    FSP_ERROR_RETURN(FSP_SUCCESS == ret, FSP_ERR_WIFI_FAILED);
+        return FSP_ERR_WIFI_FAILED;
+    }
 
     do
     {
         /* test for end of list */
         p_results[idx].cSSID[0] = '\0';
-        if (strncmp(ptr, "ssid =", 6) != 0)
+        int32_t test_ssid = strncmp(ptr, "ssid =", 6);
+        if (0 != test_ssid)
         {
-            break;                     // end of list
+            if(0 == idx)
+            {
+                ret = FSP_ERR_WIFI_FAILED; // Could not find first access point entry
+            }
+            break;
         }
 
         /* SSID */
@@ -1166,7 +1174,11 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
 
         // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
         err = sscanf(ptr, string_build, p_results[idx].cSSID);
-        FSP_ERROR_RETURN(1 == err, FSP_ERR_WIFI_FAILED);
+        if(1 != err)
+        {
+            ret = FSP_ERR_WIFI_FAILED;
+            break;
+        }
 
         /* Advance string pointer to next section of scan info */
         ptr = strchr(ptr, '\n');
@@ -1176,7 +1188,8 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
         }
         else
         {
-            return FSP_ERR_WIFI_FAILED;
+            ret = FSP_ERR_WIFI_FAILED;
+            break;
         }
 
         /* BSSID */
@@ -1194,6 +1207,11 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
                      &bssid2[4],
                      &bssid2[5]);
         FSP_ERROR_RETURN(6 == err, FSP_ERR_WIFI_FAILED);
+        if(6 != err)
+        {
+            ret = FSP_ERR_WIFI_FAILED;
+            break;
+        }
 
         /* copy the bssid data into result */
         for (int i = 0; i < wificonfigMAX_BSSID_LEN; i++)
@@ -1209,14 +1227,19 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
         }
         else
         {
-            return FSP_ERR_WIFI_FAILED;
+            ret = FSP_ERR_WIFI_FAILED;
+            break;
         }
 
         uint32_t temp_val;
 
         // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
         err = sscanf(ptr, "channel = %d\r", (int *) &temp_val);
-        FSP_ERROR_RETURN(1 == err, FSP_ERR_WIFI_FAILED);
+        if(1 != err)
+        {
+            ret = FSP_ERR_WIFI_FAILED;
+            break;
+        }
 
         p_results[idx].cChannel = (int8_t) temp_val;
 
@@ -1228,12 +1251,17 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
         }
         else
         {
-            return FSP_ERR_WIFI_FAILED;
+            ret = FSP_ERR_WIFI_FAILED;
+            break;
         }
 
         // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
         err = sscanf(ptr, "indicator = %d\r", (int *) &temp_val);
-        FSP_ERROR_RETURN(1 == err, FSP_ERR_WIFI_FAILED);
+        if(1 != err)
+        {
+            ret = FSP_ERR_WIFI_FAILED;
+            break;
+        }
 
         p_results[idx].cRSSI = (int8_t) temp_val;
 
@@ -1245,7 +1273,8 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
         }
         else
         {
-            return FSP_ERR_WIFI_FAILED;
+            ret = FSP_ERR_WIFI_FAILED;
+            break;
         }
 
         if (0 == strncmp(ptr, "security = NONE!", 16))
@@ -1260,7 +1289,8 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
             }
             else
             {
-                return FSP_ERR_WIFI_FAILED;
+                ret = FSP_ERR_WIFI_FAILED;
+                break;
             }
         }
         else
@@ -1273,7 +1303,8 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
             }
             else
             {
-                return FSP_ERR_WIFI_FAILED;
+                ret = FSP_ERR_WIFI_FAILED;
+                break;
             }
 
             if ('\r' != *(ptr))
@@ -1299,7 +1330,8 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
                 }
                 else
                 {
-                    return FSP_ERR_WIFI_FAILED;
+                    ret = FSP_ERR_WIFI_FAILED;
+                    break;
                 }
             }
         }
@@ -1314,9 +1346,12 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
         {
             break;
         }
+        
     } while (++idx < maxNetworks);
+    
+    rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
-    return FSP_SUCCESS;
+    return ret;
 }
 
 /*******************************************************************************************************************//**

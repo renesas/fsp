@@ -2241,6 +2241,7 @@ void usb_hstd_dummy_function (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 void usb_hstd_suspend_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
+    usb_cfg_t         * p_cfg;
 
     (void) data1;
     (void) data2;
@@ -2254,6 +2255,21 @@ void usb_hstd_suspend_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
  #if (BSP_CFG_RTOS == 2)
     ctrl.p_data = (void *) ptr->cur_task_hdl;
  #endif                                /* #if (BSP_CFG_RTOS == 2) */
+
+    if (ptr->ip)
+    {
+ #if defined(BSP_MCU_GROUP_RA6M3)
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
+ #else
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+ #endif
+    }
+    else
+    {
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+    }
+
+    ctrl.p_context = (void *) p_cfg->p_context;
 
     usb_set_event(USB_STATUS_SUSPEND, &ctrl);
 }
@@ -2273,6 +2289,7 @@ void usb_hstd_suspend_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 void usb_hstd_resume_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
+    usb_cfg_t         * p_cfg;
 
     (void) data1;
     (void) data2;
@@ -2287,8 +2304,23 @@ void usb_hstd_resume_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
     ctrl.p_data = (void *) ptr->cur_task_hdl;
  #endif                                /* #if (BSP_CFG_RTOS == 2) */
 
+    if (ptr->ip)
+    {
+ #if defined(BSP_MCU_GROUP_RA6M3)
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
+ #else
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+ #endif
+    }
+    else
+    {
+        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+    }
+
+    ctrl.p_context = (void *) p_cfg->p_context;
+
     usb_set_event(USB_STATUS_RESUME, &ctrl);
-}/* End of function usb_hstd_resume_complete */
+}                                      /* End of function usb_hstd_resume_complete */
 
 /******************************************************************************
  * Function Name  : usb_hstd_device_information

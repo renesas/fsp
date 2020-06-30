@@ -122,12 +122,21 @@ fsp_err_t R_SLCDC_Open (slcdc_ctrl_t * const p_ctrl, slcdc_cfg_t const * const p
                                 (p_cfg->time_slice << R_SLCDC_LCDM0_LDTY_Pos) +
                                 p_cfg->bias_method);
 
+#if BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
+
     /* Clear LCDM1 and set LCDVLM (if applicable) */
     R_SLCDC->LCDM1 = (BSP_CFG_MCU_VCC_MV > SLCDC_PRV_LCDM1_LCDVLM_THRESHOLD) ? 0U : 1U;
+#else
+
+    /* Clear LCDM1 */
+    R_SLCDC->LCDM1 = 0U;
+#endif
 
     /* Do clock operations required for SLCDC */
     err = r_slcdc_clock_operation(p_cfg);
     FSP_ERROR_RETURN((FSP_SUCCESS == err), err);
+
+#if BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
 
     /* Set default contrast */
     if (SLCDC_VOLT_INTERNAL == p_cfg->drive_volt_gen)
@@ -140,6 +149,7 @@ fsp_err_t R_SLCDC_Open (slcdc_ctrl_t * const p_ctrl, slcdc_cfg_t const * const p
         /* Non-boost modes must use the default setting for VLCD */
         R_SLCDC->VLCD = (uint8_t) SLCDC_PRV_VLCD_CONTRAST_OFFSET;
     }
+#endif
 
     /* Save a pointer to the config block */
     p_instance_ctrl->p_cfg = p_cfg;
@@ -242,11 +252,17 @@ fsp_err_t R_SLCDC_Start (slcdc_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(SLCDC_CLOSED != p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+#if BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
+
     /* Enable the voltage boost or capacitor split circuit. */
     if (SLCDC_VOLT_EXTERNAL != p_instance_ctrl->p_cfg->drive_volt_gen)
     {
         R_SLCDC->LCDM1_b.VLCON = 1;
     }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
 
     /* Start SLCDC output */
     R_SLCDC->LCDM1 = R_SLCDC->LCDM1 | SLCDC_PRV_LCDM1_SCOC_LCDON;
@@ -275,8 +291,11 @@ fsp_err_t R_SLCDC_Stop (slcdc_ctrl_t * const p_ctrl)
     /* Stop SLCDC output */
     R_SLCDC->LCDM1 = (uint8_t) (R_SLCDC->LCDM1 & (~(SLCDC_PRV_LCDM1_SCOC_LCDON)));
 
+#if BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
+
     /* Disable voltage circuit */
     R_SLCDC->LCDM1_b.VLCON = 0;
+#endif
 
     return FSP_SUCCESS;
 }
@@ -295,9 +314,16 @@ fsp_err_t R_SLCDC_Stop (slcdc_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_SLCDC_SetContrast (slcdc_ctrl_t * const p_ctrl, slcdc_contrast_t const contrast)
 {
+#if !BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(contrast);
+
+    /* Internal voltage generation is not supported on this MCU */
+    return FSP_ERR_UNSUPPORTED;
+#else
     slcdc_instance_ctrl_t * p_instance_ctrl = (slcdc_instance_ctrl_t *) p_ctrl;
 
-#if (SLCDC_CFG_PARAM_CHECKING_ENABLE)
+ #if (SLCDC_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_instance_ctrl);
     FSP_ERROR_RETURN(SLCDC_CLOSED != p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
@@ -315,9 +341,9 @@ fsp_err_t R_SLCDC_SetContrast (slcdc_ctrl_t * const p_ctrl, slcdc_contrast_t con
         return FSP_ERR_UNSUPPORTED;
     }
 
-#else
+ #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
-#endif
+ #endif
 
     /* Stop the internal voltage boost circuit. */
     R_SLCDC->LCDM1_b.VLCON = 0;
@@ -329,6 +355,7 @@ fsp_err_t R_SLCDC_SetContrast (slcdc_ctrl_t * const p_ctrl, slcdc_contrast_t con
     R_SLCDC->LCDM1_b.VLCON = 1;
 
     return FSP_SUCCESS;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -384,8 +411,11 @@ fsp_err_t R_SLCDC_Close (slcdc_ctrl_t * const p_ctrl)
     /* Stop SLCDC output */
     R_SLCDC->LCDM1 = (uint8_t) (R_SLCDC->LCDM1 & (~(SLCDC_PRV_LCDM1_SCOC_LCDON)));
 
+#if BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
+
     /* Disable voltage circuit */
     R_SLCDC->LCDM1_b.VLCON = 0;
+#endif
 
     /* Switch to external resistance method to reduce idle power consumption (per RA4M1 User's Manual (R01UH0887EJ0100)
      * section 45.2.2 "LCD Mode Register 1 (LCDM1)" Note 2) */
@@ -457,28 +487,40 @@ static fsp_err_t r_slcdc_check_display_mode (slcdc_cfg_t const * const p_cfg)
 
     /* Pre-run a few boolean operations */
     bool drive_is_external = (SLCDC_VOLT_EXTERNAL == drive_volt_gen);
+ #if BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
     bool drive_is_internal = (SLCDC_VOLT_INTERNAL == drive_volt_gen);
-    bool bias_is_3         = (SLCDC_BIAS_3 == bias_method);
-    bool bias_is_2         = (SLCDC_BIAS_2 == bias_method);
-    bool slice_is_3        = (SLCDC_SLICE_3 == time_slice);
-    bool slice_is_2        = (SLCDC_SLICE_2 == time_slice);
+ #endif
+    bool bias_is_3  = (SLCDC_BIAS_3 == bias_method);
+    bool bias_is_2  = (SLCDC_BIAS_2 == bias_method);
+    bool slice_is_3 = (SLCDC_SLICE_3 == time_slice);
 
     /* The below checks the configuration against the list of valid modes
      * given in Table 45.6 of the RA4M1 User's Manual (R01UH0887EJ0100) */
 
+ #if !BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
+    if (!drive_is_external)
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
+ #endif
+
     /* Check common compatibility modes */
+ #if BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE
     if (((SLCDC_SLICE_8 == time_slice) && (SLCDC_BIAS_4 == bias_method) && (drive_is_external || drive_is_internal)) ||
         ((SLCDC_SLICE_4 == time_slice) && bias_is_3))
+ #else
+    if ((SLCDC_SLICE_4 == time_slice) && bias_is_3)
+ #endif
     {
-        /* Do nothing */
+        /* Do nothing (valid configuration) */
     }
     else if (waveform == SLCDC_WAVE_A)
     {
         /* Check further compatibility with Waveform A */
         if ((slice_is_3 && bias_is_3) ||
-            (drive_is_external && (bias_is_2 && ((slice_is_3 || slice_is_2) || (SLCDC_STATIC == time_slice)))))
+            (drive_is_external && (bias_is_2 && (time_slice < SLCDC_SLICE_4))))
         {
-            /* Do nothing */
+            /* Do nothing (valid configuration)*/
         }
         else
         {

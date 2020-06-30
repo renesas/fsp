@@ -46,28 +46,31 @@ FSP_HEADER
 /*****************************************************************************
  * Enum definitions
  ******************************************************************************/
+
+/** ATAPI commands */
 typedef enum e_usb_atapi
 {
     /*--- SFF-8070i command define ---*/
-    USB_ATAPI_TEST_UNIT_READY      = 0x00U, ///< ATAPI command Test Unit Ready
-    USB_ATAPI_REQUEST_SENSE        = 0x03U, ///< ATAPI command Request Sense
-    USB_ATAPI_FORMAT_UNIT          = 0x04U, ///< ATAPI command Format Unit
-    USB_ATAPI_INQUIRY              = 0x12U, ///< ATAPI command Inquiry
-    USB_ATAPI_MODE_SELECT6         = 0x15U, ///< ATAPI command Mode Select6
-    USB_ATAPI_MODE_SENSE6          = 0x1AU, ///< ATAPI command Mode Sense6
-    USB_ATAPI_START_STOP_UNIT      = 0x1BU, ///< ATAPI command Start Stop Unit
-    USB_ATAPI_PREVENT_ALLOW        = 0x1EU, ///< ATAPI command Prevent Allow
-    USB_ATAPI_READ_FORMAT_CAPACITY = 0x23U, ///< ATAPI command Read Format Capacity
-    USB_ATAPI_READ_CAPACITY        = 0x25U, ///< ATAPI command Read Capacity
-    USB_ATAPI_READ10               = 0x28U, ///< ATAPI command Read10
-    USB_ATAPI_WRITE10              = 0x2AU, ///< ATAPI command Write10
-    USB_ATAPI_SEEK                 = 0x2BU, ///< ATAPI command Seek
-    USB_ATAPI_WRITE_AND_VERIFY     = 0x2EU, ///< ATAPI command Write and Verify
-    USB_ATAPI_VERIFY10             = 0x2FU, ///< ATAPI command Verify10
-    USB_ATAPI_MODE_SELECT10        = 0x55U, ///< ATAPI command Mode Select10
-    USB_ATAPI_MODE_SENSE10         = 0x5AU, ///< ATAPI command Mode Sense10
+    USB_ATAPI_TEST_UNIT_READY      = 0x00U, ///< Test Unit Ready
+    USB_ATAPI_REQUEST_SENSE        = 0x03U, ///< Request Sense
+    USB_ATAPI_FORMAT_UNIT          = 0x04U, ///< Format Unit
+    USB_ATAPI_INQUIRY              = 0x12U, ///< Inquiry
+    USB_ATAPI_MODE_SELECT6         = 0x15U, ///< Mode Select6
+    USB_ATAPI_MODE_SENSE6          = 0x1AU, ///< Mode Sense6
+    USB_ATAPI_START_STOP_UNIT      = 0x1BU, ///< Start Stop Unit
+    USB_ATAPI_PREVENT_ALLOW        = 0x1EU, ///< Prevent Allow
+    USB_ATAPI_READ_FORMAT_CAPACITY = 0x23U, ///< Read Format Capacity
+    USB_ATAPI_READ_CAPACITY        = 0x25U, ///< Read Capacity
+    USB_ATAPI_READ10               = 0x28U, ///< Read10
+    USB_ATAPI_WRITE10              = 0x2AU, ///< Write10
+    USB_ATAPI_SEEK                 = 0x2BU, ///< Seek
+    USB_ATAPI_WRITE_AND_VERIFY     = 0x2EU, ///< Write and Verify
+    USB_ATAPI_VERIFY10             = 0x2FU, ///< Verify10
+    USB_ATAPI_MODE_SELECT10        = 0x55U, ///< Mode Select10
+    USB_ATAPI_MODE_SENSE10         = 0x5AU, ///< Mode Sense10
 } usb_atapi_t;
 
+/** Command Status Wrapper (CSW) */
 typedef enum e_usb_csw_result
 {
     USB_CSW_RESULT_SUCCESS = 0x00U,    ///< CSW was successful.

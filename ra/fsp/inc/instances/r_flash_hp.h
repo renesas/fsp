@@ -46,7 +46,8 @@ FSP_HEADER
 
 /* RA6M3, RA6M2 and RA6M1 MCUs uses RV40F Phase 2 Flash technology. */
 /* This macro will eventually be migrated to bsp_feature.h. */
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M2) || defined(BSP_MCU_GROUP_RA6M1)
+#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M2) || defined(BSP_MCU_GROUP_RA6M1) || \
+    defined(BSP_MCU_GROUP_RA6T1)
  #define FLASH_HP_VERSION_PHASE_2
 #endif
 

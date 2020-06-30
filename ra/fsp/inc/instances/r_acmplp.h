@@ -48,8 +48,8 @@ typedef enum
 {
     ACMPLP_INPUT_NONE    = 0,
     ACMPLP_INPUT_CMPIN   = 1,
-    ACMPLP_INPUT_AMPO    = 2,          ///< Only available on ra2a1
-    ACMPLP_INPUT_CMPIN_1 = 4,          ///< Only available on ra4m1
+    ACMPLP_INPUT_AMPO    = 2,          ///< Not available on all MCUs
+    ACMPLP_INPUT_CMPIN_1 = 4,          ///< Not available on all MCUs
 } acmplp_input_t;
 
 typedef enum
@@ -57,7 +57,7 @@ typedef enum
     ACMPLP_REFERENCE_NONE     = 0,
     ACMPLP_REFERENCE_CMPREF   = 1,
     ACMPLP_REFERENCE_DAC8     = 2,
-    ACMPLP_REFERENCE_CMPREF_1 = 4,     ///< Only available on ra4m1
+    ACMPLP_REFERENCE_CMPREF_1 = 4,     ///< Not available on all MCUs
 } acmplp_reference_t;
 
 /* ACMPLP extended configuration */

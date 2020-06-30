@@ -476,7 +476,8 @@ void rm_freertos_plus_fat_memory_callback (rm_block_media_callback_args_t * p_ar
     /* Pass the event up to the application layer. */
     rm_freertos_plus_fat_instance_ctrl_t * p_instance_ctrl = (rm_freertos_plus_fat_instance_ctrl_t *) p_args->p_context;
 
-    if ((RM_BLOCK_MEDIA_EVENT_MEDIA_REMOVED | RM_BLOCK_MEDIA_EVENT_MEDIA_INSERTED) & p_args->event)
+    if ((RM_BLOCK_MEDIA_EVENT_MEDIA_REMOVED | RM_BLOCK_MEDIA_EVENT_MEDIA_INSERTED |
+         RM_BLOCK_MEDIA_EVENT_MEDIA_SUSPEND | RM_BLOCK_MEDIA_EVENT_MEDIA_RESUME) & p_args->event)
     {
         if (NULL != p_instance_ctrl->p_cfg->p_callback)
         {

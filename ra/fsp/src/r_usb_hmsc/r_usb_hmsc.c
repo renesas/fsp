@@ -275,7 +275,6 @@ fsp_err_t R_USB_HMSC_StorageReadSector (uint16_t        drive_number,
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(buff)
     FSP_ERROR_RETURN(USB_MAXSTRAGE >= drive_number, FSP_ERR_USB_PARAMETER)
-    FSP_ERROR_RETURN((((uint32_t) buff & 0x03) == 0), FSP_ERR_USB_PARAMETER)
 #endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
 
     /* set sector size */
@@ -351,7 +350,6 @@ fsp_err_t R_USB_HMSC_StorageWriteSector (uint16_t              drive_number,
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(buff)
     FSP_ERROR_RETURN(USB_MAXSTRAGE >= drive_number, FSP_ERR_USB_PARAMETER)
-    FSP_ERROR_RETURN((((uint32_t) buff & 0x03) == 0), FSP_ERR_USB_PARAMETER)
 #endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE */
 
     /* set sector size */

@@ -125,7 +125,7 @@ void usb_cstd_pipe_init (usb_utr_t * ptr, uint16_t pipe)
     uint16_t useport = USB_CUSE;
     uint16_t ip_no   = ptr->ip;
 
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
  #if (BSP_CFG_RTOS == 2)
@@ -237,7 +237,7 @@ void usb_cstd_pipe_init (usb_utr_t * ptr, uint16_t pipe)
  ******************************************************************************/
 void usb_cstd_clr_pipe_cnfg (usb_utr_t * ptr, uint16_t pipe_no)
 {
-    if (g_usb_usbmode == USB_PERI)
+    if (g_usb_usbmode == USB_MODE_PERI)
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
  #if (BSP_CFG_RTOS == 2)
@@ -383,9 +383,7 @@ uint16_t usb_cstd_is_set_frdy (usb_utr_t * ptr, uint16_t pipe, uint16_t fifosel,
         /* Caution!!!
          * Depending on the external bus speed of CPU, you may need to wait
          * for 100ns here.
-         * For details, please look at the data sheet.   */
-
-        /***** The example of reference. *****/
+         * For details, please look at the data sheet.   *//***** The example of reference. *****/
         buffer = hw_usb_read_syscfg(ptr);
         (void) buffer;
         buffer = hw_usb_read_syssts(ptr);

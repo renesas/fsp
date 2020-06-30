@@ -116,7 +116,7 @@ fsp_err_t R_DAC8_Open (dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg)
 #endif
 
     /* Power on the DAC8 device. */
-    R_BSP_MODULE_START(FSP_IP_DAC8, p_cfg->channel);
+    R_BSP_MODULE_START(FSP_IP_DAC8, 0U);
 
     /* Added this to a separate block to avoid redeclaration of
      * critical section variable under module stop macro. */
