@@ -10,7 +10,7 @@ var searchData=
   ['usb_20hhid_20interface',['USB HHID Interface',['../group___u_s_b___h_h_i_d___a_p_i.html',1,'']]],
   ['usb_20host_20mass_20storage_20class_20driver_20_28r_5fusb_5fhmsc_29',['USB Host Mass Storage Class Driver (r_usb_hmsc)',['../group___u_s_b___h_m_s_c.html',1,'']]],
   ['usb_20hmsc_20interface',['USB HMSC Interface',['../group___u_s_b___h_m_s_c___a_p_i.html',1,'']]],
-  ['usb_20peripheral_20communication_20device_20class_20_28r_5fusb_5fpcdc_29',['USB Peripheral Communication Device Class (r_usb_pcdc)',['../group___u_s_b___p_c_d_c.html',1,'']]],
+  ['usb_20peripheral_20communications_20device_20class_20_28r_5fusb_5fpcdc_29',['USB Peripheral Communications Device Class (r_usb_pcdc)',['../group___u_s_b___p_c_d_c.html',1,'']]],
   ['usb_20pcdc_20interface',['USB PCDC Interface',['../group___u_s_b___p_c_d_c___a_p_i.html',1,'']]],
   ['usb_20peripheral_20human_20interface_20device_20class_20_28r_5fusb_5fphid_29',['USB Peripheral Human Interface Device Class (r_usb_phid)',['../group___u_s_b___p_h_i_d.html',1,'']]],
   ['usb_20phid_20interface',['USB PHID Interface',['../group___u_s_b___p_h_i_d___a_p_i.html',1,'']]],

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,22 +107,69 @@ Functions</h2></td></tr>
 <tr class="separator:gabb6918dace465a4239fd256e846fd45d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>The USB module (r_usb_hhid) provides an API to perform hardware control of USB communications. It implements the <a class="el" href="group___u_s_b___h_h_i_d___a_p_i.html">USB HHID Interface</a>. </p>
-<p>This module is USB Basic Host and Peripheral. It works in combination with Driver (r_usb_basic module).</p>
+<p>This module provides a USB Host Human Interface Device Class Driver (HHID). It implements the <a class="el" href="group___u_s_b___h_h_i_d___a_p_i.html">USB HHID Interface</a>. </p>
 <h1><a class="anchor" id="r-usb_hhid-overview"></a>
 Overview</h1>
-<p>The r_usb_hhid module, when used in combination with the r_usb_basic module, operates as a USB host human interface device class driver (HHID).</p>
+<p>The r_usb_hhid module combines with the r_usb_basic module to provide a USB Host Human Interface Device Class (HHID) driver. The HHID driver conforms to the USB Human Interface Device class specifications and implements communication with a HID device.</p>
 <h2><a class="anchor" id="r-usb_hhid-features"></a>
 Features</h2>
-<p>The r_usb_hhid module has the following key features:</p>
-<ul>
-<li>Data communication with a connected HID device (USB mouse, USB keyboard)</li>
+<p>The r_usb_hhid module has the following key features:</p><ul>
+<li>Data communication with a connected HID device (USB mouse, keyboard etc.)</li>
 <li>Issuing of HID class requests to a connected HID device</li>
-<li>Supporting Interrupt OUT transfer</li>
+<li>Supports Interrupt OUT transfer</li>
 </ul>
-<h3>Class Driver Overview</h3>
-<p><b>1. Class Requests</b></p>
-<p>The class requests supported by this driver are shown below.</p>
+<h1><a class="anchor" id="r-usb_hhid-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for r_usb_hhid</h2>
+The following build time configurations are defined in fsp_cfg/r_usb_hhid_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>Interrupt In Pipe</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+USB PIPE6</li>
+<li>
+USB PIPE7</li>
+<li>
+USB PIPE8</li>
+<li>
+USB PIPE9</li>
+</ul>
+</td><td>USB PIPE6 </td><td>Select the pipe number to use for input interrupt events. </td></tr>
+<tr>
+<td>Pipe to use for Interrupt Out Pipe</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+USB PIPE6</li>
+<li>
+USB PIPE7</li>
+<li>
+USB PIPE8</li>
+<li>
+USB PIPE9</li>
+</ul>
+</td><td>USB PIPE9 </td><td>Select the pipe number to use for output interrupt events. </td></tr>
+</table>
+ <h2>Configurations for Middleware &gt; USB &gt; USB HHID driver on r_usb_hhid</h2>
+This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; USB &gt; USB HHID driver on r_usb_hhid:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_hhid0 </td><td>Module name. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-usb_hhid-clock-configuration"></a>
+Clock Configuration</h2>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module.</p>
+<h2><a class="anchor" id="r-usb_hhid-pin-configuration"></a>
+Pin Configuration</h2>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module.</p>
+<h1><a class="anchor" id="r-usb_hhid-usage_notes"></a>
+Usage Notes</h1>
+<dl class="section note"><dt>Note</dt><dd>This driver is not guaranteed to provide USB HID operation in all scenarios. The developer must verify correct operation when connected to the targeted USB peripherals.</dd></dl>
+<h2>Class Requests</h2>
+<p>The class requests supported by this driver are shown below:</p>
 <table class="doxtable">
 <tr>
 <th align="left">Request </th><th align="left">Code </th><th align="left">Description  </th></tr>
@@ -139,12 +186,12 @@ Features</h2>
 <tr>
 <td align="left">USB_SET_PROTOCOL </td><td align="left">0x0B </td><td align="left">Sends a protocol to the HID device. </td></tr>
 <tr>
-<td align="left">USB_GET_REPORT_DESCRIPTOR </td><td align="left">0x06 </td><td align="left">Transmits report descriptor. </td></tr>
+<td align="left">USB_GET_REPORT_DESCRIPTOR </td><td align="left">0x06 </td><td align="left">Requests a report descriptor. </td></tr>
 <tr>
-<td align="left">USB_GET_HID_DESCRIPTOR </td><td align="left">0x06 </td><td align="left">Transmits an HID descriptor. </td></tr>
+<td align="left">USB_GET_HID_DESCRIPTOR </td><td align="left">0x06 </td><td align="left">Requests a HID descriptor. </td></tr>
 </table>
-<p><b>2. Data Format</b></p>
-<p>The boot protocol data format of data received from the keyboard or mouse through interrupt-IN transfers is shown below.</p>
+<h2>Data Format</h2>
+<p>The boot protocol data format of data received from the keyboard or mouse through interrupt-IN transfers is shown below:</p>
 <table class="doxtable">
 <tr>
 <th align="left">offset </th><th align="left">Keyboard (8 Bytes) </th><th align="left">Mouse (3 Bytes)  </th></tr>
@@ -168,103 +215,39 @@ Features</h2>
 <tr>
 <td align="left">+7 </td><td align="left">Keycode 6 </td><td align="left">- </td></tr>
 </table>
-<h1><a class="anchor" id="r-usb_hhid-configuration"></a>
-Configuration</h1>
-<p><h2>Build Time Configurations for r_usb_hhid</h2>
-The following build time configurations are defined in fsp_cfg/r_usb_hhid_cfg.h:<br />
-</p><table class="doxtable">
-<tr>
-<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Pipe to use for Interrupt IN transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-USB PIPE6</li>
-<li>
-USB PIPE7</li>
-<li>
-USB PIPE8</li>
-<li>
-USB PIPE9</li>
-</ul>
-</td><td>USB PIPE6 </td><td>Please choose between 6 and 9. </td></tr>
-<tr>
-<td>Pipe to use for Interrupt OUT transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-USB PIPE6</li>
-<li>
-USB PIPE7</li>
-<li>
-USB PIPE8</li>
-<li>
-USB PIPE9</li>
-</ul>
-</td><td>USB PIPE9 </td><td>Please choose between 6 and 9. </td></tr>
-</table>
- <h2>Configurations for Middleware &gt; USB &gt; USB HHID driver on r_usb_hhid</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; USB &gt; USB HHID driver on r_usb_hhid:<br />
-</p><table class="doxtable">
-<tr>
-<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>g_hhid0 </td><td>Module name. </td></tr>
-</table>
-</p>
-<h2><a class="anchor" id="r-usb_hhid-clock-configuration"></a>
-Clock Configuration</h2>
-<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> basic module.</p>
-<h2><a class="anchor" id="r-usb_hhid-pin-configuration"></a>
-Pin Configuration</h2>
-<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> basic module.</p>
-<h1><a class="anchor" id="r-usb_hhid-usage_notes"></a>
-Usage Notes</h1>
-<ul>
-<li>This driver is not guaranteed to provide USB communication operation. The customer should verify operation when utilizing it in a system and confirm the ability to connect to a variety of different types of devices.</li>
-</ul>
 <h2><a class="anchor" id="r-usb_hhid-limitations"></a>
 Limitations</h2>
-<ol type="1">
+<ul>
 <li>The HID driver does not analyze the report descriptor. This driver determines the report format from the interface protocol.</li>
-<li>This driver does not support DMA transfer.</li>
-</ol>
+<li>This driver does not support DMA transfers.</li>
+</ul>
 <h1><a class="anchor" id="r-usb_hhid-examples"></a>
 Examples</h1>
 <h2>USB HHID Example</h2>
-<p><b>Example Operating Environment</b></p>
-<p>The following shows an example operating environment for the HHID.</p>
-<p>Refer to the associated instruction manuals for details on setting up the evaluation board and using the emulator, etc.</p>
+<p>The main functions of the application are as follows:</p>
+<ol type="1">
+<li>Performs enumeration and initialization of HID devices.</li>
+<li>Transfers data to and from a connected HID device (mouse or keyboard). Data received from the device is read and discarded.</li>
+<li>When an RTOS is used, the USB driver calls the callback (usb_apl_callback) in order to pass events to the main loop through a queue.</li>
+</ol>
 <div class="image">
 <object type="image/svg+xml" data="r_usb_hhid_operating_environment.svg">r_usb_hhid_operating_environment.svg</object>
 <div class="caption">
 Example Operating Environment</div></div>
- <h3>Application Specifications</h3>
-<p>The main functions of the application are as follows:</p>
-<ol type="1">
-<li>Performs enumeration and drive recognition processing on HID devices.</li>
-<li>Transfers data to and from an HID device (mouse or keyboard) connected to the evaluation board. Data received from the HID device is read and discarded.</li>
-</ol>
-<h3>Application Processing (for RTOS)</h3>
-<p>The application comprises two parts: initial settings and main loop. An overview of the processing in these two parts is provided below.</p>
-<p><b>Initial setting</b></p>
-<p>Initial settings consist of MCU pin settings, USB driver settings, and initial settings to the USB controller.</p>
-<p><b>usb_apl_task</b></p>
+ <h3>Application Processing (for RTOS)</h3>
 <p>The main loop performs processing to receive data from the HID device as part of the main routine. An overview of the processing performed by the loop is shown below.</p>
 <ol type="1">
 <li>When a USB-related event has completed, the USB driver calls the callback function (usb_apl_callback). In the callback function (usb_apl_callback), the application task (APL) is notified of the USB completion event using the real-time OS functionality.</li>
 <li>In APL, information regarding the USB completion event was notified from the callback function is retrieved using the real-time OS functionality.</li>
 <li>If the USB completion event (the event member of the usb_ctrl_t structure) retrieved in step 2 above is USB_STATUS_CONFIGURED, APL sends the class request (SET_PROTOCOL) to the HID device.</li>
 <li>If the USB completion event (the event member of the usb_ctrl_t structure) retrieved in step 2 above is USB_STATUS_REQUEST_COMPLETE, APL performs a data reception request to receive data transmitted from the HID device by calling the R_USB_Read function.</li>
-<li>The avove processing is repeated.</li>
+<li>The above processing is repeated.</li>
 </ol>
-<p>An overview of the processing performed by the APL is shown below:</p>
 <div class="image">
-<object type="image/svg+xml" data="r_usb_hhid_usb_apl_task.svg">r_usb_hhid_usb_apl_task.svg</object>
+<object type="image/svg+xml" data="r_usb_hhid_usb_apl_task_for_nonos.svg">r_usb_hhid_usb_apl_task_for_nonos.svg</object>
 <div class="caption">
 Main Loop (Normal mode)</div></div>
  <h3>Application Processing (for Non-OS)</h3>
-<p>The application comprises two parts: initial settings and main loop. An overview of the processing in these two parts is provided below.</p>
-<p><b>Initial setting</b></p>
-<p>Initial settings consist of MCU pin settings, USB driver settings, and initial settings to the USB controller.</p>
-<p><b>usb_apl_task</b></p>
 <p>The main loop performs processing to receive data from the HID device as part of the main routine. An overview of the processing of the main loop is presented below.</p>
 <ol type="1">
 <li>When the R_USB_GetEvent function is called after an HID device attaches to the USB host and enumeration completes, USB_STATUS_CONFIGURED is set as the return value. When the APL confirms USB_STATUS_CONFIGURED, it calls the R_USB_Write function to request transmission of data to the HID device.</li>
@@ -272,12 +255,11 @@ Main Loop (Normal mode)</div></div>
 <li>When the R_USB_GetEvent function is called after reception of data from the HID device has completed, USB_STATUS_READ_COMPLETE is set as the return value. When the APL confirms USB_STATUS_READ_COMPLETE, it calls the R_USB_Read function to make a data receive request for data sent by the HID device.</li>
 <li>The processing in step 3, above, is repeated.</li>
 </ol>
-<p>An overview of the processing performed by the APL is shown below:</p>
 <div class="image">
-<object type="image/svg+xml" data="r_usb_hhid_usb_apl_task_for_nonos.svg">r_usb_hhid_usb_apl_task_for_nonos.svg</object>
+<object type="image/svg+xml" data="r_usb_hhid_usb_apl_task.svg">r_usb_hhid_usb_apl_task.svg</object>
 <div class="caption">
 Main Loop (Normal mode)</div></div>
- <div class="fragment"><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Macro definitions</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="preprocessor">#define SET_PROTOCOL               (USB_HID_SET_PROTOCOL | USB_HOST_TO_DEV | USB_CLASS | USB_INTERFACE)</span></div><div class="line"><span class="preprocessor">#define BOOT_PROTOCOL              (0)</span></div><div class="line"><span class="preprocessor">#define USB_FS_DEVICE_ADDRESS_1    (1)</span></div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name   : r_usb_hhid_example</span></div><div class="line"><span class="comment"> * Description     : Host HID application main process</span></div><div class="line"><span class="comment"> * Arguments       : none</span></div><div class="line"><span class="comment"> * Return value    : none</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_usb_hhid_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">    usb_event_info_t * p_mess;</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a>     event;</div><div class="line">    usb_event_info_t event_info;</div><div class="line">    uint16_t         offset = 0;</div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03">open</a>(&amp;g_basic0_ctrl, &amp;g_basic0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">        USB_APL_RCV_MSG(USB_APL_MBX, (usb_msg_t **) &amp;p_mess);</div><div class="line">        event_info = *p_mess;</div><div class="line">        <span class="keyword">event</span>      = event_info.event;</div><div class="line"><span class="preprocessor">#else                                               </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a>(&amp;event_info, &amp;event); <span class="comment">/* Get event code */</span></div><div class="line"><span class="preprocessor">#endif  </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">            {</div><div class="line">                g_hhid_on_usb.typeGet(&amp;g_basic0_ctrl, &amp;g_hid_type, USB_FS_DEVICE_ADDRESS_1);</div><div class="line">                g_hhid_on_usb.maxPacketSizeGet(&amp;g_basic0_ctrl, &amp;g_mxps, <a class="code" href="group___u_s_b___h_h_i_d___a_p_i.html#ga43590b5a7439fc842dea3e70bbb5b17a">USB_HID_IN</a>, USB_FS_DEVICE_ADDRESS_1);</div><div class="line"></div><div class="line">                <span class="comment">/* Send the HID request(SetProtocol) to HID device */</span></div><div class="line">                set_protocol(&amp;g_basic0_ctrl, BOOT_PROTOCOL, USB_FS_DEVICE_ADDRESS_1);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a63dd4552584256ef9d1a0d5da2159e9c">USB_STATUS_READ_COMPLETE</a>:</div><div class="line">            {</div><div class="line">                offset = hid_memcpy(g_store_buf, g_buf, offset, g_mxps);</div><div class="line">                g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;g_basic0_ctrl, g_buf, (uint32_t) g_mxps, USB_FS_DEVICE_ADDRESS_1);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a24e9ad4653245663e5e89bda173141fd">USB_STATUS_REQUEST_COMPLETE</a>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">if</span> (USB_HID_SET_PROTOCOL == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;g_basic0_ctrl, g_buf, (uint32_t) g_mxps, USB_FS_DEVICE_ADDRESS_1);</div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main */</span></div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name   : set_protocol</span></div><div class="line"><span class="comment"> * Description     : Sending SetProtocol request to HID device</span></div><div class="line"><span class="comment"> * Arguments       : usb_ctrl_t   *p_ctrl : Pointer to usb_instance_ctrl_t structure.</span></div><div class="line"><span class="comment"> *                 : uint8_t      ptorocol: Protocol Type</span></div><div class="line"><span class="comment"> *                 : uint8_t      device_address: Device address that sends this request</span></div><div class="line"><span class="comment"> * Return value    : none</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> set_protocol (<a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> * p_ctrl, uint8_t protocol, uint8_t device_address)</div><div class="line">{</div><div class="line">    usb_setup_t setup;</div><div class="line"></div><div class="line">    setup.request_type   = SET_PROTOCOL;                                                         <span class="comment">/* bRequestCode:SET_PROTOCOL, bmRequestType */</span></div><div class="line">    setup.request_value  = protocol;                                                             <span class="comment">/* wValue: Protocol Type */</span></div><div class="line">    setup.request_index  = 0x0000;                                                               <span class="comment">/* wIndex:Interface */</span></div><div class="line">    setup.request_length = 0x0000;                                                               <span class="comment">/* wLength:Zero */</span></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e">hostControlTransfer</a>(p_ctrl, &amp;setup, (uint8_t *) &amp;g_setup_data, device_address); <span class="comment">/* Request Control transfer */</span></div><div class="line">} <span class="comment">/* End of function set_protocol */</span></div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name   : hid_memcpy</span></div><div class="line"><span class="comment"> * Description     : Copy received hhid data to the application buffer</span></div><div class="line"><span class="comment"> * Arguments       : uint8_t      *p_dest   : Pointer to application buffer</span></div><div class="line"><span class="comment"> *                 : uint8_t      *p_src    : Pointer to received buffer</span></div><div class="line"><span class="comment"> *                 : uint16_t     offset    : Application buffer offset</span></div><div class="line"><span class="comment"> *                 : uint16_t     size      : Size of receiced hhid data</span></div><div class="line"><span class="comment"> * Return value    : uint16_t     offset + i: Offset</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keyword">static</span> uint16_t hid_memcpy (uint8_t * p_dest, uint8_t * p_src, uint16_t offset, uint16_t size)</div><div class="line">{</div><div class="line">    uint16_t i;</div><div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; size; i++)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> ((offset + i) == BUFSIZE)</div><div class="line">        {</div><div class="line">            offset = 0;</div><div class="line">        }</div><div class="line"></div><div class="line">        *(p_dest + offset + i) = *(p_src + i);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> (uint16_t) (offset + i);</div><div class="line">}                                      <span class="comment">/* End of function hid_memcpy */</span></div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+ <div class="fragment"><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Macro definitions</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="preprocessor">#define SET_PROTOCOL               (USB_HID_SET_PROTOCOL | USB_HOST_TO_DEV | USB_CLASS | USB_INTERFACE)</span></div><div class="line"><span class="preprocessor">#define BOOT_PROTOCOL              (0)</span></div><div class="line"><span class="preprocessor">#define USB_FS_DEVICE_ADDRESS_1    (1)</span></div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Private global variables and functions</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___u_s_b___h_h_i_d___a_p_i.html#structusb__hhid__api__t">usb_hhid_api_t</a> g_hhid_on_usb =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___u_s_b___h_h_i_d___a_p_i.html#a2624c916cc5fa8bdb61bb47d02db1e7c">typeGet</a>          = <a class="code" href="group___u_s_b___h_h_i_d.html#gad7360cafd2f3be2fb92f6059d5f98939">R_USB_HHID_TypeGet</a>,</div><div class="line">    .maxPacketSizeGet = <a class="code" href="group___u_s_b___h_h_i_d.html#gabb6918dace465a4239fd256e846fd45d">R_USB_HHID_MaxPacketSizeGet</a>,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name   : r_usb_hhid_example</span></div><div class="line"><span class="comment"> * Description     : Host HID application main process</span></div><div class="line"><span class="comment"> * Arguments       : none</span></div><div class="line"><span class="comment"> * Return value    : none</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_usb_hhid_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">    usb_event_info_t * p_mess;</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a>     event;</div><div class="line">    usb_event_info_t event_info;</div><div class="line">    uint16_t         offset = 0;</div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03">open</a>(&amp;g_basic0_ctrl, &amp;g_basic0_cfg);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">        USB_APL_RCV_MSG(USB_APL_MBX, (usb_msg_t **) &amp;p_mess);</div><div class="line">        event_info = *p_mess;</div><div class="line">        <span class="keyword">event</span>      = event_info.event;</div><div class="line"><span class="preprocessor">#else                                        </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a>(&amp;event_info, &amp;event); <span class="comment">/* Get event code */</span></div><div class="line"><span class="preprocessor">#endif  </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">            {</div><div class="line">                g_hhid_on_usb.<a class="code" href="group___u_s_b___h_h_i_d___a_p_i.html#a2624c916cc5fa8bdb61bb47d02db1e7c">typeGet</a>(&amp;g_basic0_ctrl, &amp;g_hid_type, USB_FS_DEVICE_ADDRESS_1);</div><div class="line">                g_hhid_on_usb.<a class="code" href="group___u_s_b___h_h_i_d___a_p_i.html#ad2efecb9d87312ff91ae383fcaf46f6b">maxPacketSizeGet</a>(&amp;g_basic0_ctrl, &amp;g_mxps, <a class="code" href="group___u_s_b___h_h_i_d___a_p_i.html#ga43590b5a7439fc842dea3e70bbb5b17a">USB_HID_IN</a>, USB_FS_DEVICE_ADDRESS_1);</div><div class="line"></div><div class="line">                <span class="comment">/* Send the HID request (SetProtocol) to HID device */</span></div><div class="line">                set_protocol(&amp;g_basic0_ctrl, BOOT_PROTOCOL, USB_FS_DEVICE_ADDRESS_1);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a63dd4552584256ef9d1a0d5da2159e9c">USB_STATUS_READ_COMPLETE</a>:</div><div class="line">            {</div><div class="line">                offset = hid_memcpy(g_store_buf, g_buf, offset, g_mxps);</div><div class="line">                g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;g_basic0_ctrl, g_buf, (uint32_t) g_mxps, USB_FS_DEVICE_ADDRESS_1);</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40a24e9ad4653245663e5e89bda173141fd">USB_STATUS_REQUEST_COMPLETE</a>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">if</span> (USB_HID_SET_PROTOCOL == (event_info.setup.request_type &amp; <a class="code" href="group___u_s_b___a_p_i.html#ga3a6743f3e336fc05e70e59b05206f634">USB_BREQUEST</a>))</div><div class="line">                {</div><div class="line">                    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a1f8293d27b1dee87d1e925800c70edb3">read</a>(&amp;g_basic0_ctrl, g_buf, (uint32_t) g_mxps, USB_FS_DEVICE_ADDRESS_1);</div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main */</span></div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name   : set_protocol</span></div><div class="line"><span class="comment"> * Description     : Sending SetProtocol request to HID device</span></div><div class="line"><span class="comment"> * Arguments       : usb_ctrl_t   *p_ctrl : Pointer to usb_instance_ctrl_t structure.</span></div><div class="line"><span class="comment"> *                 : uint8_t      ptorocol: Protocol Type</span></div><div class="line"><span class="comment"> *                 : uint8_t      device_address: Device address that sends this request</span></div><div class="line"><span class="comment"> * Return value    : none</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> set_protocol (<a class="code" href="group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb">usb_instance_ctrl_t</a> * p_ctrl, uint8_t protocol, uint8_t device_address)</div><div class="line">{</div><div class="line">    usb_setup_t setup;</div><div class="line"></div><div class="line">    setup.request_type   = SET_PROTOCOL;                                                  <span class="comment">/* bRequestCode:SET_PROTOCOL, bmRequestType */</span></div><div class="line">    setup.request_value  = protocol;                                                      <span class="comment">/* wValue: Protocol Type */</span></div><div class="line">    setup.request_index  = 0x0000;                                                        <span class="comment">/* wIndex:Interface */</span></div><div class="line">    setup.request_length = 0x0000;                                                        <span class="comment">/* wLength:Zero */</span></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e">hostControlTransfer</a>(p_ctrl, &amp;setup, (uint8_t *) &amp;g_setup_data, device_address); <span class="comment">/* Request Control transfer */</span></div><div class="line">} <span class="comment">/* End of function set_protocol */</span></div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name   : hid_memcpy</span></div><div class="line"><span class="comment"> * Description     : Copy received hhid data to the application buffer</span></div><div class="line"><span class="comment"> * Arguments       : uint8_t      *p_dest   : Pointer to application buffer</span></div><div class="line"><span class="comment"> *                 : uint8_t      *p_src    : Pointer to received buffer</span></div><div class="line"><span class="comment"> *                 : uint16_t     offset    : Application buffer offset</span></div><div class="line"><span class="comment"> *                 : uint16_t     size      : Size of receiced hhid data</span></div><div class="line"><span class="comment"> * Return value    : uint16_t     offset + i: Offset</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keyword">static</span> uint16_t hid_memcpy (uint8_t * p_dest, uint8_t * p_src, uint16_t offset, uint16_t size)</div><div class="line">{</div><div class="line">    uint16_t i;</div><div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; size; i++)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> ((offset + i) == BUFSIZE)</div><div class="line">        {</div><div class="line">            offset = 0;</div><div class="line">        }</div><div class="line"></div><div class="line">        *(p_dest + offset + i) = *(p_src + i);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> (uint16_t) (offset + i);</div><div class="line">}                                      <span class="comment">/* End of function hid_memcpy */</span></div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="gad7360cafd2f3be2fb92f6059d5f98939"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad7360cafd2f3be2fb92f6059d5f98939">&#9670;&nbsp;</a></span>R_USB_HHID_TypeGet()</h2>
 
@@ -380,7 +362,7 @@ Main Loop (Normal mode)</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

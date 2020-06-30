@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -252,6 +252,11 @@ Pin Configuration</h2>
 Usage Notes</h1>
 <h2>SSI Frames</h2>
 <p>An SSI frame is 2 samples worth of data. The frame boundary (end of previous frame, start of next frame) is on the falling edge of the SSILRCKn signal.</p>
+<div class="image">
+<img src="r_ssi_frame_diagram.PNG" alt="r_ssi_frame_diagram.PNG"/>
+<div class="caption">
+SSI Frame Diagram (8-bit word, 8-bit samples)</div></div>
+<dl class="section note"><dt>Note</dt><dd>If the word length is longer than the sample bit depth, padding bits (0) will be added after the sample.</dd></dl>
 <h2>Audio Data</h2>
 <p>Only uncompressed PCM data is supported.</p>
 <p>Data arrays have the following size, alignment, and length based on the "Bit Depth" setting:</p>
@@ -800,7 +805,7 @@ Select bit clock division ratio. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

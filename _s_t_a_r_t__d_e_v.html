@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -130,10 +130,9 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level4"><a href="#cheat-sheets">Cheat Sheets</a></li>
 <li class="level4"><a href="#developer-assistance">Developer Assistance</a></li>
 <li class="level4"><a href="#information-icon">Information Icon</a></li>
-<li class="level4"><a href="#smart-manual">Smart Manual</a></li>
 </ul>
 </li>
-<li class="level3"><a href="#hal-modules-in-fsp">HAL Modules in FSP: A Practcal Description</a><ul><li class="level4"><a href="#introduction-to-hal-modules">Introduction to HAL Modules</a></li>
+<li class="level3"><a href="#hal-modules-in-fsp">HAL Modules in FSP: A Practical Description</a><ul><li class="level4"><a href="#introduction-to-hal-modules">Introduction to HAL Modules</a></li>
 <li class="level4"><a href="#hal-drvier-api-function-call-formats">HAL Driver API Function Call Formats</a></li>
 <li class="level4"><a href="#hal-driver-api-call-reference-information">HAL Driver API Call Reference Information</a></li>
 </ul>
@@ -144,6 +143,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </li>
 <li class="level2"><a href="#debugging-the-project">Debugging the Project</a></li>
 <li class="level2"><a href="#modifying-toolchain-settings">Modifying Toolchain Settings</a></li>
+<li class="level2"><a href="#creating-ra-project-with-arm-compiler-6-in-e2-studio">Creating RA project with ARM Compiler 6 in e2 studio</a></li>
 <li class="level2"><a href="#importing-an-existing-project-into-e2-studio">Importing an Existing Project into e2 studio</a></li>
 </ul>
 </li>
@@ -212,22 +212,22 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 Starting Development Introduction</h1>
 <p>The wealth of resources available to learn about and use e2 studio and FSP can be overwhelming on first inspection, so this section provides a Starting Development Guide with a list of the most important initial steps. Following these highly recommended first 11 steps will bring you up to speed on the development environment in record time. Even experienced developers can benefit from the use of this guide, to learn the terminology that might be unfamiliar or different from previous environments.</p>
 <ol type="1">
-<li>Read over the section <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-e2studio">What is e2 studio?</a>, up to but not including <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a>. This will provide a description of the various windows and views to use e2 studio to create a project, add modules and threads, configure module properties, add code, and debug a project. It also describes how to use key coding 'accelerators' like Developer Assist (to drag and drop parameter populated API function calls right into your code), a context aware Autocomplete (to easily find and select from suggested enumerations, functions, types, and many other coding elements), and many other similar productivity enhancers.</li>
-<li>Read over the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a>, <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-modules">FSP Modules</a> and <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-stacks">FSP Stacks</a> sections. These provide the basic background on how FSP modules and stacks are used to construct your application. Understanding their definitions and the theory behind how they combine will make it easier to develop with FSP.</li>
-<li>Read over a few <a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> sections to see how to use API function calls, structures, enumerations, types and callbacks. These module guides provide the information you will use to implement your project code. (Much of the details are provided with Developer Assistance, which is covered in step 6, below.</li>
-<li>After you have a Kit and you have downloaded and installed e2 studio and FSP, you can build and debug a simple project to prove out you installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project. It will use some of the key steps for managing projects within e2 studio and is a good way to learn the basics.</li>
-<li>Once you have successfully run Blinky you have a good starting point for using FSP for more complex projects. The Using HAL Drivers Tutorial, available at <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>, shows how to create a project from scratch, using FSP API functions. Do it next.</li>
-<li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Edit Hover, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19108110">https://en-support.renesas.com/knowledgeBase/19108110</a>. Doing a couple of these labs provides further details and practice using FSP and is highly recommended.</li>
-<li>The balance of the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> sections (that is, those not called out in step 2 above) contain additional reference material that may be helpful in the future. Scan them over so you know what they contain, in case you need them.</li>
+<li>Read the section <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-e2studio">What is e2 studio?</a>, up to but not including <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a>. This will provide a description of the various windows and views to use e2 studio to create a project, add modules and threads, configure module properties, add code, and debug a project. It also describes how to use key coding 'accelerators' like Developer Assist (to drag and drop parameter populated API function calls right into your code), a context aware Autocomplete (to easily find and select from suggested enumerations, functions, types, and many other coding elements), and many other similar productivity enhancers.</li>
+<li>Read the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a>, <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-modules">FSP Modules</a> and <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-stacks">FSP Stacks</a> sections. These provide the basic background on how FSP modules and stacks are used to construct your application. Understanding their definitions and the theory behind how they combine will make it easier to develop with FSP.</li>
+<li>Read a few <a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> sections to see how to use API function calls, structures, enumerations, types and callbacks. These module guides provide the information you will use to implement your project code.</li>
+<li>After you have a Kit and you have downloaded and installed e2 studio and FSP, you can build and debug a simple project to test your installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project. It will use some of the key steps for managing projects within e2 studio and is a good way to learn the basics.</li>
+<li>Once you have successfully run Blinky you have a good starting point for using FSP for more complex projects. The Using HAL Drivers Tutorial, available at <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>, shows how to create a project from scratch, using FSP API functions. Do this next.</li>
+<li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Edit Hover, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>. Doing a couple of these labs provides further details and practice using FSP and is highly recommended.</li>
+<li>The balance of the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> sections (that is, those not called out in step 2 above) contain additional reference material that may be helpful in the future. Scan them so you know what they contain, in case you need them.</li>
 <li>The balance of the e2 studio User Guide, starting with the <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-a-project">What is a Project?</a> section up to, but not including, <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section, provides a detailed description of each of the key steps, windows, and entries used to create, manage, configure, build and debug a project. Much of this may be familiar after running through the tutorials and Quick Labs. However, it is important to have a good grasp of what each of the configuration tabs are used for as that is where the bulk of the project preparation work takes place prior to writing code. Skim over this section as it may help with any questions in the future.</li>
-<li>Read over the <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section to get a short introduction to the steps used when creating application code with FSP. It covers both RTOS-independent and RTOS-dependent applications. It also includes a short description for several of the code accelerators you should be familiar with by now. Using additional Quick FSP Labs is a good way to become familiar with the application development process and links to them are included in the appropriate places in this section. You can find the complete list of available Quick FSP Labs here: <a href="https://en-support.renesas.com/knowledgeBase/19108110">https://en-support.renesas.com/knowledgeBase/19108110</a>.</li>
+<li>Read the <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section to get a short introduction to the steps used when creating application code with FSP. It covers both RTOS-independent and RTOS-dependent applications. It also includes a short description for several of the code accelerators you should be familiar with by now. Using additional Quick FSP Labs is a good way to become familiar with the application development process and links to them are included in the appropriate places in this section. You can find the complete list of available Quick FSP Labs here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>.</li>
 <li>Scan the <a class="el" href="_s_t_a_r_t__d_e_v.html#debugging-the-project">Debugging the Project</a> section to see the steps required to download and start a debug session.</li>
 <li>Explore the additional material available on the following web pages and bookmark the resources that look most valuable to you:<ol type="a">
 <li>RA Landing Page: <a href="https://www.renesas.com/ra">https://www.renesas.com/ra</a></li>
 <li>FSP Landing Page: <a href="https://www.renesas.com/fsp">https://www.renesas.com/fsp</a></li>
 <li>Example Projects on GitHub: <a href="https://github.com/renesas/ra-fsp-examples">https://github.com/renesas/ra-fsp-examples</a></li>
-<li>Quick FSP Labs Listing: <a href="https://en-support.renesas.com/knowledgeBase/19108110">https://en-support.renesas.com/knowledgeBase/19108110</a></li>
-<li>RA and FSP Knowledge Base (with articles of interest on RA and FSP): <a href="https://en-support.renesas.com/knowledgeBase#31087">https://en-support.renesas.com/knowledgeBase#31087</a></li>
+<li>Quick FSP Labs Listing: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a></li>
+<li>RA and FSP Knowledge Base (with articles of interest on RA and FSP): <a href="https://en-support.renesas.com/knowledgeBase/category/31087">https://en-support.renesas.com/knowledgeBase/category/31087</a></li>
 <li>RA and FSP Renesas Rulz site (Community posted and answered questions): <a href="https://renesasrulz.com/ra/">https://renesasrulz.com/ra/</a></li>
 <li>FSP Releases: <a href="https://github.com/renesas/fsp/releases">https://github.com/renesas/fsp/releases</a></li>
 <li>FSP Documentation: <a href="https://renesas.github.io/fsp">https://renesas.github.io/fsp</a></li>
@@ -245,7 +245,6 @@ What is e2 studio?</h2>
 <li>A Graphical User Interface (GUI) (see <a class="el" href="_s_t_a_r_t__d_e_v.html#adding-threads-and-drivers">Adding Threads and Drivers</a>) with numerous wizards for configuring and auto-generating code</li>
 <li>A context sensitive Autocomplete (see <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>) feature that provides intelligent options for completing a programming element</li>
 <li>A <a class="el" href="_s_t_a_r_t__d_e_v.html#developer-assistance">Developer Assistance</a> tool for selection of and drag and drop placement of API functions directly in application code</li>
-<li>A <a class="el" href="_s_t_a_r_t__d_e_v.html#smart-manual">Smart Manual</a> provides driver and device documentation in the form of tooltips right in the code</li>
 <li>An <a class="el" href="_s_t_a_r_t__d_e_v.html#edit-hover">Edit Hover</a> feature to show detailed descriptions of code elements while editing</li>
 <li>A <a class="el" href="_s_t_a_r_t__d_e_v.html#welcome-window">Welcome Window</a> with links to example projects, application notes and a variety of other self-help support resources</li>
 <li>An <a class="el" href="_s_t_a_r_t__d_e_v.html#information-icon">Information Icon</a> from each module is provided in the graphic configuration viewer that links to specific design resources, including code 'cheat sheets' that provide useful starting points for common application implementations.</li>
@@ -284,7 +283,7 @@ Installing e2 studio, platform installer and the FSP package</h3>
 <p>Detailed installation instructions for the e2 studio and the FSP are available on the Renesas website <a href="https://www.renesas.com/fsp">https://www.renesas.com/fsp</a>. Review the release notes for e2 studio to ensure that the e2 studio version supports the selected FSP version. The starting version of the installer includes all features of the RA MCUs.</p>
 <h3><a class="anchor" id="choosing-a-toolchain"></a>
 Choosing a Toolchain</h3>
-<p>e2 studio can work with several toolchains and toolchain versions such as the GNU ARM compiler, AC6. A version of the GNU ARM compiler is included in the e2 studio installer and has been verified to run with the FSP version.</p>
+<p>e2 studio can work with several toolchains and toolchain versions such as the GNU Arm compiler and Arm AC6. A version of the GNU Arm compiler is included in the e2 studio installer and has been verified to run with the FSP version.</p>
 <h3><a class="anchor" id="licensing"></a>
 Licensing</h3>
 <p>FSP licensing includes full source code, limited to Renesas hardware only.</p>
@@ -355,9 +354,9 @@ Selecting a Board and Toolchain</h3>
 <li>Select the <b>Board</b> for your application. You can select an existing RA MCU Evaluation Kit or select <b>Custom User Board</b> for any of the RA MCU devices with your own BSP definition.</li>
 <li>Select the <b>Device</b>. The <b>Device</b> is automatically populated based on the <b>Board</b> selection. Only change the <b>Device</b> when using the <b>Custom User Board (Any Device)</b> board selection.</li>
 <li>To add threads, select <b>RTOS</b>, or <b>No RTOS</b> if an RTOS is not being used.</li>
-<li>The <b>Toolchain</b> selection defaults to <b>GCC ARM Embedded</b>.</li>
+<li>The <b>Toolchain</b> selection defaults to <b>GCC Arm Embedded</b>.</li>
 <li>Select the <b>Toolchain version</b>. This should default to the installed toolchain version.</li>
-<li>Select the <b>Debugger</b>. The J-Link ARM Debugger is preselected.</li>
+<li>Select the <b>Debugger</b>. The J-Link Arm Debugger is preselected.</li>
 <li><p class="startli">Click <b>Next</b>.</p>
 <div class="image">
 <img src="sd-ra-proj-2.png" alt="sd-ra-proj-2.png"/>
@@ -388,7 +387,7 @@ RA MCU Project Editor and available editor tabs</div></div>
 <li>With the <b>Interrupts</b> tab, you can add new user events/interrupts.</li>
 <li>With the <b>Event Links</b> tab, you can configure events used by the Event Link Controller.</li>
 <li>With the <b>Stacks</b> tab, you can add and configure FSP modules. For each module selected in this tab, the <b>Properties</b> window provides access to the configuration parameters, interrupt priorities, and pin selections.</li>
-<li>The <b>Components</b> tab provides an overview of the selected modules. You can also add drivers for specific FSP releases and application sample code here.</li>
+<li>The <b>Components</b> tab provides an overview of the selected modules. Although you can also add drivers for specific FSP releases and application sample code here, this tab is normally only used for reference.</li>
 </ul>
 <p>The functions and use of each of these tabs is explained in detail in the next section.</p>
 <h2><a class="anchor" id="configuring-a-project"></a>
@@ -415,7 +414,7 @@ Configuration BSP tab</div></div>
 <dl class="section warning"><dt>Warning</dt><dd>Do not edit this file as it is overwritten whenever the <b>Generate Project Content</b> button is clicked.</dd></dl>
 <h3><a class="anchor" id="configuring-clocks"></a>
 Configuring Clocks</h3>
-<p>The <b>Clocks</b> tab presents a graphical view of the MCU's clock tree, allowing the various clock dividers and sources to be modified. If a clock setting is invalid, the offending clock value is highlighted in red. It is still possible to generate code with this setting, but correct operation cannot be guaranteed. In the figure below, the USB clock HOCO has been changed so the resulting clock frequency is 24 MHz instead of the required 48 MHz. This parameter is colored red.</p>
+<p>The <b>Clocks</b> tab presents a graphical view of the MCU's clock tree, allowing the various clock dividers and sources to be modified. If a clock setting is invalid, the offending clock value is highlighted in red. It is still possible to generate code with this setting, but correct operation cannot be guaranteed. In the figure below, the USB clock UCLK has been changed so the resulting clock frequency is 60 MHz instead of the required 48 MHz. This parameter is colored red.</p>
 <div class="image">
 <img src="sd-clocks-tab.png" alt="sd-clocks-tab.png"/>
 <div class="caption">
@@ -453,10 +452,10 @@ Configuring Interrupts from the Stacks Tab</h3>
 <div class="image">
 <img src="sd-config-interrupts-on-stack.png" alt="sd-config-interrupts-on-stack.png"/>
 <div class="caption">
-Configuring Interrupt on the Stacks tab</div></div>
+Configuring Interrupts in the Stacks tab</div></div>
  <h4><a class="anchor" id="interrupts"></a>
 Creating Interrupts from the Interrupts Tab</h4>
-<p>On the <b>Interrupts</b> tab, the user can bypass a peripheral interrupt by setting a user-defined ISR. This can be done by adding a new event via the <b>New User Event</b> button.</p>
+<p>On the <b>Interrupts</b> tab, the user can bypass a peripheral interrupt set by FSP by configuring a user-defined ISR. This can be done by adding a new event via the <b>New User Event</b> button.</p>
 <div class="image">
 <img src="sd-config-int-in-interrupt-tab.png" alt="sd-config-int-in-interrupt-tab.png"/>
 <div class="caption">
@@ -478,7 +477,7 @@ Using a user-defined event</div></div>
 Viewing Event Links</h3>
 <p>The Event Links tab can be used to view the Event Link Controller events. The events are sorted by peripheral to make it easy to find and verify them.</p>
 <div class="image">
-<img src="sd-viewing-event-links.png" alt="sd-viewing-event-links.png"/>
+<img src="sd-viewing-event-links.PNG" alt="sd-viewing-event-links.PNG"/>
 <div class="caption">
 Viewing Event Links</div></div>
 <p> Like the Interrupts tab, user-defined event sources and destinations (producers and consumers) can be defined by clicking the relevant <b>New User Event</b> button. Once a consumer is linked to a producer the link will appear in the <b>Allocations</b> section at the bottom.</p>
@@ -622,7 +621,7 @@ Coding Features</h3>
 <p>e2 studio provides several efficiency improving features that help write code. Review these features prior to digging into the code development step-by-step sections that follow.</p>
 <h4>Autocomplete</h4>
 <p>Autocomplete is a context aware coding accelerator that suggests possible completions for partially typed-in code elements. If you can 'guess' the first part of a macro, for example, the Autocomplete function can suggest options for completing the rest of the macro.</p>
-<p>In the following example,a macro related to a BSP_IO setting needs to be found. After typing <code>BSP_IO_</code> in a source code file, pressing <code>Ctrl + Space</code> opens the Autocomplete list. This list shows a selection of context aware options for completing the macro. Scroll through the window to find the desired macro (in this case <code>BSP_IO_LEVEL_HIGH</code>) and click on it to add it to your code.</p>
+<p>In the following example, a macro related to a BSP_IO setting needs to be found. After typing <code>BSP_IO_</code> in a source code file, pressing <code>Ctrl + Space</code> opens the Autocomplete list. This list shows a selection of context aware options for completing the macro. Scroll through the window to find the desired macro (in this case <code>BSP_IO_LEVEL_HIGH</code>) and click on it to add it to your code.</p>
 <div class="image">
 <img src="sd-autocomplete-example.png" alt="sd-autocomplete-example.png"/>
 <div class="caption">
@@ -686,15 +685,7 @@ Information Icon</h4>
 <img src="sd-info-icon.png" alt="sd-info-icon.png"/>
 <div class="caption">
 Information icon</div></div>
- <h4><a class="anchor" id="smart-manual"></a>
-Smart Manual</h4>
-<p>Smart Manual is the view that displays information (register information/search results by keyword) extracted from the hardware user's manual. Smart Manual provides search capability of hardware manual information (register information search and keyword search result) and provides a view displaying result.</p>
-<p>You can open Smart Manual view by selecting the menu: <b>Renesas Views &gt; Solution Toolkit &gt; Smart Manual</b>. Register search and Keyword search are both available by selecting the appropriate tab.</p>
-<div class="image">
-<img src="sd-smart-manual.png" alt="sd-smart-manual.png"/>
-<div class="caption">
-Smart Manual</div></div>
- <h4>IDE Help</h4>
+<h4>IDE Help</h4>
 <p>A good source of additional information for many FSP topics is the Help system. To get to the Help system, click on <b>Help</b> and then select <b>Help Contents</b> as seen below.</p>
 <div class="image">
 <img src="sd-opening-help-system.png" alt="sd-opening-help-system.png"/>
@@ -712,7 +703,7 @@ RA Content Help</div></div>
 e2 studio Help from the Search Bar</div></div>
 <p> For a hands-on experience using the Help system use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110786">An Introduction to Developer Assistance</a>, <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, Edit hover, and the Help system.</p>
 <h3><a class="anchor" id="hal-modules-in-fsp"></a>
-HAL Modules in FSP: A Practcal Description</h3>
+HAL Modules in FSP: A Practical Description</h3>
 <p>The <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> section describes FSP stacks, modules and interfaces in significant detail, providing an understanding of the theory behind them. The following sections provides a quick and practical introduction on how to use API functions when writing code and where in the API reference sections you can find useful API related information.</p>
 <h4><a class="anchor" id="introduction-to-hal-modules"></a>
 Introduction to HAL Modules</h4>
@@ -809,18 +800,64 @@ Debugging the Project</h2>
 <img src="sd-my-proj-debug.png" alt="sd-my-proj-debug.png"/>
 </div>
 </li>
-<li>Connect the board to your PC via either a standalone Segger J-Link debugger or a Segger J-Link On-Board (included on all RA EKs) and click <b>Debug</b>.</li>
+<li>Connect the board to your PC via either the on-board Segger J-Link debugger (available on all RA EKs), a standalone Segger J-Link debugger, or an E2 or E2 Lite and click <b>Debug</b>.</li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>For details on using J-Link and connecting the board to the PC, see the Quick Start Guide included in the RA MCU Kit.</dd></dl>
 <h2><a class="anchor" id="modifying-toolchain-settings"></a>
 Modifying Toolchain Settings</h2>
-<p>There are instances where it may be necessary to make changes to the toolchain being used (for example, to change optimization level of the compiler or add a library to the linker). Such modifications can be made from within e2 studio through the menu <b>Project &gt; Properties &gt; Settings</b> when the project is selected. The following screenshot shows the settings dialog for the GNU ARM toolchain. This dialog will look slightly different depending upon the toolchain being used.</p>
+<p>There are instances where it may be necessary to make changes to the toolchain being used (for example, to change optimization level of the compiler or add a library to the linker). Such modifications can be made from within e2 studio through the menu <b>Project &gt; Properties &gt; Settings</b> when the project is selected. The following screenshot shows the settings dialog for the GNU Arm toolchain. This dialog will look slightly different depending upon the toolchain being used.</p>
 <div class="image">
 <img src="sd-e2-proj-toolchain.png" alt="sd-e2-proj-toolchain.png"/>
 <div class="caption">
 e2 studio Project toolchain settings</div></div>
 <p> The scope for the settings is project scope which means that the settings are valid only for the project being modified.</p>
 <p>The settings for the linker which control the location of the various memory sections are contained in a script file specific for the device being used. This script file is included in the project when it is created and is found in the script folder (for example, <code>/script/a6m3.ld</code>).</p>
+<h2><a class="anchor" id="creating-ra-project-with-arm-compiler-6-in-e2-studio"></a>
+Creating RA project with ARM Compiler 6 in e2 studio</h2>
+<p>e2 studio does not include the ARM Compiler 6 (AC6) toolchain by default. Follow the steps below to integrate AC6 into e2 studio and create an AC6 RA project.</p>
+<dl class="section note"><dt>Note</dt><dd>It is assumed that the user is already familiar with RA project creation in e2 studio.</dd></dl>
+<p>Steps 1 through 8 describe the process for integrating ARM Compiler 6 into e2 studio.</p>
+<ol type="1">
+<li>Download, install, and configure license for the AC6 toolchain (<a href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/downloads/version-6">https://developer.arm.com/tools-and-software/embedded/arm-compiler/downloads/version-6</a>).</li>
+<li>Launch e2 studio.</li>
+<li>Go to <b>Window &gt; Preferences &gt; Toolchains</b>.</li>
+<li><p class="startli">Click <b>Add</b>.</p>
+<div class="image">
+<img src="sd-ac6-add.png" alt="sd-ac6-add.png"/>
+<div class="caption">
+Add Toolchain</div></div>
+</li>
+<li><p class="startli">Browse to the path where AC6 toolchain is installed and select the <code>\bin</code> folder. Click <b>Next</b>.</p>
+<div class="image">
+<img src="sd-ac6-select-path.png" alt="sd-ac6-select-path.png"/>
+<div class="caption">
+Browse to AC6 Compiler</div></div>
+</li>
+<li><p class="startli">Toolchain information in displayed. Click <b>Finish</b>.</p>
+<div class="image">
+<img src="sd-ac6-toolchain-info.png" alt="sd-ac6-toolchain-info.png"/>
+<div class="caption">
+Toolchain Information</div></div>
+</li>
+<li><p class="startli">Click <b>Apply and Close</b>.</p>
+<div class="image">
+<img src="sd-ac6-apply-close.png" alt="sd-ac6-apply-close.png"/>
+<div class="caption">
+Apply and Close</div></div>
+</li>
+<li><p class="startli">Click <b>Restart Eclipse</b> when prompted.</p>
+<div class="image">
+<img src="sd-ac6-restart.png" alt="sd-ac6-restart.png"/>
+<div class="caption">
+Restart Eclipse</div></div>
+</li>
+<li><p class="startli">When creating a new RA C/C++ project, select <b>ARM Compiler 6</b> included in the Toolchains section.</p>
+<div class="image">
+<img src="sd-ac6-select-arm-compiler.png" alt="sd-ac6-select-arm-compiler.png"/>
+<div class="caption">
+Select Arm Compiler</div></div>
+ </li>
+</ol>
 <h2><a class="anchor" id="importing-an-existing-project-into-e2-studio"></a>
 Importing an Existing Project into e2 studio</h2>
 <ol type="1">
@@ -911,7 +948,7 @@ What Does Blinky Do?</h2>
 <p>The Blinky example application used in this tutorial is designed to run the same way on all boards offered by Renesas that hold the RA microcontroller. The code in Blinky is completely board independent. It does the work by calling into the BSP (board support package) for the particular board it is running on. This works because:</p>
 <ul>
 <li>Every board has at least one LED connected to a GPIO pin.</li>
-<li>That one LED is always labeled LED1 on the silk screen.</li>
+<li>That one LED is always labelled LED1 on the silk screen.</li>
 <li>Every BSP supports an API that returns a list of LEDs on a board, and their port and pin assignments.</li>
 </ul>
 <h2><a class="anchor" id="prerequisites"></a>
@@ -1280,7 +1317,7 @@ WDT hal_entry.c</h3>
 <p>This file contains the function <code>hal_entry()</code> called from <code>main()</code>. User developed code should be placed in this file and function.</p>
 <p>For the WDT project edit the contents of this file to contain the code below. This code implements the flowchart in overview section of this document.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;hal_data.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;bsp_pin_cfg.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;r_ioport.h&quot;</span></div><div class="line"><span class="preprocessor">#define RED_LED_NO_OF_FLASHES    30</span></div><div class="line"><span class="preprocessor">#define RED_LED_PIN              BSP_IO_PORT_01_PIN_00</span></div><div class="line"><span class="preprocessor">#define GREEN_LED_PIN            BSP_IO_PORT_04_PIN_00</span></div><div class="line"><span class="preprocessor">#define RED_LED_DELAY_MS         125</span></div><div class="line"><span class="preprocessor">#define GREEN_LED_DELAY_MS       250</span></div><div class="line"><span class="keyword">volatile</span> uint32_t delay_counter;</div><div class="line"><span class="keyword">volatile</span> uint16_t loop_counter;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a>(<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event);</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> hal_entry (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Allow the WDT to run when the debugger is connected */</span></div><div class="line">    R_DEBUG-&gt;DBGSTOPCR_b.DBGSTOP_WDT = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the WDT */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the WDT by refreshing it */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Flash the red LED and feed the WDT for a few seconds */</span></div><div class="line">    <span class="keywordflow">for</span> (loop_counter = 0; loop_counter &lt; RED_LED_NO_OF_FLASHES; loop_counter++)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn red LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(RED_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(RED_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Flash green LED but STOP feeding the WDT. WDT should reset the</span></div><div class="line"><span class="comment">     * device */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn green LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(GREEN_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Turn green off */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(GREEN_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a> (<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4a682d5dad980652c1acbc5b04531f6da2">BSP_WARM_START_RESET</a> == event)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if BSP_FEATURE_FLASH_LP_VERSION != 0</span></div><div class="line"></div><div class="line">        <span class="comment">/* Enable reading from data flash. */</span></div><div class="line">        R_FACI_LP-&gt;DFLCTL = 1U;</div><div class="line"></div><div class="line">        <span class="comment">/* Would normally have to wait for tDSTOP(6us) for data flash recovery. Placing the enable here, before clock and</span></div><div class="line"><span class="comment">         * C runtime initialization, should negate the need for a delay since the initialization will typically take more than 6us. */</span></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811">BSP_WARM_START_POST_C</a> == event)</div><div class="line">    {</div><div class="line">        <span class="comment">/* C runtime environment and system clocks are setup. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Configure pins. */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open</a>(&amp;g_ioport_ctrl, &amp;g_bsp_pin_cfg);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> The WDT HAL driver API functions are defined in <code>r_wdt.h</code>. The WDT HAL driver is opened through the open API call using the instance structure defined in <code>r_wdt_api.h</code>:</p>
-<div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open the WDT */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div></div><!-- fragment --><p> The first passed parameter is the pointer to the control structure <code>g_wdt0_ctrl</code> instantiated in<code>hal_data.c</code>. The second parameter is the pointer to the configuration data <code>g_wdto_cfg</code> instantiated in the same <code>hal_data.c</code> file.</p>
+<div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open the WDT */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div></div><!-- fragment --><p> The first passed parameter is the pointer to the control structure <code>g_wdt0_ctrl</code> instantiated in <code>hal_data.c</code>. The second parameter is the pointer to the configuration data <code>g_wdto_cfg</code> instantiated in the same <code>hal_data.c</code> file.</p>
 <p>The WDT is started and refreshed through the API call:</p>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start the WDT by refreshing it */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div></div><!-- fragment --><p> Again the first (and only in this case) parameter passed to this API is the pointer to the control structure of this instance of the driver.</p>
 <h2><a class="anchor" id="building-and-testing-the-project"></a>
@@ -1317,8 +1354,8 @@ RA SC User Guide for MDK and IAR</h1>
 What is RA SC?</h2>
 <p>The Renesas RA Smart Configurator (RA SC) is a desktop application designed to configure device hardware such as clock set up and pin assignment as well as initialization of FSP software components for a Renesas RA microcontroller project when using a 3rd-party IDE and toolchain.</p>
 <p>The RA Smart Configurator can currently be used with</p><ol type="1">
-<li>Keil MDK and the ARM compiler toolchain.</li>
-<li>IAR EWARM with IAR toolchain for ARM</li>
+<li>Keil MDK and the Arm compiler toolchain.</li>
+<li>IAR EWARM with IAR toolchain for Arm</li>
 </ol>
 <p>Projects can be configured and the project content generated in the same way as in e2 studio. Please refer to <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a> section for more details.</p>
 <h2><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk"></a>
@@ -1326,7 +1363,7 @@ Using RA Smart Configurator with Keil MDK</h2>
 <h3><a class="anchor" id="RASC-MDK-prerequisites"></a>
 Prerequisites</h3>
 <ul>
-<li>Keil MDK and ARM compiler are installed and licensed. Please refer to the Release notes for the version to be installed.</li>
+<li>Keil MDK and Arm compiler are installed and licensed. Please refer to the Release notes for the version to be installed.</li>
 <li>Import the RA device pack. Download the RA device pack archive file (ex: MDK_Device_Packs_x.x.x.zip) from the <a href="https://github.com/renesas/fsp/releases">FSP GitHub release page</a>. Extract the archive file to locate the RA device pack. To import the RA device pack, launch the PackInstaller.exe from <code>&lt;keil_mdk_install_dir&gt;\UV4</code>. Select the menu item <b>File &gt; Import...</b> and browse to the extracted .pack file.</li>
 <li>Verify that the latest updates for RA devices are included in Keil MDK. To verify, select the menu "Packs" in Pack Installer and verify that the menu item <b>Check for Updates on Launch</b> is selected. If not, select <b>Check for Updates on Launch</b> and relaunch Pack Installer.</li>
 <li>For flashing and debugging, the latest Segger J-Link DLL is installed into Keil MDK.</li>
@@ -1444,7 +1481,7 @@ Create new RA project</h3>
 <div class="caption">
 Tool_setup</div></div>
 </li>
-<li>A new EWARM project can be created using the menu item <b>Project &gt; Create New Project...</b> and selecting the <b>Empty Project</b> and toolchain as ARM. Save the project to an empty folder.</li>
+<li>A new EWARM project can be created using the menu item <b>Project &gt; Create New Project...</b> and selecting the <b>Empty Project</b> and toolchain as Arm. Save the project to an empty folder.</li>
 <li><p class="startli">RA SC can now be launched from EWARM using the menu item <b>Tools &gt; RA Smart Configurator</b>.</p>
 <div class="image">
 <img src="configured-rasc-menu-item.png" alt="configured-rasc-menu-item.png"/>
@@ -1460,7 +1497,7 @@ RA SC Menu Item</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

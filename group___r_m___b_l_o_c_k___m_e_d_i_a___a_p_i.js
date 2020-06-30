@@ -42,6 +42,8 @@ var group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i =
       [ "RM_BLOCK_MEDIA_EVENT_MEDIA_INSERTED", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca824ad009871b7f393b49e7a8a63c6ed9", null ],
       [ "RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca5150a4a6be559ecc22ce94d509af55e3", null ],
       [ "RM_BLOCK_MEDIA_EVENT_ERROR", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca1b08744b324298474f730a66fb9a8d44", null ],
-      [ "RM_BLOCK_MEDIA_EVENT_POLL_STATUS", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96cad5d83659edff4f48bfda6d323aaed3e9", null ]
+      [ "RM_BLOCK_MEDIA_EVENT_POLL_STATUS", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96cad5d83659edff4f48bfda6d323aaed3e9", null ],
+      [ "RM_BLOCK_MEDIA_EVENT_MEDIA_SUSPEND", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca38c74d0dc7f5bbfab29f0d2a9e361373", null ],
+      [ "RM_BLOCK_MEDIA_EVENT_MEDIA_RESUME", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96caf9b57efd331b1b6a3fb5be28a0ccb11c", null ]
     ] ]
 ];

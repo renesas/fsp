@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -185,11 +185,11 @@ Kilohertz</li>
 </ul>
 </td><td>Kilohertz </td><td>Unit of the period specified above </td></tr>
 <tr>
-<td>General &gt; GPT U-Channel</td><td>Channel number must exist on the device</td><td>0 </td><td>Specify the GPT channel for U signal output. </td></tr>
+<td>General &gt; GPT U-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>0 </td><td>Specify the GPT channel for U signal output. </td></tr>
 <tr>
-<td>General &gt; GPT V-Channel</td><td>Channel number must exist on the device</td><td>1 </td><td>Specify the GPT channel for V signal output. </td></tr>
+<td>General &gt; GPT V-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>1 </td><td>Specify the GPT channel for V signal output. </td></tr>
 <tr>
-<td>General &gt; GPT W-Channel</td><td>Channel number must exist on the device</td><td>2 </td><td>Specify the GPT channel for W signal output. </td></tr>
+<td>General &gt; GPT W-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>2 </td><td>Specify the GPT channel for W signal output. </td></tr>
 <tr>
 <td>General &gt; Buffer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -204,8 +204,6 @@ Double Buffer</li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
-<li>
-Pin Level Retained</li>
 </ul>
 </td><td>Pin Level Low </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
 <tr>
@@ -214,14 +212,12 @@ Pin Level Retained</li>
 Pin Level Low</li>
 <li>
 Pin Level High</li>
-<li>
-Pin Level Retained</li>
 </ul>
 </td><td>Pin Level Low </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
 <tr>
-<td>Dead Time &gt; Dead Time Count Up (Raw Counts)</td><td>Must be an integer greater than or equal to 0</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for the GPT32 and GPT16 variants. </td></tr>
+<td>Extra Features &gt; Dead Time &gt; Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for the GPT32 and GPT16 variants. </td></tr>
 <tr>
-<td>Dead Time &gt; Dead Time Count Down (Raw Counts) (GPTE/GPTEH only)</td><td>Must be an integer greater than or equal to 0</td><td>0 </td><td>Select the dead time to apply during down counting. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+<td>Extra Features &gt; Dead Time &gt; Dead Time Count Down (Raw Counts) (GPTE/GPTEH only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-gpt-three_phase-clock-configuration"></a>
@@ -491,7 +487,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

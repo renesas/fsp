@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -119,11 +119,11 @@ Functions</h2></td></tr>
 <tr class="separator:ga87590ff490e5f422294773bfbc8ab1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>The USB module (r_usb_hmsc) provides an API to perform hardware control of USB communications. It implements the <a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html">USB HMSC Interface</a>. </p>
-<p>This module is USB Basic Host and Peripheral. It works in combination with Driver (r_usb_basic module).</p>
+<p>This module provides a USB Host Mass Storage Class (HMSC) driver. It implements the <a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html">USB HMSC Interface</a>. </p>
 <h1><a class="anchor" id="r-usb_hmsc-overview"></a>
 Overview</h1>
-<p>The r_usb_hmsc module, when used in combination with the r_usb_basic module, operates as a USB host mass storage class driver (HMSC). HMSC is built on the USB mass storage class Bulk-Only Transport (BOT) protocol. It is possible to communicate with BOT-compatible USB storage devices by combining it with the file system and storage device driver. This module should be used in combination with the FreeRTOS+FAT File System.</p>
+<p>The r_usb_hmsc module, when used in combination with the r_usb_basic module, operates as a USB Host Mass Storage Class (HMSC) driver. It is built on the USB Mass Storage Class Bulk-Only Transport (BOT) protocol. It is possible to communicate with BOT-compatible USB storage devices by combining this module with a file system and storage device driver.</p>
+<dl class="section note"><dt>Note</dt><dd>This module should be used in combination with the FreeRTOS+FAT File System.</dd></dl>
 <h2><a class="anchor" id="r-usb_hmsc-features"></a>
 Features</h2>
 <p>The r_usb_hmsc module has the following key features:</p>
@@ -132,10 +132,9 @@ Features</h2>
 <li>Storage command communication using the BOT protocol</li>
 <li>Support for SFF-8070i (ATAPI) USB mass storage subclass</li>
 <li>Sharing of a single pipe for IN/OUT directions or multiple devices</li>
-<li>Maximum 4 USB storage devices can be connected</li>
+<li>Supports up to 4 connected USB storage devices</li>
 </ul>
-<h3>Class Driver Overview</h3>
-<p><b>Class Requests</b></p>
+<h2>Class Requests</h2>
 <p>The class requests supported by this driver are shown below.</p>
 <table class="doxtable">
 <tr>
@@ -145,11 +144,10 @@ Features</h2>
 <tr>
 <td align="left">MassStorageReset </td><td align="left">Cancels a protocol error. </td></tr>
 </table>
-<p><b>Storage Commands</b></p>
+<h2>Storage Commands</h2>
 <p>This driver supports the following storage commands:</p>
 <ul>
 <li>TEST_UNIT_READY</li>
-<li>This module is USB Peripheral Communication Device Class Driver</li>
 <li>MODE_SELECT10</li>
 <li>MODE_SENSE10</li>
 <li>PREVENT_ALLOW</li>
@@ -159,28 +157,26 @@ Features</h2>
 </ul>
 <h1><a class="anchor" id="r-usb_hmsc-configuration"></a>
 Configuration</h1>
-<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> basic module.</p>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module.</p>
 <h2><a class="anchor" id="r-usb_hmsc-clock-configuration"></a>
 Clock Configuration</h2>
-<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> basic module.</p>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module.</p>
 <h2><a class="anchor" id="r-usb_hmsc-pin-configuration"></a>
 Pin Configuration</h2>
-<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> basic module.</p>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module.</p>
 <h1><a class="anchor" id="r-usb_hmsc-usage_notes"></a>
 Usage Notes</h1>
-<ul>
-<li>Due to the wide variety of USB mass storage device implementations, this driver is not guaranteed to work with all devices. When implementing the driver it is important to verify correct operation with the mass storage devices that the end user is expected to use.</li>
-<li>This module must be incorporated into a project using r_usb_basic. Once incorporated into a project, use the API to perform USB hardware control.</li>
-</ul>
+<dl class="section warning"><dt>Warning</dt><dd>Due to the wide variety of USB mass storage device implementations, this driver is not guaranteed to work with all devices. When implementing the driver it is important to verify correct operation with the mass storage devices that the end user is expected to use.</dd></dl>
 <h2><a class="anchor" id="r-usb_hmsc-limitations"></a>
 Limitations</h2>
 <ol type="1">
 <li>Some MSC devices may be unable to connect because they are not recognized as storage devices.</li>
 <li>MSC devices that return values of 1 or higher in response to the GetMaxLun command (mass storage class command) are not supported.</li>
-<li>Maximum 4 USB storage devices can be connected.</li>
+<li>A maximum of 4 USB storage devices can be connected.</li>
 <li>Only USB storage devices with a sector size of 512 bytes can be connected.</li>
 <li>A device that does not respond to the READ_CAPACITY command operates as a device with a sector size of 512 bytes.</li>
 <li>The continuous transfer mode cannot be used when using DMA.</li>
+<li>This module must be incorporated into a project using r_usb_basic and does not provide any public APIs.</li>
 </ol>
 <h1><a class="anchor" id="r-usb_hmsc-examples"></a>
 Examples</h1>
@@ -478,7 +474,7 @@ usb_apl_task</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

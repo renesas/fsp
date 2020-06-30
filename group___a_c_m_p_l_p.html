@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -146,7 +146,7 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
-<td>Reference Voltage Selection (ACMPLP1)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Reference Voltage Selection for ACMPLP1 (Standard mode only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 IVREF0</li>
 <li>
@@ -204,11 +204,11 @@ Inverted</li>
 <tr>
 <td>Pin Output (VCOUT)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Off</li>
+Disabled</li>
 <li>
-On</li>
+Enabled</li>
 </ul>
-</td><td>Off </td><td>Turn this on to include the output from this comparator on VCOUT. The comparator output on VCOUT is OR'd with output from all other ACMPHS and ACMPLP comparators. </td></tr>
+</td><td>Disabled </td><td>Turn this on to include the output from this comparator on VCOUT. The comparator output on VCOUT is OR'd with output from all other ACMPHS and ACMPLP comparators. </td></tr>
 <tr>
 <td>Vref (Standard mode only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -283,9 +283,9 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacf5f338d07b27f3f740a174e0f0c9159af2b3f9a72cd6d96fba8caff635c3bd0e"></a>ACMPLP_INPUT_AMPO&#160;</td><td class="fielddoc"><p>Only available on ra2a1. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacf5f338d07b27f3f740a174e0f0c9159af2b3f9a72cd6d96fba8caff635c3bd0e"></a>ACMPLP_INPUT_AMPO&#160;</td><td class="fielddoc"><p>Not available on all MCUs. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggacf5f338d07b27f3f740a174e0f0c9159a05bc693d58f275656e41f5ed36e72551"></a>ACMPLP_INPUT_CMPIN_1&#160;</td><td class="fielddoc"><p>Only available on ra4m1. </p>
+<tr><td class="fieldname"><a id="ggacf5f338d07b27f3f740a174e0f0c9159a05bc693d58f275656e41f5ed36e72551"></a>ACMPLP_INPUT_CMPIN_1&#160;</td><td class="fielddoc"><p>Not available on all MCUs. </p>
 </td></tr>
 </table>
 
@@ -303,7 +303,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6193f6c24e0910b6904acfad8767464daf7702670656e0a6733851763d5573c6c"></a>ACMPLP_REFERENCE_CMPREF_1&#160;</td><td class="fielddoc"><p>Only available on ra4m1. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6193f6c24e0910b6904acfad8767464daf7702670656e0a6733851763d5573c6c"></a>ACMPLP_REFERENCE_CMPREF_1&#160;</td><td class="fielddoc"><p>Not available on all MCUs. </p>
 </td></tr>
 </table>
 
@@ -509,7 +509,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

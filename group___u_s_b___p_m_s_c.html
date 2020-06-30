@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,20 +94,84 @@ $(document).ready(function(){initNavTree('group___u_s_b___p_m_s_c.html','');});
 <div class="title">USB Peripheral Mass Storage Class (r_usb_pmsc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This module is USB Peripheral Mass Storage Class Driver (PMSC). It implements the <a class="el" href="group___u_s_b___p_m_s_c___a_p_i.html">USB PMSC Interface</a>. This module works in combination with (r_usb_basic module). </p>
+<p>This module provides a USB Peripheral Mass Storage Class (PMSC) driver. It implements the <a class="el" href="group___u_s_b___p_m_s_c___a_p_i.html">USB PMSC Interface</a>. </p>
 <p><a class="anchor" id="functionss"></a></p><h2 class="groupheader">Functions</h2>
 <p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> for the common API (r_usb_basic) to be called from the application. <a class="anchor" id="details"></a></p><h2 class="groupheader">Detailed Description</h2>
 <h1><a class="anchor" id="r-usb_pmsc-overview"></a>
 Overview</h1>
-<p>The r_usb_pmsc module combines with the r_usb_basic module to provide USB Peripheral It operates as a Mass Storage class driver (hereinafter referred to as PMSC). The USB peripheral mass storage class driver (PMSC) comprises a USB mass storage class bulk-only transport (BOT) protocol. When combined with a USB peripheral control driver and media driver, it enables communication with a USB host as a BOT-compatible storage device.</p>
+<p>The r_usb_pmsc module combines with the r_usb_basic module to provide USB Peripheral It operates as a Mass Storage class driver (hereinafter referred to as PMSC). <br />
+The USB peripheral mass storage class driver (PMSC) comprises a USB mass storage class bulk-only transport (BOT) protocol. <br />
+When combined with a USB peripheral control driver and media driver, it enables communication with a USB host as a BOT-compatible storage device.</p>
 <h2><a class="anchor" id="r-usb_pmsc-features"></a>
 Features</h2>
 <p>The r_usb_pmsc module has the following key features:</p><ul>
-<li>Storage command control using the BOT protocol.</li>
-<li>Response to mass storage device class requests from a USB host.</li>
+<li>Storage command control using the BOT protocol</li>
+<li>Supports SFF-8070i (ATAPI)</li>
+<li>Response to mass storage device class requests from a USB host</li>
 </ul>
-<h3>Class Driver Overview</h3>
-<p><b>Class Requests</b></p>
+<h1><a class="anchor" id="r-usb_pmsc-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for r_usb_pmsc</h2>
+The following build time configurations are defined in fsp_cfg/r_usb_pmsc_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>Bulk Input Transfer Pipe</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+USB PIPE1</li>
+<li>
+USB PIPE2</li>
+<li>
+USB PIPE3</li>
+<li>
+USB PIPE4</li>
+<li>
+USB PIPE5</li>
+</ul>
+</td><td>USB PIPE1 </td><td>Select the USB pipe to use for bulk input transfers. </td></tr>
+<tr>
+<td>Bulk Output Transfer Pipe</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+USB PIPE1</li>
+<li>
+USB PIPE2</li>
+<li>
+USB PIPE3</li>
+<li>
+USB PIPE4</li>
+<li>
+USB PIPE5</li>
+</ul>
+</td><td>USB PIPE2 </td><td>Select the USB pipe to use for bulk output transfers. </td></tr>
+<tr>
+<td>Vendor Information</td><td>Vendor Information must be 8 bytes long; pad with spaces if shorter.</td><td>Vendor </td><td>Specify the vendor information field (part of the Inquiry command response). </td></tr>
+<tr>
+<td>Product Information</td><td>Product Information must be 16 bytes long; pad with spaces if shorter.</td><td>Mass Storage </td><td>Specify the product information field (part of the Inquiry command response). </td></tr>
+<tr>
+<td>Product Revision Level.</td><td>Product Revision Level must be 4 bytes long; pad with spaces if shorter.</td><td>1.00 </td><td>Specify the product revision level field (part of the Inquiry command response). </td></tr>
+<tr>
+<td>Number of Transfer Sectors</td><td>Please enter a number between 1 and 255.</td><td>8 </td><td>Specify the maximum sector size to request with one data transfer. </td></tr>
+</table>
+ <h2>Configurations for Middleware &gt; USB &gt; USB PMSC driver on r_usb_pmsc</h2>
+This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; USB &gt; USB PMSC driver on r_usb_pmsc:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_pmsc0 </td><td>Module name. </td></tr>
+</table>
+</p>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module for hardware configuration options.</p>
+<h2><a class="anchor" id="r-usb_pmsc-clock-configuration"></a>
+Clock Configuration</h2>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module.</p>
+<h2><a class="anchor" id="r-usb_pmsc-pin-configuration"></a>
+Pin Configuration</h2>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module.</p>
+<h1><a class="anchor" id="r-usb_pmsc-usage_notes"></a>
+Usage Notes</h1>
+<h2>Class Requests</h2>
 <p>The class requests supported by this driver are shown below.</p>
 <table class="doxtable">
 <tr>
@@ -115,11 +179,10 @@ Features</h2>
 <tr>
 <td align="left">Bulk-Only Mass Storage Reset </td><td align="left">0xFF </td><td align="left">Resets the connection interface to the mass storage device. </td></tr>
 <tr>
-<td align="left">Get Max Lun </td><td align="left">0xFE </td><td align="left">Reports the logical numbers supported by the device. </td></tr>
+<td align="left">Get Max Logical Unit Number </td><td align="left">0xFE </td><td align="left">Reports the logical numbers supported by the device. </td></tr>
 </table>
-<p><b>Storage Commands</b></p>
-<p>This driver supports the following storage command.</p>
-<p>This driver send the STALL or FAIL error (CSW) to USB HOST when receiving other than the following command.</p>
+<h2>Storage Commands</h2>
+<p>This driver supports the following storage commands.</p>
 <table class="doxtable">
 <tr>
 <th align="left">Command </th><th align="left">Code </th><th align="left">Description  </th></tr>
@@ -140,112 +203,34 @@ Features</h2>
 <tr>
 <td align="left">MODE_SENSE10 </td><td align="left">0x5A </td><td align="left">Gets the parameters of the logical unit. </td></tr>
 </table>
-<h3>Basic Functions</h3>
-<p>The functions of PDCD are to:</p>
-<ol type="1">
-<li>Supporting SFF-8070i (ATAPI)</li>
-<li>Respond to mass storage class requests from USB host.</li>
-</ol>
-<h3>BOT Protocol Overview</h3>
-<p>BOT (USB MSC Bulk-Only Transport) is a transfer protocol that, encapsulates command, data, and status (results of commands) using only two endpoints (one bulk in and one bulk out). The ATAPI storage commands and the response status are embedded in a "Command Block Wrapper"(CBW) and a "Command Status Wrapper"(CSW). fllow shows an overview of how the BOT protocol progresses with command and status data flowing between USB host and peripheral.</p>
+<dl class="section note"><dt>Note</dt><dd>A STALL or FAIL error is sent to the host upon receipt of any command not listed in the above table.</dd></dl>
+<h2>BOT Protocol Overview</h2>
+<p>BOT (USB MSC Bulk-Only Transport) is a transfer protocol that encapsulates command, data, and status (results of commands) using only two endpoints (one bulk in and one bulk out). The ATAPI storage commands and the response status are embedded in a Command Block Wrapper (CBW) and a Command Status Wrapper (CSW). The below image shows an overview of how the BOT protocol progresses with command and status data flowing between USB host and peripheral.</p>
 <div class="image">
 <object type="image/svg+xml" data="r_usb_pmsc_bot_protocol_overview.svg">r_usb_pmsc_bot_protocol_overview.svg</object>
 <div class="caption">
 BOT protocol Overview</div></div>
- <h3>Block Media Interface</h3>
-<p>PMSC implements a block media interface to enable access to media with different specifications. If the block media interface supports multiple media, users can select any media to access.</p>
-<h1><a class="anchor" id="r-usb_pmsc-configuration"></a>
-Configuration</h1>
-<p><h2>Build Time Configurations for r_usb_pmsc</h2>
-The following build time configurations are defined in fsp_cfg/r_usb_pmsc_cfg.h:<br />
-</p><table class="doxtable">
-<tr>
-<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Pipe to use for Bulk IN transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-USB PIPE1</li>
-<li>
-USB PIPE2</li>
-<li>
-USB PIPE3</li>
-<li>
-USB PIPE4</li>
-<li>
-USB PIPE5</li>
-</ul>
-</td><td>USB PIPE1 </td><td>Please choose between 1 and 5.<br />
-<br />
-<br />
-NOTE: The same pipe number as that used for bulk-out transfer cannot be used. </td></tr>
-<tr>
-<td>Pipe to use for Bulk OUT transfer.</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-USB PIPE1</li>
-<li>
-USB PIPE2</li>
-<li>
-USB PIPE3</li>
-<li>
-USB PIPE4</li>
-<li>
-USB PIPE5</li>
-</ul>
-</td><td>USB PIPE2 </td><td>Please choose between 1 and 5.<br />
-<br />
-<br />
-NOTE: The same pipe number as that used for bulk-in transfer cannot be used. </td></tr>
-<tr>
-<td>Vendor Information</td><td>Must be entered with 8 bytes of data.</td><td>Vendor </td><td>Specify the vendor information which is response data of Inquiry command. </td></tr>
-<tr>
-<td>Product Information</td><td>Must be entered as 16 bytes data.</td><td>Mass Storage </td><td>Specify the product information which is response data of Inquiry command. </td></tr>
-<tr>
-<td>Product Revision Level.</td><td>Must be entered as 4 bytes data.</td><td>1.00 </td><td>Specify the product revision level which is response data of Inquiry command. </td></tr>
-<tr>
-<td>The number of transfer sector.</td><td>Please enter a number between 1 and 255.</td><td>8 </td><td>Specify the maximum sector size to request to PCD (Peripheral Control Driver) at one data transfer. </td></tr>
-</table>
- <h2>Configurations for Middleware &gt; USB &gt; USB PMSC driver on r_usb_pmsc</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; USB &gt; USB PMSC driver on r_usb_pmsc:<br />
-</p><table class="doxtable">
-<tr>
-<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
-<tr>
-<td>Name</td><td>Name must be a valid C symbol</td><td>g_pmsc0 </td><td>Module name. </td></tr>
-</table>
- Setting as r_usb_pmsc module is not necessary.</p>
-<p>Refer to r_usb_basic module.</p>
-<h2><a class="anchor" id="r-usb_pmsc-clock-configuration"></a>
-Clock Configuration</h2>
-<p>Refer to r_usb_basic module.</p>
-<h2><a class="anchor" id="r-usb_pmsc-pin-configuration"></a>
-Pin Configuration</h2>
-<p>Refer to r_usb_basic module.</p>
-<h1><a class="anchor" id="r-usb_pmsc-usage_notes"></a>
-Usage Notes</h1>
+ <h2>Block Media Interface</h2>
+<p>PMSC implements a block media interface to enable access to higher-level modules. If the block media interface supports multiple media, users can select any media to access.</p>
 <h2><a class="anchor" id="r-usb_pmsc-limitations"></a>
 Limitations</h2>
 <ol type="1">
-<li>This driver returns the value 0 (zero) to the mass storage command (GetMaxLun) sent from USB Host.</li>
-<li>The sector size which this driver supports is 512 only.</li>
-<li>To use a removable storage device, the media must be inserted beforehand.</li>
-<li>For removing the removable media (PMSC), remove the USB device on the Windows PC and then disconnect the USB cable.</li>
-<li>Currently, the only media supported by the block media interface is the SD card, so the user-selectable block media interface is the SD card.</li>
-<li>When using DMA transfer at Hi Speed, it is necessary to set the r_usb_basic configuration so that the continuous transfer mode is not used.</li>
-<li>The storage area must be formatted.</li>
-<li>When using SD/MMC Block Media Implementation (rm_block_media_sdmmc), "Card Detection" must be set to "Not Used" in the SD/MMC Host Interface (r_sdhi) settings.</li>
+<li>The driver always returns 0 in response to the GetMaxLun command.</li>
+<li>The driver supports a sector size of 512 bytes only.</li>
+<li>The only media currently supported by the block media interface is an SD card. The card must be inserted before initializing the driver.</li>
+<li>When using DMA for Hi-Speed transfers continuous transfer mode must not be used in the USB Basic driver.</li>
+<li>The storage area must be formatted before use.</li>
+<li>When using the SD/MMC Block Media Implementation (rm_block_media_sdmmc), "Card Detection" must be set to "Not Used" in the SD/MMC Host Interface (r_sdhi) settings.</li>
 </ol>
 <h1><a class="anchor" id="r-usb_pmsc-examples"></a>
 Examples</h1>
 <h2>USB PMSC Example</h2>
-<p><b>Example Operating Environment</b></p>
-<p>The following is an image of connecting a PC and PMSC. When the evaluation board is connected to the host PC, it is recognized as a removable disk, and data transfer such as reading/writing files is possible. The media area of the removable disk is the media specified by the user in the block media interface.</p>
-<p>The FAT type depends on the size of the media used, and is FAT12, FAT16, or FAT32.</p>
+<p>In this example, when the evaluation board is connected to the host PC it is recognized as a removable disk and reading/writing files is possible. The FAT type is either FAT12, FAT16, or FAT32 depending on the size of the media used.</p>
 <div class="image">
 <object type="image/svg+xml" data="r_usb_pmsc_operating_environment.svg">r_usb_pmsc_operating_environment.svg</object>
 <div class="caption">
 Example Operating Environment</div></div>
-<p>This is a pmsc example of minimal use of the USB in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> usb_pmsc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    usb_event_info_t usb_event;</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">    usb_event_info_t * p_mess;</div><div class="line"><span class="preprocessor">#else                                  </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> event;</div><div class="line"><span class="preprocessor">#endif </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03">open</a>(&amp;g_basic0_ctrl, &amp;g_basic0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Loop back between PC(TerminalSoft) and USB MCU */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">        USB_APL_RCV_MSG(USB_APL_MBX, (usb_msg_t **) &amp;p_mess);</div><div class="line">        usb_event = *p_mess;</div><div class="line"></div><div class="line">        <span class="comment">/* Analyzing the received message */</span></div><div class="line">        <span class="keywordflow">switch</span> (usb_event.event)</div><div class="line"><span class="preprocessor">#else                                  </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a>(&amp;usb_event, &amp;event);</div><div class="line"></div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40adb879552af43dda95b70261eaa810777">USB_STATUS_SUSPEND</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ae9bcf94bdb90960ca692b1dfecb98e78">USB_STATUS_DETACH</a>:</div><div class="line">            {</div><div class="line"><span class="preprocessor">#if USB_SUPPORT_LPW == USB_APL_ENABLE</span></div><div class="line"></div><div class="line"><span class="comment">// @@                low_power_mcu();</span></div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* USB_SUPPORT_LPW == USB_APL_ENABLE */</span><span class="preprocessor"></span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main() */</span></div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="r-usb_pmsc-descriptor"></a>
+ <div class="fragment"><div class="line"><span class="keywordtype">void</span> usb_pmsc_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    usb_event_info_t usb_event;</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">    usb_event_info_t * p_mess;</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">    <a class="code" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> event;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03">open</a>(&amp;g_basic0_ctrl, &amp;g_basic0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Loop back between PC(TerminalSoft) and USB MCU */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if (BSP_CFG_RTOS == 2)</span></div><div class="line">        USB_APL_RCV_MSG(USB_APL_MBX, (usb_msg_t **) &amp;p_mess);</div><div class="line">        usb_event = *p_mess;</div><div class="line"></div><div class="line">        <span class="comment">/* Analyzing the received message */</span></div><div class="line">        <span class="keywordflow">switch</span> (usb_event.event)</div><div class="line"><span class="preprocessor">#else                                  </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">        g_usb_on_usb.<a class="code" href="group___u_s_b___a_p_i.html#a3acf29ae5b0455d82149e36b5387d02d">eventGet</a>(&amp;usb_event, &amp;event);</div><div class="line"></div><div class="line">        <span class="keywordflow">switch</span> (event)</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* (BSP_CFG_RTOS == 2) */</span><span class="preprocessor"></span></div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ab5c3bd23fe62533150eef3a4e8c8d13c">USB_STATUS_CONFIGURED</a>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40adb879552af43dda95b70261eaa810777">USB_STATUS_SUSPEND</a>:</div><div class="line">            <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga56bea25fbffdbda134044c49d40d5e40ae9bcf94bdb90960ca692b1dfecb98e78">USB_STATUS_DETACH</a>:</div><div class="line">            {</div><div class="line"><span class="preprocessor">#if USB_SUPPORT_LPW == USB_APL_ENABLE</span></div><div class="line"></div><div class="line"><span class="comment">// @@                low_power_mcu();</span></div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* USB_SUPPORT_LPW == USB_APL_ENABLE */</span><span class="preprocessor"></span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_main() */</span></div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="r-usb_pmsc-descriptor"></a>
 Descriptor</h1>
 <p>A template for PMSC descriptors can be found in ra/fsp/src/r_usb_pmsc/r_usb_pmsc_descriptor.c.template. Also, please be sure to use your vendor ID.</p>
 </div><!-- contents -->
@@ -254,7 +239,7 @@ Descriptor</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

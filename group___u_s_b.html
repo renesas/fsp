@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -192,32 +192,32 @@ Functions</h2></td></tr>
 <tr class="separator:ga628af921919f90a9232c8c1713cc6c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>The USB module (r_usb_basic) provides an API to perform hardware control of USB communication. It implements the <a class="el" href="group___u_s_b___a_p_i.html">USB Interface</a>. </p>
+<p>Driver for the USB peripheral on RA MCUs. This module implements the <a class="el" href="group___u_s_b___a_p_i.html">USB Interface</a>. </p>
 <h1><a class="anchor" id="r-usb_basic-overview"></a>
 Overview</h1>
-<p>The USB module performs USB hardware control. The USB module operates in combination with the device class drivers provided by Renesas.</p>
+<p>The USB module operates in combination with the device class drivers provided by Renesas to form a complete USB stack.</p>
 <h2><a class="anchor" id="r-usb_basic-features"></a>
 Features</h2>
 <p>The USB module has the following key features:</p>
 <ul>
-<li>Overall<ul>
-<li>Supporting USB Host or USB Peripheral.</li>
-<li>Device connect/disconnect, suspend/resume, and USB bus reset processing.</li>
-<li>Control transfer on pipe 0.</li>
-<li>Data transfer on pipes 1 to 9. (Bulk or Interrupt transfer)</li>
-<li>This driver supports RTOS version (hereinafter called "RTOS") and Non-OS version (hereinafter called "Non-OS"). RTOS uses the realtime OS (FreeRTOS). Non-OS does not use the real time OS.</li>
+<li>USB Host mode<ul>
+<li>Enumerates Low/Full/High-speed devices (see note below)</li>
+<li>Automatic transfer error determination and retry</li>
 </ul>
 </li>
-<li>Host mode<ul>
-<li>In host mode, enumeration as Low-speed/Full-speed/High-speed device (However, operating speed is different by devices ability.)</li>
-<li>Transfer error determination and transfer retry.</li>
+<li>USB Peripheral mode<ul>
+<li>Supports USB1.1/2.0/3.0 hosts</li>
 </ul>
 </li>
-<li>Peripheral mode<ul>
-<li>In peripheral mode, enumeration as USB Host of USB1.1/2.0/3.0.</li>
+<li>Automatic processing of device connect/disconnect, suspend/resume, and USB bus reset</li>
+<li>Up to 10 pipes<ul>
+<li>Control transfers supported on pipe 0</li>
+<li>Data transfer on pipes 1 to 9 (Bulk or Interrupt)</li>
 </ul>
 </li>
+<li>Functions with or without an RTOS</li>
 </ul>
+<dl class="section note"><dt>Note</dt><dd>Supported speeds are dependent on the MCU.</dd></dl>
 <h1><a class="anchor" id="r-usb_basic-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_usb_basic</h2>
@@ -236,7 +236,7 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
-<td>PLL clock frequency setting</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>PLL Frequency</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 24MHz</li>
 <li>
@@ -244,91 +244,90 @@ Disabled</li>
 <li>
 12MHz</li>
 <li>
-Other than 24/20/12MHz</li>
+Other</li>
 </ul>
-</td><td>24MHz </td><td>In the case of a USB module other than USB1 module, this definition is ignored. </td></tr>
+</td><td>24MHz </td><td>Specify the PLL frequency supplied to the USB module. This setting only applies to USB1 (not USB0). </td></tr>
 <tr>
-<td>CPU bus access wait setting</td><td>Refer to the RA Configuration tool for available options.</td><td>9 access cycles </td><td>CPU Bus Access Wait Select(CPU Bus Wait Register (BUSWAIT)BWAIT[3:0]) 2-17 access cycle wait </td></tr>
+<td>CPU Bus Access Wait Cycles</td><td>Refer to the RA Configuration tool for available options.</td><td>9 cycles </td><td>This setting controls the delay for consecutive USB peripheral register access. Set this value to a number of CPU cycles that is equivalent to 40.8ns or more. </td></tr>
 <tr>
-<td>Setting the battery charging function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Battery Charging</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Enable</li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Specify whether or not to include battery charging functionality. </td></tr>
+<tr>
+<td>Power IC Shutdown Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Active High</li>
+<li>
+Active Low</li>
+</ul>
+</td><td>Active High </td><td>Select the polarity of the Shutdown signal on the power supply IC (if provided). </td></tr>
+<tr>
+<td>Dedicated Charging Port (DCP) Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>When enabled, USB communication is disabled and the port is used for charging only. </td></tr>
+<tr>
+<td>Notifications for SET_INTERFACE/SET_FEATURE/CLEAR_FEATURE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>When enabled, the application will receive notifications for SET_INTERFACE, SET_FEATURE and CLEAR_FEATURE messages. </td></tr>
+<tr>
+<td>Double Buffering</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>When enabled, the FIFOs for Pipes 1-5 are double-buffered. </td></tr>
+<tr>
+<td>Continuous Transfer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable continuous transfer mode. </td></tr>
+<tr>
+<td>DMA Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disable</li>
-</ul>
-</td><td>Enable </td><td>Not using the battery charging function Using the battery charging function </td></tr>
-<tr>
-<td>Setting the power source IC</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-High assert</li>
-<li>
-Low assert</li>
-</ul>
-</td><td>High assert </td><td>Select High assert or Low assert. </td></tr>
-<tr>
-<td>Setting USB port operation when using the battery charging function</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-DCP enabled</li>
-<li>
-DCP disabled</li>
-</ul>
-</td><td>DCP disabled </td><td>Please select whether to deactivate or activate the DCP. </td></tr>
-<tr>
-<td>Setting whether to notify the application when receiving the request(SET_INTERFACE/SET_FEATURE/CLEAR_FEATURE)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Not notifying.</li>
-<li>
-Notifying</li>
-</ul>
-</td><td>Notifying </td><td>Please choose whether it corresponds to the class request. </td></tr>
-<tr>
-<td>Select whether to use the double buffer function.</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
 <li>
 Enable</li>
 </ul>
-</td><td>Enable </td><td>Please choose whether it corresponds to the double buffer. </td></tr>
+</td><td>Disable </td><td>Enable or disable DMA support for the USB module. </td></tr>
 <tr>
-<td>Select whether to use the continuous transfer mode.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>DMA Source Address</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Disable</li>
+DMA Disabled</li>
 <li>
-Enable</li>
+FS Address</li>
+<li>
+HS Address</li>
 </ul>
-</td><td>Disable </td><td>Please choose whether it corresponds to the continuous transfer mode. </td></tr>
+</td><td>DMA Disabled </td><td>Set this to match the speed mode when DMA is enabled. Otherwise, set to 'DMA Disabled'. </td></tr>
 <tr>
-<td>DMA Support.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>DMA Destination Address</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Disable</li>
+DMA Disabled</li>
 <li>
-Enable</li>
+FS Address</li>
+<li>
+HS Address</li>
 </ul>
-</td><td>Disable </td><td>Enable DMA support for the USB module. </td></tr>
-<tr>
-<td>Transfer source address when DMA is supported.</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-DMA not support.</li>
-<li>
-Setting for FS module.</li>
-<li>
-Setting for HS module.</li>
-</ul>
-</td><td>DMA not support. </td><td>It changes with the IP number used. </td></tr>
-<tr>
-<td>Transfer destination address when DMA is supported.</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-DMA not support.</li>
-<li>
-Setting for FS module.</li>
-<li>
-Setting for HS module.</li>
-</ul>
-</td><td>DMA not support. </td><td>It changes with the IP number used. </td></tr>
+</td><td>DMA Disabled </td><td>Set this to match the speed mode when DMA is enabled. Otherwise, set to 'DMA Disabled'. </td></tr>
 </table>
  <h2>Configurations for Middleware &gt; USB &gt; USB Driver on r_usb_basic</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; USB &gt; USB Driver on r_usb_basic:<br />
-</p><table class="doxtable">
+<table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
@@ -350,7 +349,7 @@ Hi Speed</li>
 <li>
 Low Speed</li>
 </ul>
-</td><td>Full Speed </td><td>Select the usb speed. </td></tr>
+</td><td>Full Speed </td><td>Select the USB speed. </td></tr>
 <tr>
 <td>USB Module Number</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -360,226 +359,103 @@ USB_IP1 Port</li>
 </ul>
 </td><td>USB_IP0 Port </td><td>Specify the USB module number to be used. </td></tr>
 <tr>
-<td>USB Class Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>USB Device Class</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Peripheral communication device class</li>
+Peripheral Communications Device Class</li>
 <li>
-Peripheral human interface device class</li>
+Peripheral Human Interface Device Class</li>
 <li>
-Peripheral mass strage class</li>
+Peripheral Mass Storage Class</li>
 <li>
-Peripheral vender class</li>
+Peripheral Vendor-defined Class</li>
 <li>
-Host communication device class</li>
+Host Communications Device Class</li>
 <li>
-Host human interface device class</li>
+Host Human Interface Device Class</li>
 <li>
-Host mass strage class</li>
+Host Mass Storage Class</li>
 <li>
-Host vender class</li>
+Host Vendor-defined Class</li>
 </ul>
-</td><td>Peripheral communication device class </td><td>Select the usb device class. </td></tr>
+</td><td>Peripheral Communications Device Class </td><td>Select the USB device class. </td></tr>
 <tr>
-<td>USB Descriptor</td><td>Define with usb_descriptor_t.</td><td>g_usb_descriptor </td><td>Enter the name of the descriptor to be used.<br />
+<td>USB Descriptor</td><td>USB Descriptor must be a valid C symbol.</td><td>g_usb_descriptor </td><td>Enter the name of the descriptor to be used.<br />
 For how to create a descriptor structure, refer to the Descriptor definition chapter in the usb_basic manual.<br />
 Specify NULL when using the Host class. </td></tr>
 <tr>
-<td>USB Complience CallBack</td><td>Define with usb_compliance_cb_t.</td><td>NULL </td><td>Member variable for setting callback used in compliance test. </td></tr>
+<td>USB Compliance Callback</td><td>Compliance Callback must be a valid C symbol.</td><td>NULL </td><td>Set the callback for compliance tests here. </td></tr>
 <tr>
-<td>USBFS USBI Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by USBI. </td></tr>
+<td>USBFS Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by the main USBFS ISR. </td></tr>
 <tr>
-<td>USBFS USBR Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by USBR. </td></tr>
+<td>USBFS Resume Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by the USBFS Resume ISR. </td></tr>
 <tr>
-<td>USBFS D0FIFO Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by FS D0FIFO. </td></tr>
+<td>USBFS D0FIFO Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by the USBFS D0FIFO. </td></tr>
 <tr>
-<td>USBFS D1FIFO Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by FS D1FIFO. </td></tr>
+<td>USBFS D1FIFO Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by the USBFS D1FIFO. </td></tr>
 <tr>
-<td>USBHS USBIR Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by USBI. </td></tr>
+<td>USBHS Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by the main USBHS ISR. </td></tr>
 <tr>
-<td>USBHS D0FIFO Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by HS D0FIFO. </td></tr>
+<td>USBHS D0FIFO Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by the USBHS D0FIFO ISR. </td></tr>
 <tr>
-<td>USBHS D1FIFO Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by HS D1FIFO. </td></tr>
+<td>USBHS D1FIFO Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by the USBHS D1FIFO ISR. </td></tr>
 <tr>
-<td>USB RTOS CallBack</td><td>Enter the address of the function.</td><td>NULL </td><td>Member variable for storing callbacks used by RTOS. </td></tr>
+<td>USB RTOS Callback</td><td>Enter the address of the function.</td><td>NULL </td><td>If an RTOS is used, set the callback function here. </td></tr>
 <tr>
-<td>USB Other Context</td><td>Enter the address of the context.</td><td>NULL </td><td>Enter the information you want to specify. </td></tr>
+<td>USB Callback Context</td><td>Enter the address of the context.</td><td>NULL </td><td>If an RTOS is used, set the callback context here. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-usb_basic-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The USB module uses PLL as the clock source. Set the PLL clock source frequency in the configuration file.</p>
+<p>The USB module uses PLL as the clock source. The PLL frequency can be set in the <b>Clocks</b> tab of the configuration editor or by using the CGC Interface at run-time.</p>
 <h2><a class="anchor" id="r-usb_basic-pin-configuration"></a>
 Pin Configuration</h2>
-<p>USB input/output pin settings are necessary to use the USB controller. The following is a list of USB pins that need to be set. Set the following pins as necessary.</p>
-<h3>USB I/O Pin Settings for USB Peripheral Operation.</h3>
-<table class="doxtable">
-<tr>
-<th align="left">Pin Name </th><th align="left">I/O </th><th align="left">Function  </th></tr>
-<tr>
-<td align="left">USB_VBUS </td><td align="left">input </td><td align="left">VBUS pin for USB communication </td></tr>
-<tr>
-<td align="left">USBHS_VBUS </td><td align="left">input </td><td align="left">VBUS pin for USB communication </td></tr>
-</table>
-<h3>USB I/O Pin Settings for USB Host Operation.</h3>
-<table class="doxtable">
-<tr>
-<th align="left">Pin Name </th><th align="left">I/O </th><th align="left">Function  </th></tr>
-<tr>
-<td align="left">USBHS_VBUSEN </td><td align="left">output </td><td align="left">VBUS output enabled pin for USB communication </td></tr>
-<tr>
-<td align="left">USBHS_OVRCURA </td><td align="left">input </td><td align="left">Overcurrent detection pin for USB communication </td></tr>
-<tr>
-<td align="left">USBHS_OVRCURB </td><td align="left">input </td><td align="left">Overcurrent detection pin for USB communication </td></tr>
-</table>
+<p>In peripheral mode the USB_VBUS and/or USBHS_VBUS pins are used to detect the USB connection status (connected or disconnected) and should be connected to the USB VBUS signal.</p>
+<dl class="section note"><dt>Note</dt><dd>USB_VBUS and USBHS_VBUS are 5V-tolerant pins.</dd></dl>
+<p>In host mode the USBHS_VBUSEN, USBHS_OVRCURA and USBHS_OVRCURB pins should be connected to the relevant pins of an external power supply IC, if available. These pins will be used to manage the USB VBUS supply.</p>
 <h2><a class="anchor" id="r-usb_basic-dma-configuration"></a>
 DMA Configuration</h2>
-<p>To use DMA, select an empty box under Basic in RA Configuration. The box has separate sections for sending and receiving. When you make a selection, a menu will appear, allowing you to select a DMA module. In addition, since the box is separated for transmission and reception, set the DMA in the direction you want to use.</p>
-<p>When using DMA with USB, it is necessary to set the DMA items in RA Configuration.</p>
+<p>When using DMA with USB the following properties must be configured for each DMAC module:</p>
 <table class="doxtable">
 <tr>
 <th align="left">Config Name </th><th align="left">Select Name </th><th align="left">Description  </th></tr>
 <tr>
 <td align="left">Transfer Size </td><td align="left">2 Bytes<br />
-4 Bytes</td><td align="left">When operating with FS, select "2 Bytes"<br />
-When operating with HS, select "4 Bytes" </td></tr>
+4 Bytes</td><td align="left">In FS mode, select "2 Bytes"<br />
+In HS mode, select "4 Bytes" </td></tr>
 <tr>
 <td align="left">Activation source</td><td align="left">USBFS FIFO 0<br />
 USBFS FIFO 1<br />
 USBHS FIFO 0<br />
-USBHS FIFO 1</td><td align="left">Select USBFS FIFO 0 when receiving data with FS<br />
-Select USBFS FIFO 1 when sending data with FS<br />
-Select USBHS FIFO 0 when receiving data with HS<br />
-Select USBHS FIFO 1 when sending data with HS </td></tr>
+USBHS FIFO 1</td><td align="left">USB FS Reception<br />
+USB FS Transmission<br />
+USB HS Reception<br />
+USB HS Transmission </td></tr>
 </table>
 <h1><a class="anchor" id="r-usb_basic-descriptor-definition"></a>
 Descriptor definition</h1>
-<p>The usb_descriptor_t structure stores descriptor information such as device descriptor and configuration descriptor.</p>
-<p>The descriptor information set in this structure is sent to the USB host as response data to a standard request during enumeration of the USB host.</p>
-<p>This structure is specified in the R_USB_Open function argument.</p>
-<pre>typedef struct usb_descriptor
-{
-     uint8_t *p_device;    /* Note 1 */
-     uint8_t *p_config_f;  /* Note 2 */
-     uint8_t *p_config_h;  /* Note 3 */
-     uint8_t *p_qualifier; /* Note 4 */
-     uint8_t **pp_string;  /* Note 5 */
-     uint8_t num_string;   /* Note 6 */
-} usb_descriptor_t;</pre><h3>Note:</h3>
-<ol type="1">
-<li>Specify the top address of the area that stores the device descriptor in the member (p_device).</li>
-<li>Specify the top address of the area that stores the Full-speed configuration descriptor in the member (p_config_f).<br />
- Even when using High speed, make sure you specify the top address of the area that stores the Full-speed configuration descriptor in this member.</li>
-<li>Specify the top address of the area that stores the High speed configuration descriptor in the member (p_config_h).<br />
- For Full speed, specify USB_NULL to this member.</li>
-<li>Specify the top address of the area that stores the qualifier descriptor in the member (p_qualifier). For Full speed, specify USB_NULL to this member.</li>
-<li><p class="startli">Specify the top address of the string descriptor table in the member (pp_string).<br />
- In the string descriptor table,specify the top address of the areas that store each string descriptor. <br />
- </p><pre>Ex. 1) Full speed                              Ex. 2) High speed</pre><pre>     usb_descriptor_t g_usb_descriptor =              usb_descriptor_t g_usb_descriptor =
-     {                                              {
-         smp_device,                                    smp_device,
-         smp_config_f,                                  smp_config_f,
-         USB_NULL,                                      smp_config_h,
-         USB_NULL,                                      smp_qualifier,
-         smp_str_table,                                 smp_str_table,
-         3,                                             3,
-     };                                             };</pre></li>
-<li>Specify the number of the string descriptor which set in the string descriptor table to the member (num_string).</li>
-<li>After setting the descriptors, enter the name of the structure that stores the start address of each descriptor in the USB Descriptor item of RA Configuration.<br />
-</li>
-</ol>
+<p>In Peripheral mode, the usb_descriptor_t structure stores descriptor information including the device and configuration descriptors. The values set in this structure are sent to the USB host as part of enumeration.</p>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>usb_descriptor</div><div class="line">{</div><div class="line">    uint8_t *p_device;    <span class="comment">/* Pointer to device descriptor */</span></div><div class="line">    uint8_t *p_config_f;  <span class="comment">/* Pointer to full-speed configuration descriptor */</span></div><div class="line">    uint8_t *p_config_h;  <span class="comment">/* Pointer to high-speed configuration descriptor (HS only) */</span></div><div class="line">    uint8_t *p_qualifier; <span class="comment">/* Pointer to device qualifier descriptor (HS only) */</span></div><div class="line">    uint8_t **pp_string;  <span class="comment">/* Pointer to string descriptor table */</span></div><div class="line">    uint8_t num_string;   <span class="comment">/* Number of strings in table */</span></div><div class="line">} usb_descriptor_t;</div></div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Even in high-speed mode the full-speed configuration must be made available: <div class="fragment"><div class="line"><span class="comment">/* Example USB FS descriptor struct */</span></div><div class="line">usb_descriptor_t g_usb_descriptor =</div><div class="line">{</div><div class="line">    smp_device,</div><div class="line">    smp_config_f,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    smp_str_table,</div><div class="line">    3,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Example USB HS descriptor struct */</span></div><div class="line">usb_descriptor_t g_usb_descriptor =</div><div class="line">{</div><div class="line">    smp_device,</div><div class="line">    smp_config_f,</div><div class="line">    smp_config_h,</div><div class="line">    smp_qualifier,</div><div class="line">    smp_str_table,</div><div class="line">    3,</div><div class="line">};</div></div><!-- fragment --></dd></dl>
 <h2>String Descriptor</h2>
-<p>This USB driver requires each string descriptor that is constructed to be registered in the string descriptor table. The following describes how to register a string descriptor.</p>
-<ol type="1">
-<li><p class="startli">First construct each string descriptor. Then, define the variable of each string descriptor in uint8_t* type. </p><pre> Example descriptor construction
-    uint8_t smp_str_descriptor0[]
-    {
-        0x04,      /* Length */
-        0x03,      /* Descriptor type */
-        0x09, 0x04 /* Language ID */
-    };</pre><pre>    uint8_t smp_str_descriptor1[] =
-    {
-        0x10,      /* Length */
-        0x03,      /* Descriptor type */
-        'R', 0x00,
-        'E', 0x00,
-        'N', 0x00,
-        'E', 0x00,
-        'S', 0x00,
-        'A', 0x00,
-        'S', 0x00
-    };
-    uint8_t smp_str_descriptor2[] =
-    {
-        0x12,      /* Length */
-        0x03,      /* Descriptor type */
-        'C', 0x00,
-        'D', 0x00,
-        'C', 0x00,
-        '_', 0x00,
-        'D', 0x00,
-        'E', 0x00,
-        'M', 0x00,
-        'O', 0x00
-    };</pre></li>
-<li>Set the top address of each string descriptor constructed above in the string descriptor table. Define the variables of the string descriptor table as uint8_t* type.</li>
-<li>Set the top address of the string descriptor table in the usb_descriptor_t structure member (pp_string).</li>
-<li>Set the number of the string descriptor which is set in the string descriptor table to usb_descriptor_t structure member (num_string). In the above example, the value 3 is set to the member (num_string).</li>
-</ol>
-<dl class="section note"><dt>Note</dt><dd>The position set for each string descriptor in the string descriptor table is determined by the index values set in the descriptor itself (iManufacturer, iConfiguration, etc.).</dd>
-<dd>
-For example, in the table below, the manufacturer is described in smp_str_descriptor1 and the value of iManufacturer in the device descriptor is &ldquo;1&rdquo;. Therefore, the top address "smp_str_descriptor1" is set at Index 1 in the string descriptor table.</dd></dl>
-<pre>/* String Descriptor table */
-    uint8_t *smp_str_table[] =
-    {
-        smp_str_descriptor0, /* Index: 0 */
-        smp_str_descriptor1, /* Index: 1 */
-        smp_str_descriptor2, /* Index: 2 */
-    };</pre><h2>Other Descriptors</h2>
-<ol type="1">
-<li>Please construct the device descriptor, configuration descriptor, and qualifier descriptor based on instructions provided in the Universal Serial Bus Revision 2.0 specification (<a href="http://www.usb.org/developers/docs/">http://www.usb.org/developers/docs/</a>) Each descriptor variable should be defined as uint8_t* type.</li>
-<li>The top address of each descriptor should be registered in the corresponding usb_descriptor_t function member.</li>
-</ol>
+<p>This USB driver requires string descriptors to be registered in the string descriptor table. Use the following format to define the elements:</p>
+<div class="fragment"><div class="line"><span class="comment">/* String descriptor 0 is reserved for language ID information */</span></div><div class="line">uint8_t str_descriptor_0[]</div><div class="line">{</div><div class="line">    0x04,      <span class="comment">/* Length */</span></div><div class="line">    0x03,      <span class="comment">/* Descriptor type */</span></div><div class="line">    0x09, 0x04 <span class="comment">/* Language ID */</span></div><div class="line">};</div><div class="line"></div><div class="line">uint8_t str_descriptor_manufacturer[] =</div><div class="line">{</div><div class="line">    0x10,      <span class="comment">/* Length */</span></div><div class="line">    0x03,      <span class="comment">/* Descriptor type */</span></div><div class="line">    <span class="charliteral">&#39;R&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;E&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;N&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;E&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;S&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;A&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;S&#39;</span>, 0x00</div><div class="line">};</div><div class="line"></div><div class="line">uint8_t str_descriptor_product[] =</div><div class="line">{</div><div class="line">    0x12,      <span class="comment">/* Length */</span></div><div class="line">    0x03,      <span class="comment">/* Descriptor type */</span></div><div class="line">    <span class="charliteral">&#39;C&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;D&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;C&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;_&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;D&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;E&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;M&#39;</span>, 0x00,</div><div class="line">    <span class="charliteral">&#39;O&#39;</span>, 0x00</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* String descriptor table */</span></div><div class="line">uint8_t * smp_str_table[] =</div><div class="line">{</div><div class="line">    str_descriptor_0,            <span class="comment">/* Index: 0 */</span></div><div class="line">    str_descriptor_manufacturer, <span class="comment">/* Index: 1 */</span></div><div class="line">    str_descriptor_product,      <span class="comment">/* Index: 2 */</span></div><div class="line">};</div></div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Set the string index values in the device/configuration descriptors (iManufacturer, iConfiguration etc.) to the index of the desired string in the string descriptor table. For example, in the table below, the manufacturer is described in <b>str_descriptor_manufacturer</b> and the value of iManufacturer in the device descriptor is <b>1</b>.</dd></dl>
+<h2>Other Descriptors</h2>
+<p>Refer to the Universal Serial Bus Revision 2.0 specification (<a href="http://www.usb.org/developers/docs/">http://www.usb.org/developers/docs/</a>) for details on how to construct the device, configuration and qualifier descriptors.</p>
 <h1><a class="anchor" id="r-usb_basic-usage_notes"></a>
 Usage Notes</h1>
-<h2>Creating an Application Program</h2>
-<p>This chapter provides information for creating application programs.</p>
-<h3>Descriptor Creation</h3>
-<p>For USB peripheral operations, your will need to create descriptors to meet your system specifications. Register the created descriptors in the usb_descriptor_t function members. USB host operations do not require creation of special descriptors. Set usb_descriptor_t structure in USB Descriptor of RA Configuation.</p>
-<h3>Creation and Registration of Callback Functions (RTOS only)</h3>
-<p>Create and register a callback function to be registered in RA Configuration. In addition to the USB completion event, a variety of information about the event is also set by the USB driver. Be sure to notify the application task of the relevant argument information using, for example, the RTOS API. The item to register a callback in RA Configuration is USB RTOS CallBack.</p>
-<h3>Creation of Main Routine and Application Program Tasks</h3>
-<ol type="1">
-<li><p class="startli">Non-OS</p>
-<p class="startli">Describe the main routine in the main loop format. <br />
- Make sure you call the R_USB_EventGet function in the main loop. <br />
- The USB-related completed events are obtained from the return value of the R_USB_EventGet function. Also make sure your application program has a routine for each return value.<br />
- The routine is triggered by the corresponding return value<br />
- Note: Carry out USB data communication using the R_USB_Read, R_USB_Write functions after checking the return value USB_STATUS_CONFIGURED of R_USB_EventGet function.</p>
-</li>
-<li><p class="startli">RTOS</p>
-<p class="startli">Write application program tasks in loop format.<br />
- In the main loop, be sure to call the RTOS API to retrieve the information (USB completion events and the like) that is received as notifications from the callback function.<br />
- Write programs that correspond to the respective USB completion events, with the USB completion events retrieved by the application task as a trigger.</p>
-</li>
-</ol>
-<h3>Registration to the real time OS (RTOS only)</h3>
-<p>Register the following in RTOS.</p><ol type="1">
-<li>Application Program Tasks</li>
-<li>RTOS features used by application tasks and callback functions</li>
-</ol>
-<p>Note: The priority of the application program task is 1 by default. To increase the priority, increase the value of Max Priorities in the RTOS config.</p>
+<h2>Program Structure</h2>
+<p>USB applications (whether using an RTOS or not) should be written as an event-handling loop. Either a callback function (RTOS only) or R_USB_EventGet should be used to provide event data to the application loop where a switch statement handles the event.</p>
+<dl class="section note"><dt>Note</dt><dd>The USB_STATUS_CONFIGURED event should be confirmed before calling R_USB_Read or R_USB_Write.</dd></dl>
 <h2><a class="anchor" id="r-usb_basic-limitations"></a>
 Limitations</h2>
-<p>Developers should be aware of the following limitations when using the USB:</p>
+<p>Developers should be aware of the following limitations when using the USB driver:</p>
 <ul>
-<li>The current USB driver does not support hub mode.</li>
-<li>In USB host mode, the module does not support suspend during data transfer. Execute suspend only after confirming that data transfer is complete.</li>
+<li>The current USB driver does not support hub.</li>
+<li>In USB host mode, the module does not support suspend during data transfers. Execute suspend only after confirming that all transfers are complete.</li>
 <li>Multiconfigurations are not supported.</li>
-<li>The USB host and USB peripheral modes cannot operate at the same time.</li>
-<li>This USB driver does not support the error processing when the out of specification values are specified to the arguments of each function in the driver.</li>
-<li>This driver does not support the CPU transfer using D0FIFO/D1FIFO register.</li>
-<li>This driver does not support multiple device class drivers at the same time.</li>
-<li>The USB High speed module only supports High speed operation.</li>
+<li>USB host and peripheral modes cannot operate at the same time.</li>
+<li>This driver does not support CPU transfers using the D0FIFO/D1FIFO register.</li>
+<li>Only one device-class driver may be used at a time.</li>
+<li>The USB Hi-Speed module only supports Hi-Speed operation.</li>
 </ul>
 <h1><a class="anchor" id="r-usb_basic-examples"></a>
 Examples</h1>
@@ -645,6 +521,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -675,6 +556,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -735,7 +621,13 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
+<dd>
+Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -796,7 +688,13 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
+<dd>
+Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -844,6 +742,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -875,6 +778,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -907,6 +815,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -946,6 +859,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1044,7 +962,13 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
+<dd>
+Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1098,7 +1022,13 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
+<dd>
+Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1138,6 +1068,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1269,6 +1204,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1307,7 +1247,9 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Do not use the same variable as the first argument of R_USB_Open for the first argument. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Do not use the same variable as the first argument of R_USB_Open for the first argument. </dd>
+<dd>
+Do not call this API in the interrupt function. </dd></dl>
 
 </div>
 </div>
@@ -1365,6 +1307,7 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the interrupt function. </dd></dl>
 
 </div>
 </div>
@@ -1417,7 +1360,13 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
+<dd>
+Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1464,7 +1413,13 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
+<dd>
+Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1511,7 +1466,13 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
+<dd>
+Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1550,6 +1511,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1580,6 +1546,11 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dd>
+(1). Interrupt function. </dd>
+<dd>
+(2). Callback function ( for RTOS ). </dd></dl>
 
 </div>
 </div>
@@ -1841,7 +1812,7 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

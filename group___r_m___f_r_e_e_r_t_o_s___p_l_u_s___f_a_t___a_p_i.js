@@ -24,7 +24,9 @@ var group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i =
     ] ],
     [ "rm_freertos_plus_fat_event_t", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#gab7684e811b3d1074ec0fde335c021900", [
       [ "RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_REMOVED", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#ggab7684e811b3d1074ec0fde335c021900abb0902851973dc77e7b2d2355d082832", null ],
-      [ "RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_INSERTED", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#ggab7684e811b3d1074ec0fde335c021900a6525a46d3ba3ad13d893861a54c0a9fd", null ]
+      [ "RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_INSERTED", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#ggab7684e811b3d1074ec0fde335c021900a6525a46d3ba3ad13d893861a54c0a9fd", null ],
+      [ "RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_SUSPEND", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#ggab7684e811b3d1074ec0fde335c021900a7ae511d9e908f605b966fca1a2c9b43b", null ],
+      [ "RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_RESUME", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#ggab7684e811b3d1074ec0fde335c021900ae7d315b7aa284926db89675c33d30166", null ]
     ] ],
     [ "rm_freertos_plus_fat_type_t", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#gac21461e79821454c7712431da634d6fc", [
       [ "RM_FREERTOS_PLUS_FAT_TYPE_FAT32", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#ggac21461e79821454c7712431da634d6fcace10419bd90ffbd7594f12753ef94967", null ],

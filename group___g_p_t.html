@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -419,13 +419,13 @@ Trigger Event A/D Converter Start Request B During Down Counting</li>
 </ul>
 </td><td></td><td>Select which A/D converter start request interrupts to generate and at which point in the cycle to generate them. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
 <tr>
-<td>Extra Features &gt; Dead Time &gt; Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535.</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for the GPT32 and GPT16 variants. </td></tr>
+<td>Extra Features &gt; Dead Time &gt; Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for the GPT32 and GPT16 variants. </td></tr>
 <tr>
-<td>Extra Features &gt; Dead Time &gt; Dead Time Count Down (Raw Counts) (GPTE/GPTEH only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535.</td><td>0 </td><td>Select the dead time to apply during down counting. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+<td>Extra Features &gt; Dead Time &gt; Dead Time Count Down (Raw Counts) (GPTE/GPTEH only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
 <tr>
-<td>Extra Features &gt; ADC Trigger (GPTE/GPTEH only) &gt; ADC A Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535.</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG A event. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+<td>Extra Features &gt; ADC Trigger (GPTE/GPTEH only) &gt; ADC A Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG A event. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
 <tr>
-<td>Extra Features &gt; ADC Trigger (GPTE/GPTEH only) &gt; ADC B Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535.</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG B event. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+<td>Extra Features &gt; ADC Trigger (GPTE/GPTEH only) &gt; ADC B Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG B event. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
 <tr>
 <td>Extra Features &gt; Interrupt Skipping (GPTE/GPTEH only) &gt; Interrupt to Count</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1804,7 +1804,7 @@ Advanced PWM features, optional. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

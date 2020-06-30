@@ -73,8 +73,7 @@ var group___l_p_m___a_p_i =
       [ "LPM_SNOOZE_CANCEL_SOURCE_SCI0_AM", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a85a194cc0fa66440e83f60f41ccb483a", null ],
       [ "LPM_SNOOZE_CANCEL_SOURCE_SCI0_RXI_OR_ERI", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a8d8b9b58ca6c6a30624728f10a70ce43", null ],
       [ "LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852abaf93a1f417375d09f6264b129b45852", null ],
-      [ "LPM_SNOOZE_CANCEL_SOURCE_DOC_DOPCI", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a50c3d8bf3aa14313a7e180faa479b08d", null ],
-      [ "LPM_SNOOZE_CANCEL_SOURCE_CTSU_CTSUFN", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a309fb11ccaab0c7b34b6b683a9eb9a62", null ]
+      [ "LPM_SNOOZE_CANCEL_SOURCE_DOC_DOPCI", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a50c3d8bf3aa14313a7e180faa479b08d", null ]
     ] ],
     [ "lpm_snooze_dtc_t", "group___l_p_m___a_p_i.html#ga954afb771b813cdb81e0511f604da765", [
       [ "LPM_SNOOZE_DTC_DISABLE", "group___l_p_m___a_p_i.html#gga954afb771b813cdb81e0511f604da765a440583d0c645e33f67552946fae680fa", null ],

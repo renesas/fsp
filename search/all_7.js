@@ -14,6 +14,7 @@ var searchData=
   ['hour_5fmatch',['hour_match',['../group___r_t_c___a_p_i.html#a99fb3242d7bb1eb482cb436a49c1b18d',1,'rtc_alarm_time_t']]],
   ['hsize',['hsize',['../group___d_i_s_p_l_a_y___a_p_i.html#a1b25a280e83ced0734835eccb75e988a',1,'display_input_cfg_t']]],
   ['hstride',['hstride',['../group___d_i_s_p_l_a_y___a_p_i.html#a8789df7cb3a6f24f0e4f7bda9256bf74',1,'display_input_cfg_t']]],
+  ['hsync_5fpolarity',['hsync_polarity',['../group___p_d_c___a_p_i.html#ab82be0c50aadbb28051b55aaa3d8b372',1,'pdc_cfg_t']]],
   ['htiming',['htiming',['../group___d_i_s_p_l_a_y___a_p_i.html#a7d9bd0b388f63d87d236a55510527eab',1,'display_output_cfg_t']]],
   ['hw_5fcode',['hw_code',['../group___g_a_p___a_p_i.html#a748664edc8dab5959fcdfb7a41ec8dad',1,'st_ble_gap_hw_err_evt_t']]],
   ['hysteresis',['hysteresis',['../group___t_o_u_c_h___a_p_i.html#a4752c9106a2936804192b0f02398d6f5',1,'touch_button_cfg_t']]]

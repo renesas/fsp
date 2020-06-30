@@ -8,7 +8,19 @@ var searchData=
   ['uart_5fstate_5ft',['uart_state_t',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#structuart__state__t',1,'']]],
   ['ulpgn_5fsocket_5ft',['ulpgn_socket_t',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#structulpgn__socket__t',1,'']]],
   ['usb_5fapi_5ft',['usb_api_t',['../group___u_s_b___a_p_i.html#structusb__api__t',1,'']]],
+  ['usb_5fhcdc_5fabstractstate_5ft',['usb_hcdc_abstractstate_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__abstractstate__t',1,'']]],
+  ['usb_5fhcdc_5fbreakduration_5ft',['usb_hcdc_breakduration_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__breakduration__t',1,'']]],
+  ['usb_5fhcdc_5fcommfeature_5ft',['usb_hcdc_commfeature_t',['../group___u_s_b___h_c_d_c___a_p_i.html#unionusb__hcdc__commfeature__t',1,'']]],
+  ['usb_5fhcdc_5fcontrollinestate_5ft',['usb_hcdc_controllinestate_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__controllinestate__t',1,'']]],
+  ['usb_5fhcdc_5fcountrysetting_5ft',['usb_hcdc_countrysetting_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__countrysetting__t',1,'']]],
+  ['usb_5fhcdc_5fencapsulated_5ft',['usb_hcdc_encapsulated_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__encapsulated__t',1,'']]],
+  ['usb_5fhcdc_5flinecoding_5ft',['usb_hcdc_linecoding_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__linecoding__t',1,'']]],
+  ['usb_5fhcdc_5fserialstate_5ft',['usb_hcdc_serialstate_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__serialstate__t',1,'']]],
   ['usb_5fhhid_5fapi_5ft',['usb_hhid_api_t',['../group___u_s_b___h_h_i_d___a_p_i.html#structusb__hhid__api__t',1,'']]],
   ['usb_5fhmsc_5fapi_5ft',['usb_hmsc_api_t',['../group___u_s_b___h_m_s_c___a_p_i.html#structusb__hmsc__api__t',1,'']]],
-  ['usb_5finstance_5ft',['usb_instance_t',['../group___u_s_b___a_p_i.html#structusb__instance__t',1,'']]]
+  ['usb_5finstance_5ft',['usb_instance_t',['../group___u_s_b___a_p_i.html#structusb__instance__t',1,'']]],
+  ['usb_5fpcdc_5fctrllinestate_5ft',['usb_pcdc_ctrllinestate_t',['../group___u_s_b___p_c_d_c___a_p_i.html#structusb__pcdc__ctrllinestate__t',1,'']]],
+  ['usb_5fpcdc_5flinecoding_5ft',['usb_pcdc_linecoding_t',['../group___u_s_b___p_c_d_c___a_p_i.html#structusb__pcdc__linecoding__t',1,'']]],
+  ['usb_5fsci_5fserialstate_5ft',['usb_sci_serialstate_t',['../group___u_s_b___p_c_d_c___a_p_i.html#unionusb__sci__serialstate__t',1,'']]],
+  ['usb_5fserial_5fstate_5fbitmap_5ft',['usb_serial_state_bitmap_t',['../group___u_s_b___p_c_d_c___a_p_i.html#structusb__serial__state__bitmap__t',1,'']]]
 ];

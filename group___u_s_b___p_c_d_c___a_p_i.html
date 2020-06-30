@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('group___u_s_b___p_c_d_c___a_p_i.html',
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">USB PCDC Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
@@ -100,24 +101,35 @@ $(document).ready(function(){initNavTree('group___u_s_b___p_c_d_c___a_p_i.html',
 <p>Interface for USB PCDC functions. </p>
 <h1><a class="anchor" id="USB_PCDC_API_Summary"></a>
 Summary</h1>
-<p>The USB interface provides USB functionality.</p>
+<p>The USB PCDC interface provides USB PCDC functionality.</p>
 <p>The USB PCDC interface can be implemented by:</p><ul>
-<li><a class="el" href="group___u_s_b___p_c_d_c.html">USB Peripheral Communication Device Class (r_usb_pcdc)</a> </li>
+<li><a class="el" href="group___u_s_b___p_c_d_c.html">USB Peripheral Communications Device Class (r_usb_pcdc)</a> </li>
 </ul>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structusb__serial__state__bitmap__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#structusb__serial__state__bitmap__t">usb_serial_state_bitmap_t</a></td></tr>
+<tr class="separator:structusb__serial__state__bitmap__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:unionusb__sci__serialstate__t"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#unionusb__sci__serialstate__t">usb_sci_serialstate_t</a></td></tr>
+<tr class="separator:unionusb__sci__serialstate__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structusb__pcdc__linecoding__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#structusb__pcdc__linecoding__t">usb_pcdc_linecoding_t</a></td></tr>
+<tr class="separator:structusb__pcdc__linecoding__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structusb__pcdc__ctrllinestate__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#structusb__pcdc__ctrllinestate__t">usb_pcdc_ctrllinestate_t</a></td></tr>
+<tr class="separator:structusb__pcdc__ctrllinestate__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga9e76ac14dae5e5e44b5df6e8cbee6bd0"><td class="memItemLeft" align="right" valign="top"><a id="ga9e76ac14dae5e5e44b5df6e8cbee6bd0"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#ga9e76ac14dae5e5e44b5df6e8cbee6bd0">USB_PCDC_SET_LINE_CODING</a></td></tr>
-<tr class="memdesc:ga9e76ac14dae5e5e44b5df6e8cbee6bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command code for Set Line Coding. <br /></td></tr>
+<tr class="memdesc:ga9e76ac14dae5e5e44b5df6e8cbee6bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Line Coding. <br /></td></tr>
 <tr class="separator:ga9e76ac14dae5e5e44b5df6e8cbee6bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3e7ae95dcfc42bd8912fe18339893d82"><td class="memItemLeft" align="right" valign="top"><a id="ga3e7ae95dcfc42bd8912fe18339893d82"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#ga3e7ae95dcfc42bd8912fe18339893d82">USB_PCDC_GET_LINE_CODING</a></td></tr>
-<tr class="memdesc:ga3e7ae95dcfc42bd8912fe18339893d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command code for Get Line Coding. <br /></td></tr>
+<tr class="memdesc:ga3e7ae95dcfc42bd8912fe18339893d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Line Coding. <br /></td></tr>
 <tr class="separator:ga3e7ae95dcfc42bd8912fe18339893d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6f454d69f2a0ee2fcae6793f1b0cd40a"><td class="memItemLeft" align="right" valign="top"><a id="ga6f454d69f2a0ee2fcae6793f1b0cd40a"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#ga6f454d69f2a0ee2fcae6793f1b0cd40a">USB_PCDC_SET_CONTROL_LINE_STATE</a></td></tr>
-<tr class="memdesc:ga6f454d69f2a0ee2fcae6793f1b0cd40a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Command code for Control Line State. <br /></td></tr>
+<tr class="memdesc:ga6f454d69f2a0ee2fcae6793f1b0cd40a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control Line State. <br /></td></tr>
 <tr class="separator:ga6f454d69f2a0ee2fcae6793f1b0cd40a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf96c195939328262d81a3e595427de74"><td class="memItemLeft" align="right" valign="top"><a id="gaf96c195939328262d81a3e595427de74"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#gaf96c195939328262d81a3e595427de74">USB_PCDC_SERIAL_STATE</a></td></tr>
@@ -128,13 +140,194 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga9c8890b18e109e44ff0f98cc8a187a52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup packet table size (uint16_t * 5) <br /></td></tr>
 <tr class="separator:ga9c8890b18e109e44ff0f98cc8a187a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structusb__serial__state__bitmap__t" id="structusb__serial__state__bitmap__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structusb__serial__state__bitmap__t">&#9670;&nbsp;</a></span>usb_serial_state_bitmap_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usb_serial_state_bitmap_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Virtual UART signal state </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a64d87fa03e44b380127bfffec89336e4"></a>uint16_t</td>
+<td class="fieldname">
+b_rx_carrier: 1</td>
+<td class="fielddoc">
+DCD signal. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6fdf45d945abbb8784efe11afb142783"></a>uint16_t</td>
+<td class="fieldname">
+b_tx_carrier: 1</td>
+<td class="fielddoc">
+DSR signal. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0ed45011c80bc4595fafd6ae3b61adda"></a>uint16_t</td>
+<td class="fieldname">
+b_break: 1</td>
+<td class="fielddoc">
+Break signal. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2a4cf75c8c21f0deb1c7756b7a3d952a"></a>uint16_t</td>
+<td class="fieldname">
+b_ring_signal: 1</td>
+<td class="fielddoc">
+Ring signal. </td></tr>
+<tr><td class="fieldtype">
+<a id="a049a161469392f6acb0ad2c77418c10c"></a>uint16_t</td>
+<td class="fieldname">
+b_framing: 1</td>
+<td class="fielddoc">
+Framing error. </td></tr>
+<tr><td class="fieldtype">
+<a id="a53bb96e335f4b582f259d27b7b707ce5"></a>uint16_t</td>
+<td class="fieldname">
+b_parity: 1</td>
+<td class="fielddoc">
+Parity error. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4041459eb6a3013cd53138f3482dfb14"></a>uint16_t</td>
+<td class="fieldname">
+b_over_run: 1</td>
+<td class="fielddoc">
+Overrun error. </td></tr>
+<tr><td class="fieldtype">
+<a id="a04305ba233471eb366c15711eb33d40f"></a>uint16_t</td>
+<td class="fieldname">
+rsv: 9</td>
+<td class="fielddoc">
+Reserved. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="unionusb__sci__serialstate__t" id="unionusb__sci__serialstate__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#unionusb__sci__serialstate__t">&#9670;&nbsp;</a></span>usb_sci_serialstate_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union usb_sci_serialstate_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Class Notification Serial State </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a05446d3da8609d7ffcf12e2306ca11e5"></a>uint32_t</td>
+<td class="fieldname">
+word</td>
+<td class="fielddoc">
+Word Access. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad03c704d3de17d6f4fde714a209438d2"></a><a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#structusb__serial__state__bitmap__t">usb_serial_state_bitmap_t</a></td>
+<td class="fieldname">
+bit</td>
+<td class="fielddoc">
+Bit Access. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structusb__pcdc__linecoding__t" id="structusb__pcdc__linecoding__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structusb__pcdc__linecoding__t">&#9670;&nbsp;</a></span>usb_pcdc_linecoding_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usb_pcdc_linecoding_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Virtual UART communication settings </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a4abd0faaf4c6d287d7aa3b7eb0b352a2"></a>uint32_t</td>
+<td class="fieldname">
+dw_dte_rate</td>
+<td class="fielddoc">
+Bitrate. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab27d14784ecd4e81a0b6bd1d35c11189"></a>uint8_t</td>
+<td class="fieldname">
+b_char_format</td>
+<td class="fielddoc">
+Stop bits. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3023ac6e3e0a0e67c061d7a9d78b3ebe"></a>uint8_t</td>
+<td class="fieldname">
+b_parity_type</td>
+<td class="fielddoc">
+Parity. </td></tr>
+<tr><td class="fieldtype">
+<a id="a97600a7f63c63c63a25f5575047052e9"></a>uint8_t</td>
+<td class="fieldname">
+b_data_bits</td>
+<td class="fielddoc">
+Data bits. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa7d986360b70b33c39abdad8904d33f4"></a>uint8_t</td>
+<td class="fieldname">
+rsv</td>
+<td class="fielddoc">
+Reserved. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structusb__pcdc__ctrllinestate__t" id="structusb__pcdc__ctrllinestate__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structusb__pcdc__ctrllinestate__t">&#9670;&nbsp;</a></span>usb_pcdc_ctrllinestate_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usb_pcdc_ctrllinestate_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Virtual UART control line state </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a01b4f74de16cc6802589b253c66061b9"></a>uint16_t</td>
+<td class="fieldname">
+bdtr: 1</td>
+<td class="fielddoc">
+DTR. </td></tr>
+<tr><td class="fieldtype">
+<a id="a343f27f5e44d9c93c79fb62540b7b541"></a>uint16_t</td>
+<td class="fieldname">
+brts: 1</td>
+<td class="fielddoc">
+RTS. </td></tr>
+<tr><td class="fieldtype">
+<a id="af9666766e5cb7a242cc92fe8ecd90fc3"></a>uint16_t</td>
+<td class="fieldname">
+rsv: 14</td>
+<td class="fielddoc">
+Reserved. </td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

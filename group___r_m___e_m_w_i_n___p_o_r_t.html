@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.1.1</span>
+   &#160;<span id="projectnumber">Release v1.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,12 +98,17 @@ $(document).ready(function(){initNavTree('group___r_m___e_m_w_i_n___p_o_r_t.html
 <h1><a class="anchor" id="rm-emwin-port-overview"></a>
 Overview</h1>
 <p><a class="anchor" id="um_emwin_port"></a> The SEGGER emWin RA Port module provides the configuration and hardware acceleration support necessary for use of emWin on RA products. The port provides full integration with the graphics peripherals (GLCDC, DRW and JPEG) as well as FreeRTOS.</p>
+<div class="image">
+<object type="image/svg+xml" data="emwin_port_block_diagram.svg">emwin_port_block_diagram.svg</object>
+<div class="caption">
+SEGGER emWin FSP Port Block Diagram</div></div>
 <dl class="section note"><dt>Note</dt><dd>This port layer primarily enables hardware acceleration and background handling of many display operations and does not contain code intended to be directly called by the user. Please consult the SEGGER emWin User Guide (UM03001) for details on how to use emWin in your project.</dd></dl>
 <h2><a class="anchor" id="rm-emwin-port-hw-accel"></a>
 Hardware Acceleration</h2>
 <p>The following functions are currently performed with hardware acceleration:<a class="anchor" id="um_emwin_drw_acceleration"></a><a class="anchor" id="um_emwin_jpeg_acceleration"></a></p><ul>
 <li>DRW Engine (r_drw)<ul>
 <li>Drawing bitmaps (ARGB8888 and RGB565)</li>
+<li>4bpp font rendering</li>
 <li>Rectangle fill</li>
 <li>Line and shape drawing</li>
 <li>Anti-aliased operations<ul>
@@ -340,7 +345,7 @@ Basic Example</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

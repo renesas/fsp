@@ -52,10 +52,9 @@ var NAVTREE =
             [ "Welcome Window", "_s_t_a_r_t__d_e_v.html#welcome-window", null ],
             [ "Cheat Sheets", "_s_t_a_r_t__d_e_v.html#cheat-sheets", null ],
             [ "Developer Assistance", "_s_t_a_r_t__d_e_v.html#developer-assistance", null ],
-            [ "Information Icon", "_s_t_a_r_t__d_e_v.html#information-icon", null ],
-            [ "Smart Manual", "_s_t_a_r_t__d_e_v.html#smart-manual", null ]
+            [ "Information Icon", "_s_t_a_r_t__d_e_v.html#information-icon", null ]
           ] ],
-          [ "HAL Modules in FSP: A Practcal Description", "_s_t_a_r_t__d_e_v.html#hal-modules-in-fsp", [
+          [ "HAL Modules in FSP: A Practical Description", "_s_t_a_r_t__d_e_v.html#hal-modules-in-fsp", [
             [ "Introduction to HAL Modules", "_s_t_a_r_t__d_e_v.html#introduction-to-hal-modules", null ],
             [ "HAL Driver API Function Call Formats", "_s_t_a_r_t__d_e_v.html#hal-drvier-api-function-call-formats", null ],
             [ "HAL Driver API Call Reference Information", "_s_t_a_r_t__d_e_v.html#hal-driver-api-call-reference-information", null ]
@@ -65,6 +64,7 @@ var NAVTREE =
         ] ],
         [ "Debugging the Project", "_s_t_a_r_t__d_e_v.html#debugging-the-project", null ],
         [ "Modifying Toolchain Settings", "_s_t_a_r_t__d_e_v.html#modifying-toolchain-settings", null ],
+        [ "Creating RA project with ARM Compiler 6 in e2 studio", "_s_t_a_r_t__d_e_v.html#creating-ra-project-with-arm-compiler-6-in-e2-studio", null ],
         [ "Importing an Existing Project into e2 studio", "_s_t_a_r_t__d_e_v.html#importing-an-existing-project-into-e2-studio", null ]
       ] ],
       [ "Tutorial: Your First RA MCU Project - Blinky", "_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky", [
@@ -193,15 +193,16 @@ var NAVTREEINDEX =
 "group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840ea0bce186d580888f2f38852144085d702",
 "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a57bd915b4be73b08e72d9a059b1e8ac0",
 "group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__rej__evt__t",
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca34fe61981b55c67f75a10fa40b23a71d",
-"group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#ga6e7b87c8da88649d8760d1d6336da667",
-"group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#gabcc62bc0a0fa851a3e9d34003768280e",
-"group___s_d_a_d_c.html#ga4718f5548b17c10b99741a3115afcb17",
-"group___s_l_c_d_c___a_p_i.html#gga6e306c03a7dc9caeff436fe58ab1a7fba454b1f2d9f47b4465b3e85da924e65ac",
-"group___s_s_i.html#gab2ee4147d471591bc86faf6ae993ccff",
-"group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__api__t",
-"group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302abf6fb86e88281a4c9d441b6c923b3111",
-"group___w_d_t___a_p_i.html#ga6b0f563a6311763e6204add68a018089"
+"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca35023b4e86753c1eee8c65a4cfcca455",
+"group___q_s_p_i.html#ga53abedddf8fc81df853fc93071edf117",
+"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ae74f6f5d5f827f9891901781c754455b",
+"group___s_c_i___i2_c.html#gaddcd4299259f33f1586458c6f580ef4c",
+"group___s_l_c_d_c.html#ga9dd5ed7e88cbf8fff1455ce79a4496dd",
+"group___s_p_i___f_l_a_s_h___a_p_i.html#a61e667a9ae9af76c5f8fd9f1973c6838",
+"group___t_o_u_c_h___a_p_i.html#ab3631f07ecfc93cd7733a3082488bd31",
+"group___u_s_b___a_p_i.html#ga6bbb5ab0cd4372c3d27809a643747075",
+"group___v_s___a_p_i.html#a0a490999d0f0dc3fedc7205260a0bc03",
+"group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#gaa1520e348462acd24433231d7846b733"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
