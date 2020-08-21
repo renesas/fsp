@@ -36,15 +36,7 @@
 #ifdef RM_LITTLEFS_FLASH_DATA_START
 static const uint32_t rm_littlefs_flash_data_start = RM_LITTLEFS_FLASH_DATA_START;
 #else
- #if defined(__ARMCC_VERSION)
-extern uint32_t       Image$$DATA_FLASH$$Base;
-static const uint32_t rm_littlefs_flash_data_start = ((uint32_t) &Image$$DATA_FLASH$$Base);
- #elif defined(__GNUC__)
-extern uint32_t       __Data_Flash_Start;
-static const uint32_t rm_littlefs_flash_data_start = ((uint32_t) &__Data_Flash_Start);
- #elif defined(__ICCARM__)
-static const uint32_t rm_littlefs_flash_data_start = (0x40100000);
- #endif
+static const uint32_t rm_littlefs_flash_data_start = BSP_FEATURE_FLASH_DATA_FLASH_START;
 #endif
 
 /** "RLFS" in ASCII, used to determine if channel is open. */

@@ -530,9 +530,11 @@ fsp_err_t R_FLASH_HP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
         }
 
  #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
-        uint32_t num_bytes = (region0_blocks * BSP_FEATURE_FLASH_HP_CF_REGION0_BLOCK_SIZE) +
-                             ((num_blocks - region0_blocks) * BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE);
-
+        uint32_t num_bytes = (region0_blocks * BSP_FEATURE_FLASH_HP_CF_REGION0_BLOCK_SIZE);
+        if (num_blocks > region0_blocks)
+        {
+            num_bytes += ((num_blocks - region0_blocks) * BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE);
+        }
         FSP_ERROR_RETURN(start_address + num_bytes <= BSP_ROM_SIZE_BYTES, FSP_ERR_INVALID_BLOCKS);
  #endif
 
@@ -2167,6 +2169,8 @@ void fcu_fiferr_isr (void)
 
     flash_hp_instance_ctrl_t * p_ctrl = (flash_hp_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
+    cb_data.p_context = p_ctrl->p_cfg->p_context;
+
     uint32_t fastat        = R_FACI_HP->FASTAT;
     uint32_t fstatr_errors = R_FACI_HP->FSTATR & FLASH_HP_FSTATR_ERROR_MASK;
 
@@ -2229,6 +2233,8 @@ void fcu_frdyi_isr (void)
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
     flash_hp_instance_ctrl_t * p_ctrl = (flash_hp_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+
+    cb_data.p_context = p_ctrl->p_cfg->p_context;
 
     /* Clear the Interrupt Request*/
     R_BSP_IrqStatusClear(irq);

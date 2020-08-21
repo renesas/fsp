@@ -189,8 +189,6 @@ typedef enum e_bsp_warm_start_event
     BSP_WARM_START_POST_C              ///< Called after clocks and C runtime environment have been set up
 } bsp_warm_start_event_t;
 
-/** @} (end addtogroup BSP_MCU) */
-
 /* Private enum used in R_FSP_SystemClockHzGet.  Maps clock name to base bit in SCKDIVCR. */
 typedef enum e_fsp_priv_clock
 {
@@ -279,6 +277,8 @@ void fsp_error_log(fsp_err_t err, const char * file, int32_t line);
 
  #define BSP_CFG_HANDLE_UNRECOVERABLE_ERROR(x)    __BKPT((x))
 #endif
+
+/** @} (end addtogroup BSP_MCU) */
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

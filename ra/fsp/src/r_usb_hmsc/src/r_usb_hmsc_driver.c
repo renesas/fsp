@@ -259,8 +259,7 @@ static void usb_hmsc_enumeration (usb_utr_t * mess)
             }
             else if (USB_SCSI == g_usb_hmsc_tmp_sub_class[mess->ip])
             {
-                USB_PRINTF0(
-                    "Interface subclass  : SCSI transparent command set\n");
+                USB_PRINTF0("Interface subclass  : SCSI transparent command set\n");
             }
             else if (USB_ATAPI_MMC5 == g_usb_hmsc_tmp_sub_class[mess->ip])
             {
@@ -313,10 +312,7 @@ static void usb_hmsc_enumeration (usb_utr_t * mess)
             {
                 /* Send GetDescriptor(Stirng) */
                 iproduct = g_p_usb_hmsc_device_table[mess->ip][USB_DEV_I_PRODUCT];
-                usb_hmsc_get_string_desc(mess,
-                                         g_usb_hmsc_devaddr[mess->ip],
-                                         iproduct,
-                                         usb_hmsc_class_check_result);
+                usb_hmsc_get_string_desc(mess, g_usb_hmsc_devaddr[mess->ip], iproduct, usb_hmsc_class_check_result);
                 g_usb_hmsc_init_seq[mess->ip]++;
             }
 
@@ -3168,8 +3164,7 @@ void usb_hmsc_class_check (usb_utr_t * ptr, uint16_t ** table)
     }
     else if (USB_SCSI == g_usb_hmsc_tmp_sub_class[ptr->ip])
     {
-        USB_PRINTF0(
-            "Interface subclass  : SCSI transparent command set\n");
+        USB_PRINTF0("Interface subclass  : SCSI transparent command set\n");
     }
     else if (USB_ATAPI_MMC5 == g_usb_hmsc_tmp_sub_class[ptr->ip])
     {

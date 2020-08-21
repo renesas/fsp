@@ -102,6 +102,7 @@ typedef enum e_fsp_err
     FSP_ERR_NOT_ERASED            = 31,                     ///< Erase verification failed
     FSP_ERR_SECTOR_RELEASE_FAILED = 32,                     ///< Sector release failed
     FSP_ERR_NOT_INITIALIZED       = 33,                     ///< Required initialization not complete
+    FSP_ERR_NOT_FOUND             = 34,                     ///< The requested item could not be found
 
     /* Start of RTOS only error codes */
     FSP_ERR_INTERNAL     = 100,                             ///< Internal error

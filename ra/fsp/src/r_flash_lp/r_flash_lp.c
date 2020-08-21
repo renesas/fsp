@@ -121,9 +121,9 @@
 #define FLASH_LP_MAX_WRITE_CF_TIME_US                 (1411)
 #define FLASH_LP_MAX_WRITE_DF_TIME_US                 (886)
 #define FLASH_LP_MAX_BLANK_CHECK_TIME_US              (88)
-#define FLASH_LP_MAX_ERASE_CF_BLOCK_TIME_US           (289000)
-#define FLASH_LP_MAX_ERASE_DF_BLOCK_TIME_US           (299000)
-#define FLASH_LP_MAX_WRITE_EXTRA_AREA_TIME_US         (592000)
+#define FLASH_LP_MAX_ERASE_CF_BLOCK_TIME_US           (355000)
+#define FLASH_LP_MAX_ERASE_DF_BLOCK_TIME_US           (354000)
+#define FLASH_LP_MAX_WRITE_EXTRA_AREA_TIME_US         (2289000)
 
 #define FLASH_LP_FSTATR2_ILLEGAL_ERROR_BITS           (0x10)
 #define FLASH_LP_FSTATR2_ERASE_ERROR_BITS             (0x11)
@@ -411,8 +411,8 @@ fsp_err_t R_FLASH_LP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * 
 
     /* If null pointers return error. */
 #if (FLASH_LP_CFG_PARAM_CHECKING_ENABLE)
-    FSP_ASSERT(p_cfg);
-    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(NULL != p_cfg);
+    FSP_ASSERT(NULL != p_ctrl);
 
     /* If open return error. */
     FSP_ERROR_RETURN((FLASH_HP_OPEN != p_ctrl->opened), FSP_ERR_ALREADY_OPEN);
@@ -421,7 +421,7 @@ fsp_err_t R_FLASH_LP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * 
     if (p_cfg->data_flash_bgo)
     {
         FSP_ERROR_RETURN(p_cfg->irq >= (IRQn_Type) 0, FSP_ERR_IRQ_BSP_DISABLED);
-        FSP_ASSERT(p_cfg->p_callback);
+        FSP_ASSERT(NULL != p_cfg->p_callback);
     }
 #endif
 
@@ -680,10 +680,10 @@ fsp_err_t R_FLASH_LP_StatusGet (flash_ctrl_t * const p_api_ctrl, flash_status_t 
     flash_lp_instance_ctrl_t * p_ctrl = (flash_lp_instance_ctrl_t *) p_api_ctrl;
 
     /* If null control block return error. */
-    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(NULL != p_ctrl);
 
     /* If null status pointer return error. */
-    FSP_ASSERT(p_status);
+    FSP_ASSERT(NULL != p_status);
 
     /* If control block is not open return error. */
     FSP_ERROR_RETURN((FLASH_HP_OPEN == p_ctrl->opened), FSP_ERR_NOT_OPEN);
@@ -874,7 +874,7 @@ fsp_err_t R_FLASH_LP_Reset (flash_ctrl_t * const p_api_ctrl)
 #if (FLASH_LP_CFG_PARAM_CHECKING_ENABLE)
 
     /* If null control block return error. */
-    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(NULL != p_ctrl);
 
     /* If control block is not open return error. */
     FSP_ERROR_RETURN((FLASH_HP_OPEN == p_ctrl->opened), FSP_ERR_NOT_OPEN);
@@ -986,13 +986,12 @@ fsp_err_t R_FLASH_LP_InfoGet (flash_ctrl_t * const p_api_ctrl, flash_info_t * co
     flash_lp_instance_ctrl_t * p_ctrl = (flash_lp_instance_ctrl_t *) p_api_ctrl;
 
     /* If null control block return error. */
-    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(NULL != p_ctrl);
 
     /* If control block is not open return error. */
     FSP_ERROR_RETURN((FLASH_HP_OPEN == p_ctrl->opened), FSP_ERR_NOT_OPEN);
 
-    // todo add back the NULL !=
-    FSP_ASSERT(p_info);
+    FSP_ASSERT(NULL != p_info);
 #else
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
 #endif
@@ -1047,7 +1046,7 @@ fsp_err_t R_FLASH_LP_VersionGet (fsp_version_t * const p_version)
 #if FLASH_LP_CFG_PARAM_CHECKING_ENABLE
 
     /* If null pointer return error. */
-    FSP_ASSERT(p_version);
+    FSP_ASSERT(NULL != p_version);
 #endif
 
     /* Return the version id of the flash lp module. */
@@ -1065,7 +1064,7 @@ fsp_err_t R_FLASH_LP_VersionGet (fsp_version_t * const p_version)
  * current FCLK frequency.
  * @param      p_ctrl        The p control
  * @retval     FSP_SUCCESS   Success
- * @retval     FSP_ERR_FCLK  FCLK must be >= 4 MHz.
+ * @retval     FSP_ERR_FCLK  FCLK must be 1 MHz, 2 MHz, 3 MHz or a minimum of 4 MHz.
  **********************************************************************************************************************/
 static fsp_err_t r_flash_lp_setup (flash_lp_instance_ctrl_t * p_ctrl)
 {
@@ -1074,8 +1073,14 @@ static fsp_err_t r_flash_lp_setup (flash_lp_instance_ctrl_t * p_ctrl)
     /* Get the frequency of the clock driving the flash. */
     p_ctrl->flash_clock_frequency = R_FSP_SystemClockHzGet(BSP_FEATURE_FLASH_LP_FLASH_CLOCK_SRC);
 
-    /* FCLK must be a minimum of 4 MHz for Flash operations. If not return error. */
-    FSP_ERROR_RETURN(p_ctrl->flash_clock_frequency >= FLASH_HP_MINIMUM_SUPPORTED_FCLK_FREQ, FSP_ERR_FCLK);
+    /* FCLK must be 1 MHz, 2 MHz, 3 MHz or a minimum of 4 MHz for Flash operations. If not return error. */
+    if (p_ctrl->flash_clock_frequency < FLASH_HP_MINIMUM_SUPPORTED_FCLK_FREQ)
+    {
+        FSP_ERROR_RETURN((p_ctrl->flash_clock_frequency == (1 * FLASH_LP_HZ_IN_MHZ)) ||
+                         (p_ctrl->flash_clock_frequency == (2 * FLASH_LP_HZ_IN_MHZ)) ||
+                         (p_ctrl->flash_clock_frequency == (3 * FLASH_LP_HZ_IN_MHZ)),
+                         FSP_ERR_FCLK);
+    }
 
     /* Get the frequency of the system clock. */
     p_ctrl->system_clock_frequency = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK);
@@ -1174,7 +1179,7 @@ static fsp_err_t r_flash_lp_write_read_bc_parameter_checking (flash_lp_instance_
 static fsp_err_t r_flash_lp_common_parameter_checking (flash_lp_instance_ctrl_t * const p_ctrl)
 {
     /* If null control block return error. */
-    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(NULL != p_ctrl);
 
     /* If control block is not open return error. */
     FSP_ERROR_RETURN((FLASH_HP_OPEN == p_ctrl->opened), FSP_ERR_NOT_OPEN);
@@ -1981,6 +1986,8 @@ void fcu_frdyi_isr (void)
 
         if (NULL != p_ctrl->p_cfg->p_callback)
         {
+            cb_data.p_context = p_ctrl->p_cfg->p_context;
+
             /* Set data to identify callback to user, then call user callback. */
             p_ctrl->p_cfg->p_callback(&cb_data);
         }

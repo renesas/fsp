@@ -31,6 +31,9 @@
  **********************************************************************************************************************/
 #define ACMPLP_OPEN                 (0x434d504CU)
 
+/* Number of channels. */
+#define ACMPLP_CHANNELS             (2U)
+
 /* Mask for clearing ACMPLP registers*/
 #define ACMPLP_COMPMDR_CH0_CLEAR    (0xF1U)
 #define ACMPLP_COMPFIR_CH0_CLEAR    (0xF0U)
@@ -76,6 +79,9 @@ static const uint8_t acmplp_filter_map[] =
     [COMPARATOR_FILTER_32]  = 3U,
 };
 
+/* Used to keep track of opened channels. */
+static acmplp_instance_ctrl_t * gp_acmplp_ctrl[ACMPLP_CHANNELS];
+
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -114,6 +120,7 @@ const comparator_api_t g_comparator_on_acmplp =
  *                                        p_cfg->p_callback is not NULL, but ISR is not enabled. ISR must be enabled to
  *                                        use callback function.
  * @retval FSP_ERR_ALREADY_OPEN           The control block is already open or the hardware lock is taken.
+ * @retval FSP_ERR_IN_USE                 The channel is already in use.
  **********************************************************************************************************************/
 fsp_err_t R_ACMPLP_Open (comparator_ctrl_t * const p_ctrl, comparator_cfg_t const * const p_cfg)
 {
@@ -122,6 +129,10 @@ fsp_err_t R_ACMPLP_Open (comparator_ctrl_t * const p_ctrl, comparator_cfg_t cons
 #if ACMPLP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_instance_ctrl);
+
+    /* Verify the control block has not already been initialized. */
+    FSP_ERROR_RETURN(ACMPLP_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
+    FSP_ERROR_RETURN(NULL == gp_acmplp_ctrl[p_cfg->channel], FSP_ERR_IN_USE);
 
     /* COMPARATOR_FILTER_16 is not supported for this implementation. */
     FSP_ERROR_RETURN(COMPARATOR_FILTER_16 != p_cfg->filter, FSP_ERR_INVALID_ARGUMENT);
@@ -133,9 +144,23 @@ fsp_err_t R_ACMPLP_Open (comparator_ctrl_t * const p_ctrl, comparator_cfg_t cons
         FSP_ASSERT(NULL != p_cfg->p_callback);
     }
 
-    /* Verify the control block has not already been initialized. */
-    FSP_ERROR_RETURN(ACMPLP_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
+ #if ACMPLP_CFG_CH1_IVREF0_ENABLE
+
+    /* If ACMPLP1 uses IVREF0 as a reference input, ACMPLP0 and ACMPLP1 must use the same reference input settings. */
+    uint32_t alt_channel = (p_cfg->channel + 1U) % ACMPLP_CHANNELS;
+    if (NULL != gp_acmplp_ctrl[alt_channel])
+    {
+        r_acmplp_extended_cfg_t const * p_extended_cfg     = (r_acmplp_extended_cfg_t const *) p_cfg->p_extend;
+        r_acmplp_extended_cfg_t const * p_extended_cfg_alt =
+            (r_acmplp_extended_cfg_t const *) gp_acmplp_ctrl[alt_channel]->p_cfg->p_extend;
+        FSP_ERROR_RETURN(p_extended_cfg_alt->reference_voltage == p_extended_cfg->reference_voltage,
+                         FSP_ERR_INVALID_ARGUMENT);
+    }
+ #endif
 #endif
+
+    /* Save ctrl instance. */
+    gp_acmplp_ctrl[p_cfg->channel] = p_instance_ctrl;
 
     /* Save the configuration  */
     p_instance_ctrl->p_cfg = p_cfg;
@@ -307,8 +332,26 @@ fsp_err_t R_ACMPLP_Close (comparator_ctrl_t * p_ctrl)
     FSP_ERROR_RETURN(ACMPLP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    /* Mark driver as closed   */
-    p_instance_ctrl->open = 0U;
+    {
+        FSP_CRITICAL_SECTION_DEFINE;
+        FSP_CRITICAL_SECTION_ENTER;
+
+        /* Stop the comparator and disable output to VCOUT. */
+        if (0U == p_instance_ctrl->p_cfg->channel)
+        {
+            /* Clear the Operation enable and output enable for channel 0. */
+            R_ACMPLP->COMPMDR_b.C0ENB = 0U;
+            R_ACMPLP->COMPOCR_b.C0OE  = 0U;
+        }
+        else
+        {
+            /* Clear the Operation enable and output enable for channel 1. */
+            R_ACMPLP->COMPMDR_b.C1ENB = 0U;
+            R_ACMPLP->COMPOCR_b.C1OE  = 0U;
+        }
+
+        FSP_CRITICAL_SECTION_EXIT;
+    }
 
     /* Disable interrupt. */
     if (p_instance_ctrl->p_cfg->irq >= 0)
@@ -317,23 +360,17 @@ fsp_err_t R_ACMPLP_Close (comparator_ctrl_t * p_ctrl)
         R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->irq, NULL);
     }
 
-    /* Stop the comparator and disable output to VCOUT. */
-    FSP_CRITICAL_SECTION_DEFINE;
-    FSP_CRITICAL_SECTION_ENTER;
-
-    if (0U == p_instance_ctrl->p_cfg->channel)
+    /* Check if the other channel is in use. */
+    acmplp_instance_ctrl_t * alt_channel = gp_acmplp_ctrl[!p_instance_ctrl->p_cfg->channel];
+    if (NULL == alt_channel)
     {
-        /* Clear the Operation enable and output enable */
-        R_ACMPLP->COMPMDR_b.C0ENB = 0U;
-        R_ACMPLP->COMPOCR_b.C0OE  = 0U;
-    }
-    else
-    {
-        R_ACMPLP->COMPMDR_b.C1ENB = 0U;
-        R_ACMPLP->COMPOCR_b.C1OE  = 0U;
+        /* No other channels open. */
+        R_BSP_MODULE_STOP(FSP_IP_ACMPLP, 0);
     }
 
-    FSP_CRITICAL_SECTION_EXIT;
+    /* Mark driver as closed   */
+    p_instance_ctrl->open = 0U;
+    gp_acmplp_ctrl[p_instance_ctrl->p_cfg->channel] = NULL;
 
     return FSP_SUCCESS;
 }
@@ -489,18 +526,28 @@ static void acmplp_hardware_initialize (acmplp_instance_ctrl_t * const p_instanc
         R_ACMPLP->COMPMDR = temp_reg;
 
 #if BSP_FEATURE_ACMPLP_HAS_COMPSEL_REGISTERS
+
+        /* Read the current state of COMPSEL1. */
+        temp_reg = R_ACMPLP->COMPSEL1;
  #if (ACMPLP_CFG_CH1_IVREF0_ENABLE)
-        temp_reg = (uint8_t) (p_extend->reference_voltage); // IVREF0
+
+        /* If channel 0 is not open, then set the voltage reference for channel 0. */
+        if (NULL == gp_acmplp_ctrl[0])
+        {
+            temp_reg &= (uint8_t) (~R_ACMPLP_COMPSEL1_IVREF0_Msk);
+            temp_reg |= (uint8_t) (p_extend->reference_voltage); // IVREF0
+        }
+
  #else
 
         /* Configure the reference voltage to the comparator and Reference Voltage Selection 2 for channel 1 */
-        temp_reg  = (uint8_t) 1 << R_ACMPLP_COMPSEL1_C1VRF2_Pos;
+        temp_reg |= (uint8_t) 1 << R_ACMPLP_COMPSEL1_C1VRF2_Pos;
+        temp_reg &= (uint8_t) (~R_ACMPLP_COMPSEL1_IVREF1_Msk);
         temp_reg |= (uint8_t) (p_extend->reference_voltage << R_ACMPLP_COMPSEL1_IVREF1_Pos); // IVREF1
  #endif
 
-        /* Retain CRVS for channel 0 and update CRVS for channel 1 */
-        compsel1          |= temp_reg;
-        R_ACMPLP->COMPSEL1 = compsel1;
+        /* Write settings to COMPSEL1. */
+        R_ACMPLP->COMPSEL1 = temp_reg;
 #endif
 
         /* Enable the comparator. */

@@ -48,13 +48,6 @@
  **********************************************************************************************************************/
 #define BOARD_RA4W1_EK
 
-#define BSP_CLOCK_CFG_MAIN_OSC_POPULATED           (0)
-#define BSP_CLOCK_CFG_MAIN_OSC_WAIT                (9)
-#define BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE        (0)
-#define BSP_CLOCK_CFG_SUBCLOCK_POPULATED           (0)
-#define BSP_CLOCK_CFG_SUBCLOCK_DRIVE               (0)
-#define BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS    (1000U)
-
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/

@@ -78,6 +78,8 @@
 
 #define ADC_PRV_TSCR_TSN_ENABLE                     (R_TSN_CTRL_TSCR_TSEN_Msk | R_TSN_CTRL_TSCR_TSOE_Msk)
 
+#define ADC_PRV_TSN_CALIBRATION_TSCDR_BITS          (0x00000FFFU)
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -574,6 +576,14 @@ fsp_err_t R_ADC_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
 
     /* If calibration register is available, retrieve it from the MCU */
 #if BSP_FEATURE_ADC_TSN_CALIBRATION_AVAILABLE
+ #if BSP_FEATURE_ADC_TSN_CALIBRATION32_AVAILABLE
+
+    /* Read into memory. */
+    uint32_t data = R_TSN_CAL->TSCDR;
+
+    /* Read the calibration data from ROM and AND it to mask off 12bit of calibration data. */
+    p_adc_info->calibration_data = (data & ADC_PRV_TSN_CALIBRATION_TSCDR_BITS);
+ #else
 
     /* Read into memory to prevent compiler warning when performing "|" on volatile register data. */
     uint32_t high = R_TSN->TSCDRH;
@@ -581,6 +591,7 @@ fsp_err_t R_ADC_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
 
     /* Read the calibration data from ROM and shift to fit into result variable. */
     p_adc_info->calibration_data = ((high << 8) | low);
+ #endif
 #endif
 
     /* Provide the previously retrieved slope information */
@@ -631,6 +642,13 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
      * "Available Functions and Register Settings of AN000 to AN002, AN007, AN100 to AN102, and AN107" in the RA6M3
      * manual R01UH0886EJ0100. */
     p_instance_ctrl->p_reg->ADSHCR = 0U;
+
+#if BSP_FEATURE_ADC_HAS_VREFAMPCNT
+
+    /* If VREFADC is selected as the high-potential reference voltage revert it to reduce power consumption. */
+    p_instance_ctrl->p_reg->VREFAMPCNT = 0U;
+#endif
+
     R_BSP_MODULE_STOP(FSP_IP_ADC, p_instance_ctrl->p_cfg->unit);
 
     /* Return the error code */

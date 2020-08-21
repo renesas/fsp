@@ -501,7 +501,7 @@ uint16_t usb_chattaring (uint16_t * syssts)
 static void usbfs_usbi_isr (void)
 {
     /* Call USB interrupt routine */
-    if (USB_MODE_HOST == g_usb_usbmode)
+    if (USB_MODE_HOST == g_usb_usbmode[USB_IP0])
     {
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         usb_hstd_usb_handler();        /* Call interrupt routine */
@@ -530,7 +530,7 @@ static void usbfs_usbi_isr (void)
 static void usbhs_usbir_isr (void)
 {
     /* Condition compilation by the difference of USB function */
-    if (USB_MODE_HOST == g_usb_usbmode)
+    if (USB_MODE_HOST == g_usb_usbmode[USB_IP1])
     {
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
   #if USB_NUM_USBIP == 2

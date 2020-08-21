@@ -69246,9 +69246,39 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
           <fields>
             <field>
               <name>TSCDRL</name>
-              <description>The calibration data stores the lower 8 bits of the convertedvalue.</description>
+              <description>The calibration data stores the lower 8 bits of the converted value.</description>
               <lsb>0</lsb>
               <msb>7</msb>
+              <access>read-only</access>
+            </field>
+          </fields>
+        </register>
+      </registers>
+    </peripheral>
+    <peripheral>
+      <name>R_TSN_CAL</name>
+      <description>Temperature Sensor</description>
+      <baseAddress>0x407FB17C</baseAddress>
+      <addressBlock>
+        <offset>0x00</offset>
+        <size>0x04</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <registers>
+        <register>
+          <name>TSCDR</name>
+          <description>Temperature Sensor 32 bit Calibration Data Register</description>
+          <addressOffset>0x00</addressOffset>
+          <size>32</size>
+          <access>read-only</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0x00</resetMask>
+          <fields>
+            <field>
+              <name>TSCDR</name>
+              <description>The 32 bit TSCDR register stores temperature sensor calibration converted value.</description>
+              <lsb>0</lsb>
+              <msb>31</msb>
               <access>read-only</access>
             </field>
           </fields>

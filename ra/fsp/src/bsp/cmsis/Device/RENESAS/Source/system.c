@@ -109,8 +109,10 @@ static void bsp_reset_trng_circuit(void);
 #endif
 
 #if defined(__ICCARM__)
- #pragma weak R_BSP_WarmStart
+
 void R_BSP_WarmStart(bsp_warm_start_event_t event);
+
+ #pragma weak R_BSP_WarmStart
 
 #elif defined(__GNUC__) || defined(__ARMCC_VERSION)
 
@@ -132,6 +134,9 @@ void SystemInit (void)
     /* SCB is a CMSIS defined element over which we have no control. */
     SCB->CPACR |= (uint32_t) CP_MASK;
 #endif
+
+/* Set the VTOR to the vector table address based on the build. */
+    SCB->VTOR = (uint32_t) &__Vectors;
 
 #if BSP_FEATURE_BSP_VBATT_HAS_VBTCR1_BPWSWSTP
 

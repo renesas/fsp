@@ -67,6 +67,7 @@
 #define BSP_FEATURE_ADC_SENSOR_MIN_SAMPLING_TIME       (5000U)
 #define BSP_FEATURE_ADC_TSN_CALIBRATION_AVAILABLE      (1U)
 #define BSP_FEATURE_ADC_TSN_CONTROL_AVAILABLE          (0U)
+#define BSP_FEATURE_ADC_TSN_CALIBRATION32_AVAILABLE    (0U)
 #define BSP_FEATURE_ADC_TSN_SLOPE                      (-3650)
 #define BSP_FEATURE_ADC_UNIT_0_CHANNELS                (0xFF01FF) // 0 to 8, 16 to 23 in unit 0
 #define BSP_FEATURE_ADC_UNIT_1_CHANNELS                (0)
@@ -120,6 +121,7 @@
 #define BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB    (0)
 #define BSP_FEATURE_CGC_SODRV_MASK                     (0x03U)
 #define BSP_FEATURE_CGC_SODRV_SHIFT                    (0x0U)
+#define BSP_FEATURE_CGC_STARTUP_OPCCR_MODE             (2)
 
 #define BSP_FEATURE_CRYPTO_HAS_AES                     (1)
 #define BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED             (0)
@@ -153,6 +155,7 @@
 #define BSP_FEATURE_ETHER_FIFO_DEPTH                   (0)           // Feature not available on this MCU
 #define BSP_FEATURE_ETHER_MAX_CHANNELS                 (0)           // Feature not available on this MCU
 
+#define BSP_FEATURE_FLASH_DATA_FLASH_START             (0x40100000U)
 #define BSP_FEATURE_FLASH_HP_CF_REGION0_BLOCK_SIZE     (0)           // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_HP_CF_REGION0_SIZE           (0)           // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE     (0)           // Feature not available on this MCU

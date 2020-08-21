@@ -46,7 +46,7 @@
 #if (BSP_CFG_RTOS == 2)
 
 /* The buffer size of interrupt info is increased to avoid overlapping interrupt events. */
- #define USB_INT_BUFSIZE         (64U)  /* Size of Interrupt info buffer */
+ #define USB_INT_BUFSIZE         (32U)  /* Size of Interrupt info buffer */
 #else /* #if (BSP_CFG_RTOS == 2) */
  #define USB_INT_BUFSIZE         (10U)  /* Size of Interrupt info buffer */
 #endif /* #if (BSP_CFG_RTOS == 2) */

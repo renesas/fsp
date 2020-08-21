@@ -328,8 +328,8 @@ static void crc_seed_value_update (crc_instance_ctrl_t * const p_instance_ctrl, 
         {
             /* CRC seed is masked to use only the lower 8 bits*/
             /* Set the starting 8-bit CRC Calculated value */
-            crcdor       |= (uint32_t) (R_CRC_CRCDOR_BY_CRCDOR_BY_Msk & crc_seed);
-            R_CRC->CRCDOR = crcdor;
+            crcdor          |= (uint32_t) (R_CRC_CRCDOR_BY_CRCDOR_BY_Msk & crc_seed);
+            R_CRC->CRCDOR_BY = (uint8_t) crcdor;
             break;
         }
 
@@ -338,8 +338,8 @@ static void crc_seed_value_update (crc_instance_ctrl_t * const p_instance_ctrl, 
         {
             /* CRC seed is masked to use only the lower 16 bits*/
             /* Set the starting 16-bit CRC Calculated value. */
-            crcdor       |= (uint32_t) (R_CRC_CRCDOR_HA_CRCDOR_HA_Msk & crc_seed);
-            R_CRC->CRCDOR = crcdor;
+            crcdor          |= (uint32_t) (R_CRC_CRCDOR_HA_CRCDOR_HA_Msk & crc_seed);
+            R_CRC->CRCDOR_HA = (uint16_t) crcdor;
             break;
         }
 

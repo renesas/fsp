@@ -13750,7 +13750,7 @@ typedef struct                          /*!< (@ 0x40062000) R_SDHI0 Structure   
                                         *   STP has been set to 1, the buffer access error bit (ERR5
                                         *   or ERR4) in SD_INFO2 will be set accordingly.- When STP
                                         *   has been set to 1 during transfer for single block write,
-                                        *   the access end flag is set when SD_BUF becomes e                          */
+                                        *   the access end flag is set when SD_BUF becomes emp                        */
             uint32_t           : 7;
             __IOM uint32_t SEC : 1;    /*!< [8..8] Block Count EnableSet SEC to 1 at multiple block transfer.When
                                         *   SD_CMD is set as follows to start the command sequence
@@ -13760,7 +13760,7 @@ typedef struct                          /*!< (@ 0x40062000) R_SDHI0 Structure   
                                         *   = 000)2. SD_CMD[15:13] = 001 in extended mode (CMD12 is
                                         *   automatically issued, multiple block transfer)When the
                                         *   command sequence is halted because of a communications
-                                        *   error or timeout, CMD12 is not automatically                              */
+                                        *   error or timeout, CMD12 is not automatically i                            */
             uint32_t : 23;
         } SD_STOP_b;
     };
@@ -13978,7 +13978,7 @@ typedef struct                          /*!< (@ 0x40062000) R_SDHI0 Structure   
                                         *   without automatic issuing of CMD12, as well as 512 bytes,
                                         *   32, 64, 128, and 256 bytes are specifiable. However, in
                                         *   the reading of 32, 64, 128, and 256 bytes for the transfer
-                                        *   of multiple blocks, this is restricted to mu                              */
+                                        *   of multiple blocks, this is restricted to mult                            */
             uint32_t : 22;
         } SD_SIZE_b;
     };
@@ -14241,7 +14241,7 @@ typedef struct                         /*!< (@ 0x40082000) R_SLCDC Structure    
             __IOM uint8_t B : 4;       /*!< [7..4] B-Pattern Area                                                     */
         } SEG_b[64];
     };
-} R_SLCDC_Type;                        /*!< Size = 294 (0x126)                                                        */
+} R_SLCDC_Type;                        /*!< Size = 320 (0x140)                                                        */
 
 /* =========================================================================================================================== */
 /* ================                                          R_SPI0                                           ================ */
@@ -16172,7 +16172,8 @@ typedef struct                         /*!< (@ 0x407EC000) R_TSN Structure      
 
         struct
         {
-            __IM uint8_t TSCDRL : 8;   /*!< [7..0] The calibration data stores the lower 8 bits of the convertedvalue. */
+            __IM uint8_t TSCDRL : 8;   /*!< [7..0] The calibration data stores the lower 8 bits of the converted
+                                        *   value.                                                                    */
         } TSCDRL_b;
     };
 
@@ -16188,6 +16189,28 @@ typedef struct                         /*!< (@ 0x407EC000) R_TSN Structure      
         } TSCDRH_b;
     };
 } R_TSN_Type;                          /*!< Size = 554 (0x22a)                                                        */
+
+/* =========================================================================================================================== */
+/* ================                                         R_TSN_CAL                                         ================ */
+/* =========================================================================================================================== */
+
+/**
+ * @brief Temperature Sensor (R_TSN_CAL)
+ */
+
+typedef struct                         /*!< (@ 0x407FB17C) R_TSN_CAL Structure                                        */
+{
+    union
+    {
+        __IM uint32_t TSCDR;           /*!< (@ 0x00000000) Temperature Sensor 32 bit Calibration Data Register        */
+
+        struct
+        {
+            __IM uint32_t TSCDR : 32;  /*!< [31..0] The 32 bit TSCDR register stores temperature sensor
+                                        *   calibration converted value.                                              */
+        } TSCDR_b;
+    };
+} R_TSN_CAL_Type;                      /*!< Size = 4 (0x4)                                                            */
 
 /* =========================================================================================================================== */
 /* ================                                        R_TSN_CTRL                                         ================ */
@@ -18461,6 +18484,7 @@ typedef struct                         /*!< (@ 0x40044200) R_WDT Structure      
  #define R_SSI1_BASE                   0x4004E100UL
  #define R_SYSTEM_BASE                 0x4001E000UL
  #define R_TSN_BASE                    0x407EC000UL
+ #define R_TSN_CAL_BASE                0x407FB17CUL
  #define R_TSN_CTRL_BASE               0x4005D000UL
  #define R_USB_FS0_BASE                0x40090000UL
  #define R_USB_HS0_BASE                0x40060000UL
@@ -18603,6 +18627,7 @@ typedef struct                         /*!< (@ 0x40044200) R_WDT Structure      
  #define R_SSI1                   ((R_SSI0_Type *) R_SSI1_BASE)
  #define R_SYSTEM                 ((R_SYSTEM_Type *) R_SYSTEM_BASE)
  #define R_TSN                    ((R_TSN_Type *) R_TSN_BASE)
+ #define R_TSN_CAL                ((R_TSN_CAL_Type *) R_TSN_CAL_BASE)
  #define R_TSN_CTRL               ((R_TSN_CTRL_Type *) R_TSN_CTRL_BASE)
  #define R_USB_FS0                ((R_USB_FS0_Type *) R_USB_FS0_BASE)
  #define R_USB_HS0                ((R_USB_HS0_Type *) R_USB_HS0_BASE)
@@ -23976,6 +24001,8 @@ typedef struct                         /*!< (@ 0x40044200) R_WDT Structure      
  #define R_MSTP_MSTPCRC_MSTPC4_Msk     (0x10UL)       /*!< MSTPC4 (Bitfield-Mask: 0x01)                          */
  #define R_MSTP_MSTPCRC_MSTPC3_Pos     (3UL)          /*!< MSTPC3 (Bit 3)                                        */
  #define R_MSTP_MSTPCRC_MSTPC3_Msk     (0x8UL)        /*!< MSTPC3 (Bitfield-Mask: 0x01)                          */
+ #define R_MSTP_MSTPCRC_MSTPC2_Pos     (2UL)          /*!< MSTPC2 (Bit 2)                                        */
+ #define R_MSTP_MSTPCRC_MSTPC2_Msk     (0x4UL)        /*!< MSTPC2 (Bitfield-Mask: 0x01)                          */
  #define R_MSTP_MSTPCRC_MSTPC1_Pos     (1UL)          /*!< MSTPC1 (Bit 1)                                        */
  #define R_MSTP_MSTPCRC_MSTPC1_Msk     (0x2UL)        /*!< MSTPC1 (Bitfield-Mask: 0x01)                          */
  #define R_MSTP_MSTPCRC_MSTPC0_Pos     (0UL)          /*!< MSTPC0 (Bit 0)                                        */
@@ -25961,6 +25988,14 @@ typedef struct                         /*!< (@ 0x40044200) R_WDT Structure      
 /* ========================================================  TSCDRL  ========================================================= */
  #define R_TSN_TSCDRL_TSCDRL_Pos    (0UL)    /*!< TSCDRL (Bit 0)                                        */
  #define R_TSN_TSCDRL_TSCDRL_Msk    (0xffUL) /*!< TSCDRL (Bitfield-Mask: 0xff)                          */
+
+/* =========================================================================================================================== */
+/* ================                                         R_TSN_CAL                                         ================ */
+/* =========================================================================================================================== */
+
+/* =========================================================  TSCDR  ========================================================= */
+ #define R_TSN_CAL_TSCDR_TSCDR_Pos    (0UL)          /*!< TSCDR (Bit 0)                                         */
+ #define R_TSN_CAL_TSCDR_TSCDR_Msk    (0xffffffffUL) /*!< TSCDR (Bitfield-Mask: 0xffffffff)                     */
 
 /* =========================================================================================================================== */
 /* ================                                        R_TSN_CTRL                                         ================ */

@@ -167,6 +167,10 @@ const uint16_t g_usb_apl_devicetpl[] =
 };
  #endif /* defined(USB_CFG_HVND_USE) */
 
+ #if (BSP_CFG_RTOS == 2)
+usb_hdl_t g_usb_hstd_sus_res_task_id[USB_NUM_USBIP];
+ #endif                                /*  #if (BSP_CFG_RTOS == 2) */
+
 /******************************************************************************
  * Renesas USB Host Driver functions
  ******************************************************************************/
@@ -305,8 +309,23 @@ usb_er_t usb_hstd_transfer_start_req (usb_utr_t * ptr)
 
     p_tran_data->cur_task_hdl = xTaskGetCurrentTaskHandle();
   #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-    p_tran_data->p_transfer_rx = ptr->p_transfer_rx;
-    p_tran_data->p_transfer_tx = ptr->p_transfer_tx;
+    if (0 != ptr->p_transfer_tx)
+    {
+        p_tran_data->p_transfer_tx = ptr->p_transfer_tx;
+    }
+    else
+    {
+        p_tran_data->p_transfer_tx = 0;
+    }
+
+    if (0 != ptr->p_transfer_rx)
+    {
+        p_tran_data->p_transfer_rx = ptr->p_transfer_rx;
+    }
+    else
+    {
+        p_tran_data->p_transfer_rx = 0;
+    }
   #endif
 
     /* Send message */

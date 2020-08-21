@@ -34,6 +34,10 @@
  ******************************************************************************/
 usb_int_t g_usb_pstd_usb_int;
 
+ #if (BSP_CFG_RTOS == 2)
+static usb_utr_t g_usb_pstd_int[USB_INT_BUFSIZE];
+ #endif                                /* #if (BSP_CFG_RTOS == 2)*/
+
 /******************************************************************************
  * Renesas Abstracted common Interrupt handler functions
  ******************************************************************************/
@@ -86,6 +90,33 @@ void usb_pstd_usb_handler (void)
 /******************************************************************************
  * End of function usb_pstd_usb_handler
  ******************************************************************************/
+
+ #if (BSP_CFG_RTOS == 2)
+
+/******************************************************************************
+ * Function Name   : get_usb_int_buf
+ * Description     : USB interrupt routine. Analyze which USB interrupt occurred
+ *               : and send message to PCD task.
+ * Arguments       : none
+ * Return value    : Point to the area for usb_int_t structure
+ ******************************************************************************/
+usb_utr_t * get_usb_int_buf (void)
+{
+    static uint16_t count = 0;
+    usb_utr_t     * p;
+
+    p = &g_usb_pstd_int[count];
+
+    count = ((uint16_t) (((uint16_t) (count + 1)) % USB_INT_BUFSIZE));
+
+    return p;
+}
+
+/******************************************************************************
+ * End of function get_usb_int_buf
+ ******************************************************************************/
+ #endif                                /* #if (BSP_CFG_RTOS == 2) */
+
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /******************************************************************************

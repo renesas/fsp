@@ -81,7 +81,7 @@
                                                      (TRANSFER_IRQ_END << TRANSFER_SETTINGS_IRQ_BITS) |      \
                                                      (TRANSFER_ADDR_MODE_FIXED << TRANSFER_SETTINGS_DEST_ADDR_BITS))
 #define IIC_MASTER_FUNCTION_ENABLE_REG_VAL          (0x02U)
-#define IIC_MASTER_INTERRUPT_ENABLE_INIT_MASK       (0xBFU)
+#define IIC_MASTER_INTERRUPT_ENABLE_INIT_MASK       (0xB3U)
 #define IIC_MASTER_FUNCTION_ENABLE_INIT_SETTINGS    (0x77U)
 #define IIC_MASTER_STATUS_REGISTER_2_ERR_MASK       (0x1FU)
 #define IIC_MASTER_BUS_MODE_REGISTER_1_MASK         (0x08U)
@@ -631,12 +631,6 @@ static void iic_master_abort_seq_master (iic_master_instance_ctrl_t * const p_ct
 
             /* Reset */
             p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_MASTER_ICCR1_ICE_BIT_MASK | IIC_MASTER_PRV_SCL_SDA_NOT_DRIVEN);
-
-            /* Enable Interrupts: TMOIE, ALIE, STIE, SPIE, NAKIE, RIE, TIE.
-             * Disable Interrupt: TEIE
-             * (see Section 36.2.8 'I2C Bus Interrupt Enable Register (ICIER)' of the RA6M3 manual R01UH0886EJ0100).
-             */
-            p_ctrl->p_reg->ICIER = IIC_MASTER_INTERRUPT_ENABLE_INIT_MASK;
         }
 
         /* Update the transfer descriptor to show no longer in-progress and an error */
@@ -647,6 +641,12 @@ static void iic_master_abort_seq_master (iic_master_instance_ctrl_t * const p_ct
         p_ctrl->loaded      = p_ctrl->total;
         p_ctrl->restarted   = false;
     }
+
+    /* Enable Interrupts: TMOIE, ALIE, NAKIE, RIE, TIE.
+     * Disable Interrupt: TEIE, STIE, SPIE
+     * (see Section 36.2.8 'I2C Bus Interrupt Enable Register (ICIER)' of the RA6M3 manual R01UH0886EJ0100).
+     */
+    p_ctrl->p_reg->ICIER = IIC_MASTER_INTERRUPT_ENABLE_INIT_MASK;
 }
 
 /*******************************************************************************************************************//**
@@ -716,8 +716,8 @@ static void iic_master_open_hw_master (iic_master_instance_ctrl_t * const p_ctrl
     /* Ensure the HW is in master mode and does not behave as a slave to another master on the same channel. */
     p_ctrl->p_reg->ICSER = 0x00;
 
-    /* Enable Interrupts: TMOIE, ALIE, STIE, SPIE, NAKIE, RIE, TIE.
-     * Disable Interrupt: TEIE
+    /* Enable Interrupts: TMOIE, ALIE, NAKIE, RIE, TIE.
+     * Disable Interrupt: TEIE, STIE, SPIE
      * (see Section 36.2.8 'I2C Bus Interrupt Enable Register (ICIER)' of the RA6M3 manual R01UH0886EJ0100).
      */
     p_ctrl->p_reg->ICIER = IIC_MASTER_INTERRUPT_ENABLE_INIT_MASK;
@@ -816,6 +816,10 @@ static fsp_err_t iic_master_run_hw_master (iic_master_instance_ctrl_t * const p_
      * NVIC-enable TXI which will fire after the start condition below.
      */
     NVIC_EnableIRQ(p_ctrl->p_cfg->txi_irq);
+
+    /* Enable SPIE to detect unexpected STOP condition. This is disabled between communication events as it can lead
+     * to undesired interrupts in multi-master setups. */
+    p_ctrl->p_reg->ICIER = IIC_MASTER_INTERRUPT_ENABLE_INIT_MASK | R_IIC0_ICIER_STIE_Msk | R_IIC0_ICIER_SPIE_Msk;
 
     /* If previous transaction did not end with restart, send a start condition */
     if (!p_ctrl->restarted)
@@ -1124,6 +1128,9 @@ static void iic_master_err_master (iic_master_instance_ctrl_t * p_ctrl)
         {
             /* Get the correct event to notify the user */
             event = (p_ctrl->read) ? I2C_MASTER_EVENT_RX_COMPLETE : I2C_MASTER_EVENT_TX_COMPLETE;
+
+            /* Disable STIE/SPIE to prevent errant interrupts in multi-master scenarios */
+            p_ctrl->p_reg->ICIER = IIC_MASTER_INTERRUPT_ENABLE_INIT_MASK;
         }
         else if ((errs_events & (uint8_t) IIC_MASTER_ERR_EVENT_STOP))
         {

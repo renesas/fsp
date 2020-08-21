@@ -21,7 +21,6 @@
 /******************************************************************************
  * Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
-
 #include <r_usb_basic.h>
 #include <r_usb_basic_api.h>
 
@@ -388,29 +387,31 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
         case USB_STATUS_NOT_SUPPORT:
         case USB_STATUS_DETACH:
         {
-            (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) USB_NULL, USB_OFF);
+            (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) USB_NULL, USB_OFF);
             break;
         }
 
         case USB_STATUS_REQUEST:
         {
-            (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) USB_NULL, USB_ON);
+            (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) USB_NULL, USB_OFF);
             break;
         }
 
         case USB_STATUS_SUSPEND:
         case USB_STATUS_RESUME:
         {
-            if (USB_MODE_HOST == g_usb_usbmode)
+            if (USB_MODE_HOST == g_usb_usbmode[p_ctrl->module_number])
             {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-                (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data, USB_OFF);
+                (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count],
+                                                             g_usb_hstd_sus_res_task_id[p_ctrl->module_number],
+                                                             USB_OFF);
   #endif                               /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
             }
             else
             {
   #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-                (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) USB_NULL, USB_OFF);
+                (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) USB_NULL, USB_OFF);
   #endif                               /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
             }
 
@@ -419,10 +420,11 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
 
         case USB_STATUS_REQUEST_COMPLETE:
         {
-            if (USB_MODE_HOST == g_usb_usbmode)
+            if (USB_MODE_HOST == g_usb_usbmode[p_ctrl->module_number])
             {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-                (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data, USB_OFF);
+                (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data,
+                                                             USB_OFF);
   #endif                               /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
             }
             else
@@ -431,12 +433,14 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
                 if (0 == p_ctrl->setup.request_length)
                 {
                     /* Processing for USB request has the no data stage */
-                    (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) USB_NULL, USB_OFF);
+                    (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) USB_NULL,
+                                                                 USB_OFF);
                 }
                 else
                 {
                     /* Processing for USB request has the data state */
-                    (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data, USB_OFF);
+                    (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data,
+                                                                 USB_OFF);
                 }
   #endif                               /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
             }
@@ -450,7 +454,7 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
   #if defined(USB_CFG_HMSC_USE)
         case USB_STATUS_MSC_CMD_COMPLETE:
   #endif                               /* defined(USB_CFG_HMSC_USE) */
-            (*g_usb_apl_callback)(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data, USB_OFF);
+            (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data, USB_OFF);
             break;
 
         default:
@@ -557,7 +561,7 @@ fsp_err_t usb_cstd_rel_semaphore (usb_instance_ctrl_t * p_ctrl)
  ******************************************************************************/
 void usb_cstd_usb_task (uint8_t module_number)
 {
-    if (USB_MODE_HOST == g_usb_usbmode)
+    if (USB_MODE_HOST == g_usb_usbmode[module_number])
     {
         FSP_PARAMETER_NOT_USED(module_number);
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
@@ -576,9 +580,9 @@ void usb_cstd_usb_task (uint8_t module_number)
                 usb_class_task();
             }
         }
-
         /* WAIT_LOOP */
         while (USB_FALSE != g_drive_search_lock);
+
   #else                                              /* defined(USB_CFG_HMSC_USE) */
         usb_cstd_scheduler();                        /* Scheduler */
 
@@ -674,6 +678,7 @@ uint16_t usb_cstd_remote_wakeup (usb_utr_t * p_utr)
     }
     else
     {
+
         // ret_code = FSP_ERR_USB_FAILED;
         return USB_ERROR;
     }

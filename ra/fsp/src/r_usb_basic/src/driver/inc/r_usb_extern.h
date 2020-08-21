@@ -56,6 +56,9 @@ extern uint16_t          g_usb_hstd_ignore_cnt[][USB_MAX_PIPE_NO + 1U]; /* Ignor
 extern usb_hcdreg_t      g_usb_hstd_device_drv[][USB_MAXDEVADDR + 1U];  /* Device driver (registration) */
 extern volatile uint16_t g_usb_hstd_device_info[][USB_MAXDEVADDR + 1U][8U];
 extern usb_ctrl_trans_t  g_usb_ctrl_request[USB_NUM_USBIP][USB_MAXDEVADDR + 1];
+ #if (BSP_CFG_RTOS == 2)
+extern usb_hdl_t g_usb_hstd_sus_res_task_id[];
+ #endif                                                         /*  #if (BSP_CFG_RTOS == 2) */
 
 /* port status, config num, interface class, speed, */
 extern uint16_t g_usb_hstd_remort_port[];
@@ -113,11 +116,13 @@ extern uint16_t g_usb_pstd_remote_wakeup;                          /* Remote Wak
 extern uint16_t g_usb_pstd_remote_wakeup_state;                    /* Result for Remote wake up */
 
 /* r_usb.c */
-extern volatile uint16_t g_usb_usbmode;                            /* USB mode HOST/PERI */
+
+extern volatile uint16_t g_usb_usbmode[USB_NUM_USBIP];             /* USB mode HOST/PERI */
+
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 extern usb_utr_t g_usb_hdata[USB_NUM_USBIP][USB_MAXPIPE_NUM + 1];
 
-#endif  /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 extern usb_utr_t g_usb_pdata[USB_MAXPIPE_NUM + 1];
@@ -144,7 +149,7 @@ extern uint16_t g_usb_hstd_use_pipe[];
 extern SemaphoreHandle_t g_usb_semaphore_hdl[];
 extern usb_utr_t * get_usb_int_buf(void);
 
-extern usb_callback_t * g_usb_apl_callback;
+extern usb_callback_t * g_usb_apl_callback[USB_NUM_USBIP];
 #endif                                 /*#if (BSP_CFG_RTOS == 2)*/
 
 /* r_usb_pbc.c */
@@ -201,14 +206,17 @@ usb_er_t usb_data_stop(usb_instance_ctrl_t * p_ctrl, usb_transfer_t type);
 usb_er_t usb_ctrl_stop(usb_instance_ctrl_t * p_ctrl);
 void     usb_cstd_debug_hook(uint16_t error_code);
 
-uint16_t usb_cstd_get_pipe_buf_value(uint16_t pipe_no);
-
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 usb_er_t usb_pstd_transfer_start(usb_utr_t * ptr);
 usb_er_t usb_pstd_transfer_end(usb_utr_t * p_utr, uint16_t pipe);
 void     usb_pstd_change_device_state(uint16_t state, uint16_t keyword, usb_cb_t complete, usb_utr_t * p_utr);
 void     usb_pstd_driver_registration(usb_pcdreg_t * registinfo);
 void     usb_pstd_driver_release(void);
+
+ #if defined(BSP_MCU_GROUP_RA6M3)
+uint16_t usb_pstd_get_pipe_buf_value(uint16_t pipe_no);
+
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 
@@ -235,6 +243,11 @@ uint8_t usb_hstd_make_pipe_reg_info(uint16_t               ip_no,
                                     uint16_t               speed,
                                     uint8_t              * descriptor,
                                     usb_pipe_table_reg_t * pipe_table_work);
+
+ #if defined(BSP_MCU_GROUP_RA6M3)
+uint16_t usb_hstd_get_pipe_buf_value(uint16_t pipe_no);
+
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 

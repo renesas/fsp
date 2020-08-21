@@ -126,11 +126,6 @@
  #define BSP_PRV_NUM_CLOCKS                     ((uint8_t) BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK + 1U)
 #endif
 
-/* Frequencies of clocks with fixed freqencies. */
-#define BSP_PRV_LOCO_FREQ                       (32768U)   // LOCO frequency is fixed at 32768 Hz
-#define BSP_PRV_SUBCLOCK_FREQ                   (32768U)   // Subclock frequency is 32768 Hz
-#define BSP_PRV_MOCO_FREQ                       (8000000U) // MOCO frequency is fixed at 8 MHz
-
 /* Calculate PLLCCR value. */
 #if BSP_PRV_PLL_SUPPORTED
  #if (1U == BSP_FEATURE_CGC_PLLCCR_TYPE)
@@ -549,10 +544,10 @@ void bsp_clock_init (void)
 #endif
 
     g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_HOCO]     = BSP_HOCO_HZ;
-    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_MOCO]     = BSP_PRV_MOCO_FREQ;
-    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_LOCO]     = BSP_PRV_LOCO_FREQ;
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_MOCO]     = BSP_MOCO_FREQ_HZ;
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_LOCO]     = BSP_LOCO_FREQ_HZ;
     g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC] = BSP_CFG_XTAL_HZ;
-    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK] = BSP_PRV_SUBCLOCK_FREQ;
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK] = BSP_SUBCLOCK_FREQ_HZ;
 #if BSP_PRV_PLL_SUPPORTED
 
     /* The PLL value will be calculated at initialization. */
@@ -645,6 +640,10 @@ void bsp_clock_init (void)
      * voltage mode. */
     R_SYSTEM->HOCOCR = 1U;
   #endif
+ #elif BSP_FEATURE_CGC_STARTUP_OPCCR_MODE != BSP_PRV_OPERATING_MODE_HIGH_SPEED
+
+    /* Some MCUs do not start in high speed mode. */
+    bsp_prv_operating_mode_opccr_set(BSP_PRV_OPERATING_MODE_HIGH_SPEED);
  #endif
 #endif
 
