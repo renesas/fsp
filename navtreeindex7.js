@@ -1,5 +1,9 @@
 var NAVTREEINDEX7 =
 {
+"group___c_t_s_u___a_p_i.html#ac7449580617af95b04736b986fa00a35":[3,2,7,2,30],
+"group___c_t_s_u___a_p_i.html#adfdb692d8d85db036f69dd700d5c65c1":[3,2,7,2,28],
+"group___c_t_s_u___a_p_i.html#ae27c18106bd2a8499e71cc9ceab3918e":[3,2,7,1,3],
+"group___c_t_s_u___a_p_i.html#ae74fcea91814d0f91913ae969301691c":[3,2,7,3,4],
 "group___c_t_s_u___a_p_i.html#ae84a8915368af6932e37de7d8b9d7df9":[3,2,7,2,1],
 "group___c_t_s_u___a_p_i.html#ae8f2c7b3cc9e33f0f790f76655d3d723":[3,2,7,3,0],
 "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395":[3,2,7,3,3],
@@ -109,7 +113,7 @@ var NAVTREEINDEX7 =
 "group___d_a_c___a_p_i.html#structdac__cfg__t":[3,2,8,1],
 "group___d_a_c___a_p_i.html#structdac__info__t":[3,2,8,0],
 "group___d_a_c___a_p_i.html#structdac__instance__t":[3,2,8,3],
-"group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_n_i_n_g.html":[3,1,66],
+"group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_n_i_n_g.html":[3,1,67],
 "group___d_i_s_p_l_a_y___a_p_i.html":[3,2,9],
 "group___d_i_s_p_l_a_y___a_p_i.html#a01d406959ad30c41ebb8523d6de8f318":[3,2,9,7,0],
 "group___d_i_s_p_l_a_y___a_p_i.html#a039dd90ebbe34ecb4075628ee3dc2bcd":[3,2,9,15,1],
@@ -245,9 +249,5 @@ var NAVTREEINDEX7 =
 "group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__brightness__t":[3,2,9,3],
 "group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__callback__args__t":[3,2,9,12],
 "group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__cfg__t":[3,2,9,13],
-"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__clut__cfg__t":[3,2,9,15],
-"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__clut__t":[3,2,9,8],
-"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__color__t":[3,2,9,1],
-"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__contrast__t":[3,2,9,4],
-"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__coordinate__t":[3,2,9,2]
+"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__clut__cfg__t":[3,2,9,15]
 };

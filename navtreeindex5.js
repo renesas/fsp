@@ -1,5 +1,9 @@
 var NAVTREEINDEX5 =
 {
+"group___c_a_n___a_p_i.html#a34fbfff40d0155fb8016db8195b48f98":[3,2,3,3,3],
+"group___c_a_n___a_p_i.html#a3699700f0a08a75159483ac2825dca90":[3,2,3,4,9],
+"group___c_a_n___a_p_i.html#a423c72dcd9f1926280e2180c7e7342cd":[3,2,3,1,0],
+"group___c_a_n___a_p_i.html#a44ef1a1a3726114b30f228c54b0d44ce":[3,2,3,5,0],
 "group___c_a_n___a_p_i.html#a48fa3cf4c8c7e608c25ac8b907450096":[3,2,3,3,1],
 "group___c_a_n___a_p_i.html#a51d2d4165d59650327ef2aef3b001390":[3,2,3,0,2],
 "group___c_a_n___a_p_i.html#a564584ef9e48317f93f432a0b86b9af8":[3,2,3,4,4],
@@ -245,9 +249,5 @@ var NAVTREEINDEX5 =
 "group___c_g_c___a_p_i.html#structcgc__clocks__cfg__t":[3,2,4,4],
 "group___c_g_c___a_p_i.html#structcgc__instance__t":[3,2,4,6],
 "group___c_g_c___a_p_i.html#structcgc__pll__cfg__t":[3,2,4,1],
-"group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t":[3,2,4,2],
-"group___c_o_m_p_a_r_a_t_o_r___a_p_i.html":[3,2,5],
-"group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a0251d88b11cc33909048f611db2bf688":[3,2,5,4,4],
-"group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a04056d44209a8b6ec58e1f41981bacd7":[3,2,5,5,1],
-"group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a125a6a2a99450af562e2c3deec80e7ac":[3,2,5,4,2]
+"group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t":[3,2,4,2]
 };

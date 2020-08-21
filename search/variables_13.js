@@ -20,6 +20,7 @@ var searchData=
   ['total_5fcyc',['total_cyc',['../group___d_i_s_p_l_a_y___a_p_i.html#ab20db6e371b0ff1c21cd8ac0b4bb0a76',1,'display_timing_t']]],
   ['total_5flines_5fdecoded',['total_lines_decoded',['../group___j_p_e_g.html#a900d2d361a81cbef4cc8a4b2529c68cf',1,'jpeg_instance_ctrl_t']]],
   ['total_5flines_5fencoded',['total_lines_encoded',['../group___j_p_e_g.html#a0d6fbc975cb2cbeee7e05bca0a6b5ee9',1,'jpeg_instance_ctrl_t']]],
+  ['total_5fsize',['total_size',['../group___r_m___v_e_e___a_p_i.html#aaa68302d54dacf784f77ffd518ce6c38',1,'rm_vee_cfg_t']]],
   ['transfer_5fin_5fprogress',['transfer_in_progress',['../group___s_d_m_m_c___a_p_i.html#a6f796677f6203ef572b998bb32740f91',1,'sdmmc_status_t']]],
   ['transfer_5flength_5fmax',['transfer_length_max',['../group___t_r_a_n_s_f_e_r___a_p_i.html#ae8ae839a9fa2fea09d9390e11b2edd9c',1,'transfer_properties_t']]],
   ['transfer_5flength_5fremaining',['transfer_length_remaining',['../group___t_r_a_n_s_f_e_r___a_p_i.html#afd44a3b34e332d28d7573865c58b00df',1,'transfer_properties_t']]],

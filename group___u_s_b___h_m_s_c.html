@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.2.0</span>
+   &#160;<span id="projectnumber">Release v1.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -177,6 +177,7 @@ Limitations</h2>
 <li>A device that does not respond to the READ_CAPACITY command operates as a device with a sector size of 512 bytes.</li>
 <li>The continuous transfer mode cannot be used when using DMA.</li>
 <li>This module must be incorporated into a project using r_usb_basic and does not provide any public APIs.</li>
+<li>This driver does not support Low-speed.</li>
 </ol>
 <h1><a class="anchor" id="r-usb_hmsc-examples"></a>
 Examples</h1>
@@ -212,7 +213,7 @@ usb_apl_task</div></div>
 <p> <b>file_read_task</b></p>
 <p>Of the application tasks usb_apl_task and file_read_task, file_read_task is processed while usb_apl_task is in the wait state. This task performs file read processing on the file that was written to the MSC device (<code>hmscdemo.txt</code>).</p>
 <h3>Example Code</h3>
-<dl class="section note"><dt>Note</dt><dd>For example code refer to the <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#rm-block-media-usb-examples">USB HMSC Block Media example.</a></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>For example code refer to the <a class="el" href="group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t.html#rm-freertos-plus-fat-examples">FreeRTOS + FAT example.</a></dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gae5cbef3743893d8c35aa9fe45c9d6651"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gae5cbef3743893d8c35aa9fe45c9d6651">&#9670;&nbsp;</a></span>R_USB_HMSC_StorageCommand()</h2>
@@ -474,7 +475,7 @@ usb_apl_task</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.3.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

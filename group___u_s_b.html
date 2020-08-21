@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.2.0</span>
+   &#160;<span id="projectnumber">Release v1.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -452,10 +452,10 @@ Limitations</h2>
 <li>The current USB driver does not support hub.</li>
 <li>In USB host mode, the module does not support suspend during data transfers. Execute suspend only after confirming that all transfers are complete.</li>
 <li>Multiconfigurations are not supported.</li>
-<li>USB host and peripheral modes cannot operate at the same time.</li>
 <li>This driver does not support CPU transfers using the D0FIFO/D1FIFO register.</li>
 <li>Only one device-class driver may be used at a time.</li>
 <li>The USB Hi-Speed module only supports Hi-Speed operation.</li>
+<li>In USB host mode, this USB driver does not support the composite device.</li>
 </ul>
 <h1><a class="anchor" id="r-usb_basic-examples"></a>
 Examples</h1>
@@ -1812,7 +1812,7 @@ Do not call this API in the following function. </dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.3.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

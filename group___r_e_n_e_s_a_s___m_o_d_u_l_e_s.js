@@ -66,6 +66,7 @@ var group___r_e_n_e_s_a_s___m_o_d_u_l_e_s =
     [ "LittleFS Flash Port (rm_littlefs_flash)", "group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h.html", "group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h" ],
     [ "Crypto Middleware (rm_psa_crypto)", "group___r_m___p_s_a___c_r_y_p_t_o.html", "group___r_m___p_s_a___c_r_y_p_t_o" ],
     [ "Capacitive Touch Middleware (rm_touch)", "group___t_o_u_c_h.html", "group___t_o_u_c_h" ],
+    [ "Virtual EEPROM (rm_vee_flash)", "group___r_m___v_e_e___f_l_a_s_h.html", "group___r_m___v_e_e___f_l_a_s_h" ],
     [ "AWS Device Provisioning", "group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_n_i_n_g.html", null ],
     [ "AWS MQTT", "group___a_w_s___m_q_t_t.html", null ],
     [ "Wifi Middleware (rm_wifi_onchip_silex)", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x" ],

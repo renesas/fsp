@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.2.0</span>
+   &#160;<span id="projectnumber">Release v1.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -152,7 +152,7 @@ IVREF0</li>
 <li>
 IVREF1</li>
 </ul>
-</td><td>IVREF1 </td><td>Reference Voltage Selection for ACMPLP1. When set to IVREF0, configure the reference for ACMPLP channel 1 (if used) to one of the channel 0 sources. </td></tr>
+</td><td>IVREF1 </td><td>ACMPLP1 may optionally be configured to use IVREF0 as a reference input instead of IVREF1. Note that if IVREF0 is selected, ACMPLP0 and ACMPLP1 must use the same setting for IVREF. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Analog &gt; Comparator Driver on r_acmplp</h2>
 This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Analog &gt; Comparator Driver on r_acmplp:<br />
@@ -343,6 +343,7 @@ Enumerations</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer is NULL </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>An argument is invalid. Window mode (COMPARATOR_MODE_WINDOW) and filter of 1 (COMPARATOR_FILTER_1) are not supported in this implementation. p_cfg-&gt;p_callback is not NULL, but ISR is not enabled. ISR must be enabled to use callback function. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The control block is already open or the hardware lock is taken. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>The channel is already in use. </td></tr>
   </table>
   </dd>
 </dl>
@@ -509,7 +510,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.3.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

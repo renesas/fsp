@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.2.0</span>
+   &#160;<span id="projectnumber">Release v1.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ DP83620</li>
 </ul>
 </td><td>Default </td><td>Select PHY chip to use. Selecting 'Default' will automatically choose the correct option when using a Renesas development board. </td></tr>
 <tr>
-<td>Use Reference Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Reference Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default</li>
 <li>
@@ -191,9 +191,9 @@ This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Networ
 <tr>
 <td>PHY-LSI Address</td><td>Specify a value between 0 and 31.</td><td>0 </td><td>Specify the address of the PHY-LSI used. </td></tr>
 <tr>
-<td>PHY-LSI Reset Completion Timeout</td><td>Specify a value between 1 and 0xFFFFFFFF.</td><td>0x00020000 </td><td>Specify the number of times to read the PHY-LSI control register while waiting for reset completion. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
+<td>PHY-LSI Reset Completion Timeout</td><td>Specify a value between 0x1 and 0xFFFFFFFF.</td><td>0x00020000 </td><td>Specify the number of times to read the PHY-LSI control register while waiting for reset completion. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
 <tr>
-<td>MII/RMII Register Access Wait-time</td><td>Specify a value between 1 and 0x7FFFFFFF.</td><td>8 </td><td>Specify the bit timing for MII/RMII register accesses during PHY initialization. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
+<td>MII/RMII Register Access Wait-time</td><td>Specify a value between 0x1 and 0x7FFFFFFF.</td><td>8 </td><td>Specify the bit timing for MII/RMII register accesses during PHY initialization. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
 <tr>
 <td>Flow Control</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -484,7 +484,7 @@ Capabilities bitmap for local advertising. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.3.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

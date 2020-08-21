@@ -19,6 +19,7 @@ var searchData=
   ['num_5frx',['num_rx',['../group___c_t_s_u___a_p_i.html#aa56acc1bedbf92f8a188631e6321f081',1,'ctsu_cfg_t']]],
   ['num_5frx_5fdescriptors',['num_rx_descriptors',['../group___e_t_h_e_r___a_p_i.html#ae672b5a15f85774b5b136a6e50073f68',1,'ether_cfg_t']]],
   ['num_5fsectors',['num_sectors',['../group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a9c19435e9c8a2e1a32c9e0869ef10663',1,'rm_block_media_info_t']]],
+  ['num_5fsegments',['num_segments',['../group___r_m___v_e_e___a_p_i.html#a784b186634576953b699cf78781d1aea',1,'rm_vee_cfg_t']]],
   ['num_5fsliders',['num_sliders',['../group___t_o_u_c_h___a_p_i.html#abaac08be7d2b64d95ecf167b16c5428d',1,'touch_cfg_t']]],
   ['num_5fsockets',['num_sockets',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a0f20a4dc5690df1bda8bd0c99abad9a9',1,'wifi_onchip_silex_cfg_t']]],
   ['num_5fstates',['num_states',['../group___a_d_c.html#aedbb76489ecc68110ccf3ede6f02fce9',1,'adc_sample_state_t']]],

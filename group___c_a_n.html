@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.2.0</span>
+   &#160;<span id="projectnumber">Release v1.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -159,10 +159,6 @@ This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connec
 <tr>
 <td>General &gt; Clock Source</td><td>MCU Specific Options</td><td></td><td>Select the CAN clock source. </td></tr>
 <tr>
-<td>General &gt; Sample-Point (%)</td><td>Must be a valid integer between 0 and 100.</td><td>75 </td><td>Sample-Point = (TSEG1 + 1) / (TSEG1 + TSEG2 + 1). </td></tr>
-<tr>
-<td>General &gt; CAN Baud Rate (Hz)</td><td>Must be a valid integer configurable upto maximum 4MHz.</td><td>500000 </td><td>Specify baud rate in Hz. </td></tr>
-<tr>
 <td>General &gt; Overwrite/Overrrun Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Overwrite Mode</li>
@@ -190,6 +186,52 @@ Extended ID Mode</li>
 32 Mailboxes</li>
 </ul>
 </td><td>32 Mailboxes </td><td>Select 4, 8, 16 or 32 mailboxes. </td></tr>
+<tr>
+<td>Baud Rate Settings &gt; Auto-generated Settings &gt; Sample-Point (%)</td><td>Must be a valid integer between 0 and 100. Ignore when Override Baud Settings is Enabled.</td><td>75 </td><td>Sample-Point = (TSEG1 + 1) / (TSEG1 + TSEG2 + 1). </td></tr>
+<tr>
+<td>Baud Rate Settings &gt; Auto-generated Settings &gt; CAN Baud Rate (Hz)</td><td>Must be a valid integer configurable upto maximum 1MHz. Ignore when Override Baud Settings is Enabled.</td><td>500000 </td><td>Specify baud rate in Hz. </td></tr>
+<tr>
+<td>Baud Rate Settings &gt; Override Auto-generated Settings &gt; Override Baud Settings</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Override calculated baudrate parameters and instead use the ones specified below. This option ignores the parameters specified under Sample-Point (%) and CAN Baud Rate (Hz) </td></tr>
+<tr>
+<td>Baud Rate Settings &gt; Override Auto-generated Settings &gt; Baud Rate Prescaler</td><td>Value must be a non-negative integer between 1 and 1024.</td><td>1 </td><td>Specify division value of baud rate prescaler (baud rate prescalar + 1). </td></tr>
+<tr>
+<td>Baud Rate Settings &gt; Override Auto-generated Settings &gt; Time Segment 1</td><td>Refer to the RA Configuration tool for available options.</td><td>4 Time Quanta </td><td>Select the time segment 1 value. (4-16). Check module usage notes for how to calculate this value. </td></tr>
+<tr>
+<td>Baud Rate Settings &gt; Override Auto-generated Settings &gt; Time Segment 2</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+2 Time Quanta</li>
+<li>
+3 Time Quanta</li>
+<li>
+4 Time Quanta</li>
+<li>
+5 Time Quanta</li>
+<li>
+6 Time Quanta</li>
+<li>
+7 Time Quanta</li>
+<li>
+8 Time Quanta</li>
+</ul>
+</td><td>2 Time Quanta </td><td>Select the time segment 2 value (2-8). Check module usage notes for how to calculate this value. </td></tr>
+<tr>
+<td>Baud Rate Settings &gt; Override Auto-generated Settings &gt; Synchronization Jump Width</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 Time Quanta</li>
+<li>
+2 Time Quanta</li>
+<li>
+3 Time Quanta</li>
+<li>
+4 Time Quanta</li>
+</ul>
+</td><td>1 Time Quanta </td><td>Select the Synchronization Jump Width value (1-4). Check module usage notes for how to calculate this value. </td></tr>
 <tr>
 <td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>can_callback </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time any interrupt occurs. </td></tr>
 <tr>
@@ -807,7 +849,7 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-can-usage_notes"></a>
 Usage Notes</h1>
 <h2>Bit Rate Calculation</h2>
-<p>The baudrate of the CAN peripheral is automatically set through the RA Configuration editor. For more details on how the baudrate is set refer to section 37.4 "Data Transfer Rate Configuration" of the RA6M3 User's Manual (R01UH0886EJ0100).</p>
+<p>For convenience, the baudrate of the CAN peripheral is automatically set through the RA Configuration editor using a best effort approach. If the auto-generated baud settings cause deviation that is not tolerable by the application, the user can override the auto-generated settings and put in manually calculated values through RA Configuration editor. For more details on how the baudrate is set refer to section 37.4 "Data Transfer Rate Configuration" of the RA6M3 User's Manual (R01UH0886EJ0100).</p>
 <h1><a class="anchor" id="r-can-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -1035,7 +1077,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.3.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

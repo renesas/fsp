@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.2.0</span>
+   &#160;<span id="projectnumber">Release v1.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -115,6 +115,12 @@ Functions</h2></td></tr>
 <tr class="separator:ga662624feaff3850ffbe7fb118ab140d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gade0e6b9fc5ca580d5bf6c8ae2a6af8d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gade0e6b9fc5ca580d5bf6c8ae2a6af8d9">R_BSP_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
 <tr class="separator:gade0e6b9fc5ca580d5bf6c8ae2a6af8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50cae0c65c54074c32d30eb4108d9a09"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga50cae0c65c54074c32d30eb4108d9a09">R_FSP_CurrentIrqGet</a> (void)</td></tr>
+<tr class="separator:ga50cae0c65c54074c32d30eb4108d9a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaac289335b731d0bdb5cb8e6d243898ef"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaac289335b731d0bdb5cb8e6d243898ef">R_FSP_SystemClockHzGet</a> (fsp_priv_clock_t clock)</td></tr>
+<tr class="separator:gaac289335b731d0bdb5cb8e6d243898ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadee5f5e0c5fa723426f73d7d5a07f9b2"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE bsp_unique_id_t const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gadee5f5e0c5fa723426f73d7d5a07f9b2">R_BSP_UniqueIdGet</a> ()</td></tr>
+<tr class="separator:gadee5f5e0c5fa723426f73d7d5a07f9b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf3219448adfd1531cf69f68697ab184b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a> (uint32_t delay, <a class="el" href="group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b">bsp_delay_units_t</a> units)</td></tr>
 <tr class="separator:gaf3219448adfd1531cf69f68697ab184b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaed27ea47f0c85a1af9bb515600d5e2ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a> (<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq, void(*p_callback)(<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq))</td></tr>
@@ -381,13 +387,17 @@ Not Populated</li>
 </ul>
 </td><td>Populated </td><td>Select whether or not there is a subclock crystal on the board. This setting can be overridden in board_cfg.h. </td></tr>
 <tr>
-<td>Subclock Drive</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Subclock Drive (Drive capacitance availability varies by MCU)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Low</li>
+Standard/Normal mode</li>
 <li>
-Standard</li>
+Low/Low power mode 1</li>
+<li>
+Low power mode 2</li>
+<li>
+Low power mode 3</li>
 </ul>
-</td><td>Standard </td><td>Select the subclock oscillator drive capacitance. This setting can be overridden in board_cfg.h </td></tr>
+</td><td>Standard/Normal mode </td><td>Select the subclock oscillator drive capacitance. This setting can be overridden in board_cfg.h </td></tr>
 <tr>
 <td>Subclock Stabilization Time (ms)</td><td>Value must between 0 and 10000</td><td>1000 </td><td>Select the subclock oscillator stabilization time. This is only used in the startup code if the subclock is selected as the system clock on the Clocks tab. This setting can be overridden in board_cfg.h </td></tr>
 </table>
@@ -426,6 +436,8 @@ Macros</h2></td></tr>
 <tr class="separator:ga23338e06b1e1537017ef4f3f94cda354"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4e36b09bee515ff1b813e7ba0412e60d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga4e36b09bee515ff1b813e7ba0412e60d">FSP_INVALID_VECTOR</a></td></tr>
 <tr class="separator:ga4e36b09bee515ff1b813e7ba0412e60d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f65c534e6da6ae5733380827f882898"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga4f65c534e6da6ae5733380827f882898">BSP_CFG_HANDLE_UNRECOVERABLE_ERROR</a>(x)</td></tr>
+<tr class="separator:ga4f65c534e6da6ae5733380827f882898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadecec24d538312129b60def6152f5992"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a></td></tr>
 <tr class="separator:gadecec24d538312129b60def6152f5992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf0a730b79b5bbe76759b6e8efafe2000"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(ip,  channel)</td></tr>
@@ -600,6 +612,25 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Used to signify that the requested IRQ vector is not defined in this system. </p>
+
+</div>
+</div>
+<a id="ga4f65c534e6da6ae5733380827f882898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4f65c534e6da6ae5733380827f882898">&#9670;&nbsp;</a></span>BSP_CFG_HANDLE_UNRECOVERABLE_ERROR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP_CFG_HANDLE_UNRECOVERABLE_ERROR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>In the event of an unrecoverable error the BSP will by default call the __BKPT() intrinsic function which will alert the user of the error. The user can override this default behavior by defining their own BSP_CFG_HANDLE_UNRECOVERABLE_ERROR macro. </p>
 
 </div>
 </div>
@@ -1422,6 +1453,65 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ga50cae0c65c54074c32d30eb4108d9a09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga50cae0c65c54074c32d30eb4108d9a09">&#9670;&nbsp;</a></span>R_FSP_CurrentIrqGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE IRQn_Type R_FSP_CurrentIrqGet </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return active interrupt vector number value</p>
+<dl class="section return"><dt>Returns</dt><dd>Active interrupt vector number value </dd></dl>
+
+</div>
+</div>
+<a id="gaac289335b731d0bdb5cb8e6d243898ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaac289335b731d0bdb5cb8e6d243898ef">&#9670;&nbsp;</a></span>R_FSP_SystemClockHzGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t R_FSP_SystemClockHzGet </td>
+          <td>(</td>
+          <td class="paramtype">fsp_priv_clock_t&#160;</td>
+          <td class="paramname"><em>clock</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the frequency of a system clock.</p>
+<dl class="section return"><dt>Returns</dt><dd>Frequency of requested clock in Hertz. </dd></dl>
+
+</div>
+</div>
+<a id="gadee5f5e0c5fa723426f73d7d5a07f9b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadee5f5e0c5fa723426f73d7d5a07f9b2">&#9670;&nbsp;</a></span>R_BSP_UniqueIdGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE bsp_unique_id_t const* R_BSP_UniqueIdGet </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get unique ID for this device.</p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the unique identifier structure </dd></dl>
+
+</div>
+</div>
 <a id="gaf3219448adfd1531cf69f68697ab184b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf3219448adfd1531cf69f68697ab184b">&#9670;&nbsp;</a></span>R_BSP_SoftwareDelay()</h2>
 
@@ -1616,7 +1706,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v1.3.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

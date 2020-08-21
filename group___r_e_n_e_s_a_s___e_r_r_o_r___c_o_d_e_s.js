@@ -45,6 +45,7 @@ var group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s =
       [ "FSP_ERR_NOT_ERASED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a0a6057def8440b3e3dd6ff5fe9d4d4a7", null ],
       [ "FSP_ERR_SECTOR_RELEASE_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aada459ccb2b85a8dc33fabc987e173e4", null ],
       [ "FSP_ERR_NOT_INITIALIZED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8add81216e0221e6d8583d35b1b471199b", null ],
+      [ "FSP_ERR_NOT_FOUND", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a5b3fa149fddaa9617a7d3cacf67810a4", null ],
       [ "FSP_ERR_INTERNAL", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a6d11b644cafb53d7d39f701de5ca026d", null ],
       [ "FSP_ERR_WAIT_ABORTED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aa5cbda3787ddf5092d0fdf14b8e4fe57", null ],
       [ "FSP_ERR_FRAMING", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a8f76d058261cd655519cbc81f1586bc4", null ],

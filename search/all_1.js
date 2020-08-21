@@ -480,6 +480,7 @@ var searchData=
   ['brr_5fvalue',['brr_value',['../group___s_c_i___i2_c.html#a5aee024389304363d286ce4b8c82f0c7',1,'sci_i2c_clock_settings_t']]],
   ['brts',['brts',['../group___u_s_b___h_c_d_c___a_p_i.html#a34356a82f8c5aa7d82af7efa9a425f7f',1,'usb_hcdc_controllinestate_t::brts()'],['../group___u_s_b___p_c_d_c___a_p_i.html#a343f27f5e44d9c93c79fb62540b7b541',1,'usb_pcdc_ctrllinestate_t::brts()']]],
   ['brx_5fcarrier',['brx_carrier',['../group___u_s_b___h_c_d_c___a_p_i.html#a2ee0d37edd9fc2a45a60e6c21ebc0c62',1,'usb_hcdc_serialstate_t']]],
+  ['bsp_5fcfg_5fhandle_5funrecoverable_5ferror',['BSP_CFG_HANDLE_UNRECOVERABLE_ERROR',['../group___b_s_p___m_c_u.html#ga4f65c534e6da6ae5733380827f882898',1,'bsp_common.h']]],
   ['bsp_5fdelay_5funits_5fmicroseconds',['BSP_DELAY_UNITS_MICROSECONDS',['../group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae',1,'bsp_delay.h']]],
   ['bsp_5fdelay_5funits_5fmilliseconds',['BSP_DELAY_UNITS_MILLISECONDS',['../group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913',1,'bsp_delay.h']]],
   ['bsp_5fdelay_5funits_5fseconds',['BSP_DELAY_UNITS_SECONDS',['../group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d',1,'bsp_delay.h']]],
