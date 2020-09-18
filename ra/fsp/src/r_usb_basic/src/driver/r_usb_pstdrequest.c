@@ -58,7 +58,7 @@ static void usb_pstd_set_interface3(usb_utr_t * p_utr);
 static void usb_pstd_synch_rame1(usb_utr_t * p_utr);
 
  #if USB_CFG_REQUEST == USB_CFG_ENABLE
-static void usb_pstd_request_event_set(void);
+static void usb_pstd_request_event_set(usb_utr_t * p_utr);
 
  #endif                                /* USB_CFG_REQUEST == USB_CFG_ENABLE */
 
@@ -254,6 +254,7 @@ void usb_pstd_stand_req3 (usb_utr_t * p_utr)
         ctrl.data_size            = 0;
         ctrl.status               = USB_SETUP_STATUS_ACK;
         ctrl.type                 = USB_CLASS_REQUEST;
+        ctrl.module_number        = p_utr->ip;
  #if (BSP_CFG_RTOS == 2)
         ctrl.p_data = (void *) xTaskGetCurrentTaskHandle();
  #endif                                /* (BSP_CFG_RTOS == 2) */
@@ -327,6 +328,7 @@ void usb_pstd_stand_req4 (usb_utr_t * p_utr)
         ctrl.data_size            = 0;
         ctrl.status               = USB_SETUP_STATUS_ACK;
         ctrl.type                 = USB_CLASS_REQUEST;
+        ctrl.module_number        = p_utr->ip;
  #if (BSP_CFG_RTOS == 2)
         ctrl.p_data = (void *) xTaskGetCurrentTaskHandle();
  #endif                                /* (BSP_CFG_RTOS == 2) */
@@ -370,9 +372,10 @@ void usb_pstd_stand_req5 (usb_utr_t * p_utr)
         ctrl.setup.request_index  = g_usb_pstd_req_index;  /* Index */
         ctrl.setup.request_length = g_usb_pstd_req_length; /* Length */
 
-        ctrl.data_size = 0;
-        ctrl.status    = USB_SETUP_STATUS_ACK;
-        ctrl.type      = USB_CLASS_REQUEST;
+        ctrl.data_size     = 0;
+        ctrl.status        = USB_SETUP_STATUS_ACK;
+        ctrl.type          = USB_CLASS_REQUEST;
+        ctrl.module_number = p_utr->ip;
  #if (BSP_CFG_RTOS == 2)
         ctrl.p_data = (void *) xTaskGetCurrentTaskHandle();
  #endif                                /* (BSP_CFG_RTOS == 2) */
@@ -852,7 +855,7 @@ static void usb_pstd_clr_feature0 (void)
             {
                 if (USB_TRUE == usb_pstd_chk_remote())
                 {
-                    usb_pstd_request_event_set();
+                    usb_pstd_request_event_set(p_utr);
                 }
             }
         }
@@ -1015,7 +1018,7 @@ static void usb_pstd_set_feature0 (void)
             {
                 if (USB_TRUE == usb_pstd_chk_remote())
                 {
-                    usb_pstd_request_event_set();
+                    usb_pstd_request_event_set(p_utr);
                 }
             }
         }
@@ -1363,7 +1366,7 @@ static void usb_pstd_set_interface0 (usb_utr_t * p_utr)
     }
 
  #if USB_CFG_REQUEST == USB_CFG_ENABLE
-    usb_pstd_request_event_set();
+    usb_pstd_request_event_set(p_utr);
  #endif                                /* USB_CFG_REQUEST == USB_CFG_ENABLE */
 }
 
@@ -1738,17 +1741,18 @@ void usb_peri_class_request_wss (usb_setup_t * req, usb_utr_t * p_utr)
  * Arguments       : none
  * Return value    : none
  ******************************************************************************/
-void usb_pstd_request_event_set (void)
+void usb_pstd_request_event_set (usb_utr_t * p_utr)
 {
-    usb_ctrl_t ctrl;
+    usb_instance_ctrl_t ctrl;
 
-    ctrl.setup.type   = g_usb_pstd_req_type;   /* Request type */
-    ctrl.setup.value  = g_usb_pstd_req_value;  /* Value */
-    ctrl.setup.index  = g_usb_pstd_req_index;  /* Index */
-    ctrl.setup.length = g_usb_pstd_req_length; /* Length */
-    ctrl.size         = 0;
-    ctrl.status       = USB_SETUP_STATUS_ACK;
-    ctrl.type         = USB_CLASS_REQUEST;
+    ctrl.setup.request_type   = g_usb_pstd_req_type;   /* Request type */
+    ctrl.setup.request_value  = g_usb_pstd_req_value;  /* Value */
+    ctrl.setup.request_index  = g_usb_pstd_req_index;  /* Index */
+    ctrl.setup.request_length = g_usb_pstd_req_length; /* Length */
+    ctrl.data_size            = 0;
+    ctrl.status               = USB_SETUP_STATUS_ACK;
+    ctrl.type                 = USB_CLASS_REQUEST;
+    ctrl.module_number        = p_utr->ip;
     usb_set_event(USB_STATUS_REQUEST, &ctrl);
 }                                      /* End of function usb_pstd_request_event_set */
 

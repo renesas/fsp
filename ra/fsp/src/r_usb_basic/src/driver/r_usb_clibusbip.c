@@ -559,33 +559,13 @@ fsp_err_t usb_cstd_rel_semaphore (usb_instance_ctrl_t * p_ctrl)
  * Arguments       : none
  * Return value    : none
  ******************************************************************************/
-void usb_cstd_usb_task (uint8_t module_number)
+void usb_cstd_usb_task (void)
 {
-    if (USB_MODE_HOST == g_usb_usbmode[module_number])
-    {
-        FSP_PARAMETER_NOT_USED(module_number);
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
   #if defined(USB_CFG_HMSC_USE)
-        do
-        {
-            usb_cstd_scheduler();                        /* Scheduler */
-            if (USB_FLGSET == usb_cstd_check_schedule()) /* Check for any task processing requests flags. */
-            {
-                /** Use only in non-OS. In RTOS, the kernel will schedule these tasks, no polling. **/
-                usb_hstd_hcd_task((void *) 0);           /* HCD Task */
-                usb_hstd_mgr_task((void *) 0);           /* MGR Task */
-   #if USB_CFG_HUB == USB_CFG_ENABLE
-                usb_hhub_task((usb_vp_int_t) 0);         /* HUB Task */
-   #endif /* USB_CFG_HUB == USB_CFG_ENABLE */
-                usb_class_task();
-            }
-        }
-        /* WAIT_LOOP */
-        while (USB_FALSE != g_drive_search_lock);
-
-  #else                                              /* defined(USB_CFG_HMSC_USE) */
+    do
+    {
         usb_cstd_scheduler();                        /* Scheduler */
-
         if (USB_FLGSET == usb_cstd_check_schedule()) /* Check for any task processing requests flags. */
         {
             /** Use only in non-OS. In RTOS, the kernel will schedule these tasks, no polling. **/
@@ -594,25 +574,36 @@ void usb_cstd_usb_task (uint8_t module_number)
    #if USB_CFG_HUB == USB_CFG_ENABLE
             usb_hhub_task((usb_vp_int_t) 0);         /* HUB Task */
    #endif /* USB_CFG_HUB == USB_CFG_ENABLE */
-   #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HVND_USE)
             usb_class_task();
-   #endif /* defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HVND_USE) */
         }
+    }
+    /* WAIT_LOOP */
+    while (USB_FALSE != g_drive_search_lock);
+
+  #else                                          /* defined(USB_CFG_HMSC_USE) */
+    usb_cstd_scheduler();                        /* Scheduler */
+
+    if (USB_FLGSET == usb_cstd_check_schedule()) /* Check for any task processing requests flags. */
+    {
+        /** Use only in non-OS. In RTOS, the kernel will schedule these tasks, no polling. **/
+        usb_hstd_hcd_task((void *) 0);           /* HCD Task */
+        usb_hstd_mgr_task((void *) 0);           /* MGR Task */
+   #if USB_CFG_HUB == USB_CFG_ENABLE
+        usb_hhub_task((usb_vp_int_t) 0);         /* HUB Task */
+   #endif /* USB_CFG_HUB == USB_CFG_ENABLE */
+   #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HVND_USE)
+        usb_class_task();
+   #endif /* defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HVND_USE) */
+    }
   #endif                               /* defined(USB_CFG_HMSC_USE) */
  #endif                                /*( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST )*/
-    }
-    else
-    {
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-        usb_pstd_pcd_task();
+    usb_pstd_pcd_task();
 
   #if defined(USB_CFG_PMSC_USE)
-        usb_pmsc_task(module_number);
-  #else                                /* defined(USB_CFG_PMSC_USE) */
-        FSP_PARAMETER_NOT_USED(module_number);
+    usb_pmsc_task();
   #endif                               /* defined(USB_CFG_PMSC_USE) */
  #endif                                /*( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI )*/
-    }
 } /* End of function usb_cstd_usb_task() */
 
 /******************************************************************************

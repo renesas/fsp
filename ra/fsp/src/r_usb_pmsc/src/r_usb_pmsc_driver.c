@@ -96,11 +96,7 @@ usb_pmsc_cbm_t g_usb_pmsc_message;
  * Arguments       : none
  * Return value    : none
  ***********************************************************************************************************************/
-#if (BSP_CFG_RTOS == 0)
-void usb_pmsc_task (uint8_t module_number)
-#else                                  /* (BSP_CFG_RTOS == 0) */
 void usb_pmsc_task (void)
-#endif /* (BSP_CFG_RTOS == 0) */
 {
 #if (BSP_CFG_RTOS == 0)
     usb_utr_t      utr;
@@ -129,7 +125,7 @@ void usb_pmsc_task (void)
                 /* Normal Status Condotion */
                 case USB_DATA_OK:
                 {
-                    usb_pmsc_check_cbw(module_number);
+                    usb_pmsc_check_cbw(g_usb_pmsc_usbip);
 
                     break;
                 }
@@ -173,7 +169,7 @@ void usb_pmsc_task (void)
                     pmsc_atapi_command_processing(g_usb_pmsc_cbw.cbwcb,
                                                   g_usb_pmscstatus,
                                                   &usb_pmsc_data_transfer,
-                                                  module_number);
+                                                  g_usb_pmsc_usbip);
 
                     break;
                 }
@@ -207,7 +203,7 @@ void usb_pmsc_task (void)
                     pmsc_atapi_command_processing(g_usb_pmsc_cbw.cbwcb,
                                                   g_usb_pmscstatus,
                                                   &usb_pmsc_data_transfer,
-                                                  module_number);
+                                                  g_usb_pmsc_usbip);
 
                     break;
                 }
@@ -238,7 +234,7 @@ void usb_pmsc_task (void)
                 /* Normal  Status Condotion */
                 case USB_DATA_NONE:
                 {
-                    utr.ip = module_number;
+                    utr.ip = g_usb_pmsc_usbip;
                     usb_pmsc_receive_cbw(&utr);
 
                     break;
@@ -572,9 +568,7 @@ static void usb_pmsc_check_cbw (uint8_t module_number)
         case USB_PMSC_CSWSND:
         {
             g_usb_pmsc_seq = result;
-            pmsc_atapi_command_processing(g_usb_pmsc_cbw.cbwcb,
-                                          g_usb_pmscstatus,
-                                          &usb_pmsc_data_transfer,
+            pmsc_atapi_command_processing(g_usb_pmsc_cbw.cbwcb, g_usb_pmscstatus, &usb_pmsc_data_transfer,
                                           module_number);
 
             break;

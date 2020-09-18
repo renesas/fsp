@@ -110,14 +110,18 @@ extern uint16_t     g_usb_pstd_pipe0_request;
 extern uint16_t     g_usb_pstd_std_request;
 extern uint16_t     g_usb_peri_connected;                          /* Peri CDC application enable */
 
-#endif  /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
+ #if defined(USB_CFG_PMSC_USE)
+extern uint8_t g_usb_pmsc_usbip;
+ #endif /* defined(USB_CFG_PMSC_USE) */
 
-extern uint16_t g_usb_pstd_remote_wakeup;                          /* Remote Wake up Enable Flag */
-extern uint16_t g_usb_pstd_remote_wakeup_state;                    /* Result for Remote wake up */
+#endif                                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
+
+extern uint16_t g_usb_pstd_remote_wakeup;              /* Remote Wake up Enable Flag */
+extern uint16_t g_usb_pstd_remote_wakeup_state;        /* Result for Remote wake up */
 
 /* r_usb.c */
 
-extern volatile uint16_t g_usb_usbmode[USB_NUM_USBIP];             /* USB mode HOST/PERI */
+extern volatile uint16_t g_usb_usbmode[USB_NUM_USBIP]; /* USB mode HOST/PERI */
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 extern usb_utr_t g_usb_hdata[USB_NUM_USBIP][USB_MAXPIPE_NUM + 1];
@@ -290,7 +294,7 @@ uint16_t usb_cstd_get_pipe_type(usb_utr_t * ptr, uint16_t pipe);
 void     usb_cstd_do_aclrm(usb_utr_t * ptr, uint16_t pipe);
 void     usb_cstd_set_buf(usb_utr_t * ptr, uint16_t pipe);
 void     usb_cstd_clr_stall(usb_utr_t * ptr, uint16_t pipe);
-void     usb_cstd_usb_task(uint8_t module_number);
+void     usb_cstd_usb_task(void);
 void     usb_class_task(void);
 void     usb_set_event(usb_status_t event, usb_instance_ctrl_t * ctrl);
 uint16_t usb_cstd_remote_wakeup(usb_utr_t * p_utr);
@@ -624,13 +628,7 @@ extern void usb_phid_write_complete(usb_utr_t * mess, uint16_t data1, uint16_t d
 #endif                                 /* defined(USB_CFG_PHID_USE) */
 
 #if defined(USB_CFG_PMSC_USE)
- #if (BSP_CFG_RTOS == 0)
-extern void usb_pmsc_task(uint8_t module_number);
-
- #else                                 /* (BSP_CFG_RTOS == 0) */
 extern void usb_pmsc_task(void);
-
- #endif /* (BSP_CFG_RTOS == 0) */
 
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
 

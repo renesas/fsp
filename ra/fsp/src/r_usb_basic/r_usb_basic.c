@@ -72,6 +72,7 @@
  ******************************************************************************/
 #define USB_VALUE_100    (100)
 #define USB_VALUE_7FH    (0x7F)
+#define USB_VALUE_FFH    (0xFF)
 
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
@@ -98,6 +99,10 @@ usb_utr_t g_usb_pdata[USB_MAXPIPE_NUM + 1];
 
 volatile uint16_t g_usb_usbmode[USB_NUM_USBIP];
 volatile uint16_t g_usb_open_class[USB_NUM_USBIP];
+
+#if defined(USB_CFG_PMSC_USE)
+uint8_t g_usb_pmsc_usbip = USB_VALUE_FFH;
+#endif                                 /* defined(USB_CFG_PMSC_USE) */
 
 /******************************************************************************
  * Private global variables and functions
@@ -238,7 +243,7 @@ fsp_err_t R_USB_EventGet (usb_ctrl_t * const p_api_ctrl, usb_status_t * event)
     (*event) = USB_STATUS_NONE;
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-    usb_cstd_usb_task(p_ctrl->module_number);
+    usb_cstd_usb_task();
     if (g_usb_cstd_event.write_pointer != g_usb_cstd_event.read_pointer)
     {
         *p_ctrl  = g_usb_cstd_event.ctrl[g_usb_cstd_event.read_pointer];
@@ -516,7 +521,8 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
         g_usb_usbmode[p_ctrl->module_number] = USB_MODE_PERI;
 
  #if defined(USB_CFG_PMSC_USE)
-        err = r_usb_pmsc_media_initialize(p_cfg->p_context); /* Register the media device driver. */
+        g_usb_pmsc_usbip = p_ctrl->module_number;
+        err              = r_usb_pmsc_media_initialize(p_cfg->p_context); /* Register the media device driver. */
         if (FSP_SUCCESS != err)
         {
             return err;
@@ -723,6 +729,10 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
     {
         ret_code = FSP_ERR_USB_NOT_OPEN;
     }
+
+#if defined(USB_CFG_PMSC_USE)
+    g_usb_pmsc_usbip = USB_VALUE_FFH;
+#endif                                 /* defined(USB_CFG_PMSC_USE) */
 
     return ret_code;
 }
