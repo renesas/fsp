@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -439,6 +439,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <tr class="separator:a5bb1be42ac391c9016bd3f6efb3a6b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adeb37ae1b226f926ffe36f5dc19f47b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#adeb37ae1b226f926ffe36f5dc19f47b2">erase</a> )(<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_ctrl, uint32_t const start_sector, uint32_t const sector_count)</td></tr>
 <tr class="separator:adeb37ae1b226f926ffe36f5dc19f47b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e8903825189ff782fd28316f49d6e7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#a7e8903825189ff782fd28316f49d6e7e">callbackSet</a> )(<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a7e8903825189ff782fd28316f49d6e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36c443d21eb54717d3658aada3ba1720"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#a36c443d21eb54717d3658aada3ba1720">close</a> )(<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a36c443d21eb54717d3658aada3ba1720"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07f6821a6f6f905c3fbea6d5c54ef5b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#a07f6821a6f6f905c3fbea6d5c54ef5b9">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
@@ -745,6 +747,33 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to an open SD/MMC instance control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">start_sector</td><td>First sector to erase. Must be a multiple of <a class="el" href="group___s_d_m_m_c___a_p_i.html#a0ceaae18aabfa2dd1933ad2c1d055c30" title="Minimum erasable unit (in 512 byte sectors) ">sdmmc_device_t::erase_sector_count</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">sector_count</td><td>Number of sectors to erase. Must be a multiple of <a class="el" href="group___s_d_m_m_c___a_p_i.html#a0ceaae18aabfa2dd1933ad2c1d055c30" title="Minimum erasable unit (in 512 byte sectors) ">sdmmc_device_t::erase_sector_count</a>. All sectors must be in the range of <a class="el" href="group___s_d_m_m_c___a_p_i.html#aa447f51afdf2dbc798b770d8d8b39d5d" title="Sector count. ">sdmmc_device_t::sector_count</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7e8903825189ff782fd28316f49d6e7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e8903825189ff782fd28316f49d6e7e">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  sdmmc_api_t::callbackSet) (<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___s_d_h_i.html#ga78d9f9f873c52843f778fd700ef38936">R_SDHI_CallbackSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___s_d_m_m_c___a_p_i.html#afa538bb4e713dfc116e12417376c5ce4">sdmmc_api_t::open</a> call. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function to register </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1087,7 +1116,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

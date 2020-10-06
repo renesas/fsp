@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -188,6 +188,12 @@ p_timer_instance[3]</td>
 <td class="fielddoc">
 Pointer to the timer instance structs. </td></tr>
 <tr><td class="fieldtype">
+<a id="a86be19724a2e04704a5e6ea2395f998a"></a><a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ga012330a6f9685e6143def5e3e3dd3829">three_phase_channel_t</a></td>
+<td class="fieldname">
+callback_ch</td>
+<td class="fielddoc">
+Channel to enable callback when using <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ab9207f40fa1512f415d7968004a8310a">three_phase_api_t::callbackSet</a>. </td></tr>
+<tr><td class="fieldtype">
 <a id="aaeeda614c3c86c7619865f13b0600221"></a>uint32_t</td>
 <td class="fieldname">
 channel_mask</td>
@@ -234,6 +240,8 @@ Extension parameter for hardware specific settings. </td></tr>
 <tr class="separator:a7a17e3e7e2de1c1a9605a2eb34d3b82e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b55c9d4c5fd7be3c1d4398acbce4fa7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a6b55c9d4c5fd7be3c1d4398acbce4fa7">dutyCycleSet</a> )(<a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ga4743a00c79aa11107190e48e8bce7c10">three_phase_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#structthree__phase__duty__cycle__t">three_phase_duty_cycle_t</a> *const p_duty_cycle)</td></tr>
 <tr class="separator:a6b55c9d4c5fd7be3c1d4398acbce4fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9207f40fa1512f415d7968004a8310a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ab9207f40fa1512f415d7968004a8310a">callbackSet</a> )(<a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ga4743a00c79aa11107190e48e8bce7c10">three_phase_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ab9207f40fa1512f415d7968004a8310a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aced10bd196df8bd3de4fff2bd52a2e07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#aced10bd196df8bd3de4fff2bd52a2e07">close</a> )(<a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ga4743a00c79aa11107190e48e8bce7c10">three_phase_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:aced10bd196df8bd3de4fff2bd52a2e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e7304278e077e85972d4b0601a0880c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a7e7304278e077e85972d4b0601a0880c">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
@@ -357,6 +365,33 @@ Extension parameter for hardware specific settings. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a17727ce358ca8b02f4e1a060416302b1">three_phase_api_t::open</a> call for this timer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_duty_cycle</td><td>Duty cycle values for all three timer channels. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab9207f40fa1512f415d7968004a8310a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9207f40fa1512f415d7968004a8310a">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  three_phase_api_t::callbackSet) (<a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ga4743a00c79aa11107190e48e8bce7c10">three_phase_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga594f201f422da410934d30f603b14d25">R_GPT_THREE_PHASE_CallbackSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a17727ce358ca8b02f4e1a060416302b1">three_phase_api_t::open</a> call. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function to register with GPT U-channel </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
   </table>
   </dd>
 </dl>
@@ -520,7 +555,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

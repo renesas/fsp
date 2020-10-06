@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -109,6 +109,11 @@ Functions</h2></td></tr>
 <tr class="memitem:ga17fbc878cd5f90062565187686358ad1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1">RM_TOUCH_DataGet</a> (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, uint64_t *p_button_status, uint16_t *p_slider_position, uint16_t *p_wheel_position)</td></tr>
 <tr class="memdesc:ga17fbc878cd5f90062565187686358ad1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 64-bit mask indicating which buttons are pressed. Also, this function gets the current position of where slider or wheel is being pressed. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Implements <a class="el" href="group___t_o_u_c_h___a_p_i.html#a275464ffc43790ae8a787e7f2f3544d0">touch_api_t::dataGet</a>.  <a href="#ga17fbc878cd5f90062565187686358ad1">More...</a><br /></td></tr>
 <tr class="separator:ga17fbc878cd5f90062565187686358ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4dcf4a1abe539e74de7c1c7b8387df5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#ga4dcf4a1abe539e74de7c1c7b8387df5f">RM_TOUCH_PadDataGet</a> (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, uint16_t *p_pad_rx_coordinate, uint16_t *p_pad_tx_coordinate, uint8_t *p_pad_num_touch)</td></tr>
+<tr class="memdesc:ga4dcf4a1abe539e74de7c1c7b8387df5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the current position of pad is being pressed. Implements <a class="el" href="group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3">touch_api_t::padDataGet</a> , g_touch_on_ctsu.  <a href="#ga4dcf4a1abe539e74de7c1c7b8387df5f">More...</a><br /></td></tr>
+<tr class="separator:ga4dcf4a1abe539e74de7c1c7b8387df5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9222f933707c72e3f4c097d14e66072e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#ga9222f933707c72e3f4c097d14e66072e">RM_TOUCH_CallbackSet</a> (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga9222f933707c72e3f4c097d14e66072e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0dd11aec558632e59df46765cfb546c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#ga0dd11aec558632e59df46765cfb546c5">RM_TOUCH_Close</a> (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:ga0dd11aec558632e59df46765cfb546c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified TOUCH control block. Implements <a class="el" href="group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0">touch_api_t::close</a>.  <a href="#ga0dd11aec558632e59df46765cfb546c5">More...</a><br /></td></tr>
 <tr class="separator:ga0dd11aec558632e59df46765cfb546c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,7 +169,7 @@ Disabled</li>
 </td><td>Disabled </td><td>Enable SCI_UART support for QE monitoring. </td></tr>
 </table>
  <h2>Configurations for Middleware &gt; CapTouch &gt; TOUCH Driver on rm_touch</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; CapTouch &gt; TOUCH Driver on rm_touch:<br />
+This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; CapTouch &gt; TOUCH Driver on rm_touch. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -201,7 +206,9 @@ Usage Notes</h1>
 <object type="image/svg+xml" data="rm_touch_onfreq_threshold.svg">rm_touch_onfreq_threshold.svg</object>
 <div class="caption">
 Touch/Non-touch judgement Image</div></div>
- <h1><a class="anchor" id="r-touch-examples"></a>
+ <h2>TrustZone Support</h2>
+<p>In r_ctsu and rm_touch module, Non-Secure Callable Guard Functions are only generated from QE for Capacitive Touch. QE can be used for tuning in secure or flat project, but not in non-secure project. If you want to use in non-secure project, copy the output file from secure or flat project. Refer to QE Help for more information.</p>
+<h1><a class="anchor" id="r-touch-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the TOUCH in an application.</p>
@@ -216,6 +223,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structtouch__slider__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structtouch__wheel__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#structtouch__wheel__info__t">touch_wheel_info_t</a></td></tr>
 <tr class="separator:structtouch__wheel__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structtouch__pad__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#structtouch__pad__info__t">touch_pad_info_t</a></td></tr>
+<tr class="separator:structtouch__pad__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structtouch__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#structtouch__instance__ctrl__t">touch_instance_ctrl_t</a></td></tr>
 <tr class="separator:structtouch__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -370,6 +379,90 @@ Copy from config by Open API. g_touch_wheel_threshold[] is set by Open API. </td
 
 </div>
 </div>
+<a name="structtouch__pad__info__t" id="structtouch__pad__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtouch__pad__info__t">&#9670;&nbsp;</a></span>touch_pad_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct touch_pad_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Information of pad </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ab89c67aa8f986e44d10c188a81bc4e68"></a>uint16_t *</td>
+<td class="fieldname">
+p_rx_coordinate</td>
+<td class="fielddoc">
+RX coordinate. </td></tr>
+<tr><td class="fieldtype">
+<a id="adefa5bd2023d0c017e34d89098cb5846"></a>uint16_t *</td>
+<td class="fieldname">
+p_tx_coordinate</td>
+<td class="fielddoc">
+TX coordinate. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3f09ab0918c252bc969238b6142d5525"></a>uint16_t *</td>
+<td class="fieldname">
+p_num_touch</td>
+<td class="fielddoc">
+number of touch </td></tr>
+<tr><td class="fieldtype">
+<a id="a0ffdcf96374aa32d1e64ead540d73849"></a>uint16_t *</td>
+<td class="fieldname">
+p_threshold</td>
+<td class="fielddoc">
+Coordinate calculation threshold value. </td></tr>
+<tr><td class="fieldtype">
+<a id="a813c26a5edebf7a1c7150ba6b51bb4c1"></a>uint16_t *</td>
+<td class="fieldname">
+p_base_buf</td>
+<td class="fielddoc">
+ScanData Base Value Buffer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1504101a85a6887087cde9b243142a52"></a>uint16_t *</td>
+<td class="fieldname">
+p_rx_pixel</td>
+<td class="fielddoc">
+X coordinate resolution. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9fb3d4ff8533b5f6f4160762aa7bd154"></a>uint16_t *</td>
+<td class="fieldname">
+p_tx_pixel</td>
+<td class="fielddoc">
+Y coordinate resolution. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad2ba2cafdc49cb35a043d9b109a57256"></a>uint8_t *</td>
+<td class="fieldname">
+p_max_touch</td>
+<td class="fielddoc">
+Maximum number of touch judgments used by the pad. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1ab4a862e70d8554f38a905f0f9b64bf"></a>int32_t *</td>
+<td class="fieldname">
+p_drift_buf</td>
+<td class="fielddoc">
+Drift reference value. g_touch_button_drift_buf[] is set by Open API. </td></tr>
+<tr><td class="fieldtype">
+<a id="a79c9744ae120f7b651f087342ad276d4"></a>uint16_t *</td>
+<td class="fieldname">
+p_drift_count</td>
+<td class="fielddoc">
+Drift counter. g_touch_button_drift_count[] is set by Open API. </td></tr>
+<tr><td class="fieldtype">
+<a id="acd17408d550a2e1594615e815104e341"></a>uint8_t</td>
+<td class="fieldname">
+num_drift</td>
+<td class="fielddoc">
+Copy from config by Open API. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structtouch__instance__ctrl__t" id="structtouch__instance__ctrl__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structtouch__instance__ctrl__t">&#9670;&nbsp;</a></span>touch_instance_ctrl_t</h2>
 
@@ -408,6 +501,12 @@ Information of slider. </td></tr>
 winfo</td>
 <td class="fielddoc">
 Information of wheel. </td></tr>
+<tr><td class="fieldtype">
+<a id="a475ddefbfaefb1625070f4989594041e"></a><a class="el" href="group___t_o_u_c_h.html#structtouch__pad__info__t">touch_pad_info_t</a></td>
+<td class="fieldname">
+pinfo</td>
+<td class="fielddoc">
+Information of pad. </td></tr>
 <tr><td class="fieldtype">
 <a id="a375f7cc4a3dea84f06a892f95fc1da34"></a><a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t">touch_cfg_t</a> const  *</td>
 <td class="fieldname">
@@ -546,6 +645,106 @@ Pointer to CTSU instance. </td></tr>
 
 </div>
 </div>
+<a id="ga4dcf4a1abe539e74de7c1c7b8387df5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4dcf4a1abe539e74de7c1c7b8387df5f">&#9670;&nbsp;</a></span>RM_TOUCH_PadDataGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_TOUCH_PadDataGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>p_pad_rx_coordinate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>p_pad_tx_coordinate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_pad_num_touch</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function gets the current position of pad is being pressed. Implements <a class="el" href="group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3">touch_api_t::padDataGet</a> , g_touch_on_ctsu. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data decoded. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_SCANNING</td><td>Scanning this instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9222f933707c72e3f4c097d14e66072e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9222f933707c72e3f4c097d14e66072e">&#9670;&nbsp;</a></span>RM_TOUCH_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_TOUCH_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___t_o_u_c_h___a_p_i.html#ad1390fd43ac6b2e08cab0fc26b4a5360">touch_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga0dd11aec558632e59df46765cfb546c5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga0dd11aec558632e59df46765cfb546c5">&#9670;&nbsp;</a></span>RM_TOUCH_Close()</h2>
 
@@ -606,7 +805,7 @@ Pointer to CTSU instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

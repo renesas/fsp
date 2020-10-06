@@ -1,11 +1,6 @@
 var group___a_g_t =
 [
-    [ "agt_instance_ctrl_t", "group___a_g_t.html#structagt__instance__ctrl__t", [
-      [ "open", "group___a_g_t.html#a47294d2091aca6d4c57e05ba78f8a069", null ],
-      [ "p_cfg", "group___a_g_t.html#af45c7d6d16aabfe344c79d39811a6205", null ],
-      [ "p_reg", "group___a_g_t.html#a92df2ac4ec384e625fc22e9ed128a51d", null ],
-      [ "period", "group___a_g_t.html#a9aa32608b915c6751ba226e6d3b184a4", null ]
-    ] ],
+    [ "agt_instance_ctrl_t", "group___a_g_t.html#structagt__instance__ctrl__t", null ],
     [ "agt_extended_cfg_t", "group___a_g_t.html#structagt__extended__cfg__t", [
       [ "count_source", "group___a_g_t.html#ae95824d50fa5abbc1479dbd8939b1df1", null ],
       [ "agto", "group___a_g_t.html#a5e6fc342837c54c82e8ec84fee2c705a", null ],
@@ -65,5 +60,6 @@ var group___a_g_t =
     [ "R_AGT_StatusGet", "group___a_g_t.html#ga11a30a7a093f91c09a340f7b301945fd", null ],
     [ "R_AGT_Stop", "group___a_g_t.html#gaa2b20f0b2d6856813a3a76413e0083c0", null ],
     [ "R_AGT_Open", "group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46", null ],
+    [ "R_AGT_CallbackSet", "group___a_g_t.html#gabbe61b0c767174654b68bcc55fc97fed", null ],
     [ "R_AGT_VersionGet", "group___a_g_t.html#gad6d600521cfd1134e1fd5cd5fefe2819", null ]
 ];

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -125,6 +125,8 @@ Functions</h2></td></tr>
 <tr class="separator:gad766079d801d722527eb6834fc662e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga95b5a01a9c462a38f52397315a346a3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#ga95b5a01a9c462a38f52397315a346a3e">R_FLASH_HP_StartUpAreaSelect</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#gac8629165c2d649fbbf8c9854c3c7d20b">flash_startup_area_swap_t</a> swap_type, bool is_temporary)</td></tr>
 <tr class="separator:ga95b5a01a9c462a38f52397315a346a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2932aac9082f6418d518b9cbc7cdef01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#ga2932aac9082f6418d518b9cbc7cdef01">R_FLASH_HP_CallbackSet</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga2932aac9082f6418d518b9cbc7cdef01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga35f8f3a5113959a79a551cb6f0e1b808"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#ga35f8f3a5113959a79a551cb6f0e1b808">R_FLASH_HP_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
 <tr class="separator:ga35f8f3a5113959a79a551cb6f0e1b808"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3335f3f8b174db9b86b3773993f341c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#ga3335f3f8b174db9b86b3773993f341c6">R_FLASH_HP_InfoGet</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__info__t">flash_info_t</a> *const p_info)</td></tr>
@@ -180,7 +182,7 @@ Disabled</li>
 </td><td>Enabled </td><td>Controls whether or not data-flash programming is enabled. Disabling reduces the amount of ROM used by the API. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Storage &gt; Flash Driver on r_flash_hp</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Storage &gt; Flash Driver on r_flash_hp:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Storage &gt; Flash Driver on r_flash_hp. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -222,7 +224,7 @@ Flash Clock (FCLK)</h2>
 <p><a class="anchor" id="um_flash_fclk_frequency_change"></a>The flash clock source is the clock used by the Flash peripheral in performing all Flash operations. As part of the <a class="el" href="group___f_l_a_s_h___a_p_i.html#a8166d0d1e4f3a59b8bf7f9e89fef9e44">flash_api_t::open</a> function the Flash clock source is checked will return FSP_ERR_FCLK if it is invalid. Once the Flash API has been opened, if the flash clock source frequency is changed, the <a class="el" href="group___f_l_a_s_h___a_p_i.html#ae357c91afece41b956ece618eb82c1a1">flash_api_t::updateFlashClockFreq</a> API function must be called to inform the API of the change. Failure to do so could result in flash operation failures and possibly damage the part.</p>
 <h2><a class="anchor" id="r-flash-hp-interrupts"></a>
 Interrupts</h2>
-<p><a class="anchor" id="um_flash_data_flash_bgo_callbacks"></a>Enable the flash ready interrupt only if you plan to use the data flash BGO. In this mode, the application can initiate a data flash operation and then be asynchronously notified of its completion, or an error, using a user supplied-callback function. The callback function is passed a structure containing event information that indicates the source of the callback event (for example, <a class="el" href="group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a47cf4f3983c35ca46fcfabeb1903e068">flash_api_t::FLASH_EVENT_ERASE_COMPLETE</a>) When the FLASH FRDYI interrupt is enabled, the corresponding ISR will be defined in the flash driver. The ISR will call a user-callback function if one was registered with the <a class="el" href="group___f_l_a_s_h___a_p_i.html#a8166d0d1e4f3a59b8bf7f9e89fef9e44">flash_api_t::open</a> API. </p><dl class="section note"><dt>Note</dt><dd>The Flash HP supports an additional flash-error interrupt and if the BGO mode is enabled for the FLASH HP then both the Flash Ready Interrupt and Flash Error Interrupts must be enabled (assigned a priority).</dd></dl>
+<p><a class="anchor" id="um_flash_data_flash_bgo_callbacks"></a><a class="anchor" id="um_flash_tz_callback"></a>Enable the flash ready interrupt only if you plan to use the data flash BGO. In this mode, the application can initiate a data flash operation and then be asynchronously notified of its completion, or an error, using a user supplied-callback function. The callback function is passed a structure containing event information that indicates the source of the callback event (for example, <a class="el" href="group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a47cf4f3983c35ca46fcfabeb1903e068">flash_api_t::FLASH_EVENT_ERASE_COMPLETE</a>) When the FLASH FRDYI interrupt is enabled, the corresponding ISR will be defined in the flash driver. The ISR will call a user-callback function if one was registered with the <a class="el" href="group___f_l_a_s_h___a_p_i.html#a8166d0d1e4f3a59b8bf7f9e89fef9e44">flash_api_t::open</a> API. </p><dl class="section note"><dt>Note</dt><dd>The Flash HP supports an additional flash-error interrupt and if the BGO mode is enabled for the FLASH HP then both the Flash Ready Interrupt and Flash Error Interrupts must be enabled (assigned a priority).</dd></dl>
 <h2><a class="anchor" id="r-flash-hp-limitations"></a>
 Limitations</h2>
 <ul>
@@ -267,10 +269,6 @@ Enumerations</h2></td></tr>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#a0e9c6d859fd6f932e7d723c6c6a520e3">opened</a></td></tr>
 <tr class="memdesc:a0e9c6d859fd6f932e7d723c6c6a520e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">To check whether api has been opened or not. <br /></td></tr>
 <tr class="separator:a0e9c6d859fd6f932e7d723c6c6a520e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6ad507f328b170af1342d487969042b"><td class="memItemLeft" align="right" valign="top"><a id="ac6ad507f328b170af1342d487969042b"></a>
-<a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__cfg__t">flash_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#ac6ad507f328b170af1342d487969042b">p_cfg</a></td></tr>
-<tr class="memdesc:ac6ad507f328b170af1342d487969042b"><td class="mdescLeft">&#160;</td><td class="mdescRight">User Callback function. <br /></td></tr>
-<tr class="separator:ac6ad507f328b170af1342d487969042b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecd09c39ddf5233ecdd713a14cdd4b4e"><td class="memItemLeft" align="right" valign="top"><a id="aecd09c39ddf5233ecdd713a14cdd4b4e"></a>
 <a class="el" href="group___f_l_a_s_h___h_p.html#gaf2df0780f6e32a857a43f00d2a34f5f6">flash_bgo_operation_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#aecd09c39ddf5233ecdd713a14cdd4b4e">current_operation</a></td></tr>
 <tr class="memdesc:aecd09c39ddf5233ecdd713a14cdd4b4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation in progress, for example, FLASH_OPERATION_CF_ERASE. <br /></td></tr>
@@ -806,6 +804,56 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
+<a id="ga2932aac9082f6418d518b9cbc7cdef01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2932aac9082f6418d518b9cbc7cdef01">&#9670;&nbsp;</a></span>R_FLASH_HP_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_FLASH_HP_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#adc5094e84cb696f0a1d954f8a25dfbee">flash_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga35f8f3a5113959a79a551cb6f0e1b808"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga35f8f3a5113959a79a551cb6f0e1b808">&#9670;&nbsp;</a></span>R_FLASH_HP_VersionGet()</h2>
 
@@ -874,7 +922,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

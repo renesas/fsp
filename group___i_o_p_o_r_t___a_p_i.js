@@ -60,6 +60,7 @@ var group___i_o_p_o_r_t___a_p_i =
       [ "IOPORT_PERIPHERAL_PDC", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8ab8aa7fa82f2c3eb0ac80e20e8f918304", null ],
       [ "IOPORT_PERIPHERAL_LCD_GRAPHICS", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a90c6c9da7046edfa46f22a16994d13f9", null ],
       [ "IOPORT_PERIPHERAL_TRACE", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8aa104329a7773f8ffbed0f7fbad258e6d", null ],
+      [ "IOPORT_PERIPHERAL_OSPI", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a83951c39c247388f70f38287edd67a2d", null ],
       [ "IOPORT_PERIPHERAL_END", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a9885514f43d9d1c466ae689ef3608a9a", null ]
     ] ],
     [ "ioport_ethernet_channel_t", "group___i_o_p_o_r_t___a_p_i.html#gaf6a78fbc73b4e8acef86a12c21df2da0", [
@@ -82,6 +83,7 @@ var group___i_o_p_o_r_t___a_p_i =
       [ "IOPORT_CFG_NMOS_ENABLE", "group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574a4ba9efb45585c37cdfd0b3d2a487b2ff", null ],
       [ "IOPORT_CFG_PMOS_ENABLE", "group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574aa6f841964b20d6d4bfc1a8f7b2040554", null ],
       [ "IOPORT_CFG_DRIVE_MID", "group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574a3b65ecea77e425c0ec1a0c29324a042b", null ],
+      [ "IOPORT_CFG_DRIVE_HS_HIGH", "group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574a3c3c46358b6255f284cc393dcaf14aca", null ],
       [ "IOPORT_CFG_DRIVE_MID_IIC", "group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574af3cae5dcade8718879600432ac11136a", null ],
       [ "IOPORT_CFG_DRIVE_HIGH", "group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574aec6a07e7759576dc172a9beb052cf3a0", null ],
       [ "IOPORT_CFG_EVENT_RISING_EDGE", "group___i_o_p_o_r_t___a_p_i.html#ggac617eebcb7c2c1e45fa8e04fc473e574a262810ba7eba1c4735f36fbebfd248bd", null ],

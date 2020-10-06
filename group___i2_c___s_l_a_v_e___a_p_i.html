@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -151,19 +151,19 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="acb2f4e6e80facbaaa590b9a7355f0db3"></a>void const  *const</td>
+<a id="a8480d2ef5f292fa836adfbaef1a0689c"></a>void const  *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
 Pointer to user-provided context. </td></tr>
 <tr><td class="fieldtype">
-<a id="a28c02f8e1a593b6dcf70e9de20e8d865"></a>uint32_t const</td>
+<a id="a43903d76b59b527cef993d5cdbe9a2b9"></a>uint32_t</td>
 <td class="fieldname">
 bytes</td>
 <td class="fielddoc">
 Number of received/transmitted bytes in buffer. </td></tr>
 <tr><td class="fieldtype">
-<a id="ab03da670f0ae34ef889d107668f8f1cf"></a><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gad8b613f0d4e9d1b9511ca0b6d6ab7e8c">i2c_slave_event_t</a> const</td>
+<a id="ab8f7ff67f811463a59921e4fbe11898e"></a><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gad8b613f0d4e9d1b9511ca0b6d6ab7e8c">i2c_slave_event_t</a></td>
 <td class="fieldname">
 event</td>
 <td class="fielddoc">
@@ -311,6 +311,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:ad9693d9cbb58cc0abb6e4e85548e4e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a7c8ec91840338adbabcea5b5400f19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a8a7c8ec91840338adbabcea5b5400f19">write</a> )(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_ctrl, uint8_t *const p_src, uint32_t const bytes)</td></tr>
 <tr class="separator:a8a7c8ec91840338adbabcea5b5400f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a527fc26638e91d2daf652c2b30b5ab5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a527fc26638e91d2daf652c2b30b5ab5a">callbackSet</a> )(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a527fc26638e91d2daf652c2b30b5ab5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23919938fff411b2275548e6c0dc0c7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a23919938fff411b2275548e6c0dc0c7a">close</a> )(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a23919938fff411b2275548e6c0dc0c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a832c56c809463e9c1b468fc954338a1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a832c56c809463e9c1b468fc954338a1b">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
@@ -388,6 +390,33 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block set in <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a3f978820e80073c05ef95e3b1ef31601">i2c_slave_api_t::open</a> call. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_src</td><td>Pointer to the location to get write data from. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bytes</td><td>Number of bytes to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a527fc26638e91d2daf652c2b30b5ab5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a527fc26638e91d2daf652c2b30b5ab5a">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  i2c_slave_api_t::callbackSet) (<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___i_i_c___s_l_a_v_e.html#gab803811cfa1a11e23b90ee9eb9e021ba">R_IIC_SLAVE_CallbackSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the IIC Slave control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
   </table>
   </dd>
 </dl>
@@ -584,7 +613,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

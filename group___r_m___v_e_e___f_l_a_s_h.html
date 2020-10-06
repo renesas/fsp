@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -116,6 +116,8 @@ Functions</h2></td></tr>
 <tr class="separator:gad89e131abdeaefd6c8b2f0112d5c8258"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaae419ce998756f27e146e07cb14a0e3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#gaae419ce998756f27e146e07cb14a0e3d">RM_VEE_FLASH_Format</a> (<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_api_ctrl, uint8_t const *const p_ref_data)</td></tr>
 <tr class="separator:gaae419ce998756f27e146e07cb14a0e3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga419220f67800797b2a9cc7bb9cefb463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#ga419220f67800797b2a9cc7bb9cefb463">RM_VEE_FLASH_CallbackSet</a> (<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga419220f67800797b2a9cc7bb9cefb463"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga187bcacce62402406aa6a0a5a9b2c3ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#ga187bcacce62402406aa6a0a5a9b2c3ed">RM_VEE_FLASH_Close</a> (<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga187bcacce62402406aa6a0a5a9b2c3ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga91380f99ec95d46236bed8ed65a8b7a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#ga91380f99ec95d46236bed8ed65a8b7a0">RM_VEE_FLASH_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
@@ -190,7 +192,7 @@ Disabled</li>
 <td>Refresh Buffer Size</td><td>Value must be an integer greater than 0 and a multiple of 4 bytes.</td><td>32 </td><td>The size of the internal buffer used to copying data from one flash segment to another during a refresh operation. This is required because data flash to data flash transfers are not supported by the hardware. </td></tr>
 </table>
  <h2>Configurations for Middleware &gt; Storage &gt; Virtual EEPROM on Flash</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Storage &gt; Virtual EEPROM on Flash:<br />
+This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Storage &gt; Virtual EEPROM on Flash. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -626,6 +628,57 @@ Pointer to a flash instance. </td></tr>
 
 </div>
 </div>
+<a id="ga419220f67800797b2a9cc7bb9cefb463"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga419220f67800797b2a9cc7bb9cefb463">&#9670;&nbsp;</a></span>RM_VEE_FLASH_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_VEE_FLASH_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure.</p>
+<p>Implements <a class="el" href="group___r_m___v_e_e___a_p_i.html#ac64776adb2da7869c3a806614639df67">rm_vee_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga187bcacce62402406aa6a0a5a9b2c3ed"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga187bcacce62402406aa6a0a5a9b2c3ed">&#9670;&nbsp;</a></span>RM_VEE_FLASH_Close()</h2>
 
@@ -687,7 +740,7 @@ Pointer to a flash instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

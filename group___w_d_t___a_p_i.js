@@ -25,6 +25,7 @@ var group___w_d_t___a_p_i =
       [ "statusClear", "group___w_d_t___a_p_i.html#af66d798489c7ace801fee8b5a9c833c2", null ],
       [ "counterGet", "group___w_d_t___a_p_i.html#a724c02d7265d5eaa846cf97a3556f5d6", null ],
       [ "timeoutGet", "group___w_d_t___a_p_i.html#ac2b6d848e8be0ff1a0a1be43289ad925", null ],
+      [ "callbackSet", "group___w_d_t___a_p_i.html#a28dc9b161653da57c10267f775bda125", null ],
       [ "versionGet", "group___w_d_t___a_p_i.html#a68032fbfd5bf74052918b358be31b219", null ]
     ] ],
     [ "wdt_instance_t", "group___w_d_t___a_p_i.html#structwdt__instance__t", [

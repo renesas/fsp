@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -292,6 +292,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a724c02d7265d5eaa846cf97a3556f5d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2b6d848e8be0ff1a0a1be43289ad925"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#ac2b6d848e8be0ff1a0a1be43289ad925">timeoutGet</a> )(<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_ctrl, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__timeout__values__t">wdt_timeout_values_t</a> *const p_timeout)</td></tr>
 <tr class="separator:ac2b6d848e8be0ff1a0a1be43289ad925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28dc9b161653da57c10267f775bda125"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#a28dc9b161653da57c10267f775bda125">callbackSet</a> )(<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a28dc9b161653da57c10267f775bda125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68032fbfd5bf74052918b358be31b219"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t___a_p_i.html#a68032fbfd5bf74052918b358be31b219">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_data)</td></tr>
 <tr class="separator:a68032fbfd5bf74052918b358be31b219"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -445,6 +447,33 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_timeout</td><td>Pointer to structure to return timeout values. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a28dc9b161653da57c10267f775bda125"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28dc9b161653da57c10267f775bda125">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  wdt_api_t::callbackSet) (<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___w_d_t.html#ga602ed1a63b61c46df822059ab6a5395e">R_WDT_CallbackSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the WDT control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
   </table>
   </dd>
 </dl>
@@ -728,7 +757,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

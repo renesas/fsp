@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -166,6 +166,12 @@ Total number of sectors. </td></tr>
 reentrant</td>
 <td class="fielddoc">
 True if connected block media driver is reentrant. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac3a707be8444f429d772e1f0f3346326"></a>bool</td>
+<td class="fieldname">
+write_protected</td>
+<td class="fielddoc">
+True if connected block media device is write protected. </td></tr>
 </table>
 
 </div>
@@ -295,6 +301,8 @@ Media insertion status, true if media is not removable. </td></tr>
 <tr class="separator:a108ef8243422a2ed8b3bea6cb67dbb6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a108bacf3e0522dd84e1121785eaf8f87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a108bacf3e0522dd84e1121785eaf8f87">erase</a> )(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, uint32_t const block_address, uint32_t const num_blocks)</td></tr>
 <tr class="separator:a108bacf3e0522dd84e1121785eaf8f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44e8eff381c878cbf878bdc8c331502b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a44e8eff381c878cbf878bdc8c331502b">callbackSet</a> )(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a44e8eff381c878cbf878bdc8c331502b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a802c5b072fad72944fc03c14a9bbca4e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a802c5b072fad72944fc03c14a9bbca4e">statusGet</a> )(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__status__t">rm_block_media_status_t</a> *const p_status)</td></tr>
 <tr class="separator:a802c5b072fad72944fc03c14a9bbca4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a031bb4fa56552052a1c361edfb7072cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a031bb4fa56552052a1c361edfb7072cf">infoGet</a> )(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__info__t">rm_block_media_info_t</a> *const p_info)</td></tr>
@@ -433,6 +441,33 @@ Media insertion status, true if media is not removable. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a525d6c999d2fc7e5e04b186d50423cd1">rm_block_media_api_t::open</a> call. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">block_address</td><td>Block address to start the erase process at. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">num_blocks</td><td>Number of blocks of data to erase. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a44e8eff381c878cbf878bdc8c331502b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44e8eff381c878cbf878bdc8c331502b">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_block_media_api_t::callbackSet) (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, void( *p_callback)(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#gaa495bb279277427acb8d0e185dbafea6">RM_BLOCK_MEDIA_SDMMC_CallbackSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a525d6c999d2fc7e5e04b186d50423cd1">rm_block_media_api_t::open</a> call. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function to register </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
   </table>
   </dd>
 </dl>
@@ -639,7 +674,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -300,6 +300,14 @@ Enable </li>
 </ul>
 </td><td>Disable </td><td>If ipconfigETHERNET_DRIVER_FILTERS_FRAME_TYPES is set to 1 then it is the responsibility of the Ethernet interface to filter out packets that are of no interest. </td></tr>
 <tr>
+<td>Send RST packets, when receive unknown packets.</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable </li>
+</ul>
+</td><td>Enable </td><td>TCP will not send RST packets in reply to TCP unknown or out-of-order packets </td></tr>
+<tr>
 <td>Block time to simulate MAC interrupts</td><td>Please enter a valid function name without spaces or funny characters</td><td>20 / portTICK_PERIOD_MS </td><td>The windows simulator cannot really simulate MAC interrupts, and needs to block occasionally to allow other tasks to run </td></tr>
 <tr>
 <td>Access 32-bit fields in the IP packets</td><td>Value must be an integer</td><td>2 </td><td>To access 32-bit fields in the IP packets with 32-bit memory instructions, all packets will be stored 32-bit-aligned, plus 16-bits. This has to do with the contents of the IP-packets: all 32-bit fields are 32-bit-aligned, plus 16-bit </td></tr>
@@ -396,7 +404,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

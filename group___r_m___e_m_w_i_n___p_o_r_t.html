@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -140,7 +140,7 @@ The following build time configurations are defined in fsp_cfg/rm_emwin_port_cfg
 <tr>
 <td>Memory Allocation &gt; GUI Heap Size</td><td>Value must be a non-negative integer</td><td>32768 </td><td>Set the size of the heap to be allocated for use exclusively by emWin. </td></tr>
 <tr>
-<td>Memory Allocation &gt; Section for GUI Heap</td><td>Manual Entry</td><td>.noinit </td><td>Specify the section in which to allocate the GUI heap. </td></tr>
+<td>Memory Allocation &gt; Section for GUI Heap</td><td>Manual Entry</td><td>.noinit </td><td>Specify the section in which to allocate the GUI heap. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
 <tr>
 <td>Memory Allocation &gt; Maximum Layers</td><td>Value must be a non-negative integer</td><td>16 </td><td>Set the maximum number of available display layers in emWin.<br />
 <br />
@@ -260,7 +260,7 @@ Enabling this option automatically allocates double the output buffer size. </td
 <br />
 Unless you are sure of the subsampling used in and the size of the input JPEG images it is recommended to allocate at least 16 framebuffer lines of memory. </td></tr>
 <tr>
-<td>JPEG Decoding &gt; Buffers &gt; Section for Buffers</td><td>Manual Entry</td><td>.noinit </td><td>Specify the section in which to allocate the JPEG work buffers. </td></tr>
+<td>JPEG Decoding &gt; Buffers &gt; Section for Buffers</td><td>Manual Entry</td><td>.noinit </td><td>Specify the section in which to allocate the JPEG work buffers. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-emwin-port-hw-config"></a>
@@ -345,7 +345,7 @@ Basic Example</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

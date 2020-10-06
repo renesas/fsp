@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -119,6 +119,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga377334858b5b5c7757c0bdce3bcacbf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabee978c13fde54ee541adba77a39dbae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#gabee978c13fde54ee541adba77a39dbae">R_SSI_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
 <tr class="separator:gabee978c13fde54ee541adba77a39dbae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga487b2317d289066a0a27e0e5a9124463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#ga487b2317d289066a0a27e0e5a9124463">R_SSI_CallbackSet</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga487b2317d289066a0a27e0e5a9124463"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the SSIE peripheral on RA MCUs. This module implements the <a class="el" href="group___i2_s___a_p_i.html">I2S Interface</a>. </p>
@@ -131,7 +133,7 @@ Features</h2>
 <li><a class="anchor" id="um_ssi_receive_audio_data"></a>Transmission and reception of uncompressed audio data using the standard I2S protocol in master mode</li>
 <li><a class="anchor" id="um_ssi_full_duplex"></a>Full-duplex I2S communication (channel 0 only)</li>
 <li><a class="anchor" id="um_ssi_hardware_acceleration_using_dtc"></a>Integration with the DTC transfer module</li>
-<li><a class="anchor" id="um_ssi_internal_audio_clock_connection"></a>Internal connection to GPT GTIOC1A timer output to generate the audio clock</li>
+<li><a class="anchor" id="um_ssi_internal_audio_clock_connection"></a>Internal connection to GPT timer output to generate the audio clock</li>
 <li><a class="anchor" id="um_ssi_user_event_notification"></a>Callback function notification when all data is loaded into the SSI FIFO</li>
 </ul>
 <h1><a class="anchor" id="r-ssi-configuration"></a>
@@ -161,7 +163,7 @@ Disabled</li>
 </td><td>Enabled </td><td>If code for DTC transfer support is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Connectivity &gt; I2S Driver on r_ssi</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; I2S Driver on r_ssi:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; I2S Driver on r_ssi. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -218,11 +220,11 @@ Disabled</li>
 <tr>
 <td>Bit Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-AUDIO_CLK</li>
+External AUDIO_CLK</li>
 <li>
-GTIOC1A</li>
+Internal AUDIO_CLK</li>
 </ul>
-</td><td>AUDIO_CLK </td><td>Select AUDIO_CLK for external signal to AUDIO_CLK input pin or GTIOC1A for internal connection to GPT channel 1 GTIOC1A. </td></tr>
+</td><td>External AUDIO_CLK </td><td>Select AUDIO_CLK for external signal to AUDIO_CLK input pin or GTIOC1A for internal connection to GPT channel 1 GTIOC1A. </td></tr>
 <tr>
 <td>Bit Clock Divider</td><td>Refer to the RA Configuration tool for available options.</td><td>Audio Clock / 1 </td><td>Select divider used to generate bit clock from audio clock. </td></tr>
 <tr>
@@ -293,9 +295,11 @@ SSI Frame Diagram (8-bit word, 8-bit samples)</div></div>
 <h3>Audio Clock Source</h3>
 <p>The audio clock source can come from:</p><ul>
 <li><a class="anchor" id="um_ssi_external_input_clock"></a> An external source input to the AUDIO_CLK pin</li>
-<li><a class="anchor" id="um_ssi_timer_generates_audio_clock"></a> An internal connection to the GPT channel 1 A output (GTIOC1A)</li>
+<li><a class="anchor" id="um_ssi_timer_generates_audio_clock"></a> An internal connection to the GPT timer output</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>When using the GTIOC1A output, the GPT channel must be set to channel 1, Pin Output Support must be Enabled, and GTIOCA Output Enabled must be True.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When using the internal GPT timer output, Pin Output Support must be Enabled, and GTIOCA Output Enabled must be True. </dd>
+<dd>
+See the SSIE section in the MCU hardware manual for information about which GPT channel may be used.</dd></dl>
 <h2><a class="anchor" id="r-ssi-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the SSI:</p>
@@ -387,7 +391,7 @@ Select bit clock division ratio. </td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga57213e467410bf6c3afe0c2338820260a70d00a0392b530b169f91eb676b0526f"></a>SSI_AUDIO_CLOCK_EXTERNAL&#160;</td><td class="fielddoc"><p>Audio clock source is the AUDIO_CLK input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga57213e467410bf6c3afe0c2338820260aecaf4e604947446acc0ca94f49f649b7"></a>SSI_AUDIO_CLOCK_GTIOC1A&#160;</td><td class="fielddoc"><p>Audio clock source is internal connection to GPT channel 1 output. </p>
+<tr><td class="fieldname"><a id="gga57213e467410bf6c3afe0c2338820260a26391e405e11b4b15523b934018afb7f"></a>SSI_AUDIO_CLOCK_INTERNAL&#160;</td><td class="fielddoc"><p>Audio clock source is internal connection to a MCU specific GPT channel output. </p>
 </td></tr>
 </table>
 
@@ -799,13 +803,62 @@ Select bit clock division ratio. </td></tr>
 
 </div>
 </div>
+<a id="ga487b2317d289066a0a27e0e5a9124463"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga487b2317d289066a0a27e0e5a9124463">&#9670;&nbsp;</a></span>R_SSI_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SSI_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___i2_s___a_p_i.html#a48c3fdc05d5204621b8a1d5151f83cc6">i2s_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

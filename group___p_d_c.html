@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -150,7 +150,7 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Graphics &gt; PDC Driver on r_pdc</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Graphics &gt; PDC Driver on r_pdc:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Graphics &gt; PDC Driver on r_pdc.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -213,7 +213,7 @@ Big</li>
 <tr>
 <td>Output &gt; Buffer &gt; Image buffer name</td><td>Name must be a valid C symbol</td><td>g_user_buffer </td><td>Specify the name of the data buffer to create or set to NULL, if it is to be created by the user external to the PDC driver. </td></tr>
 <tr>
-<td>Output &gt; Buffer &gt; Image buffer section</td><td>This property must be a valid section name</td><td>sram </td><td>Specify the RAM section for the image data buffer. Typically BSS (internal RAM) or SDRAM. </td></tr>
+<td>Output &gt; Buffer &gt; Image buffer section</td><td>This property must be a valid section name</td><td>.bss </td><td>Specify the RAM section for the image data buffer. Typically .bss (internal RAM) or .sdram. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
 <tr>
 <td>Output &gt; Buffer &gt; Number of image buffers</td><td>Value must be an integer greater than 0</td><td>1 </td><td>Specify the number of buffers to create. </td></tr>
 <tr>
@@ -446,7 +446,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

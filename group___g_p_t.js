@@ -24,7 +24,6 @@ var group___g_p_t =
     [ "gpt_extended_cfg_t", "group___g_p_t.html#structgpt__extended__cfg__t", [
       [ "gtioca", "group___g_p_t.html#ad323c6db6a695028d2926dfbf0a0dda8", null ],
       [ "gtiocb", "group___g_p_t.html#a78476af74debd54ee8394dd0aa6d2505", null ],
-      [ "shortest_pwm_signal", "group___g_p_t.html#a92c97688b2a90cca95531955c102945b", null ],
       [ "start_source", "group___g_p_t.html#a3b894424ab45e17d02938de9c211911a", null ],
       [ "stop_source", "group___g_p_t.html#a41333514ba7ccb2b4e2d6475a51dcc26", null ],
       [ "clear_source", "group___g_p_t.html#ad5614740946c3c06e1633d369d08f5c3", null ],
@@ -46,10 +45,6 @@ var group___g_p_t =
     [ "gpt_pin_level_t", "group___g_p_t.html#ga454c639e426428470ce78115af5d3648", [
       [ "GPT_PIN_LEVEL_LOW", "group___g_p_t.html#gga454c639e426428470ce78115af5d3648a3270f1165e7a86c5b12eecb9501390f4", null ],
       [ "GPT_PIN_LEVEL_HIGH", "group___g_p_t.html#gga454c639e426428470ce78115af5d3648adc8ebfd0f787322b884ca5d087b3a6a3", null ]
-    ] ],
-    [ "gpt_shortest_level_t", "group___g_p_t.html#gab0579e86d3b176b4e3c7da752874649a", [
-      [ "GPT_SHORTEST_LEVEL_OFF", "group___g_p_t.html#ggab0579e86d3b176b4e3c7da752874649aa7683eae71f5ed5ec08473c3b4d0292b3", null ],
-      [ "GPT_SHORTEST_LEVEL_ON", "group___g_p_t.html#ggab0579e86d3b176b4e3c7da752874649aa0c89d7bd6d02245ba1077b51f91037be", null ]
     ] ],
     [ "gpt_source_t", "group___g_p_t.html#gaa1457c9c1f178fff4dd1558832db196a", [
       [ "GPT_SOURCE_NONE", "group___g_p_t.html#ggaa1457c9c1f178fff4dd1558832db196aae376db52803d52361481b2384c3a3bd8", null ],
@@ -150,6 +145,7 @@ var group___g_p_t =
     [ "R_GPT_OutputEnable", "group___g_p_t.html#ga0e6638508ec1d5441713195c877bb7a7", null ],
     [ "R_GPT_OutputDisable", "group___g_p_t.html#gae204e5d6c9305923e98724005dcdf03d", null ],
     [ "R_GPT_AdcTriggerSet", "group___g_p_t.html#ga311c91c55f20338f7082fa4369e7c80f", null ],
+    [ "R_GPT_CallbackSet", "group___g_p_t.html#ga2a09de185d3b7f1c301b33330931bac4", null ],
     [ "R_GPT_Close", "group___g_p_t.html#ga2fc5d6a737a00948802e2bb77fbe8d8c", null ],
     [ "R_GPT_VersionGet", "group___g_p_t.html#ga84b2245c5b4ed778ea2b220470ce69c5", null ]
 ];

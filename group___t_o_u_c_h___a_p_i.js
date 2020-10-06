@@ -15,10 +15,21 @@ var group___t_o_u_c_h___a_p_i =
       [ "num_elements", "group___t_o_u_c_h___a_p_i.html#a2a7ce7245bcdada0b7952c7aa2f54751", null ],
       [ "threshold", "group___t_o_u_c_h___a_p_i.html#ab3631f07ecfc93cd7733a3082488bd31", null ]
     ] ],
+    [ "touch_pad_cfg_t", "group___t_o_u_c_h___a_p_i.html#structtouch__pad__cfg__t", [
+      [ "p_elem_index_rx", "group___t_o_u_c_h___a_p_i.html#a9d3ede192b66a76fec2468f5fb6d8af1", null ],
+      [ "p_elem_index_tx", "group___t_o_u_c_h___a_p_i.html#ac58f0d117eb8ced4edd3c9340ea2a670", null ],
+      [ "num_elements", "group___t_o_u_c_h___a_p_i.html#a8d21edeb7537532fc2ef6452e1c238ee", null ],
+      [ "threshold", "group___t_o_u_c_h___a_p_i.html#a1974bc3949c2413713995d522c5f2dd4", null ],
+      [ "rx_pixel", "group___t_o_u_c_h___a_p_i.html#abc115f199c97f8d4809230c731c056f8", null ],
+      [ "tx_pixel", "group___t_o_u_c_h___a_p_i.html#ae65b43ac8ebb2cb83cb6553f2ff12d7e", null ],
+      [ "max_touch", "group___t_o_u_c_h___a_p_i.html#a86b8c14b3059c3f9259511fe7df66fbe", null ],
+      [ "num_drift", "group___t_o_u_c_h___a_p_i.html#a6b2f11e8d2d0093bb801878bfcbc4491", null ]
+    ] ],
     [ "touch_cfg_t", "group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t", [
       [ "p_buttons", "group___t_o_u_c_h___a_p_i.html#ab1ef21c88278bfe92d79422f6f7338cc", null ],
       [ "p_sliders", "group___t_o_u_c_h___a_p_i.html#a4445e920e87f49fe68d8d2c3ade8680f", null ],
       [ "p_wheels", "group___t_o_u_c_h___a_p_i.html#ad4c14f24750ca15b6263b2cc22562184", null ],
+      [ "p_pad", "group___t_o_u_c_h___a_p_i.html#af812e886cd57abe6ad3d7519824ba524", null ],
       [ "num_buttons", "group___t_o_u_c_h___a_p_i.html#a68265729f298e4df5fd06dc7327a7b09", null ],
       [ "num_sliders", "group___t_o_u_c_h___a_p_i.html#abaac08be7d2b64d95ecf167b16c5428d", null ],
       [ "num_wheels", "group___t_o_u_c_h___a_p_i.html#acfc38d50a81ed250cab31fad7aa65b37", null ],
@@ -36,6 +47,8 @@ var group___t_o_u_c_h___a_p_i =
       [ "open", "group___t_o_u_c_h___a_p_i.html#a229c13bc7250c5977054d981680e41ad", null ],
       [ "scanStart", "group___t_o_u_c_h___a_p_i.html#a8064118d8b22b24a63cd18fc8db9c072", null ],
       [ "dataGet", "group___t_o_u_c_h___a_p_i.html#a275464ffc43790ae8a787e7f2f3544d0", null ],
+      [ "padDataGet", "group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3", null ],
+      [ "callbackSet", "group___t_o_u_c_h___a_p_i.html#ad1390fd43ac6b2e08cab0fc26b4a5360", null ],
       [ "close", "group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0", null ],
       [ "versionGet", "group___t_o_u_c_h___a_p_i.html#a2b34120d3619a9fc2223b53c5c372327", null ]
     ] ],

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -358,6 +358,18 @@ Enable</li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Use the low voltage mode. This limits the ICLK operating frequency to 4 MHz and requires all clock dividers to be at least 4 when oscillation stop detection is used. </td></tr>
+<tr>
+<td>ID Code Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Unlocked (Ignore ID)</li>
+<li>
+Locked with All Erase support</li>
+<li>
+Locked</li>
+</ul>
+</td><td>Unlocked (Ignore ID) </td><td>When set to 'Locked with All Erase support', the ID Code must be set in the debugger to read or write data to the MCU, but the All Erase command is still accepted regardless. When set to 'Locked', all erase/download/debug access is disabled unless the ID Code is provided. </td></tr>
+<tr>
+<td>ID Code (32 Hex Characters)</td><td>Value must be a 32 character long hex string</td><td>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF </td><td>Set the ID Code for locking debug access. This setting is only used when the ID Code Mode is not set to Unlocked. </td></tr>
 </table>
  </p>
 <table class="memberdecls">
@@ -388,7 +400,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -126,28 +126,29 @@ Features</h2>
 <li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_AES256_key_generation_plaintext_export"></a><a class="anchor" id="um_AES128_key_generation_plaintext_export"></a><a class="anchor" id="um_AES192_key_generation_wrapped_fail"></a><a class="anchor" id="um_AES256_key_generation_wrapped_export"></a><a class="anchor" id="um_AES128_key_generation_wrapped_export"></a></li>
 </ul>
 </li>
-<li>ECC<ul>
+<li>ECC <a class="anchor" id="um_ECC_hardware_acceleration"></a><ul>
 <li>Curves:<ul>
 <li>SECP256R1 <a class="anchor" id="um_ECC_key_generation_256K1"></a></li>
 <li>SECP256K1 <a class="anchor" id="um_ECC_key_generation_256R1"></a></li>
-<li>Brainpool256R1 <a class="anchor" id="um_ECC_key_generation_BP256R1"></a></li>
+<li>Brainpool256R1 (Unavailable on RA6M4) <a class="anchor" id="um_ECC_key_generation_BP256R1"></a></li>
 <li>SECP384R1 <a class="anchor" id="um_ECC_key_generation_384R1"></a></li>
-<li>Brainpool384R1 <a class="anchor" id="um_ECC_key_generation_BP384R1"></a></li>
+<li>Brainpool384R1 (Unavailable on RA6M4) <a class="anchor" id="um_ECC_key_generation_BP384R1"></a></li>
 </ul>
 </li>
-<li>Plain-Text Key Generation</li>
+<li>Plain-Text Key Generation (Unavailable on RA6M4)</li>
 <li>Wrapped Key Generation <a class="anchor" id="um_ECC_key_generation_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1Wrapped"></a></li>
 <li>Signing and Verification <a class="anchor" id="um_ECC_sign_verify_smaller_hash"></a></li>
 <li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_ECC_key_export_256R1"></a><a class="anchor" id="um_ECC_key_export_256K1"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_export_384R1"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1"></a><a class="anchor" id="um_ECC_key_import_256R1"></a><a class="anchor" id="um_ECC_key_import_256K1"></a><a class="anchor" id="um_ECC_key_import_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_import_384R1"></a><a class="anchor" id="um_ECC_key_import_BrainPool384R1"></a></li>
 </ul>
 </li>
 <li>RSA<ul>
-<li>Keybits - 2048</li>
-<li>Plain-Text Key Generation <a class="anchor" id="um_RSA_key_generation"></a></li>
+<li>Keybits - 2048. Verification only for 3072 and 4096 bits</li>
+<li>Plain-Text Key Generation (Unavailable on RA6M4) <a class="anchor" id="um_RSA_key_generation"></a></li>
 <li>Wrapped Key Generation <a class="anchor" id="um_RSA_key_generationWrapped"></a></li>
-<li>Signing and Verification</li>
+<li>Signature Generation</li>
+<li>Verification <a class="anchor" id="um_RSA_3072_key_import_verify"></a><a class="anchor" id="um_RSA_4096_key_import_verify"></a></li>
 <li>Encryption and Decryption with PKCS1V15 and OAEP padding <a class="anchor" id="um_RSA_PKCS1V15_encrypt_decrypt"></a><a class="anchor" id="um_RSA_OAEP_encrypt_decrypt"></a></li>
-<li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_RSA_key_export_import"></a><a class="anchor" id="um_RSA_key_import"></a><a class="anchor" id="um_RSA_key_import_e3"></a></li>
+<li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_RSA_key_export_import"></a><a class="anchor" id="um_RSA_key_export_import_wrapped"></a><a class="anchor" id="um_RSA_key_import"></a><a class="anchor" id="um_RSA_key_import_e3"></a></li>
 </ul>
 </li>
 <li>Random number generation <a class="anchor" id="um_psa_random_number_generation"></a><a class="anchor" id="um_RNG_hardware_acceleration"></a></li>
@@ -176,6 +177,10 @@ The following build time configurations are defined in arm/mbedtls/config.h:<br 
 <td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; ECDSA </td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_ECDSA_SIGN_ALT and MBEDTLS_ECDSA_VERIFY_ALT </td></tr>
 <tr>
 <td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_RSA_ALT. </td></tr>
+<tr>
+<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA 3072 Verify</td><td>MCU Specific Options</td><td></td><td>Enables RSA 3072 Verify. </td></tr>
+<tr>
+<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA 4096 Verify</td><td>MCU Specific Options</td><td></td><td>Enables RSA 4096 Verify. </td></tr>
 <tr>
 <td>Hardware Acceleration &gt; TRNG</td><td>Enabled</td><td>Enabled </td><td>Defines MBEDTLS_ENTROPY_HARDWARE_ALT. </td></tr>
 <tr>
@@ -307,7 +312,7 @@ Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Undefine </td><td>MBEDTLS_PLATFORM_MEMORY </td></tr>
+</td><td>Define </td><td>MBEDTLS_PLATFORM_MEMORY </td></tr>
 <tr>
 <td>Platform &gt; MBEDTLS_PLATFORM_NO_STD_FUNCTIONS</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -587,6 +592,14 @@ Undefine</li>
 <tr>
 <td>Platform &gt; MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO value</td><td>Manual Entry</td><td>mbedtls_platform_std_nv_seed_write </td><td>MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO value </td></tr>
 <tr>
+<td>General &gt; PSA_CRYPTO_SECURE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Define</li>
+<li>
+Undefine</li>
+</ul>
+</td><td>Undefine </td><td>PSA_CRYPTO_SECURE </td></tr>
+<tr>
 <td>General &gt; MBEDTLS_DEPRECATED_WARNING</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -665,7 +678,7 @@ Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Undefine </td><td>MBEDTLS_THREADING_ALT </td></tr>
+</td><td>Define </td><td>MBEDTLS_THREADING_ALT </td></tr>
 <tr>
 <td>General &gt; MBEDTLS_THREADING_PTHREAD</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -723,7 +736,7 @@ Define</li>
 <li>
 Undefine</li>
 </ul>
-</td><td>Undefine </td><td>MBEDTLS_THREADING_C </td></tr>
+</td><td>Define </td><td>MBEDTLS_THREADING_C </td></tr>
 <tr>
 <td>General &gt; MBEDTLS_TIMING_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1843,6 +1856,8 @@ Undefine</li>
 </ul>
 </td><td>Define </td><td>MBEDTLS_CTR_DRBG_C </td></tr>
 <tr>
+<td>RNG &gt; MBEDTLS_CTR_DRBG_C_ALT</td><td>Define</td><td>Define </td><td>MBEDTLS_CTR_DRBG_C_ALT </td></tr>
+<tr>
 <td>RNG &gt; MBEDTLS_HAVEGE_C</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Define</li>
@@ -2017,7 +2032,7 @@ SHA256 Configuration</h2>
 <p>To enable hardware acceleration for the SHA256/224 calculation, the macro MBEDTLS_SHA256_ALT and MBEDTLS_SHA256_PROCESS_ALT must be defined in the configuration file. By default SHA256 is enabled. SHA256 can be disabled, but SHA512 then needs to be enabled (software version) because the PSA implementation uses it for the entropy accumulator. This can be done using the RA Configuration editor.</p>
 <h2><a class="anchor" id="rm-psa-crypto-aes-configuration"></a>
 AES Configuration</h2>
-<p>To enable hardware acceleration for the AES128/256 operation, the macro MBEDTLS_AES_SETKEY_ENC_ALT, MBEDTLS_AES_SETKEY_DEC_ALT, MBEDTLS_AES_ENCRYPT_ALT and MBEDTLS_AES_DECRYPT_ALT must be defined in the configuration file. By default AES is enabled. AES cannot be disabled because the PSA immplementation required for the CTR_DRBG randon number generator. This can be done using the RA Configuration editor.</p>
+<p>To enable hardware acceleration for the AES128/256 operation, the macro MBEDTLS_AES_SETKEY_ENC_ALT, MBEDTLS_AES_SETKEY_DEC_ALT, MBEDTLS_AES_ENCRYPT_ALT and MBEDTLS_AES_DECRYPT_ALT must be defined in the configuration file. By default AES is enabled. AES cannot be disabled because the PSA implementation requires it for the CTR_DRBG random number generator. This can be done using the RA Configuration editor.</p>
 <h2><a class="anchor" id="rm-psa-crypto-ecc-configuration"></a>
 ECC Configuration</h2>
 <p>To enable hardware acceleration for the ECC Key Generation operation, the macro MBEDTLS_ECP_ALT must be defined in the configuration file. For ECDSA, the macros MBEDTLS_ECDSA_SIGN_ALT and MBEDTLS_ECDSA_VERIFY_ALT must be defined. By default ECC, ECDSA and ECDHE are enabled. To disable ECC, undefine MBEDTLS_ECP_C, MBEDTLS_ECDSA_C and MBEDTLS_ECDH_C. This can be done using the RA Configuration editor.</p>
@@ -2026,7 +2041,7 @@ RSA Configuration</h2>
 <p>To enable hardware acceleration for the RSA2048 operation, the macro MBEDTLS_RSA_ALT must be defined in the configuration file. By default RSA is enabled. To disable RSA, undefine MBEDTLS_RSA_C, MBEDTLS_PK_C, MBEDTLS_PK_PARSE_C, MBEDTLS_PK_WRITE_C. This can be done using the RA Configuration editor.</p>
 <h2><a class="anchor" id="rm-psa-crypto-wrapped-key-configuration"></a>
 Wrapped Key Usage</h2>
-<p>To use the Secure Crypto Engine to generate and use wrapped keys, use PSA_KEY_LIFETIME_VOLATILE_WRAPPED when setting the key lifetime. Wrapped keys can also be generated by using PSA_KEY_LIFETIME_PERSISTENT_WRAPPED to generate persistent keys as described in the next section. Setting the key's lifetime attribute using this value will cause the SCE to use wrapped key mode for all operations related to that key. The user can use the export functionality to save the wrapped keys to user ROM and import it later for usage. This mode requires that Wrapped Key functionality for the algorithm is enabled in the project configuration.</p>
+<p>To use the Secure Crypto Engine to generate and use wrapped keys, use PSA_KEY_LIFETIME_VOLATILE_WRAPPED when setting the key lifetime. Wrapped keys can also be generated by using PSA_KEY_LIFETIME_PERSISTENT_WRAPPED to generate persistent keys as described in the next section. Setting the key's lifetime attribute using this value will cause the SCE to use wrapped key mode for all operations related to that key. The user can use the export functionality to save the wrapped keys to user ROM and import it later for usage.This mode requires that Wrapped Key functionality for the algorithm is enabled in the project configuration. </p><dl class="section note"><dt>Note</dt><dd><b>On the RA6M4 devices, only the RSA public key can be exported. A file system must be used to store the internally generated private key.</b></dd></dl>
 <h2><a class="anchor" id="rm-psa-crypto-persistent-key-storage"></a>
 Persistent Key Storage</h2>
 <p>Persistent key storage can be enabled by defining MBEDTLS_FS_IO, MBEDTLS_PSA_CRYPTO_STORAGE_C, and MBEDTLS_PSA_ITS_FILE_C. The key lifetime must also be specifed as either PSA_KEY_LIFETIME_PERSISTENT or PSA_KEY_LIFETIME_PERSISTENT_WRAPPED. A lower level storage module must be added in the RA Configuration editor and initialized in the code before generating persistent keys. Persistent storage supports the use of plaintext and vendor keys. Refer to the lower level storage module documentation for information on how it should be initialized. To generate a persistent key the key must be assigned a unique id prior to calling generate using the psa_set_key_id api.<a class="anchor" id="um_PSA_ITS_persistent_storage"></a> </p><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (PSA_KEY_LIFETIME_IS_PERSISTENT(lifetime))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Set the id to a positive integer. */</span></div><div class="line">        psa_set_key_id(&amp;attributes, (psa_key_id_t) 5);</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="rm-psa-crypto-platform-configuration"></a>
@@ -2061,6 +2076,43 @@ Memory Usage</h2>
 <h2>Limitations</h2>
 <ul>
 <li>Only little endian mode is supported.</li>
+</ul>
+<h2>RA6M4 Usage</h2>
+<p>The crypto capabilities on the RA6M4 are different resulting in the below usage limitations with mbedCrypto:</p><ul>
+<li>The module includes <b>both</b> wrapped and plaintext keys code irrespective of whether the application requires it.</li>
+<li>Plaintext key generation is not supported for RSA and ECC; only wrapped keys can be generated.</li>
+</ul>
+<h2>Using PSA Crypto with TrustZone</h2>
+<p>Unlike FSP drivers, PSA Crypto cannot be configured as Non-secure callable in the RA Configurator for a secure project. The reason for this is that in order to achieve the security objective of controlling access to protected keys, both the PSA Crypto code as well as the keys must be placed in the secure region. Since the PSA Crypto API requires access to the keys directly during initialization and later via a key handle, allowing non-secure code to use the API by making it Non-secure callable will require the keys to be stored in non-secure memory.</p>
+<p>This section will provide a short explanation of how to add PSA Crypto to a secure project and have it usable by the non-secure project without exposing the keys. In this example the secure project will contain an RSA private key and the non-secure project is expected to be able to perform sign and verify operations using that key.</p>
+<div class="image">
+<object type="image/svg+xml" data="mbedcrypto-nsc.svg">mbedcrypto-nsc.svg</object>
+<div class="caption">
+PSA Crypto Non-secure callable example</div></div>
+<ul>
+<li>Secure project<ul>
+<li>During secure project boot-up, psa_crypto_init() is called.</li>
+<li>The RSA private key is programmed into secure flash either at the factory or by calling psa_generate_key() in persistent mode. Note that the data-flash area used by the LittleFS will have to be in the secure region if the key is generated as a persistent.</li>
+<li>psa_import_key()/psa_open_key() are called with the resultant handle held in secure RAM.</li>
+<li>The Non-secure callable section contains the following <b>user-defined</b> functions<ul>
+<li>verify_with_my_rsa_key(input_signature, input_hash, verification_result)<ul>
+<li>The implementation of this function in secure region will call psa_verify_hash() and return the result via verification_result.</li>
+</ul>
+</li>
+<li>sign_with_my_rsa_key(input_hash, output_signature)<ul>
+<li>The implementation of this function in secure region will call psa_sign_hash() and return the signature via output_signature.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p class="startli">Non-secure project</p><ul>
+<li>Calls verify_with_my_rsa_key() to verify a signature. The implementation will use the public key that is present in the secure project.</li>
+<li>Calls sign_with_my_rsa_key() to generate a signature. The implementation will use the private key that is present on the secure project.</li>
+</ul>
+<p class="startli">For more details on how to add user-code to the Non-secure callable region refer to the "Security Design with Arm TrustZone - IP Protection (R11AN0467EU0100)" Application Note.</p>
+</li>
 </ul>
 <h1><a class="anchor" id="rm-psa-crypto-examples"></a>
 Examples</h1>
@@ -2178,7 +2230,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

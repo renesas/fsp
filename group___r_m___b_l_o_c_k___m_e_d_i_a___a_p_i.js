@@ -3,7 +3,8 @@ var group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i =
     [ "rm_block_media_info_t", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__info__t", [
       [ "sector_size_bytes", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a4e46e0d9177f55565fa8ceb002459d96", null ],
       [ "num_sectors", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a9c19435e9c8a2e1a32c9e0869ef10663", null ],
-      [ "reentrant", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a7eb037c40f1735f5a877302c65c1387e", null ]
+      [ "reentrant", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a7eb037c40f1735f5a877302c65c1387e", null ],
+      [ "write_protected", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ac3a707be8444f429d772e1f0f3346326", null ]
     ] ],
     [ "rm_block_media_callback_args_t", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t", [
       [ "event", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aa13fc0ea05379836574c850687293ade", null ],
@@ -26,6 +27,7 @@ var group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i =
       [ "read", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a5c9c1b20f8ae1d95defa766a757d031a", null ],
       [ "write", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a108ef8243422a2ed8b3bea6cb67dbb6a", null ],
       [ "erase", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a108bacf3e0522dd84e1121785eaf8f87", null ],
+      [ "callbackSet", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a44e8eff381c878cbf878bdc8c331502b", null ],
       [ "statusGet", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a802c5b072fad72944fc03c14a9bbca4e", null ],
       [ "infoGet", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a031bb4fa56552052a1c361edfb7072cf", null ],
       [ "close", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ad116017606d47877fcc2dae3517f2f6e", null ],

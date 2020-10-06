@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -279,6 +279,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <tr class="separator:a41c511a6b1b828d54f180b729ae4fe55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab377a80211d85f8c90b578e93dfd7964"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_o_e_g___a_p_i.html#ab377a80211d85f8c90b578e93dfd7964">statusGet</a> )(<a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__status__t">poeg_status_t</a> *p_status)</td></tr>
 <tr class="separator:ab377a80211d85f8c90b578e93dfd7964"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d01f09a832b9940b264b0cf10a3863c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_o_e_g___a_p_i.html#a7d01f09a832b9940b264b0cf10a3863c">callbackSet</a> )(<a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t">poeg_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t">poeg_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a7d01f09a832b9940b264b0cf10a3863c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe1feb1a5288478eea8d339ffaa1c68e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_o_e_g___a_p_i.html#afe1feb1a5288478eea8d339ffaa1c68e">outputDisable</a> )(<a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:afe1feb1a5288478eea8d339ffaa1c68e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5765dcf518892b71b73b5ae38942bd7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_o_e_g___a_p_i.html#a5765dcf518892b71b73b5ae38942bd7f">reset</a> )(<a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const p_ctrl)</td></tr>
@@ -333,6 +335,33 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_o_e_g___a_p_i.html#a41c511a6b1b828d54f180b729ae4fe55">poeg_api_t::open</a> call. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_status</td><td>Provides the current state of the POEG. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7d01f09a832b9940b264b0cf10a3863c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d01f09a832b9940b264b0cf10a3863c">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  poeg_api_t::callbackSet) (<a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t">poeg_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t">poeg_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___p_o_e_g.html#ga299d7e0c935c5305d72077fdf1963c2d">R_POEG_CallbackSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_o_e_g___a_p_i.html#a41c511a6b1b828d54f180b729ae4fe55">poeg_api_t::open</a> call for this timer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function to register </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
   </table>
   </dd>
 </dl>
@@ -614,7 +643,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

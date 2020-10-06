@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -121,6 +121,10 @@ Functions</h2></td></tr>
 <tr class="separator:gaac289335b731d0bdb5cb8e6d243898ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadee5f5e0c5fa723426f73d7d5a07f9b2"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE bsp_unique_id_t const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gadee5f5e0c5fa723426f73d7d5a07f9b2">R_BSP_UniqueIdGet</a> ()</td></tr>
 <tr class="separator:gadee5f5e0c5fa723426f73d7d5a07f9b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacad60345efa794d28998df8034284b04"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gacad60345efa794d28998df8034284b04">R_BSP_FlashCacheDisable</a> ()</td></tr>
+<tr class="separator:gacad60345efa794d28998df8034284b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d86d933ae3e2bd194f10e755f8078e8"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga9d86d933ae3e2bd194f10e755f8078e8">R_BSP_FlashCacheEnable</a> ()</td></tr>
+<tr class="separator:ga9d86d933ae3e2bd194f10e755f8078e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf3219448adfd1531cf69f68697ab184b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a> (uint32_t delay, <a class="el" href="group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b">bsp_delay_units_t</a> units)</td></tr>
 <tr class="separator:gaf3219448adfd1531cf69f68697ab184b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaed27ea47f0c85a1af9bb515600d5e2ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a> (<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq, void(*p_callback)(<a class="el" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq))</td></tr>
@@ -151,6 +155,8 @@ Functions</h2></td></tr>
 <a href="#bsp-weak-symbols">BSP Weak Symbols</a> </li>
 <li>
 <a href="#warm-start-callbacks">Warm Start Callbacks</a> </li>
+<li>
+<a href="#c-runtime-initialization">C Runtime Initialization</a> </li>
 <li>
 <a href="#register-protection">Register Protection</a> </li>
 <li>
@@ -212,8 +218,8 @@ Group Interrupts</h3>
 <li>MPU Bus Slave Error</li>
 <li>MPU Bus Master Error</li>
 <li>MPU Stack Error</li>
+<li>TrustZone Filter Error<a class="anchor" id="um_bsp_tz_nmi"></a> A user may enable notification for one or more group interrupts by registering a callback using the BSP API function <a class="el" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite()</a>. When an NMI interrupt occurs, the NMI handler checks to see if there is a callback registered for the cause of the interrupt and if so calls the registered callback function.</li>
 </ul>
-<p>A user may enable notification for one or more group interrupts by registering a callback using the BSP API function <a class="el" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite()</a>. When an NMI interrupt occurs, the NMI handler checks to see if there is a callback registered for the cause of the interrupt and if so calls the registered callback function.</p>
 <h3><a class="anchor" id="external-peripheral-interrupts"></a>
 External and Peripheral Interrupts</h3>
 <p><a class="anchor" id="um_bsp_support_user_isrs"></a>User configurable interrupts begin with slot 16. These may be external, or peripheral generated interrupts.</p>
@@ -231,6 +237,9 @@ Warm Start Callbacks</h3>
 <p><a class="anchor" id="um_bsp_pre_clock_initialization_callback"></a><a class="anchor" id="um_bsp_post_clock_initialization_callback"></a><a class="anchor" id="um_bsp_post_data_initialization_callback"></a>As the BSP is in the process of bringing up the board out of reset, there are three points where the user can request a callback. These are defined as the 'Pre Clock Init', 'Post Clock Init' and 'Post C' warm start callbacks.</p>
 <p>As described above, this function is already weakly defined as <a class="el" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart()</a>, so it is a simple matter of redefining the function or copying the existing body from CMSIS system.c into the application code to get a callback. <a class="el" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart()</a> takes an event parameter of type <code>bsp_warm_start_event_t</code> which describes the type of warm start callback being made.</p>
 <p>This function is not enabled/disabled and is always called for both events as part of the BSP startup. Therefore it needs a function body, which will not be called if the user is overriding it. The function body is located in system.c. To use this function just copy this function into your own code and modify it to meet your needs.</p>
+<h3><a class="anchor" id="c-runtime-initialization"></a>
+C Runtime Initialization</h3>
+<p>This BSP configuration allows the user to skip the FSP C runtime initialization code by setting the "C Runtime Initialization" to "Disabled" on the BSP tab of the RA Configuration editor. Disabling this option is useful in cases where a non-standard linker script is being used or other modifications to the runtime initialization are desired. If this macro is disabled, the user must use the 'Post Clock Init' event from the warm start (described above) to run their own runtime initialization code.</p>
 <h3><a class="anchor" id="heap-allocation"></a>
 Heap Allocation</h3>
 <p><a class="anchor" id="um_bsp_stacks_and_heap"></a>The relatively low amount of on-chip SRAM available and lack of memory protection in an MCU means that heap use must be very carefully controlled to avoid memory leaks, overruns and attempted overallocation. Further, many RTOSes provide their own dynamic memory allocation system. For these reasons the default heap size is set at 0 bytes, effectively disabling dynamic memory. If it is required for an application setting a positive value to the "Heap size (bytes)" option in the RA Common configurations on the <b>BSP</b> tab will allocate a heap.</p>
@@ -251,7 +260,7 @@ ID Codes</h3>
 Software Delay</h3>
 <p><a class="anchor" id="um_bsp_software_delay"></a>Implements a blocking software delay. A delay can be specified in microseconds, milliseconds or seconds. The delay is implemented based on the system clock rate.</p>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Delay at least 1 second. Depending on the number of wait states required for the region of memory</span></div><div class="line"><span class="comment">     * that the software_delay_loop has been linked in this could take longer. The default is 4 cycles per loop.</span></div><div class="line"><span class="comment">     * This can be modified by redefining DELAY_LOOP_CYCLES. BSP_DELAY_UNITS_SECONDS, BSP_DELAY_UNITS_MILLISECONDS,</span></div><div class="line"><span class="comment">     * and BSP_DELAY_UNITS_MICROSECONDS can all be used with R_BSP_SoftwareDelay. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d">BSP_DELAY_UNITS_SECONDS</a>);</div><div class="line"></div></div><!-- fragment --> <h3><a class="anchor" id="critical-section-macros"></a>
-Critical Section Macors</h3>
+Critical Section Macros</h3>
 <p><a class="anchor" id="um_bsp_critical_section"></a>Implements a critical section. Some MCUs (MCUs with the BASEPRI register) support allowing high priority interrupts to execute during critical sections. On these MCUs, interrupts with priority less than or equal to BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION are not serviced in critical sections. Interrupts with higher priority than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION still execute in critical sections.</p>
 <div class="fragment"><div class="line"></div><div class="line">    FSP_CRITICAL_SECTION_DEFINE;</div><div class="line"></div><div class="line">    <span class="comment">/* Store the current interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaddc2260c1ce320f3aa1f1cb05b9a5620">FSP_CRITICAL_SECTION_ENTER</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Interrupts cannot run in this section unless their priority is less than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Restore saved interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga23338e06b1e1537017ef4f3f94cda354">FSP_CRITICAL_SECTION_EXIT</a>;</div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="board-features"></a>
 Board Specific Features</h1>
@@ -311,18 +320,6 @@ Errors Logged via fsp_error_log</li>
 </ul>
 </td><td>No Error Log </td><td>Specify error logging behavior. </td></tr>
 <tr>
-<td>ID Code Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Unlocked (Ignore ID)</li>
-<li>
-Locked with All Erase support</li>
-<li>
-Locked</li>
-</ul>
-</td><td>Unlocked (Ignore ID) </td><td>When set to 'Locked with All Erase support', the ID Code must be set in the debugger to read or write data to the MCU, but the All Erase command is still accepted regardless. When set to 'Locked', all erase/download/debug access is disabled unless the ID Code is provided. </td></tr>
-<tr>
-<td>ID Code (32 Hex Characters)</td><td>Value must be a 32 character long hex string</td><td>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF </td><td>Set the ID Code for locking debug access. This setting is only used when the ID Code Mode is not set to Unlocked. </td></tr>
-<tr>
 <td>Soft Reset</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Disabled</li>
@@ -346,6 +343,14 @@ Disabled</li>
 Enabled</li>
 </ul>
 </td><td>Enabled </td><td>Keep the PFS registers locked when they are not being modified. If disabled they will be unlocked during startup. </td></tr>
+<tr>
+<td>C Runtime Initialization </td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Select if the C runtime initialization in the BSP is to be used. If disabled, use the BSP_WARM_START_POST_CLOCK event to run user defined equivalent. </td></tr>
 <tr>
 <td>Main Oscillator Wait Time</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -416,6 +421,8 @@ Modules</h2></td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a6_m2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_m2.html">RA6M2</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a6_m3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_m3.html">RA6M3</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a6_m4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_m4.html">RA6M4</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -859,6 +866,8 @@ Variables</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7880302f0edd7cc4290c037809975950a40e3e5c071f08ce93fabf8adad8c548e"></a>FSP_IP_USBHS&#160;</td><td class="fielddoc"><p>USB High Speed. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga7880302f0edd7cc4290c037809975950a9bbcf1f4070b401d62dcaa2f96ca881a"></a>FSP_IP_OSPI&#160;</td><td class="fielddoc"><p>Octa Serial Peripheral Interface. </p>
+</td></tr>
 </table>
 
 </div>
@@ -1279,6 +1288,10 @@ Variables</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2a3ddc13da630734d6b18004ffe3696d1d"></a>BSP_GRP_IRQ_MPU_STACK&#160;</td><td class="fielddoc"><p>MPU Stack Error. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2ace309a082976d961a018cf8a90001694"></a>BSP_GRP_IRQ_TRUSTZONE&#160;</td><td class="fielddoc"><p>MPU Stack Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga72e70676360e6a4d753a8d235e6b93a2abd05693e6764333ec5010ef6f102277d"></a>BSP_GRP_IRQ_CACHE_PARITY&#160;</td><td class="fielddoc"><p>MPU Stack Error. </p>
+</td></tr>
 </table>
 
 </div>
@@ -1301,6 +1314,8 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3adfe89bf34b6c640adc136d06eab2be66"></a>BSP_REG_PROTECT_OM_LPC_BATT&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to operating modes, low power consumption, and battery backup function. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3aa0d59a00dd2ad61700675b0516ae7a7a"></a>BSP_REG_PROTECT_LVD&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to the LVD: LVCMPCR, LVDLVLR, LVD1CR0, LVD1CR1, LVD1SR, LVD2CR0, LVD2CR1, LVD2SR. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3aeb5f9f0105bb14618e461c354622b94a"></a>BSP_REG_PROTECT_SAR&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to the security function. </p>
 </td></tr>
 </table>
 
@@ -1512,6 +1527,42 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="gacad60345efa794d28998df8034284b04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacad60345efa794d28998df8034284b04">&#9670;&nbsp;</a></span>R_BSP_FlashCacheDisable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_FlashCacheDisable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disables the flash cache. </p>
+
+</div>
+</div>
+<a id="ga9d86d933ae3e2bd194f10e755f8078e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9d86d933ae3e2bd194f10e755f8078e8">&#9670;&nbsp;</a></span>R_BSP_FlashCacheEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void R_BSP_FlashCacheEnable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables the flash cache. </p>
+
+</div>
+</div>
 <a id="gaf3219448adfd1531cf69f68697ab184b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf3219448adfd1531cf69f68697ab184b">&#9670;&nbsp;</a></span>R_BSP_SoftwareDelay()</h2>
 
@@ -1706,7 +1757,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

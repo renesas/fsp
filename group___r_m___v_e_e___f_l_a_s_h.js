@@ -12,6 +12,7 @@ var group___r_m___v_e_e___f_l_a_s_h =
     [ "RM_VEE_FLASH_StatusGet", "group___r_m___v_e_e___f_l_a_s_h.html#gab0d810d4a3f5a77252dd1ec52c4e5771", null ],
     [ "RM_VEE_FLASH_Refresh", "group___r_m___v_e_e___f_l_a_s_h.html#gad89e131abdeaefd6c8b2f0112d5c8258", null ],
     [ "RM_VEE_FLASH_Format", "group___r_m___v_e_e___f_l_a_s_h.html#gaae419ce998756f27e146e07cb14a0e3d", null ],
+    [ "RM_VEE_FLASH_CallbackSet", "group___r_m___v_e_e___f_l_a_s_h.html#ga419220f67800797b2a9cc7bb9cefb463", null ],
     [ "RM_VEE_FLASH_Close", "group___r_m___v_e_e___f_l_a_s_h.html#ga187bcacce62402406aa6a0a5a9b2c3ed", null ],
     [ "RM_VEE_FLASH_VersionGet", "group___r_m___v_e_e___f_l_a_s_h.html#ga91380f99ec95d46236bed8ed65a8b7a0", null ]
 ];

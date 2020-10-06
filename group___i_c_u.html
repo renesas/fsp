@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -108,6 +108,8 @@ Functions</h2></td></tr>
 <tr class="separator:gae4dc732735794d378f56552b06f6c3a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf445a7aea2cea8f3599691cb2a049526"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#gaf445a7aea2cea8f3599691cb2a049526">R_ICU_ExternalIrqVersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
 <tr class="separator:gaf445a7aea2cea8f3599691cb2a049526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4779daa90b1591254cf5535151b959a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#ga4779daa90b1591254cf5535151b959a5">R_ICU_ExternalIrqCallbackSet</a> (<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga4779daa90b1591254cf5535151b959a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad72351c30a832867210c310e1f718ca0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#gad72351c30a832867210c310e1f718ca0">R_ICU_ExternalIrqClose</a> (<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:gad72351c30a832867210c310e1f718ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -147,7 +149,7 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Input &gt; External IRQ Driver on r_icu</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Input &gt; External IRQ Driver on r_icu:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Input &gt; External IRQ Driver on r_icu. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -244,27 +246,10 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#a2f4e264e88054dfe3689d0ec5c4c1ecb">channel</a></td></tr>
 <tr class="memdesc:a2f4e264e88054dfe3689d0ec5c4c1ecb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Channel. <br /></td></tr>
 <tr class="separator:a2f4e264e88054dfe3689d0ec5c4c1ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fce3fc71fae4cd669d0c07f8360f4f5"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#a8fce3fc71fae4cd669d0c07f8360f4f5">p_callback</a> )(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *p_args)</td></tr>
-<tr class="separator:a8fce3fc71fae4cd669d0c07f8360f4f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae21fc21bfc378146b4c954884570fac3"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#ae21fc21bfc378146b4c954884570fac3">p_context</a></td></tr>
 <tr class="separator:ae21fc21bfc378146b4c954884570fac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="a8fce3fc71fae4cd669d0c07f8360f4f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fce3fc71fae4cd669d0c07f8360f4f5">&#9670;&nbsp;</a></span>p_callback</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void(*  icu_instance_ctrl_t::p_callback) (<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *p_args)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Callback provided when a external IRQ ISR occurs. Set to NULL for no CPU interrupt. </p>
-
-</div>
-</div>
 <a id="ae21fc21bfc378146b4c954884570fac3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae21fc21bfc378146b4c954884570fac3">&#9670;&nbsp;</a></span>p_context</h2>
 
@@ -410,6 +395,55 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 
 </div>
 </div>
+<a id="ga4779daa90b1591254cf5535151b959a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4779daa90b1591254cf5535151b959a5">&#9670;&nbsp;</a></span>R_ICU_ExternalIrqCallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ICU_ExternalIrqCallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a4a407b8899a042692026e65d98535f6e">external_irq_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="gad72351c30a832867210c310e1f718ca0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad72351c30a832867210c310e1f718ca0">&#9670;&nbsp;</a></span>R_ICU_ExternalIrqClose()</h2>
 
@@ -443,7 +477,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

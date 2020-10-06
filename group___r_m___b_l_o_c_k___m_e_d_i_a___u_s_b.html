@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -109,6 +109,8 @@ Functions</h2></td></tr>
 <tr class="separator:gab4363b7ad816e58b5190a1621bcedcb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga755105d9c3c60cf246cc8bc4149f991a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#ga755105d9c3c60cf246cc8bc4149f991a">RM_BLOCK_MEDIA_USB_Erase</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, uint32_t const block_address, uint32_t const num_blocks)</td></tr>
 <tr class="separator:ga755105d9c3c60cf246cc8bc4149f991a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ec76168f7a7abf2dbec36bfb285b396"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#ga1ec76168f7a7abf2dbec36bfb285b396">RM_BLOCK_MEDIA_USB_CallbackSet</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga1ec76168f7a7abf2dbec36bfb285b396"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacadf6373bed265958589645d78c21574"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#gacadf6373bed265958589645d78c21574">RM_BLOCK_MEDIA_USB_StatusGet</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__status__t">rm_block_media_status_t</a> *const p_status)</td></tr>
 <tr class="separator:gacadf6373bed265958589645d78c21574"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4393a1dea13b788b21a8cd277882dd79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#ga4393a1dea13b788b21a8cd277882dd79">RM_BLOCK_MEDIA_USB_InfoGet</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__info__t">rm_block_media_info_t</a> *const p_info)</td></tr>
@@ -148,7 +150,7 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
  <h2>Configurations for Middleware &gt; Storage &gt; Block Media Implementation on rm_block_media_usb</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Storage &gt; Block Media Implementation on rm_block_media_usb:<br />
+This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Storage &gt; Block Media Implementation on rm_block_media_usb.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -391,6 +393,54 @@ Examples</h1>
 
 </div>
 </div>
+<a id="ga1ec76168f7a7abf2dbec36bfb285b396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1ec76168f7a7abf2dbec36bfb285b396">&#9670;&nbsp;</a></span>RM_BLOCK_MEDIA_USB_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_BLOCK_MEDIA_USB_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a44e8eff381c878cbf878bdc8c331502b">rm_block_media_api_t::callbackSet</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>This function is currently unsupported for Block Media over USB.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>CallbackSet is not currently supported for Block Media over USB. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="gacadf6373bed265958589645d78c21574"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gacadf6373bed265958589645d78c21574">&#9670;&nbsp;</a></span>RM_BLOCK_MEDIA_USB_StatusGet()</h2>
 
@@ -527,7 +577,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

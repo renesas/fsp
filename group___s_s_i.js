@@ -7,7 +7,7 @@ var group___s_s_i =
     ] ],
     [ "ssi_audio_clock_t", "group___s_s_i.html#ga57213e467410bf6c3afe0c2338820260", [
       [ "SSI_AUDIO_CLOCK_EXTERNAL", "group___s_s_i.html#gga57213e467410bf6c3afe0c2338820260a70d00a0392b530b169f91eb676b0526f", null ],
-      [ "SSI_AUDIO_CLOCK_GTIOC1A", "group___s_s_i.html#gga57213e467410bf6c3afe0c2338820260aecaf4e604947446acc0ca94f49f649b7", null ]
+      [ "SSI_AUDIO_CLOCK_INTERNAL", "group___s_s_i.html#gga57213e467410bf6c3afe0c2338820260a26391e405e11b4b15523b934018afb7f", null ]
     ] ],
     [ "ssi_clock_div_t", "group___s_s_i.html#gab2ee4147d471591bc86faf6ae993ccff", [
       [ "SSI_CLOCK_DIV_1", "group___s_s_i.html#ggab2ee4147d471591bc86faf6ae993ccffa700c7eaaa55e0b68bc7b082d1cba5bf4", null ],
@@ -32,5 +32,6 @@ var group___s_s_i =
     [ "R_SSI_WriteRead", "group___s_s_i.html#gaec5fe3772ecc9fca9b85126f6d2f3f49", null ],
     [ "R_SSI_Mute", "group___s_s_i.html#gacd323f1e3ef5f11745645b8297889b9b", null ],
     [ "R_SSI_Close", "group___s_s_i.html#ga377334858b5b5c7757c0bdce3bcacbf0", null ],
-    [ "R_SSI_VersionGet", "group___s_s_i.html#gabee978c13fde54ee541adba77a39dbae", null ]
+    [ "R_SSI_VersionGet", "group___s_s_i.html#gabee978c13fde54ee541adba77a39dbae", null ],
+    [ "R_SSI_CallbackSet", "group___s_s_i.html#ga487b2317d289066a0a27e0e5a9124463", null ]
 ];

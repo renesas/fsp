@@ -14,5 +14,6 @@ var group___r_t_c =
     [ "R_RTC_PeriodicIrqRateSet", "group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282", null ],
     [ "R_RTC_ErrorAdjustmentSet", "group___r_t_c.html#ga6e0f357923c34057c8c938a52f6e8da8", null ],
     [ "R_RTC_InfoGet", "group___r_t_c.html#ga311898f6b0ddd44d9b4c1b34defb0cf4", null ],
-    [ "R_RTC_VersionGet", "group___r_t_c.html#gaa697c17bba28577f3c1708356f7d94cb", null ]
+    [ "R_RTC_VersionGet", "group___r_t_c.html#gaa697c17bba28577f3c1708356f7d94cb", null ],
+    [ "R_RTC_CallbackSet", "group___r_t_c.html#gaa6b50d916a9243792c0ea8b13744d25f", null ]
 ];

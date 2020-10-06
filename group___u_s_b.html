@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -456,7 +456,16 @@ Limitations</h2>
 <li>Only one device-class driver may be used at a time.</li>
 <li>The USB Hi-Speed module only supports Hi-Speed operation.</li>
 <li>In USB host mode, this USB driver does not support the composite device.</li>
+<li>The user can not specify DMA transfer to USB IP0 and IP1 modules at the same time when using USB multi-port feature. USB multi-port function: Simultaneous operation feature of USB Host and Peripheral.</li>
 </ul>
+<h2><a class="anchor" id="r-usb_basic-trustzone"></a>
+TrustZone</h2>
+<p>The USB driver for FreeRTOS cannot be allocated in Secure region.</p>
+<h2><a class="anchor" id="r-usb_basic-uclk_setting"></a>
+UCLK setting</h2>
+<p>Enable UCLK in "Clocks" tab on e2 studio when using the following MCU.</p><ol type="1">
+<li>RA6M4</li>
+</ol>
 <h1><a class="anchor" id="r-usb_basic-examples"></a>
 Examples</h1>
 <h2>USB Basic Example</h2>
@@ -1812,7 +1821,7 @@ Do not call this API in the following function. </dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

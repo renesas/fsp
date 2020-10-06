@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,6 +110,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga2f8bf11a148ad673457d5afcabb85d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf806e8a0ba231798e50ae7264c2c7a6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d.html#gaf806e8a0ba231798e50ae7264c2c7a6f">R_LVD_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
 <tr class="separator:gaf806e8a0ba231798e50ae7264c2c7a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94ba46485f3f278ae20933892941b795"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d.html#ga94ba46485f3f278ae20933892941b795">R_LVD_CallbackSet</a> (<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga94ba46485f3f278ae20933892941b795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the LVD peripheral on RA MCUs. This module implements the <a class="el" href="group___l_v_d___a_p_i.html">Low Voltage Detection Interface</a>. </p>
@@ -150,7 +152,7 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Power &gt; Low Voltage Detection Driver on r_lvd</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Power &gt; Low Voltage Detection Driver on r_lvd:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Power &gt; Low Voltage Detection Driver on r_lvd. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -442,13 +444,62 @@ Startup time can take on the order of milliseconds for some configurations.</dd>
 
 </div>
 </div>
+<a id="ga94ba46485f3f278ae20933892941b795"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga94ba46485f3f278ae20933892941b795">&#9670;&nbsp;</a></span>R_LVD_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LVD_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___l_v_d___a_p_i.html#ab0380e0e71ee1f9dab35c2de9dd5143f">lvd_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -12,5 +12,6 @@ var group___i_i_c___s_l_a_v_e =
     [ "R_IIC_SLAVE_Read", "group___i_i_c___s_l_a_v_e.html#ga62cdf56c786ad26cb09811e27d225d06", null ],
     [ "R_IIC_SLAVE_Write", "group___i_i_c___s_l_a_v_e.html#ga26692591d226125907ecd208a6d8d0fd", null ],
     [ "R_IIC_SLAVE_Close", "group___i_i_c___s_l_a_v_e.html#gae4bb6d75bb3a27d940d70592242dbbe3", null ],
-    [ "R_IIC_SLAVE_VersionGet", "group___i_i_c___s_l_a_v_e.html#gae238193f1587aafce5ae43eae6ddcd88", null ]
+    [ "R_IIC_SLAVE_VersionGet", "group___i_i_c___s_l_a_v_e.html#gae238193f1587aafce5ae43eae6ddcd88", null ],
+    [ "R_IIC_SLAVE_CallbackSet", "group___i_i_c___s_l_a_v_e.html#gab803811cfa1a11e23b90ee9eb9e021ba", null ]
 ];

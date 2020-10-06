@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,6 +110,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint16_t *p_data)</td></tr>
 <tr class="memdesc:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>.  <a href="#ga1cff42feeaa3d73216b73c313fb9a5fe">More...</a><br /></td></tr>
 <tr class="separator:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c966546f3774ce2228739a5ffc0ac19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga3c966546f3774ce2228739a5ffc0ac19">R_CTSU_CallbackSet</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga3c966546f3774ce2228739a5ffc0ac19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga73b45020c568d57065c8a7adecaaeb4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga73b45020c568d57065c8a7adecaaeb4c">R_CTSU_Close</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:ga73b45020c568d57065c8a7adecaaeb4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified CTSU control block. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395">ctsu_api_t::close</a>.  <a href="#ga73b45020c568d57065c8a7adecaaeb4c">More...</a><br /></td></tr>
 <tr class="separator:ga73b45020c568d57065c8a7adecaaeb4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,7 +162,7 @@ Disabled</li>
 <td>Interrupt priority level</td><td>MCU Specific Options</td><td></td><td>Priority level of all CTSU interrupt (CSTU_WR,CTSU_RD,CTSU_FN)  </td></tr>
 </table>
  <h2>Configurations for Driver &gt; CapTouch &gt; CTSU Driver on r_ctsu</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; CapTouch &gt; CTSU Driver on r_ctsu:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; CapTouch &gt; CTSU Driver on r_ctsu. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -202,7 +204,7 @@ Usage Notes</h1>
 </li>
 </ul>
 <h3>Mutual-capacitance full scan mode</h3>
-<p>In mutual-capacitance mode each TS pin acts as either a 'row' or 'column' in an array of sensors. As a result, this mode uses fewer pins when more than five sensors are configured. Mutual-capacitance mode is ideal for applications where many touch sensors are required, like keypads, button matrices and touchpads.</p>
+<p>In mutual-capacitance mode each TS pin acts as either a 'row' or 'column' in an array of sensors. As a result, this mode uses fewer pins when more than five sensors are configured. Mutual-capacitance mode is ideal for applications where many touch sensors are required, like keypads, button matrices and pads.</p>
 <p>As an example, consider a standard phone keypad comprised of a matrix of four rows and three columns.</p>
 <div class="image">
 <object type="image/svg+xml" data="r_ctsu_mutual_button.svg">r_ctsu_mutual_button.svg</object>
@@ -225,6 +227,8 @@ Mutual Button Image</div></div>
 </ul>
 </li>
 </ul>
+<h2>TrustZone Support</h2>
+<p>In r_ctsu and rm_touch module, Non-Secure Callable Guard Functions are only generated from QE for Capacitive Touch. QE can be used for tuning in secure or flat project, but not in non-secure project. If you want to use in non-secure project, copy the output file from secure or flat project. Refer to QE Help for more information.</p>
 <h1><a class="anchor" id="r-ctsu-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -469,10 +473,10 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ab422bfa8a5f8e1c9e56866c44c440f75">rd_index</a></td></tr>
 <tr class="memdesc:ab422bfa8a5f8e1c9e56866c44c440f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Word index into scan data buffer. <br /></td></tr>
 <tr class="separator:ab422bfa8a5f8e1c9e56866c44c440f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a251db2b2315baf646517c73c4e05def9"><td class="memItemLeft" align="right" valign="top"><a id="a251db2b2315baf646517c73c4e05def9"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a251db2b2315baf646517c73c4e05def9">p_tuning_complete</a></td></tr>
-<tr class="memdesc:a251db2b2315baf646517c73c4e05def9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to tuning completion flag of each element. g_ctsu_tuning_complete[] is set by Open API. <br /></td></tr>
-<tr class="separator:a251db2b2315baf646517c73c4e05def9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a678f08dcec63a2aba0f31132e08667a6"><td class="memItemLeft" align="right" valign="top"><a id="a678f08dcec63a2aba0f31132e08667a6"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a678f08dcec63a2aba0f31132e08667a6">p_tuning_count</a></td></tr>
+<tr class="memdesc:a678f08dcec63a2aba0f31132e08667a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to tuning count of each element. g_ctsu_tuning_count[] is set by Open API. <br /></td></tr>
+<tr class="separator:a678f08dcec63a2aba0f31132e08667a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a527001bce3114395980eb1ab84990d39"><td class="memItemLeft" align="right" valign="top"><a id="a527001bce3114395980eb1ab84990d39"></a>
 int32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a527001bce3114395980eb1ab84990d39">p_tuning_diff</a></td></tr>
 <tr class="memdesc:a527001bce3114395980eb1ab84990d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to difference from base value of each element. g_ctsu_tuning_diff[] is set by Open API. <br /></td></tr>
@@ -545,14 +549,18 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a139bed35e18c276442ed790e2f49ad92">end_irq</a></td></tr>
 <tr class="memdesc:a139bed35e18c276442ed790e2f49ad92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy from config by Open API. CTSU_CTSUFN interrupt vector. <br /></td></tr>
 <tr class="separator:a139bed35e18c276442ed790e2f49ad92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c65e56730176fb25ab76ddb33b772ee"><td class="memItemLeft" align="right" valign="top"><a id="a0c65e56730176fb25ab76ddb33b772ee"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a0c65e56730176fb25ab76ddb33b772ee">p_callback</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *)</td></tr>
+<tr class="memdesc:a0c65e56730176fb25ab76ddb33b772ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a CTSUFN occurs. <br /></td></tr>
+<tr class="separator:a0c65e56730176fb25ab76ddb33b772ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a042150cc9f3c41639dcd6bb989e6ba1e"><td class="memItemLeft" align="right" valign="top"><a id="a042150cc9f3c41639dcd6bb989e6ba1e"></a>
+<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a042150cc9f3c41639dcd6bb989e6ba1e">p_callback_memory</a></td></tr>
+<tr class="memdesc:a042150cc9f3c41639dcd6bb989e6ba1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory. <br /></td></tr>
+<tr class="separator:a042150cc9f3c41639dcd6bb989e6ba1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3493d9a66a667f943638459c3ba5392"><td class="memItemLeft" align="right" valign="top"><a id="ac3493d9a66a667f943638459c3ba5392"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ac3493d9a66a667f943638459c3ba5392">p_context</a></td></tr>
 <tr class="memdesc:ac3493d9a66a667f943638459c3ba5392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. <br /></td></tr>
 <tr class="separator:ac3493d9a66a667f943638459c3ba5392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4678f4e7c014f1880d786da85e8348eb"><td class="memItemLeft" align="right" valign="top"><a id="a4678f4e7c014f1880d786da85e8348eb"></a>
-void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a4678f4e7c014f1880d786da85e8348eb">p_callback</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *p_args)</td></tr>
-<tr class="memdesc:a4678f4e7c014f1880d786da85e8348eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a CTSUFN occurs. <br /></td></tr>
-<tr class="separator:a4678f4e7c014f1880d786da85e8348eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -767,6 +775,55 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
+<a id="ga3c966546f3774ce2228739a5ffc0ac19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3c966546f3774ce2228739a5ffc0ac19">&#9670;&nbsp;</a></span>R_CTSU_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_CTSU_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#adda480537f35733dbed856a30b89be50">ctsu_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga73b45020c568d57065c8a7adecaaeb4c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga73b45020c568d57065c8a7adecaaeb4c">&#9670;&nbsp;</a></span>R_CTSU_Close()</h2>
 
@@ -828,7 +885,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

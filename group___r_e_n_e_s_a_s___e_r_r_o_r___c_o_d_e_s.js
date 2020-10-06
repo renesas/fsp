@@ -12,6 +12,7 @@ var group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s =
     [ "FSP_PARAMETER_NOT_USED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029", null ],
     [ "FSP_CPP_HEADER", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ga91dbefc93c284cc4ae3960bc1b371bb8", null ],
     [ "FSP_HEADER", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ga0e229cde7ac6e617ed7eac38d45c4dd7", null ],
+    [ "FSP_SECURE_ARGUMENT", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ga5560627aa81e2dc7e758b3a9853ca230", null ],
     [ "fsp_err_t", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8", [
       [ "FSP_ERR_ASSERTION", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aa31a53c0ea5b86a8cb2bb9b3ccb99964", null ],
       [ "FSP_ERR_INVALID_POINTER", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aca11a0f89f57a43b6cf1a9d60fa3c013", null ],
@@ -46,6 +47,7 @@ var group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s =
       [ "FSP_ERR_SECTOR_RELEASE_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aada459ccb2b85a8dc33fabc987e173e4", null ],
       [ "FSP_ERR_NOT_INITIALIZED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8add81216e0221e6d8583d35b1b471199b", null ],
       [ "FSP_ERR_NOT_FOUND", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a5b3fa149fddaa9617a7d3cacf67810a4", null ],
+      [ "FSP_ERR_NO_CALLBACK_MEMORY", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a0b11740f5efdcaa58bd9606a1e29fa53", null ],
       [ "FSP_ERR_INTERNAL", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a6d11b644cafb53d7d39f701de5ca026d", null ],
       [ "FSP_ERR_WAIT_ABORTED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aa5cbda3787ddf5092d0fdf14b8e4fe57", null ],
       [ "FSP_ERR_FRAMING", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a8f76d058261cd655519cbc81f1586bc4", null ],
@@ -189,6 +191,7 @@ var group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s =
       [ "FSP_ERR_CRYPTO_ALREADY_OPEN", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a4c0707d4a6169b664b80e107659336b0", null ],
       [ "FSP_ERR_CRYPTO_INSTALL_KEY_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ad7a753235aa6ea399b96239f2f0f8efb", null ],
       [ "FSP_ERR_CRYPTO_AUTHENTICATION_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8af70132beb6b5b4cdaeaed4c70bd553c4", null ],
+      [ "FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8af1bec53bb97a928b39bb4e9d5f66eb04", null ],
       [ "FSP_ERR_CRYPTO_COMMON_NOT_OPENED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8acfbdf09c1ae8d64e7eb388094bf54b9b", null ],
       [ "FSP_ERR_CRYPTO_HAL_ERROR", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ac42e16e1358505398e631062a1afbd45", null ],
       [ "FSP_ERR_CRYPTO_KEY_BUF_NOT_ENOUGH", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a378b2876a363d8c3a3c7ccc15c0221f9", null ],

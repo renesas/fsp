@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,6 +110,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga4d18442f70dc7f5e314d50b5e9328c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga17a5ead483eb9c65c1c0e6aae4e968b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga17a5ead483eb9c65c1c0e6aae4e968b0">R_GPT_THREE_PHASE_DutyCycleSet</a> (<a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ga4743a00c79aa11107190e48e8bce7c10">three_phase_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#structthree__phase__duty__cycle__t">three_phase_duty_cycle_t</a> *const p_duty_cycle)</td></tr>
 <tr class="separator:ga17a5ead483eb9c65c1c0e6aae4e968b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga594f201f422da410934d30f603b14d25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga594f201f422da410934d30f603b14d25">R_GPT_THREE_PHASE_CallbackSet</a> (<a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ga4743a00c79aa11107190e48e8bce7c10">three_phase_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga594f201f422da410934d30f603b14d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga167be16a2fd664ff09a47e4bb200b175"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga167be16a2fd664ff09a47e4bb200b175">R_GPT_THREE_PHASE_Close</a> (<a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ga4743a00c79aa11107190e48e8bce7c10">three_phase_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ga167be16a2fd664ff09a47e4bb200b175"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7b7215b57efb76b5eabed6a781727857"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga7b7215b57efb76b5eabed6a781727857">R_GPT_THREE_PHASE_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
@@ -148,7 +150,7 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Timers &gt; Three-Phase PWM Driver on r_gpt_three_phase</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; Three-Phase PWM Driver on r_gpt_three_phase:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; Three-Phase PWM Driver on r_gpt_three_phase. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -190,6 +192,16 @@ Kilohertz</li>
 <td>General &gt; GPT V-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>1 </td><td>Specify the GPT channel for V signal output. </td></tr>
 <tr>
 <td>General &gt; GPT W-Channel</td><td>Value must be an integer greater than or equal to 0</td><td>2 </td><td>Specify the GPT channel for W signal output. </td></tr>
+<tr>
+<td>General &gt; Callback Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+U-Channel</li>
+<li>
+V-Channel</li>
+<li>
+W-Channel</li>
+</ul>
+</td><td>U-Channel </td><td>Specify the GPT channel to set a callback for when using R_GPT_THREE_PHASE_CallbackSet. </td></tr>
 <tr>
 <td>General &gt; Buffer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -416,12 +428,62 @@ Data Structures</h2></td></tr>
 <p>Sets duty cycle for all three timers. Implements <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a6b55c9d4c5fd7be3c1d4398acbce4fa7">three_phase_api_t::dutyCycleSet</a>.</p>
 <p>In symmetric PWM mode duty cycle values are reflected after the next trough. In asymmetric PWM mode values are reflected at the next trough OR crest, whichever comes first.</p>
 <p>When double-buffering is enabled the values in <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a12e51857fcd253e9b3e35d1532e66694">three_phase_duty_cycle_t::duty_buffer</a> are set to the double-buffer registers. When values are reflected the first time the single buffer values (<a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a1e0c2575f75d5aed37039d04b13a757b">three_phase_duty_cycle_t::duty</a>) are used. On the second reflection the duty_buffer values are used. In asymmetric PWM mode this enables both count-up and count-down PWM values to be set at trough (or crest) exclusively.</p>
+<dl class="section note"><dt>Note</dt><dd>It is recommended to call this function in a high-priority callback to ensure that it is not interrupted and that no GPT events occur during setting that would result in a duty cycle buffer load operation.</dd></dl>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Update duty cycle values */</span></div><div class="line">        err = <a class="code" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga17a5ead483eb9c65c1c0e6aae4e968b0">R_GPT_THREE_PHASE_DutyCycleSet</a>(&amp;g_gpt_three_phase_ctrl, &amp;duty_cycle);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Duty cycle updated successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>One or more duty cycle count values was outside the range 0..(period - 1). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga594f201f422da410934d30f603b14d25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga594f201f422da410934d30f603b14d25">&#9670;&nbsp;</a></span>R_GPT_THREE_PHASE_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_GPT_THREE_PHASE_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ga4743a00c79aa11107190e48e8bce7c10">three_phase_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback for the GPT U-channel with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ab9207f40fa1512f415d7968004a8310a">three_phase_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
   </table>
   </dd>
 </dl>
@@ -487,7 +549,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

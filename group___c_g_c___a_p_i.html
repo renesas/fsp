@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -286,6 +286,12 @@ pll_cfg</td>
 <td class="fielddoc">
 PLL configuration structure. </td></tr>
 <tr><td class="fieldtype">
+<a id="a573d8be054d3a8ef1109cc39cdea365d"></a><a class="el" href="group___c_g_c___a_p_i.html#structcgc__pll__cfg__t">cgc_pll_cfg_t</a></td>
+<td class="fieldname">
+pll2_cfg</td>
+<td class="fielddoc">
+PLL2 configuration structure. </td></tr>
+<tr><td class="fieldtype">
 <a id="a160f655d324ea23224112f5f030a95aa"></a><a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t">cgc_divider_cfg_t</a></td>
 <td class="fieldname">
 divider_cfg</td>
@@ -321,6 +327,12 @@ State of Main oscillator. </td></tr>
 pll_state</td>
 <td class="fielddoc">
 State of PLL. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1210d7b93c6177b79e1bed0c4aa283b9"></a><a class="el" href="group___c_g_c___a_p_i.html#ga67f8525be602a7cce075f0b33d5f2ad8">cgc_clock_change_t</a></td>
+<td class="fieldname">
+pll2_state</td>
+<td class="fielddoc">
+State of PLL2. </td></tr>
 </table>
 
 </div>
@@ -359,6 +371,8 @@ State of PLL. </td></tr>
 <tr class="separator:a7df2f7359a1521bf0d6ae79eaa8d396a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adec8be986fe880ef29ecc2eed9e89f41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#adec8be986fe880ef29ecc2eed9e89f41">oscStopStatusClear</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:adec8be986fe880ef29ecc2eed9e89f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1d9877fcd835e19c7c573218580b5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#a9c1d9877fcd835e19c7c573218580b5b">callbackSet</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a9c1d9877fcd835e19c7c573218580b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13a62b83132e592aa8c9e0071312633a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#a13a62b83132e592aa8c9e0071312633a">close</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a13a62b83132e592aa8c9e0071312633a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fd8e37bb30b6901af9e55c9efcebf76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#a6fd8e37bb30b6901af9e55c9efcebf76">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
@@ -434,7 +448,7 @@ State of PLL. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to instance control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">clock_source</td><td>Clock source to start </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_pll_cfg</td><td>Pointer to PLL configuration, can be NULL if clock_source is not CGC_CLOCK_PLL </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_pll_cfg</td><td>Pointer to PLL configuration, can be NULL if clock_source is not CGC_CLOCK_PLL or CGC_CLOCK_PLL2 </td></tr>
   </table>
   </dd>
 </dl>
@@ -617,6 +631,33 @@ State of PLL. </td></tr>
 
 </div>
 </div>
+<a id="a9c1d9877fcd835e19c7c573218580b5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c1d9877fcd835e19c7c573218580b5b">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cgc_api_t::callbackSet) (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___c_g_c.html#ga300b8011ca9bd0c77130c60c3874d7a4">R_CGC_CallbackSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the CGC control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a13a62b83132e592aa8c9e0071312633a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a13a62b83132e592aa8c9e0071312633a">&#9670;&nbsp;</a></span>close</h2>
 
@@ -767,6 +808,8 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="gga4dcbe960cf591207eef834969b83f8a6a7c10ba3e12c26a6d09f7346c16f6ff40"></a>CGC_CLOCK_SUBCLOCK&#160;</td><td class="fielddoc"><p>The subclock oscillator. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga4dcbe960cf591207eef834969b83f8a6a14141e6db3711cbc45bb67a3704b3ac3"></a>CGC_CLOCK_PLL&#160;</td><td class="fielddoc"><p>The PLL oscillator. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4dcbe960cf591207eef834969b83f8a6a87344731497e93d24a2ffefea84ab870"></a>CGC_CLOCK_PLL2&#160;</td><td class="fielddoc"><p>The PLL2 oscillator. </p>
 </td></tr>
 </table>
 
@@ -985,7 +1028,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

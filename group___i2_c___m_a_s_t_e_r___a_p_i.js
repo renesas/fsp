@@ -1,8 +1,8 @@
 var group___i2_c___m_a_s_t_e_r___a_p_i =
 [
     [ "i2c_master_callback_args_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__callback__args__t", [
-      [ "p_context", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a3a8e27d0b5ec739248519312519d832e", null ],
-      [ "event", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a4d639fa129c38a33f2cb672afee6a0d6", null ]
+      [ "p_context", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ab98d1221b3a246270ef56a57d947ac0c", null ],
+      [ "event", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a3a8cc9e360253e44176a6d3cecb5ece8", null ]
     ] ],
     [ "i2c_master_cfg_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__cfg__t", [
       [ "channel", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ab51668940cafabfefc502f06fddc9ae4", null ],
@@ -26,6 +26,7 @@ var group___i2_c___m_a_s_t_e_r___a_p_i =
       [ "write", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ab2ca2f7ee7e55628bcdd9e3492d7dfd2", null ],
       [ "abort", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a0a0800aaa24f36b2eac8b315a0c5437e", null ],
       [ "slaveAddressSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a6e1d2e41f4dc058c06c1f5aae0c7bce5", null ],
+      [ "callbackSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a1a0c2ac15d2c2eb6a50baed682498620", null ],
       [ "close", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a7d093cf28da6a99e56dbeb7b82ad3f5f", null ],
       [ "versionGet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#acccadd9ce28cb2635121077b1547aac6", null ]
     ] ],

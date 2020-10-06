@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -112,6 +112,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaf6b4f726ecfe6795c7887dc1226450ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6e98a5b526d81651da1ffeda3f70263"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t.html#gac6e98a5b526d81651da1ffeda3f70263">R_WDT_TimeoutGet</a> (<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_ctrl, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__timeout__values__t">wdt_timeout_values_t</a> *const p_timeout)</td></tr>
 <tr class="separator:gac6e98a5b526d81651da1ffeda3f70263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga602ed1a63b61c46df822059ab6a5395e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t.html#ga602ed1a63b61c46df822059ab6a5395e">R_WDT_CallbackSet</a> (<a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga602ed1a63b61c46df822059ab6a5395e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga680a10e61b40517672ab1bd76d3941cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_d_t.html#ga680a10e61b40517672ab1bd76d3941cc">R_WDT_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
 <tr class="separator:ga680a10e61b40517672ab1bd76d3941cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -178,7 +180,7 @@ Disabled</li>
 </td><td>Disabled </td><td>If enabled, code for NMI support in register start mode is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Monitoring &gt; Watchdog Driver on r_wdt</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Monitoring &gt; Watchdog Driver on r_wdt:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Monitoring &gt; Watchdog Driver on r_wdt. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -372,7 +374,8 @@ Data Structures</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>WDT successfully configured. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once.</td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>The security state of the NMI and the module do not match.</td></tr>
   </table>
   </dd>
 </dl>
@@ -533,6 +536,55 @@ Data Structures</h2></td></tr>
 
 </div>
 </div>
+<a id="ga602ed1a63b61c46df822059ab6a5395e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga602ed1a63b61c46df822059ab6a5395e">&#9670;&nbsp;</a></span>R_WDT_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_WDT_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___w_d_t___a_p_i.html#gacb273fc13cd5efef455f45486b436efe">wdt_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___w_d_t___a_p_i.html#a28dc9b161653da57c10267f775bda125">wdt_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga680a10e61b40517672ab1bd76d3941cc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga680a10e61b40517672ab1bd76d3941cc">&#9670;&nbsp;</a></span>R_WDT_VersionGet()</h2>
 
@@ -565,7 +617,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

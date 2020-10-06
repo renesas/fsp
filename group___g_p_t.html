@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -129,6 +129,8 @@ Functions</h2></td></tr>
 <tr class="separator:gae204e5d6c9305923e98724005dcdf03d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga311c91c55f20338f7082fa4369e7c80f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga311c91c55f20338f7082fa4369e7c80f">R_GPT_AdcTriggerSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___g_p_t.html#ga2a838fffcbafd97778bbe3ffbfbf54b1">gpt_adc_compare_match_t</a> which_compare_match, uint32_t compare_match_value)</td></tr>
 <tr class="separator:ga311c91c55f20338f7082fa4369e7c80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a09de185d3b7f1c301b33330931bac4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga2a09de185d3b7f1c301b33330931bac4">R_GPT_CallbackSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga2a09de185d3b7f1c301b33330931bac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2fc5d6a737a00948802e2bb77fbe8d8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga2fc5d6a737a00948802e2bb77fbe8d8c">R_GPT_Close</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ga2fc5d6a737a00948802e2bb77fbe8d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga84b2245c5b4ed778ea2b220470ce69c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga84b2245c5b4ed778ea2b220470ce69c5">R_GPT_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
@@ -215,7 +217,7 @@ Disabled</li>
 </td><td>Disabled </td><td>If selected write protection is applied to all GPT channels. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Timers &gt; Timer Driver on r_gpt</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; Timer Driver on r_gpt:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; Timer Driver on r_gpt. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -264,14 +266,6 @@ Kilohertz</li>
 </td><td>Raw Counts </td><td>Unit of the period specified above </td></tr>
 <tr>
 <td>Output &gt; Duty Cycle Percent (only applicable in PWM mode)</td><td>Value must be between 0 and 100</td><td>50 </td><td>Specify the timer duty cycle percent. Only used in PWM mode. </td></tr>
-<tr>
-<td>Output &gt; Duty Cycle Range (only applicable in PWM mode)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Shortest: 2 PCLK, Longest: (Period - 1) PCLK</li>
-<li>
-Shortest: 1 PCLK, Longest: (Period - 2) PCLK</li>
-</ul>
-</td><td>Shortest: 2 PCLK, Longest: (Period - 1) PCLK </td><td>Select the duty cycle range. Due to hardware limitations, one PCLK cycle is added before the output pin toggles after the duty cycle is reached. This extra clock cycle is added to the ON time (if Shortest: 2 PCLK is selected) or the OFF time (if Shortest: 1 PCLK is selected) based on this configuration. </td></tr>
 <tr>
 <td>Output &gt; GTIOCA Output Enabled</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -513,7 +507,7 @@ GPT One-Shot Output</div></div>
 <div class="caption">
 GPT Periodic Output</div></div>
  <h2>PWM Output</h2>
-<p><a class="anchor" id="um_timer_pwm_output"></a> The PWM output signal is high at the beginning of the cycle and low at the end of the cycle. If <a class="el" href="group___g_p_t.html#a92c97688b2a90cca95531955c102945b" title="Shortest PWM signal level. ">gpt_extended_cfg_t::shortest_pwm_signal</a> is set to GPT_SHORTEST_LEVEL_ON, the PWM output signal is low at the beginning of the cycle and high at the end of the cycle.</p>
+<p><a class="anchor" id="um_timer_pwm_output"></a> The PWM output signal is high at the beginning of the cycle and low at the end of the cycle.</p>
 <p>Examples of PWM signals that can be generated by this module are shown below:</p>
 <div class="image">
 <object type="image/svg+xml" data="r_gpt_pwm_output.svg">r_gpt_pwm_output.svg</object>
@@ -584,8 +578,6 @@ Enumerations</h2></td></tr>
 <tr class="separator:gaabd4a03d16b1b4254cc44c7779f44c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga454c639e426428470ce78115af5d3648"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga454c639e426428470ce78115af5d3648">gpt_pin_level_t</a> </td></tr>
 <tr class="separator:ga454c639e426428470ce78115af5d3648"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab0579e86d3b176b4e3c7da752874649a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#gab0579e86d3b176b4e3c7da752874649a">gpt_shortest_level_t</a> </td></tr>
-<tr class="separator:gab0579e86d3b176b4e3c7da752874649a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa1457c9c1f178fff4dd1558832db196a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#gaa1457c9c1f178fff4dd1558832db196a">gpt_source_t</a> </td></tr>
 <tr class="separator:gaa1457c9c1f178fff4dd1558832db196a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4781e2b42b2ef339318ea0a70b250cd5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga4781e2b42b2ef339318ea0a70b250cd5">gpt_capture_filter_t</a> </td></tr>
@@ -782,11 +774,11 @@ gtiocb</td>
 <td class="fielddoc">
 Configuration for GPT I/O pin B. </td></tr>
 <tr><td class="fieldtype">
-<a id="a92c97688b2a90cca95531955c102945b"></a><a class="el" href="group___g_p_t.html#gab0579e86d3b176b4e3c7da752874649a">gpt_shortest_level_t</a></td>
+<a id="a92c97688b2a90cca95531955c102945b"></a>gpt_shortest_level_t</td>
 <td class="fieldname">
 shortest_pwm_signal</td>
 <td class="fielddoc">
-Shortest PWM signal level. </td></tr>
+</td></tr>
 <tr><td class="fieldtype">
 <a id="a3b894424ab45e17d02938de9c211911a"></a><a class="el" href="group___g_p_t.html#gaa1457c9c1f178fff4dd1558832db196a">gpt_source_t</a></td>
 <td class="fieldname">
@@ -917,27 +909,6 @@ Advanced PWM features, optional. </td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga454c639e426428470ce78115af5d3648a3270f1165e7a86c5b12eecb9501390f4"></a>GPT_PIN_LEVEL_LOW&#160;</td><td class="fielddoc"><p>Pin level low. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga454c639e426428470ce78115af5d3648adc8ebfd0f787322b884ca5d087b3a6a3"></a>GPT_PIN_LEVEL_HIGH&#160;</td><td class="fielddoc"><p>Pin level high. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="gab0579e86d3b176b4e3c7da752874649a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab0579e86d3b176b4e3c7da752874649a">&#9670;&nbsp;</a></span>gpt_shortest_level_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___g_p_t.html#gab0579e86d3b176b4e3c7da752874649a">gpt_shortest_level_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>GPT PWM shortest pin level </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab0579e86d3b176b4e3c7da752874649aa7683eae71f5ed5ec08473c3b4d0292b3"></a>GPT_SHORTEST_LEVEL_OFF&#160;</td><td class="fielddoc"><p>1 extra PCLK in ON time. Minimum ON time will be limited to 2 PCLK raw counts. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggab0579e86d3b176b4e3c7da752874649aa0c89d7bd6d02245ba1077b51f91037be"></a>GPT_SHORTEST_LEVEL_ON&#160;</td><td class="fielddoc"><p>1 extra PCLK in OFF time. Minimum ON time will be limited to 1 PCLK raw counts. </p>
 </td></tr>
 </table>
 
@@ -1745,6 +1716,56 @@ Advanced PWM features, optional. </td></tr>
 
 </div>
 </div>
+<a id="ga2a09de185d3b7f1c301b33330931bac4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2a09de185d3b7f1c301b33330931bac4">&#9670;&nbsp;</a></span>R_GPT_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_GPT_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a1b2c51a519145c2482ca2fb6b4b3d749">timer_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga2fc5d6a737a00948802e2bb77fbe8d8c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga2fc5d6a737a00948802e2bb77fbe8d8c">&#9670;&nbsp;</a></span>R_GPT_Close()</h2>
 
@@ -1804,7 +1825,7 @@ Advanced PWM features, optional. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

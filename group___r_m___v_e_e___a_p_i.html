@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -237,6 +237,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:af9b151f78090db849beecfad30c734ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dfcc3419ebd36cf3081a6b0a87618cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___a_p_i.html#a8dfcc3419ebd36cf3081a6b0a87618cc">format</a> )(<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_ctrl, uint8_t const *const p_ref_data)</td></tr>
 <tr class="separator:a8dfcc3419ebd36cf3081a6b0a87618cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac64776adb2da7869c3a806614639df67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___a_p_i.html#ac64776adb2da7869c3a806614639df67">callbackSet</a> )(<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ac64776adb2da7869c3a806614639df67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac275b976b44492bffacf67e6badcab7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___a_p_i.html#ac275b976b44492bffacf67e6badcab7b">close</a> )(<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ac275b976b44492bffacf67e6badcab7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a212b031322feb257680ae0c7440fcda8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___v_e_e___a_p_i.html#a212b031322feb257680ae0c7440fcda8">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
@@ -446,6 +448,33 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
+<a id="ac64776adb2da7869c3a806614639df67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac64776adb2da7869c3a806614639df67">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_vee_api_t::callbackSet) (<a class="el" href="group___r_m___v_e_e___a_p_i.html#gacd1c2d7f2cdb4933944fd00d0350b3b1">rm_vee_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t">rm_vee_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___v_e_e___f_l_a_s_h.html#ga419220f67800797b2a9cc7bb9cefb463">RM_VEE_FLASH_CallbackSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___r_m___v_e_e___a_p_i.html#a5f9d456c3dfb6ee20259e591e8279b62">rm_vee_api_t::open</a> call. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function to register </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ac275b976b44492bffacf67e6badcab7b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac275b976b44492bffacf67e6badcab7b">&#9670;&nbsp;</a></span>close</h2>
 
@@ -585,7 +614,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

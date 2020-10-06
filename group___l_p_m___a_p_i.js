@@ -53,7 +53,10 @@ var group___l_p_m___a_p_i =
       [ "LPM_SNOOZE_REQUEST_RTC_PERIOD", "group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4abec9224f843748c9d298bef3754ab34d", null ],
       [ "LPM_SNOOZE_REQUEST_AGT1_UNDERFLOW", "group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4a3da6e4656763ba67a5c5b175abeaf2b5", null ],
       [ "LPM_SNOOZE_REQUEST_AGT1_COMPARE_A", "group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4ac9805dc794feb3fa20414f3cf9a29ced", null ],
-      [ "LPM_SNOOZE_REQUEST_AGT1_COMPARE_B", "group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4a95e72ac2db2d91b1a1497b7bf63e85b9", null ]
+      [ "LPM_SNOOZE_REQUEST_AGT1_COMPARE_B", "group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4a95e72ac2db2d91b1a1497b7bf63e85b9", null ],
+      [ "LPM_SNOOZE_REQUEST_AGT3_UNDERFLOW", "group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4a6ae0789d5e9b75e16d144009f7079579", null ],
+      [ "LPM_SNOOZE_REQUEST_AGT3_COMPARE_A", "group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4a6e1b74ca68fe8d28da2fac265047f400", null ],
+      [ "LPM_SNOOZE_REQUEST_AGT3_COMPARE_B", "group___l_p_m___a_p_i.html#ggad89b68cf8999a1082839128aaad4e9d4aa4a92f7d9c0836c9a7738b21191fd61e", null ]
     ] ],
     [ "lpm_snooze_end_t", "group___l_p_m___a_p_i.html#ga79a7c2de81bbd287a53ff255c15cd8d3", [
       [ "LPM_SNOOZE_END_STANDBY_WAKE_SOURCES", "group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3a2d713059c1f391dec5658c5171606e69", null ],
@@ -64,7 +67,8 @@ var group___l_p_m___a_p_i =
       [ "LPM_SNOOZE_END_ADC0_COMPARE_MISMATCH", "group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3ab5d4b38dffae1ce882002b788560fcdb", null ],
       [ "LPM_SNOOZE_END_ADC1_COMPARE_MATCH", "group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3adc25c1f98076b568960ecd47a42b7d20", null ],
       [ "LPM_SNOOZE_END_ADC1_COMPARE_MISMATCH", "group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3a8f47d87c1ba6c1fa064d53d48f09b338", null ],
-      [ "LPM_SNOOZE_END_SCI0_ADDRESS_MATCH", "group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3a83527fd738776770db1f1f74cc90dbe5", null ]
+      [ "LPM_SNOOZE_END_SCI0_ADDRESS_MATCH", "group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3a83527fd738776770db1f1f74cc90dbe5", null ],
+      [ "LPM_SNOOZE_END_AGT3_UNDERFLOW", "group___l_p_m___a_p_i.html#gga79a7c2de81bbd287a53ff255c15cd8d3a349e83f94a4865ab104829ec5a95c3b5", null ]
     ] ],
     [ "lpm_snooze_cancel_t", "group___l_p_m___a_p_i.html#ga4a91a996af007d54ca8ebccb0be76852", [
       [ "LPM_SNOOZE_CANCEL_SOURCE_NONE", "group___l_p_m___a_p_i.html#gga4a91a996af007d54ca8ebccb0be76852a89494cec4dd3e8c031dc693e7119e0af", null ],
@@ -110,7 +114,10 @@ var group___l_p_m___a_p_i =
       [ "LPM_STANDBY_WAKE_SOURCE_AGT1UD", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa5d03eb6b042dbac516295dfadedeca9d", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_AGT1CA", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fadd558be7cbbc458a3c087fcc4eb7cc72", null ],
       [ "LPM_STANDBY_WAKE_SOURCE_AGT1CB", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa0134448ef091896bb8eb0997331e2c9b", null ],
-      [ "LPM_STANDBY_WAKE_SOURCE_IIC0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa738e21394c9f0ca03cf86292dd647974", null ]
+      [ "LPM_STANDBY_WAKE_SOURCE_IIC0", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa738e21394c9f0ca03cf86292dd647974", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_AGT3UD", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fa53704d6dd4d12bbc3509055cd031eb4a", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_AGT3CA", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0facfe0e9a67684ea48ad8c07a44ac2ff87", null ],
+      [ "LPM_STANDBY_WAKE_SOURCE_AGT3CB", "group___l_p_m___a_p_i.html#gga9c49529c46118be3f3cda150e13f1a0fab99344c667c90fc8946096f55442bb4c", null ]
     ] ],
     [ "lpm_io_port_t", "group___l_p_m___a_p_i.html#ga93645998bccd96ec1dc8b97d84eea1a3", [
       [ "LPM_IO_PORT_RESET", "group___l_p_m___a_p_i.html#gga93645998bccd96ec1dc8b97d84eea1a3a10c2ed5a6bb917390dc17df840afbbfb", null ],
@@ -153,6 +160,8 @@ var group___l_p_m___a_p_i =
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ13_FALLING", "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a0be18525772c9791f9516577a940fc6b", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ14_RISING", "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a6e3c30cc43df096ae944ed9f24056831", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ14_FALLING", "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a069f712851e0fbaf49669eec91007f1f", null ],
+      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ15_RISING", "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70ae515c6f9a8a919d69966060b8433633e", null ],
+      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ15_FALLING", "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70adabb69eced6abf8a392bca0673bdf671", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD1_RISING", "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a7eb43e2d6b3bcb746d1d60eff0c92151", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD1_FALLING", "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a40b29728183a58bb0d539b951771d460", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD2_RISING", "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a2c0c6d58f6cdffdedff03bae3688a461", null ],
@@ -177,6 +186,7 @@ var group___l_p_m___a_p_i =
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ12", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a6f40ae9d744423d2c16415f2d6a9f327", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ13", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a6094ed939dbe9e3e92f4d4725680e833", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ14", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a887707a8656ac77384c36ef1d802654b", null ],
+      [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ15", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438ae0013df33f2b48c42cd52413803be437", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD1", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438aecadd613bd2f58e9818eba70ac2b6164", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD2", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a3dd73230f110678f0ae5606a500e8cfd", null ],
       [ "LPM_DEEP_STANDBY_CANCEL_SOURCE_RTC_INTERVAL", "group___l_p_m___a_p_i.html#ggab83f1826bb070e32d292d48f139d0438a28cc742efeb7c1a432cfa3625fa5a5e7", null ],

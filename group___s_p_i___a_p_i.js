@@ -5,6 +5,7 @@ var group___s_p_i___a_p_i =
       [ "event", "group___s_p_i___a_p_i.html#ae1e14270178c91fb89697630627c1eee", null ],
       [ "p_context", "group___s_p_i___a_p_i.html#acdafc89def1a4325004c5f7022e9488f", null ]
     ] ],
+    [ "spi_write_read_guard_args_t", "group___s_p_i___a_p_i.html#structspi__write__read__guard__args__t", null ],
     [ "spi_cfg_t", "group___s_p_i___a_p_i.html#structspi__cfg__t", [
       [ "channel", "group___s_p_i___a_p_i.html#a330c7d1944ff925e619c40ee4f796b86", null ],
       [ "rxi_irq", "group___s_p_i___a_p_i.html#acd490330020cce12382d6ba1b1ad8bbe", null ],
@@ -31,6 +32,7 @@ var group___s_p_i___a_p_i =
       [ "read", "group___s_p_i___a_p_i.html#a43d0988501f90910690a3357bda1a936", null ],
       [ "write", "group___s_p_i___a_p_i.html#af053cb19a14773a51d1e060c5a624555", null ],
       [ "writeRead", "group___s_p_i___a_p_i.html#a6ed153d8e5e54e417fda95b044ac2fd6", null ],
+      [ "callbackSet", "group___s_p_i___a_p_i.html#a01c7aacdcdf219dcfa88c2b40e7d25b1", null ],
       [ "close", "group___s_p_i___a_p_i.html#aa23ca0243886b64c90aa17744d72aee5", null ],
       [ "versionGet", "group___s_p_i___a_p_i.html#a0f9ed0d51f93ea3630a5f5582604f0e5", null ]
     ] ],

@@ -32,6 +32,7 @@ var NAVTREE =
           [ "Selecting a Project Template", "_s_t_a_r_t__d_e_v.html#selecting-a-project-template", null ]
         ] ],
         [ "Configuring a Project", "_s_t_a_r_t__d_e_v.html#configuring-a-project", [
+          [ "Summary Tab", "_s_t_a_r_t__d_e_v.html#summary-tab", null ],
           [ "Configuring the BSP", "_s_t_a_r_t__d_e_v.html#configuring-the-bsp", null ],
           [ "Configuring Clocks", "_s_t_a_r_t__d_e_v.html#configuring-clocks", null ],
           [ "Configuring Pins", "_s_t_a_r_t__d_e_v.html#configuring-pins", null ],
@@ -52,7 +53,8 @@ var NAVTREE =
             [ "Welcome Window", "_s_t_a_r_t__d_e_v.html#welcome-window", null ],
             [ "Cheat Sheets", "_s_t_a_r_t__d_e_v.html#cheat-sheets", null ],
             [ "Developer Assistance", "_s_t_a_r_t__d_e_v.html#developer-assistance", null ],
-            [ "Information Icon", "_s_t_a_r_t__d_e_v.html#information-icon", null ]
+            [ "Information Icon", "_s_t_a_r_t__d_e_v.html#information-icon", null ],
+            [ "IDE Help", "_s_t_a_r_t__d_e_v.html#ide-help", null ]
           ] ],
           [ "HAL Modules in FSP: A Practical Description", "_s_t_a_r_t__d_e_v.html#hal-modules-in-fsp", [
             [ "Introduction to HAL Modules", "_s_t_a_r_t__d_e_v.html#introduction-to-hal-modules", null ],
@@ -60,7 +62,11 @@ var NAVTREE =
             [ "HAL Driver API Call Reference Information", "_s_t_a_r_t__d_e_v.html#hal-driver-api-call-reference-information", null ]
           ] ],
           [ "RTOS-Independent Applications", "_s_t_a_r_t__d_e_v.html#rtos-independent-applications", null ],
-          [ "RTOS Applications", "_s_t_a_r_t__d_e_v.html#rtos-applications", null ]
+          [ "RTOS Applications", "_s_t_a_r_t__d_e_v.html#rtos-applications", null ],
+          [ "Additional Resources for Application Development", "_s_t_a_r_t__d_e_v.html#additional-resources-for-application-development", [
+            [ "Example Projects", "_s_t_a_r_t__d_e_v.html#example-projects", null ],
+            [ "Quick Labs", "_s_t_a_r_t__d_e_v.html#quick-labs", null ]
+          ] ]
         ] ],
         [ "Debugging the Project", "_s_t_a_r_t__d_e_v.html#debugging-the-project", null ],
         [ "Modifying Toolchain Settings", "_s_t_a_r_t__d_e_v.html#modifying-toolchain-settings", null ],
@@ -112,6 +118,57 @@ var NAVTREE =
         ] ],
         [ "Building and Testing the Project", "_s_t_a_r_t__d_e_v.html#building-and-testing-the-project", null ]
       ] ],
+      [ "Primer: TrustZone Project Development", "_s_t_a_r_t__d_e_v.html#primer-trustzone-project-development", [
+        [ "Renesas Implementation of Arm TrustZone Technology", "_s_t_a_r_t__d_e_v.html#renesas-implementation-of-arm-trustzone-technology", [
+          [ "Calling from Non-Secure to Secure", "_s_t_a_r_t__d_e_v.html#calling-from-non-secure-to-secure", null ],
+          [ "Calling from Secure to Non-Secure", "_s_t_a_r_t__d_e_v.html#calling-from-secure-to-non-secure", null ]
+        ] ],
+        [ "Workflow", "_s_t_a_r_t__d_e_v.html#workflow", [
+          [ "Secure Project", "_s_t_a_r_t__d_e_v.html#secure-project", null ],
+          [ "Non-Secure Project", "_s_t_a_r_t__d_e_v.html#non-secure-project", null ],
+          [ "Flat Project", "_s_t_a_r_t__d_e_v.html#flat-project", null ]
+        ] ],
+        [ "RA Project Generator (PG)", "_s_t_a_r_t__d_e_v.html#ra-project-generator-pg", [
+          [ "Secure Project Set Up", "_s_t_a_r_t__d_e_v.html#secure-project-set-up", null ],
+          [ "RTOS Support in TZ Project", "_s_t_a_r_t__d_e_v.html#rtos-support-in-tz-project", null ],
+          [ "Peripheral Security Attribution", "_s_t_a_r_t__d_e_v.html#peripheral-security-attribution", null ],
+          [ "Non-Secure", "_s_t_a_r_t__d_e_v.html#non-secure", null ],
+          [ "Flat Project Type", "_s_t_a_r_t__d_e_v.html#flat-project-type", null ],
+          [ "Secure Connection to Non-Secure Project", "_s_t_a_r_t__d_e_v.html#secure-connection-to-non-secure-project", [
+            [ "Secure Project (Combined)", "_s_t_a_r_t__d_e_v.html#secure-project-combined", null ],
+            [ "Secure Bundle (Split)", "_s_t_a_r_t__d_e_v.html#secure-bundle-split", null ]
+          ] ],
+          [ "Debug Configurations", "_s_t_a_r_t__d_e_v.html#debug-configurations", [
+            [ "Non-Secure with Secure Project (Combined)", "_s_t_a_r_t__d_e_v.html#non-secure-with-secure-project-combined", null ],
+            [ "Non-Secure with Secure Bundle (Split)", "_s_t_a_r_t__d_e_v.html#non-secure-with-secure-bundle-split", null ],
+            [ "Flat Debug", "_s_t_a_r_t__d_e_v.html#flat-debug", null ]
+          ] ]
+        ] ],
+        [ "Secure Projects", "_s_t_a_r_t__d_e_v.html#secure-projects", [
+          [ "Secure Clock", "_s_t_a_r_t__d_e_v.html#secure-clock", null ],
+          [ "Setting Drivers as NSC", "_s_t_a_r_t__d_e_v.html#setting-drivers-as-nsc", null ],
+          [ "Guard Functions", "_s_t_a_r_t__d_e_v.html#guard-functions", null ]
+        ] ],
+        [ "Non-Secure projects", "_s_t_a_r_t__d_e_v.html#non-secure-projects", [
+          [ "Clock Set Up", "_s_t_a_r_t__d_e_v.html#clock-set-up", null ],
+          [ "Selecting NSC Drivers", "_s_t_a_r_t__d_e_v.html#selecting-nsc-drivers", null ],
+          [ "Locked Resources", "_s_t_a_r_t__d_e_v.html#locked-resources", null ],
+          [ "Locked Channels", "_s_t_a_r_t__d_e_v.html#locked-channels", null ]
+        ] ],
+        [ "IDAU registers", "_s_t_a_r_t__d_e_v.html#idau-registers", [
+          [ "SCI Boot Mode", "_s_t_a_r_t__d_e_v.html#sci-boot-mode", null ],
+          [ "DLM States", "_s_t_a_r_t__d_e_v.html#dlm-states", null ]
+        ] ],
+        [ "Debug", "_s_t_a_r_t__d_e_v.html#debug", [
+          [ "Non-Secure Debug", "_s_t_a_r_t__d_e_v.html#non-secure-debug", null ]
+        ] ],
+        [ "Debugger support", "_s_t_a_r_t__d_e_v.html#debugger-support", null ],
+        [ "Third-Party IDEs", "_s_t_a_r_t__d_e_v.html#third-party-ides", null ],
+        [ "Renesas Flash Programmer (RFP)", "_s_t_a_r_t__d_e_v.html#renesas-flash-programmer-rfp", null ],
+        [ "Glossary", "_s_t_a_r_t__d_e_v.html#glossary", [
+          [ "Configurator Icon Glossary", "_s_t_a_r_t__d_e_v.html#configurator-icon-glossary", null ]
+        ] ]
+      ] ],
       [ "RA SC User Guide for MDK and IAR", "_s_t_a_r_t__d_e_v.html#RASC-MDK-IAR-user-guide", [
         [ "What is RA SC?", "_s_t_a_r_t__d_e_v.html#RASC", null ],
         [ "Using RA Smart Configurator with Keil MDK", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk", [
@@ -160,6 +217,11 @@ var NAVTREE =
       ] ],
       [ "FSP Build Time Configurations", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-build-time-configurations", null ],
       [ "FSP File Structure", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-file-structure", null ],
+      [ "FSP TrustZone Support", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-trustzone-support", [
+        [ "FSP TrustZone Projects", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-trustzone-projects", null ],
+        [ "Non-Secure Callable Guard Functions", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-trustzone-nsc-guard-functions", null ],
+        [ "Callbacks in Non-Secure from Non-Secure Callable Modules", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-trustzone-callback-to-non-secure", null ]
+      ] ],
       [ "FSP Architecture in Practice", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-architecture-in-practice", [
         [ "FSP Connecting Layers", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-connecting-layers", null ],
         [ "Using FSP Modules in an Application", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#using-fsp-modules-in-an-application", [
@@ -168,6 +230,7 @@ var NAVTREE =
         ] ]
       ] ]
     ] ],
+    [ "!dsn_rm_bl2_port_usage_notes rm_bl2_port_usage_notes", "md__home_gitlab-runner_builds_nwfva_hz9_5_peaks_peaks_ra_fsp_src_rm_bl2_port_.html", null ],
     [ "API Reference", "modules.html", "modules" ],
     [ "Copyright", "_c_o_p_y_r_i_g_h_t.html", null ]
   ] ]
@@ -176,33 +239,34 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_o_p_y_r_i_g_h_t.html",
-"group___a_d_c.html#structadc__channel__cfg__t",
-"group___b_l_e___a_b_s___a_p_i.html#a2c32a344fb45fd9da0341dbb9a2156ed",
-"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa812c61e1a23fee3b7d98b111e3ce1e10",
-"group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a9f5fa0a6236976c5e219e9fa4785b1b7",
-"group___c_a_n___a_p_i.html#a34fbfff40d0155fb8016db8195b48f98",
-"group___c_o_m_p_a_r_a_t_o_r___a_p_i.html",
-"group___c_t_s_u___a_p_i.html#ac7449580617af95b04736b986fa00a35",
-"group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__clut__t",
-"group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c",
-"group___g_a_p___a_p_i.html#a681b9bfaa86e2d2d790ce8744e47b555",
-"group___g_a_p___a_p_i.html#ga94415ae942f73610e06494cacab52644",
-"group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#acb3059991446107b9199a4b3f0c2532b",
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#gga451fe37541a881679ed7aa3eb2b270bba360442e4b472b4e7125f0bed91c0252c",
-"group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aec2d2c471241869efb57a9a48a5d0eda",
-"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840ea0765c2988a552de16b2df1c07923bf37",
-"group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a47ef2519e1ba6f5b2e0893de9cddeb49",
-"group___l2_c_a_p___a_p_i.html#structst__ble__l2cap__cf__disconn__evt__t",
-"group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca0bb1747e9be9c1cb09402c519a7be44c",
-"group___q_s_p_i.html#ga13cbc9d58890d7094712edcf64bc1bf1",
-"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ae13f3c9685ff3f32dcb2966ac77c05df",
-"group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e",
-"group___s_d_m_m_c___a_p_i.html#ga55695633a9591a08f956911271fba9fd",
-"group___s_p_i___a_p_i.html#acd490330020cce12382d6ba1b1ad8bbe",
-"group___t_o_u_c_h.html#a0e9be579ea8c2bdfa9deec70b7a4bcbf",
-"group___u_s_b___a_p_i.html#ac2b9fd6871571a54b991b598cd5802a7",
-"group___u_s_b___h_m_s_c___a_p_i.html#gac5b28f1be9ca57fc904f9c93266a594da2bcce7b971b807b8baeb3ccf546643fc",
-"group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a3f03a334cf6b137dc9233814d4d5d4ec"
+"group___a_d_c.html#gga79014196d08d86b161b77892bf26b100a008539c98b123b9a7db52e3bf8ebc631",
+"group___b_l_e___a_b_s.html#acbbd8bba8ae55c4debd1e037dac2db9b",
+"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa42e4bbde41306fc1cbb3a4f7b0f0c313",
+"group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a4c8e7eec2565d342a1e7eaabfc94f4ee",
+"group___c_a_c___a_p_i.html#ga72f9630b697a9a6d09b349307611bf4c",
+"group___c_g_c___a_p_i.html#gga7499fcdfd9aafe4ca695e26e2d69175da5c77b4e770cff2b1c0806afb099b506b",
+"group___c_t_s_u.html#af11629c8645bed6f08a9dacdbd9c6bef",
+"group___d_i_s_p_l_a_y___a_p_i.html#ac6b4bd42b148b0424a2843435161da4c",
+"group___e_t_h_e_r___a_p_i.html#ab61eca8e923f4bb332f99ebb168fc6b0",
+"group___g_a_p___a_p_i.html#a14ed0a85eb05bd83c0db99d9fd5cbb28",
+"group___g_a_p___a_p_i.html#ga31ec76e9465ce24fc8f64c6b1b796098",
+"group___g_a_p___a_p_i.html#structst__ble__gap__key__dist__t",
+"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ga002069776bb6593dbb80622344be397d",
+"group___g_p_t.html#ga7e57d68f5f5d9757bab01857e8252ade",
+"group___i2_s___a_p_i.html#ggacad3e5bee8b5bde941b18e4e244f7127aa3cc46c08c885fb326a461a07e65dcba",
+"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840eaefa549f1d1c219c0ddc55e3fa9f49279",
+"group___k_e_y_m_a_t_r_i_x___a_p_i.html#ad4d2825f0417d86ac50c5998bfd4f54e",
+"group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a6e85df87a4ef87a43d718e505f8bdd7a",
+"group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a2a1b1b737fdc3254b7a26be62e063946",
+"group___p_o_e_g___a_p_i.html#gga6964e3b0b8b2d32d2428d86b32dfeef2ad3a9db10800397084958747e9cb2260a",
+"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ac2e2eac0e5d38ed6ec2c7b8891782df0",
+"group___r_t_c___a_p_i.html#a2a07242a217b804f8dc04fb078d4a6a1",
+"group___s_d_m_m_c___a_p_i.html#a0c44c5ce0dbed006580ae1dba87b9052",
+"group___s_p_i.html#gga8461cfe39f136055edd0efc7a83990f5a0f72bd478dc2ba089f14454b522db55d",
+"group___t_i_m_e_r___a_p_i.html#a9da65b46c59a0543ec977f634bb0265d",
+"group___u_a_r_t___a_p_i.html#gadc68b8fd9ded3990f84129df23fee798",
+"group___u_s_b___a_p_i.html#ggae829d35e41400a0bb30a3c0969152083afd34b1c5965035351f54187655ce1a85",
+"group___v_s___a_p_i.html#structst__ble__vs__tx__flow__chg__evt__t"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

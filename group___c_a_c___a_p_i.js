@@ -34,6 +34,7 @@ var group___c_a_c___a_p_i =
       [ "startMeasurement", "group___c_a_c___a_p_i.html#a0127958a35cee5c81d568f22a5aae493", null ],
       [ "stopMeasurement", "group___c_a_c___a_p_i.html#ad536fdf0808d540e48dc31c4291dd5fb", null ],
       [ "read", "group___c_a_c___a_p_i.html#a9d499ef68436aa97f82a9db46e63f10c", null ],
+      [ "callbackSet", "group___c_a_c___a_p_i.html#a6de25562a974da096794f16f1d801f1b", null ],
       [ "close", "group___c_a_c___a_p_i.html#a60344482e6c3f0086e96fbf860e626be", null ],
       [ "versionGet", "group___c_a_c___a_p_i.html#af12d4059ba04fa42a7bcaa1a088e1af3", null ]
     ] ],

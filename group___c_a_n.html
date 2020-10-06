@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -109,6 +109,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga8909b3cbadf32e0aeb0f4a546ff8d8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6c032135d3ee684c327e1ca135f3550f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#ga6c032135d3ee684c327e1ca135f3550f">R_CAN_InfoGet</a> (<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_api_ctrl, can_info_t *const p_info)</td></tr>
 <tr class="separator:ga6c032135d3ee684c327e1ca135f3550f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace90c8d14d728fd8e58943f258eb2bea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#gace90c8d14d728fd8e58943f258eb2bea">R_CAN_CallbackSet</a> (<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gace90c8d14d728fd8e58943f258eb2bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga70077d910115f1a605565eb8ff785d4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#ga70077d910115f1a605565eb8ff785d4b">R_CAN_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const version)</td></tr>
 <tr class="separator:ga70077d910115f1a605565eb8ff785d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -148,7 +150,7 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Connectivity &gt; CAN Driver on r_can</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; CAN Driver on r_can:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; CAN Driver on r_can. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -1046,6 +1048,56 @@ Examples</h1>
 
 </div>
 </div>
+<a id="gace90c8d14d728fd8e58943f258eb2bea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gace90c8d14d728fd8e58943f258eb2bea">&#9670;&nbsp;</a></span>R_CAN_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_CAN_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___c_a_n___a_p_i.html#a0eeb3995e651ce4b77e8860ab50597a9">can_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga70077d910115f1a605565eb8ff785d4b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga70077d910115f1a605565eb8ff785d4b">&#9670;&nbsp;</a></span>R_CAN_VersionGet()</h2>
 
@@ -1077,7 +1129,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -19,6 +19,7 @@ var group___e_x_t_e_r_n_a_l___i_r_q___a_p_i =
       [ "open", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a639337eee77555b934cbf8238e0f8449", null ],
       [ "enable", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a9cb81e4b2d313458c747cdc401179a66", null ],
       [ "disable", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a6ecb5664f627d1b731a4fd0a74e5f2bc", null ],
+      [ "callbackSet", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a4a407b8899a042692026e65d98535f6e", null ],
       [ "close", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ad0c4d6063af093a3a19a63924aae61ac", null ],
       [ "versionGet", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a46ce3fceaf8c7fd9499f82914803a2aa", null ]
     ] ],

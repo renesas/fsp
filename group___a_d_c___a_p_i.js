@@ -43,6 +43,7 @@ var group___a_d_c___a_p_i =
       [ "read32", "group___a_d_c___a_p_i.html#a81338d39975b7fe87d5e06c55a8c5dc5", null ],
       [ "calibrate", "group___a_d_c___a_p_i.html#a1ea4b7aa41983d837edfed54fcd79b5d", null ],
       [ "offsetSet", "group___a_d_c___a_p_i.html#a305b2c2466cd88fdddf6134db542dc7e", null ],
+      [ "callbackSet", "group___a_d_c___a_p_i.html#a8d081aba32f84d62e7d48389b1d10b3e", null ],
       [ "close", "group___a_d_c___a_p_i.html#a83cce8ff1af572c11ef31442f2679124", null ],
       [ "infoGet", "group___a_d_c___a_p_i.html#acc68017ee284386b5d13c027bc10bf87", null ],
       [ "versionGet", "group___a_d_c___a_p_i.html#a94d6632175e44cbb2493bd9a5d713cbd", null ]

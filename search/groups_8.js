@@ -9,5 +9,6 @@ var searchData=
   ['i_2fo_20ports_20_28r_5fioport_29',['I/O Ports (r_ioport)',['../group___i_o_p_o_r_t.html',1,'']]],
   ['i_2fo_20port_20interface',['I/O Port Interface',['../group___i_o_p_o_r_t___a_p_i.html',1,'']]],
   ['independent_20watchdog_20timer_20_28r_5fiwdt_29',['Independent Watchdog Timer (r_iwdt)',['../group___i_w_d_t.html',1,'']]],
+  ['interface',['Interface',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html',1,'']]],
   ['interfaces',['Interfaces',['../group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html',1,'']]]
 ];

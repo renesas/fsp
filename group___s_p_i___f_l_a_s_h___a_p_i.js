@@ -1,7 +1,7 @@
 var group___s_p_i___f_l_a_s_h___a_p_i =
 [
     [ "spi_flash_erase_command_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__erase__command__t", [
-      [ "command", "group___s_p_i___f_l_a_s_h___a_p_i.html#a8e3c8b055e778827f187f213a725de1e", null ],
+      [ "command", "group___s_p_i___f_l_a_s_h___a_p_i.html#a27f37ac5d1f031fd33f3b2ff5b914751", null ],
       [ "size", "group___s_p_i___f_l_a_s_h___a_p_i.html#afb42b93f396ec30b863646150e9bb91d", null ]
     ] ],
     [ "spi_flash_cfg_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t", [
@@ -10,11 +10,13 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "address_bytes", "group___s_p_i___f_l_a_s_h___a_p_i.html#ac9e56afeabf97f6a1642b7468a67cf25", null ],
       [ "dummy_clocks", "group___s_p_i___f_l_a_s_h___a_p_i.html#a6b2d213cfd3ca4a9a0f1c3dfd11414ec", null ],
       [ "page_program_address_lines", "group___s_p_i___f_l_a_s_h___a_p_i.html#ab612f8046209bbb2b29e5d3eee98831f", null ],
+      [ "write_status_bit", "group___s_p_i___f_l_a_s_h___a_p_i.html#a72bf5b8dca157ef7a4a2c66b12c945e9", null ],
+      [ "write_enable_bit", "group___s_p_i___f_l_a_s_h___a_p_i.html#a6db8c831a8c3ef08a0f511c7229a503e", null ],
       [ "page_size_bytes", "group___s_p_i___f_l_a_s_h___a_p_i.html#abfd1deab895e3f8c8f38a51d74c79b17", null ],
       [ "page_program_command", "group___s_p_i___f_l_a_s_h___a_p_i.html#ad630dd9c52ab12c077c5b27485b46017", null ],
       [ "write_enable_command", "group___s_p_i___f_l_a_s_h___a_p_i.html#ae5c4c2c2b0cebe9a54e530cbc2554b6e", null ],
       [ "status_command", "group___s_p_i___f_l_a_s_h___a_p_i.html#a27e2c004e2548fea4eca6793027b9d25", null ],
-      [ "write_status_bit", "group___s_p_i___f_l_a_s_h___a_p_i.html#a72bf5b8dca157ef7a4a2c66b12c945e9", null ],
+      [ "read_command", "group___s_p_i___f_l_a_s_h___a_p_i.html#a7c61a9a4dbc8bb415233c42cfdc34d6d", null ],
       [ "xip_enter_command", "group___s_p_i___f_l_a_s_h___a_p_i.html#accd8433fbfc03e8a8bdb209c583c6ce9", null ],
       [ "xip_exit_command", "group___s_p_i___f_l_a_s_h___a_p_i.html#a315a0b4fc25c20262fdbf762c389c109", null ],
       [ "erase_command_list_length", "group___s_p_i___f_l_a_s_h___a_p_i.html#a24bbe669d6ca4a02fe6d806d321a044c", null ],
@@ -28,6 +30,7 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "open", "group___s_p_i___f_l_a_s_h___a_p_i.html#a6b8a1ae0eed7bca555c94959c1314ae3", null ],
       [ "directWrite", "group___s_p_i___f_l_a_s_h___a_p_i.html#a31a1d575f3d8876154d4e217caebf110", null ],
       [ "directRead", "group___s_p_i___f_l_a_s_h___a_p_i.html#a3366fdcb333cb6950ff38bb35618c401", null ],
+      [ "directTransfer", "group___s_p_i___f_l_a_s_h___a_p_i.html#a21da248768dd75281ea7b29f2d243afd", null ],
       [ "spiProtocolSet", "group___s_p_i___f_l_a_s_h___a_p_i.html#a3328711e7e70c8379f4373d2861d785a", null ],
       [ "write", "group___s_p_i___f_l_a_s_h___a_p_i.html#a61e667a9ae9af76c5f8fd9f1973c6838", null ],
       [ "erase", "group___s_p_i___f_l_a_s_h___a_p_i.html#a0f241a48dd8f386e19a6e0fe44e8a2d9", null ],
@@ -54,7 +57,9 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
     ] ],
     [ "spi_flash_protocol_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535", [
       [ "SPI_FLASH_PROTOCOL_EXTENDED_SPI", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a1b7d1595891e2e14a3dc9e718b5188c3", null ],
-      [ "SPI_FLASH_PROTOCOL_QPI", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535abf7718fe53c0e4daa1dcad6f4d6d215e", null ]
+      [ "SPI_FLASH_PROTOCOL_QPI", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535abf7718fe53c0e4daa1dcad6f4d6d215e", null ],
+      [ "SPI_FLASH_PROTOCOL_SOPI", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535aa8b956dd00ae8afcb2e4497fb1b9ab58", null ],
+      [ "SPI_FLASH_PROTOCOL_DOPI", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535afd83f451b4164b209b240ebb0f4bb158", null ]
     ] ],
     [ "spi_flash_address_bytes_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#ga289ef915326b8e75e7d0dd331c2d0797", [
       [ "SPI_FLASH_ADDRESS_BYTES_3", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga289ef915326b8e75e7d0dd331c2d0797ab4c7c4e57259098044562889ba84709f", null ],
@@ -83,5 +88,6 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "SPI_FLASH_DUMMY_CLOCKS_15", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea5c661aa719d0f2846d0a4a3bea4e3f37", null ],
       [ "SPI_FLASH_DUMMY_CLOCKS_16", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802feab4afe95b4c411fbe7b17252fce3e9776", null ],
       [ "SPI_FLASH_DUMMY_CLOCKS_17", "group___s_p_i___f_l_a_s_h___a_p_i.html#ggaa1e03cbf0d565f4ae7ad2e41d85802fea34ec51de93041c3710730907347e29ce", null ]
-    ] ]
+    ] ],
+    [ "spi_flash_direct_transfer_dir_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5", null ]
 ];

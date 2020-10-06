@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -509,6 +509,12 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4a95e72ac2db2d91b1a1497b7bf63e85b9"></a>LPM_SNOOZE_REQUEST_AGT1_COMPARE_B&#160;</td><td class="fielddoc"><p>Enable AGT1 compare match B snooze request. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4a6ae0789d5e9b75e16d144009f7079579"></a>LPM_SNOOZE_REQUEST_AGT3_UNDERFLOW&#160;</td><td class="fielddoc"><p>Enable AGT3 underflow snooze request. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4a6e1b74ca68fe8d28da2fac265047f400"></a>LPM_SNOOZE_REQUEST_AGT3_COMPARE_A&#160;</td><td class="fielddoc"><p>Enable AGT3 compare match A snooze request. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad89b68cf8999a1082839128aaad4e9d4aa4a92f7d9c0836c9a7738b21191fd61e"></a>LPM_SNOOZE_REQUEST_AGT3_COMPARE_B&#160;</td><td class="fielddoc"><p>Enable AGT3 compare match B snooze request. </p>
+</td></tr>
 </table>
 
 </div>
@@ -543,6 +549,8 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="gga79a7c2de81bbd287a53ff255c15cd8d3a8f47d87c1ba6c1fa064d53d48f09b338"></a>LPM_SNOOZE_END_ADC1_COMPARE_MISMATCH&#160;</td><td class="fielddoc"><p>ADC 1 compare mismatch. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga79a7c2de81bbd287a53ff255c15cd8d3a83527fd738776770db1f1f74cc90dbe5"></a>LPM_SNOOZE_END_SCI0_ADDRESS_MATCH&#160;</td><td class="fielddoc"><p>SCI0 address mismatch. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga79a7c2de81bbd287a53ff255c15cd8d3a349e83f94a4865ab104829ec5a95c3b5"></a>LPM_SNOOZE_END_AGT3_UNDERFLOW&#160;</td><td class="fielddoc"><p>AGT3 underflow. </p>
 </td></tr>
 </table>
 
@@ -675,6 +683,12 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa738e21394c9f0ca03cf86292dd647974"></a>LPM_STANDBY_WAKE_SOURCE_IIC0&#160;</td><td class="fielddoc"><p>I2C 0 interrupt. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fa53704d6dd4d12bbc3509055cd031eb4a"></a>LPM_STANDBY_WAKE_SOURCE_AGT3UD&#160;</td><td class="fielddoc"><p>AGT3 underflow interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0facfe0e9a67684ea48ad8c07a44ac2ff87"></a>LPM_STANDBY_WAKE_SOURCE_AGT3CA&#160;</td><td class="fielddoc"><p>AGT3 compare match A interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c49529c46118be3f3cda150e13f1a0fab99344c667c90fc8946096f55442bb4c"></a>LPM_STANDBY_WAKE_SOURCE_AGT3CB&#160;</td><td class="fielddoc"><p>AGT3 compare match B interrupt. </p>
+</td></tr>
 </table>
 
 </div>
@@ -798,6 +812,10 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaecb8b2da6c5e7bf0b3532799418b9f70a069f712851e0fbaf49669eec91007f1f"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ14_FALLING&#160;</td><td class="fielddoc"><p>IRQ14-DS Pin Falling Edge. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaecb8b2da6c5e7bf0b3532799418b9f70ae515c6f9a8a919d69966060b8433633e"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ15_RISING&#160;</td><td class="fielddoc"><p>IRQ14-DS Pin Rising Edge. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaecb8b2da6c5e7bf0b3532799418b9f70adabb69eced6abf8a392bca0673bdf671"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ15_FALLING&#160;</td><td class="fielddoc"><p>IRQ14-DS Pin Falling Edge. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaecb8b2da6c5e7bf0b3532799418b9f70a7eb43e2d6b3bcb746d1d60eff0c92151"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD1_RISING&#160;</td><td class="fielddoc"><p>LVD1 Rising Slope. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaecb8b2da6c5e7bf0b3532799418b9f70a40b29728183a58bb0d539b951771d460"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD1_FALLING&#160;</td><td class="fielddoc"><p>LVD1 Falling Slope. </p>
@@ -859,6 +877,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438a887707a8656ac77384c36ef1d802654b"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ14&#160;</td><td class="fielddoc"><p>IRQ14. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438ae0013df33f2b48c42cd52413803be437"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ15&#160;</td><td class="fielddoc"><p>IRQ15. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438aecadd613bd2f58e9818eba70ac2b6164"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD1&#160;</td><td class="fielddoc"><p>LVD1. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab83f1826bb070e32d292d48f139d0438a3dd73230f110678f0ae5606a500e8cfd"></a>LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD2&#160;</td><td class="fielddoc"><p>LVD2. </p>
@@ -906,7 +926,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,7 +110,8 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level3"><a href="#selecting-a-project-template">Selecting a Project Template</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#configuring-a-project">Configuring a Project</a><ul><li class="level3"><a href="#configuring-the-bsp">Configuring the BSP</a></li>
+<li class="level2"><a href="#configuring-a-project">Configuring a Project</a><ul><li class="level3"><a href="#summary-tab">Summary Tab</a></li>
+<li class="level3"><a href="#configuring-the-bsp">Configuring the BSP</a></li>
 <li class="level3"><a href="#configuring-clocks">Configuring Clocks</a></li>
 <li class="level3"><a href="#configuring-pins">Configuring Pins</a></li>
 <li class="level3"><a href="#configuring-interrupts">Configuring Interrupts from the Stacks Tab</a><ul><li class="level4"><a href="#interrupts">Creating Interrupts from the Interrupts Tab</a></li>
@@ -130,6 +131,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level4"><a href="#cheat-sheets">Cheat Sheets</a></li>
 <li class="level4"><a href="#developer-assistance">Developer Assistance</a></li>
 <li class="level4"><a href="#information-icon">Information Icon</a></li>
+<li class="level4"><a href="#ide-help">IDE Help</a></li>
 </ul>
 </li>
 <li class="level3"><a href="#hal-modules-in-fsp">HAL Modules in FSP: A Practical Description</a><ul><li class="level4"><a href="#introduction-to-hal-modules">Introduction to HAL Modules</a></li>
@@ -139,6 +141,10 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </li>
 <li class="level3"><a href="#rtos-independent-applications">RTOS-Independent Applications</a></li>
 <li class="level3"><a href="#rtos-applications">RTOS Applications</a></li>
+<li class="level3"><a href="#additional-resources-for-application-development">Additional Resources for Application Development</a><ul><li class="level4"><a href="#example-projects">Example Projects</a></li>
+<li class="level4"><a href="#quick-labs">Quick Labs</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="level2"><a href="#debugging-the-project">Debugging the Project</a></li>
@@ -192,6 +198,57 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level2"><a href="#building-and-testing-the-project">Building and Testing the Project</a></li>
 </ul>
 </li>
+<li class="level1"><a href="#primer-trustzone-project-development">Primer: TrustZone Project Development</a><ul><li class="level2"><a href="#renesas-implementation-of-arm-trustzone-technology">Renesas Implementation of Arm TrustZone Technology</a><ul><li class="level3"><a href="#calling-from-non-secure-to-secure">Calling from Non-Secure to Secure</a></li>
+<li class="level3"><a href="#calling-from-secure-to-non-secure">Calling from Secure to Non-Secure</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#workflow">Workflow</a><ul><li class="level3"><a href="#secure-project">Secure Project</a></li>
+<li class="level3"><a href="#non-secure-project">Non-Secure Project</a></li>
+<li class="level3"><a href="#flat-project">Flat Project</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#ra-project-generator-pg">RA Project Generator (PG)</a><ul><li class="level3"><a href="#secure-project-set-up">Secure Project Set Up</a></li>
+<li class="level3"><a href="#rtos-support-in-tz-project">RTOS Support in TZ Project</a></li>
+<li class="level3"><a href="#peripheral-security-attribution">Peripheral Security Attribution</a></li>
+<li class="level3"><a href="#non-secure">Non-Secure</a></li>
+<li class="level3"><a href="#flat-project-type">Flat Project Type</a></li>
+<li class="level3"><a href="#secure-connection-to-non-secure-project">Secure Connection to Non-Secure Project</a><ul><li class="level4"><a href="#secure-project-combined">Secure Project (Combined)</a></li>
+<li class="level4"><a href="#secure-bundle-split">Secure Bundle (Split)</a></li>
+</ul>
+</li>
+<li class="level3"><a href="#debug-configurations">Debug Configurations</a><ul><li class="level4"><a href="#non-secure-with-secure-project-combined">Non-Secure with Secure Project (Combined)</a></li>
+<li class="level4"><a href="#non-secure-with-secure-bundle-split">Non-Secure with Secure Bundle (Split)</a></li>
+<li class="level4"><a href="#flat-debug">Flat Debug</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level2"><a href="#secure-projects">Secure Projects</a><ul><li class="level3"><a href="#secure-clock">Secure Clock</a></li>
+<li class="level3"><a href="#setting-drivers-as-nsc">Setting Drivers as NSC</a></li>
+<li class="level3"><a href="#guard-functions">Guard Functions</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#non-secure-projects">Non-Secure projects</a><ul><li class="level3"><a href="#clock-set-up">Clock Set Up</a></li>
+<li class="level3"><a href="#selecting-nsc-drivers">Selecting NSC Drivers</a></li>
+<li class="level3"><a href="#locked-resources">Locked Resources</a></li>
+<li class="level3"><a href="#locked-channels">Locked Channels</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#idau-registers">IDAU registers</a><ul><li class="level3"><a href="#sci-boot-mode">SCI Boot Mode</a></li>
+<li class="level3"><a href="#dlm-states">DLM States</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#debug">Debug</a><ul><li class="level3"><a href="#non-secure-debug">Non-Secure Debug</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#debugger-support">Debugger support</a></li>
+<li class="level2"><a href="#third-party-ides">Third-Party IDEs</a></li>
+<li class="level2"><a href="#renesas-flash-programmer-rfp">Renesas Flash Programmer (RFP)</a></li>
+<li class="level2"><a href="#glossary">Glossary</a><ul><li class="level3"><a href="#configurator-icon-glossary">Configurator Icon Glossary</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="level1"><a href="#RASC-MDK-IAR-user-guide">RA SC User Guide for MDK and IAR</a><ul><li class="level2"><a href="#RASC">What is RA SC?</a></li>
 <li class="level2"><a href="#using-ra-smart-configurator-with-keil-mdk">Using RA Smart Configurator with Keil MDK</a><ul><li class="level3"><a href="#RASC-MDK-prerequisites">Prerequisites</a></li>
 <li class="level3"><a href="#using-ra-smart-configurator-with-keil-mdk-create-project">Create new RA project</a></li>
@@ -215,9 +272,9 @@ Starting Development Introduction</h1>
 <li>Read the section <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-e2studio">What is e2 studio?</a>, up to but not including <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a>. This will provide a description of the various windows and views to use e2 studio to create a project, add modules and threads, configure module properties, add code, and debug a project. It also describes how to use key coding 'accelerators' like Developer Assist (to drag and drop parameter populated API function calls right into your code), a context aware Autocomplete (to easily find and select from suggested enumerations, functions, types, and many other coding elements), and many other similar productivity enhancers.</li>
 <li>Read the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a>, <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-modules">FSP Modules</a> and <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-stacks">FSP Stacks</a> sections. These provide the basic background on how FSP modules and stacks are used to construct your application. Understanding their definitions and the theory behind how they combine will make it easier to develop with FSP.</li>
 <li>Read a few <a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> sections to see how to use API function calls, structures, enumerations, types and callbacks. These module guides provide the information you will use to implement your project code.</li>
-<li>After you have a Kit and you have downloaded and installed e2 studio and FSP, you can build and debug a simple project to test your installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project. It will use some of the key steps for managing projects within e2 studio and is a good way to learn the basics.</li>
+<li>After you have a Kit and you have downloaded and installed e2 studio and FSP, you can build and debug a simple project to test your installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project in section <a class="el" href="_s_t_a_r_t__d_e_v.html#create-a-new-project-for-blinky">Create a New Project for Blinky</a>. It will use some of the key steps for managing projects within e2 studio and is a good way to learn the basics.</li>
 <li>Once you have successfully run Blinky you have a good starting point for using FSP for more complex projects. The Using HAL Drivers Tutorial, available at <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>, shows how to create a project from scratch, using FSP API functions. Do this next.</li>
-<li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Edit Hover, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>. Doing a couple of these labs provides further details and practice using FSP and is highly recommended.</li>
+<li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Edit Hover, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>. Doing a couple of these labs provides further details on using FSP, and is also good practice. Running these labs is highly recommended.</li>
 <li>The balance of the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> sections (that is, those not called out in step 2 above) contain additional reference material that may be helpful in the future. Scan them so you know what they contain, in case you need them.</li>
 <li>The balance of the e2 studio User Guide, starting with the <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-a-project">What is a Project?</a> section up to, but not including, <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section, provides a detailed description of each of the key steps, windows, and entries used to create, manage, configure, build and debug a project. Much of this may be familiar after running through the tutorials and Quick Labs. However, it is important to have a good grasp of what each of the configuration tabs are used for as that is where the bulk of the project preparation work takes place prior to writing code. Skim over this section as it may help with any questions in the future.</li>
 <li>Read the <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section to get a short introduction to the steps used when creating application code with FSP. It covers both RTOS-independent and RTOS-dependent applications. It also includes a short description for several of the code accelerators you should be familiar with by now. Using additional Quick FSP Labs is a good way to become familiar with the application development process and links to them are included in the appropriate places in this section. You can find the complete list of available Quick FSP Labs here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>.</li>
@@ -299,18 +356,18 @@ What is a Project?</h2>
 <img src="sd-e2studio-proj-config.jpg" alt="sd-e2studio-proj-config.jpg"/>
 <div class="caption">
 e2 studio Project Configuration file</div></div>
-<p>Double-click on the <code>configuration.xml</code> file to open the RA MCU Project Editor. To edit the project configuration, make sure that the <b>RA Configuration</b> perspective is selected in the upper right hand corner of the e2 studio window. Once selected, you can use the editor to view or modify the configuration settings associated with this project.</p>
+<p>Double-click on the <code>configuration.xml</code> file to open the RA MCU Project Editor. To edit the project configuration, make sure that the <b>FSP Configuration</b> perspective is selected in the upper right hand corner of the e2 studio window. Once selected, you can use the editor to view or modify the configuration settings associated with this project.</p>
 <div class="image">
 <img src="sd-e2studio-ra-config.png" alt="sd-e2studio-ra-config.png"/>
 <div class="caption">
-e2 studio RA Configuration Perspective</div></div>
+e2 studio FSP Configuration Perspective</div></div>
  <dl class="section note"><dt>Note</dt><dd>Whenever the RA project configuration (that is, the <code>configuration.xml</code> file) is saved, a verbose RA Project Report file (<code>ra_cfg.txt</code>) with all the project settings is generated. The format allows differences to be easily viewed using a text comparison tool. The generated file is located in the project root directory.</dd></dl>
 <div class="image">
 <img src="sd-ra-mcu-proj-rpt.jpg" alt="sd-ra-mcu-proj-rpt.jpg"/>
 <div class="caption">
 RA Project Report</div></div>
 <p> The RA Project Editor has a number of tabs. The configuration steps and options for individual tabs are discussed in the following sections.</p>
-<dl class="section note"><dt>Note</dt><dd>The tabs available in the RA Project Editor depend on the e2 studio version.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The tabs available in the RA Project Editor depend on the e2 studio version and the layout may vary slightly, however the functionality should be easy to follow..</dd></dl>
 <div class="image">
 <img src="sd-proj-ed-tabs.png" alt="sd-proj-ed-tabs.png"/>
 <div class="caption">
@@ -367,12 +424,17 @@ RA MCU Project Generator (Screen 2)</div></div>
 </ol>
 <h3><a class="anchor" id="selecting-a-project-template"></a>
 Selecting a Project Template</h3>
-<p>In the next window, select a project template from the list of available templates. By default, this screen shows the templates that are included in your current RA MCU pack. Once you have selected the appropriate template, click <b>Finish</b>.</p>
+<p>In the next window, select the buiild artifact and RTOS.</p>
+<div class="image">
+<img src="sd-ra-proj-2a.png" alt="sd-ra-proj-2a.png"/>
+<div class="caption">
+RA MCU Project Generator (Screen 3)</div></div>
+<p> In the next window, select a project template from the list of available templates. By default, this screen shows the templates that are included in your current RA MCU pack. Once you have selected the appropriate template, click <b>Finish</b>.</p>
 <dl class="section note"><dt>Note</dt><dd>If you want to develop your own application, select the basic template for your board, <b>Bare Metal - Minimal</b>.</dd></dl>
 <div class="image">
 <img src="sd-ra-proj-3.png" alt="sd-ra-proj-3.png"/>
 <div class="caption">
-RA MCU Project Generator (Screen 3)</div></div>
+RA MCU Project Generator (Screen 4)</div></div>
 <p> When the project is created, e2 studio displays a summary of the current project configuration in the RA MCU Project Editor.</p>
 <div class="image">
 <img src="sd-proj-ed-tabs.png" alt="sd-proj-ed-tabs.png"/>
@@ -393,7 +455,8 @@ RA MCU Project Editor and available editor tabs</div></div>
 <h2><a class="anchor" id="configuring-a-project"></a>
 Configuring a Project</h2>
 <p>Each of the configurable elements in an FSP project can be edited using the appropriate tab in the RA Configuration editor window. Importantly, the initial configuration of the MCU after reset and before any user code is executed is set by the configuration settings in the <b>BSP</b>, <b>Clocks</b> and <b>Pins</b> tabs. When you select a project template during project creation, e2 studio configures default values that are appropriate for the associated board. You can change those default values as needed. The following sections detail the process of configuring each of the project elements for each of the associated tabs.</p>
-<h3>Summary Tab</h3>
+<h3><a class="anchor" id="summary-tab"></a>
+Summary Tab</h3>
 <div class="image">
 <img src="sd-e2-summary-tab.png" alt="sd-e2-summary-tab.png"/>
 <div class="caption">
@@ -432,6 +495,7 @@ Configuring Pins</h3>
 <div class="caption">
 Pins Configuration</div></div>
 <p> The pin configurator includes a built-in conflict checker, so if the same pin is allocated to another peripheral or I/O function the pin will be shown as red in the package view and also with white cross in a red square in the <b>Pin Selection</b> pane and <b>Pin Configuration</b> pane in the main <b>Pins</b> tab. The <b>Pin Conflicts</b> view provides a list of conflicts, so conflicts can be quickly identified and fixed.</p>
+<dl class="section note"><dt>Note</dt><dd>There is a limitation in the pin configuration where it does not support setting ASEL and PSEL bit fields for the same pin. Example: When configure the DAC pin in A2A1 device, only the ASEL bit is set and the generated pin data does not match the expected pin data.</dd></dl>
 <p>In the example shown below, port P611 is already used by the CAC, and the attempt to connect this port to the Serial Communications Interface (SCI) results in a dangling connection error. To fix this error, select another port from the pin drop-down list or disable the CAC in the <b>Pin Selection</b> pane on the left side of the tab.</p>
 <div class="image">
 <img src="sd-e2-pin-config.png" alt="sd-e2-pin-config.png"/>
@@ -455,7 +519,7 @@ Configuring Interrupts from the Stacks Tab</h3>
 Configuring Interrupts in the Stacks tab</div></div>
  <h4><a class="anchor" id="interrupts"></a>
 Creating Interrupts from the Interrupts Tab</h4>
-<p>On the <b>Interrupts</b> tab, the user can bypass a peripheral interrupt set by FSP by configuring a user-defined ISR. This can be done by adding a new event via the <b>New User Event</b> button.</p>
+<p>On the <b>Interrupts</b> tab, the user can bypass a peripheral interrupt set by the FSP by setting a user-defined ISR. This can be done by adding a new event via the <b>New User Event</b> button.</p>
 <div class="image">
 <img src="sd-config-int-in-interrupt-tab.png" alt="sd-config-int-in-interrupt-tab.png"/>
 <div class="caption">
@@ -685,7 +749,8 @@ Information Icon</h4>
 <img src="sd-info-icon.png" alt="sd-info-icon.png"/>
 <div class="caption">
 Information icon</div></div>
-<h4>IDE Help</h4>
+<h4><a class="anchor" id="ide-help"></a>
+IDE Help</h4>
 <p>A good source of additional information for many FSP topics is the Help system. To get to the Help system, click on <b>Help</b> and then select <b>Help Contents</b> as seen below.</p>
 <div class="image">
 <img src="sd-opening-help-system.png" alt="sd-opening-help-system.png"/>
@@ -771,8 +836,10 @@ Adding user code to my_thread_1.entry</div></div>
 <li>Repeat steps 1 to 9 for the next thread.</li>
 <li>Build your project without errors by clicking on <b>Project &gt; Build Project</b>.</li>
 </ol>
-<h3>Additional Resources for Application Development</h3>
-<h4>Example Projects</h4>
+<h3><a class="anchor" id="additional-resources-for-application-development"></a>
+Additional Resources for Application Development</h3>
+<h4><a class="anchor" id="example-projects"></a>
+Example Projects</h4>
 <p>A wide variety of Example Projects for FSP and RA MCUs is available on the GitHub site here: <a href="https://github.com/renesas/ra-fsp-examples">https://github.com/renesas/ra-fsp-examples</a>. Example projects are organized by target kit so it is easy to find all the examples for your kit of choice.</p>
 <div class="image">
 <img src="sd-fsp-ex-proj-org-by-kit.png" alt="sd-fsp-ex-proj-org-by-kit.png"/>
@@ -783,8 +850,9 @@ FSP Example Projects Organized by Kit</div></div>
 <img src="sd-selection-of-ex-proj-avail-on-github.png" alt="sd-selection-of-ex-proj-avail-on-github.png"/>
 <div class="caption">
 A Selection of Example Projects Available on GitHub</div></div>
- <h4>Quick Labs</h4>
-<p>A variety of Hands-on Do It Yourself labs are available on the Renesas RA and FSP Knowledge Base. Quick FSP Labs target the EK-RA6M3 kit and typically require only 15 minutes to complete. Each lab covers a couple related development tools and techniques like Edit Hover, Autocomplete, Developer Assistance, console I/O over RTT, and Visual Expressions, that can speed up the development process. A list of all available Quick Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19108110">https://en-support.renesas.com/knowledgeBase/19108110</a></p>
+ <h4><a class="anchor" id="quick-labs"></a>
+Quick Labs</h4>
+<p>A variety of Hands-on Do It Yourself labs are available on the Renesas RA and FSP Knowledge Base. Quick FSP Labs target the EK-RA6M3 kit and typically require only 15 minutes to complete. Each lab covers a couple related development tools and techniques like Edit Hover, Autocomplete, Developer Assistance, console I/O over RTT, and Visual Expressions, that can speed up the development process. A list of all available Quick Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19450948">https://en-support.renesas.com/knowledgeBase/19450948</a></p>
 <h2><a class="anchor" id="debugging-the-project"></a>
 Debugging the Project</h2>
 <p>Once your project builds without errors, you can use the Debugger to download your application to the board and execute it.</p>
@@ -800,7 +868,7 @@ Debugging the Project</h2>
 <img src="sd-my-proj-debug.png" alt="sd-my-proj-debug.png"/>
 </div>
 </li>
-<li>Connect the board to your PC via either the on-board Segger J-Link debugger (available on all RA EKs), a standalone Segger J-Link debugger, or an E2 or E2 Lite and click <b>Debug</b>.</li>
+<li>Connect the board to your PC via either a standalone Segger J-Link debugger, a Segger J-Link On-Board (included on all RA EKs), or an E2 or E2 Lite and click <b>Debug</b>.</li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>For details on using J-Link and connecting the board to the PC, see the Quick Start Guide included in the RA MCU Kit.</dd></dl>
 <h2><a class="anchor" id="modifying-toolchain-settings"></a>
@@ -815,7 +883,7 @@ e2 studio Project toolchain settings</div></div>
 <h2><a class="anchor" id="creating-ra-project-with-arm-compiler-6-in-e2-studio"></a>
 Creating RA project with ARM Compiler 6 in e2 studio</h2>
 <p>e2 studio does not include the ARM Compiler 6 (AC6) toolchain by default. Follow the steps below to integrate AC6 into e2 studio and create an AC6 RA project.</p>
-<dl class="section note"><dt>Note</dt><dd>It is assumed that the user is already familiar with RA project creation in e2 studio.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>It is assumed that the user is already familiar with RA project creation in e2 studio. e2 studio does not include ARM Compiler 6 (AC6) toolchain by default.</dd></dl>
 <p>Steps 1 through 8 describe the process for integrating ARM Compiler 6 into e2 studio.</p>
 <ol type="1">
 <li>Download, install, and configure license for the AC6 toolchain (<a href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/downloads/version-6">https://developer.arm.com/tools-and-software/embedded/arm-compiler/downloads/version-6</a>).</li>
@@ -965,7 +1033,7 @@ Create a New Project for Blinky</h2>
 <p>The creation and configuration of an RA MCU project is the first step in the creation of an application. The base RA MCU pack includes a pre-written Blinky example application that is simple and works on all Renesas RA MCU boards.</p>
 <p>Follow these steps to create an RA MCU project:</p>
 <ol type="1">
-<li>In e2 studio, click <b>File &gt; New &gt; RA Project</b> and select <b>Renesas RA C Executable Project</b>.</li>
+<li>In e2 studio, click <b>File &gt; New &gt; C/C++ Project</b> and select <b>Renesas RA</b> and <b>Renesas RA C/C++ Project</b>.</li>
 <li>Assign a name to this new project. Blinky is a good name to use for this tutorial.</li>
 <li><p class="startli">Click <b>Next</b>. The <b>Project Configuration</b> window shows your selection.</p>
 <div class="image">
@@ -979,11 +1047,19 @@ e2 studio Project Configuration window (part 1)</div></div>
 <div class="caption">
 e2 studio Project Configuration window (part 2)</div></div>
 </li>
+<li><p class="startli">Select the build artifact and RTOS.</p>
+<div class="image">
+<img src="sd-proj-config-2a.png" alt="sd-proj-config-2a.png"/>
+<div class="caption">
+e2 studio Project Configuration window (part 3)</div></div>
+</li>
+</ol>
+<ol type="1">
 <li><p class="startli">Select the Blinky template for your board and click <b>Finish</b>.</p>
 <div class="image">
 <img src="sd-proj-config-3.png" alt="sd-proj-config-3.png"/>
 <div class="caption">
-e2 studio Project Configuration window (part 3)</div></div>
+e2 studio Project Configuration window (part 4)</div></div>
 <p> Once the project has been created, the name of the project will show up in the <b>Project Explorer</b> window of e2 studio. Now click the <b>Generate Project Content</b> button in the top right corner of the <b>Project Configuration</b> window to generate your board specific files.</p>
 <div class="image">
 <img src="sd-proj-config-tab.png" alt="sd-proj-config-tab.png"/>
@@ -1179,14 +1255,14 @@ Project configuration (part 3)</div></div>
 <h2><a class="anchor" id="configuring-the-project-with-e2-studio"></a>
 Configuring the Project with e2 studio</h2>
 <p>e2 studio simplifies and accelerates the project configuration process by providing a GUI interface for selecting the options to configure the project.</p>
-<p>e2 studio offers a selection of perspectives presenting different windows to the user depending on the operation in progress. The default perspectives are <b>C/C++</b>, <b>RA Configuration</b> and <b>Debug</b>. The perspective can be changed by selecting a new one from the buttons at the top right.</p>
+<p>e2 studio offers a selection of perspectives presenting different windows to the user depending on the operation in progress. The default perspectives are <b>C/C++</b>, <b>FSP Configuration</b> and <b>Debug</b>. The perspective can be changed by selecting a new one from the buttons at the top right.</p>
 <div class="image">
 <img src="sd-select-param.jpg" alt="sd-select-param.jpg"/>
 <div class="caption">
 Selecting a perspective</div></div>
-<p> The <b>C/C++</b> perspective provides a layout selected for code editing. The <b>RA Configuration</b> perspective provides elements for configuring a RA MCU project, and the <b>Debug</b> perspective provides a view suited for debugging.</p>
+<p> The <b>C/C++</b> perspective provides a layout selected for code editing. The <b>FSP Configuration</b> perspective provides elements for configuring a RA MCU project, and the <b>Debug</b> perspective provides a view suited for debugging.</p>
 <ol type="1">
-<li>In order to configure the project settings ensure the <b>RA Configuration</b> perspective is selected.</li>
+<li>In order to configure the project settings ensure the <b>FSP Configuration</b> perspective is selected.</li>
 <li>Ensure the <b>Project Configuration [WDT Application]</b> is open. It is already open if the Summary information is visible. To open the Project Configuration now or at any time make sure the <b>RA Configuration</b> perspective is selected and double-click on the <code>configuration.xml</code> file in the Project Explorer pane on the right side of e2 studio.</li>
 </ol>
 <div class="image">
@@ -1235,7 +1311,7 @@ Stacks tab</div></div>
 <img src="sd-module-select.png" alt="sd-module-select.png"/>
 <div class="caption">
 Module Selection</div></div>
-<p> The selected HAL WDT driver is added to the <b>HAL/Common Stacks</b> Panel and the <b>Property</b> Window shows all configuration options for the selected module. The <b>Property</b> tab for the WDT should be visible at the bottom left of the screen. If it is not visible, check that the <b>RA Configuration</b> perspective is selected.</p>
+<p> The selected HAL WDT driver is added to the <b>HAL/Common Stacks</b> Panel and the <b>Property</b> Window shows all configuration options for the selected module. The <b>Property</b> tab for the WDT should be visible at the bottom left of the screen. If it is not visible, check that the <b>FSP Configuration</b> perspective is selected.</p>
 <div class="image">
 <img src="sd-module-properties.png" alt="sd-module-properties.png"/>
 <div class="caption">
@@ -1348,7 +1424,396 @@ Debug configuration</div></div>
 <li>Stop the debugger in e2 studio via <b>Run &gt; Terminate</b>.</li>
 <li>Click the reset button on the target board. The LEDs begin flashing.</li>
 </ol>
-<h1><a class="anchor" id="RASC-MDK-IAR-user-guide"></a>
+<h1><a class="anchor" id="primer-trustzone-project-development"></a>
+Primer: TrustZone Project Development</h1>
+<p>This section will introduce the user to the tools supporting TrustZone configuration for the RA Family of microcontrollers. It is intended to be read by development engineers implementing RA TrustZone projects for the first time. It will introduce basic concepts followed by workflow and tooling functions designed to simplify and accelerate their first TrustZone development. A background knowledge of e<sup>2</sup> studio and RA device hardware is expected.</p>
+<h2>Target Device</h2>
+<p>RA Cortex<sup>®</sup>-M33 or Cortex<sup>®</sup>-M23 devices with TrustZone security extension.</p>
+<h2><a class="anchor" id="renesas-implementation-of-arm-trustzone-technology"></a>
+Renesas Implementation of Arm TrustZone Technology</h2>
+<p>For brevity, TrustZone will be abbreviated to TZ in this document.</p>
+<p>The following section is supplied for reference only. For full details of TZ implementation, please refer to Arm documentation (<a href="https://developer.arm.com/ip-products/security-ip/trustzone">https://developer.arm.com/ip-products/security-ip/trustzone</a>) and the RA6M4 device manual.</p>
+<p>Arm TZ technology divides the MCU and therefore the application into Secure and Non-Secure partitions. Secure applications can access both Secure and Non-Secure memory and resources. Non-Secure code can access Non-Secure memory and resources as well as Secure resources through a set of so-called veneers located in the Non-Secure Callable (NSC) region. This ensures a single access point for Secure code when called from the Non-Secure partition. The MCU starts up in the Secure partition by default. The security state of the CPU can be either Secure or Non-Secure.</p>
+<p>The MCU code flash, data flash, and SRAM are divided into Secure (S) and Non-Secure (NS) regions. Code flash and SRAM include a further region known as Non-Secure Callable (NSC). These memory security attributes are set into the non-volatile memory via SCI or USB boot mode commands when the device lifecycle is Secure Software Debug (SSD) state. The memory security attributes are loaded into the Implementation Defined Attribution Unit (IDAU) peripheral and the memory controller before application execution and cannot be updated by application code.</p>
+<div class="image">
+<img src="tz-secure-nonsecure.png" alt="tz-secure-nonsecure.png"/>
+<div class="caption">
+Secure and Non-Secure Regions</div></div>
+<p> Note: All external memory accesses are considered to be Non-Secure.</p>
+<p>Code Flash and SRAM can be divided into Secure, Non-Secure, and Non-Secure Callable. All secure memory accesses from the Non-Secure region MUST go through the Non-Secure Callable gateway and target a specific Secure Gateway (SG) assembler instruction. This forces access to Secure APIs at a fixed location and prevents calls to sub-functions and so on. Failing to target an SG instruction will generate a TZ exception.</p>
+<p>TZ enabled compilers will manage generation of the NSC veneer automatically using CMSE extensions.</p>
+<h3><a class="anchor" id="calling-from-non-secure-to-secure"></a>
+Calling from Non-Secure to Secure</h3>
+<p>A new instruction SG (Secure Gateway) has been added to the Armv8-M architecture. This MUST be the destination instruction for any branch within the Non-Secure Callable region. If an attempt is made to branch to any other instruction from the Non-Secure partition, a TZ exception will be thrown.</p>
+<div class="image">
+<img src="tz-non-secure-to-secure-calling.png" alt="tz-non-secure-to-secure-calling.png"/>
+<div class="caption">
+Calling from Non-Secure to Secure Functions</div></div>
+ <h3><a class="anchor" id="calling-from-secure-to-non-secure"></a>
+Calling from Secure to Non-Secure</h3>
+<p>Secure code uses B(L)XNS instructions to make direct calls to Non-Secure functions. While this is certainly possible, it can create a security vulnerability in the application. It is also challenging for the Secure application to determine the address of the non-secure function during build phase. From the RA Tools and FSP point view, calling directly from Secure to Non-Secure via FSP API is not supported.</p>
+<p>Preference is for the Secure code to initialise as necessary from reset, then pass control to the Non-Secure partition. It will manage any data transfers and so forth via FSP call-backs as security checks. For, example secure data can be copied to Non-Secure RAM.</p>
+<div class="image">
+<img src="tz-secure-to-non-secure-calling.png" alt="tz-secure-to-non-secure-calling.png"/>
+<div class="caption">
+Calling from Secure to Non-Secure Functions</div></div>
+ <h2><a class="anchor" id="workflow"></a>
+Workflow</h2>
+<p>TrustZone MCU development normally consists of two projects within a workspace, Secure and Non-Secure. General project workflows are described in the following sections. The Renesas project generator also supports development with "Flat project" model with no TrustZone awareness.</p>
+<h3><a class="anchor" id="secure-project"></a>
+Secure Project</h3>
+<ol type="1">
+<li>Start a new Secure project in e<sup>2</sup> studio.</li>
+<li>Select and configure pins and drivers/stacks that need to be initialized and used in Secure mode. This should be kept to a minimum to reduce the security attack surface.</li>
+<li>Expose top of stacks as Non-Secure Callable (NSC) <em><b>if</b></em> they need to be accessed from Non-Secure partition. Again, this should be kept to a minimum.</li>
+<li>Generate project content and write Secure code such as key handling and opening drives as needed.</li>
+<li>Modify/remove any unnecessary "Guard" functions as needed to control access via NSC.</li>
+<li>Build project.</li>
+<li>A Non-Secure project will be needed before debugging. If necessary, prepare a "dummy" Non-Secure project or replace <code>R_BSP_NonSecureEnter();</code> with <code>while(1);</code> in <code>hal_entry.c</code>.</li>
+</ol>
+<h3><a class="anchor" id="non-secure-project"></a>
+Non-Secure Project</h3>
+<ol type="1">
+<li>Start a new Non-Secure project.</li>
+<li>If you have access to the Secure project, choose this option. However, if you only have access to a device with pre-programmed Secure code (commonly referred to as provisioned device) choose "Secure Bundle".</li>
+<li>Select and configure pins and drivers/stacks that need to be initialized and used in Non-Secure mode.</li>
+<li>Note that you can add NSC drivers and stacks as needed.</li>
+<li>Generate project content and write Non-Secure code as needed</li>
+<li>Access NSC drivers and Stacks via Guard functions.</li>
+<li>Build and debug project.</li>
+</ol>
+<h3><a class="anchor" id="flat-project"></a>
+Flat Project</h3>
+<p>A flat project does not technically use TrustZone as the developer has made a decision to place the entire application in Secure partition from restart.</p>
+<p>Notes:</p>
+<ul>
+<li>Any code placed in external memory (such as OSPI or QSPI) will be Non-Secure.</li>
+<li>The Ethernet EDMAC is designed to be a Non-Secure bus master so associated Ethernet RAM buffers will be placed in Non-Secure RAM. The tooling will automatically manage this.</li>
+</ul>
+<p>The workflow is as follows:</p>
+<ol type="1">
+<li>Start a new Flat project.</li>
+<li>Select and configure pins and drivers/stacks as needed.</li>
+<li>Generate project content and write code as needed.</li>
+<li>Build and debug project.</li>
+</ol>
+<h2><a class="anchor" id="ra-project-generator-pg"></a>
+RA Project Generator (PG)</h2>
+<p>The RA project generators have been created to help users through setting up new TZ enabled projects. User will be prompted for project settings such as Project Type (Secure, Non-Secure, or Flat), compiler, RTOS and debugger. Care is needed when setting up a TZ project to ensure that the connection between Secure and Non-Secure partitions are managed correctly.</p>
+<div class="image">
+<img src="tz-secure-proj.png" alt="tz-secure-proj.png"/>
+<div class="caption">
+Secure Project (following Arm notation as green)</div></div>
+ <div class="image">
+<img src="tz-non-secure-proj.png" alt="tz-non-secure-proj.png"/>
+<div class="caption">
+Non-Secure Project (following Arm notation as red)</div></div>
+ <div class="image">
+<img src="tz-flat-proj.png" alt="tz-flat-proj.png"/>
+<div class="caption">
+Flat Project</div></div>
+ <h3><a class="anchor" id="secure-project-set-up"></a>
+Secure Project Set Up</h3>
+<p>All code, data, and peripherals in this project will be configured as Secure using the device Peripheral Security Attribution (PSA) registers. Although it is very application specific, we recommend keeping the Secure project code as small as possible to reduce the attack surface. For example, secure key handling may be the only application code in the secure project.</p>
+<p>Necessary values to set up the TZ memory partition (IDAU registers) will be automatically calculated after the project is built to ensure they match the code and data size, keeping the attack surface as small as possible.</p>
+<p>Typically, ANSI C start up code (clearing of RAM, variable initialisation, etc) , clock, and secure peripheral initialisation will occur in this project.</p>
+<p>At the end of the Secure code, a call will be made to <code>R_BSP_NonSecureEnter();</code> to pass control to the Non-Secure partition.</p>
+<p>Non-Secure Callable (NSC) "Guard" functions are added to the project and expose selected modules to Non-Secure projects. User can add application-specific access checks as needed in these functions.</p>
+<p>Output of this project type will be an elf file that must be either pre-programmed (provisioned) into a device or referenced by a Non-Secure project (via Secure bundle <code>*.SBD</code>) to build a final image.</p>
+<p>This project type will NOT typically be debugged in isolation and will normally require a Non-Secure project such as a call to a <code>R_BSP_NonSecureEnter()</code> to be made. This can be replaced with <code>while(1);</code> if needed.</p>
+<h3><a class="anchor" id="rtos-support-in-tz-project"></a>
+RTOS Support in TZ Project</h3>
+<p>Although the RTOS kernel and user tasks will reside in the Non-Secure partition, the Secure partition needs to allocate stack space and so on. It is essential when starting a new RTOS project that the TrustZone Secure RTOS-Minimal template is selected. This will add the Arm TrustZone Context RA Port as below.</p>
+<div class="image">
+<img src="tz-secure-rtos-min-a.png" alt="tz-secure-rtos-min-a.png"/>
+</div>
+<div class="image">
+<img src="tz-secure-rtos-min-b.png" alt="tz-secure-rtos-min-b.png"/>
+<div class="caption">
+Secure RTOS-Minimal Template</div></div>
+ <h3><a class="anchor" id="peripheral-security-attribution"></a>
+Peripheral Security Attribution</h3>
+<p>Each peripheral can be configured to be Secure or Non-Secure. Peripherals are divided into two types.</p>
+<p>Type-1 peripherals have one security attribute. Access to all registers is controlled by one security attribute. The Type-1 peripheral security attribute is set in the PSARx (x = B to E) register by the secure application.</p>
+<p>Type-2 peripherals have the security attribute for each register or for each bit. Access to each register or bit field is controlled according to these security attributes. The Type-2 peripheral security attribute is set in the Security Attribution register in each module by the Secure application. For more information about the Security Attribution register, see sections in the Appropriate MCU’s User’s Manual for each peripheral.</p>
+<p>Table 1. Secure and Non-Secure Peripherals</p>
+<table class="doxtable">
+<tr>
+<th>Type </th><th>Peripheral  </th></tr>
+<tr>
+<td>Type 1 </td><td>SCI, SPI, USBFS, CAN, IIC, SCE9, DOC, SDHI, SSIE, CTSU, CRC, CAC, TSN, ADC12, DAC12, POEG, AGT, GPT, RTC, IWDT, WDT </td></tr>
+<tr>
+<td>Type 2 </td><td>System control (Resets, LVD, Clock Generation Circuit, Low Power Modes, Battery Backup Function), FLASH CACHE, SRAM controller, CPU CACHE, DMAC, DTC, ICU, MPU, BUS, Security setting, ELC, I/O ports </td></tr>
+<tr>
+<td>Always Non-Secure </td><td>CS Area Controller, QSPI, OSPI, ETHERC, EDMAC </td></tr>
+</table>
+<p>FSP will initialise the arbitration registers during Secure project BSP start up. User code may also be written to set or clear further arbitration. However care must be taken not to undermine FSP.</p>
+<h3><a class="anchor" id="non-secure"></a>
+Non-Secure</h3>
+<p>All code, data, and peripherals in this project will be configured as Non-Secure. This project type must be associated with a Secure project to enable access to secure code, peripherals, linker scripts and others.</p>
+<h3><a class="anchor" id="flat-project-type"></a>
+Flat Project Type</h3>
+<p>All code, data, and peripherals are configured in a Secure single partition except for the EDMAC RAM buffers that will remain in the Non-Secure partition. Effectively, TZ is disabled.</p>
+<h3><a class="anchor" id="secure-connection-to-non-secure-project"></a>
+Secure Connection to Non-Secure Project</h3>
+<p>When starting a new Non-Secure Project, the user will be prompted for either a Secure Project or Secure Bundle. In each case, details of the linker settings, Non-Secure Callable functions, and Secure peripherals will be read to enable the Non-Secure project setup.</p>
+<p>Should the Secure project or bundle be rebuilt, the Non-Secure editor will detect this and prompt user to regenerate the Non-Secure project configuration.</p>
+<div class="image">
+<img src="tz-secure-proj-or-bundle.png" alt="tz-secure-proj-or-bundle.png"/>
+<div class="caption">
+Secure Project or Bundle Selection</div></div>
+ <h4><a class="anchor" id="secure-project-combined"></a>
+Secure Project (Combined)</h4>
+<p>A Secure project must reside in the same Workspace as the Non-Secure project and will typically be used when a design engineer has access to both the Secure and Non-Secure project sources. This is sometimes known as "Combined model".</p>
+<p>A Secure <code>.elf</code> file will be referenced and included in the debug configuration for download to the target device. The development engineer will have visibility of Secure and Non-Secure project source code and configuration.</p>
+<h4><a class="anchor" id="secure-bundle-split"></a>
+Secure Bundle (Split)</h4>
+<p>A Secure Bundle will ONLY include linker memory ranges, symbol references, and details of locked Secure peripheral configuration settings but no access to Secure source code (API header files will be included as necessary).</p>
+<p>The Secure bundle file (*.SBD) must be supplied to the Non-Secure developer by the Secure project developer.</p>
+<p>The development engineer will typically not have access to the Secure project or <code>.elf</code> file which MUST be pre-programmed or provisioned into the target MCU.</p>
+<p>The DLM state of target device should then be switched to NSECSD (see section 6.2) before the device is provided to the non-secure developer.</p>
+<p>This is often referred to as "Split model" where a basic security set up is developed by a Secure team and then passed to the Non-Secure team in the same facility or at a third party. The Non-Secure team has no access to the Secure source code and cannot directly access Secure peripherals, data, or APIs.</p>
+<h3><a class="anchor" id="debug-configurations"></a>
+Debug Configurations</h3>
+<p>After each project type has been selected, a suitable debug configuration will be generated.</p>
+<h4><a class="anchor" id="non-secure-with-secure-project-combined"></a>
+Non-Secure with Secure Project (Combined)</h4>
+<p>Both Secure and Non-Secure <code>.elf</code> files will be downloaded.</p>
+<p>A debug configuration called <code>&lt;project name&gt;_SSD</code> will be generated.</p>
+<h4><a class="anchor" id="non-secure-with-secure-bundle-split"></a>
+Non-Secure with Secure Bundle (Split)</h4>
+<p>Only a Non-Secure elf will be downloaded. This configuration must be used with a pre-provisioned device (Secure project pre-programmed into MCU Flash).</p>
+<p>A debug configuration called <code>&lt;project name&gt;_NSECSD</code> will be generated.</p>
+<h4><a class="anchor" id="flat-debug"></a>
+Flat Debug</h4>
+<p>A single <code>.elf</code> file will be downloaded.</p>
+<p>A debug configuration called <code>&lt;project name&gt;_FLAT</code> will be generated.</p>
+<h2><a class="anchor" id="secure-projects"></a>
+Secure Projects</h2>
+<p>As mentioned, Secure code will be called immediately after device reset and run ANSI C start up, clock, interrupt vector table, and secure peripheral initialization before starting user code. All selected peripheral configuration settings will be automatically initialised as Secure.</p>
+<h3><a class="anchor" id="secure-clock"></a>
+Secure Clock</h3>
+<p>Device clock settings are the possible exception in that they will be initialised in the Secure project (to enable faster start up from reset) but can be set as Secure or Non-Secure as user application may need to change settings during execution (for low-power mode and so on). The Secure and Non-Secure FSP BSPs can both change the clock settings.</p>
+<p>However, clock settings can be locked as Secure should the developer choose to do so.</p>
+<div class="image">
+<img src="tz-secure-clock-setting.png" alt="tz-secure-clock-setting.png"/>
+<div class="caption">
+Secure Clock Setting</div></div>
+ <h3><a class="anchor" id="setting-drivers-as-nsc"></a>
+Setting Drivers as NSC</h3>
+<p>Some driver and middleware stacks in the Secure project may need to be accessed by the Non-Secure partition. To enable generation of NSC veneers, set "Non-Secure Callable" from the right-click context menu for the selected modules in the Configurator.</p>
+<p>Note: It is only possible to "expose" top of stacks as NSC.</p>
+<div class="image">
+<img src="tz-generate-nsc-veneers-a.png" alt="tz-generate-nsc-veneers-a.png"/>
+</div>
+<div class="image">
+<img src="tz-generate-nsc-veneers-b.png" alt="tz-generate-nsc-veneers-b.png"/>
+<div class="caption">
+Generate NSC Veneers</div></div>
+<p> The top of the stack will be marked with a new icon and tool tip to signify NSC access.</p>
+<h3><a class="anchor" id="guard-functions"></a>
+Guard Functions</h3>
+<p>Access to NSC drivers from a Non-Secure project is possible through the Guard APIs. FSP will automatically generate Guard functions for all the top of stack/driver APIs added to the project as Non-Secure Callable.</p>
+<p>User can choose to add further levels of access control or delete guard function if they wish to only expose a limited range of APIs to a Non-Secure developer.</p>
+<div class="fragment"><div class="line">BSP_CMSE_NONSECURE_ENTRY fsp_err_t g_uart0_open_guard(</div><div class="line">        uart_ctrl_t *const p_api_ctrl, uart_cfg_t const *const p_cfg) {</div><div class="line">    /* TODO: add your own security checks here */</div><div class="line"></div><div class="line">    FSP_PARAMETER_NOT_USED(p_api_ctrl);</div><div class="line">    FSP_PARAMETER_NOT_USED(p_cfg);</div><div class="line"></div><div class="line">    return R_SCI_UART_Open(&amp;g_uart0_ctrl, &amp;g_uart0_cfg);</div><div class="line">}</div></div><!-- fragment --><p>For example, an SCI channel may be opened and configured for a desired baud rate by the Secure developer, but only enable the Write API to the Non-Secure developer. In which case, all but <code>g_uart0_write_guard()</code> could be deleted. CTRL structures are not required as they will be added on the Secure side.</p>
+<p>For example, the call from the Non-Secure partition would be as follows:</p>
+<div class="fragment"><div class="line">err = g_uart0_open_guard(0,0);</div></div><!-- fragment --><h2><a class="anchor" id="non-secure-projects"></a>
+Non-Secure projects</h2>
+<p>Configuration of the project can continue as for other RA devices, but certain resources will be locked if they have been previously set up as Secure.</p>
+<p>The Non-Secure project will be called from the Secure project via <code>R_BSP_NonSecureEnter();</code></p>
+<h3><a class="anchor" id="clock-set-up"></a>
+Clock Set Up</h3>
+<p>You may recall that clocks can be set as Secure or Non-Secure. If they are set as Secure, settings will only be available to view, and user will not be able to change them. The Override button will be greyed. This is useful to preserve CGC sync with secure project by not overriding unless necessary. If it is NOT set as Secure, user can choose to override the initial Secure settings</p>
+<div class="image">
+<img src="tz-clock-setting-non-secure.png" alt="tz-clock-setting-non-secure.png"/>
+<div class="caption">
+Clock Setting as Non-Secure</div></div>
+ <div class="image">
+<img src="tz-clock-setting-secure.png" alt="tz-clock-setting-secure.png"/>
+<div class="caption">
+Clock Setting as Secure</div></div>
+ <h3><a class="anchor" id="selecting-nsc-drivers"></a>
+Selecting NSC Drivers</h3>
+<p>Drivers declared as NSC in a Secure project can be selected and added to Non-Secure project and will be decorated as before.</p>
+<div class="image">
+<img src="tz-selecting-nsc-drivers-a.png" alt="tz-selecting-nsc-drivers-a.png"/>
+</div>
+<div class="image">
+<img src="tz-selecting-nsc-drivers-b.png" alt="tz-selecting-nsc-drivers-b.png"/>
+<div class="caption">
+Selecting NSC Drivers</div></div>
+ <h3><a class="anchor" id="locked-resources"></a>
+Locked Resources</h3>
+<p>When a NSC Secure driver is added to a Non-Secure project, the configuration settings are locked and are available for information only. A padlock is added for indication.</p>
+<div class="image">
+<img src="tz-locked-resources.png" alt="tz-locked-resources.png"/>
+<div class="caption">
+Locked Resources</div></div>
+ <h3><a class="anchor" id="locked-channels"></a>
+Locked Channels</h3>
+<p>In a peripheral with multiple channels, for example, DMA, if a Non-Secure developer tries to select a channel that has already been defined as Secure, the following error message type will be displayed.</p>
+<div class="image">
+<img src="tz-error-msg-selecting-secure.png" alt="tz-error-msg-selecting-secure.png"/>
+<div class="caption">
+Error Message when Selecting a Secure Channel</div></div>
+ <h2><a class="anchor" id="idau-registers"></a>
+IDAU registers</h2>
+<p>Renesas RA TZ-enabled devices include a set of registers known as Implementation Defined Attribution Unit (IDAU) that are used to set up partitions between Secure, Non-Secure Callable, and Non-Secure regions. The IDAU registers can only be programmed during MCU <em><b>boot mode</b></em> and NOT through the debug interfaces. Because of this, special debugger firmware has been developed to manage bringing the device up in SCI boot mode to set up the IDAU registers (automatically drives MD pin) and then switch back to debug mode as needed.</p>
+<p><b>Note:</b> Please be aware of the extra signal connection (MD pin) needed on the debug interface connector. The Renesas Evaluation Kit (EK) for your selected device is a good reference.</p>
+<div class="image">
+<img src="tz-debug-iface-connector.png" alt="tz-debug-iface-connector.png"/>
+</div>
+<p> The e<sup>2</sup> studio build phase automatically extracts the IDAU partition register settings from the Secure <code>.elf</code> file and programs them into the device during debug connection, which can be observed in the console.</p>
+<p>This is an important phase of TZ development as the Secure partitions should be set as small as possible to ensure that the security attack surface is as small as possible.</p>
+<p>However, should the developer wish to make these partitions larger to accommodate, for example during field firmware updates, const or data arrays should be placed in the Secure project as needed.</p>
+<div class="image">
+<img src="tz-ra-current-status.png" alt="tz-ra-current-status.png"/>
+<div class="caption">
+RA TrustZone Device Current Status</div></div>
+<p> It is also possible to manually set up the partition registers through the Renesas Device Partition Manager.</p>
+<div class="image">
+<img src="tz-ren-dev-partition-mgr-a.png" alt="tz-ren-dev-partition-mgr-a.png"/>
+</div>
+<div class="image">
+<img src="tz-ren-dev-partition-mgr-b.png" alt="tz-ren-dev-partition-mgr-b.png"/>
+<div class="caption">
+Renesas Device Partition Manager</div></div>
+ <h3><a class="anchor" id="sci-boot-mode"></a>
+SCI Boot Mode</h3>
+<p>Example of MD mode pin connection to debugger connector (from EK schematic).</p>
+<div class="image">
+<img src="tz-md-mode-pin-ex.png" alt="tz-md-mode-pin-ex.png"/>
+<div class="caption">
+Example of MD Mode Pin Connection to Debugger Connector (from EK schematic</div></div>
+<h3><a class="anchor" id="dlm-states"></a>
+DLM States</h3>
+<p>Device lifecycle defines the current phase of the device and controls the capabilities of the debug interface, the serial programming interface and Renesas test mode. The following illustration shows the lifecycle definitions and capability in each lifecycle.</p>
+<div class="image">
+<img src="tz-lifecycle-stages.png" alt="tz-lifecycle-stages.png"/>
+<div class="caption">
+Lifecycle Stages</div></div>
+<p> Note: All authentication key exchange and transitioning to LCK_DBG, LCK_BOOT, RMA_REQ is only managed by Renesas Flash Programmer (RFP) and NOT within e<sup>2</sup> studio.</p>
+<div class="image">
+<img src="tz-lifecycle-stages-debug-levels.png" alt="tz-lifecycle-stages-debug-levels.png"/>
+<div class="caption">
+Lifecycle Stages and Debug Levels</div></div>
+<p> There are three debug access levels. The debug access level changes according to the lifecycle state.</p>
+<ul>
+<li>DBG2: The debugger connection is allowed, and no restriction to access memories and peripherals</li>
+<li>DBG1: The debugger connection is allowed, and restricted to access only Non-Secure memory regions and peripherals</li>
+<li>DBG0: The debugger connection is not allowed</li>
+</ul>
+<p>Transitions for one state to another can be performed using the Renesas Flash Programmer (RFP, see section below) or using the Renesas Device Partition Manager (limited number of states possible). It is possible to secure transitions between states using authentication keys. For more information on DLM states and transitions (device specific), please refer to device user manual.</p>
+<h2><a class="anchor" id="debug"></a>
+Debug</h2>
+<p>By default, the device will be in SSD mode and so allow access to Secure and Non-Secure partitions. In this mode both Secure and Non-Secure <code>.elf</code> files will be downloaded.</p>
+<p>The current debugger status is displayed in the lower left corner and includes the DLM state (SSD or NSECSD) and current partition (Secure, Non-Secure, or Non-Secure Callable) when the debugger is stopped, for example.</p>
+<div class="image">
+<img src="tz-current-debugger-status-a.png" alt="tz-current-debugger-status-a.png"/>
+</div>
+ <div class="image">
+<img src="tz-current-debugger-status-b.png" alt="tz-current-debugger-status-b.png"/>
+</div>
+ <div class="image">
+<img src="tz-current-debugger-status-c.png" alt="tz-current-debugger-status-c.png"/>
+<div class="caption">
+Current Debugger Status</div></div>
+ <h3><a class="anchor" id="non-secure-debug"></a>
+Non-Secure Debug</h3>
+<p>Once the device is transitioned to NSECSD mode, only Non-Secure Flash, RAM and Peripherals can be accessed. In this mode, a Secure <code>.elf</code> must be pre-programmed (provisioned) into the device, and only a Non-Secure <code>.elf</code> file will be downloaded.</p>
+<p>When in NSECSD mode access to Secure elements will be blocked and data displayed as ????????.</p>
+<p>In NSECSD mode, it is not possible to set breakpoints on Secure code or data.</p>
+<p>It is not possible to step into Secure code; the debugger will perform a step-over of any Secure function calls. Should the user press the Suspend button during execution, the debugger will stop at the next Non-Secure code access.</p>
+<p>Assuming Secure memory region finishes at 32K (0x8000) in NSECSD debug mode (colour coding added for indication only), memory will be displayed as shown in the following figure.</p>
+<div class="image">
+<img src="tz-mem-display-nsecsd-debug-mode.png" alt="tz-mem-display-nsecsd-debug-mode.png"/>
+<div class="caption">
+Memory Display in NSECSD Debug Mode</div></div>
+<p> Disassembly will be displayed as shown in the following figure.</p>
+<div class="image">
+<img src="tz-disassembly-display-nsecsd-debug-mode.png" alt="tz-disassembly-display-nsecsd-debug-mode.png"/>
+<div class="caption">
+Disassembly Display in NSECSD Debug Mode</div></div>
+ <h2><a class="anchor" id="debugger-support"></a>
+Debugger support</h2>
+<p>Renesas E2, E2 Lite, and SEGGER J-Link are supported in e<sup>2</sup> studio for TZ projects.</p>
+<p><b>Debugger Support for TZ Projects</b></p>
+<table class="doxtable">
+<tr>
+<th>Feature </th><th>E2 Lite </th><th>E2 </th><th>J-Link </th><th>J-Link OB </th><th>ULINK </th><th>IAR i-Jet  </th></tr>
+<tr>
+<td>JTAG </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>SWD </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>ETB trace </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>ETM trace </td><td>No </td><td>Yes </td><td>Yes </td><td>No </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>TZ partition programming </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>No </td></tr>
+<tr>
+<td>Non secure debug </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>e<sup>2</sup> studio </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td><td>TBC </td></tr>
+<tr>
+<td>IAR EW Arm </td><td>Under consideration </td><td>Under consideration </td><td>Yes </td><td>Yes </td><td>No </td><td>Yes </td></tr>
+<tr>
+<td>Keil MDK </td><td>Under consideration </td><td>Under consideration </td><td>Yes </td><td>Yes </td><td>Yes </td><td>No </td></tr>
+</table>
+<h2><a class="anchor" id="third-party-ides"></a>
+Third-Party IDEs</h2>
+<p>Third-party IDEs such as IAR Systems EWARM and Keil MDK (uVision) are supported by the RA Smart Configurator (RA SC).</p>
+<p>In general, RA SC offers the same configurator functionality as e<sup>2</sup> studio documented above. Project generators are available to initialise workspaces in the target IDEs as well as setting up debug configurations and so forth. However, there are some limitations that need to be noted especially with regards to IDAU TZ partition register programming. See the specific RA SC documentation for usage details.</p>
+<h2><a class="anchor" id="renesas-flash-programmer-rfp"></a>
+Renesas Flash Programmer (RFP)</h2>
+<p>Updated versions of Renesas Flash Programmer (RFP) are available to support setting of partitions, DLM state and Authentication keys.</p>
+<p>RFP can be downloaded free of charge on the Renesas web site.</p>
+<p>A new mode has been added to Program Flash Options as shown in the following graphics.</p>
+<div class="image">
+<img src="tz-rfp-program-flash-options.png" alt="tz-rfp-program-flash-options.png"/>
+<div class="caption">
+RFP Program Flash Options</div></div>
+<p> Options to set partition boundaries are shown in the following figure.</p>
+<div class="image">
+<img src="tz-rfp-partition-boundaries.png" alt="tz-rfp-partition-boundaries.png"/>
+<div class="caption">
+RFP Partition Boundaries</div></div>
+<p> Options to set DLM state, Authentication keys, and Security settings are shown in the following figure.</p>
+<div class="image">
+<img src="tz-rfp-dlm-authent-keys-security-settings.png" alt="tz-rfp-dlm-authent-keys-security-settings.png"/>
+<div class="caption">
+RFP DLM State, Authentication Keys, and Security Settings</div></div>
+<p> Great care is needed here as some DLM states can **<span class="underline">permanently</span>** turn off debug and boot mode on the devices. Equally programming a security access authentication key can lead to permanently locked devices if the key is lost.</p>
+<h2><a class="anchor" id="glossary"></a>
+Glossary</h2>
+<p><b>IDAU</b></p>
+<p>Implementation Defined Attribute Unit. Used to program TZ partitions in SCI book mode.</p>
+<p><b>NSECSD</b></p>
+<p>Non-Secure Software Development mode</p>
+<p><b>SSD</b></p>
+<p>Secure Software Development mode</p>
+<p><b>NSC</b></p>
+<p>Non-Secure Callable. Special Secure memory region used for Veneer to allow access to Secure APIs from Non-Secure code.</p>
+<p><b>Provisioned</b></p>
+<p>Device with Secure code pre-programmed and DLM state set to <b>NSECSD</b></p>
+<p><b>Flat project</b></p>
+<p>All code, data and peripherals are configured as secure with the exception of the EDMAC RAM buffer which are placed in Non-Secure RAM due to the configuration of the internal bus masters.</p>
+<p><b>Veneer</b></p>
+<p>Code that resides in Non-Secure Callable region</p>
+<p><b>Combined model</b></p>
+<p>Development engineer has access to both Secure and Non-Secure project and source code</p>
+<p><b>Split model</b></p>
+<p>Development Engineer has access to only the Non-Secure partition. No visibility of Secure source code. Secure code will be provisioned into device.</p>
+<h3><a class="anchor" id="configurator-icon-glossary"></a>
+Configurator Icon Glossary</h3>
+<div class="image">
+<img src="tz-config-icons-a.png" alt="tz-config-icons-a.png"/>
+</div>
+ <div class="image">
+<img src="tz-config-icons-b.png" alt="tz-config-icons-b.png"/>
+<div class="caption">
+Configurator Icons</div></div>
+ <h1><a class="anchor" id="RASC-MDK-IAR-user-guide"></a>
 RA SC User Guide for MDK and IAR</h1>
 <h2><a class="anchor" id="RASC"></a>
 What is RA SC?</h2>
@@ -1430,7 +1895,7 @@ Modify existing RA project</h3>
 <ol type="1">
 <li>If the desired project is not already open in uVision, the project can be opened using menu item <b>Project &gt; Open project...</b> or selecting from the list of previous projects.</li>
 <li>Select menu item <b>Project &gt; Manage &gt; Run-time Environment...</b> or tool bar button <b>Manage Run-Time Environment</b>.</li>
-<li><p class="startli">Expand the <b>Flex Software</b> tree item in the dialog shown and click the green run button next to <b>RA Configuration</b>. This launches RA SC and the FSP project configuration can be modified and updated.</p>
+<li><p class="startli">Expand the <b>Flex Software</b> tree item in the dialog shown and click the green run button next to <b>FSP Configuration</b>. This launches RA SC and the FSP project configuration can be modified and updated.</p>
 <div class="image">
 <img src="manage-runtime-environment.png" alt="manage-runtime-environment.png"/>
 <div class="caption">
@@ -1497,7 +1962,7 @@ RA SC Menu Item</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

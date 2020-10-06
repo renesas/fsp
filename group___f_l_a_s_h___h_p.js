@@ -2,7 +2,6 @@ var group___f_l_a_s_h___h_p =
 [
     [ "flash_hp_instance_ctrl_t", "group___f_l_a_s_h___h_p.html#structflash__hp__instance__ctrl__t", [
       [ "opened", "group___f_l_a_s_h___h_p.html#a0e9c6d859fd6f932e7d723c6c6a520e3", null ],
-      [ "p_cfg", "group___f_l_a_s_h___h_p.html#ac6ad507f328b170af1342d487969042b", null ],
       [ "current_operation", "group___f_l_a_s_h___h_p.html#aecd09c39ddf5233ecdd713a14cdd4b4e", null ]
     ] ],
     [ "flash_bgo_operation_t", "group___f_l_a_s_h___h_p.html#gaf2df0780f6e32a857a43f00d2a34f5f6", null ],
@@ -18,6 +17,7 @@ var group___f_l_a_s_h___h_p =
     [ "R_FLASH_HP_Reset", "group___f_l_a_s_h___h_p.html#ga4e269255ca9448da5d7b0a745992f6de", null ],
     [ "R_FLASH_HP_UpdateFlashClockFreq", "group___f_l_a_s_h___h_p.html#gad766079d801d722527eb6834fc662e8a", null ],
     [ "R_FLASH_HP_StartUpAreaSelect", "group___f_l_a_s_h___h_p.html#ga95b5a01a9c462a38f52397315a346a3e", null ],
+    [ "R_FLASH_HP_CallbackSet", "group___f_l_a_s_h___h_p.html#ga2932aac9082f6418d518b9cbc7cdef01", null ],
     [ "R_FLASH_HP_VersionGet", "group___f_l_a_s_h___h_p.html#ga35f8f3a5113959a79a551cb6f0e1b808", null ],
     [ "R_FLASH_HP_InfoGet", "group___f_l_a_s_h___h_p.html#ga3335f3f8b174db9b86b3773993f341c6", null ]
 ];

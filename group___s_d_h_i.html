@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -121,6 +121,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga6bebd1e0295bac31b76888d4fca94f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad954571b08da622a4b232680190b4313"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_h_i.html#gad954571b08da622a4b232680190b4313">R_SDHI_Erase</a> (<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_api_ctrl, uint32_t const start_sector, uint32_t const sector_count)</td></tr>
 <tr class="separator:gad954571b08da622a4b232680190b4313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78d9f9f873c52843f778fd700ef38936"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_h_i.html#ga78d9f9f873c52843f778fd700ef38936">R_SDHI_CallbackSet</a> (<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga78d9f9f873c52843f778fd700ef38936"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga76e778c7c058c3ca09f63f05c30d00c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_h_i.html#ga76e778c7c058c3ca09f63f05c30d00c1">R_SDHI_Close</a> (<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga76e778c7c058c3ca09f63f05c30d00c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2d665993f8b7841e81d81481fd1686fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_h_i.html#ga2d665993f8b7841e81d81481fd1686fe">R_SDHI_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
@@ -133,10 +135,11 @@ Overview</h1>
 <h2><a class="anchor" id="r-sdhi-features"></a>
 Features</h2>
 <ul>
-<li>Supports the following memory devices: SDSC (SD Standard Capacity), SDHC (SD High Capacity), and SDXC (SD Extended Capacity)<a class="anchor" id="um_sdmmc_sdhcsdxc_cards"></a><a class="anchor" id="um_sdmmc_sdsc_cards"></a><ul>
+<li>Supports the following memory devices: SDSC (SD Standard Capacity), SDHC (SD High Capacity), SDXC (SD Extended Capacity) and eMMC (embedded Multi Media Card)<a class="anchor" id="um_sdmmc_sdhcsdxc_cards"></a><a class="anchor" id="um_sdmmc_sdsc_cards"></a><ul>
 <li>Supports reading, writing and erasing SD memory devices</li>
-<li>Supports 1-bit or 4-bit bus<a class="anchor" id="um_sdmmc_bus_width"></a></li>
+<li>Supports 1, 4 or 8-bit data bus (8-bit bus is supported for eMMC only)<a class="anchor" id="um_sdmmc_bus_width"></a></li>
 <li>Supports detection of device write protection (SD cards only)<a class="anchor" id="um_sdmmc_write_unsupported_if_write_protected"></a><a class="anchor" id="um_sdmmc_erase_unsupported_if_write_protected"></a></li>
+<li>Supports high speed mode<a class="anchor" id="um_sdmmc_high_speed_emmc"></a></li>
 </ul>
 </li>
 <li>Automatically configures the clock to the maximum clock rate supported by both host (MCU) and device<a class="anchor" id="um_sdmmc_clock_configuration"></a></li>
@@ -168,9 +171,25 @@ Disabled</li>
 Enabled</li>
 </ul>
 </td><td>Enabled </td><td>If enabled, code for supporting buffers that are not aligned on a 4-byte boundary is included in the build. Only disable this if all buffers passed to the driver are 4-byte aligned. </td></tr>
+<tr>
+<td>SD Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>If selected code for SD card support is included in the build. </td></tr>
+<tr>
+<td>eMMC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>If selected code for eMMC device support is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Storage &gt; SD/MMC Driver on r_sdhi</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Storage &gt; SD/MMC Driver on r_sdhi:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Storage &gt; SD/MMC Driver on r_sdhi. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -231,6 +250,10 @@ Pin Configuration</h2>
 <li>SDnDAT1</li>
 <li>SDnDAT2</li>
 <li>SDnDAT3</li>
+<li>SDnDAT4 (not available on all MCUs)</li>
+<li>SDnDAT5 (not available on all MCUs)</li>
+<li>SDnDAT6 (not available on all MCUs)</li>
+<li>SDnDAT7 (not available on all MCUs)</li>
 <li>SDnCD (not available on all MCUs)</li>
 <li>SDnWP</li>
 </ul>
@@ -251,10 +274,6 @@ Limitations</h2>
 <h3>Blocking Calls</h3>
 <p>The following functions block execution until the response is received for at least one command:</p><ul>
 <li><a class="el" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a></li>
-<li><a class="el" href="group___s_d_h_i.html#ga844604588f44e8aa4495d27ffca74b0d">R_SDHI_ReadIo</a></li>
-<li><a class="el" href="group___s_d_h_i.html#ga111f9479ed25bba03ade5c6c40248e44">R_SDHI_WriteIo</a></li>
-<li><a class="el" href="group___s_d_h_i.html#gafd18fd8115dff4bfda4dadd5468783fd">R_SDHI_ReadIoExt</a></li>
-<li><a class="el" href="group___s_d_h_i.html#gaa73674cc979a40b00e4aed1ed9b5aa34">R_SDHI_WriteIoExt</a></li>
 <li><a class="el" href="group___s_d_h_i.html#gad954571b08da622a4b232680190b4313">R_SDHI_Erase</a></li>
 </ul>
 <p>Once the function returns the status of the operation can be determined via <a class="el" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet</a> or through receipt of a callback.</p>
@@ -837,6 +856,56 @@ Examples</h1>
 
 </div>
 </div>
+<a id="ga78d9f9f873c52843f778fd700ef38936"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga78d9f9f873c52843f778fd700ef38936">&#9670;&nbsp;</a></span>R_SDHI_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SDHI_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#a7e8903825189ff782fd28316f49d6e7e">sdmmc_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga76e778c7c058c3ca09f63f05c30d00c1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga76e778c7c058c3ca09f63f05c30d00c1">&#9670;&nbsp;</a></span>R_SDHI_Close()</h2>
 
@@ -896,7 +965,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

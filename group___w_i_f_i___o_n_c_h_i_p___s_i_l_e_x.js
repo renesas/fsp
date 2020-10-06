@@ -78,7 +78,6 @@ var group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x =
     [ "SOCKETS_SetSockOpt", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga0b03ee3960134967aca956e38bb2eb91", null ],
     [ "SOCKETS_GetHostByName", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga8d5a20d3337081edf5c545cf7c2fd2e9", null ],
     [ "SOCKETS_Init", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga5d655e60e429216298ff9f65973df145", null ],
-    [ "ulApplicationGetNextSequenceNumber", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga72c1e1634d4ac647d60486ad2f222d95", null ],
     [ "WIFI_On", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga2ee26776a00869c415da4a108031af1d", null ],
     [ "WIFI_Off", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga93265c46f46cb899f08adc56608b35d5", null ],
     [ "WIFI_ConnectAP", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga430d72715054198b6ce0885410b027a5", null ],

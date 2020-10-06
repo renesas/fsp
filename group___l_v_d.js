@@ -5,5 +5,6 @@ var group___l_v_d =
     [ "R_LVD_Close", "group___l_v_d.html#ga9548fb81b4659985ce9aed2343a2e34c", null ],
     [ "R_LVD_StatusGet", "group___l_v_d.html#gae1af63498d91ee2ced63246e477faa8c", null ],
     [ "R_LVD_StatusClear", "group___l_v_d.html#ga2f8bf11a148ad673457d5afcabb85d7d", null ],
-    [ "R_LVD_VersionGet", "group___l_v_d.html#gaf806e8a0ba231798e50ae7264c2c7a6f", null ]
+    [ "R_LVD_VersionGet", "group___l_v_d.html#gaf806e8a0ba231798e50ae7264c2c7a6f", null ],
+    [ "R_LVD_CallbackSet", "group___l_v_d.html#ga94ba46485f3f278ae20933892941b795", null ]
 ];

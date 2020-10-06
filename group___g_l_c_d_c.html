@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -182,7 +182,7 @@ Off</li>
 </table>
 </p>
 <p><h2>Configurations for Driver &gt; Graphics &gt; Display Driver on r_glcdc</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Graphics &gt; Display Driver on r_glcdc:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Graphics &gt; Display Driver on r_glcdc.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -253,7 +253,7 @@ Disabled</li>
 <tr>
 <td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Number of framebuffers</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 1. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.bss </td><td>Specify the section in which to allocate the framebuffer. </td></tr>
+<td>Input &gt; Graphics Layer 1 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.bss </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
 <tr>
 <td>Input &gt; Graphics Layer 1 &gt; Line Repeat &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -333,7 +333,7 @@ Disabled</li>
 <tr>
 <td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Number of framebuffers</td><td>Must be a valid non-negative integer with a maximum configurable value of 65535</td><td>2 </td><td>Number of framebuffers allocated for Graphics Layer 2. </td></tr>
 <tr>
-<td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.bss </td><td>Specify the section in which to allocate the framebuffer. </td></tr>
+<td>Input &gt; Graphics Layer 2 &gt; Framebuffer &gt; Section for framebuffer allocation</td><td>Manual Entry</td><td>.bss </td><td>Specify the section in which to allocate the framebuffer. When Arm Compiler 6 is used to place this memory in on-chip SRAM, the section name must be .bss or start with .bss. to avoid consuming unnecessary ROM space. </td></tr>
 <tr>
 <td>Input &gt; Graphics Layer 2 &gt; Line Repeat &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1655,7 +1655,7 @@ Dithering pattern D. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

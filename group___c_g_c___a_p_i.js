@@ -16,12 +16,14 @@ var group___c_g_c___a_p_i =
     [ "cgc_clocks_cfg_t", "group___c_g_c___a_p_i.html#structcgc__clocks__cfg__t", [
       [ "system_clock", "group___c_g_c___a_p_i.html#a654bf74a6f5fa9b5b278f4bd1144658c", null ],
       [ "pll_cfg", "group___c_g_c___a_p_i.html#a1340ff6ca7569ae56130fa1a6ea23253", null ],
+      [ "pll2_cfg", "group___c_g_c___a_p_i.html#a573d8be054d3a8ef1109cc39cdea365d", null ],
       [ "divider_cfg", "group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa", null ],
       [ "loco_state", "group___c_g_c___a_p_i.html#a616ba1cfab671dc6183198ad0c6044ca", null ],
       [ "moco_state", "group___c_g_c___a_p_i.html#a617d47cbafc921e9f3d02da103b83afc", null ],
       [ "hoco_state", "group___c_g_c___a_p_i.html#a12aa92642ebaa4e7abb3ba767d59e90e", null ],
       [ "mainosc_state", "group___c_g_c___a_p_i.html#ab2a7b402ef0700179bbc3cc303ecb6b3", null ],
-      [ "pll_state", "group___c_g_c___a_p_i.html#ac83f91bc046e3cc482b538b59fe41923", null ]
+      [ "pll_state", "group___c_g_c___a_p_i.html#ac83f91bc046e3cc482b538b59fe41923", null ],
+      [ "pll2_state", "group___c_g_c___a_p_i.html#a1210d7b93c6177b79e1bed0c4aa283b9", null ]
     ] ],
     [ "cgc_api_t", "group___c_g_c___a_p_i.html#structcgc__api__t", [
       [ "open", "group___c_g_c___a_p_i.html#a8a967529fe693526df739cef3d44554b", null ],
@@ -34,6 +36,7 @@ var group___c_g_c___a_p_i =
       [ "oscStopDetectEnable", "group___c_g_c___a_p_i.html#ac5a6467d7f29870c48a7f4e0cc16f3fa", null ],
       [ "oscStopDetectDisable", "group___c_g_c___a_p_i.html#a7df2f7359a1521bf0d6ae79eaa8d396a", null ],
       [ "oscStopStatusClear", "group___c_g_c___a_p_i.html#adec8be986fe880ef29ecc2eed9e89f41", null ],
+      [ "callbackSet", "group___c_g_c___a_p_i.html#a9c1d9877fcd835e19c7c573218580b5b", null ],
       [ "close", "group___c_g_c___a_p_i.html#a13a62b83132e592aa8c9e0071312633a", null ],
       [ "versionGet", "group___c_g_c___a_p_i.html#a6fd8e37bb30b6901af9e55c9efcebf76", null ]
     ] ],
@@ -52,7 +55,8 @@ var group___c_g_c___a_p_i =
       [ "CGC_CLOCK_LOCO", "group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6ac8e8533716349cdc1396bdb313ec2651", null ],
       [ "CGC_CLOCK_MAIN_OSC", "group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6a196d6c6f8b51c53e520613a529f112e3", null ],
       [ "CGC_CLOCK_SUBCLOCK", "group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6a7c10ba3e12c26a6d09f7346c16f6ff40", null ],
-      [ "CGC_CLOCK_PLL", "group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6a14141e6db3711cbc45bb67a3704b3ac3", null ]
+      [ "CGC_CLOCK_PLL", "group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6a14141e6db3711cbc45bb67a3704b3ac3", null ],
+      [ "CGC_CLOCK_PLL2", "group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6a87344731497e93d24a2ffefea84ab870", null ]
     ] ],
     [ "cgc_pll_div_t", "group___c_g_c___a_p_i.html#gaba4cdc2e548dc20fb3800c3d1adcc315", [
       [ "CGC_PLL_DIV_1", "group___c_g_c___a_p_i.html#ggaba4cdc2e548dc20fb3800c3d1adcc315a322db864f5341badeeced4700731b5ba", null ],

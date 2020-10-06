@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -116,6 +116,8 @@ Macros</h2></td></tr>
 <tr class="separator:ga91dbefc93c284cc4ae3960bc1b371bb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0e229cde7ac6e617ed7eac38d45c4dd7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ga0e229cde7ac6e617ed7eac38d45c4dd7">FSP_HEADER</a></td></tr>
 <tr class="separator:ga0e229cde7ac6e617ed7eac38d45c4dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5560627aa81e2dc7e758b3a9853ca230"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ga5560627aa81e2dc7e758b3a9853ca230">FSP_SECURE_ARGUMENT</a></td></tr>
+<tr class="separator:ga5560627aa81e2dc7e758b3a9853ca230"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -247,6 +249,21 @@ API major version. </td></tr>
 
 </div>
 </div>
+<a id="ga5560627aa81e2dc7e758b3a9853ca230"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5560627aa81e2dc7e758b3a9853ca230">&#9670;&nbsp;</a></span>FSP_SECURE_ARGUMENT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSP_SECURE_ARGUMENT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Macro to be used when argument to function is ignored since function call is NSC and the parameter is statically defined on the Secure side. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="gadfb1288da0fcc7ae1dc88c58601374f8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gadfb1288da0fcc7ae1dc88c58601374f8">&#9670;&nbsp;</a></span>fsp_err_t</h2>
@@ -326,6 +343,8 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8add81216e0221e6d8583d35b1b471199b"></a>FSP_ERR_NOT_INITIALIZED&#160;</td><td class="fielddoc"><p>Required initialization not complete. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a5b3fa149fddaa9617a7d3cacf67810a4"></a>FSP_ERR_NOT_FOUND&#160;</td><td class="fielddoc"><p>The requested item could not be found. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a0b11740f5efdcaa58bd9606a1e29fa53"></a>FSP_ERR_NO_CALLBACK_MEMORY&#160;</td><td class="fielddoc"><p>Non-secure callback memory not provided for non-secure callback. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a6d11b644cafb53d7d39f701de5ca026d"></a>FSP_ERR_INTERNAL&#160;</td><td class="fielddoc"><p>Internal error. </p>
 </td></tr>
@@ -613,6 +632,8 @@ API major version. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8af70132beb6b5b4cdaeaed4c70bd553c4"></a>FSP_ERR_CRYPTO_AUTHENTICATION_FAILED&#160;</td><td class="fielddoc"><p>Authentication failed. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8af1bec53bb97a928b39bb4e9d5f66eb04"></a>FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL&#160;</td><td class="fielddoc"><p>Failure to Init Cipher. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8acfbdf09c1ae8d64e7eb388094bf54b9b"></a>FSP_ERR_CRYPTO_COMMON_NOT_OPENED&#160;</td><td class="fielddoc"><p>Crypto Framework Common is not opened. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac42e16e1358505398e631062a1afbd45"></a>FSP_ERR_CRYPTO_HAL_ERROR&#160;</td><td class="fielddoc"><p>Cryoto HAL module returned an error. </p>
@@ -637,7 +658,7 @@ API major version. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

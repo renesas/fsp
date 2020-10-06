@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -120,6 +120,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga311898f6b0ddd44d9b4c1b34defb0cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa697c17bba28577f3c1708356f7d94cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#gaa697c17bba28577f3c1708356f7d94cb">R_RTC_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *version)</td></tr>
 <tr class="separator:gaa697c17bba28577f3c1708356f7d94cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6b50d916a9243792c0ea8b13744d25f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#gaa6b50d916a9243792c0ea8b13744d25f">R_RTC_CallbackSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gaa6b50d916a9243792c0ea8b13744d25f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the RTC peripheral on RA MCUs. This module implements the <a class="el" href="group___r_t_c___a_p_i.html">RTC Interface</a>. </p>
@@ -171,7 +173,7 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Timers &gt; RTC Driver on r_rtc</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; RTC Driver on r_rtc:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; RTC Driver on r_rtc. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -288,26 +290,20 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Channel control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a">rtc_api_t::open</a> is called </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a531f0ac7759fe0ec50841022ae9a9bfe"></a>uint32_t</td>
-<td class="fieldname">
-open</td>
-<td class="fielddoc">
-Whether or not driver is open. </td></tr>
-<tr><td class="fieldtype">
-<a id="a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"></a>const <a class="el" href="group___r_t_c___a_p_i.html#structrtc__cfg__t">rtc_cfg_t</a> *</td>
-<td class="fieldname">
-p_cfg</td>
-<td class="fielddoc">
-Pointer to initial configurations. </td></tr>
-<tr><td class="fieldtype">
-<a id="ad1e0ef1397b14d5d1571f960d536c50d"></a>volatile bool</td>
-<td class="fieldname">
-carry_isr_triggered</td>
-<td class="fielddoc">
-Was the carry isr triggered. </td></tr>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a531f0ac7759fe0ec50841022ae9a9bfe"><td class="memItemLeft" align="right" valign="top"><a id="a531f0ac7759fe0ec50841022ae9a9bfe"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#a531f0ac7759fe0ec50841022ae9a9bfe">open</a></td></tr>
+<tr class="memdesc:a531f0ac7759fe0ec50841022ae9a9bfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not driver is open. <br /></td></tr>
+<tr class="separator:a531f0ac7759fe0ec50841022ae9a9bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"><td class="memItemLeft" align="right" valign="top"><a id="a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"></a>
+const <a class="el" href="group___r_t_c___a_p_i.html#structrtc__cfg__t">rtc_cfg_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#a02ff7a87b8c7fdf8ec2ecc4ad4a817c6">p_cfg</a></td></tr>
+<tr class="memdesc:a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
+<tr class="separator:a02ff7a87b8c7fdf8ec2ecc4ad4a817c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1e0ef1397b14d5d1571f960d536c50d"><td class="memItemLeft" align="right" valign="top"><a id="ad1e0ef1397b14d5d1571f960d536c50d"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#ad1e0ef1397b14d5d1571f960d536c50d">carry_isr_triggered</a></td></tr>
+<tr class="memdesc:ad1e0ef1397b14d5d1571f960d536c50d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Was the carry isr triggered. <br /></td></tr>
+<tr class="separator:ad1e0ef1397b14d5d1571f960d536c50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -680,13 +676,62 @@ Was the carry isr triggered. </td></tr>
 
 </div>
 </div>
+<a id="gaa6b50d916a9243792c0ea8b13744d25f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa6b50d916a9243792c0ea8b13744d25f">&#9670;&nbsp;</a></span>R_RTC_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___r_t_c___a_p_i.html#a63a958dd039662f8d13d38a64da9b61e">rtc_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate was successfully changed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to RTC control block is NULL or the RTC is not configured to use the internal clock. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

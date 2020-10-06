@@ -47,6 +47,7 @@ var group___c_t_s_u___a_p_i =
       [ "open", "group___c_t_s_u___a_p_i.html#ae8f2c7b3cc9e33f0f790f76655d3d723", null ],
       [ "scanStart", "group___c_t_s_u___a_p_i.html#a1df87278ab5d47fdd093994f53de96a6", null ],
       [ "dataGet", "group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5", null ],
+      [ "callbackSet", "group___c_t_s_u___a_p_i.html#adda480537f35733dbed856a30b89be50", null ],
       [ "close", "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395", null ],
       [ "versionGet", "group___c_t_s_u___a_p_i.html#ae74fcea91814d0f91913ae969301691c", null ]
     ] ],

@@ -19,6 +19,7 @@ var group___p_o_e_g___a_p_i =
     [ "poeg_api_t", "group___p_o_e_g___a_p_i.html#structpoeg__api__t", [
       [ "open", "group___p_o_e_g___a_p_i.html#a41c511a6b1b828d54f180b729ae4fe55", null ],
       [ "statusGet", "group___p_o_e_g___a_p_i.html#ab377a80211d85f8c90b578e93dfd7964", null ],
+      [ "callbackSet", "group___p_o_e_g___a_p_i.html#a7d01f09a832b9940b264b0cf10a3863c", null ],
       [ "outputDisable", "group___p_o_e_g___a_p_i.html#afe1feb1a5288478eea8d339ffaa1c68e", null ],
       [ "reset", "group___p_o_e_g___a_p_i.html#a5765dcf518892b71b73b5ae38942bd7f", null ],
       [ "close", "group___p_o_e_g___a_p_i.html#a1576cf3362e4341bf14ec8ba9592abc4", null ],

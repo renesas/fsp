@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -179,7 +179,7 @@ Used</li>
 </td><td>Unused </td><td>Use LINKSTA signal for detect link status changes 0 = unused (use PHY-LSI status register) 1 = use (use LINKSTA signal) </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Network &gt; Ethernet Driver on r_ether</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Network &gt; Ethernet Driver on r_ether:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Network &gt; Ethernet Driver on r_ether.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -244,15 +244,18 @@ Callback Configuration</h2>
 <p>The user could provide callback function which would be invoked when either a magic packet or a link signal change is detected. When the callback function is called, a variable in which the channel number for which the detection occurred and a constant shown in Table 2.4 are stored is passed as an argument. If the value of this argument is to be used outside the callback function, its value should be copied into, for example, a global variable.</p>
 <h2><a class="anchor" id="r-ether-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The ETHER clock is derived from the following peripheral clock on each device.</p>
-<table class="doxtable">
+<p>The clock for this module is derived from the following peripheral clock for each MCU group:<br />
+</p><table class="doxtable">
 <tr>
-<th>MCU </th><th>Peripheral Clock  </th></tr>
+<th>MCU Group</th><th>Peripheral Clock </th></tr>
 <tr>
-<td>RA6M2 </td><td>PCLKA </td></tr>
+<td>RA6M2</td><td>PCLKA</td></tr>
 <tr>
-<td>RA6M3 </td><td>PCLKA </td></tr>
+<td>RA6M3</td><td>PCLKA</td></tr>
+<tr>
+<td>RA6M4</td><td>PCLKA</td></tr>
 </table>
+</p>
 <dl class="section note"><dt>Note</dt><dd>1. When using ETHERC, the PCLKA frequency is in the range 12.5 MHz &lt;= PCLKA &lt;= 120 MHz. </dd>
 <dd>
 2. When using ETHERC, PCLKA = ICLK.</dd></dl>
@@ -283,10 +286,26 @@ Magic Packet Frame Format Image</div></div>
 <p> In a Magic Packet, the value FF:FF:FF:FF:FF:FF followed by the transmission destination address repeated 16 times is inserted somewhere in the Ethernet frame data.</p>
 <h2><a class="anchor" id="r-ether-limitations"></a>
 Limitations</h2>
+<h3>Memory alignment limitation for Ethernet buffer</h3>
 <p>The Ethernet Driver has several alignment constraints:</p><ul>
 <li>16-byte alignment for the descriptor</li>
 <li>32-byte aligned write buffer for <a class="el" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write</a> when zero copy mode is enabled</li>
 </ul>
+<h3>Functional limitations in TrustZone Security Extensions</h3>
+<p>The Ethernet Driver has several security constraints:</p>
+<table class="doxtable">
+<tr>
+<th colspan="1" rowspan="2">MCU </th><th colspan="1" rowspan="2">Has Security Extension </th><th colspan="1" rowspan="2">Support Flat project </th><th colspan="2" rowspan="1">Support TZ project  </th></tr>
+<tr>
+<th colspan="1" rowspan="1">Secure </th><th colspan="1" rowspan="1">Non-Secure  </th></tr>
+<tr>
+<td align="center">RA6M2 </td><td align="center">- </td><td align="center">x </td><td align="center">- </td><td align="center">-  </td></tr>
+<tr>
+<td align="center">RA6M3 </td><td align="center">- </td><td align="center">x </td><td align="center">- </td><td align="center">-  </td></tr>
+<tr>
+<td align="center">RA6M4 </td><td align="center">- *1 </td><td align="center">x </td><td align="center">- </td><td align="center">x  </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>1. ETHERC/EDMAC is always Non-secure peripheral in this MCU.</dd></dl>
 <h1><a class="anchor" id="r-ether-examples"></a>
 Examples</h1>
 <h2>ETHER Basic Example</h2>
@@ -771,7 +790,7 @@ Current Link status. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -1,12 +1,14 @@
 var searchData=
 [
-  ['pdc_5fclock_5fdivision_5ft',['pdc_clock_division_t',['../group___p_d_c___a_p_i.html#gaefcdde7fd248adecb15dfa8a16d173f8',1,'r_pdc_api.h']]],
-  ['pdc_5fendian_5ft',['pdc_endian_t',['../group___p_d_c___a_p_i.html#ga41559cfdb76f3c5f485b79dab1d8620a',1,'r_pdc_api.h']]],
-  ['pdc_5fevent_5ft',['pdc_event_t',['../group___p_d_c___a_p_i.html#ga31162259e060f212b6d1cb04778f3adb',1,'r_pdc_api.h']]],
-  ['pdc_5fhsync_5fpolarity_5ft',['pdc_hsync_polarity_t',['../group___p_d_c___a_p_i.html#ga994abe0ad9b4c832eedd74e4700fd7f6',1,'r_pdc_api.h']]],
-  ['pdc_5fvsync_5fpolarity_5ft',['pdc_vsync_polarity_t',['../group___p_d_c___a_p_i.html#ga5fdbba40243f5c6ac0060412b66675c9',1,'r_pdc_api.h']]],
-  ['poeg_5fgtetrg_5fnoise_5ffilter_5ft',['poeg_gtetrg_noise_filter_t',['../group___p_o_e_g___a_p_i.html#gab482b24d14d1c94f6f4ba9f5e39f8d0b',1,'r_poeg_api.h']]],
-  ['poeg_5fgtetrg_5fpolarity_5ft',['poeg_gtetrg_polarity_t',['../group___p_o_e_g___a_p_i.html#gaab60100277a3b044c01007e6142704b9',1,'r_poeg_api.h']]],
-  ['poeg_5fstate_5ft',['poeg_state_t',['../group___p_o_e_g___a_p_i.html#ga6964e3b0b8b2d32d2428d86b32dfeef2',1,'r_poeg_api.h']]],
-  ['poeg_5ftrigger_5ft',['poeg_trigger_t',['../group___p_o_e_g___a_p_i.html#gad3a55ae7d23b90cc2621a83116d2e7d9',1,'r_poeg_api.h']]]
+  ['opamp_5fagt_5flink_5ft',['opamp_agt_link_t',['../group___o_p_a_m_p.html#gaff013cd26c871c6ec7e2ed3a584981ff',1,'r_opamp.h']]],
+  ['opamp_5fminus_5finput_5ft',['opamp_minus_input_t',['../group___o_p_a_m_p.html#ga1e044ea7340766331d8ab71fe18ff315',1,'r_opamp.h']]],
+  ['opamp_5fmode_5ft',['opamp_mode_t',['../group___o_p_a_m_p.html#gaeecc226775e0b3b71af2e4e055fd7923',1,'r_opamp.h']]],
+  ['opamp_5foutput_5ft',['opamp_output_t',['../group___o_p_a_m_p.html#ga1a6df2ce9c3f388ce3acd2dc14a1f2dc',1,'r_opamp.h']]],
+  ['opamp_5fplus_5finput_5ft',['opamp_plus_input_t',['../group___o_p_a_m_p.html#ga4b9382978430a5e9b11d638a507823f2',1,'r_opamp.h']]],
+  ['opamp_5ftrigger_5ft',['opamp_trigger_t',['../group___o_p_a_m_p.html#ga0d3e1efd7c7da420f0c6f86301557472',1,'r_opamp.h']]],
+  ['opamp_5ftrim_5fcmd_5ft',['opamp_trim_cmd_t',['../group___o_p_a_m_p___a_p_i.html#gaaaf9fc8a2d64abefdf3f6f0dd8b0e42b',1,'r_opamp_api.h']]],
+  ['opamp_5ftrim_5finput_5ft',['opamp_trim_input_t',['../group___o_p_a_m_p___a_p_i.html#ga225f7a2a63ee3dc11ce9853ada741b54',1,'r_opamp_api.h']]],
+  ['ospi_5fcommand_5fcs_5fpulldown_5fclocks_5ft',['ospi_command_cs_pulldown_clocks_t',['../group___o_s_p_i.html#gacc92842060aee9fb19b55d3cf911f990',1,'r_ospi.h']]],
+  ['ospi_5fcommand_5fcs_5fpullup_5fclocks_5ft',['ospi_command_cs_pullup_clocks_t',['../group___o_s_p_i.html#ga0c0370d42bd59554b52b17675637a84e',1,'r_ospi.h']]],
+  ['ospi_5fdevice_5fnumber_5ft',['ospi_device_number_t',['../group___o_s_p_i.html#ga0dd809af09334f30599a1d6290c497b1',1,'r_ospi.h']]]
 ];

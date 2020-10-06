@@ -12,6 +12,7 @@ var searchData=
   ['max_5fce_5flength',['max_ce_length',['../group___g_a_p___a_p_i.html#a8e8b7ef26360a3c5b5de95ceead94da2',1,'st_ble_gap_conn_param_t::max_ce_length()'],['../group___b_l_e___a_b_s___a_p_i.html#a674c281b82a1f3c750481c475a908045',1,'ble_gap_connection_parameter_t::max_ce_length()']]],
   ['max_5fkey_5fsize',['max_key_size',['../group___g_a_p___a_p_i.html#a6e487249ac6ba2d7c772b386e82efc33',1,'st_ble_gap_pairing_param_t']]],
   ['max_5frssi',['max_rssi',['../group___v_s___a_p_i.html#ac8248c6e3576f6d26920c6226a6ad5d9',1,'st_ble_vs_test_end_evt_t']]],
+  ['max_5ftouch',['max_touch',['../group___t_o_u_c_h___a_p_i.html#a86b8c14b3059c3f9259511fe7df66fbe',1,'touch_pad_cfg_t']]],
   ['max_5ftx_5fpwr',['max_tx_pwr',['../group___v_s___a_p_i.html#a1fce9a121d89273de7bb0c804a45c56e',1,'st_ble_vs_get_tx_pwr_comp_evt_t']]],
   ['maximum_5fkey_5fsize',['maximum_key_size',['../group___b_l_e___a_b_s___a_p_i.html#a410e1ee4e1300e3e4023b4e668acce99',1,'ble_abs_pairing_parameter_t']]],
   ['maxpacketsizeget',['maxPacketSizeGet',['../group___u_s_b___h_h_i_d___a_p_i.html#ad2efecb9d87312ff91ae383fcaf46f6b',1,'usb_hhid_api_t']]],

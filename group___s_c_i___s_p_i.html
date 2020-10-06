@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,6 +107,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga7f7f0fbe5dc85ac7dac6c5676965e432"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga061962640303cb50a61285212571a85a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_p_i.html#ga061962640303cb50a61285212571a85a">R_SCI_SPI_WriteRead</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void const *p_src, void *p_dest, uint32_t const length, <a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const bit_width)</td></tr>
 <tr class="separator:ga061962640303cb50a61285212571a85a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9980c52ccbe2e8e2f4e21888ca7a0d95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_p_i.html#ga9980c52ccbe2e8e2f4e21888ca7a0d95">R_SCI_SPI_CallbackSet</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga9980c52ccbe2e8e2f4e21888ca7a0d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga80b7c1f5e687731bbc3de8df267a1c15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_p_i.html#ga80b7c1f5e687731bbc3de8df267a1c15">R_SCI_SPI_Close</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga80b7c1f5e687731bbc3de8df267a1c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5ca04d5041e7cdb94ef2655a78e11e8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_p_i.html#ga5ca04d5041e7cdb94ef2655a78e11e8a">R_SCI_SPI_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
@@ -171,7 +173,7 @@ Disabled</li>
 </td><td>Enabled </td><td>If support for transfering data using the DTC will be compiled in. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Connectivity &gt; SPI Driver on r_sci_spi</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; SPI Driver on r_sci_spi:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; SPI Driver on r_sci_spi. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -243,21 +245,26 @@ Enabled</li>
 </p>
 <h2><a class="anchor" id="r_sci_spi-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The SCI_SPI clock is derived from the following peripheral clock on each device.</p>
-<table class="doxtable">
+<p>The clock for this module is derived from the following peripheral clock for each MCU group:<br />
+</p><table class="doxtable">
 <tr>
-<th>MCU </th><th>Peripheral Clock  </th></tr>
+<th>MCU Group</th><th>Peripheral Clock </th></tr>
 <tr>
-<td>RA2A1 </td><td>PCLKB </td></tr>
+<td>RA2A1</td><td>PCLKB</td></tr>
 <tr>
-<td>RA4M1 </td><td>PCLKA </td></tr>
+<td>RA4M1</td><td>PCLKA</td></tr>
 <tr>
-<td>RA6M1 </td><td>PCLKA </td></tr>
+<td>RA4W1</td><td>PCLKA</td></tr>
 <tr>
-<td>RA6M2 </td><td>PCLKA </td></tr>
+<td>RA6M1</td><td>PCLKA</td></tr>
 <tr>
-<td>RA6M3 </td><td>PCLKA </td></tr>
+<td>RA6M2</td><td>PCLKA</td></tr>
+<tr>
+<td>RA6M3</td><td>PCLKA</td></tr>
+<tr>
+<td>RA6M4</td><td>PCLKA</td></tr>
 </table>
+</p>
 <h2><a class="anchor" id="r_sci_spi-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module uses SCIn_MOSI, SCIn_MISO, SCIn_SPCK, and SCIn_SS pins to communicate with on board devices.</p>
@@ -588,6 +595,55 @@ Examples</h1>
 
 </div>
 </div>
+<a id="ga9980c52ccbe2e8e2f4e21888ca7a0d95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9980c52ccbe2e8e2f4e21888ca7a0d95">&#9670;&nbsp;</a></span>R_SCI_SPI_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_SPI_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_p_i___a_p_i.html#a01c7aacdcdf219dcfa88c2b40e7d25b1">spi_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga80b7c1f5e687731bbc3de8df267a1c15"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga80b7c1f5e687731bbc3de8df267a1c15">&#9670;&nbsp;</a></span>R_SCI_SPI_Close()</h2>
 
@@ -709,7 +765,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -104,6 +104,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga84d0272a9da17941d62d264ff3a7b678"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacc13125edbed3049ff434195ed6dc66e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_o_e_g.html#gacc13125edbed3049ff434195ed6dc66e">R_POEG_StatusGet</a> (<a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__status__t">poeg_status_t</a> *const p_status)</td></tr>
 <tr class="separator:gacc13125edbed3049ff434195ed6dc66e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga299d7e0c935c5305d72077fdf1963c2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_o_e_g.html#ga299d7e0c935c5305d72077fdf1963c2d">R_POEG_CallbackSet</a> (<a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t">poeg_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t">poeg_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga299d7e0c935c5305d72077fdf1963c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga42b42cd05ed30c698ba2dab5a32154dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_o_e_g.html#ga42b42cd05ed30c698ba2dab5a32154dd">R_POEG_OutputDisable</a> (<a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ga42b42cd05ed30c698ba2dab5a32154dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6713a1b99790d8e56d475bb377b5cb0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_o_e_g.html#ga6713a1b99790d8e56d475bb377b5cb0c">R_POEG_Reset</a> (<a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const p_ctrl)</td></tr>
@@ -148,7 +150,7 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Timers &gt; Port Output Enable for GPT on r_poeg</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; Port Output Enable for GPT on r_poeg:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; Port Output Enable for GPT on r_poeg. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -307,6 +309,56 @@ Data Structures</h2></td></tr>
 
 </div>
 </div>
+<a id="ga299d7e0c935c5305d72077fdf1963c2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga299d7e0c935c5305d72077fdf1963c2d">&#9670;&nbsp;</a></span>R_POEG_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_POEG_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_o_e_g___a_p_i.html#ga092fdb789d4a41f502e902a7a8e88ac7">poeg_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t">poeg_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t">poeg_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___p_o_e_g___a_p_i.html#a7d01f09a832b9940b264b0cf10a3863c">poeg_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga42b42cd05ed30c698ba2dab5a32154dd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga42b42cd05ed30c698ba2dab5a32154dd">&#9670;&nbsp;</a></span>R_POEG_OutputDisable()</h2>
 
@@ -422,7 +474,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

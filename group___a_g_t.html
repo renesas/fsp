@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -123,6 +123,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaa2b20f0b2d6856813a3a76413e0083c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga499ee5459a9adb90cf73dd659ae29b46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46">R_AGT_Open</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="separator:ga499ee5459a9adb90cf73dd659ae29b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabbe61b0c767174654b68bcc55fc97fed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#gabbe61b0c767174654b68bcc55fc97fed">R_AGT_CallbackSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gabbe61b0c767174654b68bcc55fc97fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad6d600521cfd1134e1fd5cd5fefe2819"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#gad6d600521cfd1134e1fd5cd5fefe2819">R_AGT_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
 <tr class="separator:gad6d600521cfd1134e1fd5cd5fefe2819"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -197,14 +199,14 @@ Enabled</li>
 </td><td>Disabled </td><td>Enable input support to use pulse width measurement mode, pulse period measurement mode, or input from P402, P402, or AGTIO. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Timers &gt; Timer Driver on r_agt</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; Timer Driver on r_agt:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Timers &gt; Timer Driver on r_agt. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
 <tr>
-<td>General &gt; Channel</td><td>Available AGT Channels are 0 and 1</td><td>0 </td><td>Physical hardware channel. </td></tr>
+<td>General &gt; Channel</td><td>Channel number does not exist</td><td>0 </td><td>Physical hardware channel. </td></tr>
 <tr>
 <td>General &gt; Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -447,34 +449,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Channel control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___t_i_m_e_r___a_p_i.html#af49a90087a53c8019d642a3f7abaa8ad">timer_api_t::open</a> is called. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a47294d2091aca6d4c57e05ba78f8a069"></a>uint32_t</td>
-<td class="fieldname">
-open</td>
-<td class="fielddoc">
-Whether or not channel is open. </td></tr>
-<tr><td class="fieldtype">
-<a id="af45c7d6d16aabfe344c79d39811a6205"></a>const <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> *</td>
-<td class="fieldname">
-p_cfg</td>
-<td class="fielddoc">
-Pointer to initial configurations. </td></tr>
-<tr><td class="fieldtype">
-<a id="a92df2ac4ec384e625fc22e9ed128a51d"></a>R_AGT0_Type *</td>
-<td class="fieldname">
-p_reg</td>
-<td class="fielddoc">
-Base register for this channel. </td></tr>
-<tr><td class="fieldtype">
-<a id="a9aa32608b915c6751ba226e6d3b184a4"></a>uint32_t</td>
-<td class="fieldname">
-period</td>
-<td class="fielddoc">
-Current timer period (counts) </td></tr>
-</table>
-
+</div>
 </div>
 </div>
 <a name="structagt__extended__cfg__t" id="structagt__extended__cfg__t"></a>
@@ -1073,6 +1048,56 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
 
 </div>
 </div>
+<a id="gabbe61b0c767174654b68bcc55fc97fed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabbe61b0c767174654b68bcc55fc97fed">&#9670;&nbsp;</a></span>R_AGT_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_AGT_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#a1b2c51a519145c2482ca2fb6b4b3d749">timer_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="gad6d600521cfd1134e1fd5cd5fefe2819"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad6d600521cfd1134e1fd5cd5fefe2819">&#9670;&nbsp;</a></span>R_AGT_VersionGet()</h2>
 
@@ -1105,7 +1130,7 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

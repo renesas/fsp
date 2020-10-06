@@ -36,6 +36,7 @@ var group___u_a_r_t___a_p_i =
       [ "baudSet", "group___u_a_r_t___a_p_i.html#a8b0f901bcc26bd6836fe620235585f98", null ],
       [ "infoGet", "group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50", null ],
       [ "communicationAbort", "group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11", null ],
+      [ "callbackSet", "group___u_a_r_t___a_p_i.html#a51b74df27fb26e85700d9524cdfc7c01", null ],
       [ "close", "group___u_a_r_t___a_p_i.html#a4e7e47514702ff0e3515280590dd9659", null ],
       [ "versionGet", "group___u_a_r_t___a_p_i.html#afd111f21ce7f755b470b5e5d90249768", null ]
     ] ],

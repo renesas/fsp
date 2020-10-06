@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -115,6 +115,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1dab68b64b294d346c3ef3b69feba59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga06b45c13797497f90c7ef8a20f3bff7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga06b45c13797497f90c7ef8a20f3bff7f">R_SPI_CalculateBitrate</a> (uint32_t bitrate, <a class="el" href="group___s_p_i.html#structrspck__div__setting__t">rspck_div_setting_t</a> *spck_div)</td></tr>
 <tr class="separator:ga06b45c13797497f90c7ef8a20f3bff7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2812fdb85312afcc52ef06c97f41fceb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga2812fdb85312afcc52ef06c97f41fceb">R_SPI_CallbackSet</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga2812fdb85312afcc52ef06c97f41fceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the SPI peripheral on RA MCUs. This module implements the <a class="el" href="group___s_p_i___a_p_i.html">SPI Interface</a>. </p>
@@ -189,7 +191,7 @@ Disabled</li>
 </td><td>Disabled </td><td>If enabled, all operations will be handled from the RX (receive) interrupt. This setting only provides a performance boost when DTC is not used. In addition, Transmit Only mode is not supported when this configuration is enabled. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Connectivity &gt; SPI Driver on r_spi</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; SPI Driver on r_spi:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; SPI Driver on r_spi. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -377,21 +379,26 @@ SPI_DELAY_COUNT_8</li>
 </p>
 <h2><a class="anchor" id="r-spi-clock-configuration"></a>
 Clock Configuration</h2>
-<p>The SPI clock is derived from the following peripheral clock on each device.</p>
-<table class="doxtable">
+<p>The clock for this module is derived from the following peripheral clock for each MCU group:<br />
+</p><table class="doxtable">
 <tr>
-<th>MCU </th><th>Peripheral Clock  </th></tr>
+<th>MCU Group</th><th>Peripheral Clock </th></tr>
 <tr>
-<td>RA2A1 </td><td>PCLKB </td></tr>
+<td>RA2A1</td><td>PCLKB</td></tr>
 <tr>
-<td>RA4M1 </td><td>PCLKA </td></tr>
+<td>RA4M1</td><td>PCLKA</td></tr>
 <tr>
-<td>RA6M1 </td><td>PCLKA </td></tr>
+<td>RA4W1</td><td>PCLKA</td></tr>
 <tr>
-<td>RA6M2 </td><td>PCLKA </td></tr>
+<td>RA6M1</td><td>PCLKA</td></tr>
 <tr>
-<td>RA6M3 </td><td>PCLKA </td></tr>
+<td>RA6M2</td><td>PCLKA</td></tr>
+<tr>
+<td>RA6M3</td><td>PCLKA</td></tr>
+<tr>
+<td>RA6M4</td><td>PCLKA</td></tr>
 </table>
+</p>
 <h2><a class="anchor" id="r-spi-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module uses MOSI, MISO, RSPCK, and SSL pins to communicate with on board devices.</p>
@@ -584,62 +591,44 @@ SPI Next-Access Delay Register Setting. </td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Channel control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___s_p_i___a_p_i.html#a97177a6162ebad73907c7f23c1411426">spi_api_t::open</a> is called. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="ac9844deca6b567e54920c08c7106fe79"></a>uint32_t</td>
-<td class="fieldname">
-open</td>
-<td class="fielddoc">
-Indicates whether the <a class="el" href="group___s_p_i.html#ac9844deca6b567e54920c08c7106fe79" title="Indicates whether the open() API has been successfully called. ">open()</a> API has been successfully called. </td></tr>
-<tr><td class="fieldtype">
-<a id="a7cb96da456d8da01386d7be6f17a9f4d"></a><a class="el" href="group___s_p_i___a_p_i.html#structspi__cfg__t">spi_cfg_t</a> const  *</td>
-<td class="fieldname">
-p_cfg</td>
-<td class="fielddoc">
-Pointer to instance configuration. </td></tr>
-<tr><td class="fieldtype">
-<a id="a12f5faabc6d173ed19a8fa70f7103ecc"></a>R_SPI0_Type *</td>
-<td class="fieldname">
-p_regs</td>
-<td class="fielddoc">
-Base register for this channel. </td></tr>
-<tr><td class="fieldtype">
-<a id="a4a0569c8791a283761d7872c69732bdd"></a>void const  *</td>
-<td class="fieldname">
-p_tx_data</td>
-<td class="fielddoc">
-Buffer to transmit. </td></tr>
-<tr><td class="fieldtype">
-<a id="ae8178d3442e3a5e127f8f7aaae61bb71"></a>void *</td>
-<td class="fieldname">
-p_rx_data</td>
-<td class="fielddoc">
-Buffer to receive. </td></tr>
-<tr><td class="fieldtype">
-<a id="ae130259a1d7b1bc333c0697edcea51d8"></a>uint32_t</td>
-<td class="fieldname">
-tx_count</td>
-<td class="fielddoc">
-Number of Data Frames to transfer (8-bit, 16-bit, 32-bit) </td></tr>
-<tr><td class="fieldtype">
-<a id="abe8eb56d5ed0739668b2f868e9a59826"></a>uint32_t</td>
-<td class="fieldname">
-rx_count</td>
-<td class="fielddoc">
-Number of Data Frames to transfer (8-bit, 16-bit, 32-bit) </td></tr>
-<tr><td class="fieldtype">
-<a id="a5100758244ed4221bac5ea2b332cbe1a"></a>uint32_t</td>
-<td class="fieldname">
-count</td>
-<td class="fielddoc">
-Number of Data Frames to transfer (8-bit, 16-bit, 32-bit) </td></tr>
-<tr><td class="fieldtype">
-<a id="a3cdfaf65f6b681f7130a966c065060b6"></a><a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a></td>
-<td class="fieldname">
-bit_width</td>
-<td class="fielddoc">
-Bits per Data frame (8-bit, 16-bit, 32-bit) </td></tr>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ac9844deca6b567e54920c08c7106fe79"><td class="memItemLeft" align="right" valign="top"><a id="ac9844deca6b567e54920c08c7106fe79"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ac9844deca6b567e54920c08c7106fe79">open</a></td></tr>
+<tr class="memdesc:ac9844deca6b567e54920c08c7106fe79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the <a class="el" href="group___s_p_i.html#ac9844deca6b567e54920c08c7106fe79" title="Indicates whether the open() API has been successfully called. ">open()</a> API has been successfully called. <br /></td></tr>
+<tr class="separator:ac9844deca6b567e54920c08c7106fe79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cb96da456d8da01386d7be6f17a9f4d"><td class="memItemLeft" align="right" valign="top"><a id="a7cb96da456d8da01386d7be6f17a9f4d"></a>
+<a class="el" href="group___s_p_i___a_p_i.html#structspi__cfg__t">spi_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#a7cb96da456d8da01386d7be6f17a9f4d">p_cfg</a></td></tr>
+<tr class="memdesc:a7cb96da456d8da01386d7be6f17a9f4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to instance configuration. <br /></td></tr>
+<tr class="separator:a7cb96da456d8da01386d7be6f17a9f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12f5faabc6d173ed19a8fa70f7103ecc"><td class="memItemLeft" align="right" valign="top"><a id="a12f5faabc6d173ed19a8fa70f7103ecc"></a>
+R_SPI0_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#a12f5faabc6d173ed19a8fa70f7103ecc">p_regs</a></td></tr>
+<tr class="memdesc:a12f5faabc6d173ed19a8fa70f7103ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base register for this channel. <br /></td></tr>
+<tr class="separator:a12f5faabc6d173ed19a8fa70f7103ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a0569c8791a283761d7872c69732bdd"><td class="memItemLeft" align="right" valign="top"><a id="a4a0569c8791a283761d7872c69732bdd"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#a4a0569c8791a283761d7872c69732bdd">p_tx_data</a></td></tr>
+<tr class="memdesc:a4a0569c8791a283761d7872c69732bdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to transmit. <br /></td></tr>
+<tr class="separator:a4a0569c8791a283761d7872c69732bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8178d3442e3a5e127f8f7aaae61bb71"><td class="memItemLeft" align="right" valign="top"><a id="ae8178d3442e3a5e127f8f7aaae61bb71"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ae8178d3442e3a5e127f8f7aaae61bb71">p_rx_data</a></td></tr>
+<tr class="memdesc:ae8178d3442e3a5e127f8f7aaae61bb71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer to receive. <br /></td></tr>
+<tr class="separator:ae8178d3442e3a5e127f8f7aaae61bb71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae130259a1d7b1bc333c0697edcea51d8"><td class="memItemLeft" align="right" valign="top"><a id="ae130259a1d7b1bc333c0697edcea51d8"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ae130259a1d7b1bc333c0697edcea51d8">tx_count</a></td></tr>
+<tr class="memdesc:ae130259a1d7b1bc333c0697edcea51d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of Data Frames to transfer (8-bit, 16-bit, 32-bit) <br /></td></tr>
+<tr class="separator:ae130259a1d7b1bc333c0697edcea51d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe8eb56d5ed0739668b2f868e9a59826"><td class="memItemLeft" align="right" valign="top"><a id="abe8eb56d5ed0739668b2f868e9a59826"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#abe8eb56d5ed0739668b2f868e9a59826">rx_count</a></td></tr>
+<tr class="memdesc:abe8eb56d5ed0739668b2f868e9a59826"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of Data Frames to transfer (8-bit, 16-bit, 32-bit) <br /></td></tr>
+<tr class="separator:abe8eb56d5ed0739668b2f868e9a59826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5100758244ed4221bac5ea2b332cbe1a"><td class="memItemLeft" align="right" valign="top"><a id="a5100758244ed4221bac5ea2b332cbe1a"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#a5100758244ed4221bac5ea2b332cbe1a">count</a></td></tr>
+<tr class="memdesc:a5100758244ed4221bac5ea2b332cbe1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of Data Frames to transfer (8-bit, 16-bit, 32-bit) <br /></td></tr>
+<tr class="separator:a5100758244ed4221bac5ea2b332cbe1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cdfaf65f6b681f7130a966c065060b6"><td class="memItemLeft" align="right" valign="top"><a id="a3cdfaf65f6b681f7130a966c065060b6"></a>
+<a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#a3cdfaf65f6b681f7130a966c065060b6">bit_width</a></td></tr>
+<tr class="memdesc:a3cdfaf65f6b681f7130a966c065060b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bits per Data frame (8-bit, 16-bit, 32-bit) <br /></td></tr>
+<tr class="separator:a3cdfaf65f6b681f7130a966c065060b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -1149,13 +1138,62 @@ Bits per Data frame (8-bit, 16-bit, 32-bit) </td></tr>
 
 </div>
 </div>
+<a id="ga2812fdb85312afcc52ef06c97f41fceb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2812fdb85312afcc52ef06c97f41fceb">&#9670;&nbsp;</a></span>R_SPI_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SPI_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_p_i___a_p_i.html#a01c7aacdcdf219dcfa88c2b40e7d25b1">spi_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

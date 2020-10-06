@@ -47,6 +47,7 @@ var group___r_t_c___a_p_i =
       [ "calendarAlarmGet", "group___r_t_c___a_p_i.html#aaad6019c8b72db02966fc040676810b4", null ],
       [ "periodicIrqRateSet", "group___r_t_c___a_p_i.html#a5a13e1acf6e07bfd87dc81bf65272951", null ],
       [ "errorAdjustmentSet", "group___r_t_c___a_p_i.html#ae1635364719444ad65541ce00953983e", null ],
+      [ "callbackSet", "group___r_t_c___a_p_i.html#a63a958dd039662f8d13d38a64da9b61e", null ],
       [ "infoGet", "group___r_t_c___a_p_i.html#a7a6c940847c6f730a5c5df3355dca1eb", null ],
       [ "versionGet", "group___r_t_c___a_p_i.html#a2f2ed64321f4c6fad71bc5550eceedd5", null ]
     ] ],

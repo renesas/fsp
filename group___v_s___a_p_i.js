@@ -56,6 +56,9 @@ var group___v_s___a_p_i =
       [ "param_len", "group___v_s___a_p_i.html#a7a51f73bd34b23aca881cd4a037c97a8", null ],
       [ "p_param", "group___v_s___a_p_i.html#a55aa35148eb62d62df66ce7fccd5ebc2", null ]
     ] ],
+    [ "st_ble_vs_get_scan_ch_map_comp_evt_t", "group___v_s___a_p_i.html#structst__ble__vs__get__scan__ch__map__comp__evt__t", [
+      [ "ch_map", "group___v_s___a_p_i.html#a6a1c01e6853fc9727251a9e3ff6ea01f", null ]
+    ] ],
     [ "BLE_VS_TX_POWER_HIGH", "group___v_s___a_p_i.html#ga6ccd1f174f5549d2c91dad762184a873", null ],
     [ "BLE_VS_TX_POWER_MID", "group___v_s___a_p_i.html#ga89dd56b8f1f9cf97564524116bf156d2", null ],
     [ "BLE_VS_TX_POWER_LOW", "group___v_s___a_p_i.html#ga68d928f069a2f275115cf4bf7b172840", null ],
@@ -101,6 +104,8 @@ var group___v_s___a_p_i =
       [ "BLE_VS_EVENT_GET_RAND", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a0a2444fcc8892b38e320f7f69aa063cd", null ],
       [ "BLE_VS_EVENT_TX_FLOW_STATE_CHG", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a8f88d4eb7ade06628f3acdd51f99837c", null ],
       [ "BLE_VS_EVENT_FAIL_DETECT", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a222f1bdb6d44e236d72dca050b643da0", null ],
+      [ "BLE_VS_EVENT_SET_SCAN_CH_MAP", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a7270f796d36de951b326298b95f0ba4e", null ],
+      [ "BLE_VS_EVENT_GET_SCAN_CH_MAP", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a26016a8c9b0aad4b1dccf4578ce74103", null ],
       [ "BLE_VS_EVENT_INVALID", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a9ba51c2d70b111a45df250a2f070617e", null ]
     ] ],
     [ "R_BLE_VS_Init", "group___v_s___a_p_i.html#ga57b6b04c7dd2eed94a69b583850f4ba7", null ],
@@ -117,5 +122,7 @@ var group___v_s___a_p_i =
     [ "R_BLE_VS_StartTxFlowEvtNtf", "group___v_s___a_p_i.html#ga6bebce9833bb4eb4a30733acd69fa9b9", null ],
     [ "R_BLE_VS_StopTxFlowEvtNtf", "group___v_s___a_p_i.html#ga96b5e4eb1eb876065819a6c08841458d", null ],
     [ "R_BLE_VS_GetTxBufferNum", "group___v_s___a_p_i.html#ga94ff65ce099fb521b13e224aaea44475", null ],
-    [ "R_BLE_VS_SetTxLimit", "group___v_s___a_p_i.html#ga01f0f9aa4b719394f3bf1523a0790ef5", null ]
+    [ "R_BLE_VS_SetTxLimit", "group___v_s___a_p_i.html#ga01f0f9aa4b719394f3bf1523a0790ef5", null ],
+    [ "R_BLE_VS_SetScanChMap", "group___v_s___a_p_i.html#gacb552f473dfd105f69bbf4e087cadf0a", null ],
+    [ "R_BLE_VS_GetScanChMap", "group___v_s___a_p_i.html#ga64876fb75bdd8184deffbc1349d40737", null ]
 ];

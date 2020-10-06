@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,6 +110,8 @@ Summary</h1>
 Data Structures</h2></td></tr>
 <tr class="memitem:structusb__hhid__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_h_i_d___a_p_i.html#structusb__hhid__api__t">usb_hhid_api_t</a></td></tr>
 <tr class="separator:structusb__hhid__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structusb__hhid__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_h_i_d___a_p_i.html#structusb__hhid__instance__t">usb_hhid_instance_t</a></td></tr>
+<tr class="separator:structusb__hhid__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -211,13 +213,49 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a name="structusb__hhid__instance__t" id="structusb__hhid__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structusb__hhid__instance__t">&#9670;&nbsp;</a></span>usb_hhid_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usb_hhid_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0190b5e73c5185b732f697f7d5316902"></a>usb_ctrl_t *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9c98ab9cbf2dd8173890c2ec3b90deb4"></a>usb_cfg_t const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa12d3dee30de905d17400cfa06ff3499"></a><a class="el" href="group___u_s_b___h_h_i_d___a_p_i.html#structusb__hhid__api__t">usb_hhid_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

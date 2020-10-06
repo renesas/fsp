@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v1.3.1</span>
+   &#160;<span id="projectnumber">Release v2.0.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -171,10 +171,10 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>Select whether to use the RMII reference clock. Selecting 'Default' will automatically choose the correct option when using a Renesas development board. </td></tr>
+</td><td>Default </td><td>Select whether to use the RMII reference clock. Selecting 'Default' will automatically choose the correct option when using a Renesas development board. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Network &gt; Ethernet Driver on r_ether_phy</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Network &gt; Ethernet Driver on r_ether_phy:<br />
+This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Network &gt; Ethernet Driver on r_ether_phy.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -193,6 +193,14 @@ This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Networ
 <tr>
 <td>PHY-LSI Reset Completion Timeout</td><td>Specify a value between 0x1 and 0xFFFFFFFF.</td><td>0x00020000 </td><td>Specify the number of times to read the PHY-LSI control register while waiting for reset completion. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
 <tr>
+<td>Select MII type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+MII</li>
+<li>
+RMII</li>
+</ul>
+</td><td>MII </td><td>Specify whether to use MII or RMII. </td></tr>
+<tr>
 <td>MII/RMII Register Access Wait-time</td><td>Specify a value between 0x1 and 0x7FFFFFFF.</td><td>8 </td><td>Specify the bit timing for MII/RMII register accesses during PHY initialization. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
 <tr>
 <td>Flow Control</td><td><ul style="margin-top:0;margin-bottom:0;">
@@ -207,6 +215,43 @@ Enable</li>
 <h1><a class="anchor" id="r-ether-phy-usage_notes"></a>
 Usage Notes</h1>
 <dl class="section note"><dt>Note</dt><dd>See the <a class="el" href="group___e_t_h_e_r___p_h_y.html#r-ether-phy-examples">example</a> below for details on how to initialize the Ethernet PHY module.</dd></dl>
+<h2>Accessing the MII and RMII Registers</h2>
+<p>Use the PIR register to access the MII and RMII registers in the PHY-LSI. Serial data in the MII and RMII management frame format is transmitted and received through the ET0_MDC and ET0_MDIO pins controlled by software.</p>
+<h2>MII and RMII management frame format</h2>
+<p>The below table lists the MII and RMII management frame formats.</p>
+<table class="doxtable">
+<tr>
+<th colspan="2">Access type </th><th colspan="8">MII and RMII management frame  </th></tr>
+<tr>
+<td></td><td>Item </td><td>PRE </td><td>ST </td><td>OP </td><td>PHYAD </td><td>REGAD </td><td>TA </td><td>DATA </td><td>IDLE  </td></tr>
+<tr>
+<td></td><td>Number of bits </td><td>32 </td><td>2 </td><td>2 </td><td>5 </td><td>5 </td><td>2 </td><td>16 </td><td>1  </td></tr>
+<tr>
+<td colspan="2">Read </td><td>1...1 </td><td>01 </td><td>10 </td><td>00001 </td><td>RRRRR </td><td>Z0 </td><td>DDDDDDDDDDDDDDDD </td><td>Z  </td></tr>
+<tr>
+<td colspan="2">Write </td><td>1...1 </td><td>01 </td><td>01 </td><td>00001 </td><td>RRRRR </td><td>10 </td><td>DDDDDDDDDDDDDDDD </td><td>Z  </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>- PRE (preamble): Send 32 consecutive 1s. </dd>
+<dd>
+- ST (start of frame): Send 01b. </dd>
+<dd>
+- OP (operation code): Send 10b for read or 01b for write. </dd>
+<dd>
+- PHYAD (PHY address): Up to 32 PHY-LSIs can be connected to one MAC. PHY-LSIs are selected with these 5 bits. When the PHY-LSI address is 1, send 00001b. </dd>
+<dd>
+- REGAD (register address): One register is selected from up to 32 registers in the PHY-LSI. When the register address is 1, send 00001b. </dd>
+<dd>
+- TA (turnaround): Use 2-bit turnaround time to avoid contention between the register address and data during a read operation. </dd>
+<dd>
+Send 10b during a write operation. Release the bus for 1 bit during a read operation (Z is output). </dd>
+<dd>
+(This is indicated as Z0 because 0 is output from the PHY-LSI on the next clock cycle.) </dd>
+<dd>
+- DATA (data): 16-bit data. Sequentially send or receive starting from the MSB. </dd>
+<dd>
+- IDLE (IDLE condition): Wait time before inputting the next MII or RMII management format. Release the bus during a write </dd>
+<dd>
+operation (Z is output). No control is required, because a bus was already released during a read operation.</dd></dl>
 <h2><a class="anchor" id="r-ether-phy-limitations"></a>
 Limitations</h2>
 <ul>
@@ -484,7 +529,7 @@ Capabilities bitmap for local advertising. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v1.3.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
