@@ -31,9 +31,6 @@
  ***********************************************************************************************************************/
 #include "bsp_api.h"
 
-/* TODO_SCE RELEASE Remove mock reference */
-#if !BSP_MCU_MOCKED
-
 /***********************************************************************************************************************
  * Macro definitions
  ***********************************************************************************************************************/
@@ -59,11 +56,11 @@
  **********************************************************************************************************************/
 __STATIC_INLINE void HW_SCE_PowerOn (void)
 {
- #if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA2L1))
+#if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA2L1))
 
     // S1 MCU series has separate power control for RNG
     R_MSTP->MSTPCRC_b.MSTPC28 = 0;
- #endif
+#endif
 
     // power on the SCE module
     R_MSTP->MSTPCRC_b.MSTPC31 = 0;
@@ -71,17 +68,15 @@ __STATIC_INLINE void HW_SCE_PowerOn (void)
 
 __STATIC_INLINE void HW_SCE_PowerOff (void)
 {
- #if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA2L1))
+#if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA2L1))
 
     // S1 MCU series has separate power control for RNG
     R_MSTP->MSTPCRC_b.MSTPC28 = 1;
- #endif
+#endif
 
     // power off the SCE module
     R_MSTP->MSTPCRC_b.MSTPC31 = 1;
 }
-
-#endif                                 /* BSP_MCU_MOCKED */
 
 #endif                                 /* HW_SCE_COMMON_H */
 

@@ -51,6 +51,17 @@ typedef struct st_cac_instance_ctrl
 {
     uint32_t          open;            // Set to "CAC" once API has been successfully opened.
     cac_cfg_t const * p_cfg;
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+
+    /* Pointer to callback and optional working memory */
+    void (* p_callback)(cac_callback_args_t *);
+    cac_callback_args_t * p_callback_memory;
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } cac_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -73,6 +84,10 @@ fsp_err_t R_CAC_Read(cac_ctrl_t * const p_ctrl, uint16_t * const p_counter);
 fsp_err_t R_CAC_Reset(cac_ctrl_t * const p_ctrl);
 fsp_err_t R_CAC_Close(cac_ctrl_t * const p_ctrl);
 fsp_err_t R_CAC_VersionGet(fsp_version_t * const p_version);
+fsp_err_t R_CAC_CallbackSet(cac_ctrl_t * const          p_ctrl,
+                            void (                    * p_callback)(cac_callback_args_t *),
+                            void const * const          p_context,
+                            cac_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup CAC)

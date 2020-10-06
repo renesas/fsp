@@ -114,6 +114,11 @@
 /**********************************************************************************************************************
  * Typedef definitions
  *********************************************************************************************************************/
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile iic_slave_prv_ns_callback)(i2c_slave_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile iic_slave_prv_ns_callback)(i2c_slave_callback_args_t * p_args);
+#endif
 
 /**********************************************************************************************************************
  * Private function prototypes
@@ -127,6 +132,9 @@ static fsp_err_t iic_slave_read_write(i2c_slave_ctrl_t * const p_api_ctrl,
                                       uint8_t * const          p_buffer,
                                       uint32_t const           bytes,
                                       iic_slave_transfer_dir_t direction);
+static void r_iic_slave_call_callback(iic_slave_instance_ctrl_t * p_ctrl,
+                                      i2c_slave_event_t           event,
+                                      uint32_t                    transaction_count);
 
 /* Functions that manipulate hardware */
 static void iic_open_hw_slave(iic_slave_instance_ctrl_t * const p_ctrl);
@@ -157,11 +165,12 @@ static fsp_version_t const g_iic_slave_version =
 /* IIC Implementation of I2C device slave interface */
 i2c_slave_api_t const g_i2c_slave_on_iic =
 {
-    .open       = R_IIC_SLAVE_Open,
-    .read       = R_IIC_SLAVE_Read,
-    .write      = R_IIC_SLAVE_Write,
-    .close      = R_IIC_SLAVE_Close,
-    .versionGet = R_IIC_SLAVE_VersionGet
+    .open        = R_IIC_SLAVE_Open,
+    .read        = R_IIC_SLAVE_Read,
+    .write       = R_IIC_SLAVE_Write,
+    .close       = R_IIC_SLAVE_Close,
+    .versionGet  = R_IIC_SLAVE_VersionGet,
+    .callbackSet = R_IIC_SLAVE_CallbackSet
 };
 
 /*******************************************************************************************************************//**
@@ -176,14 +185,15 @@ i2c_slave_api_t const g_i2c_slave_on_iic =
 /******************************************************************************************************************//**
  * Opens the I2C slave device.
  *
- * @retval  FSP_SUCCESS               I2C slave device opened successfully.
- * @retval  FSP_ERR_ALREADY_OPEN      Module is already open.
- * @retval  FSP_ERR_ASSERTION         Parameter check failure due to one or more reasons below:
- *                                    1. p_api_ctrl or p_cfg is NULL.
- *                                    2. extended parameter is NULL.
- *                                    3. Callback parameter is NULL.
- *                                    4. Set the rate to fast mode plus on a channel which does not support it.
- *                                    5. Invalid IRQ number assigned
+ * @retval  FSP_SUCCESS                       I2C slave device opened successfully.
+ * @retval  FSP_ERR_ALREADY_OPEN              Module is already open.
+ * @retval  FSP_ERR_IP_CHANNEL_NOT_PRESENT    Channel is not available on this MCU.
+ * @retval  FSP_ERR_ASSERTION                 Parameter check failure due to one or more reasons below:
+ *                                            1. p_api_ctrl or p_cfg is NULL.
+ *                                            2. extended parameter is NULL.
+ *                                            3. Callback parameter is NULL.
+ *                                            4. Set the rate to fast mode plus on a channel which does not support it.
+ *                                            5. Invalid IRQ number assigned
  *********************************************************************************************************************/
 fsp_err_t R_IIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_t const * const p_cfg)
 {
@@ -193,11 +203,12 @@ fsp_err_t R_IIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_t
     FSP_ASSERT(p_ctrl != NULL);
     FSP_ASSERT(p_cfg != NULL);
     FSP_ASSERT(p_cfg->p_extend != NULL);
-    FSP_ASSERT(p_cfg->p_callback != NULL);
     FSP_ASSERT(p_cfg->rxi_irq >= (IRQn_Type) 0);
     FSP_ASSERT(p_cfg->txi_irq >= (IRQn_Type) 0);
     FSP_ASSERT(p_cfg->tei_irq >= (IRQn_Type) 0);
     FSP_ASSERT(p_cfg->eri_irq >= (IRQn_Type) 0);
+
+    FSP_ERROR_RETURN(BSP_FEATURE_IIC_VALID_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     FSP_ERROR_RETURN(IIC_SLAVE_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
@@ -210,7 +221,14 @@ fsp_err_t R_IIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_t
     p_ctrl->p_reg = (R_IIC0_Type *) ((uint32_t) R_IIC0 + (p_cfg->channel * ((uint32_t) R_IIC1 - (uint32_t) R_IIC0)));
 
     /* Record the configuration on the device for use later */
-    p_ctrl->p_cfg = p_cfg;
+    p_ctrl->p_cfg             = p_cfg;
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->callback_is_secure = true;
+#endif
+
     R_BSP_MODULE_START(FSP_IP_IIC, p_cfg->channel);
 
     /* Indicate that restart and stop condition detection yet to be enabled */
@@ -284,6 +302,48 @@ fsp_err_t R_IIC_SLAVE_Write (i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * cons
     err = iic_slave_read_write(p_api_ctrl, p_src, bytes, IIC_SLAVE_TRANSFER_DIR_MASTER_READ_SLAVE_WRITE);
 
     return err;
+}
+
+/*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements i2c_slave_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_IIC_SLAVE_CallbackSet (i2c_slave_ctrl_t * const          p_api_ctrl,
+                                   void (                          * p_callback)(i2c_slave_callback_args_t *),
+                                   void const * const                p_context,
+                                   i2c_slave_callback_args_t * const p_callback_memory)
+{
+    iic_slave_instance_ctrl_t * p_ctrl = (iic_slave_instance_ctrl_t *) p_api_ctrl;
+
+#if (IIC_SLAVE_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(IIC_SLAVE_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if IIC_SLAVE_CFG_PARAM_CHECKING_ENABLE
+    if (!p_ctrl->callback_is_secure)
+    {
+        FSP_ASSERT(p_callback_memory);
+    }
+ #endif
+#endif
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
 }
 
 /******************************************************************************************************************//**
@@ -376,6 +436,8 @@ static fsp_err_t iic_slave_read_write (i2c_slave_ctrl_t * const p_api_ctrl,
 
     /* Fail if there is already a transfer in progress */
     FSP_ERROR_RETURN(IIC_SLAVE_TRANSFER_DIR_NOT_ESTABLISHED == p_ctrl->direction, FSP_ERR_IN_USE);
+
+    FSP_ASSERT(((iic_slave_instance_ctrl_t *) p_api_ctrl)->p_callback != NULL);
 #endif
 
     /* Record the new information about this transfer */
@@ -448,15 +510,8 @@ static void iic_slave_notify (iic_slave_instance_ctrl_t * const p_ctrl, i2c_slav
         p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_SLAVE_ICCR1_ICE_BIT_MASK | IIC_SLAVE_PRV_SCL_SDA_NOT_DRIVEN);
     }
 
-    /* Invoke callback */
-    /* Fill in the argument to the callback */
-
-    i2c_slave_callback_args_t args =
-    {
-        .p_context = p_ctrl->p_cfg->p_context,
-        .bytes     = p_ctrl->transaction_count,
-        .event     = slave_event
-    };
+    /* Save transaction count */
+    uint32_t transaction_count = p_ctrl->transaction_count;
 
     /* Reset the transaction count here */
     p_ctrl->transaction_count = 0U;
@@ -464,7 +519,7 @@ static void iic_slave_notify (iic_slave_instance_ctrl_t * const p_ctrl, i2c_slav
     p_ctrl->direction = IIC_SLAVE_TRANSFER_DIR_NOT_ESTABLISHED;
 
     /* Invoke the callback */
-    p_ctrl->p_cfg->p_callback(&args);
+    r_iic_slave_call_callback(p_ctrl, slave_event, transaction_count);
 }
 
 /*******************************************************************************************************************//**
@@ -475,14 +530,6 @@ static void iic_slave_notify (iic_slave_instance_ctrl_t * const p_ctrl, i2c_slav
  **********************************************************************************************************************/
 static void iic_slave_callback_request (iic_slave_instance_ctrl_t * const p_ctrl, i2c_slave_event_t slave_event)
 {
-    /* Fill in the argument to the callback */
-    i2c_slave_callback_args_t args =
-    {
-        .p_context = p_ctrl->p_cfg->p_context,
-        .event     = slave_event,
-        .bytes     = p_ctrl->transaction_count
-    };
-
     p_ctrl->direction = IIC_SLAVE_TRANSFER_DIR_NOT_ESTABLISHED;
 
     /* Disable timeout function */
@@ -490,7 +537,7 @@ static void iic_slave_callback_request (iic_slave_instance_ctrl_t * const p_ctrl
 
     /* Invoke the callback to notify the read request.
      * The application must call MasterWriteSlaveRead API in the callback.*/
-    p_ctrl->p_cfg->p_callback(&args);
+    r_iic_slave_call_callback(p_ctrl, slave_event, p_ctrl->transaction_count);
 
     /* Allow timeouts to be generated on the low value of SCL using long count mode */
     p_ctrl->p_reg->ICMR2 = IIC_SLAVE_BUS_MODE_REGISTER_2_MASK;
@@ -652,6 +699,64 @@ static void iic_slave_initiate_transaction (iic_slave_instance_ctrl_t * p_ctrl, 
 
             p_ctrl->start_interrupt_enabled = true;
         }
+    }
+}
+
+/*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_ctrl     Pointer to iic slave instance control block
+ * @param[in]     event      Event code
+ * @param[in]     transaction_count      Transaction count for iic slave
+ **********************************************************************************************************************/
+static void r_iic_slave_call_callback (iic_slave_instance_ctrl_t * p_ctrl,
+                                       i2c_slave_event_t           event,
+                                       uint32_t                    transaction_count)
+{
+    i2c_slave_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    i2c_slave_callback_args_t * p_args = p_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->bytes     = transaction_count;
+    p_args->event     = event;
+    p_args->p_context = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        iic_slave_prv_ns_callback p_callback = (iic_slave_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args);
+#endif
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
     }
 }
 

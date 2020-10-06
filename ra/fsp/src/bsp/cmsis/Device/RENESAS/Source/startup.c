@@ -100,6 +100,7 @@ BSP_DONT_REMOVE static uint8_t g_heap[BSP_CFG_HEAP_BYTES] BSP_ALIGN_VARIABLE(BSP
  #pragma weak MemManage_Handler                        = Default_Handler
  #pragma weak BusFault_Handler                         = Default_Handler
  #pragma weak UsageFault_Handler                       = Default_Handler
+ #pragma weak SecureFault_Handler                      = Default_Handler
  #pragma weak SVC_Handler                              = Default_Handler
  #pragma weak DebugMon_Handler                         = Default_Handler
  #pragma weak PendSV_Handler                           = Default_Handler
@@ -114,6 +115,7 @@ void HardFault_Handler(void) WEAK_REF_ATTRIBUTE;
 void MemManage_Handler(void) WEAK_REF_ATTRIBUTE;
 void BusFault_Handler(void) WEAK_REF_ATTRIBUTE;
 void UsageFault_Handler(void) WEAK_REF_ATTRIBUTE;
+void SecureFault_Handler(void) WEAK_REF_ATTRIBUTE;
 void SVC_Handler(void) WEAK_REF_ATTRIBUTE;
 void DebugMon_Handler(void) WEAK_REF_ATTRIBUTE;
 void PendSV_Handler(void) WEAK_REF_ATTRIBUTE;
@@ -130,7 +132,7 @@ BSP_DONT_REMOVE const exc_ptr_t __Vectors[BSP_CORTEX_VECTOR_TABLE_ENTRIES] BSP_P
     MemManage_Handler,                                         /*      MPU Fault Handler         */
     BusFault_Handler,                                          /*      Bus Fault Handler         */
     UsageFault_Handler,                                        /*      Usage Fault Handler       */
-    0,                                                         /*      Reserved                  */
+    SecureFault_Handler,                                       /*      Secure Fault Handler      */
     0,                                                         /*      Reserved                  */
     0,                                                         /*      Reserved                  */
     0,                                                         /*      Reserved                  */

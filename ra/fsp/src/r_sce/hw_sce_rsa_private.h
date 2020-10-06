@@ -33,6 +33,19 @@ typedef fsp_err_t (* hw_sce_rsa_generatekey_t)(uint32_t num_tries, uint32_t * Ou
 typedef fsp_err_t (* hw_sce_rsa_private_decrypt_t)(const uint32_t * InData_Text, const uint32_t * InData_KeyIndex,
                                                    const uint32_t * InData_N, uint32_t * OutData_Text);
 
+typedef fsp_err_t (* hw_sce_rsa_public_encrypt_t)(const uint32_t * InData_Text, const uint32_t * InData_PublicKey,
+                                                  const uint32_t * InData_N, uint32_t * OutData_Text);
+
+fsp_err_t HW_SCE_RSA_4096PublicKeyEncrypt(const uint32_t * InData_Text,
+                                          const uint32_t * InData_PublicKey,
+                                          const uint32_t * InData_N,
+                                          uint32_t       * OutData_Text);
+
+fsp_err_t HW_SCE_RSA_3072PublicKeyEncrypt(const uint32_t * InData_Text,
+                                          const uint32_t * InData_PublicKey,
+                                          const uint32_t * InData_N,
+                                          uint32_t       * OutData_Text);
+
 fsp_err_t HW_SCE_RSA_2048PublicKeyEncrypt(const uint32_t * InData_Text,
                                           const uint32_t * InData_PublicKey,
                                           const uint32_t * InData_N,

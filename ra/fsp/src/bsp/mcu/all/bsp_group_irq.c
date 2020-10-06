@@ -26,7 +26,7 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BSP_GRP_IRQ_TOTAL_ITEMS    (13U)
+#define BSP_GRP_IRQ_TOTAL_ITEMS    (16U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -105,7 +105,7 @@ void NMI_Handler (void)
     uint16_t nmisr = R_ICU->NMISR;
 
     /* Loop over all NMI status flags */
-    for (bsp_grp_irq_t irq = BSP_GRP_IRQ_IWDT_ERROR; irq <= BSP_GRP_IRQ_MPU_STACK; irq++)
+    for (bsp_grp_irq_t irq = BSP_GRP_IRQ_IWDT_ERROR; irq <= BSP_GRP_IRQ_CACHE_PARITY; irq++)
     {
         /* If the current irq status register is set call the irq callback. */
         if (0U != (nmisr & (1U << irq)))

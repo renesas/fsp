@@ -124,6 +124,15 @@ typedef struct st_spi_callback_args
     void const * p_context;            ///< Context provided to user during callback
 } spi_callback_args_t;
 
+/** Non-secure arguments for write-read guard function */
+typedef struct st_spi_write_read_guard_args
+{
+    void const          * p_src;
+    void                * p_dest;
+    uint32_t const        length;
+    spi_bit_width_t const bit_width;
+} spi_write_read_guard_args_t;
+
 /** SPI interface configuration */
 typedef struct st_spi_cfg
 {
@@ -216,6 +225,20 @@ typedef struct st_spi_api
      */
     fsp_err_t (* writeRead)(spi_ctrl_t * const p_ctrl, void const * p_src, void * p_dest, uint32_t const length,
                             spi_bit_width_t const bit_width);
+
+    /**
+     * Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - R_SCI_SPI_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the SPI control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(spi_ctrl_t * const p_api_ctrl, void (* p_callback)(spi_callback_args_t *),
+                              void const * const p_context, spi_callback_args_t * const p_callback_memory);
 
     /** Remove power to the SPI channel designated by the handle and disable the associated interrupts.
      * @par Implemented as

@@ -79,6 +79,11 @@
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile cac_prv_ns_callback)(cac_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile cac_prv_ns_callback)(cac_callback_args_t * p_args);
+#endif
 
 /***********************************************************************************************************************
  * Private global variables and functions
@@ -115,6 +120,7 @@ const cac_api_t g_cac_on_cac =
     .startMeasurement = R_CAC_StartMeasurement,
     .stopMeasurement  = R_CAC_StopMeasurement,
     .read             = R_CAC_Read,
+    .callbackSet      = R_CAC_CallbackSet,
     .close            = R_CAC_Close,
     .versionGet       = R_CAC_VersionGet
 };
@@ -154,6 +160,14 @@ fsp_err_t R_CAC_Open (cac_ctrl_t * const p_ctrl, cac_cfg_t const * const p_cfg)
 #endif
 
     p_instance_ctrl->p_cfg = p_cfg;
+
+    /* Set callback and context pointers, if configured */
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
+#if BSP_TZ_SECURE_BUILD
+    p_instance_ctrl->callback_is_secure = true;
+#endif
 
     /* Configure the CAC per the configuration. */
     r_cac_hw_configure(p_instance_ctrl);
@@ -243,6 +257,52 @@ fsp_err_t R_CAC_Read (cac_ctrl_t * const p_ctrl, uint16_t * const p_counter)
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Implements @ref cac_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ **********************************************************************************************************************/
+fsp_err_t R_CAC_CallbackSet (cac_ctrl_t * const          p_ctrl,
+                             void (                    * p_callback)(cac_callback_args_t *),
+                             void const * const          p_context,
+                             cac_callback_args_t * const p_callback_memory)
+{
+    cac_instance_ctrl_t * p_instance_ctrl = (cac_instance_ctrl_t *) p_ctrl;
+
+#if CAC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(CAC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    p_instance_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if CAC_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    cac_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                      CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(p_instance_ctrl->callback_is_secure || (NULL != p_callback_memory_checked),
+                     FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+    p_instance_ctrl->p_callback        = p_callback;
+    p_instance_ctrl->p_context         = p_context;
+    p_instance_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Release any resources that were allocated by the Open() or any subsequent CAC operations.
  *
  * @retval     FSP_SUCCESS        Successful close.
@@ -318,7 +378,7 @@ static void r_cac_hw_configure (cac_instance_ctrl_t * const p_instance_ctrl)
     R_BSP_MODULE_START(FSP_IP_CAC, 0);
 
     /* Disable measurements. */
-    R_CAC->CACR0 = 0U;
+    R_CAC->CACR0 = 0;
 
     /* Read CFME bit to confirm the bit value has changed. See section 10.2.1 CAC Control Register 0 of the RA6M3
      * manual R01UH0886EJ0100. */
@@ -391,20 +451,63 @@ static void r_cac_hw_configure (cac_instance_ctrl_t * const p_instance_ctrl)
  **********************************************************************************************************************/
 static void r_cac_isr_handler (cac_event_t event, uint32_t clear_mask)
 {
-    IRQn_Type             irq             = R_FSP_CurrentIrqGet();
-    cac_instance_ctrl_t * p_instance_ctrl = (cac_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
+    volatile cac_instance_ctrl_t * p_instance_ctrl = (cac_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    if (NULL != p_instance_ctrl->p_cfg->p_callback)
+    if (NULL != p_instance_ctrl->p_callback)
     {
-        /* Call the user defined callback. */
-        cac_callback_args_t cb_data;
-        cb_data.event     = event;
-        cb_data.p_context = p_instance_ctrl->p_cfg->p_context;
-        p_instance_ctrl->p_cfg->p_callback(&cb_data);
+        /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+         * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+        cac_callback_args_t   args;
+        cac_callback_args_t * p_args = p_instance_ctrl->p_callback_memory;
+        if (NULL == p_args)
+        {
+            /* Store on stack */
+            p_args = &args;
+        }
+        else
+        {
+            /* Save current arguments on the stack in case this is a nested interrupt. */
+            args = *p_args;
+        }
+
+        p_args->event     = event;
+        p_args->p_context = p_instance_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+        /* p_callback can point to a secure function or a non-secure function. */
+        if (p_instance_ctrl->callback_is_secure)
+        {
+            /* If p_callback is secure, then the project does not need to change security state. */
+            p_instance_ctrl->p_callback(p_args);
+        }
+        else
+        {
+            /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+            cac_prv_ns_callback p_callback = (cac_prv_ns_callback) (p_instance_ctrl->p_callback);
+            p_callback(p_args);
+        }
+
+#else
+
+        /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+        p_instance_ctrl->p_callback(p_args);
+#endif
+        if (NULL != p_instance_ctrl->p_callback_memory)
+        {
+            /* Restore callback memory in case this is a nested interrupt. */
+            *p_instance_ctrl->p_callback_memory = args;
+        }
     }
 
     /* Clear the status flag. */
     R_CAC->CAICR |= (uint8_t) clear_mask;
+
+    /* Depending on MPU and cache settings, the register may need to be read back to ensure the write happens before
+     * clearing the IRQ in the ICU. */
+    R_CAC->CAICR;
+
     R_BSP_IrqStatusClear(irq);
 }
 

@@ -330,6 +330,19 @@ typedef struct st_flash_api
     fsp_err_t (* startupAreaSelect)(flash_ctrl_t * const p_ctrl, flash_startup_area_swap_t swap_type,
                                     bool is_temporary);
 
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_FLASH_HP_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Control block set in @ref flash_api_t::open call for this timer.
+     * @param[in]   p_callback               Callback function to register
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(flash_ctrl_t * const p_api_ctrl, void (* p_callback)(flash_callback_args_t *),
+                              void const * const p_context, flash_callback_args_t * const p_callback_memory);
+
     /** Get Flash driver version.
      * @par Implemented as
      * - @ref R_FLASH_LP_VersionGet()

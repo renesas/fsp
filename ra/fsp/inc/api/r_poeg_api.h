@@ -163,6 +163,19 @@ typedef struct st_poeg_api
      */
     fsp_err_t (* statusGet)(poeg_ctrl_t * const p_ctrl, poeg_status_t * p_status);
 
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_POEG_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Control block set in @ref poeg_api_t::open call for this timer.
+     * @param[in]   p_callback               Callback function to register
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(poeg_ctrl_t * const p_api_ctrl, void (* p_callback)(poeg_callback_args_t *),
+                              void const * const p_context, poeg_callback_args_t * const p_callback_memory);
+
     /** Disables GPT output pins by software request.
      * @par Implemented as
      * - @ref R_POEG_OutputDisable()

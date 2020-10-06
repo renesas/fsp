@@ -239,6 +239,8 @@ fsp_err_t r_usb_pmsc_media_write (uint8_t const * const p_wbuffer, uint32_t cons
  ***********************************************************************************************************************/
 void r_usb_pmsc_media_ioctl (usb_ioctl_cmd_t ioctl_cmd, uint32_t * ioctl_data)
 {
+    rm_block_media_info_t info;
+
     switch (ioctl_cmd)
     {
         case USB_MEDIA_IOCTL_GET_NUM_BLOCKS:
@@ -258,6 +260,13 @@ void r_usb_pmsc_media_ioctl (usb_ioctl_cmd_t ioctl_cmd, uint32_t * ioctl_data)
         case USB_MEDIA_IOCTL_SYNC:
         {
             /* TODO: Flush write cache if necessary */
+            break;
+        }
+
+        case USB_MEDIA_IOCTL_GET_WRITE_PROTECT_INFO:
+        {
+            gp_block_media_instance->p_api->infoGet(gp_block_media_instance->p_ctrl, &info);
+            *ioctl_data = (uint32_t) info.write_protected;
             break;
         }
 

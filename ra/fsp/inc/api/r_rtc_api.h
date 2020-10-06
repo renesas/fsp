@@ -258,6 +258,19 @@ typedef struct st_rtc_api
      */
     fsp_err_t (* errorAdjustmentSet)(rtc_ctrl_t * const p_ctrl, rtc_error_adjustment_cfg_t const * const err_adj_cfg);
 
+    /**
+     * Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - R_RTC_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the RTC control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated
+     */
+    fsp_err_t (* callbackSet)(rtc_ctrl_t * const p_ctrl, void (* p_callback)(rtc_callback_args_t *),
+                              void const * const p_context, rtc_callback_args_t * const p_callback_memory);
+
     /** Return the currently configure clock source for the RTC
      *
      * @par Implemented as

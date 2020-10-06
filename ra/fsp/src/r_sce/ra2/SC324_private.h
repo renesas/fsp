@@ -22,6 +22,7 @@
 #define SC324_PRIVATE_H
 
 #include <stdint.h>
+#include "SCE_module.h"
 
 typedef struct                              /*!< SCE register structure        */
 {
@@ -46,8 +47,7 @@ typedef struct                              /*!< SCE register structure        *
     volatile uint8_t REG_07H;               /*!< Reserved                      */
 } SCE1_TRNG_Type;
 
-#define SCE1_TRNG_BASE    0x400D1000UL
-#define SCE1_TRNG         ((volatile SCE1_TRNG_Type *) SCE1_TRNG_BASE)
+#define SCE1_TRNG    ((volatile SCE1_TRNG_Type *) SCE1_TRNG_BASE)
 
 typedef struct
 {
@@ -94,7 +94,6 @@ typedef struct
     volatile uint32_t AESKW1;                        ///< AES Key Window 1 register
 } SCE1_AES_Type;
 
-#define SCE1_AES_BASE    0x400D0000UL
-#define SCE1_AES         ((volatile SCE1_AES_Type *) SCE1_AES_BASE)
+#define SCE1_AES    ((volatile SCE1_AES_Type *) SCE1_AES_BASE)
 
 #endif                                 /* SC324_PRIVATE_H */

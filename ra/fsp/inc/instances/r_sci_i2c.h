@@ -86,6 +86,17 @@ typedef struct st_sci_i2c_instance_ctrl
     volatile bool do_dummy_read;        // Tracks whether a dummy read is issued on the first RX */
     volatile bool activation_on_rxi;    // Tracks whether the transfer is activated on RXI interrupt */
     volatile bool activation_on_txi;    // Tracks whether the transfer is activated on TXI interrupt */
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;            // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+
+    /* Pointer to callback and optional working memory */
+    void (* p_callback)(i2c_master_callback_args_t *);
+    i2c_master_callback_args_t * p_callback_memory;
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } sci_i2c_instance_ctrl_t;
 
 /** SCI I2C extended configuration */
@@ -122,6 +133,10 @@ fsp_err_t R_SCI_I2C_Abort(i2c_master_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_I2C_SlaveAddressSet(i2c_master_ctrl_t * const    p_api_ctrl,
                                     uint32_t const               slave,
                                     i2c_master_addr_mode_t const addr_mode);
+fsp_err_t R_SCI_I2C_CallbackSet(i2c_master_ctrl_t * const          p_api_ctrl,
+                                void (                           * p_callback)(i2c_master_callback_args_t *),
+                                void const * const                 p_context,
+                                i2c_master_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

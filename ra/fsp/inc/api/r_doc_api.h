@@ -145,6 +145,20 @@ typedef struct st_doc_api
      * @param[out]  p_version  Code and API version used.
      */
     fsp_err_t (* versionGet)(fsp_version_t * const p_version);
+
+    /**
+     * Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - R_DOC_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the DOC control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(doc_ctrl_t * const p_api_ctrl, void (* p_callback)(doc_callback_args_t *),
+                              void const * const p_context, doc_callback_args_t * const p_callback_memory);
 } doc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

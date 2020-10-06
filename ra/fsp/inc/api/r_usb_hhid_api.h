@@ -39,6 +39,7 @@
  * Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
 #include "r_usb_hhid_cfg.h"
+#include "r_usb_basic_api.h"
 
 /******************************************************************************
  * Macro definitions
@@ -98,6 +99,14 @@ typedef struct st_usb_hhid_api
     fsp_err_t (* maxPacketSizeGet)(usb_ctrl_t * const p_api_ctrl, uint16_t * p_size, uint8_t direction,
                                    uint8_t device_address);
 } usb_hhid_api_t;
+
+/** This structure encompasses everything that is needed to use an instance of this interface. */
+typedef struct st_usb_hhid_instance
+{
+    usb_ctrl_t           * p_ctrl;     ///< Pointer to the control structure for this instance
+    usb_cfg_t const      * p_cfg;      ///< Pointer to the configuration structure for this instance
+    usb_hhid_api_t const * p_api;      ///< Pointer to the API structure for this instance
+} usb_hhid_instance_t;
 #endif                                 /* USB_HHID_API_H */
 
 /*******************************************************************************************************************//**

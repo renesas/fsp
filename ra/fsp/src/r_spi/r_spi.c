@@ -79,6 +79,11 @@
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile spi_prv_ns_callback)(spi_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile spi_prv_ns_callback)(spi_callback_args_t * p_args);
+#endif
 
 /* Frame data length */
 typedef enum e_spi_spcmd_bit_length
@@ -105,6 +110,7 @@ static fsp_err_t r_spi_write_read_common(spi_ctrl_t * const    p_api_ctrl,
 
 static void r_spi_receive(spi_instance_ctrl_t * p_ctrl);
 static void r_spi_transmit(spi_instance_ctrl_t * p_ctrl);
+static void r_spi_call_callback(spi_instance_ctrl_t * p_ctrl, spi_event_t event);
 
 /***********************************************************************************************************************
  * ISR prototypes
@@ -134,12 +140,13 @@ static const fsp_version_t module_version =
 /* SPI implementation of SPI interface. */
 const spi_api_t g_spi_on_spi =
 {
-    .open       = R_SPI_Open,
-    .read       = R_SPI_Read,
-    .write      = R_SPI_Write,
-    .writeRead  = R_SPI_WriteRead,
-    .close      = R_SPI_Close,
-    .versionGet = R_SPI_VersionGet
+    .open        = R_SPI_Open,
+    .read        = R_SPI_Read,
+    .write       = R_SPI_Write,
+    .writeRead   = R_SPI_WriteRead,
+    .close       = R_SPI_Close,
+    .versionGet  = R_SPI_VersionGet,
+    .callbackSet = R_SPI_CallbackSet
 };
 
 /*******************************************************************************************************************//**
@@ -227,7 +234,14 @@ fsp_err_t R_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Get the register address of the channel. */
-    p_ctrl->p_cfg  = p_cfg;
+    p_ctrl->p_cfg             = p_cfg;
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->callback_is_secure = true;
+#endif
+
     p_ctrl->p_regs = SPI_REG(p_ctrl->p_cfg->channel);
 
     /* Configure hardware registers according to the r_spi_api configuration structure. */
@@ -307,6 +321,41 @@ fsp_err_t R_SPI_WriteRead (spi_ctrl_t * const    p_api_ctrl,
 #endif
 
     return r_spi_write_read_common(p_api_ctrl, p_src, p_dest, length, bit_width);
+}
+
+/*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements spi_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_SPI_CallbackSet (spi_ctrl_t * const          p_api_ctrl,
+                             void (                    * p_callback)(spi_callback_args_t *),
+                             void const * const          p_context,
+                             spi_callback_args_t * const p_callback_memory)
+{
+    spi_instance_ctrl_t * p_ctrl = (spi_instance_ctrl_t *) p_api_ctrl;
+
+#if (SPI_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(SPI_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -649,6 +698,10 @@ static void r_spi_hw_config (spi_instance_ctrl_t * p_ctrl)
     p_ctrl->p_regs->SPCR2    = (uint8_t) spcr2;
     p_ctrl->p_regs->SPCMD[0] = (uint16_t) spcmd0;
     p_ctrl->p_regs->SPDCR2   = (uint8_t) spdcr2;
+
+#if BSP_FEATURE_SPI_HAS_SPCR3 == 1
+    p_ctrl->p_regs->SPCR3 = R_SPI0_SPCR3_CENDIE_Msk;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -941,6 +994,61 @@ static void r_spi_transmit (spi_instance_ctrl_t * p_ctrl)
 }
 
 /*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_ctrl     Pointer to SPI instance control block
+ * @param[in]     event      Event code
+ **********************************************************************************************************************/
+static void r_spi_call_callback (spi_instance_ctrl_t * p_ctrl, spi_event_t event)
+{
+    spi_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    spi_callback_args_t * p_args = p_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->channel   = p_ctrl->p_cfg->channel;
+    p_args->event     = event;
+    p_args->p_context = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        spi_prv_ns_callback p_callback = (spi_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args);
+#endif
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
+    }
+}
+
+/*******************************************************************************************************************//**
  * ISR called when data is loaded into SPI data register from the shift register.
  **********************************************************************************************************************/
 void spi_rxi_isr (void)
@@ -1040,14 +1148,8 @@ void spi_tei_isr (void)
         /* Disable the SPI Transfer. */
         p_ctrl->p_regs->SPCR_b.SPE = 0;
 
-        /* Setup callback args. */
-        spi_callback_args_t spi_cb_data;
-        spi_cb_data.channel   = p_ctrl->p_cfg->channel;
-        spi_cb_data.event     = SPI_EVENT_TRANSFER_COMPLETE;
-        spi_cb_data.p_context = p_ctrl->p_cfg->p_context;
-
         /* Signal that a transfer has completed. */
-        p_ctrl->p_cfg->p_callback(&spi_cb_data);
+        r_spi_call_callback(p_ctrl, SPI_EVENT_TRANSFER_COMPLETE);
     }
 
     /* Restore context if RTOS is used */
@@ -1068,11 +1170,6 @@ void spi_eri_isr (void)
     /* Disable the SPI Transfer. */
     p_ctrl->p_regs->SPCR_b.SPE = 0;
 
-    /* Setup callback args. */
-    spi_callback_args_t spi_cb_data;
-    spi_cb_data.channel   = p_ctrl->p_cfg->channel;
-    spi_cb_data.p_context = p_ctrl->p_cfg->p_context;
-
     /* Read the status register. */
     uint8_t status = p_ctrl->p_regs->SPSR;
 
@@ -1082,15 +1179,13 @@ void spi_eri_isr (void)
     /* Check if the error is a Parity Error. */
     if (R_SPI0_SPSR_PERF_Msk & status)
     {
-        spi_cb_data.event = SPI_EVENT_ERR_PARITY;
-        p_ctrl->p_cfg->p_callback(&spi_cb_data);
+        r_spi_call_callback(p_ctrl, SPI_EVENT_ERR_PARITY);
     }
 
     /* Check if the error is a Receive Buffer Overflow Error. */
     if (R_SPI0_SPSR_OVRF_Msk & status)
     {
-        spi_cb_data.event = SPI_EVENT_ERR_READ_OVERFLOW;
-        p_ctrl->p_cfg->p_callback(&spi_cb_data);
+        r_spi_call_callback(p_ctrl, SPI_EVENT_ERR_READ_OVERFLOW);
     }
 
     /* Check if the error is a Mode Fault Error. */
@@ -1099,8 +1194,7 @@ void spi_eri_isr (void)
         /* Check if the error is a Transmit Buffer Underflow Error. */
         if (R_SPI0_SPSR_UDRF_Msk & status)
         {
-            spi_cb_data.event = SPI_EVENT_ERR_MODE_UNDERRUN;
-            p_ctrl->p_cfg->p_callback(&spi_cb_data);
+            r_spi_call_callback(p_ctrl, SPI_EVENT_ERR_MODE_UNDERRUN);
         }
     }
 

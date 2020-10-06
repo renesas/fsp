@@ -70,15 +70,16 @@ static const fsp_version_t g_rm_block_media_usb_version =
 
 const rm_block_media_api_t g_rm_block_media_on_usb =
 {
-    .open       = RM_BLOCK_MEDIA_USB_Open,
-    .mediaInit  = RM_BLOCK_MEDIA_USB_MediaInit,
-    .read       = RM_BLOCK_MEDIA_USB_Read,
-    .write      = RM_BLOCK_MEDIA_USB_Write,
-    .erase      = RM_BLOCK_MEDIA_USB_Erase,
-    .infoGet    = RM_BLOCK_MEDIA_USB_InfoGet,
-    .statusGet  = RM_BLOCK_MEDIA_USB_StatusGet,
-    .close      = RM_BLOCK_MEDIA_USB_Close,
-    .versionGet = RM_BLOCK_MEDIA_USB_VersionGet,
+    .open        = RM_BLOCK_MEDIA_USB_Open,
+    .mediaInit   = RM_BLOCK_MEDIA_USB_MediaInit,
+    .read        = RM_BLOCK_MEDIA_USB_Read,
+    .write       = RM_BLOCK_MEDIA_USB_Write,
+    .erase       = RM_BLOCK_MEDIA_USB_Erase,
+    .callbackSet = RM_BLOCK_MEDIA_USB_CallbackSet,
+    .infoGet     = RM_BLOCK_MEDIA_USB_InfoGet,
+    .statusGet   = RM_BLOCK_MEDIA_USB_StatusGet,
+    .close       = RM_BLOCK_MEDIA_USB_Close,
+    .versionGet  = RM_BLOCK_MEDIA_USB_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -351,6 +352,28 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Erase (rm_block_media_ctrl_t * const p_ctrl,
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Implements @ref rm_block_media_api_t::callbackSet.
+ *
+ * @note This function is currently unsupported for Block Media over USB.
+ *
+ * @retval  FSP_ERR_UNSUPPORTED          CallbackSet is not currently supported for Block Media over USB.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLOCK_MEDIA_USB_CallbackSet (rm_block_media_ctrl_t * const p_ctrl,
+                                          void (                      * p_callback)(
+                                              rm_block_media_callback_args_t *),
+                                          void const * const                     p_context,
+                                          rm_block_media_callback_args_t * const p_callback_memory)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_callback);
+    FSP_PARAMETER_NOT_USED(p_context);
+    FSP_PARAMETER_NOT_USED(p_callback_memory);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * Provides driver status.  Implements @ref rm_block_media_api_t::statusGet().
  *
  * @retval     FSP_SUCCESS                   Status stored in p_status.
@@ -419,6 +442,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_InfoGet (rm_block_media_ctrl_t * const p_ctrl, rm_b
     p_info->sector_size_bytes = p_instance_ctrl->sector_size_bytes;
     p_info->num_sectors       = p_instance_ctrl->sector_count;
     p_info->reentrant         = false;
+    p_info->write_protected   = false;
 
     return FSP_SUCCESS;
 }

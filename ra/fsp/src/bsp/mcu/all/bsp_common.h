@@ -174,8 +174,12 @@ extern const fsp_version_t g_bsp_version;
 /* Private definition used in R_FSP_SystemClockHzGet. Each bitfield in SCKDIVCR is 3 bits wide. */
 #define FSP_PRIV_SCKDIVCR_DIV_MASK              (7)
 
-#define BSP_MCU_INFO_POINTER_LOCATION           (0x407FB19C)
-#define BSP_UNIQUE_ID_OFFSET                    (0x14)
+/* Use the secure registers for secure projects and flat projects. */
+#if !BSP_TZ_NONSECURE_BUILD && BSP_FEATURE_TZ_HAS_TRUSTZONE
+ #define FSP_PRIV_TZ_USE_SECURE_REGS            (1)
+#else
+ #define FSP_PRIV_TZ_USE_SECURE_REGS            (0)
+#endif
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -256,7 +260,29 @@ __STATIC_INLINE uint32_t R_FSP_SystemClockHzGet (fsp_priv_clock_t clock)
  **********************************************************************************************************************/
 __STATIC_INLINE bsp_unique_id_t const * R_BSP_UniqueIdGet ()
 {
-    return (bsp_unique_id_t *) ((*(uint32_t *) BSP_MCU_INFO_POINTER_LOCATION) + BSP_UNIQUE_ID_OFFSET);
+    return (bsp_unique_id_t *) BSP_FEATURE_BSP_UNIQUE_ID_POINTER;
+}
+
+/*******************************************************************************************************************//**
+ * Disables the flash cache.
+ **********************************************************************************************************************/
+__STATIC_INLINE void R_BSP_FlashCacheDisable ()
+{
+    R_FCACHE->FCACHEE = 0U;
+}
+
+/*******************************************************************************************************************//**
+ * Enables the flash cache.
+ **********************************************************************************************************************/
+__STATIC_INLINE void R_BSP_FlashCacheEnable ()
+{
+    /* Invalidate the flash cache and wait until it is invalidated. (See section 55.3.2.2 "Operation" of the Flash Cache
+     * in the RA6M3 manual R01UH0878EJ0100). */
+    R_FCACHE->FCACHEIV = 1U;
+    FSP_HARDWARE_REGISTER_WAIT(R_FCACHE->FCACHEIV, 0U);
+
+    /* Enable flash cache. */
+    R_FCACHE->FCACHEE = 1U;
 }
 
 /***********************************************************************************************************************

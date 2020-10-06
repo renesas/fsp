@@ -87,6 +87,7 @@ typedef enum e_cgc_clock
     CGC_CLOCK_MAIN_OSC = 3,            ///< The main oscillator
     CGC_CLOCK_SUBCLOCK = 4,            ///< The subclock oscillator
     CGC_CLOCK_PLL      = 5,            ///< The PLL oscillator
+    CGC_CLOCK_PLL2     = 6,            ///< The PLL2 oscillator
 } cgc_clock_t;
 
 /** PLL divider values */
@@ -219,6 +220,7 @@ typedef void cgc_ctrl_t;
 typedef struct s_cgc_cfg
 {
     void (* p_callback)(cgc_callback_args_t * p_args);
+    void const * p_context;
 } cgc_cfg_t;
 
 /** Clock configuration */
@@ -226,12 +228,14 @@ typedef struct st_cgc_clocks_cfg
 {
     cgc_clock_t        system_clock;   ///< System clock source enumeration
     cgc_pll_cfg_t      pll_cfg;        ///< PLL configuration structure
+    cgc_pll_cfg_t      pll2_cfg;       ///< PLL2 configuration structure
     cgc_divider_cfg_t  divider_cfg;    ///< Clock dividers structure
     cgc_clock_change_t loco_state;     ///< State of LOCO
     cgc_clock_change_t moco_state;     ///< State of MOCO
     cgc_clock_change_t hoco_state;     ///< State of HOCO
     cgc_clock_change_t mainosc_state;  ///< State of Main oscillator
     cgc_clock_change_t pll_state;      ///< State of PLL
+    cgc_clock_change_t pll2_state;     ///< State of PLL2
 } cgc_clocks_cfg_t;
 
 /** CGC functions implemented at the HAL layer follow this API. */
@@ -258,7 +262,8 @@ typedef struct
      * - @ref R_CGC_ClockStart()
      * @param[in]   p_ctrl         Pointer to instance control block
      * @param[in]   clock_source   Clock source to start
-     * @param[in]   p_pll_cfg      Pointer to PLL configuration, can be NULL if clock_source is not CGC_CLOCK_PLL
+     * @param[in]   p_pll_cfg      Pointer to PLL configuration, can be NULL if clock_source is not CGC_CLOCK_PLL or
+     *                             CGC_CLOCK_PLL2
      */
     fsp_err_t (* clockStart)(cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
                              cgc_pll_cfg_t const * const p_pll_cfg);
@@ -322,6 +327,20 @@ typedef struct
      * @param[in]   p_ctrl          Pointer to instance control block
      */
     fsp_err_t (* oscStopStatusClear)(cgc_ctrl_t * const p_ctrl);
+
+    /**
+     * Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - R_CGC_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the CGC control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(cgc_ctrl_t * const p_api_ctrl, void (* p_callback)(cgc_callback_args_t *),
+                              void const * const p_context, cgc_callback_args_t * const p_callback_memory);
 
     /** Close the CGC driver.
      * @par Implemented as

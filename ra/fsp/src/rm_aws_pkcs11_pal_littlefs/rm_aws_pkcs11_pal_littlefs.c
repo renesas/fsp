@@ -81,6 +81,14 @@ uint8_t g_object_handle_dictionary[pkcs11configMAX_NUM_OBJECTS][pkcs11configMAX_
 #endif
 };
 
+/*
+ *  @brief Initialize the PAL.
+ */
+CK_RV PKCS11_PAL_Initialize ()
+{
+    return CKR_OK;
+}
+
 /**
  * @brief Writes a file to local storage.
  *
@@ -92,7 +100,7 @@ uint8_t g_object_handle_dictionary[pkcs11configMAX_NUM_OBJECTS][pkcs11configMAX_
  *
  * @return The file handle of the object that was stored.
  */
-CK_OBJECT_HANDLE PKCS11_PAL_SaveObject (CK_ATTRIBUTE_PTR pxLabel, uint8_t * pucData, uint32_t ulDataSize)
+CK_OBJECT_HANDLE PKCS11_PAL_SaveObject (CK_ATTRIBUTE_PTR pxLabel, CK_BYTE_PTR pucData, CK_ULONG ulDataSize)
 {
     CK_OBJECT_HANDLE xHandle = eInvalidHandle;
 
@@ -144,14 +152,14 @@ CK_OBJECT_HANDLE PKCS11_PAL_SaveObject (CK_ATTRIBUTE_PTR pxLabel, uint8_t * pucD
  * Port-specific object handle retrieval.
  *
  *
- * @param[in] pLabel         Pointer to the label of the object
+ * @param[in] pxLabel        Pointer to the label of the object
  *                           who's handle should be found.
  * @param[in] usLength       The length of the label, in bytes.
  *
  * @return The object handle if operation was successful.
  * Returns eInvalidHandle if unsuccessful.
  */
-CK_OBJECT_HANDLE PKCS11_PAL_FindObject (uint8_t * pLabel, uint8_t usLength)
+CK_OBJECT_HANDLE PKCS11_PAL_FindObject (CK_BYTE_PTR pxLabel, CK_ULONG usLength)
 {
     /* Avoid compiler warnings about unused variables. */
     FSP_PARAMETER_NOT_USED(usLength);
@@ -161,11 +169,11 @@ CK_OBJECT_HANDLE PKCS11_PAL_FindObject (uint8_t * pLabel, uint8_t usLength)
 
     for (i = 1; i < pkcs11configMAX_NUM_OBJECTS; i++)
     {
-        if (!strcmp((char *) &g_object_handle_dictionary[i], (char *) pLabel))
+        if (!strcmp((char *) &g_object_handle_dictionary[i], (char *) pxLabel))
         {
             lfs_file_t file;
 
-            int lfs_err = lfs_file_open(&RM_STDIO_LITTLEFS_CFG_LFS, &file, (char *) pLabel, LFS_O_RDONLY);
+            int lfs_err = lfs_file_open(&RM_STDIO_LITTLEFS_CFG_LFS, &file, (char *) pxLabel, LFS_O_RDONLY);
 
             if (LFS_ERR_OK == lfs_err)
             {
@@ -194,7 +202,7 @@ CK_OBJECT_HANDLE PKCS11_PAL_FindObject (uint8_t * pLabel, uint8_t usLength)
  * @param[in]  xHandle      Handle of the file to be read.
  * @param[out] ppucData     Pointer to buffer for file data.
  * @param[out] pulDataSize  Size (in bytes) of data located in file.
- * @param[out] xIsPrivate   Boolean indicating if value is private (CK_TRUE)
+ * @param[out] pIsPrivate   Boolean indicating if value is private (CK_TRUE)
  *                          or exportable (CK_FALSE)
  *
  * @return CKR_OK if operation was successful.  CKR_KEY_HANDLE_INVALID ifshit
@@ -203,10 +211,10 @@ CK_OBJECT_HANDLE PKCS11_PAL_FindObject (uint8_t * pLabel, uint8_t usLength)
  * error.
  */
 
-BaseType_t PKCS11_PAL_GetObjectValue (CK_OBJECT_HANDLE xHandle,
-                                      uint8_t       ** ppucData,
-                                      uint32_t       * pulDataSize,
-                                      CK_BBOOL       * xIsPrivate)
+CK_RV PKCS11_PAL_GetObjectValue (CK_OBJECT_HANDLE xHandle,
+                                 CK_BYTE_PTR    * ppucData,
+                                 CK_ULONG_PTR     pulDataSize,
+                                 CK_BBOOL       * pIsPrivate)
 {
     BaseType_t       xReturn        = CKR_FUNCTION_FAILED;
     CK_OBJECT_HANDLE xHandleStorage = xHandle;
@@ -243,11 +251,11 @@ BaseType_t PKCS11_PAL_GetObjectValue (CK_OBJECT_HANDLE xHandle,
 
             if (xHandle == eAwsDevicePrivateKey)
             {
-                *xIsPrivate = CK_TRUE;
+                *pIsPrivate = CK_TRUE;
             }
             else
             {
-                *xIsPrivate = CK_FALSE;
+                *pIsPrivate = CK_FALSE;
             }
         }
 
@@ -260,17 +268,17 @@ BaseType_t PKCS11_PAL_GetObjectValue (CK_OBJECT_HANDLE xHandle,
 /**
  * @brief Cleanup after PKCS11_GetObjectValue().
  *
- * @param[in] pucBuffer       The buffer to free.
+ * @param[in] pucData       The buffer to free.
  *                          (*ppucData from PKCS11_PAL_GetObjectValue())
- * @param[in] ulBufferSize    The length of the buffer to free.
+ * @param[in] ulDataSize    The length of the buffer to free.
  *                          (*pulDataSize from PKCS11_PAL_GetObjectValue())
  */
-void PKCS11_PAL_GetObjectValueCleanup (uint8_t * pucBuffer, uint32_t ulBufferSize)
+void PKCS11_PAL_GetObjectValueCleanup (CK_BYTE_PTR pucData, CK_ULONG ulDataSize)
 {
     /* Avoid compiler warnings about unused variables. */
-    FSP_PARAMETER_NOT_USED(ulBufferSize);
+    FSP_PARAMETER_NOT_USED(ulDataSize);
 
-    vPortFree(pucBuffer);
+    vPortFree(pucData);
 }
 
 /*-----------------------------------------------------------*/

@@ -58,8 +58,12 @@
 #endif
 
 /** FSP Header and Footer definitions */
-#define FSP_HEADER    FSP_CPP_HEADER
-#define FSP_FOOTER    FSP_CPP_FOOTER
+#define FSP_HEADER             FSP_CPP_HEADER
+#define FSP_FOOTER             FSP_CPP_FOOTER
+
+/** Macro to be used when argument to function is ignored since function call is NSC and the parameter is statically
+ *  defined on the Secure side. */
+#define FSP_SECURE_ARGUMENT    (NULL)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -103,6 +107,7 @@ typedef enum e_fsp_err
     FSP_ERR_SECTOR_RELEASE_FAILED = 32,                     ///< Sector release failed
     FSP_ERR_NOT_INITIALIZED       = 33,                     ///< Required initialization not complete
     FSP_ERR_NOT_FOUND             = 34,                     ///< The requested item could not be found
+    FSP_ERR_NO_CALLBACK_MEMORY    = 35,                     ///< Non-secure callback memory not provided for non-secure callback
 
     /* Start of RTOS only error codes */
     FSP_ERR_INTERNAL     = 100,                             ///< Internal error
@@ -303,6 +308,8 @@ typedef enum e_fsp_err
     FSP_ERR_CRYPTO_ALREADY_OPEN          = 0x1000f,  ///< control block is already opened
     FSP_ERR_CRYPTO_INSTALL_KEY_FAILED    = 0x10010,  ///< Specified input key is invalid.
     FSP_ERR_CRYPTO_AUTHENTICATION_FAILED = 0x10011,  ///< Authentication failed
+    FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      = 0x10012,  ///< Failure to Init Cipher
+    FSP_ERR_CRYPTO_SCE_AUTHENTICATION    = 0x10013,
 
     /* Start of SF_CRYPTO specific */
     FSP_ERR_CRYPTO_COMMON_NOT_OPENED      = 0x20000, ///< Crypto Framework Common is not opened

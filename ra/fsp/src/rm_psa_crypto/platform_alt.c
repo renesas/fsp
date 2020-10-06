@@ -28,6 +28,13 @@
  #include "platform.h"
  #include "hw_sce_private.h"
 
+ #if defined(CONFIG_MEDTLS_USE_AFR_MEMORY) && defined(MBEDTLS_PLATFORM_MEMORY) && \
+    !(defined(MBEDTLS_PLATFORM_CALLOC_MACRO) && defined(MBEDTLS_PLATFORM_FREE_MACRO))
+extern void * pvCalloc(size_t xNumElements, size_t xSize);
+extern void   vPortFree(void * pv);
+
+ #endif
+
 /*******************************************************************************************************************//**
  * @addtogroup RM_PSA_CRYPTO
  * @{
@@ -47,27 +54,14 @@ int mbedtls_platform_setup (mbedtls_platform_context * ctx)
 {
     (void) ctx;
 
-    uint32_t iret = FSP_ERR_CRYPTO_SCE_FAIL;
+    fsp_err_t iret = FSP_ERR_CRYPTO_SCE_FAIL;
 
-    // power on the SCE module
-    HW_SCE_PowerOn();
+ #if defined(CONFIG_MEDTLS_USE_AFR_MEMORY) && defined(MBEDTLS_PLATFORM_MEMORY) && \
+    !(defined(MBEDTLS_PLATFORM_CALLOC_MACRO) && defined(MBEDTLS_PLATFORM_FREE_MACRO))
+    mbedtls_platform_set_calloc_free(pvCalloc, vPortFree);
+ #endif
 
-    HW_SCE_SoftReset();
-    iret = HW_SCE_Initialization1();
-
-    if (FSP_SUCCESS == iret)
-    {
-        iret = HW_SCE_Initialization2();
-        if (FSP_SUCCESS == iret)
-        {
-            iret = HW_SCE_secureBoot();
-        }
-    }
-
-    if (FSP_SUCCESS == iret)
-    {
-        HW_SCE_EndianSetLittle();
-    }
+    iret = HW_SCE_McuSpecificInit();
 
     if (iret != FSP_SUCCESS)
     {

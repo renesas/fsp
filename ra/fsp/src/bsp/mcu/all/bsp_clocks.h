@@ -42,8 +42,9 @@ FSP_HEADER
 #define BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC    (3) // The main oscillator.
 #define BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK    (4) // The subclock oscillator.
 #define BSP_CLOCKS_SOURCE_CLOCK_PLL         (5) // The PLL oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_PLL2        (6) // The PLL2 oscillator.
 
-/* PLL is not supported in the following scenarios:
+/* PLLs are not supported in the following scenarios:
  *  - When using low voltage mode
  *  - When using an MCU that does not have a PLL
  *  - When the PLL only accepts the main oscillator as a source and XTAL is not used
@@ -51,8 +52,14 @@ FSP_HEADER
 #if BSP_FEATURE_CGC_HAS_PLL && !BSP_CFG_USE_LOW_VOLTAGE_MODE && \
     !((1U != BSP_FEATURE_CGC_PLLCCR_TYPE) && !BSP_CLOCK_CFG_MAIN_OSC_POPULATED)
  #define BSP_PRV_PLL_SUPPORTED              (1)
+ #if BSP_FEATURE_CGC_HAS_PLL2
+  #define BSP_PRV_PLL2_SUPPORTED            (1)
+ #else
+  #define BSP_PRV_PLL2_SUPPORTED            (0)
+ #endif
 #else
  #define BSP_PRV_PLL_SUPPORTED              (0)
+ #define BSP_PRV_PLL2_SUPPORTED             (0)
 #endif
 
 /* The ICLK frequency at startup is used to determine the ideal operating mode to set after startup. The PLL frequency
@@ -62,6 +69,13 @@ FSP_HEADER
   #define BSP_PRV_PLL_SOURCE_FREQ_HZ           (BSP_HOCO_HZ)
  #else
   #define BSP_PRV_PLL_SOURCE_FREQ_HZ           (BSP_CFG_XTAL_HZ)
+ #endif
+#endif
+#if BSP_PRV_PLL2_SUPPORTED
+ #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL2_SOURCE
+  #define BSP_PRV_PLL2_SOURCE_FREQ_HZ          (BSP_HOCO_HZ)
+ #else
+  #define BSP_PRV_PLL2_SOURCE_FREQ_HZ          (BSP_CFG_XTAL_HZ)
  #endif
 #endif
 
@@ -121,6 +135,13 @@ FSP_HEADER
 #define BSP_CLOCKS_USB_CLOCK_DIV_4             (3) // Divide USB source clock by 4
 #define BSP_CLOCKS_USB_CLOCK_DIV_5             (4) // Divide USB source clock by 5
 
+/* OCTA clock divider options. */
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_1            (0) // Divide OCTA source clock by 1
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_2            (1) // Divide OCTA source clock by 2
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_4            (2) // Divide OCTA source clock by 4
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_6            (3) // Divide OCTA source clock by 6
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_8            (4) // Divide OCTA source clock by 8
+
 /* PLL divider options. */
 #define BSP_CLOCKS_PLL_DIV_1                   (0)
 #define BSP_CLOCKS_PLL_DIV_2                   (1)
@@ -173,8 +194,8 @@ FSP_HEADER
 #define BSP_CLOCKS_PLL_MUL_30_0                (0x3B)
 #define BSP_CLOCKS_PLL_MUL_31_0                (0x3D)
 
-/* Configuration option used to disable CLKOUT output. */
-#define BSP_CLOCKS_CLKOUT_DISABLED             (0xFFU)
+/* Configuration option used to disable clock output. */
+#define BSP_CLOCKS_CLOCK_DISABLED              (0xFFU)
 
 /* HOCO cycles per microsecond. */
 #define BSP_PRV_HOCO_CYCLES_PER_US             (BSP_HOCO_HZ / 1000000U)
@@ -234,6 +255,22 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+#if BSP_TZ_SECURE_BUILD || BSP_TZ_NONSECURE_BUILD
+typedef struct
+{
+    uint32_t pll_freq;
+} bsp_clock_update_callback_args_t;
+
+ #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile bsp_clock_update_callback_t)(bsp_clock_update_callback_args_t *
+                                                                              p_callback_args);
+ #elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_clock_update_callback_t)(bsp_clock_update_callback_args_t *
+                                                                             p_callback_args);
+ #endif
+
+#endif
+
 /***********************************************************************************************************************
  * Exported global variables
  **********************************************************************************************************************/
@@ -244,6 +281,17 @@ FSP_HEADER
 
 /* Public functions defined in bsp.h */
 void bsp_clock_init(void);             // Used internally by BSP
+
+#if BSP_TZ_NONSECURE_BUILD
+void bsp_clock_freq_var_init(void);    // Used internally by BSP
+
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+void r_bsp_clock_update_callback_set(bsp_clock_update_callback_t        p_callback,
+                                     bsp_clock_update_callback_args_t * p_callback_memory);
+
+#endif
 
 /* Used internally by CGC */
 

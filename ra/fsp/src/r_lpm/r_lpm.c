@@ -53,6 +53,9 @@
 #define LPM_SW_STANDBY_STCONR                (0x0U)
 #define LPM_SW_STANDBY_WAKE_STCONR           (0x3U)
 
+#define LPM_SNZREQCR1_OFFSET                 (0x32ULL)
+#define LPM_WUPEN1_OFFSET                    (0x32ULL)
+
 #define LPM_OPEN                             (0x524c504d)
 
 /***********************************************************************************************************************
@@ -345,7 +348,7 @@ fsp_err_t r_lpm_mcu_specific_low_power_check (lpm_cfg_t const * const p_cfg)
     {
         if (LPM_MODE_STANDBY_SNOOZE == p_cfg->low_power_mode)
         {
-            FSP_ERROR_RETURN(0U == ((uint32_t) p_cfg->snooze_request_source & (~BSP_FEATURE_LPM_SNZREQCR_MASK)),
+            FSP_ERROR_RETURN(0U == ((uint64_t) p_cfg->snooze_request_source & (~BSP_FEATURE_LPM_SNZREQCR_MASK)),
                              FSP_ERR_INVALID_ARGUMENT);
             FSP_ERROR_RETURN(0U == ((uint32_t) p_cfg->snooze_end_sources & (~BSP_FEATURE_LPM_SNZEDCR_MASK)),
                              FSP_ERR_INVALID_ARGUMENT);
@@ -377,7 +380,7 @@ fsp_err_t r_lpm_mcu_specific_low_power_check (lpm_cfg_t const * const p_cfg)
             /* Do nothing. */
         }
 
-        FSP_ERROR_RETURN(0U == ((uint32_t) p_cfg->standby_wake_sources & ~BSP_FEATURE_ICU_WUPEN_MASK),
+        FSP_ERROR_RETURN(0U == ((uint64_t) p_cfg->standby_wake_sources & ~BSP_FEATURE_ICU_WUPEN_MASK),
                          FSP_ERR_INVALID_MODE);
     }
 
@@ -465,7 +468,11 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
             }
 
             /* Set the request condition that can trigger entry in to snooze mode */
-            R_SYSTEM->SNZREQCR = (uint32_t) p_cfg->snooze_request_source;
+            R_SYSTEM->SNZREQCR = (uint32_t) p_cfg->snooze_request_source & UINT32_MAX;
+
+#if BSP_FEATURE_LPM_HAS_SNZREQCR1 == 1
+            R_SYSTEM->SNZREQCR1 = (uint32_t) (p_cfg->snooze_request_source >> LPM_SNZREQCR1_OFFSET) & UINT32_MAX;
+#endif
 
             /* Enable/disable DTC operation */
             snzcr |= (uint32_t) (p_cfg->dtc_state_in_snooze << R_SYSTEM_SNZCR_SNZDTCEN_Pos);
@@ -474,7 +481,11 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
             R_ICU->SELSR0_b.SELS = (uint8_t) p_cfg->snooze_cancel_sources;
 
             /* Set all sources that can cause an exit from snooze mode to software standby. */
-            R_SYSTEM->SNZEDCR = (uint8_t) p_cfg->snooze_end_sources;
+            R_SYSTEM->SNZEDCR = (uint8_t) p_cfg->snooze_end_sources & UINT8_MAX;
+
+#if BSP_FEATURE_LPM_HAS_SNZEDCR1 == 1
+            R_SYSTEM->SNZEDCR1 = (uint8_t) (p_cfg->snooze_end_sources >> 8U) & UINT8_MAX;
+#endif
         }
 
         /* Set SBYCR to Standby/Deep Standby. */
@@ -486,7 +497,10 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
         sbycr = (1U << R_SYSTEM_SBYCR_SSBY_Pos);
 #endif
 
-        R_ICU->WUPEN = p_cfg->standby_wake_sources;
+        R_ICU->WUPEN = (uint32_t) p_cfg->standby_wake_sources & UINT32_MAX;
+#if BSP_FEATURE_ICU_HAS_WUPEN1 == 1
+        R_ICU->WUPEN1 = (uint32_t) (p_cfg->standby_wake_sources >> LPM_WUPEN1_OFFSET) & UINT32_MAX;
+#endif
     }
     else
     {
@@ -558,9 +572,13 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
     uint32_t saved_opccr        = 0U;
     uint32_t saved_sopccr       = 0U;
     uint32_t saved_ostdcr_ostde = 0U;
-    uint32_t saved_hocowtcr     = 0U;
-    uint32_t new_hocowtcr       = 0U;
-    uint32_t stopped_modules    = 0;
+ #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
+    uint32_t saved_hocowtcr = 0U;
+    uint32_t new_hocowtcr   = 0U;
+ #endif
+ #if BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED
+    uint32_t stopped_modules = 0;
+ #endif
 #endif
 
     if (1U == R_SYSTEM->SBYCR_b.SSBY)
@@ -577,6 +595,9 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
             FSP_ERROR_RETURN(FSP_SUCCESS == r_lpm_check_clocks(clock_source), FSP_ERR_INVALID_MODE);
         }
 
+        /* Enable writing to CGC and Low Power Mode registers. */
+        R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
+        R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
 #else
 
         /* RA6 Series Only:
@@ -586,8 +607,11 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         saved_opccr  = R_SYSTEM->OPCCR_b.OPCM;
         saved_sopccr = R_SYSTEM->SOPCCR_b.SOPCM;
 
+ #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
+
         /* Save HOCOWTCR_b.HSTS */
         saved_hocowtcr = R_SYSTEM->HOCOWTCR_b.HSTS;
+ #endif
 
         /* Enable writing to CGC and Low Power Mode registers. */
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
@@ -602,18 +626,25 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
             {
                 /* Verify clock settings. */
                 FSP_ERROR_RETURN(FSP_SUCCESS == r_lpm_check_clocks(clock_source), FSP_ERR_INVALID_MODE);
+ #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
                 new_hocowtcr = LPM_SW_STANDBY_HOCOWTCR_SCI0_HSTS;
             }
             else
             {
                 new_hocowtcr = LPM_SW_STANDBY_HOCOWTCR_HSTS;
+ #endif
             }
+
+ #if BSP_FEATURE_LPM_HAS_STCONR == 1
 
             /* Set STCONR based on the current system clock. */
             if (LPM_CLOCK_HOCO == clock_source)
             {
+  #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
+
                 /* Set HOCOWTCR_b.HSTS when using HOCO as the system clock */
                 R_SYSTEM->HOCOWTCR_b.HSTS = R_SYSTEM_HOCOWTCR_HSTS_Msk & (new_hocowtcr << R_SYSTEM_HOCOWTCR_HSTS_Pos);
+  #endif
 
                 R_SYSTEM->STCONR = LPM_SW_STANDBY_STCONR;
             }
@@ -621,6 +652,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
             {
                 R_SYSTEM->STCONR = LPM_SW_STANDBY_WAKE_STCONR;
             }
+ #endif
         }
         else
         {
@@ -671,6 +703,10 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         /* Enable Snooze mode (SNZCR.SNZE = 1) immediately before entering to Software Standby mode.
          * See Section 11.8.2 "Canceling Snooze Mode" in the RA6M3 manual  R01UM0004EU0110 */
         R_SYSTEM->SNZCR_b.SNZE = 1;
+
+        /* Dummy read required.
+         * infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0321a/BIHICBGB.html */
+        R_SYSTEM->SNZCR;
     }
 
     /* DSB should be last instruction executed before WFI
@@ -690,10 +726,12 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         r_lpm_wait_for_operating_mode_flags();
 
         /* Restore system registers to the values prior to entering standby. */
-        R_SYSTEM->OPCCR           = saved_opccr & R_SYSTEM_OPCCR_OPCM_Msk;
-        R_SYSTEM->SOPCCR          = saved_sopccr & R_SYSTEM_SOPCCR_SOPCM_Msk;
-        R_SYSTEM->OSTDCR_b.OSTDE  = 0x1U & saved_ostdcr_ostde;
+        R_SYSTEM->OPCCR          = saved_opccr & R_SYSTEM_OPCCR_OPCM_Msk;
+        R_SYSTEM->SOPCCR         = saved_sopccr & R_SYSTEM_SOPCCR_SOPCM_Msk;
+        R_SYSTEM->OSTDCR_b.OSTDE = 0x1U & saved_ostdcr_ostde;
+ #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
         R_SYSTEM->HOCOWTCR_b.HSTS = R_SYSTEM_HOCOWTCR_HSTS_Msk & (saved_hocowtcr << R_SYSTEM_HOCOWTCR_HSTS_Pos);
+ #endif
 
         /* Disable writing to CGC and Low Power Mode registers. */
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);

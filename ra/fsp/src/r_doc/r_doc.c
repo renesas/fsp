@@ -37,6 +37,12 @@
  * Typedef definitions
  **********************************************************************************************************************/
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile doc_prv_ns_callback)(doc_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile doc_prv_ns_callback)(doc_callback_args_t * p_args);
+#endif
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
@@ -63,11 +69,12 @@ static const fsp_version_t g_doc_version =
 
 const doc_api_t g_doc_on_doc =
 {
-    .open       = R_DOC_Open,
-    .close      = R_DOC_Close,
-    .statusGet  = R_DOC_StatusGet,
-    .write      = R_DOC_Write,
-    .versionGet = R_DOC_VersionGet,
+    .open        = R_DOC_Open,
+    .close       = R_DOC_Close,
+    .statusGet   = R_DOC_StatusGet,
+    .write       = R_DOC_Write,
+    .versionGet  = R_DOC_VersionGet,
+    .callbackSet = R_DOC_CallbackSet,
 };
 
 /***********************************************************************************************************************
@@ -107,6 +114,14 @@ fsp_err_t R_DOC_Open (doc_ctrl_t * const p_api_ctrl, doc_cfg_t const * const p_c
 
     /* save pointers for later use */
     p_ctrl->p_cfg = p_cfg;
+#if BSP_TZ_SECURE_BUILD
+
+    /* If this is a secure build, the callback provided in p_cfg must be secure. */
+    p_ctrl->callback_is_secure = true;
+#endif
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
 
     /* Power on the DOC module. */
     R_BSP_MODULE_START(FSP_IP_DOC, 0);
@@ -240,6 +255,44 @@ fsp_err_t R_DOC_VersionGet (fsp_version_t * const p_version)
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements doc_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_DOC_CallbackSet (doc_ctrl_t * const          p_api_ctrl,
+                             void (                    * p_callback)(doc_callback_args_t *),
+                             void const * const          p_context,
+                             doc_callback_args_t * const p_callback_memory)
+{
+    doc_instance_ctrl_t * p_ctrl = (doc_instance_ctrl_t *) p_api_ctrl;
+
+#if (DOC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(DOC_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+
+    /* Store callback and context */
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup DOC)
  **********************************************************************************************************************/
 
@@ -262,14 +315,51 @@ void doc_int_isr (void)
 
     doc_instance_ctrl_t * p_ctrl = (doc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    /* Call the callback */
-    doc_callback_args_t cb_data;
+    /* Call callback */
+    doc_callback_args_t args;
 
-    /* Set data to identify callback to the user. */
-    cb_data.p_context = p_ctrl->p_cfg->p_context;
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    doc_callback_args_t * p_args = p_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
 
-    /* Call the callback.  */
-    p_ctrl->p_cfg->p_callback(&cb_data);
+    p_args->p_context = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        doc_prv_ns_callback p_callback = (doc_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args);
+#endif
+
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
+    }
 
     /* clear DOPCF flag */
     R_DOC->DOCR = (uint8_t) (R_DOC_DOCR_DOPCFCL_Msk | (p_ctrl->p_cfg->event));

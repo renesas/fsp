@@ -50,7 +50,7 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BLE_API_VERSION_MAJOR    (1U)
+#define BLE_API_VERSION_MAJOR    (2U)
 #define BLE_API_VERSION_MINOR    (0U)
 
 /* =================================================== Main Macro =================================================== */
@@ -59,13 +59,13 @@ FSP_HEADER
  * @def BLE_VERSION_MAJOR
  * BLE Module Major Version.
  */
-#define BLE_VERSION_MAJOR        (0x0000)
+#define BLE_VERSION_MAJOR        (0x0002)
 
 /**
  * @def BLE_VERSION_MINOR
  * BLE Module Minor Version.
  */
-#define BLE_VERSION_MINOR        (0x0009)
+#define BLE_VERSION_MINOR        (0x0000)
 
 /**
  * @def BLE_LIB_ALL_FEATS
@@ -550,37 +550,37 @@ enum RBLE_STATUS_enum
  * @def BLE_GAP_LIST_ADD_DEV
  * @brief Add the device to the list.
  */
-#define BLE_GAP_LIST_ADD_DEV                (0x01)
+#define BLE_GAP_LIST_ADD_DEV             (0x01)
 
 /**
  * @def BLE_GAP_LIST_REM_DEV
  * @brief Delete the device from the list.
  */
-#define BLE_GAP_LIST_REM_DEV                (0x02)
+#define BLE_GAP_LIST_REM_DEV             (0x02)
 
 /**
  * @def BLE_GAP_LIST_CLR
  * @brief Clear the list.
  */
-#define BLE_GAP_LIST_CLR                    (0x03)
+#define BLE_GAP_LIST_CLR                 (0x03)
 
 /**
  * @def BLE_GAP_WHITE_LIST_MAX_ENTRY
  * @brief The maximum entry number of White List.
  */
-#define BLE_GAP_WHITE_LIST_MAX_ENTRY        (0x04)
+#define BLE_GAP_WHITE_LIST_MAX_ENTRY     (0x04)
 
 /**
  * @def BLE_GAP_RSLV_LIST_MAX_ENTRY
  * @brief The maximum entry number of Resolving List.
  */
-#define BLE_GAP_RSLV_LIST_MAX_ENTRY         (0x08)
+#define BLE_GAP_RSLV_LIST_MAX_ENTRY      (0x08)
 
 /**
  * @def BLE_GAP_PERD_LIST_MAX_ENTRY
  * @brief The maximum entry number of Periodic Advertiser List.
  */
-#define BLE_GAP_PERD_LIST_MAX_ENTRY         (0x04)
+#define BLE_GAP_PERD_LIST_MAX_ENTRY      (0x04)
 
 /* Set Address Resolution */
 
@@ -588,13 +588,13 @@ enum RBLE_STATUS_enum
  * @def BLE_GAP_RPA_DISABLED
  * @brief Disable RPA generation/resolution.
  */
-#define BLE_GAP_RPA_DISABLED                (0x00)
+#define BLE_GAP_RPA_DISABLED             (0x00)
 
 /**
  * @def BLE_GAP_RPA_ENABLED
  * @brief Enable RPA generation/resolution.
  */
-#define BLE_GAP_RPA_ENABLED                 (0x01)
+#define BLE_GAP_RPA_ENABLED              (0x01)
 
 /* Set Local IRK type */
 
@@ -602,13 +602,13 @@ enum RBLE_STATUS_enum
  * @def BLE_GAP_RL_LOC_KEY_ALL_ZERO
  * @brief  All-zero IRK.
  */
-#define BLE_GAP_RL_LOC_KEY_ALL_ZERO         (0x00)
+#define BLE_GAP_RL_LOC_KEY_ALL_ZERO      (0x00)
 
 /**
  * @def BLE_GAP_RL_LOC_KEY_REGISTERED
  * @brief  The IRK registered by R_BLE_GAP_SetLocIdInfo().
  */
-#define BLE_GAP_RL_LOC_KEY_REGISTERED       (0x01)
+#define BLE_GAP_RL_LOC_KEY_REGISTERED    (0x01)
 
 /* Number of advertising set supported */
 
@@ -616,7 +616,11 @@ enum RBLE_STATUS_enum
  * @def BLE_MAX_NO_OF_ADV_SETS_SUPPORTED
  * @brief  The maximum number of advertising set for the Abstraction API.
  */
-#define BLE_MAX_NO_OF_ADV_SETS_SUPPORTED    (BLE_ABS_CFG_RF_ADVERTISING_SET_MAXIMUM)
+#if (BLE_CFG_LIBRARY_TYPE == 0)
+ #define BLE_MAX_NO_OF_ADV_SETS_SUPPORTED    (4)
+#else                                  /* (BLE_CFG_LIB_TYPE == 0) */
+ #define BLE_MAX_NO_OF_ADV_SETS_SUPPORTED    (1)
+#endif /* (BLE_CFG_LIB_TYPE == 0) */
 
 /* Advertising Properties  */
 /* Legacy Advertising PDU */
@@ -9661,6 +9665,18 @@ typedef struct
 } st_ble_vs_evt_data_t;
 
 /******************************************************************************************************************//**
+ *  @struct st_ble_vs_get_scan_ch_map_comp_evt_t
+ *  @brief  This structure notifies that current scan channel map.
+ **********************************************************************************************************************/
+typedef struct
+{
+    /**
+     *  @brief The result of current scan channel map.
+     */
+    uint8_t ch_map;
+} st_ble_vs_get_scan_ch_map_comp_evt_t;
+
+/******************************************************************************************************************//**
  * @typedef ble_vs_app_cb_t
  * @brief   ble_vs_app_cb_t is the Vendor Specific Event callback function type.
  * @param[in] event_type    The type of Vendor Specific Event.
@@ -9992,6 +10008,50 @@ typedef enum
      *  None
      */
     BLE_VS_EVENT_FAIL_DETECT = 0x800D,
+
+    /**
+     *  @brief This event notifies that scan channel map has been set by R_BLE_VS_SetScanChMap().
+     *
+     * ## Event Code: 0x800E
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *              <tr>
+     *                  <td class="paramname">BLE_ERR_INVALID_ARG(0x0003)</td>
+     *                  <td>The ch_map parameter specified by R_BLE_VS_SetScanChMap() is out of range.</td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  none
+     */
+    BLE_VS_EVENT_SET_SCAN_CH_MAP = 0x800E,
+
+    /**
+     *  @brief This event notifies that scan channel map has been retrieved by R_BLE_VS_GetScanChMap().
+     *
+     * ## Event Code: 0x800F
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  st_ble_vs_get_scan_ch_map_comp_evt_t
+     */
+    BLE_VS_EVENT_GET_SCAN_CH_MAP = 0x800F,
 
     /**
      *  @brief  Invalid VS Event.
@@ -12563,6 +12623,32 @@ ble_status_t R_BLE_VS_GetTxBufferNum(uint32_t * p_buffer_num);
  * @retval  BLE_ERR_INVALID_ARG(0x0003) The tx_queue_lwm parameter or the tx_queue_hwm parameter is out of range.
  **********************************************************************************************************************/
 ble_status_t R_BLE_VS_SetTxLimit(uint32_t tx_queue_lwm, uint32_t tx_queue_hwm);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_SetScanChMap(uint16_t ch_map)
+ * @brief    This function sets the scan channel map.
+ * @details  Set specify the scan channel for use.\n
+ *           At least one channel must be enabled.
+ * @note     Calling this API while Scan is already running will not change the channel map.
+ * @param[in] ch_map  Specify the channel map for use.
+ *        | bit            |   description                                      |
+ *        |:-------------- |:-------------------------------------------------- |
+ *        | bit0           | Enable channel 37 for use (0:disable, 1:enable)    |
+ *        | bit1           | Enable channel 38 for use (0:disable, 1:enable)    |
+ *        | bit2           | Enable channel 39 for use (0:disable, 1:enable)    |
+ *        | All other bits | Reserved for future use.                           |
+ * @retval  BLE_SUCCESS(0x0000) Success
+ * @retval  BLE_ERR_INVALID_ARG(0x0003) The ch_map parameter is out of range.
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_SetScanChMap(uint16_t ch_map);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_GetScanChMap(void)
+ * @brief    This function gets currently scan channel map.
+ * @details  The result of this API call is notified in BLE_VS_EVENT_GET_SCAN_CH_MAP event.
+ * @retval  BLE_SUCCESS(0x0000) Success
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_GetScanChMap(void);
 
 /*@}*/
 

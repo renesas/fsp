@@ -82,11 +82,12 @@
 typedef enum
 {
     /* Generic ioctl command (defined for compatibility with FatFs) */
-    USB_MEDIA_IOCTL_SYNC              = 0, /* Flush media write cache. */
-    USB_MEDIA_IOCTL_GET_NUM_BLOCKS    = 1, /* For use un calculating media size. */
-    USB_MEDIA_IOCTL_GET_SECTOR_SIZE   = 2, /* Get sector size (for multiple sector size. (_MAX_SS >= 1024)) */
-    USB_MEDIA_IOCTL_GET_BLOCK_SIZE    = 3, /* Get number of byes per block. */
-    USB_MEDIA_IOCTL_CTRL_ERASE_SECTOR = 4, /* Force erased a sector group. (for only _USE_ERASE) */
+    USB_MEDIA_IOCTL_SYNC                   = 0, /* Flush media write cache. */
+    USB_MEDIA_IOCTL_GET_NUM_BLOCKS         = 1, /* For use un calculating media size. */
+    USB_MEDIA_IOCTL_GET_SECTOR_SIZE        = 2, /* Get sector size (for multiple sector size. (_MAX_SS >= 1024)) */
+    USB_MEDIA_IOCTL_GET_BLOCK_SIZE         = 3, /* Get number of byes per block. */
+    USB_MEDIA_IOCTL_CTRL_ERASE_SECTOR      = 4, /* Force erased a sector group. (for only _USE_ERASE) */
+    USB_MEDIA_IOCTL_GET_WRITE_PROTECT_INFO = 5, /* Get write protect sinfo. */
 
 /* Add more IOCTL commands starting below here. */
 } usb_ioctl_cmd_t;

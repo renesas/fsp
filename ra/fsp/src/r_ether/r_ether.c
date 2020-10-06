@@ -309,7 +309,8 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
          i < (p_instance_ctrl->p_ether_cfg->num_tx_descriptors + p_instance_ctrl->p_ether_cfg->num_rx_descriptors);
          i++)
     {
-        memset(p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i], 0x00,
+        memset(p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i],
+               0x00,
                p_instance_ctrl->p_ether_cfg->ether_buffer_size);
     }
 
@@ -1530,7 +1531,9 @@ static fsp_err_t ether_do_link (ether_instance_ctrl_t * const p_instance_ctrl, c
                      * Enable PAUSE for full duplex link depending on
                      * the pause resolution results
                      */
-                    ether_pause_resolution(local_pause_bits, partner_pause_bits, &transmit_pause_set,
+                    ether_pause_resolution(local_pause_bits,
+                                           partner_pause_bits,
+                                           &transmit_pause_set,
                                            &receive_pause_set);
 
                     if (ETHER_PAUSE_XMIT_ON == transmit_pause_set)

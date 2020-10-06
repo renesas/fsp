@@ -45,6 +45,7 @@
 #define USB_VALUE_RMB                      (0x80)
 #define USB_VALUE_MASK_FFH                 (0xFF)
 #define USB_VALUE_32                       (32)
+#define USB_VALUE_ALL_PAGE_LENGTH          (0x24)
 
 /***********************************************************************************************************************
  * Private global variables and functions
@@ -145,7 +146,7 @@ static const uint8_t g_usb_atapi_rs_tbl[USB_ATAPI_REQUEST_SENSE_SIZE] =
 };
 
 /* Mode Sense data (Mode Parameter) */
-static const uint8_t g_usb_atapi_ms_mp_tbl[USB_ATAPI_MODE_SENSE10_MODE_PARAM_SIZE] =
+static uint8_t g_usb_atapi_ms_mp_tbl[USB_ATAPI_MODE_SENSE10_MODE_PARAM_SIZE] =
 {
     0x00,                              /* [0]Mode Data Length */
     0x00,                              /* [1]Mode Data Length */
@@ -158,7 +159,7 @@ static const uint8_t g_usb_atapi_ms_mp_tbl[USB_ATAPI_MODE_SENSE10_MODE_PARAM_SIZ
 };
 
 /* Mode Sense data (ReadWrite Error Recovery Page 12byte) */
-static const uint8_t g_usb_atapi_ms_rcvr_tbl[USB_ATAPI_MODE_SENSE10_ERR_RCVR_P_SIZE] =
+static uint8_t g_usb_atapi_ms_rcvr_tbl[USB_ATAPI_MODE_SENSE10_ERR_RCVR_P_SIZE] =
 {
     /* Mode Parameter List */
     0x00,                              /* [0]Mode Data Length */
@@ -186,7 +187,7 @@ static const uint8_t g_usb_atapi_ms_rcvr_tbl[USB_ATAPI_MODE_SENSE10_ERR_RCVR_P_S
 };
 
 /* Mode Sense data (Cashing Page 12byte) */
-static const uint8_t g_usb_atapi_ms_cash_tbl[USB_ATAPI_MODE_SENSE10_CASHING_P_SIZE] =
+static uint8_t g_usb_atapi_ms_cash_tbl[USB_ATAPI_MODE_SENSE10_CASHING_P_SIZE] =
 {
     /* Mode Parameter List */
     0x00,                              /* [0]Mode Data Length */
@@ -213,7 +214,7 @@ static const uint8_t g_usb_atapi_ms_cash_tbl[USB_ATAPI_MODE_SENSE10_CASHING_P_SI
 };
 
 /* Mode Sense data (Removable Block Access Capacities Page 12byte) */
-static const uint8_t g_usb_atapi_ms_capa_tbl[USB_ATAPI_MODE_SENSE10_CAP_P_SIZE] =
+static uint8_t g_usb_atapi_ms_capa_tbl[USB_ATAPI_MODE_SENSE10_CAP_P_SIZE] =
 {
     /* Mode Parameter List */
     0x00,                              /* [0]Mode Data Length */
@@ -239,13 +240,27 @@ static const uint8_t g_usb_atapi_ms_capa_tbl[USB_ATAPI_MODE_SENSE10_CAP_P_SIZE] 
     0x00                               /* [11]Reserved */
 };
 
-/* Mode Sense data (Timer & Protect Page) */
-static const uint8_t g_usb_atapi_ms_op_cmd_tbl[USB_ATAPI_MODE_SENSE10_OP_CMD_SIZE] =
+/* Mode Sense data (Timer & Protect Page 8byte) */
+static uint8_t g_usb_atapi_ms_op_cmd_tbl[USB_ATAPI_MODE_SENSE10_OP_CMD_SIZE] =
 {
+    /* Mode Parameter List */
+    0x00,                              /* [0]Mode Data Length */
+    0x08,                              /* [1]Mode Data Length */
+    0x00,                              /* [2]Medium Type Code(00h-FFh Vendor Specific) */
+    0x00,                              /* [3]b7:WP(Write Protect), b6-b0:Reserved */
+    0x00,                              /* [4]Reserved */
+    0x00,                              /* [5]Reserved */
+    0x00,                              /* [6]Reserved */
+    0x00,                              /* [7]Reserved */
+    /* Page(Timer & Protect Page 8byte) */
     0x1C,                              /* [0]b7:PS, b6:Reserved, b5-b0:Page Code(1Ch) */
-    0x06,                              /* [1]Page Length(06h) */
+    0x0A,                              /* [1]Page Length(06h) */
     0x00,                              /* [2]Reserved */
     0x00,                              /* [3]b7-b4:Reserved, b3-b0:Inactivity Time Multiplier */
+    0x00,                              /* [4]b7-b2:Reserved, b2:WCE, b1:DISP, b0:SWPP */
+    0x00,                              /* [5]Reserved */
+    0x00,                              /* [6]Reserved */
+    0x00,                              /* [7]Reserved */
     0x00,                              /* [4]b7-b2:Reserved, b2:WCE, b1:DISP, b0:SWPP */
     0x00,                              /* [5]Reserved */
     0x00,                              /* [6]Reserved */
@@ -253,11 +268,11 @@ static const uint8_t g_usb_atapi_ms_op_cmd_tbl[USB_ATAPI_MODE_SENSE10_OP_CMD_SIZ
 };
 
 /* Mode Sense data (All Page) */
-static const uint8_t g_usb_atapi_ms_all_tbl[USB_ATAPI_MODE_SENSE10_ALL_P_SIZE] =
+static uint8_t g_usb_atapi_ms_all_tbl[USB_ATAPI_MODE_SENSE10_ALL_P_SIZE] =
 {
     /* Mode Parameter List */
     0x00,                              /* [0]Mode Data Length */
-    0x24,                              /* [1]Mode Data Length */
+    USB_VALUE_ALL_PAGE_LENGTH,         /* [1]Mode Data Length */
     0x00,                              /* [2]Medium Type Code(00h-FFh Vendor Specific) */
     0x00,                              /* [3]b7:WP(Write Protect), b6-b0:Reserved */
     0x00,                              /* [4]Reserved */
@@ -307,7 +322,7 @@ static const uint8_t g_usb_atapi_ms_all_tbl[USB_ATAPI_MODE_SENSE10_ALL_P_SIZE] =
 };
 
 /* Mode Sense data (Page code error) */
-static const uint8_t g_usb_atapi_ms_err_tbl[USB_ATAPI_MODE_SENSE10_P_CODE_ERR_SIZE] =
+static uint8_t g_usb_atapi_ms_err_tbl[USB_ATAPI_MODE_SENSE10_P_CODE_ERR_SIZE] =
 {
     0x00,                              /* [0]Mode Data Length */
     0x00,                              /* [1]Mode Data Length */
@@ -894,61 +909,71 @@ void pmsc_atapi_command_processing (uint8_t * cbw, uint16_t usb_result, usb_cb_t
 static void pmsc_atapi_get_mode_sense10_data (uint8_t page_code, uint32_t * size, uint8_t ** buff)
 {
     uint8_t * p_data;
+    uint32_t  write_protect = 0;
+
+    r_usb_pmsc_media_ioctl(USB_MEDIA_IOCTL_GET_WRITE_PROTECT_INFO, &write_protect);
 
     switch (page_code)
     {
         case 0x00:                     /* Mode Parameter Header */
         {
-            *size  = USB_ATAPI_MODE_SENSE10_MODE_PARAM_SIZE;
-            p_data = (uint8_t *) &g_usb_atapi_ms_mp_tbl[0];
+            *size = USB_ATAPI_MODE_SENSE10_MODE_PARAM_SIZE;
+            g_usb_atapi_ms_mp_tbl[3] |= (uint8_t) (write_protect << 0x07);
+            p_data = &g_usb_atapi_ms_mp_tbl[0];
 
             break;
         }
 
         case 0x01:                     /* ReadWrite Error Recovery Page */
         {
-            *size  = USB_ATAPI_MODE_SENSE10_ERR_RCVR_P_SIZE;
-            p_data = (uint8_t *) &g_usb_atapi_ms_rcvr_tbl[0];
+            *size = USB_ATAPI_MODE_SENSE10_ERR_RCVR_P_SIZE;
+            g_usb_atapi_ms_rcvr_tbl[3] |= (uint8_t) (write_protect << 0x07);
+            p_data = &g_usb_atapi_ms_rcvr_tbl[0];
 
             break;
         }
 
         case 0x08:                     /* Cashing Page */
         {
-            *size  = USB_ATAPI_MODE_SENSE10_CASHING_P_SIZE;
-            p_data = (uint8_t *) &g_usb_atapi_ms_cash_tbl[0];
+            *size = USB_ATAPI_MODE_SENSE10_CASHING_P_SIZE;
+            g_usb_atapi_ms_cash_tbl[3] |= (uint8_t) (write_protect << 0x07);
+            p_data = &g_usb_atapi_ms_cash_tbl[0];
 
             break;
         }
 
         case 0x1B:                     /* Removable Block Access Capacities Page */
         {
-            *size  = USB_ATAPI_MODE_SENSE10_CAP_P_SIZE;
-            p_data = (uint8_t *) &g_usb_atapi_ms_capa_tbl[0];
+            *size = USB_ATAPI_MODE_SENSE10_CAP_P_SIZE;
+            g_usb_atapi_ms_capa_tbl[3] |= (uint8_t) (write_protect << 0x07);
+            p_data = &g_usb_atapi_ms_capa_tbl[0];
 
             break;
         }
 
         case 0x1C:                     /* Timer & Protect Page */
         {
-            *size  = USB_ATAPI_MODE_SENSE10_OP_CMD_SIZE;
-            p_data = (uint8_t *) &g_usb_atapi_ms_op_cmd_tbl[0];
+            *size = USB_ATAPI_MODE_SENSE10_OP_CMD_SIZE;
+            g_usb_atapi_ms_op_cmd_tbl[3] |= (uint8_t) (write_protect << 0x07);
+            p_data = &g_usb_atapi_ms_op_cmd_tbl[0];
 
             break;
         }
 
         case USB_VALUE_MODE_SENSE10_ALL_PAGE: /* All Page */
         {
-            *size  = USB_ATAPI_MODE_SENSE10_ALL_P_SIZE;
-            p_data = (uint8_t *) &g_usb_atapi_ms_all_tbl[0];
+            *size = USB_ATAPI_MODE_SENSE10_ALL_P_SIZE;
+            g_usb_atapi_ms_all_tbl[3] |= (uint8_t) (write_protect << 0x07);
+            p_data = &g_usb_atapi_ms_all_tbl[0];
 
             break;
         }
 
         default:
         {
-            *size  = USB_ATAPI_MODE_SENSE10_P_CODE_ERR_SIZE;
-            p_data = (uint8_t *) &g_usb_atapi_ms_err_tbl[0];
+            *size = USB_ATAPI_MODE_SENSE10_P_CODE_ERR_SIZE;
+            g_usb_atapi_ms_err_tbl[3] |= (uint8_t) (write_protect << 0x07);
+            p_data = &g_usb_atapi_ms_err_tbl[0];
 
             break;
         }

@@ -133,6 +133,12 @@ typedef enum e_iic_master_transfer_dir_option
     IIC_MASTER_TRANSFER_DIR_READ  = 0x1
 } iic_master_transfer_dir_t;
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile iic_master_prv_ns_callback)(i2c_master_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile iic_master_prv_ns_callback)(i2c_master_callback_args_t * p_args);
+#endif
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
@@ -195,7 +201,8 @@ i2c_master_api_t const g_i2c_master_on_iic =
     .abort           = R_IIC_MASTER_Abort,
     .slaveAddressSet = R_IIC_MASTER_SlaveAddressSet,
     .close           = R_IIC_MASTER_Close,
-    .versionGet      = R_IIC_MASTER_VersionGet
+    .versionGet      = R_IIC_MASTER_VersionGet,
+    .callbackSet     = R_IIC_MASTER_CallbackSet
 };
 
 /*******************************************************************************************************************//**
@@ -210,14 +217,15 @@ i2c_master_api_t const g_i2c_master_on_iic =
 /*******************************************************************************************************************//**
  * Opens the I2C device.
  *
- * @retval  FSP_SUCCESS               Requested clock rate was set exactly.
- * @retval  FSP_ERR_ALREADY_OPEN      Module is already open.
- * @retval  FSP_ERR_ASSERTION         Parameter check failure due to one or more reasons below:
- *                                    1. p_api_ctrl or p_cfg is NULL.
- *                                    2. extended parameter is NULL.
- *                                    3. Callback parameter is NULL.
- *                                    4. Set the rate to fast mode plus on a channel which does not support it.
- *                                    5. Invalid IRQ number assigned
+ * @retval  FSP_SUCCESS                       Requested clock rate was set exactly.
+ * @retval  FSP_ERR_ALREADY_OPEN              Module is already open.
+ * @retval  FSP_ERR_IP_CHANNEL_NOT_PRESENT    Channel is not available on this MCU.
+ * @retval  FSP_ERR_ASSERTION                 Parameter check failure due to one or more reasons below:
+ *                                            1. p_api_ctrl or p_cfg is NULL.
+ *                                            2. extended parameter is NULL.
+ *                                            3. Callback parameter is NULL.
+ *                                            4. Set the rate to fast mode plus on a channel which does not support it.
+ *                                            5. Invalid IRQ number assigned
  **********************************************************************************************************************/
 fsp_err_t R_IIC_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cfg_t const * const p_cfg)
 {
@@ -226,12 +234,13 @@ fsp_err_t R_IIC_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cf
     FSP_ASSERT(p_api_ctrl != NULL);
     FSP_ASSERT(p_cfg != NULL);
     FSP_ASSERT(p_cfg->p_extend != NULL);
-    FSP_ASSERT(p_cfg->p_callback != NULL);
     FSP_ASSERT(p_cfg->rxi_irq >= (IRQn_Type) 0);
     FSP_ASSERT(p_cfg->txi_irq >= (IRQn_Type) 0);
     FSP_ASSERT(p_cfg->tei_irq >= (IRQn_Type) 0);
     FSP_ASSERT(p_cfg->eri_irq >= (IRQn_Type) 0);
     FSP_ERROR_RETURN(IIC_MASTER_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
+
+    FSP_ERROR_RETURN(BSP_FEATURE_IIC_VALID_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     /* If rate is configured as Fast mode plus, check whether the channel supports it */
     if (I2C_MASTER_RATE_FASTPLUS == p_cfg->rate)
@@ -248,9 +257,15 @@ fsp_err_t R_IIC_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cf
     p_ctrl->timeout_mode = ((iic_master_extended_cfg_t *) p_cfg->p_extend)->timeout_mode;
 
     /* Record the pointer to the configuration structure for later use */
-    p_ctrl->p_cfg     = p_cfg;
-    p_ctrl->slave     = p_cfg->slave;
-    p_ctrl->addr_mode = p_cfg->addr_mode;
+    p_ctrl->p_cfg             = p_cfg;
+    p_ctrl->slave             = p_cfg->slave;
+    p_ctrl->addr_mode         = p_cfg->addr_mode;
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->callback_is_secure = true;
+#endif
 
     R_BSP_MODULE_START(FSP_IP_IIC, p_cfg->channel);
 
@@ -409,6 +424,48 @@ fsp_err_t R_IIC_MASTER_SlaveAddressSet (i2c_master_ctrl_t * const    p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements i2c_master_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_IIC_MASTER_CallbackSet (i2c_master_ctrl_t * const          p_api_ctrl,
+                                    void (                           * p_callback)(i2c_master_callback_args_t *),
+                                    void const * const                 p_context,
+                                    i2c_master_callback_args_t * const p_callback_memory)
+{
+    iic_master_instance_ctrl_t * p_ctrl = (iic_master_instance_ctrl_t *) p_api_ctrl;
+
+#if (IIC_MASTER_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(IIC_MASTER_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if IIC_MASTER_CFG_PARAM_CHECKING_ENABLE
+    if (!p_ctrl->callback_is_secure)
+    {
+        FSP_ASSERT(p_callback_memory);
+    }
+ #endif
+#endif
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Closes the I2C device. May power down IIC peripheral.
  * This function will safely terminate any in-progress I2C transfers.
  *
@@ -511,6 +568,7 @@ static fsp_err_t iic_master_read_write (i2c_master_ctrl_t * const p_api_ctrl,
 #if IIC_MASTER_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_buffer != NULL);
     FSP_ERROR_RETURN((p_ctrl->open == IIC_MASTER_OPEN), FSP_ERR_NOT_OPEN);
+    FSP_ASSERT(((iic_master_instance_ctrl_t *) p_api_ctrl)->p_callback != NULL);
  #if IIC_MASTER_CFG_DTC_ENABLE
 
     /* DTC on RX could actually receive 65535+3 = 65538 bytes as 3 bytes are handled separately.
@@ -566,11 +624,25 @@ static fsp_err_t iic_master_read_write (i2c_master_ctrl_t * const p_api_ctrl,
  **********************************************************************************************************************/
 static void iic_master_notify (iic_master_instance_ctrl_t * const p_ctrl, i2c_master_event_t const event)
 {
-    i2c_master_callback_args_t args =
+    i2c_master_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    i2c_master_callback_args_t * p_args = p_ctrl->p_callback_memory;
+    if (NULL == p_args)
     {
-        .p_context = p_ctrl->p_cfg->p_context,
-        .event     = event
-    };
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->p_context = p_ctrl->p_context;
+    p_args->event     = event;
+
 #if IIC_MASTER_CFG_DTC_ENABLE
 
     /* Stop any DTC assisted transfer for tx */
@@ -589,7 +661,32 @@ static void iic_master_notify (iic_master_instance_ctrl_t * const p_ctrl, i2c_ma
 #endif
 
     /* Now do the callback here */
-    p_ctrl->p_cfg->p_callback(&args);
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        iic_master_prv_ns_callback p_callback = (iic_master_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args);
+#endif
+
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
+    }
 
     /* Clear the err flags */
     p_ctrl->err = false;

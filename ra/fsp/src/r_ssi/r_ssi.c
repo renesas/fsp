@@ -78,6 +78,12 @@
  * Typedef definitions
  **********************************************************************************************************************/
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile i2s_prv_ns_callback)(i2s_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile i2s_prv_ns_callback)(i2s_callback_args_t * p_args);
+#endif
+
 /* SSI communication direction */
 typedef enum e_ssi_dir
 {
@@ -103,6 +109,8 @@ typedef struct e_ssi_prv_transfer_reset
 void ssi_txi_isr(void);
 void ssi_rxi_isr(void);
 void ssi_int_isr(void);
+
+static void r_ssi_call_callback(ssi_instance_ctrl_t * p_ctrl, i2s_event_t event);
 
 /* ISR subroutines */
 static void r_ssi_tx_fifo_write(ssi_instance_ctrl_t * p_instance_ctrl, uint32_t stages_to_write);
@@ -155,15 +163,16 @@ static const fsp_version_t g_version =
 /*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
 const i2s_api_t g_i2s_on_ssi =
 {
-    .open       = R_SSI_Open,
-    .stop       = R_SSI_Stop,
-    .write      = R_SSI_Write,
-    .read       = R_SSI_Read,
-    .writeRead  = R_SSI_WriteRead,
-    .mute       = R_SSI_Mute,
-    .statusGet  = R_SSI_StatusGet,
-    .close      = R_SSI_Close,
-    .versionGet = R_SSI_VersionGet
+    .open        = R_SSI_Open,
+    .stop        = R_SSI_Stop,
+    .write       = R_SSI_Write,
+    .read        = R_SSI_Read,
+    .writeRead   = R_SSI_WriteRead,
+    .mute        = R_SSI_Mute,
+    .statusGet   = R_SSI_StatusGet,
+    .close       = R_SSI_Close,
+    .versionGet  = R_SSI_VersionGet,
+    .callbackSet = R_SSI_CallbackSet,
 };
 
 /*******************************************************************************************************************//**
@@ -220,9 +229,14 @@ fsp_err_t R_SSI_Open (i2s_ctrl_t * const p_ctrl, i2s_cfg_t const * const p_cfg)
                      FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 #endif
 
+#if BSP_FEATURE_SSI_VALID_CHANNEL_MASK == 1
+    uint32_t base_address = (uint32_t) R_SSI0;
+#else
+
     /* Calculate base address for registers on this channel. */
-    uint32_t      base_address = (uint32_t) R_SSI0 + (p_cfg->channel * ((uint32_t) R_SSI1 - (uint32_t) R_SSI0));
-    R_SSI0_Type * p_reg        = (R_SSI0_Type *) base_address;
+    uint32_t base_address = (uint32_t) R_SSI0 + (p_cfg->channel * ((uint32_t) R_SSI1 - (uint32_t) R_SSI0));
+#endif
+    R_SSI0_Type * p_reg = (R_SSI0_Type *) base_address;
 
     /* Determine how to access the FIFO (1 byte, 2 byte, or 4 byte access). */
     transfer_size_t fifo_access_size = TRANSFER_SIZE_4_BYTE;
@@ -293,6 +307,15 @@ fsp_err_t R_SSI_Open (i2s_ctrl_t * const p_ctrl, i2s_cfg_t const * const p_cfg)
     /* Initialize the SSIE following the procedure in Figure 41.53 "Procedure to start communication (CPU operation
      * procedure)" of the RA6M3 manual R01UH0886EJ0100. This function follows this procedure except for enabling
      * interrupts and enabling communication, which are done before communication begins. */
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* If this is a secure build, the callback provided in p_cfg must be secure. */
+    p_instance_ctrl->callback_is_secure = true;
+#endif
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
 
     /* Enable PCLK to SSIE. */
     R_BSP_MODULE_START(FSP_IP_SSI, p_instance_ctrl->p_cfg->channel);
@@ -623,6 +646,44 @@ fsp_err_t R_SSI_VersionGet (fsp_version_t * const p_version)
 #endif
 
     p_version->version_id = g_version.version_id;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements i2s_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_SSI_CallbackSet (i2s_ctrl_t * const          p_api_ctrl,
+                             void (                    * p_callback)(i2s_callback_args_t *),
+                             void const * const          p_context,
+                             i2s_callback_args_t * const p_callback_memory)
+{
+    ssi_instance_ctrl_t * p_ctrl = (ssi_instance_ctrl_t *) p_api_ctrl;
+
+#if (SSI_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(SSI_PRV_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+
+    /* Store callback and context */
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
 
     return FSP_SUCCESS;
 }
@@ -1086,6 +1147,60 @@ static void r_ssi_rx_fifo_read (ssi_instance_ctrl_t * p_instance_ctrl, uint32_t 
 }
 
 /*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_ctrl     Pointer to I2S instance control block
+ * @param[in]     event      Event code
+ **********************************************************************************************************************/
+static void r_ssi_call_callback (ssi_instance_ctrl_t * p_ctrl, i2s_event_t event)
+{
+    i2s_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    i2s_callback_args_t * p_args = p_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->event     = event;
+    p_args->p_context = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        i2s_prv_ns_callback p_callback = (i2s_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args);
+#endif
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
+    }
+}
+
+/*******************************************************************************************************************//**
  * Transmit ISR. Calls callback when transmission is complete.  Fills FIFO if transfer interface is not used.
  **********************************************************************************************************************/
 void ssi_txi_isr (void)
@@ -1099,25 +1214,23 @@ void ssi_txi_isr (void)
     /* Clear the IR flag in the ICU */
     R_BSP_IrqStatusClear(irq);
 
-    bool                call_callback = true;
-    i2s_callback_args_t args;
+    bool call_callback = true;
+
     if (NULL != p_instance_ctrl->p_tx_src)
     {
-        /* If transfer is not used, write data. */
-        r_ssi_fifo_write(p_instance_ctrl);
-
         /* If there is more data to send, don't call the callback. */
         if (p_instance_ctrl->tx_src_samples > 0)
         {
             call_callback = false;
         }
+
+        /* If transfer is not used, write data. */
+        r_ssi_fifo_write(p_instance_ctrl);
     }
 
     if (call_callback)
     {
-        args.event     = I2S_EVENT_TX_EMPTY;
-        args.p_context = p_instance_ctrl->p_cfg->p_context;
-        p_instance_ctrl->p_cfg->p_callback(&args);
+        r_ssi_call_callback(p_instance_ctrl, I2S_EVENT_TX_EMPTY);
     }
 
     /* Restore context if RTOS is used */
@@ -1138,8 +1251,8 @@ void ssi_rxi_isr (void)
     /* Clear the IR flag in the ICU */
     R_BSP_IrqStatusClear(irq);
 
-    bool                call_callback = true;
-    i2s_callback_args_t args;
+    bool call_callback = true;
+
     if (NULL != p_instance_ctrl->p_rx_dest)
     {
         /* If transfer is not used, read data into the destination buffer. */
@@ -1154,9 +1267,7 @@ void ssi_rxi_isr (void)
 
     if (call_callback)
     {
-        args.event     = I2S_EVENT_RX_FULL;
-        args.p_context = p_instance_ctrl->p_cfg->p_context;
-        p_instance_ctrl->p_cfg->p_callback(&args);
+        r_ssi_call_callback(p_instance_ctrl, I2S_EVENT_RX_FULL);
     }
 
     /* Restore context if RTOS is used */
@@ -1190,10 +1301,7 @@ void ssi_int_isr (void)
         p_instance_ctrl->p_reg->SSICR_b.IIEN = 0U;
 
         /* If peripheral is idle, call idle callback. */
-        i2s_callback_args_t args;
-        args.event     = I2S_EVENT_IDLE;
-        args.p_context = p_instance_ctrl->p_cfg->p_context;
-        p_instance_ctrl->p_cfg->p_callback(&args);
+        r_ssi_call_callback(p_instance_ctrl, I2S_EVENT_IDLE);
     }
     else
     {

@@ -89,6 +89,17 @@ typedef struct st_iic_master_instance_ctrl
     volatile bool             activation_on_txi;    // Tracks whether the transfer is activated on TXI interrupt
     volatile bool             address_restarted;    // Tracks whether the restart condition is send on 10 bit read
     iic_master_timeout_mode_t timeout_mode;         // Holds the timeout mode value. i.e short mode or long mode
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                        // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+
+    /* Pointer to callback and optional working memory */
+    void (* p_callback)(i2c_master_callback_args_t *);
+    i2c_master_callback_args_t * p_callback_memory;
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } iic_master_instance_ctrl_t;
 
 /** R_IIC extended configuration */
@@ -127,6 +138,10 @@ fsp_err_t R_IIC_MASTER_SlaveAddressSet(i2c_master_ctrl_t * const    p_api_ctrl,
                                        i2c_master_addr_mode_t const addr_mode);
 fsp_err_t R_IIC_MASTER_Close(i2c_master_ctrl_t * const p_api_ctrl);
 fsp_err_t R_IIC_MASTER_VersionGet(fsp_version_t * const p_version);
+fsp_err_t R_IIC_MASTER_CallbackSet(i2c_master_ctrl_t * const          p_api_ctrl,
+                                   void (                           * p_callback)(i2c_master_callback_args_t *),
+                                   void const * const                 p_context,
+                                   i2c_master_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

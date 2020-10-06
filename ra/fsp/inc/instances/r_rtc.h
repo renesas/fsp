@@ -52,9 +52,17 @@ FSP_HEADER
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref rtc_api_t::open is called */
 typedef struct st_rtc_ctrl
 {
-    uint32_t          open;                ///< Whether or not driver is open
-    const rtc_cfg_t * p_cfg;               ///< Pointer to initial configurations
-    volatile bool     carry_isr_triggered; ///< Was the carry isr triggered
+    uint32_t          open;                     ///< Whether or not driver is open
+    const rtc_cfg_t * p_cfg;                    ///< Pointer to initial configurations
+    volatile bool     carry_isr_triggered;      ///< Was the carry isr triggered
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(rtc_callback_args_t *); // Pointer to callback that is called when a rtc_event_t occurs.
+    rtc_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+
+    void const * p_context;                     // Pointer to context to be passed into callback function
 } rtc_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -80,6 +88,10 @@ fsp_err_t R_RTC_PeriodicIrqRateSet(rtc_ctrl_t * const p_ctrl, rtc_periodic_irq_s
 fsp_err_t R_RTC_ErrorAdjustmentSet(rtc_ctrl_t * const p_ctrl, rtc_error_adjustment_cfg_t const * const err_adj_cfg);
 fsp_err_t R_RTC_InfoGet(rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_info);
 fsp_err_t R_RTC_VersionGet(fsp_version_t * version);
+fsp_err_t R_RTC_CallbackSet(rtc_ctrl_t * const          p_ctrl,
+                            void (                    * p_callback)(rtc_callback_args_t *),
+                            void const * const          p_context,
+                            rtc_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

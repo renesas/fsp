@@ -67,6 +67,12 @@
  * Typedef definitions
  **********************************************************************************************************************/
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile iwdt_prv_ns_callback)(wdt_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile iwdt_prv_ns_callback)(wdt_callback_args_t * p_args);
+#endif
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
@@ -125,7 +131,7 @@ static const uint8_t g_wdt_division_lookup[] =
 };
 
 /* Global pointer to control structure for use by the NMI callback.  */
-static iwdt_instance_ctrl_t * gp_iwdt_ctrl = NULL;
+static volatile iwdt_instance_ctrl_t * gp_iwdt_ctrl = NULL;
 
 /* Watchdog implementation of IWDT Driver  */
 const wdt_api_t g_wdt_on_iwdt =
@@ -136,6 +142,7 @@ const wdt_api_t g_wdt_on_iwdt =
     .statusClear = R_IWDT_StatusClear,
     .counterGet  = R_IWDT_CounterGet,
     .timeoutGet  = R_IWDT_TimeoutGet,
+    .callbackSet = R_IWDT_CallbackSet,
     .versionGet  = R_IWDT_VersionGet,
 };
 
@@ -159,6 +166,7 @@ const wdt_api_t g_wdt_on_iwdt =
  * @retval FSP_ERR_NOT_ENABLED      An attempt to open the IWDT when the OFS0 register is not
  *                                  configured for auto-start mode.
  * @retval FSP_ERR_ALREADY_OPEN     Module is already open.  This module can only be opened once.
+ * @retval FSP_ERR_INVALID_STATE    The security state of the NMI and the module do not match.
  **********************************************************************************************************************/
 fsp_err_t R_IWDT_Open (wdt_ctrl_t * const p_api_ctrl, wdt_cfg_t const * const p_cfg)
 {
@@ -171,6 +179,13 @@ fsp_err_t R_IWDT_Open (wdt_ctrl_t * const p_api_ctrl, wdt_cfg_t const * const p_
     FSP_ASSERT(NULL != p_ctrl);
  #if IWDT_PRV_NMI_SUPPORTED
     FSP_ASSERT(NULL != p_cfg->p_callback);
+ #endif
+
+    /* Ensure this module is in the same security state as the NMI */
+ #if defined(BSP_TZ_NONSECURE_BUILD) && BSP_TZ_NONSECURE_BUILD
+    FSP_ERROR_RETURN(SCB->AIRCR & SCB_AIRCR_BFHFNMINS_Msk, FSP_ERR_INVALID_STATE);
+ #elif defined(BSP_TZ_SECURE_BUILD) && BSP_TZ_SECURE_BUILD
+    FSP_ERROR_RETURN(!(SCB->AIRCR & SCB_AIRCR_BFHFNMINS_Msk), FSP_ERR_INVALID_STATE);
  #endif
 
     /* Enum checking is done here because some enums in wdt_timeout_t are not supported by the IWDT peripheral (they are
@@ -372,6 +387,42 @@ fsp_err_t R_IWDT_TimeoutGet (wdt_ctrl_t * const p_api_ctrl, wdt_timeout_values_t
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements wdt_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_IWDT_CallbackSet (wdt_ctrl_t * const          p_ctrl,
+                              void (                    * p_callback)(wdt_callback_args_t *),
+                              void const * const          p_context,
+                              wdt_callback_args_t * const p_callback_memory)
+{
+    iwdt_instance_ctrl_t * p_instance_ctrl = (iwdt_instance_ctrl_t *) p_ctrl;
+
+#if IWDT_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(IWDT_OPEN == p_instance_ctrl->wdt_open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_instance_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+
+    p_instance_ctrl->p_callback        = p_callback;
+    p_instance_ctrl->p_context         = p_context;
+    p_instance_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Return IWDT HAL driver version. Implements @ref wdt_api_t::versionGet.
  *
  * @retval          FSP_SUCCESS         Call successful.
@@ -406,10 +457,49 @@ static void iwdt_nmi_internal_callback (bsp_grp_irq_t irq)
 {
     FSP_PARAMETER_NOT_USED(irq);
 
-    /* Call user registered callback */
-    wdt_callback_args_t p_args;
-    p_args.p_context = gp_iwdt_ctrl->p_context;
-    gp_iwdt_ctrl->p_callback(&p_args);
+    wdt_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    wdt_callback_args_t * p_args = gp_iwdt_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->p_context = gp_iwdt_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (gp_iwdt_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        gp_iwdt_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        iwdt_prv_ns_callback p_callback = (iwdt_prv_ns_callback) (gp_iwdt_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    gp_iwdt_ctrl->p_callback(p_args);
+#endif
+    if (NULL != gp_iwdt_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *gp_iwdt_ctrl->p_callback_memory = args;
+    }
 }
 
 /*******************************************************************************************************************//**

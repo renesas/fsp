@@ -63,26 +63,6 @@ psa_status_t psa_ecdsa_verify(mbedtls_ecp_keypair * ecp,
                               size_t                hash_length,
                               const uint8_t       * signature,
                               size_t                signature_length);
-psa_status_t psa_import_rsa_key(psa_key_type_t         type,
-                                const uint8_t        * data,
-                                size_t                 data_length,
-                                mbedtls_rsa_context ** p_rsa);
-psa_status_t psa_read_rsa_exponent(const uint8_t * domain_parameters,
-                                   size_t          domain_parameters_size,
-                                   int           * exponent);
-psa_status_t psa_rsa_sign(mbedtls_rsa_context * rsa,
-                          psa_algorithm_t       alg,
-                          const uint8_t       * hash,
-                          size_t                hash_length,
-                          uint8_t             * signature,
-                          size_t                signature_size,
-                          size_t              * signature_length);
-psa_status_t psa_rsa_verify(mbedtls_rsa_context * rsa,
-                            psa_algorithm_t       alg,
-                            const uint8_t       * hash,
-                            size_t                hash_length,
-                            const uint8_t       * signature,
-                            size_t                signature_length);
 
 /* Functions to support vendor defined format */
 psa_status_t psa_import_ec_private_key_vendor(psa_ecc_curve_t        curve,
@@ -103,5 +83,27 @@ psa_status_t psa_import_ec_private_key_vendor(psa_ecc_curve_t        curve,
 int ecp_gen_key_vendor(mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair * key);
 
 #endif                                 /* MBEDTLS_ECP_ALT */
+
+#if defined(MBEDTLS_RSA_ALT)
+psa_status_t psa_import_rsa_key(psa_key_type_t         type,
+                                const uint8_t        * data,
+                                size_t                 data_length,
+                                mbedtls_rsa_context ** p_rsa);
+psa_status_t psa_read_rsa_exponent(const uint8_t * domain_parameters, size_t domain_parameters_size, int * exponent);
+psa_status_t psa_rsa_sign(mbedtls_rsa_context * rsa,
+                          psa_algorithm_t       alg,
+                          const uint8_t       * hash,
+                          size_t                hash_length,
+                          uint8_t             * signature,
+                          size_t                signature_size,
+                          size_t              * signature_length);
+psa_status_t psa_rsa_verify(mbedtls_rsa_context * rsa,
+                            psa_algorithm_t       alg,
+                            const uint8_t       * hash,
+                            size_t                hash_length,
+                            const uint8_t       * signature,
+                            size_t                signature_length);
+
+#endif                                 /* MBEDTLS_RSA_ALT */
 
 #endif                                 /* ASYMMETRIC_VENDOR_H */

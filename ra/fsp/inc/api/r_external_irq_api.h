@@ -136,6 +136,22 @@ typedef struct st_external_irq_api
      */
     fsp_err_t (* disable)(external_irq_ctrl_t * const p_ctrl);
 
+    /**
+     * Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - R_ICU_ExternalIrqCallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the Extneral IRQ control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(external_irq_ctrl_t * const          p_api_ctrl,
+                              void (                             * p_callback)(external_irq_callback_args_t *),
+                              void const * const                   p_context,
+                              external_irq_callback_args_t * const p_callback_memory);
+
     /** Allow driver to be reconfigured. May reduce power consumption.
      * @par Implemented as
      * - @ref R_ICU_ExternalIrqClose()

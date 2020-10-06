@@ -78,8 +78,6 @@
 
 #define ADC_PRV_TSCR_TSN_ENABLE                     (R_TSN_CTRL_TSCR_TSEN_Msk | R_TSN_CTRL_TSCR_TSOE_Msk)
 
-#define ADC_PRV_TSN_CALIBRATION_TSCDR_BITS          (0x00000FFFU)
-
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -93,6 +91,12 @@ typedef enum e_adc_elc_trigger
     ADC_ELC_TRIGGER_BOTH     = (0x0BU),
     ADC_ELC_TRIGGER_DISABLED = (0x3FU)
 } adc_elc_trigger_t;
+
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile adc_prv_ns_callback)(adc_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile adc_prv_ns_callback)(adc_callback_args_t * p_args);
+#endif
 
 /***********************************************************************************************************************
  * Private global variables and functions
@@ -179,6 +183,7 @@ const adc_api_t g_adc_on_adc =
     .versionGet    = R_ADC_VersionGet,
     .calibrate     = R_ADC_Calibrate,
     .offsetSet     = R_ADC_OffsetSet,
+    .callbackSet   = R_ADC_CallbackSet,
 };
 
 /*******************************************************************************************************************//**
@@ -235,6 +240,15 @@ fsp_err_t R_ADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
 
     /* Save configurations. */
     p_instance_ctrl->p_cfg = p_cfg;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* If this is a secure build, the callback provided in p_cfg must be secure. */
+    p_instance_ctrl->callback_is_secure = true;
+#endif
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
 
     /* Calculate the register base address. */
     uint32_t address_gap = (uint32_t) R_ADC1 - (uint32_t) R_ADC0;
@@ -297,6 +311,42 @@ fsp_err_t R_ADC_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_extend)
 
     /* Return the error code */
     return err;
+}
+
+/*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements adc_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_ADC_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
+                             void (                    * p_callback)(adc_callback_args_t *),
+                             void const * const          p_context,
+                             adc_callback_args_t * const p_callback_memory)
+{
+    adc_instance_ctrl_t * p_ctrl = (adc_instance_ctrl_t *) p_api_ctrl;
+
+#if (ADC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(ADC_OPEN == p_ctrl->opened, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -575,14 +625,14 @@ fsp_err_t R_ADC_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
     p_adc_info->calibration_data = UINT32_MAX;
 
     /* If calibration register is available, retrieve it from the MCU */
-#if BSP_FEATURE_ADC_TSN_CALIBRATION_AVAILABLE
- #if BSP_FEATURE_ADC_TSN_CALIBRATION32_AVAILABLE
+#if 1U == BSP_FEATURE_ADC_TSN_CALIBRATION_AVAILABLE
+ #if 1U == BSP_FEATURE_ADC_TSN_CALIBRATION32_AVAILABLE
 
     /* Read into memory. */
     uint32_t data = R_TSN_CAL->TSCDR;
 
-    /* Read the calibration data from ROM and AND it to mask off 12bit of calibration data. */
-    p_adc_info->calibration_data = (data & ADC_PRV_TSN_CALIBRATION_TSCDR_BITS);
+    /* Read the temperature calibration data from ROM. */
+    p_adc_info->calibration_data = (data & BSP_FEATURE_ADC_TSN_CALIBRATION32_MASK);
  #else
 
     /* Read into memory to prevent compiler warning when performing "|" on volatile register data. */
@@ -1406,16 +1456,30 @@ static void r_adc_scan_end_common_isr (adc_event_t event)
     adc_instance_ctrl_t * p_instance_ctrl = (adc_instance_ctrl_t *) R_FSP_IsrContextGet(R_FSP_CurrentIrqGet());
     adc_callback_args_t   args;
 
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    adc_callback_args_t * p_args = p_instance_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
     /* Clear the BSP IRQ Flag     */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
 
-    args.event = event;
+    p_args->event = event;
 #if BSP_FEATURE_ADC_CALIBRATION_REG_AVAILABLE
 
     /* Store the correct event into the callback argument */
     if (ADC_ADICR_CALIBRATION_INTERRUPT_DISABLED != p_instance_ctrl->p_reg->ADICR)
     {
-        args.event = ADC_EVENT_CALIBRATION_COMPLETE;
+        p_args->event = ADC_EVENT_CALIBRATION_COMPLETE;
 
         /* Restore the interrupt source to disable interrupts after calibration is done. */
         p_instance_ctrl->p_reg->ADICR = 0U;
@@ -1423,18 +1487,43 @@ static void r_adc_scan_end_common_isr (adc_event_t event)
 #endif
 
     /* Store the unit number into the callback argument */
-    args.unit = p_instance_ctrl->p_cfg->unit;
+    p_args->unit = p_instance_ctrl->p_cfg->unit;
 
     /* Initialize the channel to 0.  It is not used in this implementation. */
-    args.channel = ADC_CHANNEL_0;
+    p_args->channel = ADC_CHANNEL_0;
 
     /* Populate the context field. */
-    args.p_context = p_instance_ctrl->p_cfg->p_context;
+    p_args->p_context = p_instance_ctrl->p_context;
 
     /* If a callback was provided, call it with the argument */
-    if (NULL != p_instance_ctrl->p_cfg->p_callback)
+    if (NULL != p_instance_ctrl->p_callback)
     {
-        p_instance_ctrl->p_cfg->p_callback(&args);
+#if BSP_TZ_SECURE_BUILD
+
+        /* p_callback can point to a secure function or a non-secure function. */
+        if (p_instance_ctrl->callback_is_secure)
+        {
+            /* If p_callback is secure, then the project does not need to change security state. */
+            p_instance_ctrl->p_callback(p_args);
+        }
+        else
+        {
+            /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+            adc_prv_ns_callback p_callback = (adc_prv_ns_callback) (p_instance_ctrl->p_callback);
+            p_callback(p_args);
+        }
+
+#else
+
+        /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+        p_instance_ctrl->p_callback(p_args);
+#endif
+    }
+
+    if (NULL != p_instance_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_instance_ctrl->p_callback_memory = args;
     }
 
     /* Restore context if RTOS is used */

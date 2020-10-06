@@ -122,6 +122,10 @@ fsp_err_t R_FLASH_LP_Reset(flash_ctrl_t * const p_api_ctrl);
 fsp_err_t R_FLASH_LP_StartUpAreaSelect(flash_ctrl_t * const      p_api_ctrl,
                                        flash_startup_area_swap_t swap_type,
                                        bool                      is_temporary);
+fsp_err_t R_FLASH_LP_CallbackSet(flash_ctrl_t * const          p_api_ctrl,
+                                 void (                      * p_callback)(flash_callback_args_t *),
+                                 void const * const            p_context,
+                                 flash_callback_args_t * const p_callback_memory);
 fsp_err_t R_FLASH_LP_UpdateFlashClockFreq(flash_ctrl_t * const p_api_ctrl);
 fsp_err_t R_FLASH_LP_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_FLASH_LP_InfoGet(flash_ctrl_t * const p_api_ctrl, flash_info_t * const p_info);

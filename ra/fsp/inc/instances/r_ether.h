@@ -174,8 +174,6 @@ fsp_err_t R_ETHER_BufferRelease(ether_ctrl_t * const p_ctrl);
 
 fsp_err_t R_ETHER_Write(ether_ctrl_t * const p_ctrl, void * const p_buffer, uint32_t const frame_length);
 
-fsp_err_t R_ETHER_LinkStatusCheck(ether_ctrl_t * const p_ctrl);
-
 fsp_err_t R_ETHER_LinkProcess(ether_ctrl_t * const p_ctrl);
 
 fsp_err_t R_ETHER_WakeOnLANEnable(ether_ctrl_t * const p_ctrl);

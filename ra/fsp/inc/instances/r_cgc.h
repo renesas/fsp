@@ -49,9 +49,16 @@ FSP_HEADER
 /** CGC private control block. DO NOT MODIFY. Initialization occurs when R_CGC_Open() is called. */
 typedef struct st_cgc_instance_ctrl
 {
-    uint32_t     open;
+    uint32_t open;
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    cgc_callback_args_t * p_callback_memory;           // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+    void (* p_callback)(cgc_callback_args_t * p_args); // Pointer to callback that is called when a cgc_event_t occurs.
+
+    /** Placeholder for user data.  Passed to the user callback in ::cgc_callback_args_t. */
     void const * p_context;
-    void (* p_callback)(cgc_callback_args_t * p_args);
 } cgc_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -81,6 +88,10 @@ fsp_err_t R_CGC_SystemClockGet(cgc_ctrl_t * const        p_ctrl,
 fsp_err_t R_CGC_OscStopDetectEnable(cgc_ctrl_t * const p_ctrl);
 fsp_err_t R_CGC_OscStopDetectDisable(cgc_ctrl_t * const p_ctrl);
 fsp_err_t R_CGC_OscStopStatusClear(cgc_ctrl_t * const p_ctrl);
+fsp_err_t R_CGC_CallbackSet(cgc_ctrl_t * const          p_api_ctrl,
+                            void (                    * p_callback)(cgc_callback_args_t *),
+                            void const * const          p_context,
+                            cgc_callback_args_t * const p_callback_memory);
 fsp_err_t R_CGC_Close(cgc_ctrl_t * const p_ctrl);
 fsp_err_t R_CGC_VersionGet(fsp_version_t * version);
 

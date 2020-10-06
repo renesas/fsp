@@ -195,6 +195,19 @@ typedef struct st_cac_api
      */
     fsp_err_t (* read)(cac_ctrl_t * const p_ctrl, uint16_t * const p_counter);
 
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_CAC_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Control block set in @ref cac_api_t::open call
+     * @param[in]   p_callback               Callback function to register
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(cac_ctrl_t * const p_api_ctrl, void (* p_callback)(cac_callback_args_t *),
+                              void const * const p_context, cac_callback_args_t * const p_callback_memory);
+
     /** Close function for CAC device.
      * @param[in]  p_ctrl        Pointer to CAC device control.
      */

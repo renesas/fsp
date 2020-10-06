@@ -145,6 +145,9 @@ typedef enum e_ioport_peripheral
     /** Pin will function as a debug trace peripheral pin */
     IOPORT_PERIPHERAL_TRACE = (0x1AUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
+    /** Pin will function as a OSPI peripheral pin */
+    IOPORT_PERIPHERAL_OSPI = (0x1CUL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
     /** Marks end of enum - used by parameter checking */
     IOPORT_PERIPHERAL_END
 } ioport_peripheral_t;
@@ -177,6 +180,7 @@ typedef enum e_ioport_cfg_options
     IOPORT_CFG_NMOS_ENABLE           = 0x00000040, ///< Enables the pin's NMOS open-drain output
     IOPORT_CFG_PMOS_ENABLE           = 0x00000080, ///< Enables the pin's PMOS open-drain ouput
     IOPORT_CFG_DRIVE_MID             = 0x00000400, ///< Sets pin drive output to medium
+    IOPORT_CFG_DRIVE_HS_HIGH         = 0x00000800, ///< Sets pin drive output to high along with supporting high speed
     IOPORT_CFG_DRIVE_MID_IIC         = 0x00000C00, ///< Sets pin to drive output needed for IIC on a 20mA port
     IOPORT_CFG_DRIVE_HIGH            = 0x00000C00, ///< Sets pin drive output to high
     IOPORT_CFG_EVENT_RISING_EDGE     = 0x00001000, ///< Sets pin event trigger to rising edge

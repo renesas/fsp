@@ -89,21 +89,21 @@
  * Do not set BREM or BWEM when using DMA/DTC. This driver always uses DMA or DTC. */
 #define SDHI_PRV_SDHI_INFO2_MASK_CMD_SEND                  (0x00007C80U)
 
-/* The relationship of the SD Clock Control Register SD_CLK_CTRL CLKSEL to the division of PCLKA
+/* The relationship of the SD Clock Control Register SD_CLK_CTRL CLKSEL to the division of the source PCLK
  * b7            b0
- * 0 0 0 0 0 0 0 0: PCLKA/2
- * 0 0 0 0 0 0 0 1: PCLKA/4
- * 0 0 0 0 0 0 1 0: PCLKA/8
- * 0 0 0 0 0 1 0 0: PCLKA/16
- * 0 0 0 0 1 0 0 0: PCLKA/32
- * 0 0 0 1 0 0 0 0: PCLKA/64
- * 0 0 1 0 0 0 0 0: PCLKA/128
- * 0 1 0 0 0 0 0 0: PCLKA/256
- * 1 0 0 0 0 0 0 0: PCLKA/512.
+ * 1 1 1 1 1 1 1 1: PCLK
+ * 0 0 0 0 0 0 0 0: PCLK/2
+ * 0 0 0 0 0 0 0 1: PCLK/4
+ * 0 0 0 0 0 0 1 0: PCLK/8
+ * 0 0 0 0 0 1 0 0: PCLK/16
+ * 0 0 0 0 1 0 0 0: PCLK/32
+ * 0 0 0 1 0 0 0 0: PCLK/64
+ * 0 0 1 0 0 0 0 0: PCLK/128
+ * 0 1 0 0 0 0 0 0: PCLK/256
+ * 1 0 0 0 0 0 0 0: PCLK/512.
  * Other settings are prohibited.
  */
 #define SDHI_PRV_MAX_CLOCK_DIVISION_SHIFT                  (9U) /* 512 (2^9) is max clock division supported */
-#define SDHI_PRV_MIN_CLOCK_DIVISION_SHIFT                  (1U) /* 2 (2^1) is minimum division supported */
 
 #define SDHI_PRV_CLK_CTRL_DIV_INVALID                      (0xFFU)
 
@@ -182,6 +182,11 @@
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile sdhi_prv_ns_callback)(sdmmc_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile sdhi_prv_ns_callback)(sdmmc_callback_args_t * p_args);
+#endif
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -286,7 +291,7 @@ static fsp_err_t r_sdhi_transfer_write(sdhi_instance_ctrl_t * const p_ctrl,
 
 static void r_sdhi_transfer_end(sdhi_instance_ctrl_t * const p_ctrl);
 
-static void sdhi_call_callback(sdhi_instance_ctrl_t * p_ctrl, sdmmc_callback_args_t * p_args);
+static void r_sdhi_call_callback(sdhi_instance_ctrl_t * p_ctrl, sdmmc_callback_args_t * p_args);
 
 void r_sdhi_transfer_callback(sdhi_instance_ctrl_t * p_ctrl);
 
@@ -329,6 +334,7 @@ const sdmmc_api_t g_sdmmc_on_sdhi =
     .ioIntEnable = R_SDHI_IoIntEnable,
     .statusGet   = R_SDHI_StatusGet,
     .erase       = R_SDHI_Erase,
+    .callbackSet = R_SDHI_CallbackSet,
     .close       = R_SDHI_Close,
     .versionGet  = R_SDHI_VersionGet,
 };
@@ -380,7 +386,11 @@ fsp_err_t R_SDHI_Open (sdmmc_ctrl_t * const p_api_ctrl, sdmmc_cfg_t const * cons
 
     /* Initialize control block. */
     memset(p_ctrl, 0, sizeof(*p_ctrl));
-    p_ctrl->p_reg = R_SDHI0 + (p_cfg->channel * (R_SDHI1 - R_SDHI0));
+#if BSP_FEATURE_SDHI_VALID_CHANNEL_MASK > 1U
+    p_ctrl->p_reg = p_cfg->channel ? R_SDHI1 : R_SDHI0;
+#else
+    p_ctrl->p_reg = R_SDHI0;
+#endif
     p_ctrl->p_cfg = p_cfg;
 
     /* Clear module stop bit (turn module on). */
@@ -399,6 +409,11 @@ fsp_err_t R_SDHI_Open (sdmmc_ctrl_t * const p_api_ctrl, sdmmc_cfg_t const * cons
     {
         p_ctrl->p_reg->SD_INFO1_MASK = SDHI_PRV_SD_INFO1_MASK_MASK_ALL;
     }
+
+    /* Set callback and context pointers, if configured */
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
 
     /* Configure and enable interrupts. */
     R_BSP_IrqCfgEnable(p_cfg->access_irq, p_cfg->access_ipl, p_ctrl);
@@ -1023,6 +1038,56 @@ fsp_err_t R_SDHI_Erase (sdmmc_ctrl_t * const p_api_ctrl, uint32_t const start_se
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Implements @ref sdmmc_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ **********************************************************************************************************************/
+fsp_err_t R_SDHI_CallbackSet (sdmmc_ctrl_t * const          p_api_ctrl,
+                              void (                      * p_callback)(sdmmc_callback_args_t *),
+                              void const * const            p_context,
+                              sdmmc_callback_args_t * const p_callback_memory)
+{
+    sdhi_instance_ctrl_t * p_ctrl = (sdhi_instance_ctrl_t *) p_api_ctrl;
+
+#if SDHI_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(SDHI_PRV_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    bool callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if SDHI_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    sdmmc_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                        CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(sdmmc_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
+#endif
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Closes an open SD/MMC device.  Implements @ref sdmmc_api_t::close().
  *
  * @retval     FSP_SUCCESS        Successful close.
@@ -1414,28 +1479,25 @@ static fsp_err_t r_sdhi_max_clock_rate_set (sdhi_instance_ctrl_t * p_ctrl, uint3
 {
     uint32_t setting = SDHI_PRV_CLK_CTRL_DIV_INVALID;
 
-    /* Get the runtime frequency of PCLKA, the source of the SD clock */
-    uint32_t frequency = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKA);
+    /* Get the runtime frequency of the source of the SD clock */
+    uint32_t frequency = R_FSP_SystemClockHzGet(BSP_FEATURE_SDHI_CLOCK);
 
     /* Iterate over all possible divisors, starting with the smallest, until the resulting clock rate is less than
      * or equal to the requested maximum rate. */
-    for (uint32_t divisor_shift = SDHI_PRV_MIN_CLOCK_DIVISION_SHIFT;
+    for (uint32_t divisor_shift = BSP_FEATURE_SDHI_MIN_CLOCK_DIVISION_SHIFT;
          divisor_shift <= SDHI_PRV_MAX_CLOCK_DIVISION_SHIFT;
          divisor_shift++)
     {
         if ((frequency >> divisor_shift) <= max_rate)
         {
             /* If the calculated frequency is less than or equal to the maximum supported by the device,
-             * select this frequency. */
-            setting = 1U << divisor_shift;
-
-            /* The register setting is the divisor value divided by 4. */
-            setting >>= 2U;
+             * select this frequency. The register setting is the divisor value divided by 4, or 0xFF for no divider. */
+            setting = divisor_shift ? ((1U << divisor_shift) >> 2U) : UINT8_MAX;
 
             /* Set the clock setting. */
 
             /* The clock register is accessible 8 SD clock counts after the last command completes.  Each register access
-             * requires at least one PCLKA count, so check the register up to 8 times the maximum PCLKA divisor value (512). */
+             * requires at least one PCLK count, so check the register up to 8 times the maximum PCLK divisor value (512). */
             uint32_t timeout = SDHI_PRV_SD_CLK_CTRLEN_TIMEOUT;
 
             while (timeout > 0U)
@@ -2462,14 +2524,11 @@ void r_sdhi_transfer_callback (sdhi_instance_ctrl_t * p_ctrl)
              * callback is called. */
             r_sdhi_transfer_end(p_ctrl);
 
-            if (NULL != p_ctrl->p_cfg->p_callback)
-            {
-                sdmmc_callback_args_t args;
-                memset(&args, 0U, sizeof(args));
-                args.p_context = p_ctrl->p_cfg->p_context;
-                args.event    |= SDMMC_EVENT_TRANSFER_COMPLETE;
-                p_ctrl->p_cfg->p_callback(&args);
-            }
+            sdmmc_callback_args_t args;
+            memset(&args, 0U, sizeof(args));
+            args.p_context = p_ctrl->p_context;
+            args.event    |= SDMMC_EVENT_TRANSFER_COMPLETE;
+            r_sdhi_call_callback(p_ctrl, &args);
         }
     }
 
@@ -2630,18 +2689,63 @@ static void r_sdhi_transfer_end (sdhi_instance_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Close transfer driver, clear transfer data, and disable transfer in the SDHI peripheral.
+ * Calls user callback
  *
  * @param[in]     p_ctrl    Pointer to the instance control block.
  * @param[in]     p_args    Pointer to callback arguments with event and response set.
  **********************************************************************************************************************/
-static void sdhi_call_callback (sdhi_instance_ctrl_t * p_ctrl, sdmmc_callback_args_t * p_args)
+static void r_sdhi_call_callback (sdhi_instance_ctrl_t * p_ctrl, sdmmc_callback_args_t * p_args)
 {
     /* Call user callback if provided, if an event was determined, and if the driver is initialized. */
-    if ((NULL != p_ctrl->p_cfg->p_callback) && (p_ctrl->initialized) && (0U != p_args->event))
+    if (NULL != p_ctrl->p_callback)
     {
-        p_args->p_context = p_ctrl->p_cfg->p_context;
-        p_ctrl->p_cfg->p_callback(p_args);
+        sdmmc_callback_args_t args;
+
+        /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+         * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+        sdmmc_callback_args_t * p_args_memory = p_ctrl->p_callback_memory;
+        if (NULL == p_args_memory)
+        {
+            /* Use provided args struct on stack */
+            p_args_memory = p_args;
+        }
+        else
+        {
+            /* Save current arguments on the stack in case this is a nested interrupt. */
+            args = *p_args_memory;
+
+            /* Copy the stacked args to callback memory */
+            *p_args_memory = *p_args;
+        }
+
+        p_args_memory->p_context = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+        /* p_callback can point to a secure function or a non-secure function. */
+        if (!cmse_is_nsfptr(p_ctrl->p_callback))
+        {
+            /* If p_callback is secure, then the project does not need to change security state. */
+            p_ctrl->p_callback(p_args_memory);
+        }
+        else
+        {
+            /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+            sdhi_prv_ns_callback p_callback = (sdhi_prv_ns_callback) (p_ctrl->p_callback);
+            p_callback(p_args_memory);
+        }
+
+#else
+
+        /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+        p_ctrl->p_callback(p_args_memory);
+#endif
+
+        if (NULL != p_ctrl->p_callback_memory)
+        {
+            /* Restore callback memory in case this is a nested interrupt. */
+            *p_ctrl->p_callback_memory = args;
+        }
     }
 }
 
@@ -2661,7 +2765,10 @@ void sdhimmc_accs_isr (void)
     r_sdhi_access_irq_process(p_ctrl, &args);
 
     /* Call user callback */
-    sdhi_call_callback(p_ctrl, &args);
+    if ((p_ctrl->initialized) && (0U != args.event))
+    {
+        r_sdhi_call_callback(p_ctrl, &args);
+    }
 
     /* Clear the IR flag in the ICU */
     /* Clearing the IR bit must be done after clearing the interrupt source in the the peripheral */
@@ -2702,12 +2809,9 @@ void sdhimmc_card_isr (void)
     info1.word             &= SDHI_PRV_SDHI_INFO1_CARD_MASK;
     p_ctrl->p_reg->SD_INFO1 = (~info1.word);
 
-    /* Call user callback if provided, if an event was determined, and if the driver is initialized. */
-    if (NULL != p_ctrl->p_cfg->p_callback)
-    {
-        args.p_context = p_ctrl->p_cfg->p_context;
-        p_ctrl->p_cfg->p_callback(&args);
-    }
+    /* Call user callback if provided */
+    args.p_context = p_ctrl->p_context;
+    r_sdhi_call_callback(p_ctrl, &args);
 
     /* Clear the IR flag in the ICU */
     /* Clearing the IR bit must be done after clearing the interrupt source in the the peripheral */
@@ -2768,7 +2872,10 @@ void sdhimmc_sdio_isr (void)
     }
 
     /* Call user callback */
-    sdhi_call_callback(p_ctrl, &args);
+    if (p_ctrl->initialized)
+    {
+        r_sdhi_call_callback(p_ctrl, &args);
+    }
 
     /* Clear interrupt flags */
     p_ctrl->p_reg->SDIO_INFO1 = SDHI_PRV_SDIO_INFO1_IRQ_CLEAR;

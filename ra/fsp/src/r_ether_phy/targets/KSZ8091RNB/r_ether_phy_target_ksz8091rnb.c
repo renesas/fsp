@@ -37,8 +37,13 @@
  ***********************************************************************************************************************/
 
 /* Vendor Specific PHY Registers */
- #define ETHER_PHY_REG_INTERRUPT_CONTROL    (0x1B)
- #define ETHER_PHY_REG_PHY_CONTROL2         (0x1F)
+ #define ETHER_PHY_REG_INTERRUPT_CONTROL                (0x1B)
+ #define ETHER_PHY_REG_PHY_CONTROL2                     (0x1F)
+
+ #define ETHER_PHY_REG_INTERRUPT_CONTROL_LUIE_OFFSET    (0x8)
+ #define ETHER_PHY_REG_INTERRUPT_CONTROL_LDIE_OFFSET    (0xA)
+ #define ETHER_PHY_REG_PHY_CONTROL2_RMII_RCS_OFFSET     (0x7)
+ #define ETHER_PHY_REG_PHY_CONTROL2_RMII_IL_OFFSET      (0x9)
 
 /***********************************************************************************************************************
  * Exported global variables (to be accessed by other files)
@@ -75,17 +80,20 @@ void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
      * b10=1:Enable link-down interrupt
      * b8=1 :Enable link-up interrupt
      */
-    ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_INTERRUPT_CONTROL, 0x0500);
+    ether_phy_write(p_instance_ctrl,
+                    ETHER_PHY_REG_INTERRUPT_CONTROL,
+                    (0x1 << ETHER_PHY_REG_INTERRUPT_CONTROL_LUIE_OFFSET | 0x1 <<
+                     ETHER_PHY_REG_INTERRUPT_CONTROL_LDIE_OFFSET));
     ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_INTERRUPT_CONTROL);
     reg = ether_phy_read(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2);
 
     /* b7=1:RMII 50MHz clock mode; clock input to XI(pin 9) is 50MHz */
  #if (ETHER_PHY_CFG_USE_REF_CLK == 0)
-    reg |= 0x0080;
+    reg |= (0x1 << ETHER_PHY_REG_PHY_CONTROL2_RMII_RCS_OFFSET);
  #endif
 
     /* b9=0:Interrupt pin active low */
-    reg &= 0xfdff;
+    reg &= (uint16_t) ~ETHER_PHY_REG_PHY_CONTROL2_RMII_IL_OFFSET;
     ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2, reg);
 }                                      /* End of function ether_phy_targets_initialize() */
 

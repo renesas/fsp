@@ -62,13 +62,13 @@
 #include "../../src/bsp/mcu/all/bsp_group_irq.h"
 #include "../../src/bsp/mcu/all/bsp_clocks.h"
 #include "../../src/bsp/mcu/all/bsp_module_stop.h"
+#include "../../src/bsp/mcu/all/bsp_security.h"
 
 /* Factory MCU information. */
 #include "../../inc/fsp_features.h"
 
 /* BSP Common Includes (Other than bsp_common.h) */
 #include "../../src/bsp/mcu/all/bsp_delay.h"
-
 #include "../../src/bsp/mcu/all/bsp_mcu_api.h"
 
 /** Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */

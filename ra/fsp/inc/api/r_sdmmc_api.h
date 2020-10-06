@@ -468,6 +468,19 @@ typedef struct st_sdmmc_api
      */
     fsp_err_t (* erase)(sdmmc_ctrl_t * const p_ctrl, uint32_t const start_sector, uint32_t const sector_count);
 
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_SDHI_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Control block set in @ref sdmmc_api_t::open call.
+     * @param[in]   p_callback               Callback function to register
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(sdmmc_ctrl_t * const p_api_ctrl, void (* p_callback)(sdmmc_callback_args_t *),
+                              void const * const p_context, sdmmc_callback_args_t * const p_callback_memory);
+
     /** Close open SD/MMC device.
      *
      * @par Implemented as

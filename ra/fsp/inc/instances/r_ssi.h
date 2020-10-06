@@ -48,7 +48,8 @@ FSP_HEADER
 typedef enum e_ssi_audio_clock
 {
     SSI_AUDIO_CLOCK_EXTERNAL = 0,      ///< Audio clock source is the AUDIO_CLK input pin
-    SSI_AUDIO_CLOCK_GTIOC1A  = 1,      ///< Audio clock source is internal connection to GPT channel 1 output
+    SSI_AUDIO_CLOCK_GTIOC1A  = 1,      // Audio clock source is internal connection to GPT channel 1 output (Deprecated)
+    SSI_AUDIO_CLOCK_INTERNAL = 1,      ///< Audio clock source is internal connection to a MCU specific GPT channel output
 } ssi_audio_clock_t;
 
 /** Bit clock division ratio.  Bit clock frequency = audio clock frequency / bit clock division ratio. */
@@ -88,6 +89,15 @@ typedef struct st_ssi_instance_ctrl
     /* Size of destination buffer used to fill from hardware FIFO in receive ISR. */
     uint32_t        rx_dest_samples;
     transfer_size_t fifo_access_size;  // Access the FIFO as 1 byte, 2 bytes, or 4 bytes
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+
+    /* Pointer to callback and optional working memory */
+    void (* p_callback)(i2s_callback_args_t *);
+    i2s_callback_args_t * p_callback_memory;
+    void const          * p_context;   // < User defined context passed into callback function
 } ssi_instance_ctrl_t;
 
 /** SSI configuration extension. This extension is optional. */
@@ -120,6 +130,10 @@ fsp_err_t R_SSI_WriteRead(i2s_ctrl_t * const p_ctrl, void const * const p_src, v
 fsp_err_t R_SSI_Mute(i2s_ctrl_t * const p_ctrl, i2s_mute_t const mute_enable);
 fsp_err_t R_SSI_Close(i2s_ctrl_t * const p_ctrl);
 fsp_err_t R_SSI_VersionGet(fsp_version_t * const p_version);
+fsp_err_t R_SSI_CallbackSet(i2s_ctrl_t * const          p_api_ctrl,
+                            void (                    * p_callback)(i2s_callback_args_t *),
+                            void const * const          p_context,
+                            i2s_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

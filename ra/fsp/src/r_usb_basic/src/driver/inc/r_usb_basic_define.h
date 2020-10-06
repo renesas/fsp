@@ -212,7 +212,13 @@
 /* USB module definition */
 #define USB_M0                                 (R_USB_FS0)
 
-#define USB_M1                                 (R_USB_HS0)
+#if defined(BSP_MCU_GROUP_RA6M3)       /* High-speed module */
+ #define USB_M1                                (R_USB_HS0)
+#else  /* defined(BSP_MCU_GROUP_RA6M3) */  /* Full-speed module*/
+ #define R_USB_HS0_BASE                        0x40060000
+ #define R_USB_HS0                             ((R_USB_HS0_Type *) R_USB_HS0_BASE)
+ #define USB_M1                                (R_USB_HS0)
+#endif                                 /* defined(BSP_MCU_GROUP_RA6M3) */
 
 /* FIFO port register default access size */
 #define USB0_CFIFO_MBW                         (USB_MBW_16)

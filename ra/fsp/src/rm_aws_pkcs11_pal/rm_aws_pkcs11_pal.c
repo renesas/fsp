@@ -44,6 +44,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "rm_aws_pkcs11_pal.h"
 #include "r_flash_hp.h"
 
 #define FLASH_HP_DATA_BLOCK_NUM    (1024U)
@@ -180,29 +181,12 @@ const flash_cfg_t fsp_flash_cfg =
 // }
 
 /*
- *  @brief Save an object to storage.
+ *  @brief Initialize the PAL.
  */
-extern CK_OBJECT_HANDLE PKCS11_PAL_SaveObject(CK_ATTRIBUTE_PTR pxLabel, uint8_t * pucData, uint32_t ulDataSize);
-
-/*
- *   @brief Look up an object handle using it's label.
- */
-extern CK_OBJECT_HANDLE PKCS11_PAL_FindObject(uint8_t * pLabel, uint8_t usLength);
-
-/*
- *   @brief Get the value of an object.
- *   @note  Buffers may be allocated by this call, and should be
- *          freed up by calling PKCS11_PAL_GetObjectValueCleanup().
- */
-extern CK_RV PKCS11_PAL_GetObjectValue(CK_OBJECT_HANDLE xHandle,
-                                       uint8_t       ** ppucData,
-                                       uint32_t       * pulDataSize,
-                                       CK_BBOOL       * xIsPrivate);
-
-/**
- *  @brief Free the buffer allocated in PKCS11_PAL_GetObjectValue() (see PAL).
- */
-extern void PKCS11_PAL_GetObjectValueCleanup(uint8_t * pucBuffer, uint32_t ulBufferSize);
+CK_RV PKCS11_PAL_Initialize ()
+{
+    return CKR_OK;
+}
 
 /**
  * @brief Writes a file to local storage.
@@ -352,14 +336,14 @@ CK_OBJECT_HANDLE PKCS11_PAL_SaveObject (CK_ATTRIBUTE_PTR pxLabel, uint8_t * pucD
  * Port-specific object handle retrieval.
  *
  *
- * @param[in] pLabel         Pointer to the label of the object
+ * @param[in] pxLabel         Pointer to the label of the object
  *                           who's handle should be found.
  * @param[in] usLength       The length of the label, in bytes.
  *
  * @return The object handle if operation was successful.
  * Returns eInvalidHandle if unsuccessful.
  */
-CK_OBJECT_HANDLE PKCS11_PAL_FindObject (uint8_t * pLabel, uint8_t usLength)
+CK_OBJECT_HANDLE PKCS11_PAL_FindObject (uint8_t * pxLabel, uint8_t usLength)
 {
     /* Avoid compiler warnings about unused variables. */
     FSP_PARAMETER_NOT_USED(usLength);
@@ -369,7 +353,7 @@ CK_OBJECT_HANDLE PKCS11_PAL_FindObject (uint8_t * pLabel, uint8_t usLength)
 
     for (i = 1; i < PKCS_OBJECT_HANDLES_NUM; i++)
     {
-        if (!strcmp((char *) &object_handle_dictionary[i], (char *) pLabel))
+        if (!strcmp((char *) &object_handle_dictionary[i], (char *) pxLabel))
         {
             if (pkcs_control_block_data_image.data.pkcs_data[i].status == PKCS_DATA_STATUS_REGISTERED)
             {

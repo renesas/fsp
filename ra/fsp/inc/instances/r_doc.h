@@ -46,6 +46,15 @@ typedef struct st_doc_instance_ctrl
 {
     doc_cfg_t const * p_cfg;           // Pointer to the configuration structure
     uint32_t          open;            ///< Used by driver to check if the control structure is valid
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+
+    /* Pointer to callback and optional working memory */
+    void (* p_callback)(doc_callback_args_t *);
+    doc_callback_args_t * p_callback_memory;
+    void const          * p_context;   ///< User defined context passed into callback function
 } doc_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -66,6 +75,10 @@ fsp_err_t R_DOC_Close(doc_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DOC_StatusGet(doc_ctrl_t * const p_api_ctrl, doc_status_t * p_status);
 fsp_err_t R_DOC_Write(doc_ctrl_t * const p_api_ctrl, uint16_t data);
 fsp_err_t R_DOC_VersionGet(fsp_version_t * const p_version);
+fsp_err_t R_DOC_CallbackSet(doc_ctrl_t * const          p_api_ctrl,
+                            void (                    * p_callback)(doc_callback_args_t *),
+                            void const * const          p_context,
+                            doc_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

@@ -101,6 +101,12 @@
  * Typedef definitions
  **********************************************************************************************************************/
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile wdt_prv_ns_callback)(wdt_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile wdt_prv_ns_callback)(wdt_callback_args_t * p_args);
+#endif
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
@@ -166,7 +172,7 @@ static const uint8_t g_wdt_division_lookup[] =
 };
 
 /** Global pointer to control structure for use by the NMI callback.  */
-static wdt_instance_ctrl_t * gp_wdt_ctrl = NULL;
+static volatile wdt_instance_ctrl_t * gp_wdt_ctrl = NULL;
 
 /***********************************************************************************************************************
  * Global variables
@@ -182,6 +188,7 @@ const wdt_api_t g_wdt_on_wdt =
     .statusClear = R_WDT_StatusClear,
     .counterGet  = R_WDT_CounterGet,
     .timeoutGet  = R_WDT_TimeoutGet,
+    .callbackSet = R_WDT_CallbackSet,
     .versionGet  = R_WDT_VersionGet,
 };
 
@@ -207,6 +214,7 @@ const wdt_api_t g_wdt_on_wdt =
  * @retval FSP_SUCCESS              WDT successfully configured.
  * @retval FSP_ERR_ASSERTION        Null pointer, or one or more configuration options is invalid.
  * @retval FSP_ERR_ALREADY_OPEN     Module is already open.  This module can only be opened once.
+ * @retval FSP_ERR_INVALID_STATE    The security state of the NMI and the module do not match.
  *
  * @note In auto start mode the only valid configuration option is for registering the callback for the NMI ISR if
  *       NMI output has been selected.
@@ -231,6 +239,7 @@ fsp_err_t R_WDT_Open (wdt_ctrl_t * const p_ctrl, wdt_cfg_t const * const p_cfg)
         /* Register callback with BSP NMI ISR. */
         r_wdt_nmi_initialize(p_instance_ctrl, p_cfg);
     }
+
  #else
 
     /* Eliminate toolchain warning when NMI output is not being used.  */
@@ -474,6 +483,42 @@ fsp_err_t R_WDT_CounterGet (wdt_ctrl_t * const p_ctrl, uint32_t * const p_count)
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements wdt_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_WDT_CallbackSet (wdt_ctrl_t * const          p_ctrl,
+                             void (                    * p_callback)(wdt_callback_args_t *),
+                             void const * const          p_context,
+                             wdt_callback_args_t * const p_callback_memory)
+{
+    wdt_instance_ctrl_t * p_instance_ctrl = (wdt_instance_ctrl_t *) p_ctrl;
+
+#if WDT_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(WDT_OPEN == p_instance_ctrl->wdt_open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_instance_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+
+    p_instance_ctrl->p_callback        = p_callback;
+    p_instance_ctrl->p_context         = p_context;
+    p_instance_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Return WDT HAL driver version. Implements @ref wdt_api_t::versionGet.
  *
  * @retval      FSP_SUCCESS             Version information successfully read.
@@ -512,9 +557,49 @@ static void r_wdt_nmi_internal_callback (bsp_grp_irq_t irq)
     {
         if (NULL != gp_wdt_ctrl->p_callback)
         {
-            wdt_callback_args_t p_args;
-            p_args.p_context = gp_wdt_ctrl->p_context;
-            gp_wdt_ctrl->p_callback(&p_args);
+            wdt_callback_args_t args;
+
+            /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+             * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+            wdt_callback_args_t * p_args = gp_wdt_ctrl->p_callback_memory;
+            if (NULL == p_args)
+            {
+                /* Store on stack */
+                p_args = &args;
+            }
+            else
+            {
+                /* Save current arguments on the stack in case this is a nested interrupt. */
+                args = *p_args;
+            }
+
+            p_args->p_context = gp_wdt_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+            /* p_callback can point to a secure function or a non-secure function. */
+            if (gp_wdt_ctrl->callback_is_secure)
+            {
+                /* If p_callback is secure, then the project does not need to change security state. */
+                gp_wdt_ctrl->p_callback(p_args);
+            }
+            else
+            {
+                /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+                wdt_prv_ns_callback p_callback = (wdt_prv_ns_callback) (gp_wdt_ctrl->p_callback);
+                p_callback(p_args);
+            }
+
+#else
+
+            /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+            gp_wdt_ctrl->p_callback(p_args);
+#endif
+            if (NULL != gp_wdt_ctrl->p_callback_memory)
+            {
+                /* Restore callback memory in case this is a nested interrupt. */
+                *gp_wdt_ctrl->p_callback_memory = args;
+            }
         }
     }
 }
@@ -554,8 +639,15 @@ static void r_wdt_nmi_initialize (wdt_instance_ctrl_t * const p_instance_ctrl, w
 
     /* NMI output mode. */
     R_BSP_GroupIrqWrite(BSP_GRP_IRQ_WDT_ERROR, r_wdt_nmi_internal_callback);
-    p_instance_ctrl->p_callback = p_cfg->p_callback;
-    p_instance_ctrl->p_context  = p_cfg->p_context;
+
+ #if BSP_TZ_SECURE_BUILD
+
+    /* If this is a secure build, the callback provided in p_cfg must be secure. */
+    p_instance_ctrl->callback_is_secure = true;
+ #endif
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
 
     /* Enable the WDT underflow/refresh error interrupt (will generate an NMI). NMIER bits cannot be cleared after reset,
      * so no need to read-modify-write. */
@@ -573,6 +665,7 @@ static void r_wdt_nmi_initialize (wdt_instance_ctrl_t * const p_instance_ctrl, w
  * @retval FSP_SUCCESS              WDT successfully configured.
  * @retval FSP_ERR_ASSERTION        Null pointer, or one or more configuration options is invalid.
  * @retval FSP_ERR_ALREADY_OPEN     Module is already open.  This module can only be opened once.
+ * @retval FSP_ERR_INVALID_STATE    The security state of the NMI and the module do not match.
  **********************************************************************************************************************/
 static fsp_err_t r_wdt_parameter_checking (wdt_instance_ctrl_t * const p_instance_ctrl, wdt_cfg_t const * const p_cfg)
 {
@@ -582,6 +675,13 @@ static fsp_err_t r_wdt_parameter_checking (wdt_instance_ctrl_t * const p_instanc
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(WDT_OPEN != p_instance_ctrl->wdt_open, FSP_ERR_ALREADY_OPEN);
+
+    /* Ensure this module is in the same security state as the NMI */
+ #if defined(BSP_TZ_NONSECURE_BUILD) && BSP_TZ_NONSECURE_BUILD
+    FSP_ERROR_RETURN(SCB->AIRCR & SCB_AIRCR_BFHFNMINS_Msk, FSP_ERR_INVALID_STATE);
+ #elif defined(BSP_TZ_SECURE_BUILD) && BSP_TZ_SECURE_BUILD
+    FSP_ERROR_RETURN(!(SCB->AIRCR & SCB_AIRCR_BFHFNMINS_Msk), FSP_ERR_INVALID_STATE);
+ #endif
 
     /* Check timeout parameter is supported by WDT. */
 
@@ -605,6 +705,7 @@ static fsp_err_t r_wdt_parameter_checking (wdt_instance_ctrl_t * const p_instanc
     {
         FSP_ASSERT(NULL == p_cfg->p_callback);
     }
+
   #else
     FSP_ASSERT(p_cfg->reset_control == WDT_RESET_CONTROL_RESET);
   #endif

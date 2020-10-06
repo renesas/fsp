@@ -114,6 +114,12 @@ typedef enum e_rm_vee_flash_refresh_refresh
     RM_VEE_FLASH_PRV_REFRESH_RECORD_OVFL
 } rm_vee_flash_refresh_refresh_t;
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile rm_vee_flash_prv_ns_callback)(rm_vee_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile rm_vee_flash_prv_ns_callback)(rm_vee_callback_args_t * p_args);
+#endif
+
 /***********************************************************************************************************************
  * External functions
  **********************************************************************************************************************/
@@ -215,6 +221,7 @@ fsp_err_t RM_VEE_FLASH_Open (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_cfg_t cons
     FSP_ERROR_RETURN(2 <= p_cfg->num_segments, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(BSP_DATA_FLASH_SIZE_BYTES >= p_cfg->total_size, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0 == (p_cfg->total_size % p_cfg->num_segments), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(0 == ((p_cfg->total_size / p_cfg->num_segments) % 4), FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0 == (p_cfg->ref_data_size % RM_VEE_FLASH_DF_WRITE_SIZE), FSP_ERR_INVALID_ARGUMENT);
 #endif
 
@@ -288,6 +295,14 @@ fsp_err_t RM_VEE_FLASH_Open (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_cfg_t cons
 
         p_ctrl->ref_hdr.pad        = 0;
         p_ctrl->ref_hdr.valid_code = RM_VEE_FLASH_VALID_CODE;
+
+#if BSP_TZ_SECURE_BUILD
+        p_ctrl->callback_is_secure = true;
+#endif
+
+        p_ctrl->p_callback        = p_cfg->p_callback;
+        p_ctrl->p_context         = p_cfg->p_context;
+        p_ctrl->p_callback_memory = NULL;
 
         p_ctrl->mode = RM_VEE_FLASH_PRV_MODE_NORMAL;
 
@@ -606,6 +621,52 @@ fsp_err_t RM_VEE_FLASH_Format (rm_vee_ctrl_t * const p_api_ctrl, uint8_t const *
     rm_vee_flash_err_handle(p_ctrl, err);
 
     return err;
+}
+
+/*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ *
+ * Implements @ref rm_vee_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ **********************************************************************************************************************/
+fsp_err_t RM_VEE_FLASH_CallbackSet (rm_vee_ctrl_t * const          p_api_ctrl,
+                                    void (                       * p_callback)(rm_vee_callback_args_t *),
+                                    void const * const             p_context,
+                                    rm_vee_callback_args_t * const p_callback_memory)
+{
+    rm_vee_flash_instance_ctrl_t * p_ctrl = (rm_vee_flash_instance_ctrl_t *) p_api_ctrl;
+
+#if (RM_VEE_FLASH_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(RM_VEE_FLASH_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if (RM_VEE_FLASH_CFG_PARAM_CHECKING_ENABLE)
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    rm_vee_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                         CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(p_ctrl->callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -1453,6 +1514,61 @@ static fsp_err_t rm_vee_start_seg_refresh (rm_vee_flash_instance_ctrl_t * const 
 }
 
 /*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_ctrl     Pointer to the control block
+ * @param[in]     p_args     Pointer to arguments on stack
+ **********************************************************************************************************************/
+static void rm_vee_call_callback (rm_vee_flash_instance_ctrl_t * p_ctrl, rm_vee_callback_args_t * p_args)
+{
+    rm_vee_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    rm_vee_callback_args_t * p_args_memory = p_ctrl->p_callback_memory;
+    if (NULL == p_args_memory)
+    {
+        /* Use provided args struct on stack */
+        p_args_memory = p_args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args_memory;
+
+        /* Copy the stacked args to callback memory */
+        *p_args_memory = *p_args;
+    }
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args_memory);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        rm_vee_flash_prv_ns_callback p_callback = (rm_vee_flash_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args_memory);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args_memory);
+#endif
+
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
+    }
+}
+
+/*******************************************************************************************************************//**
  * This function is called at the interrupt level every time a flash operation completes. If this function
  * is called during VEE initialization, a global flag is set and the function exits immediately (driver is
  * blocking). In normal operation, this function handles the main state machine for the driver. The state
@@ -1659,13 +1775,13 @@ void rm_vee_flash_callback (flash_callback_args_t * p_args)
 
     rm_vee_flash_err_handle(p_ctrl, err);
 
-    if ((RM_VEE_FLASH_PRV_STATES_READY == p_ctrl->state) && (NULL != p_ctrl->p_cfg->p_callback))
+    if ((RM_VEE_FLASH_PRV_STATES_READY == p_ctrl->state) && (NULL != p_ctrl->p_callback))
     {
         rm_vee_callback_args_t args;
 
         rm_vee_state_get(p_ctrl, &args.state);
-        args.p_context = p_ctrl->p_cfg->p_context;
-        p_ctrl->p_cfg->p_callback(&args);
+        args.p_context = p_ctrl->p_context;
+        rm_vee_call_callback(p_ctrl, &args);
     }
 }
 

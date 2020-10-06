@@ -36,11 +36,11 @@
 #ifdef RM_LITTLEFS_FLASH_DATA_START
 static const uint32_t rm_littlefs_flash_data_start = RM_LITTLEFS_FLASH_DATA_START;
 #else
-static const uint32_t rm_littlefs_flash_data_start = BSP_FEATURE_FLASH_DATA_FLASH_START;
+ #define rm_littlefs_flash_data_start           BSP_FEATURE_FLASH_DATA_FLASH_START
 #endif
 
 /** "RLFS" in ASCII, used to determine if channel is open. */
-#define RM_LITTLEFS_FLASH_OPEN    (0x524C4653ULL)
+#define RM_LITTLEFS_FLASH_OPEN                  (0x524C4653ULL)
 
 const fsp_version_t g_rm_littlefs_flash_version =
 {

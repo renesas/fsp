@@ -90,6 +90,12 @@ typedef enum e_gpt_prv_capture_event
     GPT_PRV_CAPTURE_EVENT_B,
 } gpt_prv_capture_event_t;
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile gpt_prv_ns_callback)(timer_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile gpt_prv_ns_callback)(timer_callback_args_t * p_args);
+#endif
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
@@ -118,6 +124,8 @@ static void gpt_calculate_duty_cycle(gpt_instance_ctrl_t * const p_instance_ctrl
 static uint32_t gpt_gtior_calculate(timer_cfg_t const * const p_cfg, gpt_pin_level_t const stop_level);
 
 #endif
+
+static void r_gpt_call_callback(gpt_instance_ctrl_t * p_ctrl, timer_event_t event, uint32_t capture);
 
 /***********************************************************************************************************************
  * ISR prototypes
@@ -157,6 +165,7 @@ const timer_api_t g_timer_on_gpt =
     .dutyCycleSet = R_GPT_DutyCycleSet,
     .infoGet      = R_GPT_InfoGet,
     .statusGet    = R_GPT_StatusGet,
+    .callbackSet  = R_GPT_CallbackSet,
     .close        = R_GPT_Close,
     .versionGet   = R_GPT_VersionGet
 };
@@ -726,6 +735,51 @@ fsp_err_t R_GPT_AdcTriggerSet (timer_ctrl_t * const    p_ctrl,
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Implements @ref timer_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ **********************************************************************************************************************/
+fsp_err_t R_GPT_CallbackSet (timer_ctrl_t * const          p_api_ctrl,
+                             void (                      * p_callback)(timer_callback_args_t *),
+                             void const * const            p_context,
+                             timer_callback_args_t * const p_callback_memory)
+{
+    gpt_instance_ctrl_t * p_ctrl = (gpt_instance_ctrl_t *) p_api_ctrl;
+
+#if GPT_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(GPT_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if GPT_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    timer_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                        CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(p_ctrl->callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Stops counter, disables output pins, and clears internal driver data. Implements @ref timer_api_t::close.
  *
  * @retval FSP_SUCCESS                 Successful close.
@@ -848,6 +902,15 @@ static void gpt_common_open (gpt_instance_ctrl_t * const p_instance_ctrl, timer_
     /* Save register base address. */
     uint32_t base_address = (uint32_t) R_GPT0 + (p_cfg->channel * ((uint32_t) R_GPT1 - (uint32_t) R_GPT0));
     p_instance_ctrl->p_reg = (R_GPT0_Type *) base_address;
+
+#if BSP_TZ_SECURE_BUILD
+    p_instance_ctrl->callback_is_secure = true;
+#endif
+
+    /* Set callback and context pointers, if configured */
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
 }
 
 /*******************************************************************************************************************//**
@@ -879,7 +942,7 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
      * RA6M3 manual R01UH0886EJ0100) and other registers required by the driver. */
 
     /* Dividers for GPT are half the enum value. */
-    uint32_t gtcr_tpcs = p_cfg->source_div >> 1;
+    uint32_t gtcr_tpcs = p_cfg->source_div;
     uint32_t gtcr      = gtcr_tpcs << R_GPT0_GTCR_TPCS_Pos;
 
     /* Store period register setting. The actual period and is one cycle longer than the register value for saw waves
@@ -1114,8 +1177,19 @@ static void gpt_calculate_duty_cycle (gpt_instance_ctrl_t * const p_instance_ctr
                                       uint32_t const              duty_cycle_counts,
                                       gpt_prv_duty_registers_t  * p_duty_reg)
 {
-    /* 0% and 100% duty cycle are supported in OADTY/OBDTY. */
+    /* Determine the current period. The actual period is one cycle longer than the register value for saw waves
+     * and twice the register value for triangle waves. Reference section 23.2.21 "General PWM Timer Cycle Setting
+     * Register (GTPR)". The setting passed to the configuration is expected to be half the desired duty cycle for
+     * triangle waves. */
     uint32_t current_period = p_instance_ctrl->p_reg->GTPR;
+ #if GPT_PRV_EXTRA_FEATURES_ENABLED == GPT_CFG_OUTPUT_SUPPORT_ENABLE
+    if (p_instance_ctrl->p_cfg->mode < TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM)
+ #endif
+    {
+        current_period++;
+    }
+
+    /* 0% and 100% duty cycle are supported in OADTY/OBDTY. */
     if (0U == duty_cycle_counts)
     {
         p_duty_reg->omdty = GPT_DUTY_CYCLE_MODE_0_PERCENT;
@@ -1127,13 +1201,6 @@ static void gpt_calculate_duty_cycle (gpt_instance_ctrl_t * const p_instance_ctr
     else
     {
         uint32_t temp_duty_cycle = duty_cycle_counts;
-
-        /* When the GPT_SHORTEST_LEVEL_ON is set, the high part of the PWM wave is at the end of the cycle. */
-        gpt_extended_cfg_t * p_extend = (gpt_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-        if (GPT_SHORTEST_LEVEL_ON == p_extend->shortest_pwm_signal)
-        {
-            temp_duty_cycle = current_period - temp_duty_cycle;
-        }
 
  #if GPT_PRV_EXTRA_FEATURES_ENABLED == GPT_CFG_OUTPUT_SUPPORT_ENABLE
         if (p_instance_ctrl->p_cfg->mode >= TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM)
@@ -1163,7 +1230,7 @@ static void gpt_calculate_duty_cycle (gpt_instance_ctrl_t * const p_instance_ctr
 static uint32_t gpt_clock_frequency_get (gpt_instance_ctrl_t * const p_instance_ctrl)
 {
     /* Look up PCLKD frequency and divide it by GPT PCLKD divider. */
-    timer_source_div_t pclk_divisor = (timer_source_div_t) (p_instance_ctrl->p_reg->GTCR_b.TPCS << 1);
+    timer_source_div_t pclk_divisor = (timer_source_div_t) (p_instance_ctrl->p_reg->GTCR_b.TPCS);
     uint32_t           pclk_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKD);
 
     return pclk_freq_hz >> pclk_divisor;
@@ -1181,20 +1248,14 @@ static uint32_t gpt_clock_frequency_get (gpt_instance_ctrl_t * const p_instance_
 static uint32_t gpt_gtior_calculate (timer_cfg_t const * const p_cfg, gpt_pin_level_t const stop_level)
 {
     /* The stop level is used as both the initial level and the stop level. */
-    uint32_t gtior = R_GPT0_GTIOR_OAE_Msk | ((uint32_t) stop_level << GPT_PRV_GTIOR_STOP_LEVEL_BIT) |
+    uint32_t gtior = R_GPT0_GTIOR_OAE_Msk | ((uint32_t) stop_level << R_GPT0_GTIOR_OADFLT_Pos) |
                      ((uint32_t) stop_level << GPT_PRV_GTIOR_INITIAL_LEVEL_BIT);
 
-    uint32_t        gtion         = GPT_PRV_GTIO_LOW_COMPARE_MATCH_HIGH_CYCLE_END;
-    gpt_pin_level_t compare_match = GPT_PIN_LEVEL_LOW;
+    uint32_t gtion = GPT_PRV_GTIO_LOW_COMPARE_MATCH_HIGH_CYCLE_END;
 
     if (TIMER_MODE_PWM == p_cfg->mode)
     {
-        gpt_extended_cfg_t * p_extend = (gpt_extended_cfg_t *) p_cfg->p_extend;
-        if (GPT_SHORTEST_LEVEL_ON == p_extend->shortest_pwm_signal)
-        {
-            /* Output high after compare match when GPT_SHORTEST_LEVEL_ON is used to generate the shortest PWM duty cycle. */
-            compare_match = GPT_PIN_LEVEL_HIGH;
-        }
+        /* Use default: GTIOn is high at cycle end, then low at compare match. */
     }
 
  #if GPT_PRV_EXTRA_FEATURES_ENABLED == GPT_CFG_OUTPUT_SUPPORT_ENABLE
@@ -1208,13 +1269,8 @@ static uint32_t gpt_gtior_calculate (timer_cfg_t const * const p_cfg, gpt_pin_le
         /* In one-shot mode, the output pin goes high after the first compare match (one cycle after the timer starts counting). */
         if (GPT_PIN_LEVEL_LOW == stop_level)
         {
-            compare_match = GPT_PIN_LEVEL_HIGH;
+            gtion = GPT_PRV_GTIO_HIGH_COMPARE_MATCH_LOW_CYCLE_END;
         }
-    }
-
-    if (compare_match == GPT_PIN_LEVEL_HIGH)
-    {
-        gtion = GPT_PRV_GTIO_HIGH_COMPARE_MATCH_LOW_CYCLE_END;
     }
 
     gtior |= gtion;
@@ -1223,6 +1279,63 @@ static uint32_t gpt_gtior_calculate (timer_cfg_t const * const p_cfg, gpt_pin_le
 }
 
 #endif
+
+/*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_ctrl     Pointer to GPT instance control block
+ * @param[in]     event      Event code
+ * @param[in]     capture    Event capture counts (if applicable)
+ **********************************************************************************************************************/
+static void r_gpt_call_callback (gpt_instance_ctrl_t * p_ctrl, timer_event_t event, uint32_t capture)
+{
+    timer_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    timer_callback_args_t * p_args = p_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->event     = event;
+    p_args->capture   = capture;
+    p_args->p_context = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        gpt_prv_ns_callback p_callback = (gpt_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args);
+#endif
+
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
+    }
+}
 
 /*******************************************************************************************************************//**
  * Common processing for input capture interrupt.
@@ -1256,13 +1369,11 @@ static void r_gpt_capture_common_isr (gpt_prv_capture_event_t event)
     }
 
     /* If a callback is provided, then call it with the captured counter value. */
-    if (NULL != p_instance_ctrl->p_cfg->p_callback)
+    if (NULL != p_instance_ctrl->p_callback)
     {
-        timer_callback_args_t callback_args;
-        callback_args.event     = (timer_event_t) ((uint32_t) TIMER_EVENT_CAPTURE_A + (uint32_t) event);
-        callback_args.capture   = counter;
-        callback_args.p_context = p_instance_ctrl->p_cfg->p_context;
-        p_instance_ctrl->p_cfg->p_callback(&callback_args);
+        r_gpt_call_callback(p_instance_ctrl,
+                            (timer_event_t) ((uint32_t) TIMER_EVENT_CAPTURE_A + (uint32_t) event),
+                            counter);
     }
 
     /* Restore context if RTOS is used */
@@ -1303,13 +1414,9 @@ void gpt_counter_overflow_isr (void)
         R_BSP_IrqClearPending(irq);
     }
 
-    if (NULL != p_instance_ctrl->p_cfg->p_callback)
+    if (NULL != p_instance_ctrl->p_callback)
     {
-        /* Set data to identify callback to user, then call user callback. */
-        timer_callback_args_t callback_args;
-        callback_args.p_context = p_instance_ctrl->p_cfg->p_context;
-        callback_args.event     = TIMER_EVENT_CYCLE_END;
-        p_instance_ctrl->p_cfg->p_callback(&callback_args);
+        r_gpt_call_callback(p_instance_ctrl, TIMER_EVENT_CYCLE_END, 0);
     }
 
     /* Restore context if RTOS is used */
@@ -1334,11 +1441,8 @@ void gpt_counter_underflow_isr (void)
     /* Recover ISR context saved in open. */
     gpt_instance_ctrl_t * p_instance_ctrl = (gpt_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    /* Set data to identify callback to user, then call user callback. */
-    timer_callback_args_t callback_args;
-    callback_args.p_context = p_instance_ctrl->p_cfg->p_context;
-    callback_args.event     = TIMER_EVENT_TROUGH;
-    p_instance_ctrl->p_cfg->p_callback(&callback_args);
+    /* Call user callback. */
+    r_gpt_call_callback(p_instance_ctrl, TIMER_EVENT_TROUGH, 0);
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE;

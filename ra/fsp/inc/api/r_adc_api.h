@@ -295,6 +295,20 @@ typedef struct st_adc_api
      */
     fsp_err_t (* offsetSet)(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, int32_t const offset);
 
+    /**
+     * Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_ADC_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the ADC control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(adc_ctrl_t * const p_api_ctrl, void (* p_callback)(adc_callback_args_t *),
+                              void const * const p_context, adc_callback_args_t * const p_callback_memory);
+
     /** Close the specified ADC unit by ending any scan in progress, disabling interrupts, and removing power to the
      * specified A/D unit.
      * @par Implemented as

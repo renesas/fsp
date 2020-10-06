@@ -84,8 +84,8 @@ typedef enum e_i2c_master_event
 /** I2C callback parameter definition */
 typedef struct st_i2c_master_callback_args
 {
-    void const * const       p_context; ///< Pointer to user-provided context
-    i2c_master_event_t const event;     ///< Event code
+    void const       * p_context;      ///< Pointer to user-provided context
+    i2c_master_event_t event;          ///< Event code
 } i2c_master_callback_args_t;
 
 /** I2C configuration block */
@@ -174,6 +174,20 @@ typedef struct st_i2c_master_api
      */
     fsp_err_t (* slaveAddressSet)(i2c_master_ctrl_t * const p_ctrl, uint32_t const slave,
                                   i2c_master_addr_mode_t const addr_mode);
+
+    /**
+     * Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_IIC_MASTER_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the IIC Master control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(i2c_master_ctrl_t * const p_api_ctrl, void (* p_callback)(i2c_master_callback_args_t *),
+                              void const * const p_context, i2c_master_callback_args_t * const p_callback_memory);
 
     /** Closes the driver and releases the I2C Master device.
      * @par Implemented as

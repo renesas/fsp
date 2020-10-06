@@ -63,6 +63,11 @@ typedef struct st_rm_block_media_sdmmc_instance_ctrl
     uint32_t sector_count;
     uint32_t sector_size_bytes;
     bool     initialized;
+    bool     write_protected;
+
+    void (* p_callback)(rm_block_media_callback_args_t *); // Pointer to callback
+    rm_block_media_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
+    void const * p_context;                                // Pointer to context to be passed into callback function
 } rm_block_media_sdmmc_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -88,10 +93,14 @@ fsp_err_t RM_BLOCK_MEDIA_SDMMC_Write(rm_block_media_ctrl_t * const p_ctrl,
                                      uint8_t const * const         p_src_address,
                                      uint32_t const                block_address,
                                      uint32_t const                num_blocks);
-fsp_err_t RM_BLOCK_MEDIA_SDMMC_Flush(rm_block_media_ctrl_t * const p_ctrl);
 fsp_err_t RM_BLOCK_MEDIA_SDMMC_Erase(rm_block_media_ctrl_t * const p_ctrl,
                                      uint32_t const                block_address,
                                      uint32_t const                num_blocks);
+fsp_err_t RM_BLOCK_MEDIA_SDMMC_CallbackSet(rm_block_media_ctrl_t * const p_ctrl,
+                                           void (                      * p_callback)(
+                                               rm_block_media_callback_args_t *),
+                                           void const * const                     p_context,
+                                           rm_block_media_callback_args_t * const p_callback_memory);
 fsp_err_t RM_BLOCK_MEDIA_SDMMC_StatusGet(rm_block_media_ctrl_t * const   p_api_ctrl,
                                          rm_block_media_status_t * const p_status);
 fsp_err_t RM_BLOCK_MEDIA_SDMMC_InfoGet(rm_block_media_ctrl_t * const p_ctrl, rm_block_media_info_t * const p_info);

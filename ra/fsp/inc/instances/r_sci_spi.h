@@ -69,6 +69,17 @@ typedef struct st_sci_spi_instance_ctrl
     uint32_t          tx_count;
     uint32_t          rx_count;
     uint32_t          count;
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+
+    /* Pointer to callback and optional working memory */
+    void (* p_callback)(spi_callback_args_t *);
+    spi_callback_args_t * p_callback_memory;
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } sci_spi_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -101,6 +112,10 @@ fsp_err_t R_SCI_SPI_WriteRead(spi_ctrl_t * const    p_api_ctrl,
 fsp_err_t R_SCI_SPI_Close(spi_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_SPI_VersionGet(fsp_version_t * p_version);
 fsp_err_t R_SCI_SPI_CalculateBitrate(uint32_t bitrate, sci_spi_div_setting_t * sclk_div, bool use_mddr);
+fsp_err_t R_SCI_SPI_CallbackSet(spi_ctrl_t * const          p_api_ctrl,
+                                void (                    * p_callback)(spi_callback_args_t *),
+                                void const * const          p_context,
+                                spi_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

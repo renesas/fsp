@@ -38,6 +38,7 @@
   #include "mbedtls/aesni.h"
  #endif
  #include "hw_sce_aes_private.h"
+ #include "hw_sce_private.h"
 
 /*
  * 32-bit integer manipulation macros (little endian)
@@ -81,13 +82,34 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
 {
     FSP_ASSERT(ctx);
     FSP_ASSERT(key);
-    int          ret           = 0;
-    unsigned int local_keybits = 0;
+    int                   ret            = 0;
+    unsigned int          local_keybits  = 0;
+    const unsigned char * p_internal_key = key;
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
 
+    /* Create storage to hold the generated OEM key index. Size = Largest key size possible. */
+    uint8_t encrypted_aes_key[SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED] = {0};
+  #endif
     switch (keybits)
     {
         case SIZE_AES_128BIT_KEYLEN_BITS:
         {
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+            local_keybits = SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED;
+            ctx->nr       = 10;
+            if (false == (bool) ctx->vendor_ctx)
+            {
+                p_internal_key = encrypted_aes_key;
+                ret            = (int) HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                                                         SCE_OEM_CMD_AES128,
+                                                                         NULL,
+                                                                         NULL,
+                                                                         key,
+                                                                         (uint32_t *) p_internal_key);
+                ctx->vendor_ctx = (bool *) true;
+            }
+
+  #else
             if (true == (bool) ctx->vendor_ctx)
             {
                 local_keybits = SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED;
@@ -96,13 +118,29 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
             {
                 local_keybits = keybits;
             }
-
             ctx->nr = 10;
+  #endif
             break;
         }
 
         case SIZE_AES_256BIT_KEYLEN_BITS:
         {
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+            local_keybits = SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED;
+            ctx->nr       = 14;
+            if (false == (bool) ctx->vendor_ctx)
+            {
+                p_internal_key = encrypted_aes_key;
+                ret            = (int) HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                                                         SCE_OEM_CMD_AES256,
+                                                                         NULL,
+                                                                         NULL,
+                                                                         key,
+                                                                         (uint32_t *) p_internal_key);
+                ctx->vendor_ctx = (bool *) true;
+            }
+
+  #else
             if (true == (bool) ctx->vendor_ctx)
             {
                 local_keybits = SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED;
@@ -111,8 +149,9 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
             {
                 local_keybits = keybits;
             }
-
             ctx->nr = 14;
+  #endif
+
             break;
         }
 
@@ -123,10 +162,11 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
 
     if (0 == ret)
     {
-        /* Store the key into the buffer */
+        /* Store the encrypted key into the buffer */
         for (uint32_t i = 0; i < (local_keybits >> 5); i++)
         {
-            GET_UINT32_LE(ctx->buf[i], key, i << 2);
+            /* buf is large enough to hold AES 256 bit wrapped key */
+            GET_UINT32_LE(ctx->buf[i], p_internal_key, i << 2);
         }
     }
 

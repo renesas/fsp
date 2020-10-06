@@ -76,6 +76,11 @@
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile lvd_prv_ns_callback)(lvd_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile lvd_prv_ns_callback)(lvd_callback_args_t * p_args);
+#endif
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -115,14 +120,19 @@ static const fsp_version_t g_lvd_version =
 };
 
 /* Look-up tables for writing to monitor 1 and monitor 2 registers. */
-static uint8_t volatile * const g_lvdncr0_lut[]        = {&(R_SYSTEM->LVD1CR0), &(R_SYSTEM->LVD2CR0)};
-static uint8_t volatile * const g_lvdncr1_lut[]        = {&(R_SYSTEM->LVD1CR1), &(R_SYSTEM->LVD2CR1)};
-static uint8_t volatile * const g_lvdnsr_lut[]         = {&(R_SYSTEM->LVD1SR), &(R_SYSTEM->LVD2SR)};
-static uint32_t const           g_lvdlvlr_offset_lut[] =
+static uint8_t volatile * const g_lvdncr0_lut[] = {&(R_SYSTEM->LVD1CR0), &(R_SYSTEM->LVD2CR0)};
+static uint8_t volatile * const g_lvdncr1_lut[] = {&(R_SYSTEM->LVD1CR1), &(R_SYSTEM->LVD2CR1)};
+static uint8_t volatile * const g_lvdnsr_lut[]  = {&(R_SYSTEM->LVD1SR), &(R_SYSTEM->LVD2SR)};
+#if (BSP_FEATURE_LVD_HAS_LVDLVLR == 1)
+static uint32_t const g_lvdlvlr_offset_lut[] =
 {
     LVD_PRV_LVDLVLR_LVD1LVL_OFFSET, LVD_PRV_LVDLVLR_LVD2LVL_OFFSET
 };
 static uint32_t const g_lvdlvlr_mask_lut[] = {LVD_PRV_LVDLVLR_LVD1LVL_MASK, LVD_PRV_LVDLVLR_LVD2LVL_MASK};
+#else
+static uint8_t volatile * const g_lvdncmpcr_lut[]    = {&(R_SYSTEM->LVD1CMPCR), &(R_SYSTEM->LVD2CMPCR)};
+static uint32_t const           g_lvdnlvl_mask_lut[] = {R_SYSTEM_LVD1CMPCR_LVD1LVL_Msk, R_SYSTEM_LVD2CMPCR_LVD2LVL_Msk};
+#endif
 
 /***********************************************************************************************************************
  * Global Variables
@@ -136,6 +146,7 @@ const lvd_api_t g_lvd_on_lvd =
     .statusClear = R_LVD_StatusClear,
     .close       = R_LVD_Close,
     .versionGet  = R_LVD_VersionGet,
+    .callbackSet = R_LVD_CallbackSet
 };
 
 /*******************************************************************************************************************//**
@@ -173,6 +184,15 @@ fsp_err_t R_LVD_Open (lvd_ctrl_t * const p_api_ctrl, lvd_cfg_t const * const p_c
 
     /* Store the user configuration. */
     p_ctrl->p_cfg = p_cfg;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* If this is a secure build, the callback provided in p_cfg must be secure. */
+    p_ctrl->callback_is_secure = true;
+#endif
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
 
     /* Store control structure so it can be accessed from NMI handler. */
     gp_ctrls[p_ctrl->p_cfg->monitor_number - 1] = p_ctrl;
@@ -257,6 +277,42 @@ fsp_err_t R_LVD_StatusClear (lvd_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements lvd_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_LVD_CallbackSet (lvd_ctrl_t * const          p_api_ctrl,
+                             void (                    * p_callback)(lvd_callback_args_t *),
+                             void const * const          p_context,
+                             lvd_callback_args_t * const p_callback_memory)
+{
+    lvd_instance_ctrl_t * p_ctrl = (lvd_instance_ctrl_t *) p_api_ctrl;
+
+#if (LVD_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(LVD_OPENED == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Disables the LVD peripheral. Closes the driver instance.
  *
  * @param[in]   p_api_ctrl          Pointer to the control block structure for the driver instance
@@ -275,7 +331,9 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
     FSP_ERROR_RETURN(LVD_OPENED == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+#if BSP_FEATURE_LVD_HAS_LVDLVLR == 1
     FSP_CRITICAL_SECTION_DEFINE;
+#endif
 
     uint32_t monitor_index = p_ctrl->p_cfg->monitor_number - 1;
 
@@ -314,6 +372,8 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
 
     *(g_lvdncr0_lut[monitor_index]) = lvdncr0;
 
+#if BSP_FEATURE_LVD_HAS_LVDLVLR == 1
+
     /* Critical section required because LVCMPCR register is shared with other instances. */
     FSP_CRITICAL_SECTION_ENTER;
 
@@ -321,6 +381,9 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
     R_SYSTEM->LVCMPCR &= (uint8_t) ~(p_ctrl->p_cfg->monitor_number << LVD_PRV_LVCMPCR_LVD1E_OFFSET);
 
     FSP_CRITICAL_SECTION_EXIT;
+#else
+    *(g_lvdncmpcr_lut[monitor_index]) &= (uint8_t) ~R_SYSTEM_LVD1CMPCR_LVD1E_Msk;
+#endif
 
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_LVD);
 
@@ -435,6 +498,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     /* Enable access to LVD registers. */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
 
+#if (BSP_FEATURE_LVD_HAS_LVDLVLR == 1)
     uint32_t lvdne_mask    = p_ctrl->p_cfg->monitor_number << LVD_PRV_LVCMPCR_LVD1E_OFFSET;
     uint32_t lvdlvr_offset = g_lvdlvlr_offset_lut[monitor_index];
 
@@ -456,6 +520,44 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     R_SYSTEM->LVCMPCR |= (uint8_t) lvdne_mask;
 
     FSP_CRITICAL_SECTION_EXIT;
+#else
+    uint8_t lvdne[LVD_PRV_NUMBER_OF_MONITORS];
+    uint8_t i;
+
+    /* Critical section required because LVCMPCR and LVDLVLR registers are shared with other instances. */
+    FSP_CRITICAL_SECTION_ENTER;
+
+    /* To change a LVDNLVL register both voltage detection circuits must be disabled.
+     * Disable the voltage detection circuit for all monitors before writing the LVDLVLR register.
+     * See section 7.2.2 "LVD1CMPCR : Voltage Monitoring 1 Comparator Control Register" in the RA6M4 manual R01HUM0890EJ0050.*/
+    for (i = 0; i < LVD_PRV_NUMBER_OF_MONITORS; i++)
+    {
+        lvdne[i]               = *(g_lvdncmpcr_lut[i]) & R_SYSTEM_LVD1CMPCR_LVD1E_Msk; // Preserve enable values for other monitors
+        *(g_lvdncmpcr_lut[i]) &= (uint8_t) ~R_SYSTEM_LVD1CMPCR_LVD1E_Msk;
+    }
+
+    /* Configure the voltage threshold setting. */
+    uint8_t lvdncmpcr = *(g_lvdncmpcr_lut[monitor_index]);
+    lvdncmpcr &= (uint8_t) ~(g_lvdnlvl_mask_lut[monitor_index]);
+    lvdncmpcr |= p_ctrl->p_cfg->voltage_threshold;
+
+    /* Write the voltage level setting. */
+    *(g_lvdncmpcr_lut[monitor_index]) = lvdncmpcr;
+
+    /* Enable the voltage detection circuits. */
+    for (i = 0; i < LVD_PRV_NUMBER_OF_MONITORS; i++)
+    {
+        if (monitor_index == i)
+        {
+            *(g_lvdncmpcr_lut[monitor_index]) |= R_SYSTEM_LVD1CMPCR_LVD1E_Msk;
+        }
+        else
+        {
+            *(g_lvdncmpcr_lut[i]) |= lvdne[i];
+        }
+    }
+    FSP_CRITICAL_SECTION_EXIT;
+#endif
 
     /* Write settings to control registers. */
     *(g_lvdncr0_lut[monitor_index]) = (uint8_t) lvdncr0;
@@ -575,10 +677,52 @@ static void lvd_common_isr_handler (lvd_instance_ctrl_t * p_ctrl)
     uint32_t monitor_index = p_ctrl->p_cfg->monitor_number - 1;
 
     lvd_callback_args_t callback_args;
-    callback_args.current_state =
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    lvd_callback_args_t * p_args = p_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &callback_args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        callback_args = *p_args;
+    }
+
+    p_args->current_state =
         (lvd_current_state_t) ((*(g_lvdnsr_lut[monitor_index]) & LVD_PRV_LVDNSR_MON_MASK) > 0);
-    callback_args.monitor_number = p_ctrl->p_cfg->monitor_number;
-    p_ctrl->p_cfg->p_callback(&callback_args);
+    p_args->monitor_number = p_ctrl->p_cfg->monitor_number;
+    p_args->p_context      = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        lvd_prv_ns_callback p_callback = (lvd_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args);
+#endif
+
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = callback_args;
+    }
 
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
 
@@ -619,7 +763,6 @@ static void lvd_nmi_handler (bsp_grp_irq_t irq)
 {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
-
     /* Call common isr handler. */
     lvd_common_isr_handler(gp_ctrls[irq - BSP_GRP_IRQ_LVD1]);
 

@@ -119,10 +119,17 @@ typedef enum e_agt_pin_cfg
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref timer_api_t::open is called. */
 typedef struct st_agt_instance_ctrl
 {
-    uint32_t            open;          ///< Whether or not channel is open
-    const timer_cfg_t * p_cfg;         ///< Pointer to initial configurations
-    R_AGT0_Type       * p_reg;         ///< Base register for this channel
-    uint32_t            period;        ///< Current timer period (counts)
+    uint32_t            open;                     // Whether or not channel is open
+    const timer_cfg_t * p_cfg;                    // Pointer to initial configurations
+    R_AGT0_Type       * p_reg;                    // Base register for this channel
+    uint32_t            period;                   // Current timer period (counts)
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                      // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(timer_callback_args_t *); // Pointer to callback that is called when a timer_event_t occurs.
+    timer_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+    void const            * p_context;            // Pointer to context to be passed into callback function
 } agt_instance_ctrl_t;
 
 /** Optional AGT extension data structure.*/
@@ -171,6 +178,10 @@ fsp_err_t R_AGT_InfoGet(timer_ctrl_t * const p_ctrl, timer_info_t * const p_info
 fsp_err_t R_AGT_StatusGet(timer_ctrl_t * const p_ctrl, timer_status_t * const p_status);
 fsp_err_t R_AGT_Stop(timer_ctrl_t * const p_ctrl);
 fsp_err_t R_AGT_Open(timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_cfg);
+fsp_err_t R_AGT_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
+                            void (                      * p_callback)(timer_callback_args_t *),
+                            void const * const            p_context,
+                            timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_AGT_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**

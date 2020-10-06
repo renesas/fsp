@@ -35,6 +35,7 @@
  * Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
 #include "r_usb_hhid_cfg.h"
+#include "r_usb_basic_api.h"
 
 /******************************************************************************
  * Exported global functions (to be accessed by other files)

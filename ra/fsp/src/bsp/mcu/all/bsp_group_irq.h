@@ -53,6 +53,8 @@ typedef enum e_bsp_grp_irq
     BSP_GRP_IRQ_MPU_BUS_SLAVE   = 10,  ///< MPU Bus Slave Error
     BSP_GRP_IRQ_MPU_BUS_MASTER  = 11,  ///< MPU Bus Master Error
     BSP_GRP_IRQ_MPU_STACK       = 12,  ///< MPU Stack Error
+    BSP_GRP_IRQ_TRUSTZONE       = 13,  ///< MPU Stack Error
+    BSP_GRP_IRQ_CACHE_PARITY    = 15,  ///< MPU Stack Error
 } bsp_grp_irq_t;
 
 /* Callback type. */

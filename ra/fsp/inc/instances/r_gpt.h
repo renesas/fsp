@@ -60,14 +60,11 @@ typedef enum e_gpt_pin_level
     GPT_PIN_LEVEL_HIGH = 1,            ///< Pin level high
 } gpt_pin_level_t;
 
-/** GPT PWM shortest pin level */
+/* DEPRECATED - Do not use. */
 typedef enum e_gpt_shortest_level
 {
-    /** 1 extra PCLK in ON time. Minimum ON time will be limited to 2 PCLK raw counts. */
     GPT_SHORTEST_LEVEL_OFF = 0,
-
-    /** 1 extra PCLK in OFF time. Minimum ON time will be limited to 1 PCLK raw counts. */
-    GPT_SHORTEST_LEVEL_ON = 1,
+    GPT_SHORTEST_LEVEL_ON  = 1,
 } gpt_shortest_level_t;
 
 /** Sources can be used to start the timer, stop the timer, count up, or count down. These enumerations represent
@@ -257,11 +254,18 @@ typedef enum e_gpt_interrupt_skip_adc
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref timer_api_t::open is called. */
 typedef struct st_gpt_instance_ctrl
 {
-    uint32_t            open;          // Whether or not channel is open
-    const timer_cfg_t * p_cfg;         // Pointer to initial configurations
-    R_GPT0_Type       * p_reg;         // Base register for this channel
-    uint32_t            channel_mask;  // Channel bitmask
-    timer_variant_t     variant;       // Timer variant
+    uint32_t            open;                     // Whether or not channel is open
+    const timer_cfg_t * p_cfg;                    // Pointer to initial configurations
+    R_GPT0_Type       * p_reg;                    // Base register for this channel
+    uint32_t            channel_mask;             // Channel bitmask
+    timer_variant_t     variant;                  // Timer variant
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                      // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(timer_callback_args_t *); // Pointer to callback
+    timer_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
+    void const            * p_context;            // Pointer to context to be passed into callback function
 } gpt_instance_ctrl_t;
 
 /** GPT extension for advanced PWM features. */
@@ -288,7 +292,7 @@ typedef struct st_gpt_extended_cfg
 {
     gpt_output_pin_t     gtioca;              ///< Configuration for GPT I/O pin A
     gpt_output_pin_t     gtiocb;              ///< Configuration for GPT I/O pin B
-    gpt_shortest_level_t shortest_pwm_signal; ///< Shortest PWM signal level
+    gpt_shortest_level_t shortest_pwm_signal; // DEPRECATED - Do not use
     gpt_source_t         start_source;        ///< Event sources that trigger the timer to start
     gpt_source_t         stop_source;         ///< Event sources that trigger the timer to stop
     gpt_source_t         clear_source;        ///< Event sources that trigger the timer to clear
@@ -345,6 +349,10 @@ fsp_err_t R_GPT_OutputDisable(timer_ctrl_t * const p_ctrl, gpt_io_pin_t pin);
 fsp_err_t R_GPT_AdcTriggerSet(timer_ctrl_t * const    p_ctrl,
                               gpt_adc_compare_match_t which_compare_match,
                               uint32_t                compare_match_value);
+fsp_err_t R_GPT_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
+                            void (                      * p_callback)(timer_callback_args_t *),
+                            void const * const            p_context,
+                            timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_GPT_Close(timer_ctrl_t * const p_ctrl);
 fsp_err_t R_GPT_VersionGet(fsp_version_t * const p_version);
 

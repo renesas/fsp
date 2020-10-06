@@ -82,10 +82,6 @@ static TaskHandle_t xRxHanderTaskHandle = NULL;
 /***********************************************************************************************************************
  * Exported global function
  ***********************************************************************************************************************/
-uint32_t ulApplicationGetNextSequenceNumber(uint32_t ulSourceAddress,
-                                            uint16_t usSourcePort,
-                                            uint32_t ulDestinationAddress,
-                                            uint16_t usDestinationPort) __attribute__((weak));
 
 /***********************************************************************************************************************
  * Prototype declaration of global functions
@@ -329,7 +325,6 @@ __attribute__((weak)) BaseType_t xApplicationGetRandomNumber (uint32_t * pulNumb
      * rand() in returns a 16-bit number. so create 32 bit Random number using 16 bit rand().
      * In this case just a psuedo random number is used so THIS IS NOT RECOMMENDED FOR PRODUCTION SYSTEMS.
      */
-
     uint32_t ulRandomValue = 0;
 
     ulRandomValue = ((((uint32_t) rand()) & UNSIGNED_SHORT_RANDOM_NUMBER_MASK)) |      // NOLINT (rand() has limited randomness. But c99 does not support random)
@@ -340,10 +335,10 @@ __attribute__((weak)) BaseType_t xApplicationGetRandomNumber (uint32_t * pulNumb
     return pdTRUE;
 }
 
-uint32_t ulApplicationGetNextSequenceNumber (uint32_t ulSourceAddress,
-                                             uint16_t usSourcePort,
-                                             uint32_t ulDestinationAddress,
-                                             uint16_t usDestinationPort)
+BSP_WEAK_REFERENCE uint32_t ulApplicationGetNextSequenceNumber (uint32_t ulSourceAddress,
+                                                                uint16_t usSourcePort,
+                                                                uint32_t ulDestinationAddress,
+                                                                uint16_t usDestinationPort)
 {
     /*
      * Callback that provides the inputs necessary to generate a randomized TCP

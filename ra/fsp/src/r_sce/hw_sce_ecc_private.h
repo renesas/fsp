@@ -58,8 +58,15 @@
 #define ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS                    (544U)
 
 /* Function pointer declarations */
+#if BSP_FEATURE_CRYPTO_HAS_SCE9
+ #define ECC_PUBLIC_KEY_SIZE_BYTES(curve_size)    (curve_size * 2 + 20U)
+typedef fsp_err_t (* hw_sce_ecc_scalarmultiplication_t)(const uint32_t * InData_CurveType, const uint32_t * InData_Cmd,
+                                                        const uint32_t * InData_K, const uint32_t * InData_P,
+                                                        uint32_t * OutData_R);
+#else
 typedef fsp_err_t (* hw_sce_ecc_scalarmultiplication_t)(const uint32_t * InData_DomainParam, const uint32_t * InData_K,
                                                         const uint32_t * InData_P, uint32_t * OutData_R);
+#endif
 typedef fsp_err_t (* hw_sce_ecc_generatekey_t)(const uint32_t * InData_DomainParam, const uint32_t * InData_G,
                                                uint32_t * OutData_PubKey, uint32_t * OutData_PrivKey);
 
@@ -114,6 +121,12 @@ fsp_err_t HW_SCE_ECC_256HrkScalarMultiplication(const uint32_t * InData_DomainPa
                                                 const uint32_t * InData_P,
                                                 uint32_t       * OutData_R);
 
+fsp_err_t HW_SCE_ECC_256WrappedScalarMultiplication(const uint32_t * InData_CurveType,
+                                                    const uint32_t * InData_Cmd,
+                                                    const uint32_t * InData_KeyIndex,
+                                                    const uint32_t * InData_P,
+                                                    uint32_t       * OutData_R);
+
 /* ECC - 384 HW Procedure definitions */
 fsp_err_t HW_SCE_ECC_384ScalarMultiplication(const uint32_t * InData_DomainParam,
                                              const uint32_t * InData_K,
@@ -156,5 +169,10 @@ fsp_err_t HW_SCE_ECC_384HrkScalarMultiplication(const uint32_t * InData_DomainPa
                                                 const uint32_t * InData_KeyIndex,
                                                 const uint32_t * InData_P,
                                                 uint32_t       * OutData_R);
+fsp_err_t HW_SCE_ECC_384WrappedScalarMultiplication(const uint32_t * InData_CurveType,
+                                                    const uint32_t * InData_Cmd,
+                                                    const uint32_t * InData_KeyIndex,
+                                                    const uint32_t * InData_P,
+                                                    uint32_t       * OutData_R);
 
 #endif                                 /* HW_SCE_ECC_PRIVATE_H */

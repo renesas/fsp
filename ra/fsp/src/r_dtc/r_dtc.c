@@ -264,7 +264,11 @@ fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
 
     /* Disable read skip prior to modifying settings. It will be enabled later
      * (See DTC Section 18.4.1 of the RA6M3 manual R01UH0886EJ0100). */
+#if FSP_PRIV_TZ_USE_SECURE_REGS
+    R_DTC->DTCCR_SEC = DTC_PRV_RRS_DISABLE;
+#else
     R_DTC->DTCCR = DTC_PRV_RRS_DISABLE;
+#endif
 
     /* Reset transfer based on input parameters. */
     if (NULL != p_src)
@@ -291,7 +295,11 @@ fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
     }
 
     /* Enable read skip after all settings are written. */
+#if FSP_PRIV_TZ_USE_SECURE_REGS
+    R_DTC->DTCCR_SEC = DTC_PRV_RRS_ENABLE;
+#else
     R_DTC->DTCCR = DTC_PRV_RRS_ENABLE;
+#endif
 
     /* This is an exception to FSP Architecture Parameter Checking (May return an error after modifying registers). */
     /* Enable transfers on this activation source. */
@@ -518,7 +526,11 @@ static void r_dtc_state_initialize (void)
         memset(&gp_dtc_vector_table, 0U, DTC_VECTOR_TABLE_ENTRIES * sizeof(transfer_info_t *));
 
         /* Set DTC vector table. */
-        R_DTC->DTCVBR = (uint32_t) &gp_dtc_vector_table;
+#if FSP_PRIV_TZ_USE_SECURE_REGS
+        R_DTC->DTCVBR_SEC = (uint32_t) gp_dtc_vector_table;
+#else
+        R_DTC->DTCVBR = (uint32_t) gp_dtc_vector_table;
+#endif
 
         /* Enable the DTC Peripheral */
         R_DTC->DTCST = 1U;
@@ -535,13 +547,21 @@ static void r_dtc_set_info (dtc_instance_ctrl_t * p_ctrl, transfer_info_t * p_in
 
     /* Disable read skip prior to modifying settings. It will be enabled later
      * (See DTC Section 18.4.1 of the RA6M3 manual R01UH0886EJ0100). */
+#if FSP_PRIV_TZ_USE_SECURE_REGS
+    R_DTC->DTCCR_SEC = DTC_PRV_RRS_DISABLE;
+#else
     R_DTC->DTCCR = DTC_PRV_RRS_DISABLE;
+#endif
 
     /* Update the entry in the DTC Vector table. */
     gp_dtc_vector_table[p_ctrl->irq] = p_info;
 
     /* Enable read skip after all settings are written. */
+#if DTC_PRV_USE_SECURE_REGS
+    R_DTC->DTCCR_SEC = DTC_PRV_RRS_ENABLE;
+#else
     R_DTC->DTCCR = DTC_PRV_RRS_ENABLE;
+#endif
 }
 
 /*******************************************************************************************************************//**

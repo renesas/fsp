@@ -146,6 +146,17 @@ typedef struct st_spi_instance_ctrl
     uint32_t          rx_count;        ///< Number of Data Frames to transfer (8-bit, 16-bit, 32-bit)
     uint32_t          count;           ///< Number of Data Frames to transfer (8-bit, 16-bit, 32-bit)
     spi_bit_width_t   bit_width;       ///< Bits per Data frame (8-bit, 16-bit, 32-bit)
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+
+    /* Pointer to callback and optional working memory */
+    void (* p_callback)(spi_callback_args_t *);
+    spi_callback_args_t * p_callback_memory;
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } spi_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -184,6 +195,10 @@ fsp_err_t R_SPI_Close(spi_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SPI_VersionGet(fsp_version_t * p_version);
 
 fsp_err_t R_SPI_CalculateBitrate(uint32_t bitrate, rspck_div_setting_t * spck_div);
+fsp_err_t R_SPI_CallbackSet(spi_ctrl_t * const          p_api_ctrl,
+                            void (                    * p_callback)(spi_callback_args_t *),
+                            void const * const          p_context,
+                            spi_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**
  * @} (end ingroup SPI)

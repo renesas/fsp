@@ -104,6 +104,10 @@ typedef struct st_sdmmc_instance_ctrl
     uint32_t              transfer_block_current;
     uint32_t              transfer_block_size;
     uint32_t              aligned_buff[SDHI_MAX_BLOCK_SIZE / sizeof(uint32_t)];
+
+    void (* p_callback)(sdmmc_callback_args_t *); // Pointer to callback
+    sdmmc_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
+    void const            * p_context;            // Pointer to context to be passed into callback function
 } sdhi_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -156,6 +160,10 @@ fsp_err_t R_SDHI_WriteIoExt(sdmmc_ctrl_t * const     p_api_ctrl,
 fsp_err_t R_SDHI_IoIntEnable(sdmmc_ctrl_t * const p_api_ctrl, bool enable);
 fsp_err_t R_SDHI_StatusGet(sdmmc_ctrl_t * const p_api_ctrl, sdmmc_status_t * const p_status);
 fsp_err_t R_SDHI_Erase(sdmmc_ctrl_t * const p_api_ctrl, uint32_t const start_sector, uint32_t const sector_count);
+fsp_err_t R_SDHI_CallbackSet(sdmmc_ctrl_t * const          p_api_ctrl,
+                             void (                      * p_callback)(sdmmc_callback_args_t *),
+                             void const * const            p_context,
+                             sdmmc_callback_args_t * const p_callback_memory);
 fsp_err_t R_SDHI_Close(sdmmc_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SDHI_VersionGet(fsp_version_t * const p_version);
 

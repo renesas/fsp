@@ -215,11 +215,20 @@ typedef struct st_adc_channel_cfg
 /** ADC instance control block. DO NOT INITIALIZE.  Initialized in @ref adc_api_t::open(). */
 typedef struct
 {
-    R_ADC0_Type     * p_reg;           // Base register for this unit
+    R_ADC0_Type     * p_reg;                    // Base register for this unit
     adc_cfg_t const * p_cfg;
-    uint32_t          opened;          // Boolean to verify that the Unit has been initialized
-    uint32_t          scan_mask;       // Scan mask used for Normal scan.
+    uint32_t          opened;                   // Boolean to verify that the Unit has been initialized
+    uint32_t          scan_mask;                // Scan mask used for Normal scan.
     uint16_t          scan_start_adcsr;
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(adc_callback_args_t *); // Pointer to callback that is called when an adc_event_t occurs.
+    adc_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } adc_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -248,6 +257,10 @@ fsp_err_t R_ADC_Close(adc_ctrl_t * p_ctrl);
 fsp_err_t R_ADC_OffsetSet(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, int32_t offset);
 fsp_err_t R_ADC_Calibrate(adc_ctrl_t * const p_ctrl, void * const p_extend);
 fsp_err_t R_ADC_VersionGet(fsp_version_t * const p_version);
+fsp_err_t R_ADC_CallbackSet(adc_ctrl_t * const          p_api_ctrl,
+                            void (                    * p_callback)(adc_callback_args_t *),
+                            void const * const          p_context,
+                            adc_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup ADC)

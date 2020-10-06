@@ -231,6 +231,19 @@ typedef struct st_ctsu_api
      */
     fsp_err_t (* dataGet)(ctsu_ctrl_t * const p_ctrl, uint16_t * p_data);
 
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_CTSU_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the CTSU control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(ctsu_ctrl_t * const p_api_ctrl, void (* p_callback)(ctsu_callback_args_t *),
+                              void const * const p_context, ctsu_callback_args_t * const p_callback_memory);
+
     /** Close driver.
      * @par Implemented as
      * - @ref R_CTSU_Close()

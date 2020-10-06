@@ -319,6 +319,19 @@ typedef struct st_can_api
      */
     fsp_err_t (* infoGet)(can_ctrl_t * const p_ctrl, can_info_t * const p_info);
 
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_CAN_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Control block set in @ref can_api_t::open call.
+     * @param[in]   p_callback               Callback function to register
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(can_ctrl_t * const p_api_ctrl, void (* p_callback)(can_callback_args_t *),
+                              void const * const p_context, can_callback_args_t * const p_callback_memory);
+
     /** Version get function for CAN device
      * @par Implemented as
      * - R_CAN_VersionGet()

@@ -69,47 +69,51 @@ typedef enum e_lpm_mode
 /** Snooze request sources */
 typedef enum e_lpm_snooze_request
 {
-    LPM_SNOOZE_REQUEST_RXD0_FALLING   = 0x00000000U, ///< Enable RXD0 falling edge snooze request
-    LPM_SNOOZE_REQUEST_IRQ0           = 0x00000001U, ///< Enable IRQ0 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ1           = 0x00000002U, ///< Enable IRQ1 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ2           = 0x00000004U, ///< Enable IRQ2 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ3           = 0x00000008U, ///< Enable IRQ3 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ4           = 0x00000010U, ///< Enable IRQ4 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ5           = 0x00000020U, ///< Enable IRQ5 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ6           = 0x00000040U, ///< Enable IRQ6 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ7           = 0x00000080U, ///< Enable IRQ7 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ8           = 0x00000100U, ///< Enable IRQ8 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ9           = 0x00000200U, ///< Enable IRQ9 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ10          = 0x00000400U, ///< Enable IRQ10 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ11          = 0x00000800U, ///< Enable IRQ11 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ12          = 0x00001000U, ///< Enable IRQ12 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ13          = 0x00002000U, ///< Enable IRQ13 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ14          = 0x00004000U, ///< Enable IRQ14 pin snooze request
-    LPM_SNOOZE_REQUEST_IRQ15          = 0x00008000U, ///< Enable IRQ15 pin snooze request
-    LPM_SNOOZE_REQUEST_KEY            = 0x00020000U, ///< Enable KR snooze request
-    LPM_SNOOZE_REQUEST_ACMPHS0        = 0x00400000U, ///< Enable High-speed analog comparator 0 snooze request
-    LPM_SNOOZE_REQUEST_RTC_ALARM      = 0x01000000U, ///< Enable RTC alarm snooze request
-    LPM_SNOOZE_REQUEST_RTC_PERIOD     = 0x02000000U, ///< Enable RTC period snooze request
-    LPM_SNOOZE_REQUEST_AGT1_UNDERFLOW = 0x10000000U, ///< Enable AGT1 underflow snooze request
-    LPM_SNOOZE_REQUEST_AGT1_COMPARE_A = 0x20000000U, ///< Enable AGT1 compare match A snooze request
-    LPM_SNOOZE_REQUEST_AGT1_COMPARE_B = 0x40000000U, ///< Enable AGT1 compare match B snooze request
+    LPM_SNOOZE_REQUEST_RXD0_FALLING   = 0x00000000ULL,  ///< Enable RXD0 falling edge snooze request
+    LPM_SNOOZE_REQUEST_IRQ0           = 0x00000001ULL,  ///< Enable IRQ0 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ1           = 0x00000002ULL,  ///< Enable IRQ1 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ2           = 0x00000004ULL,  ///< Enable IRQ2 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ3           = 0x00000008ULL,  ///< Enable IRQ3 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ4           = 0x00000010ULL,  ///< Enable IRQ4 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ5           = 0x00000020ULL,  ///< Enable IRQ5 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ6           = 0x00000040ULL,  ///< Enable IRQ6 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ7           = 0x00000080ULL,  ///< Enable IRQ7 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ8           = 0x00000100ULL,  ///< Enable IRQ8 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ9           = 0x00000200ULL,  ///< Enable IRQ9 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ10          = 0x00000400ULL,  ///< Enable IRQ10 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ11          = 0x00000800ULL,  ///< Enable IRQ11 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ12          = 0x00001000ULL,  ///< Enable IRQ12 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ13          = 0x00002000ULL,  ///< Enable IRQ13 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ14          = 0x00004000ULL,  ///< Enable IRQ14 pin snooze request
+    LPM_SNOOZE_REQUEST_IRQ15          = 0x00008000ULL,  ///< Enable IRQ15 pin snooze request
+    LPM_SNOOZE_REQUEST_KEY            = 0x00020000ULL,  ///< Enable KR snooze request
+    LPM_SNOOZE_REQUEST_ACMPHS0        = 0x00400000ULL,  ///< Enable High-speed analog comparator 0 snooze request
+    LPM_SNOOZE_REQUEST_RTC_ALARM      = 0x01000000ULL,  ///< Enable RTC alarm snooze request
+    LPM_SNOOZE_REQUEST_RTC_PERIOD     = 0x02000000ULL,  ///< Enable RTC period snooze request
+    LPM_SNOOZE_REQUEST_AGT1_UNDERFLOW = 0x10000000ULL,  ///< Enable AGT1 underflow snooze request
+    LPM_SNOOZE_REQUEST_AGT1_COMPARE_A = 0x20000000ULL,  ///< Enable AGT1 compare match A snooze request
+    LPM_SNOOZE_REQUEST_AGT1_COMPARE_B = 0x40000000ULL,  ///< Enable AGT1 compare match B snooze request
+    LPM_SNOOZE_REQUEST_AGT3_UNDERFLOW = 0x100000000ULL, ///< Enable AGT3 underflow snooze request
+    LPM_SNOOZE_REQUEST_AGT3_COMPARE_A = 0x200000000ULL, ///< Enable AGT3 compare match A snooze request
+    LPM_SNOOZE_REQUEST_AGT3_COMPARE_B = 0x400000000ULL, ///< Enable AGT3 compare match B snooze request
 } lpm_snooze_request_t;
 
 /** Snooze end control */
 typedef enum e_lpm_snooze_end
 {
-    LPM_SNOOZE_END_STANDBY_WAKE_SOURCES       = 0x00U, ///< Transition from Snooze to Normal mode directly
-    LPM_SNOOZE_END_AGT1_UNDERFLOW             = 0x01U, ///< AGT1 underflow
-    LPM_SNOOZE_END_DTC_TRANS_COMPLETE         = 0x02U, ///< Last DTC transmission completion
-    LPM_SNOOZE_END_DTC_TRANS_COMPLETE_NEGATED = 0x04U, ///< Not Last DTC transmission completion
-    LPM_SNOOZE_END_ADC0_COMPARE_MATCH         = 0x08U, ///< ADC Channel 0 compare match
-    LPM_SNOOZE_END_ADC0_COMPARE_MISMATCH      = 0x10U, ///< ADC Channel 0 compare mismatch
-    LPM_SNOOZE_END_ADC1_COMPARE_MATCH         = 0x20U, ///< ADC 1 compare match
-    LPM_SNOOZE_END_ADC1_COMPARE_MISMATCH      = 0x40U, ///< ADC 1 compare mismatch
-    LPM_SNOOZE_END_SCI0_ADDRESS_MATCH         = 0x80U, ///< SCI0 address mismatch
+    LPM_SNOOZE_END_STANDBY_WAKE_SOURCES       = 0x00U,  ///< Transition from Snooze to Normal mode directly
+    LPM_SNOOZE_END_AGT1_UNDERFLOW             = 0x01U,  ///< AGT1 underflow
+    LPM_SNOOZE_END_DTC_TRANS_COMPLETE         = 0x02U,  ///< Last DTC transmission completion
+    LPM_SNOOZE_END_DTC_TRANS_COMPLETE_NEGATED = 0x04U,  ///< Not Last DTC transmission completion
+    LPM_SNOOZE_END_ADC0_COMPARE_MATCH         = 0x08U,  ///< ADC Channel 0 compare match
+    LPM_SNOOZE_END_ADC0_COMPARE_MISMATCH      = 0x10U,  ///< ADC Channel 0 compare mismatch
+    LPM_SNOOZE_END_ADC1_COMPARE_MATCH         = 0x20U,  ///< ADC 1 compare match
+    LPM_SNOOZE_END_ADC1_COMPARE_MISMATCH      = 0x40U,  ///< ADC 1 compare mismatch
+    LPM_SNOOZE_END_SCI0_ADDRESS_MATCH         = 0x80U,  ///< SCI0 address mismatch
+    LPM_SNOOZE_END_AGT3_UNDERFLOW             = 0x100U, ///< AGT3 underflow
 } lpm_snooze_end_t;
 
-typedef uint8_t lpm_snooze_end_bits_t;
+typedef uint16_t lpm_snooze_end_bits_t;
 
 /** Snooze cancel control */
 typedef enum e_lpm_snooze_cancel
@@ -140,40 +144,43 @@ typedef enum e_lpm_snooze_dtc
 /** Wake from standby mode sources, does not apply to sleep or deep standby modes */
 typedef enum e_lpm_standby_wake_source
 {
-    LPM_STANDBY_WAKE_SOURCE_IRQ0    = 0x00000001U, ///< IRQ0
-    LPM_STANDBY_WAKE_SOURCE_IRQ1    = 0x00000002U, ///< IRQ1
-    LPM_STANDBY_WAKE_SOURCE_IRQ2    = 0x00000004U, ///< IRQ2
-    LPM_STANDBY_WAKE_SOURCE_IRQ3    = 0x00000008U, ///< IRQ3
-    LPM_STANDBY_WAKE_SOURCE_IRQ4    = 0x00000010U, ///< IRQ4
-    LPM_STANDBY_WAKE_SOURCE_IRQ5    = 0x00000020U, ///< IRQ5
-    LPM_STANDBY_WAKE_SOURCE_IRQ6    = 0x00000040U, ///< IRQ6
-    LPM_STANDBY_WAKE_SOURCE_IRQ7    = 0x00000080U, ///< IRQ7
-    LPM_STANDBY_WAKE_SOURCE_IRQ8    = 0x00000100U, ///< IRQ8
-    LPM_STANDBY_WAKE_SOURCE_IRQ9    = 0x00000200U, ///< IRQ9
-    LPM_STANDBY_WAKE_SOURCE_IRQ10   = 0x00000400U, ///< IRQ10
-    LPM_STANDBY_WAKE_SOURCE_IRQ11   = 0x00000800U, ///< IRQ11
-    LPM_STANDBY_WAKE_SOURCE_IRQ12   = 0x00001000U, ///< IRQ12
-    LPM_STANDBY_WAKE_SOURCE_IRQ13   = 0x00002000U, ///< IRQ13
-    LPM_STANDBY_WAKE_SOURCE_IRQ14   = 0x00004000U, ///< IRQ14
-    LPM_STANDBY_WAKE_SOURCE_IRQ15   = 0x00008000U, ///< IRQ15
-    LPM_STANDBY_WAKE_SOURCE_IWDT    = 0x00010000U, ///< Independent watchdog interrupt
-    LPM_STANDBY_WAKE_SOURCE_KEY     = 0x00020000U, ///< Key interrupt
-    LPM_STANDBY_WAKE_SOURCE_LVD1    = 0x00040000U, ///< Low Voltage Detection 1 interrupt
-    LPM_STANDBY_WAKE_SOURCE_LVD2    = 0x00080000U, ///< Low Voltage Detection 2 interrupt
-    LPM_STANDBY_WAKE_SOURCE_VBATT   = 0x00100000U, ///< VBATT Monitor interrupt
-    LPM_STANDBY_WAKE_SOURCE_ACMPHS0 = 0x00400000U, ///< Analog Comparator High-speed 0 interrupt
-    LPM_STANDBY_WAKE_SOURCE_ACMPLP0 = 0x00800000U, ///< Analog Comparator Low-speed 0 interrupt
-    LPM_STANDBY_WAKE_SOURCE_RTCALM  = 0x01000000U, ///< RTC Alarm interrupt
-    LPM_STANDBY_WAKE_SOURCE_RTCPRD  = 0x02000000U, ///< RTC Period interrupt
-    LPM_STANDBY_WAKE_SOURCE_USBHS   = 0x04000000U, ///< USB High-speed interrupt
-    LPM_STANDBY_WAKE_SOURCE_USBFS   = 0x08000000U, ///< USB Full-speed interrupt
-    LPM_STANDBY_WAKE_SOURCE_AGT1UD  = 0x10000000U, ///< AGT1 underflow interrupt
-    LPM_STANDBY_WAKE_SOURCE_AGT1CA  = 0x20000000U, ///< AGT1 compare match A interrupt
-    LPM_STANDBY_WAKE_SOURCE_AGT1CB  = 0x40000000U, ///< AGT1 compare match B interrupt
-    LPM_STANDBY_WAKE_SOURCE_IIC0    = 0x80000000U, ///< I2C 0 interrupt
+    LPM_STANDBY_WAKE_SOURCE_IRQ0    = 0x00000001ULL,  ///< IRQ0
+    LPM_STANDBY_WAKE_SOURCE_IRQ1    = 0x00000002ULL,  ///< IRQ1
+    LPM_STANDBY_WAKE_SOURCE_IRQ2    = 0x00000004ULL,  ///< IRQ2
+    LPM_STANDBY_WAKE_SOURCE_IRQ3    = 0x00000008ULL,  ///< IRQ3
+    LPM_STANDBY_WAKE_SOURCE_IRQ4    = 0x00000010ULL,  ///< IRQ4
+    LPM_STANDBY_WAKE_SOURCE_IRQ5    = 0x00000020ULL,  ///< IRQ5
+    LPM_STANDBY_WAKE_SOURCE_IRQ6    = 0x00000040ULL,  ///< IRQ6
+    LPM_STANDBY_WAKE_SOURCE_IRQ7    = 0x00000080ULL,  ///< IRQ7
+    LPM_STANDBY_WAKE_SOURCE_IRQ8    = 0x00000100ULL,  ///< IRQ8
+    LPM_STANDBY_WAKE_SOURCE_IRQ9    = 0x00000200ULL,  ///< IRQ9
+    LPM_STANDBY_WAKE_SOURCE_IRQ10   = 0x00000400ULL,  ///< IRQ10
+    LPM_STANDBY_WAKE_SOURCE_IRQ11   = 0x00000800ULL,  ///< IRQ11
+    LPM_STANDBY_WAKE_SOURCE_IRQ12   = 0x00001000ULL,  ///< IRQ12
+    LPM_STANDBY_WAKE_SOURCE_IRQ13   = 0x00002000ULL,  ///< IRQ13
+    LPM_STANDBY_WAKE_SOURCE_IRQ14   = 0x00004000ULL,  ///< IRQ14
+    LPM_STANDBY_WAKE_SOURCE_IRQ15   = 0x00008000ULL,  ///< IRQ15
+    LPM_STANDBY_WAKE_SOURCE_IWDT    = 0x00010000ULL,  ///< Independent watchdog interrupt
+    LPM_STANDBY_WAKE_SOURCE_KEY     = 0x00020000ULL,  ///< Key interrupt
+    LPM_STANDBY_WAKE_SOURCE_LVD1    = 0x00040000ULL,  ///< Low Voltage Detection 1 interrupt
+    LPM_STANDBY_WAKE_SOURCE_LVD2    = 0x00080000ULL,  ///< Low Voltage Detection 2 interrupt
+    LPM_STANDBY_WAKE_SOURCE_VBATT   = 0x00100000ULL,  ///< VBATT Monitor interrupt
+    LPM_STANDBY_WAKE_SOURCE_ACMPHS0 = 0x00400000ULL,  ///< Analog Comparator High-speed 0 interrupt
+    LPM_STANDBY_WAKE_SOURCE_ACMPLP0 = 0x00800000ULL,  ///< Analog Comparator Low-speed 0 interrupt
+    LPM_STANDBY_WAKE_SOURCE_RTCALM  = 0x01000000ULL,  ///< RTC Alarm interrupt
+    LPM_STANDBY_WAKE_SOURCE_RTCPRD  = 0x02000000ULL,  ///< RTC Period interrupt
+    LPM_STANDBY_WAKE_SOURCE_USBHS   = 0x04000000ULL,  ///< USB High-speed interrupt
+    LPM_STANDBY_WAKE_SOURCE_USBFS   = 0x08000000ULL,  ///< USB Full-speed interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT1UD  = 0x10000000ULL,  ///< AGT1 underflow interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT1CA  = 0x20000000ULL,  ///< AGT1 compare match A interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT1CB  = 0x40000000ULL,  ///< AGT1 compare match B interrupt
+    LPM_STANDBY_WAKE_SOURCE_IIC0    = 0x80000000ULL,  ///< I2C 0 interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT3UD  = 0x100000000ULL, ///< AGT3 underflow interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT3CA  = 0x200000000ULL, ///< AGT3 compare match A interrupt
+    LPM_STANDBY_WAKE_SOURCE_AGT3CB  = 0x400000000ULL, ///< AGT3 compare match B interrupt
 } lpm_standby_wake_source_t;
 
-typedef uint32_t lpm_standby_wake_source_bits_t;
+typedef uint64_t lpm_standby_wake_source_bits_t;
 
 /** I/O port state after Deep Software Standby mode */
 typedef enum e_lpm_io_port
@@ -248,6 +255,8 @@ typedef enum e_lpm_deep_standby_cancel_edge
     LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ13_FALLING = 0U,          ///< IRQ13-DS Pin Falling Edge
     LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ14_RISING  = 0x00004000U, ///< IRQ14-DS Pin Rising Edge
     LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ14_FALLING = 0U,          ///< IRQ14-DS Pin Falling Edge
+    LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ15_RISING  = 0x00008000U, ///< IRQ14-DS Pin Rising Edge
+    LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ15_FALLING = 0U,          ///< IRQ14-DS Pin Falling Edge
 
     LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD1_RISING  = 0x00010000U,  ///< LVD1 Rising Slope
     LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD1_FALLING = 0U,           ///< LVD1 Falling Slope
@@ -280,6 +289,7 @@ typedef enum e_lpm_deep_standby_cancel_source
     LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ12 = 0x00001000U,        ///< IRQ12
     LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ13 = 0x00002000U,        ///< IRQ13
     LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ14 = 0x00004000U,        ///< IRQ14
+    LPM_DEEP_STANDBY_CANCEL_SOURCE_IRQ15 = 0x00008000U,        ///< IRQ15
 
     LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD1         = 0x00010000U, ///< LVD1
     LPM_DEEP_STANDBY_CANCEL_SOURCE_LVD2         = 0x00020000U, ///< LVD2

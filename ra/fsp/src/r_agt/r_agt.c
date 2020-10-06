@@ -30,8 +30,6 @@
 /** "AGT" in ASCII, used to determine if channel is open. */
 #define AGT_OPEN                                (0x00414754ULL)
 
-#define AGT_PRV_VALID_CHANNEL_MASK              (0x3U)
-
 #define AGT_COMPARE_MATCH_A_OUTPUT              (0x03U) ///< Enabling AGTOAn pin
 #define AGT_COMPARE_MATCH_B_OUTPUT              (0x30U) ///< Enabling AGTOBn pin
 
@@ -57,6 +55,11 @@
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile agt_prv_ns_callback)(timer_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile agt_prv_ns_callback)(timer_callback_args_t * p_args);
+#endif
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -111,6 +114,7 @@ const timer_api_t g_timer_on_agt =
     .dutyCycleSet = R_AGT_DutyCycleSet,
     .infoGet      = R_AGT_InfoGet,
     .statusGet    = R_AGT_StatusGet,
+    .callbackSet  = R_AGT_CallbackSet,
     .close        = R_AGT_Close,
     .versionGet   = R_AGT_VersionGet
 };
@@ -177,6 +181,17 @@ fsp_err_t R_AGT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     {
         R_BSP_IrqCfgEnable(p_cfg->cycle_end_irq, p_cfg->cycle_end_ipl, p_instance_ctrl);
     }
+
+    /* Set callback and context pointers */
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* If this is a secure build, the callback provided in p_cfg must be secure. */
+    p_instance_ctrl->callback_is_secure = true;
+#endif
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
 
     p_instance_ctrl->open = AGT_OPEN;
 
@@ -475,6 +490,58 @@ fsp_err_t R_AGT_StatusGet (timer_ctrl_t * const p_ctrl, timer_status_t * const p
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Implements @ref timer_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ **********************************************************************************************************************/
+fsp_err_t R_AGT_CallbackSet (timer_ctrl_t * const          p_api_ctrl,
+                             void (                      * p_callback)(timer_callback_args_t *),
+                             void const * const            p_context,
+                             timer_callback_args_t * const p_callback_memory)
+{
+    agt_instance_ctrl_t * p_ctrl = (agt_instance_ctrl_t *) p_api_ctrl;
+
+#if AGT_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(AGT_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if AGT_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    timer_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                        CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(p_ctrl->callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Stops counter, disables interrupts, disables output pins, and clears internal driver data.  Implements
  * @ref timer_api_t::close.
  *
@@ -572,7 +639,7 @@ static fsp_err_t r_agt_open_param_checking (agt_instance_ctrl_t * p_instance_ctr
     FSP_ASSERT(p_cfg->period_counts <= AGT_MAX_PERIOD);
 
     /* Validate channel number. */
-    FSP_ERROR_RETURN(((1U << p_cfg->channel) & AGT_PRV_VALID_CHANNEL_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(((1U << p_cfg->channel) & BSP_FEATURE_AGT_VALID_CHANNEL_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     /* AGT_CLOCK_AGT0_UNDERFLOW is not allowed on AGT channel 0. */
     agt_extended_cfg_t const * p_extend = (agt_extended_cfg_t const *) p_cfg->p_extend;
@@ -871,21 +938,36 @@ void agt_int_isr (void)
     }
 
     /* Invoke the callback function if it is set. */
-    if (NULL != p_instance_ctrl->p_cfg->p_callback)
+    if (NULL != p_instance_ctrl->p_callback)
     {
         /* Setup parameters for the user-supplied callback function. */
         timer_callback_args_t callback_args;
+
+        /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+         * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+        timer_callback_args_t * p_args = p_instance_ctrl->p_callback_memory;
+        if (NULL == p_args)
+        {
+            /* Store on stack */
+            p_args = &callback_args;
+        }
+        else
+        {
+            /* Save current arguments on the stack in case this is a nested interrupt. */
+            callback_args = *p_args;
+        }
+
         if (agtcr & R_AGT0_AGTCR_TUNDF_Msk)
         {
-            callback_args.event = TIMER_EVENT_CYCLE_END;
+            p_args->event = TIMER_EVENT_CYCLE_END;
         }
 
 #if AGT_CFG_INPUT_SUPPORT_ENABLE
         else
         {
-            callback_args.event = TIMER_EVENT_CAPTURE_A;
+            p_args->event = TIMER_EVENT_CAPTURE_A;
             uint32_t reload_value = p_instance_ctrl->period - 1U;
-            callback_args.capture = reload_value - p_instance_ctrl->p_reg->AGT;
+            p_args->capture = reload_value - p_instance_ctrl->p_reg->AGT;
 
             /* The AGT counter is not reset in pulse width measurement mode. Reset it by software. Note that this
              * will restart the counter if a new capture has already started. Application writers must ensure that
@@ -898,13 +980,39 @@ void agt_int_isr (void)
             {
                 /* Period of input pulse = (initial value of counter [AGT register] - reading value of the read-out buffer) + 1
                  * Reference section 25.4.5 of the RA6M3 manual R01UH0886EJ0100. */
-                callback_args.capture++;
+                p_args->capture++;
             }
         }
 #endif
 
-        callback_args.p_context = p_instance_ctrl->p_cfg->p_context;
-        p_instance_ctrl->p_cfg->p_callback(&callback_args);
+        p_args->p_context = p_instance_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+        /* p_callback can point to a secure function or a non-secure function. */
+        if (p_instance_ctrl->callback_is_secure)
+        {
+            /* If p_callback is secure, then the project does not need to change security state. */
+            p_instance_ctrl->p_callback(p_args);
+        }
+        else
+        {
+            /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+            agt_prv_ns_callback p_callback = (agt_prv_ns_callback) (p_instance_ctrl->p_callback);
+            p_callback(p_args);
+        }
+
+#else
+
+        /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+        p_instance_ctrl->p_callback(p_args);
+#endif
+
+        if (NULL != p_instance_ctrl->p_callback_memory)
+        {
+            /* Restore callback memory in case this is a nested interrupt. */
+            *p_instance_ctrl->p_callback_memory = callback_args;
+        }
     }
 
     /* Clear flags in AGTCR. */

@@ -28,7 +28,8 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BSP_IRQ_UINT32_MAX    (0xFFFFFFFFU)
+#define BSP_IRQ_UINT32_MAX       (0xFFFFFFFFU)
+#define BSP_PRV_BITS_PER_WORD    (32)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -62,6 +63,45 @@ const bsp_interrupt_event_t g_interrupt_event_link_select[BSP_ICU_VECTOR_MAX_ENT
  **********************************************************************************************************************/
 void bsp_irq_cfg (void)
 {
+#if FSP_PRIV_TZ_USE_SECURE_REGS
+
+    /* Unprotect security registers. */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
+
+ #if !BSP_TZ_SECURE_BUILD
+
+    /* Set the DMAC channels to secure access. */
+    R_CPSCU->ICUSARC = ~R_CPSCU_ICUSARC_SADMACn_Msk;
+ #endif
+
+    /* Place all vectors in non-secure state unless they are used in the secure project. */
+    uint32_t interrupt_security_state[BSP_ICU_VECTOR_MAX_ENTRIES / BSP_PRV_BITS_PER_WORD];
+    memset(&interrupt_security_state, UINT8_MAX, sizeof(interrupt_security_state));
+
+    for (uint32_t i = 0U; i < BSP_ICU_VECTOR_MAX_ENTRIES; i++)
+    {
+        if (0U != g_interrupt_event_link_select[i])
+        {
+            /* This is a secure vector. Clear the associated bit. */
+            uint32_t index = i / BSP_PRV_BITS_PER_WORD;
+            uint32_t bit   = i % BSP_PRV_BITS_PER_WORD;
+            interrupt_security_state[index] &= ~(1U << bit);
+        }
+    }
+
+    /* The Secure Attribute managed within the ARM CPU NVIC must match the security attribution of IELSEn
+     * (Reference section 13.2.9 in the RA6M4 manual R01UH0890EJ0050). */
+    uint32_t volatile * p_icusarg = &R_CPSCU->ICUSARG;
+    for (uint32_t i = 0U; i < BSP_ICU_VECTOR_MAX_ENTRIES / BSP_PRV_BITS_PER_WORD; i++)
+    {
+        p_icusarg[i]  = interrupt_security_state[i];
+        NVIC->ITNS[i] = interrupt_security_state[i];
+    }
+
+    /* Protect security registers. */
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_SAR);
+#endif
+
     for (uint32_t i = 0U; i < BSP_ICU_VECTOR_MAX_ENTRIES; i++)
     {
         R_ICU->IELSR[i] = (uint32_t) g_interrupt_event_link_select[i];

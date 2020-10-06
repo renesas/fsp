@@ -41,6 +41,12 @@
  * Typedef definitions
  **********************************************************************************************************************/
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile poeg_prv_ns_callback)(poeg_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile poeg_prv_ns_callback)(poeg_callback_args_t * p_args);
+#endif
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
@@ -74,6 +80,7 @@ const poeg_api_t g_poeg_on_poeg =
     .reset         = R_POEG_Reset,
     .outputDisable = R_POEG_OutputDisable,
     .statusGet     = R_POEG_StatusGet,
+    .callbackSet   = R_POEG_CallbackSet,
     .close         = R_POEG_Close,
     .versionGet    = R_POEG_VersionGet
 };
@@ -135,6 +142,14 @@ fsp_err_t R_POEG_Open (poeg_ctrl_t * const p_ctrl, poeg_cfg_t const * const p_cf
     p_instance_ctrl->p_reg->POEGG = ((uint32_t) p_cfg->trigger << R_GPT_POEG0_POEGG_PIDE_Pos) |
                                     ((uint32_t) p_cfg->polarity << R_GPT_POEG0_POEGG_INV_Pos) |
                                     ((uint32_t) p_cfg->noise_filter << R_GPT_POEG0_POEGG_NFEN_Pos);
+
+    /* Set callback and context pointers, if configured */
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
+#if BSP_TZ_SECURE_BUILD
+    p_instance_ctrl->callback_is_secure = true;
+#endif
 
     /* Make sure the module is marked open before enabling the interrupt since the interrupt could fire immediately. */
     p_instance_ctrl->open = POEG_OPEN;
@@ -222,6 +237,52 @@ fsp_err_t R_POEG_StatusGet (poeg_ctrl_t * const p_ctrl, poeg_status_t * const p_
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Implements @ref poeg_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ **********************************************************************************************************************/
+fsp_err_t R_POEG_CallbackSet (poeg_ctrl_t * const          p_ctrl,
+                              void (                     * p_callback)(poeg_callback_args_t *),
+                              void const * const           p_context,
+                              poeg_callback_args_t * const p_callback_memory)
+{
+    poeg_instance_ctrl_t * p_instance_ctrl = (poeg_instance_ctrl_t *) p_ctrl;
+
+#if POEG_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(POEG_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    p_instance_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if POEG_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    poeg_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                       CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(p_instance_ctrl->callback_is_secure || (NULL != p_callback_memory_checked),
+                     FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+    p_instance_ctrl->p_callback        = p_callback;
+    p_instance_ctrl->p_context         = p_context;
+    p_instance_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Disables POEG interrupt. Implements @ref poeg_api_t::close.
  *
  * @note This function does not disable the POEG.
@@ -283,15 +344,54 @@ void poeg_event_isr (void)
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE;
 
+    poeg_callback_args_t args;
+
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
     /* Recover ISR context saved in open. */
-    poeg_instance_ctrl_t * p_instance_ctrl = (poeg_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+    volatile poeg_instance_ctrl_t * p_instance_ctrl = (poeg_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    /* Set data to identify callback to user, then call user callback. */
-    poeg_callback_args_t callback_args;
-    callback_args.p_context = p_instance_ctrl->p_cfg->p_context;
-    p_instance_ctrl->p_cfg->p_callback(&callback_args);
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    poeg_callback_args_t * p_args = p_instance_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->p_context = p_instance_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_instance_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_instance_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        poeg_prv_ns_callback p_callback = (poeg_prv_ns_callback) (p_instance_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_instance_ctrl->p_callback(p_args);
+#endif
+    if (NULL != p_instance_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_instance_ctrl->p_callback_memory = args;
+    }
 
     /* Clear pending IRQ to make sure it doesn't fire again after exiting.  This is a level interrupt, so it must be
      * cleared at the end of the ISR. */

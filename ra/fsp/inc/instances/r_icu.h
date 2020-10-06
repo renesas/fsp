@@ -48,12 +48,15 @@ FSP_HEADER
 /** ICU private control block. DO NOT MODIFY.  Initialization occurs when R_ICU_ExternalIrqOpen is called. */
 typedef struct st_icu_instance_ctrl
 {
-    uint32_t  open;                    ///< Used to determine if channel control block is in use
-    IRQn_Type irq;                     ///< NVIC interrupt number
-    uint8_t   channel;                 ///< Channel
+    uint32_t  open;                                             ///< Used to determine if channel control block is in use
+    IRQn_Type irq;                                              ///< NVIC interrupt number
+    uint8_t   channel;                                          ///< Channel
 
-    /** Callback provided when a external IRQ ISR occurs. Set to NULL for no CPU interrupt. */
-    void (* p_callback)(external_irq_callback_args_t * p_args);
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+    external_irq_callback_args_t * p_callback_memory;           // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+#endif
+    void (* p_callback)(external_irq_callback_args_t * p_args); // Pointer to callback that is called when an edge is detected on the external irq pin.
 
     /** Placeholder for user data.  Passed to the user callback in ::external_irq_callback_args_t. */
     void const * p_context;
@@ -79,6 +82,11 @@ fsp_err_t R_ICU_ExternalIrqEnable(external_irq_ctrl_t * const p_api_ctrl);
 fsp_err_t R_ICU_ExternalIrqDisable(external_irq_ctrl_t * const p_api_ctrl);
 
 fsp_err_t R_ICU_ExternalIrqVersionGet(fsp_version_t * const p_version);
+
+fsp_err_t R_ICU_ExternalIrqCallbackSet(external_irq_ctrl_t * const          p_api_ctrl,
+                                       void (                             * p_callback)(external_irq_callback_args_t *),
+                                       void const * const                   p_context,
+                                       external_irq_callback_args_t * const p_callback_memory);
 
 fsp_err_t R_ICU_ExternalIrqClose(external_irq_ctrl_t * const p_api_ctrl);
 

@@ -45,7 +45,7 @@
 /** Used for holding reference counters for protection bits. */
 static volatile uint16_t g_protect_counters[] =
 {
-    0U, 0U, 0U
+    0U, 0U, 0U, 0U
 };
 
 /** Masks for setting or clearing the PRCR register. Use -1 for size because PWPR in MPC is used differently. */
@@ -54,6 +54,7 @@ static const uint16_t g_prcr_masks[] =
     0x0001U,                           /* PRC0. */
     0x0002U,                           /* PRC1. */
     0x0008U,                           /* PRC3. */
+    0x0010U,                           /* PRC4. */
 };
 
 /*******************************************************************************************************************//**

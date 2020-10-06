@@ -75,6 +75,17 @@ typedef struct st_iic_slave_instance_ctrl
     volatile bool do_dummy_read;                 // Tracks whether a dummy read is issued on the first RX
     volatile bool start_interrupt_enabled;       // Tracks whether the start interrupt is enabled
     volatile bool transaction_completed;         // Tracks whether previous transaction restarted
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                     // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+
+    /* Pointer to callback and optional working memory */
+    void (* p_callback)(i2c_slave_callback_args_t *);
+    i2c_slave_callback_args_t * p_callback_memory;
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } iic_slave_instance_ctrl_t;
 
 /** R_IIC_SLAVE extended configuration */
@@ -102,6 +113,10 @@ fsp_err_t R_IIC_SLAVE_Read(i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * const 
 fsp_err_t R_IIC_SLAVE_Write(i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * const p_src, uint32_t const bytes);
 fsp_err_t R_IIC_SLAVE_Close(i2c_slave_ctrl_t * const p_api_ctrl);
 fsp_err_t R_IIC_SLAVE_VersionGet(fsp_version_t * const p_version);
+fsp_err_t R_IIC_SLAVE_CallbackSet(i2c_slave_ctrl_t * const          p_api_ctrl,
+                                  void (                          * p_callback)(i2c_slave_callback_args_t *),
+                                  void const * const                p_context,
+                                  i2c_slave_callback_args_t * const p_callback_memory);
 
 #endif                                 // R_IIC_SLAVE_H
 

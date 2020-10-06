@@ -237,6 +237,20 @@ typedef struct st_uart_api
      */
     fsp_err_t (* communicationAbort)(uart_ctrl_t * const p_ctrl, uart_dir_t communication_to_abort);
 
+    /**
+     * Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - R_SCI_Uart_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the UART control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(uart_ctrl_t * const p_api_ctrl, void (* p_callback)(uart_callback_args_t *),
+                              void const * const p_context, uart_callback_args_t * const p_callback_memory);
+
     /** Close UART device.
      * @par Implemented as
      * - @ref R_SCI_UART_Close()

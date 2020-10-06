@@ -336,8 +336,13 @@ __STATIC_INLINE void R_BSP_PinAccessEnable (void)
     /** If this is first entry then allow writing of PFS. */
     if (0 == g_protect_pfswe_counter)
     {
-        R_PMISC->PWPR = 0;                              ///< Clear BOWI bit - writing to PFSWE bit enabled
-        R_PMISC->PWPR = 1U << BSP_IO_PWPR_PFSWE_OFFSET; ///< Set PFSWE bit - writing to PFS register enabled
+ #if BSP_TZ_SECURE_BUILD
+        R_PMISC->PWPRS = 0;                              ///< Clear BOWI bit - writing to PFSWE bit enabled
+        R_PMISC->PWPRS = 1U << BSP_IO_PWPR_PFSWE_OFFSET; ///< Set PFSWE bit - writing to PFS register enabled
+ #else
+        R_PMISC->PWPR = 0;                               ///< Clear BOWI bit - writing to PFSWE bit enabled
+        R_PMISC->PWPR = 1U << BSP_IO_PWPR_PFSWE_OFFSET;  ///< Set PFSWE bit - writing to PFS register enabled
+ #endif
     }
 
     /** Increment the protect counter */
@@ -370,8 +375,13 @@ __STATIC_INLINE void R_BSP_PinAccessDisable (void)
     /** Is it safe to disable writing of PFS? */
     if (0 == g_protect_pfswe_counter)
     {
-        R_PMISC->PWPR = 0;                             ///< Clear PFSWE bit - writing to PFS register disabled
-        R_PMISC->PWPR = 1U << BSP_IO_PWPR_B0WI_OFFSET; ///< Set BOWI bit - writing to PFSWE bit disabled
+ #if BSP_TZ_SECURE_BUILD
+        R_PMISC->PWPRS = 0;                             ///< Clear PFSWE bit - writing to PFSWE bit enabled
+        R_PMISC->PWPRS = 1U << BSP_IO_PWPR_B0WI_OFFSET; ///< Set BOWI bit - writing to PFS register enabled
+ #else
+        R_PMISC->PWPR = 0;                              ///< Clear PFSWE bit - writing to PFS register disabled
+        R_PMISC->PWPR = 1U << BSP_IO_PWPR_B0WI_OFFSET;  ///< Set BOWI bit - writing to PFSWE bit disabled
+ #endif
     }
 
     /** Restore the interrupt state */

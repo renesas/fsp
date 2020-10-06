@@ -94,6 +94,7 @@ typedef struct st_three_phase_cfg
 
     /* Pointers to GPT instance structs */
     timer_instance_t const * p_timer_instance[3]; ///< Pointer to the timer instance structs
+    three_phase_channel_t    callback_ch;         ///< Channel to enable callback when using three_phase_api_t::callbackSet
 
     uint32_t channel_mask;                        ///< Bitmask of timer channels used by this module
 
@@ -148,6 +149,19 @@ typedef struct st_three_phase_api
      * @param[in]   p_duty_cycle       Duty cycle values for all three timer channels.
      */
     fsp_err_t (* dutyCycleSet)(three_phase_ctrl_t * const p_ctrl, three_phase_duty_cycle_t * const p_duty_cycle);
+
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_GPT_THREE_PHASE_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Control block set in @ref three_phase_api_t::open call.
+     * @param[in]   p_callback               Callback function to register with GPT U-channel
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(three_phase_ctrl_t * const p_api_ctrl, void (* p_callback)(timer_callback_args_t *),
+                              void const * const p_context, timer_callback_args_t * const p_callback_memory);
 
     /** Allows driver to be reconfigured and may reduce power consumption.
      * @par Implemented as

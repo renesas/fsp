@@ -28,6 +28,12 @@
  * Macro definitions
  **********************************************************************************************************************/
 
+#if BSP_TZ_NONSECURE_BUILD
+ #if defined(BSP_CFG_CLOCKS_SECURE) && BSP_CFG_CLOCKS_SECURE
+  #error "The CGC registers are only accessible in the TrustZone Secure Project."
+ #endif
+#endif
+
 /* "CGC" in ASCII, used to determine if the module is open. */
 #define CGC_OPEN                                 (0x00434743U)
 
@@ -54,7 +60,11 @@
 #define CGC_PRV_CKOCR_CKODIV_BIT                 (4)
 
 #if BSP_PRV_PLL_SUPPORTED
- #define CGC_PRV_NUM_CLOCKS                      ((uint8_t) CGC_CLOCK_PLL + 1U)
+ #if BSP_PRV_PLL2_SUPPORTED
+  #define CGC_PRV_NUM_CLOCKS                     ((uint8_t) CGC_CLOCK_PLL2 + 1U)
+ #else
+  #define CGC_PRV_NUM_CLOCKS                     ((uint8_t) CGC_CLOCK_PLL + 1U)
+ #endif
 #else
  #define CGC_PRV_NUM_CLOCKS                      ((uint8_t) CGC_CLOCK_SUBCLOCK + 1U)
 #endif
@@ -68,6 +78,7 @@
 #define CGC_PRV_MOSCCR                           ((uint8_t *) 0x4001E032U)
 #define CGC_PRV_SOSCCR                           ((uint8_t *) 0x4001E480U)
 #define CGC_PRV_PLLCR                            ((uint8_t *) 0x4001E02AU)
+#define CGC_PRV_PLL2CR                           ((uint8_t *) 0x4001E04AU)
 
 /* The closest supported power mode to use when exiting low speed or low voltage mode. */
 #if BSP_FEATURE_CGC_MIDDLE_SPEED_MAX_FREQ_HZ > 0U
@@ -84,7 +95,6 @@
 
 /* Specifications for PLL on MCUs with PLLCCR. */
 #define CGC_PRV_PLLCCR_PLL_MIN_HZ                (120000000U)
-#define CGC_PRV_PLLCCR_PLL_MAX_HZ                (240000000U)
 
 /* Specifications for PLL on MCUs with PLLCCR2. */
 #define CGC_PRV_PLLCCR2_PLL_MIN_HZ               (24000000U)
@@ -109,6 +119,12 @@ typedef enum e_cgc_prv_change
     CGC_PRV_CHANGE_LPM     = 0,
     CGC_PRV_CHANGE_LPM_CGC = 1,
 } cgc_prv_change_t;
+
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile cgc_prv_ns_callback)(cgc_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile cgc_prv_ns_callback)(cgc_callback_args_t * p_args);
+#endif
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -138,14 +154,27 @@ static fsp_err_t r_cgc_pll_parameter_check(cgc_pll_cfg_t const * const p_pll_cfg
  #endif
 #endif
 
-#if BSP_PRV_PLL_SUPPORTED
-static uint32_t           r_cgc_pllccr_calculate(cgc_pll_cfg_t const * const p_pll_cfg);
+#if BSP_PRV_PLL_SUPPORTED || BSP_PRV_PLL2_SUPPORTED
+static uint32_t r_cgc_pllccr_calculate(cgc_pll_cfg_t const * const p_pll_cfg);
+
+ #if BSP_PRV_PLL_SUPPORTED
+
 static inline cgc_clock_t r_cgc_pll_clocksource_get(void);
-static fsp_err_t          r_cgc_pll_hz_calculate(cgc_pll_cfg_t const * const p_pll_cfg, uint32_t * const p_pll_hz);
-static void               r_cgc_pll_cfg(uint32_t pll_hz, uint32_t pllccr);
-static fsp_err_t          r_cgc_pllccr_pll_hz_calculate(cgc_pll_cfg_t const * const p_pll_cfg,
-                                                        uint32_t * const            p_pll_hz,
-                                                        uint32_t * const            p_pllccr);
+
+ #endif
+
+ #if BSP_PRV_PLL2_SUPPORTED && CGC_CFG_PARAM_CHECKING_ENABLE
+
+static inline cgc_clock_t r_cgc_pll2_clocksource_get(void);
+
+ #endif
+
+static fsp_err_t r_cgc_pll_hz_calculate(cgc_pll_cfg_t const * const p_pll_cfg, uint32_t * const p_pll_hz);
+static void      r_cgc_pll_cfg(uint32_t pll_hz, uint32_t pllccr);
+static fsp_err_t r_cgc_pllccr_pll_hz_calculate(cgc_pll_cfg_t const * const p_pll_cfg,
+                                               uint32_t * const            p_pll_hz,
+                                               uint32_t * const            p_pllccr,
+                                               cgc_clock_t                 pll);
 
 #endif
 
@@ -179,6 +208,9 @@ static uint8_t volatile * const gp_cgc_clock_stp_registers[CGC_PRV_NUM_CLOCKS] =
 #if BSP_PRV_PLL_SUPPORTED
     [CGC_CLOCK_PLL] = CGC_PRV_PLLCR,
 #endif
+#if BSP_PRV_PLL2_SUPPORTED
+    [CGC_CLOCK_PLL2] = CGC_PRV_PLL2CR,
+#endif
 };
 
 /* How long of a software delay is required after starting each clock before activating it as the system clock. */
@@ -191,6 +223,9 @@ static const uint8_t g_cgc_software_wait_us[CGC_PRV_NUM_CLOCKS] =
     [CGC_CLOCK_SUBCLOCK] = 0U,         // Subclock is assumed to be stable
 #if BSP_PRV_PLL_SUPPORTED
     [CGC_CLOCK_PLL] = 0U,              // PLL has a stabilization wait flag
+#endif
+#if BSP_PRV_PLL2_SUPPORTED
+    [CGC_CLOCK_PLL2] = 0U,             // PLL2 has a stabilization wait flag
 #endif
 };
 
@@ -215,6 +250,7 @@ const cgc_api_t g_cgc_on_cgc =
     .oscStopDetectEnable  = R_CGC_OscStopDetectEnable,
     .oscStopDetectDisable = R_CGC_OscStopDetectDisable,
     .oscStopStatusClear   = R_CGC_OscStopStatusClear,
+    .callbackSet          = R_CGC_CallbackSet,
     .close                = R_CGC_Close,
     .versionGet           = R_CGC_VersionGet,
 };
@@ -248,10 +284,16 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
     FSP_ERROR_RETURN(CGC_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
 
+#if BSP_TZ_SECURE_BUILD
+    p_instance_ctrl->callback_is_secure = true;
+#endif
+
     /* Store the control structure in a private global variable so the oscillation stop detection function can be
      * called from the NMI callback. */
-    gp_cgc_ctrl                 = p_instance_ctrl;
-    p_instance_ctrl->p_callback = p_cfg->p_callback;
+    gp_cgc_ctrl                        = p_instance_ctrl;
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
 
     /* Mark the module as open so other APIs can be used. */
     p_instance_ctrl->open = CGC_OPEN;
@@ -263,7 +305,7 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
  * Reconfigures all main system clocks.  This API can be used for any of the following purposes:
  *   - start or stop clocks
  *   - change the system clock source
- *   - configure the PLL multiplication and division ratios when starting the PLL
+ *   - configure the PLL/PLL2 multiplication and division ratios when starting the PLL
  *   - change the system dividers
  *
  * If the requested system clock source has a stabilization flag, this function blocks waiting for the stabilization
@@ -281,7 +323,7 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
  *   - RA2A1: see footnotes of Table 9.2 "Clock generation circuit specifications for the internal clocks" in the RA2A1
  *     manual R01UH0888EJ0100
  *
- * Do not attempt to stop the requested clock source or the source of the PLL if the PLL will be running after this
+ * Do not attempt to stop the requested clock source or the source of a PLL if the PLL will be running after this
  * operation completes.
  *
  * Implements @ref cgc_api_t::clocksCfg.
@@ -291,6 +333,7 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
  *
  * @retval FSP_SUCCESS                  Clock configuration applied successfully.
  * @retval FSP_ERR_ASSERTION            Invalid input argument.
+ * @retval FSP_ERR_UNSUPPORTED          PLL/PLL2 is not available on this MCU.
  * @retval FSP_ERR_NOT_OPEN             Module is not open.
  * @retval FSP_ERR_IN_USE               Attempt to stop the current system clock or the PLL source clock.
  * @retval FSP_ERR_CLOCK_ACTIVE         PLL configuration cannot be changed while PLL is running.
@@ -328,7 +371,11 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     options[CGC_CLOCK_SUBCLOCK] = CGC_CLOCK_CHANGE_NONE;
 #if CGC_CFG_PARAM_CHECKING_ENABLE
  #if !BSP_PRV_PLL_SUPPORTED
-    FSP_ASSERT(CGC_CLOCK_CHANGE_START != p_clock_cfg->pll_state);
+    FSP_ERROR_RETURN(CGC_CLOCK_CHANGE_START != p_clock_cfg->pll_state, FSP_ERR_UNSUPPORTED);
+ #endif
+
+ #if !BSP_PRV_PLL2_SUPPORTED
+    FSP_ERROR_RETURN(CGC_CLOCK_CHANGE_START != p_clock_cfg->pll2_state, FSP_ERR_UNSUPPORTED);
  #endif
 
  #if BSP_CFG_USE_LOW_VOLTAGE_MODE
@@ -354,7 +401,7 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     uint32_t pllccr = 0U;
     if (CGC_CLOCK_CHANGE_START == p_clock_cfg->pll_state)
     {
-        err = r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll_cfg, &pll_hz, &pllccr);
+        err = r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll_cfg, &pll_hz, &pllccr, CGC_CLOCK_PLL);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     }
 
@@ -366,6 +413,30 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
         err =
             r_cgc_pll_parameter_check(&p_clock_cfg->pll_cfg,
                                       (CGC_CLOCK_CHANGE_START != options[p_clock_cfg->pll_cfg.source_clock]));
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+ #endif
+#endif
+
+#if BSP_PRV_PLL2_SUPPORTED
+    options[CGC_CLOCK_PLL2] = p_clock_cfg->pll2_state;
+
+    uint32_t pll2_hz = 0U;
+    uint32_t pll2ccr = 0U;
+    if (CGC_CLOCK_CHANGE_START == p_clock_cfg->pll2_state)
+    {
+        err = r_cgc_pllccr_pll_hz_calculate(&p_clock_cfg->pll2_cfg, &pll2_hz, &pll2ccr, CGC_CLOCK_PLL2);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+
+ #if CGC_CFG_PARAM_CHECKING_ENABLE
+
+    /* Check the PLL2 parameters if starting PLL2. */
+    if (CGC_CLOCK_CHANGE_START == p_clock_cfg->pll2_state)
+    {
+        err =
+            r_cgc_pll_parameter_check(&p_clock_cfg->pll2_cfg,
+                                      (CGC_CLOCK_CHANGE_START != options[p_clock_cfg->pll2_cfg.source_clock]));
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     }
  #endif
@@ -386,6 +457,17 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
         }
     }
  #endif
+ #if BSP_PRV_PLL2_SUPPORTED
+
+    /* Do not attempt to stop the source of PLL2 if PLL2 will be running after this operation completes. */
+    if (CGC_CLOCK_CHANGE_STOP != options[CGC_CLOCK_PLL2])
+    {
+        if ((CGC_CLOCK_CHANGE_START == options[CGC_CLOCK_PLL2]) || r_cgc_clock_run_state_get(CGC_CLOCK_PLL2))
+        {
+            FSP_ERROR_RETURN(CGC_CLOCK_CHANGE_STOP != options[p_clock_cfg->pll2_cfg.source_clock], FSP_ERR_IN_USE);
+        }
+    }
+ #endif
 #endif
 
     /* Prerequisite to starting clocks or changing the system clock. */
@@ -402,6 +484,20 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
             /* Need to start PLL source clock and let it stabilize before starting PLL. */
             r_cgc_clock_change(p_clock_cfg->pll_cfg.source_clock, CGC_CLOCK_CHANGE_START);
             FSP_HARDWARE_REGISTER_WAIT(r_cgc_clock_check(p_clock_cfg->pll_cfg.source_clock), FSP_SUCCESS);
+        }
+    }
+#endif
+#if BSP_PRV_PLL2_SUPPORTED
+    if (CGC_CLOCK_CHANGE_START == p_clock_cfg->pll2_state)
+    {
+        /* Configure PLL2 and store frequency in BSP. */
+        R_SYSTEM->PLL2CCR = (uint16_t) pll2ccr;
+
+        if (CGC_CLOCK_CHANGE_START == options[p_clock_cfg->pll_cfg.source_clock])
+        {
+            /* Need to start PLL source clock and let it stabilize before starting PLL. */
+            r_cgc_clock_change(p_clock_cfg->pll2_cfg.source_clock, CGC_CLOCK_CHANGE_START);
+            FSP_HARDWARE_REGISTER_WAIT(r_cgc_clock_check(p_clock_cfg->pll2_cfg.source_clock), FSP_SUCCESS);
         }
     }
 #endif
@@ -506,7 +602,7 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
 
     fsp_err_t err = FSP_SUCCESS;
     FSP_PARAMETER_NOT_USED(err);       // unused in some build configurations
-#if !BSP_PRV_PLL_SUPPORTED
+#if !BSP_PRV_PLL_SUPPORTED && !BSP_PRV_PLL2_SUPPORTED
     FSP_PARAMETER_NOT_USED(p_pll_cfg);
 #endif
 #if CGC_CFG_PARAM_CHECKING_ENABLE
@@ -516,8 +612,15 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
  #if !BSP_PRV_PLL_SUPPORTED
     FSP_ASSERT(CGC_CLOCK_PLL != clock_source);
  #endif
+ #if !BSP_PRV_PLL2_SUPPORTED
+    FSP_ASSERT(CGC_CLOCK_PLL2 != clock_source);
+ #endif
  #if BSP_PRV_PLL_SUPPORTED
-    if (CGC_CLOCK_PLL == clock_source)
+    if ((CGC_CLOCK_PLL == clock_source)
+  #if BSP_PRV_PLL2_SUPPORTED
+        || (CGC_CLOCK_PLL2 == clock_source)
+  #endif
+        )
     {
         /* p_pll_cfg is required to start PLL. */
         FSP_ASSERT(NULL != p_pll_cfg);
@@ -533,9 +636,13 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
 #if BSP_PRV_PLL_SUPPORTED
     uint32_t pll_hz;
     uint32_t pllccr;
-    if (CGC_CLOCK_PLL == clock_source)
+    if ((CGC_CLOCK_PLL == clock_source)
+ #if BSP_PRV_PLL2_SUPPORTED
+        || (CGC_CLOCK_PLL2 == clock_source)
+ #endif
+        )
     {
-        err = r_cgc_pllccr_pll_hz_calculate(p_pll_cfg, &pll_hz, &pllccr);
+        err = r_cgc_pllccr_pll_hz_calculate(p_pll_cfg, &pll_hz, &pllccr, clock_source);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     }
 
@@ -552,6 +659,17 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
     {
         r_cgc_pll_cfg(pll_hz, pllccr);
     }
+
+ #if BSP_PRV_PLL2_SUPPORTED
+    else if (CGC_CLOCK_PLL2 == clock_source)
+    {
+        R_SYSTEM->PLL2CCR = (uint16_t) pllccr;
+    }
+    else
+    {
+        /* Do nothing. */
+    }
+ #endif
 #endif
 
     /* Start the clock. */
@@ -567,7 +685,7 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
 /*******************************************************************************************************************//**
  * Stop the specified clock if it is active.  Implements @ref cgc_api_t::clockStop.
  *
- * Do not attempt to stop the current system clock source.  Do not attempt to stop the source clock of the PLL if the
+ * Do not attempt to stop the current system clock source.  Do not attempt to stop the source clock of a PLL if the
  * PLL is running.
  *
  * @retval FSP_SUCCESS                      Clock stopped successfully.
@@ -600,7 +718,11 @@ fsp_err_t R_CGC_ClockStop (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
  #if BSP_PRV_PLL_SUPPORTED
 
     /* If PLL is operating, the PLL clock source cannot be stopped. */
-    FSP_ERROR_RETURN(!((r_cgc_clock_run_state_get(CGC_CLOCK_PLL) && (r_cgc_pll_clocksource_get() == clock_source))),
+    FSP_ERROR_RETURN(!((r_cgc_clock_run_state_get(CGC_CLOCK_PLL) && (r_cgc_pll_clocksource_get() == clock_source)))
+  #if BSP_PRV_PLL2_SUPPORTED
+                     && !((r_cgc_clock_run_state_get(CGC_CLOCK_PLL2) && (r_cgc_pll2_clocksource_get() == clock_source)))
+  #endif
+                     ,
                      FSP_ERR_IN_USE);
  #endif
 
@@ -792,6 +914,16 @@ fsp_err_t R_CGC_OscStopDetectEnable (cgc_ctrl_t * const p_ctrl)
     /* Verify p_instance_ctrl is not NULL and the module is open. */
     fsp_err_t err = r_cgc_common_parameter_checking(p_instance_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+ #if defined(BSP_TZ_NONSECURE_BUILD) && BSP_TZ_NONSECURE_BUILD
+
+    /* The NMI must be configured to TrustZone Non-secure in order to be used in a Non-secure project. */
+    FSP_ASSERT(0U != (SCB->AIRCR & SCB_AIRCR_BFHFNMINS_Msk));
+ #elif defined(BSP_TZ_SECURE_BUILD) && BSP_TZ_SECURE_BUILD
+
+    /* The NMI must be configured to TrustZone Secure in order to be used in a Secure project. */
+    FSP_ASSERT(0U == (SCB->AIRCR & SCB_AIRCR_BFHFNMINS_Msk));
+ #endif
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif
@@ -960,6 +1092,56 @@ fsp_err_t R_CGC_OscStopStatusClear (cgc_ctrl_t * const p_ctrl)
     return FSP_SUCCESS;
 }
 
+/*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements cgc_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_CGC_CallbackSet (cgc_ctrl_t * const          p_api_ctrl,
+                             void (                    * p_callback)(cgc_callback_args_t *),
+                             void const * const          p_context,
+                             cgc_callback_args_t * const p_callback_memory)
+{
+    cgc_instance_ctrl_t * p_ctrl = (cgc_instance_ctrl_t *) p_api_ctrl;
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+
+#if CGC_CFG_PARAM_CHECKING_ENABLE
+
+    /* Verify p_ctrl is not NULL and the module is open. */
+    fsp_err_t err = r_cgc_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Verify that the callback is not NULL. */
+    FSP_ASSERT(NULL != p_callback);
+
+ #if BSP_TZ_SECURE_BUILD
+    if (!callback_is_secure)
+    {
+        FSP_ASSERT(NULL != p_callback_memory);
+    }
+ #endif
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_ctrl->callback_is_secure = callback_is_secure;
+#endif
+
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
 /******************************************************************************************************************//**
  * Closes the CGC module.  Implements @ref cgc_api_t::close.
  *
@@ -1037,9 +1219,12 @@ static fsp_err_t r_cgc_common_parameter_checking (cgc_instance_ctrl_t * p_instan
 static void r_cgc_pre_change (cgc_prv_change_t change)
 {
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
+ #if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
 
     /* Disable flash cache. */
-    R_FCACHE->FCACHEE = 0U;
+    R_BSP_FlashCacheDisable();
+ #endif
+
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
 #endif
     if (CGC_PRV_CHANGE_LPM_CGC == change)
@@ -1072,13 +1257,9 @@ static void r_cgc_post_change (cgc_prv_change_t change)
 
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
-
-    /* Invalidate flash cache. */
-    R_FCACHE->FCACHEIV = 1U;
-    FSP_HARDWARE_REGISTER_WAIT(R_FCACHE->FCACHEIV, 0U);
-
-    /* Enable flash cache. */
-    R_FCACHE->FCACHEE = 1U;
+ #if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
+    R_BSP_FlashCacheEnable();
+ #endif
 #endif
 }
 
@@ -1104,6 +1285,9 @@ static bool r_cgc_subosc_mode_possible (uint32_t sckdivcr)
     if ((((!R_SYSTEM->HOCOCR) || (!R_SYSTEM->MOCOCR)) || (!R_SYSTEM->MOSCCR))
  #if BSP_PRV_PLL_SUPPORTED
         || (!R_SYSTEM->PLLCR)
+ #endif
+ #if BSP_PRV_PLL2_SUPPORTED
+        || (!R_SYSTEM->PLL2CR)
  #endif
         )
     {
@@ -1163,7 +1347,11 @@ static bool r_cgc_low_speed_or_voltage_mode_possible (uint32_t sckdivcr, uint8_t
 #if BSP_PRV_PLL_SUPPORTED
 
     /* Low speed mode is only possible if the PLL is stopped. */
-    return (bool) R_SYSTEM->PLLCR;
+    return (bool) R_SYSTEM->PLLCR
+ #if BSP_PRV_PLL2_SUPPORTED
+           || R_SYSTEM->PLL2CR
+ #endif
+    ;
 #else                                  /* BSP_PRV_PLL_SUPPORTED */
     return true;
 #endif
@@ -1454,10 +1642,10 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg, 
 
   #if CGC_CFG_PARAM_CHECKING_ENABLE
 
-    /* The PLL output frequency must be between 120 MHz and 240 MHz on this MCU (see Table 9.1 "Specifications of the
+    /* The PLL output frequency must be between 120 MHz and 240 MHz on most MCUs (see Table 9.1 "Specifications of the
      * clock generation circuit for the clock sources" in the RA6M3 manual R01UH0886EJ0100). */
     FSP_ASSERT(pll_hz >= CGC_PRV_PLLCCR_PLL_MIN_HZ);
-    FSP_ASSERT(pll_hz <= CGC_PRV_PLLCCR_PLL_MAX_HZ);
+    FSP_ASSERT(pll_hz <= BSP_FEATURE_CGC_PLLCCR_MAX_HZ);
   #endif
  #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE
     uint32_t multiplier            = (p_pll_cfg->multiplier + 1U) >> 1;
@@ -1560,6 +1748,20 @@ static inline cgc_clock_t r_cgc_pll_clocksource_get (void)
 
 #endif
 
+#if BSP_PRV_PLL2_SUPPORTED && CGC_CFG_PARAM_CHECKING_ENABLE
+
+/*******************************************************************************************************************//**
+ * This function returns the PLL2 clock source.
+ *
+ * @return PLL2 clock source
+ **********************************************************************************************************************/
+static inline cgc_clock_t r_cgc_pll2_clocksource_get (void)
+{
+    return R_SYSTEM->PLL2CCR_b.PL2SRCSEL == 1U ? CGC_CLOCK_HOCO : CGC_CLOCK_MAIN_OSC;
+}
+
+#endif
+
 #if BSP_PRV_PLL_SUPPORTED
 
 /*******************************************************************************************************************//**
@@ -1568,6 +1770,7 @@ static inline cgc_clock_t r_cgc_pll_clocksource_get (void)
  * @param[in]   p_pll_cfg               Pointer to clock system configuration
  * @param[out]  p_pll_hz                Pointer to store calculated PLL frequency
  * @param[out]  p_pllccr                Pointer to store calculated PLLCCR value
+ * @param[out]  pll                     PLL to be configured (if PLL2 is supported)
  *
  * @retval FSP_SUCCESS                  No errors detected in PLL configuration.
  * @retval FSP_ERR_ASSERTION            Invalid input argument.
@@ -1575,21 +1778,44 @@ static inline cgc_clock_t r_cgc_pll_clocksource_get (void)
  **********************************************************************************************************************/
 static fsp_err_t r_cgc_pllccr_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
                                                 uint32_t * const            p_pll_hz,
-                                                uint32_t * const            p_pllccr)
+                                                uint32_t * const            p_pllccr,
+                                                cgc_clock_t                 pll)
 {
+ #if !BSP_PRV_PLL2_SUPPORTED
+    FSP_PARAMETER_NOT_USED(pll);
+ #endif
+
     /* Calculate the PLLCCR register. */
     uint32_t pllccr = r_cgc_pllccr_calculate(p_pll_cfg);
 
+ #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
+    volatile uint16_t * p_pllccr_reg;
+ #else
+    volatile uint8_t * p_pllccr_reg;
+ #endif
+
+ #if BSP_PRV_PLL2_SUPPORTED
+    if (CGC_CLOCK_PLL == pll)
+ #endif
+    {
+ #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
+        p_pllccr_reg = &(R_SYSTEM->PLLCCR);
+ #else
+        p_pllccr_reg = &(R_SYSTEM->PLLCCR2);
+ #endif
+    }
+
+ #if BSP_PRV_PLL2_SUPPORTED
+    else
+    {
+        p_pllccr_reg = &(R_SYSTEM->PLL2CCR);
+    }
+ #endif
+
     /* PLLCCR cannot be changed while PLL is running. Verify requested PLLCCR value is unchanged or the PLL is
      * currently stopped. */
-    FSP_ERROR_RETURN(
- #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
-        (R_SYSTEM->PLLCCR == pllccr)
- #else                                 // 2U == BSP_FEATURE_CGC_PLLCCR_TYPE
-        (R_SYSTEM->PLLCCR2 == pllccr)
- #endif
-        || (CGC_PRV_CLOCK_STATE_STOPPED == r_cgc_clock_run_state_get(CGC_CLOCK_PLL)),
-        FSP_ERR_CLOCK_ACTIVE);
+    FSP_ERROR_RETURN((*p_pllccr_reg == pllccr) || (CGC_PRV_CLOCK_STATE_STOPPED == r_cgc_clock_run_state_get(pll)),
+                     FSP_ERR_CLOCK_ACTIVE);
 
     /* Calculate the new PLL frequency. Parameter checking is performed during this calculation if parameter
      * checking is enabled, but the calculation is required even if parameter checking is not enabled. */
@@ -1650,9 +1876,46 @@ static void r_cgc_nmi_internal_callback (bsp_grp_irq_t irq)
         if (NULL != gp_cgc_ctrl->p_callback)
         {
             cgc_callback_args_t args;
-            args.event     = CGC_EVENT_OSC_STOP_DETECT;
-            args.p_context = gp_cgc_ctrl->p_context;
+
+            cgc_callback_args_t * p_args = gp_cgc_ctrl->p_callback_memory;
+            if (NULL == p_args)
+            {
+                p_args = &args;
+            }
+            else
+            {
+                args = *p_args;
+            }
+
+            p_args->event     = CGC_EVENT_OSC_STOP_DETECT;
+            p_args->p_context = gp_cgc_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+            /* p_callback can point to a secure function or a non-secure function. */
+            if (gp_cgc_ctrl->callback_is_secure)
+            {
+                /* If p_callback is secure, then the project does not need to change security state. */
+                gp_cgc_ctrl->p_callback(&args);
+            }
+            else
+            {
+                /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+                cgc_prv_ns_callback p_callback = (cgc_prv_ns_callback) (gp_cgc_ctrl->p_callback);
+                p_callback(p_args);
+            }
+
+#else
+
+            /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
             gp_cgc_ctrl->p_callback(&args);
+#endif
+
+            if (NULL != gp_cgc_ctrl->p_callback_memory)
+            {
+                /* Restore callback memory in case this is a nested interrupt. */
+                *gp_cgc_ctrl->p_callback_memory = args;
+            }
         }
     }
 }

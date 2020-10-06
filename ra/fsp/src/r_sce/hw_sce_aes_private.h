@@ -173,4 +173,24 @@ extern fsp_err_t HW_SCE_AES_256EcbDecryptUsingEncryptedKey(const uint32_t * InDa
                                                            const uint32_t * InData_Text,
                                                            uint32_t       * OutData_Text);
 
+extern fsp_err_t HW_SCE_Aes128EncryptDecryptInit(const uint32_t * InData_Cmd,
+                                                 const uint32_t * InData_KeyIndex,
+                                                 const uint32_t * InData_IV);
+
+extern void HW_SCE_Aes128EncryptDecryptUpdate(const uint32_t * InData_Text,
+                                              uint32_t       * OutData_Text,
+                                              const uint32_t   num_words);
+
+extern fsp_err_t HW_SCE_Aes128EncryptDecryptFinal(void);
+
+extern fsp_err_t HW_SCE_Aes256EncryptDecryptInit(const uint32_t * InData_Cmd,
+                                                 const uint32_t * InData_KeyIndex,
+                                                 const uint32_t * InData_IV);
+
+extern void HW_SCE_Aes256EncryptDecryptUpdate(const uint32_t * InData_Text,
+                                              uint32_t       * OutData_Text,
+                                              const uint32_t   num_words);
+
+extern fsp_err_t HW_SCE_Aes256EncryptDecryptFinal(void);
+
 #endif                                 /* HW_SCE_AES_PRIVATE_H */

@@ -327,6 +327,7 @@ const flash_api_t g_flash_on_flash_lp =
     .reset                = R_FLASH_LP_Reset,
     .startupAreaSelect    = R_FLASH_LP_StartUpAreaSelect,
     .updateFlashClockFreq = R_FLASH_LP_UpdateFlashClockFreq,
+    .callbackSet          = R_FLASH_LP_CallbackSet,
     .versionGet           = R_FLASH_LP_VersionGet
 };
 
@@ -1033,6 +1034,25 @@ fsp_err_t R_FLASH_LP_Close (flash_ctrl_t * const p_api_ctrl)
     }
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Stub function
+ * Implements @ref flash_api_t::callbackSet.
+ *
+ * @retval  FSP_ERR_UNSUPPORTED          Function has not been implemented.
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_LP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
+                                  void (                      * p_callback)(flash_callback_args_t *),
+                                  void const * const            p_context,
+                                  flash_callback_args_t * const p_callback_memory)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_callback);
+    FSP_PARAMETER_NOT_USED(p_callback_memory);
+    FSP_PARAMETER_NOT_USED(p_context);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**
@@ -1788,13 +1808,7 @@ static fsp_err_t r_flash_lp_pe_mode_exit (flash_lp_instance_ctrl_t * const p_ctr
     if (flash_pe_mode == FLASH_LP_FENTRYR_CF_PE_MODE)
     {
  #if BSP_FEATURE_BSP_FLASH_CACHE
-
-        /* Invalidate flash cache. */
-        R_FCACHE->FCACHEIV = 1U;
-        FSP_HARDWARE_REGISTER_WAIT(R_FCACHE->FCACHEIV, 0U);
-
-        /* Enable flash cache. */
-        R_FCACHE->FCACHEE = 1U;
+        R_BSP_FlashCacheEnable();
  #endif
  #if BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER
         R_FACI_LP->PFBER = 1;
@@ -2468,7 +2482,7 @@ void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
     R_FACI_LP->PFBER = 0;
  #endif
  #if BSP_FEATURE_BSP_FLASH_CACHE
-    R_FCACHE->FCACHEE = 0U;
+    R_BSP_FlashCacheDisable();
  #endif
 
     if (p_ctrl->p_cfg->data_flash_bgo)

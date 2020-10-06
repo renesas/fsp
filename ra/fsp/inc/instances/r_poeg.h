@@ -48,9 +48,16 @@ FSP_HEADER
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref poeg_api_t::open is called. */
 typedef struct st_poeg_instance_ctrl
 {
-    uint32_t           open;           // Whether or not channel is open
-    const poeg_cfg_t * p_cfg;          // Pointer to initial configurations
-    R_GPT_POEG0_Type * p_reg;          // Base register for this channel
+    uint32_t           open;                     // Whether or not channel is open
+    const poeg_cfg_t * p_cfg;                    // Pointer to initial configurations
+    R_GPT_POEG0_Type * p_reg;                    // Base register for this channel
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                     // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(poeg_callback_args_t *); // Pointer to callback
+    poeg_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
+    void const           * p_context;            // Pointer to context to be passed into callback function
 } poeg_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -68,6 +75,10 @@ extern const poeg_api_t g_poeg_on_poeg;
  **********************************************************************************************************************/
 fsp_err_t R_POEG_Open(poeg_ctrl_t * const p_ctrl, poeg_cfg_t const * const p_cfg);
 fsp_err_t R_POEG_StatusGet(poeg_ctrl_t * const p_ctrl, poeg_status_t * const p_status);
+fsp_err_t R_POEG_CallbackSet(poeg_ctrl_t * const          p_ctrl,
+                             void (                     * p_callback)(poeg_callback_args_t *),
+                             void const * const           p_context,
+                             poeg_callback_args_t * const p_callback_memory);
 fsp_err_t R_POEG_OutputDisable(poeg_ctrl_t * const p_ctrl);
 fsp_err_t R_POEG_Reset(poeg_ctrl_t * const p_ctrl);
 fsp_err_t R_POEG_Close(poeg_ctrl_t * const p_ctrl);

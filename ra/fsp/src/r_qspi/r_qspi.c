@@ -433,7 +433,7 @@ fsp_err_t R_QSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_addr
     FSP_ASSERT(NULL != p_device_address);
 #endif
 
-    uint8_t  erase_command = 0;
+    uint16_t erase_command = 0;
     uint32_t chip_address  = (uint32_t) p_device_address - QSPI_DEVICE_START_ADDRESS + R_QSPI->SFMCNT1;
     bool     send_address  = true;
 
@@ -561,6 +561,7 @@ fsp_err_t R_QSPI_BankSet (spi_flash_ctrl_t * p_ctrl, uint32_t bank)
  * @retval FSP_SUCCESS                SPI protocol updated on MCU peripheral.
  * @retval FSP_ERR_ASSERTION          A required pointer is NULL.
  * @retval FSP_ERR_NOT_OPEN           Driver is not opened.
+ * @retval FSP_ERR_INVALID_ARGUMENT   Invalid SPI protocol requested.
  **********************************************************************************************************************/
 fsp_err_t R_QSPI_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol_t spi_protocol)
 {
@@ -569,6 +570,7 @@ fsp_err_t R_QSPI_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol_t
 #if QSPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(QSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(SPI_FLASH_PROTOCOL_QPI >= spi_protocol, FSP_ERR_INVALID_ARGUMENT);
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif

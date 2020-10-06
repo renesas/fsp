@@ -50,16 +50,23 @@ FSP_HEADER
 typedef struct st_can_instance_ctrl
 {
     /* Parameters to control CAN peripheral device */
-    can_cfg_t const    * p_cfg;          // Pointer to the configuration structure
-    R_CAN0_Type        * p_reg;          // Pointer to register base address
-    uint32_t             open;           // Open status of channel.
-    can_operation_mode_t operation_mode; // Can operation mode.
-    can_test_mode_t      test_mode;      // Can operation mode.
-    can_id_mode_t        id_mode;        // Standard or Extended ID mode.
-    uint32_t             mailbox_count;  // Number of mailboxes.
-    can_mailbox_t      * p_mailbox;      // Pointer to mailboxes.
-    can_message_mode_t   message_mode;   // Overwrite message or overrun.
-    can_clock_source_t   clock_source;   // Clock source. CANMCLK or PCLKB.
+    can_cfg_t const    * p_cfg;                 // Pointer to the configuration structure
+    R_CAN0_Type        * p_reg;                 // Pointer to register base address
+    uint32_t             open;                  // Open status of channel.
+    can_operation_mode_t operation_mode;        // Can operation mode.
+    can_test_mode_t      test_mode;             // Can operation mode.
+    can_id_mode_t        id_mode;               // Standard or Extended ID mode.
+    uint32_t             mailbox_count;         // Number of mailboxes.
+    can_mailbox_t      * p_mailbox;             // Pointer to mailboxes.
+    can_message_mode_t   message_mode;          // Overwrite message or overrun.
+    can_clock_source_t   clock_source;          // Clock source. CANMCLK or PCLKB.
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(can_callback_args_t *); // Pointer to callback
+    can_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
+    void const          * p_context;            // Pointer to context to be passed into callback function
 } can_instance_ctrl_t;
 
 /* CAN clock configuration and mailbox mask to be pointed to by p_extend. */
@@ -89,6 +96,10 @@ fsp_err_t R_CAN_ModeTransition(can_ctrl_t * const   p_api_ctrl,
                                can_operation_mode_t operation_mode,
                                can_test_mode_t      test_mode);
 fsp_err_t R_CAN_InfoGet(can_ctrl_t * const p_api_ctrl, can_info_t * const p_info);
+fsp_err_t R_CAN_CallbackSet(can_ctrl_t * const          p_api_ctrl,
+                            void (                    * p_callback)(can_callback_args_t *),
+                            void const * const          p_context,
+                            can_callback_args_t * const p_callback_memory);
 fsp_err_t R_CAN_VersionGet(fsp_version_t * const version);
 
 /*******************************************************************************************************************//**

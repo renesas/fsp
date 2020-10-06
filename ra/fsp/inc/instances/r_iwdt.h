@@ -50,7 +50,12 @@ typedef struct st_iwdt_instance_ctrl
     uint32_t      wdt_open;                            ///< Indicates whether the open() API has been successfully called.
     void const  * p_context;                           ///< Placeholder for user data.  Passed to the user callback in wdt_callback_args_t.
     R_IWDT_Type * p_reg;                               ///< Pointer to register base address.
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS).
+#endif
     void (* p_callback)(wdt_callback_args_t * p_args); ///< Callback provided when a WDT NMI ISR occurs.
+    wdt_callback_args_t * p_callback_memory;           // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 } iwdt_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -73,6 +78,11 @@ fsp_err_t R_IWDT_StatusGet(wdt_ctrl_t * const p_api_ctrl, wdt_status_t * const p
 fsp_err_t R_IWDT_CounterGet(wdt_ctrl_t * const p_api_ctrl, uint32_t * const p_count);
 
 fsp_err_t R_IWDT_TimeoutGet(wdt_ctrl_t * const p_api_ctrl, wdt_timeout_values_t * const p_timeout);
+
+fsp_err_t R_IWDT_CallbackSet(wdt_ctrl_t * const          p_ctrl,
+                             void (                    * p_callback)(wdt_callback_args_t *),
+                             void const * const          p_context,
+                             wdt_callback_args_t * const p_callback_memory);
 
 fsp_err_t R_IWDT_VersionGet(fsp_version_t * const p_data);
 

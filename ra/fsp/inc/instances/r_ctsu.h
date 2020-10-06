@@ -130,9 +130,13 @@ typedef struct st_ctsu_correction_info
     volatile ctsu_self_buf_t scanbuf;                                ///< Correction scan buffer
 #if (BSP_FEATURE_CTSU_VERSION == 2)
  #if (CTSU_CFG_TEMP_CORRECTION_SUPPORT == 1)
+  #if (CTSU_CFG_CALIB_RTRIM_SUPPORT == 1)
+    uint16_t tscap_voltage;                                          ///< TSCAP Voltage by ADC
+  #endif
     uint16_t scan_index;                                             ///< Scan point index
     uint16_t update_counter;                                         ///< Coefficient update counter
     uint16_t ex_base_value;                                          ///< Value of external registance measurement
+    uint8_t  suadj0;                                                 ///< Stored SUADJ0 value
  #endif
     uint16_t base_value[CTSU_RANGE_NUM];                             ///< Value of internal registance measurement
     uint16_t error_rate[CTSU_RANGE_NUM];                             ///< Error rate of base vs DAC
@@ -171,39 +175,43 @@ typedef struct st_ctsu_corrcfc_info
 /** CTSU private control block. DO NOT MODIFY. Initialization occurs when R_CTSU_Open() is called. */
 typedef struct st_ctsu_instance_ctrl
 {
-    uint32_t                 open;                      ///< Whether or not driver is open.
-    ctsu_state_t             state;                     ///< CTSU run state.
-    ctsu_tuning_t            tuning;                    ///< CTSU Initial offset tuning status.
-    uint16_t                 num_elements;              ///< Number of elements to scan
-    uint16_t                 wr_index;                  ///< Word index into ctsuwr register array.
-    uint16_t                 rd_index;                  ///< Word index into scan data buffer.
-    uint8_t                * p_tuning_complete;         ///< Pointer to tuning completion flag of each element. g_ctsu_tuning_complete[] is set by Open API.
-    int32_t                * p_tuning_diff;             ///< Pointer to difference from base value of each element. g_ctsu_tuning_diff[] is set by Open API.
-    uint16_t                 average;                   ///< CTSU Moving average counter.
-    uint16_t                 num_moving_average;        ///< Copy from config by Open API.
-    uint8_t                  ctsucr1;                   ///< Copy from (atune1 << 3, md << 6) by Open API. CLK, ATUNE0, CSW, and PON is set by HAL driver.
-    ctsu_ctsuwr_t          * p_ctsuwr;                  ///< CTSUWR write register value. g_ctsu_ctsuwr[] is set by Open API.
-    ctsu_self_buf_t        * p_self_raw;                ///< Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API.
-    uint16_t               * p_self_work;               ///< Pointer to Self work buffer. g_ctsu_self_work[] is set by Open API.
-    uint16_t               * p_self_data;               ///< Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
-    ctsu_mutual_buf_t      * p_mutual_raw;              ///< Pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API.
-    uint16_t               * p_mutual_pri_work;         ///< Pointer to Mutual primary work buffer. g_ctsu_mutual_pri_work[] is set by Open API.
-    uint16_t               * p_mutual_snd_work;         ///< Pointer to Mutual secondary work buffer. g_ctsu_mutual_snd_work[] is set by Open API.
-    uint16_t               * p_mutual_pri_data;         ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
-    uint16_t               * p_mutual_snd_data;         ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
-    ctsu_correction_info_t * p_correction_info;         ///< Pointer to correction info
+    uint32_t                 open;               ///< Whether or not driver is open.
+    ctsu_state_t             state;              ///< CTSU run state.
+    ctsu_tuning_t            tuning;             ///< CTSU Initial offset tuning status.
+    uint16_t                 num_elements;       ///< Number of elements to scan
+    uint16_t                 wr_index;           ///< Word index into ctsuwr register array.
+    uint16_t                 rd_index;           ///< Word index into scan data buffer.
+    uint8_t                * p_tuning_count;     ///< Pointer to tuning count of each element. g_ctsu_tuning_count[] is set by Open API.
+    int32_t                * p_tuning_diff;      ///< Pointer to difference from base value of each element. g_ctsu_tuning_diff[] is set by Open API.
+    uint16_t                 average;            ///< CTSU Moving average counter.
+    uint16_t                 num_moving_average; ///< Copy from config by Open API.
+    uint8_t                  ctsucr1;            ///< Copy from (atune1 << 3, md << 6) by Open API. CLK, ATUNE0, CSW, and PON is set by HAL driver.
+    ctsu_ctsuwr_t          * p_ctsuwr;           ///< CTSUWR write register value. g_ctsu_ctsuwr[] is set by Open API.
+    ctsu_self_buf_t        * p_self_raw;         ///< Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API.
+    uint16_t               * p_self_work;        ///< Pointer to Self work buffer. g_ctsu_self_work[] is set by Open API.
+    uint16_t               * p_self_data;        ///< Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
+    ctsu_mutual_buf_t      * p_mutual_raw;       ///< Pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API.
+    uint16_t               * p_mutual_pri_work;  ///< Pointer to Mutual primary work buffer. g_ctsu_mutual_pri_work[] is set by Open API.
+    uint16_t               * p_mutual_snd_work;  ///< Pointer to Mutual secondary work buffer. g_ctsu_mutual_snd_work[] is set by Open API.
+    uint16_t               * p_mutual_pri_data;  ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
+    uint16_t               * p_mutual_snd_data;  ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
+    ctsu_correction_info_t * p_correction_info;  ///< Pointer to correction info
 #if (BSP_FEATURE_CTSU_VERSION == 2)
-    ctsu_range_t          range;                        ///< According to atune12. (20uA : 0, 40uA : 1, 80uA : 2, 160uA : 3)
-    uint8_t               ctsucr2;                      ///< Copy from (posel, atune1, md) by Open API. FCMODE and SDPSEL and LOAD is set by HAL driver.
-    uint64_t              cfc_rx_bitmap;                ///< Bitmap of CFC receive terminal.
-    ctsu_corrcfc_info_t * p_corrcfc_info;               ///< pointer to CFC correction info
+    ctsu_range_t          range;                 ///< According to atune12. (20uA : 0, 40uA : 1, 80uA : 2, 160uA : 3)
+    uint8_t               ctsucr2;               ///< Copy from (posel, atune1, md) by Open API. FCMODE and SDPSEL and LOAD is set by HAL driver.
+    uint64_t              cfc_rx_bitmap;         ///< Bitmap of CFC receive terminal.
+    ctsu_corrcfc_info_t * p_corrcfc_info;        ///< pointer to CFC correction info
 #endif
-    ctsu_cfg_t const * p_ctsu_cfg;                      ///< Pointer to initial configurations.
-    IRQn_Type          write_irq;                       ///< Copy from config by Open API. CTSU_CTSUWR interrupt vector
-    IRQn_Type          read_irq;                        ///< Copy from config by Open API. CTSU_CTSURD interrupt vector
-    IRQn_Type          end_irq;                         ///< Copy from config by Open API. CTSU_CTSUFN interrupt vector
-    void const       * p_context;                       ///< Placeholder for user data.
-    void (* p_callback)(ctsu_callback_args_t * p_args); ///< Callback provided when a CTSUFN occurs.
+    ctsu_cfg_t const * p_ctsu_cfg;               ///< Pointer to initial configurations.
+    IRQn_Type          write_irq;                ///< Copy from config by Open API. CTSU_CTSUWR interrupt vector
+    IRQn_Type          read_irq;                 ///< Copy from config by Open API. CTSU_CTSURD interrupt vector
+    IRQn_Type          end_irq;                  ///< Copy from config by Open API. CTSU_CTSUFN interrupt vector
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                     ///< If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(ctsu_callback_args_t *); ///< Callback provided when a CTSUFN occurs.
+    ctsu_callback_args_t * p_callback_memory;    ///< Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+    void const           * p_context;            ///< Placeholder for user data.
 } ctsu_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -222,6 +230,10 @@ extern const ctsu_api_t g_ctsu_on_ctsu;
 fsp_err_t R_CTSU_Open(ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cfg);
 fsp_err_t R_CTSU_ScanStart(ctsu_ctrl_t * const p_ctrl);
 fsp_err_t R_CTSU_DataGet(ctsu_ctrl_t * const p_ctrl, uint16_t * p_data);
+fsp_err_t R_CTSU_CallbackSet(ctsu_ctrl_t * const          p_api_ctrl,
+                             void (                     * p_callback)(ctsu_callback_args_t *),
+                             void const * const           p_context,
+                             ctsu_callback_args_t * const p_callback_memory);
 fsp_err_t R_CTSU_Close(ctsu_ctrl_t * const p_ctrl);
 fsp_err_t R_CTSU_VersionGet(fsp_version_t * const p_version);
 

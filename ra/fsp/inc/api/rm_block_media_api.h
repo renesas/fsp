@@ -75,6 +75,7 @@ typedef struct st_rm_block_media_info
     uint32_t sector_size_bytes;        ///< Sector size in bytes
     uint32_t num_sectors;              ///< Total number of sectors
     bool     reentrant;                ///< True if connected block media driver is reentrant
+    bool     write_protected;          ///< True if connected block media device is write protected
 } rm_block_media_info_t;
 
 /** Callback function parameter data */
@@ -169,6 +170,21 @@ typedef struct st_rm_block_media_api
      * @param[in]   num_blocks         Number of blocks of data to erase.
      */
     fsp_err_t (* erase)(rm_block_media_ctrl_t * const p_ctrl, uint32_t const block_address, uint32_t const num_blocks);
+
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref RM_BLOCK_MEDIA_SDMMC_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Control block set in @ref rm_block_media_api_t::open call.
+     * @param[in]   p_callback               Callback function to register
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(rm_block_media_ctrl_t * const          p_ctrl,
+                              void (                               * p_callback)(rm_block_media_callback_args_t *),
+                              void const * const                     p_context,
+                              rm_block_media_callback_args_t * const p_callback_memory);
 
     /** Get status of connected device.
      *

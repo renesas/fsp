@@ -91,6 +91,7 @@ const three_phase_api_t g_gpt_three_phase_on_gpt_three_phase =
     .start        = R_GPT_THREE_PHASE_Start,
     .reset        = R_GPT_THREE_PHASE_Reset,
     .dutyCycleSet = R_GPT_THREE_PHASE_DutyCycleSet,
+    .callbackSet  = R_GPT_THREE_PHASE_CallbackSet,
     .close        = R_GPT_THREE_PHASE_Close,
     .versionGet   = R_GPT_THREE_PHASE_VersionGet
 };
@@ -258,6 +259,9 @@ fsp_err_t R_GPT_THREE_PHASE_Reset (three_phase_ctrl_t * const p_ctrl)
  * In asymmetric PWM mode this enables both count-up and count-down PWM values to be set at trough (or crest)
  * exclusively.
  *
+ * @note It is recommended to call this function in a high-priority callback to ensure that it is not interrupted and
+ * that no GPT events occur during setting that would result in a duty cycle buffer load operation.
+ *
  * Example:
  * @snippet r_gpt_three_phase_example.c R_GPT_THREE_PHASE_DutyCycleSet
  *
@@ -309,6 +313,37 @@ fsp_err_t R_GPT_THREE_PHASE_DutyCycleSet (three_phase_ctrl_t * const       p_ctr
     r_gpt_write_protect_enable_all(p_instance_ctrl);
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Updates the user callback for the GPT U-channel with the option to provide memory for the callback argument
+ * structure.
+ * Implements @ref three_phase_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t R_GPT_THREE_PHASE_CallbackSet (three_phase_ctrl_t * const    p_ctrl,
+                                         void (                      * p_callback)(timer_callback_args_t *),
+                                         void const * const            p_context,
+                                         timer_callback_args_t * const p_callback_memory)
+{
+    gpt_three_phase_instance_ctrl_t * p_instance_ctrl = (gpt_three_phase_instance_ctrl_t *) p_ctrl;
+    fsp_err_t err = FSP_SUCCESS;
+
+#if GPT_THREE_PHASE_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ASSERT(NULL != p_callback);
+    FSP_ERROR_RETURN(GPT_THREE_PHASE_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    err = R_GPT_CallbackSet(p_instance_ctrl->p_cfg->p_timer_instance[p_instance_ctrl->p_cfg->callback_ch]->p_ctrl,
+                            p_callback,
+                            p_context,
+                            p_callback_memory);
+
+    return err;
 }
 
 /*******************************************************************************************************************//**

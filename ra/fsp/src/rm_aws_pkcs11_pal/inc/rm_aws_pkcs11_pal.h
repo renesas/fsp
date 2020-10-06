@@ -33,6 +33,11 @@
 #include <string.h>
 
 /*
+ *  @brief Initialize the PAL.
+ */
+extern CK_RV PKCS11_PAL_Initialize();
+
+/*
  *  @brief Save an object to storage.
  */
 extern CK_OBJECT_HANDLE PKCS11_PAL_SaveObject(CK_ATTRIBUTE_PTR pxLabel, uint8_t * pucData, uint32_t ulDataSize);
@@ -40,7 +45,7 @@ extern CK_OBJECT_HANDLE PKCS11_PAL_SaveObject(CK_ATTRIBUTE_PTR pxLabel, uint8_t 
 /*
  *   @brief Look up an object handle using it's label.
  */
-extern CK_OBJECT_HANDLE PKCS11_PAL_FindObject(uint8_t * pLabel, uint8_t usLength);
+extern CK_OBJECT_HANDLE PKCS11_PAL_FindObject(uint8_t * pxLabel, uint8_t usLength);
 
 /*
  *   @brief Get the value of an object.

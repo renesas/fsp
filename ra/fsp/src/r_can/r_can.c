@@ -102,9 +102,16 @@ typedef union
     } int_status_b;
 } can_error_interrrupt_status_t;
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile can_prv_ns_callback)(can_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile can_prv_ns_callback)(can_callback_args_t * p_args);
+#endif
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
+static void r_can_call_callback(can_instance_ctrl_t * p_ctrl, can_callback_args_t * p_args);
 static void r_can_switch_to_operation_mode(can_instance_ctrl_t * p_ctrl, can_operation_mode_t canm_mode_setting);
 static void r_can_mode_transition(can_instance_ctrl_t * p_ctrl,
                                   can_operation_mode_t  operation_mode,
@@ -143,6 +150,7 @@ const can_api_t g_can_on_can =
     .write          = R_CAN_Write,
     .modeTransition = R_CAN_ModeTransition,
     .infoGet        = R_CAN_InfoGet,
+    .callbackSet    = R_CAN_CallbackSet,
     .versionGet     = R_CAN_VersionGet
 };
 
@@ -274,6 +282,15 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
 
     /* Initialize the control block */
     p_ctrl->p_cfg = p_cfg;
+
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->callback_is_secure = true;
+#endif
+
+    /* Set callback and context pointers, if configured */
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
 
     /* Set the clock source to the user configured source. */
     p_ctrl->clock_source = extended_cfg->clock_source;
@@ -579,6 +596,51 @@ fsp_err_t R_CAN_InfoGet (can_ctrl_t * const p_api_ctrl, can_info_t * const p_inf
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Implements @ref can_api_t::callbackSet.
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
+ **********************************************************************************************************************/
+fsp_err_t R_CAN_CallbackSet (can_ctrl_t * const          p_api_ctrl,
+                             void (                    * p_callback)(can_callback_args_t *),
+                             void const * const          p_context,
+                             can_callback_args_t * const p_callback_memory)
+{
+    can_instance_ctrl_t * p_ctrl = (can_instance_ctrl_t *) p_api_ctrl;
+
+#if CAN_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(CAN_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    p_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if CAN_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    can_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                      CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(p_ctrl->callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+    p_ctrl->p_callback        = p_callback;
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Get CAN module code and API versions.
  * @retval  FSP_SUCCESS             Operation succeeded.
  * @retval  FSP_ERR_ASSERTION       Null pointer presented
@@ -605,6 +667,61 @@ fsp_err_t R_CAN_VersionGet (fsp_version_t * const p_version)
 /***********************************************************************************************************************
  * Private Functions
  **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_ctrl     Pointer to CAN instance control block
+ * @param[in]     p_args     Pointer to arguments on stack
+ **********************************************************************************************************************/
+static void r_can_call_callback (can_instance_ctrl_t * p_ctrl, can_callback_args_t * p_args)
+{
+    can_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    can_callback_args_t * p_args_memory = p_ctrl->p_callback_memory;
+    if (NULL == p_args_memory)
+    {
+        /* Use provided args struct on stack */
+        p_args_memory = p_args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args_memory;
+
+        /* Copy the stacked args to callback memory */
+        *p_args_memory = *p_args;
+    }
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args_memory);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        can_prv_ns_callback p_callback = (can_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args_memory);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args_memory);
+#endif
+
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
+    }
+}
 
 /*******************************************************************************************************************//**
  * Error ISR.
@@ -646,9 +763,9 @@ void can_error_isr (void)
 
     args.p_frame   = NULL;
     args.channel   = p_ctrl->p_cfg->channel;
-    args.p_context = p_ctrl->p_cfg->p_context;
+    args.p_context = p_ctrl->p_context;
     args.mailbox   = mailbox;
-    p_ctrl->p_cfg->p_callback(&args);
+    r_can_call_callback(p_ctrl, &args);
 
     /* Check for mailboxes with data loss due to overrun,
      * if true, fire this interrupt again.
@@ -739,8 +856,8 @@ void can_mailbox_rx_isr (void)
     args.mailbox = mailbox;
 
     args.channel   = p_ctrl->p_cfg->channel;
-    args.p_context = p_ctrl->p_cfg->p_context;
-    p_ctrl->p_cfg->p_callback(&args);
+    args.p_context = p_ctrl->p_context;
+    r_can_call_callback(p_ctrl, &args);
 
     /* Check for mailboxes with receive data, if true, fire this interrupt again */
     if ((p_ctrl->p_reg->STR_b.NDST))
@@ -792,9 +909,9 @@ void can_mailbox_tx_isr (void)
     /*  Set event argument to transmit complete. */
     args.event     = CAN_EVENT_TX_COMPLETE;
     args.channel   = p_ctrl->p_cfg->channel;
-    args.p_context = p_ctrl->p_cfg->p_context;
+    args.p_context = p_ctrl->p_context;
     args.p_frame   = NULL;
-    p_ctrl->p_cfg->p_callback(&args);
+    r_can_call_callback(p_ctrl, &args);
 
     /* Check for other mailboxes with pending transmit complete flags. */
     if ((p_ctrl->p_reg->STR_b.SDST))

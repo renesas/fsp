@@ -107,6 +107,8 @@ __STATIC_INLINE void R_BSP_IrqCfg (IRQn_Type const irq, uint32_t priority, void 
      * every time a priority is configured in the NVIC. */
 #if (4U == __CORTEX_M)
     NVIC->IP[((uint32_t) irq)] = (uint8_t) ((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t) UINT8_MAX);
+#elif (33 == __CORTEX_M)
+    NVIC->IPR[((uint32_t) irq)] = (uint8_t) ((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t) UINT8_MAX);
 #elif (23 == __CORTEX_M)
     NVIC->IPR[_IP_IDX(irq)] = ((uint32_t) (NVIC->IPR[_IP_IDX(irq)] & ~((uint32_t) UINT8_MAX << _BIT_SHIFT(irq))) |
                                (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t) UINT8_MAX) << _BIT_SHIFT(irq)));

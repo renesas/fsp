@@ -50,6 +50,9 @@ typedef enum e_bsp_reg_protect
     /** Enables writing to the registers related to the LVD: LVCMPCR, LVDLVLR, LVD1CR0, LVD1CR1, LVD1SR, LVD2CR0,
      * LVD2CR1, LVD2SR. */
     BSP_REG_PROTECT_LVD,
+
+    /** Enables writing to the registers related to the security function. */
+    BSP_REG_PROTECT_SAR,
 } bsp_reg_protect_t;
 
 /** @} (end addtogroup BSP_MCU) */

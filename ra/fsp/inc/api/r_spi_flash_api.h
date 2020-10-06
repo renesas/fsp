@@ -26,6 +26,9 @@
  * @section SPI_FLASH_API_SUMMARY Summary
  * The SPI flash API provides an interface that configures, writes, and erases sectors in SPI flash devices.
  *
+ * Implemented by:
+ * - @ref OSPI
+ * - @ref QSPI
  * @{
  **********************************************************************************************************************/
 
@@ -72,6 +75,12 @@ typedef enum e_spi_flash_protocol
 
     /** QPI mode (commands on 4 lines). Note that the application must ensure the device is in QPI mode. */
     SPI_FLASH_PROTOCOL_QPI = 2,
+
+    /** SOPI mode (command and data on 8 lines). Note that the application must ensure the device is in SOPI mode. */
+    SPI_FLASH_PROTOCOL_SOPI = 3,
+
+    /** DOPI mode (command and data on 8 lines, dual data rate). Note that the application must ensure the device is in DOPI mode. */
+    SPI_FLASH_PROTOCOL_DOPI = 4,
 } spi_flash_protocol_t;
 
 /** Number of bytes in the address. */
@@ -118,12 +127,30 @@ typedef enum e_spi_flash_dummy_clocks
     SPI_FLASH_DUMMY_CLOCKS_17,         ///< 17 dummy clocks
 } spi_flash_dummy_clocks_t;
 
+/** Direct Read and Write direction */
+typedef enum e_spi_flash_direct_transfer_dir_option
+{
+    SPI_FLASH_DIRECT_TRANSFER_DIR_READ  = 0x0,
+    SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE = 0x1
+} spi_flash_direct_transfer_dir_t;
+
 /** Structure to define an erase command and associated erase size. */
 typedef struct st_spi_flash_erase_command
 {
-    uint8_t  command;                  ///< Erase command
+    uint16_t command;                  ///< Erase command
     uint32_t size;                     ///< Size of erase for associated command, set to SPI_FLASH_ERASE_SIZE_CHIP_ERASE for chip erase
 } spi_flash_erase_command_t;
+
+typedef struct st_spi_flash_direct_transfer
+{
+    uint32_t address;
+    uint32_t data;
+    uint16_t command;
+    uint8_t  dummy_cycles;
+    uint8_t  command_length;
+    uint8_t  address_length;
+    uint8_t  data_length;
+} spi_flash_direct_transfer_t;
 
 /** User configuration structure used by the open function */
 typedef struct st_spi_flash_cfg
@@ -136,11 +163,13 @@ typedef struct st_spi_flash_cfg
     /** Number of lines used to send address for page program command. This should either be 1 or match the number of lines used in
      * the selected read mode. */
     spi_flash_data_lines_t            page_program_address_lines;
+    uint8_t                           write_status_bit;          ///< Which bit determines write status
+    uint8_t                           write_enable_bit;          ///< Which bit determines write status
     uint32_t                          page_size_bytes;           ///< Page size in bytes (maximum number of bytes for page program)
     uint8_t                           page_program_command;      ///< Page program command
     uint8_t                           write_enable_command;      ///< Command to enable write or erase, typically 0x06
     uint8_t                           status_command;            ///< Command to read the write status
-    uint8_t                           write_status_bit;          ///< Which bit determines write status
+    uint8_t                           read_command;              ///< Read command - OSPI SPI mode only
     uint8_t                           xip_enter_command;         ///< Command to enter XIP mode
     uint8_t                           xip_exit_command;          ///< Command to exit XIP mode
     uint8_t                           erase_command_list_length; ///< Length of erase command list
@@ -198,6 +227,17 @@ typedef struct st_spi_flash_api
      * @param[in]  bytes                Number of bytes to read
      **/
     fsp_err_t (* directRead)(spi_flash_ctrl_t * p_ctrl, uint8_t * const p_dest, uint32_t const bytes);
+
+    /** Direct Read/Write raw data to the SPI flash.
+     * @par Implemented as
+     * - @ref R_OSPI_DirectTransfer()
+     *
+     * @param[in] p_ctrl               Pointer to a driver handle
+     * @param[in] p_data               Pointer to command, address and data values and lengths
+     * @param[in] direction            Direct Read/Write
+     **/
+    fsp_err_t (* directTransfer)(spi_flash_ctrl_t * p_ctrl, spi_flash_direct_transfer_t * const p_transfer,
+                                 spi_flash_direct_transfer_dir_t direction);
 
     /** Change the SPI protocol in the driver. The application must change the SPI protocol on the device.
      * @par Implemented as

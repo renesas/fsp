@@ -113,6 +113,7 @@ typedef enum e_fsp_ip
     FSP_IP_JPEG   = 69,                ///< JPEG
     FSP_IP_DAC8   = 70,                ///< 8-Bit D/A Converter
     FSP_IP_USBHS  = 71,                ///< USB High Speed
+    FSP_IP_OSPI   = 72,                ///< Octa Serial Peripheral Interface
 } fsp_ip_t;
 
 /** Signals that can be mapped to an interrupt. */

@@ -114,6 +114,13 @@ typedef struct st_rm_vee_flash_instance_ctrl
     uint32_t                 refresh_xfer_bytes_left;
     flash_instance_t const * p_flash;
     uint32_t                 segment_size;
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                       // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(rm_vee_callback_args_t *); // Pointer to callback
+    rm_vee_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
+    void const             * p_context;            // Pointer to context to be passed into callback function
 } rm_vee_flash_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -143,6 +150,10 @@ fsp_err_t RM_VEE_FLASH_RefDataPtrGet(rm_vee_ctrl_t * const p_api_ctrl, uint8_t *
 fsp_err_t RM_VEE_FLASH_StatusGet(rm_vee_ctrl_t * const p_api_ctrl, rm_vee_status_t * const p_status);
 fsp_err_t RM_VEE_FLASH_Refresh(rm_vee_ctrl_t * const p_api_ctrl);
 fsp_err_t RM_VEE_FLASH_Format(rm_vee_ctrl_t * const p_api_ctrl, uint8_t const * const p_ref_data);
+fsp_err_t RM_VEE_FLASH_CallbackSet(rm_vee_ctrl_t * const          p_api_ctrl,
+                                   void (                       * p_callback)(rm_vee_callback_args_t *),
+                                   void const * const             p_context,
+                                   rm_vee_callback_args_t * const p_callback_memory);
 fsp_err_t RM_VEE_FLASH_Close(rm_vee_ctrl_t * const p_api_ctrl);
 fsp_err_t RM_VEE_FLASH_VersionGet(fsp_version_t * const p_version);
 

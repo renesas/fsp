@@ -27,6 +27,10 @@
 #include "bsp_api.h"
 #include "hw_sce_common.h"
 
-fsp_err_t HW_SCE_SHA256_UpdateHash(const uint32_t * p_source, uint32_t num_words, uint32_t * p_digest);
+fsp_err_t        HW_SCE_SHA256_UpdateHash(const uint32_t * p_source, uint32_t num_words, uint32_t * p_digest);
+extern fsp_err_t HW_SCE_Sha224256GenerateMessageDigestSub(const uint32_t * InData_InitVal,
+                                                          const uint32_t * InData_PaddedMsg,
+                                                          const uint32_t   MAX_CNT,
+                                                          uint32_t       * OutData_MsgDigest);
 
 #endif                                 /* HW_SCE_HASH_PRIVATE_H */

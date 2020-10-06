@@ -44,13 +44,6 @@ FSP_HEADER
 #define FLASH_HP_CODE_VERSION_MAJOR    (1U)
 #define FLASH_HP_CODE_VERSION_MINOR    (1U)
 
-/* RA6M3, RA6M2 and RA6M1 MCUs uses RV40F Phase 2 Flash technology. */
-/* This macro will eventually be migrated to bsp_feature.h. */
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M2) || defined(BSP_MCU_GROUP_RA6M1) || \
-    defined(BSP_MCU_GROUP_RA6T1)
- #define FLASH_HP_VERSION_PHASE_2
-#endif
-
 /* If Code Flash programming is enabled, then all API functions must execute out of RAM. */
 #if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
  #if defined(__ICCARM__)
@@ -81,8 +74,7 @@ typedef enum e_flash_bgo_operation
 /** Flash HP instance control block. DO NOT INITIALIZE. */
 typedef struct st_flash_hp_instance_ctrl
 {
-    uint32_t opened;                                     ///< To check whether api has been opened or not.
-    void (* p_callback)(flash_callback_args_t * p_args); /// User Callback function.
+    uint32_t              opened;      ///< To check whether api has been opened or not.
     flash_cfg_t const   * p_cfg;
     uint32_t              timeout_write_cf;
     uint32_t              timeout_write_df;
@@ -95,7 +87,13 @@ typedef struct st_flash_hp_instance_ctrl
     uint32_t              source_start_address;
     uint32_t              dest_end_address;
     uint32_t              operations_remaining;
-    flash_bgo_operation_t current_operation; ///< Operation in progress, for example, FLASH_OPERATION_CF_ERASE
+    flash_bgo_operation_t current_operation;      ///< Operation in progress, for example, FLASH_OPERATION_CF_ERASE
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                      // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(flash_callback_args_t *); // Pointer to callback
+    flash_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
+    void const            * p_context;            // Pointer to context to be passed into callback function
 } flash_hp_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -142,6 +140,10 @@ fsp_err_t R_FLASH_HP_UpdateFlashClockFreq(flash_ctrl_t * const p_api_ctrl);
 fsp_err_t R_FLASH_HP_StartUpAreaSelect(flash_ctrl_t * const      p_api_ctrl,
                                        flash_startup_area_swap_t swap_type,
                                        bool                      is_temporary);
+fsp_err_t R_FLASH_HP_CallbackSet(flash_ctrl_t * const          p_api_ctrl,
+                                 void (                      * p_callback)(flash_callback_args_t *),
+                                 void const * const            p_context,
+                                 flash_callback_args_t * const p_callback_memory);
 fsp_err_t R_FLASH_HP_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_FLASH_HP_InfoGet(flash_ctrl_t * const p_api_ctrl, flash_info_t * const p_info);
 

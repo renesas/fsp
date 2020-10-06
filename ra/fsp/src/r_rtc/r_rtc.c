@@ -86,6 +86,12 @@
  * Typedef definitions
  **********************************************************************************************************************/
 
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * volatile rtc_prv_ns_callback)(rtc_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile rtc_prv_ns_callback)(rtc_callback_args_t * p_args);
+#endif
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
@@ -123,6 +129,7 @@ const rtc_api_t g_rtc_on_rtc =
     .periodicIrqRateSet = R_RTC_PeriodicIrqRateSet,
     .infoGet            = R_RTC_InfoGet,
     .errorAdjustmentSet = R_RTC_ErrorAdjustmentSet,
+    .callbackSet        = R_RTC_CallbackSet,
     .versionGet         = R_RTC_VersionGet,
 };
 
@@ -145,6 +152,8 @@ static void r_rtc_software_reset(void);
 static void r_rtc_config_rtc_interrupts(rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg);
 
 static void r_rtc_irq_set(bool irq_enable_flag, uint8_t mask);
+
+static void r_rtc_call_callback(rtc_instance_ctrl_t * p_ctrl, rtc_event_t event);
 
 #if RTC_CFG_PARAM_CHECKING_ENABLE
 static fsp_err_t r_rtc_rfrl_validate(uint32_t value);
@@ -204,6 +213,15 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
 
     /* Save the configuration  */
     p_instance_ctrl->p_cfg = p_cfg;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* If this is a secure build, the callback provided in p_cfg must be secure. */
+    p_instance_ctrl->callback_is_secure = true;
+#endif
+    p_instance_ctrl->p_callback        = p_cfg->p_callback;
+    p_instance_ctrl->p_context         = p_cfg->p_context;
+    p_instance_ctrl->p_callback_memory = NULL;
 
 #if RTC_CFG_PARAM_CHECKING_ENABLE
 
@@ -700,6 +718,43 @@ fsp_err_t R_RTC_VersionGet (fsp_version_t * p_version)
 }
 
 /*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements rtc_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Baud rate was successfully changed.
+ * @retval  FSP_ERR_ASSERTION            Pointer to RTC control block is NULL or the RTC is not configured to use the
+ *                                       internal clock.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened
+ **********************************************************************************************************************/
+fsp_err_t R_RTC_CallbackSet (rtc_ctrl_t * const          p_ctrl,
+                             void (                    * p_callback)(rtc_callback_args_t *),
+                             void const * const          p_context,
+                             rtc_callback_args_t * const p_callback_memory)
+{
+    rtc_instance_ctrl_t * p_instance_ctrl = (rtc_instance_ctrl_t *) p_ctrl;
+
+#if (RTC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(RTC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Store callback and context */
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
+    p_instance_ctrl->callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+#endif
+    p_instance_ctrl->p_callback        = p_callback;
+    p_instance_ctrl->p_context         = p_context;
+    p_instance_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtpgroup RTC)
  **********************************************************************************************************************/
 
@@ -835,6 +890,60 @@ static void r_rtc_irq_set (bool irq_enable_flag, uint8_t mask)
         R_RTC->RCR1 &= (uint8_t) ~mask;
 
         FSP_HARDWARE_REGISTER_WAIT((R_RTC->RCR1 & mask), 0U);
+    }
+}
+
+/*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_ctrl     Pointer to RTC instance control block
+ * @param[in]     event      Event code
+ **********************************************************************************************************************/
+static void r_rtc_call_callback (rtc_instance_ctrl_t * p_ctrl, rtc_event_t event)
+{
+    rtc_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    rtc_callback_args_t * p_args = p_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->event     = event;
+    p_args->p_context = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (p_ctrl->callback_is_secure)
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        rtc_prv_ns_callback p_callback = (rtc_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args);
+#endif
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
     }
 }
 
@@ -1243,18 +1352,18 @@ void rtc_alarm_periodic_isr (void)
     if (NULL != p_ctrl->p_cfg->p_callback)
     {
         /* Set data to identify callback to user, then call user callback. */
-        rtc_callback_args_t rtc_context_data;
+        rtc_event_t event;
         if (irq == p_ctrl->p_cfg->alarm_irq)
         {
-            rtc_context_data.event = RTC_EVENT_ALARM_IRQ;
+            event = RTC_EVENT_ALARM_IRQ;
         }
         else
         {
-            rtc_context_data.event = RTC_EVENT_PERIODIC_IRQ;
+            event = RTC_EVENT_PERIODIC_IRQ;
         }
 
-        rtc_context_data.p_context = p_ctrl->p_cfg->p_context;
-        p_ctrl->p_cfg->p_callback(&rtc_context_data);
+        /* Call callback */
+        r_rtc_call_callback(p_ctrl, event);
     }
 
     /* Clear the IR flag in the ICU */

@@ -92,6 +92,15 @@ typedef struct st_sci_uart_instance_ctrl
 
     /* Base register for this channel */
     R_SCI0_Type * p_reg;
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                     // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(uart_callback_args_t *); // Pointer to callback that is called when a uart_event_t occurs.
+    uart_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } sci_uart_instance_ctrl_t;
 
 /** Receive FIFO trigger configuration. */
@@ -183,6 +192,10 @@ fsp_err_t R_SCI_UART_BaudCalculate(uint32_t               baudrate,
                                    bool                   bitrate_modulation,
                                    uint32_t               baud_rate_error_x_1000,
                                    baud_setting_t * const p_baud_setting);
+fsp_err_t R_SCI_UART_CallbackSet(uart_ctrl_t * const          p_api_ctrl,
+                                 void (                     * p_callback)(uart_callback_args_t *),
+                                 void const * const           p_context,
+                                 uart_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup SCI_UART)

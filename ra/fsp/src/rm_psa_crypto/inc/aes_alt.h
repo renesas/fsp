@@ -23,7 +23,7 @@ extern "C"
 {
 #endif
 
-#if defined(MBEDTLS_AES_ALT)
+#if defined(MBEDTLS_AES_ALT) || defined(MBEDTLS_CTR_DRBG_C_ALT)
 
     /**
  * \brief The AES context-type definition.
@@ -42,7 +42,8 @@ extern "C"
                                         *             </li></ul> */
         void *vendor_ctx; /*!< Vendor defined context. */
     } mbedtls_aes_context;
-
+#endif
+#if defined(MBEDTLS_AES_ALT)
 #if defined(MBEDTLS_CIPHER_MODE_XTS)
 
     /**

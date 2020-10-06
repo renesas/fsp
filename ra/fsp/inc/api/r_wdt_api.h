@@ -223,6 +223,19 @@ typedef struct st_wdt_api
      */
     fsp_err_t (* timeoutGet)(wdt_ctrl_t * const p_ctrl, wdt_timeout_values_t * const p_timeout);
 
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref R_WDT_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Pointer to the WDT control block.
+     * @param[in]   p_callback               Callback function
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(wdt_ctrl_t * const p_api_ctrl, void (* p_callback)(wdt_callback_args_t *),
+                              void const * const p_context, wdt_callback_args_t * const p_callback_memory);
+
     /** Return the version of the driver.
      * @par Implemented as
      * - @ref R_WDT_VersionGet()

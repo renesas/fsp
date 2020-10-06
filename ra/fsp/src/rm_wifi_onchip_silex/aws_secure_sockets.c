@@ -28,6 +28,7 @@
 #include "semphr.h"
 #include "limits.h"
 #include "rm_wifi_onchip_silex.h"
+#include "rm_wifi_onchip_silex_cfg.h"
 
 /* Undefine the macro for Keil Compiler to avoid conflict: */
 /* __PASTE macro redefinition [-Wmacro-redefinition] */
@@ -37,9 +38,11 @@
 #endif
 
 #include "iot_secure_sockets.h"
-#include "iot_tls.h"
-#include "iot_pkcs11.h"
-#include "iot_crypto.h"
+#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+ #include "iot_tls.h"
+ #include "iot_pkcs11.h"
+ #include "iot_crypto.h"
+#endif
 
 #if defined(__ARMCC_VERSION)
  #pragma GCC diagnostic pop
@@ -230,7 +233,7 @@ Socket_t SOCKETS_Socket (int32_t lDomain, int32_t lType, int32_t lProtocol)
  *
  * @return
  * *  SOCKETS_ERROR_NONE if a connection is established.
- * * If an error occured, a negative value is returned.  
+ * * If an error occured, a negative value is returned.
  */
 int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Socklen_t xAddressLength)
 {
@@ -239,9 +242,6 @@ int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Sockle
     int32_t             lStatus   = SOCKETS_ERROR_NONE;
     int32_t             ret       = SOCKETS_SOCKET_ERROR;
     SSOCKETContextPtr_t pxContext = (SSOCKETContextPtr_t) xSocket; /*lint !e9087 cast used for portability. */
-
-    TLSParams_t xTLSParams =
-    {0};
 
     if ((pxContext->xSocket != SOCKETS_INVALID_SOCKET) && (pxAddress != NULL))
     {
@@ -256,8 +256,10 @@ int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Sockle
         }
 
         /* Negotiate TLS if requested. */
+#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
         if ((SOCKETS_ERROR_NONE == lStatus) && (pdTRUE == pxContext->xRequireTLS))
         {
+            TLSParams_t xTLSParams = {0};
             xTLSParams.ulSize                    = sizeof(xTLSParams);
             xTLSParams.pcDestination             = pxContext->pcDestination;
             xTLSParams.pcServerCertificate       = pxContext->pcServerCertificate;
@@ -276,6 +278,7 @@ int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Sockle
                 }
             }
         }
+#endif
     }
     else
     {
@@ -302,7 +305,7 @@ int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Sockle
  *   buffer pointed to by pvBuffer) is returned.
  * * If a timeout occurred before data could be received then 0 is returned (timeout
  *   is set using  SOCKETS_SO_RCVTIMEO).
- * * If an error occured, a negative value is returned.  
+ * * If an error occured, a negative value is returned.
  */
 int32_t SOCKETS_Recv (Socket_t xSocket, void * pvBuffer, size_t xBufferLength, uint32_t ulFlags)
 {
@@ -312,13 +315,14 @@ int32_t SOCKETS_Recv (Socket_t xSocket, void * pvBuffer, size_t xBufferLength, u
     if ((xSocket != SOCKETS_INVALID_SOCKET) && (pvBuffer != NULL))
     {
         pxContext->xRecvFlags = (BaseType_t) ulFlags;
-
+#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
         if (pdTRUE == pxContext->xRequireTLS)
         {
             /* Receive through TLS pipe, if negotiated. */
             lStatus = TLS_Recv(pxContext->pvTLSContext, pvBuffer, xBufferLength);
         }
         else
+#endif
         {
             /* Receive unencrypted. */
             lStatus = prvNetworkRecv(pxContext, pvBuffer, xBufferLength);
@@ -341,7 +345,7 @@ int32_t SOCKETS_Recv (Socket_t xSocket, void * pvBuffer, size_t xBufferLength, u
  *
  * @return
  * * On success, the number of bytes actually sent is returned.
- * * If an error occured, a negative value is returned.  
+ * * If an error occured, a negative value is returned.
  */
 int32_t SOCKETS_Send (Socket_t xSocket, const void * pvBuffer, size_t xDataLength, uint32_t ulFlags)
 {
@@ -352,12 +356,14 @@ int32_t SOCKETS_Send (Socket_t xSocket, const void * pvBuffer, size_t xDataLengt
     {
         pxContext->xSendFlags = (BaseType_t) ulFlags;
 
+#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
         if (pdTRUE == pxContext->xRequireTLS)
         {
             /* Send through TLS pipe, if negotiated. */
             lStatus = TLS_Send(pxContext->pvTLSContext, pvBuffer, xDataLength);
         }
         else
+#endif
         {
             /* Send unencrypted. */
             lStatus = prvNetworkSend(pxContext, pvBuffer, xDataLength);
@@ -376,7 +382,7 @@ int32_t SOCKETS_Send (Socket_t xSocket, const void * pvBuffer, size_t xDataLengt
  *
  * @return
  * * If the operation was successful, 0 is returned.
- * * If an error occured, a negative value is returned.  
+ * * If an error occured, a negative value is returned.
  *
  */
 int32_t SOCKETS_Shutdown (Socket_t xSocket, uint32_t ulHow)
@@ -426,7 +432,7 @@ int32_t SOCKETS_Shutdown (Socket_t xSocket, uint32_t ulHow)
  *
  * @return
  * * On success, 0 is returned.
- * * If an error occurred, a negative value is returned.  
+ * * If an error occurred, a negative value is returned.
  */
 int32_t SOCKETS_Close (Socket_t xSocket)
 {
@@ -436,6 +442,7 @@ int32_t SOCKETS_Close (Socket_t xSocket)
     if (((int) NULL != (int) pxContext) && ((int) SOCKETS_INVALID_SOCKET != (int) pxContext) &&
         ((int) pxContext->xSocket < WIFI_ONCHIP_SILEX_CFG_NUM_CREATEABLE_SOCKETS))
     {
+#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
         if (NULL != pxContext->pcDestination)
         {
             vPortFree(pxContext->pcDestination);
@@ -450,6 +457,7 @@ int32_t SOCKETS_Close (Socket_t xSocket)
         {
             TLS_Cleanup(pxContext->pvTLSContext);
         }
+#endif
 
         ret = (int32_t) rm_wifi_onchip_silex_socket_disconnect(((uint32_t) pxContext->xSocket));
         if (ret != 0)
@@ -528,7 +536,7 @@ int32_t SOCKETS_Close (Socket_t xSocket)
  *
  * @return
  * * On success, 0 is returned.
- * * If an error occured, a negative value is returned.  
+ * * If an error occured, a negative value is returned.
  */
 int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
                             int32_t      lLevel,
@@ -557,6 +565,8 @@ int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
         {
             case SOCKETS_SO_SERVER_NAME_INDICATION:
             {
+#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+
                 /* Do not set the SNI options if the socket is possibly already connected. */
                 if (WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED == status)
                 {
@@ -578,11 +588,16 @@ int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
                     }
                 }
 
+#else
+                lStatus = SOCKETS_EINVAL;
+#endif
                 break;
             }
 
             case SOCKETS_SO_TRUSTED_SERVER_CERTIFICATE:
             {
+#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+
                 /* Do not set the trusted server certificate if the socket is possibly already connected. */
                 if (WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED == status)
                 {
@@ -604,11 +619,16 @@ int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
                     }
                 }
 
+#else
+                lStatus = SOCKETS_EINVAL;
+#endif
                 break;
             }
 
             case SOCKETS_SO_REQUIRE_TLS:
             {
+#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+
                 /* Do not set the TLS option if the socket is possibly already connected. */
                 if (WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED == status)
                 {
@@ -618,6 +638,10 @@ int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
                 {
                     pxContext->xRequireTLS = pdTRUE;
                 }
+
+#else
+                lStatus = SOCKETS_EINVAL;
+#endif
 
                 break;
             }
@@ -722,159 +746,6 @@ BaseType_t SOCKETS_Init (void)
     }
 
     return pdPASS;
-}
-
-static CK_RV prvSocketsGetCryptoSession (CK_SESSION_HANDLE * pxSession, CK_FUNCTION_LIST_PTR_PTR ppxFunctionList)
-{
-    CK_RV                       xResult              = 0;
-    CK_C_GetFunctionList        pxCkGetFunctionList  = NULL;
-    static CK_SESSION_HANDLE    xPkcs11Session       = 0;
-    static CK_FUNCTION_LIST_PTR pxPkcs11FunctionList = NULL;
-    CK_ULONG                    ulCount              = 1;
-    CK_SLOT_ID                  xSlotId              = 0;
-
-    portENTER_CRITICAL();
-
-    if (0 == xPkcs11Session)
-    {
-        /* One-time initialization. */
-
-        /* Ensure that the PKCS#11 module is initialized. */
-        if (0 == xResult)
-        {
-            pxCkGetFunctionList = C_GetFunctionList;
-            xResult             = pxCkGetFunctionList(&pxPkcs11FunctionList);
-        }
-
-        if (0 == xResult)
-        {
-            xResult = pxPkcs11FunctionList->C_Initialize(NULL);
-        }
-
-        /* Get the default slot ID. */
-        if (0 == xResult)
-        {
-            xResult = pxPkcs11FunctionList->C_GetSlotList(CK_TRUE, &xSlotId, &ulCount);
-        }
-
-        /* Start a session with the PKCS#11 module. */
-        if (0 == xResult)
-        {
-            xResult = pxPkcs11FunctionList->C_OpenSession(xSlotId, CKF_SERIAL_SESSION, NULL, NULL, &xPkcs11Session);
-        }
-    }
-
-    portEXIT_CRITICAL();
-
-    /* Output the shared function pointers and session handle. */
-    *ppxFunctionList = pxPkcs11FunctionList;
-    *pxSession       = xPkcs11Session;
-
-    return xResult;
-}
-
-/**
- *  Generate a TCP Initial Sequence Number that is reasonably difficult
- * to predict, per https://tools.ietf.org/html/rfc6528.
- */
-uint32_t ulApplicationGetNextSequenceNumber (uint32_t ulSourceAddress,
-                                             uint16_t usSourcePort,
-                                             uint32_t ulDestinationAddress,
-                                             uint16_t usDestinationPort)
-{
-    CK_RV                xResult              = 0;
-    CK_SESSION_HANDLE    xPkcs11Session       = 0;
-    CK_FUNCTION_LIST_PTR pxPkcs11FunctionList = NULL;
-    CK_MECHANISM         xMechSha256          =
-    {0};
-    uint8_t         ucSha256Result[cryptoSHA256_DIGEST_BYTES];
-    CK_ULONG        ulLength             = sizeof(ucSha256Result);
-    uint32_t        ulNextSequenceNumber = 0;
-    static uint64_t ullKey               = 0;
-
-    /* Acquire a crypto session handle. */
-    xResult = prvSocketsGetCryptoSession(&xPkcs11Session, &pxPkcs11FunctionList);
-
-    if (0 == xResult)
-    {
-        portENTER_CRITICAL();
-        if (0 == ullKey)
-        {
-            /* One-time initialization, per boot, of the random seed. */
-            xResult = pxPkcs11FunctionList->C_GenerateRandom(xPkcs11Session, (CK_BYTE_PTR) &ullKey, sizeof(ullKey));
-        }
-
-        portEXIT_CRITICAL();
-    }
-
-    /* Lock the shared crypto session. */
-    portENTER_CRITICAL();
-
-    /* Start a hash. */
-    if (0 == xResult)
-    {
-        xMechSha256.mechanism = CKM_SHA256;
-        xResult               = pxPkcs11FunctionList->C_DigestInit(xPkcs11Session, &xMechSha256);
-    }
-
-    /* Hash the seed. */
-    if (0 == xResult)
-    {
-        xResult = pxPkcs11FunctionList->C_DigestUpdate(xPkcs11Session, (CK_BYTE_PTR) &ullKey, sizeof(ullKey));
-    }
-
-    /* Hash the source address. */
-    if (0 == xResult)
-    {
-        xResult =
-            pxPkcs11FunctionList->C_DigestUpdate(xPkcs11Session, (CK_BYTE_PTR) &ulSourceAddress,
-                                                 sizeof(ulSourceAddress));
-    }
-
-    /* Hash the source port. */
-    if (0 == xResult)
-    {
-        xResult =
-            pxPkcs11FunctionList->C_DigestUpdate(xPkcs11Session, (CK_BYTE_PTR) &usSourcePort, sizeof(usSourcePort));
-    }
-
-    /* Hash the destination address. */
-    if (0 == xResult)
-    {
-        xResult =
-            pxPkcs11FunctionList->C_DigestUpdate(xPkcs11Session, (CK_BYTE_PTR) &ulDestinationAddress,
-                                                 sizeof(ulDestinationAddress));
-    }
-
-    /* Hash the destination port. */
-    if (0 == xResult)
-    {
-        xResult =
-            pxPkcs11FunctionList->C_DigestUpdate(xPkcs11Session, (CK_BYTE_PTR) &usDestinationPort,
-                                                 sizeof(usDestinationPort));
-    }
-
-    /* Get the hash. */
-    if (0 == xResult)
-    {
-        xResult = pxPkcs11FunctionList->C_DigestFinal(xPkcs11Session, ucSha256Result, &ulLength);
-    }
-
-    portEXIT_CRITICAL();
-
-    /* Use the first four bytes of the hash result as the starting point for
-     * all initial sequence numbers for connections based on the input 4-tuple. */
-    if (0 == xResult)
-    {
-        memcpy(&ulNextSequenceNumber, ucSha256Result, sizeof(ulNextSequenceNumber));
-
-        /* Add the tick count of four-tick intervals. In theory, per the RFC
-         * (see above), this approach still allows server equipment to optimize
-         * handling of connections from the same device that haven't fully timed out. */
-        ulNextSequenceNumber += xTaskGetTickCount() / 4;
-    }
-
-    return ulNextSequenceNumber;
 }
 
 /*******************************************************************************************************************//**

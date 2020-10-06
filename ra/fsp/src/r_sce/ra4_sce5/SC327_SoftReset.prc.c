@@ -19,7 +19,7 @@
  **********************************************************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////
-// <softreset:SC32#7 TSIP software reset>                              //
+// <softreset:SC32#7 SCE software reset>                              //
 // File name      : SC327_SoftReset.prc                                //
 // State Diagram  : All state ransition                                //
 // Start State    : All state                                          //

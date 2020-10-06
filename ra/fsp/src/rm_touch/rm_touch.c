@@ -72,6 +72,16 @@
  #define TOUCH_MONITOR_BUTTON_SIZE            (7)
  #define TOUCH_MONITOR_SLIDER_SIZE            (4)
  #define TOUCH_MONITOR_WHEEL_SIZE             (4)
+ #if (TOUCH_CFG_PAD_ENABLE)
+  #define TOUCH_MONITOR_PAD_ELEMENT_SIZE      (2)
+  #define TOUCH_MONITOR_PAD_TOUCH_MAX         (10)
+  #define TOUCH_MONITOR_PAD_COORD_SIZE        (4)
+  #define TOUCH_MONITOR_PAD_SIZE              (11)
+  #define TOUCH_MONITOR_PAD_TOTAL_SIZE        (TOUCH_MONITOR_PAD_COORD_SIZE * TOUCH_MONITOR_PAD_TOUCH_MAX) + \
+    (TOUCH_MONITOR_PAD_SIZE)
+ #else
+  #define TOUCH_MONITOR_PAD_TOTAL_SIZE        (0)
+ #endif
  #define TOUCH_MONITOR_FOOTER_SIZE            (1)
  #define TOUCH_MONITOR_BUFFER_SIZE            ((TOUCH_MONITOR_HEADER_SIZE * TOUCH_MONITOR_BLOCK_MAX) +              \
                                                (TOUCH_MONITOR_SELF_ELEMENT_SIZE * CTSU_CFG_NUM_SELF_ELEMENTS) +     \
@@ -82,6 +92,7 @@
                                                (TOUCH_MONITOR_SLIDER_SIZE * TOUCH_CFG_NUM_SLIDERS) +                \
                                                (TOUCH_MONITOR_WHEAD_SIZE * TOUCH_MONITOR_BLOCK_MAX) +               \
                                                (TOUCH_MONITOR_WHEEL_SIZE * TOUCH_CFG_NUM_WHEELS) +                  \
+                                               (TOUCH_MONITOR_PAD_TOTAL_SIZE) +                                     \
                                                TOUCH_MONITOR_FOOTER_SIZE)
 
  #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
@@ -104,6 +115,7 @@
   #define TOUCH_UART_RESPONSE_BIT             (0x80)
   #define TOUCH_UART_RESPONSE_ERROR_BIT       (0xA0)
   #define TOUCH_UART_RESPONSE_MONITOR         (0xA1)
+  #define TOUCH_UART_RESPONSE_MONITOR2        (0xA2)
 
 /* Write Request Type */
   #define TOUCH_UART_WRITE_DRIFT              (0x01)
@@ -118,6 +130,11 @@
   #define TOUCH_UART_WRITE_CTSUSO             (0x0A)
   #define TOUCH_UART_WRITE_CTSUSNUM           (0x0B)
   #define TOUCH_UART_WRITE_CTSUSDPA           (0x0C)
+  #define TOUCH_UART_WRTIE_PAD_THRESHOLD      (0x0D)
+  #define TOUCH_UART_WRTIE_PAD_RX_PIXEL       (0x0E)
+  #define TOUCH_UART_WRTIE_PAD_TX_PIXEL       (0x0F)
+  #define TOUCH_UART_WRTIE_PAD_MAX_TOUCH      (0x10)
+  #define TOUCH_UART_WRTIE_PAD_DRIFT          (0x11)
 
 /* Method Number Maximum */
   #define TOUCH_UART_INSTANCE_MAX             (32)
@@ -141,11 +158,31 @@
    #define TOUCH_UART_CTSUSDPA_SHIFT          (8)
   #endif
  #endif
+
+/* Method Number Maximum */
+ #define TOUCH_UART_INSTANCE_MAX              (32)
+#endif
+#if (TOUCH_CFG_PAD_ENABLE)
+ #define TOUCH_MAP_X                          (3)
+ #define TOUCH_MAP_Y                          (3)
+ #define TOUCH_PAD_NOT_TOUCH                  (0xFFFF)
+ #define TOUCH_PAD_TEMP_VALUE_OVERFLOW_BIT    (0x8000)
+ #define TOUCH_PAD_MONITOR_TOUCH_NUM_MAX      (10)
 #endif
 
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+
+#if (TOUCH_CFG_PAD_ENABLE)
+typedef struct st_touch_pad_drift_id
+{
+    uint16_t i;
+    uint16_t j;
+    uint16_t num_rx;
+    uint16_t num_tx;
+} touch_pad_drift_id_t;
+#endif
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -216,11 +253,22 @@ static uint8_t  g_touch_wheel_index = 0;
 static uint16_t g_touch_wheel_position[TOUCH_CFG_NUM_WHEELS];
 static uint16_t g_touch_wheel_threshold[TOUCH_CFG_NUM_WHEELS];
 #endif
+#if (TOUCH_CFG_PAD_ENABLE)
+static uint16_t g_touch_pad_rx_coordinate[TOUCH_PAD_MONITOR_TOUCH_NUM_MAX];
+static uint16_t g_touch_pad_tx_coordinate[TOUCH_PAD_MONITOR_TOUCH_NUM_MAX];
+static uint16_t g_touch_pad_num_touch;
+static uint16_t g_touch_pad_threshold;
+static uint16_t g_touch_pad_rx_pixsel;
+static uint16_t g_touch_pad_tx_pixsel;
+static uint8_t  g_touch_pad_max_touch;
+static uint16_t g_touch_pad_drift_count;
+static int32_t  g_touch_pad_drift_buf[CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX];
+static uint16_t g_touch_pad_base[CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX];
+#endif
 #if TOUCH_CFG_MONITOR_ENABLE
 static volatile uint8_t g_touch_monitor_buf[TOUCH_MONITOR_BUFFER_SIZE];
 static uint8_t          g_touch_monitor_id;
 static uint16_t         g_touch_monitor_size[TOUCH_MONITOR_BLOCK_MAX];
-
  #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
 static touch_instance_ctrl_t * gp_touch_ctrl_list[TOUCH_UART_INSTANCE_MAX];
 static uart_instance_t       * gp_touch_uart_instance;
@@ -245,6 +293,7 @@ const touch_api_t g_touch_on_ctsu =
     .open       = RM_TOUCH_Open,
     .scanStart  = RM_TOUCH_ScanStart,
     .dataGet    = RM_TOUCH_DataGet,
+    .padDataGet = RM_TOUCH_PadDataGet,
     .close      = RM_TOUCH_Close,
     .versionGet = RM_TOUCH_VersionGet,
 };
@@ -272,7 +321,8 @@ const touch_api_t g_touch_on_ctsu =
 fsp_err_t RM_TOUCH_Open (touch_ctrl_t * const p_ctrl, touch_cfg_t const * const p_cfg)
 {
     touch_instance_ctrl_t * p_instance_ctrl = (touch_instance_ctrl_t *) p_ctrl;
-#if ((TOUCH_CFG_NUM_BUTTONS != 0) || (TOUCH_CFG_NUM_SLIDERS != 0) || (TOUCH_CFG_NUM_WHEELS != 0))
+#if ((TOUCH_CFG_NUM_BUTTONS != 0) || (TOUCH_CFG_NUM_SLIDERS != 0) || (TOUCH_CFG_NUM_WHEELS != 0) || \
+    (TOUCH_CFG_PAD_ENABLE))
     uint8_t id;
 #endif
     fsp_err_t err = FSP_SUCCESS;
@@ -380,6 +430,30 @@ fsp_err_t RM_TOUCH_Open (touch_ctrl_t * const p_ctrl, touch_cfg_t const * const 
         *(p_instance_ctrl->winfo.p_threshold + id) = p_cfg->p_wheels[id].threshold;
     }
 #endif
+#if (TOUCH_CFG_PAD_ENABLE)
+    p_instance_ctrl->pinfo.p_rx_coordinate = &g_touch_pad_rx_coordinate[0];
+    p_instance_ctrl->pinfo.p_tx_coordinate = &g_touch_pad_tx_coordinate[0];
+    p_instance_ctrl->pinfo.p_num_touch     = &g_touch_pad_num_touch;
+    p_instance_ctrl->pinfo.p_threshold     = &g_touch_pad_threshold;
+    p_instance_ctrl->pinfo.p_rx_pixel      = &g_touch_pad_rx_pixsel;
+    p_instance_ctrl->pinfo.p_tx_pixel      = &g_touch_pad_tx_pixsel;
+    p_instance_ctrl->pinfo.p_max_touch     = &g_touch_pad_max_touch;
+    p_instance_ctrl->pinfo.p_drift_buf     = &g_touch_pad_drift_buf[0];
+    p_instance_ctrl->pinfo.p_drift_count   = &g_touch_pad_drift_count;
+    p_instance_ctrl->pinfo.p_base_buf      = &g_touch_pad_base[0];
+
+    *(p_instance_ctrl->pinfo.p_threshold) = p_cfg->p_pad->threshold;
+    *(p_instance_ctrl->pinfo.p_rx_pixel)  = p_cfg->p_pad->rx_pixel;
+    *(p_instance_ctrl->pinfo.p_tx_pixel)  = p_cfg->p_pad->tx_pixel;
+    *(p_instance_ctrl->pinfo.p_max_touch) = p_cfg->p_pad->max_touch;
+    p_instance_ctrl->pinfo.num_drift      = p_cfg->p_pad->num_drift;
+
+    for (id = 0; id < (CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX); id++)
+    {
+        *(p_instance_ctrl->pinfo.p_drift_buf + id) = 0;
+    }
+    *(p_instance_ctrl->pinfo.p_drift_count) = 0;
+#endif
 
     if (FSP_SUCCESS == err)
     {
@@ -424,6 +498,15 @@ fsp_err_t RM_TOUCH_Open (touch_ctrl_t * const p_ctrl, touch_cfg_t const * const 
                         (TOUCH_MONITOR_WHEEL_SIZE * p_cfg->num_wheels));
     }
  #endif
+ #if (TOUCH_CFG_PAD_ENABLE)
+    if (CTSU_MODE_MUTUAL_CFC_SCAN == (p_instance_ctrl->p_ctsu_instance->p_cfg->md))
+    {
+        g_touch_monitor_size[num] =
+            (uint16_t) (g_touch_monitor_size[num] + TOUCH_MONITOR_PAD_SIZE +
+                        (TOUCH_MONITOR_PAD_ELEMENT_SIZE * p_cfg->p_pad->num_elements));
+    }
+ #endif
+
     g_touch_monitor_size[num] =
         (uint16_t) (g_touch_monitor_size[num] + TOUCH_MONITOR_HEADER_SIZE + TOUCH_MONITOR_FOOTER_SIZE);
 
@@ -650,106 +733,710 @@ fsp_err_t RM_TOUCH_DataGet (touch_ctrl_t * const p_ctrl,
     {
         if (TOUCH_UART_MONITOR_NONE == g_touch_uart_monitor_num)
         {
+            for (i = 0; i < p_instance_ctrl->p_touch_cfg->number; i++)
+            {
+                index = (uint16_t) (index + g_touch_monitor_size[i]);
+            }
+        }
+
+ #else
+    for (i = 0; i < p_instance_ctrl->p_touch_cfg->number; i++)
+    {
+        index = (uint16_t) (index + g_touch_monitor_size[i]);
+    }
  #endif
+        g_touch_monitor_buf[index++] = g_touch_monitor_id;
+        g_touch_monitor_buf[index++] = p_instance_ctrl->p_touch_cfg->number;
+        if ((CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->p_ctsu_instance->p_cfg->md) ||
+            (CTSU_MODE_CURRENT_SCAN == p_instance_ctrl->p_ctsu_instance->p_cfg->md))
+        {
+            g_touch_monitor_buf[index++] = 0x00;
+            element_num = p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_rx;
+            g_touch_monitor_buf[index++] = element_num;
+            for (i = 0; i < element_num; i++)
+            {
+                g_touch_monitor_buf[index++] = (uint8_t) (data[i]);
+                g_touch_monitor_buf[index++] = (uint8_t) (data[i] >> 8);
+            }
+        }
+        else
+        {
+            g_touch_monitor_buf[index++] = 0x01;
+            element_num = (uint8_t) (p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_rx *
+                                     p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_tx);
+            g_touch_monitor_buf[index++] = element_num;
+            for (i = 0; i < (element_num * 2); i++)
+            {
+                g_touch_monitor_buf[index++] = (uint8_t) (data[i]);
+                g_touch_monitor_buf[index++] = (uint8_t) (data[i] >> 8);
+            }
+        }
+
+ #if (TOUCH_CFG_NUM_BUTTONS != 0)
+        if (0 < p_instance_ctrl->p_touch_cfg->num_buttons)
+        {
+            g_touch_monitor_buf[index++] = 0x00;
+            g_touch_monitor_buf[index++] = p_instance_ctrl->p_touch_cfg->num_buttons;
+            for (i = 0; i < p_instance_ctrl->p_touch_cfg->num_buttons; i++)
+            {
+                g_touch_monitor_buf[index++] = (uint8_t) ((p_instance_ctrl->binfo.status >> i) & 0x01);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_reference[i]);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_reference[i] >> 8);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_threshold[i]);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_threshold[i] >> 8);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_hysteresis[i]);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_hysteresis[i] >> 8);
+            }
+        }
+ #endif
+ #if (TOUCH_CFG_NUM_SLIDERS != 0)
+        if (0 < p_instance_ctrl->p_touch_cfg->num_sliders)
+        {
+            g_touch_monitor_buf[index++] = 0x01;
+            g_touch_monitor_buf[index++] = p_instance_ctrl->p_touch_cfg->num_sliders;
+            for (i = 0; i < p_instance_ctrl->p_touch_cfg->num_sliders; i++)
+            {
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->sinfo.p_position[i]);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->sinfo.p_position[i] >> 8);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->sinfo.p_threshold[i]);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->sinfo.p_threshold[i] >> 8);
+            }
+        }
+ #endif
+ #if (TOUCH_CFG_NUM_WHEELS != 0)
+        if (0 < p_instance_ctrl->p_touch_cfg->num_wheels)
+        {
+            g_touch_monitor_buf[index++] = 0x02;
+            g_touch_monitor_buf[index++] = p_instance_ctrl->p_touch_cfg->num_wheels;
+            for (i = 0; i < p_instance_ctrl->p_touch_cfg->num_wheels; i++)
+            {
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->winfo.p_position[i]);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->winfo.p_position[i] >> 8);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->winfo.p_threshold[i]);
+                g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->winfo.p_threshold[i] >> 8);
+            }
+        }
+ #endif
+        g_touch_monitor_buf[index++] = g_touch_monitor_id++;
+
+ #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
+    }
+
+    if (!g_touch_uart_transmit_flag && (p_instance_ctrl->p_touch_cfg->number == g_touch_uart_monitor_num))
+    {
+        g_touch_monitor_buf[index++] = TOUCH_UART_FOOTER;
+        g_touch_monitor_buf[2]       = (uint8_t) (index);
+        g_touch_monitor_buf[3]       = (uint8_t) (index >> 8);
+        g_touch_uart_transmit_flag   = 1;
+        gp_touch_uart_instance->p_api->write(gp_touch_uart_instance->p_ctrl,
+                                             (uint8_t const * const) &g_touch_monitor_buf,
+                                             index);
+    }
+ #endif
+#endif
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * @brief This function gets the current position of pad is being pressed.
+ * Implements @ref touch_api_t::padDataGet , g_touch_on_ctsu
+ *
+ * @retval FSP_SUCCESS              Successfully data decoded.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_CTSU_SCANNING    Scanning this instance.
+ **********************************************************************************************************************/
+fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
+                               uint16_t           * p_pad_rx_coordinate,
+                               uint16_t           * p_pad_tx_coordinate,
+                               uint8_t            * p_pad_num_touch)
+{
+    fsp_err_t               err             = FSP_SUCCESS;
+    touch_instance_ctrl_t * p_instance_ctrl = (touch_instance_ctrl_t *) p_ctrl;
+#if (TOUCH_CFG_PAD_ENABLE)
+    static uint16_t count_get[CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX * 2];
+    static uint8_t  base_flag = 0;
+    uint16_t        i;
+    uint16_t        j;
+    uint8_t         loop;
+    int32_t         max_diff;
+    uint16_t        max_x;
+    uint16_t        max_y;
+    int32_t         x_parameter;
+    int32_t         y_parameter;
+    int16_t         heat_map[TOUCH_MAP_X * TOUCH_MAP_Y];
+    uint8_t         use_map[TOUCH_MAP_X * TOUCH_MAP_Y];
+    uint8_t         num_x;
+    uint8_t         num_y;
+    uint16_t        pitch_x;
+    uint16_t        pitch_y;
+    int16_t         tmp_count;
+    uint16_t        tmp_value;
+    int32_t         tmp_diff;
+    int32_t         tmp_heat;
+    int32_t         tmp_x1;            /* Work for calculating x parameter1 */
+    int32_t         tmp_x2;            /* Work for calculating x parameter2 */
+    int32_t         tmp_x3;            /* Work for calculating x parameter3 */
+    int32_t         tmp_x4;            /* Work for calculating x parameter4 */
+    int32_t         tmp_y1;            /* Work for calculating y parameter1 */
+    int32_t         tmp_y2;            /* Work for calculating y parameter2 */
+    int32_t         tmp_y3;            /* Work for calculating y parameter3 */
+    int32_t         tmp_y4;            /* Work for calculating y parameter4 */
+    uint16_t        second_half;
+    int32_t         drift_diff;
+    uint8_t         max_touch;         /* number of max touch */
+ #if (TOUCH_CFG_MONITOR_ENABLE)
+    uint16_t index       = 0;
+    uint8_t  element_num = 0;
+ #endif
+
+ #if (TOUCH_CFG_PARAM_CHECKING_ENABLE == 1)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_pad_rx_coordinate);
+    FSP_ASSERT(p_pad_tx_coordinate);
+    FSP_ASSERT(p_pad_num_touch);
+    TOUCH_ERROR_RETURN(TOUCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+
+    /* initialize touch number */
+    *p_pad_num_touch = 0;
+
+    /* check for max touch */
+    if (*(p_instance_ctrl->pinfo.p_max_touch) > ((CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX) / 9))
+    {
+        max_touch = (CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX) / 9;
+    }
+    else
+    {
+        max_touch = *(p_instance_ctrl->pinfo.p_max_touch);
+    }
+
+    /* Get local variable (TS number & data pinch) */
+    num_x       = p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_rx;
+    num_y       = p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_tx;
+    second_half = (uint16_t) (num_x * num_y);
+
+    pitch_x = (uint16_t) (*(p_instance_ctrl->pinfo.p_rx_pixel) / num_x);
+    pitch_y = (uint16_t) (*(p_instance_ctrl->pinfo.p_tx_pixel) / num_y);
+
+    /* Data get */
+    err = p_instance_ctrl->p_ctsu_instance->p_api->dataGet(p_instance_ctrl->p_ctsu_instance->p_ctrl, count_get);
+    FSP_ERROR_RETURN(FSP_ERR_CTSU_SCANNING != err, FSP_ERR_CTSU_SCANNING);
+
+    if (FSP_SUCCESS != err)
+    {
+        return err;
+    }
+
+    /* make difference value = secondary - primary */
+    for (i = 0; i < CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX; i++)
+    {
+        /* save to buffer in the first half */
+        count_get[i] = (uint16_t) (count_get[(i * 2) + 1] - count_get[i * 2]);
+    }
+
+    /* Data get section */
+    if (!base_flag)
+    {
+        /* format base value , changing the order */
+        for (j = 0; j < num_x; j++)
+        {
+            for (i = 0; i < num_y; i++)
+            {
+                *(p_instance_ctrl->pinfo.p_base_buf + j + (i * num_x)) =
+                    (count_get[*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_rx + j) +
+                               (*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_tx + i) * num_x)]);
+            }
+        }
+
+        base_flag = 1;
+    }
+    else
+    {
+        /* format difference value  */
+        for (j = 0; j < num_x; j++)
+        {
+            for (i = 0; i < num_y; i++)
+            {
+                /* get count data ,and changing the order */
+                tmp_value = count_get[*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_rx + j) +
+                                      (*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_tx + i) * num_x)];
+
+                /* make difference from base value */
+                tmp_diff = *(p_instance_ctrl->pinfo.p_base_buf + j + (i * num_x)) - tmp_value;
+
+                /* save difference value to buffer in the second half */
+                count_get[second_half + j + (i * num_x)] = (uint16_t) tmp_diff;
+            }
+        }
+    }
+
+    /* Monitor part of ready */
+ #if (TOUCH_CFG_MONITOR_ENABLE)
+  #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
+    if (!g_touch_uart_transmit_flag && (p_instance_ctrl->p_touch_cfg->number == g_touch_uart_monitor_num))
+    {
+        /* Monitor Data Notification */
+        g_touch_monitor_buf[index++] = TOUCH_UART_HEADER;
+        g_touch_monitor_buf[index++] = TOUCH_UART_RESPONSE_MONITOR2;
+        g_touch_monitor_buf[index++] = 0; /* Temporarily input the size */
+        g_touch_monitor_buf[index++] = 0; /* Temporarily input the size */
+    }
+
+    if (!g_touch_uart_transmit_flag &&
+        ((p_instance_ctrl->p_touch_cfg->number == g_touch_uart_monitor_num) ||
+         (TOUCH_UART_MONITOR_NONE == g_touch_uart_monitor_num)))
+    {
+        if (TOUCH_UART_MONITOR_NONE == g_touch_uart_monitor_num)
+        {
+            for (i = 0; i < p_instance_ctrl->p_touch_cfg->number; i++)
+            {
+                index = (uint16_t) (index + g_touch_monitor_size[i]);
+            }
+        }
+
+        if (!g_touch_uart_transmit_flag)
+        {
+            g_touch_monitor_buf[index++] = g_touch_monitor_id;
+            g_touch_monitor_buf[index++] = p_instance_ctrl->p_touch_cfg->number;
+
+            /* Pad data */
+            g_touch_monitor_buf[index++] = 0x02;
+            element_num = (uint8_t) (p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_rx *
+                                     p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_tx);
+            g_touch_monitor_buf[index++] = element_num;
+        }
+
+  #else                                /* TOUCH_CFG_UART_MONITOR_SUPPORT */
     for (i = 0; i < p_instance_ctrl->p_touch_cfg->number; i++)
     {
         index = (uint16_t) (index + g_touch_monitor_size[i]);
     }
 
- #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
-}
- #endif
-
     g_touch_monitor_buf[index++] = g_touch_monitor_id;
     g_touch_monitor_buf[index++] = p_instance_ctrl->p_touch_cfg->number;
-    if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->p_ctsu_instance->p_cfg->md)
+
+    /* Pad data */
+    g_touch_monitor_buf[index++] = 0x02;
+    element_num = (uint8_t) (p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_rx *
+                             p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_tx);
+    g_touch_monitor_buf[index++] = element_num;
+  #endif
+
+  #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
+    }
+
+    if (!g_touch_uart_transmit_flag &&
+        ((p_instance_ctrl->p_touch_cfg->number == g_touch_uart_monitor_num) ||
+         (TOUCH_UART_MONITOR_NONE == g_touch_uart_monitor_num)))
     {
-        g_touch_monitor_buf[index++] = 0x00;
-        element_num = p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_rx;
-        g_touch_monitor_buf[index++] = element_num;
+  #endif                               /* TOUCH_CFG_UART_MONITOR_SUPPORT */
         for (i = 0; i < element_num; i++)
         {
-            g_touch_monitor_buf[index++] = (uint8_t) (data[i]);
-            g_touch_monitor_buf[index++] = (uint8_t) (data[i] >> 8);
+            tmp_value = count_get[second_half + i];
+            if (tmp_value & TOUCH_PAD_TEMP_VALUE_OVERFLOW_BIT)
+            {
+                tmp_value = 0;
+            }
+
+            g_touch_monitor_buf[index++] = (uint8_t) (tmp_value);
+            g_touch_monitor_buf[index++] = (uint8_t) (tmp_value >> 8);
         }
+
+        g_touch_monitor_buf[index++] = 0x03; /* id of Pad     */
+        g_touch_monitor_buf[index++] = 0x01; /* number of Pad */
+  #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
     }
-    else
+  #endif
+ #endif  /* TOUCH_CFG_MONITOR_ENABLE */
+
+    if (base_flag)
     {
-        g_touch_monitor_buf[index++] = 0x01;
-        element_num = (uint8_t) (p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_rx *
-                                 p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_tx);
-        g_touch_monitor_buf[index++] = element_num;
-        for (i = 0; i < (element_num * 2); i++)
+        /* Get coordinate data for the Max touch */
+        for (loop = 0; loop < max_touch; loop++)
         {
-            g_touch_monitor_buf[index++] = (uint8_t) (data[i]);
-            g_touch_monitor_buf[index++] = (uint8_t) (data[i] >> 8);
+            /* initialize heat-map variables */
+            max_diff = 0;
+            max_y    = 0;
+            max_x    = 0;
+
+            /* Clear heat map ,and initial use map */
+            for (i = 0; i < (TOUCH_MAP_X * TOUCH_MAP_Y); i++)
+            {
+                heat_map[i] = 0;
+                use_map[i]  = 1;
+            }
+
+            /* Maximum value search */
+            for (j = 0; j < (num_x); j++)
+            {
+                for (i = 0; i < (num_y); i++)
+                {
+                    if ((int16_t) count_get[second_half + j + (i * num_x)] > max_diff)
+                    {
+                        max_diff = (int16_t) count_get[second_half + j + (i * num_x)];
+                        max_y    = i;
+                        max_x    = j;
+                    }
+                }
+            }
+
+            /* make use map */
+            if (0 == max_y)
+            {
+                /* If map position is Top. */
+                use_map[0] = 0;
+                use_map[1] = 0;
+                use_map[2] = 0;
+            }
+            else if ((num_y - 1) == max_y)
+            {
+                /* If map position is Bottom. */
+                use_map[6] = 0;
+                use_map[7] = 0;
+                use_map[8] = 0;
+            }
+            else
+            {
+            }
+
+            if (0 == max_x)
+            {
+                /* If map position is Left. */
+                use_map[0] = 0;
+                use_map[3] = 0;
+                use_map[6] = 0;
+            }
+            else if ((num_x - 1) == max_x)
+            {
+                /* If map position is Right. */
+                use_map[2] = 0;
+                use_map[5] = 0;
+                use_map[8] = 0;
+            }
+            else
+            {
+            }
+
+            /* make heat mapping */
+            for (i = 0; i < TOUCH_MAP_X; i++)
+            {
+                for (j = 0; j < TOUCH_MAP_Y; j++)
+                {
+                    if (use_map[j + (i * TOUCH_MAP_X)])
+                    {
+                        heat_map[j + (i * TOUCH_MAP_X)] =
+                            (int16_t) count_get[second_half + (max_x - 1 + j) + (max_y - 1 + i) * num_x];
+                    }
+                }
+            }
+
+            /* get x value */
+            /* Calculate right + bottom value. (x1/y1) */
+            tmp_heat = heat_map[5] + heat_map[7];
+            if (tmp_heat == 0)
+            {
+                /* When dividing by zero, set the calculation result to zero */
+                tmp_x1 = 0;                                      /* x parameter1 */
+                tmp_y1 = 0;                                      /* y parameter1 */
+            }
+            else
+            {
+                tmp_x1 = (heat_map[8] * heat_map[5]) / tmp_heat; /* x parameter1 */
+                tmp_y1 = (heat_map[8] * heat_map[7]) / tmp_heat; /* y parameter1 */
+            }
+
+            /* Calculate right + up value. (x2/y4) */
+            tmp_heat = heat_map[5] + heat_map[1];
+            if (tmp_heat == 0)
+            {
+                /* When dividing by zero, set the calculation result to zero */
+                tmp_x2 = 0;                                      /* x parameter2 */
+                tmp_y4 = 0;                                      /* y parameter4 */
+            }
+            else
+            {
+                tmp_x2 = (heat_map[2] * heat_map[5]) / tmp_heat; /* x parameter2 */
+                tmp_y4 = (heat_map[2] * heat_map[1]) / tmp_heat; /* y parameter4 */
+            }
+
+            /* Calculate left + up value. (x3/y3) */
+            tmp_heat = heat_map[3] + heat_map[1];
+            if (tmp_heat == 0)
+            {
+                /* When dividing by zero, set the calculation result to zero */
+                tmp_x3 = 0;                                      /* x parameter3 */
+                tmp_y3 = 0;                                      /* y parameter3 */
+            }
+            else
+            {
+                tmp_x3 = (heat_map[0] * heat_map[3]) / tmp_heat; /* x parameter3 */
+                tmp_y3 = (heat_map[0] * heat_map[1]) / tmp_heat; /* y parameter3 */
+            }
+
+            /* Calculate left + down value. (x4/y2) */
+            tmp_heat = heat_map[3] + heat_map[7];
+            if (tmp_heat == 0)
+            {
+                /* When dividing by zero, set the calculation result to zero */
+                tmp_x4 = 0;                                      /* x parameter4 */
+                tmp_y2 = 0;                                      /* y parameter2 */
+            }
+            else
+            {
+                tmp_x4 = (heat_map[6] * heat_map[3]) / tmp_heat; /* x parameter4 */
+                tmp_y2 = (heat_map[6] * heat_map[7]) / tmp_heat; /* y parameter2 */
+            }
+
+            if (heat_map[4] == 0)
+            {
+                x_parameter = 0;
+            }
+            else
+            {
+                /* x coordinate value calculation*/
+                x_parameter = ((pitch_x / 2) *
+                               (heat_map[5] + tmp_x1 + tmp_x2 -
+                                heat_map[3] - tmp_x3 - tmp_x4) /
+                               heat_map[4]);
+            }
+
+            /* Fit to pitch */
+            if (x_parameter > pitch_x / 2)
+            {
+                x_parameter = pitch_x / 2;
+            }
+            else if (x_parameter < -(pitch_x / 2))
+            {
+                x_parameter = -(pitch_x / 2);
+            }
+            else
+            {
+                /* no operation */
+            }
+
+            /* Coordinate x value based on pitch */
+            *(p_pad_rx_coordinate + loop) = (uint16_t) ((pitch_x * (max_x + 1) - pitch_x / 2) + x_parameter);
+
+            /* get y value */
+            if (heat_map[4] == 0)
+            {
+                y_parameter = 0;
+            }
+            else
+            {
+                /* y coordinate value calculation*/
+                y_parameter = ((pitch_y / 2) *
+                               (heat_map[7] + tmp_y1 + tmp_y2 -
+                                heat_map[1] - tmp_y3 - tmp_y4) /
+                               heat_map[4]);
+            }
+
+            /* Fit to pitch */
+            if (y_parameter > pitch_y / 2)
+            {
+                y_parameter = pitch_y / 2;
+            }
+            else if (y_parameter < -(pitch_y / 2))
+            {
+                y_parameter = -(pitch_y / 2);
+            }
+            else
+            {
+                /* no operation */
+            }
+
+            /* Coordinate y value based on pitch  */
+            *(p_pad_tx_coordinate + loop) = (uint16_t) ((pitch_y * (max_y + 1) - pitch_y / 2) + y_parameter);
+
+            /* touch check */
+            if (max_diff >= *(p_instance_ctrl->pinfo.p_threshold))
+            {
+                /* If touching ,then counter's being incremented */
+                (*p_pad_num_touch)++;
+
+                /* Clear heat map area */
+                for (i = 0; i < TOUCH_MAP_X; i++)
+                {
+                    for (j = 0; j < TOUCH_MAP_Y; j++)
+                    {
+                        if (use_map[i * TOUCH_MAP_X + j])
+                        {
+                            count_get[second_half + (max_x - 1 + j) + (max_y - 1 + i) * num_x] = 0;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                *(p_pad_rx_coordinate + loop) = TOUCH_PAD_NOT_TOUCH;
+                *(p_pad_tx_coordinate + loop) = TOUCH_PAD_NOT_TOUCH;
+            }
+
+            if (loop < TOUCH_PAD_MONITOR_TOUCH_NUM_MAX)
+            {
+                *(p_instance_ctrl->pinfo.p_rx_coordinate + loop) = *(p_pad_rx_coordinate + loop);
+                *(p_instance_ctrl->pinfo.p_tx_coordinate + loop) = *(p_pad_tx_coordinate + loop);
+
+                FSP_PARAMETER_NOT_USED(p_instance_ctrl->pinfo.p_rx_coordinate);
+                FSP_PARAMETER_NOT_USED(p_instance_ctrl->pinfo.p_tx_coordinate);
+            }
+        }
+
+        /* the drift correction process. */
+        if (0 < p_instance_ctrl->pinfo.num_drift)
+        {
+            if (0 == *p_pad_num_touch)
+            {
+                /* If not touching, drift correction counter's being incremented */
+                (*(p_instance_ctrl->pinfo.p_drift_count))++;
+
+                for (i = 0; i < num_y; i++)
+                {
+                    for (j = 0; j < num_x; j++)
+                    {
+                        /* It is an addition for the drift correction average calculation */
+                        tmp_count = (int16_t) count_get[second_half + j + (i * num_x)];
+
+                        *(p_instance_ctrl->pinfo.p_drift_buf + (j + (i * num_x))) += (int32_t) tmp_count;
+
+                        if (*(p_instance_ctrl->pinfo.p_drift_count) >= p_instance_ctrl->pinfo.num_drift)
+                        {
+                            drift_diff = (int32_t) (*(p_instance_ctrl->pinfo.p_drift_buf + j + (i * num_x)) /
+                                                    *(p_instance_ctrl->pinfo.p_drift_count));
+
+                            *(p_instance_ctrl->pinfo.p_base_buf + j + (i * num_x)) =
+                                (uint16_t) ((int32_t) (*(p_instance_ctrl->pinfo.p_base_buf + j + (i * num_x))) -
+                                            drift_diff);
+
+                            /* Clear total value for the average */
+                            *(p_instance_ctrl->pinfo.p_drift_buf + (j + (i * num_x))) = 0;
+                        }
+                    }
+                }
+
+                if (*(p_instance_ctrl->pinfo.p_drift_count) >= p_instance_ctrl->pinfo.num_drift)
+                {
+                    /* Count clear */
+                    *(p_instance_ctrl->pinfo.p_drift_count) = 0;
+                }
+            }
         }
     }
 
- #if (TOUCH_CFG_NUM_BUTTONS != 0)
-    if (0 < p_instance_ctrl->p_touch_cfg->num_buttons)
+    *(p_instance_ctrl->pinfo.p_num_touch) = *p_pad_num_touch;
+
+    for (i = *p_pad_num_touch; i < TOUCH_PAD_MONITOR_TOUCH_NUM_MAX; i++)
     {
-        g_touch_monitor_buf[index++] = 0x00;
-        g_touch_monitor_buf[index++] = p_instance_ctrl->p_touch_cfg->num_buttons;
-        for (i = 0; i < p_instance_ctrl->p_touch_cfg->num_buttons; i++)
+        g_touch_pad_rx_coordinate[i] = TOUCH_PAD_NOT_TOUCH;
+        g_touch_pad_tx_coordinate[i] = TOUCH_PAD_NOT_TOUCH;
+    }
+
+    /* Monitor part of result  */
+ #if (TOUCH_CFG_MONITOR_ENABLE)
+  #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
+    if (!g_touch_uart_transmit_flag &&
+        ((p_instance_ctrl->p_touch_cfg->number == g_touch_uart_monitor_num) ||
+         (TOUCH_UART_MONITOR_NONE == g_touch_uart_monitor_num)))
+    {
+        g_touch_monitor_buf[index++] = *p_pad_num_touch; /* number of touch    */
+        for (i = 0; i < TOUCH_PAD_MONITOR_TOUCH_NUM_MAX; i++)
         {
-            g_touch_monitor_buf[index++] = (uint8_t) ((p_instance_ctrl->binfo.status >> i) & 0x01);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_reference[i]);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_reference[i] >> 8);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_threshold[i]);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_threshold[i] >> 8);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_hysteresis[i]);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->binfo.p_hysteresis[i] >> 8);
+            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->pinfo.p_rx_coordinate[i]);
+            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->pinfo.p_rx_coordinate[i] >> 8);
+            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->pinfo.p_tx_coordinate[i]);
+            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->pinfo.p_tx_coordinate[i] >> 8);
+        }
+
+        g_touch_monitor_buf[index++] = (uint8_t) (*(p_instance_ctrl->pinfo.p_threshold));
+        g_touch_monitor_buf[index++] = (uint8_t) ((*(p_instance_ctrl->pinfo.p_threshold)) >> 8);
+        g_touch_monitor_buf[index++] = (uint8_t) (*(p_instance_ctrl->pinfo.p_rx_pixel));
+        g_touch_monitor_buf[index++] = (uint8_t) ((*(p_instance_ctrl->pinfo.p_rx_pixel)) >> 8);
+        g_touch_monitor_buf[index++] = (uint8_t) (*(p_instance_ctrl->pinfo.p_tx_pixel));
+        g_touch_monitor_buf[index++] = (uint8_t) ((*(p_instance_ctrl->pinfo.p_tx_pixel)) >> 8);
+        g_touch_monitor_buf[index++] = (*(p_instance_ctrl->pinfo.p_max_touch));
+        g_touch_monitor_buf[index++] = (p_instance_ctrl->pinfo.num_drift);
+        g_touch_monitor_buf[index++] = g_touch_monitor_id++;
+
+        if (p_instance_ctrl->p_touch_cfg->number == g_touch_uart_monitor_num)
+        {
+            g_touch_monitor_buf[index++] = TOUCH_UART_FOOTER;
+            g_touch_monitor_buf[2]       = (uint8_t) (index);
+            g_touch_monitor_buf[3]       = (uint8_t) (index >> 8);
+            g_touch_uart_transmit_flag   = 1;
+            gp_touch_uart_instance->p_api->write(gp_touch_uart_instance->p_ctrl,
+                                                 (uint8_t const * const) &g_touch_monitor_buf,
+                                                 index);
         }
     }
- #endif
- #if (TOUCH_CFG_NUM_SLIDERS != 0)
-    if (0 < p_instance_ctrl->p_touch_cfg->num_sliders)
+
+  #else                                              /* TOUCH_CFG_UART_MONITOR_SUPPORT */
+    g_touch_monitor_buf[index++] = *p_pad_num_touch; /* number of touch    */
+    for (i = 0; i < TOUCH_PAD_MONITOR_TOUCH_NUM_MAX; i++)
     {
-        g_touch_monitor_buf[index++] = 0x01;
-        g_touch_monitor_buf[index++] = p_instance_ctrl->p_touch_cfg->num_sliders;
-        for (i = 0; i < p_instance_ctrl->p_touch_cfg->num_sliders; i++)
-        {
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->sinfo.p_position[i]);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->sinfo.p_position[i] >> 8);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->sinfo.p_threshold[i]);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->sinfo.p_threshold[i] >> 8);
-        }
+        g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->pinfo.p_rx_coordinate[i]);
+        g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->pinfo.p_rx_coordinate[i] >> 8);
+        g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->pinfo.p_tx_coordinate[i]);
+        g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->pinfo.p_tx_coordinate[i] >> 8);
     }
- #endif
- #if (TOUCH_CFG_NUM_WHEELS != 0)
-    if (0 < p_instance_ctrl->p_touch_cfg->num_wheels)
-    {
-        g_touch_monitor_buf[index++] = 0x02;
-        g_touch_monitor_buf[index++] = p_instance_ctrl->p_touch_cfg->num_wheels;
-        for (i = 0; i < p_instance_ctrl->p_touch_cfg->num_wheels; i++)
-        {
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->winfo.p_position[i]);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->winfo.p_position[i] >> 8);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->winfo.p_threshold[i]);
-            g_touch_monitor_buf[index++] = (uint8_t) (p_instance_ctrl->winfo.p_threshold[i] >> 8);
-        }
-    }
- #endif
+
+    g_touch_monitor_buf[index++] = (uint8_t) (*(p_instance_ctrl->pinfo.p_threshold));
+    g_touch_monitor_buf[index++] = (uint8_t) ((*(p_instance_ctrl->pinfo.p_threshold)) >> 8);
+    g_touch_monitor_buf[index++] = (uint8_t) (*(p_instance_ctrl->pinfo.p_rx_pixel));
+    g_touch_monitor_buf[index++] = (uint8_t) ((*(p_instance_ctrl->pinfo.p_rx_pixel)) >> 8);
+    g_touch_monitor_buf[index++] = (uint8_t) (*(p_instance_ctrl->pinfo.p_tx_pixel));
+    g_touch_monitor_buf[index++] = (uint8_t) ((*(p_instance_ctrl->pinfo.p_tx_pixel)) >> 8);
+    g_touch_monitor_buf[index++] = (*(p_instance_ctrl->pinfo.p_max_touch));
+    g_touch_monitor_buf[index++] = (p_instance_ctrl->pinfo.num_drift);
     g_touch_monitor_buf[index++] = g_touch_monitor_id++;
-
- #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
-}
-
-if (!g_touch_uart_transmit_flag && (p_instance_ctrl->p_touch_cfg->number == g_touch_uart_monitor_num))
-{
-    g_touch_monitor_buf[index++] = TOUCH_UART_FOOTER;
-    g_touch_monitor_buf[2]       = (uint8_t) (index);
-    g_touch_monitor_buf[3]       = (uint8_t) (index >> 8);
-    g_touch_uart_transmit_flag   = 1;
-    gp_touch_uart_instance->p_api->write(gp_touch_uart_instance->p_ctrl,
-                                         (uint8_t const * const) &g_touch_monitor_buf,
-                                         index);
-}
+  #endif                               /* TOUCH_CFG_UART_MONITOR_SUPPORT */
+ #endif                                /* TOUCH_CFG_MONITOR_ENABLE */
+#else  /* TOUCH_CFG_PAD_ENABLE */
+ #if (TOUCH_CFG_PARAM_CHECKING_ENABLE == 1)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_pad_rx_coordinate);
+    FSP_ASSERT(p_pad_tx_coordinate);
+    FSP_ASSERT(p_pad_num_touch);
+    TOUCH_ERROR_RETURN(TOUCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
  #endif
+    FSP_PARAMETER_NOT_USED(p_pad_rx_coordinate);
+    FSP_PARAMETER_NOT_USED(p_pad_tx_coordinate);
+    FSP_PARAMETER_NOT_USED(p_pad_num_touch);
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+    FSP_PARAMETER_NOT_USED(FSP_ERR_CTSU_SCANNING);
+#endif                                 /* TOUCH_CFG_PAD_ENABLE */
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Updates the user callback and has option of providing memory for callback structure.
+ * Implements touch_api_t::callbackSet
+ *
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t RM_TOUCH_CallbackSet (touch_ctrl_t * const          p_api_ctrl,
+                                void (                      * p_callback)(touch_callback_args_t *),
+                                void const * const            p_context,
+                                touch_callback_args_t * const p_callback_memory)
+{
+    fsp_err_t               err    = FSP_SUCCESS;
+    touch_instance_ctrl_t * p_ctrl = (touch_instance_ctrl_t *) p_api_ctrl;
+
+#if (TOUCH_CFG_PARAM_CHECKING_ENABLE == 1)
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(TOUCH_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    return FSP_SUCCESS;
+    err = p_ctrl->p_ctsu_instance->p_api->callbackSet(p_ctrl->p_ctsu_instance->p_ctrl,
+                                                      p_callback,
+                                                      p_context,
+                                                      p_callback_memory);
+
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -762,7 +1449,7 @@ if (!g_touch_uart_transmit_flag && (p_instance_ctrl->p_touch_cfg->number == g_to
 fsp_err_t RM_TOUCH_Close (touch_ctrl_t * const p_ctrl)
 {
     touch_instance_ctrl_t * p_instance_ctrl = (touch_instance_ctrl_t *) p_ctrl;
-    fsp_err_t err = FSP_SUCCESS;
+    fsp_err_t               err             = FSP_SUCCESS;
 
     FSP_ASSERT(p_instance_ctrl);
     TOUCH_ERROR_RETURN(TOUCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
@@ -933,7 +1620,7 @@ void touch_button_on (touch_button_info_t * p_binfo, uint16_t value, uint8_t but
     /* ===== touch ON result ===== */
     if (p_binfo->on_freq <= (*(p_binfo->p_on_count + button_id)))
     {
-        p_binfo->status |= (uint64_t) (1 << button_id);
+        p_binfo->status |= ((uint64_t) 1 << button_id);
     }
     else
     {
@@ -946,7 +1633,7 @@ void touch_button_on (touch_button_info_t * p_binfo, uint16_t value, uint8_t but
         /* If reaching max_on_threshold, it makes result off and it revises a drift. */
         if (p_binfo->cancel_freq <= (*(p_binfo->p_on_count + button_id)))
         {
-            p_binfo->status &= ~((uint64_t) (1 << button_id));
+            p_binfo->status &= ~((uint64_t) 1 << button_id);
             *(p_binfo->p_on_count + button_id)  = 0;
             *(p_binfo->p_reference + button_id) = value;
         }
@@ -972,7 +1659,7 @@ void touch_button_off (touch_button_info_t * p_binfo, uint8_t button_id)
     /* ===== touch OFF result ===== */
     if (p_binfo->off_freq <= (*(p_binfo->p_off_count + button_id)))
     {
-        p_binfo->status &= ~((uint64_t) (1 << button_id));
+        p_binfo->status &= ~(((uint64_t) 1 << button_id));
     }
     else
     {
@@ -993,7 +1680,7 @@ void touch_button_drift (touch_button_info_t * p_binfo, uint16_t value, uint8_t 
     if (0 != p_binfo->drift_freq)
     {
         /* In case of doing drift correction being and moreover On/Off judgment result 1=OFF */
-        if (0 == (p_binfo->status & ((uint64_t) (1 << button_id))))
+        if (0 == (p_binfo->status & ((uint64_t) 1 << button_id)))
         {
             /* It is an addition for the drift correction average calculation */
             *(p_binfo->p_drift_buf + button_id) += value;
@@ -1041,8 +1728,8 @@ void touch_button_drift (touch_button_info_t * p_binfo, uint16_t value, uint8_t 
 void touch_slider_decode (touch_slider_info_t * p_sinfo, uint16_t * slider_data, uint8_t num_elements,
                           uint8_t slider_id)
 {
-    uint8_t loop;
-    uint8_t max_data_num;
+    uint8_t  loop;
+    uint8_t  max_data_num;
     uint16_t d1;
     uint16_t d2;
     uint16_t d3;
@@ -1167,8 +1854,8 @@ void touch_slider_decode (touch_slider_info_t * p_sinfo, uint16_t * slider_data,
  ***********************************************************************************************************************/
 void touch_wheel_decode (touch_wheel_info_t * p_winfo, uint16_t * wheel_data, uint8_t num_elements, uint8_t wheel_id)
 {
-    uint8_t loop;
-    uint8_t max_data_num;
+    uint8_t  loop;
+    uint8_t  max_data_num;
     uint16_t d1;
     uint16_t d2;
     uint16_t d3;
@@ -1263,10 +1950,10 @@ void touch_wheel_decode (touch_wheel_info_t * p_winfo, uint16_t * wheel_data, ui
 void touch_uart_callback (uart_callback_args_t * p_args)
 {
     ctsu_instance_ctrl_t * p_ctsu_ctrl;
-    uint16_t write_data;
-    uint16_t ctsuso;
-    uint8_t ctsusdpa;
-    uint8_t ctsusnum;
+    uint16_t               write_data;
+    uint16_t               ctsuso;
+    uint8_t                ctsusdpa;
+    uint8_t                ctsusnum;
   #if (BSP_FEATURE_CTSU_VERSION == 2)
     uint32_t * p_ctsuso;
     uint32_t * p_ctsusdpa;
@@ -1277,8 +1964,8 @@ void touch_uart_callback (uart_callback_args_t * p_args)
     uint16_t * p_ctsusdpa;
     uint16_t * p_ctsusnum;
   #endif
-    uint8_t num;
-    uint8_t element;
+    uint8_t  num;
+    uint8_t  element;
     uint16_t index;
 
     if (NULL == gp_touch_uart_instance)
@@ -1499,6 +2186,39 @@ void touch_uart_callback (uart_callback_args_t * p_args)
                             break;
                         }
 
+  #if (TOUCH_CFG_PAD_ENABLE)
+
+                        /* write command */
+                        case TOUCH_UART_WRTIE_PAD_THRESHOLD:
+                        {
+                            *gp_touch_ctrl_list[num]->pinfo.p_threshold = write_data;
+                            break;
+                        }
+
+                        case TOUCH_UART_WRTIE_PAD_RX_PIXEL:
+                        {
+                            *gp_touch_ctrl_list[num]->pinfo.p_rx_pixel = write_data;
+                            break;
+                        }
+
+                        case TOUCH_UART_WRTIE_PAD_TX_PIXEL:
+                        {
+                            *gp_touch_ctrl_list[num]->pinfo.p_tx_pixel = write_data;
+                            break;
+                        }
+
+                        case TOUCH_UART_WRTIE_PAD_MAX_TOUCH:
+                        {
+                            *gp_touch_ctrl_list[num]->pinfo.p_max_touch = (uint8_t) write_data;
+                            break;
+                        }
+
+                        case TOUCH_UART_WRTIE_PAD_DRIFT:
+                        {
+                            gp_touch_ctrl_list[num]->pinfo.num_drift = (uint8_t) write_data;
+                            break;
+                        }
+  #endif                               /* TOUCH_CFG_PAD_ENABLE */
                         default:
                         {
                             break;

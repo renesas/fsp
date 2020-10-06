@@ -180,6 +180,19 @@ typedef struct st_rm_vee_api
      */
     fsp_err_t (* format)(rm_vee_ctrl_t * const p_ctrl, uint8_t const * const p_ref_data);
 
+    /** Specify callback function and optional context pointer and working memory pointer.
+     * @par Implemented as
+     * - @ref RM_VEE_FLASH_CallbackSet()
+     *
+     * @param[in]   p_ctrl                   Control block set in @ref rm_vee_api_t::open call.
+     * @param[in]   p_callback               Callback function to register
+     * @param[in]   p_context                Pointer to send to callback function
+     * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
+     *                                       Callback arguments allocated here are only valid during the callback.
+     */
+    fsp_err_t (* callbackSet)(rm_vee_ctrl_t * const p_api_ctrl, void (* p_callback)(rm_vee_callback_args_t *),
+                              void const * const p_context, rm_vee_callback_args_t * const p_callback_memory);
+
     /** Closes the module and lower level storage device.
      * @par Implemented as
      * - @ref RM_VEE_FLASH_Close

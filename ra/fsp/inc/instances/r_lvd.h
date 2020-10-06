@@ -51,6 +51,15 @@ typedef struct st_lvd_instance_ctrl
 {
     uint32_t          open;
     lvd_cfg_t const * p_cfg;
+
+#if BSP_TZ_SECURE_BUILD
+    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
+#endif
+    void (* p_callback)(lvd_callback_args_t *); // Pointer to callback that is called when lvd_current_state_t changes.
+    lvd_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+
+    /* Pointer to context to be passed into callback function */
+    void const * p_context;
 } lvd_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -71,6 +80,10 @@ fsp_err_t R_LVD_Close(lvd_ctrl_t * const p_api_ctrl);
 fsp_err_t R_LVD_StatusGet(lvd_ctrl_t * const p_api_ctrl, lvd_status_t * p_lvd_status);
 fsp_err_t R_LVD_StatusClear(lvd_ctrl_t * const p_api_ctrl);
 fsp_err_t R_LVD_VersionGet(fsp_version_t * const p_version);
+fsp_err_t R_LVD_CallbackSet(lvd_ctrl_t * const          p_api_ctrl,
+                            void (                    * p_callback)(lvd_callback_args_t *),
+                            void const * const          p_context,
+                            lvd_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

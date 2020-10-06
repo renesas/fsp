@@ -40,7 +40,8 @@
 /* Calculate the mask bits for byte alignment from the transfer_size_t. */
 #define DMAC_PRV_MASK_ALIGN_N_BYTES(x)    ((1U << (x)) - 1U)
 
-#define DMAC_PRV_REG(ch)                  ((R_DMAC0_Type *) ((R_DMAC1 - R_DMAC0) * ch + R_DMAC0))
+#define DMAC_PRV_REG(ch)                  ((R_DMAC0_Type *) (((uint32_t) R_DMAC1 - (uint32_t) R_DMAC0) * ch + \
+                                                             (uint32_t) R_DMAC0))
 
 /* Transfer Count Register A Bit Field Definitions */
 #define DMAC_PRV_DMCRA_LOW_OFFSET      (0U)
@@ -182,6 +183,7 @@ fsp_err_t R_DMAC_Open (transfer_ctrl_t * const p_api_ctrl, transfer_cfg_t const 
 
     /* Enable DMAC Operation. */
     R_BSP_MODULE_START(FSP_IP_DMAC, p_extend->channel);
+
     R_DMA->DMAST = 1;
 
     /* Configure the transfer settings. */
