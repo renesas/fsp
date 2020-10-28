@@ -49,7 +49,7 @@ void R_BSP_ElcCfgSecurityInit(void);
 extern const fsp_vector_t g_vector_table[BSP_ICU_VECTOR_MAX_ENTRIES];
 
  #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile bsp_nonsecure_func_t)(void);
+typedef void (BSP_CMSE_NONSECURE_CALL * bsp_nonsecure_func_t)(void);
  #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_nonsecure_func_t)(void);
  #endif
@@ -63,9 +63,11 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_nonsecure_func_t)(void);
   #pragma section=".tz_sdram_ns_start"
   #pragma section=".tz_qspi_flash_ns_start"
 
-/* &__tz_<REGION>_C is the address of the non-secure callable section. */
+/* &__tz_<REGION>_C is the address of the non-secure callable section. Must assign value to this variable or
+ * linker will give error. */
+
 /* &__tz_<REGION>_N is the start address of the non-secure region. */
-BSP_DONT_REMOVE void const * const __tz_FLASH_C      BSP_ALIGN_VARIABLE(1024) @".tz_flash_nsc_start";
+BSP_DONT_REMOVE void const * const __tz_FLASH_C      BSP_ALIGN_VARIABLE(1024) @".tz_flash_nsc_start" = 0;
 BSP_DONT_REMOVE void const * const __tz_FLASH_N      BSP_ALIGN_VARIABLE(32768) @".tz_flash_ns_start";
 BSP_DONT_REMOVE void const * const __tz_RAM_C        BSP_ALIGN_VARIABLE(1024) @".tz_ram_nsc_start";
 BSP_DONT_REMOVE void const * const __tz_RAM_N        BSP_ALIGN_VARIABLE(8192) @".tz_ram_ns_start";

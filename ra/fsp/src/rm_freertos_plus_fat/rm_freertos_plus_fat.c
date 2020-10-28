@@ -79,7 +79,6 @@ const fsp_version_t g_rm_freertos_plus_fat_version =
 };
 
 /** FAT HAL API mapping for FreeRTOS_plus_FAT Controller interface */
-/*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
 const rm_freertos_plus_fat_api_t g_fat_on_freertos =
 {
     .open       = RM_FREERTOS_PLUS_FAT_Open,

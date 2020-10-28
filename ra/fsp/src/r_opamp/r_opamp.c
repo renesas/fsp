@@ -88,7 +88,6 @@ static const uint32_t g_opamp_stabilization_lookup[] =
  **********************************************************************************************************************/
 
 /** OPAMP Implementation of OPAMP interface. */
-/*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
 const opamp_api_t g_opamp_on_opamp =
 {
     .open       = R_OPAMP_Open,

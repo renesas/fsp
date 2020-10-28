@@ -93,7 +93,7 @@ typedef enum e_adc_elc_trigger
 } adc_elc_trigger_t;
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile adc_prv_ns_callback)(adc_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * adc_prv_ns_callback)(adc_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile adc_prv_ns_callback)(adc_callback_args_t * p_args);
 #endif
@@ -280,7 +280,7 @@ fsp_err_t R_ADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
 
 /*******************************************************************************************************************//**
  * Configures the ADC scan parameters. Channel specific settings are set in this function. Pass a pointer to
- * @ref adc_channel_cfg_t to p_extend.
+ * @ref adc_channel_cfg_t to p_channel_cfg.
  *
  * @note This starts group B scans if adc_channel_cfg_t::priority_group_a is set to ADC_GROUP_A_GROUP_B_CONTINUOUS_SCAN.
  *
@@ -288,26 +288,26 @@ fsp_err_t R_ADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
  **********************************************************************************************************************/
-fsp_err_t R_ADC_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_extend)
+fsp_err_t R_ADC_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_channel_cfg)
 {
-    adc_channel_cfg_t const * p_channel_cfg   = (adc_channel_cfg_t const *) p_extend;
-    adc_instance_ctrl_t     * p_instance_ctrl = (adc_instance_ctrl_t *) p_ctrl;
-    fsp_err_t                 err             = FSP_SUCCESS;
+    adc_channel_cfg_t const * p_adc_channel_cfg = (adc_channel_cfg_t const *) p_channel_cfg;
+    adc_instance_ctrl_t     * p_instance_ctrl   = (adc_instance_ctrl_t *) p_ctrl;
+    fsp_err_t                 err               = FSP_SUCCESS;
 
 #if ADC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
-    FSP_ASSERT(NULL != p_channel_cfg);
+    FSP_ASSERT(NULL != p_adc_channel_cfg);
     FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
 
-    err = r_adc_scan_cfg_check(p_instance_ctrl, p_channel_cfg);
+    err = r_adc_scan_cfg_check(p_instance_ctrl, p_adc_channel_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
     /* Configure the hardware based on the configuration */
-    r_adc_scan_cfg(p_instance_ctrl, p_channel_cfg);
+    r_adc_scan_cfg(p_instance_ctrl, p_adc_channel_cfg);
 
     /* Save the scan mask locally; this is required for the infoGet function. */
-    p_instance_ctrl->scan_mask = p_channel_cfg->scan_mask;
+    p_instance_ctrl->scan_mask = p_adc_channel_cfg->scan_mask;
 
     /* Return the error code */
     return err;

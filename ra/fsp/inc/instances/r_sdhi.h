@@ -39,7 +39,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define SDHI_CODE_VERSION_MAJOR    (1U)
-#define SDHI_CODE_VERSION_MINOR    (0U)
+#define SDHI_CODE_VERSION_MINOR    (1U)
 
 #define SDHI_MAX_BLOCK_SIZE        (512U)
 
@@ -60,7 +60,6 @@ typedef union
 {
     uint32_t word;
 
-    /*LDRA_INSPECTED 381 S Anonymous structures and unions are allowed in FSP code. */
     struct s_sdhi_event_type
     {
         uint32_t response_end       : 1; // < response end detected

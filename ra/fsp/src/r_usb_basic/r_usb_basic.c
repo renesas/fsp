@@ -566,15 +566,32 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 
     if (FSP_SUCCESS == err)
     {
-        g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << p_ctrl->type);      /* Set USB Open device class */
-        if (USB_CLASS_INTERNAL_PCDC == (usb_class_internal_t) p_ctrl->type)
+        if (USB_MODE_HOST == p_cfg->usb_mode)
         {
-            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PCDCC); /* Set USB Open device class */
+            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << p_ctrl->type);      /* Set USB Open device class */
+            if (USB_CLASS_INTERNAL_HCDC == (usb_class_internal_t) p_ctrl->type)
+            {
+                g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_HCDCC); /* Set USB Open device class */
+            }
         }
-
-        if (USB_CLASS_INTERNAL_HCDC == (usb_class_internal_t) p_ctrl->type)
+        else
         {
-            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_HCDCC); /* Set USB Open device class */
+#if defined(USB_CFG_PCDC_USE)
+            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PCDC);
+            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PCDCC);
+ #if ((USB_CFG_PCDC_BULK_IN2 != USB_NULL) || (USB_CFG_PCDC_BULK_OUT2 != USB_NULL))
+            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PCDC2);
+            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PCDCC2);
+ #endif                                /* ((USB_CFG_PCDC_BULK_IN2 != USB_NULL) || (USB_CFG_PCDC_BULK_OUT2 != USB_NULL)) */
+#endif                                 /* defined(USB_CFG_PCDC_USE) */
+
+#if defined(USB_CFG_PHID_USE)
+            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PHID);
+#endif                                 /* defined(USB_CFG_PHID_USE) */
+
+#if defined(USB_CFG_PMSC_USE)
+            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PMSC);
+#endif                                 /* defined(USB_CFG_PMSC_USE) */
         }
     }
 
@@ -700,24 +717,8 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
 #endif  /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
         }
 
-        g_usb_open_class[p_ctrl->module_number] =
-            (uint16_t) (g_usb_open_class[p_ctrl->module_number] & (~(1 << p_ctrl->type))); /* Clear USB Open device class */
+        g_usb_open_class[p_ctrl->module_number] = 0;
 
-#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-        if (USB_CLASS_INTERNAL_PCDC == (usb_class_internal_t) p_ctrl->type)
-        {
-            g_usb_open_class[p_ctrl->module_number] = (uint16_t) (g_usb_open_class[p_ctrl->module_number] &
-                                                                  (~(1 << USB_CLASS_INTERNAL_PCDCC))); /* Clear USB Open device class */
-        }
-#endif  /* USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
-
-#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-        if (USB_CLASS_INTERNAL_HCDC == (usb_class_internal_t) p_ctrl->type)
-        {
-            g_usb_open_class[p_ctrl->module_number] = (uint16_t) (g_usb_open_class[p_ctrl->module_number] &
-                                                                  (~(1 << USB_CLASS_INTERNAL_HCDCC))); /* Clear USB Open device class */
-        }
-#endif  /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 #if defined(USB_CFG_PMSC_USE)
         ret_code = r_usb_pmsc_media_close();
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
@@ -2152,6 +2153,7 @@ fsp_err_t R_USB_PipeInfoGet (usb_ctrl_t * const p_api_ctrl, usb_pipe_t * p_info,
         }
 
         pipe_type = usb_cstd_get_pipe_type(&utr, p_ctrl->pipe);
+
         switch (pipe_type)
         {
             case USB_TYPFIELD_ISO:

@@ -74,7 +74,7 @@ const spi_api_t g_spi_on_sci =
  **********************************************************************************************************************/
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile sci_spi_prv_ns_callback)(spi_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * sci_spi_prv_ns_callback)(spi_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile sci_spi_prv_ns_callback)(spi_callback_args_t * p_args);
 #endif

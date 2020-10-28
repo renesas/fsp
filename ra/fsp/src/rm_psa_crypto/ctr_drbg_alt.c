@@ -65,7 +65,7 @@ static int  mbedtls_aes_crypt_ecb(mbedtls_aes_context * ctx,
 static void mbedtls_aes_init(mbedtls_aes_context * ctx);
 static int  mbedtls_aes_setkey_enc(mbedtls_aes_context * ctx, const unsigned char * key, unsigned int keybits);
 
- #if defined(__ICCARM__)               /* IAR Compiler */
+ #if defined(__ICCARM__) && defined(MBEDTLS_FS_IO)              /* IAR Compiler */
 static int ferror(FILE * f);
 
 int ferror (FILE * f)
@@ -174,7 +174,7 @@ static int block_cipher_df( unsigned char *output,
      *     (Total is padded to a multiple of 16-bytes with zeroes)
      */
     p = buf + MBEDTLS_CTR_DRBG_BLOCKSIZE;
-    *p++ = ( data_len >> 24 ) & 0xff;
+    *p++ = (uint8_t) (( data_len >> 24 ) & 0xff);
     *p++ = ( data_len >> 16 ) & 0xff;
     *p++ = ( data_len >> 8  ) & 0xff;
     *p++ = ( data_len       ) & 0xff;
@@ -186,7 +186,7 @@ static int block_cipher_df( unsigned char *output,
     buf_len = MBEDTLS_CTR_DRBG_BLOCKSIZE + 8 + data_len + 1;
 
     for( i = 0; i < MBEDTLS_CTR_DRBG_KEYSIZE; i++ )
-        key[i] = i;
+        key[i] = (uint8_t) i;
 
     if( ( ret = mbedtls_aes_setkey_enc( &aes_ctx, key,
                                         MBEDTLS_CTR_DRBG_KEYBITS ) ) != 0 )
@@ -1550,6 +1550,7 @@ static int mbedtls_aes_crypt_ecb (mbedtls_aes_context * ctx,
     AES_VALIDATE_RET(output != NULL);
     AES_VALIDATE_RET(mode == MBEDTLS_AES_ENCRYPT ||
                      mode == MBEDTLS_AES_DECRYPT);
+    (void) mode; // Unused in some build configurations
 
  #if defined(MBEDTLS_AESNI_C) && defined(MBEDTLS_HAVE_X86_64)
     if (mbedtls_aesni_has_support(MBEDTLS_AESNI_AES))

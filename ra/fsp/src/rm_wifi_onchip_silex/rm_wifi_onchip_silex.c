@@ -294,6 +294,12 @@ size_t xStreamBufferReceiveAlternate(StreamBufferHandle_t xStreamBuffer,
                                      size_t               xBufferLengthBytes,
                                      TickType_t           xTicksToWait);
 
+static fsp_err_t rm_wifi_onchip_silex_send_scan(wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl,
+                                                uint32_t                            serial_ch_id,
+                                                bool                                send_scan_cmd,
+                                                uint32_t                            byte_timeout,
+                                                uint32_t                            timeout_ms);
+
 /*******************************************************************************************************************//**
  * @addtogroup WIFI_ONCHIP_SILEX WIFI_ONCHIP_SILEX
  * @{
@@ -396,12 +402,12 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
 
     vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_1SEC));
 
-    // Create memory copy of uart extended configuration and then copy new configuration values in.
+    /* Create memory copy of uart extended configuration and then copy new configuration values in. */
     memcpy((void *) &uart0_cfg_extended_115200,
            (void *) p_instance_ctrl->uart_instance_objects[0]->p_cfg->p_extend,
            sizeof(sci_uart_extended_cfg_t));
 
-    // Create memory copy of uart configuration and update with new extended configuration structure.
+    /* Create memory copy of uart configuration and update with new extended configuration structure. */
     memcpy((void *) &uart0_cfg_115200, p_instance_ctrl->uart_instance_objects[0]->p_cfg, sizeof(uart_cfg_t));
 
     R_SCI_UART_BaudCalculate(WIFI_ONCHIP_SILEX_DEFAULT_BAUDRATE,
@@ -416,7 +422,7 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
 
     uart0_cfg_115200.p_extend = (void *) &uart0_cfg_extended_115200;
 
-    // call uart open()
+    /* call uart open() */
     p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT];
     err    = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg_115200);
 
@@ -448,8 +454,8 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
 
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
 
-    // create string for wifi modem baud rate change.
-    // using currently unused socket RX buffer for temp string.
+    /* create string for wifi modem baud rate change.
+     * using currently unused socket RX buffer for temp string. */
     memset(p_instance_ctrl->sockets[0].socket_recv_buff, 0, sizeof(p_instance_ctrl->sockets[0].socket_recv_buff));
     strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, "ATB=", 5);
     strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, g_wifi_onchip_silex_uart_cmd_baud, 10);
@@ -492,7 +498,7 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT];
     err    = p_uart->p_api->open(p_uart->p_ctrl, p_uart->p_cfg);
 
-    // Set uart enabled value
+    /* Set uart enabled value */
     if (FSP_SUCCESS != err)
     {
         rm_wifi_onchip_silex_cleanup_open(p_instance_ctrl);
@@ -563,7 +569,7 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
         p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_SECOND_PORT];
         err    = p_uart->p_api->open(p_uart->p_ctrl, p_uart->p_cfg);
 
-        // Set uart enabled value
+        /* Set uart enabled value */
         if (FSP_SUCCESS != err)
         {
             rm_wifi_onchip_silex_cleanup_open(p_instance_ctrl);
@@ -730,6 +736,18 @@ fsp_err_t rm_wifi_onchip_silex_close ()
 
     p_instance_ctrl->open = 0;
 
+    /* If only one UART is used then send escape sequence command to exit transparent mode */
+    if ((1 == p_instance_ctrl->num_uarts) &&
+        (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
+    {
+        rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
+                                        p_instance_ctrl->curr_cmd_port,
+                                        "+++",
+                                        WIFI_ONCHIP_SILEX_TIMEOUT_3MS,
+                                        WIFI_ONCHIP_SILEX_TIMEOUT_1SEC,
+                                        WIFI_ONCHIP_SILEX_RETURN_OK);
+    }
+
     /* Tell wifi module to disconnect from the current AP */
     err = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
@@ -737,6 +755,7 @@ fsp_err_t rm_wifi_onchip_silex_close ()
                                           WIFI_ONCHIP_SILEX_TIMEOUT_3MS,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_1SEC,
                                           WIFI_ONCHIP_SILEX_RETURN_OK);
+
     if (FSP_SUCCESS != err)
     {
         rm_wifi_onchip_silex_wifi_module_reset(p_instance_ctrl);
@@ -771,6 +790,18 @@ fsp_err_t rm_wifi_onchip_silex_disconnect ()
     mutex_flag = (WIFI_ONCHIP_SILEX_MUTEX_TX | WIFI_ONCHIP_SILEX_MUTEX_RX);
     FSP_ERROR_RETURN(FSP_SUCCESS == rm_wifi_onchip_silex_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
+
+    /* If only one UART is used then send escape sequence command to exit transparent mode */
+    if ((1 == p_instance_ctrl->num_uarts) &&
+        (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
+    {
+        rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
+                                        p_instance_ctrl->curr_cmd_port,
+                                        "+++",
+                                        WIFI_ONCHIP_SILEX_TIMEOUT_3MS,
+                                        WIFI_ONCHIP_SILEX_TIMEOUT_1SEC,
+                                        WIFI_ONCHIP_SILEX_RETURN_OK);
+    }
 
     /* Tell wifi module to disconnect from the current AP */
     rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
@@ -1060,12 +1091,47 @@ fsp_err_t rm_wifi_onchip_silex_mac_addr_get (uint8_t * p_macaddr)
         return FSP_ERR_WIFI_FAILED;
     }
 
+    /* Return an error if a socket is connected */
+    if ((1 == p_instance_ctrl->num_uarts) &&
+        (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
+    {
+        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+        return FSP_ERR_WIFI_FAILED;
+    }
+
     ret = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
                                           "ATW\r",
                                           WIFI_ONCHIP_SILEX_TIMEOUT_100MS,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_3SEC,
                                           WIFI_ONCHIP_SILEX_RETURN_OK);
+
+    if (FSP_SUCCESS == ret)
+    {
+        // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
+        err = sscanf((const char *) p_instance_ctrl->cmd_rx_buff,
+                     "%*[^\n]\n%*[^\n]\n%*[^\n]\nMac Addr     =   %2x:%2x:%2x:%2x:%2x:%2x\r",
+                     &macaddr[0],
+                     &macaddr[1],
+                     &macaddr[2],
+                     &macaddr[3],
+                     &macaddr[4],
+                     &macaddr[5]);
+
+        if (6 == err)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                p_macaddr[i] = (uint8_t) macaddr[i];
+            }
+        }
+        else
+        {
+            ret = FSP_ERR_WIFI_FAILED;
+        }
+    }
+
     if (FSP_SUCCESS != ret)
     {
         rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
@@ -1073,31 +1139,7 @@ fsp_err_t rm_wifi_onchip_silex_mac_addr_get (uint8_t * p_macaddr)
         return FSP_ERR_WIFI_FAILED;
     }
 
-    // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
-    err = sscanf((const char *) p_instance_ctrl->cmd_rx_buff,
-                 "%*[^\n]\n%*[^\n]\n%*[^\n]\nMac Addr     =   %2x:%2x:%2x:%2x:%2x:%2x\r",
-                 &macaddr[0],
-                 &macaddr[1],
-                 &macaddr[2],
-                 &macaddr[3],
-                 &macaddr[4],
-                 &macaddr[5]);
-
-    if (6 == err)
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            p_macaddr[i] = (uint8_t) macaddr[i];
-        }
-
-        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
-    }
-    else
-    {
-        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
-
-        return FSP_ERR_WIFI_FAILED;
-    }
+    rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     return FSP_SUCCESS;
 }
@@ -1108,10 +1150,11 @@ fsp_err_t rm_wifi_onchip_silex_mac_addr_get (uint8_t * p_macaddr)
  * @param[out]  p_results      Pointer to a structure array holding scanned Access Points.
  * @param[in]   maxNetworks  Size of the structure array for holding APs.
  *
- * @retval FSP_SUCCESS              Function completed successfully.
- * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
- * @retval FSP_ERR_ASSERTION        Assertion error occurred.
- * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
+ * @retval FSP_SUCCESS                Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED        Error occurred with command to Wifi module.
+ * @retval FSP_ERR_ASSERTION          Assertion error occurred.
+ * @retval FSP_ERR_NOT_OPEN           The instance has not been opened.
+ * @retval FSP_ERR_WIFI_SCAN_COMPLETE Wifi scan has completed.
  **********************************************************************************************************************/
 fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxNetworks)
 {
@@ -1138,13 +1181,22 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
     FSP_ERROR_RETURN(FSP_SUCCESS == rm_wifi_onchip_silex_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
-    ret = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
-                                          p_instance_ctrl->curr_cmd_port,
-                                          "ATWS\r",
-                                          WIFI_ONCHIP_SILEX_TIMEOUT_1SEC,
-                                          WIFI_ONCHIP_SILEX_TIMEOUT_8SEC,
-                                          WIFI_ONCHIP_SILEX_RETURN_OK);
+    /* Return an error if a socket is connected */
+    if ((1 == p_instance_ctrl->num_uarts) &&
+        (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
+    {
+        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
+        return FSP_ERR_WIFI_FAILED;
+    }
+
+    ret = rm_wifi_onchip_silex_send_scan(p_instance_ctrl,
+                                         p_instance_ctrl->curr_cmd_port,
+                                         true,
+                                         WIFI_ONCHIP_SILEX_TIMEOUT_1SEC,
+                                         WIFI_ONCHIP_SILEX_TIMEOUT_8SEC);
+
+    /* Test if AT commands were successful */
     if (FSP_SUCCESS != ret)
     {
         rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
@@ -1159,10 +1211,6 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
         int32_t test_ssid = strncmp(ptr, "ssid =", 6);
         if (0 != test_ssid)
         {
-            if(0 == idx)
-            {
-                ret = FSP_ERR_WIFI_FAILED; // Could not find first access point entry
-            }
             break;
         }
 
@@ -1174,7 +1222,7 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
 
         // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
         err = sscanf(ptr, string_build, p_results[idx].cSSID);
-        if(1 != err)
+        if (1 != err)
         {
             ret = FSP_ERR_WIFI_FAILED;
             break;
@@ -1207,7 +1255,7 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
                      &bssid2[4],
                      &bssid2[5]);
         FSP_ERROR_RETURN(6 == err, FSP_ERR_WIFI_FAILED);
-        if(6 != err)
+        if (6 != err)
         {
             ret = FSP_ERR_WIFI_FAILED;
             break;
@@ -1235,7 +1283,7 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
 
         // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
         err = sscanf(ptr, "channel = %d\r", (int *) &temp_val);
-        if(1 != err)
+        if (1 != err)
         {
             ret = FSP_ERR_WIFI_FAILED;
             break;
@@ -1257,7 +1305,7 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
 
         // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
         err = sscanf(ptr, "indicator = %d\r", (int *) &temp_val);
-        if(1 != err)
+        if (1 != err)
         {
             ret = FSP_ERR_WIFI_FAILED;
             break;
@@ -1346,9 +1394,24 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
         {
             break;
         }
-        
+
+        rm_wifi_onchip_silex_send_scan(p_instance_ctrl,
+                                       p_instance_ctrl->curr_cmd_port,
+                                       false,
+                                       WIFI_ONCHIP_SILEX_TIMEOUT_1SEC,
+                                       WIFI_ONCHIP_SILEX_TIMEOUT_8SEC);
+
+        ptr = (char *) (p_instance_ctrl->cmd_rx_buff);
     } while (++idx < maxNetworks);
-    
+
+    /* Clear out the rest of the access points returned from the module */
+    while (FSP_ERR_WIFI_FAILED !=
+           rm_wifi_onchip_silex_send_scan(p_instance_ctrl, p_instance_ctrl->curr_cmd_port, false,
+                                          WIFI_ONCHIP_SILEX_TIMEOUT_1SEC, WIFI_ONCHIP_SILEX_TIMEOUT_8SEC))
+    {
+        ;
+    }
+
     rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     return ret;
@@ -1370,7 +1433,7 @@ fsp_err_t rm_wifi_onchip_silex_ping (uint8_t * p_ip_addr, uint32_t count, uint32
 {
     FSP_PARAMETER_NOT_USED(interval_ms);
 
-    fsp_err_t ret;
+    fsp_err_t ret = FSP_SUCCESS;
     uint32_t  i;
     uint32_t  mutex_flag;
 
@@ -1392,6 +1455,15 @@ fsp_err_t rm_wifi_onchip_silex_ping (uint8_t * p_ip_addr, uint32_t count, uint32
             p_ip_addr[2],
             p_ip_addr[3]);
 
+    /* Return an error if a socket is connected */
+    if ((1 == p_instance_ctrl->num_uarts) &&
+        (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
+    {
+        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+        return FSP_ERR_WIFI_FAILED;
+    }
+
     for (i = 0; i < count; i++)
     {
         ret = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
@@ -1402,10 +1474,15 @@ fsp_err_t rm_wifi_onchip_silex_ping (uint8_t * p_ip_addr, uint32_t count, uint32
                                               WIFI_ONCHIP_SILEX_RETURN_OK);
         if (FSP_SUCCESS != ret)
         {
-            rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
-
-            return FSP_ERR_WIFI_FAILED;
+            break;
         }
+    }
+
+    if (FSP_SUCCESS != ret)
+    {
+        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+        return FSP_ERR_WIFI_FAILED;
     }
 
     rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
@@ -1451,46 +1528,56 @@ fsp_err_t rm_wifi_onchip_silex_ip_addr_get (uint8_t * p_ip_addr)
         return FSP_ERR_WIFI_FAILED;
     }
 
+    /* Return an error if a socket is connected */
+    if ((1 == p_instance_ctrl->num_uarts) &&
+        (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
+    {
+        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+        return FSP_ERR_WIFI_FAILED;
+    }
+
     ret = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
                                           "ATNSET?\r",
                                           WIFI_ONCHIP_SILEX_TIMEOUT_30MS,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_5SEC,
                                           WIFI_ONCHIP_SILEX_RETURN_OK);
+
+    if (FSP_SUCCESS == ret)
+    {
+        if ((buff[0] == '\n') && (buff[1] == '\0'))
+        {
+            buff += 2;
+        }
+
+        err =
+
+            // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
+            sscanf((const char *) buff, "IP:%u.%u.%u.%u,", &temp_addr[0], &temp_addr[1], &temp_addr[2], &temp_addr[3]);
+
+        if (4 == err)
+        {
+            for (i = 0; i < 4; i++)
+            {
+                if (temp_addr[i] <= UINT8_MAX)
+                {
+                    p_ip_addr[i] = (uint8_t) temp_addr[i];
+                }
+                else
+                {
+                    ret = FSP_ERR_WIFI_FAILED;
+                    break;
+                }
+            }
+        }
+    }
+
     if (FSP_SUCCESS != ret)
     {
         rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return FSP_ERR_WIFI_FAILED;
-    }
-
-    if ((buff[0] == '\n') && (buff[1] == '\0'))
-    {
-        buff += 2;
-    }
-
-    // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
-    err = sscanf((const char *) buff, "IP:%u.%u.%u.%u,", &temp_addr[0], &temp_addr[1], &temp_addr[2], &temp_addr[3]);
-
-    if (4 != err)
-    {
-        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
-
-        return FSP_ERR_WIFI_FAILED;
-    }
-
-    for (i = 0; i < 4; i++)
-    {
-        if (temp_addr[i] <= UINT8_MAX)
-        {
-            p_ip_addr[i] = (uint8_t) temp_addr[i];
-        }
-        else
-        {
-            rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
-
-            return FSP_ERR_WIFI_FAILED;
-        }
     }
 
     rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
@@ -1780,7 +1867,7 @@ int32_t rm_wifi_onchip_silex_tcp_send (uint32_t socket_no, const uint8_t * p_dat
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    // if socket write has been disabled by shutdown call then return 0 bytes sent.
+    /* if socket write has been disabled by shutdown call then return 0 bytes sent. */
     if (!(p_instance_ctrl->sockets[socket_no].socket_read_write_flag & WIFI_ONCHIP_SILEX_SOCKET_WRITE))
     {
         return 0;
@@ -1887,13 +1974,13 @@ int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uin
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    // if socket read has been disabled by shutdown call then return 0 bytes received.
+    /* if socket read has been disabled by shutdown call then return 0 bytes received. */
     if (!(p_instance_ctrl->sockets[socket_no].socket_read_write_flag & WIFI_ONCHIP_SILEX_SOCKET_READ))
     {
         return 0;
     }
 
-    /*Take the receive mutex */
+    /* Take the receive mutex */
     mutex_flag = (WIFI_ONCHIP_SILEX_MUTEX_RX);
     FSP_ERROR_RETURN(FSP_SUCCESS == rm_wifi_onchip_silex_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      WIFI_ONCHIP_SILEX_ERR_ERROR);
@@ -2080,7 +2167,8 @@ fsp_err_t rm_wifi_onchip_silex_socket_disconnect (uint32_t socket_no)
         }
 
         /* If only one UART is used then send escape sequence command */
-        if (p_instance_ctrl->num_uarts == 1)
+        if ((1 == p_instance_ctrl->num_uarts) &&
+            (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
         {
             rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
@@ -2169,6 +2257,15 @@ fsp_err_t rm_wifi_onchip_silex_dns_query (const char * p_textstring, uint8_t * p
     sprintf((char *) p_instance_ctrl->cmd_tx_buff + strlen((char *) p_instance_ctrl->cmd_tx_buff), "%s\r",
             p_textstring);
 
+    /* Return an error if a socket is connected */
+    if ((1 == p_instance_ctrl->num_uarts) &&
+        (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
+    {
+        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+        return FSP_ERR_WIFI_FAILED;
+    }
+
     func_ret = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                                p_instance_ctrl->curr_cmd_port,
                                                (char *) p_instance_ctrl->cmd_tx_buff,
@@ -2176,41 +2273,43 @@ fsp_err_t rm_wifi_onchip_silex_dns_query (const char * p_textstring, uint8_t * p
                                                WIFI_ONCHIP_SILEX_TIMEOUT_3SEC,
                                                WIFI_ONCHIP_SILEX_RETURN_OK);
 
+    if (FSP_SUCCESS == func_ret)
+    {
+        // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
+        scanf_ret = sscanf((const char *) p_instance_ctrl->cmd_rx_buff,
+                           "%u\r\n%u.%u.%u.%u\r\n",
+                           &result,
+                           &temp_addr[0],
+                           &temp_addr[1],
+                           &temp_addr[2],
+                           &temp_addr[3]);
+
+        if ((scanf_ret == 5) && (result == 1))
+        {
+            for (i = 0; i < 4; i++)
+            {
+                if (temp_addr[i] <= UINT8_MAX)
+                {
+                    p_ip_addr[i] = (uint8_t) temp_addr[i];
+                }
+                else
+                {
+                    func_ret = FSP_ERR_WIFI_FAILED;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            func_ret = FSP_ERR_WIFI_FAILED;
+        }
+    }
+
     if (FSP_SUCCESS != func_ret)
     {
         rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
         return FSP_ERR_WIFI_FAILED;
-    }
-
-    // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
-    scanf_ret = sscanf((const char *) p_instance_ctrl->cmd_rx_buff,
-                       "%u\r\n%u.%u.%u.%u\r\n",
-                       &result,
-                       &temp_addr[0],
-                       &temp_addr[1],
-                       &temp_addr[2],
-                       &temp_addr[3]);
-
-    if ((scanf_ret != 5) || (result != 1))
-    {
-        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
-
-        return FSP_ERR_WIFI_FAILED;
-    }
-
-    for (i = 0; i < 4; i++)
-    {
-        if (temp_addr[i] <= UINT8_MAX)
-        {
-            p_ip_addr[i] = (uint8_t) temp_addr[i];
-        }
-        else
-        {
-            rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
-
-            return FSP_ERR_WIFI_FAILED;
-        }
     }
 
     rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
@@ -2571,6 +2670,104 @@ fsp_err_t rm_wifi_onchip_silex_send_basic (wifi_onchip_silex_instance_ctrl_t * p
             /* Success */
             break;
         }
+    }
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ *  Send and receive wifi scan command.
+ *
+ * @param[in]  p_instance_ctrl      Pointer to array holding URL to query from DNS.
+ * @param[in]  serial_ch_id         Uart channel ID.
+ * @param[in]  send_scan_cmd        Enable or disable the AT command transmit.
+ * @param[in]  byte_timeout         Timeout value between bytes received.
+ * @param[in]  timeout_ms           Timeout value before first byte received.
+ *
+ * @retval FSP_SUCCESS                   Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED           Error occurred with command to Wifi module.
+ * @retval FSP_ERR_WIFI_SCAN_COMPLETE    All scan data have been received from the module.
+ *
+ **********************************************************************************************************************/
+static fsp_err_t rm_wifi_onchip_silex_send_scan (wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl,
+                                                 uint32_t                            serial_ch_id,
+                                                 bool                                send_scan_cmd,
+                                                 uint32_t                            byte_timeout,
+                                                 uint32_t                            timeout_ms)
+{
+    fsp_err_t err;
+    uint32_t  recvcnt = 0;
+    uint8_t   receive_data;
+
+    memset(&p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
+
+    if (true == send_scan_cmd)
+    {
+        recvcnt = 0;
+
+        if (uxQueueMessagesWaiting((QueueHandle_t) p_instance_ctrl->uart_state_info[serial_ch_id].uart_tei_sem) !=
+            0)
+        {
+            return FSP_ERR_WIFI_FAILED;
+        }
+
+        err =
+            p_instance_ctrl->uart_instance_objects[serial_ch_id]->p_api->write(p_instance_ctrl->uart_instance_objects[
+                                                                                   serial_ch_id]->p_ctrl,
+                                                                               (uint8_t *) "ATWS\r",
+                                                                               5);
+
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
+
+        FSP_ERROR_RETURN(pdTRUE ==
+                         xSemaphoreTake(p_instance_ctrl->uart_state_info[serial_ch_id].uart_tei_sem,
+                                        (timeout_ms / portTICK_PERIOD_MS)),
+                         FSP_ERR_WIFI_FAILED);
+    }
+
+    /* Detect the first transmitted byte from the message */
+    size_t xReceivedBytes = xStreamBufferReceiveAlternate(p_instance_ctrl->socket_byteq_hdl,
+                                                          &receive_data,
+                                                          1,
+                                                          pdMS_TO_TICKS(timeout_ms));
+    if (xReceivedBytes == 1)
+    {
+        p_instance_ctrl->cmd_rx_buff[recvcnt++] = receive_data;
+
+        while (xReceivedBytes == 1)
+        {
+            xReceivedBytes = xStreamBufferReceiveAlternate(p_instance_ctrl->socket_byteq_hdl,
+                                                           &receive_data,
+                                                           1,
+                                                           pdMS_TO_TICKS(byte_timeout));
+
+            if (xReceivedBytes == 1)
+            {
+                p_instance_ctrl->cmd_rx_buff[recvcnt++] = receive_data;
+
+                /* Return success if a access point has been returned. */
+                if ((recvcnt >= 4) &&
+                    (0 == strncmp((const char *) &p_instance_ctrl->cmd_rx_buff[recvcnt - 4], "\r\n\r\n", 4)))
+                {
+                    return FSP_SUCCESS;
+                }
+
+                /* Return success if the last access point has been returned. */
+                if ((recvcnt >= 3) &&
+                    (0 == strncmp((const char *) &p_instance_ctrl->cmd_rx_buff[recvcnt - 3], "\r\n0", 3)))
+                {
+                    return FSP_ERR_WIFI_SCAN_COMPLETE;
+                }
+            }
+            else
+            {
+                return FSP_ERR_WIFI_FAILED;
+            }
+        }
+    }
+    else
+    {
+        return FSP_ERR_WIFI_FAILED;
     }
 
     return FSP_SUCCESS;

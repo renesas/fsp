@@ -42,7 +42,7 @@ FSP_HEADER
 
 /** Version of code that implements the API defined in this file */
 #define OPAMP_CODE_VERSION_MAJOR    (1U)
-#define OPAMP_CODE_VERSION_MINOR    (1U)
+#define OPAMP_CODE_VERSION_MINOR    (2U)
 
 #define OPAMP_MASK_CHANNEL_0        (1U << 0)
 #define OPAMP_MASK_CHANNEL_1        (1U << 1)

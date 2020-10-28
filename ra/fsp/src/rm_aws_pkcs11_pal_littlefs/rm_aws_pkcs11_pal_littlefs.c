@@ -205,7 +205,7 @@ CK_OBJECT_HANDLE PKCS11_PAL_FindObject (CK_BYTE_PTR pxLabel, CK_ULONG usLength)
  * @param[out] pIsPrivate   Boolean indicating if value is private (CK_TRUE)
  *                          or exportable (CK_FALSE)
  *
- * @return CKR_OK if operation was successful.  CKR_KEY_HANDLE_INVALID ifshit
+ * @return CKR_OK if operation was successful.  CKR_KEY_HANDLE_INVALID if
  * no such object handle was found, CKR_DEVICE_MEMORY if memory for
  * buffer could not be allocated, CKR_FUNCTION_FAILED for device driver
  * error.
@@ -216,7 +216,7 @@ CK_RV PKCS11_PAL_GetObjectValue (CK_OBJECT_HANDLE xHandle,
                                  CK_ULONG_PTR     pulDataSize,
                                  CK_BBOOL       * pIsPrivate)
 {
-    BaseType_t       xReturn        = CKR_FUNCTION_FAILED;
+    CK_RV            xReturn        = CKR_FUNCTION_FAILED;
     CK_OBJECT_HANDLE xHandleStorage = xHandle;
 
     if (xHandle != eInvalidHandle)

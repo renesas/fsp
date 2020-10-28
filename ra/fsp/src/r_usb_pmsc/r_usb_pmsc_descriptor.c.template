@@ -6,7 +6,9 @@
 #include <stdlib.h>                    /* HMSC Sample use */
 #include <stdio.h>                     /* HMSC Sample use */
 
-#include "r_usb_pmsc_apl.h"
+#include "bsp_api.h"
+#include "r_usb_basic_api.h"
+#include "r_usb_pmsc_api.h"
 
 /******************************************************************************
  * Macro definitions

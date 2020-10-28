@@ -58,7 +58,7 @@ FSP_HEADER
  ******************************************************************************/
 
 /* USB Version Info */
-#define USB_API_VERSION_MINOR      (1U)      ///< Minor version of the API.
+#define USB_API_VERSION_MINOR      (2U)      ///< Minor version of the API.
 #define USB_API_VERSION_MAJOR      (1U)      ///< Major version of the API.
 
 /* USB Request Type Register */
@@ -225,6 +225,8 @@ typedef enum e_usb_class
 {
     USB_CLASS_PCDC = 0x80,             ///< PCDC Class
     USB_CLASS_PCDCC,                   ///< PCDCC Class
+    USB_CLASS_PCDC2,                   ///< PCDC2 Class
+    USB_CLASS_PCDCC2,                  ///< PCDCC2 Class
     USB_CLASS_PHID,                    ///< PHID Class
     USB_CLASS_PVND,                    ///< PVND Class
     USB_CLASS_HCDC,                    ///< HCDC Class

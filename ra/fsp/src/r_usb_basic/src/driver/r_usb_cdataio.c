@@ -113,17 +113,21 @@ static const uint8_t g_usb_pipe_peri[] =
 {
     /* OUT pipe */          /* IN pipe */
  #if defined(USB_CFG_PCDC_USE)
-    USB_CFG_PCDC_BULK_OUT, USB_CFG_PCDC_BULK_IN, /* USB_PCDC */
-    USB_NULL,              USB_CFG_PCDC_INT_IN,  /* USB_PCDCC */
- #else                                           /* defined(USB_CFG_PCDC_USE) */
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
+    USB_CFG_PCDC_BULK_OUT,  USB_CFG_PCDC_BULK_IN,  /* USB_PCDC */
+    USB_NULL,               USB_CFG_PCDC_INT_IN,   /* USB_PCDCC */
+    USB_CFG_PCDC_BULK_OUT2, USB_CFG_PCDC_BULK_IN2, /* USB_PCDC2 */
+    USB_NULL,               USB_CFG_PCDC_INT_IN2,  /* USB_PCDCC2 */
+ #else                                             /* defined(USB_CFG_PCDC_USE) */
+    USB_NULL,               USB_NULL,
+    USB_NULL,               USB_NULL,
+    USB_NULL,               USB_NULL,
+    USB_NULL,               USB_NULL,
  #endif                                          /* defined(USB_CFG_PCDC_USE) */
 
  #if defined(USB_CFG_PHID_USE)
-    USB_CFG_PHID_INT_OUT,  USB_CFG_PHID_INT_IN,  /* USB_PHID */
+    USB_CFG_PHID_INT_OUT,   USB_CFG_PHID_INT_IN, /* USB_PHID */
  #else                                           /* defined(USB_CFG_PHID_USE) */
-    USB_NULL,              USB_NULL,
+    USB_NULL,               USB_NULL,
  #endif                                          /* defined(USB_CFG_PHID_USE) */
 };
 #endif  /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
@@ -152,9 +156,13 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
 #if defined(USB_CFG_PCDC_USE)
     usb_pcdc_read_complete, usb_pcdc_write_complete, /* USB_PCDC  (0) */
     USB_NULL, usb_pcdc_write_complete,               /* USB_PCDCC (1) */
+    usb_pcdc_read_complete, usb_pcdc_write_complete, /* USB_PCDC2  (0) */
+    USB_NULL, usb_pcdc_write_complete,               /* USB_PCDCC2 (1) */
 #else
     USB_NULL, USB_NULL,                              /* USB_PCDC  (0) */
     USB_NULL, USB_NULL,                              /* USB_PCDCC (1) */
+    USB_NULL, USB_NULL,                              /* USB_PCDC2  (0) */
+    USB_NULL, USB_NULL,                              /* USB_PCDCC2 (1) */
 #endif
 
     /* PHID */

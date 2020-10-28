@@ -41,7 +41,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define ETHER_PHY_CODE_VERSION_MAJOR        (1U)
-#define ETHER_PHY_CODE_VERSION_MINOR        (1U)
+#define ETHER_PHY_CODE_VERSION_MINOR        (2U)
 
 #define ETHER_PHY_CFG_USE_PHY_KSZ8091RNB    (1)
 #define ETHER_PHY_CFG_USE_PHY_KSZ8041       (2)

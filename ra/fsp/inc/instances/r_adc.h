@@ -49,7 +49,7 @@ FSP_HEADER
 
 /* Version of code that implements the API defined in this file */
 #define ADC_CODE_VERSION_MAJOR                 (1U)
-#define ADC_CODE_VERSION_MINOR                 (0U)
+#define ADC_CODE_VERSION_MINOR                 (1U)
 
 /* Typical values that can be used to modify the sample states.
  * The minimum sample state count value is either 6 or 7 depending on the clock ratios.
@@ -245,7 +245,7 @@ extern const adc_api_t g_adc_on_adc;
  * Public APIs
  **********************************************************************************************************************/
 fsp_err_t R_ADC_Open(adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg);
-fsp_err_t R_ADC_ScanCfg(adc_ctrl_t * p_ctrl, void const * const p_extend);
+fsp_err_t R_ADC_ScanCfg(adc_ctrl_t * p_ctrl, void const * const p_channel_cfg);
 fsp_err_t R_ADC_InfoGet(adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info);
 fsp_err_t R_ADC_ScanStart(adc_ctrl_t * p_ctrl);
 fsp_err_t R_ADC_ScanStop(adc_ctrl_t * p_ctrl);

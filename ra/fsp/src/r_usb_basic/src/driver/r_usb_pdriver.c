@@ -1743,6 +1743,7 @@ uint16_t usb_peri_pipe_info (uint8_t * table, uint16_t speed, uint16_t length, u
     uint16_t ofdsc;
     uint16_t retval = USB_ERROR;
     uint8_t  pipe_no;
+    uint8_t  class_info = 0;
 
     FSP_PARAMETER_NOT_USED(speed);
 
@@ -1752,11 +1753,16 @@ uint16_t usb_peri_pipe_info (uint8_t * table, uint16_t speed, uint16_t length, u
     /* WAIT_LOOP */
     while (ofdsc < length)
     {
+        if (USB_DT_INTERFACE == table[ofdsc + USB_EP_B_DESCRIPTORTYPE])
+        {
+            class_info = table[ofdsc + USB_IF_B_INTERFACECLASS];
+        }
+
         /* Endpoint Descriptor */
         if (USB_DT_ENDPOINT == table[ofdsc + USB_EP_B_DESCRIPTORTYPE])
         {
             /* EP Table pipe Information set */
-            pipe_no = usb_pstd_set_pipe_table(&table[ofdsc], p_utr);
+            pipe_no = usb_pstd_set_pipe_table(&table[ofdsc], p_utr, class_info);
             if (USB_NULL != pipe_no)
             {
                 retval = USB_OK;

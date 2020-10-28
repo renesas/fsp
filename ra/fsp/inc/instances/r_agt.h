@@ -37,7 +37,7 @@ FSP_HEADER
 
 /* Leading zeroes removed to avoid coding standards violation. */
 #define AGT_CODE_VERSION_MAJOR    (1U)
-#define AGT_CODE_VERSION_MINOR    (1U)
+#define AGT_CODE_VERSION_MINOR    (2U)
 
 /** Maximum number of clock counts in 16 bit timer. */
 #define AGT_MAX_CLOCK_COUNTS      (UINT16_MAX)

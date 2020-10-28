@@ -29,45 +29,40 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#ifdef RM_VEE_FLASH_DATA_START
-static const uint32_t rm_vee_flash_data_start = RM_VEE_FLASH_DATA_START;
-#else
-static const uint32_t rm_vee_flash_data_start = BSP_FEATURE_FLASH_DATA_FLASH_START;
-#endif
-
 /* INTERRUPT TIMEOUT VALUES (for Open() to catch user global interrupt disable) */
 #ifndef RM_VEE_FLASH_TIMEOUT_US
- #define RM_VEE_FLASH_TIMEOUT_US            (1000000)
+ #define RM_VEE_FLASH_TIMEOUT_US             (1000000)
 #endif
 #ifndef RM_VEE_FLASH_TIMEOUT_REFRESH_US
- #define RM_VEE_FLASH_TIMEOUT_REFRESH_US    (5000000)
+ #define RM_VEE_FLASH_TIMEOUT_REFRESH_US     (5000000)
 #endif
 
-#define RM_VEE_FLASH_OPEN                   (0x52564545U)
-#define RM_VEE_FLASH_VALID_CODE             (0xBEAD)
-#define RM_VEE_FLASH_ID_INVALID             (UINT16_MAX)
-#define RM_VEE_FLASH_DF_END_ADDRESS         (rm_vee_flash_data_start + p_ctrl->p_cfg->total_size)
-#define RM_VEE_FLASH_REC_OVERHEAD           (sizeof(rm_vee_rec_hdr_t) + sizeof(rm_vee_rec_end_t))
-#define RM_VEE_FLASH_REF_DATA_COUNT         (2)
+#define RM_VEE_FLASH_OPEN                    (0x52564545U)
+#define RM_VEE_FLASH_VALID_CODE              (0xBEAD)
+#define RM_VEE_FLASH_ID_INVALID              (UINT16_MAX)
+#define RM_VEE_FLASH_LOGICAL_END_ADDRESS     (p_ctrl->p_cfg->start_addr + p_ctrl->p_cfg->total_size)
+#define RM_VEE_FLASH_PHYSICAL_END_ADDRESS    (BSP_FEATURE_FLASH_DATA_FLASH_START + BSP_DATA_FLASH_SIZE_BYTES)
+#define RM_VEE_FLASH_REC_OVERHEAD            (sizeof(rm_vee_rec_hdr_t) + sizeof(rm_vee_rec_end_t))
+#define RM_VEE_FLASH_REF_DATA_COUNT          (2)
 #if RM_VEE_FLASH_CFG_REF_DATA_SUPPORT
- #define RM_VEE_FLASH_REF_DATA_AREA_SIZE    ((sizeof(rm_vee_ref_hdr_t) + \
-                                              (p_ctrl->p_cfg->ref_data_size * RM_VEE_FLASH_REF_DATA_COUNT)))
+ #define RM_VEE_FLASH_REF_DATA_AREA_SIZE     ((sizeof(rm_vee_ref_hdr_t) + \
+                                               (p_ctrl->p_cfg->ref_data_size * RM_VEE_FLASH_REF_DATA_COUNT)))
 #else
- #define RM_VEE_FLASH_REF_DATA_AREA_SIZE    (0)
+ #define RM_VEE_FLASH_REF_DATA_AREA_SIZE     (0)
 #endif
 
 /* Use appropriate macros for Flash HP or LP */
 #if (BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE > 0)
- #define RM_VEE_FLASH_DF_BLOCK_SIZE         (BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE)
+ #define RM_VEE_FLASH_DF_BLOCK_SIZE          (BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE)
 #else
- #define RM_VEE_FLASH_DF_BLOCK_SIZE         (BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE)
+ #define RM_VEE_FLASH_DF_BLOCK_SIZE          (BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE)
 #endif
 
-#define RM_VEE_FLASH_DF_WRITE_SIZE          (4)
+#define RM_VEE_FLASH_DF_WRITE_SIZE           (4)
 
-#define RM_VEE_FLASH_REC_DATA_MAX_SIZE      (p_ctrl->segment_size -                                           \
-                                             (sizeof(rm_vee_seg_hdr_t) + (p_ctrl->p_cfg->ref_data_size * 2) + \
-                                              sizeof(rm_vee_ref_hdr_t) + RM_VEE_FLASH_REC_OVERHEAD))
+#define RM_VEE_FLASH_REC_DATA_MAX_SIZE       (p_ctrl->segment_size -                                           \
+                                              (sizeof(rm_vee_seg_hdr_t) + (p_ctrl->p_cfg->ref_data_size * 2) + \
+                                               sizeof(rm_vee_ref_hdr_t) + RM_VEE_FLASH_REC_OVERHEAD))
 
 /* Version data structure used by error logger macro. */
 static const fsp_version_t g_vee_version =
@@ -115,7 +110,7 @@ typedef enum e_rm_vee_flash_refresh_refresh
 } rm_vee_flash_refresh_refresh_t;
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile rm_vee_flash_prv_ns_callback)(rm_vee_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * rm_vee_flash_prv_ns_callback)(rm_vee_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile rm_vee_flash_prv_ns_callback)(rm_vee_callback_args_t * p_args);
 #endif
@@ -217,9 +212,22 @@ fsp_err_t RM_VEE_FLASH_Open (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_cfg_t cons
 #if RM_VEE_FLASH_CFG_PARAM_CHECKING_ENABLE == 1
     FSP_ASSERT(p_ctrl);
     FSP_ASSERT(p_cfg);
+
+    /* Interface isn't already open and is configured for more than one segment */
     FSP_ERROR_RETURN(RM_VEE_FLASH_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
     FSP_ERROR_RETURN(2 <= p_cfg->num_segments, FSP_ERR_INVALID_ARGUMENT);
-    FSP_ERROR_RETURN(BSP_DATA_FLASH_SIZE_BYTES >= p_cfg->total_size, FSP_ERR_INVALID_ARGUMENT);
+
+    /* Start and end adress are valid */
+    FSP_ERROR_RETURN(BSP_FEATURE_FLASH_DATA_FLASH_START <= p_cfg->start_addr, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(RM_VEE_FLASH_PHYSICAL_END_ADDRESS >= (p_cfg->start_addr + p_cfg->total_size),
+                     FSP_ERR_INVALID_ARGUMENT);
+
+    /* All memory segments are correctly aligned */
+    FSP_ERROR_RETURN(0 == (p_cfg->start_addr - BSP_FEATURE_FLASH_DATA_FLASH_START) % RM_VEE_FLASH_DF_BLOCK_SIZE,
+                     FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(0 == p_cfg->total_size % RM_VEE_FLASH_DF_BLOCK_SIZE, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(0 == (p_cfg->total_size / RM_VEE_FLASH_DF_BLOCK_SIZE) % p_cfg->num_segments,
+                     FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0 == (p_cfg->total_size % p_cfg->num_segments), FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0 == ((p_cfg->total_size / p_cfg->num_segments) % 4), FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0 == (p_cfg->ref_data_size % RM_VEE_FLASH_DF_WRITE_SIZE), FSP_ERR_INVALID_ARGUMENT);
@@ -596,7 +604,8 @@ fsp_err_t RM_VEE_FLASH_Format (rm_vee_ctrl_t * const p_api_ctrl, uint8_t const *
 #endif
     p_ctrl->state = RM_VEE_FLASH_PRV_STATES_UNINITIALIZED;
     fsp_err_t err =
-        rm_vee_blocking_erase(p_ctrl, rm_vee_flash_data_start,
+        rm_vee_blocking_erase(p_ctrl,
+                              p_ctrl->p_cfg->start_addr,
                               (p_ctrl->p_cfg->total_size / RM_VEE_FLASH_DF_BLOCK_SIZE));
 
 #if RM_VEE_FLASH_CFG_REF_DATA_SUPPORT
@@ -605,7 +614,7 @@ fsp_err_t RM_VEE_FLASH_Format (rm_vee_ctrl_t * const p_api_ctrl, uint8_t const *
         err =
             rm_vee_blocking_write(p_ctrl,
                                   (uint32_t) p_ref_data,
-                                  (RM_VEE_FLASH_DF_END_ADDRESS - p_ctrl->p_cfg->ref_data_size),
+                                  (RM_VEE_FLASH_LOGICAL_END_ADDRESS - p_ctrl->p_cfg->ref_data_size),
                                   p_ctrl->p_cfg->ref_data_size);
     }
 
@@ -830,7 +839,7 @@ static fsp_err_t rm_vee_inspect_segments (rm_vee_flash_instance_ctrl_t * const p
     /* Loop through each segment */
     for (uint32_t i = 0; i < p_ctrl->p_cfg->num_segments; i++)
     {
-        addr = rm_vee_flash_data_start + (i * p_ctrl->segment_size);
+        addr = p_ctrl->p_cfg->start_addr + (i * p_ctrl->segment_size);
 
 #if RM_VEE_FLASH_CFG_REF_DATA_SUPPORT
 
@@ -923,7 +932,7 @@ static fsp_err_t rm_vee_inspect_segments (rm_vee_flash_instance_ctrl_t * const p
     /* If no active segment found, set highest flash segment as active in driver control structure. */
     if (0 == p_ctrl->active_seg_addr)
     {
-        p_ctrl->active_seg_addr = RM_VEE_FLASH_DF_END_ADDRESS - p_ctrl->segment_size;
+        p_ctrl->active_seg_addr = RM_VEE_FLASH_LOGICAL_END_ADDRESS - p_ctrl->segment_size;
 
         /* Make segment active in flash if no errors were encountered */
         if (FSP_SUCCESS == err)
@@ -933,7 +942,7 @@ static fsp_err_t rm_vee_inspect_segments (rm_vee_flash_instance_ctrl_t * const p
             err =
                 rm_vee_blocking_write(p_ctrl,
                                       (uint32_t) &p_ctrl->seg_hdr,
-                                      RM_VEE_FLASH_DF_END_ADDRESS - p_ctrl->segment_size,
+                                      RM_VEE_FLASH_LOGICAL_END_ADDRESS - p_ctrl->segment_size,
                                       sizeof(rm_vee_seg_hdr_t));
         }
     }
@@ -1231,19 +1240,14 @@ static fsp_err_t rm_vee_blocking_erase (rm_vee_flash_instance_ctrl_t * const p_c
     /* Clear interrupt-occurred flag */
     p_ctrl->irq_flag = false;
 
-    p_ctrl->p_flash->p_api->erase(p_ctrl->p_flash->p_ctrl, addr, num_blocks);
+    err = p_ctrl->p_flash->p_api->erase(p_ctrl->p_flash->p_ctrl, addr, num_blocks);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Poll for interrupt complete. Do timeout check in case app disabled interrupts.
      * Erase is for (p_ctrl->segment_size/RM_VEE_FLASH_DF_BLOCK_SIZE).
      */
-    for (i = 0; i < RM_VEE_FLASH_TIMEOUT_US; i++)
+    for (i = 0; (i < RM_VEE_FLASH_TIMEOUT_US) && (p_ctrl->irq_flag != true); i++)
     {
-        if (p_ctrl->irq_flag == true)
-        {
-            break;
-        }
-
         R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MICROSECONDS);
     }
 
@@ -1441,9 +1445,9 @@ static fsp_err_t rm_vee_start_seg_refresh (rm_vee_flash_instance_ctrl_t * const 
 
     /* Get refresh segment address. Handle wrap-around case. */
     new_seg_addr = p_ctrl->active_seg_addr + p_ctrl->segment_size;
-    if (RM_VEE_FLASH_DF_END_ADDRESS == new_seg_addr)
+    if (RM_VEE_FLASH_LOGICAL_END_ADDRESS == new_seg_addr)
     {
-        new_seg_addr = rm_vee_flash_data_start;
+        new_seg_addr = p_ctrl->p_cfg->start_addr;
     }
 
     /* Setup control structure for new segment */

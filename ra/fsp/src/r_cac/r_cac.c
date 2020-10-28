@@ -80,7 +80,7 @@
  * Typedef definitions
  **********************************************************************************************************************/
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile cac_prv_ns_callback)(cac_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * cac_prv_ns_callback)(cac_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile cac_prv_ns_callback)(cac_callback_args_t * p_args);
 #endif

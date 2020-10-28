@@ -45,7 +45,10 @@ void * gp_renesas_isr_context[BSP_ICU_VECTOR_MAX_ENTRIES];
 /***********************************************************************************************************************
  * Private global variables and functions
  **********************************************************************************************************************/
-const bsp_interrupt_event_t g_interrupt_event_link_select[BSP_ICU_VECTOR_MAX_ENTRIES] BSP_WEAK_REFERENCE;
+const bsp_interrupt_event_t g_interrupt_event_link_select[BSP_ICU_VECTOR_MAX_ENTRIES] BSP_WEAK_REFERENCE =
+{
+    (bsp_interrupt_event_t) 0
+};
 
 /*******************************************************************************************************************//**
  * @addtogroup BSP_MCU

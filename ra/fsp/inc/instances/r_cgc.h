@@ -40,7 +40,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define CGC_CODE_VERSION_MAJOR    (1U)
-#define CGC_CODE_VERSION_MINOR    (0U)
+#define CGC_CODE_VERSION_MINOR    (1U)
 
 /***********************************************************************************************************************
  * Typedef definitions

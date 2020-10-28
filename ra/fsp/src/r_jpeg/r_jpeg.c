@@ -598,7 +598,7 @@ fsp_err_t R_JPEG_DecodeLinesDecodedGet (jpeg_ctrl_t * p_api_ctrl, uint32_t * p_l
  * Configure horizontal and vertical subsampling.
  * @note   This function can be used to scale the output of decoded image data.
  *
- * @retval        FSP_SUCCESS                Horizontal stride value is properly configured.
+ * @retval        FSP_SUCCESS                Horizontal subsample value is properly configured.
  * @retval        FSP_ERR_ASSERTION          Pointer to the control block is NULL.
  * @retval        FSP_ERR_NOT_OPEN           JPEG not opened.
  **********************************************************************************************************************/
@@ -825,7 +825,7 @@ fsp_err_t R_JPEG_ModeSet (jpeg_ctrl_t * const p_api_ctrl, jpeg_mode_t mode)
 /*******************************************************************************************************************//**
  * Cancel an outstanding JPEG codec operation and close the device.
  *
- * @retval        FSP_SUCCESS                The input data buffer is properly assigned to JPEG Codec device.
+ * @retval        FSP_SUCCESS                The input data buffer is closed.
  * @retval        FSP_ERR_ASSERTION          Pointer to the control block is NULL.
  * @retval        FSP_ERR_NOT_OPEN           JPEG not opened.
  **********************************************************************************************************************/

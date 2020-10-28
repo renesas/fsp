@@ -42,7 +42,7 @@
  **********************************************************************************************************************/
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile poeg_prv_ns_callback)(poeg_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * poeg_prv_ns_callback)(poeg_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile poeg_prv_ns_callback)(poeg_callback_args_t * p_args);
 #endif

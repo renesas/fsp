@@ -40,7 +40,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define CTSU_CODE_VERSION_MAJOR       (1U)
-#define CTSU_CODE_VERSION_MINOR       (1U)
+#define CTSU_CODE_VERSION_MINOR       (2U)
 
 #if (BSP_FEATURE_CTSU_VERSION == 2)
  #define CTSU_CORRECTION_POINT_NUM    (12) ///< number of correction table
@@ -188,11 +188,8 @@ typedef struct st_ctsu_instance_ctrl
     uint8_t                  ctsucr1;            ///< Copy from (atune1 << 3, md << 6) by Open API. CLK, ATUNE0, CSW, and PON is set by HAL driver.
     ctsu_ctsuwr_t          * p_ctsuwr;           ///< CTSUWR write register value. g_ctsu_ctsuwr[] is set by Open API.
     ctsu_self_buf_t        * p_self_raw;         ///< Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API.
-    uint16_t               * p_self_work;        ///< Pointer to Self work buffer. g_ctsu_self_work[] is set by Open API.
     uint16_t               * p_self_data;        ///< Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
     ctsu_mutual_buf_t      * p_mutual_raw;       ///< Pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API.
-    uint16_t               * p_mutual_pri_work;  ///< Pointer to Mutual primary work buffer. g_ctsu_mutual_pri_work[] is set by Open API.
-    uint16_t               * p_mutual_snd_work;  ///< Pointer to Mutual secondary work buffer. g_ctsu_mutual_snd_work[] is set by Open API.
     uint16_t               * p_mutual_pri_data;  ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
     uint16_t               * p_mutual_snd_data;  ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
     ctsu_correction_info_t * p_correction_info;  ///< Pointer to correction info

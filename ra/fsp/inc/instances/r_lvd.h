@@ -40,7 +40,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define LVD_CODE_VERSION_MAJOR    (1U)
-#define LVD_CODE_VERSION_MINOR    (0U)
+#define LVD_CODE_VERSION_MINOR    (1U)
 
 /***********************************************************************************************************************
  * Typedef definitions

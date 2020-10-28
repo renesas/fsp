@@ -41,7 +41,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define QSPI_CODE_VERSION_MAJOR      (1U)
-#define QSPI_CODE_VERSION_MINOR      (0U)
+#define QSPI_CODE_VERSION_MINOR      (1U)
 
 #define QSPI_DEVICE_START_ADDRESS    (0x60000000)
 

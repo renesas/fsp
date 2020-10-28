@@ -112,7 +112,7 @@ typedef enum e_sci_i2c_dtc_interrupt_trigger
 } sci_i2c_dtc_interrupt_trigger_t;
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile sci_i2c_prv_ns_callback)(i2c_master_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * sci_i2c_prv_ns_callback)(i2c_master_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile sci_i2c_prv_ns_callback)(i2c_master_callback_args_t * p_args);
 #endif

@@ -39,7 +39,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define GPT_CODE_VERSION_MAJOR    (1U)
-#define GPT_CODE_VERSION_MINOR    (0U)
+#define GPT_CODE_VERSION_MINOR    (1U)
 
 /***********************************************************************************************************************
  * Typedef definitions

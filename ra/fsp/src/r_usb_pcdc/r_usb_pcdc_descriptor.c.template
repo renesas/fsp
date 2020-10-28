@@ -5,7 +5,6 @@
 #include "r_usb_basic.h"
 #include "r_usb_basic_api.h"
 #include "r_usb_basic_cfg.h"
-#include "hal_data.h"
 
 /******************************************************************************
  Macro definitions

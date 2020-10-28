@@ -1022,22 +1022,12 @@ void bsp_clock_init (void)
 
     /* Set the OCTASPI clock if it exists on the MCU (See section 8.2.30 of the RA6M4 hardware manual R01UH0890EJ0050). */
 #if BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK && BSP_CFG_OCTA_SOURCE != BSP_CLOCKS_CLOCK_DISABLED
-
-    /* Request to change the OCTASPI Clock. */
-    R_SYSTEM->OCTACKCR_b.OCTACKSREQ = 1;
-
-    /* Wait for the clock to be stopped. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OCTACKCR_b.OCTACKSRDY, 1U);
-
-    /* Write the settings. */
-    R_SYSTEM->OCTACKDIVCR = BSP_CFG_OCTA_DIV;
-    R_SYSTEM->OCTACKCR    = BSP_CFG_OCTA_SOURCE | R_SYSTEM_OCTACKCR_OCTACKSREQ_Msk;
-
-    /* Start the OCTASPI Clock. */
-    R_SYSTEM->OCTACKCR = BSP_CFG_OCTA_SOURCE;
-
-    /* Wait for the OCTASPI Clock to be started. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OCTACKCR_b.OCTACKSRDY, 0U);
+    bsp_octaclk_settings_t octaclk_settings =
+    {
+        .source_clock = (bsp_clocks_source_t) BSP_CFG_OCTA_SOURCE,
+        .divider      = (bsp_clocks_octaclk_div_t) BSP_CFG_OCTA_DIV
+    };
+    R_BSP_OctaclkUpdate(&octaclk_settings);
 #endif                                 /* BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK && BSP_CFG_OCTASPI_CLOCK_ENABLE */
 
     /* Lock CGC and LPM protection registers. */
@@ -1182,6 +1172,45 @@ static void bsp_clock_set_postchange (uint32_t updated_freq_hz, uint8_t new_rom_
     {
         BSP_PRV_FLDWAITR_REG_ACCESS = BSP_PRV_FLDWAITR_ONE_WAIT_CYCLES;
     }
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * Octa-SPI clock update.
+ * @param[in]   p_octaclk_setting   Pointer to Octaclk setting structure which provides information regarding
+ *                                  Octaclk source and divider settings to be applied.
+ * @note The requested Octaclk source must be started before calling this function.
+ **********************************************************************************************************************/
+void R_BSP_OctaclkUpdate (bsp_octaclk_settings_t * p_octaclk_setting)
+{
+#if BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK
+
+    /* Store initial value of CGC and LPM protection registers. */
+    uint16_t bsp_prv_prcr_orig = R_SYSTEM->PRCR;
+
+    /* Unlock CGC and LPM protection registers. */
+    R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_UNLOCK;
+
+    /* Request to change the OCTASPI Clock. */
+    R_SYSTEM->OCTACKCR_b.OCTACKSREQ = 1;
+
+    /* Wait for the clock to be stopped. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OCTACKCR_b.OCTACKSRDY, 1U);
+
+    /* Write the settings. */
+    R_SYSTEM->OCTACKDIVCR = (uint8_t) p_octaclk_setting->divider;
+    R_SYSTEM->OCTACKCR    = (uint8_t) (p_octaclk_setting->source_clock | R_SYSTEM_OCTACKCR_OCTACKSREQ_Msk);
+
+    /* Start the OCTASPI Clock. */
+    R_SYSTEM->OCTACKCR = BSP_CLOCKS_SOURCE_CLOCK_PLL2;
+
+    /* Wait for the OCTASPI Clock to be started. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OCTACKCR_b.OCTACKSRDY, 0U);
+
+    /* Restore CGC and LPM protection registers. */
+    R_SYSTEM->PRCR = bsp_prv_prcr_orig;
+#else
+    FSP_PARAMETER_NOT_USED(p_octaclk_setting);
 #endif
 }
 

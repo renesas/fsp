@@ -59,7 +59,7 @@ FSP_HEADER
  **********************************************************************************************************************/
 #define WIFI_ONCHIP_SILEX_RETURN_TEXT_LENGTH    (13 + 1) // Length of the tailing buffer used by command parser
 #define WIFI_ONCHIP_SILEX_CODE_VERSION_MAJOR    (1U)
-#define WIFI_ONCHIP_SILEX_CODE_VERSION_MINOR    (1U)
+#define WIFI_ONCHIP_SILEX_CODE_VERSION_MINOR    (2U)
 
 /***********************************************************************************************************************
  * Typedef definitions

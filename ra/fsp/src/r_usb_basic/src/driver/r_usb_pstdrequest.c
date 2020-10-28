@@ -1471,11 +1471,7 @@ void usb_peri_class_request (usb_setup_t * preq, uint16_t ctsq, usb_utr_t * p_ut
 
             case USB_CS_WRDS:
             {
- #if defined(USB_CFG_PMSC_USE)
-                usb_peri_class_request_wds(p_utr);        /* class request (control write data stage) */
- #else  /* defined(USB_CFG_PMSC_USE) */
                 usb_peri_class_request_rwds(preq, p_utr); /* class request (control write data stage) */
- #endif /* defined(USB_CFG_PMSC_USE) */
                 break;
             }
 
@@ -1537,11 +1533,12 @@ void usb_peri_class_request_ioss (usb_setup_t * req)
  ******************************************************************************/
 void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
 {
- #if defined(USB_CFG_PMSC_USE)
     usb_instance_ctrl_t ctrl;
 
+ #if defined(USB_CFG_PMSC_USE)
+
     /* Is a request receive target Interface? */
-    if ((0 == req->request_index) && (USB_INTERFACE == (req->request_type & USB_BMREQUESTTYPERECIP)))
+    if (USB_INTERFACE == (req->request_type & USB_BMREQUESTTYPERECIP))
     {
         if (USB_GET_MAX_LUN == (req->request_type & USB_BREQUEST))
         {
@@ -1549,7 +1546,7 @@ void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
         }
         else
         {
-            /* Get Line Coding Request */
+            /* Get Line Coding Request etc */
             ctrl.module_number = p_utr->ip;
             ctrl.setup         = *req; /* Save setup data. */
             ctrl.data_size     = 0;
@@ -1563,9 +1560,7 @@ void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
         /* Set Stall */
         usb_pstd_set_stall_pipe0(p_utr); /* Req Error */
     }
- #else  /* defined(USB_CFG_PMSC_USE) */
-    usb_instance_ctrl_t ctrl;
-
+ #else /* defined(USB_CFG_PMSC_USE) */
     /* Is a request receive target Interface? */
     ctrl.module_number = p_utr->ip;
     ctrl.setup         = *req;         /* Save setup data. */
@@ -1575,21 +1570,6 @@ void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
     usb_set_event(USB_STATUS_REQUEST, &ctrl);
  #endif                                /* defined(USB_CFG_PMSC_USE) */
 } /* End of function usb_peri_class_request_rwds */
-
- #if defined(USB_CFG_PMSC_USE)
-
-/******************************************************************************
- * Function Name   : usb_peri_class_request_wds
- * Description     : Class request processing (control write data stage)
- * Arguments       : usb_utr_t *p_utr : Pointer to usb_utr_t structure.
- * Return value    : none
- ******************************************************************************/
-void usb_peri_class_request_wds (usb_utr_t * p_utr)
-{
-    usb_pstd_set_stall_pipe0(p_utr);
-}                                      /* End of function usb_peri_class_request_wds */
-
- #endif /* defined(USB_CFG_PMSC_USE) */
 
 /******************************************************************************
  * Function Name   : usb_peri_other_request
@@ -1617,10 +1597,12 @@ void usb_peri_other_request (usb_setup_t * req, usb_utr_t * p_utr)
  ******************************************************************************/
 void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
 {
+    usb_instance_ctrl_t ctrl;
+
  #if defined(USB_CFG_PMSC_USE)
 
     /* Is a request receive target Interface? */
-    if ((0 == req->request_index) && (USB_INTERFACE == (req->request_type & USB_BMREQUESTTYPERECIP)))
+    if (USB_INTERFACE == (req->request_type & USB_BMREQUESTTYPERECIP))
     {
         if (USB_MASS_STORAGE_RESET == (req->request_type & USB_BREQUEST))
         {
@@ -1628,7 +1610,12 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
         }
         else
         {
-            usb_pstd_set_stall_pipe0(p_utr); /* Req Error */
+            ctrl.setup         = *req; /* Save setup data. */
+            ctrl.module_number = p_utr->ip;
+            ctrl.data_size     = 0;
+            ctrl.status        = USB_SETUP_STATUS_ACK;
+            ctrl.type          = USB_CLASS_REQUEST;
+            usb_set_event(USB_STATUS_REQUEST, &ctrl);
         }
     }
     else
@@ -1640,11 +1627,9 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
     {
         usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
     }
- #else  /* defined(USB_CFG_PMSC_USE) */
-    usb_instance_ctrl_t ctrl;
-
+ #else /* defined(USB_CFG_PMSC_USE) */
     /* Is a request receive target Interface? */
-    ctrl.setup         = *req;         /* Save setup data. */
+    ctrl.setup         = *req;                             /* Save setup data. */
     ctrl.module_number = p_utr->ip;
     ctrl.data_size     = 0;
     ctrl.status        = USB_SETUP_STATUS_ACK;

@@ -38,7 +38,7 @@
  **********************************************************************************************************************/
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile doc_prv_ns_callback)(doc_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * doc_prv_ns_callback)(doc_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile doc_prv_ns_callback)(doc_callback_args_t * p_args);
 #endif

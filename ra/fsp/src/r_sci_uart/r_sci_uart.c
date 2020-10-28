@@ -153,7 +153,7 @@ typedef enum e_noise_cancel_lvl
 } noise_cancel_lvl_t;
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile sci_uart_prv_ns_callback)(uart_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * sci_uart_prv_ns_callback)(uart_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile sci_uart_prv_ns_callback)(uart_callback_args_t * p_args);
 #endif

@@ -134,7 +134,7 @@ typedef enum e_iic_master_transfer_dir_option
 } iic_master_transfer_dir_t;
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile iic_master_prv_ns_callback)(i2c_master_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * iic_master_prv_ns_callback)(i2c_master_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile iic_master_prv_ns_callback)(i2c_master_callback_args_t * p_args);
 #endif

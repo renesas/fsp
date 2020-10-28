@@ -102,7 +102,7 @@
  **********************************************************************************************************************/
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile wdt_prv_ns_callback)(wdt_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * wdt_prv_ns_callback)(wdt_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile wdt_prv_ns_callback)(wdt_callback_args_t * p_args);
 #endif
@@ -179,7 +179,6 @@ static volatile wdt_instance_ctrl_t * gp_wdt_ctrl = NULL;
  **********************************************************************************************************************/
 
 /** Watchdog implementation of WDT Driver  */
-/*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
 const wdt_api_t g_wdt_on_wdt =
 {
     .open        = R_WDT_Open,

@@ -38,7 +38,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define IWDT_CODE_VERSION_MAJOR    (1U)
-#define IWDT_CODE_VERSION_MINOR    (1U)
+#define IWDT_CODE_VERSION_MINOR    (2U)
 
 /***********************************************************************************************************************
  * Typedef definitions

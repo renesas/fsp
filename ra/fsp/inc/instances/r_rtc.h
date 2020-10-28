@@ -40,7 +40,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define RTC_CODE_VERSION_MAJOR    (1U)
-#define RTC_CODE_VERSION_MINOR    (0U)
+#define RTC_CODE_VERSION_MINOR    (1U)
 
 /* Counting mode */
 #define RTC_CALENDAR_MODE         (0)

@@ -44,7 +44,6 @@
 /** This macro is used to suppress compiler messages about a parameter not being used in a function. The nice thing
  * about using this implementation is that it does not take any extra RAM or ROM. */
 
-/*LDRA_INSPECTED 340 s */
 #define FSP_PARAMETER_NOT_USED(p)    (void) ((p))
 
 /** Determine if a C++ compiler is being used.
@@ -267,6 +266,7 @@ typedef enum e_fsp_err
     FSP_ERR_WIFI_TRANSMIT_FAILED = 70002,            ///< Transmission failed
     FSP_ERR_WIFI_INVALID_MODE    = 70003,            ///< API called when provisioned in client mode
     FSP_ERR_WIFI_FAILED          = 70004,            ///< WiFi Failed.
+    FSP_ERR_WIFI_SCAN_COMPLETE   = 70005,            ///< Wifi scan has completed.
 
     /* Start of SF_CELLULAR Specific */
     FSP_ERR_CELLULAR_CONFIG_FAILED       = 80000,    ///< Cellular module Configuration failed.

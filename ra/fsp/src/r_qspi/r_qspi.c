@@ -108,7 +108,6 @@ static void(*const gp_qspi_prv_byte_write[3]) (uint8_t byte) =
  * Global Variables
  **********************************************************************************************************************/
 
-/*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
 const spi_flash_api_t g_qspi_on_spi_flash =
 {
     .open           = R_QSPI_Open,
@@ -576,7 +575,10 @@ fsp_err_t R_QSPI_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol_t
 #endif
 
     /* Update the SPI protocol. */
-    R_QSPI->SFMSPC_b.SFMSPI = spi_protocol;
+
+    /* The cast is used to prevent a warning that not all values of spi_flash_protocol_t fit in SFMSPI.  spi_protocol is
+     * verified to fit in SFMSPI in parameter checking above. */
+    R_QSPI->SFMSPC_b.SFMSPI = (uint32_t) spi_protocol & 3U;
 
     return FSP_SUCCESS;
 }

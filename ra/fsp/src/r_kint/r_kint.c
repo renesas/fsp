@@ -152,7 +152,7 @@ fsp_err_t R_KINT_Close (keymatrix_ctrl_t * const p_api_ctrl)
  * This function enables interrupts for the KINT peripheral after clearing any pending requests.
  * Implements @ref keymatrix_api_t::enable.
  *
- * @retval FSP_SUCCESS        Interrupt disabled successfully.
+ * @retval FSP_SUCCESS        Interrupt enabled successfully.
  * @retval FSP_ERR_ASSERTION  The p_ctrl parameter was null.
  * @retval FSP_ERR_NOT_OPEN   The peripheral is not opened.
  **********************************************************************************************************************/

@@ -277,7 +277,7 @@ fsp_err_t R_LPM_IoKeepClear (lpm_ctrl_t * const p_api_ctrl)
 /*******************************************************************************************************************//**
  * Close the LPM Instance
  *
- * @retval     FSP_SUCCESS        LPM Software lock initialized
+ * @retval     FSP_SUCCESS        LPM mode closed
  * @retval     FSP_ERR_NOT_OPEN   LPM instance is not open
  * @retval     FSP_ERR_ASSERTION  Null Pointer
  **********************************************************************************************************************/
@@ -297,7 +297,7 @@ fsp_err_t R_LPM_Close (lpm_ctrl_t * const p_api_ctrl)
 /*******************************************************************************************************************//**
  * Get the driver version based on compile time macros.
  *
- * @retval     FSP_SUCCESS        Successful close.
+ * @retval     FSP_SUCCESS        Successfully got version.
  * @retval     FSP_ERR_ASSERTION  p_version is NULL.
  **********************************************************************************************************************/
 fsp_err_t R_LPM_VersionGet (fsp_version_t * const p_version)

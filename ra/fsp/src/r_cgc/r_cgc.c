@@ -121,7 +121,7 @@ typedef enum e_cgc_prv_change
 } cgc_prv_change_t;
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile cgc_prv_ns_callback)(cgc_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * cgc_prv_ns_callback)(cgc_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile cgc_prv_ns_callback)(cgc_callback_args_t * p_args);
 #endif
@@ -237,7 +237,6 @@ static const uint32_t g_sckdivcr_upper_bits =
  * Global Variables
  **********************************************************************************************************************/
 
-/*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
 const cgc_api_t g_cgc_on_cgc =
 {
     .open                 = R_CGC_Open,
@@ -333,7 +332,6 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
  *
  * @retval FSP_SUCCESS                  Clock configuration applied successfully.
  * @retval FSP_ERR_ASSERTION            Invalid input argument.
- * @retval FSP_ERR_UNSUPPORTED          PLL/PLL2 is not available on this MCU.
  * @retval FSP_ERR_NOT_OPEN             Module is not open.
  * @retval FSP_ERR_IN_USE               Attempt to stop the current system clock or the PLL source clock.
  * @retval FSP_ERR_CLOCK_ACTIVE         PLL configuration cannot be changed while PLL is running.
@@ -370,14 +368,6 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     options[CGC_CLOCK_MAIN_OSC] = p_clock_cfg->mainosc_state;
     options[CGC_CLOCK_SUBCLOCK] = CGC_CLOCK_CHANGE_NONE;
 #if CGC_CFG_PARAM_CHECKING_ENABLE
- #if !BSP_PRV_PLL_SUPPORTED
-    FSP_ERROR_RETURN(CGC_CLOCK_CHANGE_START != p_clock_cfg->pll_state, FSP_ERR_UNSUPPORTED);
- #endif
-
- #if !BSP_PRV_PLL2_SUPPORTED
-    FSP_ERROR_RETURN(CGC_CLOCK_CHANGE_START != p_clock_cfg->pll2_state, FSP_ERR_UNSUPPORTED);
- #endif
-
  #if BSP_CFG_USE_LOW_VOLTAGE_MODE
 
     /* HOCO must be running in low voltage mode. */

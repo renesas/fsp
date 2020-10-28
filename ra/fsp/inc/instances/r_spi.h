@@ -39,7 +39,7 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 #define SPI_CODE_VERSION_MAJOR    (1U)
-#define SPI_CODE_VERSION_MINOR    (1U)
+#define SPI_CODE_VERSION_MINOR    (2U)
 
 /*************************************************************************************************
  * Type defines for the SPI interface API

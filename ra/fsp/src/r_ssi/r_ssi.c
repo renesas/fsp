@@ -79,7 +79,7 @@
  **********************************************************************************************************************/
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile i2s_prv_ns_callback)(i2s_callback_args_t * p_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * i2s_prv_ns_callback)(i2s_callback_args_t * p_args);
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile i2s_prv_ns_callback)(i2s_callback_args_t * p_args);
 #endif
@@ -160,7 +160,6 @@ static const fsp_version_t g_version =
  **********************************************************************************************************************/
 
 /** SSI Implementation of I2S interface.  */
-/*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
 const i2s_api_t g_i2s_on_ssi =
 {
     .open        = R_SSI_Open,
@@ -1214,21 +1213,15 @@ void ssi_txi_isr (void)
     /* Clear the IR flag in the ICU */
     R_BSP_IrqStatusClear(irq);
 
-    bool call_callback = true;
-
     if (NULL != p_instance_ctrl->p_tx_src)
     {
-        /* If there is more data to send, don't call the callback. */
-        if (p_instance_ctrl->tx_src_samples > 0)
-        {
-            call_callback = false;
-        }
-
         /* If transfer is not used, write data. */
         r_ssi_fifo_write(p_instance_ctrl);
     }
 
-    if (call_callback)
+    /* If there are more samples to write to the FIFO or the FIFO is above the watermark, don't call the callback. */
+    if ((p_instance_ctrl->tx_src_samples == 0) &&
+        (p_instance_ctrl->p_reg->SSIFSR_b.TDC > (BSP_FEATURE_SSI_FIFO_NUM_STAGES / 2U)))
     {
         r_ssi_call_callback(p_instance_ctrl, I2S_EVENT_TX_EMPTY);
     }

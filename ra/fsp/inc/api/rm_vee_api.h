@@ -50,7 +50,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define RM_VEE_API_VERSION_MAJOR    (1U)
-#define RM_VEE_API_VERSION_MINOR    (0U)
+#define RM_VEE_API_VERSION_MINOR    (1U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -76,6 +76,7 @@ typedef struct st_rm_vee_callback_args
 /** User configuration structure, used in open function */
 typedef struct st_rm_vee_cfg
 {
+    uint32_t   start_addr;                                ///< Start address to be used for Virtual EEPROM memory
     uint32_t   num_segments;                              ///< Number of segments to divide the volume into
     uint32_t   total_size;                                ///< Total size of the volume
     uint32_t   ref_data_size;                             ///< Size of the reference data stored at the end of the segment

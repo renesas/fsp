@@ -73,7 +73,14 @@ void usb_pcdc_read_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
         /* Set Receive data length */
         ctrl.data_size = mess->read_req_len - mess->tranlen;
         ctrl.pipe      = (uint8_t) mess->keyword; /* Pipe number setting */
-        ctrl.type      = USB_CLASS_PCDC;          /* Device class setting  */
+        if (USB_CFG_PCDC_BULK_OUT == ctrl.pipe)
+        {
+            ctrl.type = USB_CLASS_PCDC;           /* CDC Data class  */
+        }
+        else
+        {
+            ctrl.type = USB_CLASS_PCDC2;          /* CDC Data class  */
+        }
 
         switch (mess->status)
         {
@@ -148,6 +155,16 @@ void usb_pcdc_write_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
         if (USB_DATA_NONE == mess->status)
         {
             ctrl.status = FSP_SUCCESS;
+        }
+        else if (USB_CFG_PCDC_BULK_IN2 == ctrl.pipe)
+        {
+            ctrl.type = USB_CLASS_PCDC2; /* CDC Data class  */
+        }
+
+        /* USB_CFG_PCDC_INT_IN2 */
+        else if (USB_CFG_PCDC_INT_IN2 == ctrl.pipe)
+        {
+            ctrl.type = USB_CLASS_PCDCC2; /* CDC Control class  */
         }
         else
         {

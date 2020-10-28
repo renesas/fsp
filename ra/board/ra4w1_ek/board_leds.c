@@ -56,7 +56,6 @@ static const uint16_t g_bsp_prv_leds[] =
 
 /** Structure with LED information for this board. */
 
-/*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
 const bsp_leds_t g_bsp_leds =
 {
     .led_count = (uint16_t) ((sizeof(g_bsp_prv_leds) / sizeof(g_bsp_prv_leds[0]))),

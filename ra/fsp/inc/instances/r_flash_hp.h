@@ -42,7 +42,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define FLASH_HP_CODE_VERSION_MAJOR    (1U)
-#define FLASH_HP_CODE_VERSION_MINOR    (1U)
+#define FLASH_HP_CODE_VERSION_MINOR    (2U)
 
 /* If Code Flash programming is enabled, then all API functions must execute out of RAM. */
 #if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)

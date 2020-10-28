@@ -34,7 +34,7 @@
  * Macro definitions
  ***********************************************************************************************************************/
 #define IIC_SLAVE_CODE_VERSION_MAJOR    (1U)
-#define IIC_SLAVE_CODE_VERSION_MINOR    (0U)
+#define IIC_SLAVE_CODE_VERSION_MINOR    (1U)
 
 /***********************************************************************************************************************
  * Typedef definitions

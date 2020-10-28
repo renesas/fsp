@@ -652,6 +652,9 @@ static fsp_err_t r_ospi_spi_protocol_specific_settings (ospi_instance_ctrl_t * p
 
         /* Clear auto-calibration value */
         R_OSPI->MDTR = OSPI_PRV_RMW_MASKED(R_OSPI->MDTR, R_OSPI_MDTR_DV0DEL_Msk, 0U, channel);
+
+        /* Set read/write dummy clocks to 0 in SPI mode. */
+        R_OSPI->MDLR = OSPI_PRV_RMW_MASKED(R_OSPI->MDLR, R_OSPI_MDLR_DV0RDL_Msk, 0U, channel);
     }
 
     return ret;

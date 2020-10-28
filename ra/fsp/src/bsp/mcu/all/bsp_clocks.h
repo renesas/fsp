@@ -262,8 +262,8 @@ typedef struct
 } bsp_clock_update_callback_args_t;
 
  #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
-typedef void (BSP_CMSE_NONSECURE_CALL * volatile bsp_clock_update_callback_t)(bsp_clock_update_callback_args_t *
-                                                                              p_callback_args);
+typedef void (BSP_CMSE_NONSECURE_CALL * bsp_clock_update_callback_t)(bsp_clock_update_callback_args_t *
+                                                                     p_callback_args);
  #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_clock_update_callback_t)(bsp_clock_update_callback_args_t *
                                                                              p_callback_args);

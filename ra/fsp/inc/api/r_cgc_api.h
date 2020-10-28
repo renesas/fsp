@@ -58,7 +58,7 @@ FSP_HEADER
 
 /* Version Number of API. */
 #define CGC_API_VERSION_MAJOR    (1U)
-#define CGC_API_VERSION_MINOR    (0U)
+#define CGC_API_VERSION_MINOR    (1U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -173,9 +173,8 @@ typedef struct st_cgc_pll_cfg
  * functions. */
 typedef union u_cgc_divider_cfg
 {
-    uint32_t sckdivcr_w;               ///< (@ 0x4001E020) System clock Division control register
+    uint32_t sckdivcr_w;                   ///< (@ 0x4001E020) System clock Division control register
 
-    /*LDRA_INSPECTED 381 S Anonymous structures and unions are allowed in FSP code. */
     struct
     {
         cgc_sys_clock_div_t pclkd_div : 3; ///< Divider value for PCLKD

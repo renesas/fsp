@@ -132,7 +132,7 @@ const pdc_api_t g_pdc_on_pdc =
  * @retval FSP_ERR_ASSERTION        One or more of the following parameters is NULL
  *                                  1. p_cfg is NULL
  *                                  2. p_api_ctrl is NULL
- *                                  3 The pointer to the transfer interface in the p_cfg parameter is NULL
+ *                                  3. The pointer to the transfer interface in the p_cfg parameter is NULL
  *                                  4. Callback parameter is NULL.
  *                                  5. Invalid IRQ number assigned
  * @retval FSP_ERR_INVALID_ARGUMENT One or more of the following parameters is incorrect

@@ -229,6 +229,8 @@ typedef enum e_usb_class_internal
 {
     USB_CLASS_INTERNAL_PCDC = 0,       ///< PCDC Class
     USB_CLASS_INTERNAL_PCDCC,          ///< PCDCC Class
+    USB_CLASS_INTERNAL_PCDC2,          ///< PCDC2 Class
+    USB_CLASS_INTERNAL_PCDCC2,         ///< PCDCC2 Class
     USB_CLASS_INTERNAL_PHID,           ///< PHID Class
     USB_CLASS_INTERNAL_PVND,           ///< PVND Class
     USB_CLASS_INTERNAL_HCDC,           ///< HCDC Class

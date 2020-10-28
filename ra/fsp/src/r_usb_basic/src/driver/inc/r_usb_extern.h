@@ -264,11 +264,11 @@ void     usb_pstd_fifo_to_buf(uint16_t pipe, uint16_t useport, usb_utr_t * p_utr
 uint16_t usb_pstd_read_data(uint16_t pipe, uint16_t pipemode, usb_utr_t * p_utr);
 void     usb_pstd_data_end(uint16_t pipe, uint16_t status, usb_utr_t * p_utr);
 
-uint8_t usb_pstd_set_pipe_table(uint8_t * descriptor, usb_utr_t * p_utr);
+uint8_t usb_pstd_set_pipe_table(uint8_t * descriptor, usb_utr_t * p_utr, uint8_t class_info);
 void    usb_pstd_clr_pipe_table(uint8_t usb_ip);
 void    usb_pstd_set_pipe_reg(usb_utr_t * p_utr);
 void    usb_pstd_clr_pipe_reg(usb_utr_t * p_utr);
-uint8_t usb_pstd_get_pipe_no(uint8_t type, uint8_t dir, usb_utr_t * p_utr);
+uint8_t usb_pstd_get_pipe_no(uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint8_t class_info);
 
 /* r_usb_cintfifo.c */
 void usb_pstd_nrdy_pipe_process(usb_utr_t * p_utr, uint16_t bitsts);

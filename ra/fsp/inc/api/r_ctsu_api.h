@@ -51,7 +51,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define CTSU_API_VERSION_MAJOR    (1U)
-#define CTSU_API_VERSION_MINOR    (1U)
+#define CTSU_API_VERSION_MINOR    (2U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -191,6 +191,7 @@ typedef struct st_ctsu_cfg
     uint8_t                    num_tx;                  ///< Number of transmit terminals
     uint16_t                   num_moving_average;      ///< Number of moving average for measurement data
     bool tunning_enable;                                ///< Initial offset tuning flag
+    bool judge_multifreq_disable;                       ///< Disable to judge multi frequency
     void (* p_callback)(ctsu_callback_args_t * p_args); ///< Callback provided when CTSUFN ISR occurs.
     transfer_instance_t const * p_transfer_tx;          ///< DTC instance for transmit at CTSUWR. Set to NULL if unused.
     transfer_instance_t const * p_transfer_rx;          ///< DTC instance for receive at CTSURD. Set to NULL if unused.
