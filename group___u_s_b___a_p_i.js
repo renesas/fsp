@@ -163,6 +163,8 @@ var group___u_s_b___a_p_i =
     [ "usb_class_t", "group___u_s_b___a_p_i.html#gab1dc4a2240edf1a50cca3945f31dc9f2", [
       [ "USB_CLASS_PCDC", "group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e", null ],
       [ "USB_CLASS_PCDCC", "group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a48516b4d7d5a664f676e88c2952a2767", null ],
+      [ "USB_CLASS_PCDC2", "group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a45f5c5efd523b3602a3e1239993da161", null ],
+      [ "USB_CLASS_PCDCC2", "group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2ad0f97287712c5d6d1fc0013ed6ba5104", null ],
       [ "USB_CLASS_PHID", "group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2abf75ec21c7f480bc52e8f9b68701ef17", null ],
       [ "USB_CLASS_PVND", "group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2af29ff035832b2ed9568dd3e674052265", null ],
       [ "USB_CLASS_HCDC", "group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2aa31d93178a24f042fb19db6da3b5a2d8", null ],

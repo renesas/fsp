@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.0</span>
+   &#160;<span id="projectnumber">Release v2.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -164,6 +164,8 @@ Functions</h2></td></tr>
 <li>
 <a href="#software-delay">Software Delay</a> </li>
 <li>
+<a href="#octaclock-update">Octal-SPI Clock Update</a> </li>
+<li>
 <a href="#board-features">Board Specific Features</a> </li>
 <li>
 <a href="#bsp-configuration">Configuration</a> </li>
@@ -262,7 +264,10 @@ Software Delay</h3>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Delay at least 1 second. Depending on the number of wait states required for the region of memory</span></div><div class="line"><span class="comment">     * that the software_delay_loop has been linked in this could take longer. The default is 4 cycles per loop.</span></div><div class="line"><span class="comment">     * This can be modified by redefining DELAY_LOOP_CYCLES. BSP_DELAY_UNITS_SECONDS, BSP_DELAY_UNITS_MILLISECONDS,</span></div><div class="line"><span class="comment">     * and BSP_DELAY_UNITS_MICROSECONDS can all be used with R_BSP_SoftwareDelay. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d">BSP_DELAY_UNITS_SECONDS</a>);</div><div class="line"></div></div><!-- fragment --> <h3><a class="anchor" id="critical-section-macros"></a>
 Critical Section Macros</h3>
 <p><a class="anchor" id="um_bsp_critical_section"></a>Implements a critical section. Some MCUs (MCUs with the BASEPRI register) support allowing high priority interrupts to execute during critical sections. On these MCUs, interrupts with priority less than or equal to BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION are not serviced in critical sections. Interrupts with higher priority than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION still execute in critical sections.</p>
-<div class="fragment"><div class="line"></div><div class="line">    FSP_CRITICAL_SECTION_DEFINE;</div><div class="line"></div><div class="line">    <span class="comment">/* Store the current interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaddc2260c1ce320f3aa1f1cb05b9a5620">FSP_CRITICAL_SECTION_ENTER</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Interrupts cannot run in this section unless their priority is less than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Restore saved interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga23338e06b1e1537017ef4f3f94cda354">FSP_CRITICAL_SECTION_EXIT</a>;</div><div class="line"></div></div><!-- fragment --> <h1><a class="anchor" id="board-features"></a>
+<div class="fragment"><div class="line"></div><div class="line">    FSP_CRITICAL_SECTION_DEFINE;</div><div class="line"></div><div class="line">    <span class="comment">/* Store the current interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaddc2260c1ce320f3aa1f1cb05b9a5620">FSP_CRITICAL_SECTION_ENTER</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Interrupts cannot run in this section unless their priority is less than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Restore saved interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga23338e06b1e1537017ef4f3f94cda354">FSP_CRITICAL_SECTION_EXIT</a>;</div><div class="line"></div></div><!-- fragment --> <h3><a class="anchor" id="octaclock-update"></a>
+OctaClock Update</h3>
+<p><a class="anchor" id="um_bsp_octaclk_update"></a>Supports changing the Octal-SPI Clock (OCTACLK) during runtime if supported by the MCU. The OCTACLK source and clock divisor can be updated. It is user's responsibility to ensure the selected clock source is running before attempting to update OCTACLK.</p>
+<h1><a class="anchor" id="board-features"></a>
 Board Specific Features</h1>
 <p>The BSP will call the board's initialization function (bsp_init) which can initialize board specific features. Possible board features are listed below.</p>
 <table class="doxtable">
@@ -423,6 +428,8 @@ Modules</h2></td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a6_m3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_m3.html">RA6M3</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a6_m4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_m4.html">RA6M4</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a6_t1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a6_t1.html">RA6T1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -1757,7 +1764,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

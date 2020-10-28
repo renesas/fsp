@@ -106,7 +106,7 @@ var group___a_d_c =
       [ "ADC_DOUBLE_TRIGGER_ENABLED_EXTENDED", "group___a_d_c.html#gga802c536966b5905a58039e347c5dbbc5a67e6c1666364c908d8ceb504b4ccf15f", null ]
     ] ],
     [ "R_ADC_Open", "group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac", null ],
-    [ "R_ADC_ScanCfg", "group___a_d_c.html#ga5d12f4922dd64d6eeeb855549d9e7ce5", null ],
+    [ "R_ADC_ScanCfg", "group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88", null ],
     [ "R_ADC_InfoGet", "group___a_d_c.html#ga1cc44d84e1dd1cad8fdafe1e91a3b6d0", null ],
     [ "R_ADC_ScanStart", "group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2", null ],
     [ "R_ADC_ScanStop", "group___a_d_c.html#ga9b5242c153c6320a564ed9ffd324f144", null ],

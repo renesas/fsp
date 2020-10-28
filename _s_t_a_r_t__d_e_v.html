@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.0</span>
+   &#160;<span id="projectnumber">Release v2.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level2"><a href="#what-is-a-project">What is a Project?</a></li>
 <li class="level2"><a href="#creating-a-project">Creating a Project</a><ul><li class="level3"><a href="#creating-a-new-project">Creating a New Project</a></li>
 <li class="level3"><a href="#selecting-a-board-and-toolchain">Selecting a Board and Toolchain</a></li>
+<li class="level3"><a href="#selecting-flat-or-trustzone-project">Selecting Flat or Arm® TrustZone® Project</a></li>
 <li class="level3"><a href="#selecting-a-project-template">Selecting a Project Template</a></li>
 </ul>
 </li>
@@ -126,8 +127,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </ul>
 </li>
 <li class="level2"><a href="#reviewing-and-adding-components">Reviewing and Adding Components</a></li>
-<li class="level2"><a href="#writing-the-application">Writing the Application</a><ul><li class="level3"><a href="#coding-features">Coding Features</a><ul><li class="level4"><a href="#edit-hover">Edit Hover</a></li>
-<li class="level4"><a href="#welcome-window">Welcome Window</a></li>
+<li class="level2"><a href="#writing-the-application">Writing the Application</a><ul><li class="level3"><a href="#coding-features">Coding Features</a><ul><li class="level4"><a href="#welcome-window">Welcome Window</a></li>
 <li class="level4"><a href="#cheat-sheets">Cheat Sheets</a></li>
 <li class="level4"><a href="#developer-assistance">Developer Assistance</a></li>
 <li class="level4"><a href="#information-icon">Information Icon</a></li>
@@ -198,7 +198,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <li class="level2"><a href="#building-and-testing-the-project">Building and Testing the Project</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#primer-trustzone-project-development">Primer: TrustZone Project Development</a><ul><li class="level2"><a href="#renesas-implementation-of-arm-trustzone-technology">Renesas Implementation of Arm TrustZone Technology</a><ul><li class="level3"><a href="#calling-from-non-secure-to-secure">Calling from Non-Secure to Secure</a></li>
+<li class="level1"><a href="#primer-trustzone-project-development">Primer: ARM® TrustZone® Project Development</a><ul><li class="level2"><a href="#renesas-implementation-of-arm-trustzone-technology">Renesas Implementation of ARM® TrustZone® Technology</a><ul><li class="level3"><a href="#calling-from-non-secure-to-secure">Calling from Non-Secure to Secure</a></li>
 <li class="level3"><a href="#calling-from-secure-to-non-secure">Calling from Secure to Non-Secure</a></li>
 </ul>
 </li>
@@ -274,7 +274,7 @@ Starting Development Introduction</h1>
 <li>Read a few <a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> sections to see how to use API function calls, structures, enumerations, types and callbacks. These module guides provide the information you will use to implement your project code.</li>
 <li>After you have a Kit and you have downloaded and installed e2 studio and FSP, you can build and debug a simple project to test your installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project in section <a class="el" href="_s_t_a_r_t__d_e_v.html#create-a-new-project-for-blinky">Create a New Project for Blinky</a>. It will use some of the key steps for managing projects within e2 studio and is a good way to learn the basics.</li>
 <li>Once you have successfully run Blinky you have a good starting point for using FSP for more complex projects. The Using HAL Drivers Tutorial, available at <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>, shows how to create a project from scratch, using FSP API functions. Do this next.</li>
-<li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Edit Hover, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>. Doing a couple of these labs provides further details on using FSP, and is also good practice. Running these labs is highly recommended.</li>
+<li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>. Doing a couple of these labs provides further details on using FSP, and is also good practice. Running these labs is highly recommended.</li>
 <li>The balance of the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> sections (that is, those not called out in step 2 above) contain additional reference material that may be helpful in the future. Scan them so you know what they contain, in case you need them.</li>
 <li>The balance of the e2 studio User Guide, starting with the <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-a-project">What is a Project?</a> section up to, but not including, <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section, provides a detailed description of each of the key steps, windows, and entries used to create, manage, configure, build and debug a project. Much of this may be familiar after running through the tutorials and Quick Labs. However, it is important to have a good grasp of what each of the configuration tabs are used for as that is where the bulk of the project preparation work takes place prior to writing code. Skim over this section as it may help with any questions in the future.</li>
 <li>Read the <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section to get a short introduction to the steps used when creating application code with FSP. It covers both RTOS-independent and RTOS-dependent applications. It also includes a short description for several of the code accelerators you should be familiar with by now. Using additional Quick FSP Labs is a good way to become familiar with the application development process and links to them are included in the appropriate places in this section. You can find the complete list of available Quick FSP Labs here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>.</li>
@@ -302,7 +302,6 @@ What is e2 studio?</h2>
 <li>A Graphical User Interface (GUI) (see <a class="el" href="_s_t_a_r_t__d_e_v.html#adding-threads-and-drivers">Adding Threads and Drivers</a>) with numerous wizards for configuring and auto-generating code</li>
 <li>A context sensitive Autocomplete (see <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>) feature that provides intelligent options for completing a programming element</li>
 <li>A <a class="el" href="_s_t_a_r_t__d_e_v.html#developer-assistance">Developer Assistance</a> tool for selection of and drag and drop placement of API functions directly in application code</li>
-<li>An <a class="el" href="_s_t_a_r_t__d_e_v.html#edit-hover">Edit Hover</a> feature to show detailed descriptions of code elements while editing</li>
 <li>A <a class="el" href="_s_t_a_r_t__d_e_v.html#welcome-window">Welcome Window</a> with links to example projects, application notes and a variety of other self-help support resources</li>
 <li>An <a class="el" href="_s_t_a_r_t__d_e_v.html#information-icon">Information Icon</a> from each module is provided in the graphic configuration viewer that links to specific design resources, including code 'cheat sheets' that provide useful starting points for common application implementations.</li>
 </ul>
@@ -422,6 +421,14 @@ RA MCU Project Generator (Screen 2)</div></div>
  <dl class="section note"><dt>Note</dt><dd>Click on the <b>Help</b> icon (?) for user guides, RA contents, and other documents.</dd></dl>
 </li>
 </ol>
+<h3><a class="anchor" id="selecting-flat-or-trustzone-project"></a>
+Selecting Flat or Arm® TrustZone® Project</h3>
+<p>If you selected a device or tool based on an Arm® Cortex®-M33, you next select whether to use Arm® TrustZone® in your project. For normal, non-TrustZone projects, select "Flat".</p>
+<div class="image">
+<img src="sd-flat-non-trustzone.png" alt="sd-flat-non-trustzone.png"/>
+<div class="caption">
+Flat, Secure, or Non-Secure Project</div></div>
+<p> For more information on Arm® TrustZone®, see <a class="el" href="_s_t_a_r_t__d_e_v.html#primer-trustzone-project-development">Primer: ARM® TrustZone® Project Development</a>.</p>
 <h3><a class="anchor" id="selecting-a-project-template"></a>
 Selecting a Project Template</h3>
 <p>In the next window, select the buiild artifact and RTOS.</p>
@@ -691,20 +698,7 @@ Coding Features</h3>
 <div class="caption">
 Autocomplete example</div></div>
 <p> Other code elements can use autocomplete too. Some of the more common uses for Autocomplete include Enumerations, Types, and API functions - but try it in any situation you think the tool may have enough context to determine what you might be looking for.</p>
-<p>For a hands-on experience using Autocomplete use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, Edit hover, and the Help system.</p>
-<h4><a class="anchor" id="edit-hover"></a>
-Edit Hover</h4>
-<p>e2 studio supports hovers in the textual editor. This function can be enabled or disabled via <b>Window &gt; Preferences &gt; C/C++ &gt; Editor &gt; Hovers</b>.</p>
-<div class="image">
-<img src="sd-hovers-pref.png" alt="sd-hovers-pref.png"/>
-<div class="caption">
-Hover preference</div></div>
-<p> To enable hover, check <b>Combined Hover</b> box. To disable it, uncheck this box. By default, it is enabled. The Hover function allows a user to view detailed information about any identifiers in the source code by hovering the mouse over an identifier and checking the pop-up.</p>
-<div class="image">
-<img src="sd-hovers-ex.png" alt="sd-hovers-ex.png"/>
-<div class="caption">
-Hover Example</div></div>
-<p> For a hands-on experience using Edit Hover use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, Edit hover, and the Help system.</p>
+<p>For a hands-on experience using Autocomplete use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, and the Help system.</p>
 <h4><a class="anchor" id="welcome-window"></a>
 Welcome Window</h4>
 <p>The e2 studio Welcome window displays useful information and common links to assist in development. Check out these resources to see what is available. They are updated with each release, so check back to see what has been added after a new release.</p>
@@ -741,7 +735,7 @@ Developer Assistance APIs</div></div>
 <img src="sd-dev-assist-drag-drop.png" alt="sd-dev-assist-drag-drop.png"/>
 <div class="caption">
 Dragging and Dropping an API in Developer Assistance</div></div>
-<p> For a hands-on experience using Developer Assistance use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110786">An Introduction to Developer Assistance</a>, <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, Edit hover, and the Help system.</p>
+<p> For a hands-on experience using Developer Assistance use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110786">An Introduction to Developer Assistance</a>, <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, and the Help system.</p>
 <h4><a class="anchor" id="information-icon"></a>
 Information Icon</h4>
 <p>Information icons are available on each module in the thread stack. Clicking on these icons opens a module folder on GitHub that contains additional information on the module. An example information Icon is shown below:</p>
@@ -766,7 +760,7 @@ RA Content Help</div></div>
 <img src="sd-e2-studio-help-from-search-bar.png" alt="sd-e2-studio-help-from-search-bar.png"/>
 <div class="caption">
 e2 studio Help from the Search Bar</div></div>
-<p> For a hands-on experience using the Help system use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110786">An Introduction to Developer Assistance</a>, <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, Edit hover, and the Help system.</p>
+<p> For a hands-on experience using the Help system use the Quick FSP Labs for <a href="https://en-support.renesas.com/knowledgeBase/19110786">An Introduction to Developer Assistance</a>, <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating Blinky from Scratch</a> and <a href="https://en-support.renesas.com/knowledgeBase/19110690">Creating an RTC Blinky from Scratch</a>. These 15-minute Do it Yourself labs take you through the step-by-step process of using Autocomplete, Developer Assistance, and the Help system.</p>
 <h3><a class="anchor" id="hal-modules-in-fsp"></a>
 HAL Modules in FSP: A Practical Description</h3>
 <p>The <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> section describes FSP stacks, modules and interfaces in significant detail, providing an understanding of the theory behind them. The following sections provides a quick and practical introduction on how to use API functions when writing code and where in the API reference sections you can find useful API related information.</p>
@@ -852,7 +846,7 @@ FSP Example Projects Organized by Kit</div></div>
 A Selection of Example Projects Available on GitHub</div></div>
  <h4><a class="anchor" id="quick-labs"></a>
 Quick Labs</h4>
-<p>A variety of Hands-on Do It Yourself labs are available on the Renesas RA and FSP Knowledge Base. Quick FSP Labs target the EK-RA6M3 kit and typically require only 15 minutes to complete. Each lab covers a couple related development tools and techniques like Edit Hover, Autocomplete, Developer Assistance, console I/O over RTT, and Visual Expressions, that can speed up the development process. A list of all available Quick Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19450948">https://en-support.renesas.com/knowledgeBase/19450948</a></p>
+<p>A variety of Hands-on Do It Yourself labs are available on the Renesas RA and FSP Knowledge Base. Quick FSP Labs target the EK-RA6M3 kit and typically require only 15 minutes to complete. Each lab covers a couple related development tools and techniques like Autocomplete, Developer Assistance, console I/O over RTT, and Visual Expressions, that can speed up the development process. A list of all available Quick Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19450948">https://en-support.renesas.com/knowledgeBase/19450948</a></p>
 <h2><a class="anchor" id="debugging-the-project"></a>
 Debugging the Project</h2>
 <p>Once your project builds without errors, you can use the Debugger to download your application to the board and execute it.</p>
@@ -1053,8 +1047,12 @@ e2 studio Project Configuration window (part 2)</div></div>
 <div class="caption">
 e2 studio Project Configuration window (part 3)</div></div>
 </li>
-</ol>
-<ol type="1">
+<li><p class="startli">Select the build artifact and RTOS.</p>
+<div class="image">
+<img src="sd-proj-config-2a.png" alt="sd-proj-config-2a.png"/>
+<div class="caption">
+e2 studio Project Configuration window (part 3)</div></div>
+</li>
 <li><p class="startli">Select the Blinky template for your board and click <b>Finish</b>.</p>
 <div class="image">
 <img src="sd-proj-config-3.png" alt="sd-proj-config-3.png"/>
@@ -1425,13 +1423,13 @@ Debug configuration</div></div>
 <li>Click the reset button on the target board. The LEDs begin flashing.</li>
 </ol>
 <h1><a class="anchor" id="primer-trustzone-project-development"></a>
-Primer: TrustZone Project Development</h1>
-<p>This section will introduce the user to the tools supporting TrustZone configuration for the RA Family of microcontrollers. It is intended to be read by development engineers implementing RA TrustZone projects for the first time. It will introduce basic concepts followed by workflow and tooling functions designed to simplify and accelerate their first TrustZone development. A background knowledge of e<sup>2</sup> studio and RA device hardware is expected.</p>
+Primer: ARM® TrustZone® Project Development</h1>
+<p>This section will introduce the user to the tools supporting ARM® TrustZone® configuration for the RA Family of microcontrollers. It is intended to be read by development engineers implementing RA ARM® TrustZone® projects for the first time. It will introduce basic concepts followed by workflow and tooling functions designed to simplify and accelerate their first ARM® TrustZone® development. A background knowledge of e<sup>2</sup> studio and RA device hardware is expected.</p>
 <h2>Target Device</h2>
-<p>RA Cortex<sup>®</sup>-M33 or Cortex<sup>®</sup>-M23 devices with TrustZone security extension.</p>
+<p>RA Cortex<sup>®</sup>-M33 or Cortex<sup>®</sup>-M23 devices with ARM® TrustZone® security extension.</p>
 <h2><a class="anchor" id="renesas-implementation-of-arm-trustzone-technology"></a>
-Renesas Implementation of Arm TrustZone Technology</h2>
-<p>For brevity, TrustZone will be abbreviated to TZ in this document.</p>
+Renesas Implementation of ARM® TrustZone® Technology</h2>
+<p>For brevity, ARM® TrustZone® will be abbreviated to TZ in this document.</p>
 <p>The following section is supplied for reference only. For full details of TZ implementation, please refer to Arm documentation (<a href="https://developer.arm.com/ip-products/security-ip/trustzone">https://developer.arm.com/ip-products/security-ip/trustzone</a>) and the RA6M4 device manual.</p>
 <p>Arm TZ technology divides the MCU and therefore the application into Secure and Non-Secure partitions. Secure applications can access both Secure and Non-Secure memory and resources. Non-Secure code can access Non-Secure memory and resources as well as Secure resources through a set of so-called veneers located in the Non-Secure Callable (NSC) region. This ensures a single access point for Secure code when called from the Non-Secure partition. The MCU starts up in the Secure partition by default. The security state of the CPU can be either Secure or Non-Secure.</p>
 <p>The MCU code flash, data flash, and SRAM are divided into Secure (S) and Non-Secure (NS) regions. Code flash and SRAM include a further region known as Non-Secure Callable (NSC). These memory security attributes are set into the non-volatile memory via SCI or USB boot mode commands when the device lifecycle is Secure Software Debug (SSD) state. The memory security attributes are loaded into the Implementation Defined Attribution Unit (IDAU) peripheral and the memory controller before application execution and cannot be updated by application code.</p>
@@ -1452,14 +1450,14 @@ Calling from Non-Secure to Secure Functions</div></div>
  <h3><a class="anchor" id="calling-from-secure-to-non-secure"></a>
 Calling from Secure to Non-Secure</h3>
 <p>Secure code uses B(L)XNS instructions to make direct calls to Non-Secure functions. While this is certainly possible, it can create a security vulnerability in the application. It is also challenging for the Secure application to determine the address of the non-secure function during build phase. From the RA Tools and FSP point view, calling directly from Secure to Non-Secure via FSP API is not supported.</p>
-<p>Preference is for the Secure code to initialise as necessary from reset, then pass control to the Non-Secure partition. It will manage any data transfers and so forth via FSP call-backs as security checks. For, example secure data can be copied to Non-Secure RAM.</p>
+<p>Preference is for the Secure code to initialise as necessary from reset, then pass control to the Non-Secure partition. It will manage any data transfers and so forth via FSP call-backs as security checks. For, example secure data can be copied to Non-Secure RAM. and so forth via FSP call-backs as security checks. For, example secure data can be copied to Non-Secure RAM.</p>
 <div class="image">
 <img src="tz-secure-to-non-secure-calling.png" alt="tz-secure-to-non-secure-calling.png"/>
 <div class="caption">
 Calling from Secure to Non-Secure Functions</div></div>
  <h2><a class="anchor" id="workflow"></a>
 Workflow</h2>
-<p>TrustZone MCU development normally consists of two projects within a workspace, Secure and Non-Secure. General project workflows are described in the following sections. The Renesas project generator also supports development with "Flat project" model with no TrustZone awareness.</p>
+<p>ARM® TrustZone® MCU development normally consists of two projects within a workspace, Secure and Non-Secure. General project workflows are described in the following sections. The Renesas project generator also supports development with "Flat project" model with no ARM® TrustZone® awareness.</p>
 <h3><a class="anchor" id="secure-project"></a>
 Secure Project</h3>
 <ol type="1">
@@ -1484,7 +1482,7 @@ Non-Secure Project</h3>
 </ol>
 <h3><a class="anchor" id="flat-project"></a>
 Flat Project</h3>
-<p>A flat project does not technically use TrustZone as the developer has made a decision to place the entire application in Secure partition from restart.</p>
+<p>A flat project does not technically use ARM® TrustZone® as the developer has made a decision to place the entire application in Secure partition from restart.</p>
 <p>Notes:</p>
 <ul>
 <li>Any code placed in external memory (such as OSPI or QSPI) will be Non-Secure.</li>
@@ -1962,7 +1960,7 @@ RA SC Menu Item</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

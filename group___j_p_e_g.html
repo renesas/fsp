@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.0</span>
+   &#160;<span id="projectnumber">Release v2.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -322,7 +322,7 @@ Minimum Coded Unit (MCU)</h3>
 <h3><a class="anchor" id="r-jpeg-limitations-encode-format"></a>
 Encoding Input Format</h3>
 <p>The encoding unit only supports Y'CbCr 4:2:2 input. Raw RGB888 data can be converted to this format as follows:</p>
-<div class="fragment"><div class="line"></div><div class="line">    y  =       (0.299000f * r) + (0.587000f * g) + (0.114000f * b);</div><div class="line">    cb = 128 - (0.168736f * r) - (0.331264f * g) + (0.500000f * b);</div><div class="line">    cr = 128 + (0.500000f * r) - (0.418688f * g) - (0.081312f * b);</div><div class="line"></div></div><!-- fragment --><p> While these equations are mathematically simple they do use the floating-point unit. To speed things up we can multiply the coefficients by 256/256...</p>
+<div class="fragment"><div class="line"></div><div class="line">    y  =       (0.299000f * r) + (0.587000f * g) + (0.114000f * b);</div><div class="line">    cb = 128 - (0.168736f * r) - (0.331264f * g) + (0.500000f * b);</div><div class="line">    cr = 128 + (0.500000f * r) - (0.418688f * g) - (0.081312f * b);</div><div class="line"></div></div><!-- fragment --><p> While these equations are mathematically simple they do use the floating-point unit. To speed things up we can multiply the coefficients by 256 and divide the sum by 256...</p>
 <div class="fragment"><div class="line"></div><div class="line">    y  =       ((76.5440f * r) + (150.272f * g) + (29.1840f * b)) / 256;</div><div class="line">    cb = 128 - ((43.1964f * r) - (84.8036f * g) + (128.000f * b)) / 256;</div><div class="line">    cr = 128 + ((128.000f * r) - (107.184f * g) - (20.8159f * b)) / 256;</div><div class="line"></div></div><!-- fragment --><p> ...which allows the formulas to be calculated entirely with shifts and addition (coefficients rounded to the nearest integer):</p>
 <div class="fragment"><div class="line"></div><div class="line">    y  =       (   (r &lt;&lt; 6) + (r &lt;&lt; 3) + (r &lt;&lt; 2) + r</div><div class="line">                 + (g &lt;&lt; 7) + (g &lt;&lt; 4) + (g &lt;&lt; 2) + (g &lt;&lt; 1)</div><div class="line">                 + (b &lt;&lt; 4) + (b &lt;&lt; 3) + (b &lt;&lt; 2) + b</div><div class="line">               ) &gt;&gt; 8;</div><div class="line"></div><div class="line">    cb = 128 - (   (r &lt;&lt; 5) + (r &lt;&lt; 3) + (r &lt;&lt; 1) + r</div><div class="line">                 + (g &lt;&lt; 6) + (g &lt;&lt; 4) + (g &lt;&lt; 2) + g</div><div class="line">                 - (b &lt;&lt; 7)</div><div class="line">               ) &gt;&gt; 8;</div><div class="line"></div><div class="line">    cr = 128 + (   (r &lt;&lt; 7)</div><div class="line">                 - (g &lt;&lt; 6) - (g &lt;&lt; 5) - (g &lt;&lt; 3) - (g &lt;&lt; 1) - g</div><div class="line">                 - (b &lt;&lt; 4) - (b &lt;&lt; 2) - b)</div><div class="line">               ) &gt;&gt; 8;</div><div class="line"></div></div><!-- fragment --><p> To compose the final Y'CbCr 4:2:2 data the chroma of every two pixels must be averaged. <b>In addition, the JPEG Codec expects chrominance values to be in the range -127..127 instead of the standard 1..255.</b></p>
 <div class="fragment"><div class="line"></div><div class="line">    cb = (uint8_t) ((int8_t) ((cb0 + cb1 + 1) &gt;&gt; 1) - 128);</div><div class="line">    cr = (uint8_t) ((int8_t) ((cr0 + cr1 + 1) &gt;&gt; 1) - 128);</div><div class="line"></div></div><!-- fragment --><p> Finally, the below equation composes two 4:2:2 output pixels at a time with standard byte order (<code>JPEG_DATA_ORDER_NORMAL</code>):</p>
@@ -651,7 +651,7 @@ The JPEG decoding operation automatically starts after both the input buffer and
 <p>Cancel an outstanding JPEG codec operation and close the device.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>The input data buffer is properly assigned to JPEG Codec device. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The input data buffer is closed. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to the control block is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>JPEG not opened. </td></tr>
   </table>
@@ -878,7 +878,7 @@ The JPEG decoding operation automatically starts after both the input buffer and
 <p>Configure horizontal and vertical subsampling. </p><dl class="section note"><dt>Note</dt><dd>This function can be used to scale the output of decoded image data.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Horizontal stride value is properly configured. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Horizontal subsample value is properly configured. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to the control block is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>JPEG not opened. </td></tr>
   </table>
@@ -970,7 +970,7 @@ The JPEG decoding operation automatically starts after both the input buffer and
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

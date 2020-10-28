@@ -5,6 +5,7 @@ var group___r_m___v_e_e___a_p_i =
       [ "p_context", "group___r_m___v_e_e___a_p_i.html#a81b1d05978598d20624e9eb484305a6f", null ]
     ] ],
     [ "rm_vee_cfg_t", "group___r_m___v_e_e___a_p_i.html#structrm__vee__cfg__t", [
+      [ "start_addr", "group___r_m___v_e_e___a_p_i.html#a591db393049e30cc9a79f499de75823b", null ],
       [ "num_segments", "group___r_m___v_e_e___a_p_i.html#a784b186634576953b699cf78781d1aea", null ],
       [ "total_size", "group___r_m___v_e_e___a_p_i.html#aaa68302d54dacf784f77ffd518ce6c38", null ],
       [ "ref_data_size", "group___r_m___v_e_e___a_p_i.html#add602f247291cbd3c0ec3d85050fc1a9", null ],

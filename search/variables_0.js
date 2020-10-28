@@ -53,6 +53,7 @@ var searchData=
   ['alarm_5firq',['alarm_irq',['../group___r_t_c___a_p_i.html#aabad6d91d22b402ad2cbee664bd5c502',1,'rtc_cfg_t']]],
   ['alignment',['alignment',['../group___a_d_c___a_p_i.html#aa36a14783685f411c4c0a7904a3de8eb',1,'adc_cfg_t']]],
   ['alpha_5fvalue',['alpha_value',['../group___j_p_e_g___a_p_i.html#a322f2b515077a630ef146fd1b3bb3d8e',1,'jpeg_cfg_t']]],
+  ['angleget',['angleGet',['../group___m_o_t_o_r___a_p_i.html#a2667442da1af9179b7ea009e67d74c77',1,'motor_api_t']]],
   ['anglespeedget',['angleSpeedGet',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ad3acb6cc95597c3d1b8741cb3fe57fa0',1,'motor_angle_api_t']]],
   ['area',['area',['../group___v_s___a_p_i.html#a020bf1c7afa9553d53d0ac38a72e56c5',1,'st_ble_vs_get_bd_addr_comp_evt_t']]],
   ['at_5fcmd_5fmode',['at_cmd_mode',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a227024ff84efc50f6dc7b53ac073a23a',1,'wifi_onchip_silex_instance_ctrl_t']]],

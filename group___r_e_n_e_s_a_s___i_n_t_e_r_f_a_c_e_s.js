@@ -48,10 +48,11 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "Block Media Interface", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i" ],
     [ "FreeRTOS+FAT Port Interface", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i" ],
     [ "LittleFS Interface", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html", "group___r_m___l_i_t_t_l_e_f_s___a_p_i" ],
-    [ "MOTOR ANGLE Interface", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html", "group___m_o_t_o_r___a_n_g_l_e___a_p_i" ],
-    [ "Interface", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i" ],
-    [ "MOTOR_DRIVER Interface", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i" ],
-    [ "MOTOR SPEED Interface", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html", "group___m_o_t_o_r___s_p_e_e_d___a_p_i" ],
+    [ "Motor angle Interface", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html", "group___m_o_t_o_r___a_n_g_l_e___a_p_i" ],
+    [ "Motor Interface", "group___m_o_t_o_r___a_p_i.html", "group___m_o_t_o_r___a_p_i" ],
+    [ "Motor current Interface", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i" ],
+    [ "Motor driver Interface", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i" ],
+    [ "Motor speed Interface", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html", "group___m_o_t_o_r___s_p_e_e_d___a_p_i" ],
     [ "Touch Middleware Interface", "group___t_o_u_c_h___a_p_i.html", "group___t_o_u_c_h___a_p_i" ],
     [ "Virtual EEPROM Interface", "group___r_m___v_e_e___a_p_i.html", "group___r_m___v_e_e___a_p_i" ]
 ];

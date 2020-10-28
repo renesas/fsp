@@ -33,6 +33,7 @@ var group___c_t_s_u___a_p_i =
       [ "num_tx", "group___c_t_s_u___a_p_i.html#a542052c1596c2006262e4b2bfb977244", null ],
       [ "num_moving_average", "group___c_t_s_u___a_p_i.html#abfff39da3a865d91b1d6e25e9d6b2933", null ],
       [ "tunning_enable", "group___c_t_s_u___a_p_i.html#a30d5daff3a3330673a7e3b8d306ec16c", null ],
+      [ "judge_multifreq_disable", "group___c_t_s_u___a_p_i.html#aee8acd294a80af31b96cfd442521eacc", null ],
       [ "p_callback", "group___c_t_s_u___a_p_i.html#a156c5159fbd59f5e29d12d7625f855ee", null ],
       [ "p_transfer_tx", "group___c_t_s_u___a_p_i.html#ac42f999742f1228975263f7b6b1b6d7e", null ],
       [ "p_transfer_rx", "group___c_t_s_u___a_p_i.html#afeb071da4ade7c5148db18ae14e6316c", null ],

@@ -203,6 +203,7 @@ var searchData=
   ['fsp_5ferr_5fwifi_5ffailed',['FSP_ERR_WIFI_FAILED',['../group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a5711df02b0d0b9e2027bef9de27948a4',1,'fsp_common_api.h']]],
   ['fsp_5ferr_5fwifi_5finit_5ffailed',['FSP_ERR_WIFI_INIT_FAILED',['../group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ae1e9fb09fdb6841cf4379097812e6156',1,'fsp_common_api.h']]],
   ['fsp_5ferr_5fwifi_5finvalid_5fmode',['FSP_ERR_WIFI_INVALID_MODE',['../group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a6955ee4b9476caa9941a4a30608b2d9f',1,'fsp_common_api.h']]],
+  ['fsp_5ferr_5fwifi_5fscan_5fcomplete',['FSP_ERR_WIFI_SCAN_COMPLETE',['../group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a0dfea4f4a09d2cb04031624c5c3bd753',1,'fsp_common_api.h']]],
   ['fsp_5ferr_5fwifi_5ftransmit_5ffailed',['FSP_ERR_WIFI_TRANSMIT_FAILED',['../group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8adeb727c2591c971117d47d29edec70e6',1,'fsp_common_api.h']]],
   ['fsp_5ferr_5fwrite_5ffailed',['FSP_ERR_WRITE_FAILED',['../group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a23d4ede168571c3084157c0f99f6c60c',1,'fsp_common_api.h']]],
   ['fsp_5fip_5facmphs',['FSP_IP_ACMPHS',['../group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a83fcacc44bf2dff69162ee3a5cfcbbd6',1,'fsp_features.h']]],

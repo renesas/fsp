@@ -7,6 +7,7 @@ var group___b_s_p___m_c_u =
     [ "RA6M2", "group___b_s_p___m_c_u___r_a6_m2.html", "group___b_s_p___m_c_u___r_a6_m2" ],
     [ "RA6M3", "group___b_s_p___m_c_u___r_a6_m3.html", "group___b_s_p___m_c_u___r_a6_m3" ],
     [ "RA6M4", "group___b_s_p___m_c_u___r_a6_m4.html", null ],
+    [ "RA6T1", "group___b_s_p___m_c_u___r_a6_t1.html", "group___b_s_p___m_c_u___r_a6_t1" ],
     [ "BSP_IRQ_DISABLED", "group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c", null ],
     [ "FSP_RETURN", "group___b_s_p___m_c_u.html#ga8c791e904efc648fb8b69b56d7dd37ba", null ],
     [ "FSP_ERROR_LOG", "group___b_s_p___m_c_u.html#ga960f46c44b67ba8ad5377cfc8e4e6a75", null ],

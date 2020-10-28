@@ -29,6 +29,7 @@ var NAVTREE =
         [ "Creating a Project", "_s_t_a_r_t__d_e_v.html#creating-a-project", [
           [ "Creating a New Project", "_s_t_a_r_t__d_e_v.html#creating-a-new-project", null ],
           [ "Selecting a Board and Toolchain", "_s_t_a_r_t__d_e_v.html#selecting-a-board-and-toolchain", null ],
+          [ "Selecting Flat or Arm® TrustZone® Project", "_s_t_a_r_t__d_e_v.html#selecting-flat-or-trustzone-project", null ],
           [ "Selecting a Project Template", "_s_t_a_r_t__d_e_v.html#selecting-a-project-template", null ]
         ] ],
         [ "Configuring a Project", "_s_t_a_r_t__d_e_v.html#configuring-a-project", [
@@ -49,7 +50,6 @@ var NAVTREE =
         [ "Reviewing and Adding Components", "_s_t_a_r_t__d_e_v.html#reviewing-and-adding-components", null ],
         [ "Writing the Application", "_s_t_a_r_t__d_e_v.html#writing-the-application", [
           [ "Coding Features", "_s_t_a_r_t__d_e_v.html#coding-features", [
-            [ "Edit Hover", "_s_t_a_r_t__d_e_v.html#edit-hover", null ],
             [ "Welcome Window", "_s_t_a_r_t__d_e_v.html#welcome-window", null ],
             [ "Cheat Sheets", "_s_t_a_r_t__d_e_v.html#cheat-sheets", null ],
             [ "Developer Assistance", "_s_t_a_r_t__d_e_v.html#developer-assistance", null ],
@@ -118,8 +118,8 @@ var NAVTREE =
         ] ],
         [ "Building and Testing the Project", "_s_t_a_r_t__d_e_v.html#building-and-testing-the-project", null ]
       ] ],
-      [ "Primer: TrustZone Project Development", "_s_t_a_r_t__d_e_v.html#primer-trustzone-project-development", [
-        [ "Renesas Implementation of Arm TrustZone Technology", "_s_t_a_r_t__d_e_v.html#renesas-implementation-of-arm-trustzone-technology", [
+      [ "Primer: ARM® TrustZone® Project Development", "_s_t_a_r_t__d_e_v.html#primer-trustzone-project-development", [
+        [ "Renesas Implementation of ARM® TrustZone® Technology", "_s_t_a_r_t__d_e_v.html#renesas-implementation-of-arm-trustzone-technology", [
           [ "Calling from Non-Secure to Secure", "_s_t_a_r_t__d_e_v.html#calling-from-non-secure-to-secure", null ],
           [ "Calling from Secure to Non-Secure", "_s_t_a_r_t__d_e_v.html#calling-from-secure-to-non-secure", null ]
         ] ],
@@ -230,7 +230,6 @@ var NAVTREE =
         ] ]
       ] ]
     ] ],
-    [ "!dsn_rm_bl2_port_usage_notes rm_bl2_port_usage_notes", "md__home_gitlab-runner_builds_nwfva_hz9_5_peaks_peaks_ra_fsp_src_rm_bl2_port_.html", null ],
     [ "API Reference", "modules.html", "modules" ],
     [ "Copyright", "_c_o_p_y_r_i_g_h_t.html", null ]
   ] ]
@@ -243,9 +242,9 @@ var NAVTREEINDEX =
 "group___b_l_e___a_b_s.html#acbbd8bba8ae55c4debd1e037dac2db9b",
 "group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa42e4bbde41306fc1cbb3a4f7b0f0c313",
 "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a4c8e7eec2565d342a1e7eaabfc94f4ee",
-"group___c_a_c___a_p_i.html#ga72f9630b697a9a6d09b349307611bf4c",
-"group___c_g_c___a_p_i.html#gga7499fcdfd9aafe4ca695e26e2d69175da5c77b4e770cff2b1c0806afb099b506b",
-"group___c_t_s_u.html#af11629c8645bed6f08a9dacdbd9c6bef",
+"group___c_a_c___a_p_i.html#ga06a44030019c434344457141c4802260",
+"group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8afc34723b6efeafd271fb3cfb365f8ec1",
+"group___c_t_s_u.html#ga07d91c963664201accc65a9d45fb817a",
 "group___d_i_s_p_l_a_y___a_p_i.html#ac6b4bd42b148b0424a2843435161da4c",
 "group___e_t_h_e_r___a_p_i.html#ab61eca8e923f4bb332f99ebb168fc6b0",
 "group___g_a_p___a_p_i.html#a14ed0a85eb05bd83c0db99d9fd5cbb28",
@@ -257,16 +256,16 @@ var NAVTREEINDEX =
 "group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840eaefa549f1d1c219c0ddc55e3fa9f49279",
 "group___k_e_y_m_a_t_r_i_x___a_p_i.html#ad4d2825f0417d86ac50c5998bfd4f54e",
 "group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a6e85df87a4ef87a43d718e505f8bdd7a",
-"group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a2a1b1b737fdc3254b7a26be62e063946",
-"group___p_o_e_g___a_p_i.html#gga6964e3b0b8b2d32d2428d86b32dfeef2ad3a9db10800397084958747e9cb2260a",
-"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ac2e2eac0e5d38ed6ec2c7b8891782df0",
-"group___r_t_c___a_p_i.html#a2a07242a217b804f8dc04fb078d4a6a1",
-"group___s_d_m_m_c___a_p_i.html#a0c44c5ce0dbed006580ae1dba87b9052",
-"group___s_p_i.html#gga8461cfe39f136055edd0efc7a83990f5a0f72bd478dc2ba089f14454b522db55d",
-"group___t_i_m_e_r___a_p_i.html#a9da65b46c59a0543ec977f634bb0265d",
-"group___u_a_r_t___a_p_i.html#gadc68b8fd9ded3990f84129df23fee798",
-"group___u_s_b___a_p_i.html#ggae829d35e41400a0bb30a3c0969152083afd34b1c5965035351f54187655ce1a85",
-"group___v_s___a_p_i.html#structst__ble__vs__tx__flow__chg__evt__t"
+"group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga3069a2a3350193c0894eda657016baa4",
+"group___p_d_c___a_p_i.html#structpdc__api__t",
+"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a899d80c2fd828410b2d01a7a96528f8c",
+"group___r_m___v_e_e___a_p_i.html#ggac7515f6fffdfcee3069dd80f584fb64ca319b7957152c005bfebc44789e6a7b68",
+"group___s_d_a_d_c.html#gga6f7fea933d308bfc55dbca4f0f6ce630a38fd67c20c786c7f9a7280fefea30622",
+"group___s_p_i.html#a4a0569c8791a283761d7872c69732bdd",
+"group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a27a23815612c052e599b32398b917937",
+"group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fada90d8a89f98ff82475383b14141b08d",
+"group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302a6efe30ef900a8492f5f0a1e02a7beb34",
+"group___v_s___a_p_i.html#ga6d1d6c0bdf14dd33f290a1f9fda0b00f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

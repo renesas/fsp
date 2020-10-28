@@ -389,6 +389,5 @@ var searchData=
   ['iw_5fad_5fch',['iw_ad_ch',['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#af4b44c99460328adf454d2e85892e18d',1,'motor_driver_cfg_t']]],
   ['independent_20watchdog_20timer_20_28r_5fiwdt_29',['Independent Watchdog Timer (r_iwdt)',['../group___i_w_d_t.html',1,'']]],
   ['iwdt_5finstance_5fctrl_5ft',['iwdt_instance_ctrl_t',['../group___i_w_d_t.html#structiwdt__instance__ctrl__t',1,'']]],
-  ['interface',['Interface',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html',1,'']]],
   ['interfaces',['Interfaces',['../group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html',1,'']]]
 ];

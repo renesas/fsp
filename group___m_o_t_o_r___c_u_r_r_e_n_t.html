@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.0</span>
+   &#160;<span id="projectnumber">Release v2.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -139,7 +139,7 @@ Functions</h2></td></tr>
 <tr class="separator:gafc2fac98f2344a29b860b956d2f85958"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Calculation process for the motor control on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html">Interface</a>. </p>
+<p>Calculation process for the motor control on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html">Motor current Interface</a>. </p>
 <h1><a class="anchor" id="rm-motor_current-overview"></a>
 Overview</h1>
 <p>The motor current is used to control the electric current of motor rotation in an appication. This module should be called cyclically after the A/D conversion of electric current of each phase in an application. This module calculates each phase voltage with input current reference, electric current and rotor angle.</p>
@@ -184,7 +184,7 @@ This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Mo
 <tr>
 <td>General &gt; PWM Carrier Frequency[kHz]</td><td>Manual Entry</td><td>20.0F </td><td>PWM Carrier Frequency. </td></tr>
 <tr>
-<td>General &gt; Limit of electric current</td><td>Manual Entry</td><td>12.0F </td><td>Limit of electric current. </td></tr>
+<td>General &gt; Input Voltage</td><td>Manual Entry</td><td>24.0F </td><td>Input voltage for limitation of current PI control. </td></tr>
 <tr>
 <td>General &gt; Voltage error compensation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -194,25 +194,25 @@ Enable</li>
 </ul>
 </td><td>Enable </td><td>Select enable/disable Voltage error compensation. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 1</td><td>Manual Entry</td><td>0.326F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 1</td><td>Manual Entry</td><td>0.672F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 2</td><td>Manual Entry</td><td>0.535F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 2</td><td>Manual Entry</td><td>0.945F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 3</td><td>Manual Entry</td><td>0.726F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 3</td><td>Manual Entry</td><td>1.054F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 4</td><td>Manual Entry</td><td>0.846F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 4</td><td>Manual Entry</td><td>1.109F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 5</td><td>Manual Entry</td><td>0.874F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 5</td><td>Manual Entry</td><td>1.192F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 1</td><td>Manual Entry</td><td>0.047F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 1</td><td>Manual Entry</td><td>0.013F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 2</td><td>Manual Entry</td><td>0.082F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 2</td><td>Manual Entry</td><td>0.049F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 3</td><td>Manual Entry</td><td>0.161F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 3</td><td>Manual Entry</td><td>0.080F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 4</td><td>Manual Entry</td><td>0.407F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 4</td><td>Manual Entry</td><td>0.184F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 5</td><td>Manual Entry</td><td>0.862F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 5</td><td>Manual Entry</td><td>0.751F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
 <td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
 <tr>
@@ -220,7 +220,7 @@ Enable</li>
 <tr>
 <td>Design Prameter &gt; Current PI Loop Zeta</td><td>Manual Entry</td><td>1.0F </td><td>Current PI Loop Zeta </td></tr>
 <tr>
-<td>Motor Parameter &gt; Pole Pair</td><td>Manual Entry</td><td>2 </td><td>Pole Pair </td></tr>
+<td>Motor Parameter &gt; Pole Pairs</td><td>Manual Entry</td><td>2 </td><td>Pole Pairs </td></tr>
 <tr>
 <td>Motor Parameter &gt; Resistance[ohm]</td><td>Manual Entry</td><td>8.5F </td><td>Resistance </td></tr>
 <tr>
@@ -228,9 +228,9 @@ Enable</li>
 <tr>
 <td>Motor Parameter &gt; Inductance of q-axis[H]</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
 <tr>
-<td>Motor Parameter &gt; Inertia[kgm^2]</td><td>Manual Entry</td><td>0.02159F </td><td>Inertia </td></tr>
+<td>Motor Parameter &gt; Permanent magnetic flux[Wb]</td><td>Manual Entry</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
 <tr>
-<td>Motor Parameter &gt; Nominal Current[Arms]</td><td>Manual Entry</td><td>0.0000028F </td><td>Nominal Current </td></tr>
+<td>Motor Parameter &gt; Rotor inertia[kgm^2]</td><td>Manual Entry</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-motor_current-clock-configuration"></a>
@@ -366,7 +366,7 @@ Examples</h1>
 <p>Run(Start) the Current Control. Implements <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#aff15656c8a4bb67ff8a50982175f5b1d">motor_current_api_t::run</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully reset. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully run. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
   </table>
@@ -576,7 +576,7 @@ Examples</h1>
 <p>Get Output Parameters. Implements <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#aef7b7b1ab3f8f89183e27c6b74ed10ef">motor_current_api_t::parameterGet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data is set. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful data get. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Input parameter error. </td></tr>
@@ -621,7 +621,7 @@ Examples</h1>
 <p>Get d/q-axis Current. Implements <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a1a8766712000f5de24429b03b328017a">motor_current_api_t::currentGet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data is set. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful data get. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Input parameter error. </td></tr>
@@ -660,7 +660,7 @@ Examples</h1>
 <p>Gets the set phase voltage. Implements <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a2b285802d4040280d7b5a5fe65aae795">motor_current_api_t::phaseVoltageGet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data culated. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful data calculation. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Input parameter error. </td></tr>
@@ -740,7 +740,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

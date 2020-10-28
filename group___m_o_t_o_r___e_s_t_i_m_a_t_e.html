@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.0</span>
+   &#160;<span id="projectnumber">Release v2.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -130,7 +130,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga6803211a184fe12dc04bacc46486767b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Calculation proccess for the motor control on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html">MOTOR ANGLE Interface</a>. </p>
+<p>Calculation proccess for the motor control on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html">Motor angle Interface</a>. </p>
 <h1><a class="anchor" id="rm-motor_estimate-overview"></a>
 Overview</h1>
 <p>The motor angle and speed estimation module is used to calculate rotor angle and rotational speed in an application. This module should be called cyclically after the A/D conversion of electric current of each phase in an application.</p>
@@ -168,17 +168,17 @@ This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Mo
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Motor &gt; Number of pole pairs</td><td>Manual Entry</td><td>2 </td><td>Number of pole pairs </td></tr>
+<td>Motor Parameter &gt; Pole pairs</td><td>Manual Entry</td><td>2 </td><td>Pole pairs </td></tr>
 <tr>
-<td>Motor &gt; Resistance</td><td>Manual Entry</td><td>8.5F </td><td>Resistance </td></tr>
+<td>Motor Parameter &gt; Resistance[ohm]</td><td>Manual Entry</td><td>8.5F </td><td>Resistance </td></tr>
 <tr>
-<td>Motor &gt; D-axis inductance</td><td>Manual Entry</td><td>0.0045F </td><td>D-axis inductance </td></tr>
+<td>Motor Parameter &gt; Inductance of d-axis[H]</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of d-axis </td></tr>
 <tr>
-<td>Motor &gt; Q-axis inductance</td><td>Manual Entry</td><td>0.0045F </td><td>Q-axis inductance </td></tr>
+<td>Motor Parameter &gt; Inductance of q-axis[H]</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
 <tr>
-<td>Motor &gt; Rotor inertia</td><td>Manual Entry</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
+<td>Motor Parameter &gt; Permanent magnetic flux[Wb]</td><td>Manual Entry</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
 <tr>
-<td>Motor &gt; Permanent magnetic flux</td><td>Manual Entry</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
+<td>Motor Parameter &gt; Rotor inertia[kgm^2]</td><td>Manual Entry</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
 <tr>
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_motor_angle0 </td><td>Module name. </td></tr>
 <tr>
@@ -303,7 +303,7 @@ Examples</h1>
 <p>Reset variables of Angle Estimation module. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#aae4410e4978e4f26ed8a5eb621201d41">motor_angle_api_t::reset</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully reset. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
   </table>
@@ -347,7 +347,7 @@ Examples</h1>
 <p>Set d/q-axis Current Data &amp; Voltage Reference. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ae2f738485245cc7b892dad6a7d1d07fc">motor_angle_api_t::currentSet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
   </table>
@@ -391,7 +391,7 @@ Examples</h1>
 <p>Set Speed Information. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a95e98bd293774d7e12058ef204fd00a9">motor_angle_api_t::speedSet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
   </table>
@@ -429,7 +429,7 @@ Examples</h1>
 <p>Set the flag of PI Control runs. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a0de7bb1da46eb37b8dbf2e533452207c">motor_angle_api_t::flagPiCtrlSet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
   </table>
@@ -479,7 +479,7 @@ Examples</h1>
 <p>Gets the current rotor's angle and rotation speed. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ad3acb6cc95597c3d1b8741cb3fe57fa0">motor_angle_api_t::angleSpeedGet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data calculated. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful data get. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
   </table>
@@ -602,7 +602,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

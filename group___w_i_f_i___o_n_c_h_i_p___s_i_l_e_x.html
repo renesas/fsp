@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.0</span>
+   &#160;<span id="projectnumber">Release v2.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -261,6 +261,7 @@ Usage Notes</h1>
 <li>WiFi AP connections do not currently support WEP security.</li>
 <li>When operating with a single UART only single socket connections are possible. To support multiple sockets two UART channels must be connected to the module. When using the Renesas-provided SX-ULPGN PMOD board the second UART channel is on pins 9 and 10 of the PMOD header.</li>
 <li>Network connection parameters SSID and Passphrase for the Access Point can not contain any commas. This is a current limitation of the Silex module firmware. The <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#gae861aaa0df9a25b53cf7fea5d47ec31b">rm_wifi_onchip_silex_connect()</a> function will return an error if a comma is detected.</li>
+<li>When operating with a single UART and there is an active socket connection you cannot call <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga4f1c2fb7ab3463f7d19afb506e945fd6">WIFI_Scan()</a>, <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga8680ac4cdb4455a2c03919c2f5417f72">WIFI_Ping()</a>, <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga8d5a20d3337081edf5c545cf7c2fd2e9">SOCKETS_GetHostByName()</a>, <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#gaa1520e348462acd24433231d7846b733">WIFI_GetMAC()</a>, or <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#gaf32f12b0901a7d91d3a3dd17dae6d56e">WIFI_GetIP()</a>. Calling one of these function will return an error code in this situation. These commands are blocked in the one UART case during an active socket connection because they could cause data loss. To avoid this limitation please configure the hardware to use both UARTs.</li>
 </ul>
 <h1><a class="anchor" id="r-wifi-onchip-silex-examples"></a>
 Examples</h1>
@@ -855,6 +856,7 @@ Internal socket instances. </td></tr>
     <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WIFI_SCAN_COMPLETE</td><td>Wifi scan has completed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2215,7 +2217,7 @@ Internal socket instances. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

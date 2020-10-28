@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.0.0</span>
+   &#160;<span id="projectnumber">Release v2.1.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -130,7 +130,7 @@ Functions</h2></td></tr>
 <tr class="separator:gaff2ff397e9689f04268d45db85599525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Calculation process for the motor control on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html">MOTOR SPEED Interface</a>. </p>
+<p>Calculation process for the motor control on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html">Motor speed Interface</a>. </p>
 <h1><a class="anchor" id="rm-motor_speed-overview"></a>
 Overview</h1>
 <p>The motor speed is used to control the speed of motor rotation in an appication. This module should be called cyclically in an application (e.g. in cyclic timer interrupt). This module caliculates d/q-axis current reference with input speed reference, current rotational speed, and d/q-axis current.</p>
@@ -200,7 +200,7 @@ Disable</li>
 <li>
 Enable</li>
 </ul>
-</td><td>Enable </td><td>Select enable/disable Flux Weakening Control. </td></tr>
+</td><td>Disable </td><td>Select enable/disable Flux Weakening Control. </td></tr>
 <tr>
 <td>General &gt; Torque compensation for sensorless transition</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -236,7 +236,7 @@ Enable</li>
 <tr>
 <td>Design Prameter &gt; Cutoff frequency of Phase error LPF</td><td>Manual Entry</td><td>10.0F </td><td>Cutoff frequency of Phase error LPF </td></tr>
 <tr>
-<td>Motor Parameter &gt; Pole Pair</td><td>Manual Entry</td><td>2 </td><td>Pole Pair </td></tr>
+<td>Motor Parameter &gt; Pole Pairs</td><td>Manual Entry</td><td>2 </td><td>Pole Pairs </td></tr>
 <tr>
 <td>Motor Parameter &gt; Resistance[ohm]</td><td>Manual Entry</td><td>8.5F </td><td>Resistance </td></tr>
 <tr>
@@ -244,9 +244,9 @@ Enable</li>
 <tr>
 <td>Motor Parameter &gt; Inductance of q-axis[H]</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
 <tr>
-<td>Motor Parameter &gt; Inertia[kgm^2]</td><td>Manual Entry</td><td>0.02159F </td><td>Inertia </td></tr>
+<td>Motor Parameter &gt; Permanent magnetic flux[Wb]</td><td>Manual Entry</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
 <tr>
-<td>Motor Parameter &gt; Nominal Current[Arms]</td><td>Manual Entry</td><td>0.0000028F </td><td>Nominal Current </td></tr>
+<td>Motor Parameter &gt; Rotor inertia[kgm^2]</td><td>Manual Entry</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
 <tr>
 <td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at timer interrupt. </td></tr>
 <tr>
@@ -494,7 +494,7 @@ Examples</h1>
 <p>Calculates the d/q-axis current reference.(Main process of Speed Control) Implements <a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a04253a27b4ea9f8e9c8927da5423eab9">motor_speed_api_t::speedControl</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data culated. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful data calculation. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
   </table>
@@ -613,7 +613,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.0.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

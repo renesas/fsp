@@ -158,6 +158,7 @@ var group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s =
       [ "FSP_ERR_WIFI_TRANSMIT_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8adeb727c2591c971117d47d29edec70e6", null ],
       [ "FSP_ERR_WIFI_INVALID_MODE", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a6955ee4b9476caa9941a4a30608b2d9f", null ],
       [ "FSP_ERR_WIFI_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a5711df02b0d0b9e2027bef9de27948a4", null ],
+      [ "FSP_ERR_WIFI_SCAN_COMPLETE", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a0dfea4f4a09d2cb04031624c5c3bd753", null ],
       [ "FSP_ERR_CELLULAR_CONFIG_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a61cdc8708028a97a52556794d4c2e050", null ],
       [ "FSP_ERR_CELLULAR_INIT_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a4a5158a88f2ea654f62435a7b5ae72d2", null ],
       [ "FSP_ERR_CELLULAR_TRANSMIT_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a1350c1ec5c0dc121c93983b2367a61ab", null ],
