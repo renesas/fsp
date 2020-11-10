@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.0</span>
+   &#160;<span id="projectnumber">Release v2.1.1</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -2082,6 +2082,7 @@ Memory Usage</h2>
 <p>The crypto capabilities on the RA6M4 are different resulting in the below usage limitations with mbedCrypto:</p><ul>
 <li>The module includes <b>both</b> wrapped and plaintext keys code irrespective of whether the application requires it.</li>
 <li>Plaintext key generation is not supported for RSA and ECC; only wrapped keys can be generated.</li>
+<li>If ECDH is used, only wrapped key will be generated on SCE9 and will not return an error even if the user context is somehow set for plain key. This may be relevant only if the psa_key_agreement() function with plaintext key on SCE9 is attempted.</li>
 </ul>
 <h2>Using PSA Crypto with TrustZone</h2>
 <p>Unlike FSP drivers, PSA Crypto cannot be configured as Non-secure callable in the RA Configurator for a secure project. The reason for this is that in order to achieve the security objective of controlling access to protected keys, both the PSA Crypto code as well as the keys must be placed in the secure region. Since the PSA Crypto API requires access to the keys directly during initialization and later via a key handle, allowing non-secure code to use the API by making it Non-secure callable will require the keys to be stored in non-secure memory.</p>
@@ -2231,7 +2232,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
