@@ -59,7 +59,8 @@ typedef enum e_agt_clock
 {
     AGT_CLOCK_PCLKB          = 0x00,   ///< PCLKB count source, division by 1, 2, or 8 allowed
     AGT_CLOCK_LOCO           = 0x40,   ///< LOCO count source, division by 1, 2, 4, 8, 16, 32, 64, or 128 allowed
-    AGT_CLOCK_AGT0_UNDERFLOW = 0x50,   ///< Underflow event signal from AGT0, division must be 1
+    AGT_CLOCK_AGT_UNDERFLOW  = 0x50,   ///< Underflow event signal from next lowest AGT channel, division must be 1
+    AGT_CLOCK_AGT0_UNDERFLOW = 0x50,   // Underflow event signal from AGT0, division must be 1 (deprecated)
     AGT_CLOCK_SUBCLOCK       = 0x60,   ///< Subclock count source, division by 1, 2, 4, 8, 16, 32, 64, or 128 allowed
     AGT_CLOCK_P402           = 0x92,   ///< Counts events on P402, events are counted in deep software standby mode
     AGT_CLOCK_P403           = 0x93,   ///< Counts events on P403, events are counted in deep software standby mode

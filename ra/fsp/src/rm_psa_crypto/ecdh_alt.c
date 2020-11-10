@@ -555,6 +555,9 @@ static int ecdh_make_public_internal( mbedtls_ecdh_context_mbed *ctx,
                                              f_rng, p_rng, rs_ctx ) ) != 0 )
         return( ret );
 #else
+#if BSP_FEATURE_CRYPTO_HAS_SCE9
+    ctx->grp.vendor_ctx = (void *) true;
+#endif
     if( ( ret = mbedtls_ecdh_gen_public( &ctx->grp, &ctx->d, &ctx->Q,
                                          f_rng, p_rng ) ) != 0 )
         return( ret );

@@ -93,9 +93,9 @@ static const fsp_version_t s_agt_version =
     .code_version_major = AGT_CODE_VERSION_MAJOR,
 };
 
-/* The period for channel 0 must be known to calculate the frequency of channel 1 if the count source is AGT0
+/* The period for even channels must be known to calculate the frequency of odd channels if the count source is AGT
  * underflow. */
-static uint32_t gp_prv_agt_periods[2];
+static uint32_t gp_prv_agt_periods[BSP_FEATURE_AGT_MAX_CHANNEL_NUM + 1];
 
 /***********************************************************************************************************************
  * Global Variables
@@ -443,10 +443,12 @@ fsp_err_t R_AGT_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p_inf
 
     /* Get and store clock frequency */
     agt_extended_cfg_t const * p_extend = (agt_extended_cfg_t const *) p_instance_ctrl->p_cfg->p_extend;
-    if (AGT_CLOCK_AGT0_UNDERFLOW == p_extend->count_source)
+    if (AGT_CLOCK_AGT_UNDERFLOW == p_extend->count_source)
     {
-        /* Clock frequency is the AGT0 clock frequency divided by the period of AGT0. */
-        p_info->clock_frequency = r_agt_clock_frequency_get(R_AGT0) / gp_prv_agt_periods[0];
+        /* Clock frequency of this channel is the clock frequency divided by the timer period of the source channel. */
+        R_AGT0_Type * p_source_channel_reg = p_instance_ctrl->p_reg - (R_AGT1 - R_AGT0);
+        p_info->clock_frequency = r_agt_clock_frequency_get(p_source_channel_reg) /
+                                  gp_prv_agt_periods[p_instance_ctrl->p_cfg->channel - 1];
     }
     else
     {
@@ -641,9 +643,9 @@ static fsp_err_t r_agt_open_param_checking (agt_instance_ctrl_t * p_instance_ctr
     /* Validate channel number. */
     FSP_ERROR_RETURN(((1U << p_cfg->channel) & BSP_FEATURE_AGT_VALID_CHANNEL_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
-    /* AGT_CLOCK_AGT0_UNDERFLOW is not allowed on AGT channel 0. */
+    /* AGT_CLOCK_AGT_UNDERFLOW is not allowed on even AGT channels. */
     agt_extended_cfg_t const * p_extend = (agt_extended_cfg_t const *) p_cfg->p_extend;
-    FSP_ASSERT((AGT_CLOCK_AGT0_UNDERFLOW != p_extend->count_source) || (1U == p_cfg->channel));
+    FSP_ASSERT((AGT_CLOCK_AGT_UNDERFLOW != p_extend->count_source) || (p_cfg->channel & 1U));
 
     /* Validate divider. */
     if (AGT_CLOCK_PCLKB == p_extend->count_source)
@@ -652,7 +654,7 @@ static fsp_err_t r_agt_open_param_checking (agt_instance_ctrl_t * p_instance_ctr
         FSP_ASSERT(p_cfg->source_div <= TIMER_SOURCE_DIV_8);
         FSP_ASSERT(p_cfg->source_div != TIMER_SOURCE_DIV_4);
     }
-    else if (AGT_CLOCK_AGT0_UNDERFLOW == p_extend->count_source)
+    else if (AGT_CLOCK_AGT_UNDERFLOW == p_extend->count_source)
     {
         /* Divider not used if AGT0 underflow is selected as count source. */
         FSP_ASSERT(p_cfg->source_div == TIMER_SOURCE_DIV_1);
@@ -733,14 +735,14 @@ static void r_agt_hardware_cfg (agt_instance_ctrl_t * const p_instance_ctrl, tim
         p_instance_ctrl->p_reg->AGTIOSEL = (uint8_t) (p_extend->count_source & (uint8_t) ~AGT_CLOCK_AGTIO);
     }
 #endif
-    else if (AGT_CLOCK_AGT0_UNDERFLOW != p_extend->count_source)
+    else if (AGT_CLOCK_AGT_UNDERFLOW != p_extend->count_source)
     {
         /* Update the divider for LOCO/subclock. */
         agtmr2 = p_cfg->source_div;
     }
     else
     {
-        /* No divider can be used when count source is AGT_CLOCK_AGT0_UNDERFLOW. */
+        /* No divider can be used when count source is AGT_CLOCK_AGT_UNDERFLOW. */
     }
 
     uint32_t agtmr1 = (count_source_int | edge) | mode;

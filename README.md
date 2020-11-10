@@ -20,6 +20,7 @@ Download the latest FSP version from the [Releases page](https://github.com/rene
 - EK-RA6M3
 - EK-RA6M3G
 - EK-RA6M4
+- RSSK-RA6T1
 
 ### Setup Instructions
 

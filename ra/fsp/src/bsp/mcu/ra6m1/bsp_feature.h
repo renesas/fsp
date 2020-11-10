@@ -80,6 +80,7 @@
 #define BSP_FEATURE_ADC_VALID_UNIT_MASK                   (3U)
 
 #define BSP_FEATURE_AGT_VALID_CHANNEL_MASK                (0x03)
+#define BSP_FEATURE_AGT_MAX_CHANNEL_NUM                   (1)
 
 #define BSP_FEATURE_BSP_FLASH_CACHE                       (1)
 #define BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM           (1U)
@@ -269,9 +270,9 @@
 
 #define BSP_FEATURE_SDRAM_START_ADDRESS                   (0x0U)
 
-#define BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE                (0) // Feature not available on this MCU
-#define BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN           (0) // Feature not available on this MCU
-#define BSP_FEATURE_SLCDC_MAX_NUM_SEG                     (0) // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE                (0)  // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN           (0)  // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_MAX_NUM_SEG                     (0)  // Feature not available on this MCU
 
 #define BSP_FEATURE_SPI_CLK                               (FSP_PRIV_CLOCK_PCLKA)
 #define BSP_FEATURE_SPI_HAS_BYTE_SWAP                     (1U)

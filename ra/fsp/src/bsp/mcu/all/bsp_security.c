@@ -68,7 +68,7 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_nonsecure_func_t)(void);
 
 /* &__tz_<REGION>_N is the start address of the non-secure region. */
 BSP_DONT_REMOVE void const * const __tz_FLASH_C      BSP_ALIGN_VARIABLE(1024) @".tz_flash_nsc_start" = 0;
-BSP_DONT_REMOVE void const * const __tz_FLASH_N      BSP_ALIGN_VARIABLE(32768) @".tz_flash_ns_start";
+BSP_DONT_REMOVE void const * const __tz_FLASH_N      BSP_ALIGN_VARIABLE(32768) @".tz_flash_ns_start" = 0;
 BSP_DONT_REMOVE void const * const __tz_RAM_C        BSP_ALIGN_VARIABLE(1024) @".tz_ram_nsc_start";
 BSP_DONT_REMOVE void const * const __tz_RAM_N        BSP_ALIGN_VARIABLE(8192) @".tz_ram_ns_start";
 BSP_DONT_REMOVE void const * const __tz_DATA_FLASH_N BSP_ALIGN_VARIABLE(1024) @".tz_data_flash_ns_start";
