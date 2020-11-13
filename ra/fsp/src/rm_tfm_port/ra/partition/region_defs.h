@@ -130,8 +130,12 @@
  * with TF-M Secure code's MSP stack
  */
 #define BOOT_TFM_SHARED_DATA_BASE S_RAM_ALIAS_BASE
-#define BOOT_TFM_SHARED_DATA_SIZE (0x400)
+#define BOOT_TFM_SHARED_DATA_SIZE (0x3E0)
+#define BOOT_TFM_SHARED_SEED_BASE (BOOT_TFM_SHARED_DATA_BASE + \
+                                    BOOT_TFM_SHARED_DATA_SIZE)
+#define BOOT_TFM_SHARED_SEED_SIZE (0x20)
 #define BOOT_TFM_SHARED_DATA_LIMIT (BOOT_TFM_SHARED_DATA_BASE + \
+                                    BOOT_TFM_SHARED_SEED_SIZE + \
                                     BOOT_TFM_SHARED_DATA_SIZE - 1)
 
 #endif /* __REGION_DEFS_H__ */
