@@ -21,12 +21,27 @@
 #include <stddef.h>
 #include "psa/crypto_types.h"
 #include "crypto_spe.h"
+#include "tfm_plat_defs.h"
 
 #define SHA256_LEN_BYTES    32
 
 extern const psa_ecc_curve_t initial_attestation_curve_type;
 extern const uint8_t         initial_attestation_private_key[];
 extern const uint32_t        initial_attestation_private_key_size;
+const uint8_t                tfm_key_derivation_prefix[] = "TFM_DERIVATION_PREFIX";
+
+/* HUK to be used for key derivation. */
+TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_CRYPTO")
+const uint8_t tfm_huk_key[] =
+{
+    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+    0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
+    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+    0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
+};
+
+TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_CRYPTO")
+const uint32_t tfm_huk_key_size = sizeof(tfm_huk_key);
 
 /**
  * \brief Copy the key to the destination buffer
@@ -63,14 +78,20 @@ enum tfm_plat_err_t tfm_plat_get_huk_derived_key (const uint8_t * label,
     uint8_t              hash[SHA256_LEN_BYTES] = {0};
     size_t               hash_len               = 0;
 
+    /* Maximum derived-key size supported is 256 bits. */
     if (key_size > SHA256_LEN_BYTES)
     {
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
 
-    bsp_unique_id_t const * p_unique_id = R_BSP_UniqueIdGet();
-
     if (PSA_SUCCESS != psa_hash_setup(&operation, alg))
+    {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    /* This prefix is used here in case the HUK has to be used for some other key derivation other than TFM labels.
+     * In that case a new prefix can be added without breaking existing code. */
+    if (PSA_SUCCESS != psa_hash_update(&operation, tfm_key_derivation_prefix, sizeof(tfm_key_derivation_prefix)))
     {
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
@@ -80,7 +101,7 @@ enum tfm_plat_err_t tfm_plat_get_huk_derived_key (const uint8_t * label,
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
 
-    if (PSA_SUCCESS != psa_hash_update(&operation, (const uint8_t *) p_unique_id, sizeof(bsp_unique_id_t)))
+    if (PSA_SUCCESS != psa_hash_update(&operation, (const uint8_t *) tfm_huk_key, tfm_huk_key_size))
     {
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
