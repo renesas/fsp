@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -118,24 +118,24 @@ Features</h2>
 <li>SHA256 calculation <a class="anchor" id="um_sha256_hash_calculation"></a><a class="anchor" id="um_sha256_hash_multipart_calculation"></a><a class="anchor" id="um_sha256_hash_read"></a><a class="anchor" id="um_sha256_hash_clone"></a></li>
 <li>SHA224 calculation <a class="anchor" id="um_sha224_hash_read"></a></li>
 <li>AES<ul>
-<li>Keybits - 128, 256</li>
-<li>Plain-Text Key Generation <a class="anchor" id="um_AES_hardware_acceleration"></a><a class="anchor" id="um_AES256_key_generation_plaintext"></a><a class="anchor" id="um_AES128_key_generation_plaintext"></a></li>
-<li>Wrapped Key Generation <a class="anchor" id="um_AES256_key_generation_wrapped"></a><a class="anchor" id="um_AES128_key_generation_wrapped"></a></li>
-<li>Encryption and Decryption with no padding and with PKCS7 padding. <a class="anchor" id="um_AES_pkcs7_padding"></a><a class="anchor" id="um_AES128_encryption_decryption"></a><a class="anchor" id="um_AES256_encryption_decryption"></a></li>
+<li>Keybits - 128, 192, 256</li>
+<li>Plain-Text Key Generation <a class="anchor" id="um_AES_hardware_acceleration"></a><a class="anchor" id="um_AES256_key_generation_plaintext"></a><a class="anchor" id="um_AES128_key_generation_plaintext"></a><a class="anchor" id="um_AES192_key_generation_plaintext"></a></li>
+<li>Wrapped Key Generation <a class="anchor" id="um_AES256_key_generation_wrapped"></a><a class="anchor" id="um_AES128_key_generation_wrapped"></a><a class="anchor" id="um_AES192_key_generation_wrapped"></a></li>
+<li>Encryption and Decryption with no padding and with PKCS7 padding. <a class="anchor" id="um_AES_pkcs7_padding"></a><a class="anchor" id="um_AES128_encryption_decryption"></a><a class="anchor" id="um_AES192_encryption_decryption"></a><a class="anchor" id="um_AES256_encryption_decryption"></a></li>
 <li>CBC, CTR and GCM modes <a class="anchor" id="um_AES_cbc"></a><a class="anchor" id="um_AES_gcm"></a><a class="anchor" id="um_AES_multipart_ctr"></a></li>
-<li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_AES256_key_generation_plaintext_export"></a><a class="anchor" id="um_AES128_key_generation_plaintext_export"></a><a class="anchor" id="um_AES192_key_generation_wrapped_fail"></a><a class="anchor" id="um_AES256_key_generation_wrapped_export"></a><a class="anchor" id="um_AES128_key_generation_wrapped_export"></a></li>
+<li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_AES256_key_generation_plaintext_export"></a><a class="anchor" id="um_AES128_key_generation_plaintext_export"></a><a class="anchor" id="um_AES192_key_generation_plaintext_export"></a><a class="anchor" id="um_AES256_key_generation_wrapped_export"></a><a class="anchor" id="um_AES128_key_generation_wrapped_export"></a><a class="anchor" id="um_AES192_key_generation_wrapped_export"></a></li>
 </ul>
 </li>
 <li>ECC <a class="anchor" id="um_ECC_hardware_acceleration"></a><ul>
 <li>Curves:<ul>
 <li>SECP256R1 <a class="anchor" id="um_ECC_key_generation_256K1"></a></li>
 <li>SECP256K1 <a class="anchor" id="um_ECC_key_generation_256R1"></a></li>
-<li>Brainpool256R1 (Unavailable on RA6M4) <a class="anchor" id="um_ECC_key_generation_BP256R1"></a></li>
+<li>Brainpool256R1 <a class="anchor" id="um_ECC_key_generation_BP256R1"></a></li>
 <li>SECP384R1 <a class="anchor" id="um_ECC_key_generation_384R1"></a></li>
-<li>Brainpool384R1 (Unavailable on RA6M4) <a class="anchor" id="um_ECC_key_generation_BP384R1"></a></li>
+<li>Brainpool384R1 <a class="anchor" id="um_ECC_key_generation_BP384R1"></a></li>
 </ul>
 </li>
-<li>Plain-Text Key Generation (Unavailable on RA6M4)</li>
+<li>Plain-Text Key Generation (Unavailable on RA6M4 and RA4M3)</li>
 <li>Wrapped Key Generation <a class="anchor" id="um_ECC_key_generation_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1Wrapped"></a></li>
 <li>Signing and Verification <a class="anchor" id="um_ECC_sign_verify_smaller_hash"></a></li>
 <li>Export and Import for Plaintext and Wrapped keys <a class="anchor" id="um_ECC_key_export_256R1"></a><a class="anchor" id="um_ECC_key_export_256K1"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_export_384R1"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1"></a><a class="anchor" id="um_ECC_key_import_256R1"></a><a class="anchor" id="um_ECC_key_import_256K1"></a><a class="anchor" id="um_ECC_key_import_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_import_384R1"></a><a class="anchor" id="um_ECC_key_import_BrainPool384R1"></a></li>
@@ -144,7 +144,7 @@ Features</h2>
 </li>
 <li>RSA<ul>
 <li>Keybits - 2048. Verification only for 3072 and 4096 bits</li>
-<li>Plain-Text Key Generation (Unavailable on RA6M4) <a class="anchor" id="um_RSA_key_generation"></a></li>
+<li>Plain-Text Key Generation (Unavailable on RA6M4 and RA4M3) <a class="anchor" id="um_RSA_key_generation"></a></li>
 <li>Wrapped Key Generation <a class="anchor" id="um_RSA_key_generationWrapped"></a></li>
 <li>Signature Generation</li>
 <li>Verification <a class="anchor" id="um_RSA_3072_key_import_verify"></a><a class="anchor" id="um_RSA_4096_key_import_verify"></a></li>
@@ -2042,7 +2042,7 @@ RSA Configuration</h2>
 <p>To enable hardware acceleration for the RSA2048 operation, the macro MBEDTLS_RSA_ALT must be defined in the configuration file. By default RSA is enabled. To disable RSA, undefine MBEDTLS_RSA_C, MBEDTLS_PK_C, MBEDTLS_PK_PARSE_C, MBEDTLS_PK_WRITE_C. This can be done using the RA Configuration editor.</p>
 <h2><a class="anchor" id="rm-psa-crypto-wrapped-key-configuration"></a>
 Wrapped Key Usage</h2>
-<p>To use the Secure Crypto Engine to generate and use wrapped keys, use PSA_KEY_LIFETIME_VOLATILE_WRAPPED when setting the key lifetime. Wrapped keys can also be generated by using PSA_KEY_LIFETIME_PERSISTENT_WRAPPED to generate persistent keys as described in the next section. Setting the key's lifetime attribute using this value will cause the SCE to use wrapped key mode for all operations related to that key. The user can use the export functionality to save the wrapped keys to user ROM and import it later for usage.This mode requires that Wrapped Key functionality for the algorithm is enabled in the project configuration. </p><dl class="section note"><dt>Note</dt><dd><b>On the RA6M4 devices, only the RSA public key can be exported. A file system must be used to store the internally generated private key.</b></dd></dl>
+<p>To use the Secure Crypto Engine to generate and use wrapped keys, use PSA_KEY_LIFETIME_VOLATILE_WRAPPED when setting the key lifetime. Wrapped keys can also be generated by using PSA_KEY_LIFETIME_PERSISTENT_WRAPPED to generate persistent keys as described in the next section. Setting the key's lifetime attribute using this value will cause the SCE to use wrapped key mode for all operations related to that key. The user can use the export functionality to save the wrapped keys to user ROM and import it later for usage.This mode requires that Wrapped Key functionality for the algorithm is enabled in the project configuration. </p><dl class="section note"><dt>Note</dt><dd><b>On the RA6M4 and RA4M3 devices, only the RSA public key can be exported. A file system must be used to store the internally generated private key.</b></dd></dl>
 <h2><a class="anchor" id="rm-psa-crypto-persistent-key-storage"></a>
 Persistent Key Storage</h2>
 <p>Persistent key storage can be enabled by defining MBEDTLS_FS_IO, MBEDTLS_PSA_CRYPTO_STORAGE_C, and MBEDTLS_PSA_ITS_FILE_C. The key lifetime must also be specifed as either PSA_KEY_LIFETIME_PERSISTENT or PSA_KEY_LIFETIME_PERSISTENT_WRAPPED. A lower level storage module must be added in the RA Configuration editor and initialized in the code before generating persistent keys. Persistent storage supports the use of plaintext and vendor keys. Refer to the lower level storage module documentation for information on how it should be initialized. To generate a persistent key the key must be assigned a unique id prior to calling generate using the psa_set_key_id api.<a class="anchor" id="um_PSA_ITS_persistent_storage"></a> </p><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (PSA_KEY_LIFETIME_IS_PERSISTENT(lifetime))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Set the id to a positive integer. */</span></div><div class="line">        psa_set_key_id(&amp;attributes, (psa_key_id_t) 5);</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="rm-psa-crypto-platform-configuration"></a>
@@ -2078,8 +2078,8 @@ Memory Usage</h2>
 <ul>
 <li>Only little endian mode is supported.</li>
 </ul>
-<h2>RA6M4 Usage</h2>
-<p>The crypto capabilities on the RA6M4 are different resulting in the below usage limitations with mbedCrypto:</p><ul>
+<h2>RA6M4 and RA4M3 Usage</h2>
+<p>The crypto capabilities on the RA6M4 and RA4M3 are different resulting in the below usage limitations with mbedCrypto:</p><ul>
 <li>The module includes <b>both</b> wrapped and plaintext keys code irrespective of whether the application requires it.</li>
 <li>Plaintext key generation is not supported for RSA and ECC; only wrapped keys can be generated.</li>
 <li>If ECDH is used, only wrapped key will be generated on SCE9 and will not return an error even if the user context is somehow set for plain key. This may be relevant only if the psa_key_agreement() function with plaintext key on SCE9 is attempted.</li>
@@ -2232,7 +2232,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

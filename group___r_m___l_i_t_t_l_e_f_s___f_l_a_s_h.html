@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -161,6 +161,14 @@ The following build time configurations are defined in arm/littlefs/lfs_util.h:<
 <tr>
 <td>Custom lfs_util.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom lfs_util.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
 <tr>
+<td>Thread Safe</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enables thread safety in LittleFS. </td></tr>
+<tr>
 <td>Use Malloc</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -265,7 +273,8 @@ Examples</h1>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input parameter was invalid. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>The provided block size is invalid. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Flash BGO mode must be disabled.</td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Flash BGO mode must be disabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INTERNAL</td><td>Failed to create the semaphore.</td></tr>
   </table>
   </dd>
 </dl>
@@ -341,7 +350,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -180,7 +180,8 @@ var NAVTREE =
         ] ],
         [ "Using RA Smart Configurator with IAR EWARM", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-ewarm", [
           [ "Prerequisites", "_s_t_a_r_t__d_e_v.html#RASC-EWARM-prerequisites", null ],
-          [ "Create new RA project", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-ewarm-create-project", null ]
+          [ "Create new RA project", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-ewarm-create-project", null ],
+          [ "Notes and Restrictions", "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-ewarm-notes-restrictions", null ]
         ] ]
       ] ]
     ] ],
@@ -220,7 +221,8 @@ var NAVTREE =
       [ "FSP TrustZone Support", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-trustzone-support", [
         [ "FSP TrustZone Projects", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-trustzone-projects", null ],
         [ "Non-Secure Callable Guard Functions", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-trustzone-nsc-guard-functions", null ],
-        [ "Callbacks in Non-Secure from Non-Secure Callable Modules", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-trustzone-callback-to-non-secure", null ]
+        [ "Callbacks in Non-Secure from Non-Secure Callable Modules", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-trustzone-callback-to-non-secure", null ],
+        [ "Additional TrustZone Information", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#additional-trustzone-information", null ]
       ] ],
       [ "FSP Architecture in Practice", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-architecture-in-practice", [
         [ "FSP Connecting Layers", "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-connecting-layers", null ],
@@ -238,34 +240,34 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_c_o_p_y_r_i_g_h_t.html",
-"group___a_d_c.html#gga79014196d08d86b161b77892bf26b100a008539c98b123b9a7db52e3bf8ebc631",
-"group___b_l_e___a_b_s.html#acbbd8bba8ae55c4debd1e037dac2db9b",
-"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa42e4bbde41306fc1cbb3a4f7b0f0c313",
-"group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a4c8e7eec2565d342a1e7eaabfc94f4ee",
-"group___c_a_c___a_p_i.html#ga06a44030019c434344457141c4802260",
-"group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8afc34723b6efeafd271fb3cfb365f8ec1",
-"group___c_t_s_u.html#ga07d91c963664201accc65a9d45fb817a",
-"group___d_i_s_p_l_a_y___a_p_i.html#ac6b4bd42b148b0424a2843435161da4c",
-"group___e_t_h_e_r___a_p_i.html#ab61eca8e923f4bb332f99ebb168fc6b0",
-"group___g_a_p___a_p_i.html#a14ed0a85eb05bd83c0db99d9fd5cbb28",
-"group___g_a_p___a_p_i.html#ga31ec76e9465ce24fc8f64c6b1b796098",
-"group___g_a_p___a_p_i.html#structst__ble__gap__key__dist__t",
-"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ga002069776bb6593dbb80622344be397d",
-"group___g_p_t.html#ga7e57d68f5f5d9757bab01857e8252ade",
-"group___i2_s___a_p_i.html#ggacad3e5bee8b5bde941b18e4e244f7127aa3cc46c08c885fb326a461a07e65dcba",
-"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840eaefa549f1d1c219c0ddc55e3fa9f49279",
-"group___k_e_y_m_a_t_r_i_x___a_p_i.html#ad4d2825f0417d86ac50c5998bfd4f54e",
-"group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a6e85df87a4ef87a43d718e505f8bdd7a",
-"group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga3069a2a3350193c0894eda657016baa4",
-"group___p_d_c___a_p_i.html#structpdc__api__t",
-"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a899d80c2fd828410b2d01a7a96528f8c",
-"group___r_m___v_e_e___a_p_i.html#ggac7515f6fffdfcee3069dd80f584fb64ca319b7957152c005bfebc44789e6a7b68",
-"group___s_d_a_d_c.html#gga6f7fea933d308bfc55dbca4f0f6ce630a38fd67c20c786c7f9a7280fefea30622",
-"group___s_p_i.html#a4a0569c8791a283761d7872c69732bdd",
-"group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a27a23815612c052e599b32398b917937",
-"group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fada90d8a89f98ff82475383b14141b08d",
-"group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302a6efe30ef900a8492f5f0a1e02a7beb34",
-"group___v_s___a_p_i.html#ga6d1d6c0bdf14dd33f290a1f9fda0b00f"
+"group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3baf73e7cec5f82b03d9c18fde149496d55",
+"group___b_l_e___a_b_s.html#ab43119208f625f3f228c8caa87c86b23",
+"group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa403d5f5c6cd53c24705a73b35e54057c",
+"group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a4b1928d112eca102629678bf01c37a9b",
+"group___c_a_c___a_p_i.html#a980e998b04943ffecb7827ffd93f33e2",
+"group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7",
+"group___c_t_s_u.html#aadfb1f17208413aec59916e5c0d030c2",
+"group___d_i_s_p_l_a_y___a_p_i.html#aa764a7d8d39b16c3668eee37329bb216",
+"group___e_t_h_e_r___a_p_i.html#a3500b706d40693b385e0d8d47af5ca28",
+"group___g_a_p___a_p_i.html#a052364cd515b137905025ec7f58f8657",
+"group___g_a_p___a_p_i.html#ga1b7495214e738848a57826b0c4c3c6bf",
+"group___g_a_p___a_p_i.html#structst__ble__gap__conn__param__t",
+"group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae64acb27bd2ee7c08254e7a39e33631c",
+"group___g_p_t.html#ga1e6af74d7faaf735f5847a34121eff71",
+"group___i2_s___a_p_i.html#gga622c7c1c7f4e11569cedea578a839550a80c9c8f0ef92ef6ed286b4c92e02fc11",
+"group___i_o_p_o_r_t.html#gga3a0a7f66458384069f25931ecb83840eadefef7cafea74dc1370b0996bf19adb3",
+"group___k_e_y_m_a_t_r_i_x___a_p_i.html#a01a3d8938cd8e088f833896a16bec6db",
+"group___l_p_m___a_p_i.html#ggaecb8b2da6c5e7bf0b3532799418b9f70a069f712851e0fbaf49669eec91007f1f",
+"group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#af4ebbd3916982bd0dca8e8f06180f67c",
+"group___p_d_c___a_p_i.html#gga41559cfdb76f3c5f485b79dab1d8620aadcdb4435e5b61673aa52be6acd7b32f3",
+"group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a75d640ca7358ecbd243474c9355fd084",
+"group___r_m___v_e_e___a_p_i.html#a8132a0f63b5d4e898714cf71e7488f75",
+"group___s_d_a_d_c.html#gga52e6c45364c9f174d21b42962090cf5aa026ad37a956bc62163b88b737f518f5e",
+"group___s_l_c_d_c___a_p_i.html#ggac2bcd5672ab1b5837e4042a025bb3909a3e971cbe8a30e2b34121504777563f03",
+"group___s_s_i.html#ggab2ee4147d471591bc86faf6ae993ccffabbc43787e347945e45540dc7172a6145",
+"group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12a8b6b33a085b51ea2eeed1ef119de562f",
+"group___u_s_b___a_p_i.html#gae493db3a65e22cbc31478e187242b9d6",
+"group___v_s___a_p_i.html#ga35cfc1fb6715e37ceb8d4f2b67031b36"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -2,6 +2,7 @@ var NAVTREEINDEX0 =
 {
 "_c_o_p_y_r_i_g_h_t.html":[4],
 "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html":[2],
+"_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#additional-trustzone-information":[2,8,3],
 "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#c99-use":[2,0,0],
 "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#control-structure":[2,4,0],
 "_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#create-a-module-instance":[2,9,1,0],
@@ -155,6 +156,7 @@ var NAVTREEINDEX0 =
 "_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky":[1,2],
 "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-ewarm":[1,5,2],
 "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-ewarm-create-project":[1,5,2,1],
+"_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-ewarm-notes-restrictions":[1,5,2,2],
 "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk":[1,5,1],
 "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-build-project":[1,5,1,3],
 "_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-create-project":[1,5,1,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3badd8b22743455d23b4bbd6df024bdb226":[3,1,2,8,14],
 "group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3bae1c044bc95b5471599d2a7271c726fb7":[3,1,2,8,3],
 "group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3baeac06f74c92938efe5781be93d8ebd4a":[3,1,2,8,7],
-"group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3baf4b29f4c28457a25bbdecf62cf038df3":[3,1,2,8,15],
-"group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3baf73e7cec5f82b03d9c18fde149496d55":[3,1,2,8,5],
-"group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3bafd39019ec86088e9d0759f867d86cba5":[3,1,2,8,1]
+"group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3baf4b29f4c28457a25bbdecf62cf038df3":[3,1,2,8,15]
 };

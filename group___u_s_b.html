@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -367,7 +367,7 @@ Peripheral Human Interface Device Class</li>
 <li>
 Peripheral Mass Storage Class</li>
 <li>
-Peripheral Vendor-defined Class</li>
+Peripheral Vendor Class</li>
 <li>
 Host Communications Device Class</li>
 <li>
@@ -375,7 +375,7 @@ Host Human Interface Device Class</li>
 <li>
 Host Mass Storage Class</li>
 <li>
-Host Vendor-defined Class</li>
+Host Vendor Class</li>
 </ul>
 </td><td>Peripheral Communications Device Class </td><td>Select the USB device class. </td></tr>
 <tr>
@@ -407,6 +407,7 @@ Specify NULL when using the Host class. </td></tr>
 <h2><a class="anchor" id="r-usb_basic-clock-configuration"></a>
 Clock Configuration</h2>
 <p>The USB module uses PLL as the clock source. The PLL frequency can be set in the <b>Clocks</b> tab of the configuration editor or by using the CGC Interface at run-time.</p>
+<dl class="section note"><dt>Note</dt><dd>When using HOCO as the PLL source on Cortex M33 parts the FLL function must be enabled for correct USB operation. Refer to the MCU Family -&gt; Clocks group of the BSP properties in the RA configuration tool to adjust FLL settings.</dd></dl>
 <h2><a class="anchor" id="r-usb_basic-pin-configuration"></a>
 Pin Configuration</h2>
 <p>In peripheral mode the USB_VBUS and/or USBHS_VBUS pins are used to detect the USB connection status (connected or disconnected) and should be connected to the USB VBUS signal.</p>
@@ -1821,7 +1822,7 @@ Do not call this API in the following function. </dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -116,14 +116,11 @@ Using this Manual</h1>
 <p>This manual provides a wide variety of information, so it can be helpful to know where to start. Here is a short description of each main section and how they can be used.</p>
 <p><a class="el" href="_s_t_a_r_t__d_e_v.html">Starting Development</a> - Provides a step by step guide on how to use e2 studio and FSP to develop a project for RA MCUs. This is a good place to start to get up to speed quickly and efficiently.</p>
 <p><a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> - Provides useful background material on key FSP concepts such as Modules, Stacks, and API standards. Reference this section to extend or refresh your knowledge of FSP concepts.</p>
-<p><a href="modules.html">API Reference</a></p>
-<ul>
-<li>Provides detailed information on each module and interface including features, API functions, configuration settings, usage notes, function prototypes and code examples. Board Support Package (BSP) related API functions are also included.</li>
-</ul>
+<p><b><a href="modules.html">API Reference</a></b> - Provides detailed information on each module and interface including features, API functions, configuration settings, usage notes, function prototypes and code examples. Board Support Package (BSP) related API functions are also included.</p>
 <dl class="section note"><dt>Note</dt><dd>Much of the information in the API Reference section is available from within the e2 studio tool via the <a class="el" href="_s_t_a_r_t__d_e_v.html#developer-assistance">Developer Assistance</a> feature. The information here can be referenced for additional details on API features.</dd></dl>
 <h1><a class="anchor" id="documentation-standard"></a>
 Documentation Standard</h1>
-<p>Each module user guide outlines the following:</p>
+<p>Each <a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> section user guide outlines the following:</p>
 <ul>
 <li>Features: A bullet list of high level features provided by the module.</li>
 <li>Configuration: A description of module specific configurations available in the RA Configuration editor.</li>
@@ -131,7 +128,13 @@ Documentation Standard</h1>
 <li>Examples: Example code provided to help the user get started.</li>
 <li>API Reference: Usage notes for each API in the module, including the function prototype and hyperlinks to the interface documentation for parameter definitions.</li>
 </ul>
-<p>Interface documentation includes typed enumerations and structures&ndash;including a structure of function pointers that defines the API&ndash;that are shared by all modules that implement the interface.</p>
+<p>Each <a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> section user guide outlines the following:</p>
+<ul>
+<li>Detailed Description: A short description and summary of the interface functionality.</li>
+<li>Data Structures: A list and definition of each data structure used by the interface including the structure of the pointers that define the API and are shared by all modules that implement the interface.</li>
+<li>Typedefs: A list and description of the typedefs used by the interface.</li>
+<li>Enumerations: A list and description of the enumerations used by the interface.</li>
+</ul>
 <h1><a class="anchor" id="introduction-to-fsp"></a>
 Introduction to FSP</h1>
 <h2><a class="anchor" id="purpose-fsp"></a>
@@ -158,7 +161,7 @@ e2 studio IDE</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

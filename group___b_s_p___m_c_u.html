@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -267,6 +267,10 @@ Critical Section Macros</h3>
 <div class="fragment"><div class="line"></div><div class="line">    FSP_CRITICAL_SECTION_DEFINE;</div><div class="line"></div><div class="line">    <span class="comment">/* Store the current interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaddc2260c1ce320f3aa1f1cb05b9a5620">FSP_CRITICAL_SECTION_ENTER</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Interrupts cannot run in this section unless their priority is less than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Restore saved interrupt posture. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga23338e06b1e1537017ef4f3f94cda354">FSP_CRITICAL_SECTION_EXIT</a>;</div><div class="line"></div></div><!-- fragment --> <h3><a class="anchor" id="octaclock-update"></a>
 OctaClock Update</h3>
 <p><a class="anchor" id="um_bsp_octaclk_update"></a>Supports changing the Octal-SPI Clock (OCTACLK) during runtime if supported by the MCU. The OCTACLK source and clock divisor can be updated. It is user's responsibility to ensure the selected clock source is running before attempting to update OCTACLK.</p>
+<h2><a class="anchor" id="bsp-seal-msp"></a>
+Sealing the Main Stack (TrustZone Secure Projects)</h2>
+<p>In TrustZone secure projects, the BSP seals the main stack by placing the value 0xFEF5EDA5 above the stack top. For more information, refer to section 3.5 "Sealing a Stack" in "Secure software guidelines for ARMv8-M": <a href="https://developer.arm.com/documentation/100720/0300">https://developer.arm.com/documentation/100720/0300</a>.</p>
+<p><a class="anchor" id="um_bsp_tz_seal_msp"></a> </p>
 <h1><a class="anchor" id="board-features"></a>
 Board Specific Features</h1>
 <p>The BSP will call the board's initialization function (bsp_init) which can initialize board specific features. Possible board features are listed below.</p>
@@ -409,7 +413,7 @@ Low power mode 3</li>
 </ul>
 </td><td>Standard/Normal mode </td><td>Select the subclock oscillator drive capacitance. This setting can be overridden in board_cfg.h </td></tr>
 <tr>
-<td>Subclock Stabilization Time (ms)</td><td>Value must between 0 and 10000</td><td>1000 </td><td>Select the subclock oscillator stabilization time. This is only used in the startup code if the subclock is selected as the system clock on the Clocks tab. This setting can be overridden in board_cfg.h </td></tr>
+<td>Subclock Stabilization Time (ms)</td><td>Value must between 0 and 10000</td><td>1000 </td><td>Select the subclock oscillator stabilization time. This is only used in the startup code if the subclock is selected as the system clock on the Clocks tab or if the HOCO FLL function is enabled. This setting can be overridden in board_cfg.h </td></tr>
 </table>
 </p>
 <table class="memberdecls">
@@ -417,7 +421,11 @@ Low power mode 3</li>
 Modules</h2></td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a2_a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_a1.html">RA2A1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a2_l1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html">RA2L1</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a4_m1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a4_m1.html">RA4M1</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a4_m3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a4_m3.html">RA4M3</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a4_w1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a4_w1.html">RA4W1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1764,7 +1772,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -214,6 +214,7 @@ Limitations</h2>
 <li>Only one Snooze Request Source can be used at a time.</li>
 <li>When using Snooze mode with SCI0 RXD as the snooze source the system clock must be HOCO and the MOCO, Main Oscillator and PLL clocks must be turned off.<a class="anchor" id="um_lpm_snooze_sci0_clocks"></a></li>
 <li>If the main oscillator or PLL with main oscillator source is used for the system clock, the wake time from standby mode can be affected by the Main Oscillator Wait Time Setting in the MOSCWTCR register. This register setting is available to be changed through the Main Oscillator Wait Time setting in the CGC module properties. See the "Wakeup Timing and Duration" table in Electrical Characteristics for more information.</li>
+<li>When using the DC-DC regulator (where available), the MCU will temporarily switch to the LDO if Software Standby or Snooze is requested and back again when it is cancelled. Switching to the LDO incurs a 60 microsecond critical section wherein all interrupts AND peripherals are stopped. Switching back to DCDC from the LDO incurs an additional 22 microsecond critical section (peripherals running).</li>
 </ul>
 <h1><a class="anchor" id="r-lpm-examples"></a>
 Examples</h1>
@@ -319,7 +320,7 @@ Data Structures</h2></td></tr>
 <p>Close the LPM Instance</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>LPM mode closed </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>LPM driver closed </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>LPM instance is not open </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer </td></tr>
   </table>
@@ -482,7 +483,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

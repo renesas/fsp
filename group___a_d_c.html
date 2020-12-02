@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -243,23 +243,7 @@ Channel 2</li>
 <tr>
 <td>Input &gt; Group B Scan Mask (channel availability varies by MCU)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>In group mode, this field specifies which channels belong to group B. </td></tr>
 <tr>
-<td>Input &gt; Add/Average Count</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Add two samples</li>
-<li>
-Add three samples</li>
-<li>
-Add four samples</li>
-<li>
-Add sixteen samples</li>
-<li>
-Average two samples</li>
-<li>
-Average four samples</li>
-</ul>
-</td><td>Disabled </td><td>Specifies if addition or averaging needs to be done for any of the channels in this unit. </td></tr>
+<td>Input &gt; Add/Average Count</td><td>MCU Specific Options</td><td></td><td>Specifies if addition or averaging needs to be done for any of the channels in this unit. </td></tr>
 <tr>
 <td>Input &gt; Reference Voltage control</td><td>MCU Specific Options</td><td></td><td>Specify VREFH/VREFADC output voltage control. </td></tr>
 <tr>
@@ -298,7 +282,11 @@ Clock Configuration</h2>
 <tr>
 <td>RA2A1</td><td>PCLKD</td></tr>
 <tr>
+<td>RA2L1</td><td>PCLKD</td></tr>
+<tr>
 <td>RA4M1</td><td>PCLKC</td></tr>
+<tr>
+<td>RA4M3</td><td>PCLKC</td></tr>
 <tr>
 <td>RA4W1</td><td>PCLKC</td></tr>
 <tr>
@@ -367,6 +355,8 @@ ADC Operational Modes</h2>
 <li>Slope: Temperature gradient of the temperature sensor (V/degrees C); slope = (V2 - V1)/ (T2 - T1)</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>The slope value can be obtained from the hardware manual for each device in the Electrical Characteristics Chapter - TSN Characteristics Table, Temperature slope entry.</dd></dl>
+<h2>Reading CTSU TSCAP with ADC</h2>
+<p>Some MCUs support reading CTSU TSCAP with ADC. CTSU TSCAP is connected to ADC0 channel 16. Use existing enums for channel 16 to set sample states for the sensor connected to CTSU TSCAP, enable scanning of CTSU TSCAP, and read results for CTSU TSCAP.</p>
 <h2>Usage Notes for ADC16</h2>
 <h3>Calibration</h3>
 <p>Calibration is required to use the ADC16 peripheral. When using this driver on an MCU that has ADC16, call <a class="el" href="group___a_d_c.html#gafb2e4cd66d5bd276d05eb5fa104a2037">R_ADC_Calibrate()</a> after open, and prior to any other function.</p>
@@ -1343,6 +1333,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1355,7 +1346,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,6 @@ var group___q_s_p_i =
       [ "QSPI_QSPCLK_DIV_16", "group___q_s_p_i.html#gga53abedddf8fc81df853fc93071edf117a9923fe9b9bb7d3ca577765233aa6f0d6", null ],
       [ "QSPI_QSPCLK_DIV_17", "group___q_s_p_i.html#gga53abedddf8fc81df853fc93071edf117a53ea3e230c59917bf61689877c6ec4ef", null ],
       [ "QSPI_QSPCLK_DIV_18", "group___q_s_p_i.html#gga53abedddf8fc81df853fc93071edf117a8df72b69e34326c9c76be0246acf3dfa", null ],
-      [ "QSPI_QSPCLK_DIV_19", "group___q_s_p_i.html#gga53abedddf8fc81df853fc93071edf117af5b8889a5e4007de96b4c4218711c9a4", null ],
       [ "QSPI_QSPCLK_DIV_20", "group___q_s_p_i.html#gga53abedddf8fc81df853fc93071edf117ae39be3f29b0d0c3157cd27525e63adf1", null ],
       [ "QSPI_QSPCLK_DIV_22", "group___q_s_p_i.html#gga53abedddf8fc81df853fc93071edf117a06bf89781df92a3eab51df780129270b", null ],
       [ "QSPI_QSPCLK_DIV_24", "group___q_s_p_i.html#gga53abedddf8fc81df853fc93071edf117a60b08a829e45c8e8cf2845fd901e76d2", null ],

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -394,7 +394,7 @@ Voltage monitor 0 reset is disabled after reset</li>
 </ul>
 </td><td>2.80 V </td><td></td></tr>
 <tr>
-<td>OFS1 register settings &gt; HOCO OScillation Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>OFS1 register settings &gt; HOCO Oscillation Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 HOCO oscillation is enabled after reset</li>
 <li>
@@ -442,6 +442,18 @@ Flash Block 37</li>
 <tr>
 <td>Permanent Block Protection Settings (PBPS) &gt; PBPS2</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Permanent Block Protection Register 2 </td></tr>
 <tr>
+<td>Clocks &gt; HOCO FLL Function</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Setting this option to Enabled improves HOCO accuracy significantly by using the subclock, but incurs certain restrictions.<br />
+<br />
+The FLL function requires the subclock oscillator to be running and stabilized. When enabled and running the PLL or system clock from HOCO, the BSP will wait for both the Subclock Stabilization Time as well as the FLL Stabilization Time when setting up clocks at startup.<br />
+<br />
+When FLL is enabled Software Standby and Deep Software Standby modes are not available. </td></tr>
+<tr>
 <td>Dual Bank Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -457,7 +469,7 @@ Disabled</li>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

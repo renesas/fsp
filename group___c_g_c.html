@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -148,7 +148,7 @@ Features</h2>
 <li>When the system core clock frequency changes, the following things are updated:<ul>
 <li>The CMSIS standard global variable SystemCoreClock is updated to reflect the new clock frequency.<a class="anchor" id="um_cgc_system_clock_set_systemcoreclock"></a></li>
 <li>Wait states for ROM and RAM are adjusted to the minimum supported value for the new clock frequency.</li>
-<li>The operating power control mode is updated to the minimum supported value for the new clock settings. <a class="anchor" id="um_cgc_clock_start_hoco"></a><a class="anchor" id="um_cgc_clock_start_moco"></a><a class="anchor" id="um_cgc_clock_start_loco"></a><a class="anchor" id="um_cgc_clock_start_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll_on_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll_on_hoco"></a><a class="anchor" id="um_cgc_clock_start_pll_cfg"></a><a class="anchor" id="um_cgc_clock_start_pll2_on_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll2_on_hoco"></a><a class="anchor" id="um_cgc_clock_start_pll2_cfg"></a><a class="anchor" id="um_cgc_clock_stop_hoco"></a><a class="anchor" id="um_cgc_clock_stop_moco"></a><a class="anchor" id="um_cgc_clock_stop_loco"></a><a class="anchor" id="um_cgc_clock_stop_main_osc"></a><a class="anchor" id="um_cgc_clock_stop_pll"></a><a class="anchor" id="um_cgc_clock_stop_pll2"></a></li>
+<li>The operating power control mode is updated to the minimum supported value for the new clock settings. <a class="anchor" id="um_cgc_clock_start_hoco"></a><a class="anchor" id="um_cgc_clock_start_hoco_fll"></a><a class="anchor" id="um_cgc_clock_start_moco"></a><a class="anchor" id="um_cgc_clock_start_loco"></a><a class="anchor" id="um_cgc_clock_start_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll_on_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll_on_hoco"></a><a class="anchor" id="um_cgc_clock_start_pll_cfg"></a><a class="anchor" id="um_cgc_clock_start_pll2_on_main_osc"></a><a class="anchor" id="um_cgc_clock_start_pll2_on_hoco"></a><a class="anchor" id="um_cgc_clock_start_pll2_cfg"></a><a class="anchor" id="um_cgc_clock_stop_hoco"></a><a class="anchor" id="um_cgc_clock_stop_hoco_fll"></a><a class="anchor" id="um_cgc_clock_stop_moco"></a><a class="anchor" id="um_cgc_clock_stop_loco"></a><a class="anchor" id="um_cgc_clock_stop_main_osc"></a><a class="anchor" id="um_cgc_clock_stop_pll"></a><a class="anchor" id="um_cgc_clock_stop_pll2"></a></li>
 </ul>
 </li>
 <li>Supports starting or stopping any of the system clock sources <a class="anchor" id="um_cgc_system_clock_set_dividers"></a></li>
@@ -259,6 +259,7 @@ Low Power Operation</h2>
 </li>
 </ul>
 <p>Refer to the section "Function for Lower Operating Power Consumption" in the "Low Power Modes" chapter of the hardware manual for MCU specific information about operating power control modes.</p>
+<dl class="section note"><dt>Note</dt><dd>The DCDC regulator (if present) is only available in Middle- and High-speed modes. The BSP will automatically switch between DCDC and LDO when switching between compatible and incompatible modes if the DCDC regulator is in use. Switching to the LDO incurs a 60 microsecond critical section wherein all interrupts AND peripherals are stopped. Switching back to DCDC from the LDO incurs an additional 22 microsecond critical section (peripherals running).</dd></dl>
 <p>When low voltage mode is not used, the following functions adjust the operating power control mode to ensure it remains within the hardware specification and to ensure the MCU is running at the optimal operating power control mode:</p><ul>
 <li><a class="el" href="group___c_g_c.html#ga9c6dbd3c1987e7b4b24c1e9a481ce24d">R_CGC_ClockStart()</a></li>
 <li><a class="el" href="group___c_g_c.html#ga6f3141746cc5f5662df296769487e224">R_CGC_ClockStop()</a></li>
@@ -405,6 +406,7 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_OSC_STOP_DET_ENABLED</td><td>PLL multiplier must be less than 20 if oscillation stop detect is enabled and the input frequency is less than 12.5 MHz. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_STABILIZED</td><td>PLL clock source is not stable. </td></tr>
     <tr><td class="paramname">FSP_ERR_PLL_SRC_INACTIVE</td><td>PLL clock source is not running. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>The subclock must be running before activating HOCO with FLL. </td></tr>
   </table>
   </dd>
 </dl>
@@ -453,6 +455,7 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_PLL_SRC_INACTIVE</td><td>PLL clock source is not running. </td></tr>
     <tr><td class="paramname">FSP_ERR_CLOCK_ACTIVE</td><td>PLL configuration cannot be changed while PLL is running. </td></tr>
     <tr><td class="paramname">FSP_ERR_OSC_STOP_DET_ENABLED</td><td>PLL multiplier must be less than 20 if oscillation stop detect is enabled and the input frequency is less than 12.5 MHz. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>The subclock must be running before activating HOCO with FLL. </td></tr>
   </table>
   </dd>
 </dl>
@@ -766,6 +769,7 @@ the internal clocks".</p>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
   </table>
   </dd>
 </dl>
@@ -831,7 +835,7 @@ the internal clocks".</p>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

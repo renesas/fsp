@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -184,6 +184,12 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-ctsu-usage_notes"></a>
 Usage Notes</h1>
 <h2>CTSU</h2>
+<h3>Sensor ICO correction</h3>
+<p>In order to improve the measurement accuracy, the correction coefficient is generated at the first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>. Therefore, the first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a> process takes about 40ms.</p>
+<h3>Initial offset tuning</h3>
+<p>CTSU has a current offset mechanism to cancel the parasitic capacitance. This module automatically adjusts to be within the dynamic range of the Sensor ICO, taking into account the amount of current that changes with touch. This adjustment uses normal measurement prosess and requires several <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a> and <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>. <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a> returns FSP_ERR_CTSU_INCOMPLETE_TUNING if it is being adjusted. The member "so" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__element__cfg__t">ctsu_element_cfg_t</a> is used as the starting point for adjustment, so if this value is appropriate, it can be completed quickly. Normally, this value uses the value adjusted by QE for Capacitive Touch.</p>
+<h3>Scan trigger</h3>
+<p>Scanning of sensors may begin by either a software trigger or an external event initiated by the Event Link Controller (ELC). This trigger can be set with the member "cap" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Typically, a software trigger is used. Common usage is to have a periodic timer initiate scans. For software triggers, a periodic timer such as the CMT is configured whose interval is large enough to allow for all sensors to be scanned and data to be updated. Software triggers are issued by calling <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>. Using an external trigger is processed almost identically to using software triggers. Call <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a> before starting the timer to set the measurement and prepare for external trigger measurement. After that, when the timer is started, the measurement start trigger is applied.</p>
 <h3>Self-capacitance multi scan mode</h3>
 <p>In self-capacitance mode each TS pin is assigned to one touch button. Electrodes of multiple TS pins can be physically aligned to create slider or wheel interfaces.</p>
 <ul>
@@ -203,6 +209,7 @@ Usage Notes</h1>
 </ul>
 </li>
 </ul>
+<p>Set CTSU_MODE_SELF_MULTI_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Also, add the number of terminals used for this measurement to CTSU_CFG_NUM_SELF_ELEMENTS. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
 <h3>Mutual-capacitance full scan mode</h3>
 <p>In mutual-capacitance mode each TS pin acts as either a 'row' or 'column' in an array of sensors. As a result, this mode uses fewer pins when more than five sensors are configured. Mutual-capacitance mode is ideal for applications where many touch sensors are required, like keypads, button matrices and pads.</p>
 <p>As an example, consider a standard phone keypad comprised of a matrix of four rows and three columns.</p>
@@ -227,6 +234,42 @@ Mutual Button Image</div></div>
 </ul>
 </li>
 </ul>
+<p>Set CTSU_MODE_MUTUAL_FULL_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Also, add the number of matrix used for this measurement to CTSU_CFG_NUM_MUTUAL_ELEMENTS. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
+<h2>CTSU2 (RA2L1)</h2>
+<p>CTSU2 is a peripheral that improves CTSU. For CTSU2, this module supports the following in addition to the features described in the CTSU chapter.</p>
+<h3>Improved accuracy with more accurate ICO correction</h3>
+<p>The internal circuit of CTSU2 is used to create a correction coefficient with higher accuracy than CTSU. This correction coefficient is created by the first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a> like CTSU, but it takes about 100ms. For Mutual-capacitance parallel scan mode, create a correction factor for the CFC circuit. This is also created with the first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>. It takes about 40ms.</p>
+<h3>Improved noise immunity by multi-frequency measurement</h3>
+<p>CTSU2 can measure up to 4 different drive frequencies to avoid sync noise. This module sets the number of frequencies with CTSU_CFG_NUM_SUMULTI. The recommended value is 3. The three frequencies are set according to CTSU_CFG_SUMULTI0, CTSU_CFG_SUMULTI1 and CTSU_CFG_SUMULTI2. 0x3F is the center. QE will automatically output the recommended value. From the three results obtained, make a noise removal judgment to determine the measured value. By setting judge_multifreq_disable in <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> to true, it is possible to get three results without making a majority vote and use your own noise filter. Prepare three times as many buffers for the data to be acquired by <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>.</p>
+<h3>Mutual-capacitance parallel scan mode</h3>
+<p>This mode provides fast measurement time by parallel scanning the RX lines with a CFC circuit. Operation is otherwise identical to normal CTSU mutual scanning.</p>
+<ul>
+<li>Scan Order<ul>
+<li>The hardware scans all RX pins simultaneously for each TX pin.</li>
+<li>For example, if sensors TS10, TS11, and TS03 are specified as RX sensors, and sensors TS02, TS07, and TS04 are specified as TX sensors, the hardware will scan them in the following sensor-pair order:<br />
+ TS02-(TS03, TS10, TS11), TS04-(TS03, TS10, TS11), TS07-(TS03, TS10, TS11)</li>
+</ul>
+</li>
+<li>Element<ul>
+<li>An element refers to the index of a sensor-pair within the scan order. Using the previous example, TS07-TS10 is element 7.</li>
+</ul>
+</li>
+<li>Scan Time<ul>
+<li>Because the RX lines are scanned in parallel, CFC mutual-capacitance scan is the same amount of times faster than a basic mutual matrix scan as the number of RX lines. In other words, on a matrix with N receive lines, CFC mutual scanning is N times faster than basic mutual scanning.</li>
+</ul>
+</li>
+</ul>
+<p>Set CTSU_MODE_MUTUAL_CFC_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Also, add the number of matrix used for this measurement to CTSU_CFG_NUM_MUTUAL_ELEMENTS. In addition, set the number of CTSU_CFG_NUM_CFC and CTSU_CFG_NUM_CFC_TX. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
+<h3>Current scan mode</h3>
+<p>CTSU2 can measure the current input to the TS terminal. This module supports this feature. Set CTSU_MODE_CURRENT_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Also, add the number of terminals used for this measurement to CTSU_CFG_NUM_SELF_ELEMENTS. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
+<h3>Active shield</h3>
+<p>CTSU2 can drive a shield signal on a single TS pin. This module can set the shield for each instance. Set the members of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> as shown in the example below. Other configurations omitted </p><div class="fragment"><div class="line">.txvsel     = CTSU_TXVSEL_INTERNAL_POWER,</div><div class="line">.txvsel2    = CTSU_TXVSEL_MODE,</div><div class="line">.md         = CTSU_MODE_SELF_MULTI_SCAN,</div><div class="line">.posel      = CTSU_POSEL_SAME_PULSE,</div><div class="line">.ctsuchac0  = 0x0F,</div><div class="line">.ctsuchtrc0 = 0x08,</div></div><!-- fragment --> <div class="image">
+<object type="image/svg+xml" data="r_ctsu_shield.svg">r_ctsu_shield.svg</object>
+<div class="caption">
+Shield pin Image</div></div>
+ <dl class="section note"><dt>Note</dt><dd>This feature is only available in self-capacitance mode.</dd></dl>
+<h2>Temperature Correction</h2>
+<p>The internal circuit of CTSU2 and r_adc can be used to compensate for temperature drift. This keeps the measured value constant even if the temperature changes. An instance for temperature correction is required to operate this function, and it is also necessary to measure this instance on a regular basis. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
 <h2>TrustZone Support</h2>
 <p>In r_ctsu and rm_touch module, Non-Secure Callable Guard Functions are only generated from QE for Capacitive Touch. QE can be used for tuning in secure or flat project, but not in non-secure project. If you want to use in non-secure project, copy the output file from secure or flat project. Refer to QE Help for more information.</p>
 <h1><a class="anchor" id="r-ctsu-examples"></a>
@@ -806,6 +849,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
   </table>
   </dd>
 </dl>
@@ -873,7 +917,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

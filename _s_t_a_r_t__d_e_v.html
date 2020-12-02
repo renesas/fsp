@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -259,6 +259,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </li>
 <li class="level2"><a href="#using-ra-smart-configurator-with-ewarm">Using RA Smart Configurator with IAR EWARM</a><ul><li class="level3"><a href="#RASC-EWARM-prerequisites">Prerequisites</a></li>
 <li class="level3"><a href="#using-ra-smart-configurator-with-ewarm-create-project">Create new RA project</a></li>
+<li class="level3"><a href="#using-ra-smart-configurator-with-ewarm-notes-restrictions">Notes and Restrictions</a></li>
 </ul>
 </li>
 </ul>
@@ -1047,12 +1048,6 @@ e2 studio Project Configuration window (part 2)</div></div>
 <div class="caption">
 e2 studio Project Configuration window (part 3)</div></div>
 </li>
-<li><p class="startli">Select the build artifact and RTOS.</p>
-<div class="image">
-<img src="sd-proj-config-2a.png" alt="sd-proj-config-2a.png"/>
-<div class="caption">
-e2 studio Project Configuration window (part 3)</div></div>
-</li>
 <li><p class="startli">Select the Blinky template for your board and click <b>Finish</b>.</p>
 <div class="image">
 <img src="sd-proj-config-3.png" alt="sd-proj-config-3.png"/>
@@ -1426,11 +1421,11 @@ Debug configuration</div></div>
 Primer: ARM® TrustZone® Project Development</h1>
 <p>This section will introduce the user to the tools supporting ARM® TrustZone® configuration for the RA Family of microcontrollers. It is intended to be read by development engineers implementing RA ARM® TrustZone® projects for the first time. It will introduce basic concepts followed by workflow and tooling functions designed to simplify and accelerate their first ARM® TrustZone® development. A background knowledge of e<sup>2</sup> studio and RA device hardware is expected.</p>
 <h2>Target Device</h2>
-<p>RA Cortex<sup>®</sup>-M33 or Cortex<sup>®</sup>-M23 devices with ARM® TrustZone® security extension.</p>
+<p>RA Cortex®-M33 or Cortex®-M23 devices with ARM® TrustZone® security extension.</p>
 <h2><a class="anchor" id="renesas-implementation-of-arm-trustzone-technology"></a>
 Renesas Implementation of ARM® TrustZone® Technology</h2>
 <p>For brevity, ARM® TrustZone® will be abbreviated to TZ in this document.</p>
-<p>The following section is supplied for reference only. For full details of TZ implementation, please refer to Arm documentation (<a href="https://developer.arm.com/ip-products/security-ip/trustzone">https://developer.arm.com/ip-products/security-ip/trustzone</a>) and the RA6M4 device manual.</p>
+<p>The following section is supplied for reference only. For full details of TZ implementation, refer to Arm documentation (<a href="https://developer.arm.com/ip-products/security-ip/trustzone">https://developer.arm.com/ip-products/security-ip/trustzone</a>) and the RA6M4 device manual.</p>
 <p>Arm TZ technology divides the MCU and therefore the application into Secure and Non-Secure partitions. Secure applications can access both Secure and Non-Secure memory and resources. Non-Secure code can access Non-Secure memory and resources as well as Secure resources through a set of so-called veneers located in the Non-Secure Callable (NSC) region. This ensures a single access point for Secure code when called from the Non-Secure partition. The MCU starts up in the Secure partition by default. The security state of the CPU can be either Secure or Non-Secure.</p>
 <p>The MCU code flash, data flash, and SRAM are divided into Secure (S) and Non-Secure (NS) regions. Code flash and SRAM include a further region known as Non-Secure Callable (NSC). These memory security attributes are set into the non-volatile memory via SCI or USB boot mode commands when the device lifecycle is Secure Software Debug (SSD) state. The memory security attributes are loaded into the Implementation Defined Attribution Unit (IDAU) peripheral and the memory controller before application execution and cannot be updated by application code.</p>
 <div class="image">
@@ -1450,7 +1445,7 @@ Calling from Non-Secure to Secure Functions</div></div>
  <h3><a class="anchor" id="calling-from-secure-to-non-secure"></a>
 Calling from Secure to Non-Secure</h3>
 <p>Secure code uses B(L)XNS instructions to make direct calls to Non-Secure functions. While this is certainly possible, it can create a security vulnerability in the application. It is also challenging for the Secure application to determine the address of the non-secure function during build phase. From the RA Tools and FSP point view, calling directly from Secure to Non-Secure via FSP API is not supported.</p>
-<p>Preference is for the Secure code to initialise as necessary from reset, then pass control to the Non-Secure partition. It will manage any data transfers and so forth via FSP call-backs as security checks. For, example secure data can be copied to Non-Secure RAM. and so forth via FSP call-backs as security checks. For, example secure data can be copied to Non-Secure RAM.</p>
+<p>Preference is for the Secure code to initialise as necessary from reset, then pass control to the Non-Secure partition. It will manage any data transfers and so forth via FSP call-backs as security checks. For example, secure data can be copied to Non-Secure RAM.</p>
 <div class="image">
 <img src="tz-secure-to-non-secure-calling.png" alt="tz-secure-to-non-secure-calling.png"/>
 <div class="caption">
@@ -1827,7 +1822,7 @@ Using RA Smart Configurator with Keil MDK</h2>
 Prerequisites</h3>
 <ul>
 <li>Keil MDK and Arm compiler are installed and licensed. Please refer to the Release notes for the version to be installed.</li>
-<li>Import the RA device pack. Download the RA device pack archive file (ex: MDK_Device_Packs_x.x.x.zip) from the <a href="https://github.com/renesas/fsp/releases">FSP GitHub release page</a>. Extract the archive file to locate the RA device pack. To import the RA device pack, launch the PackInstaller.exe from <code>&lt;keil_mdk_install_dir&gt;\UV4</code>. Select the menu item <b>File &gt; Import...</b> and browse to the extracted .pack file.</li>
+<li>Import the RA device pack. Download the RA device pack archive file (ex: MDK_Device_Packs_2.x.x.zip) from the <a href="https://github.com/renesas/fsp/releases">FSP GitHub release page</a>. Extract the archive file to locate the RA device pack. To import the RA device pack, launch the PackInstaller.exe from <code>&lt;keil_mdk_install_dir&gt;\UV4</code>. Select the menu item <b>File &gt; Import...</b> and browse to the extracted .pack file.</li>
 <li>Verify that the latest updates for RA devices are included in Keil MDK. To verify, select the menu "Packs" in Pack Installer and verify that the menu item <b>Check for Updates on Launch</b> is selected. If not, select <b>Check for Updates on Launch</b> and relaunch Pack Installer.</li>
 <li>For flashing and debugging, the latest Segger J-Link DLL is installed into Keil MDK.</li>
 <li>Install RA SC and FSP using the Platform Installer from the GitHub release page.</li>
@@ -1836,70 +1831,55 @@ Prerequisites</h3>
 Create new RA project</h3>
 <p>The following steps are required to create an RA project using Keil MDK, RA SC and FSP:</p>
 <ol type="1">
-<li>To create an RA project in Keil MDK, an example template needs to be copied from the Pack Installer. The Pack Installer can be launched by running PackInstaller.exe from <code>&lt;keil_mdk_install_dir&gt;\UV4</code>.</li>
-<li><p class="startli">Select the device family or a device in the left pane of pack installer to filter the example templates in Examples tab in the right pane. The search bar in left pane helps to easily find a device. It is important to select the correct device and package type as this will be used by RA SC to configure pins.</p>
+<li>Start the RA Smart Configurator.</li>
+<li><p class="startli">Enter a project folder and project name.</p>
 <div class="image">
-<img src="mdk-pack-installer-example-template.png" alt="mdk-pack-installer-example-template.png"/>
+<img src="image009.png" alt="image009.png"/>
 <div class="caption">
-PackInstaller device example template</div></div>
+RA SC project settings</div></div>
 </li>
-<li><p class="startli">Click the <b>Copy</b> button for the example template to launch a dialog box and select where to copy the example project. The default project name will be the target device name.</p>
+<li><p class="startli">Select the target device and IDE.</p>
 <div class="image">
-<img src="mdk-new-project-folder.png" alt="mdk-new-project-folder.png"/>
+<img src="image010.png" alt="image010.png"/>
 <div class="caption">
-Copy Example dialog</div></div>
-<p> Click <b>OK</b> to launch Keil uVision with the new project.</p>
-<div class="image">
-<img src="uVision-with-new-project.png" alt="uVision-with-new-project.png"/>
-<div class="caption">
-uVision</div></div>
-<p> If the project name needs to be changed then deselect <b>Launch uVision_ in the Copy Example dialog and click __OK</b>. Follow project rename instructions here: <a href="http://www.keil.com/support/docs/3579.htm">http://www.keil.com/support/docs/3579.htm</a> Once renamed, open the project using menu item <b>Project &gt; Open Project...</b> in uVision and continue with steps in <a class="el" href="_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-modify-project">Modify existing RA project</a>.</p>
+Target device and IDE selection</div></div>
 </li>
-<li><p class="startli">uVision offers to start the RA Smart Configurator (RA SC). Click <b>Start Renesas RA Smart Configurator</b> to launch it.</p>
-<div class="image">
-<img src="launch-rasc.png" alt="launch-rasc.png"/>
-<div class="caption">
-Launch RA SC confirmation dialog</div></div>
-</li>
-<li><p class="startli">If multiple versions of RA SC are installed, select the appropriate version of RA SC to run.</p>
-<div class="image">
-<img src="rasc-version-selection.png" alt="rasc-version-selection.png"/>
-<div class="caption">
-RA SC version selection</div></div>
-</li>
-<li>RA SC will be launched with project generator wizard.</li>
-<li>The configuration window opens once the project wizard is closed. Refer to <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a> for more details on how to configure the project.</li>
-<li><p class="startli">After clicking <b>Generate Project Content</b> in the RA Smart Configurator, return to uVision. uVision offers a dialog to import the changes and updates to the project made in RA SC. Select <b>Yes</b> to import the updated project and the project is ready to build.</p>
-<div class="image">
-<img src="uVision-import-generated-code.png" alt="uVision-import-generated-code.png"/>
-<div class="caption">
-Import project data</div></div>
-<p> RA SC will place the necessary FSP source code and header files into the project workspace. The folder structure is defined as below.</p>
-</li>
-</ol>
-<ul>
-<li>Source Group 1 User source code should be added to the project in this folder</li>
-<li>Renesas RA Smart Configurator: Common Sources These source files are generated by RA Smart Configurator and can be edited as necessary</li>
-<li><p class="startli">Flex Software These are the source files from FSP and can be modified if needed. However, it is recommended NOT to edit these files as this may impact dependencies or functionality.</p>
+<li>The rest of the project generator and FSP configuration is the same as e2 studio. Please refer to the previous sections for details.</li>
+<li>On completion of the FSP configuration, press "Generate Project Content"</li>
+<li><p class="startli">A new Keil MDK project file will be generated in the project path. Double click this file to open MDK and continue development as usual.</p>
 <div class="image">
 <img src="uVision-imported-data.png" alt="uVision-imported-data.png"/>
 <div class="caption">
 uVision project workspace with imported project data</div></div>
  </li>
-</ul>
+</ol>
 <h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-modify-project"></a>
 Modify existing RA project</h3>
-<p>Once an initial project has been generated and configured, it is also possible to make changes using RA SC as follows:</p>
+<p>Once an initial project has been generated and configured, it is also possible to make changes using RA SC as follows.</p>
+<dl class="section note"><dt>Note</dt><dd>This setup only needs to be done once per project.</dd></dl>
+<p>Set up the following links to RA SC:</p>
 <ol type="1">
-<li>If the desired project is not already open in uVision, the project can be opened using menu item <b>Project &gt; Open project...</b> or selecting from the list of previous projects.</li>
-<li>Select menu item <b>Project &gt; Manage &gt; Run-time Environment...</b> or tool bar button <b>Manage Run-Time Environment</b>.</li>
-<li><p class="startli">Expand the <b>Flex Software</b> tree item in the dialog shown and click the green run button next to <b>FSP Configuration</b>. This launches RA SC and the FSP project configuration can be modified and updated.</p>
-<div class="image">
-<img src="manage-runtime-environment.png" alt="manage-runtime-environment.png"/>
-<div class="caption">
-Manage run-time environment</div></div>
- </li>
+<li>In Keil MDK uVision, select <b>Tools &gt; Customize Tools Menu...</b>.</li>
+<li>Select the <b>new</b> icon and fill in the fields as follows for each tool:<ol type="a">
+<li>RA Smart Configurator:<ul>
+<li>Menu item name: Enter: RA Smart Configurator</li>
+<li>Command: Select "..." and navigate to <code>rasc.exe</code></li>
+<li>Initial Folder: Enter: <code>$P</code></li>
+<li>Arguments: Enter: <code>--device $D –compiler ARMv6 configuration.xml</code></li>
+</ul>
+</li>
+<li>Device Partition Manager:<ul>
+<li>Menu item name: Enter: Device Partition Manager</li>
+<li>Command: Select "..." and navigate to <code>rasc.exe</code></li>
+<li>Initial Folder: Enter: <code>$P</code></li>
+<li>Arguments: Enter: <code>-application com.renesas.cdt.ddsc.dpm.ui.dpmapplication configuration.xml "SL%L"</code></li>
+</ul>
+</li>
 </ol>
+</li>
+</ol>
+<p>To reconfigure an existing project select <b>Tools &gt; RA Smart Configurator</b></p>
+<p>To reconfigure the TrustZone partitions select <b>Tools &gt; Device Partition Manager</b></p>
 <h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-build-project"></a>
 Build and Debug RA project</h3>
 <p>The project can be built by selecting the menu item <b>Project &gt; Build Target</b> or tool bar item <b>Rebuild</b> or the keyboard shortcut F7.</p>
@@ -1914,7 +1894,13 @@ Options for Target</div></div>
 <h3><a class="anchor" id="using-ra-smart-configurator-with-keil-mdk-notes-restrictions"></a>
 Notes and Restrictions</h3>
 <ol type="1">
-<li>When creating a new RA project, do not create a new project directly inside uVision. Follow the steps as mentioned in <a class="el" href="_s_t_a_r_t__d_e_v.html#using-ra-smart-configurator-with-keil-mdk-create-project">Create new RA project</a></li>
+<li><b>When debugging a TrustZone based project, the Secure project image MUST be downloaded before the Non Secure project.</b></li>
+<li><p class="startli">For TrustZone enabled devices, the user will need to manually set up the memory partitions using the "Renesas Device Partition Manager" from inside RA SC before downloading.</p>
+<div class="image">
+<img src="image007.png" alt="image007.png"/>
+<div class="caption">
+Renesas Device partition Manager</div></div>
+</li>
 <li>RA FSP contains a full set of drivers and middleware and may not be compatible with other CMSIS packs from Keil, Arm or third parties.</li>
 <li>Flash programming is currently only supported through the debugger connection.</li>
 </ol>
@@ -1932,35 +1918,60 @@ Prerequisites</h3>
 Create new RA project</h3>
 <p>The following steps are required to create an RA project using IAR EWARM, RA SC and FSP:</p>
 <ol type="1">
-<li><p class="startli">To Use RA SC with EWARM, RA SC needs to configured as a tool in EWARM by selecting the menu item <b>Tools &gt; Configure Tools...</b>. Select <b>New</b> to create a new tool in the dialog shown and add the following information:</p><ul>
-<li>Menu Text: RA Smart Configurator</li>
-<li>Command: Select Browse... and navigate to rasc.exe in the installed RA SC</li>
-<li>Argument: &ndash;compiler IAR configuration.xml</li>
-<li>Initial Directory: $PROJ_DIR$</li>
+<li>Start the RA Smart Configurator.</li>
+<li><p class="startli">Enter a project folder and project name.</p>
+<div class="image">
+<img src="image014.png" alt="image014.png"/>
+<div class="caption">
+RA SC project settings</div></div>
+</li>
+<li><p class="startli">Select the target device and IDE.</p>
+<div class="image">
+<img src="image016.png" alt="image016.png"/>
+<div class="caption">
+Target device and IDE selection</div></div>
+</li>
+<li>The rest of the project generator and FSP configuration operates the same as e2 studio. Refer to the previous sections for details.</li>
+<li>On completion of the FSP configuration, press <b>Generate Project Content</b>.</li>
+<li>A new IAR EWARM project file will be generated in the project path. Double click this file to open IAR EWARM and continue development as usual.</li>
+<li>To Use RA SC with EWARM, RA SC needs to configured as a tool in EWARM by selecting the menu item <b>Tools &gt; Configure Tools...</b>. Select <b>New</b> to create a new tool in the dialog shown and add the following information:<ul>
+<li>Menu Text: <b>RA Smart Configurator</b><ol type="a">
+<li>Command: Select <b>Browse...</b> and navigate to <code>rasc.exe</code> in the installed RA SC</li>
+<li>Argument: <code>–compiler IAR configuration.xml</code></li>
+<li>Initial Directory: <code>$PROJ_DIR$</code></li>
 <li>Tool Available: Always</li>
-</ul>
-<div class="image">
-<img src="ewarm-tool-setup.png" alt="ewarm-tool-setup.png"/>
-<div class="caption">
-Tool_setup</div></div>
-</li>
-<li>A new EWARM project can be created using the menu item <b>Project &gt; Create New Project...</b> and selecting the <b>Empty Project</b> and toolchain as Arm. Save the project to an empty folder.</li>
-<li><p class="startli">RA SC can now be launched from EWARM using the menu item <b>Tools &gt; RA Smart Configurator</b>.</p>
-<div class="image">
-<img src="configured-rasc-menu-item.png" alt="configured-rasc-menu-item.png"/>
-<div class="caption">
-RA SC Menu Item</div></div>
-<p> RA SC will be launched with project generator wizard. The configuration window opens once the project wizard is closed. Refer to <a class="el" href="_s_t_a_r_t__d_e_v.html#configuring-a-project">Configuring a Project</a> for more details on how to configure the project. After configuring the project, click <b>Generate Project Content</b>. Changes to the RA configuration will be reflected in the EWARM project.</p>
-</li>
-<li>A Project connection needs to be set up in EWARM to build the project. Select <b>Project &gt; Add Project Connection</b> in EWARM and select <b>IAR Project Connection</b>. Navigate to the project folder and select <code>buildinfo.ipcf</code> and click open. The project can now build in EWARM. </li>
 </ol>
+</li>
+<li>Menu Text: <b>Device Partition Manager</b><ol type="a">
+<li>Command: Select <b>Browse...</b> and navigate to <code>rasc.exe</code> in the installed RA SC</li>
+<li>Argument: -<code>application com.renesas.cdt.ddsc.dpm.ui.dpmapplication configuration.xml "$TARGET_PATH$"</code></li>
+<li>Initial Directory: <code>$PROJ_DIR$</code></li>
+<li>Tool Available: Always</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>RA SC can now be re-launched from EWARM using the menu item <b>Tools &gt; RA Smart Configurator</b>.</li>
+<li>A Project connection needs to be set up in EWARM to build the project. Select <b>Project &gt; Add Project Connection</b> in EWARM and select <b>IAR Project Connection</b>. Navigate to the project folder and select <code>buildinfo.ipcf</code> and click <b>Open</b>. The project can now build in EWARM.</li>
+</ol>
+<h3><a class="anchor" id="using-ra-smart-configurator-with-ewarm-notes-restrictions"></a>
+Notes and Restrictions</h3>
+<p>When starting a TrustZone enabled debug session Partition sizes are checked automatically.</p>
+<ul>
+<li>If partition sizes are set correctly, the debug session will launch as normal.</li>
+<li>If partition sizes need to be changed, IAR EWARM will prompt to run the Renesas Device Partition Manager. Select <b>Yes</b>. The Device Partition Manager will start with the required partition sizes prefilled.</li>
+<li>Select <b>Set TrustZone secure / non-secure boundaries</b> as the only action.</li>
+<li>Enter debugger details, if required.</li>
+<li>Select <b>Run</b> to program the partitions.</li>
+<li>Return to the IDE and relaunch the debug session </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

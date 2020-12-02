@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.1.1</span>
+   &#160;<span id="projectnumber">Release v2.2.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -123,13 +123,16 @@ Usage Notes</h1>
 <h2><a class="anchor" id="r-tz-context-trustzone-integration"></a>
 TrustZone Integration</h2>
 <p>When using an RTOS in a TrustZone project, ARM recommends keeping the RTOS in the non-secure project. Tasks may call non-secure callable functions if the task has allocated a secure context. To allocate a secure context, reference the documentation for the RTOS port used. For example, reference <a class="el" href="group___r_m___f_r_e_e_r_t_o_s___p_o_r_t.html#r-freertos-port-trustzone-integration">TrustZone Integration</a> when FreeRTOS is used.</p>
+<h2>Sealing the Process Stack</h2>
+<p>This module seals each process stack by placing the value 0xFEF5EDA5 above the stack top. For more information, refer to section 3.5 "Sealing a Stack" in "Secure software guidelines for ARMv8-M": <a href="https://developer.arm.com/documentation/100720/0300">https://developer.arm.com/documentation/100720/0300</a>.</p>
+<p><a class="anchor" id="um_tz_context_seal_psp"></a></p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.1.1 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.2.0 User's Manual Copyright © (2020) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
