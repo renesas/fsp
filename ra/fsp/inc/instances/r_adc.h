@@ -221,9 +221,6 @@ typedef struct
     uint32_t          scan_mask;                // Scan mask used for Normal scan.
     uint16_t          scan_start_adcsr;
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
     void (* p_callback)(adc_callback_args_t *); // Pointer to callback that is called when an adc_event_t occurs.
     adc_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 

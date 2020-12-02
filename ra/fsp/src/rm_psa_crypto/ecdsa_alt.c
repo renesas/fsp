@@ -193,11 +193,27 @@ static int ecp_group_load_a_only (mbedtls_ecp_group_id gid)
             return 1;
         }
   #endif
+#ifdef MBEDTLS_ECP_DP_BP256R1_ENABLED
+        case MBEDTLS_ECP_DP_BP256R1:
+        {
+            LOAD_GROUP_A_ONLY(secp256r1);
+
+            return 1;
+        }
+  #endif
   #ifdef MBEDTLS_ECP_DP_SECP384R1_ENABLED
         case MBEDTLS_ECP_DP_SECP384R1:
         {
             LOAD_GROUP_A_ONLY(secp384r1);
 
+            return 1;
+        }
+  #endif
+#ifdef MBEDTLS_ECP_DP_BP384R1_ENABLED
+        case MBEDTLS_ECP_DP_BP384R1:
+        {
+            LOAD_GROUP_A_ONLY(secp384r1);
+            
             return 1;
         }
   #endif
@@ -323,23 +339,37 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp, uint32_t * p_c
     {
         case MBEDTLS_ECP_DP_SECP256R1:
         {
-            *p_curve_type = 0x0;
+            *p_curve_type = SCE_ECC_CURVE_TYPE_NIST;
             *p_cmd        = 0x0;
             priv_key_command   = SCE_OEM_CMD_ECC_P256_PRIVATE;
             break;
         }
         case MBEDTLS_ECP_DP_SECP384R1:
         {
-            *p_curve_type = 0x0;
+            *p_curve_type = SCE_ECC_CURVE_TYPE_NIST;
             *p_cmd        = 0x0;
             priv_key_command   = SCE_OEM_CMD_ECC_P384_PRIVATE;
             break;
         }
         case MBEDTLS_ECP_DP_SECP256K1:
         {
-            *p_curve_type = 0x2;
+            *p_curve_type = SCE_ECC_CURVE_TYPE_KOBLITZ;
             *p_cmd        = 0x0;
             priv_key_command   = SCE_OEM_CMD_ECC_SECP256K1_PRIVATE;
+            break;
+        }
+        case MBEDTLS_ECP_DP_BP256R1:
+        {
+            *p_curve_type = SCE_ECC_CURVE_TYPE_BRAINPOOL;
+            *p_cmd        = 0x0;
+            priv_key_command   = SCE_OEM_CMD_ECC_P256R1_PRIVATE;
+            break;
+        }
+        case MBEDTLS_ECP_DP_BP384R1:
+        {
+            *p_curve_type = SCE_ECC_CURVE_TYPE_BRAINPOOL;
+            *p_cmd        = 0x0;
+            priv_key_command   = SCE_OEM_CMD_ECC_P384R1_PRIVATE;
             break;
         }
         default:

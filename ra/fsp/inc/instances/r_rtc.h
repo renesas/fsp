@@ -56,9 +56,6 @@ typedef struct st_rtc_ctrl
     const rtc_cfg_t * p_cfg;                    ///< Pointer to initial configurations
     volatile bool     carry_isr_triggered;      ///< Was the carry isr triggered
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
     void (* p_callback)(rtc_callback_args_t *); // Pointer to callback that is called when a rtc_event_t occurs.
     rtc_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 

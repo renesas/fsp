@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -67,7 +68,7 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub(const uint32_t *InData_CurveType,
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00009a01u;
+    SCE->REG_84H = 0x00009a02u;
     SCE->REG_108H = 0x00000000u;
     SCE->REG_28H = 0x00870001u;
     SCE->REG_104H = 0x00000068u;
@@ -134,12 +135,12 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub(const uint32_t *InData_CurveType,
     SCE->REG_ECH = 0x00000003u;
     SCE->REG_E0H = 0x00000080u;
     SCE->REG_1CH = 0x00A60000u;
-    HW_SCE_p_func100(0x9f58c96cu, 0x24afabb1u, 0xd7924d6du, 0xffcb5f05u);
+    HW_SCE_p_func100(0x3965c2d2u, 0x82748bcdu, 0xc40cd983u, 0x4cfda6a2u);
     SCE->REG_1CH = 0x00400000u;
     SCE->REG_1D0H = 0x00000000u;
     if (1u == (SCE->REG_1CH_b.B22))
     {
-        HW_SCE_p_func102(0xe52fe7beu, 0x50ce0297u, 0xd96d5fb9u, 0x734916fbu);
+        HW_SCE_p_func102(0x57ec98c4u, 0x37655b01u, 0xbd5955d6u, 0x4b280573u);
         SCE->REG_1B8H = 0x00000040u;
         /* WAIT_LOOP */
         while (0u != SCE->REG_18H_b.B12)
@@ -166,7 +167,7 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub(const uint32_t *InData_CurveType,
             /* waiting */
         }
         SCE->REG_100H = change_endian_long(0x0000009au);
-        HW_SCE_p_func101(0x6026ca65u, 0x5c1ca45du, 0x10ae9afcu, 0x9e7b87b4u);
+        HW_SCE_p_func101(0x3aa30067u, 0x566ddb9au, 0x5cee2e76u, 0x4083c512u);
         HW_SCE_p_func043();
         HW_SCE_p_func074_r1();
         SCE->REG_ECH = 0x000034feu;
@@ -678,5 +679,5 @@ fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSub(const uint32_t *InData_CurveType,
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p9a_r3.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p9a_r4.prc
 ***********************************************************************************************************************/

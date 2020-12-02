@@ -57,6 +57,8 @@
  #define BSP_PRV_STACK_TOP                            ((uint32_t) &__StackTop)
 #endif
 
+#define BSP_TZ_STACK_SEAL_VALUE                       (0xFEF5EDA5)
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -148,8 +150,21 @@ void SystemInit (void)
     SCB->CPACR = (uint32_t) CP_MASK;
 #endif
 
-/* Set the Secure/Non-Secure VTOR to the vector table address based on the build. */
-#if FSP_PRIV_TZ_USE_SECURE_REGS
+#if BSP_TZ_SECURE_BUILD
+
+    /* Seal the main stack for secure projects. Reference:
+     * https://developer.arm.com/documentation/100720/0300
+     * https://developer.arm.com/support/arm-security-updates/armv8-m-stack-sealing */
+    uint32_t * p_main_stack = (uint32_t *) __Vectors[0];
+    p_main_stack[BSP_CFG_STACK_MAIN_BYTES / sizeof(uint32_t)] = BSP_TZ_STACK_SEAL_VALUE;
+#endif
+
+#if !BSP_TZ_NONSECURE_BUILD
+
+    /* VTOR is in undefined state out of RESET:
+     * https://developer.arm.com/documentation/100235/0004/the-cortex-m33-peripherals/system-control-block/system-control-block-registers-summary?lang=en.
+     * Set the Secure/Non-Secure VTOR to the vector table address based on the build. This is skipped for non-secure
+     * projects because SCB_NS->VTOR is set by the secure project before the non-secure project runs. */
     SCB->VTOR = (uint32_t) &__Vectors;
 #endif
 
@@ -295,6 +310,8 @@ void SystemInit (void)
  #endif
 #endif
 
+#if FSP_PRIV_TZ_USE_SECURE_REGS
+
     /* Ensure that the PMSAR registers are reset (Soft reset does not reset PMSAR). */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
 
@@ -302,8 +319,8 @@ void SystemInit (void)
     {
         R_PMISC->PMSAR[i].PMSAR = UINT16_MAX;
     }
-
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_SAR);
+#endif
 
 #if BSP_TZ_SECURE_BUILD
 

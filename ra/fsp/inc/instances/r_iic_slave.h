@@ -76,10 +76,6 @@ typedef struct st_iic_slave_instance_ctrl
     volatile bool start_interrupt_enabled;       // Tracks whether the start interrupt is enabled
     volatile bool transaction_completed;         // Tracks whether previous transaction restarted
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                     // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
-
     /* Pointer to callback and optional working memory */
     void (* p_callback)(i2c_slave_callback_args_t *);
     i2c_slave_callback_args_t * p_callback_memory;

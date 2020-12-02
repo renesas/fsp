@@ -825,7 +825,7 @@ fsp_err_t R_JPEG_ModeSet (jpeg_ctrl_t * const p_api_ctrl, jpeg_mode_t mode)
 /*******************************************************************************************************************//**
  * Cancel an outstanding JPEG codec operation and close the device.
  *
- * @retval        FSP_SUCCESS                The input data buffer is closed.
+ * @retval        FSP_SUCCESS                The JPEG unit is stopped and the driver is closed.
  * @retval        FSP_ERR_ASSERTION          Pointer to the control block is NULL.
  * @retval        FSP_ERR_NOT_OPEN           JPEG not opened.
  **********************************************************************************************************************/

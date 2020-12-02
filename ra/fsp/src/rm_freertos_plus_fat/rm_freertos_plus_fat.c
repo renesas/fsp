@@ -215,23 +215,23 @@ fsp_err_t RM_FREERTOS_PLUS_FAT_DiskInit (rm_freertos_plus_fat_ctrl_t * const    
     FSP_ERROR_RETURN(RM_FREERTOS_PLUS_FAT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* Sector size must be a multiple of 512 bytes. */
-    FSP_ASSERT(0U == p_disk_cfg->sector_size_bytes % RM_FREERTOS_PLUS_FAT_MIN_SECTOR_SIZE_BYTES);
+    FSP_ASSERT(0U == p_disk_cfg->device.sector_size_bytes % RM_FREERTOS_PLUS_FAT_MIN_SECTOR_SIZE_BYTES);
 
     /* Cache size must be multple of sector size and at least 2 * sector size. */
-    FSP_ASSERT(0U == p_disk_cfg->cache_size_bytes % p_disk_cfg->sector_size_bytes);
-    FSP_ASSERT(p_disk_cfg->cache_size_bytes >= 2 * p_disk_cfg->sector_size_bytes);
+    FSP_ASSERT(0U == p_disk_cfg->cache_size_bytes % p_disk_cfg->device.sector_size_bytes);
+    FSP_ASSERT(p_disk_cfg->cache_size_bytes >= 2 * p_disk_cfg->device.sector_size_bytes);
 #endif
 
     /* Initialise the disk structure. memset used to clear unused bitfields. */
     memset(p_disk, '\0', sizeof(FF_Disk_t));
-    p_disk->ulNumberOfSectors        = p_disk_cfg->num_sectors;
+    p_disk->ulNumberOfSectors        = p_disk_cfg->device.sector_count;
     p_disk->xStatus.bPartitionNumber = p_disk_cfg->partition_number;
     p_disk->pvTag = p_instance_ctrl;
 
     FF_CreationParameters_t xParameters;
     xParameters.pucCacheMemory          = p_disk_cfg->p_cache;
     xParameters.ulMemorySize            = p_disk_cfg->cache_size_bytes;
-    xParameters.ulSectorSize            = (BaseType_t) p_disk_cfg->sector_size_bytes;
+    xParameters.ulSectorSize            = (BaseType_t) p_disk_cfg->device.sector_size_bytes;
     xParameters.fnWriteBlocks           = rm_freertos_plus_fat_write;
     xParameters.fnReadBlocks            = rm_freertos_plus_fat_read;
     xParameters.pxDisk                  = p_disk;

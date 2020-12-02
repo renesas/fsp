@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -67,7 +68,7 @@ fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub(const uint32_t *InData_CurveType,
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00009b01u;
+    SCE->REG_84H = 0x00009b02u;
     SCE->REG_108H = 0x00000000u;
     SCE->REG_28H = 0x008b0001u;
     SCE->REG_104H = 0x00000068u;
@@ -94,7 +95,7 @@ fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub(const uint32_t *InData_CurveType,
         /* waiting */
     }
     SCE->REG_100H = change_endian_long(0x0000009bu);
-    HW_SCE_p_func101(0x05ccca86u, 0xc9809ae4u, 0x1b82b071u, 0xab553c28u);
+    HW_SCE_p_func101(0x729ab639u, 0xfe0a0d1du, 0x1e7fbae5u, 0x6d0e18e6u);
     HW_SCE_p_func043();
     HW_SCE_p_func076();
     SCE->REG_ECH = 0x000034feu;
@@ -610,5 +611,5 @@ fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSub(const uint32_t *InData_CurveType,
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p9b_r2.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p9b_r3.prc
 ***********************************************************************************************************************/

@@ -304,10 +304,6 @@ fsp_err_t RM_VEE_FLASH_Open (rm_vee_ctrl_t * const p_api_ctrl, rm_vee_cfg_t cons
         p_ctrl->ref_hdr.pad        = 0;
         p_ctrl->ref_hdr.valid_code = RM_VEE_FLASH_VALID_CODE;
 
-#if BSP_TZ_SECURE_BUILD
-        p_ctrl->callback_is_secure = true;
-#endif
-
         p_ctrl->p_callback        = p_cfg->p_callback;
         p_ctrl->p_context         = p_cfg->p_context;
         p_ctrl->p_callback_memory = NULL;
@@ -658,20 +654,25 @@ fsp_err_t RM_VEE_FLASH_CallbackSet (rm_vee_ctrl_t * const          p_api_ctrl,
 #if BSP_TZ_SECURE_BUILD
 
     /* Get security state of p_callback */
-    p_ctrl->callback_is_secure =
+    bool callback_is_secure =
         (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
 
- #if (RM_VEE_FLASH_CFG_PARAM_CHECKING_ENABLE)
+ #if RM_VEE_FLASH_CFG_PARAM_CHECKING_ENABLE
 
     /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
     rm_vee_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
                                                                                          CMSE_AU_NONSECURE);
-    FSP_ERROR_RETURN(p_ctrl->callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
  #endif
 #endif
 
     /* Store callback and context */
-    p_ctrl->p_callback        = p_callback;
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(rm_vee_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
+#endif
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
 
@@ -1547,7 +1548,7 @@ static void rm_vee_call_callback (rm_vee_flash_instance_ctrl_t * p_ctrl, rm_vee_
 #if BSP_TZ_SECURE_BUILD
 
     /* p_callback can point to a secure function or a non-secure function. */
-    if (p_ctrl->callback_is_secure)
+    if (!cmse_is_nsfptr(p_ctrl->p_callback))
     {
         /* If p_callback is secure, then the project does not need to change security state. */
         p_ctrl->p_callback(p_args_memory);

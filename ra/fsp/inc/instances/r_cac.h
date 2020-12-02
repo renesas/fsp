@@ -52,10 +52,6 @@ typedef struct st_cac_instance_ctrl
     uint32_t          open;            // Set to "CAC" once API has been successfully opened.
     cac_cfg_t const * p_cfg;
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
-
     /* Pointer to callback and optional working memory */
     void (* p_callback)(cac_callback_args_t *);
     cac_callback_args_t * p_callback_memory;

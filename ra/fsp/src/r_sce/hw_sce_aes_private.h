@@ -33,7 +33,7 @@
 #define SIZE_AES_128BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED) / 8)
 #define SIZE_AES_128BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED) / 32)
 
-#define SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED     (416)
+#define SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED     (448) /* Added 32 bits here to differentiate 192 wrapped key from 256 wrapped key in the psa_crypto stack. */
 #define SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 8)
 #define SIZE_AES_192BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 32)
 
@@ -104,6 +104,16 @@ extern fsp_err_t HW_SCE_AES_128XtsDecrypt(const uint32_t * InData_Key,
                                           uint32_t       * OutData_Text,
                                           uint32_t       * OutData_IV);
 
+extern fsp_err_t HW_SCE_AES_192EcbEncrypt(const uint32_t * InData_Key,
+                                          const uint32_t   num_words,
+                                          const uint32_t * InData_Text,
+                                          uint32_t       * OutData_Text);
+
+extern fsp_err_t HW_SCE_AES_192EcbDecrypt(const uint32_t * InData_Key,
+                                          const uint32_t   num_words,
+                                          const uint32_t * InData_Text,
+                                          uint32_t       * OutData_Text);
+
 extern fsp_err_t HW_SCE_AES_256EcbEncrypt(const uint32_t * InData_Key,
                                           const uint32_t   num_words,
                                           const uint32_t * InData_Text,
@@ -157,6 +167,18 @@ extern fsp_err_t HW_SCE_AES_128EcbEncryptUsingEncryptedKey(const uint32_t * InDa
                                                            uint32_t       * OutData_Text);
 
 extern fsp_err_t HW_SCE_AES_128EcbDecryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text);
+
+extern fsp_err_t HW_SCE_AES_192CreateEncryptedKey(uint32_t * OutData_KeyIndex);
+
+extern fsp_err_t HW_SCE_AES_192EcbEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text);
+
+extern fsp_err_t HW_SCE_AES_192EcbDecryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
                                                            const uint32_t   num_words,
                                                            const uint32_t * InData_Text,
                                                            uint32_t       * OutData_Text);

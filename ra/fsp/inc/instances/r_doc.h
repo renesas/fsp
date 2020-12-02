@@ -47,10 +47,6 @@ typedef struct st_doc_instance_ctrl
     doc_cfg_t const * p_cfg;           // Pointer to the configuration structure
     uint32_t          open;            ///< Used by driver to check if the control structure is valid
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
-
     /* Pointer to callback and optional working memory */
     void (* p_callback)(doc_callback_args_t *);
     doc_callback_args_t * p_callback_memory;

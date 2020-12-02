@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -67,7 +68,7 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InDa
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00006e01u;
+    SCE->REG_84H = 0x00006e02u;
     SCE->REG_108H = 0x00000000u;
     SCE->REG_104H = 0x00000068u;
     SCE->REG_E0H = 0x800103e0u;
@@ -80,7 +81,7 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InDa
     SCE->REG_ECH = 0x38000fffu;
     SCE->REG_E0H = 0x00000080u;
     SCE->REG_1CH = 0x00260000u;
-    HW_SCE_p_func100(0x785685e4u, 0x1eb8d70du, 0xe603298au, 0xf0890493u);
+    HW_SCE_p_func100(0x65d6015fu, 0xcef163cdu, 0xd36f3dbau, 0x9ff542e9u);
     SCE->REG_1CH = 0x00400000u;
     SCE->REG_1D0H = 0x00000000u;
     if (1u == (SCE->REG_1CH_b.B22))
@@ -107,12 +108,12 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InDa
         SCE->REG_ECH = 0x00000010u;
         SCE->REG_E0H = 0x00000080u;
         SCE->REG_1CH = 0x00A60000u;
-        HW_SCE_p_func100(0x1fc2eb2au, 0xb7a01ddau, 0xe60b956au, 0x2cd96153u);
+        HW_SCE_p_func100(0x98244c8cu, 0x79b8693eu, 0x27d09331u, 0x54bd7297u);
         SCE->REG_1CH = 0x00400000u;
         SCE->REG_1D0H = 0x00000000u;
         if (1u == (SCE->REG_1CH_b.B22))
         {
-            HW_SCE_p_func102(0x158158fau, 0xac8c3ed0u, 0xa6fff060u, 0x701fd272u);
+            HW_SCE_p_func102(0x619b2415u, 0x1a64fb8fu, 0x72abf3c5u, 0xb1a9f8d3u);
             SCE->REG_1BCH = 0x00000040u;
             /* WAIT_LOOP */
             while (0u != SCE->REG_18H_b.B12)
@@ -133,7 +134,7 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InDa
                 /* waiting */
             }
             SCE->REG_100H = change_endian_long(0x0000006eu);
-            HW_SCE_p_func101(0x4e05f96fu, 0x9b1167c2u, 0x75157ed6u, 0x55f37badu);
+            HW_SCE_p_func101(0xa7637c51u, 0x0fdd3f7fu, 0x3ef7d917u, 0x86dcab7au);
             HW_SCE_p_func058(InData_SessionKey,OFS_ADR);
             SCE->REG_104H = 0x00000058u;
             SCE->REG_E0H = 0x80010380u;
@@ -193,12 +194,12 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InDa
         SCE->REG_ECH = 0x00000024u;
         SCE->REG_E0H = 0x00000080u;
         SCE->REG_1CH = 0x00A60000u;
-        HW_SCE_p_func100(0x3ddcbafau, 0x68190098u, 0x71aaccc8u, 0x13400e2fu);
+        HW_SCE_p_func100(0x7aef0fcbu, 0x9258934au, 0x8b4dbf1fu, 0xf15611dcu);
         SCE->REG_1CH = 0x00400000u;
         SCE->REG_1D0H = 0x00000000u;
         if (1u == (SCE->REG_1CH_b.B22))
         {
-            HW_SCE_p_func102(0x32392174u, 0x42e93794u, 0xfb704f82u, 0x2fa0736cu);
+            HW_SCE_p_func102(0x638045bau, 0xdc6175a9u, 0x99105401u, 0x7086cb16u);
             SCE->REG_1BCH = 0x00000040u;
             /* WAIT_LOOP */
             while (0u != SCE->REG_18H_b.B12)
@@ -218,7 +219,7 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InDa
                 /* waiting */
             }
             SCE->REG_100H = change_endian_long(0x0000006eu);
-            HW_SCE_p_func101(0xf791c673u, 0xdde49f4cu, 0xe3b14380u, 0x967940b2u);
+            HW_SCE_p_func101(0x083ef1a1u, 0x630e194cu, 0x4b5f490eu, 0x96a54f99u);
             HW_SCE_p_func065_r1(InData_InstData,OutData_KeyIndex);
             HW_SCE_p_func100(0x1cf9ac81u, 0x590924eau, 0xd4425eb1u, 0xd5db5292u);
             SCE->REG_E0H = 0x81010000u;
@@ -242,5 +243,5 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub(uint32_t *InData_KeyType, uint32_t *InDa
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p6e_r1.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p6e_r2.prc
 ***********************************************************************************************************************/

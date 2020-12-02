@@ -69,6 +69,13 @@ psa_status_t prepare_raw_data_slot_vendor (psa_key_type_t type, size_t bits, str
                 break;
             }
 
+            case SIZE_AES_192BIT_KEYLEN_BITS:
+            case SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED:
+            {
+                raw->bytes = SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED;
+                break;
+            }
+
             case SIZE_AES_256BIT_KEYLEN_BITS:
             case SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED:
             {
@@ -139,12 +146,22 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
                 break;
             }
 
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
             case SIZE_AES_192BIT_KEYLEN_BITS:
             {
-                ret = PSA_ERROR_NOT_SUPPORTED;
+                if (output_size != SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED)
+                {
+                    ret = PSA_ERROR_BUFFER_TOO_SMALL;
+                }
+
+                if (!ret)
+                {
+                    err = HW_SCE_AES_192CreateEncryptedKey((uint32_t *) output);
+                }
+
                 break;
             }
-
+  #endif
             case SIZE_AES_256BIT_KEYLEN_BITS:
             {
                 if (output_size != SIZE_AES_256BIT_KEYLEN_BYTES_WRAPPED)
@@ -206,7 +223,10 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
     /* The mbedcrypto implementation obtains the list of methods based on the keybit size.
      * Since the wrapped keybit size does not correspond to the raw key size i.e the
      * AES256 raw bit size is 256 but the wrapped size is 416 bytes, provide the 256 bit value
-     * to mbedcrypto so that the right methods are invoked. */
+     * to mbedcrypto so that the right methods are invoked.
+     * Since AES192 wrapped size is also 416, there is an addition of 32 dummy bits in the end to make it 448 bits.
+     * This helps to differentiate between the 256 and 192 wrapped keys.
+     * */
     status = vendor_bitlength_to_raw_bitlength(slot->attr.type, slot->attr.bits, &key_bits);
     if (status != PSA_SUCCESS)
     {

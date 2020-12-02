@@ -87,10 +87,6 @@ typedef struct st_sci_i2c_instance_ctrl
     volatile bool activation_on_rxi;    // Tracks whether the transfer is activated on RXI interrupt */
     volatile bool activation_on_txi;    // Tracks whether the transfer is activated on TXI interrupt */
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;            // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
-
     /* Pointer to callback and optional working memory */
     void (* p_callback)(i2c_master_callback_args_t *);
     i2c_master_callback_args_t * p_callback_memory;

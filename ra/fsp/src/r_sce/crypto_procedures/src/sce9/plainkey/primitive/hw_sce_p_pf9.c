@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -67,9 +68,9 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSub(const uint32_t *InData_CurveTy
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x0000f901u;
+    SCE->REG_84H = 0x0000f902u;
     SCE->REG_108H = 0x00000000u;
-    HW_SCE_p_func100(0x71955c20u, 0x3ac12303u, 0x15fa1bdau, 0xb60a3db0u);
+    HW_SCE_p_func100(0xba8ae618u, 0x5d822127u, 0xa6afe272u, 0x6caf7220u);
     SCE->REG_28H = 0x008b0001u;
     SCE->REG_104H = 0x00000068u;
     SCE->REG_E0H = 0x80010340u;
@@ -96,12 +97,12 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSub(const uint32_t *InData_CurveTy
     }
     S_RAM[0] = change_endian_long(SCE->REG_100H);
     OFS_ADR = S_RAM[0];
-    HW_SCE_p_func100(0x4f0f541eu, 0x1a44960eu, 0x563abdb1u, 0xe3baac79u);
+    HW_SCE_p_func100(0x0b6231a1u, 0x4082f030u, 0x48c52f06u, 0x5326581du);
     HW_SCE_p_func027_r2(OFS_ADR);
-    HW_SCE_p_func100(0xc801a728u, 0x47ab14b5u, 0xf9ee4545u, 0xd37aac4fu);
+    HW_SCE_p_func100(0x0b7f37d0u, 0xd0a2a81eu, 0x474b3adfu, 0x9178501bu);
     SCE->REG_28H = 0x008d0001u;
     HW_SCE_p_func103();
-    HW_SCE_p_func100(0x6d82e07fu, 0x8dad4d87u, 0xa9117322u, 0x58cdcce9u);
+    HW_SCE_p_func100(0x41340726u, 0x77095143u, 0x72576630u, 0x93c93c46u);
     SCE->REG_104H = 0x00000052u;
     SCE->REG_C4H = 0x01000c84u;
     /* WAIT_LOOP */
@@ -119,7 +120,7 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSub(const uint32_t *InData_CurveTy
     }
     SCE->REG_1CH = 0x00001800u;
     HW_SCE_p_func103();
-    HW_SCE_p_func100(0x60a4b8bau, 0x3aa18769u, 0xfaf0117du, 0x2d608defu);
+    HW_SCE_p_func100(0xe7d4d41fu, 0x6983ba59u, 0x15f1cca4u, 0xf5ee9a3eu);
     SCE->REG_104H = 0x00000052u;
     SCE->REG_C4H = 0x01000c84u;
     /* WAIT_LOOP */
@@ -136,7 +137,7 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSub(const uint32_t *InData_CurveTy
     }
     SCE->REG_1CH = 0x00001800u;
     HW_SCE_p_func103();
-    HW_SCE_p_func100(0x11cdcd6cu, 0xa3872140u, 0x68e4fa6au, 0xe51f5637u);
+    HW_SCE_p_func100(0xb89c36f1u, 0xebc180b7u, 0xd992e7d8u, 0x4a0de3e7u);
     SCE->REG_104H = 0x00000052u;
     SCE->REG_C4H = 0x01000c84u;
     /* WAIT_LOOP */
@@ -233,7 +234,7 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSub(const uint32_t *InData_CurveTy
     {
         /* waiting */
     }
-    HW_SCE_p_func100(0x60c968fcu, 0x219d0e28u, 0x9436dee9u, 0xcc67ad17u);
+    HW_SCE_p_func100(0x3d1a8336u, 0x622e0f62u, 0xb1697e91u, 0xa005292fu);
     SCE->REG_24H = 0x000084d0u;
     /* WAIT_LOOP */
     while (0u != SCE->REG_24H_b.B21)
@@ -285,7 +286,7 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSub(const uint32_t *InData_CurveTy
         /* waiting */
     }
     HW_SCE_p_func028_r2(OFS_ADR);
-    HW_SCE_p_func100(0xdfa41c30u, 0xd99f4cfdu, 0xf7a85de6u, 0xa99c9005u);
+    HW_SCE_p_func100(0x64d66971u, 0x64ca9b9eu, 0x5940c872u, 0x204325b7u);
     SCE->REG_34H = 0x00000802u;
     SCE->REG_24H = 0x800088d0u;
     /* WAIT_LOOP */
@@ -329,13 +330,13 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSub(const uint32_t *InData_CurveTy
     S_RAM[0] = change_endian_long(SCE->REG_100H);
     for(iLoop=0;iLoop<384;iLoop=iLoop+1)
     {
-        HW_SCE_p_func101(0xfbcc0d7fu, 0x36080ac4u, 0xcf7b143cu, 0x6ff21498u);
+        HW_SCE_p_func101(0xdbe796a4u, 0x6b1d9355u, 0xf4fd2662u, 0xd98cb7d6u);
         HW_SCE_p_func300();
         if (S_RAM[0] == 0x00000001)
         {
             break;
         }
-        HW_SCE_p_func101(0xa45737d5u, 0xb1b23b5au, 0x2de55314u, 0x1d084e61u);
+        HW_SCE_p_func101(0xc0de3a65u, 0xfe27f27fu, 0x4d239102u, 0xb50f0d0au);
     }
     SCE->REG_24H = 0x00001dc0u;
     /* WAIT_LOOP */
@@ -802,5 +803,5 @@ fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSub(const uint32_t *InData_CurveTy
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pf9_r3.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pf9_r4.prc
 ***********************************************************************************************************************/

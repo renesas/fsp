@@ -73,39 +73,38 @@ typedef enum e_qspi_qssl_min_high_level
 /* QSPCLK divider. */
 typedef enum e_qspi_qspclk_div
 {
-    QSPI_QSPCLK_DIV_2,                 ///< QSPCLK = PCLK / 2
-    QSPI_QSPCLK_DIV_3,                 ///< QSPCLK = PCLK / 3
-    QSPI_QSPCLK_DIV_4,                 ///< QSPCLK = PCLK / 4
-    QSPI_QSPCLK_DIV_5,                 ///< QSPCLK = PCLK / 5
-    QSPI_QSPCLK_DIV_6,                 ///< QSPCLK = PCLK / 6
-    QSPI_QSPCLK_DIV_7,                 ///< QSPCLK = PCLK / 7
-    QSPI_QSPCLK_DIV_8,                 ///< QSPCLK = PCLK / 8
-    QSPI_QSPCLK_DIV_9,                 ///< QSPCLK = PCLK / 9
-    QSPI_QSPCLK_DIV_10,                ///< QSPCLK = PCLK / 10
-    QSPI_QSPCLK_DIV_11,                ///< QSPCLK = PCLK / 11
-    QSPI_QSPCLK_DIV_12,                ///< QSPCLK = PCLK / 12
-    QSPI_QSPCLK_DIV_13,                ///< QSPCLK = PCLK / 13
-    QSPI_QSPCLK_DIV_14,                ///< QSPCLK = PCLK / 14
-    QSPI_QSPCLK_DIV_15,                ///< QSPCLK = PCLK / 15
-    QSPI_QSPCLK_DIV_16,                ///< QSPCLK = PCLK / 16
-    QSPI_QSPCLK_DIV_17,                ///< QSPCLK = PCLK / 17
-    QSPI_QSPCLK_DIV_18,                ///< QSPCLK = PCLK / 18
-    QSPI_QSPCLK_DIV_19,                ///< QSPCLK = PCLK / 19
-    QSPI_QSPCLK_DIV_20,                ///< QSPCLK = PCLK / 20
-    QSPI_QSPCLK_DIV_22,                ///< QSPCLK = PCLK / 22
-    QSPI_QSPCLK_DIV_24,                ///< QSPCLK = PCLK / 24
-    QSPI_QSPCLK_DIV_26,                ///< QSPCLK = PCLK / 26
-    QSPI_QSPCLK_DIV_28,                ///< QSPCLK = PCLK / 28
-    QSPI_QSPCLK_DIV_30,                ///< QSPCLK = PCLK / 30
-    QSPI_QSPCLK_DIV_32,                ///< QSPCLK = PCLK / 32
-    QSPI_QSPCLK_DIV_34,                ///< QSPCLK = PCLK / 34
-    QSPI_QSPCLK_DIV_36,                ///< QSPCLK = PCLK / 36
-    QSPI_QSPCLK_DIV_38,                ///< QSPCLK = PCLK / 38
-    QSPI_QSPCLK_DIV_40,                ///< QSPCLK = PCLK / 40
-    QSPI_QSPCLK_DIV_42,                ///< QSPCLK = PCLK / 42
-    QSPI_QSPCLK_DIV_44,                ///< QSPCLK = PCLK / 44
-    QSPI_QSPCLK_DIV_46,                ///< QSPCLK = PCLK / 46
-    QSPI_QSPCLK_DIV_48,                ///< QSPCLK = PCLK / 48
+    QSPI_QSPCLK_DIV_2  = 0x0,          ///< QSPCLK = PCLK / 2
+    QSPI_QSPCLK_DIV_3  = 0x1,          ///< QSPCLK = PCLK / 3
+    QSPI_QSPCLK_DIV_4  = 0x2,          ///< QSPCLK = PCLK / 4
+    QSPI_QSPCLK_DIV_5  = 0x3,          ///< QSPCLK = PCLK / 5
+    QSPI_QSPCLK_DIV_6  = 0x4,          ///< QSPCLK = PCLK / 6
+    QSPI_QSPCLK_DIV_7  = 0x5,          ///< QSPCLK = PCLK / 7
+    QSPI_QSPCLK_DIV_8  = 0x6,          ///< QSPCLK = PCLK / 8
+    QSPI_QSPCLK_DIV_9  = 0x7,          ///< QSPCLK = PCLK / 9
+    QSPI_QSPCLK_DIV_10 = 0x8,          ///< QSPCLK = PCLK / 10
+    QSPI_QSPCLK_DIV_11 = 0x9,          ///< QSPCLK = PCLK / 11
+    QSPI_QSPCLK_DIV_12 = 0xA,          ///< QSPCLK = PCLK / 12
+    QSPI_QSPCLK_DIV_13 = 0xB,          ///< QSPCLK = PCLK / 13
+    QSPI_QSPCLK_DIV_14 = 0xC,          ///< QSPCLK = PCLK / 14
+    QSPI_QSPCLK_DIV_15 = 0xD,          ///< QSPCLK = PCLK / 15
+    QSPI_QSPCLK_DIV_16 = 0xE,          ///< QSPCLK = PCLK / 16
+    QSPI_QSPCLK_DIV_17 = 0xF,          ///< QSPCLK = PCLK / 17
+    QSPI_QSPCLK_DIV_18 = 0x10,         ///< QSPCLK = PCLK / 18
+    QSPI_QSPCLK_DIV_20 = 0x11,         ///< QSPCLK = PCLK / 20
+    QSPI_QSPCLK_DIV_22 = 0x12,         ///< QSPCLK = PCLK / 22
+    QSPI_QSPCLK_DIV_24 = 0x13,         ///< QSPCLK = PCLK / 24
+    QSPI_QSPCLK_DIV_26 = 0x14,         ///< QSPCLK = PCLK / 26
+    QSPI_QSPCLK_DIV_28 = 0x15,         ///< QSPCLK = PCLK / 28
+    QSPI_QSPCLK_DIV_30 = 0x16,         ///< QSPCLK = PCLK / 30
+    QSPI_QSPCLK_DIV_32 = 0x17,         ///< QSPCLK = PCLK / 32
+    QSPI_QSPCLK_DIV_34 = 0x18,         ///< QSPCLK = PCLK / 34
+    QSPI_QSPCLK_DIV_36 = 0x19,         ///< QSPCLK = PCLK / 36
+    QSPI_QSPCLK_DIV_38 = 0x1A,         ///< QSPCLK = PCLK / 38
+    QSPI_QSPCLK_DIV_40 = 0x1B,         ///< QSPCLK = PCLK / 40
+    QSPI_QSPCLK_DIV_42 = 0x1C,         ///< QSPCLK = PCLK / 42
+    QSPI_QSPCLK_DIV_44 = 0x1D,         ///< QSPCLK = PCLK / 44
+    QSPI_QSPCLK_DIV_46 = 0x1E,         ///< QSPCLK = PCLK / 46
+    QSPI_QSPCLK_DIV_48 = 0x1F,         ///< QSPCLK = PCLK / 48
 } qspi_qspclk_div_t;
 
 /* Extended configuration. */

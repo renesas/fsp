@@ -90,10 +90,6 @@ typedef struct st_iic_master_instance_ctrl
     volatile bool             address_restarted;    // Tracks whether the restart condition is send on 10 bit read
     iic_master_timeout_mode_t timeout_mode;         // Holds the timeout mode value. i.e short mode or long mode
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                        // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
-
     /* Pointer to callback and optional working memory */
     void (* p_callback)(i2c_master_callback_args_t *);
     i2c_master_callback_args_t * p_callback_memory;

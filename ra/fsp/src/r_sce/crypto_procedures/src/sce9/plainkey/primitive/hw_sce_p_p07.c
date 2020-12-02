@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -67,9 +68,9 @@ fsp_err_t HW_SCE_GenerateAes128RandomKeyIndexSub(uint32_t *OutData_KeyIndex)
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00000701u;
+    SCE->REG_84H = 0x00000702u;
     SCE->REG_108H = 0x00000000u;
-    HW_SCE_p_func100(0xf7efeb7eu, 0x5bdda299u, 0xe42a1e4fu, 0x767dea6au);
+    HW_SCE_p_func100(0x95582d71u, 0x39635633u, 0x15288f50u, 0x17f47b88u);
     HW_SCE_p_func103();
     SCE->REG_104H = 0x00000052u;
     SCE->REG_C4H = 0x01000c84u;
@@ -103,7 +104,7 @@ fsp_err_t HW_SCE_GenerateAes128RandomKeyIndexSub(uint32_t *OutData_KeyIndex)
         /* waiting */
     }
     SCE->REG_100H = change_endian_long(0x00000007u);
-    HW_SCE_p_func101(0x513bef76u, 0xa59e0bb3u, 0xcdfad875u, 0x8d637e2eu);
+    HW_SCE_p_func101(0x41eb044fu, 0xd0879d0fu, 0x836bd0a6u, 0xdd94cd7au);
     HW_SCE_p_func043();
     SCE->REG_ECH = 0x0000b4e0u;
     SCE->REG_ECH = 0x00000005u;
@@ -197,5 +198,5 @@ fsp_err_t HW_SCE_GenerateAes128RandomKeyIndexSub(uint32_t *OutData_KeyIndex)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p07.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p07_r1.prc
 ***********************************************************************************************************************/

@@ -52,6 +52,7 @@
 #define ITEM_LEN                 (76U)
 #define HID_MXPS                 (8U)
 #define NUM_EP                   (1U)
+#define USB_VALUE_22H            (0x22U)
 
 /* USB Class Definitions for Communications Devices Specification
  release number in binary-coded decimal. */
@@ -238,7 +239,7 @@ uint8_t g_apl_configuration[USB_PCDC_PHID_CD_LEN + (USB_PCDC_PHID_CD_LEN % 2)] =
     0x01,                                                       /*  3:HID Ver */
     0x00,                                                       /*  4:bCountryCode */
     0x01,                                                       /*  5:bNumDescriptors */
-    0x22,                                                       /*  6:bDescriptorType */
+    USB_VALUE_22H,                                              /*  6:bDescriptorType */
     ITEM_LEN,                                                   /*  7:wItemLength(L) */
     0x00,                                                       /*  8:wItemLength(H) */
 

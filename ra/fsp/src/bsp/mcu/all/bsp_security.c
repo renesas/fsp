@@ -23,7 +23,7 @@
  **********************************************************************************************************************/
 #include "bsp_api.h"
 
-#if BSP_TZ_SECURE_BUILD
+#if BSP_FEATURE_TZ_HAS_TRUSTZONE
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -54,7 +54,7 @@ typedef void (BSP_CMSE_NONSECURE_CALL * bsp_nonsecure_func_t)(void);
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_nonsecure_func_t)(void);
  #endif
 
- #if   defined(__IAR_SYSTEMS_ICC__)
+ #if   defined(__IAR_SYSTEMS_ICC__) && BSP_TZ_SECURE_BUILD
   #pragma section=".tz_flash_nsc_start"
   #pragma section=".tz_flash_ns_start"
   #pragma section=".tz_ram_nsc_start"
@@ -102,23 +102,35 @@ extern const uint32_t Image$$__tz_OSPI_DEVICE_0_N$$Base;
 extern const uint32_t Image$$__tz_OSPI_DEVICE_0_S$$Base;
 extern const uint32_t Image$$__tz_OSPI_DEVICE_1_N$$Base;
 extern const uint32_t Image$$__tz_OSPI_DEVICE_1_S$$Base;
+extern const uint32_t Image$$__tz_OPTION_SETTING_N$$Base;
+extern const uint32_t Image$$__tz_OPTION_SETTING_S$$Base;
+extern const uint32_t Image$$__tz_OPTION_SETTING_S_N$$Base;
+extern const uint32_t Image$$__tz_OPTION_SETTING_S_S$$Base;
+extern const uint32_t Image$$__tz_ID_CODE_N$$Base;
+extern const uint32_t Image$$__tz_ID_CODE_S$$Base;
 
-  #define __tz_FLASH_N            Image$$__tz_FLASH_N$$Base
-  #define __tz_FLASH_C            Image$$__tz_FLASH_C$$Base
-  #define __tz_FLASH_S            Image$$__tz_FLASH_S$$Base
-  #define __tz_RAM_N              Image$$__tz_RAM_N$$Base
-  #define __tz_RAM_C              Image$$__tz_RAM_C$$Base
-  #define __tz_RAM_S              Image$$__tz_RAM_S$$Base
-  #define __tz_DATA_FLASH_N       Image$$__tz_DATA_FLASH_N$$Base
-  #define __tz_DATA_FLASH_S       Image$$__tz_DATA_FLASH_S$$Base
-  #define __tz_QSPI_FLASH_N       Image$$__tz_QSPI_FLASH_N$$Base
-  #define __tz_QSPI_FLASH_S       Image$$__tz_QSPI_FLASH_S$$Base
-  #define __tz_SDRAM_N            Image$$__tz_SDRAM_N$$Base
-  #define __tz_SDRAM_S            Image$$__tz_SDRAM_S$$Base
-  #define __tz_OSPI_DEVICE_0_N    Image$$__tz_OSPI_DEVICE_0_N$$Base
-  #define __tz_OSPI_DEVICE_0_S    Image$$__tz_OSPI_DEVICE_0_S$$Base
-  #define __tz_OSPI_DEVICE_1_N    Image$$__tz_OSPI_DEVICE_1_N$$Base
-  #define __tz_OSPI_DEVICE_1_S    Image$$__tz_OSPI_DEVICE_1_S$$Base
+  #define __tz_FLASH_N               Image$$__tz_FLASH_N$$Base
+  #define __tz_FLASH_C               Image$$__tz_FLASH_C$$Base
+  #define __tz_FLASH_S               Image$$__tz_FLASH_S$$Base
+  #define __tz_RAM_N                 Image$$__tz_RAM_N$$Base
+  #define __tz_RAM_C                 Image$$__tz_RAM_C$$Base
+  #define __tz_RAM_S                 Image$$__tz_RAM_S$$Base
+  #define __tz_DATA_FLASH_N          Image$$__tz_DATA_FLASH_N$$Base
+  #define __tz_DATA_FLASH_S          Image$$__tz_DATA_FLASH_S$$Base
+  #define __tz_QSPI_FLASH_N          Image$$__tz_QSPI_FLASH_N$$Base
+  #define __tz_QSPI_FLASH_S          Image$$__tz_QSPI_FLASH_S$$Base
+  #define __tz_SDRAM_N               Image$$__tz_SDRAM_N$$Base
+  #define __tz_SDRAM_S               Image$$__tz_SDRAM_S$$Base
+  #define __tz_OSPI_DEVICE_0_N       Image$$__tz_OSPI_DEVICE_0_N$$Base
+  #define __tz_OSPI_DEVICE_0_S       Image$$__tz_OSPI_DEVICE_0_S$$Base
+  #define __tz_OSPI_DEVICE_1_N       Image$$__tz_OSPI_DEVICE_1_N$$Base
+  #define __tz_OSPI_DEVICE_1_S       Image$$__tz_OSPI_DEVICE_1_S$$Base
+  #define __tz_OPTION_SETTING_N      Image$$__tz_OPTION_SETTING_N$$Base
+  #define __tz_OPTION_SETTING_S      Image$$__tz_OPTION_SETTING_S$$Base
+  #define __tz_OPTION_SETTING_S_N    Image$$__tz_OPTION_SETTING_S_N$$Base
+  #define __tz_OPTION_SETTING_S_S    Image$$__tz_OPTION_SETTING_S_S$$Base
+  #define __tz_ID_CODE_N             Image$$__tz_ID_CODE_N$$Base
+  #define __tz_ID_CODE_S             Image$$__tz_ID_CODE_S$$Base
 
 /* Assign region addresses to pointers so that AC6 includes symbols that can be used to determine the
  * start addresses of Secure, Non-secure and Non-secure Callable regions. */
@@ -130,18 +142,32 @@ BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_ram   = &_
 BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_ram               = &__tz_RAM_S;
 BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_data_flash     = &__tz_DATA_FLASH_N;
 BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_data_flash        = &__tz_DATA_FLASH_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_qspi_flash     = &__tz_QSPI_FLASH_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_qspi_flash        = &__tz_QSPI_FLASH_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_sdram          = &__tz_SDRAM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_sdram             = &__tz_SDRAM_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ospi_device_0  = &__tz_OSPI_DEVICE_0_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_ospi_device_0     = &__tz_OSPI_DEVICE_0_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ospi_device_1  = &__tz_OSPI_DEVICE_1_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_ospi_device_1     = &__tz_OSPI_DEVICE_1_S;
+
+  #if BSP_TZ_SECURE_BUILD
+
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_qspi_flash       = &__tz_QSPI_FLASH_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_qspi_flash          = &__tz_QSPI_FLASH_S;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_sdram            = &__tz_SDRAM_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_sdram               = &__tz_SDRAM_S;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ospi_device_0    = &__tz_OSPI_DEVICE_0_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_ospi_device_0       = &__tz_OSPI_DEVICE_0_S;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ospi_device_1    = &__tz_OSPI_DEVICE_1_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_ospi_device_1       = &__tz_OSPI_DEVICE_1_S;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_option_setting   = &__tz_OPTION_SETTING_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_option_setting      = &__tz_OPTION_SETTING_S;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_option_setting_s = &__tz_OPTION_SETTING_S_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_option_setting_s    = &__tz_OPTION_SETTING_S_S;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_id_code          = &__tz_ID_CODE_N;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_id_code             = &__tz_ID_CODE_S;
+
+  #endif
+
  #elif defined(__GNUC__)
 extern const uint32_t __tz_FLASH_N;
 BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash = &__tz_FLASH_N;
  #endif
+
+ #if BSP_TZ_SECURE_BUILD
 
 /*******************************************************************************************************************//**
  * @addtogroup BSP_MCU
@@ -192,7 +218,7 @@ void R_BSP_SecurityInit (void)
     /* The following section of code to configure SCB->AIRCR, SCB->NSACR, and FPU->FPCCR is taken from
      * system_ARMCM33.c in the CMSIS_5 repository. SCB->SCR SLEEPDEEPS bit is not configured because the
      * SCB->SCR SLEEPDEEP bit is ignored on RA MCUs. */
- #if defined(SCB_CSR_AIRCR_INIT) && (SCB_CSR_AIRCR_INIT == 1U)
+  #if defined(SCB_CSR_AIRCR_INIT) && (SCB_CSR_AIRCR_INIT == 1U)
 
     /* Configure whether non-secure projects have access to system reset, whether bus fault, hard fault, and NMI target
      * secure or non-secure, and whether non-secure interrupt priorities are reduced to the lowest 8 priority levels. */
@@ -202,9 +228,9 @@ void R_BSP_SecurityInit (void)
                  ((SCB_AIRCR_SYSRESETREQS_VAL << SCB_AIRCR_SYSRESETREQS_Pos) & SCB_AIRCR_SYSRESETREQS_Msk) |
                  ((SCB_AIRCR_PRIS_VAL << SCB_AIRCR_PRIS_Pos) & SCB_AIRCR_PRIS_Msk) |
                  ((SCB_AIRCR_BFHFNMINS_VAL << SCB_AIRCR_BFHFNMINS_Pos) & SCB_AIRCR_BFHFNMINS_Msk);
- #endif
+  #endif
 
- #if defined(__FPU_USED) && (__FPU_USED == 1U) && \
+  #if defined(__FPU_USED) && (__FPU_USED == 1U) && \
     defined(TZ_FPU_NS_USAGE) && (TZ_FPU_NS_USAGE == 1U)
 
     /* Configure whether the FPU can be accessed in the non-secure project. */
@@ -217,7 +243,7 @@ void R_BSP_SecurityInit (void)
                  ((FPU_FPCCR_TS_VAL << FPU_FPCCR_TS_Pos) & FPU_FPCCR_TS_Msk) |
                  ((FPU_FPCCR_CLRONRETS_VAL << FPU_FPCCR_CLRONRETS_Pos) & FPU_FPCCR_CLRONRETS_Msk) |
                  ((FPU_FPCCR_CLRONRET_VAL << FPU_FPCCR_CLRONRET_Pos) & FPU_FPCCR_CLRONRET_Msk);
- #endif
+  #endif
 
     /* Disable PRCR for SARs. */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
@@ -257,7 +283,7 @@ void R_BSP_SecurityInit (void)
     R_CPSCU->BUSSARA   = BSP_TZ_CFG_BUSSARA;   /* Security Attribution Register A for the BUS Control Registers. */
     R_CPSCU->BUSSARB   = BSP_TZ_CFG_BUSSARB;   /* Security Attribution Register B for the BUS Control Registers. */
 
- #if BSP_TZ_CFG_ICUSARC != UINT32_MAX
+  #if BSP_TZ_CFG_ICUSARC != UINT32_MAX
     R_BSP_MODULE_START(FSP_IP_DMAC, 0);
 
     /* If any DMAC channels are required by secure program, disable nonsecure write access to DMAST
@@ -266,9 +292,9 @@ void R_BSP_SecurityInit (void)
 
     /* Ensure that DMAST is set so that the nonsecure program can use DMA. */
     R_DMA->DMAST = 1U;
- #endif
+  #endif
 
- #if BSP_TZ_CFG_DTC_USED
+  #if BSP_TZ_CFG_DTC_USED
     R_BSP_MODULE_START(FSP_IP_DTC, 0);
 
     /* If the DTC is used by the secure program, disable nonsecure write access to DTCST
@@ -277,7 +303,7 @@ void R_BSP_SecurityInit (void)
 
     /* Ensure that DTCST is set so that the nonsecure program can use DTC. */
     R_DTC->DTCST = 1U;
- #endif
+  #endif
 
     /* Initialize security attribution registers for Pins. */
     R_BSP_PinCfgSecurityInit();
@@ -299,40 +325,5 @@ BSP_WEAK_REFERENCE void R_BSP_ElcCfgSecurityInit (void)
 {
 }
 
-#else
-
- #if defined(__ARMCC_VERSION) && BSP_FEATURE_TZ_HAS_TRUSTZONE
-
-/* These symbols are required to allocate non-secure memory in flat projects on MCUs that support TrustZone. */
-
-extern const uint32_t Image$$__tz_FLASH_N$$Base;
-extern const uint32_t Image$$__tz_FLASH_C$$Base;
-extern const uint32_t Image$$__tz_FLASH_S$$Base;
-extern const uint32_t Image$$__tz_RAM_N$$Base;
-extern const uint32_t Image$$__tz_RAM_C$$Base;
-extern const uint32_t Image$$__tz_RAM_S$$Base;
-extern const uint32_t Image$$__tz_DATA_FLASH_N$$Base;
-extern const uint32_t Image$$__tz_DATA_FLASH_S$$Base;
-
-  #define __tz_FLASH_N         Image$$__tz_FLASH_N$$Base
-  #define __tz_FLASH_C         Image$$__tz_FLASH_C$$Base
-  #define __tz_FLASH_S         Image$$__tz_FLASH_S$$Base
-  #define __tz_RAM_N           Image$$__tz_RAM_N$$Base
-  #define __tz_RAM_C           Image$$__tz_RAM_C$$Base
-  #define __tz_RAM_S           Image$$__tz_RAM_S$$Base
-  #define __tz_DATA_FLASH_N    Image$$__tz_DATA_FLASH_N$$Base
-  #define __tz_DATA_FLASH_S    Image$$__tz_DATA_FLASH_S$$Base
-
-/* Assign region addresses to pointers so that AC6 includes symbols that can be used to determine the
- * start addresses of Secure, Non-secure and Non-secure Callable regions. */
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash          = &__tz_FLASH_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_flash = &__tz_FLASH_C;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_flash             = &__tz_FLASH_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ram            = &__tz_RAM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_ram   = &__tz_RAM_C;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_ram               = &__tz_RAM_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_data_flash     = &__tz_DATA_FLASH_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_data_flash        = &__tz_DATA_FLASH_S;
  #endif
-
 #endif

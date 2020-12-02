@@ -397,12 +397,6 @@ fsp_err_t R_FLASH_HP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * 
         p_ctrl->p_context         = p_cfg->p_context;
         p_ctrl->p_callback_memory = NULL;
 
-#if BSP_TZ_SECURE_BUILD
-
-        /* If a callback is not supplied this will get set during callbackSet */
-        p_ctrl->callback_is_secure = true;
-#endif
-
         /* Enable FCU interrupts. */
         R_FACI_HP->FRDYIE = 1U;
         R_BSP_IrqCfgEnable(p_cfg->irq, p_cfg->ipl, p_ctrl);
@@ -1077,7 +1071,7 @@ fsp_err_t R_FLASH_HP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
 #if BSP_TZ_SECURE_BUILD
 
     /* Get security state of p_callback */
-    p_ctrl->callback_is_secure =
+    bool callback_is_secure =
         (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
 
  #if FLASH_HP_CFG_PARAM_CHECKING_ENABLE
@@ -1085,12 +1079,17 @@ fsp_err_t R_FLASH_HP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
     /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
     flash_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
                                                                                         CMSE_AU_NONSECURE);
-    FSP_ERROR_RETURN(p_ctrl->callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
  #endif
 #endif
 
     /* Store callback and context */
-    p_ctrl->p_callback        = p_callback;
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(flash_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
+#endif
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
 
@@ -2423,7 +2422,7 @@ static void r_flash_hp_call_callback (flash_hp_instance_ctrl_t * p_ctrl, flash_e
 #if BSP_TZ_SECURE_BUILD
 
     /* p_callback can point to a secure function or a non-secure function. */
-    if (p_ctrl->callback_is_secure)
+    if (!cmse_is_nsfptr(p_ctrl->p_callback))
     {
         /* If p_callback is secure, then the project does not need to change security state. */
         p_ctrl->p_callback(p_args);

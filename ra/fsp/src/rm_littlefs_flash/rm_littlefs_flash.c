@@ -33,14 +33,18 @@
 
 #define RM_LITTLEFS_FLASH_MINIMUM_BLOCK_SIZE    (104)
 
+#ifndef RM_LITTLEFS_FLASH_SEMAPHORE_TIMEOUT
+ #define RM_LITTLEFS_FLASH_SEMAPHORE_TIMEOUT    UINT32_MAX
+#endif
+
 #ifdef RM_LITTLEFS_FLASH_DATA_START
 static const uint32_t rm_littlefs_flash_data_start = RM_LITTLEFS_FLASH_DATA_START;
 #else
- #define rm_littlefs_flash_data_start           BSP_FEATURE_FLASH_DATA_FLASH_START
+ #define rm_littlefs_flash_data_start    BSP_FEATURE_FLASH_DATA_FLASH_START
 #endif
 
 /** "RLFS" in ASCII, used to determine if channel is open. */
-#define RM_LITTLEFS_FLASH_OPEN                  (0x524C4653ULL)
+#define RM_LITTLEFS_FLASH_OPEN           (0x524C4653ULL)
 
 const fsp_version_t g_rm_littlefs_flash_version =
 {
@@ -73,6 +77,7 @@ const rm_littlefs_api_t g_rm_littlefs_on_flash =
  * @retval     FSP_ERR_ALREADY_OPEN       Module is already open.
  * @retval     FSP_ERR_INVALID_SIZE       The provided block size is invalid.
  * @retval     FSP_ERR_INVALID_ARGUMENT   Flash BGO mode must be disabled.
+ * @retval     FSP_ERR_INTERNAL           Failed to create the semaphore.
  *
  * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes. This
  *             function calls:
@@ -110,6 +115,17 @@ fsp_err_t RM_LITTLEFS_FLASH_Open (rm_littlefs_ctrl_t * const p_ctrl, rm_littlefs
     fsp_err_t                err     = p_flash->p_api->open(p_flash->p_ctrl, p_flash->p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
+#if LFS_THREAD_SAFE
+    p_instance_ctrl->xSemaphore = xSemaphoreCreateMutexStatic(&p_instance_ctrl->xMutexBuffer);
+
+    if (NULL == p_instance_ctrl->xSemaphore)
+    {
+        p_flash->p_api->close(p_flash->p_ctrl);
+
+        return FSP_ERR_INTERNAL;
+    }
+#endif
+
     /* This module is now open. */
     p_instance_ctrl->open = RM_LITTLEFS_FLASH_OPEN;
 
@@ -143,6 +159,10 @@ fsp_err_t RM_LITTLEFS_FLASH_Close (rm_littlefs_ctrl_t * const p_ctrl)
     flash_instance_t const        * p_flash  = p_extend->p_flash;
 
     p_flash->p_api->close(p_extend->p_flash->p_ctrl);
+
+#if LFS_THREAD_SAFE
+    vSemaphoreDelete(p_instance_ctrl->xSemaphore);
+#endif
 
     return FSP_SUCCESS;
 }
@@ -269,6 +289,62 @@ int rm_littlefs_flash_erase (const struct lfs_config * c, lfs_block_t block)
     FSP_ERROR_RETURN(FSP_SUCCESS == err, LFS_ERR_IO);
 
     return LFS_ERR_OK;
+}
+
+/*******************************************************************************************************************//**
+ * Returns the version of this module.
+ *
+ * Implements @ref rm_littlefs_api_t::versionGet().
+ *
+ * @retval     LFS_ERR_OK  Success.
+ * @retval     LFS_ERR_IO  Lower layer is not open or failed to lock the flash.
+ **********************************************************************************************************************/
+int rm_littlefs_flash_lock (const struct lfs_config * c)
+{
+#if LFS_THREAD_SAFE
+    rm_littlefs_flash_instance_ctrl_t * p_instance_ctrl = (rm_littlefs_flash_instance_ctrl_t *) c->context;
+ #if RM_LITTLEFS_FLASH_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ERROR_RETURN(RM_LITTLEFS_FLASH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+    BaseType_t err = xSemaphoreTake(p_instance_ctrl->xSemaphore, RM_LITTLEFS_FLASH_SEMAPHORE_TIMEOUT);
+
+    FSP_ERROR_RETURN(true == err, LFS_ERR_IO);
+
+    return LFS_ERR_OK;
+#else
+    FSP_PARAMETER_NOT_USED(c);
+
+    return LFS_ERR_IO;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * Returns the version of this module.
+ *
+ * Implements @ref rm_littlefs_api_t::versionGet().
+ *
+ * @retval     LFS_ERR_OK  Success.
+ * @retval     LFS_ERR_IO  Lower layer is not open or failed to unlock the flash.
+ **********************************************************************************************************************/
+int rm_littlefs_flash_unlock (const struct lfs_config * c)
+{
+#if LFS_THREAD_SAFE
+    rm_littlefs_flash_instance_ctrl_t * p_instance_ctrl = (rm_littlefs_flash_instance_ctrl_t *) c->context;
+ #if RM_LITTLEFS_FLASH_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ERROR_RETURN(RM_LITTLEFS_FLASH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+    BaseType_t err = xSemaphoreGive(p_instance_ctrl->xSemaphore);
+
+    FSP_ERROR_RETURN(true == err, LFS_ERR_IO);
+
+    return LFS_ERR_OK;
+#else
+    FSP_PARAMETER_NOT_USED(c);
+
+    return LFS_ERR_IO;
+#endif
 }
 
 /*******************************************************************************************************************//**

@@ -88,9 +88,7 @@ typedef struct st_flash_hp_instance_ctrl
     uint32_t              dest_end_address;
     uint32_t              operations_remaining;
     flash_bgo_operation_t current_operation;      ///< Operation in progress, for example, FLASH_OPERATION_CF_ERASE
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                      // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
+
     void (* p_callback)(flash_callback_args_t *); // Pointer to callback
     flash_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
     void const            * p_context;            // Pointer to context to be passed into callback function

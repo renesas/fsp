@@ -277,7 +277,7 @@ fsp_err_t R_LPM_IoKeepClear (lpm_ctrl_t * const p_api_ctrl)
 /*******************************************************************************************************************//**
  * Close the LPM Instance
  *
- * @retval     FSP_SUCCESS        LPM mode closed
+ * @retval     FSP_SUCCESS        LPM driver closed
  * @retval     FSP_ERR_NOT_OPEN   LPM instance is not open
  * @retval     FSP_ERR_ASSERTION  Null Pointer
  **********************************************************************************************************************/
@@ -559,6 +559,7 @@ fsp_err_t r_lpm_check_clocks (uint32_t clock_source)
  *
  * @retval     FSP_SUCCESS                   Successfully entered and woke from low power mode.
  * @retval     FSP_ERR_INVALID_MODE          One of the following:
+ *                                           - FLL function is enabled when requesting Software Standby.
  *                                           - HOCO was not system clock when using snooze mode with SCI0/RXD0.
  *                                           - HOCO was not stable when using snooze mode with SCI0/RXD0.
  *                                           - MOCO was running when using snooze mode with SCI0/RXD0.
@@ -580,10 +581,19 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
     uint32_t stopped_modules = 0;
  #endif
 #endif
+#if BSP_PRV_POWER_USE_DCDC
+    bsp_power_mode_t power_mode = BSP_POWER_MODE_LDO;
+#endif
 
     if (1U == R_SYSTEM->SBYCR_b.SSBY)
     {
         /* Execute pre-wfi standby tasks */
+
+#if BSP_PRV_HOCO_USE_FLL
+
+        /* If FLL is available it must not be active when entering Software Standby. */
+        FSP_ERROR_RETURN(0U == R_SYSTEM->FLLCR1, FSP_ERR_INVALID_MODE);
+#endif
 
         /* Get system clock */
         uint32_t clock_source = R_SYSTEM->SCKSCR;
@@ -690,6 +700,15 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         }
  #endif
 #endif
+#if BSP_PRV_POWER_USE_DCDC
+
+        /* DCDC cannot be used in Software Standby, so switch back to LDO if needed (see RA2L1 User's Manual
+         * (R01UH0853EJ0100) Section 40.3 Usage Notes). */
+        if (R_SYSTEM->DCDCCTL & R_SYSTEM_DCDCCTL_DCDCON_Msk)
+        {
+            power_mode = R_BSP_PowerModeSet(BSP_POWER_MODE_LDO_BOOST);
+        }
+#endif
     }
 
     if (LPM_MODE_STANDBY_SNOOZE == p_instance_ctrl->p_cfg->low_power_mode)
@@ -719,9 +738,11 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
      * See Section 11.8.2 "Canceling Snooze Mode" in the RA6M3 manual  R01UM0004EU0110 */
     R_SYSTEM->SNZCR_b.SNZE = 0;
 
-#if BSP_FEATURE_LPM_HAS_DEEP_STANDBY
+#if BSP_FEATURE_LPM_HAS_DEEP_STANDBY || (BSP_PRV_POWER_USE_DCDC)
     if (1U == R_SYSTEM->SBYCR_b.SSBY)
     {
+ #if BSP_FEATURE_LPM_HAS_DEEP_STANDBY
+
         /* Wait for ongoing operating mode transition (OPCMTSF, SOPCMTSF) */
         r_lpm_wait_for_operating_mode_flags();
 
@@ -729,16 +750,24 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         R_SYSTEM->OPCCR          = saved_opccr & R_SYSTEM_OPCCR_OPCM_Msk;
         R_SYSTEM->SOPCCR         = saved_sopccr & R_SYSTEM_SOPCCR_SOPCM_Msk;
         R_SYSTEM->OSTDCR_b.OSTDE = 0x1U & saved_ostdcr_ostde;
- #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
+  #if BSP_FEATURE_CGC_HAS_HOCOWTCR == 1
         R_SYSTEM->HOCOWTCR_b.HSTS = R_SYSTEM_HOCOWTCR_HSTS_Msk & (saved_hocowtcr << R_SYSTEM_HOCOWTCR_HSTS_Pos);
- #endif
+  #endif
 
         /* Disable writing to CGC and Low Power Mode registers. */
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
 
- #if BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED
+  #if BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED
         bsp_prv_power_change_mstp_clear(stopped_modules);
+  #endif
+ #endif
+ #if BSP_PRV_POWER_USE_DCDC
+        if (power_mode < BSP_POWER_MODE_LDO)
+        {
+            /* Switch back to DCDC if it was enabled before. */
+            R_BSP_PowerModeSet(power_mode);
+        }
  #endif
     }
 

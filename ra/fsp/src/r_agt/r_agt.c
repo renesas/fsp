@@ -164,8 +164,11 @@ fsp_err_t R_AGT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     /* Power on the AGT channel. */
     R_BSP_MODULE_START(FSP_IP_AGT, p_cfg->channel);
 
-    /* Forcibly stop timer and clear flags. */
-    p_instance_ctrl->p_reg->AGTCR = AGT_PRV_AGTCR_FORCE_STOP_CLEAR_FLAGS;
+    /* Clear AGTCR. This stops the timer if it is running and clears the flags. */
+    p_instance_ctrl->p_reg->AGTCR = 0U;
+
+    /* The timer is stopped in sync with the count clock, or in sync with PCLK in event and external count modes. */
+    FSP_HARDWARE_REGISTER_WAIT(0U, p_instance_ctrl->p_reg->AGTCR_b.TCSTF);
 
     /* Clear AGTMR2 before AGTMR1 is set. Reference Note 3 in section 25.2.6 "AGT Mode Register 2 (AGTMR2)"
      * of the RA6M3 manual R01UH0886EJ0100. */
@@ -183,12 +186,6 @@ fsp_err_t R_AGT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     }
 
     /* Set callback and context pointers */
-
-#if BSP_TZ_SECURE_BUILD
-
-    /* If this is a secure build, the callback provided in p_cfg must be secure. */
-    p_instance_ctrl->callback_is_secure = true;
-#endif
     p_instance_ctrl->p_callback        = p_cfg->p_callback;
     p_instance_ctrl->p_context         = p_cfg->p_context;
     p_instance_ctrl->p_callback_memory = NULL;
@@ -516,7 +513,7 @@ fsp_err_t R_AGT_CallbackSet (timer_ctrl_t * const          p_api_ctrl,
 #if BSP_TZ_SECURE_BUILD
 
     /* Get security state of p_callback */
-    p_ctrl->callback_is_secure =
+    bool callback_is_secure =
         (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
 
  #if AGT_CFG_PARAM_CHECKING_ENABLE
@@ -524,19 +521,17 @@ fsp_err_t R_AGT_CallbackSet (timer_ctrl_t * const          p_api_ctrl,
     /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
     timer_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
                                                                                         CMSE_AU_NONSECURE);
-    FSP_ERROR_RETURN(p_ctrl->callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
  #endif
 #endif
 
     /* Store callback and context */
-
 #if BSP_TZ_SECURE_BUILD
-
-    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
-    p_ctrl->callback_is_secure =
-        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(timer_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
 #endif
-    p_ctrl->p_callback        = p_callback;
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
 
@@ -992,7 +987,7 @@ void agt_int_isr (void)
 #if BSP_TZ_SECURE_BUILD
 
         /* p_callback can point to a secure function or a non-secure function. */
-        if (p_instance_ctrl->callback_is_secure)
+        if (!cmse_is_nsfptr(p_instance_ctrl->p_callback))
         {
             /* If p_callback is secure, then the project does not need to change security state. */
             p_instance_ctrl->p_callback(p_args);

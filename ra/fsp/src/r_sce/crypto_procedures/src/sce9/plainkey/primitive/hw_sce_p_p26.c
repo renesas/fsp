@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -69,8 +70,18 @@ fsp_err_t HW_SCE_FwIntegrityCheck(void)
     }
     SCE->REG_84H = 0x00002601u;
     SCE->REG_108H = 0x00000000u;
+    SCE->REG_84H = 0x00010002u;
+    SCE->REG_13CH = 0x00000F01u;
+    SCE->REG_84H = 0x00010003u;
+    SCE->REG_13CH = 0x00000F01u;
+    SCE->REG_ECH = 0x0000b7c0u;
+    SCE->REG_ECH = 0x000001f0u;
+    SCE->REG_ECH = 0x0000b7e0u;
+    SCE->REG_ECH = 0x00000000u;
+    SCE->REG_ECH = 0x00003ffeu;
+    SCE->REG_84H = 0x00010001u;
     SCE->REG_13CH = 0x00000202u;
-    HW_SCE_p_func102(0xe8e880e8u, 0xe878ca41u, 0x69b6222du, 0x05286da4u);
+    HW_SCE_p_func102(0x5e152cc3u, 0x70c33839u, 0x6c11afcdu, 0x3a544458u);
     SCE->REG_1BCH = 0x00000040u;
     /* WAIT_LOOP */
     while (0u != SCE->REG_18H_b.B12)
@@ -81,5 +92,5 @@ fsp_err_t HW_SCE_FwIntegrityCheck(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p26.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p26_r2.prc
 ***********************************************************************************************************************/

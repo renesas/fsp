@@ -70,10 +70,6 @@ typedef struct st_sci_spi_instance_ctrl
     uint32_t          rx_count;
     uint32_t          count;
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
-
     /* Pointer to callback and optional working memory */
     void (* p_callback)(spi_callback_args_t *);
     spi_callback_args_t * p_callback_memory;

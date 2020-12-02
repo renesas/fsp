@@ -61,9 +61,6 @@ typedef struct st_can_instance_ctrl
     can_message_mode_t   message_mode;          // Overwrite message or overrun.
     can_clock_source_t   clock_source;          // Clock source. CANMCLK or PCLKB.
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
     void (* p_callback)(can_callback_args_t *); // Pointer to callback
     can_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
     void const          * p_context;            // Pointer to context to be passed into callback function

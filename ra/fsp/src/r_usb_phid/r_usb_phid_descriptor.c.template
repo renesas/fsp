@@ -28,8 +28,11 @@
 #define CD_LEN                   (34U)
 
 /* Descriptor data Mask */
+#define USB_VALUE_32             (32)
+#define USB_VALUE_100            (100)
 #define USB_UCHAR_MAX            (0xffU)
 #define USB_W_TOTAL_LENGTH_MASK  (256U)
+#define USB_VALUE_22H            (0x22U)
 
 /************************************************************
  *  Device Descriptor                                       *
@@ -69,7 +72,7 @@ uint8_t g_apl_configuration[CD_LEN + (CD_LEN % 2)] =
     1,                                                          /*  5:bConfigurationValue */
     4,                                                          /*  6:iConfiguration */
     (uint8_t) (USB_CF_RESERVED | USB_CF_SELFP | USB_CF_RWUPON), /*  7:bmAttributes */
-    (uint8_t) (100 / 2),                                        /*  8:bMaxPower (2mA unit) */
+    (uint8_t) (USB_VALUE_100 / 2),                              /*  8:bMaxPower (2mA unit) */
 
     /* Interface Descriptor */
     USB_ID_BLENGTH,                                             /*  0:bLength */
@@ -89,7 +92,7 @@ uint8_t g_apl_configuration[CD_LEN + (CD_LEN % 2)] =
     0x01,                                                       /*  3:HID Ver */
     0x00,                                                       /*  4:bCountryCode */
     0x01,                                                       /*  5:bNumDescriptors */
-    0x22,                                                       /*  6:bDescriptorType */
+    USB_VALUE_22H,                                              /*  6:bDescriptorType */
     ITEM_LEN,                                                   /*  7:wItemLength(L) */
     0x00,                                                       /*  8:wItemLength(H) */
 
@@ -138,7 +141,7 @@ uint8_t g_apl_string1[] =
 
 uint8_t g_apl_string2[] =
 {
-    32,                 /*  0:bLength */
+    USB_VALUE_32,       /*  0:bLength */
     USB_DT_STRING,      /*  1:bDescriptorType */
     'U', 0x00,
     'S', 0x00,

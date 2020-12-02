@@ -28,6 +28,8 @@ extern "C"
  #define PSA_AES_BITS_VENDOR_RAW(bit_length)                                             \
     ((bit_length) == SIZE_AES_128BIT_KEYLEN_BITS ? SIZE_AES_128BIT_KEYLEN_BITS :         \
      (bit_length) == SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED ? SIZE_AES_128BIT_KEYLEN_BITS : \
+     (bit_length) == SIZE_AES_192BIT_KEYLEN_BITS ? SIZE_AES_192BIT_KEYLEN_BITS :         \
+     (bit_length) == SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED ? SIZE_AES_192BIT_KEYLEN_BITS : \
      (bit_length) == SIZE_AES_256BIT_KEYLEN_BITS ? SIZE_AES_256BIT_KEYLEN_BITS :         \
      (bit_length) == SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED ? SIZE_AES_256BIT_KEYLEN_BITS : \
      0)

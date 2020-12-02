@@ -8,18 +8,23 @@ The e² studio ISDE provides support with intuitive configurators and intelligen
 
 FSP uses an open software ecosystem and provides flexibility in using your preferred RTOS, legacy code, and third-party ecosystem solutions.
 
-Download the latest FSP version from the [Releases page](https://github.com/renesas/fsp/releases).
+### Current Release
+
+[FSP v2.2.0](https://github.com/renesas/fsp/releases/tag/v2.2.0)
 
 ### Supported RA MCU Kits
 
 - EK-RA2A1
+- EK-RA2L1
 - EK-RA4M1
 - EK-RA4W1
+- EK-RA4M3
 - EK-RA6M1
 - EK-RA6M2
 - EK-RA6M3
 - EK-RA6M3G
 - EK-RA6M4
+- RSSK-RA2L1
 - RSSK-RA6T1
 
 ### Setup Instructions
@@ -32,7 +37,7 @@ If you have already installed a previous FSP release that included e² studio th
 
 #### For new users that are using FSP with e² studio
 
-1.	Download the FSP with e² studio Installer from the Assets section of the [latest release](https://github.com/renesas/fsp/releases).
+1.	Download the FSP with e² studio Installer from the Assets section of the [current release](https://github.com/renesas/fsp/releases/tag/v2.2.0).
 2.	Run the installer. This will install the e² studio tool, FSP packs, GCC toolchain and other tools required to use this software. No additional installations are required.
 
 #### If using RA Smart Configurator (RASC) with IAR Embedded Workbench or Keil MDK ####

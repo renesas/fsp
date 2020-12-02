@@ -117,11 +117,18 @@ typedef struct st_rm_freertos_plus_fat_cfg
 
 typedef struct st_rm_freertos_plus_fat_disk_cfg
 {
-    uint32_t  num_sectors;             ///< Number of sectors in this partition
-    uint32_t  sector_size_bytes;       ///< Block size
-    uint32_t  cache_size_bytes;        ///< Chache memory size
-    uint8_t * p_cache;                 ///< Pointer to cache memory
-    uint8_t   partition_number;        ///< Partition number for this disk
+    union
+    {
+        rm_freertos_plus_fat_device_t device; ///< Device sector data
+        struct
+        {
+            uint32_t num_sectors;             // DEPRECATED
+            uint32_t sector_size_bytes;       // DEPRECATED
+        };
+    };
+    uint32_t  cache_size_bytes;               ///< Chache memory size
+    uint8_t * p_cache;                        ///< Pointer to cache memory
+    uint8_t   partition_number;               ///< Partition number for this disk
 } rm_freertos_plus_fat_disk_cfg_t;
 
 typedef void rm_freertos_plus_fat_ctrl_t;

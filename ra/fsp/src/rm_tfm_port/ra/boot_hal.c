@@ -16,6 +16,9 @@
 #include "r_flash_api.h"
 
 #include "psa/crypto.h"
+#if defined(MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT)
+ #include "platform.h"
+#endif
 
 #if defined(__ARMCC_VERSION)
 __attribute__((naked)) void boot_clear_bl2_ram_area (void)
@@ -77,14 +80,12 @@ __attribute__((naked)) void boot_clear_bl2_ram_area (void)
 
 #endif
 
-#ifdef BOOT_DATA_AVAILABLE
-
 /*
  * The section 'fsp_dtc_vector_table' is reused to store boot data.
  * This is done to avoid creating a BL2 specific linker script.
  */
 static uint8_t g_tfm_shared_data[BOOT_TFM_SHARED_DATA_SIZE] BSP_PLACE_IN_SECTION(".fsp_dtc_vector_table");
-#endif                                 /* BOOT_DATA_AVAILABLE */
+static uint8_t g_tfm_shared_boot_seed[BOOT_TFM_SHARED_SEED_SIZE] BSP_PLACE_IN_SECTION(".fsp_dtc_vector_table");
 
 #define FAW_START_ADDR    (0xFFFC)
 #define FAW_END_ADDR      (0x200000)
@@ -94,7 +95,6 @@ extern ARM_DRIVER_FLASH FLASH_DEV_NAME;
 
 /* FSP structures required by uart and flash drivers */
 extern flash_hp_instance_ctrl_t g_tfm_fsp_flash_ctrl;
-extern const flash_cfg_t        g_tfm_fsp_flash_cfg;
 
 static void flash_FAW_Set (uint32_t start_addr, uint32_t end_addr)
 {
@@ -130,9 +130,8 @@ int32_t boot_platform_init (void)
         return result;
     }
 
-#ifdef BOOT_DATA_AVAILABLE
     memset(g_tfm_shared_data, 0x0, BOOT_TFM_SHARED_DATA_SIZE);
-#endif                                 /* BOOT_DATA_AVAILABLE */
+    memset(g_tfm_shared_boot_seed, 0x0, BOOT_TFM_SHARED_SEED_SIZE);
 
     /* Set the FAW to lock the Secure code and data region */
 
@@ -141,10 +140,14 @@ int32_t boot_platform_init (void)
     result = mbedtls_platform_setup(NULL);
     if (result != 0)
     {
-    	return result;;
+        return result;
     }
 
     result = psa_crypto_init();
+    if (PSA_SUCCESS == result)
+    {
+        result = psa_generate_random(g_tfm_shared_boot_seed, BOOT_TFM_SHARED_SEED_SIZE);
+    }
 
     return result;
 }

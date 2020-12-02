@@ -17638,7 +17638,36 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                : 7;
         } VBTCR1_b;
     };
-    __IM uint32_t RESERVED47[24];
+    __IM uint32_t RESERVED47[8];
+
+    union
+    {
+        __IOM uint8_t DCDCCTL;         /*!< (@ 0x00000440) DCDC/LDO Control Register                                  */
+
+        struct
+        {
+            __IOM uint8_t DCDCON  : 1; /*!< [0..0] LDO/DCDC on/off Control bit                                        */
+            __IOM uint8_t OCPEN   : 1; /*!< [1..1] DCDC OCP Function Enable bit                                       */
+            uint8_t               : 2;
+            __IOM uint8_t STOPZA  : 1; /*!< [4..4] DCDC IO Buffer Power Control bit                                   */
+            __IOM uint8_t LCBOOST : 1; /*!< [5..5] LDO LCBOOST Mode Control bit                                       */
+            __IOM uint8_t FST     : 1; /*!< [6..6] DCDC Fast Startup                                                  */
+            __IOM uint8_t PD      : 1; /*!< [7..7] DCDC VREF Generate Disable bit                                     */
+        } DCDCCTL_b;
+    };
+
+    union
+    {
+        __IOM uint8_t VCCSEL;          /*!< (@ 0x00000441) Voltage Level Selection Control Register                   */
+
+        struct
+        {
+            __IOM uint8_t VCCSEL : 2;  /*!< [1..0] DCDC Working Voltage Level Selection                               */
+            uint8_t              : 6;
+        } VCCSEL_b;
+    };
+    __IM uint16_t RESERVED48;
+    __IM uint32_t RESERVED49[15];
 
     union
     {
@@ -17661,8 +17690,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 6;
         } SOMCR_b;
     };
-    __IM uint16_t RESERVED48;
-    __IM uint32_t RESERVED49[3];
+    __IM uint16_t RESERVED50;
+    __IM uint32_t RESERVED51[3];
 
     union
     {
@@ -17674,7 +17703,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t             : 7;
         } LOCOCR_b;
     };
-    __IM uint8_t RESERVED50;
+    __IM uint8_t RESERVED52;
 
     union
     {
@@ -17689,8 +17718,8 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
                                          *   trimming bits                                                             */
         } LOCOUTCR_b;
     };
-    __IM uint8_t  RESERVED51;
-    __IM uint32_t RESERVED52[7];
+    __IM uint8_t  RESERVED53;
+    __IM uint32_t RESERVED54[7];
 
     union
     {
@@ -17729,7 +17758,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t               : 7;
         } VBTCMPCR_b;
     };
-    __IM uint8_t RESERVED53;
+    __IM uint8_t RESERVED55;
 
     union
     {
@@ -17743,7 +17772,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t                  : 6;
         } VBTLVDICR_b;
     };
-    __IM uint8_t RESERVED54;
+    __IM uint8_t RESERVED56;
 
     union
     {
@@ -17755,7 +17784,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 7;
         } VBTWCTLR_b;
     };
-    __IM uint8_t RESERVED55;
+    __IM uint8_t RESERVED57;
 
     union
     {
@@ -17890,9 +17919,9 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint8_t            : 4;
         } VBTBER_b;
     };
-    __IM uint8_t  RESERVED56;
-    __IM uint16_t RESERVED57;
-    __IM uint32_t RESERVED58[15];
+    __IM uint8_t  RESERVED58;
+    __IM uint16_t RESERVED59;
+    __IM uint32_t RESERVED60[15];
 
     union
     {
@@ -28772,6 +28801,22 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
 /* ========================================================  VBTCR1  ========================================================= */
  #define R_SYSTEM_VBTCR1_BPWSWSTP_Pos           (0UL)          /*!< BPWSWSTP (Bit 0)                                      */
  #define R_SYSTEM_VBTCR1_BPWSWSTP_Msk           (0x1UL)        /*!< BPWSWSTP (Bitfield-Mask: 0x01)                        */
+/* ========================================================  DCDCCTL  ======================================================== */
+ #define R_SYSTEM_DCDCCTL_PD_Pos                (7UL)          /*!< PD (Bit 7)                                            */
+ #define R_SYSTEM_DCDCCTL_PD_Msk                (0x80UL)       /*!< PD (Bitfield-Mask: 0x01)                              */
+ #define R_SYSTEM_DCDCCTL_FST_Pos               (6UL)          /*!< FST (Bit 6)                                           */
+ #define R_SYSTEM_DCDCCTL_FST_Msk               (0x40UL)       /*!< FST (Bitfield-Mask: 0x01)                             */
+ #define R_SYSTEM_DCDCCTL_LCBOOST_Pos           (5UL)          /*!< LCBOOST (Bit 5)                                       */
+ #define R_SYSTEM_DCDCCTL_LCBOOST_Msk           (0x20UL)       /*!< LCBOOST (Bitfield-Mask: 0x01)                         */
+ #define R_SYSTEM_DCDCCTL_STOPZA_Pos            (4UL)          /*!< STOPZA (Bit 4)                                        */
+ #define R_SYSTEM_DCDCCTL_STOPZA_Msk            (0x10UL)       /*!< STOPZA (Bitfield-Mask: 0x01)                          */
+ #define R_SYSTEM_DCDCCTL_OCPEN_Pos             (1UL)          /*!< OCPEN (Bit 1)                                         */
+ #define R_SYSTEM_DCDCCTL_OCPEN_Msk             (0x2UL)        /*!< OCPEN (Bitfield-Mask: 0x01)                           */
+ #define R_SYSTEM_DCDCCTL_DCDCON_Pos            (0UL)          /*!< DCDCON (Bit 0)                                        */
+ #define R_SYSTEM_DCDCCTL_DCDCON_Msk            (0x1UL)        /*!< DCDCON (Bitfield-Mask: 0x01)                          */
+/* ========================================================  VCCSEL  ========================================================= */
+ #define R_SYSTEM_VCCSEL_VCCSEL_Pos             (0UL)          /*!< VCCSEL (Bit 0)                                        */
+ #define R_SYSTEM_VCCSEL_VCCSEL_Msk             (0x3UL)        /*!< VCCSEL (Bitfield-Mask: 0x03)                          */
 /* ========================================================  SOSCCR  ========================================================= */
  #define R_SYSTEM_SOSCCR_SOSTP_Pos              (0UL)          /*!< SOSTP (Bit 0)                                         */
  #define R_SYSTEM_SOSCCR_SOSTP_Msk              (0x1UL)        /*!< SOSTP (Bitfield-Mask: 0x01)                           */

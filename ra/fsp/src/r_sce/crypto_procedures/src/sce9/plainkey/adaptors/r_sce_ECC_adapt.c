@@ -93,12 +93,12 @@ fsp_err_t HW_SCE_ECC_256GenerateSign (const uint32_t * InData_DomainParam,
     sce_oem_cmd_t key_command;
 
     /* NIST curve */
-    if (0U == *InData_DomainParam)
+    if (SCE_ECC_CURVE_TYPE_NIST == *InData_DomainParam)
     {
         key_command = SCE_OEM_CMD_ECC_P256_PRIVATE;
     }
     /* Brainpool Curve */
-    else if (1U == *InData_DomainParam)
+    else if (SCE_ECC_CURVE_TYPE_BRAINPOOL == *InData_DomainParam)
     {
         key_command = SCE_OEM_CMD_ECC_P256R1_PRIVATE;
     }
@@ -117,7 +117,7 @@ fsp_err_t HW_SCE_ECC_256GenerateSign (const uint32_t * InData_DomainParam,
                                                       wrapped_private_key);
     if (FSP_SUCCESS == err)
     {
-        err  = HW_SCE_EcdsaSigunatureGenerateSub(InData_DomainParam,
+        err  = HW_SCE_EcdsaSignatureGenerateSub(InData_DomainParam,
                                                  InData_G,
                                                  wrapped_private_key,
                                                  InData_MsgDgst,
@@ -140,7 +140,7 @@ fsp_err_t HW_SCE_ECC_256HrkGenerateSign (const uint32_t * InData_DomainParam,
                                          uint32_t       * OutData_S)
 {
     uint32_t  signature[(HW_SCE_ECDSA_DATA_BYTE_SIZE / 4U)] = {0};
-    fsp_err_t err            = HW_SCE_EcdsaSigunatureGenerateSub(InData_DomainParam,
+    fsp_err_t err            = HW_SCE_EcdsaSignatureGenerateSub(InData_DomainParam,
                                                                  InData_G,
                                                                  InData_KeyIndex,
                                                                  InData_MsgDgst,
@@ -165,12 +165,12 @@ fsp_err_t HW_SCE_ECC_384GenerateSign (const uint32_t * InData_DomainParam,
     uint32_t wrapped_private_key[17U];
     sce_oem_cmd_t key_command;
     /* NIST curve */
-    if (0U == *InData_DomainParam)
+    if (SCE_ECC_CURVE_TYPE_NIST == *InData_DomainParam)
     {
         key_command = SCE_OEM_CMD_ECC_P384_PRIVATE;
     }
     /* Brainpool Curve */
-    else if (1U == *InData_DomainParam)
+    else if (SCE_ECC_CURVE_TYPE_BRAINPOOL == *InData_DomainParam)
     {
         key_command = SCE_OEM_CMD_ECC_P384R1_PRIVATE;
     }
@@ -189,7 +189,7 @@ fsp_err_t HW_SCE_ECC_384GenerateSign (const uint32_t * InData_DomainParam,
     if (FSP_SUCCESS == err)
     {
         err =
-            HW_SCE_EcdsaP384SigunatureGenerateSub(InData_DomainParam, wrapped_private_key, InData_MsgDgst, signature);
+            HW_SCE_EcdsaP384SignatureGenerateSub(InData_DomainParam, wrapped_private_key, InData_MsgDgst, signature);
     }
     if (FSP_SUCCESS == err)
     {
@@ -208,7 +208,7 @@ fsp_err_t HW_SCE_ECC_384HrkGenerateSign (const uint32_t * InData_DomainParam,
                                          uint32_t       * OutData_S)
 {
     uint32_t signature[HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 4U] = {0};
-    fsp_err_t    err = HW_SCE_EcdsaP384SigunatureGenerateSub(InData_DomainParam, InData_KeyIndex, InData_MsgDgst, signature);
+    fsp_err_t    err = HW_SCE_EcdsaP384SignatureGenerateSub(InData_DomainParam, InData_KeyIndex, InData_MsgDgst, signature);
     if (FSP_SUCCESS == err)
     {
         memcpy(OutData_R, signature, (HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 2U));
@@ -231,12 +231,12 @@ fsp_err_t HW_SCE_ECC_256VerifySign (const uint32_t * InData_DomainParam,
     memcpy(&signature[(HW_SCE_ECDSA_DATA_BYTE_SIZE / 4U) / 2U], InData_S, (HW_SCE_ECDSA_DATA_BYTE_SIZE / 2U));
     sce_oem_cmd_t key_command;
     /* NIST curve */
-    if (0U == *InData_DomainParam)
+    if (SCE_ECC_CURVE_TYPE_NIST == *InData_DomainParam)
     {
         key_command = SCE_OEM_CMD_ECC_P256_PUBLIC;
     }
     /* Brainpool Curve */
-    else if (1U == *InData_DomainParam)
+    else if (SCE_ECC_CURVE_TYPE_BRAINPOOL == *InData_DomainParam)
     {
         key_command = SCE_OEM_CMD_ECC_P256R1_PUBLIC;
     }
@@ -255,7 +255,7 @@ fsp_err_t HW_SCE_ECC_256VerifySign (const uint32_t * InData_DomainParam,
     if (FSP_SUCCESS == err)
     {
         /* InData_DomainParam = curve type; InData_G = command */
-        err = HW_SCE_EcdsaSigunatureVerificationSub(InData_DomainParam, InData_G, formatted_public_key, InData_MsgDgst,
+        err = HW_SCE_EcdsaSignatureVerificationSub(InData_DomainParam, InData_G, formatted_public_key, InData_MsgDgst,
                                                     signature);
     }                                                        
     return err;
@@ -275,12 +275,12 @@ fsp_err_t HW_SCE_ECC_384VerifySign (const uint32_t * InData_DomainParam,
 
     sce_oem_cmd_t key_command;
     /* NIST curve */
-    if (0U == *InData_DomainParam)
+    if (SCE_ECC_CURVE_TYPE_NIST == *InData_DomainParam)
     {
         key_command = SCE_OEM_CMD_ECC_P384_PUBLIC;
     }
     /* Brainpool Curve */
-    else if (1U == *InData_DomainParam)
+    else if (SCE_ECC_CURVE_TYPE_BRAINPOOL == *InData_DomainParam)
     {
         key_command = SCE_OEM_CMD_ECC_P384R1_PUBLIC;
     }
@@ -298,7 +298,7 @@ fsp_err_t HW_SCE_ECC_384VerifySign (const uint32_t * InData_DomainParam,
                                                       formatted_public_key);
     if (FSP_SUCCESS == err)
     {
-        err = HW_SCE_EcdsaP384SigunatureVerificationSub(InData_DomainParam, formatted_public_key, InData_MsgDgst, signature);
+        err = HW_SCE_EcdsaP384SignatureVerificationSub(InData_DomainParam, formatted_public_key, InData_MsgDgst, signature);
     }                                                        
 
     return err;

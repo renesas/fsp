@@ -172,7 +172,7 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
     USB_NULL, USB_NULL,                              /* USB_PHID (2) */
 #endif
 
-    /* PVNDR */
+    /* PVND */
     USB_NULL, USB_NULL,                              /* USB_PVND  (3) */
 
     /* HCDC, HCDCC */
@@ -191,19 +191,19 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
     USB_NULL, USB_NULL,                              /* USB_HHID  (6) */
 #endif
 
-    /* HVNDR */
-#if defined(USB_CFG_HVNDR_USE)
-    usb_hvndr_read_complete, usb_hnvdr_write_complete, /* USB_HVND  (7) */
+    /* HVND */
+#if defined(USB_CFG_HVND_USE)
+    usb_hvnd_read_complete, usb_hvnd_write_complete, /* USB_HVND  (7) */
 #else
-    USB_NULL, USB_NULL,                                /* USB_HVND  (7) */
+    USB_NULL, USB_NULL,                              /* USB_HVND  (7) */
 #endif
 
     /* HMSC */
-    USB_NULL, USB_NULL,                                /* USB_HMSC  (8) */
+    USB_NULL, USB_NULL,                              /* USB_HMSC  (8) */
 
     /* PMSC */
-    USB_NULL, USB_NULL,                                /* USB_PMSC  (9) */
-};                                                     /* const void (g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) */
+    USB_NULL, USB_NULL,                              /* USB_PMSC  (9) */
+};                                                   /* const void (g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) */
 
 #if defined(USB_CFG_PCDC_USE)
 

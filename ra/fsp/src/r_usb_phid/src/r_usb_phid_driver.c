@@ -44,6 +44,8 @@
 #include "../../r_usb_basic/src/hw/inc/r_usb_reg_access.h"
 #include "r_usb_phid_api.h"
 
+#ifdef USB_CFG_PHID_USE
+
 /******************************************************************************
  * Private global variables and functions
  ******************************************************************************/
@@ -83,9 +85,9 @@ void usb_phid_write_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
         ctrl.status = FSP_ERR_USB_FAILED;
     }
 
-#if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS == 2)
     ctrl.p_data = (void *) mess->cur_task_hdl;
-#endif                                 /* (BSP_CFG_RTOS_USED == 1) */
+ #endif                                /* (BSP_CFG_RTOS_USED == 1) */
     usb_set_event(USB_STATUS_WRITE_COMPLETE, &ctrl);
 }
 
@@ -143,15 +145,16 @@ void usb_phid_read_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
         }
     }
 
-#if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS == 2)
     ctrl.p_data = (void *) mess->cur_task_hdl;
-#endif                                 /* (BSP_CFG_RTOS_USED == 1) */
+ #endif                                /* (BSP_CFG_RTOS_USED == 1) */
     usb_set_event(USB_STATUS_READ_COMPLETE, &ctrl);
 }
 
 /******************************************************************************
  * End of function usb_phid_read_complete
  ******************************************************************************/
+#endif                                 /* USB_CFG_PHID_USE */
 
 /******************************************************************************
  * End  Of File

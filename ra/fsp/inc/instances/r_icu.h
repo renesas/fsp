@@ -53,7 +53,6 @@ typedef struct st_icu_instance_ctrl
     uint8_t   channel;                                          ///< Channel
 
 #if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
     external_irq_callback_args_t * p_callback_memory;           // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 #endif
     void (* p_callback)(external_irq_callback_args_t * p_args); // Pointer to callback that is called when an edge is detected on the external irq pin.

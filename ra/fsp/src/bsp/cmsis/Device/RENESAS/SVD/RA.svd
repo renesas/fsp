@@ -71727,6 +71727,11 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
         <usage>registers</usage>
       </addressBlock>
       <addressBlock>
+        <offset>0x00000440</offset>
+        <size>0x002</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <addressBlock>
         <offset>0x00000480</offset>
         <size>0x002</size>
         <usage>registers</usage>
@@ -75919,6 +75924,171 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
                   <name>1</name>
                   <description>Battery Power supply Switch stop</description>
                   <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DCDCCTL</name>
+          <description>DCDC/LDO Control Register</description>
+          <addressOffset>0x440</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0xC0</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <name>PD</name>
+              <description>DCDC VREF Generate Disable bit</description>
+              <lsb>7</lsb>
+              <msb>7</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>DCDC VREF BIAS output enable</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>DCDC VREF BIAS output disable</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>FST</name>
+              <description>DCDC Fast Startup</description>
+              <lsb>6</lsb>
+              <msb>6</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>The DCDC VREF BIAS is in low power mode</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>The DCDC VREF BIAS is in High-speed mode</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>LCBOOST</name>
+              <description>LDO LCBOOST Mode Control bit</description>
+              <lsb>5</lsb>
+              <msb>5</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>LDO power mode is other than LCBOOST</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>LDO power mode is in LCBOOST</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>STOPZA</name>
+              <description>DCDC IO Buffer Power Control bit</description>
+              <lsb>4</lsb>
+              <msb>4</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>DCDC IO buffer power down</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>DCDC IO buffer power up</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>OCPEN</name>
+              <description>DCDC OCP Function Enable bit</description>
+              <lsb>1</lsb>
+              <msb>1</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>DCDC OCP (Over Current Protection) Function disable</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>DCDC OCP (Over Current Protection) Function enable</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>DCDCON</name>
+              <description>LDO/DCDC on/off Control bit</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>LDO is on and DCDC is off</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>LDO is off and DCDC is on</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>VCCSEL</name>
+          <description>Voltage Level Selection Control Register</description>
+          <addressOffset>0x441</addressOffset>
+          <size>8</size>
+          <access>read-write</access>
+          <resetValue>0x00</resetValue>
+          <resetMask>0xFF</resetMask>
+          <fields>
+            <field>
+              <name>VCCSEL</name>
+              <description>DCDC Working Voltage Level Selection</description>
+              <lsb>0</lsb>
+              <msb>1</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>00</name>
+                  <description>2.7V &lt;= VCC &lt; 3.6V</description>
+                  <value>#00</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>01</name>
+                  <description>3.6V &lt;= VCC &lt; 4.5V</description>
+                  <value>#01</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>10</name>
+                  <description>4.5V &lt;= VCC &lt;= 5.5V</description>
+                  <value>#10</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>11</name>
+                  <description>2.4V &lt;= VCC &lt; 2.7V</description>
+                  <value>#11</value>
                 </enumeratedValue>
               </enumeratedValues>
             </field>

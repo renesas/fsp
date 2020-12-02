@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -69,16 +70,6 @@ fsp_err_t HW_SCE_LoadHukSub(uint32_t *InData_LC)
     }
     SCE->REG_84H = 0x00004001u;
     SCE->REG_108H = 0x00000000u;
-    SCE->REG_C4H = 0x200e1a0du;
-    /* WAIT_LOOP */
-    while (1u != SCE->REG_104H_b.B31)
-    {
-        /* waiting */
-    }
-    SCE->REG_100H = S_RAM[16+0 + 0];
-    SCE->REG_100H = S_RAM[16+0 + 1];
-    SCE->REG_100H = S_RAM[16+0 + 2];
-    SCE->REG_100H = S_RAM[16+0 + 3];
     HW_SCE_p_func048(InData_LC);
     SCE->REG_ECH = 0x0000b420u;
     SCE->REG_ECH = 0x00000009u;
@@ -89,54 +80,54 @@ fsp_err_t HW_SCE_LoadHukSub(uint32_t *InData_LC)
 if (InData_LC[0] == 0x00000000)
     {
         SCE->REG_1CH = 0x00b80000u;
-        HW_SCE_p_func101(0xe83b7e4eu, 0xdb097f27u, 0xb31d59d5u, 0x0daab77bu);
+        HW_SCE_p_func101(0x8df65220u, 0x66b86af0u, 0x024552f0u, 0x698bb6acu);
     }
 else if (InData_LC[0] == 0x00000001)
     {
         SCE->REG_1CH = 0x00b00000u;
-        HW_SCE_p_func101(0x78659d26u, 0x860f5f45u, 0x80267e4eu, 0x1f70b510u);
+        HW_SCE_p_func101(0x75474f29u, 0xcf9f73aau, 0xa8987b45u, 0x01019f0cu);
     }
 else if (InData_LC[0] == 0x00000002)
     {
         SCE->REG_1CH = 0x00b10000u;
-        HW_SCE_p_func101(0x2751871bu, 0xe89c2f48u, 0xf573d4cfu, 0x115ecb07u);
+        HW_SCE_p_func101(0x37fe7e13u, 0xdba1bf8du, 0xad1e7c16u, 0xf4949bbau);
     }
 else if (InData_LC[0] == 0x00000003)
     {
         SCE->REG_1CH = 0x00b20000u;
-        HW_SCE_p_func101(0xbba17e71u, 0xbc808154u, 0x1e078979u, 0x86405b9au);
+        HW_SCE_p_func101(0xcaf7e415u, 0x4128fb42u, 0xdb48afe2u, 0x99074a75u);
     }
 else if (InData_LC[0] == 0x00000004)
     {
         SCE->REG_1CH = 0x00b30000u;
-        HW_SCE_p_func101(0x4f20b598u, 0xd0dabac4u, 0xc7ad0190u, 0x75198e1cu);
+        HW_SCE_p_func101(0x57f8f4a6u, 0x94787521u, 0x31fcee4fu, 0x864d46bdu);
     }
 else if (InData_LC[0] == 0x00000005)
     {
         SCE->REG_1CH = 0x00b40000u;
-        HW_SCE_p_func101(0xf19a5f31u, 0x21feee6au, 0xce2fb686u, 0x6804e1f8u);
+        HW_SCE_p_func101(0xb16bd6fdu, 0xc927d654u, 0xfc8bef50u, 0x3d3513a4u);
     }
 else if (InData_LC[0] == 0x00000006)
     {
         SCE->REG_1CH = 0x00b50000u;
-        HW_SCE_p_func101(0x0524bae4u, 0xa2bdb569u, 0x3882d45bu, 0x0c17e0a9u);
+        HW_SCE_p_func101(0x086e5c12u, 0x2708cae7u, 0x24c60329u, 0xd6a1f0ceu);
     }
 else if (InData_LC[0] == 0x00000007)
     {
         SCE->REG_1CH = 0x00b60000u;
-        HW_SCE_p_func101(0xa9029f34u, 0x03b9f72cu, 0x0c3dea38u, 0x2168dc2bu);
+        HW_SCE_p_func101(0x64586489u, 0xe5ec3887u, 0xaf796043u, 0xf870aad7u);
     }
 else if (InData_LC[0] == 0x00000008)
     {
         SCE->REG_1CH = 0x00b70000u;
-        HW_SCE_p_func101(0x370593d5u, 0xa06496acu, 0x346be3f9u, 0x4ab24229u);
+        HW_SCE_p_func101(0xdd18b7c6u, 0x61da8f10u, 0x2dddd787u, 0x0986d7deu);
     }
     else
     {
         SCE->REG_ECH = 0x38000c00u;
         SCE->REG_E0H = 0x00000080u;
         SCE->REG_1CH = 0x00A60000u;
-        HW_SCE_p_func101(0x4ef037fcu, 0x717efbf1u, 0x95329c71u, 0x33958d8du);
+        HW_SCE_p_func101(0x855d7c4au, 0x63f263fau, 0x172ed129u, 0x7c8fa20fu);
     }
     HW_SCE_p_func100(0xc49e2b89u, 0x3ccaecb7u, 0xa622a807u, 0x78f51bbeu);
     SCE->REG_1CH = 0x00400000u;
@@ -352,5 +343,5 @@ else if (InData_LC[0] == 0x00000008)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p40_r1.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p40_r2.prc
 ***********************************************************************************************************************/

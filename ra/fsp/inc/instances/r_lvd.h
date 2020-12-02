@@ -52,9 +52,6 @@ typedef struct st_lvd_instance_ctrl
     uint32_t          open;
     lvd_cfg_t const * p_cfg;
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                    // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
     void (* p_callback)(lvd_callback_args_t *); // Pointer to callback that is called when lvd_current_state_t changes.
     lvd_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 

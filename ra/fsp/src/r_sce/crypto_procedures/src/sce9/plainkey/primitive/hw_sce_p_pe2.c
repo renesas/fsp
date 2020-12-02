@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Improved pefromance for secure boot.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -67,7 +68,7 @@ fsp_err_t HW_SCE_TlsEncryptPreMasterSecretSub(uint32_t *InData_PubKey, uint32_t 
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x0000e201u;
+    SCE->REG_84H = 0x0000e202u;
     SCE->REG_108H = 0x00000000u;
     SCE->REG_C4H = 0x200e1a0du;
     /* WAIT_LOOP */
@@ -75,10 +76,10 @@ fsp_err_t HW_SCE_TlsEncryptPreMasterSecretSub(uint32_t *InData_PubKey, uint32_t 
     {
         /* waiting */
     }
-    SCE->REG_100H = S_RAM[16+0 + 0];
-    SCE->REG_100H = S_RAM[16+0 + 1];
-    SCE->REG_100H = S_RAM[16+0 + 2];
-    SCE->REG_100H = S_RAM[16+0 + 3];
+    SCE->REG_100H = S_RAM[20+0 + 0];
+    SCE->REG_100H = S_RAM[20+0 + 1];
+    SCE->REG_100H = S_RAM[20+0 + 2];
+    SCE->REG_100H = S_RAM[20+0 + 3];
     SCE->REG_104H = 0x00000368u;
     SCE->REG_E0H = 0x80040000u;
     /* WAIT_LOOP */
@@ -124,12 +125,12 @@ fsp_err_t HW_SCE_TlsEncryptPreMasterSecretSub(uint32_t *InData_PubKey, uint32_t 
     SCE->REG_ECH = 0x00000007u;
     SCE->REG_E0H = 0x00000080u;
     SCE->REG_1CH = 0x00A60000u;
-    HW_SCE_p_func100(0xd244310fu, 0x547e382fu, 0xb318a02du, 0x464efc11u);
+    HW_SCE_p_func100(0x48be1967u, 0x16593d09u, 0xd82736a4u, 0x036ab5f6u);
     SCE->REG_1CH = 0x00400000u;
     SCE->REG_1D0H = 0x00000000u;
     if (1u == (SCE->REG_1CH_b.B22))
     {
-        HW_SCE_p_func102(0x2b469163u, 0xf6f625a5u, 0xdc4f65eau, 0xba0c2c3bu);
+        HW_SCE_p_func102(0xbb364183u, 0x653b285eu, 0x0be0eea8u, 0x2aa3f295u);
         SCE->REG_1BCH = 0x00000040u;
         /* WAIT_LOOP */
         while (0u != SCE->REG_18H_b.B12)
@@ -174,7 +175,7 @@ fsp_err_t HW_SCE_TlsEncryptPreMasterSecretSub(uint32_t *InData_PubKey, uint32_t 
             /* waiting */
         }
         SCE->REG_100H = change_endian_long(0x000000e2u);
-        HW_SCE_p_func101(0xad6085ccu, 0x12c5aee4u, 0x062f76d2u, 0x4b1b7c5cu);
+        HW_SCE_p_func101(0xe6a71effu, 0x4e0998a4u, 0x2cc3e9bdu, 0xa7c2735au);
         HW_SCE_p_func059();
         SCE->REG_ECH = 0x0000b4e0u;
         SCE->REG_ECH = 0x0154569cu;
@@ -635,5 +636,5 @@ fsp_err_t HW_SCE_TlsEncryptPreMasterSecretSub(uint32_t *InData_PubKey, uint32_t 
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pe2.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pe2_r1.prc
 ***********************************************************************************************************************/

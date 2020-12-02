@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -67,11 +68,11 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00002b01u;
+    SCE->REG_84H = 0x00002b02u;
     SCE->REG_108H = 0x00000000u;
-    HW_SCE_p_func100(0x8c22ebc6u, 0xbac7b812u, 0x923c6843u, 0xf8ce1439u);
+    HW_SCE_p_func100(0x29802336u, 0xd159a0b7u, 0xe311d54cu, 0x36dce5c5u);
     HW_SCE_p_func103();
-    HW_SCE_p_func100(0x94583792u, 0x24e30c80u, 0x32f50786u, 0x671c03ecu);
+    HW_SCE_p_func100(0xb8dc77d4u, 0x3247864du, 0xc9a3aaf3u, 0x419c0ae7u);
     SCE->REG_104H = 0x00000052u;
     SCE->REG_C4H = 0x01080c84u;
     /* WAIT_LOOP */
@@ -164,7 +165,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
         }
         SCE->REG_1CH = 0x00001800u;
         SCE->REG_28H = 0x009f0001u;
-        HW_SCE_p_func100(0x7e5acf8bu, 0xd2737edau, 0x4eae0493u, 0x1a30791cu);
+        HW_SCE_p_func100(0x7c3be8a4u, 0x10077703u, 0x98320738u, 0x5903bfb6u);
         HW_SCE_p_func103();
         SCE->REG_104H = 0x00000052u;
         SCE->REG_C4H = 0x01000c84u;
@@ -194,7 +195,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
         SCE->REG_1CH = 0x00001800u;
         for(iLoop = 0; iLoop < 24; iLoop = iLoop + 4)
         {
-            HW_SCE_p_func100(0x07a1fbc9u, 0xe02e1b04u, 0xfe51796bu, 0x3e56e547u);
+            HW_SCE_p_func100(0x10e16e07u, 0x8fb49ab6u, 0xf23e1fdfu, 0x970de29au);
             HW_SCE_p_func103();
             SCE->REG_104H = 0x00000052u;
             SCE->REG_C4H = 0x01000c84u;
@@ -211,9 +212,9 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
                 /* waiting */
             }
             SCE->REG_1CH = 0x00001800u;
-            HW_SCE_p_func101(0xd2b54d13u, 0xf1bac9dbu, 0x985665fcu, 0x4686ee7du);
+            HW_SCE_p_func101(0xfc43caa7u, 0xb55af2a9u, 0x6c16fba1u, 0x313b167cu);
         }
-        HW_SCE_p_func100(0x07a1fbc9u, 0xe02e1b04u, 0xfe51796bu, 0x3e56e547u);
+        HW_SCE_p_func100(0x10e16e07u, 0x8fb49ab6u, 0xf23e1fdfu, 0x970de29au);
         HW_SCE_p_func103();
         SCE->REG_104H = 0x00000052u;
         SCE->REG_C4H = 0x01000c84u;
@@ -292,17 +293,17 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
             /* waiting */
         }
         SCE->REG_1CH = 0x00210000u;
-        HW_SCE_p_func100(0xf2a4147au, 0x0eab872fu, 0x3dd27a2bu, 0x1960df16u);
+        HW_SCE_p_func100(0x90ae1e92u, 0x8bca1ce6u, 0x377f1b58u, 0x7427eca8u);
         SCE->REG_1CH = 0x00400000u;
         SCE->REG_1D0H = 0x00000000u;
         if (1u == (SCE->REG_1CH_b.B22))
         {
-            HW_SCE_p_func101(0x2b6e9024u, 0x64c4b8b0u, 0xb11bfcd4u, 0xf8f01459u);
+            HW_SCE_p_func101(0x5cba8941u, 0x18800bcfu, 0x699933a2u, 0xc0a9c83du);
             continue;
         }
         else
         {
-            HW_SCE_p_func101(0xbce884a9u, 0xb4300625u, 0xeb8ed2e5u, 0x145cbbdau);
+            HW_SCE_p_func101(0x755f15bcu, 0xfaa7c752u, 0x8cdee2ccu, 0x7c5d5e22u);
         }
         SCE->REG_ECH = 0x38008a20u;
         SCE->REG_ECH = 0x00000001u;
@@ -379,7 +380,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
             SCE->REG_1D0H = 0x00000000u;
             if (1u == (SCE->REG_1CH_b.B22))
             {
-                HW_SCE_p_func101(0x6e42246au, 0x0051e8dcu, 0x3afb2da8u, 0xfc5b0241u);
+                HW_SCE_p_func101(0xe281d2f1u, 0x0c9fbf53u, 0xf7faeb43u, 0xc9102828u);
                 continue;
             }
             else
@@ -456,7 +457,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
         SCE->REG_1D0H = 0x00000000u;
         if (1u == (SCE->REG_1CH_b.B22))
         {
-            HW_SCE_p_func101(0xa0c54035u, 0xdbc1038cu, 0x6dffe9ffu, 0x22939bb3u);
+            HW_SCE_p_func101(0xebf0bae4u, 0x21cca239u, 0xd872659au, 0xfcdcf0fcu);
             continue;
         }
         SCE->REG_24H = 0x000011c0u;
@@ -540,7 +541,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
         SCE->REG_1D0H = 0x00000000u;
         if (1u == (SCE->REG_1CH_b.B22))
         {
-            HW_SCE_p_func101(0xa64df750u, 0x1eacebc9u, 0xa9607bc6u, 0xea154560u);
+            HW_SCE_p_func101(0x5436329au, 0x9632d27fu, 0x10281c9eu, 0xc0df0d5fu);
         }
         else
         {
@@ -632,7 +633,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
             SCE->REG_1D0H = 0x00000000u;
             if (1u == (SCE->REG_1CH_b.B22))
             {
-                HW_SCE_p_func101(0x0c4d57c7u, 0x3f5c6c0fu, 0x0a22b208u, 0xc6301377u);
+                HW_SCE_p_func101(0xbe8e9962u, 0x0bda5eb5u, 0x5c30c9c9u, 0x33a96ae3u);
                 continue;
             }
             SCE->REG_24H = 0x000098d0u;
@@ -1196,7 +1197,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
                 SCE->REG_1D0H = 0x00000000u;
                 if (1u == (SCE->REG_1CH_b.B22))
                 {
-                    HW_SCE_p_func101(0x144c6c66u, 0x8a422809u, 0xaca7266eu, 0xcd70f9f0u);
+                    HW_SCE_p_func101(0x72ead49bu, 0x3189737du, 0x9848fc7du, 0x2304bad9u);
                     break;
                 }
                 else
@@ -1213,12 +1214,12 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
                     {
                         /* waiting */
                     }
-                    HW_SCE_p_func101(0x817dcc5du, 0x7630144fu, 0x631df7e6u, 0xd908d8c8u);
+                    HW_SCE_p_func101(0x4165eaaau, 0xde546422u, 0x77a875aau, 0x47feb412u);
                 }
             }
             else
             {
-                HW_SCE_p_func101(0xdbba2aa6u, 0xbe5543d3u, 0xd39ab5a0u, 0x758fd189u);
+                HW_SCE_p_func101(0x424beb5fu, 0x7e7bd614u, 0xc3225a20u, 0xaa7eb3c8u);
             }
         }
     }
@@ -1226,12 +1227,12 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
     SCE->REG_ECH = 0x00000002u;
     SCE->REG_E0H = 0x00000080u;
     SCE->REG_1CH = 0x00A60000u;
-    HW_SCE_p_func100(0x43009d9cu, 0xb0aaa3a1u, 0x29a32de2u, 0x777a8077u);
+    HW_SCE_p_func100(0x797c9f8cu, 0xf9c42989u, 0xc34235dcu, 0xabd7d990u);
     SCE->REG_1CH = 0x00400000u;
     SCE->REG_1D0H = 0x00000000u;
     if (1u == (SCE->REG_1CH_b.B22))
     {
-        HW_SCE_p_func102(0xdcc9ddc5u, 0x77d8925bu, 0xe4eec2cfu, 0x8a66a099u);
+        HW_SCE_p_func102(0x9557ba67u, 0x07316373u, 0x90ae53f1u, 0x62dc9458u);
         SCE->REG_1BCH = 0x00000040u;
         /* WAIT_LOOP */
         while (0u != SCE->REG_18H_b.B12)
@@ -1240,7 +1241,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
         }
         return FSP_ERR_CRYPTO_SCE_FAIL;
     }
-    HW_SCE_p_func100(0xc897604bu, 0x7ea24896u, 0x6b2b64f0u, 0x4757ffa2u);
+    HW_SCE_p_func100(0xac0314bdu, 0x515c4e7eu, 0xb9f37c2bu, 0xa620448du);
     SCE->REG_ECH = 0x0000b5c0u;
     SCE->REG_ECH = 0x00010001u;
     SCE->REG_24H = 0x000019c0u;
@@ -1297,7 +1298,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
         S_HEAP[iLoop + 2] = SCE->REG_100H;
         S_HEAP[iLoop + 3] = SCE->REG_100H;
     }
-    HW_SCE_p_func100(0xf04437edu, 0xd2f2aa45u, 0x8905e13bu, 0x87f50a93u);
+    HW_SCE_p_func100(0xd43ec52du, 0x5fb382ecu, 0xa9cc436cu, 0x4d6b8853u);
     SCE->REG_104H = 0x00000052u;
     SCE->REG_C4H = 0x00000c84u;
     /* WAIT_LOOP */
@@ -1376,12 +1377,12 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
             /* waiting */
         }
         SCE->REG_1CH = 0x00210000u;
-        HW_SCE_p_func100(0x02a10e8bu, 0x345b9ec9u, 0x69707df5u, 0xf1d88be4u);
+        HW_SCE_p_func100(0xa7c960d8u, 0xb1109e97u, 0x6b23ed89u, 0x19ad0c6du);
         SCE->REG_1CH = 0x00400000u;
         SCE->REG_1D0H = 0x00000000u;
         if (1u == (SCE->REG_1CH_b.B22))
         {
-            HW_SCE_p_func101(0x9493fa8fu, 0xc27e5124u, 0x25f9ca01u, 0x5acd770du);
+            HW_SCE_p_func101(0x1f9661cdu, 0x28746ae5u, 0x8cd2741du, 0x6ddec20bu);
             break;
         }
         else
@@ -1404,7 +1405,7 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
             {
                 /* waiting */
             }
-            HW_SCE_p_func101(0x0c4f97b0u, 0x9a3e48e8u, 0x89031f6bu, 0x5b814724u);
+            HW_SCE_p_func101(0x3f844510u, 0xe045fee9u, 0x9ccc4a88u, 0x014d4648u);
         }
     }
     SCE->REG_24H = 0x000094d0u;
@@ -2297,5 +2298,5 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Ou
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p2b_r1.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p2b_r2.prc
 ***********************************************************************************************************************/

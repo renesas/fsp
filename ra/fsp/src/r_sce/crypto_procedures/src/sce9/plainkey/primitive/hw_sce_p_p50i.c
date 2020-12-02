@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -69,7 +70,7 @@ fsp_err_t HW_SCE_Aes256EncryptDecryptInitSub (const uint32_t * InData_Cmd,
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00005001u;
+    SCE->REG_84H = 0x00005002u;
     SCE->REG_108H = 0x00000000u;
     SCE->REG_C4H = 0x200e1a0du;
     /* WAIT_LOOP */
@@ -77,10 +78,10 @@ fsp_err_t HW_SCE_Aes256EncryptDecryptInitSub (const uint32_t * InData_Cmd,
     {
         /* waiting */
     }
-    SCE->REG_100H = S_RAM[16+0 + 0];
-    SCE->REG_100H = S_RAM[16+0 + 1];
-    SCE->REG_100H = S_RAM[16+0 + 2];
-    SCE->REG_100H = S_RAM[16+0 + 3];
+    SCE->REG_100H = S_RAM[20+0 + 0];
+    SCE->REG_100H = S_RAM[20+0 + 1];
+    SCE->REG_100H = S_RAM[20+0 + 2];
+    SCE->REG_100H = S_RAM[20+0 + 3];
     SCE->REG_E0H = 0x80010000u;
     SCE->REG_104H = 0x00000068u;
     /* WAIT_LOOP */
@@ -99,7 +100,7 @@ fsp_err_t HW_SCE_Aes256EncryptDecryptInitSub (const uint32_t * InData_Cmd,
     SCE->REG_ECH = 0x00000005u;
     SCE->REG_E0H = 0x00000080u;
     SCE->REG_1CH = 0x00260000u;
-    HW_SCE_p_func100(0x0e21cf93u, 0x39ff2075u, 0x975fe4d6u, 0xe5002de5u);
+    HW_SCE_p_func100(0xa75beb2du, 0x0b0dc6e8u, 0x742eeb18u, 0xde0c5645u);
     SCE->REG_1CH = 0x00400000u;
     SCE->REG_1D0H = 0x00000000u;
     if (1u == (SCE->REG_1CH_b.B22))
@@ -120,7 +121,7 @@ fsp_err_t HW_SCE_Aes256EncryptDecryptInitSub (const uint32_t * InData_Cmd,
             /* waiting */
         }
         SCE->REG_100H = change_endian_long(0x00000050u);
-        HW_SCE_p_func101(0x63a10ee4u, 0x1c9962a7u, 0xc5c75ca8u, 0xa459db17u);
+        HW_SCE_p_func101(0xf2c83e65u, 0x7f80c6a7u, 0xaea2052au, 0x050e7614u);
         HW_SCE_p_func043();
         SCE->REG_ECH = 0x0000b4e0u;
         SCE->REG_ECH = 0x00000007u;
@@ -262,7 +263,7 @@ fsp_err_t HW_SCE_Aes256EncryptDecryptInitSub (const uint32_t * InData_Cmd,
             /* waiting */
         }
         SCE->REG_100H = change_endian_long(0x00000050u);
-        HW_SCE_p_func101(0x328609eau, 0xd57d7798u, 0xfb710b61u, 0xc3f90299u);
+        HW_SCE_p_func101(0xbe7770c1u, 0x76a8f8b8u, 0x83aabf34u, 0x8aaf31f8u);
         HW_SCE_p_func059();
         HW_SCE_p_func100(0xfc41514eu, 0x17da911bu, 0xd1be8b6au, 0xb76ef6c2u);
         SCE->REG_104H = 0x00000762u;
@@ -403,5 +404,5 @@ fsp_err_t HW_SCE_Aes256EncryptDecryptInitSub (const uint32_t * InData_Cmd,
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p50i.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p50i_r1.prc
 ***********************************************************************************************************************/

@@ -88,7 +88,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
   #if BSP_FEATURE_CRYPTO_HAS_SCE9
 
     /* Create storage to hold the generated OEM key index. Size = Largest key size possible. */
-    uint8_t encrypted_aes_key[SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED] = {0};
+    uint8_t encrypted_aes_key[SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED] = {0};
   #endif
     switch (keybits)
     {
@@ -119,6 +119,37 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
                 local_keybits = keybits;
             }
             ctx->nr = 10;
+  #endif
+            break;
+        }
+
+        case SIZE_AES_192BIT_KEYLEN_BITS:
+        {
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+            local_keybits = SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED;
+            ctx->nr       = 12;
+            if (false == (bool) ctx->vendor_ctx)
+            {
+                p_internal_key = encrypted_aes_key;
+                ret            = (int) HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                                                         SCE_OEM_CMD_AES192,
+                                                                         NULL,
+                                                                         NULL,
+                                                                         key,
+                                                                         (uint32_t *) p_internal_key);
+                ctx->vendor_ctx = (bool *) true;
+            }
+
+  #else
+            if (true == (bool) ctx->vendor_ctx)
+            {
+                local_keybits = SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED;
+            }
+            else
+            {
+                local_keybits = keybits;
+            }
+            ctx->nr = 12;
   #endif
             break;
         }
@@ -165,7 +196,9 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
         /* Store the encrypted key into the buffer */
         for (uint32_t i = 0; i < (local_keybits >> 5); i++)
         {
-            /* buf is large enough to hold AES 256 bit wrapped key */
+            /* buf is large enough to hold AES 192 bit wrapped key
+             * (largest key due to 32 bit padding for differentiating it from 256 wrapped key)
+             * */
             GET_UINT32_LE(ctx->buf[i], p_internal_key, i << 2);
         }
     }
@@ -229,6 +262,29 @@ int mbedtls_internal_aes_encrypt (mbedtls_aes_context * ctx, const unsigned char
                                          (uint32_t *) &output[0]);
         }
     }
+
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+    else if (ctx->nr == 12)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
+            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_192EcbEncryptUsingEncryptedKey(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
+                                                          (uint32_t *) &output[0]);
+   #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+   #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_192EcbEncrypt(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
+                                         (uint32_t *) &output[0]);
+        }
+    }
+  #endif
     else if (ctx->nr == 14)
     {
         if (true == (bool) ctx->vendor_ctx)
@@ -293,6 +349,29 @@ int mbedtls_internal_aes_decrypt (mbedtls_aes_context * ctx, const unsigned char
                                          (uint32_t *) &output[0]);
         }
     }
+
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+    if (ctx->nr == 12)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
+            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_192EcbDecryptUsingEncryptedKey(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
+                                                          (uint32_t *) &output[0]);
+   #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+   #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_192EcbDecrypt(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
+                                         (uint32_t *) &output[0]);
+        }
+    }
+  #endif
     else if (ctx->nr == 14)
     {
         if (true == (bool) ctx->vendor_ctx)

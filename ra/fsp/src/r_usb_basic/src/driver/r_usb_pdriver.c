@@ -1381,10 +1381,10 @@ usb_er_t usb_pstd_transfer_end (usb_utr_t * p_utr, uint16_t pipe)
   #if (BSP_CFG_RTOS == 0)
         usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_STOP, p_utr);
   #else                                /* BSP_CFG_RTOS == 0 */
-        (void) *p_utr;
         utr.msghead = (usb_mh_t) USB_NULL;
         utr.msginfo = USB_MSG_PCD_TRANSEND1;
         utr.keyword = pipe;
+        utr.ip      = p_utr->ip;
 
         /* Send message */
         err = USB_SND_MSG(USB_PCD_MBX, (usb_msg_t *) &utr);
@@ -1907,12 +1907,15 @@ void usb_peri_interface (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
  ******************************************************************************/
 void usb_pvnd_read_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
 {
+    (void) data1;
+    (void) data2;
+
     usb_instance_ctrl_t ctrl;
 
     /* Set Receive data length */
-    ctrl.size = mess->read_req_len - mess->tranlen;
-    ctrl.pipe = mess->keyword;         /* Pipe number setting */
-    ctrl.type = USB_PVND;              /* Device class setting  */
+    ctrl.data_size = mess->read_req_len - mess->tranlen;
+    ctrl.pipe      = (uint8_t) mess->keyword; /* Pipe number setting */
+    ctrl.type      = USB_CLASS_INTERNAL_PVND; /* Device class setting  */
   #if (BSP_CFG_RTOS == 2)
     ctrl.p_data = (void *) mess->cur_task_hdl;
   #endif /* (BSP_CFG_RTOS == 2) */
@@ -1920,32 +1923,32 @@ void usb_pvnd_read_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
     {
         case USB_DATA_OK:
         {
-            ctrl.status = USB_SUCCESS;
+            ctrl.status = FSP_SUCCESS;
             break;
         }
 
         case USB_DATA_SHT:
         {
-            ctrl.status = USB_ERR_SHORT;
+            ctrl.status = FSP_ERR_USB_SIZE_SHORT;
             break;
         }
 
         case USB_DATA_OVR:
         {
-            ctrl.status = USB_ERR_OVER;
+            ctrl.status = FSP_ERR_USB_SIZE_OVER;
             break;
         }
 
         case USB_DATA_ERR:
         default:
         {
-            ctrl.status = USB_ERR_NG;
+            ctrl.status = FSP_ERR_USB_FAILED;
             break;
         }
     }
 
     ctrl.module_number = mess->ip;
-    usb_set_event(USB_STS_READ_COMPLETE, &ctrl);
+    usb_set_event(USB_STATUS_READ_COMPLETE, &ctrl);
 }                                      /* End of function usb_pvnd_read_complete() */
 
 /******************************************************************************
@@ -1956,24 +1959,27 @@ void usb_pvnd_read_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
  ******************************************************************************/
 void usb_pvnd_write_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
 {
+    (void) data1;
+    (void) data2;
+
     usb_instance_ctrl_t ctrl;
 
-    ctrl.pipe = mess->keyword;         /* Pipe number setting */
-    ctrl.type = USB_PVND;              /* CDC Control class  */
+    ctrl.pipe = (uint8_t) mess->keyword; /* Pipe number setting */
+    ctrl.type = USB_CLASS_INTERNAL_PVND; /* CDC Control class  */
     if (USB_DATA_NONE == mess->status)
     {
-        ctrl.status = USB_SUCCESS;
+        ctrl.status = FSP_SUCCESS;
     }
     else
     {
-        ctrl.status = USB_ERR_NG;
+        ctrl.status = FSP_ERR_USB_FAILED;
     }
 
     ctrl.module_number = mess->ip;
   #if (BSP_CFG_RTOS == 2)
     ctrl.p_data = (void *) mess->cur_task_hdl;
   #endif                               /* (BSP_CFG_RTOS == 2) */
-    usb_set_event(USB_STS_WRITE_COMPLETE, &ctrl);
+    usb_set_event(USB_STATUS_WRITE_COMPLETE, &ctrl);
 } /* End of function usb_pvnd_write_complete() */
 
  #endif                                /* defined(USB_CFG_PVND_USE) */

@@ -90,10 +90,6 @@ typedef struct st_ssi_instance_ctrl
     uint32_t        rx_dest_samples;
     transfer_size_t fifo_access_size;  // Access the FIFO as 1 byte, 2 bytes, or 4 bytes
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
-
     /* Pointer to callback and optional working memory */
     void (* p_callback)(i2s_callback_args_t *);
     i2s_callback_args_t * p_callback_memory;

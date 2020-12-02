@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -47,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-fsp_err_t HW_SCE_EcdsaP384SigunatureGenerateSub(const uint32_t *InData_CurveType, const uint32_t *InData_KeyIndex, const uint32_t *InData_MsgDgst, uint32_t *OutData_Signature)
+fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSub(const uint32_t *InData_CurveType, const uint32_t *InData_KeyIndex, const uint32_t *InData_MsgDgst, uint32_t *OutData_Signature)
 {
     uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
     uint32_t dummy = 0u;
@@ -67,9 +68,9 @@ fsp_err_t HW_SCE_EcdsaP384SigunatureGenerateSub(const uint32_t *InData_CurveType
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x0000f501u;
+    SCE->REG_84H = 0x0000f502u;
     SCE->REG_108H = 0x00000000u;
-    HW_SCE_p_func100(0xa7f12ee1u, 0x27da227du, 0x9461ff19u, 0x6881bdbdu);
+    HW_SCE_p_func100(0x312c0105u, 0xe39ac18fu, 0x3efce70du, 0x82ee3947u);
     SCE->REG_28H = 0x008b0001u;
     SCE->REG_104H = 0x00000068u;
     SCE->REG_E0H = 0x80010340u;
@@ -96,9 +97,9 @@ fsp_err_t HW_SCE_EcdsaP384SigunatureGenerateSub(const uint32_t *InData_CurveType
     }
     S_RAM[0] = change_endian_long(SCE->REG_100H);
     OFS_ADR = S_RAM[0];
-    HW_SCE_p_func100(0xf46088a1u, 0xf9dbfbbbu, 0xb25ee1f4u, 0x85dd652du);
+    HW_SCE_p_func100(0x254f5bceu, 0xd0e0ae32u, 0x5e264fe5u, 0xe6343b1bu);
     HW_SCE_p_func027_r2(OFS_ADR);
-    HW_SCE_p_func100(0xd55c4eb5u, 0x7f198c94u, 0x721f4f41u, 0x1814ae3du);
+    HW_SCE_p_func100(0x5b67e65cu, 0x89b76efbu, 0x195f48f7u, 0x3a5ca1cfu);
     SCE->REG_24H = 0x000084d0u;
     /* WAIT_LOOP */
     while (0u != SCE->REG_24H_b.B21)
@@ -131,7 +132,7 @@ fsp_err_t HW_SCE_EcdsaP384SigunatureGenerateSub(const uint32_t *InData_CurveType
         /* waiting */
     }
     HW_SCE_p_func103();
-    HW_SCE_p_func100(0xa166c3d1u, 0x63f3e146u, 0x3407e331u, 0x077ac6f2u);
+    HW_SCE_p_func100(0x4d397cd5u, 0xbd352a05u, 0x2cc33cbau, 0xd1dd9e81u);
     SCE->REG_104H = 0x00000052u;
     SCE->REG_C4H = 0x01000c84u;
     /* WAIT_LOOP */
@@ -164,7 +165,7 @@ fsp_err_t HW_SCE_EcdsaP384SigunatureGenerateSub(const uint32_t *InData_CurveType
         /* waiting */
     }
     SCE->REG_1CH = 0x00001800u;
-    HW_SCE_p_func100(0xbb59feb0u, 0x4dfb2a9bu, 0x836cc811u, 0x64f2af03u);
+    HW_SCE_p_func100(0xd3087966u, 0xf666cb88u, 0x5f0fa4acu, 0xa25c4eceu);
     HW_SCE_p_func103();
     SCE->REG_104H = 0x00000052u;
     SCE->REG_C4H = 0x01000c84u;
@@ -205,7 +206,7 @@ fsp_err_t HW_SCE_EcdsaP384SigunatureGenerateSub(const uint32_t *InData_CurveType
     {
         /* waiting */
     }
-    HW_SCE_p_func100(0x41d0bf49u, 0xaa66c69au, 0xf4980677u, 0xfd0c6fa7u);
+    HW_SCE_p_func100(0x03845026u, 0xbbcf7d47u, 0xedb094b2u, 0x90542a64u);
     HW_SCE_p_func028_r2(OFS_ADR);
     SCE->REG_34H = 0x00000802u;
     SCE->REG_24H = 0x800088d0u;
@@ -359,7 +360,7 @@ fsp_err_t HW_SCE_EcdsaP384SigunatureGenerateSub(const uint32_t *InData_CurveType
     SCE->REG_ECH = 0x0000b7a0u;
     SCE->REG_ECH = 0x000000f5u;
     SCE->REG_ECH = 0x00000b9cu;
-    HW_SCE_p_func100(0xfc034238u, 0xa16bf6e9u, 0xd5414d16u, 0x07a0874eu);
+    HW_SCE_p_func100(0x61153670u, 0xfb15e115u, 0xdfc162fdu, 0xc428f26au);
     SCE->REG_E0H = 0x81010380u;
     SCE->REG_04H = 0x00000607u;
     /* WAIT_LOOP */
@@ -370,13 +371,13 @@ fsp_err_t HW_SCE_EcdsaP384SigunatureGenerateSub(const uint32_t *InData_CurveType
     S_RAM[0] = change_endian_long(SCE->REG_100H);
     for(iLoop=0;iLoop<384;iLoop=iLoop+1)
     {
-        HW_SCE_p_func101(0x756940cau, 0x38631cc2u, 0x3a832969u, 0x9de523a9u);
+        HW_SCE_p_func101(0x60de8cceu, 0x0a5d67fau, 0xd6c84176u, 0xc734a08bu);
         HW_SCE_p_func300();
         if (S_RAM[0] == 0x00000001)
         {
             break;
         }
-        HW_SCE_p_func101(0xc2cd7dc5u, 0x4cea4522u, 0xfd87c0a8u, 0x03011e3au);
+        HW_SCE_p_func101(0x8c1694a4u, 0xf381dd63u, 0x9a202387u, 0x1768b8d1u);
     }
     SCE->REG_24H = 0x00001dc0u;
     /* WAIT_LOOP */
@@ -1539,5 +1540,5 @@ fsp_err_t HW_SCE_EcdsaP384SigunatureGenerateSub(const uint32_t *InData_CurveType
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pf5_r4.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pf5_r5.prc
 ***********************************************************************************************************************/

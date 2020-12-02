@@ -239,13 +239,7 @@ fsp_err_t R_ADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
 #endif
 
     /* Save configurations. */
-    p_instance_ctrl->p_cfg = p_cfg;
-
-#if BSP_TZ_SECURE_BUILD
-
-    /* If this is a secure build, the callback provided in p_cfg must be secure. */
-    p_instance_ctrl->callback_is_secure = true;
-#endif
+    p_instance_ctrl->p_cfg             = p_cfg;
     p_instance_ctrl->p_callback        = p_cfg->p_callback;
     p_instance_ctrl->p_context         = p_cfg->p_context;
     p_instance_ctrl->p_callback_memory = NULL;
@@ -320,6 +314,7 @@ fsp_err_t R_ADC_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_channel_cfg)
  * @retval  FSP_SUCCESS                  Callback updated successfully.
  * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
                              void (                    * p_callback)(adc_callback_args_t *),
@@ -338,11 +333,24 @@ fsp_err_t R_ADC_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
 
 #if BSP_TZ_SECURE_BUILD
 
-    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
-    p_ctrl->callback_is_secure =
+    /* Get security state of p_callback */
+    bool callback_is_secure =
         (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if ADC_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    adc_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                      CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(adc_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
 #endif
-    p_ctrl->p_callback        = p_callback;
+
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
 
@@ -688,10 +696,13 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
     /* Stop the ADC. */
     p_instance_ctrl->p_reg->ADCSR = 0U;
 
+#if BSP_FEATURE_ADC_HAS_SAMPLE_HOLD_REG
+
     /* Disable sample and hold before entering module stop state to reduce power consumption (reference section 47.6.8
      * "Available Functions and Register Settings of AN000 to AN002, AN007, AN100 to AN102, and AN107" in the RA6M3
      * manual R01UH0886EJ0100. */
     p_instance_ctrl->p_reg->ADSHCR = 0U;
+#endif
 
 #if BSP_FEATURE_ADC_HAS_VREFAMPCNT
 
@@ -1277,7 +1288,7 @@ static void r_adc_sensor_sample_state_calculation (uint32_t * const p_sample_sta
     uint32_t freq_hz = R_FSP_SystemClockHzGet(BSP_FEATURE_ADC_CLOCK_SOURCE);
 
     /* Calculate sample states required for the current ADC conversion clock (reference section 47.2.14 "A/D Sampling
-     * State Register n (ADSSTRn) (n = 00 to 07, L, T, O) in the RA6M3 manual R01UH0886EJ0100.
+     * State Register n (ADSSTRn) (n = 00 to 07, L, T, O)" in the RA6M3 manual R01UH0886EJ0100.
      *
      * sample_states = required_sample_time / adclk_period
      *               = required_sample_time (nsec) * adclk_frequency (kHz) / 1000000 (usec / sec) + 1
@@ -1399,11 +1410,14 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
         r_adc_sensor_cfg(p_instance_ctrl, p_channel_cfg);
     }
 
+#if BSP_FEATURE_ADC_HAS_SAMPLE_HOLD_REG
+
     /* Configure sample and hold. */
     uint32_t adshcr = p_channel_cfg->sample_hold_states;
     adshcr |= (p_channel_cfg->sample_hold_mask & ADC_MASK_SAMPLE_HOLD_BYPASS_CHANNELS) <<
               ADC_MASK_SAMPLE_HOLD_BYPASS_SHIFT;
     p_instance_ctrl->p_reg->ADSHCR = (uint16_t) adshcr;
+#endif
 
     /* Set group A priority action (not interrupt priority!)
      * This will also start the Group B scans if configured for ADC_GROUP_A_GROUP_B_CONTINUOUS_SCAN.
@@ -1501,7 +1515,7 @@ static void r_adc_scan_end_common_isr (adc_event_t event)
 #if BSP_TZ_SECURE_BUILD
 
         /* p_callback can point to a secure function or a non-secure function. */
-        if (p_instance_ctrl->callback_is_secure)
+        if (!cmse_is_nsfptr(p_instance_ctrl->p_callback))
         {
             /* If p_callback is secure, then the project does not need to change security state. */
             p_instance_ctrl->p_callback(p_args);

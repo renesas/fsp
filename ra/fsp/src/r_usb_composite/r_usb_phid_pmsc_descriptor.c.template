@@ -53,6 +53,8 @@
 #define USB_INTERFACE_SUBCLASS    (USB_ATAPI)
 
 #define USB_VALUE_64              (64)
+#define USB_VALUE_100             (100)
+#define USB_VALUE_22H             (0x22U)
 
 /************************************************************
  *  Device Descriptor                                       *
@@ -92,7 +94,7 @@ uint8_t g_apl_configuration[USB_PMSC_PHID_CD_LEN + (USB_PMSC_PHID_CD_LEN % 2)] =
     1,                                                          /*  5:bConfigurationValue */
     4,                                                          /*  6:iConfiguration */
     (uint8_t) (USB_CF_RESERVED | USB_CF_SELFP | USB_CF_RWUPON), /*  7:bmAttributes */
-    (uint8_t) (100 / 2),                                        /*  8:bMaxPower (2mA unit) */
+    (uint8_t) (USB_VALUE_100 / 2),                              /*  8:bMaxPower (2mA unit) */
 
 /* Mass Storage Class */
 
@@ -145,7 +147,7 @@ uint8_t g_apl_configuration[USB_PMSC_PHID_CD_LEN + (USB_PMSC_PHID_CD_LEN % 2)] =
     0x01,                                                       /*  3:HID Ver */
     0x00,                                                       /*  4:bCountryCode */
     0x01,                                                       /*  5:bNumDescriptors */
-    0x22,                                                       /*  6:bDescriptorType */
+    USB_VALUE_22H,                                              /*  6:bDescriptorType */
     HID_ITEM_LEN,                                               /*  7:wItemLength(L) */
     0x00,                                                       /*  8:wItemLength(H) */
 

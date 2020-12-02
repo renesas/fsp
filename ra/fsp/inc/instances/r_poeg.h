@@ -52,9 +52,6 @@ typedef struct st_poeg_instance_ctrl
     const poeg_cfg_t * p_cfg;                    // Pointer to initial configurations
     R_GPT_POEG0_Type * p_reg;                    // Base register for this channel
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                     // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
     void (* p_callback)(poeg_callback_args_t *); // Pointer to callback
     poeg_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
     void const           * p_context;            // Pointer to context to be passed into callback function

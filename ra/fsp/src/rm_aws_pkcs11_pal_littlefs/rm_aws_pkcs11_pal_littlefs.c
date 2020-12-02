@@ -47,7 +47,6 @@
 #include <string.h>
 
 #include "lfs.h"
-#include "lfs_util.h"
 
 extern lfs_t RM_STDIO_LITTLEFS_CFG_LFS;
 

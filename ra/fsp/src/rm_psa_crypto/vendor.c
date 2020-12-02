@@ -43,8 +43,9 @@ psa_status_t vendor_bitlength_to_raw_bitlength (psa_key_type_t type, size_t vend
     if (PSA_KEY_TYPE_IS_AES(type))
     {
 /* Check that the bit size is acceptable for the key type
- * NOTE: If adding wrapped 192 key support in future note that the size of the wrapped 192 and 256 AES keys
- * are the same (416 bits) making this logic unusable */
+ * Wrapped 192 key support is differentiated from 256 wrapped key support by increasing its size by 32 bits.
+ * These 32 bits are prepended and are not used by the crypto primitives (which continue to use 416 bits as the wrapped
+ * key length for both the keys). */
         *raw_bits = PSA_AES_BITS_VENDOR_RAW(vendor_bits);
         if (0 == *raw_bits)
         {

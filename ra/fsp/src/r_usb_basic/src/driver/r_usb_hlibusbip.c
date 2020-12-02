@@ -563,6 +563,7 @@ uint16_t usb_hstd_write_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
     uint16_t buffer;
     uint16_t mxps;
     uint16_t end_flag;
+    uint16_t read_pid;
 
     if (USB_MAX_PIPE_NO < pipe)
     {
@@ -630,6 +631,9 @@ uint16_t usb_hstd_write_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
         count    = size;
     }
 
+    read_pid = usb_cstd_get_pid(ptr, pipe);
+    usb_cstd_set_nak(ptr, pipe);
+
     gp_usb_hstd_data_ptr[ptr->ip][pipe] =
         usb_hstd_write_fifo(ptr, count, pipemode, gp_usb_hstd_data_ptr[ptr->ip][pipe]);
 
@@ -651,6 +655,14 @@ uint16_t usb_hstd_write_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
     {
         /* Total data count - count */
         g_usb_hstd_data_cnt[ptr->ip][pipe] -= count;
+    }
+
+    hw_usb_clear_status_bemp(ptr, pipe);
+
+    /* USB_PID_BUF ? */
+    if (USB_PID_BUF == (USB_PID & read_pid))
+    {
+        usb_cstd_set_buf(ptr, pipe);
     }
 
     /* End or Err or Continue */
@@ -1062,9 +1074,17 @@ void usb_hstd_brdy_pipe_process (usb_utr_t * ptr, uint16_t bitsts)
                     g_usb_cstd_dma_size[ip][dma_ch] = buffer & USB_DTLN;
                     if (set_dma_block_cnt > trans_dma_block_cnt)
                     {
-                        g_usb_cstd_dma_size[ip][dma_ch] =
-                            (uint16_t) ((uint16_t) (g_usb_cstd_dma_size[ip][dma_ch]) +
-                                        (uint16_t) ((set_dma_block_cnt - (trans_dma_block_cnt + 1)) * maxps));
+                        if (0 != g_usb_cstd_dma_size[ip][dma_ch])
+                        {
+                            g_usb_cstd_dma_size[ip][dma_ch] =
+                                (uint16_t) ((uint16_t) (g_usb_cstd_dma_size[ip][dma_ch]) +
+                                            (uint16_t) ((set_dma_block_cnt - (trans_dma_block_cnt + 1)) * maxps));
+                        }
+                        else
+                        {
+                            g_usb_cstd_dma_size[ip][dma_ch] =
+                                (uint16_t) ((set_dma_block_cnt - (trans_dma_block_cnt)) * maxps);
+                        }
                     }
 
                     /* Check data count */
@@ -1473,7 +1493,7 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
                     if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
                     {
                         /* Check Free pipe */
-                        pipe_no = pipe; /* Set Free pipe */
+                        pipe_no = (uint8_t) pipe; /* Set Free pipe */
                         break;
                     }
                 }
@@ -1488,7 +1508,7 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
                     if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
                     {
                         /* Check Free pipe */
-                        pipe_no = pipe; /* Set Free pipe */
+                        pipe_no = (uint8_t) pipe; /* Set Free pipe */
                         break;
                     }
                 }
@@ -1790,6 +1810,43 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
             break;
         }
   #endif /* defined(USB_CFG_HMSC_USE) */
+
+  #if defined(USB_CFG_HVND_USE)
+        case USB_PIPE1:
+        {
+            pipe_buf = (USB_BUF_SIZE(512u) | USB_BUF_NUMB(8u));
+            break;
+        }
+
+        case USB_PIPE2:
+        {
+            pipe_buf = (USB_BUF_SIZE(512u) | USB_BUF_NUMB(24u));
+            break;
+        }
+
+        case USB_PIPE3:
+        {
+            pipe_buf = (USB_BUF_SIZE(512u) | USB_BUF_NUMB(40u));
+            break;
+        }
+
+        case USB_PIPE4:
+        {
+            pipe_buf = (USB_BUF_SIZE(512u) | USB_BUF_NUMB(56u));
+            break;
+        }
+
+        case USB_PIPE5:
+        {
+            pipe_buf = (USB_BUF_SIZE(512u) | USB_BUF_NUMB(72u));
+            break;
+        }
+  #endif                               /* defined(USB_CFG_HVND_USE) */
+        default:
+        {
+            /* Error */
+            break;
+        }
     }
 
     return pipe_buf;

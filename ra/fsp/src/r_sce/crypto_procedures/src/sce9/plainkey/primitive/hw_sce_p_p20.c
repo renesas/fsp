@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -67,9 +68,9 @@ fsp_err_t HW_SCE_GenerateRandomNumberSub(uint32_t *OutData_Text)
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x00002001u;
+    SCE->REG_84H = 0x00002002u;
     SCE->REG_108H = 0x00000000u;
-    HW_SCE_p_func100(0x39474ca5u, 0x2734ab38u, 0xac8a3b6eu, 0xd618ffa1u);
+    HW_SCE_p_func100(0xcc566a95u, 0xd54b495bu, 0x13b7c5d5u, 0xf9a0c228u);
     HW_SCE_p_func103();
     SCE->REG_104H = 0x00000052u;
     SCE->REG_C4H = 0x01000c84u;
@@ -79,7 +80,7 @@ fsp_err_t HW_SCE_GenerateRandomNumberSub(uint32_t *OutData_Text)
         /* waiting */
     }
     SCE->REG_100H = change_endian_long(0x00000000u);
-    HW_SCE_p_func100(0x78680554u, 0x7e6bcbf3u, 0x28e0c2d1u, 0x77ed0e82u);
+    HW_SCE_p_func100(0xf90a114au, 0x4d146fe5u, 0x5da04d77u, 0xef4683f4u);
     SCE->REG_04H = 0x00000213u;
     /* WAIT_LOOP */
     while (1u != SCE->REG_04H_b.B30)
@@ -90,7 +91,7 @@ fsp_err_t HW_SCE_GenerateRandomNumberSub(uint32_t *OutData_Text)
     OutData_Text[1] = SCE->REG_100H;
     OutData_Text[2] = SCE->REG_100H;
     OutData_Text[3] = SCE->REG_100H;
-    HW_SCE_p_func102(0xabc3a4dbu, 0x2a94f5aeu, 0xd92f7679u, 0x10c3f31bu);
+    HW_SCE_p_func102(0x5cf23bfeu, 0x974c37aeu, 0xb6dfffc7u, 0xb05e02eeu);
     SCE->REG_1BCH = 0x00000040u;
     /* WAIT_LOOP */
     while (0u != SCE->REG_18H_b.B12)
@@ -101,5 +102,5 @@ fsp_err_t HW_SCE_GenerateRandomNumberSub(uint32_t *OutData_Text)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p20.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_p20_r1.prc
 ***********************************************************************************************************************/

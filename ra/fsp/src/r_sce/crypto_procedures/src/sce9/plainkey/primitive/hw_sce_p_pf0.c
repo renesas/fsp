@@ -17,8 +17,9 @@
 * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
 ***********************************************************************************************************************/
 /***********************************************************************************************************************
-* History : DD.MM.YYYY Version Description
-*         : 05.10.2020 1.00        First Release.
+ * History : DD.MM.YYYY Version Description
+ *         : 05.10.2020 1.00        First Release.
+ *         : 02.12.2020 1.01        Added new functions such as the Brainpool curve.
 ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
@@ -47,7 +48,7 @@ Exported global variables (to be accessed by other files)
 Private global variables and functions
 ***********************************************************************************************************************/
 
-fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, const uint32_t *InData_Cmd, const uint32_t *InData_KeyIndex, const uint32_t *InData_MsgDgst, uint32_t *OutData_Signature)
+fsp_err_t HW_SCE_EcdsaSignatureGenerateSub(const uint32_t *InData_CurveType, const uint32_t *InData_Cmd, const uint32_t *InData_KeyIndex, const uint32_t *InData_MsgDgst, uint32_t *OutData_Signature)
 {
     uint32_t iLoop = 0u, iLoop1 = 0u, iLoop2 = 0u, jLoop = 0u, kLoop = 0u, oLoop = 0u, oLoop1 = 0u, oLoop2 = 0u, KEY_ADR = 0u, OFS_ADR = 0u, MAX_CNT2 = 0u;
     uint32_t dummy = 0u;
@@ -67,7 +68,7 @@ fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, co
     {
         return FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
     }
-    SCE->REG_84H = 0x0000f001u;
+    SCE->REG_84H = 0x0000f002u;
     SCE->REG_108H = 0x00000000u;
     SCE->REG_28H = 0x00870001u;
     SCE->REG_104H = 0x00000068u;
@@ -127,12 +128,12 @@ fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, co
     SCE->REG_ECH = 0x00000003u;
     SCE->REG_E0H = 0x00000080u;
     SCE->REG_1CH = 0x00A60000u;
-    HW_SCE_p_func100(0xf5d8c06eu, 0xc83bb08au, 0xae510efbu, 0x36a7af08u);
+    HW_SCE_p_func100(0x80b99bc2u, 0x9ee4a418u, 0x49ce3627u, 0x4351adfau);
     SCE->REG_1CH = 0x00400000u;
     SCE->REG_1D0H = 0x00000000u;
     if (1u == (SCE->REG_1CH_b.B22))
     {
-        HW_SCE_p_func102(0x8f775961u, 0x0b5a28aau, 0x87943f60u, 0x0f2c8f26u);
+        HW_SCE_p_func102(0x563d1fa8u, 0x5a5d6fb3u, 0x1459421cu, 0xe53d7473u);
         SCE->REG_1B8H = 0x00000040u;
         /* WAIT_LOOP */
         while (0u != SCE->REG_18H_b.B12)
@@ -143,7 +144,7 @@ fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, co
     }
     else
     {
-        HW_SCE_p_func100(0x405aceaau, 0x2e5e12d4u, 0x11fcc9ccu, 0xf58f11d1u);
+        HW_SCE_p_func100(0x451200efu, 0xc8d401b7u, 0x2fa241a7u, 0xb8a7f10cu);
         SCE->REG_28H = 0x00870001u;
         SCE->REG_ECH = 0x30003340u;
         SCE->REG_ECH = 0x00050020u;
@@ -174,9 +175,9 @@ fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, co
         }
         S_RAM[0] = change_endian_long(SCE->REG_100H);
         OFS_ADR = S_RAM[0];
-        HW_SCE_p_func100(0x45761474u, 0x57cc450bu, 0x5ceb52e5u, 0x6b5c37e2u);
+        HW_SCE_p_func100(0xf071916eu, 0xbb83fee2u, 0xd34567d9u, 0x5f50077eu);
         HW_SCE_p_func070_r2(OFS_ADR);
-        HW_SCE_p_func100(0x00613584u, 0x5c3272c3u, 0x996ad0bdu, 0x304f803du);
+        HW_SCE_p_func100(0x470710d8u, 0x2d41069cu, 0xa5095108u, 0xfec111dbu);
         SCE->REG_34H = 0x00000003u;
         SCE->REG_24H = 0x800068d0u;
         /* WAIT_LOOP */
@@ -216,7 +217,7 @@ fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, co
             /* waiting */
         }
         HW_SCE_p_func103();
-        HW_SCE_p_func100(0x6805778au, 0x816c6846u, 0x3b6d78aeu, 0x3bcdbe72u);
+        HW_SCE_p_func100(0x704a81dfu, 0xd750501au, 0xfdc7daaau, 0x30ad6bdfu);
         SCE->REG_104H = 0x00000052u;
         SCE->REG_C4H = 0x01000c84u;
         /* WAIT_LOOP */
@@ -273,7 +274,7 @@ fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, co
         {
             /* waiting */
         }
-        HW_SCE_p_func100(0xebac350fu, 0x45ec962fu, 0x32c6f830u, 0xe58ac3c3u);
+        HW_SCE_p_func100(0xef5f6f61u, 0x8b7b541du, 0x60a83d4cu, 0xe6fcc2f3u);
         HW_SCE_p_func071_r2(OFS_ADR);
         SCE->REG_34H = 0x00000802u;
         SCE->REG_24H = 0x800088d0u;
@@ -428,7 +429,7 @@ fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, co
         SCE->REG_ECH = 0x000000f0u;
         SCE->REG_ECH = 0x0000373cu;
         SCE->REG_ECH = 0x00000b9cu;
-        HW_SCE_p_func100(0xf3ab3173u, 0x27de0948u, 0x5353a013u, 0x2e638bd8u);
+        HW_SCE_p_func100(0x1d4ac2e4u, 0x51589b8eu, 0x542a868au, 0x975cf1b6u);
         SCE->REG_E0H = 0x81010380u;
         SCE->REG_04H = 0x00000607u;
         /* WAIT_LOOP */
@@ -439,13 +440,13 @@ fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, co
         S_RAM[0] = change_endian_long(SCE->REG_100H);
         for(iLoop=0;iLoop<256;iLoop=iLoop+1)
         {
-            HW_SCE_p_func101(0x3c677163u, 0xea4d3d2eu, 0xafceb4b7u, 0xe2e493feu);
+            HW_SCE_p_func101(0x78e307d7u, 0x63d014e3u, 0x594119d3u, 0xc6df9701u);
             HW_SCE_p_func300();
             if (S_RAM[0] == 0x00000001)
             {
                 break;
             }
-            HW_SCE_p_func101(0xa7c1a7c6u, 0x18421ea5u, 0x850f9fdbu, 0xfaf97de6u);
+            HW_SCE_p_func101(0x6db06aceu, 0xebbad615u, 0x7726e7c9u, 0x4983ea35u);
         }
         SCE->REG_24H = 0x00001dc0u;
         /* WAIT_LOOP */
@@ -1594,5 +1595,5 @@ fsp_err_t HW_SCE_EcdsaSigunatureGenerateSub(const uint32_t *InData_CurveType, co
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pf0_r4.prc
+End of function ./input_dir/S6C1/Cryptographic_PlainKey/HW_SCE_p_pf0_r5.prc
 ***********************************************************************************************************************/

@@ -113,12 +113,7 @@ fsp_err_t R_DOC_Open (doc_ctrl_t * const p_api_ctrl, doc_cfg_t const * const p_c
 #endif
 
     /* save pointers for later use */
-    p_ctrl->p_cfg = p_cfg;
-#if BSP_TZ_SECURE_BUILD
-
-    /* If this is a secure build, the callback provided in p_cfg must be secure. */
-    p_ctrl->callback_is_secure = true;
-#endif
+    p_ctrl->p_cfg             = p_cfg;
     p_ctrl->p_callback        = p_cfg->p_callback;
     p_ctrl->p_context         = p_cfg->p_context;
     p_ctrl->p_callback_memory = NULL;
@@ -261,6 +256,7 @@ fsp_err_t R_DOC_VersionGet (fsp_version_t * const p_version)
  * @retval  FSP_SUCCESS                  Callback updated successfully.
  * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
  **********************************************************************************************************************/
 fsp_err_t R_DOC_CallbackSet (doc_ctrl_t * const          p_api_ctrl,
                              void (                    * p_callback)(doc_callback_args_t *),
@@ -279,13 +275,26 @@ fsp_err_t R_DOC_CallbackSet (doc_ctrl_t * const          p_api_ctrl,
 
 #if BSP_TZ_SECURE_BUILD
 
-    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
-    p_ctrl->callback_is_secure =
+    /* Get security state of p_callback */
+    bool callback_is_secure =
         (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if DOC_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    doc_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                      CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
 #endif
 
     /* Store callback and context */
-    p_ctrl->p_callback        = p_callback;
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(doc_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
+#endif
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
 
@@ -337,7 +346,7 @@ void doc_int_isr (void)
 #if BSP_TZ_SECURE_BUILD
 
     /* p_callback can point to a secure function or a non-secure function. */
-    if (p_ctrl->callback_is_secure)
+    if (!cmse_is_nsfptr(p_ctrl->p_callback))
     {
         /* If p_callback is secure, then the project does not need to change security state. */
         p_ctrl->p_callback(p_args);

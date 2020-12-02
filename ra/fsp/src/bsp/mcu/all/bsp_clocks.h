@@ -244,6 +244,17 @@ FSP_HEADER
                                                   BSP_PRV_SCKDIVCR_PCLKA_MASK) |                                  \
                                                  BSP_PRV_SCKDIVCR_BCLK_MASK) | BSP_PRV_SCKDIVCR_FCLK_MASK)
 
+/* FLL is only used when enabled, present and the subclock is populated. */
+#if BSP_FEATURE_CGC_HAS_FLL && BSP_CFG_FLL_ENABLE && BSP_CLOCK_CFG_SUBCLOCK_POPULATED
+ #define BSP_PRV_HOCO_USE_FLL                  (1)
+ #ifndef BSP_PRV_FLL_STABILIZATION_TIME_US
+  #define BSP_PRV_FLL_STABILIZATION_TIME_US    (1800)
+ #endif
+#else
+ #define BSP_PRV_HOCO_USE_FLL                  (0)
+ #define BSP_PRV_FLL_STABILIZATION_TIME_US     (0)
+#endif
+
 /* Operating power control modes. */
 #define BSP_PRV_OPERATING_MODE_HIGH_SPEED      (0U) // Should match OPCCR OPCM high speed
 #define BSP_PRV_OPERATING_MODE_MIDDLE_SPEED    (1U) // Should match OPCCR OPCM middle speed

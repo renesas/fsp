@@ -100,6 +100,17 @@
  #endif
 #endif
 
+/* Choose the value to write to FLLCR2 (if applicable). */
+#if BSP_PRV_HOCO_USE_FLL
+ #if 0U == BSP_CFG_HOCO_FREQUENCY
+  #define BSP_PRV_FLL_FLLCR2                    (0x1E9U)
+ #elif 1U == BSP_CFG_HOCO_FREQUENCY
+  #define BSP_PRV_FLL_FLLCR2                    (0x226U)
+ #elif 2U == BSP_CFG_HOCO_FREQUENCY
+  #define BSP_PRV_FLL_FLLCR2                    (0x263U)
+ #endif
+#endif
+
 /* Calculate the value to write to SCKDIVCR. */
 #define BSP_PRV_STARTUP_SCKDIVCR_ICLK_BITS      ((BSP_CFG_ICLK_DIV & 7U) << 24U)
 #if BSP_FEATURE_CGC_HAS_PCLKD
@@ -362,6 +373,20 @@ static void bsp_prv_operating_mode_opccr_set (uint8_t operating_mode)
  **********************************************************************************************************************/
 void bsp_prv_operating_mode_set (uint8_t operating_mode)
 {
+ #if BSP_PRV_POWER_USE_DCDC
+    static bsp_power_mode_t power_mode = BSP_POWER_MODE_LDO;
+
+    /* Disable DCDC if transitioning to an incompatible mode. */
+    if ((operating_mode > BSP_PRV_OPERATING_MODE_MIDDLE_SPEED) && (R_SYSTEM->DCDCCTL & R_SYSTEM_DCDCCTL_DCDCON_Msk))
+    {
+        /* LDO boost must be used if entering subclock speed mode (see RA2L1 User's Manual (R01UH0853EJ0100) Section
+         * 10.5.1 (5) Switching from High-speed/Middle-speed mode in DCDC power mode to Subosc-speed mode or Software
+         * Standby mode). */
+        power_mode = R_BSP_PowerModeSet((BSP_PRV_OPERATING_MODE_SUBOSC_SPEED == operating_mode) ?
+                                        BSP_POWER_MODE_LDO_BOOST : BSP_POWER_MODE_LDO);
+    }
+ #endif
+
     if (BSP_PRV_OPERATING_MODE_SUBOSC_SPEED == operating_mode)
     {
         /* Wait for transition to complete. */
@@ -388,6 +413,16 @@ void bsp_prv_operating_mode_set (uint8_t operating_mode)
 
         bsp_prv_operating_mode_opccr_set(operating_mode);
     }
+
+ #if BSP_PRV_POWER_USE_DCDC
+
+    /* Enable DCDC if it was previously enabled. */
+    if ((operating_mode <= BSP_PRV_OPERATING_MODE_MIDDLE_SPEED) && (power_mode < BSP_POWER_MODE_LDO))
+    {
+        R_BSP_PowerModeSet(power_mode);
+        power_mode = BSP_POWER_MODE_LDO;
+    }
+ #endif
 }
 
 #endif
@@ -749,9 +784,9 @@ void bsp_clock_init (void)
         /* Configure the subclock drive if the subclock is not already running. */
         R_SYSTEM->SOMCR  = ((BSP_CLOCK_CFG_SUBCLOCK_DRIVE << BSP_FEATURE_CGC_SODRV_SHIFT) & BSP_FEATURE_CGC_SODRV_MASK);
         R_SYSTEM->SOSCCR = 0U;
- #if BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE
+ #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
 
-        /* If the subclock is the system clock source, wait for it to stabilize. */
+        /* If the subclock is the system clock source OR if FLL is used, wait for stabilization. */
         R_BSP_SoftwareDelay(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS, BSP_DELAY_UNITS_MILLISECONDS);
  #endif
     }
@@ -807,6 +842,14 @@ void bsp_clock_init (void)
  #endif
 #endif
 
+    /* The FLL function can only be used when the subclock is running. */
+#if BSP_PRV_HOCO_USE_FLL
+
+    /* If FLL is to be used configure FLLCR1 and FLLCR2 before starting HOCO. */
+    R_SYSTEM->FLLCR2 = BSP_PRV_FLL_FLLCR2;
+    R_SYSTEM->FLLCR1 = 1U;
+#endif
+
     /* If the PLL is the desired source clock, ensure the source clock is running and stable and the power mode
      * allows PLL operation. */
 #if BSP_PRV_PLL_SUPPORTED
@@ -838,6 +881,11 @@ void bsp_clock_init (void)
 
     /* Verify PLL source is stable before starting PLL. */
   #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL_SOURCE
+   #if BSP_PRV_HOCO_USE_FLL
+
+    /* If FLL is enabled, wait for the FLL stabilization delay (1.8 ms) */
+    R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+   #endif
 
     /* Wait for HOCO to stabilize. */
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.HOCOSF, 1U);
@@ -852,6 +900,12 @@ void bsp_clock_init (void)
     /* Start source clock. */
 #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_CLOCK_SOURCE
     R_SYSTEM->HOCOCR = 0U;
+
+ #if BSP_PRV_HOCO_USE_FLL && (BSP_CLOCKS_SOURCE_CLOCK_HOCO != BSP_CFG_PLL_SOURCE)
+
+    /* If FLL is enabled, wait for the FLL stabilization delay (1.8 ms) */
+    R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+ #endif
 
     /* Wait for HOCO to stabilize. */
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.HOCOSF, 1U);
@@ -920,6 +974,13 @@ void bsp_clock_init (void)
  #endif
 #endif
 
+#if defined(BSP_PRV_POWER_USE_DCDC) && (BSP_PRV_POWER_USE_DCDC == BSP_PRV_POWER_DCDC_STARTUP) && \
+    (BSP_PRV_STARTUP_OPERATING_MODE <= BSP_PRV_OPERATING_MODE_MIDDLE_SPEED)
+
+    /* Start DCDC as part of BSP startup when configured (BSP_CFG_DCDC_ENABLE == 2). */
+    R_BSP_PowerModeSet(BSP_CFG_DCDC_VOLTAGE_RANGE);
+#endif
+
     /* Configure BCLK if it exists on the MCU. */
 #ifdef BSP_CFG_BCLK_OUTPUT
  #if BSP_CFG_BCLK_OUTPUT > 0U
@@ -952,20 +1013,31 @@ void bsp_clock_init (void)
 #if BSP_PRV_STARTUP_OPERATING_MODE != BSP_PRV_OPERATING_MODE_LOW_SPEED
  #if BSP_FEATURE_CGC_HAS_PLL2 && BSP_CFG_PLL2_SOURCE != BSP_CLOCKS_CLOCK_DISABLED
 
-    /* Start PLL source clock. */
-  #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL2_SOURCE
+    /* Start PLL2 source clock. */
+  #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL2_SOURCE && (BSP_CLOCKS_SOURCE_CLOCK_HOCO != BSP_CFG_PLL_SOURCE) && \
+    (BSP_CLOCKS_SOURCE_CLOCK_HOCO != BSP_CFG_CLOCK_SOURCE)
     R_SYSTEM->HOCOCR = 0U;
-  #elif BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == BSP_CFG_PLL2_SOURCE
+
+   #if BSP_PRV_HOCO_USE_FLL
+
+    /* If FLL is enabled, wait for the FLL stabilization delay (1.8 ms) */
+    R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+   #endif
+
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.HOCOSF, 1U);
+  #elif BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == BSP_CFG_PLL2_SOURCE && \
+    (BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC != BSP_CFG_PLL_SOURCE) &&    \
+    (BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC != BSP_CFG_CLOCK_SOURCE)
     R_SYSTEM->MOSCCR = 0U;
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.MOSCSF, 1U);
   #endif                               /* BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL2_SOURCE */
 
     R_SYSTEM->PLL2CCR = BSP_PRV_PLL2CCR;
 
-    /* Start the PLL. */
+    /* Start PLL2. */
     R_SYSTEM->PLL2CR = 0U;
 
-    /* Wait for the PLL to stabilize. */
+    /* Wait for PLL2 to stabilize. */
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLL2SF, 1U);
  #endif                                /* BSP_FEATURE_CGC_HAS_PLL2 && BSP_CFG_PLL2_ENABLE */
 

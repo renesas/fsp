@@ -40,6 +40,10 @@
 #define TZ_PROCESS_STACK_SIZE      256U
 #endif
 
+#define TZ_PROCESS_STACK_SEAL_SIZE     8U
+
+#define TZ_PROCESS_STACK_SEAL_VALUE    0xFEF5EDA5
+
 /// MPU is not yet supported
 #define RM_TZ_CONTEXT_CFG_MPU_ENABLE   0U
 
@@ -50,7 +54,7 @@ typedef struct {
 } stack_info_t;
 
 static stack_info_t ProcessStackInfo  [TZ_PROCESS_STACK_SLOTS];
-static uint32_t     ProcessStackMemory[TZ_PROCESS_STACK_SLOTS][TZ_PROCESS_STACK_SIZE/sizeof(uint32_t)] BSP_ALIGN_VARIABLE(8);
+static uint32_t     ProcessStackMemory[TZ_PROCESS_STACK_SLOTS][(TZ_PROCESS_STACK_SIZE + TZ_PROCESS_STACK_SEAL_SIZE)/sizeof(uint32_t)] BSP_ALIGN_VARIABLE(8);
 static uint32_t     ProcessStackFreeSlot = UINT32_MAX;
 
 /// Initialize secure context memory system
@@ -68,6 +72,9 @@ uint32_t TZ_InitContextSystem_S (void) {
     ProcessStackInfo[n].sp_limit = (uint32_t)&ProcessStackMemory[n];
     ProcessStackInfo[n].sp_top   = (uint32_t)&ProcessStackMemory[n] + TZ_PROCESS_STACK_SIZE;
     *((uint32_t *)ProcessStackMemory[n]) = n + 1U;
+
+    /* Seal each process stack. */
+    ProcessStackMemory[n][TZ_PROCESS_STACK_SIZE/sizeof(uint32_t)] = TZ_PROCESS_STACK_SEAL_VALUE;
   }
   *((uint32_t *)ProcessStackMemory[--n]) = UINT32_MAX;
 

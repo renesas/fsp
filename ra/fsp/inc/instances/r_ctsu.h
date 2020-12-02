@@ -203,9 +203,6 @@ typedef struct st_ctsu_instance_ctrl
     IRQn_Type          write_irq;                ///< Copy from config by Open API. CTSU_CTSUWR interrupt vector
     IRQn_Type          read_irq;                 ///< Copy from config by Open API. CTSU_CTSURD interrupt vector
     IRQn_Type          end_irq;                  ///< Copy from config by Open API. CTSU_CTSUFN interrupt vector
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                     ///< If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
     void (* p_callback)(ctsu_callback_args_t *); ///< Callback provided when a CTSUFN occurs.
     ctsu_callback_args_t * p_callback_memory;    ///< Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
     void const           * p_context;            ///< Placeholder for user data.

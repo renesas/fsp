@@ -125,9 +125,6 @@ typedef struct st_agt_instance_ctrl
     R_AGT0_Type       * p_reg;                    // Base register for this channel
     uint32_t            period;                   // Current timer period (counts)
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                      // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
     void (* p_callback)(timer_callback_args_t *); // Pointer to callback that is called when a timer_event_t occurs.
     timer_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
     void const            * p_context;            // Pointer to context to be passed into callback function

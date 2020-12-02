@@ -291,9 +291,6 @@
 #define USB_TEST_STSelectors      (0x0600U) /* Standard test selectors */
 #define USB_TEST_RESERVED         (0x4000U) /* Reserved */
 #define USB_TEST_VSTMODES         (0xC000U) /* VendorSpecific test modes */
-#define USB_EP_DIR                (0x0080U) /* b7: Endpoint Direction */
-#define USB_EP_DIR_IN             (0x0080U)
-#define USB_EP_DIR_OUT            (0x0000U)
 
 /* USB Request Length Register */
 #define USB_WLENGTH               (0xFFFFU) /* b15-0: wLength */

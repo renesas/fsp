@@ -104,7 +104,6 @@
  #endif
 
  #if (CTSU_CFG_CALIB_RTRIM_SUPPORT == 1)
-  #define CTSU_REG_ADCTDR                    (*(uint16_t *) 0x4005C040)         // ADCTDR address
   #if (CTSU_CFG_LOW_VOLTAGE_MODE == 0)
    #define CTSU_CALIB_REF                    ((6144000 * 10) / CTSU_CFG_VCC_MV) // 1.5V Reference value (4096 * 1500 * 10)
   #else
@@ -427,7 +426,8 @@ fsp_err_t R_CTSU_Open (ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cf
         if (CTSU_MODE_CURRENT_SCAN == p_cfg->md)
         {
             /* Current scan does not run multiple frequency */
-            p_instance_ctrl->p_ctsuwr[element_id].ctsuso = (uint32_t) (element_cfgs->snum << 10);
+            p_instance_ctrl->p_ctsuwr[element_id].ctsuso =
+                (uint32_t) ((element_cfgs->sdpa << 24) | (element_cfgs->snum << 10) | element_cfgs->so);
         }
         else
         {
@@ -629,11 +629,6 @@ fsp_err_t R_CTSU_Open (ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cf
     p_instance_ctrl->wr_index          = 0;
     p_instance_ctrl->state             = CTSU_STATE_IDLE;
 
-#if BSP_TZ_SECURE_BUILD
-
-    /* If this is a secure build, the callback provided in p_cfg must be secure. */
-    p_instance_ctrl->callback_is_secure = true;
-#endif
     p_instance_ctrl->p_callback        = p_cfg->p_callback;
     p_instance_ctrl->p_context         = p_cfg->p_context;
     p_instance_ctrl->p_callback_memory = NULL;
@@ -934,6 +929,7 @@ fsp_err_t R_CTSU_DataGet (ctsu_ctrl_t * const p_ctrl, uint16_t * p_data)
  * @retval  FSP_SUCCESS                  Callback updated successfully.
  * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
  **********************************************************************************************************************/
 fsp_err_t R_CTSU_CallbackSet (ctsu_ctrl_t * const          p_api_ctrl,
                               void (                     * p_callback)(ctsu_callback_args_t *),
@@ -948,15 +944,28 @@ fsp_err_t R_CTSU_CallbackSet (ctsu_ctrl_t * const          p_api_ctrl,
     FSP_ERROR_RETURN(CTSU_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    /* Store callback and context */
-
 #if BSP_TZ_SECURE_BUILD
 
-    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
-    p_ctrl->callback_is_secure =
+    /* Get security state of p_callback */
+    bool callback_is_secure =
         (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if CTSU_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    ctsu_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                       CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
 #endif
-    p_ctrl->p_callback        = p_callback;
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(ctsu_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
+#endif
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
 
@@ -1399,10 +1408,11 @@ void ctsu_initial_offset_tuning (ctsu_instance_ctrl_t * const p_instance_ctrl)
 
                 snum = (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI)].ctsuso >> 10) &
                        CTSU_SNUM_MAX;
-                corr_data[i] = (uint16_t) ((uint32_t) (corr_data[i] * (CTSU_SNUM_RECOMMEND + 1)) / (snum + 1));
+                corr_data[i] = (uint16_t) (((uint32_t) corr_data[i] * (CTSU_SNUM_RECOMMEND + 1)) / (snum + 1));
 
                 /* Calculate CTSUSO equivalent difference between current value and target value */
-                diff = (int32_t) (corr_data[i] - target_val) / (CTSU_CORRECTION_OFFSET_UNIT >> p_instance_ctrl->range);
+                diff = (int32_t) ((int32_t) corr_data[i] - (int32_t) target_val) /
+                       (CTSU_CORRECTION_OFFSET_UNIT >> p_instance_ctrl->range);
 
                 ctsuso  = (int32_t) (p_instance_ctrl->p_ctsuwr[element_top + i].ctsuso & CTSU_TUNING_MAX);
                 ctsuso += diff;
@@ -1463,9 +1473,9 @@ void ctsu_moving_average (uint16_t * p_average, uint16_t new_data, uint16_t aver
 {
     uint32_t work;
 
-    work       = (uint32_t) (*p_average * ((average_num) - 1)); /* Average * (num - 1) */
-    work      += new_data;                                      /* Add Now data        */
-    *p_average = (uint16_t) (work / average_num);               /* Average calculation */
+    work       = (uint32_t) ((uint32_t) *p_average * (uint32_t) (average_num - 1)); /* Average * (num - 1) */
+    work      += new_data;                                                          /* Add Now data        */
+    *p_average = (uint16_t) (work / average_num);                                   /* Average calculation */
 }
 
 /***********************************************************************************************************************
@@ -1719,7 +1729,7 @@ void ctsu_end_isr (void)
 #if BSP_TZ_SECURE_BUILD
 
         /* p_callback can point to a secure function or a non-secure function. */
-        if (p_instance_ctrl->callback_is_secure)
+        if (!cmse_is_nsfptr(p_instance_ctrl->p_callback))
         {
             /* If p_callback is secure, then the project does not need to change security state. */
             p_instance_ctrl->p_callback(p_args);
@@ -1814,7 +1824,8 @@ void ctsu_correction_process (ctsu_instance_ctrl_t * const p_instance_ctrl)
 
     /* Step2-a : Measure the current input to the ICO by passing current through the internal resistance */
     /*           in each range. The theoretical value of the current is 12.5uA. */
-    R_CTSU->CTSUCHAC0        = 1;
+    R_CTSU->CTSUCHACA        = 1;
+    R_CTSU->CTSUCHACB        = 0;
     R_CTSU->CTSUCALIB_b.TSOC = 1;
     for (i = 0; i < CTSU_RANGE_NUM; i++)
     {
@@ -1845,6 +1856,7 @@ void ctsu_correction_process (ctsu_instance_ctrl_t * const p_instance_ctrl)
     }
 
     /* Step3 : Measure by inputting each constant current from internal DAC to ICO. */
+    R_CTSU->CTSUCRB_b.SSCNT      = 0;
     R_CTSU->CTSUCALIB_b.CCOCLK   = 0;
     R_CTSU->CTSUCALIB_b.CCOCALIB = 1;
 
@@ -1871,16 +1883,17 @@ void ctsu_correction_process (ctsu_instance_ctrl_t * const p_instance_ctrl)
     for (i = 0; i < CTSU_RANGE_NUM; i++)
     {
         g_ctsu_correction_info.error_rate[i] =
-            (uint16_t) ((g_ctsu_correction_info.base_value[i] * error_registance[i]) /
+            (uint16_t) (((uint32_t) g_ctsu_correction_info.base_value[i] * (uint32_t) error_registance[i]) /
                         g_ctsu_correction_info.dac_value[9]);
 
         for (j = 0; j < CTSU_CORRECTION_POINT_NUM; j++)
         {
             g_ctsu_correction_info.real_value[j] =
-                (uint16_t) ((g_ctsu_correction_info.dac_value[j] * g_ctsu_correction_info.error_rate[i]) >>
+                (uint16_t) (((uint32_t) g_ctsu_correction_info.dac_value[j] *
+                             (uint32_t) g_ctsu_correction_info.error_rate[i]) >>
                             CTSU_SHIFT_AMOUNT);
             g_ctsu_correction_info.coefficient[i][j] =
-                (uint16_t) (((CTSU_CORRECTION_STD_UNIT * (j + 1)) << CTSU_SHIFT_AMOUNT) /
+                (uint16_t) ((uint32_t) ((CTSU_CORRECTION_STD_UNIT * (j + 1)) << CTSU_SHIFT_AMOUNT) /
                             g_ctsu_correction_info.real_value[j]);
         }
     }
@@ -1888,7 +1901,7 @@ void ctsu_correction_process (ctsu_instance_ctrl_t * const p_instance_ctrl)
     for (i = 0; i < CTSU_RANGE_NUM - 1; i++)
     {
         g_ctsu_correction_info.range_ratio[i] =
-            (uint16_t) ((g_ctsu_correction_info.error_rate[CTSU_RANGE_160UA] << CTSU_SHIFT_AMOUNT) /
+            (uint16_t) (((uint32_t) g_ctsu_correction_info.error_rate[CTSU_RANGE_160UA] << CTSU_SHIFT_AMOUNT) /
                         g_ctsu_correction_info.error_rate[i]);
     }
     g_ctsu_correction_info.status = CTSU_CORRECTION_COMPLETE;
@@ -2166,30 +2179,30 @@ void ctsu_correction_data_get (ctsu_instance_ctrl_t * const p_instance_ctrl)
  ***********************************************************************************************************************/
 void ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_ctrl)
 {
-    adc_status_t status;
-    uint16_t     i;
-    uint16_t     adctdr_ave;
-    uint32_t     adctdr_sum;
-    int16_t      diff;
-    int16_t      dir  = 0;
-    uint16_t     comp = 0;
+    adc_status_t           status;
+    adc_instance_t const * p_adc = p_instance_ctrl->p_ctsu_cfg->p_adc_instance;
+    uint16_t               i;
+    uint16_t               adctdr_result;
+    uint16_t               adctdr_ave;
+    uint32_t               adctdr_sum;
+    int16_t                diff;
+    int16_t                dir  = 0;
+    uint16_t               comp = 0;
 
     adctdr_sum = 0;
     for (i = 0; i < CTSU_CALIB_AVERAGE_TIME; i++)
     {
-        p_instance_ctrl->p_ctsu_cfg->p_adc_instance->p_api->scanStart(
-            p_instance_ctrl->p_ctsu_cfg->p_adc_instance->p_ctrl);
+        p_adc->p_api->scanStart(p_adc->p_ctrl);
 
         /* Wait for conversion to complete. */
         status.state = ADC_STATE_SCAN_IN_PROGRESS;
         while (ADC_STATE_SCAN_IN_PROGRESS == status.state)
         {
-            p_instance_ctrl->p_ctsu_cfg->p_adc_instance->p_api->scanStatusGet(
-                p_instance_ctrl->p_ctsu_cfg->p_adc_instance->p_ctrl,
-                &status);
+            p_adc->p_api->scanStatusGet(p_adc->p_ctrl, &status);
         }
 
-        adctdr_sum += (uint32_t) (CTSU_REG_ADCTDR);
+        p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_16, &adctdr_result);
+        adctdr_sum += adctdr_result;
     }
 
     g_ctsu_correction_info.tscap_voltage = (uint16_t) ((adctdr_sum * 10) / CTSU_CALIB_AVERAGE_TIME);
@@ -2223,23 +2236,21 @@ void ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_ctrl)
         adctdr_sum = 0;
         for (i = 0; i < CTSU_CALIB_AVERAGE_TIME; i++)
         {
-            p_instance_ctrl->p_ctsu_cfg->p_adc_instance->p_api->scanStart(
-                p_instance_ctrl->p_ctsu_cfg->p_adc_instance->p_ctrl);
+            p_adc->p_api->scanStart(p_adc->p_ctrl);
 
             /* Wait for conversion to complete. */
             status.state = ADC_STATE_SCAN_IN_PROGRESS;
             while (ADC_STATE_SCAN_IN_PROGRESS == status.state)
             {
-                p_instance_ctrl->p_ctsu_cfg->p_adc_instance->p_api->scanStatusGet(
-                    p_instance_ctrl->p_ctsu_cfg->p_adc_instance->p_ctrl,
-                    &status);
+                p_adc->p_api->scanStatusGet(p_adc->p_ctrl, &status);
             }
 
-            adctdr_sum += (uint32_t) (CTSU_REG_ADCTDR);
+            p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_16, &adctdr_result);
+            adctdr_sum += adctdr_result;
         }
 
         adctdr_ave = (uint16_t) ((adctdr_sum * 10) / CTSU_CALIB_AVERAGE_TIME);
-        diff       = (int16_t) (adctdr_ave - CTSU_CALIB_REF);
+        diff       = (int16_t) ((adctdr_ave - CTSU_CALIB_REF) / 10);
 
         /* The change unit of the voltage by the RTRIM register is about 4mV (4096 * 4) = 16.384 */
         if (diff > CTSU_CALIB_THRESHOLD)
@@ -2283,11 +2294,15 @@ void ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_ctrl)
  ***********************************************************************************************************************/
 void ctsu_correction_offset_adjust (uint16_t * p_adj_data, uint16_t raw_data, int32_t offset_error)
 {
+    int32_t diff;
+
+    diff = (int32_t) ((int32_t) raw_data - offset_error);
+
     if (offset_error > 0)
     {
-        if (0 > (int32_t) (raw_data - offset_error))
+        if (0 < diff)
         {
-            *p_adj_data = (uint16_t) (raw_data - offset_error);
+            *p_adj_data = diff;
         }
         else
         {
@@ -2296,13 +2311,13 @@ void ctsu_correction_offset_adjust (uint16_t * p_adj_data, uint16_t raw_data, in
     }
     else
     {
-        if (CTSU_COUNT_MAX < (int32_t) (raw_data - offset_error))
+        if (CTSU_COUNT_MAX < diff)
         {
             *p_adj_data = CTSU_COUNT_MAX;
         }
         else
         {
-            *p_adj_data = (uint16_t) (raw_data - offset_error);
+            *p_adj_data = diff;
         }
     }
 }
@@ -2389,7 +2404,7 @@ void ctsu_correction_calc (uint16_t * correction_data, uint16_t raw_data, ctsu_c
 
         /* Since the correction coefficient table is created with the recommended measurement time, */
         /* If the measurement time is different, adjust the value level. */
-        cmp_data = (int32_t) ((raw_data * (CTSU_SNUM_RECOMMEND + 1)) / (p_calc->snum + 1));
+        cmp_data = (int32_t) (((int32_t) raw_data * (CTSU_SNUM_RECOMMEND + 1)) / (p_calc->snum + 1));
 
         /* y = y0 + (y1 - y0) * (x - x0) / (x1 - x0);    [y=coefficient, x=value] */
         if (CTSU_MODE_MUTUAL_CFC_SCAN != p_calc->md)
@@ -2430,7 +2445,7 @@ void ctsu_correction_calc (uint16_t * correction_data, uint16_t raw_data, ctsu_c
 #endif
 
         /* Get output count data */
-        answer = (uint32_t) ((raw_data * coefficient) >> CTSU_SHIFT_AMOUNT);
+        answer = (uint32_t) (((uint32_t) raw_data * (uint32_t) coefficient) >> CTSU_SHIFT_AMOUNT);
 
         /* Value Overflow Check */
         if (CTSU_COUNT_MAX < answer)
@@ -2561,11 +2576,18 @@ void ctsu_correction_exec (ctsu_instance_ctrl_t * const p_instance_ctrl)
   #if (CTSU_CFG_CALIB_RTRIM_SUPPORT == 1)
 
             /* Correction offset current by TSCAP voltage error */
-            multi.offset_error[i] =
-                (int32_t) ((g_ctsu_correction_info.tscap_voltage << CTSU_SHIFT_AMOUNT) / CTSU_CALIB_REF);
-            multi.offset_error[i] =
-                (int32_t) (((multi.offset[i] * (uint32_t) multi.offset_error[i]) >> CTSU_SHIFT_AMOUNT) -
-                           multi.offset[i]);
+            if (0 == g_ctsu_correction_info.tscap_voltage)
+            {
+                multi.offset_error[i] = 0;
+            }
+            else
+            {
+                multi.offset_error[i] =
+                    (int32_t) (((uint32_t) g_ctsu_correction_info.tscap_voltage << CTSU_SHIFT_AMOUNT) / CTSU_CALIB_REF);
+                multi.offset_error[i] =
+                    (int32_t) (((multi.offset[i] * (uint32_t) multi.offset_error[i]) >> CTSU_SHIFT_AMOUNT) -
+                               multi.offset[i]);
+            }
             multi.offset[i] = (multi.offset[i] + (uint32_t) multi.offset_error[i]);
   #endif
  #endif
@@ -2744,11 +2766,13 @@ void ctsu_correction_exec (ctsu_instance_ctrl_t * const p_instance_ctrl)
 void ctsu_correction_multi (ctsu_correction_multi_t * p_multi, uint16_t * p_pri, uint16_t * p_snd)
 {
     uint32_t i;
-    uint16_t pri_calc[CTSU_CFG_NUM_SUMULTI];
-    uint16_t snd_calc[CTSU_CFG_NUM_SUMULTI];
-    uint16_t sumulti[CTSU_CFG_NUM_SUMULTI];
-    uint32_t add_pri;
-    uint32_t add_snd;
+    int32_t  pri_calc[CTSU_CFG_NUM_SUMULTI];
+    int32_t  snd_calc[CTSU_CFG_NUM_SUMULTI];
+    int32_t  sumulti[CTSU_CFG_NUM_SUMULTI];
+    int32_t  pri_total;
+    int32_t  snd_total;
+    int32_t  add_pri;
+    int32_t  add_snd;
  #if CTSU_CFG_NUM_SUMULTI >= 3
     int32_t diff[CTSU_CFG_NUM_SUMULTI];
  #endif
@@ -2764,8 +2788,8 @@ void ctsu_correction_multi (ctsu_correction_multi_t * p_multi, uint16_t * p_pri,
     pri_calc[0] = p_multi->pri[0];
     for (i = 1; i < CTSU_CFG_NUM_SUMULTI; i++)
     {
-        pri_calc[i] =
-            (uint16_t) ((((p_multi->pri[i] + p_multi->offset[i]) * sumulti[0]) / sumulti[i]) - p_multi->offset[0]);
+        pri_total   = (int32_t) (p_multi->pri[i] + p_multi->offset[i]);
+        pri_calc[i] = (int32_t) (((pri_total * sumulti[0]) / sumulti[i]) - (int32_t) p_multi->offset[0]);
     }
 
     if (NULL == p_snd)
@@ -2780,8 +2804,8 @@ void ctsu_correction_multi (ctsu_correction_multi_t * p_multi, uint16_t * p_pri,
         snd_calc[0] = p_multi->snd[0];
         for (i = 1; i < CTSU_CFG_NUM_SUMULTI; i++)
         {
-            snd_calc[i] =
-                (uint16_t) ((((p_multi->snd[i] + p_multi->offset[i]) * sumulti[0]) / sumulti[i]) - p_multi->offset[0]);
+            snd_total   = (int32_t) (p_multi->snd[i] + p_multi->offset[i]);
+            snd_calc[i] = (int32_t) (((snd_total * sumulti[0]) / sumulti[i]) - (int32_t) p_multi->offset[0]);
         }
     }
 
@@ -2789,22 +2813,22 @@ void ctsu_correction_multi (ctsu_correction_multi_t * p_multi, uint16_t * p_pri,
     {
         for (i = 0; i < CTSU_CFG_NUM_SUMULTI; i++)
         {
-            p_pri[i] = pri_calc[i];
+            p_pri[i] = (uint16_t) pri_calc[i];
             if (NULL != p_snd)
             {
-                p_snd[i] = snd_calc[i];
+                p_snd[i] = (uint16_t) snd_calc[i];
             }
         }
     }
     else
     {
  #if CTSU_CFG_NUM_SUMULTI == 1
-        add_pri = (uint32_t) (pri_calc[0]);
-        add_snd = (uint32_t) (snd_calc[0]);
+        add_pri = pri_calc[0];
+        add_snd = snd_calc[0];
  #endif
  #if CTSU_CFG_NUM_SUMULTI == 2
-        add_pri = (uint32_t) (pri_calc[0] + pri_calc[1]);
-        add_snd = (uint32_t) (snd_calc[0] + snd_calc[1]);
+        add_pri = pri_calc[0] + pri_calc[1];
+        add_snd = snd_calc[0] + snd_calc[1];
  #endif
  #if CTSU_CFG_NUM_SUMULTI >= 3
         diff[0] = (snd_calc[1] - pri_calc[1]) - (snd_calc[0] - pri_calc[0]);
@@ -2824,20 +2848,20 @@ void ctsu_correction_multi (ctsu_correction_multi_t * p_multi, uint16_t * p_pri,
         /* Compare with the combination with the other frequency difference (including margin). */
         if ((diff[0] < (diff[1] * 2)) && (diff[0] < ((diff[2] * 3) / 2)))
         {
-            add_pri = (uint32_t) (pri_calc[0] + pri_calc[1]);
-            add_snd = (uint32_t) (snd_calc[0] + snd_calc[1]);
+            add_pri = pri_calc[0] + pri_calc[1];
+            add_snd = snd_calc[0] + snd_calc[1];
         }
         else
         {
             if (diff[1] < diff[2])
             {
-                add_pri = (uint32_t) (pri_calc[0] + pri_calc[2]);
-                add_snd = (uint32_t) (snd_calc[0] + snd_calc[2]);
+                add_pri = pri_calc[0] + pri_calc[2];
+                add_snd = snd_calc[0] + snd_calc[2];
             }
             else
             {
-                add_pri = (uint32_t) (pri_calc[1] + pri_calc[2]);
-                add_snd = (uint32_t) (snd_calc[1] + snd_calc[2]);
+                add_pri = pri_calc[1] + pri_calc[2];
+                add_snd = snd_calc[1] + snd_calc[2];
             }
         }
  #endif
@@ -2934,6 +2958,7 @@ void ctsu_corrcfc_process (ctsu_instance_ctrl_t * const p_instance_ctrl)
     ctsu_corrcfc_measurement(p_instance_ctrl, &g_ctsu_corrcfc_info.base_value[index], 1);
 
     /* Step2 : Measure by inputting each constant current from internal DAC to CFC-ICO. */
+    R_CTSU->CTSUCRB_b.SSCNT     = 0;
     R_CTSU->CTSUCRA_b.LOAD      = 1;
     R_CTSU->CTSUCALIB_b.CCOCLK  = 0;
     R_CTSU->CTSUCALIB_b.CFCMODE = 1;

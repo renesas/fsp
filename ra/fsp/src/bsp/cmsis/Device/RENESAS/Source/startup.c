@@ -31,6 +31,11 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
+#if BSP_TZ_SECURE_BUILD
+ #define BSP_TZ_STACK_SEAL_SIZE    (8U)
+#else
+ #define BSP_TZ_STACK_SEAL_SIZE    (0U)
+#endif
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -80,8 +85,8 @@ void Default_Handler (void)
 }
 
 /* Main stack */
-static uint8_t g_main_stack[BSP_CFG_STACK_MAIN_BYTES] BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT) BSP_PLACE_IN_SECTION(
-    BSP_SECTION_STACK);
+static uint8_t g_main_stack[BSP_CFG_STACK_MAIN_BYTES + BSP_TZ_STACK_SEAL_SIZE] BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT)
+BSP_PLACE_IN_SECTION(BSP_SECTION_STACK);
 
 /* Heap */
 #if (BSP_CFG_HEAP_BYTES > 0)

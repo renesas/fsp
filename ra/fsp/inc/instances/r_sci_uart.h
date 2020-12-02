@@ -93,9 +93,6 @@ typedef struct st_sci_uart_instance_ctrl
     /* Base register for this channel */
     R_SCI0_Type * p_reg;
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;                     // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
     void (* p_callback)(uart_callback_args_t *); // Pointer to callback that is called when a uart_event_t occurs.
     uart_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 

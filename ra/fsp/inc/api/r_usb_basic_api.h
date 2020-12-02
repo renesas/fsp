@@ -128,6 +128,11 @@ FSP_HEADER
 #define USB_EP14                   (0xEU)    ///< End Point Number14
 #define USB_EP15                   (0xFU)    ///< End Point Number15
 
+/* Endpoint Direction */
+#define USB_EP_DIR                 (0x0080U) ///< b7: Endpoint Direction
+#define USB_EP_DIR_IN              (0x0080U) ///< b7: Endpoint Direction In
+#define USB_EP_DIR_OUT             (0x0000U) ///< b7: Endpoint Direction Out
+
 /* Descriptor type  Define */
 #define USB_DT_DEVICE              (0x01U)   ///< Device Descriptor
 #define USB_DT_CONFIGURATION       (0x02U)   ///< Configuration Descriptor

@@ -147,10 +147,6 @@ typedef struct st_spi_instance_ctrl
     uint32_t          count;           ///< Number of Data Frames to transfer (8-bit, 16-bit, 32-bit)
     spi_bit_width_t   bit_width;       ///< Bits per Data frame (8-bit, 16-bit, 32-bit)
 
-#if BSP_TZ_SECURE_BUILD
-    bool callback_is_secure;           // If the callback is in non-secure memory then a security state transistion is required to call p_callback (BLXNS)
-#endif
-
     /* Pointer to callback and optional working memory */
     void (* p_callback)(spi_callback_args_t *);
     spi_callback_args_t * p_callback_memory;

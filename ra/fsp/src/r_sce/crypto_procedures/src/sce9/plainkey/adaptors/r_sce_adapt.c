@@ -124,10 +124,9 @@ fsp_err_t HW_SCE_McuSpecificInit (void)
 
     if (FSP_SUCCESS == iret)
     {
-        iret = HW_SCE_SelfCheck2Sub();
-
         /* Change SCE to little endian mode */
         SCE->REG_1D4H = 0x0000ffff;
+
         if (FSP_SUCCESS == iret)
         {
             iret = HW_SCE_HUK_Load_LCS();
@@ -135,6 +134,12 @@ fsp_err_t HW_SCE_McuSpecificInit (void)
             if (FSP_SUCCESS == iret)
             {
                 iret = HW_SCE_FwIntegrityCheck();
+
+                /* This check is moved from before the endian setting for the updated fastboot procedures */
+                iret = HW_SCE_SelfCheck2Sub();
+
+                /* This check is only needed if RSA 3K or 4K are bing used. */
+                iret = HW_SCE_SelfCheck3Sub();
             }
         }
     }

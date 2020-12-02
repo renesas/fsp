@@ -131,8 +131,7 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
 #if BSP_TZ_SECURE_BUILD
 
     /* If this is a secure build, the callback provided in p_cfg must be secure. */
-    p_ctrl->p_callback_memory  = NULL;
-    p_ctrl->callback_is_secure = true;
+    p_ctrl->p_callback_memory = NULL;
 #endif
 
     /* Initialize control block. */
@@ -228,6 +227,7 @@ fsp_err_t R_ICU_ExternalIrqDisable (external_irq_ctrl_t * const p_api_ctrl)
  * @retval  FSP_SUCCESS                  Callback updated successfully.
  * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
  **********************************************************************************************************************/
 fsp_err_t R_ICU_ExternalIrqCallbackSet (external_irq_ctrl_t * const p_api_ctrl,
                                         void (                    * p_callback)(
@@ -252,20 +252,22 @@ fsp_err_t R_ICU_ExternalIrqCallbackSet (external_irq_ctrl_t * const p_api_ctrl,
     FSP_ASSERT(NULL != p_callback);
 
  #if BSP_TZ_SECURE_BUILD
-    if (!callback_is_secure)
-    {
-        FSP_ASSERT(NULL != p_callback_memory);
-    }
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    external_irq_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                               CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
  #endif
 #endif
 
 #if BSP_TZ_SECURE_BUILD
-    p_ctrl->callback_is_secure = callback_is_secure;
-    p_ctrl->p_callback_memory  = p_callback_memory;
-#endif
-
+    p_ctrl->p_callback_memory = p_callback_memory;
+    p_ctrl->p_callback        = callback_is_secure ? p_callback :
+                                (void (*)(external_irq_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
     p_ctrl->p_callback = p_callback;
-    p_ctrl->p_context  = p_context;
+#endif
+    p_ctrl->p_context = p_context;
 
     return FSP_SUCCESS;
 }
@@ -348,9 +350,8 @@ void r_icu_isr (void)
 #if BSP_TZ_SECURE_BUILD
 
         /* p_callback can point to a secure function or a non-secure function. */
-
         external_irq_callback_args_t args;
-        if (p_ctrl->callback_is_secure)
+        if (!cmse_is_nsfptr(p_ctrl->p_callback))
         {
             /* If p_callback is secure, then the project does not need to change security state. */
             args.channel   = p_ctrl->channel;

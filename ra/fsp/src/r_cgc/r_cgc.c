@@ -283,10 +283,6 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
     FSP_ERROR_RETURN(CGC_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
 
-#if BSP_TZ_SECURE_BUILD
-    p_instance_ctrl->callback_is_secure = true;
-#endif
-
     /* Store the control structure in a private global variable so the oscillation stop detection function can be
      * called from the NMI callback. */
     gp_cgc_ctrl                        = p_instance_ctrl;
@@ -339,6 +335,7 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
  *                                      the input frequency is less than 12.5 MHz.
  * @retval FSP_ERR_NOT_STABILIZED       PLL clock source is not stable.
  * @retval FSP_ERR_PLL_SRC_INACTIVE     PLL clock source is not running.
+ * @retval FSP_ERR_INVALID_STATE        The subclock must be running before activating HOCO with FLL.
  **********************************************************************************************************************/
 fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * const p_clock_cfg)
 {
@@ -372,6 +369,24 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
 
     /* HOCO must be running in low voltage mode. */
     FSP_ASSERT(CGC_CLOCK_CHANGE_STOP != p_clock_cfg->hoco_state);
+ #endif
+ #if BSP_PRV_HOCO_USE_FLL
+
+    /* Determine if HOCO will be started. */
+  #if BSP_PRV_PLL2_SUPPORTED
+    uint8_t start_hoco = (CGC_CLOCK_CHANGE_START == p_clock_cfg->hoco_state) ||
+                         ((CGC_CLOCK_CHANGE_START == p_clock_cfg->pll_state) &&
+                          (CGC_CLOCK_HOCO == p_clock_cfg->pll_cfg.source_clock)) ||
+                         ((CGC_CLOCK_CHANGE_START == p_clock_cfg->pll2_state) &&
+                          (CGC_CLOCK_HOCO == p_clock_cfg->pll2_cfg.source_clock));
+  #else
+    uint8_t start_hoco = (CGC_CLOCK_CHANGE_START == p_clock_cfg->hoco_state) ||
+                         ((CGC_CLOCK_CHANGE_START == p_clock_cfg->pll_state) &&
+                          (CGC_CLOCK_HOCO == p_clock_cfg->pll_cfg.source_clock));
+  #endif
+
+    /* Subclock must be running to use FLL. */
+    FSP_ERROR_RETURN(!(start_hoco && R_SYSTEM->SOSCCR), FSP_ERR_INVALID_STATE);
  #endif
 #endif
 #if BSP_PRV_PLL_SUPPORTED
@@ -463,6 +478,14 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     /* Prerequisite to starting clocks or changing the system clock. */
     r_cgc_pre_change(CGC_PRV_CHANGE_LPM_CGC);
 
+#if BSP_PRV_HOCO_USE_FLL
+    if (CGC_CLOCK_CHANGE_START == p_clock_cfg->hoco_state)
+    {
+        /* If FLL is to be used set FLLCR1 before starting HOCO. */
+        R_SYSTEM->FLLCR1 = 1U;
+    }
+#endif
+
 #if BSP_PRV_PLL_SUPPORTED
     if (CGC_CLOCK_CHANGE_START == p_clock_cfg->pll_state)
     {
@@ -473,6 +496,16 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
         {
             /* Need to start PLL source clock and let it stabilize before starting PLL. */
             r_cgc_clock_change(p_clock_cfg->pll_cfg.source_clock, CGC_CLOCK_CHANGE_START);
+
+ #if BSP_PRV_HOCO_USE_FLL
+            if (CGC_CLOCK_HOCO == p_clock_cfg->pll_cfg.source_clock)
+            {
+                /* If FLL is enabled and HOCO is turned on an additional stabilization wait is required before
+                 * checking the flag and starting the PLL. */
+                R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+            }
+ #endif
+
             FSP_HARDWARE_REGISTER_WAIT(r_cgc_clock_check(p_clock_cfg->pll_cfg.source_clock), FSP_SUCCESS);
         }
     }
@@ -487,6 +520,16 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
         {
             /* Need to start PLL source clock and let it stabilize before starting PLL. */
             r_cgc_clock_change(p_clock_cfg->pll2_cfg.source_clock, CGC_CLOCK_CHANGE_START);
+
+ #if BSP_PRV_HOCO_USE_FLL
+            if (CGC_CLOCK_HOCO == p_clock_cfg->pll2_cfg.source_clock)
+            {
+                /* If FLL is enabled and HOCO is turned on an additional stabilization wait is required before
+                 * checking the flag and starting PLL2. */
+                R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+            }
+ #endif
+
             FSP_HARDWARE_REGISTER_WAIT(r_cgc_clock_check(p_clock_cfg->pll2_cfg.source_clock), FSP_SUCCESS);
         }
     }
@@ -516,6 +559,14 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
             r_cgc_clock_change(clock_to_change, CGC_CLOCK_CHANGE_START);
         }
     }
+
+#if BSP_PRV_HOCO_USE_FLL
+    if (CGC_CLOCK_CHANGE_STOP == p_clock_cfg->hoco_state)
+    {
+        /* If HOCO is disabled then disable FLL as well. */
+        R_SYSTEM->FLLCR1 = 0U;
+    }
+#endif
 
     /* Verify the requested clock is stable if it has a stabilization flag. */
     FSP_HARDWARE_REGISTER_WAIT(r_cgc_clock_check(requested_system_clock), FSP_SUCCESS);
@@ -561,7 +612,7 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     }
 
     /* Reduce the operating speed mode to the optimal setting for these clock configurations and restore the cache to
-     * it's previous state. */
+     * its previous state. */
     r_cgc_post_change(CGC_PRV_CHANGE_LPM_CGC);
 
     return FSP_SUCCESS;
@@ -585,6 +636,7 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
  * @retval FSP_ERR_CLOCK_ACTIVE         PLL configuration cannot be changed while PLL is running.
  * @retval FSP_ERR_OSC_STOP_DET_ENABLED PLL multiplier must be less than 20 if oscillation stop detect is enabled and
  *                                      the input frequency is less than 12.5 MHz.
+ * @retval FSP_ERR_INVALID_STATE        The subclock must be running before activating HOCO with FLL.
  **********************************************************************************************************************/
 fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source, cgc_pll_cfg_t const * const p_pll_cfg)
 {
@@ -618,6 +670,9 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
         err = r_cgc_pll_parameter_check(p_pll_cfg, true);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     }
+ #endif
+ #if BSP_PRV_HOCO_USE_FLL
+    FSP_ERROR_RETURN(!((CGC_CLOCK_HOCO == clock_source) && R_SYSTEM->SOSCCR), FSP_ERR_INVALID_STATE);
  #endif
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
@@ -660,6 +715,14 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
         /* Do nothing. */
     }
  #endif
+#endif
+
+#if BSP_PRV_HOCO_USE_FLL
+    if (CGC_CLOCK_HOCO == clock_source)
+    {
+        /* If FLL is to be used set FLLCR1 before starting HOCO. */
+        R_SYSTEM->FLLCR1 = 1U;
+    }
 #endif
 
     /* Start the clock. */
@@ -730,6 +793,16 @@ fsp_err_t R_CGC_ClockStop (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
     /* Stop the clock. */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
     r_cgc_clock_change(clock_source, CGC_CLOCK_CHANGE_STOP);
+
+#if BSP_PRV_HOCO_USE_FLL
+
+    /* FLL must be disabled after stopping HOCO. */
+    if (CGC_CLOCK_HOCO == clock_source)
+    {
+        R_SYSTEM->FLLCR1 = 0U;
+    }
+#endif
+
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
 
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
@@ -1089,6 +1162,7 @@ fsp_err_t R_CGC_OscStopStatusClear (cgc_ctrl_t * const p_ctrl)
  * @retval  FSP_SUCCESS                  Callback updated successfully.
  * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
  **********************************************************************************************************************/
 fsp_err_t R_CGC_CallbackSet (cgc_ctrl_t * const          p_api_ctrl,
                              void (                    * p_callback)(cgc_callback_args_t *),
@@ -1112,20 +1186,20 @@ fsp_err_t R_CGC_CallbackSet (cgc_ctrl_t * const          p_api_ctrl,
     FSP_ASSERT(NULL != p_callback);
 
  #if BSP_TZ_SECURE_BUILD
-    if (!callback_is_secure)
-    {
-        FSP_ASSERT(NULL != p_callback_memory);
-    }
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    cgc_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                      CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
  #endif
 #endif
 
 #if BSP_TZ_SECURE_BUILD
-
-    /* cmse_check_address_range returns NULL if p_callback is located in secure memory */
-    p_ctrl->callback_is_secure = callback_is_secure;
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(cgc_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
 #endif
-
-    p_ctrl->p_callback        = p_callback;
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
 
@@ -1883,7 +1957,7 @@ static void r_cgc_nmi_internal_callback (bsp_grp_irq_t irq)
 #if BSP_TZ_SECURE_BUILD
 
             /* p_callback can point to a secure function or a non-secure function. */
-            if (gp_cgc_ctrl->callback_is_secure)
+            if (!cmse_is_nsfptr(gp_cgc_ctrl->p_callback))
             {
                 /* If p_callback is secure, then the project does not need to change security state. */
                 gp_cgc_ctrl->p_callback(&args);

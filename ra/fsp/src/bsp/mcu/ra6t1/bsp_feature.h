@@ -103,6 +103,7 @@
 #define BSP_FEATURE_BSP_OFS1_HOCOFRQ_OFFSET               (9U)
 #define BSP_FEATURE_BSP_OSIS_PADDING                      (0U)
 #define BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED        (1U)
+#define BSP_FEATURE_BSP_HAS_DCDC_REGULATOR                (0U)
 #define BSP_FEATURE_BSP_RESET_TRNG                        (0U)
 #define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_NO_RAM_WAITS       (60000000U)  // The maximum frequency allowed without having RAM wait state enabled in SRAMWTSC.
 #define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_ONE_ROM_WAITS      (40000000U)  // The maximum frequency allowed without having one ROM wait cycle.
@@ -118,10 +119,11 @@
 #define BSP_FEATURE_CAN_MCLOCK_ONLY                       (0U)
 #define BSP_FEATURE_CAN_NUM_CHANNELS                      (2U)
 
-#define BSP_FEATURE_CGC_HAS_BCLK                          (1U)
+#define BSP_FEATURE_CGC_HAS_BCLK                          (0U)
 #define BSP_FEATURE_CGC_HAS_FCLK                          (1U)
 #define BSP_FEATURE_CGC_HAS_FLDWAITR                      (0U)
 #define BSP_FEATURE_CGC_HAS_FLWT                          (1U)
+#define BSP_FEATURE_CGC_HAS_FLL                           (1U)
 #define BSP_FEATURE_CGC_HAS_HOCOWTCR                      (1U)
 #define BSP_FEATURE_CGC_HAS_MEMWAIT                       (0U)
 #define BSP_FEATURE_CGC_HAS_PCLKA                         (1U)
