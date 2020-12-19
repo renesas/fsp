@@ -130,12 +130,28 @@
  * with TF-M Secure code's MSP stack
  */
 #define BOOT_TFM_SHARED_DATA_BASE S_RAM_ALIAS_BASE
-#define BOOT_TFM_SHARED_DATA_SIZE (0x3E0)
+/* BOOT_TFM_SHARED_DATA_SIZE is used in the bl2 code as the total area reserved to save the
+ * attestation info. The actual shared data area will be defined by BOOT_TFM_SHARED_DATA_LIMIT
+ * which will contain other items as well. */
+#define BOOT_TFM_SHARED_DATA_SIZE (0x380)
+
 #define BOOT_TFM_SHARED_SEED_BASE (BOOT_TFM_SHARED_DATA_BASE + \
                                     BOOT_TFM_SHARED_DATA_SIZE)
 #define BOOT_TFM_SHARED_SEED_SIZE (0x20)
+
+#define BOOT_TFM_SHARED_HUK_BASE (BOOT_TFM_SHARED_SEED_BASE + \
+                                    BOOT_TFM_SHARED_SEED_SIZE)
+#define BOOT_TFM_SHARED_HUK_SIZE (0x30)
+
+#define BOOT_TFM_SHARED_IAK_BASE (BOOT_TFM_SHARED_HUK_BASE + \
+                                    BOOT_TFM_SHARED_HUK_SIZE)
+#define BOOT_TFM_SHARED_IAK_SIZE (0x30)
+
 #define BOOT_TFM_SHARED_DATA_LIMIT (BOOT_TFM_SHARED_DATA_BASE + \
                                     BOOT_TFM_SHARED_SEED_SIZE + \
+                                    BOOT_TFM_SHARED_HUK_SIZE + \
+                                    BOOT_TFM_SHARED_IAK_SIZE + \
                                     BOOT_TFM_SHARED_DATA_SIZE - 1)
 
+#define BOOT_TFM_SHARED_DATA_TOTAL_SIZE (BOOT_TFM_SHARED_DATA_LIMIT - BOOT_TFM_SHARED_DATA_BASE + 1)
 #endif /* __REGION_DEFS_H__ */

@@ -11,6 +11,7 @@
 #include "Driver_Flash.h"
 #include "region_defs.h"
 #include "bootutil/bootutil_log.h"
+#include "crypto_keys.h"
 
 #include "r_flash_hp.h"
 #include "r_flash_api.h"
@@ -81,11 +82,52 @@ __attribute__((naked)) void boot_clear_bl2_ram_area (void)
 #endif
 
 /*
+ * The below structure contains the hard coded version of the ECDSA P-256 secret key in:
+ * platform/ext/common/template/tfm_initial_attestation_key.pem
+ *
+ * As a P-256 key, the private key is 32 bytes long.
+ *
+ * This key is used to sign the initial attestation token.
+ * The secret key is stored in raw format, without any encoding(ASN.1, COSE).
+ *
+ * #######  DO NOT USE THIS KEY IN PRODUCTION #######
+ */
+
+const iak_data_t iak_data =
+{
+    {
+        0xA9, 0xB4, 0x54, 0xB2, 0x6D, 0x6F, 0x90, 0xA4,
+        0xEA, 0x31, 0x19, 0x35, 0x64, 0xCB, 0xA9, 0x1F,
+        0xEC, 0x6F, 0x9A, 0x00, 0x2A, 0x7D, 0xC0, 0x50,
+        0x4B, 0x92, 0xA1, 0x93, 0x71, 0x34, 0x58, 0x5F
+    },
+    MAX_IAK_BYTES,
+    PSA_ECC_CURVE_SECP_R1
+};
+
+/*
+ * The below structure contains the hard coded HUK
+ * and its size.
+ *
+ * #######  DO NOT USE THIS KEY IN PRODUCTION #######
+ */
+
+const huk_data_t huk_data =
+{
+    {
+        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+        0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
+        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+        0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
+    },
+    MAX_HUK_BYTES
+};
+
+/*
  * The section 'fsp_dtc_vector_table' is reused to store boot data.
  * This is done to avoid creating a BL2 specific linker script.
  */
-static uint8_t g_tfm_shared_data[BOOT_TFM_SHARED_DATA_SIZE] BSP_PLACE_IN_SECTION(".fsp_dtc_vector_table");
-static uint8_t g_tfm_shared_boot_seed[BOOT_TFM_SHARED_SEED_SIZE] BSP_PLACE_IN_SECTION(".fsp_dtc_vector_table");
+uint8_t g_dummy_reserve_for_tfm[BOOT_TFM_SHARED_DATA_TOTAL_SIZE] BSP_PLACE_IN_SECTION(".fsp_dtc_vector_table") = {0};
 
 #define FAW_START_ADDR    (0xFFFC)
 #define FAW_END_ADDR      (0x200000)
@@ -122,7 +164,9 @@ static void flash_FAW_Set (uint32_t start_addr, uint32_t end_addr)
 /* bootloader platform-specific HW intialization */
 int32_t boot_platform_init (void)
 {
-    int32_t result;
+    int32_t      result;
+    iak_data_t * p_initial_attestation = (iak_data_t *) BOOT_TFM_SHARED_IAK_BASE;
+    huk_data_t * p_huk                 = (huk_data_t *) BOOT_TFM_SHARED_HUK_BASE;
 
     result = FLASH_DEV_NAME.Initialize(NULL);
     if (ARM_DRIVER_OK != result)
@@ -130,8 +174,8 @@ int32_t boot_platform_init (void)
         return result;
     }
 
-    memset(g_tfm_shared_data, 0x0, BOOT_TFM_SHARED_DATA_SIZE);
-    memset(g_tfm_shared_boot_seed, 0x0, BOOT_TFM_SHARED_SEED_SIZE);
+    /* This line is necessary to prevent the compiler from optimizing out this area */
+    memset(g_dummy_reserve_for_tfm, 0x0, BOOT_TFM_SHARED_DATA_TOTAL_SIZE);
 
     /* Set the FAW to lock the Secure code and data region */
 
@@ -146,7 +190,14 @@ int32_t boot_platform_init (void)
     result = psa_crypto_init();
     if (PSA_SUCCESS == result)
     {
-        result = psa_generate_random(g_tfm_shared_boot_seed, BOOT_TFM_SHARED_SEED_SIZE);
+        result = psa_generate_random((uint8_t *) BOOT_TFM_SHARED_SEED_BASE, BOOT_TFM_SHARED_SEED_SIZE);
+    }
+
+    /* Copy the IAK and HUK from bootloader ROM into the shared RAM area for the application */
+    if (PSA_SUCCESS == result)
+    {
+        memcpy((uint8_t *) p_huk, (uint8_t *) &huk_data, sizeof(huk_data));
+        memcpy((uint8_t *) p_initial_attestation, (uint8_t *) &iak_data, sizeof(iak_data));
     }
 
     return result;
