@@ -10,7 +10,7 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 
 ### Current Release
 
-[FSP v2.2.0](https://github.com/renesas/fsp/releases/tag/v2.2.0)
+[FSP v2.2.1](https://github.com/renesas/fsp/releases/tag/v2.2.1)
 
 ### Supported RA MCU Kits
 
