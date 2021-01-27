@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,7 +92,6 @@ $(document).ready(function(){initNavTree('group___k_e_y_m_a_t_r_i_x___a_p_i.html
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
@@ -118,17 +117,6 @@ Data Structures</h2></td></tr>
 <tr class="separator:structkeymatrix__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structkeymatrix__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__instance__t">keymatrix_instance_t</a></td></tr>
 <tr class="separator:structkeymatrix__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaf7b361d959102a7e9918d1c42bae69ea"><td class="memItemLeft" align="right" valign="top"><a id="gaf7b361d959102a7e9918d1c42bae69ea"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#gaf7b361d959102a7e9918d1c42bae69ea">KEYMATRIX_API_VERSION_MAJOR</a></td></tr>
-<tr class="memdesc:gaf7b361d959102a7e9918d1c42bae69ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">KEY MATRIX API version number (Major) <br /></td></tr>
-<tr class="separator:gaf7b361d959102a7e9918d1c42bae69ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga230143b15ac4b8648c871711eb16ec39"><td class="memItemLeft" align="right" valign="top"><a id="ga230143b15ac4b8648c871711eb16ec39"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#ga230143b15ac4b8648c871711eb16ec39">KEYMATRIX_API_VERSION_MINOR</a></td></tr>
-<tr class="memdesc:ga230143b15ac4b8648c871711eb16ec39"><td class="mdescLeft">&#160;</td><td class="mdescRight">KEY MATRIX API version number (Minor) <br /></td></tr>
-<tr class="separator:ga230143b15ac4b8648c871711eb16ec39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -240,8 +228,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a09fb58639b5e8570a78cab673e2bef16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e29688d8bba08a050b5af70ddf63fb9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#a3e29688d8bba08a050b5af70ddf63fb9">close</a> )(<a class="el" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#ga74eaead2fb2e21ea4242f3318df0b7a1">keymatrix_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a3e29688d8bba08a050b5af70ddf63fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01a3d8938cd8e088f833896a16bec6db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___k_e_y_m_a_t_r_i_x___a_p_i.html#a01a3d8938cd8e088f833896a16bec6db">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:a01a3d8938cd8e088f833896a16bec6db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="aaf093a3b501722a78d23a7fe3d39782c"></a>
@@ -341,30 +327,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a01a3d8938cd8e088f833896a16bec6db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01a3d8938cd8e088f833896a16bec6db">&#9670;&nbsp;</a></span>versionGet</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  keymatrix_api_t::versionGet) (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get version and store it in provided pointer p_version. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___k_i_n_t.html#ga393ed6d6b790522be1a1e200cbc6b7a1">R_KINT_VersionGet()</a></li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_version</td><td>Code and API version used. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 
 </div>
 </div>
@@ -451,7 +413,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

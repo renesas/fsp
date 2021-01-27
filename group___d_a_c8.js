@@ -13,6 +13,5 @@ var group___d_a_c8 =
     [ "R_DAC8_Close", "group___d_a_c8.html#ga1eaf239636a9b783a3018a8bf7dca406", null ],
     [ "R_DAC8_Write", "group___d_a_c8.html#gabd22339f6611161998fcde2ed0d42048", null ],
     [ "R_DAC8_Start", "group___d_a_c8.html#ga34e56069033c9baa3ece8c3f899b3602", null ],
-    [ "R_DAC8_Stop", "group___d_a_c8.html#ga3b61ad58ee313d0aac5fc667e87e7f5d", null ],
-    [ "R_DAC8_VersionGet", "group___d_a_c8.html#ga6543b875e07078a4a4460df5b3cf46d5", null ]
+    [ "R_DAC8_Stop", "group___d_a_c8.html#ga3b61ad58ee313d0aac5fc667e87e7f5d", null ]
 ];

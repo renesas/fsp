@@ -48,8 +48,7 @@ var group___r_t_c___a_p_i =
       [ "periodicIrqRateSet", "group___r_t_c___a_p_i.html#a5a13e1acf6e07bfd87dc81bf65272951", null ],
       [ "errorAdjustmentSet", "group___r_t_c___a_p_i.html#ae1635364719444ad65541ce00953983e", null ],
       [ "callbackSet", "group___r_t_c___a_p_i.html#a63a958dd039662f8d13d38a64da9b61e", null ],
-      [ "infoGet", "group___r_t_c___a_p_i.html#a7a6c940847c6f730a5c5df3355dca1eb", null ],
-      [ "versionGet", "group___r_t_c___a_p_i.html#a2f2ed64321f4c6fad71bc5550eceedd5", null ]
+      [ "infoGet", "group___r_t_c___a_p_i.html#a7a6c940847c6f730a5c5df3355dca1eb", null ]
     ] ],
     [ "rtc_instance_t", "group___r_t_c___a_p_i.html#structrtc__instance__t", [
       [ "p_ctrl", "group___r_t_c___a_p_i.html#acc669b027e055903ca6effb673182925", null ],

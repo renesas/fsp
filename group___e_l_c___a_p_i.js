@@ -10,8 +10,7 @@ var group___e_l_c___a_p_i =
       [ "linkSet", "group___e_l_c___a_p_i.html#a05af30d0ca7743f5a033b10d664ded59", null ],
       [ "linkBreak", "group___e_l_c___a_p_i.html#aded8ab0cdd59a636f2a5cc60313c54c5", null ],
       [ "enable", "group___e_l_c___a_p_i.html#a5ec2e92543d9a74fd4e33b20b9782ef5", null ],
-      [ "disable", "group___e_l_c___a_p_i.html#a91eea8824e8ea3d204860d16abb8d78a", null ],
-      [ "versionGet", "group___e_l_c___a_p_i.html#a682f1515dbb329a8bfe3dd4f3b689192", null ]
+      [ "disable", "group___e_l_c___a_p_i.html#a91eea8824e8ea3d204860d16abb8d78a", null ]
     ] ],
     [ "elc_instance_t", "group___e_l_c___a_p_i.html#structelc__instance__t", [
       [ "p_ctrl", "group___e_l_c___a_p_i.html#a666a726dd9209856799d03b62b703029", null ],

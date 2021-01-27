@@ -13,8 +13,7 @@ var group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i =
       [ "parameterGet", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#aef7b7b1ab3f8f89183e27c6b74ed10ef", null ],
       [ "currentGet", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a1a8766712000f5de24429b03b328017a", null ],
       [ "phaseVoltageGet", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a2b285802d4040280d7b5a5fe65aae795", null ],
-      [ "parameterUpdate", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ad16a2f88a5bf5d1974bc1486ee797b8d", null ],
-      [ "versionGet", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a8cc9b76a7a821dd05b18d20df1db0587", null ]
+      [ "parameterUpdate", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ad16a2f88a5bf5d1974bc1486ee797b8d", null ]
     ] ],
     [ "motor_current_instance_t", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__instance__t", [
       [ "p_ctrl", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#aa780adf7215404b78cd5bf7fb873c9d7", null ],

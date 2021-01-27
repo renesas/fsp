@@ -11,6 +11,5 @@ var group___m_o_t_o_r___c_u_r_r_e_n_t =
     [ "RM_MOTOR_CURRENT_ParameterGet", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaa4264f3fac4a8f014d6b6815643ddbda", null ],
     [ "RM_MOTOR_CURRENT_CurrentGet", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga89cc6bce8ed53d1216ca2c6d8c882bea", null ],
     [ "RM_MOTOR_CURRENT_PhaseVoltageGet", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga3024deb6496b68e238306a22bc2eb251", null ],
-    [ "RM_MOTOR_CURRENT_ParameterUpdate", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#gafba5f225ac4f28d7224d71969ab4c4c4", null ],
-    [ "RM_MOTOR_CURRENT_VersionGet", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#gafc2fac98f2344a29b860b956d2f85958", null ]
+    [ "RM_MOTOR_CURRENT_ParameterUpdate", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#gafba5f225ac4f28d7224d71969ab4c4c4", null ]
 ];

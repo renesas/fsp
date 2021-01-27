@@ -13,8 +13,7 @@ var group___c_r_c___a_p_i =
       [ "crcResultGet", "group___c_r_c___a_p_i.html#a0c748a9f3b2eb21585c97e3493f285ac", null ],
       [ "snoopEnable", "group___c_r_c___a_p_i.html#a4d4efcfb06b59c92801320f31e8f2eb7", null ],
       [ "snoopDisable", "group___c_r_c___a_p_i.html#ab171c85217e275bda7426309bd832b02", null ],
-      [ "calculate", "group___c_r_c___a_p_i.html#ababb93aa2ede5ba3d5750bd3203ce7e3", null ],
-      [ "versionGet", "group___c_r_c___a_p_i.html#af01465b831364720a3327ce6ec9fe05d", null ]
+      [ "calculate", "group___c_r_c___a_p_i.html#ababb93aa2ede5ba3d5750bd3203ce7e3", null ]
     ] ],
     [ "crc_instance_t", "group___c_r_c___a_p_i.html#structcrc__instance__t", [
       [ "p_ctrl", "group___c_r_c___a_p_i.html#a43ca783a75a91815659195f46717b4ca", null ],

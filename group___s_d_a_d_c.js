@@ -89,6 +89,5 @@ var group___s_d_a_d_c =
     [ "R_SDADC_Read32", "group___s_d_a_d_c.html#ga77dc084a35379f65d2e2084e9a9c5806", null ],
     [ "R_SDADC_OffsetSet", "group___s_d_a_d_c.html#gaf89d5f194cf841e12f1db6f869a4cf18", null ],
     [ "R_SDADC_Calibrate", "group___s_d_a_d_c.html#gab365571e4e0d3ab6ae46acd4fb558a5b", null ],
-    [ "R_SDADC_Close", "group___s_d_a_d_c.html#gacd3903592611777a4bdd0bf0e6488da8", null ],
-    [ "R_SDADC_VersionGet", "group___s_d_a_d_c.html#ga9ca79207c8bc1b37ec4d10a41db10c0d", null ]
+    [ "R_SDADC_Close", "group___s_d_a_d_c.html#gacd3903592611777a4bdd0bf0e6488da8", null ]
 ];

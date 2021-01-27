@@ -12,6 +12,5 @@ var group___s_d_h_i =
     [ "R_SDHI_StatusGet", "group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90", null ],
     [ "R_SDHI_Erase", "group___s_d_h_i.html#gad954571b08da622a4b232680190b4313", null ],
     [ "R_SDHI_CallbackSet", "group___s_d_h_i.html#ga78d9f9f873c52843f778fd700ef38936", null ],
-    [ "R_SDHI_Close", "group___s_d_h_i.html#ga76e778c7c058c3ca09f63f05c30d00c1", null ],
-    [ "R_SDHI_VersionGet", "group___s_d_h_i.html#ga2d665993f8b7841e81d81481fd1686fe", null ]
+    [ "R_SDHI_Close", "group___s_d_h_i.html#ga76e778c7c058c3ca09f63f05c30d00c1", null ]
 ];

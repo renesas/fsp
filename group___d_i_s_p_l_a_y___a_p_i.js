@@ -113,8 +113,7 @@ var group___d_i_s_p_l_a_y___a_p_i =
       [ "correction", "group___d_i_s_p_l_a_y___a_p_i.html#a33e37feda5af926e37370700569d0450", null ],
       [ "clut", "group___d_i_s_p_l_a_y___a_p_i.html#a5a2c9cd2bae48a2a69da0bbc45cb340f", null ],
       [ "clutEdit", "group___d_i_s_p_l_a_y___a_p_i.html#adf095eb456db9e413a39ce5cb6042ced", null ],
-      [ "statusGet", "group___d_i_s_p_l_a_y___a_p_i.html#a58901881db804c805aa9dbe363200393", null ],
-      [ "versionGet", "group___d_i_s_p_l_a_y___a_p_i.html#aa3baf9d0678a5499e2960cf3137d17ff", null ]
+      [ "statusGet", "group___d_i_s_p_l_a_y___a_p_i.html#a58901881db804c805aa9dbe363200393", null ]
     ] ],
     [ "display_instance_t", "group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__instance__t", [
       [ "p_ctrl", "group___d_i_s_p_l_a_y___a_p_i.html#a793d312d7e6559d3a1874de04c43f4c6", null ],

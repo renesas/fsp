@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -125,8 +125,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga499ee5459a9adb90cf73dd659ae29b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabbe61b0c767174654b68bcc55fc97fed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#gabbe61b0c767174654b68bcc55fc97fed">R_AGT_CallbackSet</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:gabbe61b0c767174654b68bcc55fc97fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad6d600521cfd1134e1fd5cd5fefe2819"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_g_t.html#gad6d600521cfd1134e1fd5cd5fefe2819">R_AGT_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:gad6d600521cfd1134e1fd5cd5fefe2819"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the AGT peripheral on RA MCUs. This module implements the <a class="el" href="group___t_i_m_e_r___a_p_i.html">Timer Interface</a>. </p>
@@ -220,7 +218,9 @@ PWM</li>
 <tr>
 <td>General &gt; Period</td><td>Value must be non-negative</td><td>0x10000 </td><td>Specify the timer period based on the selected unit.<br />
 <br />
-When the unit is set to 'Raw Counts', setting the period to 0x10000 results in the maximum period at the lowest divisor (fastest timer tick). Set the period to 0x10000 for a free running timer, pulse width measurement or pulse period measurement. Setting the period higher will automatically select a higher divider; the period can be set up to 0x80000 when counting from PCLKB or 0x800000 when counting from LOCO/subclock, which will use a divider of 8 or 128 respectively with the maximum period. </td></tr>
+When the unit is set to 'Raw Counts', setting the period to 0x10000 results in the maximum period at the lowest divisor (fastest timer tick). Set the period to 0x10000 for a free running timer, pulse width measurement or pulse period measurement. Setting the period higher will automatically select a higher divider; the period can be set up to 0x80000 when counting from PCLKB or 0x800000 when counting from LOCO/subclock, which will use a divider of 8 or 128 respectively with the maximum period.<br />
+<br />
+If the requested period cannot be achieved, the settings with the largest possible period that is less than or equal to the requested period are used. The theoretical calculated period is printed in a comment in the <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> structure. </td></tr>
 <tr>
 <td>General &gt; Period Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1098,39 +1098,13 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
 
 </div>
 </div>
-<a id="gad6d600521cfd1134e1fd5cd5fefe2819"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad6d600521cfd1134e1fd5cd5fefe2819">&#9670;&nbsp;</a></span>R_AGT_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_AGT_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sets driver version based on compile time macros. Implements <a class="el" href="group___t_i_m_e_r___a_p_i.html#afd486e90a2c3214bdf156ab47560d236">timer_api_t::versionGet</a>.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Version in p_version. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_version is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

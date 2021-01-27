@@ -28,8 +28,7 @@ var group___p_d_c___a_p_i =
     [ "pdc_api_t", "group___p_d_c___a_p_i.html#structpdc__api__t", [
       [ "open", "group___p_d_c___a_p_i.html#a8990d4fe3eedd0988cd4f1398015db41", null ],
       [ "close", "group___p_d_c___a_p_i.html#aa4d12908591f162b73df01012da87156", null ],
-      [ "captureStart", "group___p_d_c___a_p_i.html#a110d0725d82910e086afb31056378b2b", null ],
-      [ "versionGet", "group___p_d_c___a_p_i.html#aa978d8004af08ba44e055f8140eb05b7", null ]
+      [ "captureStart", "group___p_d_c___a_p_i.html#a110d0725d82910e086afb31056378b2b", null ]
     ] ],
     [ "pdc_instance_t", "group___p_d_c___a_p_i.html#structpdc__instance__t", [
       [ "p_ctrl", "group___p_d_c___a_p_i.html#a9fd6064cfb76ba066ba1e0fe4303baa4", null ],

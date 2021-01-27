@@ -52,8 +52,6 @@ var searchData=
   ['usb_20_28r_5fusb_5fbasic_29',['USB (r_usb_basic)',['../group___u_s_b.html',1,'']]],
   ['usb_20interface',['USB Interface',['../group___u_s_b___a_p_i.html',1,'']]],
   ['usb_5fapi_5ft',['usb_api_t',['../group___u_s_b___a_p_i.html#structusb__api__t',1,'']]],
-  ['usb_5fapi_5fversion_5fmajor',['USB_API_VERSION_MAJOR',['../group___u_s_b___a_p_i.html#ga38294965ef266ae12bd57803aacbec9a',1,'r_usb_basic_api.h']]],
-  ['usb_5fapi_5fversion_5fminor',['USB_API_VERSION_MINOR',['../group___u_s_b___a_p_i.html#gaec0b78dd4858a6e50c460c170851b383',1,'r_usb_basic_api.h']]],
   ['usb_5fatapi_5fformat_5funit',['USB_ATAPI_FORMAT_UNIT',['../group___u_s_b___h_m_s_c___a_p_i.html#gac5b28f1be9ca57fc904f9c93266a594da7779aea8021a735586ad28a6d77ae837',1,'r_usb_hmsc_api.h']]],
   ['usb_5fatapi_5finquiry',['USB_ATAPI_INQUIRY',['../group___u_s_b___h_m_s_c___a_p_i.html#gac5b28f1be9ca57fc904f9c93266a594da0b050e0e07f619e41aa97177c912ea23',1,'r_usb_hmsc_api.h']]],
   ['usb_5fatapi_5fmode_5fselect10',['USB_ATAPI_MODE_SELECT10',['../group___u_s_b___h_m_s_c___a_p_i.html#gac5b28f1be9ca57fc904f9c93266a594da6174baf6b2a97463908ef798074251b9',1,'r_usb_hmsc_api.h']]],

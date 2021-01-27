@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -118,8 +118,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga6e0f357923c34057c8c938a52f6e8da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga311898f6b0ddd44d9b4c1b34defb0cf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#ga311898f6b0ddd44d9b4c1b34defb0cf4">R_RTC_InfoGet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__info__t">rtc_info_t</a> *const p_rtc_info)</td></tr>
 <tr class="separator:ga311898f6b0ddd44d9b4c1b34defb0cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa697c17bba28577f3c1708356f7d94cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#gaa697c17bba28577f3c1708356f7d94cb">R_RTC_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *version)</td></tr>
-<tr class="separator:gaa697c17bba28577f3c1708356f7d94cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa6b50d916a9243792c0ea8b13744d25f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#gaa6b50d916a9243792c0ea8b13744d25f">R_RTC_CallbackSet</a> (<a class="el" href="group___r_t_c___a_p_i.html#ga324429d0f16e2a72abae17610d776f0e">rtc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:gaa6b50d916a9243792c0ea8b13744d25f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -649,33 +647,6 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="gaa697c17bba28577f3c1708356f7d94cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa697c17bba28577f3c1708356f7d94cb">&#9670;&nbsp;</a></span>R_RTC_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RTC_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get driver version based on compile time macros.</p>
-<p>Implements <a class="el" href="group___r_t_c___a_p_i.html#a2f2ed64321f4c6fad71bc5550eceedd5">rtc_api_t::versionGet</a></p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful close. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_version is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gaa6b50d916a9243792c0ea8b13744d25f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa6b50d916a9243792c0ea8b13744d25f">&#9670;&nbsp;</a></span>R_RTC_CallbackSet()</h2>
 
@@ -732,7 +703,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

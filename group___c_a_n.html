@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -111,8 +111,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga6c032135d3ee684c327e1ca135f3550f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gace90c8d14d728fd8e58943f258eb2bea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#gace90c8d14d728fd8e58943f258eb2bea">R_CAN_CallbackSet</a> (<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:gace90c8d14d728fd8e58943f258eb2bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga70077d910115f1a605565eb8ff785d4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#ga70077d910115f1a605565eb8ff785d4b">R_CAN_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const version)</td></tr>
-<tr class="separator:ga70077d910115f1a605565eb8ff785d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the CAN peripheral on RA MCUs. This module implements the <a class="el" href="group___c_a_n___a_p_i.html">CAN Interface</a>. </p>
@@ -191,7 +189,9 @@ Extended ID Mode</li>
 <tr>
 <td>Baud Rate Settings &gt; Auto-generated Settings &gt; Sample-Point (%)</td><td>Must be a valid integer between 0 and 100. Ignore when Override Baud Settings is Enabled.</td><td>75 </td><td>Sample-Point = (TSEG1 + 1) / (TSEG1 + TSEG2 + 1). </td></tr>
 <tr>
-<td>Baud Rate Settings &gt; Auto-generated Settings &gt; CAN Baud Rate (Hz)</td><td>Must be a valid integer configurable upto maximum 1MHz. Ignore when Override Baud Settings is Enabled.</td><td>500000 </td><td>Specify baud rate in Hz. </td></tr>
+<td>Baud Rate Settings &gt; Auto-generated Settings &gt; CAN Baud Rate (Hz)</td><td>Must be a valid integer configurable upto maximum 1MHz. Ignore when Override Baud Settings is Enabled.</td><td>500000 </td><td>Specify baud rate in Hz.<br />
+<br />
+If the requested baud rate cannot be achieved, the settings with the largest possible baud rate that is less than or equal to the requested baud rate is used. If multiple combinations would result in the best baud rate, the combination with the least absolute error for the ratio is chosen. The theoretical calculated baud rate and ratio are printed in a comment in the generated <a class="el" href="group___c_a_n___a_p_i.html#structcan__bit__timing__cfg__t">can_bit_timing_cfg_t</a> structure. </td></tr>
 <tr>
 <td>Baud Rate Settings &gt; Override Auto-generated Settings &gt; Override Baud Settings</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -1098,38 +1098,13 @@ Examples</h1>
 
 </div>
 </div>
-<a id="ga70077d910115f1a605565eb8ff785d4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga70077d910115f1a605565eb8ff785d4b">&#9670;&nbsp;</a></span>R_CAN_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_CAN_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get CAN module code and API versions. </p><dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Operation succeeded. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer presented note This function is reentrant. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -18,6 +18,5 @@ var group___f_l_a_s_h___h_p =
     [ "R_FLASH_HP_UpdateFlashClockFreq", "group___f_l_a_s_h___h_p.html#gad766079d801d722527eb6834fc662e8a", null ],
     [ "R_FLASH_HP_StartUpAreaSelect", "group___f_l_a_s_h___h_p.html#ga95b5a01a9c462a38f52397315a346a3e", null ],
     [ "R_FLASH_HP_CallbackSet", "group___f_l_a_s_h___h_p.html#ga2932aac9082f6418d518b9cbc7cdef01", null ],
-    [ "R_FLASH_HP_VersionGet", "group___f_l_a_s_h___h_p.html#ga35f8f3a5113959a79a551cb6f0e1b808", null ],
     [ "R_FLASH_HP_InfoGet", "group___f_l_a_s_h___h_p.html#ga3335f3f8b174db9b86b3773993f341c6", null ]
 ];

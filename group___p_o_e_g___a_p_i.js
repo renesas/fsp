@@ -22,8 +22,7 @@ var group___p_o_e_g___a_p_i =
       [ "callbackSet", "group___p_o_e_g___a_p_i.html#a7d01f09a832b9940b264b0cf10a3863c", null ],
       [ "outputDisable", "group___p_o_e_g___a_p_i.html#afe1feb1a5288478eea8d339ffaa1c68e", null ],
       [ "reset", "group___p_o_e_g___a_p_i.html#a5765dcf518892b71b73b5ae38942bd7f", null ],
-      [ "close", "group___p_o_e_g___a_p_i.html#a1576cf3362e4341bf14ec8ba9592abc4", null ],
-      [ "versionGet", "group___p_o_e_g___a_p_i.html#aecb9edd3331b69522f5b519f56f20448", null ]
+      [ "close", "group___p_o_e_g___a_p_i.html#a1576cf3362e4341bf14ec8ba9592abc4", null ]
     ] ],
     [ "poeg_instance_t", "group___p_o_e_g___a_p_i.html#structpoeg__instance__t", [
       [ "p_ctrl", "group___p_o_e_g___a_p_i.html#a475ca15f8e94a914ea5889e66b4d5ccc", null ],

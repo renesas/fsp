@@ -10,6 +10,5 @@ var group___e_t_h_e_r___p_h_y =
     [ "R_ETHER_PHY_Close", "group___e_t_h_e_r___p_h_y.html#ga6a4f3bdcd321faef43008379b2065c4b", null ],
     [ "R_ETHER_PHY_StartAutoNegotiate", "group___e_t_h_e_r___p_h_y.html#gaca73174d76fd87100066407a8ff13147", null ],
     [ "R_ETHER_PHY_LinkPartnerAbilityGet", "group___e_t_h_e_r___p_h_y.html#ga02b4fcbbb5e863cb759b610a7dc992bd", null ],
-    [ "R_ETHER_PHY_LinkStatusGet", "group___e_t_h_e_r___p_h_y.html#ga13e3a39ef86ed3f62805963c55442e03", null ],
-    [ "R_ETHER_PHY_VersionGet", "group___e_t_h_e_r___p_h_y.html#gadf6c0ab632cd139e0ba1f4d576c6b096", null ]
+    [ "R_ETHER_PHY_LinkStatusGet", "group___e_t_h_e_r___p_h_y.html#ga13e3a39ef86ed3f62805963c55442e03", null ]
 ];

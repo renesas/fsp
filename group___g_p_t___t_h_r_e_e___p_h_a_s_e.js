@@ -7,6 +7,5 @@ var group___g_p_t___t_h_r_e_e___p_h_a_s_e =
     [ "R_GPT_THREE_PHASE_Reset", "group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga4d18442f70dc7f5e314d50b5e9328c4c", null ],
     [ "R_GPT_THREE_PHASE_DutyCycleSet", "group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga17a5ead483eb9c65c1c0e6aae4e968b0", null ],
     [ "R_GPT_THREE_PHASE_CallbackSet", "group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga594f201f422da410934d30f603b14d25", null ],
-    [ "R_GPT_THREE_PHASE_Close", "group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga167be16a2fd664ff09a47e4bb200b175", null ],
-    [ "R_GPT_THREE_PHASE_VersionGet", "group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga7b7215b57efb76b5eabed6a781727857", null ]
+    [ "R_GPT_THREE_PHASE_Close", "group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga167be16a2fd664ff09a47e4bb200b175", null ]
 ];

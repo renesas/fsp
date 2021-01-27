@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -111,8 +111,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga9980c52ccbe2e8e2f4e21888ca7a0d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga80b7c1f5e687731bbc3de8df267a1c15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_p_i.html#ga80b7c1f5e687731bbc3de8df267a1c15">R_SCI_SPI_Close</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga80b7c1f5e687731bbc3de8df267a1c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ca04d5041e7cdb94ef2655a78e11e8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_p_i.html#ga5ca04d5041e7cdb94ef2655a78e11e8a">R_SCI_SPI_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
-<tr class="separator:ga5ca04d5041e7cdb94ef2655a78e11e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac932bfc8adfb704b0c4dc6c45d8042fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_p_i.html#gac932bfc8adfb704b0c4dc6c45d8042fc">R_SCI_SPI_CalculateBitrate</a> (uint32_t bitrate, <a class="el" href="structsci__spi__div__setting__t.html">sci_spi_div_setting_t</a> *sclk_div, bool use_mddr)</td></tr>
 <tr class="separator:gac932bfc8adfb704b0c4dc6c45d8042fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -232,7 +230,9 @@ LSB First</li>
 <tr>
 <td>Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the error interrupt priority. </td></tr>
 <tr>
-<td>Bitrate</td><td>Value must be an integer greater than 0</td><td>8000000 </td><td>Enter the desired bitrate. </td></tr>
+<td>Bitrate</td><td>Value must be an integer greater than 0</td><td>8000000 </td><td>Enter the desired bitrate.<br />
+<br />
+If the requested bitrate cannot be achieved, the settings with the largest possible value that is less than or equal to the requested bitrate is used. The theoretical bitrate is printed in a comment in the generated <a class="el" href="structsci__spi__extended__cfg__t.html">sci_spi_extended_cfg_t</a> structure. </td></tr>
 <tr>
 <td>Bitrate Modulation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -252,9 +252,13 @@ Clock Configuration</h2>
 <tr>
 <td>RA2A1</td><td>PCLKB</td></tr>
 <tr>
+<td>RA2E1</td><td>PCLKB</td></tr>
+<tr>
 <td>RA2L1</td><td>PCLKB</td></tr>
 <tr>
 <td>RA4M1</td><td>PCLKA</td></tr>
+<tr>
+<td>RA4M2</td><td>PCLKA</td></tr>
 <tr>
 <td>RA4M3</td><td>PCLKA</td></tr>
 <tr>
@@ -684,37 +688,6 @@ Examples</h1>
 
 </div>
 </div>
-<a id="ga5ca04d5041e7cdb94ef2655a78e11e8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5ca04d5041e7cdb94ef2655a78e11e8a">&#9670;&nbsp;</a></span>R_SCI_SPI_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_SPI_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the version information of the underlying driver. Implements <a class="el" href="group___s_p_i___a_p_i.html#a0f9ed0d51f93ea3630a5f5582604f0e5">spi_api_t::versionGet</a>. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p_version</td><td>Pointer to version structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful version get. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_version is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gac932bfc8adfb704b0c4dc6c45d8042fc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gac932bfc8adfb704b0c4dc6c45d8042fc">&#9670;&nbsp;</a></span>R_SCI_SPI_CalculateBitrate()</h2>
 
@@ -772,7 +745,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

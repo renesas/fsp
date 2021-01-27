@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,8 +110,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga1d62e16ee0c22a4ca2c3853ec81c7928"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0b41824f40d6c66c59a6c5ad908cbdce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___j_p_e_g.html#ga0b41824f40d6c66c59a6c5ad908cbdce">R_JPEG_Close</a> (<a class="el" href="group___j_p_e_g___a_p_i.html#gadcda3a404659199f5fc9b90a8eb4b543">jpeg_ctrl_t</a> *p_api_ctrl)</td></tr>
 <tr class="separator:ga0b41824f40d6c66c59a6c5ad908cbdce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2289e232b2c03439069ce49af01b5eaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___j_p_e_g.html#ga2289e232b2c03439069ce49af01b5eaa">R_JPEG_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
-<tr class="separator:ga2289e232b2c03439069ce49af01b5eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6cff298a8d044d4a7ea04c577a9170ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___j_p_e_g.html#ga6cff298a8d044d4a7ea04c577a9170ca">R_JPEG_EncodeImageSizeSet</a> (<a class="el" href="group___j_p_e_g___a_p_i.html#gadcda3a404659199f5fc9b90a8eb4b543">jpeg_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___j_p_e_g___a_p_i.html#structjpeg__encode__image__size__t">jpeg_encode_image_size_t</a> *p_image_size)</td></tr>
 <tr class="separator:ga6cff298a8d044d4a7ea04c577a9170ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga21a77d572299550b56a4f5c39757612e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___j_p_e_g.html#ga21a77d572299550b56a4f5c39757612e">R_JPEG_DecodeLinesDecodedGet</a> (<a class="el" href="group___j_p_e_g___a_p_i.html#gadcda3a404659199f5fc9b90a8eb4b543">jpeg_ctrl_t</a> *const p_api_ctrl, uint32_t *const p_lines)</td></tr>
@@ -319,6 +317,7 @@ Minimum Coded Unit (MCU)</h3>
 <tr>
 <td>Y'CbCr 4:2:0 </td><td>16 pixels </td><td>16 lines </td></tr>
 </table>
+<dl class="section note"><dt>Note</dt><dd>Because encoding is limited to Y'CbCr 4:2:2, raw pixel input data must always be in whole increments of 16x8 pixels.</dd></dl>
 <h3><a class="anchor" id="r-jpeg-limitations-encode-format"></a>
 Encoding Input Format</h3>
 <p>The encoding unit only supports Y'CbCr 4:2:2 input. Raw RGB888 data can be converted to this format as follows:</p>
@@ -660,32 +659,6 @@ The JPEG decoding operation automatically starts after both the input buffer and
 
 </div>
 </div>
-<a id="ga2289e232b2c03439069ce49af01b5eaa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2289e232b2c03439069ce49af01b5eaa">&#9670;&nbsp;</a></span>R_JPEG_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_JPEG_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the version of the JPEG Codec driver.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Version number returned successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_version is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga6cff298a8d044d4a7ea04c577a9170ca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga6cff298a8d044d4a7ea04c577a9170ca">&#9670;&nbsp;</a></span>R_JPEG_EncodeImageSizeSet()</h2>
 
@@ -970,7 +943,7 @@ The JPEG decoding operation automatically starts after both the input buffer and
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

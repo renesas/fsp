@@ -17,8 +17,7 @@ var group___s_l_c_d_c___a_p_i =
       [ "stop", "group___s_l_c_d_c___a_p_i.html#ac1788f1692c76737e4a82e7a543b081a", null ],
       [ "setContrast", "group___s_l_c_d_c___a_p_i.html#ac6a6848af8883dadbf3facea277d8dbd", null ],
       [ "setDisplayArea", "group___s_l_c_d_c___a_p_i.html#a2ddfe15b6b8eef5011dd46c851051e48", null ],
-      [ "close", "group___s_l_c_d_c___a_p_i.html#ae3b9edbc5ed25b0ba8ba003155f64e1c", null ],
-      [ "versionGet", "group___s_l_c_d_c___a_p_i.html#ae74d7d856ed0d7d8f381b147090cd941", null ]
+      [ "close", "group___s_l_c_d_c___a_p_i.html#ae3b9edbc5ed25b0ba8ba003155f64e1c", null ]
     ] ],
     [ "slcdc_instance_t", "group___s_l_c_d_c___a_p_i.html#structslcdc__instance__t", [
       [ "p_ctrl", "group___s_l_c_d_c___a_p_i.html#a8a8e876757f830ea6c9a3f6838a7cf7b", null ],

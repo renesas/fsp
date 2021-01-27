@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -168,6 +168,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:ga69790145005d03f5503c4d1338956e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad877e721a58a6783c472f3022304f7f9"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#gad877e721a58a6783c472f3022304f7f9">ble_gatt_client_application_callback_t</a>) (uint16_t event_type, ble_status_t event_result, <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__evt__data__t">st_ble_gattc_evt_data_t</a> *p_event_data)</td></tr>
 <tr class="separator:gad877e721a58a6783c472f3022304f7f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ba4dba2dff7da80f1ead1e0ef94b613"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga2ba4dba2dff7da80f1ead1e0ef94b613">ble_abs_delete_bond_application_callback_t</a>) (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__dev__addr__t">st_ble_dev_addr_t</a> *p_addr)</td></tr>
+<tr class="separator:ga2ba4dba2dff7da80f1ead1e0ef94b613"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga933069f10ed98538549bc7a4298a3923"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a></td></tr>
 <tr class="separator:ga933069f10ed98538549bc7a4298a3923"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -175,6 +177,12 @@ Typedefs</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga77ed02034d3aa2e83b97680eb15bb01f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga77ed02034d3aa2e83b97680eb15bb01f">ble_abs_advertising_filter_t</a> </td></tr>
 <tr class="separator:ga77ed02034d3aa2e83b97680eb15bb01f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga326be6526889c57ef80bf9821d12c8e6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga326be6526889c57ef80bf9821d12c8e6">ble_abs_local_bond_information_t</a> </td></tr>
+<tr class="separator:ga326be6526889c57ef80bf9821d12c8e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18554897bd2c017f794125cd4ca1764b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga18554897bd2c017f794125cd4ca1764b">ble_abs_remote_bond_information_t</a> </td></tr>
+<tr class="separator:ga18554897bd2c017f794125cd4ca1764b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf67724f2be90aa139e93499fe456b80"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#gacf67724f2be90aa139e93499fe456b80">ble_abs_delete_non_volatile_area_t</a> </td></tr>
+<tr class="separator:gacf67724f2be90aa139e93499fe456b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structble__device__address__t" id="structble__device__address__t"></a>
@@ -1497,8 +1505,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:abdc48fd7588fd6d422f7bd7b4d59637a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac71b5f4a2de135b45195165a221a8d19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ac71b5f4a2de135b45195165a221a8d19">reset</a> )(<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, <a class="el" href="group___b_l_e.html#gaa6c920c309a2765c1c27954de0cfcb4b">ble_event_cb_t</a> init_callback)</td></tr>
 <tr class="separator:ac71b5f4a2de135b45195165a221a8d19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5209172017a48afee54a6106b89c8702"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a5209172017a48afee54a6106b89c8702">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_data)</td></tr>
-<tr class="separator:a5209172017a48afee54a6106b89c8702"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a729b404106cfd3c8847f78bb4d760d98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a729b404106cfd3c8847f78bb4d760d98">startLegacyAdvertising</a> )(<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__legacy__advertising__parameter__t">ble_abs_legacy_advertising_parameter_t</a> const *const p_advertising_parameter)</td></tr>
 <tr class="separator:a729b404106cfd3c8847f78bb4d760d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae630f94d36fc57dbdb3f8267b8421733"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ae630f94d36fc57dbdb3f8267b8421733">startExtendedAdvertising</a> )(<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__extend__advertising__parameter__t">ble_abs_extend_advertising_parameter_t</a> const *const p_advertising_parameter)</td></tr>
@@ -1515,6 +1521,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a6f9928d4535222963b96d5a88ca04986"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65ce1d52c18d6261fa6122c50d42438f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a65ce1d52c18d6261fa6122c50d42438f">startAuthentication</a> )(<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, uint16_t connection_handle)</td></tr>
 <tr class="separator:a65ce1d52c18d6261fa6122c50d42438f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a982369d158ac921397f35cf13e993ecb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a982369d158ac921397f35cf13e993ecb">deleteBondInformation</a> )(<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, ble_abs_bond_information_parameter_t const *const p_bond_information_parameter)</td></tr>
+<tr class="separator:a982369d158ac921397f35cf13e993ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a84d7676435519fb9b324c484e4ce8b24"></a>
@@ -1585,30 +1593,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">init_callback</td><td>callback function to initialize Host Stack. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a5209172017a48afee54a6106b89c8702"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5209172017a48afee54a6106b89c8702">&#9670;&nbsp;</a></span>versionGet</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ble_abs_api_t::versionGet) (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_data)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Return the version of the driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___b_l_e___a_b_s.html#ga1b8cfa2a4a7a78fee9020d05d998b02a">RM_BLE_ABS_VersionGet()</a> </li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_data</td><td>Memory address to return version information to. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1816,6 +1800,31 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
+<a id="a982369d158ac921397f35cf13e993ecb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a982369d158ac921397f35cf13e993ecb">&#9670;&nbsp;</a></span>deleteBondInformation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ble_abs_api_t::deleteBondInformation) (<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, ble_abs_bond_information_parameter_t const *const p_bond_information_parameter)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Delete bond information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___b_l_e___a_b_s.html#ga022825a039b69fbf25070f5c84032128">RM_BLE_ABS_DeleteBondInformation()</a> </li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_bond_information_parameter</td><td>Pointer to bond information parameter. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -1916,6 +1925,21 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga2ba4dba2dff7da80f1ead1e0ef94b613"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2ba4dba2dff7da80f1ead1e0ef94b613">&#9670;&nbsp;</a></span>ble_abs_delete_bond_application_callback_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(*  ble_abs_delete_bond_application_callback_t) (<a class="el" href="group___g_a_p___a_p_i.html#structst__ble__dev__addr__t">st_ble_dev_addr_t</a> *p_addr)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ble_abs_delete_bond_application_callback_t is the delete bond information Event callback function type. </p>
+
+</div>
+</div>
 <a id="ga933069f10ed98538549bc7a4298a3923"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga933069f10ed98538549bc7a4298a3923">&#9670;&nbsp;</a></span>ble_abs_ctrl_t</h2>
 
@@ -1956,13 +1980,78 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga326be6526889c57ef80bf9821d12c8e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga326be6526889c57ef80bf9821d12c8e6">&#9670;&nbsp;</a></span>ble_abs_local_bond_information_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga326be6526889c57ef80bf9821d12c8e6">ble_abs_local_bond_information_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Local keys delete policy </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga326be6526889c57ef80bf9821d12c8e6a03fbae0c7854d6928e43526ce2d1b0e2"></a>BLE_ABS_LOCAL_BOND_INFORMATION_NONE&#160;</td><td class="fielddoc"><p>Delete no local keys. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga326be6526889c57ef80bf9821d12c8e6a91f9abe24f22055f08d651ff92b11413"></a>BLE_ABS_LOCAL_BOND_INFORMATION_ALL&#160;</td><td class="fielddoc"><p>Delete all local keys. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga18554897bd2c017f794125cd4ca1764b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga18554897bd2c017f794125cd4ca1764b">&#9670;&nbsp;</a></span>ble_abs_remote_bond_information_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga18554897bd2c017f794125cd4ca1764b">ble_abs_remote_bond_information_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Remote keys delete policy </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga18554897bd2c017f794125cd4ca1764ba020984f5eece1efb24c867ee2fd81208"></a>BLE_ABS_REMOTE_BOND_INFORMATION_NONE&#160;</td><td class="fielddoc"><p>Delete no remote device keys. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga18554897bd2c017f794125cd4ca1764ba2b52e14ef60726f30a1be8b9c4ff4c21"></a>BLE_ABS_REMOTE_BOND_INFORMATION_SPECIFIED&#160;</td><td class="fielddoc"><p>Delete the keys specified by the device address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga18554897bd2c017f794125cd4ca1764ba3f8e3dd7a7d9c073eec747e636b2bc72"></a>BLE_ABS_REMOTE_BOND_INFORMATION_ALL&#160;</td><td class="fielddoc"><p>Delete all remote device keys. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gacf67724f2be90aa139e93499fe456b80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacf67724f2be90aa139e93499fe456b80">&#9670;&nbsp;</a></span>ble_abs_delete_non_volatile_area_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#gacf67724f2be90aa139e93499fe456b80">ble_abs_delete_non_volatile_area_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deletion policy for non-volatile memory </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacf67724f2be90aa139e93499fe456b80a65466878d25e807f51357a208a206421"></a>BLE_ABS_DELETE_NON_VOLATILE_AREA_DISABLE&#160;</td><td class="fielddoc"><p>Delete no keys stored in storage. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacf67724f2be90aa139e93499fe456b80abaf6badd2792553a1318e6fd03306077"></a>BLE_ABS_DELETE_NON_VOLATILE_AREA_ENABLE&#160;</td><td class="fielddoc"><p>Delete the keys stored in storage. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

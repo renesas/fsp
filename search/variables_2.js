@@ -42,6 +42,7 @@ var searchData=
   ['char_5fid',['char_id',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a0b68f7ee53f567ca1de9bf212611fe91',1,'st_ble_gatts_db_conn_hdl_t']]],
   ['char_5fstart_5fidx',['char_start_idx',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a951e75a37807928a22577bbba5d93fc6',1,'st_ble_gatts_db_serv_cfg_t']]],
   ['cid',['cid',['../group___l2_c_a_p___a_p_i.html#aef8a04f22b212efd3b9f1dc470d8f510',1,'st_ble_l2cap_cf_conn_evt_t::cid()'],['../group___l2_c_a_p___a_p_i.html#aa1c668ad08120aa44fc2ace8c7306c51',1,'st_ble_l2cap_cf_data_evt_t::cid()'],['../group___l2_c_a_p___a_p_i.html#a484b0fc673b1de8e12842ff03d228ee3',1,'st_ble_l2cap_cf_credit_evt_t::cid()'],['../group___l2_c_a_p___a_p_i.html#a5bd5e865216b1b5179ef3bc54038bc7a',1,'st_ble_l2cap_cf_disconn_evt_t::cid()']]],
+  ['cipher_5fctx',['cipher_ctx',['../structmbedtls__gcm__context.html#a3687a336bb05c025fb3861ca99cd945d',1,'mbedtls_gcm_context']]],
   ['cks',['cks',['../group___s_c_i___u_a_r_t.html#a1020681fcd736e343ef2e9000f57afff',1,'baud_setting_t']]],
   ['cks_5fvalue',['cks_value',['../group___i_i_c___m_a_s_t_e_r.html#a213bb6cc78cf57022dbc0b0b2087c0b4',1,'iic_master_clock_settings_t::cks_value()'],['../group___i_i_c___s_l_a_v_e.html#ae84939949fde82ff8600981d24e69d0f',1,'iic_slave_clock_settings_t::cks_value()']]],
   ['classtypeget',['classTypeGet',['../group___u_s_b___a_p_i.html#a4609b14b348657b9b574464f849d7e8f',1,'usb_api_t']]],

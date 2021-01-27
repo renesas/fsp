@@ -33,8 +33,7 @@ var group___s_p_i___a_p_i =
       [ "write", "group___s_p_i___a_p_i.html#af053cb19a14773a51d1e060c5a624555", null ],
       [ "writeRead", "group___s_p_i___a_p_i.html#a6ed153d8e5e54e417fda95b044ac2fd6", null ],
       [ "callbackSet", "group___s_p_i___a_p_i.html#a01c7aacdcdf219dcfa88c2b40e7d25b1", null ],
-      [ "close", "group___s_p_i___a_p_i.html#aa23ca0243886b64c90aa17744d72aee5", null ],
-      [ "versionGet", "group___s_p_i___a_p_i.html#a0f9ed0d51f93ea3630a5f5582604f0e5", null ]
+      [ "close", "group___s_p_i___a_p_i.html#aa23ca0243886b64c90aa17744d72aee5", null ]
     ] ],
     [ "spi_instance_t", "group___s_p_i___a_p_i.html#structspi__instance__t", [
       [ "p_ctrl", "group___s_p_i___a_p_i.html#abd5918ae9720bacf1708e2a2dfed564b", null ],

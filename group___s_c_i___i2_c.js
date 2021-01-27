@@ -12,7 +12,6 @@ var group___s_c_i___i2_c =
     [ "sci_i2c_extended_cfg_t", "group___s_c_i___i2_c.html#structsci__i2c__extended__cfg__t", [
       [ "clock_settings", "group___s_c_i___i2_c.html#a8695398d7f739c6335fed576df646973", null ]
     ] ],
-    [ "R_SCI_I2C_VersionGet", "group___s_c_i___i2_c.html#ga075bd36361ec44fc1dc964248db8c7ff", null ],
     [ "R_SCI_I2C_Open", "group___s_c_i___i2_c.html#gaddcd4299259f33f1586458c6f580ef4c", null ],
     [ "R_SCI_I2C_Close", "group___s_c_i___i2_c.html#ga6ce2bd61f5a153cd7957c4a1b1350df8", null ],
     [ "R_SCI_I2C_Read", "group___s_c_i___i2_c.html#gad044a875458d5878769a8f4b4b5e038f", null ],

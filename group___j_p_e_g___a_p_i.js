@@ -43,7 +43,6 @@ var group___j_p_e_g___a_p_i =
       [ "outputBufferSet", "group___j_p_e_g___a_p_i.html#a04d7ffecb1d8d637096b9e4e7cd50b05", null ],
       [ "statusGet", "group___j_p_e_g___a_p_i.html#ab06bec10d5cfe4c69a3b25487a320892", null ],
       [ "close", "group___j_p_e_g___a_p_i.html#a7a5ce020b11dcf436538ba8782fcbb93", null ],
-      [ "versionGet", "group___j_p_e_g___a_p_i.html#ad093c2e521838e6515eb57fa939f7c86", null ],
       [ "horizontalStrideSet", "group___j_p_e_g___a_p_i.html#a24f29f17b8f5ef47caac087acb198e16", null ],
       [ "pixelFormatGet", "group___j_p_e_g___a_p_i.html#a949e297a0391a9beaa3c717c33a25299", null ],
       [ "imageSubsampleSet", "group___j_p_e_g___a_p_i.html#a493b4b6b00ecb7a403246d67d4c65342", null ],

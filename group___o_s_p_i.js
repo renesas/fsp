@@ -31,6 +31,5 @@ var group___o_s_p_i =
     [ "R_OSPI_Write", "group___o_s_p_i.html#gaf58c5c42d8c2e0b5f1d690fc30e923a4", null ],
     [ "R_OSPI_Erase", "group___o_s_p_i.html#gab6b1ae4fbb819789a75de733edad9ecb", null ],
     [ "R_OSPI_StatusGet", "group___o_s_p_i.html#ga42589667f192024298c01bb2c41496e2", null ],
-    [ "R_OSPI_BankSet", "group___o_s_p_i.html#ga6495853f86b39d1f524d5df3df6c455b", null ],
-    [ "R_OSPI_VersionGet", "group___o_s_p_i.html#gad21d780e88bed4609b74a72e004c68e0", null ]
+    [ "R_OSPI_BankSet", "group___o_s_p_i.html#ga6495853f86b39d1f524d5df3df6c455b", null ]
 ];

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -103,8 +103,6 @@ Functions</h2></td></tr>
 <tr class="separator:gac90c5652573dc23974aa31115968730c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4fb69235b51e8fbcf2efbf4a00ece782"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h.html#ga4fb69235b51e8fbcf2efbf4a00ece782">RM_LITTLEFS_FLASH_Close</a> (<a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#ga343f6d7a2dffa306f3ab00c0eb9391b2">rm_littlefs_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ga4fb69235b51e8fbcf2efbf4a00ece782"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4c6125249cf452c724dd92a6651fbe37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h.html#ga4c6125249cf452c724dd92a6651fbe37">RM_LITTLEFS_FLASH_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:ga4c6125249cf452c724dd92a6651fbe37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Middleware for the LittleFS File System control on RA MCUs. </p>
@@ -119,7 +117,7 @@ The following build time configurations are defined in fsp_cfg/rm_littlefs_flash
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Parameter Checking Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
 <li>
@@ -191,7 +189,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>Configures debug messages. </td></tr>
+</td><td>Disabled </td><td>Configures debug messages. </td></tr>
 <tr>
 <td>Warning Messages</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -199,7 +197,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>Configures warning messages. </td></tr>
+</td><td>Disabled </td><td>Configures warning messages. </td></tr>
 <tr>
 <td>Error Messages</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -207,7 +205,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>Configures error messages. </td></tr>
+</td><td>Disabled </td><td>Configures error messages. </td></tr>
 <tr>
 <td>Trace Messages</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -317,40 +315,13 @@ Examples</h1>
 
 </div>
 </div>
-<a id="ga4c6125249cf452c724dd92a6651fbe37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4c6125249cf452c724dd92a6651fbe37">&#9670;&nbsp;</a></span>RM_LITTLEFS_FLASH_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_LITTLEFS_FLASH_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Returns the version of this module.</p>
-<p>Implements <a class="el" href="group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#ac79a6275a857c894229dc94643a536b6">rm_littlefs_api_t::versionGet()</a>.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Failed in acquiring version information. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

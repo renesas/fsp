@@ -17,8 +17,7 @@ var group___m_o_t_o_r___s_p_e_e_d___a_p_i =
       [ "parameterSet", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a70647ddb7f97e09ec29f553e19da9834", null ],
       [ "speedControl", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a04253a27b4ea9f8e9c8927da5423eab9", null ],
       [ "parameterGet", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a0f0a5a3e499f8f4d7fdaa02b136f6415", null ],
-      [ "parameterUpdate", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ab5cfe333f6ef8f0e5bf7349ad90de28e", null ],
-      [ "versionGet", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ac686a85c8ab8ad2ddd338dc0396a0a5b", null ]
+      [ "parameterUpdate", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ab5cfe333f6ef8f0e5bf7349ad90de28e", null ]
     ] ],
     [ "motor_speed_instance_t", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__instance__t", [
       [ "p_ctrl", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a2a1b1b737fdc3254b7a26be62e063946", null ],

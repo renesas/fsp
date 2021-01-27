@@ -12,8 +12,7 @@ var group___d_a_c___a_p_i =
       [ "close", "group___d_a_c___a_p_i.html#a56a4f3e70f9aa1e2d66c5c586f994c1a", null ],
       [ "write", "group___d_a_c___a_p_i.html#ab1f3bfcf59391fda4d5a1b46db9892b8", null ],
       [ "start", "group___d_a_c___a_p_i.html#ad65c88411b83c76ab1a3698402520496", null ],
-      [ "stop", "group___d_a_c___a_p_i.html#afc2c513b17daa37c5c84a639c1e74eb7", null ],
-      [ "versionGet", "group___d_a_c___a_p_i.html#a8662f9b4ad486920900b3f783b3ffe12", null ]
+      [ "stop", "group___d_a_c___a_p_i.html#afc2c513b17daa37c5c84a639c1e74eb7", null ]
     ] ],
     [ "dac_instance_t", "group___d_a_c___a_p_i.html#structdac__instance__t", [
       [ "p_ctrl", "group___d_a_c___a_p_i.html#a8f502a56110113b181e99d1011b5759b", null ],

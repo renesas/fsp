@@ -14,8 +14,7 @@ var group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i =
       [ "diskInit", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#aa597f30568b2324b673bc972c55294eb", null ],
       [ "diskDeinit", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#adf46076db217070ad630100244fadbdd", null ],
       [ "infoGet", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#a0f2cf2904b6b2b3c93ededa4483517c9", null ],
-      [ "close", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#ae68e8edd354ff6c3b5ab7b22920af3b3", null ],
-      [ "versionGet", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#a3a7b84604eb9663b0b3621fe6de8617c", null ]
+      [ "close", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#ae68e8edd354ff6c3b5ab7b22920af3b3", null ]
     ] ],
     [ "rm_freertos_plus_fat_instance_t", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#structrm__freertos__plus__fat__instance__t", [
       [ "p_ctrl", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html#a4784d2d0db1893699de3f79f2ae51459", null ],

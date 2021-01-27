@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -125,8 +125,6 @@ Functions</h2></td></tr>
 <tr class="separator:gaf3bc65f19ba61612e0b7517dfd41ab61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafb2e4cd66d5bd276d05eb5fa104a2037"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#gafb2e4cd66d5bd276d05eb5fa104a2037">R_ADC_Calibrate</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void *const p_extend)</td></tr>
 <tr class="separator:gafb2e4cd66d5bd276d05eb5fa104a2037"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ef435c2d9a890729e770e6d25c790e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#ga5ef435c2d9a890729e770e6d25c790e1">R_ADC_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:ga5ef435c2d9a890729e770e6d25c790e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9110aa7c0d36661e561641f522eeb737"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#ga9110aa7c0d36661e561641f522eeb737">R_ADC_CallbackSet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:ga9110aa7c0d36661e561641f522eeb737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -282,9 +280,13 @@ Clock Configuration</h2>
 <tr>
 <td>RA2A1</td><td>PCLKD</td></tr>
 <tr>
+<td>RA2E1</td><td>PCLKD</td></tr>
+<tr>
 <td>RA2L1</td><td>PCLKD</td></tr>
 <tr>
 <td>RA4M1</td><td>PCLKC</td></tr>
+<tr>
+<td>RA4M2</td><td>PCLKC</td></tr>
 <tr>
 <td>RA4M3</td><td>PCLKC</td></tr>
 <tr>
@@ -1264,32 +1266,6 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 
 </div>
 </div>
-<a id="ga5ef435c2d9a890729e770e6d25c790e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5ef435c2d9a890729e770e6d25c790e1">&#9670;&nbsp;</a></span>R_ADC_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ADC_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Retrieve the API version number.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Version stored in the provided p_version. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input argument is invalid. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga9110aa7c0d36661e561641f522eeb737"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga9110aa7c0d36661e561641f522eeb737">&#9670;&nbsp;</a></span>R_ADC_CallbackSet()</h2>
 
@@ -1346,7 +1322,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

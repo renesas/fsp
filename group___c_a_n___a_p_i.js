@@ -47,8 +47,7 @@ var group___c_a_n___a_p_i =
       [ "close", "group___c_a_n___a_p_i.html#a32ec8d31d80a709bae881f2e28d36d6c", null ],
       [ "modeTransition", "group___c_a_n___a_p_i.html#afb37a7735c6ac61a151a083b2d25153b", null ],
       [ "infoGet", "group___c_a_n___a_p_i.html#aba27908c89442250d365d4a44304e3c1", null ],
-      [ "callbackSet", "group___c_a_n___a_p_i.html#a0eeb3995e651ce4b77e8860ab50597a9", null ],
-      [ "versionGet", "group___c_a_n___a_p_i.html#aa3a9393d2130549479111743b1750b41", null ]
+      [ "callbackSet", "group___c_a_n___a_p_i.html#a0eeb3995e651ce4b77e8860ab50597a9", null ]
     ] ],
     [ "can_instance_t", "group___c_a_n___a_p_i.html#structcan__instance__t", [
       [ "p_ctrl", "group___c_a_n___a_p_i.html#ae4d4d032f3e4f0688879027286ae4dbe", null ],

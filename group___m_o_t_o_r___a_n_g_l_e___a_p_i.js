@@ -14,8 +14,7 @@ var group___m_o_t_o_r___a_n_g_l_e___a_p_i =
       [ "flagPiCtrlSet", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a0de7bb1da46eb37b8dbf2e533452207c", null ],
       [ "angleSpeedGet", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ad3acb6cc95597c3d1b8741cb3fe57fa0", null ],
       [ "estimatedComponentGet", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a02b9994b5d96935df89d463f66dbe5a3", null ],
-      [ "parameterUpdate", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#af63edfe16658b986a471a15bb7856a1f", null ],
-      [ "versionGet", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a71c27293316fb8394fd887ff3a37d6b1", null ]
+      [ "parameterUpdate", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#af63edfe16658b986a471a15bb7856a1f", null ]
     ] ],
     [ "motor_angle_instance_t", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__instance__t", [
       [ "p_ctrl", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a5220f113aff9b6e309e8bc60c922a0d0", null ],

@@ -49,8 +49,7 @@ var group___t_o_u_c_h___a_p_i =
       [ "dataGet", "group___t_o_u_c_h___a_p_i.html#a275464ffc43790ae8a787e7f2f3544d0", null ],
       [ "padDataGet", "group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3", null ],
       [ "callbackSet", "group___t_o_u_c_h___a_p_i.html#ad1390fd43ac6b2e08cab0fc26b4a5360", null ],
-      [ "close", "group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0", null ],
-      [ "versionGet", "group___t_o_u_c_h___a_p_i.html#a2b34120d3619a9fc2223b53c5c372327", null ]
+      [ "close", "group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0", null ]
     ] ],
     [ "touch_instance_t", "group___t_o_u_c_h___a_p_i.html#structtouch__instance__t", [
       [ "p_ctrl", "group___t_o_u_c_h___a_p_i.html#a6061528bc8f1880b0ed52e05a63b0c68", null ],

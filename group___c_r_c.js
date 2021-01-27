@@ -6,6 +6,5 @@ var group___c_r_c =
     [ "R_CRC_Calculate", "group___c_r_c.html#ga89b0be959ce83ac6ca053329b1fddb75", null ],
     [ "R_CRC_CalculatedValueGet", "group___c_r_c.html#ga5bb7766a9c3217d2da7b77ea203b8c74", null ],
     [ "R_CRC_SnoopEnable", "group___c_r_c.html#ga606b389497fa4cba30b0d8f9a658331f", null ],
-    [ "R_CRC_SnoopDisable", "group___c_r_c.html#ga5bda4df2557aeaaf312b23fb31568f20", null ],
-    [ "R_CRC_VersionGet", "group___c_r_c.html#gaafa3c9845e9b4c0fcd97e2de009df170", null ]
+    [ "R_CRC_SnoopDisable", "group___c_r_c.html#ga5bda4df2557aeaaf312b23fb31568f20", null ]
 ];

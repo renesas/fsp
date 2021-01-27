@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -122,9 +122,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga992be578c310d212389be65762d1b6ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga992be578c310d212389be65762d1b6ea">R_ETHER_WakeOnLANEnable</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:ga992be578c310d212389be65762d1b6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">The setting of ETHERC is changed from normal sending and receiving mode to magic packet detection mode. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad">ether_api_t::wakeOnLANEnable</a>.  <a href="#ga992be578c310d212389be65762d1b6ea">More...</a><br /></td></tr>
 <tr class="separator:ga992be578c310d212389be65762d1b6ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef9ae6460a191a602864a5b4da16cf45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gaef9ae6460a191a602864a5b4da16cf45">R_ETHER_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="memdesc:gaef9ae6460a191a602864a5b4da16cf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides API and code version in the user provided pointer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a2d7eb9db55c87bff39494408612fe766">ether_api_t::versionGet</a>.  <a href="#gaef9ae6460a191a602864a5b4da16cf45">More...</a><br /></td></tr>
-<tr class="separator:gaef9ae6460a191a602864a5b4da16cf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the Ethernet peripheral on RA MCUs. This module implements the <a class="el" href="group___e_t_h_e_r___a_p_i.html">Ethernet Interface</a>. </p>
@@ -229,6 +226,20 @@ Enable</li>
 <td>Buffers &gt; Number of RX buffer</td><td>Must be an integer from 1 to 8</td><td>1 </td><td>Number of receive buffers </td></tr>
 <tr>
 <td>Buffers &gt; Buffer size</td><td>Must be at least 1514 which is the maximum Ethernet frame size</td><td>1514 </td><td>Size of Ethernet buffer </td></tr>
+<tr>
+<td>Buffers &gt; Padding size</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+1 byte</li>
+<li>
+2 byte</li>
+<li>
+3 byte</li>
+</ul>
+</td><td>Disable </td><td>The padding size that is automatically inserted into the received packets </td></tr>
+<tr>
+<td>Buffers &gt; Padding offset</td><td>Must be an integer from 0 to 63</td><td>1 </td><td>The padding offset that is automatically inserted into the received packets </td></tr>
 <tr>
 <td>Interrupts &gt; Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the EDMAC interrupt priority. </td></tr>
 <tr>
@@ -757,40 +768,13 @@ Current Link status. </td></tr>
 
 </div>
 </div>
-<a id="gaef9ae6460a191a602864a5b4da16cf45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaef9ae6460a191a602864a5b4da16cf45">&#9670;&nbsp;</a></span>R_ETHER_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__INLINE <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHER_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Provides API and code version in the user provided pointer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a2d7eb9db55c87bff39494408612fe766">ether_api_t::versionGet</a>. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Version information stored in provided p_version. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_version is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

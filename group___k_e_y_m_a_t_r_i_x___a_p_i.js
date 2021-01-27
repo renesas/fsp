@@ -17,16 +17,13 @@ var group___k_e_y_m_a_t_r_i_x___a_p_i =
       [ "open", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#aaf093a3b501722a78d23a7fe3d39782c", null ],
       [ "enable", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#abd5204289f3ea028b71ca24834e73b1f", null ],
       [ "disable", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a09fb58639b5e8570a78cab673e2bef16", null ],
-      [ "close", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a3e29688d8bba08a050b5af70ddf63fb9", null ],
-      [ "versionGet", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a01a3d8938cd8e088f833896a16bec6db", null ]
+      [ "close", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a3e29688d8bba08a050b5af70ddf63fb9", null ]
     ] ],
     [ "keymatrix_instance_t", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__instance__t", [
       [ "p_ctrl", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#aac241143178b9b15a50036b1af84e63e", null ],
       [ "p_cfg", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#aba83db9b80b23423731c2d947ecc7d2c", null ],
       [ "p_api", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a6d27db4f6ad13ea3788d7246f58b7284", null ]
     ] ],
-    [ "KEYMATRIX_API_VERSION_MAJOR", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#gaf7b361d959102a7e9918d1c42bae69ea", null ],
-    [ "KEYMATRIX_API_VERSION_MINOR", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#ga230143b15ac4b8648c871711eb16ec39", null ],
     [ "keymatrix_ctrl_t", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#ga74eaead2fb2e21ea4242f3318df0b7a1", null ],
     [ "keymatrix_trigger_t", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#ga5ef5011ed342570c52df788c61cb3e8d", [
       [ "KEYMATRIX_TRIG_FALLING", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#gga5ef5011ed342570c52df788c61cb3e8da10593fe57729b2ecb049440139819e51", null ],

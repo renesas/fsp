@@ -15,6 +15,7 @@ var group___b_l_e___a_b_s =
       [ "p_context", "group___b_l_e___a_b_s.html#ad9eb4e55c01850a2de4821fc405477e1", null ],
       [ "abs_gap_callback", "group___b_l_e___a_b_s.html#a03f344b2687721cb3544879b1ec08077", null ],
       [ "abs_vendor_specific_callback", "group___b_l_e___a_b_s.html#a09a0d029b8a0389cd364cd67d3c93443", null ],
+      [ "abs_delete_bond_callback", "group___b_l_e___a_b_s.html#acb9fe105040554b6a69a9387968bc0a5", null ],
       [ "connection_timer_handle", "group___b_l_e___a_b_s.html#ae6d58e2aeeb4a45de24bbea9009a8f7f", null ],
       [ "advertising_timer_handle", "group___b_l_e___a_b_s.html#a0afbfaaf47bcd34401496bdbced73d1d", null ],
       [ "advertising_sets", "group___b_l_e___a_b_s.html#a71dc03f61aa199d53e6721879c4727c5", null ],
@@ -42,7 +43,6 @@ var group___b_l_e___a_b_s =
     [ "RM_BLE_ABS_Open", "group___b_l_e___a_b_s.html#gaa4b69ce603223da8394cf8338474251c", null ],
     [ "RM_BLE_ABS_Close", "group___b_l_e___a_b_s.html#gadebdd1a85c6106e2a7ec3ad77cabcfb1", null ],
     [ "RM_BLE_ABS_Reset", "group___b_l_e___a_b_s.html#ga575389fd0ae0c9dc79a9f5a98293a696", null ],
-    [ "RM_BLE_ABS_VersionGet", "group___b_l_e___a_b_s.html#ga1b8cfa2a4a7a78fee9020d05d998b02a", null ],
     [ "RM_BLE_ABS_StartLegacyAdvertising", "group___b_l_e___a_b_s.html#ga0ddc7b65d81cae204fa9dc000bb39a96", null ],
     [ "RM_BLE_ABS_StartExtendedAdvertising", "group___b_l_e___a_b_s.html#gad53e0067083864ce216f899f1437f6a2", null ],
     [ "RM_BLE_ABS_StartNonConnectableAdvertising", "group___b_l_e___a_b_s.html#ga6536ccc73b69e059ce8baf4a7170a497", null ],
@@ -50,5 +50,6 @@ var group___b_l_e___a_b_s =
     [ "RM_BLE_ABS_StartScanning", "group___b_l_e___a_b_s.html#ga65b966bfa5d93cf5c1a6683038096e58", null ],
     [ "RM_BLE_ABS_CreateConnection", "group___b_l_e___a_b_s.html#ga4628e9d39df688687e6307505deb9f05", null ],
     [ "RM_BLE_ABS_SetLocalPrivacy", "group___b_l_e___a_b_s.html#ga82519ff5215e8c59717f8843a9868e15", null ],
-    [ "RM_BLE_ABS_StartAuthentication", "group___b_l_e___a_b_s.html#ga6a9bbe44610417982b5a1d44fba3f238", null ]
+    [ "RM_BLE_ABS_StartAuthentication", "group___b_l_e___a_b_s.html#ga6a9bbe44610417982b5a1d44fba3f238", null ],
+    [ "RM_BLE_ABS_DeleteBondInformation", "group___b_l_e___a_b_s.html#ga022825a039b69fbf25070f5c84032128", null ]
 ];

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -108,8 +108,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga26692591d226125907ecd208a6d8d0fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae4bb6d75bb3a27d940d70592242dbbe3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_i_c___s_l_a_v_e.html#gae4bb6d75bb3a27d940d70592242dbbe3">R_IIC_SLAVE_Close</a> (<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:gae4bb6d75bb3a27d940d70592242dbbe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae238193f1587aafce5ae43eae6ddcd88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_i_c___s_l_a_v_e.html#gae238193f1587aafce5ae43eae6ddcd88">R_IIC_SLAVE_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:gae238193f1587aafce5ae43eae6ddcd88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab803811cfa1a11e23b90ee9eb9e021ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_i_c___s_l_a_v_e.html#gab803811cfa1a11e23b90ee9eb9e021ba">R_IIC_SLAVE_CallbackSet</a> (<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#gaf676f2e6f026d5f3c96fcb18fdc71972">i2c_slave_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:gab803811cfa1a11e23b90ee9eb9e021ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -170,7 +168,9 @@ Fast-mode</li>
 <li>
 Fast-mode plus</li>
 </ul>
-</td><td>Standard </td><td>Select the transfer rate. </td></tr>
+</td><td>Standard </td><td>Select the transfer rate.<br />
+<br />
+If the delay for the requested transfer rate cannot be achieved, the settings with the largest possible transfer rate that is less than or equal to the requested transfer rate are used. The theoretical calculated delay is printed in a comment in the generated <a class="el" href="group___i_i_c___s_l_a_v_e.html#structiic__slave__extended__cfg__t">iic_slave_extended_cfg_t</a> structure. </td></tr>
 <tr>
 <td>Internal Reference Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -526,32 +526,6 @@ I2C Clock settings. </td></tr>
 
 </div>
 </div>
-<a id="gae238193f1587aafce5ae43eae6ddcd88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae238193f1587aafce5ae43eae6ddcd88">&#9670;&nbsp;</a></span>R_IIC_SLAVE_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_IIC_SLAVE_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Gets version information and stores it in the provided version structure.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful version get. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_version is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gab803811cfa1a11e23b90ee9eb9e021ba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab803811cfa1a11e23b90ee9eb9e021ba">&#9670;&nbsp;</a></span>R_IIC_SLAVE_CallbackSet()</h2>
 
@@ -608,7 +582,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

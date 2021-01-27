@@ -24,8 +24,7 @@ var group___m_o_t_o_r___d_r_i_v_e_r___a_p_i =
       [ "currentGet", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a8b6a7b3b6b6065ff3276632c33f34c07", null ],
       [ "flagCurrentOffsetGet", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a757b8d7120439ce9903deedbfb73b46c", null ],
       [ "currentOffsetRestart", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#adae5b042125b32e5a4a5247233ed62be", null ],
-      [ "parameterUpdate", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a95a0311d62025b0b3f92255fe2198e52", null ],
-      [ "versionGet", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a57786c096d85ce1a1101324c65cfe68e", null ]
+      [ "parameterUpdate", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a95a0311d62025b0b3f92255fe2198e52", null ]
     ] ],
     [ "motor_driver_instance_t", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#structmotor__driver__instance__t", [
       [ "p_ctrl", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#aa0affec3216f3b6a38e15564770f4d4e", null ],

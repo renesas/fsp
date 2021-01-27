@@ -45,8 +45,7 @@ var group___a_d_c___a_p_i =
       [ "offsetSet", "group___a_d_c___a_p_i.html#a305b2c2466cd88fdddf6134db542dc7e", null ],
       [ "callbackSet", "group___a_d_c___a_p_i.html#a8d081aba32f84d62e7d48389b1d10b3e", null ],
       [ "close", "group___a_d_c___a_p_i.html#a83cce8ff1af572c11ef31442f2679124", null ],
-      [ "infoGet", "group___a_d_c___a_p_i.html#acc68017ee284386b5d13c027bc10bf87", null ],
-      [ "versionGet", "group___a_d_c___a_p_i.html#a94d6632175e44cbb2493bd9a5d713cbd", null ]
+      [ "infoGet", "group___a_d_c___a_p_i.html#acc68017ee284386b5d13c027bc10bf87", null ]
     ] ],
     [ "adc_instance_t", "group___a_d_c___a_p_i.html#structadc__instance__t", [
       [ "p_ctrl", "group___a_d_c___a_p_i.html#aa536102e4b637a09aa6c6744d8598c8f", null ],

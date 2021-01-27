@@ -8,6 +8,5 @@ var group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b =
     [ "RM_BLOCK_MEDIA_USB_CallbackSet", "group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#ga1ec76168f7a7abf2dbec36bfb285b396", null ],
     [ "RM_BLOCK_MEDIA_USB_StatusGet", "group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#gacadf6373bed265958589645d78c21574", null ],
     [ "RM_BLOCK_MEDIA_USB_InfoGet", "group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#ga4393a1dea13b788b21a8cd277882dd79", null ],
-    [ "RM_BLOCK_MEDIA_USB_Close", "group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#gae7f3cf66b8c12d590c32705ef275711a", null ],
-    [ "RM_BLOCK_MEDIA_USB_VersionGet", "group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#ga2da4f73f4eb7cd060a121cf31428e6ed", null ]
+    [ "RM_BLOCK_MEDIA_USB_Close", "group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html#gae7f3cf66b8c12d590c32705ef275711a", null ]
 ];

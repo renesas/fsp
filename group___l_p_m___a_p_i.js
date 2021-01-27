@@ -14,8 +14,7 @@ var group___l_p_m___a_p_i =
       [ "close", "group___l_p_m___a_p_i.html#ae76670d2a5f1f1d3ceaa70b89dc1d893", null ],
       [ "lowPowerReconfigure", "group___l_p_m___a_p_i.html#a98bdd7aeba1c468785755e8d19654277", null ],
       [ "lowPowerModeEnter", "group___l_p_m___a_p_i.html#a3277e4d6aa8864e088c8f17af32c3f4b", null ],
-      [ "ioKeepClear", "group___l_p_m___a_p_i.html#a45ccc8344f1e18a62dcf78aef2f713d5", null ],
-      [ "versionGet", "group___l_p_m___a_p_i.html#a1f5c3a395ef9d0631a9565c9406e69ca", null ]
+      [ "ioKeepClear", "group___l_p_m___a_p_i.html#a45ccc8344f1e18a62dcf78aef2f713d5", null ]
     ] ],
     [ "lpm_instance_t", "group___l_p_m___a_p_i.html#structlpm__instance__t", [
       [ "p_ctrl", "group___l_p_m___a_p_i.html#a6979923fdacc8efb14d3fb20d19bfa66", null ],

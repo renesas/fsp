@@ -25,8 +25,7 @@ var group___i2_c___s_l_a_v_e___a_p_i =
       [ "read", "group___i2_c___s_l_a_v_e___a_p_i.html#ad9693d9cbb58cc0abb6e4e85548e4e18", null ],
       [ "write", "group___i2_c___s_l_a_v_e___a_p_i.html#a8a7c8ec91840338adbabcea5b5400f19", null ],
       [ "callbackSet", "group___i2_c___s_l_a_v_e___a_p_i.html#a527fc26638e91d2daf652c2b30b5ab5a", null ],
-      [ "close", "group___i2_c___s_l_a_v_e___a_p_i.html#a23919938fff411b2275548e6c0dc0c7a", null ],
-      [ "versionGet", "group___i2_c___s_l_a_v_e___a_p_i.html#a832c56c809463e9c1b468fc954338a1b", null ]
+      [ "close", "group___i2_c___s_l_a_v_e___a_p_i.html#a23919938fff411b2275548e6c0dc0c7a", null ]
     ] ],
     [ "i2c_slave_instance_t", "group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__instance__t", [
       [ "p_ctrl", "group___i2_c___s_l_a_v_e___a_p_i.html#ae2d56c946cfbfae06c21f48be15d32cb", null ],

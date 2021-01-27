@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -113,8 +113,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga00f07c25ed95b9e1de217f34c42b9d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga49e8b74b71d1901a209a94ed4c220d4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga49e8b74b71d1901a209a94ed4c220d4d">R_SCI_UART_Close</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga49e8b74b71d1901a209a94ed4c220d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93ce8503fe6cf6f1489f35f51e30eee2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga93ce8503fe6cf6f1489f35f51e30eee2">R_SCI_UART_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
-<tr class="separator:ga93ce8503fe6cf6f1489f35f51e30eee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga816beee7f9f27113cd2d792c54c6af53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga816beee7f9f27113cd2d792c54c6af53">R_SCI_UART_Abort</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_a_r_t___a_p_i.html#gac36c5a0dffa37b418fb9425a76c57740">uart_dir_t</a> communication_to_abort)</td></tr>
 <tr class="separator:ga816beee7f9f27113cd2d792c54c6af53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga864f43cde0ddc087748610357cbcd6c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2">R_SCI_UART_BaudCalculate</a> (uint32_t baudrate, bool bitrate_modulation, uint32_t baud_rate_error_x_1000, <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> *const p_baud_setting)</td></tr>
@@ -220,7 +218,9 @@ Even</li>
 </ul>
 </td><td>1bit </td><td>Select the number of stop bits. </td></tr>
 <tr>
-<td>Baud &gt; Baud Rate</td><td>Value must be an integer greater than 0</td><td>115200 </td><td>Enter the desired baud rate. </td></tr>
+<td>Baud &gt; Baud Rate</td><td>Value must be an integer greater than 0</td><td>115200 </td><td>Enter the desired baud rate.<br />
+<br />
+If the requested baud rate cannot be achieved, the settings with the smallest percent error are used. The theoretical calculated baud rate and percent error are printed in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
 <tr>
 <td>Baud &gt; Baud Rate Modulation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -320,9 +320,13 @@ Clock Configuration</h2>
 <tr>
 <td>RA2A1</td><td>PCLKB</td></tr>
 <tr>
+<td>RA2E1</td><td>PCLKB</td></tr>
+<tr>
 <td>RA2L1</td><td>PCLKB</td></tr>
 <tr>
 <td>RA4M1</td><td>PCLKA</td></tr>
+<tr>
+<td>RA4M2</td><td>PCLKA</td></tr>
 <tr>
 <td>RA4M3</td><td>PCLKA</td></tr>
 <tr>
@@ -885,38 +889,6 @@ CTS/RTS function of the SSn pin. </td></tr>
 
 </div>
 </div>
-<a id="ga93ce8503fe6cf6f1489f35f51e30eee2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga93ce8503fe6cf6f1489f35f51e30eee2">&#9670;&nbsp;</a></span>R_SCI_UART_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_UART_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Provides API and code version in the user provided pointer. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#afd111f21ce7f755b470b5e5d90249768">uart_api_t::versionGet</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_version</td><td>Version number set here</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Version information stored in provided p_version. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_version is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga816beee7f9f27113cd2d792c54c6af53"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga816beee7f9f27113cd2d792c54c6af53">&#9670;&nbsp;</a></span>R_SCI_UART_Abort()</h2>
 
@@ -1073,7 +1045,7 @@ CTS/RTS function of the SSn pin. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

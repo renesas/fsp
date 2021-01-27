@@ -38,8 +38,7 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "xipEnter", "group___s_p_i___f_l_a_s_h___a_p_i.html#ab5c6cc5c82e73038ddcef82a906b966f", null ],
       [ "xipExit", "group___s_p_i___f_l_a_s_h___a_p_i.html#a3a7c2aae058a733f879ae294c63ce2c6", null ],
       [ "bankSet", "group___s_p_i___f_l_a_s_h___a_p_i.html#a14581133205383b71df54a65439c0dcf", null ],
-      [ "close", "group___s_p_i___f_l_a_s_h___a_p_i.html#a16810f14e3fff6ed04f36eca44353785", null ],
-      [ "versionGet", "group___s_p_i___f_l_a_s_h___a_p_i.html#acf0f82982d8022e22796c252131063af", null ]
+      [ "close", "group___s_p_i___f_l_a_s_h___a_p_i.html#a16810f14e3fff6ed04f36eca44353785", null ]
     ] ],
     [ "spi_flash_instance_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__instance__t", [
       [ "p_ctrl", "group___s_p_i___f_l_a_s_h___a_p_i.html#ab7cca7ee8e821effe8d7e8902e6a7514", null ],

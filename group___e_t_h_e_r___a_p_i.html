@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -245,6 +245,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <a class="el" href="group___e_t_h_e_r___a_p_i.html#gaebbb8ab534ca83d1769d4d0b71e1943f">ether_flow_control_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a122143791d6fa60143a041fd0b2e49c7">flow_control</a></td></tr>
 <tr class="memdesc:a122143791d6fa60143a041fd0b2e49c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flow control functionally enable or disable. <br /></td></tr>
 <tr class="separator:a122143791d6fa60143a041fd0b2e49c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96ab539f1b4c8f7be6169d7173b67776"><td class="memItemLeft" align="right" valign="top"><a id="a96ab539f1b4c8f7be6169d7173b67776"></a>
+ether_padding_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a96ab539f1b4c8f7be6169d7173b67776">padding</a></td></tr>
+<tr class="memdesc:a96ab539f1b4c8f7be6169d7173b67776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Padding length inserted into the received Ethernet frame. <br /></td></tr>
+<tr class="separator:a96ab539f1b4c8f7be6169d7173b67776"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c1d94fec751bde17d1a54d911c39619"><td class="memItemLeft" align="right" valign="top"><a id="a5c1d94fec751bde17d1a54d911c39619"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a5c1d94fec751bde17d1a54d911c39619">padding_offset</a></td></tr>
+<tr class="memdesc:a5c1d94fec751bde17d1a54d911c39619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the padding inserted into the received Ethernet frame. <br /></td></tr>
+<tr class="separator:a5c1d94fec751bde17d1a54d911c39619"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a538e42b696b0b1b941e2a7a92cf9a6aa"><td class="memItemLeft" align="right" valign="top"><a id="a538e42b696b0b1b941e2a7a92cf9a6aa"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a538e42b696b0b1b941e2a7a92cf9a6aa">broadcast_filter</a></td></tr>
 <tr class="memdesc:a538e42b696b0b1b941e2a7a92cf9a6aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Limit of the number of broadcast frames received continuously. <br /></td></tr>
@@ -350,8 +358,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a125ca4ee69c6c63e1db42708324c0fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afabb87ef0be65717bb7675a4a004e3ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad">wakeOnLANEnable</a> )(<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:afabb87ef0be65717bb7675a4a004e3ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d7eb9db55c87bff39494408612fe766"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a2d7eb9db55c87bff39494408612fe766">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_data)</td></tr>
-<tr class="separator:a2d7eb9db55c87bff39494408612fe766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="ae75458ac2a31861195b73120676d670c"></a>
@@ -521,30 +527,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a2d7eb9db55c87bff39494408612fe766"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d7eb9db55c87bff39494408612fe766">&#9670;&nbsp;</a></span>versionGet</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_api_t::versionGet) (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_data)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Return the version of the driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___e_t_h_e_r.html#gaef9ae6460a191a602864a5b4da16cf45">R_ETHER_VersionGet()</a></li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_data</td><td>Memory address to return version information to. </td></tr>
   </table>
   </dd>
 </dl>
@@ -746,7 +728,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

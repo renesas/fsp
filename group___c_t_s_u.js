@@ -79,6 +79,5 @@ var group___c_t_s_u =
     [ "R_CTSU_ScanStart", "group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525", null ],
     [ "R_CTSU_DataGet", "group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe", null ],
     [ "R_CTSU_CallbackSet", "group___c_t_s_u.html#ga3c966546f3774ce2228739a5ffc0ac19", null ],
-    [ "R_CTSU_Close", "group___c_t_s_u.html#ga73b45020c568d57065c8a7adecaaeb4c", null ],
-    [ "R_CTSU_VersionGet", "group___c_t_s_u.html#ga6e821a30f20571244fd853784b15ae53", null ]
+    [ "R_CTSU_Close", "group___c_t_s_u.html#ga73b45020c568d57065c8a7adecaaeb4c", null ]
 ];

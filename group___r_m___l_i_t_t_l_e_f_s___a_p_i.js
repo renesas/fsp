@@ -6,8 +6,7 @@ var group___r_m___l_i_t_t_l_e_f_s___a_p_i =
     ] ],
     [ "rm_littlefs_api_t", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#structrm__littlefs__api__t", [
       [ "open", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#a4031c0c73be211bf2fae77c88c1e2b3e", null ],
-      [ "close", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#a2c9719932ae0325a6efd7dd4caf33330", null ],
-      [ "versionGet", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#ac79a6275a857c894229dc94643a536b6", null ]
+      [ "close", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#a2c9719932ae0325a6efd7dd4caf33330", null ]
     ] ],
     [ "rm_littlefs_instance_t", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#structrm__littlefs__instance__t", [
       [ "p_ctrl", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html#acf6ebe74bcdf1c7b82928e7f59b885e8", null ],

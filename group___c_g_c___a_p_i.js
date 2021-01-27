@@ -37,8 +37,7 @@ var group___c_g_c___a_p_i =
       [ "oscStopDetectDisable", "group___c_g_c___a_p_i.html#a7df2f7359a1521bf0d6ae79eaa8d396a", null ],
       [ "oscStopStatusClear", "group___c_g_c___a_p_i.html#adec8be986fe880ef29ecc2eed9e89f41", null ],
       [ "callbackSet", "group___c_g_c___a_p_i.html#a9c1d9877fcd835e19c7c573218580b5b", null ],
-      [ "close", "group___c_g_c___a_p_i.html#a13a62b83132e592aa8c9e0071312633a", null ],
-      [ "versionGet", "group___c_g_c___a_p_i.html#a6fd8e37bb30b6901af9e55c9efcebf76", null ]
+      [ "close", "group___c_g_c___a_p_i.html#a13a62b83132e592aa8c9e0071312633a", null ]
     ] ],
     [ "cgc_instance_t", "group___c_g_c___a_p_i.html#structcgc__instance__t", [
       [ "p_ctrl", "group___c_g_c___a_p_i.html#ab301bf3a224910b82a82818fbf38bb30", null ],

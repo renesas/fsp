@@ -32,6 +32,5 @@ var group___s_s_i =
     [ "R_SSI_WriteRead", "group___s_s_i.html#gaec5fe3772ecc9fca9b85126f6d2f3f49", null ],
     [ "R_SSI_Mute", "group___s_s_i.html#gacd323f1e3ef5f11745645b8297889b9b", null ],
     [ "R_SSI_Close", "group___s_s_i.html#ga377334858b5b5c7757c0bdce3bcacbf0", null ],
-    [ "R_SSI_VersionGet", "group___s_s_i.html#gabee978c13fde54ee541adba77a39dbae", null ],
     [ "R_SSI_CallbackSet", "group___s_s_i.html#ga487b2317d289066a0a27e0e5a9124463", null ]
 ];

@@ -21,7 +21,6 @@ var group___j_p_e_g =
     [ "R_JPEG_InputBufferSet", "group___j_p_e_g.html#gafdadb62bd28baa5552f90fe6bf14b772", null ],
     [ "R_JPEG_StatusGet", "group___j_p_e_g.html#ga1d62e16ee0c22a4ca2c3853ec81c7928", null ],
     [ "R_JPEG_Close", "group___j_p_e_g.html#ga0b41824f40d6c66c59a6c5ad908cbdce", null ],
-    [ "R_JPEG_VersionGet", "group___j_p_e_g.html#ga2289e232b2c03439069ce49af01b5eaa", null ],
     [ "R_JPEG_EncodeImageSizeSet", "group___j_p_e_g.html#ga6cff298a8d044d4a7ea04c577a9170ca", null ],
     [ "R_JPEG_DecodeLinesDecodedGet", "group___j_p_e_g.html#ga21a77d572299550b56a4f5c39757612e", null ],
     [ "R_JPEG_DecodeHorizontalStrideSet", "group___j_p_e_g.html#ga62ffba3d7256310ec46dff12b798983e", null ],

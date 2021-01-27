@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -117,8 +117,6 @@ Functions</h2></td></tr>
 <tr class="separator:gafc142e5784f845043f7e87b6ff2ac132"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa5523e82b88c596ba33f52958fdd7bda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#gaa5523e82b88c596ba33f52958fdd7bda">RM_BLOCK_MEDIA_SDMMC_Close</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:gaa5523e82b88c596ba33f52958fdd7bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabcc62bc0a0fa851a3e9d34003768280e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#gabcc62bc0a0fa851a3e9d34003768280e">RM_BLOCK_MEDIA_SDMMC_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:gabcc62bc0a0fa851a3e9d34003768280e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Middleware to implement the block media interface on SD cards. This module implements the <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html">Block Media Interface</a>. </p>
@@ -283,7 +281,6 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Reads data from an SD or eMMC device. Up to 0x10000 sectors can be read at a time. Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a5c9c1b20f8ae1d95defa766a757d031a">rm_block_media_api_t::read()</a>.</p>
-<p>This function blocks until the data is read into the destination buffer.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Data read successfully. </td></tr>
@@ -338,7 +335,6 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Writes data to an SD or eMMC device. Up to 0x10000 sectors can be written at a time. Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a108ef8243422a2ed8b3bea6cb67dbb6a">rm_block_media_api_t::write()</a>.</p>
-<p>This function blocks until the write operation completes.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Write finished successfully. </td></tr>
@@ -387,7 +383,6 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Erases sectors of an SD card or eMMC device. Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a108bacf3e0522dd84e1121785eaf8f87">rm_block_media_api_t::erase()</a>.</p>
-<p>This function blocks until erase is complete.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Erase operation requested. </td></tr>
@@ -557,39 +552,13 @@ Examples</h1>
 
 </div>
 </div>
-<a id="gabcc62bc0a0fa851a3e9d34003768280e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabcc62bc0a0fa851a3e9d34003768280e">&#9670;&nbsp;</a></span>RM_BLOCK_MEDIA_SDMMC_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_BLOCK_MEDIA_SDMMC_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Returns the version of the firmware and API. Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a3ee96c10cb3ebe9fd845abafd99393d3">rm_block_media_api_t::versionGet()</a>.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Function executed successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

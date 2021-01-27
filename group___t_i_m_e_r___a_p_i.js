@@ -38,8 +38,7 @@ var group___t_i_m_e_r___a_p_i =
       [ "infoGet", "group___t_i_m_e_r___a_p_i.html#aeaea79f26305c493566e4b45ae9e294c", null ],
       [ "statusGet", "group___t_i_m_e_r___a_p_i.html#a11321e8dde7c33a4e6835a1bf64f7689", null ],
       [ "callbackSet", "group___t_i_m_e_r___a_p_i.html#a1b2c51a519145c2482ca2fb6b4b3d749", null ],
-      [ "close", "group___t_i_m_e_r___a_p_i.html#a9e8b8140010a28082aedd758390fac97", null ],
-      [ "versionGet", "group___t_i_m_e_r___a_p_i.html#afd486e90a2c3214bdf156ab47560d236", null ]
+      [ "close", "group___t_i_m_e_r___a_p_i.html#a9e8b8140010a28082aedd758390fac97", null ]
     ] ],
     [ "timer_instance_t", "group___t_i_m_e_r___a_p_i.html#structtimer__instance__t", [
       [ "p_ctrl", "group___t_i_m_e_r___a_p_i.html#a641f967b15711f0e91bc0f41fc8ebfe6", null ],

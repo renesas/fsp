@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -261,8 +261,6 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <tr class="separator:a444b4249b587c60f8fb5f2c60157808c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f6629725bd980b1b46b0e3225d7c0c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c___a_p_i.html#a8f6629725bd980b1b46b0e3225d7c0c5">write</a> )(<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_ctrl, uint16_t data)</td></tr>
 <tr class="separator:a8f6629725bd980b1b46b0e3225d7c0c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cf440bd314f150d2cefafa0c0f8237d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c___a_p_i.html#a0cf440bd314f150d2cefafa0c0f8237d">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:a0cf440bd314f150d2cefafa0c0f8237d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a559e6ae7a841b6d0464232db650556"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_o_c___a_p_i.html#a4a559e6ae7a841b6d0464232db650556">callbackSet</a> )(<a class="el" href="group___d_o_c___a_p_i.html#gaf04723af6be7642657d11b713a90ccc6">doc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___d_o_c___a_p_i.html#structdoc__callback__args__t">doc_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:a4a559e6ae7a841b6d0464232db650556"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -360,30 +358,6 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___d_o_c___a_p_i.html#abbbbf13adc94767c3efdb1aaa7b948ae">doc_api_t::open</a> call. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>data to be written to DOC DODIR register. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a0cf440bd314f150d2cefafa0c0f8237d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cf440bd314f150d2cefafa0c0f8237d">&#9670;&nbsp;</a></span>versionGet</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  doc_api_t::versionGet) (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get version and stores it in provided pointer p_version. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___d_o_c.html#gafcdcc41928c2bf00b34f5856758bc862">R_DOC_VersionGet()</a></li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_version</td><td>Code and API version used. </td></tr>
   </table>
   </dd>
 </dl>
@@ -507,7 +481,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

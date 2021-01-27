@@ -19,6 +19,5 @@ var group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s =
     [ "RM_MOTOR_SENSORLESS_StatusGet", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gaef47adefadf91147d95fba13f058190f", null ],
     [ "RM_MOTOR_SENSORLESS_AngleGet", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga84c1eb58db8f6cbad123ca3413aa7b2a", null ],
     [ "RM_MOTOR_SENSORLESS_SpeedGet", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga737b83c18e18f49488b90bdb71b0eef9", null ],
-    [ "RM_MOTOR_SENSORLESS_ErrorCheck", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga526e1f2e08b5b8ec13ec92e4481e10af", null ],
-    [ "RM_MOTOR_SENSORLESS_VersionGet", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gabccf88343664a0bf439db078fb70df0b", null ]
+    [ "RM_MOTOR_SENSORLESS_ErrorCheck", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga526e1f2e08b5b8ec13ec92e4481e10af", null ]
 ];

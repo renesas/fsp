@@ -117,6 +117,5 @@ var group___a_d_c =
     [ "R_ADC_Close", "group___a_d_c.html#ga499187b3067534e42a57239ead111797", null ],
     [ "R_ADC_OffsetSet", "group___a_d_c.html#gaf3bc65f19ba61612e0b7517dfd41ab61", null ],
     [ "R_ADC_Calibrate", "group___a_d_c.html#gafb2e4cd66d5bd276d05eb5fa104a2037", null ],
-    [ "R_ADC_VersionGet", "group___a_d_c.html#ga5ef435c2d9a890729e770e6d25c790e1", null ],
     [ "R_ADC_CallbackSet", "group___a_d_c.html#ga9110aa7c0d36661e561641f522eeb737", null ]
 ];

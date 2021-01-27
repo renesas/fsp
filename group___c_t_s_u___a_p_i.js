@@ -49,8 +49,7 @@ var group___c_t_s_u___a_p_i =
       [ "scanStart", "group___c_t_s_u___a_p_i.html#a1df87278ab5d47fdd093994f53de96a6", null ],
       [ "dataGet", "group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5", null ],
       [ "callbackSet", "group___c_t_s_u___a_p_i.html#adda480537f35733dbed856a30b89be50", null ],
-      [ "close", "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395", null ],
-      [ "versionGet", "group___c_t_s_u___a_p_i.html#ae74fcea91814d0f91913ae969301691c", null ]
+      [ "close", "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395", null ]
     ] ],
     [ "ctsu_instance_t", "group___c_t_s_u___a_p_i.html#structctsu__instance__t", [
       [ "p_ctrl", "group___c_t_s_u___a_p_i.html#a869c53c171f70f95ed85cbf7109914fc", null ],

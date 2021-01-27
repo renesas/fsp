@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -353,8 +353,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:ab06bec10d5cfe4c69a3b25487a320892"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a5ce020b11dcf436538ba8782fcbb93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___j_p_e_g___a_p_i.html#a7a5ce020b11dcf436538ba8782fcbb93">close</a> )(<a class="el" href="group___j_p_e_g___a_p_i.html#gadcda3a404659199f5fc9b90a8eb4b543">jpeg_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a7a5ce020b11dcf436538ba8782fcbb93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad093c2e521838e6515eb57fa939f7c86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___j_p_e_g___a_p_i.html#ad093c2e521838e6515eb57fa939f7c86">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td></tr>
-<tr class="separator:ad093c2e521838e6515eb57fa939f7c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24f29f17b8f5ef47caac087acb198e16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___j_p_e_g___a_p_i.html#a24f29f17b8f5ef47caac087acb198e16">horizontalStrideSet</a> )(<a class="el" href="group___j_p_e_g___a_p_i.html#gadcda3a404659199f5fc9b90a8eb4b543">jpeg_ctrl_t</a> *const p_ctrl, uint32_t horizontal_stride)</td></tr>
 <tr class="separator:a24f29f17b8f5ef47caac087acb198e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a949e297a0391a9beaa3c717c33a25299"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___j_p_e_g___a_p_i.html#a949e297a0391a9beaa3c717c33a25299">pixelFormatGet</a> )(<a class="el" href="group___j_p_e_g___a_p_i.html#gadcda3a404659199f5fc9b90a8eb4b543">jpeg_ctrl_t</a> *const p_ctrl, <a class="el" href="group___j_p_e_g___a_p_i.html#ga3aed73edf47174b12b8b99e41437d696">jpeg_color_space_t</a> *const p_color_space)</td></tr>
@@ -499,30 +497,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___j_p_e_g___a_p_i.html#a1d5e667447fa87ac5a3940bf1da89ee5">jpeg_api_t::open</a> call. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ad093c2e521838e6515eb57fa939f7c86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad093c2e521838e6515eb57fa939f7c86">&#9670;&nbsp;</a></span>versionGet</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  jpeg_api_t::versionGet) (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *p_version)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get version and store it in provided pointer p_version. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___j_p_e_g.html#ga2289e232b2c03439069ce49af01b5eaa">R_JPEG_VersionGet()</a></li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_version</td><td>Code and API version used. </td></tr>
   </table>
   </dd>
 </dl>
@@ -935,7 +909,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

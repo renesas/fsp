@@ -14,6 +14,5 @@ var group___c_g_c =
     [ "R_CGC_OscStopDetectDisable", "group___c_g_c.html#ga1a02897dd353e879f32de19f7a4fd283", null ],
     [ "R_CGC_OscStopStatusClear", "group___c_g_c.html#ga00fa9cabb71b0cc504aa413c0d48b916", null ],
     [ "R_CGC_CallbackSet", "group___c_g_c.html#ga300b8011ca9bd0c77130c60c3874d7a4", null ],
-    [ "R_CGC_Close", "group___c_g_c.html#gaf4a220e7ffbeb997676ba5d84a8c7983", null ],
-    [ "R_CGC_VersionGet", "group___c_g_c.html#ga465ab0b6f1a1b43cca57ebf655508ed1", null ]
+    [ "R_CGC_Close", "group___c_g_c.html#gaf4a220e7ffbeb997676ba5d84a8c7983", null ]
 ];

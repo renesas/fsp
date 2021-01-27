@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -100,8 +100,6 @@ $(document).ready(function(){initNavTree('group___s_c_i___i2_c.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga075bd36361ec44fc1dc964248db8c7ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___i2_c.html#ga075bd36361ec44fc1dc964248db8c7ff">R_SCI_I2C_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:ga075bd36361ec44fc1dc964248db8c7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaddcd4299259f33f1586458c6f580ef4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___i2_c.html#gaddcd4299259f33f1586458c6f580ef4c">R_SCI_I2C_Open</a> (<a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__cfg__t">i2c_master_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="separator:gaddcd4299259f33f1586458c6f580ef4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ce2bd61f5a153cd7957c4a1b1350df8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___i2_c.html#ga6ce2bd61f5a153cd7957c4a1b1350df8">R_SCI_I2C_Close</a> (<a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const p_api_ctrl)</td></tr>
@@ -202,7 +200,9 @@ Standard</li>
 <li>
 Fast-mode</li>
 </ul>
-</td><td>Standard </td><td>Select the I2C data rate. </td></tr>
+</td><td>Standard </td><td>Select the I2C data rate.<br />
+<br />
+If the requested transfer rate cannot be achieved, the settings with the largest possible transfer rate that is less than or equal to the requested transfer rate are used. The theoretical calculated transfer rate and SDA delay are printed in a comment in the generated <a class="el" href="group___s_c_i___i2_c.html#structsci__i2c__extended__cfg__t">sci_i2c_extended_cfg_t</a> structure. </td></tr>
 <tr>
 <td>SDA Output Delay (nano seconds)</td><td>Must be a valid non-negative integer with maximum configurable value of 300</td><td>300 </td><td>Specify the SDA output delay in nanoseconds. </td></tr>
 <tr>
@@ -242,9 +242,13 @@ Clock Configuration</h2>
 <tr>
 <td>RA2A1</td><td>PCLKB</td></tr>
 <tr>
+<td>RA2E1</td><td>PCLKB</td></tr>
+<tr>
 <td>RA2L1</td><td>PCLKB</td></tr>
 <tr>
 <td>RA4M1</td><td>PCLKA</td></tr>
+<tr>
+<td>RA4M2</td><td>PCLKA</td></tr>
 <tr>
 <td>RA4M3</td><td>PCLKA</td></tr>
 <tr>
@@ -406,32 +410,6 @@ I2C Clock settings. </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga075bd36361ec44fc1dc964248db8c7ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga075bd36361ec44fc1dc964248db8c7ff">&#9670;&nbsp;</a></span>R_SCI_I2C_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_I2C_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sets driver version based on compile time macros.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful version get. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_version is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gaddcd4299259f33f1586458c6f580ef4c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaddcd4299259f33f1586458c6f580ef4c">&#9670;&nbsp;</a></span>R_SCI_I2C_Open()</h2>
 
@@ -734,7 +712,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,5 @@ var group___d_t_c =
     [ "R_DTC_Enable", "group___d_t_c.html#ga09d7866bbd07c19c458a1d96a6013e49", null ],
     [ "R_DTC_Disable", "group___d_t_c.html#gacfaa6458b92432fa53fc073f6e36cfd1", null ],
     [ "R_DTC_InfoGet", "group___d_t_c.html#gaa9e2c3dc5b7271551b2cd470bfe0e000", null ],
-    [ "R_DTC_Close", "group___d_t_c.html#ga2139f7cdd0e8d8dcb0ce07b705ea1ef4", null ],
-    [ "R_DTC_VersionGet", "group___d_t_c.html#ga5b1323a2b31bc990730c5879bcb85f43", null ]
+    [ "R_DTC_Close", "group___d_t_c.html#ga2139f7cdd0e8d8dcb0ce07b705ea1ef4", null ]
 ];

@@ -30,8 +30,7 @@ var group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i =
       [ "callbackSet", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a44e8eff381c878cbf878bdc8c331502b", null ],
       [ "statusGet", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a802c5b072fad72944fc03c14a9bbca4e", null ],
       [ "infoGet", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a031bb4fa56552052a1c361edfb7072cf", null ],
-      [ "close", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ad116017606d47877fcc2dae3517f2f6e", null ],
-      [ "versionGet", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a3ee96c10cb3ebe9fd845abafd99393d3", null ]
+      [ "close", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ad116017606d47877fcc2dae3517f2f6e", null ]
     ] ],
     [ "rm_block_media_instance_t", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__instance__t", [
       [ "p_ctrl", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a2702edebec02b8a06ccf116e3e0e0993", null ],

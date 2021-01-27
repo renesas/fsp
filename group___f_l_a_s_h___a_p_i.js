@@ -42,8 +42,7 @@ var group___f_l_a_s_h___a_p_i =
       [ "reset", "group___f_l_a_s_h___a_p_i.html#af87f6e3215253ad33a0c961c79979da0", null ],
       [ "updateFlashClockFreq", "group___f_l_a_s_h___a_p_i.html#ae357c91afece41b956ece618eb82c1a1", null ],
       [ "startupAreaSelect", "group___f_l_a_s_h___a_p_i.html#af01c458da5ffbd29ee404ccc5e8e6869", null ],
-      [ "callbackSet", "group___f_l_a_s_h___a_p_i.html#adc5094e84cb696f0a1d954f8a25dfbee", null ],
-      [ "versionGet", "group___f_l_a_s_h___a_p_i.html#a073ae5cbefbfc82b7568c95fd012aec5", null ]
+      [ "callbackSet", "group___f_l_a_s_h___a_p_i.html#adc5094e84cb696f0a1d954f8a25dfbee", null ]
     ] ],
     [ "flash_instance_t", "group___f_l_a_s_h___a_p_i.html#structflash__instance__t", [
       [ "p_ctrl", "group___f_l_a_s_h___a_p_i.html#a59f329f1271b1a71a0c5de0e01a5d916", null ],

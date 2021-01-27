@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,7 +92,6 @@ $(document).ready(function(){initNavTree('group___e_x_t_e_r_n_a_l___i_r_q___a_p_
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
@@ -118,17 +117,6 @@ Data Structures</h2></td></tr>
 <tr class="separator:structexternal__irq__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structexternal__irq__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__instance__t">external_irq_instance_t</a></td></tr>
 <tr class="separator:structexternal__irq__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga7d530b33037fde119626b97a1954422e"><td class="memItemLeft" align="right" valign="top"><a id="ga7d530b33037fde119626b97a1954422e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga7d530b33037fde119626b97a1954422e">EXTERNAL_IRQ_API_VERSION_MAJOR</a></td></tr>
-<tr class="memdesc:ga7d530b33037fde119626b97a1954422e"><td class="mdescLeft">&#160;</td><td class="mdescRight">EXTERNAL IRQ API version number (Major) <br /></td></tr>
-<tr class="separator:ga7d530b33037fde119626b97a1954422e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaecd7545df380272d1cd4bbde5e24d8fb"><td class="memItemLeft" align="right" valign="top"><a id="gaecd7545df380272d1cd4bbde5e24d8fb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gaecd7545df380272d1cd4bbde5e24d8fb">EXTERNAL_IRQ_API_VERSION_MINOR</a></td></tr>
-<tr class="memdesc:gaecd7545df380272d1cd4bbde5e24d8fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">EXTERNAL IRQ API version number (Minor) <br /></td></tr>
-<tr class="separator:gaecd7545df380272d1cd4bbde5e24d8fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -279,8 +267,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a4a407b8899a042692026e65d98535f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0c4d6063af093a3a19a63924aae61ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ad0c4d6063af093a3a19a63924aae61ac">close</a> )(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ad0c4d6063af093a3a19a63924aae61ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46ce3fceaf8c7fd9499f82914803a2aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a46ce3fceaf8c7fd9499f82914803a2aa">versionGet</a> )(<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:a46ce3fceaf8c7fd9499f82914803a2aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a639337eee77555b934cbf8238e0f8449"></a>
@@ -407,30 +393,6 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a46ce3fceaf8c7fd9499f82914803a2aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46ce3fceaf8c7fd9499f82914803a2aa">&#9670;&nbsp;</a></span>versionGet</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  external_irq_api_t::versionGet) (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get version and store it in provided pointer p_version. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___i_c_u.html#gaf445a7aea2cea8f3599691cb2a049526">R_ICU_ExternalIrqVersionGet()</a></li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_version</td><td>Code and API version used. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 
 </div>
 </div>
@@ -546,7 +508,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

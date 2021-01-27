@@ -208,6 +208,5 @@ var group___i_o_p_o_r_t =
     [ "R_IOPORT_PortEventOutputWrite", "group___i_o_p_o_r_t.html#ga8d3f8c4c90241587fee076b6fb0623ff", null ],
     [ "R_IOPORT_PortRead", "group___i_o_p_o_r_t.html#gab84c08b8ac66d18c5636ebc772133e77", null ],
     [ "R_IOPORT_PortWrite", "group___i_o_p_o_r_t.html#ga31825f3f0295317e5b446d74f791cd68", null ],
-    [ "R_IOPORT_EthernetModeCfg", "group___i_o_p_o_r_t.html#ga383b2f8df036fceeb7c5344c5654d2c3", null ],
-    [ "R_IOPORT_VersionGet", "group___i_o_p_o_r_t.html#ga7af603d9d81f6907399da7b18cbfd286", null ]
+    [ "R_IOPORT_EthernetModeCfg", "group___i_o_p_o_r_t.html#ga383b2f8df036fceeb7c5344c5654d2c3", null ]
 ];

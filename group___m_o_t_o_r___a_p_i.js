@@ -17,8 +17,7 @@ var group___m_o_t_o_r___a_p_i =
       [ "statusGet", "group___m_o_t_o_r___a_p_i.html#a292e940165b226b56d83a0b3e9a20a8c", null ],
       [ "angleGet", "group___m_o_t_o_r___a_p_i.html#a2667442da1af9179b7ea009e67d74c77", null ],
       [ "speedGet", "group___m_o_t_o_r___a_p_i.html#a9cdbead2d65894e3243ea33fbfcb89cb", null ],
-      [ "errorCheck", "group___m_o_t_o_r___a_p_i.html#a4646d3816e8fb2b123246a83a6034888", null ],
-      [ "versionGet", "group___m_o_t_o_r___a_p_i.html#aa727bda793e69d6c34526691331415cc", null ]
+      [ "errorCheck", "group___m_o_t_o_r___a_p_i.html#a4646d3816e8fb2b123246a83a6034888", null ]
     ] ],
     [ "motor_instance_t", "group___m_o_t_o_r___a_p_i.html#structmotor__instance__t", [
       [ "p_ctrl", "group___m_o_t_o_r___a_p_i.html#a8f7fd61779133ce440e2803e776aac9a", null ],

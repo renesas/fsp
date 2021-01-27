@@ -9,7 +9,6 @@ var group___i_c_u =
     [ "R_ICU_ExternalIrqOpen", "group___i_c_u.html#ga036e85b235d213b257cae159b9eba0a3", null ],
     [ "R_ICU_ExternalIrqEnable", "group___i_c_u.html#ga56b7181d7a70a5b8655659d760993ad1", null ],
     [ "R_ICU_ExternalIrqDisable", "group___i_c_u.html#gae4dc732735794d378f56552b06f6c3a9", null ],
-    [ "R_ICU_ExternalIrqVersionGet", "group___i_c_u.html#gaf445a7aea2cea8f3599691cb2a049526", null ],
     [ "R_ICU_ExternalIrqCallbackSet", "group___i_c_u.html#ga4779daa90b1591254cf5535151b959a5", null ],
     [ "R_ICU_ExternalIrqClose", "group___i_c_u.html#gad72351c30a832867210c310e1f718ca0", null ]
 ];

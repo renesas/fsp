@@ -8,6 +8,5 @@ var group___m_o_t_o_r___e_s_t_i_m_a_t_e =
     [ "RM_MOTOR_ESTIMATE_FlagPiCtrlSet", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga3069a2a3350193c0894eda657016baa4", null ],
     [ "RM_MOTOR_ESTIMATE_AngleSpeedGet", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga762a451cee6f7dfa4430afa8f8b11819", null ],
     [ "RM_MOTOR_ESTIMATE_EstimatedComponentGet", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga859290e2a7cf91a48d0e2852790b3811", null ],
-    [ "RM_MOTOR_ESTIMATE_ParameterUpdate", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaaa47afb770dc694652a2d9a9e8f03acb", null ],
-    [ "RM_MOTOR_ESTIMATE_VersionGet", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga6803211a184fe12dc04bacc46486767b", null ]
+    [ "RM_MOTOR_ESTIMATE_ParameterUpdate", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaaa47afb770dc694652a2d9a9e8f03acb", null ]
 ];

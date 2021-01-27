@@ -34,7 +34,6 @@ var group___i2_s___a_p_i =
       [ "writeRead", "group___i2_s___a_p_i.html#a0268adf9536947ac5cd8ac2795416a18", null ],
       [ "statusGet", "group___i2_s___a_p_i.html#a1f88823bc677660a18881e9a348e6af0", null ],
       [ "close", "group___i2_s___a_p_i.html#a8c2a70075e8e8b976cf1664f034cc68e", null ],
-      [ "versionGet", "group___i2_s___a_p_i.html#a4014a2abddc620e514f8e53804f5a2cd", null ],
       [ "callbackSet", "group___i2_s___a_p_i.html#a48c3fdc05d5204621b8a1d5151f83cc6", null ]
     ] ],
     [ "i2s_instance_t", "group___i2_s___a_p_i.html#structi2s__instance__t", [

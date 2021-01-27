@@ -49,6 +49,5 @@ var group___t_o_u_c_h =
     [ "RM_TOUCH_DataGet", "group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1", null ],
     [ "RM_TOUCH_PadDataGet", "group___t_o_u_c_h.html#ga4dcf4a1abe539e74de7c1c7b8387df5f", null ],
     [ "RM_TOUCH_CallbackSet", "group___t_o_u_c_h.html#ga9222f933707c72e3f4c097d14e66072e", null ],
-    [ "RM_TOUCH_Close", "group___t_o_u_c_h.html#ga0dd11aec558632e59df46765cfb546c5", null ],
-    [ "RM_TOUCH_VersionGet", "group___t_o_u_c_h.html#ga5de8394a70335511e9685b2aa2ea395d", null ]
+    [ "RM_TOUCH_Close", "group___t_o_u_c_h.html#ga0dd11aec558632e59df46765cfb546c5", null ]
 ];

@@ -60,6 +60,5 @@ var group___a_g_t =
     [ "R_AGT_StatusGet", "group___a_g_t.html#ga11a30a7a093f91c09a340f7b301945fd", null ],
     [ "R_AGT_Stop", "group___a_g_t.html#gaa2b20f0b2d6856813a3a76413e0083c0", null ],
     [ "R_AGT_Open", "group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46", null ],
-    [ "R_AGT_CallbackSet", "group___a_g_t.html#gabbe61b0c767174654b68bcc55fc97fed", null ],
-    [ "R_AGT_VersionGet", "group___a_g_t.html#gad6d600521cfd1134e1fd5cd5fefe2819", null ]
+    [ "R_AGT_CallbackSet", "group___a_g_t.html#gabbe61b0c767174654b68bcc55fc97fed", null ]
 ];

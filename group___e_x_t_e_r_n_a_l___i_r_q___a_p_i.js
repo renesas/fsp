@@ -20,16 +20,13 @@ var group___e_x_t_e_r_n_a_l___i_r_q___a_p_i =
       [ "enable", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a9cb81e4b2d313458c747cdc401179a66", null ],
       [ "disable", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a6ecb5664f627d1b731a4fd0a74e5f2bc", null ],
       [ "callbackSet", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a4a407b8899a042692026e65d98535f6e", null ],
-      [ "close", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ad0c4d6063af093a3a19a63924aae61ac", null ],
-      [ "versionGet", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a46ce3fceaf8c7fd9499f82914803a2aa", null ]
+      [ "close", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ad0c4d6063af093a3a19a63924aae61ac", null ]
     ] ],
     [ "external_irq_instance_t", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__instance__t", [
       [ "p_ctrl", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a7bf006f685a26836095b1660bf2eb263", null ],
       [ "p_cfg", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ab32ad9ad3e7627390225d731f2834fd7", null ],
       [ "p_api", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a1c64bba3bbf9346831933b4d70b3ae9c", null ]
     ] ],
-    [ "EXTERNAL_IRQ_API_VERSION_MAJOR", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga7d530b33037fde119626b97a1954422e", null ],
-    [ "EXTERNAL_IRQ_API_VERSION_MINOR", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gaecd7545df380272d1cd4bbde5e24d8fb", null ],
     [ "external_irq_ctrl_t", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246", null ],
     [ "external_irq_trigger_t", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga2d1960d763da14da209e16fbb972d57c", [
       [ "EXTERNAL_IRQ_TRIG_FALLING", "group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57caace14d51313fed5f17da4b9828fd5412", null ],

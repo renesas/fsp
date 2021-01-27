@@ -8,6 +8,5 @@ var group___m_o_t_o_r___s_p_e_e_d =
     [ "RM_MOTOR_SPEED_ParameterSet", "group___m_o_t_o_r___s_p_e_e_d.html#ga2d4f55f40ae21026e8049902ef652660", null ],
     [ "RM_MOTOR_SPEED_SpeedControl", "group___m_o_t_o_r___s_p_e_e_d.html#gaa0a0132a0e0a1f60d5ba66f46a634865", null ],
     [ "RM_MOTOR_SPEED_ParameterGet", "group___m_o_t_o_r___s_p_e_e_d.html#gaa1a67f0a31a1abcd5d82670df8a73f31", null ],
-    [ "RM_MOTOR_SPEED_ParameterUpdate", "group___m_o_t_o_r___s_p_e_e_d.html#gaf2f51436aadd6f6db7181c5c15367911", null ],
-    [ "RM_MOTOR_SPEED_VersionGet", "group___m_o_t_o_r___s_p_e_e_d.html#gaff2ff397e9689f04268d45db85599525", null ]
+    [ "RM_MOTOR_SPEED_ParameterUpdate", "group___m_o_t_o_r___s_p_e_e_d.html#gaf2f51436aadd6f6db7181c5c15367911", null ]
 ];

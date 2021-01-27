@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,6 +203,16 @@ Secure State</li>
 </td><td>Secure State </td><td>Value for SCB-&gt;AIRCR register bit SYSRESETREQS. Defines whether the SYSRESETREQ bit is functional for Non-secure use.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
+<tr>
+<td>Security &gt; Cache Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Both Secure and Non-Secure State</li>
+<li>
+Secure State</li>
+</ul>
+</td><td>Both Secure and Non-Secure State </td><td>Defines whether the Cache registers are write accessible for the Non-secure application.<br />
+<br />
+This setting is only valid when building protjects with TrustZone. </td></tr>
 <tr>
 <td>Security &gt; System Reset Status Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -454,6 +464,14 @@ The FLL function requires the subclock oscillator to be running and stabilized. 
 <br />
 When FLL is enabled Software Standby and Deep Software Standby modes are not available. </td></tr>
 <tr>
+<td>Startup C-Cache Line Size</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+32 Bytes</li>
+<li>
+64 Bytes</li>
+</ul>
+</td><td>32 Bytes </td><td>Set the C-Cache line size configured during startup. </td></tr>
+<tr>
 <td>Dual Bank Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
@@ -469,7 +487,7 @@ Disabled</li>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

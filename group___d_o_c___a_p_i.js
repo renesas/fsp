@@ -17,7 +17,6 @@ var group___d_o_c___a_p_i =
       [ "close", "group___d_o_c___a_p_i.html#ad2214941bcd6ee492790b34239861dcf", null ],
       [ "statusGet", "group___d_o_c___a_p_i.html#a444b4249b587c60f8fb5f2c60157808c", null ],
       [ "write", "group___d_o_c___a_p_i.html#a8f6629725bd980b1b46b0e3225d7c0c5", null ],
-      [ "versionGet", "group___d_o_c___a_p_i.html#a0cf440bd314f150d2cefafa0c0f8237d", null ],
       [ "callbackSet", "group___d_o_c___a_p_i.html#a4a559e6ae7a841b6d0464232db650556", null ]
     ] ],
     [ "doc_instance_t", "group___d_o_c___a_p_i.html#structdoc__instance__t", [

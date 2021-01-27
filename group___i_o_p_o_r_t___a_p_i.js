@@ -22,8 +22,7 @@ var group___i_o_p_o_r_t___a_p_i =
       [ "portEventInputRead", "group___i_o_p_o_r_t___a_p_i.html#ab369548c3b66d80747df3ed29ca336f0", null ],
       [ "portEventOutputWrite", "group___i_o_p_o_r_t___a_p_i.html#afad905247e7c42fcb42d412a4e2d2d15", null ],
       [ "portRead", "group___i_o_p_o_r_t___a_p_i.html#ac0de7591b4c5680e87ab2d219e2748c2", null ],
-      [ "portWrite", "group___i_o_p_o_r_t___a_p_i.html#a5a71c5cffcdcacab2425d46603451cf2", null ],
-      [ "versionGet", "group___i_o_p_o_r_t___a_p_i.html#a001924b9dd280688859fd74421e7b046", null ]
+      [ "portWrite", "group___i_o_p_o_r_t___a_p_i.html#a5a71c5cffcdcacab2425d46603451cf2", null ]
     ] ],
     [ "ioport_instance_t", "group___i_o_p_o_r_t___a_p_i.html#structioport__instance__t", [
       [ "p_ctrl", "group___i_o_p_o_r_t___a_p_i.html#af318c6344f0b7679df2ca79bf24bad6e", null ],

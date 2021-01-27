@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -148,9 +148,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf882576a8f79312c27fa700d3fb94951"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951">R_USB_EventGet</a> (usb_ctrl_t *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> *event)</td></tr>
 <tr class="memdesc:gaf882576a8f79312c27fa700d3fb94951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains completed USB related events. (OS-less Only)  <a href="#gaf882576a8f79312c27fa700d3fb94951">More...</a><br /></td></tr>
 <tr class="separator:gaf882576a8f79312c27fa700d3fb94951"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf95e0ee001b1be6f998be42e4986f1c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#gaf95e0ee001b1be6f998be42e4986f1c9">R_USB_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="memdesc:gaf95e0ee001b1be6f998be42e4986f1c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the version of this module.  <a href="#gaf95e0ee001b1be6f998be42e4986f1c9">More...</a><br /></td></tr>
-<tr class="separator:gaf95e0ee001b1be6f998be42e4986f1c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2560b302dca363895820a82ea6a2ba9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#ga2560b302dca363895820a82ea6a2ba9c">R_USB_Callback</a> (usb_callback_t *p_callback)</td></tr>
 <tr class="memdesc:ga2560b302dca363895820a82ea6a2ba9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback function to be called upon completion of a USB related event. (RTOS only)  <a href="#ga2560b302dca363895820a82ea6a2ba9c">More...</a><br /></td></tr>
 <tr class="separator:ga2560b302dca363895820a82ea6a2ba9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -297,6 +294,14 @@ Disabled</li>
 Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable or disable continuous transfer mode. </td></tr>
+<tr>
+<td>LDO Regulator</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Disable </td><td>Enable or disable LDO regulator. </td></tr>
 <tr>
 <td>DMA Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -631,9 +636,7 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
-<dd>
-Do not call this API in the following function. </dd>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -698,9 +701,7 @@ Do not call this API in the following function. </dd>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
-<dd>
-Do not call this API in the following function. </dd>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -972,9 +973,7 @@ Do not call this API in the following function. </dd>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
-<dd>
-Do not call this API in the following function. </dd>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -1032,9 +1031,7 @@ Do not call this API in the following function. </dd>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
-<dd>
-Do not call this API in the following function. </dd>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -1263,34 +1260,6 @@ Do not call this API in the interrupt function. </dd></dl>
 
 </div>
 </div>
-<a id="gaf95e0ee001b1be6f998be42e4986f1c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf95e0ee001b1be6f998be42e4986f1c9">&#9670;&nbsp;</a></span>R_USB_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the version of this module. </p>
-<p>The version number is encoded such that the top two bytes are the major version number and the bottom two bytes are the minor version number.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Failed in acquiring version information. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga2560b302dca363895820a82ea6a2ba9c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga2560b302dca363895820a82ea6a2ba9c">&#9670;&nbsp;</a></span>R_USB_Callback()</h2>
 
@@ -1370,9 +1339,7 @@ Do not call this API in the interrupt function. </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
-<dd>
-Do not call this API in the following function. </dd>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -1419,13 +1386,10 @@ Do not call this API in the following function. </dd>
     <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter is NULL error. </td></tr>
     <tr><td class="paramname">FSP_ERR_USB_BUSY</td><td>Specified pipe now handling data receive/send request. </td></tr>
-    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
-<dd>
-Do not call this API in the following function. </dd>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -1472,13 +1436,10 @@ Do not call this API in the following function. </dd>
     <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter is NULL error. </td></tr>
     <tr><td class="paramname">FSP_ERR_USB_BUSY</td><td>Specified pipe now handling data receive/send request. </td></tr>
-    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The address specified in the argument p_buf must be 4-byte aligned. </dd>
-<dd>
-Do not call this API in the following function. </dd>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -1822,7 +1783,7 @@ Do not call this API in the following function. </dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

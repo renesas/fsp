@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -108,8 +108,6 @@ Functions</h2></td></tr>
 <tr class="separator:gae1af63498d91ee2ced63246e477faa8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2f8bf11a148ad673457d5afcabb85d7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d.html#ga2f8bf11a148ad673457d5afcabb85d7d">R_LVD_StatusClear</a> (<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga2f8bf11a148ad673457d5afcabb85d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf806e8a0ba231798e50ae7264c2c7a6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d.html#gaf806e8a0ba231798e50ae7264c2c7a6f">R_LVD_VersionGet</a> (<a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const p_version)</td></tr>
-<tr class="separator:gaf806e8a0ba231798e50ae7264c2c7a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga94ba46485f3f278ae20933892941b795"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d.html#ga94ba46485f3f278ae20933892941b795">R_LVD_CallbackSet</a> (<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:ga94ba46485f3f278ae20933892941b795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -412,38 +410,6 @@ Startup time can take on the order of milliseconds for some configurations.</dd>
 
 </div>
 </div>
-<a id="gaf806e8a0ba231798e50ae7264c2c7a6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf806e8a0ba231798e50ae7264c2c7a6f">&#9670;&nbsp;</a></span>R_LVD_VersionGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LVD_VersionGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Returns the LVD driver version based on compile time macros.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_version</td><td>Pointer to the version structure</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_version was NULL </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga94ba46485f3f278ae20933892941b795"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga94ba46485f3f278ae20933892941b795">&#9670;&nbsp;</a></span>R_LVD_CallbackSet()</h2>
 
@@ -500,7 +466,7 @@ Startup time can take on the order of milliseconds for some configurations.</dd>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

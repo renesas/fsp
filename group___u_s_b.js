@@ -17,7 +17,6 @@ var group___u_s_b =
     [ "R_USB_PipeInfoGet", "group___u_s_b.html#ga08f0810f299c825fae9a9f8ada2f9dbf", null ],
     [ "R_USB_PullUp", "group___u_s_b.html#ga999a06f4569d82b8e18c2509e579a35f", null ],
     [ "R_USB_EventGet", "group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951", null ],
-    [ "R_USB_VersionGet", "group___u_s_b.html#gaf95e0ee001b1be6f998be42e4986f1c9", null ],
     [ "R_USB_Callback", "group___u_s_b.html#ga2560b302dca363895820a82ea6a2ba9c", null ],
     [ "R_USB_HostControlTransfer", "group___u_s_b.html#gaecba62e40820ec837fa0b285140ed13b", null ],
     [ "R_USB_PeriControlDataGet", "group___u_s_b.html#ga1293995ba77495705db3a3adf703b7f1", null ],

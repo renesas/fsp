@@ -15,8 +15,7 @@ var group___e_t_h_e_r___p_h_y___a_p_i =
       [ "close", "group___e_t_h_e_r___p_h_y___a_p_i.html#a43859adb62f78f2ffd46622ee33bf3b3", null ],
       [ "startAutoNegotiate", "group___e_t_h_e_r___p_h_y___a_p_i.html#a7c47b46e3ac5c47080332d6e940395a3", null ],
       [ "linkPartnerAbilityGet", "group___e_t_h_e_r___p_h_y___a_p_i.html#ad508caaca41fbabfe2ec5bdae28d790d", null ],
-      [ "linkStatusGet", "group___e_t_h_e_r___p_h_y___a_p_i.html#aa2afea5d0c6c80b55cfd49f249612991", null ],
-      [ "versionGet", "group___e_t_h_e_r___p_h_y___a_p_i.html#a535dc7c9158b79d2ec577f216523f8c5", null ]
+      [ "linkStatusGet", "group___e_t_h_e_r___p_h_y___a_p_i.html#aa2afea5d0c6c80b55cfd49f249612991", null ]
     ] ],
     [ "ether_phy_instance_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__instance__t", [
       [ "p_ctrl", "group___e_t_h_e_r___p_h_y___a_p_i.html#aa038161c98da2c0d2149e2a76416b7de", null ],

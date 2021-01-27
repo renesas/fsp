@@ -1,8 +1,10 @@
 var group___b_s_p___m_c_u =
 [
     [ "RA2A1", "group___b_s_p___m_c_u___r_a2_a1.html", "group___b_s_p___m_c_u___r_a2_a1" ],
+    [ "RA2E1", "group___b_s_p___m_c_u___r_a2_e1.html", "group___b_s_p___m_c_u___r_a2_e1" ],
     [ "RA2L1", "group___b_s_p___m_c_u___r_a2_l1.html", "group___b_s_p___m_c_u___r_a2_l1" ],
     [ "RA4M1", "group___b_s_p___m_c_u___r_a4_m1.html", "group___b_s_p___m_c_u___r_a4_m1" ],
+    [ "RA4M2", "group___b_s_p___m_c_u___r_a4_m2.html", null ],
     [ "RA4M3", "group___b_s_p___m_c_u___r_a4_m3.html", null ],
     [ "RA4W1", "group___b_s_p___m_c_u___r_a4_w1.html", "group___b_s_p___m_c_u___r_a4_w1" ],
     [ "RA6M1", "group___b_s_p___m_c_u___r_a6_m1.html", "group___b_s_p___m_c_u___r_a6_m1" ],
@@ -284,7 +286,6 @@ var group___b_s_p___m_c_u =
     [ "Default_Handler", "group___b_s_p___m_c_u.html#ga4e0c522c1bb26af24accaf20e6b87d12", null ],
     [ "SystemInit", "group___b_s_p___m_c_u.html#ga93f514700ccf00d08dbdcff7f1224eb2", null ],
     [ "R_BSP_WarmStart", "group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7", null ],
-    [ "R_BSP_VersionGet", "group___b_s_p___m_c_u.html#gade0e6b9fc5ca580d5bf6c8ae2a6af8d9", null ],
     [ "R_FSP_CurrentIrqGet", "group___b_s_p___m_c_u.html#ga50cae0c65c54074c32d30eb4108d9a09", null ],
     [ "R_FSP_SystemClockHzGet", "group___b_s_p___m_c_u.html#gaac289335b731d0bdb5cb8e6d243898ef", null ],
     [ "R_BSP_UniqueIdGet", "group___b_s_p___m_c_u.html#gadee5f5e0c5fa723426f73d7d5a07f9b2", null ],

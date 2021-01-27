@@ -5,8 +5,6 @@ var searchData=
   ['key_5ftype',['key_type',['../group___g_a_p___a_p_i.html#a870fe05818d039120a4da9dcb0228641',1,'st_ble_gap_key_press_ntf_evt_t']]],
   ['key_20matrix_20interface',['Key Matrix Interface',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html',1,'']]],
   ['keymatrix_5fapi_5ft',['keymatrix_api_t',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__api__t',1,'']]],
-  ['keymatrix_5fapi_5fversion_5fmajor',['KEYMATRIX_API_VERSION_MAJOR',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#gaf7b361d959102a7e9918d1c42bae69ea',1,'r_keymatrix_api.h']]],
-  ['keymatrix_5fapi_5fversion_5fminor',['KEYMATRIX_API_VERSION_MINOR',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#ga230143b15ac4b8648c871711eb16ec39',1,'r_keymatrix_api.h']]],
   ['keymatrix_5fcallback_5fargs_5ft',['keymatrix_callback_args_t',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__callback__args__t',1,'']]],
   ['keymatrix_5fcfg_5ft',['keymatrix_cfg_t',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__cfg__t',1,'']]],
   ['keymatrix_5fctrl_5ft',['keymatrix_ctrl_t',['../group___k_e_y_m_a_t_r_i_x___a_p_i.html#ga74eaead2fb2e21ea4242f3318df0b7a1',1,'r_keymatrix_api.h']]],

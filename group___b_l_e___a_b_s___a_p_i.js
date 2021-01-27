@@ -155,7 +155,6 @@ var group___b_l_e___a_b_s___a_p_i =
       [ "open", "group___b_l_e___a_b_s___a_p_i.html#a84d7676435519fb9b324c484e4ce8b24", null ],
       [ "close", "group___b_l_e___a_b_s___a_p_i.html#abdc48fd7588fd6d422f7bd7b4d59637a", null ],
       [ "reset", "group___b_l_e___a_b_s___a_p_i.html#ac71b5f4a2de135b45195165a221a8d19", null ],
-      [ "versionGet", "group___b_l_e___a_b_s___a_p_i.html#a5209172017a48afee54a6106b89c8702", null ],
       [ "startLegacyAdvertising", "group___b_l_e___a_b_s___a_p_i.html#a729b404106cfd3c8847f78bb4d760d98", null ],
       [ "startExtendedAdvertising", "group___b_l_e___a_b_s___a_p_i.html#ae630f94d36fc57dbdb3f8267b8421733", null ],
       [ "startNonConnectableAdvertising", "group___b_l_e___a_b_s___a_p_i.html#aa44b155f06857bc1ef281eeffb1144ab", null ],
@@ -163,7 +162,8 @@ var group___b_l_e___a_b_s___a_p_i =
       [ "startScanning", "group___b_l_e___a_b_s___a_p_i.html#add26234f552e169063aafebcfbaada57", null ],
       [ "createConnection", "group___b_l_e___a_b_s___a_p_i.html#a68ac3bccdd07538ecd6de9ee4eecd60a", null ],
       [ "setLocalPrivacy", "group___b_l_e___a_b_s___a_p_i.html#a6f9928d4535222963b96d5a88ca04986", null ],
-      [ "startAuthentication", "group___b_l_e___a_b_s___a_p_i.html#a65ce1d52c18d6261fa6122c50d42438f", null ]
+      [ "startAuthentication", "group___b_l_e___a_b_s___a_p_i.html#a65ce1d52c18d6261fa6122c50d42438f", null ],
+      [ "deleteBondInformation", "group___b_l_e___a_b_s___a_p_i.html#a982369d158ac921397f35cf13e993ecb", null ]
     ] ],
     [ "ble_abs_instance_t", "group___b_l_e___a_b_s___a_p_i.html#structble__abs__instance__t", [
       [ "p_ctrl", "group___b_l_e___a_b_s___a_p_i.html#abea1433d38189ab5b3168178e645bc7e", null ],
@@ -175,9 +175,23 @@ var group___b_l_e___a_b_s___a_p_i =
     [ "ble_vendor_specific_application_callback_t", "group___b_l_e___a_b_s___a_p_i.html#ga0ce85fc03a2dab118c422d5cbcdc178c", null ],
     [ "ble_gatt_server_application_callback_t", "group___b_l_e___a_b_s___a_p_i.html#ga69790145005d03f5503c4d1338956e83", null ],
     [ "ble_gatt_client_application_callback_t", "group___b_l_e___a_b_s___a_p_i.html#gad877e721a58a6783c472f3022304f7f9", null ],
+    [ "ble_abs_delete_bond_application_callback_t", "group___b_l_e___a_b_s___a_p_i.html#ga2ba4dba2dff7da80f1ead1e0ef94b613", null ],
     [ "ble_abs_ctrl_t", "group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923", null ],
     [ "ble_abs_advertising_filter_t", "group___b_l_e___a_b_s___a_p_i.html#ga77ed02034d3aa2e83b97680eb15bb01f", [
       [ "BLE_ABS_ADVERTISING_FILTER_ALLOW_ANY", "group___b_l_e___a_b_s___a_p_i.html#gga77ed02034d3aa2e83b97680eb15bb01fa9edc780a771c3008a0d1ba1e15c3f827", null ],
       [ "BLE_ABS_ADVERTISING_FILTER_ALLOW_WHITE_LIST", "group___b_l_e___a_b_s___a_p_i.html#gga77ed02034d3aa2e83b97680eb15bb01fa9f033087c27d8004907aa41ae03b0853", null ]
+    ] ],
+    [ "ble_abs_local_bond_information_t", "group___b_l_e___a_b_s___a_p_i.html#ga326be6526889c57ef80bf9821d12c8e6", [
+      [ "BLE_ABS_LOCAL_BOND_INFORMATION_NONE", "group___b_l_e___a_b_s___a_p_i.html#gga326be6526889c57ef80bf9821d12c8e6a03fbae0c7854d6928e43526ce2d1b0e2", null ],
+      [ "BLE_ABS_LOCAL_BOND_INFORMATION_ALL", "group___b_l_e___a_b_s___a_p_i.html#gga326be6526889c57ef80bf9821d12c8e6a91f9abe24f22055f08d651ff92b11413", null ]
+    ] ],
+    [ "ble_abs_remote_bond_information_t", "group___b_l_e___a_b_s___a_p_i.html#ga18554897bd2c017f794125cd4ca1764b", [
+      [ "BLE_ABS_REMOTE_BOND_INFORMATION_NONE", "group___b_l_e___a_b_s___a_p_i.html#gga18554897bd2c017f794125cd4ca1764ba020984f5eece1efb24c867ee2fd81208", null ],
+      [ "BLE_ABS_REMOTE_BOND_INFORMATION_SPECIFIED", "group___b_l_e___a_b_s___a_p_i.html#gga18554897bd2c017f794125cd4ca1764ba2b52e14ef60726f30a1be8b9c4ff4c21", null ],
+      [ "BLE_ABS_REMOTE_BOND_INFORMATION_ALL", "group___b_l_e___a_b_s___a_p_i.html#gga18554897bd2c017f794125cd4ca1764ba3f8e3dd7a7d9c073eec747e636b2bc72", null ]
+    ] ],
+    [ "ble_abs_delete_non_volatile_area_t", "group___b_l_e___a_b_s___a_p_i.html#gacf67724f2be90aa139e93499fe456b80", [
+      [ "BLE_ABS_DELETE_NON_VOLATILE_AREA_DISABLE", "group___b_l_e___a_b_s___a_p_i.html#ggacf67724f2be90aa139e93499fe456b80a65466878d25e807f51357a208a206421", null ],
+      [ "BLE_ABS_DELETE_NON_VOLATILE_AREA_ENABLE", "group___b_l_e___a_b_s___a_p_i.html#ggacf67724f2be90aa139e93499fe456b80abaf6badd2792553a1318e6fd03306077", null ]
     ] ]
 ];

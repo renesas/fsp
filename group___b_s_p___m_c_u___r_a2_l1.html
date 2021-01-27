@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.2.1</span>
+   &#160;<span id="projectnumber">Release v2.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -262,6 +262,14 @@ Stop counting when entering Sleep mode</li>
 </ul>
 </td><td>Stop counting when entering Sleep mode </td><td></td></tr>
 <tr>
+<td>OFS1 register settings &gt; Internal Clock Supply Architecture Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Type B</li>
+<li>
+Type A</li>
+</ul>
+</td><td>Type A </td><td></td></tr>
+<tr>
 <td>OFS1 register settings &gt; Voltage Detection 0 Circuit Start</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Voltage monitor 0 reset is enabled after reset</li>
@@ -284,7 +292,13 @@ Voltage monitor 0 reset is disabled after reset</li>
 </ul>
 </td><td>1.90 V </td><td></td></tr>
 <tr>
-<td>OFS1 register settings &gt; HOCO Oscillation Enable</td><td>HOCO oscillation is enabled after reset</td><td>HOCO oscillation is enabled after reset </td><td>HOCO must be enabled out of reset because the MCU starts up in low voltage mode and the HOCO must be operating in low voltage mode. </td></tr>
+<td>OFS1 register settings &gt; HOCO Oscillation Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+HOCO oscillation is enabled after reset</li>
+<li>
+HOCO oscillation is disabled after reset</li>
+</ul>
+</td><td>HOCO oscillation is enabled after reset </td><td>HOCO must be enabled out of reset because the MCU starts up in low voltage mode and the HOCO must be operating in low voltage mode. </td></tr>
 <tr>
 <td>MPU &gt; Enable or disable PC Region 0</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -382,13 +396,7 @@ When set to 'Enabled at startup' the BSP will switch to the DCDC regulator durin
 </ul>
 </td><td>2.7V to 3.6V </td><td>Set this to the expected MCU supply voltage (Vcc) at startup when using the DCDC regulator. </td></tr>
 <tr>
-<td>Use Low Voltage Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enable</li>
-<li>
-Disable</li>
-</ul>
-</td><td>Disable </td><td>Use the low voltage mode. This limits the ICLK operating frequency to 4 MHz and requires all clock dividers to be at least 4 when oscillation stop detection is used. </td></tr>
+<td>Use Low Voltage Mode</td><td>Not Supported</td><td>config.bsp.low_voltage_mode.disabled </td><td>Use the low voltage mode. This limits the ICLK operating frequency to 4 MHz and requires all clock dividers to be at least 4 when oscillation stop detection is used. </td></tr>
 <tr>
 <td>ID Code Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -437,7 +445,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_l1.html#ga1e962f78bb332dfe44840fd60e119a8b">icu_event_t</a></td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_e1.html#ga1e962f78bb332dfe44840fd60e119a8b">icu_event_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -509,7 +517,7 @@ If the supply voltage falls outside the range originally specified when starting
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

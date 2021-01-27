@@ -14,6 +14,8 @@ var group___e_t_h_e_r___a_p_i =
       [ "multicast", "group___e_t_h_e_r___a_p_i.html#ad157df08c8edb7dac37ee3a05229641c", null ],
       [ "promiscuous", "group___e_t_h_e_r___a_p_i.html#a3500b706d40693b385e0d8d47af5ca28", null ],
       [ "flow_control", "group___e_t_h_e_r___a_p_i.html#a122143791d6fa60143a041fd0b2e49c7", null ],
+      [ "padding", "group___e_t_h_e_r___a_p_i.html#a96ab539f1b4c8f7be6169d7173b67776", null ],
+      [ "padding_offset", "group___e_t_h_e_r___a_p_i.html#a5c1d94fec751bde17d1a54d911c39619", null ],
       [ "broadcast_filter", "group___e_t_h_e_r___a_p_i.html#a538e42b696b0b1b941e2a7a92cf9a6aa", null ],
       [ "p_mac_address", "group___e_t_h_e_r___a_p_i.html#afd4c3c463a931fa8068576f5bb410609", null ],
       [ "p_rx_descriptors", "group___e_t_h_e_r___a_p_i.html#a9580ac1ebfaae9398ebee4f17562acb5", null ],
@@ -36,8 +38,7 @@ var group___e_t_h_e_r___a_p_i =
       [ "bufferRelease", "group___e_t_h_e_r___a_p_i.html#aa38e7f82e66fd26fd8d51b11f46ae6e6", null ],
       [ "write", "group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233", null ],
       [ "linkProcess", "group___e_t_h_e_r___a_p_i.html#a125ca4ee69c6c63e1db42708324c0fb3", null ],
-      [ "wakeOnLANEnable", "group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad", null ],
-      [ "versionGet", "group___e_t_h_e_r___a_p_i.html#a2d7eb9db55c87bff39494408612fe766", null ]
+      [ "wakeOnLANEnable", "group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad", null ]
     ] ],
     [ "ether_instance_t", "group___e_t_h_e_r___a_p_i.html#structether__instance__t", [
       [ "p_ctrl", "group___e_t_h_e_r___a_p_i.html#a013ed407826d291e797c6b5eb44eb5ba", null ],

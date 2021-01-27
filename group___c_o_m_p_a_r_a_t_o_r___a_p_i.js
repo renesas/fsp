@@ -29,8 +29,7 @@ var group___c_o_m_p_a_r_a_t_o_r___a_p_i =
       [ "outputEnable", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a4113c9227ed46dce9804f3a08eb11277", null ],
       [ "infoGet", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a125a6a2a99450af562e2c3deec80e7ac", null ],
       [ "statusGet", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a9c18633510979192f85835c48cdc8c3d", null ],
-      [ "close", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a0251d88b11cc33909048f611db2bf688", null ],
-      [ "versionGet", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a72e08ecfa63e2b13fc0b793710badc4a", null ]
+      [ "close", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a0251d88b11cc33909048f611db2bf688", null ]
     ] ],
     [ "comparator_instance_t", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__instance__t", [
       [ "p_ctrl", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ae1f96829cf817b8f6392a525f7c65a37", null ],

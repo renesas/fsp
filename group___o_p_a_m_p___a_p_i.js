@@ -20,8 +20,7 @@ var group___o_p_a_m_p___a_p_i =
       [ "trim", "group___o_p_a_m_p___a_p_i.html#ac782f4e26e8e1f22cc47f2659dcf6989", null ],
       [ "infoGet", "group___o_p_a_m_p___a_p_i.html#a84aff8b18eb1e166ea166fd3891ea764", null ],
       [ "statusGet", "group___o_p_a_m_p___a_p_i.html#ac100ead80121384eb5b640ce16f21e16", null ],
-      [ "close", "group___o_p_a_m_p___a_p_i.html#af09f2b996eeb11833a5a21c6df7f3834", null ],
-      [ "versionGet", "group___o_p_a_m_p___a_p_i.html#a635f1571ec8779d4961eed2e0c36c57c", null ]
+      [ "close", "group___o_p_a_m_p___a_p_i.html#af09f2b996eeb11833a5a21c6df7f3834", null ]
     ] ],
     [ "opamp_instance_t", "group___o_p_a_m_p___a_p_i.html#structopamp__instance__t", [
       [ "p_ctrl", "group___o_p_a_m_p___a_p_i.html#aff3af80cd1ed596486291769a9f902d3", null ],

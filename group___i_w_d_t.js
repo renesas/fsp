@@ -12,6 +12,5 @@ var group___i_w_d_t =
     [ "R_IWDT_StatusGet", "group___i_w_d_t.html#ga9619fc0daddf190cda28ccae1213629d", null ],
     [ "R_IWDT_CounterGet", "group___i_w_d_t.html#ga5e86ba83718eb70e72bfb892c39ddbb4", null ],
     [ "R_IWDT_TimeoutGet", "group___i_w_d_t.html#ga7e029c3f446f09d7de668eb49709b439", null ],
-    [ "R_IWDT_CallbackSet", "group___i_w_d_t.html#ga195bc2a05e0071001b72a8aa4615a4fa", null ],
-    [ "R_IWDT_VersionGet", "group___i_w_d_t.html#ga16b1037e3a48398170eb28a5f6f8565f", null ]
+    [ "R_IWDT_CallbackSet", "group___i_w_d_t.html#ga195bc2a05e0071001b72a8aa4615a4fa", null ]
 ];

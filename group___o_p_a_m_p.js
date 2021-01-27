@@ -63,6 +63,5 @@ var group___o_p_a_m_p =
     [ "R_OPAMP_StatusGet", "group___o_p_a_m_p.html#ga91a580e6f9e7117b2be8c9f07596d373", null ],
     [ "R_OPAMP_Trim", "group___o_p_a_m_p.html#gacfcb03e4ea60b3408e3b88e76f1388ee", null ],
     [ "R_OPAMP_Close", "group___o_p_a_m_p.html#ga5590bdd0379906ac3c6af341ed41b1f1", null ],
-    [ "R_OPAMP_VersionGet", "group___o_p_a_m_p.html#ga9f5634f5f6cf8da40d69f5dae2e1257e", null ],
     [ "g_opamp_on_opamp", "group___o_p_a_m_p.html#ga7dde0adadfb1020d985abd60ebb8c1a6", null ]
 ];
