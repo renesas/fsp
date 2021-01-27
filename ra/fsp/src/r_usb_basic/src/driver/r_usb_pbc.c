@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -122,10 +122,10 @@ uint8_t usb_pstd_bc_data_contact_detect (usb_utr_t * p_utr)
     uint16_t buf;
     uint16_t timer = 0;
 
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     hw_usb_set_cnen(p_utr->ip);
     hw_usb_set_bcctrl(p_utr, USB_IDPSRCE);
-  #endif
+  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     usb_cpu_delay_xms((uint16_t) 5);   /* wait stabilization */
 
     /* WAIT_LOOP */
@@ -139,9 +139,9 @@ uint8_t usb_pstd_bc_data_contact_detect (usb_utr_t * p_utr)
             buf   = hw_usb_read_syssts(p_utr);
             if (USB_SE0 == (buf & USB_LNST))
             {
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
                 hw_usb_clear_bcctrl(p_utr, USB_IDPSRCE);
-  #endif
+  #endif                                    /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
                 return USB_BC_DCD_COMP_SE0; /* Connected Data Line */
             }
@@ -151,9 +151,9 @@ uint8_t usb_pstd_bc_data_contact_detect (usb_utr_t * p_utr)
         timer++;
     }
 
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     hw_usb_clear_bcctrl(p_utr, USB_IDPSRCE);
-  #endif
+  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
     return USB_BC_DCD_TIMEOUT;         /* DCD Timeout */
 }                                      /* End of function usb_pstd_bc_data_contact_detect() */
@@ -168,15 +168,15 @@ uint8_t usb_pstd_bc_primary_detection (usb_utr_t * p_utr)
 {
     uint16_t buf;
     uint8_t  detect_port = 0;
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     hw_usb_set_bcctrl(p_utr, (USB_VDPSRCE | USB_IDMSINKE));
-  #endif
+  #endif                                             /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
-    usb_cpu_delay_xms((uint16_t) USB_BC_VDPSRC_ON); /* [BC1.2 Spec] TVDPSRC_ON (min:40ms) */
+    usb_cpu_delay_xms((uint16_t) USB_BC_VDPSRC_ON);  /* [BC1.2 Spec] TVDPSRC_ON (min:40ms) */
     buf = hw_usb_read_bcctrl(p_utr);
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     hw_usb_clear_bcctrl(p_utr, (USB_VDPSRCE | USB_IDMSINKE));
-  #endif
+  #endif                                             /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     usb_cpu_delay_xms((uint16_t) USB_BC_VDMSRC_DIS); /* [BC1.2 Spec] TVDMSRC_DIS (max:20ms) */
 
     if (buf & USB_CHGDETSTS)
@@ -202,26 +202,26 @@ uint8_t usb_pstd_bc_secondary_detection (usb_utr_t * p_utr)
     uint16_t buf;
     uint8_t  detect_port = 0;
 
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     hw_usb_set_bcctrl(p_utr, (USB_VDMSRCE | USB_IDPSINKE));
-  #endif
+  #endif                                            /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     usb_cpu_delay_xms((uint16_t) USB_BC_VDMSRC_ON); /* [BC1.2 Spec] TVDMSRC_ON (min:40ms) */
     buf = hw_usb_read_bcctrl(p_utr);
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     hw_usb_clear_bcctrl(p_utr, (USB_VDMSRCE | USB_IDPSINKE));
-  #endif
+  #endif                                            /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
     if (buf & USB_PDDETSTS)
     {
-        detect_port = 1;               /* Detected DCP */
+        detect_port = 1;                            /* Detected DCP */
     }
     else
     {
-        detect_port = 0;               /* Detected CDP */
+        detect_port = 0;                            /* Detected CDP */
     }
 
     return detect_port;
-}                                      /* End of function usb_pstd_secondary_detection() */
+}                                                   /* End of function usb_pstd_secondary_detection() */
 
  #endif /* USB_CFG_BC == USB_CFG_ENABLE */
 

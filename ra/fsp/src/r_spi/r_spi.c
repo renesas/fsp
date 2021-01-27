@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -424,8 +424,8 @@ fsp_err_t R_SPI_Close (spi_ctrl_t * const p_api_ctrl)
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * This function gets the version information of the underlying driver. Implements @ref spi_api_t::versionGet.
+/***********************************************************************************************************************
+ * DEPRECATED This function gets the version information of the underlying driver. Implements @ref spi_api_t::versionGet.
  *
  * @retval      FSP_SUCCESS            Successful version get.
  * @retval      FSP_ERR_ASSERTION      The parameter p_version is NULL.

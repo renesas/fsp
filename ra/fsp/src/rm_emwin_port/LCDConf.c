@@ -275,6 +275,33 @@ static void _GraphicsHWInit (void)
 
 /*********************************************************************
  *
+ *       _GraphicsHWDeInit
+ */
+static void _GraphicsHWDeInit (void)
+{
+    //
+    // Stop graphics LCD controller
+    //
+    while (FSP_SUCCESS != R_GLCDC_Stop(_g_display_emwin->p_ctrl))
+    {
+        /* Wait for GLCDC register update to complete before closing driver. */
+    }
+
+    R_GLCDC_Close(_g_display_emwin->p_ctrl);
+
+#if EMWIN_LCD_USE_DAVE
+
+    //
+    // Deinitialize D/AVE 2D driver
+    //
+    d2_freerenderbuffer(*_d2_handle_emwin, renderbuffer);
+    d2_deinithw(*_d2_handle_emwin);
+    d2_closedevice(*_d2_handle_emwin);
+#endif
+}
+
+/*********************************************************************
+ *
  *       _SetLUTEntry
  *
  * Purpose:
@@ -1187,6 +1214,13 @@ void LCD_X_Config (void)
     // Initialize graphics HW
     //
     _GraphicsHWInit();
+
+    //
+    // Set graphics HW deinit callback for GUI_Exit
+    //
+    static GUI_REGISTER_EXIT RegisterExit;
+    RegisterExit.pfVoid = _GraphicsHWDeInit;
+    GUI__RegisterExit(&RegisterExit);
 
 #if (EMWIN_LCD_NUM_FRAMEBUFFERS > 1)
 

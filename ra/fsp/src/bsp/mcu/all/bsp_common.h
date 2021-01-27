@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -269,6 +269,12 @@ __STATIC_INLINE bsp_unique_id_t const * R_BSP_UniqueIdGet ()
 __STATIC_INLINE void R_BSP_FlashCacheDisable ()
 {
     R_FCACHE->FCACHEE = 0U;
+
+#if BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
+
+    /* Disable the C-Cache. */
+    R_CACHE->CCACTL = 0U;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -283,6 +289,15 @@ __STATIC_INLINE void R_BSP_FlashCacheEnable ()
 
     /* Enable flash cache. */
     R_FCACHE->FCACHEE = 1U;
+
+#if BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
+
+    /* Configure the C-Cache line size. */
+    R_CACHE->CCALCF = BSP_CFG_C_CACHE_LINE_SIZE;
+
+    /* Enable the C-Cache. */
+    R_CACHE->CCACTL = 1U;
+#endif
 }
 
 /***********************************************************************************************************************

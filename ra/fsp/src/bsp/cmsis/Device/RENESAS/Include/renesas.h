@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -4979,7 +4979,7 @@ typedef struct                         /*!< (@ 0x40082000) R_CTSU2 Structure    
                 __IOM uint32_t LOAD   : 2; /*!< [19..18] CTSU Measurement Load Control                                    */
                 __IOM uint32_t POSEL  : 2; /*!< [21..20] CTSU Non-measured Channel Output Select                          */
                 __IOM uint32_t SDPSEL : 1; /*!< [22..22] CTSU Sensor Drive Pulse Select                                   */
-                __IOM uint32_t FCMODE : 1; /*!< [23..23] CTSU SUCLK Control                                               */
+                __IOM uint32_t PCSEL  : 1; /*!< [23..23] CTSU Boost Circuit Clock Select                                  */
                 __IOM uint32_t STCLK  : 6; /*!< [29..24] CTSU STCLK Select                                                */
                 __IOM uint32_t DCMODE : 1; /*!< [30..30] CTSU Current Measurement Mode Select                             */
                 __IOM uint32_t DCBACK : 1; /*!< [31..31] CTSU Current Measurement Feedback Select                         */
@@ -4998,8 +4998,17 @@ typedef struct                         /*!< (@ 0x40082000) R_CTSU2 Structure    
                     __IOM uint8_t CTSUCR1; /*!< (@ 0x00000001) CTSU Control Register A                                    */
                 };
             };
-            __IOM uint8_t CTSUCR2;         /*!< (@ 0x00000002) CTSU Control Register A                                    */
-            __IOM uint8_t CTSUCR3;         /*!< (@ 0x00000003) CTSU Control Register A                                    */
+
+            union
+            {
+                __IOM uint16_t CTSUCRAH;   /*!< (@ 0x00000002) CTSU Control Register A                                    */
+
+                struct
+                {
+                    __IOM uint8_t CTSUCR2; /*!< (@ 0x00000002) CTSU Control Register A                                    */
+                    __IOM uint8_t CTSUCR3; /*!< (@ 0x00000003) CTSU Control Register A                                    */
+                };
+            };
         };
     };
 
@@ -5352,7 +5361,7 @@ typedef struct                         /*!< (@ 0x40082000) R_CTSU2 Structure    
             struct
             {
                 __IM uint32_t SENSCNT : 16; /*!< [15..0] CTSU Sensor Counter                                               */
-                uint32_t              : 16;
+                __IM uint32_t SUCKCNT : 16; /*!< [31..16] CTSU SUCLK Counter                                               */
             } CTSUSCNT_b;
         };
         __IM uint16_t CTSUSC;               /*!< (@ 0x00000024) CTSU Sensor Counter Register                               */
@@ -5368,15 +5377,16 @@ typedef struct                         /*!< (@ 0x40082000) R_CTSU2 Structure    
             {
                 uint32_t                : 2;
                 __IOM uint32_t TSOD     : 1; /*!< [2..2] CTSU TS Pins Fixed Output Select                                   */
-                __IOM uint32_t DRV      : 1; /*!< [3..3] CTSU Calibration Setting Bit 1                                     */
-                uint32_t                : 2;
+                __IOM uint32_t DRV      : 1; /*!< [3..3] CTSU Power Supply Forced Start                                     */
+                __IOM uint32_t CLKSEL   : 2; /*!< [5..4] CTSU Observation Clock Select                                      */
                 __IOM uint32_t SUCLKEN  : 1; /*!< [6..6] CTSU SUCLK Enable Control                                          */
-                __IOM uint32_t TSOC     : 1; /*!< [7..7] CTSU Calibration Setting Bit 2                                     */
-                uint32_t                : 1;
+                __IOM uint32_t TSOC     : 1; /*!< [7..7] CTSU Switched Capacitor Operation Stop                             */
+                __IOM uint32_t CNTRDSEL : 1; /*!< [8..8] CTSU Read Count Select of Sensor Counter                           */
                 __IOM uint32_t IOC      : 1; /*!< [9..9] CTSU Transfer Pins Control                                         */
                 __IOM uint32_t CFCRDMD  : 1; /*!< [10..10] CTSU CFC Counter Read Mode Select                                */
                 __IOM uint32_t DCOFF    : 1; /*!< [11..11] CTSU Down Converter Control                                      */
-                uint32_t                : 10;
+                uint32_t                : 4;
+                __IOM uint32_t CFCSEL   : 6; /*!< [21..16] CTSU Observation CFC Clock Select                                */
                 __IOM uint32_t CFCMODE  : 1; /*!< [22..22] CTSU CFC Current Source Switching                                */
                 uint32_t                : 2;
                 __IOM uint32_t DACCARRY : 1; /*!< [25..25] CTSU DAC Upper Current Source Carry Control                      */
@@ -5385,7 +5395,7 @@ typedef struct                         /*!< (@ 0x40082000) R_CTSU2 Structure    
                 __IOM uint32_t DACCLK   : 1; /*!< [28..28] CTSU DAC Modulation Circuit Clock Select                         */
                 __IOM uint32_t CCOCLK   : 1; /*!< [29..29] CTSU CCO Modulation Circuit Clock Select                         */
                 __IOM uint32_t CCOCALIB : 1; /*!< [30..30] CTSU CCO Calibration Mode Select                                 */
-                uint32_t                : 1;
+                __IOM uint32_t TXREV    : 1; /*!< [31..31] CTSU Transmit Pin Inverted Output                                */
             } CTSUCALIB_b;
         };
 
@@ -5398,7 +5408,18 @@ typedef struct                         /*!< (@ 0x40082000) R_CTSU2 Structure    
 
     union
     {
-        __IOM uint32_t CTSUSUCLKA;     /*!< (@ 0x0000002C) CTSU Sensor Unit Clock Control Register A                  */
+        union
+        {
+            __IOM uint32_t CTSUSUCLKA;       /*!< (@ 0x0000002C) CTSU Sensor Unit Clock Control Register A                  */
+
+            struct
+            {
+                __IOM uint32_t SUADJ0   : 8; /*!< [7..0] CTSU SUCLK Frequency Adjustment                                    */
+                __IOM uint32_t SUMULTI0 : 8; /*!< [15..8] CTSU SUCLK Multiplier Rate Setting                                */
+                __IOM uint32_t SUADJ1   : 8; /*!< [23..16] CTSU SUCLK Frequency Adjustment                                  */
+                __IOM uint32_t SUMULTI1 : 8; /*!< [31..24] CTSU SUCLK Multiplier Rate Setting                               */
+            } CTSUSUCLKA_b;
+        };
 
         struct
         {
@@ -10249,6 +10270,50 @@ typedef struct                         /*!< (@ 0x407EC000) R_FACI_LP Structure  
     __IM uint8_t   RESERVED29;
     __IM uint16_t  RESERVED30;
 } R_FACI_LP_Type;                      /*!< Size = 16332 (0x3fcc)                                                     */
+
+/* =========================================================================================================================== */
+/* ================                                        R_CTSUTRIM                                         ================ */
+/* =========================================================================================================================== */
+
+/**
+ * @brief CTSU Trimming Registers (R_CTSUTRIM)
+ */
+
+typedef struct                         /*!< (@ 0x407EC000) R_CTSUTRIM Structure                                       */
+{
+    __IM uint32_t RESERVED[233];
+
+    union
+    {
+        __IOM uint32_t CTSUTRIMA;         /*!< (@ 0x000003A4) CTSU Trimming Register A                                   */
+
+        struct
+        {
+            __IOM uint32_t RTRIM     : 8; /*!< [7..0] CTSU Reference Resistance Adjustment                               */
+            __IOM uint32_t DACTRIM   : 8; /*!< [15..8] Linearity Adjustment of Offset Current                            */
+            __IOM uint32_t SUADJD    : 8; /*!< [23..16] CTSU SUCLK Frequency Adjustment                                  */
+            __IOM uint32_t SUADJTRIM : 8; /*!< [31..24] Coefficient of variation for the reference load resistance
+                                           *   (120k)                                                                    */
+        } CTSUTRIMA_b;
+    };
+
+    union
+    {
+        __IOM uint32_t CTSUTRIMB;        /*!< (@ 0x000003A8) CTSU Trimming Register B                                   */
+
+        struct
+        {
+            __IOM uint32_t TRESULT0 : 8; /*!< [7..0] Coefficient of variation for the reference load resistance
+                                          *   (7.5k)                                                                    */
+            __IOM uint32_t TRESULT1 : 8; /*!< [15..8] Coefficient of variation for the reference load resistance
+                                          *   (15k)                                                                     */
+            __IOM uint32_t TRESULT2 : 8; /*!< [23..16] Coefficient of variation for the reference load resistance
+                                          *   (30k)                                                                     */
+            __IOM uint32_t TRESULT3 : 8; /*!< [31..24] Coefficient of variation for the reference load resistance
+                                          *   (60k)                                                                     */
+        } CTSUTRIMB_b;
+    };
+} R_CTSUTRIM_Type;                       /*!< Size = 940 (0x3ac)                                                        */
 
 /* =========================================================================================================================== */
 /* ================                                         R_FCACHE                                          ================ */
@@ -20187,6 +20252,109 @@ typedef struct                         /*!< (@ 0x40000E00) R_TZF Structure      
 } R_TZF_Type;                          /*!< Size = 388 (0x184)                                                        */
 
 /* =========================================================================================================================== */
+/* ================                                          R_CACHE                                          ================ */
+/* =========================================================================================================================== */
+
+/**
+ * @brief R_CACHE (R_CACHE)
+ */
+
+typedef struct                         /*!< (@ 0x40007000) R_CACHE Structure                                          */
+{
+    union
+    {
+        __IOM uint32_t CCACTL;         /*!< (@ 0x00000000) C-Cache Control Register                                   */
+
+        struct
+        {
+            __IOM uint32_t ENC : 1;    /*!< [0..0] C-Cache Enable                                                     */
+            uint32_t           : 31;
+        } CCACTL_b;
+    };
+
+    union
+    {
+        __IOM uint32_t CCAFCT;         /*!< (@ 0x00000004) C-Cache Flush Control Register                             */
+
+        struct
+        {
+            __IOM uint32_t FC : 1;     /*!< [0..0] C-Cache Flush                                                      */
+            uint32_t          : 31;
+        } CCAFCT_b;
+    };
+
+    union
+    {
+        __IOM uint32_t CCALCF;         /*!< (@ 0x00000008) C-Cache Line Configuration Register                        */
+
+        struct
+        {
+            __IOM uint32_t CC : 2;     /*!< [1..0] C-Cache Line Size                                                  */
+            uint32_t          : 30;
+        } CCALCF_b;
+    };
+    __IM uint32_t RESERVED[13];
+
+    union
+    {
+        __IOM uint32_t SCACTL;         /*!< (@ 0x00000040) S-Cache Control Register                                   */
+
+        struct
+        {
+            __IOM uint32_t ENS : 1;    /*!< [0..0] S-Cache Enable                                                     */
+            uint32_t           : 31;
+        } SCACTL_b;
+    };
+
+    union
+    {
+        __IOM uint32_t SCAFCT;         /*!< (@ 0x00000044) S-Cache Flush Control Register                             */
+
+        struct
+        {
+            __IOM uint32_t FS : 1;     /*!< [0..0] S-Cache Flush                                                      */
+            uint32_t          : 31;
+        } SCAFCT_b;
+    };
+
+    union
+    {
+        __IOM uint32_t SCALCF;         /*!< (@ 0x00000048) S-Cache Line Configuration Register                        */
+
+        struct
+        {
+            __IOM uint32_t CS : 2;     /*!< [1..0] S-Cache Line Size                                                  */
+            uint32_t          : 30;
+        } SCALCF_b;
+    };
+    __IM uint32_t RESERVED1[109];
+
+    union
+    {
+        __IOM uint32_t CAPOAD;         /*!< (@ 0x00000200) Cache Parity Error Operation After Detection
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint32_t OAD : 1;    /*!< [0..0] Operation after Detection                                          */
+            uint32_t           : 31;
+        } CAPOAD_b;
+    };
+
+    union
+    {
+        __IOM uint32_t CAPRCR;         /*!< (@ 0x00000204) Cache Protection Register                                  */
+
+        struct
+        {
+            __IOM uint32_t PRCR : 1;   /*!< [0..0] Register Write Control                                             */
+            __IOM uint32_t KW   : 7;   /*!< [7..1] Write key code                                                     */
+            uint32_t            : 24;
+        } CAPRCR_b;
+    };
+} R_CACHE_Type;                        /*!< Size = 520 (0x208)                                                        */
+
+/* =========================================================================================================================== */
 /* ================                                          R_CPSCU                                          ================ */
 /* =========================================================================================================================== */
 
@@ -20194,9 +20362,21 @@ typedef struct                         /*!< (@ 0x40000E00) R_TZF Structure      
  * @brief CPU System Security Control Unit (R_CPSCU)
  */
 
-typedef struct                         /*!< (@ 0x40008000) R_CPSCU Structure                                          */
+typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure                                          */
 {
-    __IM uint32_t RESERVED[4];
+    union
+    {
+        __IOM uint32_t CSAR;             /*!< (@ 0x00000000) Cache Security Attribution Register                        */
+
+        struct
+        {
+            __IOM uint32_t CACHESA  : 1; /*!< [0..0] Security Attributes of Registers for Cache Control                 */
+            __IOM uint32_t CACHELSA : 1; /*!< [1..1] Security Attributes of Registers for Cache Line Configuration      */
+            __IOM uint32_t CACHEESA : 1; /*!< [2..2] Security Attributes of Registers for Cache Error                   */
+            uint32_t                : 29;
+        } CSAR_b;
+    };
+    __IM uint32_t RESERVED[3];
 
     union
     {
@@ -23062,8 +23242,8 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
  #define R_CTSU2_CTSUCRA_POSEL_Msk     (0x300000UL)   /*!< POSEL (Bitfield-Mask: 0x03)                           */
  #define R_CTSU2_CTSUCRA_SDPSEL_Pos    (22UL)         /*!< SDPSEL (Bit 22)                                       */
  #define R_CTSU2_CTSUCRA_SDPSEL_Msk    (0x400000UL)   /*!< SDPSEL (Bitfield-Mask: 0x01)                          */
- #define R_CTSU2_CTSUCRA_FCMODE_Pos    (23UL)         /*!< FCMODE (Bit 23)                                       */
- #define R_CTSU2_CTSUCRA_FCMODE_Msk    (0x800000UL)   /*!< FCMODE (Bitfield-Mask: 0x01)                          */
+ #define R_CTSU2_CTSUCRA_PCSEL_Pos     (23UL)         /*!< PCSEL (Bit 23)                                        */
+ #define R_CTSU2_CTSUCRA_PCSEL_Msk     (0x800000UL)   /*!< PCSEL (Bitfield-Mask: 0x01)                           */
  #define R_CTSU2_CTSUCRA_STCLK_Pos     (24UL)         /*!< STCLK (Bit 24)                                        */
  #define R_CTSU2_CTSUCRA_STCLK_Msk     (0x3f000000UL) /*!< STCLK (Bitfield-Mask: 0x3f)                           */
  #define R_CTSU2_CTSUCRA_DCMODE_Pos    (30UL)         /*!< DCMODE (Bit 30)                                       */
@@ -23073,6 +23253,7 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
 /* =======================================================  CTSUCRAL  ======================================================== */
 /* ========================================================  CTSUCR0  ======================================================== */
 /* ========================================================  CTSUCR1  ======================================================== */
+/* =======================================================  CTSUCRAH  ======================================================== */
 /* ========================================================  CTSUCR2  ======================================================== */
 /* ========================================================  CTSUCR3  ======================================================== */
 /* ========================================================  CTSUCRB  ======================================================== */
@@ -23286,50 +23467,68 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
 /* ========================================================  CTSUSRH  ======================================================== */
 /* ========================================================  CTSUSR2  ======================================================== */
 /* ========================================================  CTSUSO  ========================================================= */
- #define R_CTSU2_CTSUSO_SO_Pos             (0UL)          /*!< SO (Bit 0)                                            */
- #define R_CTSU2_CTSUSO_SO_Msk             (0x3ffUL)      /*!< SO (Bitfield-Mask: 0x3ff)                             */
- #define R_CTSU2_CTSUSO_SNUM_Pos           (10UL)         /*!< SNUM (Bit 10)                                         */
- #define R_CTSU2_CTSUSO_SNUM_Msk           (0x3fc00UL)    /*!< SNUM (Bitfield-Mask: 0xff)                            */
- #define R_CTSU2_CTSUSO_SSDIV_Pos          (20UL)         /*!< SSDIV (Bit 20)                                        */
- #define R_CTSU2_CTSUSO_SSDIV_Msk          (0xf00000UL)   /*!< SSDIV (Bitfield-Mask: 0x0f)                           */
- #define R_CTSU2_CTSUSO_SDPA_Pos           (24UL)         /*!< SDPA (Bit 24)                                         */
- #define R_CTSU2_CTSUSO_SDPA_Msk           (0xff000000UL) /*!< SDPA (Bitfield-Mask: 0xff)                            */
+ #define R_CTSU2_CTSUSO_SO_Pos              (0UL)          /*!< SO (Bit 0)                                            */
+ #define R_CTSU2_CTSUSO_SO_Msk              (0x3ffUL)      /*!< SO (Bitfield-Mask: 0x3ff)                             */
+ #define R_CTSU2_CTSUSO_SNUM_Pos            (10UL)         /*!< SNUM (Bit 10)                                         */
+ #define R_CTSU2_CTSUSO_SNUM_Msk            (0x3fc00UL)    /*!< SNUM (Bitfield-Mask: 0xff)                            */
+ #define R_CTSU2_CTSUSO_SSDIV_Pos           (20UL)         /*!< SSDIV (Bit 20)                                        */
+ #define R_CTSU2_CTSUSO_SSDIV_Msk           (0xf00000UL)   /*!< SSDIV (Bitfield-Mask: 0x0f)                           */
+ #define R_CTSU2_CTSUSO_SDPA_Pos            (24UL)         /*!< SDPA (Bit 24)                                         */
+ #define R_CTSU2_CTSUSO_SDPA_Msk            (0xff000000UL) /*!< SDPA (Bitfield-Mask: 0xff)                            */
 /* ========================================================  CTSUSO0  ======================================================== */
 /* ========================================================  CTSUSO1  ======================================================== */
 /* =======================================================  CTSUSCNT  ======================================================== */
- #define R_CTSU2_CTSUSCNT_SENSCNT_Pos      (0UL)          /*!< SENSCNT (Bit 0)                                       */
- #define R_CTSU2_CTSUSCNT_SENSCNT_Msk      (0xffffUL)     /*!< SENSCNT (Bitfield-Mask: 0xffff)                       */
+ #define R_CTSU2_CTSUSCNT_SENSCNT_Pos       (0UL)          /*!< SENSCNT (Bit 0)                                       */
+ #define R_CTSU2_CTSUSCNT_SENSCNT_Msk       (0xffffUL)     /*!< SENSCNT (Bitfield-Mask: 0xffff)                       */
+ #define R_CTSU2_CTSUSCNT_SUCKCNT_Pos       (16UL)         /*!< SUCKCNT (Bit 16)                                      */
+ #define R_CTSU2_CTSUSCNT_SUCKCNT_Msk       (0xffff0000UL) /*!< SUCKCNT (Bitfield-Mask: 0xffff)                       */
 /* ========================================================  CTSUSC  ========================================================= */
 /* =======================================================  CTSUCALIB  ======================================================= */
- #define R_CTSU2_CTSUCALIB_TSOD_Pos        (2UL)          /*!< TSOD (Bit 2)                                          */
- #define R_CTSU2_CTSUCALIB_TSOD_Msk        (0x4UL)        /*!< TSOD (Bitfield-Mask: 0x01)                            */
- #define R_CTSU2_CTSUCALIB_DRV_Pos         (3UL)          /*!< DRV (Bit 3)                                           */
- #define R_CTSU2_CTSUCALIB_DRV_Msk         (0x8UL)        /*!< DRV (Bitfield-Mask: 0x01)                             */
- #define R_CTSU2_CTSUCALIB_SUCLKEN_Pos     (6UL)          /*!< SUCLKEN (Bit 6)                                       */
- #define R_CTSU2_CTSUCALIB_SUCLKEN_Msk     (0x40UL)       /*!< SUCLKEN (Bitfield-Mask: 0x01)                         */
- #define R_CTSU2_CTSUCALIB_TSOC_Pos        (7UL)          /*!< TSOC (Bit 7)                                          */
- #define R_CTSU2_CTSUCALIB_TSOC_Msk        (0x80UL)       /*!< TSOC (Bitfield-Mask: 0x01)                            */
- #define R_CTSU2_CTSUCALIB_IOC_Pos         (9UL)          /*!< IOC (Bit 9)                                           */
- #define R_CTSU2_CTSUCALIB_IOC_Msk         (0x200UL)      /*!< IOC (Bitfield-Mask: 0x01)                             */
- #define R_CTSU2_CTSUCALIB_CFCRDMD_Pos     (10UL)         /*!< CFCRDMD (Bit 10)                                      */
- #define R_CTSU2_CTSUCALIB_CFCRDMD_Msk     (0x400UL)      /*!< CFCRDMD (Bitfield-Mask: 0x01)                         */
- #define R_CTSU2_CTSUCALIB_DCOFF_Pos       (11UL)         /*!< DCOFF (Bit 11)                                        */
- #define R_CTSU2_CTSUCALIB_DCOFF_Msk       (0x800UL)      /*!< DCOFF (Bitfield-Mask: 0x01)                           */
- #define R_CTSU2_CTSUCALIB_CFCMODE_Pos     (22UL)         /*!< CFCMODE (Bit 22)                                      */
- #define R_CTSU2_CTSUCALIB_CFCMODE_Msk     (0x400000UL)   /*!< CFCMODE (Bitfield-Mask: 0x01)                         */
- #define R_CTSU2_CTSUCALIB_DACCARRY_Pos    (25UL)         /*!< DACCARRY (Bit 25)                                     */
- #define R_CTSU2_CTSUCALIB_DACCARRY_Msk    (0x2000000UL)  /*!< DACCARRY (Bitfield-Mask: 0x01)                        */
- #define R_CTSU2_CTSUCALIB_SUCARRY_Pos     (27UL)         /*!< SUCARRY (Bit 27)                                      */
- #define R_CTSU2_CTSUCALIB_SUCARRY_Msk     (0x8000000UL)  /*!< SUCARRY (Bitfield-Mask: 0x01)                         */
- #define R_CTSU2_CTSUCALIB_DACCLK_Pos      (28UL)         /*!< DACCLK (Bit 28)                                       */
- #define R_CTSU2_CTSUCALIB_DACCLK_Msk      (0x10000000UL) /*!< DACCLK (Bitfield-Mask: 0x01)                          */
- #define R_CTSU2_CTSUCALIB_CCOCLK_Pos      (29UL)         /*!< CCOCLK (Bit 29)                                       */
- #define R_CTSU2_CTSUCALIB_CCOCLK_Msk      (0x20000000UL) /*!< CCOCLK (Bitfield-Mask: 0x01)                          */
- #define R_CTSU2_CTSUCALIB_CCOCALIB_Pos    (30UL)         /*!< CCOCALIB (Bit 30)                                     */
- #define R_CTSU2_CTSUCALIB_CCOCALIB_Msk    (0x40000000UL) /*!< CCOCALIB (Bitfield-Mask: 0x01)                        */
+ #define R_CTSU2_CTSUCALIB_TSOD_Pos         (2UL)          /*!< TSOD (Bit 2)                                          */
+ #define R_CTSU2_CTSUCALIB_TSOD_Msk         (0x4UL)        /*!< TSOD (Bitfield-Mask: 0x01)                            */
+ #define R_CTSU2_CTSUCALIB_DRV_Pos          (3UL)          /*!< DRV (Bit 3)                                           */
+ #define R_CTSU2_CTSUCALIB_DRV_Msk          (0x8UL)        /*!< DRV (Bitfield-Mask: 0x01)                             */
+ #define R_CTSU2_CTSUCALIB_CLKSEL_Pos       (4UL)          /*!< CLKSEL (Bit 4)                                        */
+ #define R_CTSU2_CTSUCALIB_CLKSEL_Msk       (0x30UL)       /*!< CLKSEL (Bitfield-Mask: 0x03)                          */
+ #define R_CTSU2_CTSUCALIB_SUCLKEN_Pos      (6UL)          /*!< SUCLKEN (Bit 6)                                       */
+ #define R_CTSU2_CTSUCALIB_SUCLKEN_Msk      (0x40UL)       /*!< SUCLKEN (Bitfield-Mask: 0x01)                         */
+ #define R_CTSU2_CTSUCALIB_TSOC_Pos         (7UL)          /*!< TSOC (Bit 7)                                          */
+ #define R_CTSU2_CTSUCALIB_TSOC_Msk         (0x80UL)       /*!< TSOC (Bitfield-Mask: 0x01)                            */
+ #define R_CTSU2_CTSUCALIB_CNTRDSEL_Pos     (8UL)          /*!< CNTRDSEL (Bit 8)                                      */
+ #define R_CTSU2_CTSUCALIB_CNTRDSEL_Msk     (0x100UL)      /*!< CNTRDSEL (Bitfield-Mask: 0x01)                        */
+ #define R_CTSU2_CTSUCALIB_IOC_Pos          (9UL)          /*!< IOC (Bit 9)                                           */
+ #define R_CTSU2_CTSUCALIB_IOC_Msk          (0x200UL)      /*!< IOC (Bitfield-Mask: 0x01)                             */
+ #define R_CTSU2_CTSUCALIB_CFCRDMD_Pos      (10UL)         /*!< CFCRDMD (Bit 10)                                      */
+ #define R_CTSU2_CTSUCALIB_CFCRDMD_Msk      (0x400UL)      /*!< CFCRDMD (Bitfield-Mask: 0x01)                         */
+ #define R_CTSU2_CTSUCALIB_DCOFF_Pos        (11UL)         /*!< DCOFF (Bit 11)                                        */
+ #define R_CTSU2_CTSUCALIB_DCOFF_Msk        (0x800UL)      /*!< DCOFF (Bitfield-Mask: 0x01)                           */
+ #define R_CTSU2_CTSUCALIB_CFCSEL_Pos       (16UL)         /*!< CFCSEL (Bit 16)                                       */
+ #define R_CTSU2_CTSUCALIB_CFCSEL_Msk       (0x3f0000UL)   /*!< CFCSEL (Bitfield-Mask: 0x3f)                          */
+ #define R_CTSU2_CTSUCALIB_CFCMODE_Pos      (22UL)         /*!< CFCMODE (Bit 22)                                      */
+ #define R_CTSU2_CTSUCALIB_CFCMODE_Msk      (0x400000UL)   /*!< CFCMODE (Bitfield-Mask: 0x01)                         */
+ #define R_CTSU2_CTSUCALIB_DACCARRY_Pos     (25UL)         /*!< DACCARRY (Bit 25)                                     */
+ #define R_CTSU2_CTSUCALIB_DACCARRY_Msk     (0x2000000UL)  /*!< DACCARRY (Bitfield-Mask: 0x01)                        */
+ #define R_CTSU2_CTSUCALIB_SUCARRY_Pos      (27UL)         /*!< SUCARRY (Bit 27)                                      */
+ #define R_CTSU2_CTSUCALIB_SUCARRY_Msk      (0x8000000UL)  /*!< SUCARRY (Bitfield-Mask: 0x01)                         */
+ #define R_CTSU2_CTSUCALIB_DACCLK_Pos       (28UL)         /*!< DACCLK (Bit 28)                                       */
+ #define R_CTSU2_CTSUCALIB_DACCLK_Msk       (0x10000000UL) /*!< DACCLK (Bitfield-Mask: 0x01)                          */
+ #define R_CTSU2_CTSUCALIB_CCOCLK_Pos       (29UL)         /*!< CCOCLK (Bit 29)                                       */
+ #define R_CTSU2_CTSUCALIB_CCOCLK_Msk       (0x20000000UL) /*!< CCOCLK (Bitfield-Mask: 0x01)                          */
+ #define R_CTSU2_CTSUCALIB_CCOCALIB_Pos     (30UL)         /*!< CCOCALIB (Bit 30)                                     */
+ #define R_CTSU2_CTSUCALIB_CCOCALIB_Msk     (0x40000000UL) /*!< CCOCALIB (Bitfield-Mask: 0x01)                        */
+ #define R_CTSU2_CTSUCALIB_TXREV_Pos        (31UL)         /*!< TXREV (Bit 31)                                        */
+ #define R_CTSU2_CTSUCALIB_TXREV_Msk        (0x80000000UL) /*!< TXREV (Bitfield-Mask: 0x01)                           */
 /* =======================================================  CTSUDBGR0  ======================================================= */
 /* =======================================================  CTSUDBGR1  ======================================================= */
 /* ======================================================  CTSUSUCLKA  ======================================================= */
+ #define R_CTSU2_CTSUSUCLKA_SUADJ0_Pos      (0UL)          /*!< SUADJ0 (Bit 0)                                        */
+ #define R_CTSU2_CTSUSUCLKA_SUADJ0_Msk      (0xffUL)       /*!< SUADJ0 (Bitfield-Mask: 0xff)                          */
+ #define R_CTSU2_CTSUSUCLKA_SUMULTI0_Pos    (8UL)          /*!< SUMULTI0 (Bit 8)                                      */
+ #define R_CTSU2_CTSUSUCLKA_SUMULTI0_Msk    (0xff00UL)     /*!< SUMULTI0 (Bitfield-Mask: 0xff)                        */
+ #define R_CTSU2_CTSUSUCLKA_SUADJ1_Pos      (16UL)         /*!< SUADJ1 (Bit 16)                                       */
+ #define R_CTSU2_CTSUSUCLKA_SUADJ1_Msk      (0xff0000UL)   /*!< SUADJ1 (Bitfield-Mask: 0xff)                          */
+ #define R_CTSU2_CTSUSUCLKA_SUMULTI1_Pos    (24UL)         /*!< SUMULTI1 (Bit 24)                                     */
+ #define R_CTSU2_CTSUSUCLKA_SUMULTI1_Msk    (0xff000000UL) /*!< SUMULTI1 (Bitfield-Mask: 0xff)                        */
 /* ======================================================  CTSUSUCLK0  ======================================================= */
 /* ======================================================  CTSUSUCLK1  ======================================================= */
 /* ======================================================  CTSUSUCLKB  ======================================================= */
@@ -25380,6 +25579,29 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
 /* ========================================================  FENTRYR  ======================================================== */
 /* ========================================================  FLWAITR  ======================================================== */
 /* =========================================================  PFBER  ========================================================= */
+
+/* =========================================================================================================================== */
+/* ================                                        R_CTSUTRIM                                         ================ */
+/* =========================================================================================================================== */
+
+/* =======================================================  CTSUTRIMA  ======================================================= */
+ #define R_CTSUTRIM_CTSUTRIMA_SUADJTRIM_Pos    (24UL)         /*!< SUADJTRIM (Bit 24)                                    */
+ #define R_CTSUTRIM_CTSUTRIMA_SUADJTRIM_Msk    (0xff000000UL) /*!< SUADJTRIM (Bitfield-Mask: 0xff)                       */
+ #define R_CTSUTRIM_CTSUTRIMA_SUADJD_Pos       (16UL)         /*!< SUADJD (Bit 16)                                       */
+ #define R_CTSUTRIM_CTSUTRIMA_SUADJD_Msk       (0xff0000UL)   /*!< SUADJD (Bitfield-Mask: 0xff)                          */
+ #define R_CTSUTRIM_CTSUTRIMA_DACTRIM_Pos      (8UL)          /*!< DACTRIM (Bit 8)                                       */
+ #define R_CTSUTRIM_CTSUTRIMA_DACTRIM_Msk      (0xff00UL)     /*!< DACTRIM (Bitfield-Mask: 0xff)                         */
+ #define R_CTSUTRIM_CTSUTRIMA_RTRIM_Pos        (0UL)          /*!< RTRIM (Bit 0)                                         */
+ #define R_CTSUTRIM_CTSUTRIMA_RTRIM_Msk        (0xffUL)       /*!< RTRIM (Bitfield-Mask: 0xff)                           */
+/* =======================================================  CTSUTRIMB  ======================================================= */
+ #define R_CTSUTRIM_CTSUTRIMB_TRESULT3_Pos     (24UL)         /*!< TRESULT3 (Bit 24)                                     */
+ #define R_CTSUTRIM_CTSUTRIMB_TRESULT3_Msk     (0xff000000UL) /*!< TRESULT3 (Bitfield-Mask: 0xff)                        */
+ #define R_CTSUTRIM_CTSUTRIMB_TRESULT2_Pos     (16UL)         /*!< TRESULT2 (Bit 16)                                     */
+ #define R_CTSUTRIM_CTSUTRIMB_TRESULT2_Msk     (0xff0000UL)   /*!< TRESULT2 (Bitfield-Mask: 0xff)                        */
+ #define R_CTSUTRIM_CTSUTRIMB_TRESULT1_Pos     (8UL)          /*!< TRESULT1 (Bit 8)                                      */
+ #define R_CTSUTRIM_CTSUTRIMB_TRESULT1_Msk     (0xff00UL)     /*!< TRESULT1 (Bitfield-Mask: 0xff)                        */
+ #define R_CTSUTRIM_CTSUTRIMB_TRESULT0_Pos     (0UL)          /*!< TRESULT0 (Bit 0)                                      */
+ #define R_CTSUTRIM_CTSUTRIMB_TRESULT0_Msk     (0xffUL)       /*!< TRESULT0 (Bitfield-Mask: 0xff)                        */
 
 /* =========================================================================================================================== */
 /* ================                                         R_FCACHE                                          ================ */
@@ -29750,9 +29972,47 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
  #define R_TZF_TZFSAR_TZFSA0_Msk    (0x1UL)    /*!< TZFSA0 (Bitfield-Mask: 0x01)                          */
 
 /* =========================================================================================================================== */
+/* ================                                          R_CACHE                                          ================ */
+/* =========================================================================================================================== */
+
+/* ========================================================  CCACTL  ========================================================= */
+ #define R_CACHE_CCACTL_ENC_Pos     (0UL)    /*!< ENC (Bit 0)                                           */
+ #define R_CACHE_CCACTL_ENC_Msk     (0x1UL)  /*!< ENC (Bitfield-Mask: 0x01)                             */
+/* ========================================================  CCAFCT  ========================================================= */
+ #define R_CACHE_CCAFCT_FC_Pos      (0UL)    /*!< FC (Bit 0)                                            */
+ #define R_CACHE_CCAFCT_FC_Msk      (0x1UL)  /*!< FC (Bitfield-Mask: 0x01)                              */
+/* ========================================================  CCALCF  ========================================================= */
+ #define R_CACHE_CCALCF_CC_Pos      (0UL)    /*!< CC (Bit 0)                                            */
+ #define R_CACHE_CCALCF_CC_Msk      (0x3UL)  /*!< CC (Bitfield-Mask: 0x03)                              */
+/* ========================================================  SCACTL  ========================================================= */
+ #define R_CACHE_SCACTL_ENS_Pos     (0UL)    /*!< ENS (Bit 0)                                           */
+ #define R_CACHE_SCACTL_ENS_Msk     (0x1UL)  /*!< ENS (Bitfield-Mask: 0x01)                             */
+/* ========================================================  SCAFCT  ========================================================= */
+ #define R_CACHE_SCAFCT_FS_Pos      (0UL)    /*!< FS (Bit 0)                                            */
+ #define R_CACHE_SCAFCT_FS_Msk      (0x1UL)  /*!< FS (Bitfield-Mask: 0x01)                              */
+/* ========================================================  SCALCF  ========================================================= */
+ #define R_CACHE_SCALCF_CS_Pos      (0UL)    /*!< CS (Bit 0)                                            */
+ #define R_CACHE_SCALCF_CS_Msk      (0x3UL)  /*!< CS (Bitfield-Mask: 0x03)                              */
+/* ========================================================  CAPOAD  ========================================================= */
+ #define R_CACHE_CAPOAD_OAD_Pos     (0UL)    /*!< OAD (Bit 0)                                           */
+ #define R_CACHE_CAPOAD_OAD_Msk     (0x1UL)  /*!< OAD (Bitfield-Mask: 0x01)                             */
+/* ========================================================  CAPRCR  ========================================================= */
+ #define R_CACHE_CAPRCR_PRCR_Pos    (0UL)    /*!< PRCR (Bit 0)                                          */
+ #define R_CACHE_CAPRCR_PRCR_Msk    (0x1UL)  /*!< PRCR (Bitfield-Mask: 0x01)                            */
+ #define R_CACHE_CAPRCR_KW_Pos      (1UL)    /*!< KW (Bit 1)                                            */
+ #define R_CACHE_CAPRCR_KW_Msk      (0xfeUL) /*!< KW (Bitfield-Mask: 0x7f)                              */
+
+/* =========================================================================================================================== */
 /* ================                                          R_CPSCU                                          ================ */
 /* =========================================================================================================================== */
 
+/* =========================================================  CSAR  ========================================================== */
+ #define R_CPSCU_CSAR_CACHESA_Pos           (0UL)          /*!< CACHESA (Bit 0)                                       */
+ #define R_CPSCU_CSAR_CACHESA_Msk           (0x1UL)        /*!< CACHESA (Bitfield-Mask: 0x01)                         */
+ #define R_CPSCU_CSAR_CACHELSA_Pos          (1UL)          /*!< CACHELSA (Bit 1)                                      */
+ #define R_CPSCU_CSAR_CACHELSA_Msk          (0x2UL)        /*!< CACHELSA (Bitfield-Mask: 0x01)                        */
+ #define R_CPSCU_CSAR_CACHEESA_Pos          (2UL)          /*!< CACHEESA (Bit 2)                                      */
+ #define R_CPSCU_CSAR_CACHEESA_Msk          (0x4UL)        /*!< CACHEESA (Bitfield-Mask: 0x01)                        */
 /* ========================================================  SRAMSAR  ======================================================== */
  #define R_CPSCU_SRAMSAR_SRAMSA0_Pos        (0UL)          /*!< SRAMSA0 (Bit 0)                                       */
  #define R_CPSCU_SRAMSAR_SRAMSA0_Msk        (0x1UL)        /*!< SRAMSA0 (Bitfield-Mask: 0x01)                         */

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -49,8 +49,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  *********************************************************************************************************************/
-#define EXTERNAL_IRQ_API_VERSION_MAJOR    (1U) ///< EXTERNAL IRQ API version number (Major)
-#define EXTERNAL_IRQ_API_VERSION_MINOR    (0U) ///< EXTERNAL IRQ API version number (Minor)
+#define EXTERNAL_IRQ_API_VERSION_MAJOR    (1U) // DEPRECATED ///< EXTERNAL IRQ API version number (Major)
+#define EXTERNAL_IRQ_API_VERSION_MINOR    (0U) // DEPRECATED ///< EXTERNAL IRQ API version number (Minor)
 
 /*********************************************************************************************************************
  * Typedef definitions
@@ -160,7 +160,7 @@ typedef struct st_external_irq_api
      */
     fsp_err_t (* close)(external_irq_ctrl_t * const p_ctrl);
 
-    /** Get version and store it in provided pointer p_version.
+    /* DEPRECATED Get version and store it in provided pointer p_version.
      * @par Implemented as
      * - @ref R_ICU_ExternalIrqVersionGet()
      *

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -50,8 +50,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define TRANSFER_API_VERSION_MAJOR            (1U)
-#define TRANSFER_API_VERSION_MINOR            (0U)
+#define TRANSFER_API_VERSION_MAJOR            (1U) // DEPRECATED
+#define TRANSFER_API_VERSION_MINOR            (0U) // DEPRECATED
 
 #define TRANSFER_SETTINGS_MODE_BITS           (30U)
 #define TRANSFER_SETTINGS_SIZE_BITS           (28U)
@@ -348,7 +348,7 @@ typedef struct st_transfer_api
      */
     fsp_err_t (* close)(transfer_ctrl_t * const p_ctrl);
 
-    /** Gets version and stores it in provided pointer p_version.
+    /* DEPRECATED Gets version and stores it in provided pointer p_version.
      * @par Implemented as
      * - @ref R_DTC_VersionGet()
      * - @ref R_DMAC_VersionGet()

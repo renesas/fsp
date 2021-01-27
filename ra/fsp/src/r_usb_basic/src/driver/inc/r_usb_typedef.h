@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -50,11 +50,11 @@ typedef TMO     usb_tm_t;
 typedef VP      usb_mh_t;
 typedef VP_INT  usb_vp_int_t;
 
-#if defined(BSP_MCU_GROUP_RA6M3)
+#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
 typedef volatile R_USB_HS0_Type * usb_regadr1_t; // @@
-#else /* defined(BSP_MCU_GROUP_RA6M3) */
+#else /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 typedef volatile R_USB_FS0_Type * usb_regadr1_t;
-#endif /* defined(BSP_MCU_GROUP_RA6M3) */
+#endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
 typedef volatile R_USB_FS0_Type * usb_regadr_t;
 

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -163,11 +163,11 @@ typedef struct
     usb_msc_bcbwlun_t       bcbwlun;
     usb_msc_bcbwcb_length_t bcbwcb_length;
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     uint8_t cbwcb[(16 + USB_VALUE_481)]; /* Hi-Speed USB_MSC_CBW_t:512Byte */
- #else  /* defined(BSP_MCU_GROUP_RA6M3) */
+ #else  /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     uint8_t cbwcb[(16 + USB_VALUE_33)];  /* Full-Speed USB_MSC_CBW_t:64Byte*/
- #endif /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 #else                                    /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
     uint8_t cbwcb[16];
 #endif  /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */

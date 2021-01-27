@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -716,8 +716,8 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Retrieve the API version number.
+/***********************************************************************************************************************
+ * DEPRECATED Retrieve the API version number.
  *
  * @retval FSP_SUCCESS                 Version stored in the provided p_version.
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.

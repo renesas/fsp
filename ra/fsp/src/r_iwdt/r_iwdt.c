@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -437,8 +437,8 @@ fsp_err_t R_IWDT_CallbackSet (wdt_ctrl_t * const          p_ctrl,
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Return IWDT HAL driver version. Implements @ref wdt_api_t::versionGet.
+/***********************************************************************************************************************
+ * DEPRECATED Return IWDT HAL driver version. Implements @ref wdt_api_t::versionGet.
  *
  * @retval          FSP_SUCCESS         Call successful.
  * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter.

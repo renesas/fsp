@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -53,10 +53,11 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BLE_ABS_API_VERSION_MAJOR         (1U)
-#define BLE_ABS_API_VERSION_MINOR         (0U)
+#define BLE_ABS_API_VERSION_MAJOR         (1U)   // DEPRECATED
+#define BLE_ABS_API_VERSION_MINOR         (0U)   // DEPRECATED
 
 #define BLE_ABS_ADVERTISING_PHY_LEGACY    (0x00) ///< Non-Connectable Legacy Advertising phy setting.
+#define BLE_BD_ADDR_LEN                   (0x06)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -69,7 +70,27 @@ typedef enum e_ble_abs_advertising_filter
     BLE_ABS_ADVERTISING_FILTER_ALLOW_WHITE_LIST = 0x01, ///< Receive a connect request from only the devices registered in White List.
 } ble_abs_advertising_filter_t;
 
-#define BLE_BD_ADDR_LEN    (0x06)
+/** Local keys delete policy */
+typedef enum e_ble_abs_local_bond_information
+{
+    BLE_ABS_LOCAL_BOND_INFORMATION_NONE = 0x00, ///< Delete no local keys.
+    BLE_ABS_LOCAL_BOND_INFORMATION_ALL  = 0x03, ///< Delete all local keys.
+} ble_abs_local_bond_information_t;
+
+/** Remote keys delete policy */
+typedef enum e_ble_abs_remote_bond_information
+{
+    BLE_ABS_REMOTE_BOND_INFORMATION_NONE      = 0x00, ///< Delete no remote device keys.
+    BLE_ABS_REMOTE_BOND_INFORMATION_SPECIFIED = 0x01, ///< Delete the keys specified by the device address.
+    BLE_ABS_REMOTE_BOND_INFORMATION_ALL       = 0x03, ///< Delete all remote device keys.
+} ble_abs_remote_bond_information_t;
+
+/** Deletion policy for non-volatile memory */
+typedef enum e_ble_abs_delete_non_volatile_area
+{
+    BLE_ABS_DELETE_NON_VOLATILE_AREA_DISABLE = 0x00, ///< Delete no keys stored in storage.
+    BLE_ABS_DELETE_NON_VOLATILE_AREA_ENABLE  = 0x01, ///< Delete the keys stored in storage.
+} ble_abs_delete_non_volatile_area_t;
 
 /** st_ble_device_address is the type of bluetooth device address(BD_ADDR). */
 typedef struct st_ble_device_address
@@ -93,6 +114,9 @@ typedef void (* ble_gatt_server_application_callback_t)(uint16_t event_type, ble
 /** ble_gatt_client_application_callback_t is the GATT Server Event callback function type. */
 typedef void (* ble_gatt_client_application_callback_t)(uint16_t event_type, ble_status_t event_result,
                                                         st_ble_gattc_evt_data_t * p_event_data);
+
+/** ble_abs_delete_bond_application_callback_t is the delete bond information Event callback function type. */
+typedef void (* ble_abs_delete_bond_application_callback_t)(st_ble_dev_addr_t * p_addr);
 
 /** ble_gap_connection_parameter_t is Connection parameters included in connection interval, slave latency, supervision timeout, ce length. */
 typedef struct st_ble_gap_connection_parameter
@@ -719,6 +743,15 @@ typedef struct st_ble_abs_connection_parameter
     uint8_t padding[2];
 } ble_abs_connection_parameter_t;
 
+typedef struct st_ble_abs_bond_information_parameter
+{
+    ble_abs_local_bond_information_t           local_bond_information;   ///< Select the local keys to delete.
+    ble_abs_remote_bond_information_t          remote_bond_information;  ///< Select the remote keys to delete.
+    ble_abs_delete_non_volatile_area_t         delete_non_volatile_area; ///< Whether delete keys from storage or not.
+    ble_device_address_t                     * p_address;                ///< Pointer to Device address to delete the remote key.
+    ble_abs_delete_bond_application_callback_t abs_delete_bond_callback; ///< User callback function executed when erasing the remote device key.
+} ble_abs_bond_information_parameter_t;
+
 /** BLE ABS configuration parameters. */
 typedef struct st_ble_abs_cfg
 {
@@ -769,7 +802,7 @@ typedef struct st_ble_abs_api
      */
     fsp_err_t (* reset)(ble_abs_ctrl_t * const p_ctrl, ble_event_cb_t init_callback);
 
-    /** Return the version of the driver.
+    /* DEPRECATED Return the version of the driver.
      * @par Implemented as
      * - RM_BLE_ABS_VersionGet()
      * @param[out] p_data       Memory address to return version information to.
@@ -847,6 +880,15 @@ typedef struct st_ble_abs_api
      * @param[in]  connection_handle        Connection handle identifying the remote device.
      */
     fsp_err_t (* startAuthentication)(ble_abs_ctrl_t * const p_ctrl, uint16_t connection_handle);
+
+    /** Delete bond information.
+     * @par Implemented as
+     * - RM_BLE_ABS_DeleteBondInformation()
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_bond_information_parameter   Pointer to bond information parameter.
+     */
+    fsp_err_t (* deleteBondInformation)(ble_abs_ctrl_t * const                             p_ctrl,
+                                        ble_abs_bond_information_parameter_t const * const p_bond_information_parameter);
 } ble_abs_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

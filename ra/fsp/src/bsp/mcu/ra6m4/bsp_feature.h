@@ -46,6 +46,7 @@
 #define BSP_FEATURE_ADC_GROUP_B_SENSORS_ALLOWED           (1U)
 #define BSP_FEATURE_ADC_HAS_ADCER_ADPRC                   (1U)
 #define BSP_FEATURE_ADC_HAS_ADCER_ADRFMT                  (1U)
+#define BSP_FEATURE_BSP_HAS_CLOCK_SUPPLY_TYPEB            (0U)
 #define BSP_FEATURE_ADC_HAS_PGA                           (0U)
 #define BSP_FEATURE_ADC_HAS_SAMPLE_HOLD_REG               (0U)
 #define BSP_FEATURE_ADC_HAS_VREFAMPCNT                    (0U)
@@ -68,6 +69,7 @@
 #define BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM           (0U)
 #define BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER             (0)
 #define BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK                 (1)
+#define BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE             (1)
 #define BSP_FEATURE_BSP_HAS_SCE5                          (0)  // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SCE_ON_RA2                    (0)  // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SECURITY_MPU                  (0U)
@@ -266,6 +268,8 @@
 
 #define BSP_FEATURE_SSI_FIFO_NUM_STAGES                   (32U)
 #define BSP_FEATURE_SSI_VALID_CHANNEL_MASK                (1U)
+
+#define BSP_FEATURE_TRNG_HAS_MODULE_STOP                  (0U)
 
 #define BSP_FEATURE_TZ_HAS_TRUSTZONE                      (1U)
 

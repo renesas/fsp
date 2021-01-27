@@ -16231,20 +16231,20 @@
               </enumeratedValues>
             </field>
             <field>
-              <name>FCMODE</name>
-              <description>CTSU SUCLK Control</description>
+              <name>PCSEL</name>
+              <description>CTSU Boost Circuit Clock Select</description>
               <lsb>23</lsb>
               <msb>23</msb>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
-                  <description>SUCLK is used as frequency diffusion clock</description>
+                  <description>Sensor drive pulse divided by 2</description>
                   <value>#0</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>1</name>
-                  <description>SUCLK is used as recovery clock for multi-clock measurement</description>
+                  <description>STCLK</description>
                   <value>#1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -16325,6 +16325,16 @@
           <access>read-write</access>
           <resetValue>0x00</resetValue>
           <resetMask>0xff</resetMask>
+        </register>
+        <register>
+          <name>CTSUCRAH</name>
+          <description>CTSU Control Register A</description>
+          <alternateRegister>CTSUCRA</alternateRegister>
+          <addressOffset>0x02</addressOffset>
+          <size>16</size>
+          <access>read-write</access>
+          <resetValue>0x0000</resetValue>
+          <resetMask>0xffff</resetMask>
         </register>
         <register>
           <name>CTSUCR2</name>
@@ -18882,6 +18892,13 @@
               <msb>15</msb>
               <access>read-only</access>
             </field>
+            <field>
+              <name>SUCKCNT</name>
+              <description>CTSU SUCLK Counter</description>
+              <lsb>16</lsb>
+              <msb>31</msb>
+              <access>read-only</access>
+            </field>
           </fields>
         </register>
         <register>
@@ -18924,22 +18941,29 @@
             </field>
             <field>
               <name>DRV</name>
-              <description>CTSU Calibration Setting Bit 1</description>
+              <description> CTSU Power Supply Forced Start</description>
               <lsb>3</lsb>
               <msb>3</msb>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
-                  <description>Electrostatic capacitance measurement mode</description>
+                  <description>CTSU power supply is in idle state</description>
                   <value>#0</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>1</name>
-                  <description>Calibration setting 1</description>
+                  <description>CTSU power supply is in a measurement state</description>
                   <value>#1</value>
                 </enumeratedValue>
               </enumeratedValues>
+            </field>
+            <field>
+              <name>CLKSEL</name>
+              <description>CTSU Observation Clock Select</description>
+              <lsb>4</lsb>
+              <msb>5</msb>
+              <access>read-write</access>
             </field>
             <field>
               <name>SUCLKEN</name>
@@ -18962,19 +18986,38 @@
             </field>
             <field>
               <name>TSOC</name>
-              <description>CTSU Calibration Setting Bit 2</description>
+              <description>CTSU Switched Capacitor Operation Stop</description>
               <lsb>7</lsb>
               <msb>7</msb>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
-                  <description>Electrostatic capacitance measurement mode</description>
+                  <description>Operation</description>
                   <value>#0</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>1</name>
-                  <description>Calibration setting 2</description>
+                  <description>Stop</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>CNTRDSEL</name>
+              <description>CTSU Read Count Select of Sensor Counter</description>
+              <lsb>8</lsb>
+              <msb>8</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Read once</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Read twice</description>
                   <value>#1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -19035,6 +19078,13 @@
                   <value>#1</value>
                 </enumeratedValue>
               </enumeratedValues>
+            </field>
+            <field>
+              <name>CFCSEL</name>
+              <description>CTSU Observation CFC Clock Select</description>
+              <lsb>16</lsb>
+              <msb>21</msb>
+              <access>read-write</access>
             </field>
             <field>
               <name>CFCMODE</name>
@@ -19150,6 +19200,25 @@
                 </enumeratedValue>
               </enumeratedValues>
             </field>
+            <field>
+              <name>TXREV</name>
+              <description>CTSU Transmit Pin Inverted Output</description>
+              <lsb>31</lsb>
+              <msb>31</msb>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Normal</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Invert</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
           </fields>
         </register>
         <register>
@@ -19180,6 +19249,36 @@
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <resetMask>0xffffffff</resetMask>
+          <fields>
+            <field>
+              <name>SUADJ0</name>
+              <description>CTSU SUCLK Frequency Adjustment</description>
+              <lsb>0</lsb>
+              <msb>7</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SUMULTI0</name>
+              <description>CTSU SUCLK Multiplier Rate Setting</description>
+              <lsb>8</lsb>
+              <msb>15</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SUADJ1</name>
+              <description>CTSU SUCLK Frequency Adjustment</description>
+              <lsb>16</lsb>
+              <msb>23</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SUMULTI1</name>
+              <description>CTSU SUCLK Multiplier Rate Setting</description>
+              <lsb>24</lsb>
+              <msb>31</msb>
+              <access>read-write</access>
+            </field>
+          </fields>
         </register>
         <register>
           <name>CTSUSUCLK0</name>
@@ -36771,6 +36870,96 @@ FMS2,1,0:
           <access>read-write</access>
           <resetValue>0x00</resetValue>
           <resetMask>0xFF</resetMask>
+        </register>
+      </registers>
+    </peripheral>
+    <peripheral>
+      <name>R_CTSUTRIM</name>
+      <description>CTSU Trimming Registers</description>
+      <baseAddress>0x407EC000</baseAddress>
+      <addressBlock>
+        <offset>0x00000000</offset>
+        <size>0x400</size>
+        <usage>registers</usage>
+      </addressBlock>
+      <registers>
+        <register>
+          <name>CTSUTRIMA</name>
+          <description>CTSU Trimming Register A</description>
+          <addressOffset>0x3A4</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>SUADJTRIM</name>
+              <description>Coefficient of variation for the reference load resistance (120k)</description>
+              <lsb>24</lsb>
+              <msb>31</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>SUADJD</name>
+              <description>CTSU SUCLK Frequency Adjustment</description>
+              <lsb>16</lsb>
+              <msb>23</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>DACTRIM</name>
+              <description>Linearity Adjustment of Offset Current</description>
+              <lsb>8</lsb>
+              <msb>15</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>RTRIM</name>
+              <description>CTSU Reference Resistance Adjustment</description>
+              <lsb>0</lsb>
+              <msb>7</msb>
+              <access>read-write</access>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>CTSUTRIMB</name>
+          <description>CTSU Trimming Register B</description>
+          <addressOffset>0x3A8</addressOffset>
+          <size>32</size>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <resetMask>0xFFFFFFFF</resetMask>
+          <fields>
+            <field>
+              <name>TRESULT3</name>
+              <description>Coefficient of variation for the reference load resistance (60k)</description>
+              <lsb>24</lsb>
+              <msb>31</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>TRESULT2</name>
+              <description>Coefficient of variation for the reference load resistance (30k)</description>
+              <lsb>16</lsb>
+              <msb>23</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>TRESULT1</name>
+              <description>Coefficient of variation for the reference load resistance (15k)</description>
+              <lsb>8</lsb>
+              <msb>15</msb>
+              <access>read-write</access>
+            </field>
+            <field>
+              <name>TRESULT0</name>
+              <description>Coefficient of variation for the reference load resistance (7.5k)</description>
+              <lsb>0</lsb>
+              <msb>7</msb>
+              <access>read-write</access>
+            </field>
+          </fields>
         </register>
       </registers>
     </peripheral>
@@ -85543,9 +85732,303 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
       </registers>
     </peripheral>
     <peripheral>
+      <name>R_CACHE</name>
+      <description>R_CACHE</description>
+      <baseAddress>0x40007000</baseAddress>
+      <addressBlock>
+          <offset>0x00</offset>
+          <size>12</size>
+          <usage>registers</usage>
+      </addressBlock>
+      <addressBlock>
+          <offset>0x40</offset>
+          <size>12</size>
+          <usage>registers</usage>
+      </addressBlock>
+      <addressBlock>
+          <offset>0x200</offset>
+          <size>8</size>
+          <usage>registers</usage>
+      </addressBlock>
+      <registers>
+          <register>
+              <name>CCACTL</name>
+              <description>C-Cache Control Register</description>
+              <addressOffset>0x000</addressOffset>
+              <size>32</size>
+              <access>read-write</access>
+              <resetValue>0x00000000</resetValue>
+              <resetMask>0xffffffff</resetMask>
+              <fields>
+                  <field>
+                      <name>ENC</name>
+                      <description>C-Cache Enable</description>
+                      <lsb>0</lsb>
+                      <msb>0</msb>
+                      <access>read-write</access>
+                      <enumeratedValues>
+                          <enumeratedValue>
+                              <name>0</name>
+                              <description>Disable C-cache</description>
+                              <value>#0</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>1</name>
+                              <description>Enable C-cache</description>
+                              <value>#1</value>
+                          </enumeratedValue>
+                      </enumeratedValues>
+                  </field>
+              </fields>
+          </register>
+          <register>
+              <name>CCAFCT</name>
+              <description>C-Cache Flush Control Register</description>
+              <addressOffset>0x004</addressOffset>
+              <size>32</size>
+              <access>read-write</access>
+              <resetValue>0x00000000</resetValue>
+              <resetMask>0xffffffff</resetMask>
+              <fields>
+                  <field>
+                      <name>FC</name>
+                      <description>C-Cache Flush</description>
+                      <lsb>0</lsb>
+                      <msb>0</msb>
+                      <access>read-write</access>
+                      <enumeratedValues>
+                          <enumeratedValue>
+                              <name>0</name>
+                              <description>No action</description>
+                              <value>#0</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>1</name>
+                              <description>C-cache line flush (all lines invalidated)</description>
+                              <value>#1</value>
+                          </enumeratedValue>
+                      </enumeratedValues>
+                  </field>
+              </fields>
+          </register>
+          <register>
+              <name>CCALCF</name>
+              <description>C-Cache Line Configuration Register</description>
+              <addressOffset>0x008</addressOffset>
+              <size>32</size>
+              <access>read-write</access>
+              <resetValue>0x00000101</resetValue>
+              <resetMask>0xffffffff</resetMask>
+              <fields>
+                  <field>
+                      <name>CC</name>
+                      <description>C-Cache Line Size</description>
+                      <lsb>0</lsb>
+                      <msb>1</msb>
+                      <access>read-write</access>
+                      <enumeratedValues>
+                          <enumeratedValue>
+                              <name>00</name>
+                              <description>Prohibited</description>
+                              <value>#00</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>01</name>
+                              <description>Cache line size 32 bytes</description>
+                              <value>#01</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>10</name>
+                              <description>Cache line size 64 bytes</description>
+                              <value>#10</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>11</name>
+                              <description>Prohibited</description>
+                              <value>#11</value>
+                          </enumeratedValue>
+                      </enumeratedValues>
+                  </field>
+              </fields>
+          </register>
+          <register>
+              <name>SCACTL</name>
+              <description>S-Cache Control Register</description>
+              <addressOffset>0x040</addressOffset>
+              <size>32</size>
+              <access>read-write</access>
+              <resetValue>0x00000000</resetValue>
+              <resetMask>0xffffffff</resetMask>
+              <fields>
+                  <field>
+                      <name>ENS</name>
+                      <description>S-Cache Enable</description>
+                      <lsb>0</lsb>
+                      <msb>0</msb>
+                      <access>read-write</access>
+                      <enumeratedValues>
+                          <enumeratedValue>
+                              <name>0</name>
+                              <description>Disable S-cache</description>
+                              <value>#0</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>1</name>
+                              <description>Enable S-cache</description>
+                              <value>#1</value>
+                          </enumeratedValue>
+                      </enumeratedValues>
+                  </field>
+              </fields>
+          </register>
+          <register>
+              <name>SCAFCT</name>
+              <description>S-Cache Flush Control Register</description>
+              <addressOffset>0x044</addressOffset>
+              <size>32</size>
+              <access>read-write</access>
+              <resetValue>0x00000000</resetValue>
+              <resetMask>0xffffffff</resetMask>
+              <fields>
+                  <field>
+                      <name>FS</name>
+                      <description>S-Cache Flush</description>
+                      <lsb>0</lsb>
+                      <msb>0</msb>
+                      <access>read-write</access>
+                      <enumeratedValues>
+                          <enumeratedValue>
+                              <name>0</name>
+                              <description>No action</description>
+                              <value>#0</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>1</name>
+                              <description>S-cache line flush (all lines invalidated)</description>
+                              <value>#1</value>
+                          </enumeratedValue>
+                      </enumeratedValues>
+                  </field>
+              </fields>
+          </register>
+          <register>
+              <name>SCALCF</name>
+              <description>S-Cache Line Configuration Register</description>
+              <addressOffset>0x048</addressOffset>
+              <size>32</size>
+              <access>read-write</access>
+              <resetValue>0x00000101</resetValue>
+              <resetMask>0xffffffff</resetMask>
+              <fields>
+                  <field>
+                      <name>CS</name>
+                      <description>S-Cache Line Size</description>
+                      <lsb>0</lsb>
+                      <msb>1</msb>
+                      <access>read-write</access>
+                      <enumeratedValues>
+                          <enumeratedValue>
+                              <name>00</name>
+                              <description>Prohibited</description>
+                              <value>#00</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>01</name>
+                              <description>Cache line size 32 bytes</description>
+                              <value>#01</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>10</name>
+                              <description>Cache line size 64 bytes</description>
+                              <value>#10</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>11</name>
+                              <description>Prohibited</description>
+                              <value>#11</value>
+                          </enumeratedValue>
+                      </enumeratedValues>
+                  </field>
+              </fields>
+          </register>
+          <register>
+              <name>CAPOAD</name>
+              <description>Cache Parity Error Operation After Detection Register</description>
+              <addressOffset>0x200</addressOffset>
+              <size>32</size>
+              <access>read-write</access>
+              <resetValue>0x00000000</resetValue>
+              <resetMask>0xffffffff</resetMask>
+              <fields>
+                  <field>
+                      <name>OAD</name>
+                      <description>Operation after Detection</description>
+                      <lsb>0</lsb>
+                      <msb>0</msb>
+                      <access>read-write</access>
+                      <enumeratedValues>
+                          <enumeratedValue>
+                              <name>0</name>
+                              <description>Non-maskable interrupt</description>
+                              <value>#0</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>1</name>
+                              <description>Reset</description>
+                              <value>#1</value>
+                          </enumeratedValue>
+                      </enumeratedValues>
+                  </field>
+              </fields>
+          </register>
+          <register>
+              <name>CAPRCR</name>
+              <description>Cache Protection Register</description>
+              <addressOffset>0x204</addressOffset>
+              <size>32</size>
+              <access>read-write</access>
+              <resetValue>0x00000000</resetValue>
+              <resetMask>0xffffffff</resetMask>
+              <fields>
+                  <field>
+                      <name>PRCR</name>
+                      <description>Register Write Control</description>
+                      <lsb>0</lsb>
+                      <msb>0</msb>
+                      <access>read-write</access>
+                      <enumeratedValues>
+                          <enumeratedValue>
+                              <name>0</name>
+                              <description>Disable writes to protected registers</description>
+                              <value>#0</value>
+                          </enumeratedValue>
+                          <enumeratedValue>
+                              <name>1</name>
+                              <description>Enable writes to protected registers</description>
+                              <value>#1</value>
+                          </enumeratedValue>
+                      </enumeratedValues>
+                  </field>
+                  <field>
+                      <name>KW</name>
+                      <description>Write key code</description>
+                      <lsb>1</lsb>
+                      <msb>7</msb>
+                      <access>read-write</access>
+                  </field>
+              </fields>
+          </register>
+      </registers>
+    </peripheral>
+    <peripheral>
       <name>R_CPSCU</name>
       <description>CPU System Security Control Unit</description>
       <baseAddress>0x40008000</baseAddress>
+      <addressBlock>
+        <offset>0x00</offset>
+        <size>4</size>
+        <usage>registers</usage>
+      </addressBlock>
       <addressBlock>
         <offset>0x10</offset>
         <size>4</size>
@@ -85587,6 +86070,74 @@ The order in which the SPCMD0 to SPCMD07 registers are to be referenced is chang
         <usage>registers</usage>
       </addressBlock>
       <registers>
+        <register>
+            <name>CSAR</name>
+            <description>Cache Security Attribution Register</description>
+            <addressOffset>0x000</addressOffset>
+            <size>32</size>
+            <access>read-write</access>
+            <resetValue>0xffffffff</resetValue>
+            <resetMask>0xffffffff</resetMask>
+            <fields>
+                <field>
+                    <name>CACHESA</name>
+                    <description>Security Attributes of Registers for Cache Control</description>
+                    <lsb>0</lsb>
+                    <msb>0</msb>
+                    <access>read-write</access>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>0</name>
+                            <description>Secure</description>
+                            <value>#0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>1</name>
+                            <description>Non-secure</description>
+                            <value>#1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>CACHELSA</name>
+                    <description>Security Attributes of Registers for Cache Line Configuration</description>
+                    <lsb>1</lsb>
+                    <msb>1</msb>
+                    <access>read-write</access>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>0</name>
+                            <description>Secure</description>
+                            <value>#0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>1</name>
+                            <description>Non-secure</description>
+                            <value>#1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+                <field>
+                    <name>CACHEESA</name>
+                    <description>Security Attributes of Registers for Cache Error</description>
+                    <lsb>2</lsb>
+                    <msb>2</msb>
+                    <access>read-write</access>
+                    <enumeratedValues>
+                        <enumeratedValue>
+                            <name>0</name>
+                            <description>Secure</description>
+                            <value>#0</value>
+                        </enumeratedValue>
+                        <enumeratedValue>
+                            <name>1</name>
+                            <description>Non-secure</description>
+                            <value>#1</value>
+                        </enumeratedValue>
+                    </enumeratedValues>
+                </field>
+            </fields>
+        </register>
         <register>
           <name>SRAMSAR</name>
           <description>SRAM Security Attribution Register</description>

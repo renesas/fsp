@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1070,8 +1070,8 @@ fsp_err_t R_SCI_UART_BaudCalculate (uint32_t               baudrate,
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Provides API and code version in the user provided pointer. Implements @ref uart_api_t::versionGet
+/***********************************************************************************************************************
+ * DEPRECATED Provides API and code version in the user provided pointer. Implements @ref uart_api_t::versionGet
  *
  * @param[in] p_version   Version number set here
  *

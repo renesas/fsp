@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -432,8 +432,8 @@ fsp_err_t RM_MOTOR_DRIVER_ParameterUpdate (motor_driver_ctrl_t * const p_ctrl, m
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Return Motor Driver Module version. Implements @ref motor_driver_api_t::versionGet.
+/***********************************************************************************************************************
+ * DEPRECATED Return Motor Driver Module version. Implements @ref motor_driver_api_t::versionGet.
  *
  * @retval      FSP_SUCCESS             Version information successfully read.
  * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter

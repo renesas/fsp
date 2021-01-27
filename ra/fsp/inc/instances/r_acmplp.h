@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -38,8 +38,8 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ACMPLP_CODE_VERSION_MAJOR    (1U)
-#define ACMPLP_CODE_VERSION_MINOR    (0U)
+#define ACMPLP_CODE_VERSION_MAJOR    (1U) // DEPRECATED
+#define ACMPLP_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /*********************************************************************************************************************
  * Typedef definitions

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -49,8 +49,8 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CAC_API_VERSION_MAJOR    (1U)
-#define CAC_API_VERSION_MINOR    (1U)
+#define CAC_API_VERSION_MAJOR    (1U)  // DEPRECATED
+#define CAC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -213,7 +213,7 @@ typedef struct st_cac_api
      */
     fsp_err_t (* close)(cac_ctrl_t * const p_ctrl);
 
-    /** Get the CAC API and code version information.
+    /* DEPRECATED Get the CAC API and code version information.
      * @param[out]  p_version is value returned.
      */
     fsp_err_t (* versionGet)(fsp_version_t * p_version);

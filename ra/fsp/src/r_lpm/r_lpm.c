@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -294,8 +294,8 @@ fsp_err_t R_LPM_Close (lpm_ctrl_t * const p_api_ctrl)
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Get the driver version based on compile time macros.
+/***********************************************************************************************************************
+ * DEPRECATED Get the driver version based on compile time macros.
  *
  * @retval     FSP_SUCCESS        Successfully got version.
  * @retval     FSP_ERR_ASSERTION  p_version is NULL.

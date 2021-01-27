@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -50,8 +50,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define DAC_API_VERSION_MAJOR    (1U)
-#define DAC_API_VERSION_MINOR    (1U)
+#define DAC_API_VERSION_MAJOR    (1U)  // DEPRECATED
+#define DAC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -135,7 +135,7 @@ typedef struct st_dac_api
      */
     fsp_err_t (* stop)(dac_ctrl_t * const p_ctrl);
 
-    /** Get version and store it in provided pointer p_version.
+    /* DEPRECATED Get version and store it in provided pointer p_version.
      * @par Implemented as
      * - @ref R_DAC_VersionGet()
      * - @ref R_DAC8_VersionGet()

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -147,14 +147,14 @@ fsp_err_t R_GPT_THREE_PHASE_Open (three_phase_ctrl_t * const p_ctrl, three_phase
         FSP_PARAMETER_NOT_USED(err);
 #endif
 
+        /* Save a pointer to the GPT registers for this channel */
+        p_instance_ctrl->p_reg[ch] = ((gpt_instance_ctrl_t *) (p_cfg->p_timer_instance[ch]->p_ctrl))->p_reg;
+
 #if GPT_CFG_WRITE_PROTECT_ENABLE
 
         /* Disable write protection on the current GPT channel */
         p_instance_ctrl->p_reg[ch]->GTWP = GPT_THREE_PHASE_PRV_GTWP_RESET_VALUE;
 #endif
-
-        /* Save a pointer to the GPT registers for this channel */
-        p_instance_ctrl->p_reg[ch] = ((gpt_instance_ctrl_t *) (p_cfg->p_timer_instance[ch]->p_ctrl))->p_reg;
 
         /* Set the buffer mode */
         if (THREE_PHASE_BUFFER_MODE_DOUBLE == p_cfg->buffer_mode)
@@ -378,8 +378,8 @@ fsp_err_t R_GPT_THREE_PHASE_Close (three_phase_ctrl_t * const p_ctrl)
     return err;
 }
 
-/*******************************************************************************************************************//**
- * Sets driver version based on compile time macros. Implements @ref three_phase_api_t::versionGet.
+/***********************************************************************************************************************
+ * DEPRECATED Sets driver version based on compile time macros. Implements @ref three_phase_api_t::versionGet.
  *
  * @retval FSP_SUCCESS                 Version stored in p_version.
  * @retval FSP_ERR_ASSERTION           p_version was NULL.

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -56,8 +56,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ETHER_API_VERSION_MAJOR    (1U)
-#define ETHER_API_VERSION_MINOR    (1U)
+#define ETHER_API_VERSION_MAJOR    (1U) // DEPRECATED
+#define ETHER_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -97,6 +97,14 @@ typedef enum e_ether_zerocopy
     ETHER_ZEROCOPY_DISABLE = 0,        ///< Disable zero copy in Read/Write function
     ETHER_ZEROCOPY_ENABLE  = 1,        ///< Enable zero copy in Read/Write function
 } ether_zerocopy_t;
+
+typedef enum e_ether_padding
+{
+    ETHER_PADDING_DISABLE = 0,
+    ETHER_PADDING_1BYTE   = 1,
+    ETHER_PADDING_2BYTE   = 2,
+    ETEHR_PADDING_3BYTE   = 3,
+} ether_padding_t;
 
 /** EDMAC descriptor as defined in the hardware manual.
  * Structure must be packed at 1 byte.
@@ -154,6 +162,8 @@ typedef struct st_ether_cfg
     ether_multicast_t    multicast;                      ///< Multicast enable or disable
     ether_promiscuous_t  promiscuous;                    ///< Promiscuous mode enable or disable
     ether_flow_control_t flow_control;                   ///< Flow control functionally enable or disable
+    ether_padding_t      padding;                        ///< Padding length inserted into the received Ethernet frame.
+    uint32_t             padding_offset;                 ///< Offset of the padding inserted into the received Ethernet frame.
     uint32_t             broadcast_filter;               ///< Limit of the number of broadcast frames received continuously
     uint8_t            * p_mac_address;                  ///< Pointer of MAC address
 
@@ -243,7 +253,7 @@ typedef struct st_ether_api
      */
     fsp_err_t (* wakeOnLANEnable)(ether_ctrl_t * const p_api_ctrl);
 
-    /** Return the version of the driver.
+    /* DEPRECATED Return the version of the driver.
      * @par Implemented as
      * - @ref R_ETHER_VersionGet()
      *

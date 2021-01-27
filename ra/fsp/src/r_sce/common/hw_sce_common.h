@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -56,9 +56,9 @@
  **********************************************************************************************************************/
 __STATIC_INLINE void HW_SCE_PowerOn (void)
 {
-#if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA2L1))
+#if BSP_FEATURE_TRNG_HAS_MODULE_STOP
 
-    // S1 MCU series has separate power control for RNG
+    // RA2 MCU series has separate power control for RNG
     R_MSTP->MSTPCRC_b.MSTPC28 = 0;
 #endif
 
@@ -68,9 +68,9 @@ __STATIC_INLINE void HW_SCE_PowerOn (void)
 
 __STATIC_INLINE void HW_SCE_PowerOff (void)
 {
-#if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA2L1))
+#if BSP_FEATURE_TRNG_HAS_MODULE_STOP
 
-    // S1 MCU series has separate power control for RNG
+    // RA2 MCU series has separate power control for RNG
     R_MSTP->MSTPCRC_b.MSTPC28 = 1;
 #endif
 

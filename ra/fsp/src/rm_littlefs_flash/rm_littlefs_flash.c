@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -167,8 +167,8 @@ fsp_err_t RM_LITTLEFS_FLASH_Close (rm_littlefs_ctrl_t * const p_ctrl)
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Returns the version of this module.
+/***********************************************************************************************************************
+ * DEPRECATED Returns the version of this module.
  *
  * Implements @ref rm_littlefs_api_t::versionGet().
  *
@@ -294,8 +294,6 @@ int rm_littlefs_flash_erase (const struct lfs_config * c, lfs_block_t block)
 /*******************************************************************************************************************//**
  * Returns the version of this module.
  *
- * Implements @ref rm_littlefs_api_t::versionGet().
- *
  * @retval     LFS_ERR_OK  Success.
  * @retval     LFS_ERR_IO  Lower layer is not open or failed to lock the flash.
  **********************************************************************************************************************/
@@ -321,8 +319,6 @@ int rm_littlefs_flash_lock (const struct lfs_config * c)
 
 /*******************************************************************************************************************//**
  * Returns the version of this module.
- *
- * Implements @ref rm_littlefs_api_t::versionGet().
  *
  * @retval     LFS_ERR_OK  Success.
  * @retval     LFS_ERR_IO  Lower layer is not open or failed to unlock the flash.

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -183,8 +183,6 @@ fsp_err_t RM_BLOCK_MEDIA_SDMMC_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
  * Reads data from an SD or eMMC device.  Up to 0x10000 sectors can be read at a time. Implements
  * @ref rm_block_media_api_t::read().
  *
- * This function blocks until the data is read into the destination buffer.
- *
  * @retval     FSP_SUCCESS                   Data read successfully.
  * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
  * @retval     FSP_ERR_NOT_OPEN              Module is not open.
@@ -223,8 +221,6 @@ fsp_err_t RM_BLOCK_MEDIA_SDMMC_Read (rm_block_media_ctrl_t * const p_ctrl,
  * Writes data to an SD or eMMC device. Up to 0x10000 sectors can be written at a time. Implements
  * @ref rm_block_media_api_t::write().
  *
- * This function blocks until the write operation completes.
- *
  * @retval     FSP_SUCCESS                   Write finished successfully.
  * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
  * @retval     FSP_ERR_NOT_OPEN              Module is not open.
@@ -261,8 +257,6 @@ fsp_err_t RM_BLOCK_MEDIA_SDMMC_Write (rm_block_media_ctrl_t * const p_ctrl,
 
 /*******************************************************************************************************************//**
  * Erases sectors of an SD card or eMMC device.  Implements @ref rm_block_media_api_t::erase().
- *
- * This function blocks until erase is complete.
  *
  * @retval     FSP_SUCCESS                   Erase operation requested.
  * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
@@ -437,8 +431,8 @@ fsp_err_t RM_BLOCK_MEDIA_SDMMC_Close (rm_block_media_ctrl_t * const p_ctrl)
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Returns the version of the firmware and API.  Implements @ref rm_block_media_api_t::versionGet().
+/***********************************************************************************************************************
+ * DEPRECATED Returns the version of the firmware and API.  Implements @ref rm_block_media_api_t::versionGet().
  *
  * @retval     FSP_SUCCESS        Function executed successfully.
  * @retval     FSP_ERR_ASSERTION  Null Pointer.

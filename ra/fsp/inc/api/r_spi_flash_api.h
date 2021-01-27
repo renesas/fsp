@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -48,8 +48,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define SPI_FLASH_API_VERSION_MAJOR        (1U)
-#define SPI_FLASH_API_VERSION_MINOR        (0U)
+#define SPI_FLASH_API_VERSION_MAJOR        (1U) // DEPRECATED
+#define SPI_FLASH_API_VERSION_MINOR        (0U) // DEPRECATED
 
 #define SPI_FLASH_ERASE_SIZE_CHIP_ERASE    (UINT32_MAX)
 
@@ -313,7 +313,7 @@ typedef struct st_spi_flash_api
      **/
     fsp_err_t (* close)(spi_flash_ctrl_t * p_ctrl);
 
-    /** Get the driver version based on compile time macros.
+    /* DEPRECATED Get the driver version based on compile time macros.
      * @par Implemented as
      * - @ref R_QSPI_VersionGet()
      *

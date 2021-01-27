@@ -26,6 +26,7 @@
  #define R_DMA_BASE             0x40005200
  #define R_DTC_BASE             0x40005400
  #define R_ICU_BASE             0x40006000
+ #define R_CACHE_BASE           0x40007000
  #define R_CPSCU_BASE           0x40008000
  #define R_DBG_BASE             0x4001B000
  #define R_FCACHE_BASE          0x4001C000
@@ -43,6 +44,7 @@
 // #define R_MSTP_BASE 0x40084000
  #define R_POEG_BASE            0x4008A000
  #define R_USB_FS0_BASE         0x40090000
+ #define R_USB_HS0_BASE         0x40111000
  #define R_SDHI0_BASE           0x40092000
  #define R_SSI0_BASE            0x4009D000
  #define R_IIC0_BASE            0x4009F000
@@ -143,6 +145,7 @@
  #define R_DMA              ((R_DMA_Type *) R_DMA_BASE)
  #define R_DTC              ((R_DTC_Type *) R_DTC_BASE)
  #define R_ICU              ((R_ICU_Type *) R_ICU_BASE)
+ #define R_CACHE            ((R_CACHE_Type *) R_CACHE_BASE)
  #define R_CPSCU            ((R_CPSCU_Type *) R_CPSCU_BASE)
  #define R_DEBUG            ((R_DEBUG_Type *) R_DBG_BASE)
  #define R_FCACHE           ((R_FCACHE_Type *) R_FCACHE_BASE)
@@ -158,6 +161,7 @@
  #define R_MSTP             ((R_MSTP_Type *) R_MSTP_BASE)
  #define R_POEG             ((R_POEG_Type *) R_POEG_BASE)
  #define R_USB_FS0          ((R_USB_FS0_Type *) R_USB_FS0_BASE)
+ #define R_USB_HS0          ((R_USB_HS0_Type *) R_USB_HS0_BASE)
  #define R_SDHI0            ((R_SDHI0_Type *) R_SDHI0_BASE)
  #define R_SSI0             ((R_SSI0_Type *) R_SSI0_BASE)
  #define R_IIC0             ((R_IIC0_Type *) R_IIC0_BASE)
@@ -290,6 +294,7 @@
  #define R_FACI_HP_CMD_BASE            0x407E0000
  #define R_FACI_HP_BASE                0x407FE000
  #define R_FACI_LP_BASE                0x407EC000
+ #define R_CTSUTRIM_BASE               0x407EC000
  #define R_FCACHE_BASE                 0x4001C000
  #define R_GLCDC_BASE                  0x400E0000
  #define R_GPT0_BASE                   0x40078000
@@ -429,6 +434,7 @@
  #define R_FACI_HP_CMD            ((R_FACI_HP_CMD_Type *) R_FACI_HP_CMD_BASE)
  #define R_FACI_HP                ((R_FACI_HP_Type *) R_FACI_HP_BASE)
  #define R_FACI_LP                ((R_FACI_LP_Type *) R_FACI_LP_BASE)
+ #define R_CTSUTRIM               ((R_CTSUTRIM_Type *) R_CTSUTRIM_BASE)
  #define R_FCACHE                 ((R_FCACHE_Type *) R_FCACHE_BASE)
  #define R_GLCDC                  ((R_GLCDC_Type *) R_GLCDC_BASE)
  #define R_GPT0                   ((R_GPT0_Type *) R_GPT0_BASE)

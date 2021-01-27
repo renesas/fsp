@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -145,6 +145,16 @@ void usb_pcdc_write_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
         {
             ctrl.type = USB_CLASS_PCDC;      /* CDC Data class  */
         }
+        else if (USB_CFG_PCDC_BULK_IN2 == ctrl.pipe)
+        {
+            ctrl.type = USB_CLASS_PCDC2;     /* CDC Data class  */
+        }
+
+        /* USB_CFG_PCDC_INT_IN2 */
+        else if (USB_CFG_PCDC_INT_IN2 == ctrl.pipe)
+        {
+            ctrl.type = USB_CLASS_PCDCC2; /* CDC Control class  */
+        }
 
         /* USB_CFG_PCDC_INT_IN */
         else
@@ -155,16 +165,6 @@ void usb_pcdc_write_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
         if (USB_DATA_NONE == mess->status)
         {
             ctrl.status = FSP_SUCCESS;
-        }
-        else if (USB_CFG_PCDC_BULK_IN2 == ctrl.pipe)
-        {
-            ctrl.type = USB_CLASS_PCDC2; /* CDC Data class  */
-        }
-
-        /* USB_CFG_PCDC_INT_IN2 */
-        else if (USB_CFG_PCDC_INT_IN2 == ctrl.pipe)
-        {
-            ctrl.type = USB_CLASS_PCDCC2; /* CDC Control class  */
         }
         else
         {

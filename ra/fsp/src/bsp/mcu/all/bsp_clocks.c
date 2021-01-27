@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -208,6 +208,12 @@
  #define BSP_PRV_STARTUP_OPERATING_MODE    (BSP_PRV_OPERATING_MODE_MIDDLE_SPEED)
 #else
  #define BSP_PRV_STARTUP_OPERATING_MODE    (BSP_PRV_OPERATING_MODE_HIGH_SPEED)
+#endif
+
+#if BSP_FEATURE_BSP_HAS_CLOCK_SUPPLY_TYPEB
+ #define BSP_PRV_CLOCK_SUPPLY_TYPE_B       (0 == BSP_CFG_ROM_REG_OFS1_ICSATS)
+#else
+ #define BSP_PRV_CLOCK_SUPPLY_TYPE_B       (0)
 #endif
 
 /***********************************************************************************************************************
@@ -616,7 +622,8 @@ static void bsp_prv_clock_set_hard_reset (void)
   #if BSP_STARTUP_ICLK_HZ <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_ONE_ROM_WAITS
 
     /* Do nothing. Default setting in FLWT is correct. */
-  #elif BSP_STARTUP_ICLK_HZ <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_TWO_ROM_WAITS
+  #elif BSP_STARTUP_ICLK_HZ <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_TWO_ROM_WAITS || \
+    BSP_FEATURE_BSP_SYS_CLOCK_FREQ_TWO_ROM_WAITS == 0
     R_FCACHE->FLWT = BSP_PRV_ROM_ONE_WAIT_CYCLES;
   #elif 0 == BSP_FEATURE_BSP_SYS_CLOCK_FREQ_THREE_ROM_WAITS || \
     (BSP_STARTUP_ICLK_HZ <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_THREE_ROM_WAITS)
@@ -626,7 +633,7 @@ static void bsp_prv_clock_set_hard_reset (void)
   #endif
  #endif
 
- #if BSP_FEATURE_CGC_HAS_MEMWAIT
+ #if BSP_FEATURE_CGC_HAS_MEMWAIT && !BSP_PRV_CLOCK_SUPPLY_TYPE_B
   #if BSP_STARTUP_ICLK_HZ > BSP_PRV_MEMWAIT_MAX_ZERO_WAIT_FREQ
 
     /* The MCU must be in high speed mode to set wait states to 2. High speed mode is the default out of reset. */
@@ -634,7 +641,7 @@ static void bsp_prv_clock_set_hard_reset (void)
   #endif
  #endif
 
- #if BSP_FEATURE_CGC_HAS_FLDWAITR
+ #if BSP_FEATURE_CGC_HAS_FLDWAITR && !BSP_PRV_CLOCK_SUPPLY_TYPE_B
   #if BSP_STARTUP_ICLK_HZ > BSP_PRV_FLDWAITR_MAX_ONE_WAIT_FREQ
 
     /* The MCU must be in high speed mode to set wait states to 2. High speed mode is the default out of reset. */
@@ -1125,6 +1132,8 @@ static uint8_t bsp_clock_set_prechange (uint32_t requested_freq_hz)
 {
     uint8_t new_rom_wait_state = 0U;
 
+    FSP_PARAMETER_NOT_USED(requested_freq_hz);
+
 #if BSP_FEATURE_CGC_HAS_SRAMWTSC
 
     /* Wait states for SRAM (SRAM0, SRAM1 and SRAM0 (DED)). */
@@ -1145,6 +1154,17 @@ static uint8_t bsp_clock_set_prechange (uint32_t requested_freq_hz)
 #if BSP_FEATURE_CGC_HAS_FLWT
 
     /* Calculate the wait states for ROM */
+ #if BSP_FEATURE_BSP_SYS_CLOCK_FREQ_TWO_ROM_WAITS == 0
+    if (requested_freq_hz <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_ONE_ROM_WAITS)
+    {
+        new_rom_wait_state = BSP_PRV_ROM_ZERO_WAIT_CYCLES;
+    }
+    else
+    {
+        new_rom_wait_state = BSP_PRV_ROM_ONE_WAIT_CYCLES;
+    }
+
+ #elif BSP_FEATURE_BSP_SYS_CLOCK_FREQ_THREE_ROM_WAITS == 0
     if (requested_freq_hz <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_ONE_ROM_WAITS)
     {
         new_rom_wait_state = BSP_PRV_ROM_ZERO_WAIT_CYCLES;
@@ -1154,14 +1174,23 @@ static uint8_t bsp_clock_set_prechange (uint32_t requested_freq_hz)
         new_rom_wait_state = BSP_PRV_ROM_ONE_WAIT_CYCLES;
     }
     else
- #if BSP_FEATURE_BSP_SYS_CLOCK_FREQ_THREE_ROM_WAITS > 0
-    if (requested_freq_hz <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_THREE_ROM_WAITS)
- #endif
     {
         new_rom_wait_state = BSP_PRV_ROM_TWO_WAIT_CYCLES;
     }
 
- #if BSP_FEATURE_BSP_SYS_CLOCK_FREQ_THREE_ROM_WAITS > 0
+ #else
+    if (requested_freq_hz <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_ONE_ROM_WAITS)
+    {
+        new_rom_wait_state = BSP_PRV_ROM_ZERO_WAIT_CYCLES;
+    }
+    else if (requested_freq_hz <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_TWO_ROM_WAITS)
+    {
+        new_rom_wait_state = BSP_PRV_ROM_ONE_WAIT_CYCLES;
+    }
+    else if (requested_freq_hz <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_THREE_ROM_WAITS)
+    {
+        new_rom_wait_state = BSP_PRV_ROM_TWO_WAIT_CYCLES;
+    }
     else
     {
         new_rom_wait_state = BSP_PRV_ROM_THREE_WAIT_CYCLES;
@@ -1175,7 +1204,7 @@ static uint8_t bsp_clock_set_prechange (uint32_t requested_freq_hz)
     }
 #endif
 
-#if BSP_FEATURE_CGC_HAS_MEMWAIT
+#if BSP_FEATURE_CGC_HAS_MEMWAIT && !BSP_PRV_CLOCK_SUPPLY_TYPE_B
     if (requested_freq_hz > BSP_PRV_MEMWAIT_MAX_ZERO_WAIT_FREQ)
     {
         /* The MCU must be in high speed mode to set wait states to 2. The MCU should already be in high speed mode as
@@ -1184,7 +1213,7 @@ static uint8_t bsp_clock_set_prechange (uint32_t requested_freq_hz)
     }
 #endif
 
-#if BSP_FEATURE_CGC_HAS_FLDWAITR
+#if BSP_FEATURE_CGC_HAS_FLDWAITR && !BSP_PRV_CLOCK_SUPPLY_TYPE_B
     if (requested_freq_hz > BSP_PRV_FLDWAITR_MAX_ONE_WAIT_FREQ)
     {
         /* The MCU must be in high speed mode to set wait states to 2. The MCU should already be in high speed mode as
@@ -1232,14 +1261,14 @@ static void bsp_clock_set_postchange (uint32_t updated_freq_hz, uint8_t new_rom_
     }
 #endif
 
-#if BSP_FEATURE_CGC_HAS_MEMWAIT
+#if BSP_FEATURE_CGC_HAS_MEMWAIT && !BSP_PRV_CLOCK_SUPPLY_TYPE_B
     if (updated_freq_hz <= BSP_PRV_MEMWAIT_MAX_ZERO_WAIT_FREQ)
     {
         R_SYSTEM->MEMWAIT = BSP_PRV_MEMWAIT_ZERO_WAIT_CYCLES;
     }
 #endif
 
-#if BSP_FEATURE_CGC_HAS_FLDWAITR
+#if BSP_FEATURE_CGC_HAS_FLDWAITR && !BSP_PRV_CLOCK_SUPPLY_TYPE_B
     if (updated_freq_hz <= BSP_PRV_FLDWAITR_MAX_ONE_WAIT_FREQ)
     {
         BSP_PRV_FLDWAITR_REG_ACCESS = BSP_PRV_FLDWAITR_ONE_WAIT_CYCLES;

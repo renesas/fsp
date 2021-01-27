@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -36,8 +36,8 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /* Leading zeroes removed to avoid coding standards violation. */
-#define AGT_CODE_VERSION_MAJOR    (1U)
-#define AGT_CODE_VERSION_MINOR    (2U)
+#define AGT_CODE_VERSION_MAJOR    (1U) // DEPRECATED
+#define AGT_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
 /** Maximum number of clock counts in 16 bit timer. */
 #define AGT_MAX_CLOCK_COUNTS      (UINT16_MAX)

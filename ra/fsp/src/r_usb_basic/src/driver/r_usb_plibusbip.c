@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1040,9 +1040,9 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
     uint8_t  pipe_no;
     uint16_t pipe_cfg;
     uint16_t pipe_maxp;
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     uint16_t pipe_buf;
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
     /* Check Endpoint descriptor */
     if (USB_DT_ENDPOINT != descriptor[USB_DEV_B_DESCRIPTOR_TYPE])
@@ -1070,12 +1070,12 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
                 pipe_cfg = (uint16_t) (USB_TYPFIELD_BULK | USB_CFG_DBLB | USB_SHTNAKFIELD | USB_DIR_P_OUT);
             }
 
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
             if (USB_CFG_IP1 == p_utr->ip)
             {
                 pipe_cfg |= (uint16_t) (USB_CFG_CNTMD);
             }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
             break;
         }
 
@@ -1120,7 +1120,7 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
         g_usb_pipe_table[p_utr->ip][pipe_no].pipe_cfg  = pipe_cfg;
         g_usb_pipe_table[p_utr->ip][pipe_no].pipe_maxp = pipe_maxp;
         g_usb_pipe_table[p_utr->ip][pipe_no].pipe_peri = USB_NULL;
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
         if (USB_CFG_IP1 == p_utr->ip)
         {
             pipe_buf = usb_pstd_get_pipe_buf_value(pipe_no);
@@ -1130,7 +1130,7 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
         {
             (void) pipe_buf;
         }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     }
     else
     {
@@ -1160,12 +1160,12 @@ void usb_pstd_clr_pipe_table (uint8_t usb_ip)
             /* Clear use block */
             g_usb_pipe_table[usb_ip][pipe_no].use_flag = USB_FALSE;
             g_usb_pipe_table[usb_ip][pipe_no].pipe_cfg = USB_NULL;
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
             if (USB_CFG_IP1 == usb_ip)
             {
                 g_usb_pipe_table[usb_ip][pipe_no].pipe_buf = USB_NULL;
             }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
             g_usb_pipe_table[usb_ip][pipe_no].pipe_maxp = USB_NULL;
             g_usb_pipe_table[usb_ip][pipe_no].pipe_peri = USB_NULL;
         }
@@ -1437,7 +1437,7 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
     return pipe_no;
 }
 
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
 
 /******************************************************************************
  * Function Name   : usb_pstd_get_pipe_buf_value
@@ -1536,7 +1536,7 @@ uint16_t usb_pstd_get_pipe_buf_value (uint16_t pipe_no)
     return pipe_buf;
 }                                      /* End of function usb_pstd_get_pipe_buf_value() */
 
- #endif /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 

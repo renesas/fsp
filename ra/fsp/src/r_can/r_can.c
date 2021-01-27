@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -641,8 +641,8 @@ fsp_err_t R_CAN_CallbackSet (can_ctrl_t * const          p_api_ctrl,
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Get CAN module code and API versions.
+/***********************************************************************************************************************
+ * DEPRECATED Get CAN module code and API versions.
  * @retval  FSP_SUCCESS             Operation succeeded.
  * @retval  FSP_ERR_ASSERTION       Null pointer presented
  * note This function is reentrant.

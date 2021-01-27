@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -321,14 +321,14 @@ void hw_usb_hset_enb_sacke (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_hset_enb_pddetinte (usb_utr_t * ptr)
 {
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     if (USB_IP1 == ptr->ip)
     {
         ptr->ipp1->INTENB1 |= USB_PDDETINTE;
     }
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) */
+ #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     (void) *ptr;
- #endif /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 }
 
 /******************************************************************************
@@ -458,14 +458,14 @@ void hw_usb_hclear_sts_sack (usb_utr_t * ptr)
  ******************************************************************************/
 void hw_usb_hclear_sts_pddetint (usb_utr_t * ptr)
 {
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     if (USB_IP1 == ptr->ip)
     {
         ptr->ipp1->INTSTS1 = (uint16_t) ((~USB_PDDETINT) & INTSTS1_MASK);
     }
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) */
+ #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     (void) *ptr;
- #endif /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 }
 
 /******************************************************************************
@@ -675,14 +675,14 @@ void hw_usb_hset_usbspd (usb_utr_t * ptr, uint16_t devsel, uint16_t data)
  ******************************************************************************/
 void hw_usb_hset_dcpmode (usb_utr_t * ptr)
 {
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     if (USB_IP1 == ptr->ip)
     {
         ptr->ipp1->BCCTRL |= USB_DCPMODE;
     }
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) */
+ #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     (void) *ptr;
- #endif
+ #endif/* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 }
 
 /******************************************************************************
@@ -711,9 +711,9 @@ void hw_usb_hmodule_init (usb_ctrl_t * p_api_ctrl)
             /* none */
         }
 
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
         USB_M0->PHYSLEW = 0x5;
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
         USB_M0->SYSCFG |= USB_DCFM;
 
@@ -777,7 +777,7 @@ void hw_usb_hmodule_init (usb_ctrl_t * p_api_ctrl)
  #if USB_NUM_USBIP == 2
     else
     {
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
    #if USB_CFG_CLKSEL == USB_CFG_20MHZ
         USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
         USB_M1->PHYSET |= USB_CLKSEL_20;
@@ -821,7 +821,7 @@ void hw_usb_hmodule_init (usb_ctrl_t * p_api_ctrl)
 
         USB_M1->BUSWAIT = (USB_CFG_BUSWAIT | USB_VALUE_0F00H);
         usb_cpu_delay_1us((uint16_t) 1); /* wait 1usec */
-  #endif /* defined(BSP_MCU_GROUP_RA6M3) */
+  #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
         USB_M1->SOFCFG |= USB_INTL;
 
@@ -875,9 +875,9 @@ void hw_usb_hmodule_init (usb_ctrl_t * p_api_ctrl)
 
             case USB_SE0:              /* USB device no connected */
             {
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
                 USB_M1->INTENB1 = USB_ATTCH;
-  #endif /* defined(BSP_MCU_GROUP_RA6M3) */
+  #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
                 break;
             }
 
@@ -889,11 +889,15 @@ void hw_usb_hmodule_init (usb_ctrl_t * p_api_ctrl)
 
         USB_M1->INTSTS1 &= (~USB_OVRCRE & INTSTS1_MASK);
         USB_M1->INTENB0  = (USB_BEMPE | USB_NRDYE | USB_BRDYE);
-  #if defined(BSP_MCU_GROUP_RA6M3)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
         USB_M1->INTENB1 = (USB_OVRCRE | USB_ATTCH);
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) */
+  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     }
  #endif                                /* USB_NUM_USBIP == 2 */
+
+ #if (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE))
+    hw_usb_set_vdcen();
+ #endif /* (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE)) */
 }
 
 /******************************************************************************

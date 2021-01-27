@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -52,8 +52,8 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /** Version Number of API.  */
-#define COMPARATOR_API_VERSION_MAJOR    (1U)
-#define COMPARATOR_API_VERSION_MINOR    (1U)
+#define COMPARATOR_API_VERSION_MAJOR    (1U) // DEPRECATED
+#define COMPARATOR_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /*****************************************************************************
  * Typedef definitions
@@ -205,7 +205,7 @@ typedef struct st_comparator_api
      */
     fsp_err_t (* close)(comparator_ctrl_t * const p_ctrl);
 
-    /** Retrieve the API version.
+    /* DEPRECATED Retrieve the API version.
      * @par Implemented as
      * - @ref R_ACMPHS_VersionGet()
      * - @ref R_ACMPLP_VersionGet()

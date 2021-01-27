@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -163,6 +163,8 @@
  #define BLE_ABS_SECURE_DATA_BOND_ADDRESS_FF                    (0xFF)
  #define BLE_ABS_SECURE_DATA_BOND_CHECK_FF                      (0xFF)
 #endif
+
+#define BLE_ABS_SECURE_DATA_INVALID_DATA                        (0xFF)
 
 #if (BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE != 0)
  #define BLE_DEV_DATA_DF_ADDR                                   _BLE_DF_ADDR(BLE_CFG_DEV_DATA_DF_BLOCK)
@@ -388,6 +390,9 @@ static fsp_err_t ble_abs_secure_data_writeremkeys(flash_instance_t const * p_ins
                                                   ble_device_address_t   * p_addr,
                                                   st_ble_gap_auth_info_t * p_keyinfo);
 static fsp_err_t ble_abs_secure_data_init(flash_instance_t const * p_instance);
+static void      ble_abs_secure_data_delete_remote_keys(st_ble_dev_addr_t * p_addr);
+static void      ble_abs_secure_data_delete_local_keys(st_ble_dev_addr_t * p_addr);
+static void      ble_abs_secure_data_delete_all_keys(st_ble_dev_addr_t * p_addr);
 
 #if (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1)
 
@@ -435,7 +440,7 @@ uint8_t r_dflash_write(uint32_t addr, uint8_t * buff, uint16_t len);
 
 /*** ble secure data functions end ***/
 
-/*** platform control functions added start ***/
+/*** platform control functions start ***/
 
 void    r_ble_rf_control_error(uint32_t err_no);
 uint8_t r_ble_rf_power_save_mode(void);
@@ -509,6 +514,7 @@ const ble_abs_api_t g_ble_abs_on_ble =
     .createConnection               = RM_BLE_ABS_CreateConnection,
     .setLocalPrivacy                = RM_BLE_ABS_SetLocalPrivacy,
     .startAuthentication            = RM_BLE_ABS_StartAuthentication,
+    .deleteBondInformation          = RM_BLE_ABS_DeleteBondInformation,
 };
 
 static ble_abs_instance_ctrl_t * gp_instance_ctrl;
@@ -703,8 +709,8 @@ fsp_err_t RM_BLE_ABS_Reset (ble_abs_ctrl_t * const p_ctrl, ble_event_cb_t init_c
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Get BLE module code and API versions.
+/***********************************************************************************************************************
+ * DEPRECATED Get BLE module code and API versions.
  * Implements @ref ble_abs_api_t::versionGet.
  *
  * @retval      FSP_SUCCESS            Operation succeeded.
@@ -1360,6 +1366,91 @@ fsp_err_t RM_BLE_ABS_StartAuthentication (ble_abs_ctrl_t * const p_ctrl, uint16_
 
     return FSP_SUCCESS;
 }                                      /* End of function RM_BLE_ABS_StartAuthentication() */
+
+/*******************************************************************************************************************//**
+ * Delete bonding information from BLE stack and storage.
+ * Implements @ref ble_abs_api_t::deleteBondInformation.
+ *
+ * Example:
+ * @snippet rm_ble_abs_example.c   RM_BLE_ABS_DeleteBondInformation
+ *
+ * @retval FSP_SUCCESS             Operation succeeded.
+ * @retval FSP_ERR_ASSERTION       The parameter p_instance_ctrl is NULL.
+ * @retval FSP_ERR_INVALID_POINTER The parameter p_bond_information_parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN        Control block not open.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLE_ABS_DeleteBondInformation (ble_abs_ctrl_t * const                             p_ctrl,
+                                            ble_abs_bond_information_parameter_t const * const p_bond_information_parameter)
+{
+    ble_abs_instance_ctrl_t * p_instance_ctrl          = (ble_abs_instance_ctrl_t *) p_ctrl;
+    ble_gap_del_bond_cb_t     gap_delete_bond_callback = NULL;
+    ble_device_address_t    * p_address                = NULL;
+
+    /* Parameter checking */
+#if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
+
+    /* Verify the pointers are valid */
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(NULL != p_bond_information_parameter, FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN(BLE_ABS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#else
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
+
+    if (BLE_ABS_DELETE_NON_VOLATILE_AREA_ENABLE == p_bond_information_parameter->delete_non_volatile_area)
+    {
+        if ((BLE_ABS_LOCAL_BOND_INFORMATION_NONE != p_bond_information_parameter->local_bond_information) &&
+            (BLE_ABS_REMOTE_BOND_INFORMATION_NONE != p_bond_information_parameter->remote_bond_information))
+        {
+            gap_delete_bond_callback = ble_abs_secure_data_delete_all_keys;
+        }
+        else if (BLE_ABS_LOCAL_BOND_INFORMATION_NONE != p_bond_information_parameter->local_bond_information)
+        {
+            gap_delete_bond_callback = ble_abs_secure_data_delete_local_keys;
+        }
+        else if (BLE_ABS_REMOTE_BOND_INFORMATION_NONE != p_bond_information_parameter->remote_bond_information)
+        {
+            gap_delete_bond_callback = ble_abs_secure_data_delete_remote_keys;
+        }
+        else
+        {
+            ;
+        }
+    }
+
+    if (NULL != gap_delete_bond_callback)
+    {
+        p_instance_ctrl->abs_delete_bond_callback = p_bond_information_parameter->abs_delete_bond_callback;
+    }
+    else
+    {
+        gap_delete_bond_callback = p_bond_information_parameter->abs_delete_bond_callback;
+    }
+
+    if (BLE_ABS_REMOTE_BOND_INFORMATION_SPECIFIED == p_bond_information_parameter->remote_bond_information)
+    {
+        p_address = p_bond_information_parameter->p_address;
+    }
+    else
+    {
+        ;
+    }
+
+    R_BLE_GAP_DeleteBondInfo((int32_t) p_bond_information_parameter->local_bond_information,
+                             (int32_t) p_bond_information_parameter->remote_bond_information,
+                             (st_ble_dev_addr_t *) p_address,
+                             gap_delete_bond_callback);
+
+    if ((BLE_ABS_LOCAL_BOND_INFORMATION_NONE != p_bond_information_parameter->local_bond_information) &&
+        (BLE_ABS_REMOTE_BOND_INFORMATION_NONE == p_bond_information_parameter->remote_bond_information))
+    {
+        /* Delete local keys from non volatile area, after R_BLE_GAP_DeleteBondInfo executes. */
+        /* It is because R_BLE_GAP_DeleteBondInfo don't call callback function when delete local keys. */
+        gap_delete_bond_callback(NULL);
+    }
+
+    return FSP_SUCCESS;
+}
 
 /************************************************
  *   static function definitions                *
@@ -3127,7 +3218,6 @@ void r_ble_wake_up_task_from_isr (void * EventGroupHandle)
 
 /*** platform control functions end ***/
 
-/*** r_ble_sec_data functions added start ***/
 #if (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1)
 
 /*******************************************************************************************************************//**
@@ -3411,8 +3501,10 @@ static fsp_err_t ble_abs_secure_data_find_entry (ble_device_address_t * p_dev_ad
                                  BLE_ABS_SECURE_DATA_SECURITY_IDENTITY_ADDRESS_OFFSET],
                      p_addr->addr,
                      BLE_BD_ADDR_LEN)) &&
-             (p_addr->type ==
-              p_sec_data[BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET + i * BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE +
+
+             (p_addr->type ==          // NOLINT: It is needed to load data from flash directory.
+              p_sec_data[BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET +
+                         i * BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE +
                          BLE_ABS_SECURE_DATA_SECURITY_IDENTITY_ADDRESS_OFFSET])))
         {
             *p_entry = i;
@@ -3456,7 +3548,7 @@ static fsp_err_t ble_abs_secure_data_update_bond_num (flash_instance_t const * p
     uint8_t   bond_num;
     uint8_t   bond_order;
 
-    bond_num = p_sec_data[BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE];
+    bond_num = p_sec_data[BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE]; // NOLINT: It is needed to load data from flash directory.
 
     switch (op_code)
     {
@@ -3670,6 +3762,92 @@ static void ble_abs_secure_data_release_bond_info_buf (uint8_t * p_sec_data)
     free(p_sec_data);
 }                                      /* End of function ble_abs_secure_data_release_bond_info_buf() */
 
+static void ble_abs_secure_data_delete_remote_keys (st_ble_dev_addr_t * p_addr) {
+    ble_abs_instance_ctrl_t * p_instance_ctrl  = gp_instance_ctrl;
+    flash_instance_t        * p_flash_instance = (flash_instance_t *) p_instance_ctrl->p_cfg->p_flash_instance;
+    uint8_t                 * p_sec_data;
+    fsp_err_t                 retval;
+
+    p_sec_data = malloc(BLE_ABS_SECURE_DATA_MAX_SIZE);
+    retval     = (fsp_err_t) r_dflash_read(BLE_ABS_SECURE_DATA_BASE_ADDR, p_sec_data, BLE_ABS_SECURE_DATA_MAX_SIZE);
+    if (FSP_SUCCESS != retval)
+    {
+        free(p_sec_data);
+
+        return;
+    }
+
+    if (NULL != p_addr)
+    {
+        int32_t entry;
+        int32_t del_target;
+        uint8_t bond_num;
+
+        retval = ble_abs_secure_data_find_entry((ble_device_address_t *) p_addr, &entry, p_sec_data);
+        if (FSP_SUCCESS == retval)
+        {
+            ble_abs_secure_data_update_bond_num(p_flash_instance, entry, BLE_SECD_UPD_BN_DEL, NULL, p_sec_data);
+            bond_num = p_sec_data[BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE];
+            if ((BLE_ABS_SECURE_DATA_INVALID_DATA == bond_num) || (entry == bond_num))
+            {
+                del_target = entry;
+            }
+            else
+            {
+                /* swap remote bond area */
+                memcpy(&p_sec_data[BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET + entry *
+                                   BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE],
+                       &p_sec_data[BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET + bond_num *
+                                   BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE],
+                       BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE);
+                del_target = (int32_t) bond_num;
+            }
+
+            memset(&p_sec_data[BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET + del_target *
+                               BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE],
+                   BLE_ABS_SECURE_DATA_INVALID_DATA,
+                   BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE);
+        }
+    }
+    else
+    {
+        memset(&p_sec_data[BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET],
+               BLE_ABS_SECURE_DATA_INVALID_DATA,
+               BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE * BLE_ABS_CFG_NUMBER_BONDING);
+        ble_abs_secure_data_update_bond_num(p_flash_instance, 0, BLE_SECD_UPD_BN_ALL_DEL, NULL, p_sec_data);
+    }
+
+    r_dflash_write((uint32_t) BLE_ABS_SECURE_DATA_BASE_ADDR, p_sec_data, BLE_ABS_SECURE_DATA_MAX_SIZE);
+    free(p_sec_data);
+
+    if (NULL != p_instance_ctrl->abs_delete_bond_callback)
+    {
+        p_instance_ctrl->abs_delete_bond_callback(p_addr);
+        p_instance_ctrl->abs_delete_bond_callback = NULL;
+    }
+}
+
+static void ble_abs_secure_data_delete_local_keys (st_ble_dev_addr_t * p_addr) {
+    ble_abs_instance_ctrl_t * p_instance_ctrl = gp_instance_ctrl;
+    uint8_t invalid_data[BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE];
+    (void) p_addr;
+
+    memset(invalid_data, BLE_ABS_SECURE_DATA_INVALID_DATA, BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE);
+    r_dflash_write(BLE_ABS_SECURE_DATA_ADDR_LOC_IRK, invalid_data, BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE);
+
+    if (NULL != p_instance_ctrl->abs_delete_bond_callback)
+    {
+        p_instance_ctrl->abs_delete_bond_callback(p_addr);
+        p_instance_ctrl->abs_delete_bond_callback = NULL;
+    }
+}
+
+static void ble_abs_secure_data_delete_all_keys (st_ble_dev_addr_t * p_addr) {
+    ble_abs_secure_data_delete_remote_keys(p_addr);
+
+    ble_abs_secure_data_delete_local_keys(NULL);
+}
+
 #else                                  /* (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1) */
 
 /*******************************************************************************************************************//**
@@ -3736,6 +3914,18 @@ static fsp_err_t ble_abs_secure_data_init (flash_instance_t const * p_instance)
     (void) p_instance;
 
     return FSP_ERR_UNSUPPORTED;
+}
+
+static void ble_abs_secure_data_delete_remote_keys (st_ble_dev_addr_t * p_addr) {
+    (void) p_addr;
+}
+
+static void ble_abs_secure_data_delete_local_keys (st_ble_dev_addr_t * p_addr) {
+    (void) p_addr;
+}
+
+static void ble_abs_secure_data_delete_all_keys (st_ble_dev_addr_t * p_addr) {
+    (void) p_addr;
 }
 
 #endif                                 /* (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1) */
@@ -3818,7 +4008,7 @@ static fsp_err_t ble_abs_secure_data_flash_write (flash_instance_t const * p_ins
     {
         if ((i >= offset) && (i < (offset + len)))
         {
-            temporary_buffer[i] = *buff++;
+            temporary_buffer[i] = *buff++; // NOLINT: It is needed to load data from flash directory.
         }
         else
         {
@@ -3858,8 +4048,6 @@ uint8_t r_dflash_write (uint32_t addr, uint8_t * buff, uint16_t len) {
 
     return FSP_SUCCESS;
 }
-
-/*** r_ble_sec_data functions added end ***/
 
 static void ble_abs_timer_update_remaining_time_ms (ble_abs_instance_ctrl_t * const p_instance_ctrl, bool expired)
 {

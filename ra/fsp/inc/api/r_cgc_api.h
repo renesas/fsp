@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -57,8 +57,8 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /* Version Number of API. */
-#define CGC_API_VERSION_MAJOR    (1U)
-#define CGC_API_VERSION_MINOR    (1U)
+#define CGC_API_VERSION_MAJOR    (1U)  // DEPRECATED
+#define CGC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -348,7 +348,7 @@ typedef struct
      */
     fsp_err_t (* close)(cgc_ctrl_t * const p_ctrl);
 
-    /** Gets the CGC driver version.
+    /* DEPRECATED Gets the CGC driver version.
      * @par Implemented as
      * - @ref R_CGC_VersionGet()
      * @param[out]  p_version   Code and API version used

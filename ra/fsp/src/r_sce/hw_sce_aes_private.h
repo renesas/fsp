@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -33,6 +33,10 @@
 #define SIZE_AES_128BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED) / 8)
 #define SIZE_AES_128BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED) / 32)
 
+#define SIZE_AES_192BIT_KEYLEN_BITS             (192)
+#define SIZE_AES_192BIT_KEYLEN_BYTES            ((SIZE_AES_192BIT_KEYLEN_BITS) / 8)
+#define SIZE_AES_192BIT_KEYLEN_WORDS            ((SIZE_AES_192BIT_KEYLEN_BITS) / 32)
+
 #define SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED     (448) /* Added 32 bits here to differentiate 192 wrapped key from 256 wrapped key in the psa_crypto stack. */
 #define SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 8)
 #define SIZE_AES_192BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 32)
@@ -58,6 +62,21 @@ typedef struct st_sce_data
     uint32_t   length;
     uint32_t * p_data;
 } r_sce_data_t;
+
+typedef fsp_err_t (* hw_sce_aes_gcm_crypt_init_t)(uint32_t * InData_KeyType, uint32_t * InData_KeyIndex,
+                                                  uint32_t * InData_IV);
+typedef void      (* hw_sce_aes_gcm_update_aad_t)(uint32_t * InData_DataA, uint32_t MAX_CNT);
+typedef void      (* hw_sce_aes_gcm_crypt_update_transition_t)(void);
+typedef void      (* hw_sce_aes_gcm_crypt_update_t)(uint32_t * InData_Text, uint32_t * OutData_Text, uint32_t MAX_CNT);
+typedef fsp_err_t (* hw_sce_aes_gcm_encrypt_final_t)(uint32_t * InData_Text, uint32_t * InData_DataALen,
+                                                     uint32_t * InData_TextLen, uint32_t * OutData_Text,
+                                                     uint32_t * OutData_DataT);
+typedef fsp_err_t (* hw_sce_aes_gcm_decrypt_final_t)(uint32_t * InData_Text, uint32_t * InData_DataT,
+                                                     uint32_t * InData_DataALen, uint32_t * InData_TextLen,
+                                                     uint32_t * InData_DataTLen, uint32_t * OutData_Text);
+typedef fsp_err_t (* hw_sce_aes_ecb_encrypt_using_encrypted_key)(const uint32_t * InData_KeyIndex,
+                                                                 const uint32_t num_words, const uint32_t * InData_Text,
+                                                                 uint32_t * OutData_Text);
 
 extern fsp_err_t HW_SCE_AES_128EcbEncrypt(const uint32_t * InData_Key,
                                           const uint32_t   num_words,
@@ -214,5 +233,12 @@ extern void HW_SCE_Aes256EncryptDecryptUpdate(const uint32_t * InData_Text,
                                               const uint32_t   num_words);
 
 extern fsp_err_t HW_SCE_Aes256EncryptDecryptFinal(void);
+
+fsp_err_t HW_SCE_Aes256GcmEncryptInitSubGeneral(uint32_t * InData_KeyType,
+                                                uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral(uint32_t * InData_KeyType,
+                                                uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
 
 #endif                                 /* HW_SCE_AES_PRIVATE_H */

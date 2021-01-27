@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -58,8 +58,8 @@ FSP_HEADER
  ******************************************************************************/
 
 /* USB Version Info */
-#define USB_API_VERSION_MINOR      (2U)      ///< Minor version of the API.
-#define USB_API_VERSION_MAJOR      (1U)      ///< Major version of the API.
+#define USB_API_VERSION_MINOR      (2U)      // DEPRECATED      ///< Minor version of the API.
+#define USB_API_VERSION_MAJOR      (1U)      // DEPRECATED      ///< Major version of the API.
 
 /* USB Request Type Register */
 #define USB_BREQUEST               (0xFF00U) ///< b15-8
@@ -534,7 +534,7 @@ typedef struct st_usb_api
      */
     fsp_err_t (* pipeInfoGet)(usb_ctrl_t * const p_api_ctrl, usb_pipe_t * p_info, uint8_t pipe_number);
 
-    /** Get the driver version
+    /* DEPRECATED Get the driver version
      * @par Implemented as
      * - @ref R_USB_VersionGet()
      *

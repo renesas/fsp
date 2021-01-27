@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -210,8 +210,8 @@ fsp_err_t R_KINT_Disable (keymatrix_ctrl_t * const p_api_ctrl)
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Set driver version based on compile time macros.
+/***********************************************************************************************************************
+ * DEPRECATED Set driver version based on compile time macros.
  *
  * @retval     FSP_SUCCESS        Successful return.
  * @retval     FSP_ERR_ASSERTION  The parameter p_version is NULL.

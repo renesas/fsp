@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -50,8 +50,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define PDC_API_VERSION_MAJOR    (1U)
-#define PDC_API_VERSION_MINOR    (1U)
+#define PDC_API_VERSION_MAJOR    (1U)  // DEPRECATED
+#define PDC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -170,7 +170,7 @@ typedef struct st_pdc_api
      */
     fsp_err_t (* captureStart)(pdc_ctrl_t * const p_ctrl, uint8_t * const p_buffer);
 
-    /** Return the version of the driver.
+    /* DEPRECATED Return the version of the driver.
      * @par Implemented as
      * - @ref R_PDC_VersionGet()
      *

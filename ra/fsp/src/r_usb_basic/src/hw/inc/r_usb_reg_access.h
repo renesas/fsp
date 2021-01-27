@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -57,6 +57,10 @@
 #define USB1_CFIFO32        (USB_M1->CFIFO)
 #define USB1_D0FIFO32       (USB_M1->D0FIFO)
 #define USB1_D1FIFO32       (USB_M1->D1FIFO)
+
+#if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA4M1))
+ #define USB_LDO_REGULATOR_MODULE
+#endif                                 /* (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE)) */
 
 /****************/
 /*  INITIARIZE  */
@@ -376,6 +380,8 @@ void     hw_usb_set_idpsinke(usb_utr_t * ptr);
 void     hw_usb_set_suspendm(uint8_t usb_ip);
 void     hw_usb_clear_suspm(uint8_t usb_ip);
 void     hw_usb_clear_idpsinke(usb_utr_t * ptr);
+void     hw_usb_set_vdcen(void);
+void     hw_usb_clear_vdcen(void);
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 void hw_usb_hset_dcpmode(usb_utr_t * ptr);

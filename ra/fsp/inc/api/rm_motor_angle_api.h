@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -48,8 +48,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_ANGLE_API_VERSION_MAJOR    (1U)
-#define MOTOR_ANGLE_API_VERSION_MINOR    (0U)
+#define MOTOR_ANGLE_API_VERSION_MAJOR    (1U) // DEPRECATED
+#define MOTOR_ANGLE_API_VERSION_MINOR    (0U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -170,7 +170,7 @@ typedef struct st_motor_angle_api
      */
     fsp_err_t (* parameterUpdate)(motor_angle_ctrl_t * const p_ctrl, motor_angle_cfg_t const * p_cfg);
 
-    /** Return the version of the driver.
+    /* DEPRECATED Return the version of the driver.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_VersionGet()
      *

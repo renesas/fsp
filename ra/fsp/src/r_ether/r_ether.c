@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -44,6 +44,9 @@
 /* Definition of the maximum / minimum number of data that can be sent at one time in the Ethernet */
 #define ETHER_MAXIMUM_FRAME_SIZE                        (1514U) /* Maximum number of transmitted data */
 #define ETHER_MINIMUM_FRAME_SIZE                        (60U)   /* Minimum number of transmitted data */
+
+/* Definition of the maximum padding offset */
+#define ETHER_MAXIMUM_PADDING_OFFSET                    (63U)
 
 /* Bit definition of Ethernet interrupt factor*/
 #define ETHER_ETHERC_INTERRUPT_FACTOR_ALL               (0x00000037UL)
@@ -176,6 +179,7 @@ static void ether_configure_mac(ether_instance_ctrl_t * const p_instance_ctrl,
 static fsp_err_t ether_do_link(ether_instance_ctrl_t * const p_instance_ctrl, const uint8_t mode);
 static fsp_err_t ether_link_status_check(ether_instance_ctrl_t const * const p_instance_ctrl);
 static uint8_t   ether_check_magic_packet_detection_bit(ether_instance_ctrl_t const * const p_instance_ctrl);
+static void      ether_configure_padding(ether_instance_ctrl_t * const p_instance_ctrl);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -308,7 +312,8 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
          i < (p_instance_ctrl->p_ether_cfg->num_tx_descriptors + p_instance_ctrl->p_ether_cfg->num_rx_descriptors);
          i++)
     {
-        memset(p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i], 0x00,
+        memset(p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i],
+               0x00,
                p_instance_ctrl->p_ether_cfg->ether_buffer_size);
     }
 
@@ -316,6 +321,9 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
 
     /* Software reset */
     ether_reset_mac(p_instance_ctrl->p_reg_edmac);
+
+    /* Setting the padding function */
+    ether_configure_padding(p_instance_ctrl);
 
     /* Software reset the PHY */
     phy_ret = p_instance_ctrl->p_ether_cfg->p_ether_phy_instance->p_api->open(
@@ -910,7 +918,9 @@ fsp_err_t R_ETHER_Read (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint
                 p_read_buffer = p_instance_ctrl->p_rx_descriptor->p_buffer;
 
                 /* Get bytes received */
-                received_size = p_instance_ctrl->p_rx_descriptor->size;
+                received_size =
+                    (uint32_t) (p_instance_ctrl->p_rx_descriptor->size +
+                                (uint16_t) p_instance_ctrl->p_ether_cfg->padding);
                 break;
             }
         }
@@ -1051,8 +1061,8 @@ fsp_err_t R_ETHER_Write (ether_ctrl_t * const p_ctrl, void * const p_buffer, uin
     return err;
 }                                      /* End of function R_ETHER_Write() */
 
-/********************************************************************************************************************//**
- * @brief Provides API and code version in the user provided pointer. Implements @ref ether_api_t::versionGet.
+/************************************************************************************************************************
+ * DEPRECATED Provides API and code version in the user provided pointer. Implements @ref ether_api_t::versionGet.
  *
  * @retval  FSP_SUCCESS                  Version information stored in provided p_version.
  * @retval  FSP_ERR_ASSERTION            p_version is NULL.
@@ -1099,6 +1109,12 @@ static fsp_err_t ether_open_param_check (ether_instance_ctrl_t const * const p_i
     ETHER_ERROR_RETURN((NULL != p_cfg->p_mac_address), FSP_ERR_INVALID_POINTER);
     ETHER_ERROR_RETURN((BSP_FEATURE_ETHER_MAX_CHANNELS > p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
     ETHER_ERROR_RETURN((0 <= p_cfg->irq), FSP_ERR_INVALID_ARGUMENT);
+    ETHER_ERROR_RETURN((p_cfg->padding <= ETEHR_PADDING_3BYTE), FSP_ERR_INVALID_ARGUMENT);
+
+    if (p_cfg->padding != ETHER_PADDING_DISABLE)
+    {
+        ETHER_ERROR_RETURN((p_cfg->padding_offset <= ETHER_MAXIMUM_PADDING_OFFSET), FSP_ERR_INVALID_ARGUMENT);
+    }
 
     ETHER_ERROR_RETURN((ETHER_OPEN != p_instance_ctrl->open), FSP_ERR_ALREADY_OPEN);
 
@@ -1398,6 +1414,9 @@ static void ether_configure_mac (ether_instance_ctrl_t * const p_instance_ctrl,
     /* Software reset */
     ether_reset_mac(p_instance_ctrl->p_reg_edmac);
 
+    /* Setting the padding function */
+    ether_configure_padding(p_instance_ctrl);
+
     /* Set MAC address */
     mac_h = (((((uint32_t) mac_addr[0] << 24) | ((uint32_t) mac_addr[1] << 16)) | ((uint32_t) mac_addr[2] << 8)) |
              (uint32_t) mac_addr[3]);
@@ -1529,7 +1548,9 @@ static fsp_err_t ether_do_link (ether_instance_ctrl_t * const p_instance_ctrl, c
                      * Enable PAUSE for full duplex link depending on
                      * the pause resolution results
                      */
-                    ether_pause_resolution(local_pause_bits, partner_pause_bits, &transmit_pause_set,
+                    ether_pause_resolution(local_pause_bits,
+                                           partner_pause_bits,
+                                           &transmit_pause_set,
                                            &receive_pause_set);
 
                     if (ETHER_PAUSE_XMIT_ON == transmit_pause_set)
@@ -1761,3 +1782,18 @@ static void ether_disable_icu (ether_instance_ctrl_t * const p_instance_ctrl)
     NVIC_DisableIRQ(p_instance_ctrl->p_ether_cfg->irq);
     R_FSP_IsrContextSet(p_instance_ctrl->p_ether_cfg->irq, NULL);
 }                                      /* End of function ether_disable_icu() */
+
+/***********************************************************************************************************************
+ * Function Name: ether_configure_padding
+ * Description  :
+ * Arguments    : channel -
+ *                    Ethernet channel number
+ * Return Value : none
+ ***********************************************************************************************************************/
+static void ether_configure_padding (ether_instance_ctrl_t * const p_instance_ctrl)
+{
+    R_ETHERC_EDMAC_Type * p_reg_edmac;
+    p_reg_edmac                = (R_ETHERC_EDMAC_Type *) p_instance_ctrl->p_reg_edmac;
+    p_reg_edmac->RPADIR_b.PADR = (unsigned) p_instance_ctrl->p_ether_cfg->padding_offset & ETHER_MAXIMUM_PADDING_OFFSET;
+    p_reg_edmac->RPADIR_b.PADS = p_instance_ctrl->p_ether_cfg->padding;
+}

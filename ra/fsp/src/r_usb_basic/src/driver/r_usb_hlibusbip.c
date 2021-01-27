@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -370,7 +370,7 @@ uint16_t usb_hstd_pipe2fport (usb_utr_t * ptr, uint16_t pipe)
  * End of function usb_hstd_pipe2fport
  ******************************************************************************/
 
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
 
 /******************************************************************************
  * Function Name   : usb_hstd_set_hse
@@ -396,7 +396,7 @@ void usb_hstd_set_hse (usb_utr_t * ptr, uint16_t speed)
 /******************************************************************************
  * End of function usb_hstd_set_hse
  ******************************************************************************/
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
 /******************************************************************************
  * Function Name   : usb_hstd_berne_enable
@@ -1286,9 +1286,9 @@ uint8_t usb_hstd_make_pipe_reg_info (uint16_t               ip_no,
     uint16_t pipe_cfg;
     uint16_t pipe_maxp;
     uint16_t pipe_peri = USB_NULL;
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     uint16_t pipe_buf;
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
     /* Check Endpoint descriptor */
     if (USB_DT_ENDPOINT != descriptor[USB_DEV_B_DESCRIPTOR_TYPE])
@@ -1316,12 +1316,12 @@ uint8_t usb_hstd_make_pipe_reg_info (uint16_t               ip_no,
                 pipe_no  = usb_hstd_get_pipe_no(ip_no, address, usb_class, USB_EP_BULK, USB_PIPE_DIR_OUT);
             }
 
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
             if (USB_IP1 == ip_no)
             {
                 pipe_cfg |= (uint16_t) (USB_CFG_CNTMD);
             }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
             break;
         }
 
@@ -1369,14 +1369,14 @@ uint8_t usb_hstd_make_pipe_reg_info (uint16_t               ip_no,
         pipe_table_work->pipe_cfg  = pipe_cfg;
         pipe_table_work->pipe_maxp = pipe_maxp;
         pipe_table_work->pipe_peri = pipe_peri;
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
         if (USB_IP1 == ip_no)
         {
             /* PIPEBUF is USBA module only */
             pipe_buf = usb_hstd_get_pipe_buf_value(pipe_no);
             pipe_table_work->pipe_buf = pipe_buf;
         }
- #endif                                /* #if defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     }
 
     return pipe_no;
@@ -1409,13 +1409,13 @@ void usb_hstd_clr_pipe_table (uint16_t ip_no, uint16_t device_address)
                 g_usb_pipe_table[ip_no][pipe_no].pipe_cfg  = USB_NULL;
                 g_usb_pipe_table[ip_no][pipe_no].pipe_maxp = USB_NULL;
                 g_usb_pipe_table[ip_no][pipe_no].pipe_peri = USB_NULL;
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
                 if (USB_IP1 == ip_no)
                 {
                     /* PIPEBUF is USBA module only */
                     g_usb_pipe_table[ip_no][pipe_no].pipe_buf = USB_NULL;
                 }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
             }
         }
     }
@@ -1747,7 +1747,7 @@ uint16_t usb_hstd_get_pipe_peri_value (uint16_t speed, uint8_t binterval)
     return pipe_peri;
 }                                      /* eof usb_hstd_get_pipe_peri_value() */
 
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
 
 /******************************************************************************
  * Function Name   : usb_hstd_get_pipe_buf_value
@@ -1852,7 +1852,7 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
     return pipe_buf;
 }                                      /* End of function usb_hstd_get_pipe_buf_value() */
 
- #endif /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
 #endif  /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 

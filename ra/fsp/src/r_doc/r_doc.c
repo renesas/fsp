@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -107,7 +107,9 @@ fsp_err_t R_DOC_Open (doc_ctrl_t * const p_api_ctrl, doc_cfg_t const * const p_c
 #if DOC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_cfg);
+ #if !BSP_TZ_SECURE_BUILD
     FSP_ASSERT(p_cfg->p_callback != NULL);
+ #endif
     FSP_ASSERT(p_cfg->irq >= (IRQn_Type) 0);
     FSP_ERROR_RETURN(DOC_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
@@ -229,8 +231,8 @@ fsp_err_t R_DOC_Write (doc_ctrl_t * const p_api_ctrl, uint16_t data)
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Returns DOC HAL driver version.
+/***********************************************************************************************************************
+ * DEPRECATED Returns DOC HAL driver version.
  *
  * @retval FSP_SUCCESS          Version information successfully read.
  * @retval FSP_ERR_ASSERTION    Pointer pointing to NULL.
@@ -344,18 +346,20 @@ void doc_int_isr (void)
     p_args->p_context = p_ctrl->p_context;
 
 #if BSP_TZ_SECURE_BUILD
-
-    /* p_callback can point to a secure function or a non-secure function. */
-    if (!cmse_is_nsfptr(p_ctrl->p_callback))
+    if (NULL != p_ctrl->p_callback)
     {
-        /* If p_callback is secure, then the project does not need to change security state. */
-        p_ctrl->p_callback(p_args);
-    }
-    else
-    {
-        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
-        doc_prv_ns_callback p_callback = (doc_prv_ns_callback) (p_ctrl->p_callback);
-        p_callback(p_args);
+        /* p_callback can point to a secure function or a non-secure function. */
+        if (!cmse_is_nsfptr(p_ctrl->p_callback))
+        {
+            /* If p_callback is secure, then the project does not need to change security state. */
+            p_ctrl->p_callback(p_args);
+        }
+        else
+        {
+            /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+            doc_prv_ns_callback p_callback = (doc_prv_ns_callback) (p_ctrl->p_callback);
+            p_callback(p_args);
+        }
     }
 
 #else

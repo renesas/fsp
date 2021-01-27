@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -37,8 +37,8 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BLE_ABS_CODE_VERSION_MAJOR                    (1U)
-#define BLE_ABS_CODE_VERSION_MINOR                    (0U)
+#define BLE_ABS_CODE_VERSION_MAJOR                    (1U) // DEPRECATED
+#define BLE_ABS_CODE_VERSION_MINOR                    (0U) // DEPRECATED
 
 #define BLE_ABS_EVENT_NOTIFY_CONNECTION_START_POS     (0)
 #define BLE_ABS_EVENT_NOTIFY_ADVERTISING_POS          (1)
@@ -128,6 +128,7 @@ typedef struct st_ble_abs_instance_ctrl
     void const * p_context;                                                         ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     ble_gap_application_callback_t             abs_gap_callback;                    ///< GAP callback function
     ble_vendor_specific_application_callback_t abs_vendor_specific_callback;        ///< Vendor specific callback function
+    ble_abs_delete_bond_application_callback_t abs_delete_bond_callback;            ///< Delete bond information callback function
     uint32_t connection_timer_handle;                                               ///< Cancel a request for connection timer.
     uint32_t advertising_timer_handle;                                              ///< Advertising timer for legacy advertising
     abs_advertising_parameter_t advertising_sets[BLE_MAX_NO_OF_ADV_SETS_SUPPORTED]; ///< Advertising set information.
@@ -247,6 +248,9 @@ fsp_err_t RM_BLE_ABS_SetLocalPrivacy(ble_abs_ctrl_t * const p_ctrl, uint8_t cons
                                      uint8_t privacy_mode);
 
 fsp_err_t RM_BLE_ABS_StartAuthentication(ble_abs_ctrl_t * const p_ctrl, uint16_t connection_handle);
+
+fsp_err_t RM_BLE_ABS_DeleteBondInformation(ble_abs_ctrl_t * const                             p_ctrl,
+                                           ble_abs_bond_information_parameter_t const * const p_bond_information_parameter);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

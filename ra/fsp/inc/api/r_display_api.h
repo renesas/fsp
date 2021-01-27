@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -54,8 +54,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define DISPLAY_API_VERSION_MAJOR          (1U)
-#define DISPLAY_API_VERSION_MINOR          (0U)
+#define DISPLAY_API_VERSION_MAJOR          (1U) // DEPRECATED
+#define DISPLAY_API_VERSION_MINOR          (0U) // DEPRECATED
 
 #define DISPLAY_GAMMA_CURVE_ELEMENT_NUM    (16)
 
@@ -428,7 +428,7 @@ typedef struct st_display_api
      */
     fsp_err_t (* statusGet)(display_ctrl_t const * const p_ctrl, display_status_t * const p_status);
 
-    /** Get version.
+    /* DEPRECATED Get version.
      * @par Implemented as
      * - @ref R_GLCDC_VersionGet()
      * @param[in]   p_version  Pointer to the memory to store the version information.

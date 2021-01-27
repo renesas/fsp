@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -75,8 +75,8 @@ extern QueueHandle_t * g_mpl_table[];
 /******************************************************************************
  * Exported global functions (to be accessed by other files)
  ******************************************************************************/
-usb_rtos_err_t usb_rtos_configuration(void);
-usb_rtos_err_t usb_rtos_delete(void);
+usb_rtos_err_t usb_rtos_configuration(usb_mode_t usb_mode);
+usb_rtos_err_t usb_rtos_delete(uint8_t module_number);
 
 #endif
 #endif                                 /* FREERTOS_USB_TASK_H_ */

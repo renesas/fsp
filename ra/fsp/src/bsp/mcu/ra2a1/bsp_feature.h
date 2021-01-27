@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -60,6 +60,7 @@
 #define BSP_FEATURE_ADC_GROUP_B_SENSORS_ALLOWED           (0U)
 #define BSP_FEATURE_ADC_HAS_ADCER_ADPRC                   (0U)
 #define BSP_FEATURE_ADC_HAS_ADCER_ADRFMT                  (0U)
+#define BSP_FEATURE_BSP_HAS_CLOCK_SUPPLY_TYPEB            (0U)
 #define BSP_FEATURE_ADC_HAS_PGA                           (0) // Feature not available on this MCU
 #define BSP_FEATURE_ADC_HAS_SAMPLE_HOLD_REG               (0U)
 #define BSP_FEATURE_ADC_HAS_VREFAMPCNT                    (1U)
@@ -81,6 +82,7 @@
 #define BSP_FEATURE_BSP_FLASH_CACHE                       (1)
 #define BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM           (1U)
 #define BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER             (0)
+#define BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE             (0)
 #define BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK                 (0U)
 #define BSP_FEATURE_BSP_HAS_SCE5                          (0) // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SCE_ON_RA2                    (1)
@@ -280,6 +282,8 @@
 
 #define BSP_FEATURE_SSI_FIFO_NUM_STAGES                   (0) // Feature not available on this MCU
 #define BSP_FEATURE_SSI_VALID_CHANNEL_MASK                (0) // Feature not available on this MCU
+
+#define BSP_FEATURE_TRNG_HAS_MODULE_STOP                  (1U)
 
 #define BSP_FEATURE_TZ_HAS_TRUSTZONE                      (0U)
 

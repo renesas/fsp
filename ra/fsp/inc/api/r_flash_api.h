@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -52,8 +52,8 @@ FSP_HEADER
  *********************************************************************************************************************/
 
 /* Version Number of API. */
-#define FLASH_API_VERSION_MAJOR    (1U)
-#define FLASH_API_VERSION_MINOR    (0U)
+#define FLASH_API_VERSION_MAJOR    (1U) // DEPRECATED
+#define FLASH_API_VERSION_MINOR    (0U) // DEPRECATED
 
 /*********************************************************************************************************************
  * Typedef definitions
@@ -343,7 +343,7 @@ typedef struct st_flash_api
     fsp_err_t (* callbackSet)(flash_ctrl_t * const p_api_ctrl, void (* p_callback)(flash_callback_args_t *),
                               void const * const p_context, flash_callback_args_t * const p_callback_memory);
 
-    /** Get Flash driver version.
+    /* DEPRECATED Get Flash driver version.
      * @par Implemented as
      * - @ref R_FLASH_LP_VersionGet()
      * - @ref R_FLASH_HP_VersionGet()

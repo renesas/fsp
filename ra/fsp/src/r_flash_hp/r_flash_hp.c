@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -101,7 +101,8 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 
 /**  Configuration set Command offset*/
 #define FLASH_HP_FCU_CONFIG_SET_ID_BYTE                 (0x0000A150U)
-#if !(defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA4M2))
+#if !(defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA4M2) || \
+    defined(BSP_MCU_GROUP_RA6M5))
  #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP         (0x0000A160U)
 #else
  #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP         (0x0100A130U)
@@ -1031,14 +1032,20 @@ fsp_err_t R_FLASH_HP_Close (flash_ctrl_t * const p_api_ctrl)
     /* Close the API */
     p_ctrl->opened = FLASH_HP_CLOSE;
 
-    /* Disable interrupt in ICU */
-    R_BSP_IrqDisable(p_ctrl->p_cfg->irq);
+    if (p_ctrl->p_cfg->irq >= 0)
+    {
+        /* Disable interrupt in ICU */
+        R_BSP_IrqDisable(p_ctrl->p_cfg->irq);
+    }
 
     /* Disable Flash Rdy interrupt in the FLASH peripheral */
     R_FACI_HP->FRDYIE = 0x00U;
 
-    /* Disable interrupt in ICU */
-    R_BSP_IrqDisable(p_ctrl->p_cfg->err_irq);
+    if (p_ctrl->p_cfg->err_irq >= 0)
+    {
+        /* Disable interrupt in ICU */
+        R_BSP_IrqDisable(p_ctrl->p_cfg->err_irq);
+    }
 
     /* Disable Flash Error interrupt in the FLASH peripheral */
     R_FACI_HP->FAEINT = 0x00U;
@@ -1096,8 +1103,8 @@ fsp_err_t R_FLASH_HP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * This function gets FLASH HAL driver version
+/***********************************************************************************************************************
+ * DEPRECATED This function gets FLASH HAL driver version
  * @retval     FSP_SUCCESS        Operation performed successfully
  * @retval     FSP_ERR_ASSERTION  Null pointer
  **********************************************************************************************************************/
@@ -1846,6 +1853,19 @@ static fsp_err_t flash_hp_pe_mode_exit ()
         R_BSP_FlashCacheEnable();
     }
 
+#if BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
+    else if (FLASH_HP_FENTRYR_DF_PE_MODE == pe_mode)
+    {
+        /* Flush the C-CACHE. */
+        R_CACHE->CCAFCT = 1U;
+        FSP_HARDWARE_REGISTER_WAIT(R_CACHE->CCAFCT, 0U);
+    }
+    else
+    {
+        /* Do nothing. */
+    }
+#endif
+
     /* If a command locked state was detected earlier, then return that error. */
     if (FSP_ERR_CMD_LOCKED == temp_err)
     {
@@ -2510,6 +2530,10 @@ static fsp_err_t flash_hp_enter_pe_cf_mode (flash_hp_instance_ctrl_t * const p_c
     /* While the Flash API is in use we will disable the flash cache. */
  #if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
     R_BSP_FlashCacheDisable();
+ #elif BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
+
+    /* Disable the C-Cache. */
+    R_CACHE->CCACTL = 0U;
  #endif
 
     /* If interrupts are being used then disable interrupts. */

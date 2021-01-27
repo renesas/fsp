@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -53,8 +53,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RTC_API_VERSION_MAJOR    (1U)
-#define RTC_API_VERSION_MINOR    (1U)
+#define RTC_API_VERSION_MAJOR    (1U)  // DEPRECATED
+#define RTC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -281,7 +281,7 @@ typedef struct st_rtc_api
      */
     fsp_err_t (* infoGet)(rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_info);
 
-    /** Gets version and stores it in provided pointer p_version.
+    /* DEPRECATED Gets version and stores it in provided pointer p_version.
      * @par Implemented as
      * - @ref R_RTC_VersionGet()
      *

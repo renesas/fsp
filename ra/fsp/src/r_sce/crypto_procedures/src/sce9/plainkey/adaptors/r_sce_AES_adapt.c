@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -267,4 +267,17 @@ fsp_err_t HW_SCE_AES_256CreateEncryptedKey (uint32_t * OutData_KeyIndex)
     }
 
     return FSP_SUCCESS;
+}
+
+/* AES GCM 256bit init adaptors */
+fsp_err_t HW_SCE_Aes256GcmEncryptInitSubGeneral(uint32_t *InData_KeyType, uint32_t *InData_KeyIndex, uint32_t *InData_IV)
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+    return(HW_SCE_Aes256GcmEncryptInitSub(InData_KeyIndex, InData_IV));
+}
+
+fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral(uint32_t *InData_KeyType, uint32_t *InData_KeyIndex, uint32_t *InData_IV)
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+    return(HW_SCE_Aes256GcmDecryptInitSub(InData_KeyIndex, InData_IV));
 }

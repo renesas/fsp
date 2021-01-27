@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -230,9 +230,9 @@ void hw_usb_pmodule_init (uint8_t usb_ip)
             /* Wait for Set of SCKE */
         }
 
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
         USB_M0->PHYSLEW = 0x5;
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
         USB_M0->SYSCFG &= (uint16_t) (~USB_DRPD);
 
@@ -249,7 +249,7 @@ void hw_usb_pmodule_init (uint8_t usb_ip)
     }
     else
     {
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
   #if USB_CFG_CLKSEL == USB_CFG_20MHZ
         USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
         USB_M1->PHYSET |= USB_CLKSEL_20;
@@ -302,8 +302,12 @@ void hw_usb_pmodule_init (uint8_t usb_ip)
   #endif                               /* USB_CFG_ENDIAN == USB_CFG_BIG */
 
         USB_M1->INTENB0 = (USB_BEMPE | USB_BRDYE | USB_VBSE | USB_DVSE | USB_CTRE);
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     }
+
+ #if (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE))
+    hw_usb_set_vdcen();
+ #endif                                /* (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE)) */
 }
 
 /******************************************************************************

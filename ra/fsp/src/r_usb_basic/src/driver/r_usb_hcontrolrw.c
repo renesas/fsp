@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -17,8 +17,9 @@
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
+
 /******************************************************************************
- Includes   <System Includes> , "Project Includes"
+ * Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
 
 #include <r_usb_basic.h>
@@ -30,36 +31,37 @@
 #include "../hw/inc/r_usb_reg_access.h"
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+
 /******************************************************************************
- Renesas USB FIFO Read/Write Host Driver API functions
+ * Renesas USB FIFO Read/Write Host Driver API functions
  ******************************************************************************/
 
-#if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+ #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
 uint16_t g_usb_hstd_response_counter[USB_NUM_USBIP];
-#endif /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+ #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
 /******************************************************************************
- Function Name   : usb_hstd_ctrl_write_start
- Description     : Start data stage of Control Write transfer.
- Arguments       : usb_utr_t *ptr    : Pointer to usb_utr_t structure.
-                 : uint32_t  Bsize   : Data Size
-                 : uint8_t   *Table  : Data Table Address
- Return          : uint16_t          : USB_WRITEEND / USB_WRITING
-                 :                   : USB_WRITESHRT / USB_FIFOERROR
+ * Function Name   : usb_hstd_ctrl_write_start
+ * Description     : Start data stage of Control Write transfer.
+ * Arguments       : usb_utr_t *ptr    : Pointer to usb_utr_t structure.
+ *                 : uint32_t  Bsize   : Data Size
+ *                 : uint8_t   *Table  : Data Table Address
+ * Return          : uint16_t          : USB_WRITEEND / USB_WRITING
+ *                 :                   : USB_WRITESHRT / USB_FIFOERROR
  ******************************************************************************/
-uint16_t usb_hstd_ctrl_write_start (usb_utr_t *ptr, uint32_t Bsize, uint8_t *Table)
+uint16_t usb_hstd_ctrl_write_start (usb_utr_t * ptr, uint32_t Bsize, uint8_t * Table)
 {
     uint16_t end_flag;
     uint16_t toggle;
 
     /* PID=NAK & clear STALL */
     usb_cstd_clr_stall(ptr, (uint16_t) USB_PIPE0);
-    g_usb_hstd_data_cnt[ptr->ip][USB_PIPE0] = Bsize; /* Transfer size set */
+    g_usb_hstd_data_cnt[ptr->ip][USB_PIPE0]  = Bsize; /* Transfer size set */
     gp_usb_hstd_data_ptr[ptr->ip][USB_PIPE0] = Table; /* Transfer address set */
 
     /* DCP Configuration Register  (0x5C) */
     hw_usb_write_dcpcfg(ptr, (USB_CNTMDFIELD | USB_DIRFIELD));
-    hw_usb_set_sqset(ptr, USB_PIPE0); /* SQSET=1, PID=NAK */
+    hw_usb_set_sqset(ptr, USB_PIPE0);                 /* SQSET=1, PID=NAK */
     if (USB_DATAWRCNT == g_usb_hstd_ctsq[ptr->ip])
     {
         /* Next stage is Control read data stage */
@@ -78,8 +80,8 @@ uint16_t usb_hstd_ctrl_write_start (usb_utr_t *ptr, uint32_t Bsize, uint8_t *Tab
     switch (end_flag)
     {
         /* End of data write */
-        case USB_WRITESHRT :
-
+        case USB_WRITESHRT:
+        {
             /* Next stage is Control write status stage */
             g_usb_hstd_ctsq[ptr->ip] = USB_STATUSWR;
 
@@ -91,14 +93,16 @@ uint16_t usb_hstd_ctrl_write_start (usb_utr_t *ptr, uint32_t Bsize, uint8_t *Tab
 
             /* Set BUF */
             usb_cstd_set_buf(ptr, (uint16_t) USB_PIPE0);
-        break;
+            break;
+        }
 
-            /* End of data write (not null) */
-        case USB_WRITEEND :
+        /* End of data write (not null) */
+        case USB_WRITEEND:
 
-            /* continue */
-            /* Continue of data write */
-        case USB_WRITING :
+        /* continue */
+        /* Continue of data write */
+        case USB_WRITING:
+        {
             if (USB_SETUPWR == g_usb_hstd_ctsq[ptr->ip])
             {
                 /* Next stage is Control read data stage */
@@ -119,40 +123,47 @@ uint16_t usb_hstd_ctrl_write_start (usb_utr_t *ptr, uint32_t Bsize, uint8_t *Tab
 
             /* Set BUF */
             usb_cstd_set_buf(ptr, (uint16_t) USB_PIPE0);
-        break;
+            break;
+        }
 
-            /* FIFO access error */
-        case USB_FIFOERROR :
-        break;
-        default :
-        break;
+        /* FIFO access error */
+        case USB_FIFOERROR:
+        {
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
     }
 
     /* End or Err or Continue */
-    return (end_flag);
+    return end_flag;
 }
+
 /******************************************************************************
- End of function usb_hstd_ctrl_write_start
+ * End of function usb_hstd_ctrl_write_start
  ******************************************************************************/
 
 /******************************************************************************
- Function Name   : usb_hstd_ctrl_read_start
- Description     : Start data stage of Control Read transfer.
- Arguments       : usb_utr_t *ptr    : Pointer to usb_utr_t structure.
-                 : uint32_t Bsize    : Data Size
-                 : uint8_t  *Table   : Data Table Address
- Return          : none
+ * Function Name   : usb_hstd_ctrl_read_start
+ * Description     : Start data stage of Control Read transfer.
+ * Arguments       : usb_utr_t *ptr    : Pointer to usb_utr_t structure.
+ *                 : uint32_t Bsize    : Data Size
+ *                 : uint8_t  *Table   : Data Table Address
+ * Return          : none
  ******************************************************************************/
-void usb_hstd_ctrl_read_start (usb_utr_t *ptr, uint32_t Bsize, uint8_t *Table)
+void usb_hstd_ctrl_read_start (usb_utr_t * ptr, uint32_t Bsize, uint8_t * Table)
 {
     uint16_t toggle;
 
-#if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+ #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
     g_usb_hstd_response_counter[ptr->ip] = 0;
 
-    hw_usb_clear_sts_sofr( ptr );
-    hw_usb_set_intenb( ptr, USB_SOFE );
-#endif /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+    hw_usb_clear_sts_sofr(ptr);
+    hw_usb_set_intenb(ptr, USB_SOFE);
+ #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
     /* PID=NAK & clear STALL */
     usb_cstd_clr_stall(ptr, (uint16_t) USB_PIPE0);
@@ -190,24 +201,25 @@ void usb_hstd_ctrl_read_start (usb_utr_t *ptr, uint32_t Bsize, uint8_t *Table)
     g_usb_hstd_ignore_cnt[ptr->ip][USB_PIPE0] = (uint16_t) 0;
 
     /* Interrupt enable */
-    hw_usb_set_brdyenb(ptr, (uint16_t) USB_PIPE0); /* Enable Ready Interrupt */
+    hw_usb_set_brdyenb(ptr, (uint16_t) USB_PIPE0);   /* Enable Ready Interrupt */
     usb_cstd_nrdy_enable(ptr, (uint16_t) USB_PIPE0); /* Enable Not Ready Interrupt */
-    usb_cstd_set_buf(ptr, (uint16_t) USB_PIPE0); /* Set BUF */
+    usb_cstd_set_buf(ptr, (uint16_t) USB_PIPE0);     /* Set BUF */
 }
+
 /******************************************************************************
- End of function usb_hstd_ctrl_read_start
+ * End of function usb_hstd_ctrl_read_start
  ******************************************************************************/
 
 /******************************************************************************
- Function Name   : usb_hstd_status_start
- Description     : Start status stage of Control Command.
- Arguments       : usb_utr_t *ptr : Pointer to usb_utr_t structure.
- Return          : none
+ * Function Name   : usb_hstd_status_start
+ * Description     : Start status stage of Control Command.
+ * Arguments       : usb_utr_t *ptr : Pointer to usb_utr_t structure.
+ * Return          : none
  ******************************************************************************/
-void usb_hstd_status_start (usb_utr_t *ptr)
+void usb_hstd_status_start (usb_utr_t * ptr)
 {
     uint16_t end_flag;
-    uint8_t buf1[16];
+    uint8_t  buf1[16];
 
     /* Interrupt Disable */
     /* BEMP0 Disable */
@@ -226,17 +238,17 @@ void usb_hstd_status_start (usb_utr_t *ptr)
     switch (g_usb_hstd_ctsq[ptr->ip])
     {
         /* Control Read Data */
-        case USB_DATARD :
+        case USB_DATARD:
 
-            /* continue */
-            /* Control Read Data */
-        case USB_DATARDCNT :
-
+        /* continue */
+        /* Control Read Data */
+        case USB_DATARDCNT:
+        {
             /* Control read Status */
             g_usb_hstd_ctsq[ptr->ip] = USB_DATARD;
 
             /* Control write start */
-            end_flag = usb_hstd_ctrl_write_start(ptr, (uint32_t) 0, (uint8_t*) &buf1);
+            end_flag = usb_hstd_ctrl_write_start(ptr, (uint32_t) 0, (uint8_t *) &buf1);
             if (USB_FIFOERROR == end_flag)
             {
                 USB_PRINTF0("### FIFO access error \n");
@@ -248,47 +260,54 @@ void usb_hstd_status_start (usb_utr_t *ptr)
                 /* Next stage is Control read status stage */
                 g_usb_hstd_ctsq[ptr->ip] = USB_STATUSRD;
             }
-        break;
 
-            /* Control Write Data */
-        case USB_STATUSWR :
+            break;
+        }
 
-            /* continue */
-            /* NoData Control */
-        case USB_SETUPNDC :
+        /* Control Write Data */
+        case USB_STATUSWR:
 
+        /* continue */
+        /* NoData Control */
+        case USB_SETUPNDC:
+        {
             /* Control Read Status */
-            usb_hstd_ctrl_read_start(ptr, (uint32_t) 0, (uint8_t*) &buf1);
+            usb_hstd_ctrl_read_start(ptr, (uint32_t) 0, (uint8_t *) &buf1);
 
             /* Host Control sequence */
             /* Next stage is Control write status stage */
             g_usb_hstd_ctsq[ptr->ip] = USB_STATUSWR;
-        break;
-        default :
+            break;
+        }
+
+        default:
+        {
             return;
-        break;
+            break;
+        }
     }
 }
+
 /******************************************************************************
- End of function usb_hstd_status_start
+ * End of function usb_hstd_status_start
  ******************************************************************************/
 
 /******************************************************************************
- Function Name   : usb_hstd_ctrl_end
- Description     : Call the user registered callback function that notifies 
-                 : completion of a control transfer.
- Arguments       : usb_utr_t *ptr   : Pointer to usb_utr_t structure.
-                 : uint16_t  status : Transfer status
- Return          : none
+ * Function Name   : usb_hstd_ctrl_end
+ * Description     : Call the user registered callback function that notifies
+ *                 : completion of a control transfer.
+ * Arguments       : usb_utr_t *ptr   : Pointer to usb_utr_t structure.
+ *                 : uint16_t  status : Transfer status
+ * Return          : none
  ******************************************************************************/
-void usb_hstd_ctrl_end (usb_utr_t *ptr, uint16_t status)
+void usb_hstd_ctrl_end (usb_utr_t * ptr, uint16_t status)
 {
     /* Interrupt Disable */
     hw_usb_clear_bempenb(ptr, (uint16_t) USB_PIPE0); /* BEMP0 Disable */
     hw_usb_clear_brdyenb(ptr, (uint16_t) USB_PIPE0); /* BRDY0 Disable */
     hw_usb_clear_nrdyenb(ptr, (uint16_t) USB_PIPE0); /* NRDY0 Disable */
 
-    usb_cstd_clr_stall(ptr, (uint16_t) USB_PIPE0); /* PID=NAK & clear STALL */
+    usb_cstd_clr_stall(ptr, (uint16_t) USB_PIPE0);   /* PID=NAK & clear STALL */
     if (USB_IP0 == ptr->ip)
     {
         hw_usb_set_mbw(ptr, USB_CUSE, USB0_CFIFO_MBW);
@@ -300,13 +319,14 @@ void usb_hstd_ctrl_end (usb_utr_t *ptr, uint16_t status)
     {
         hw_usb_set_mbw(ptr, USB_CUSE, USB1_CFIFO_MBW);
 
-#if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+
         /* CSCLR=1, SUREQ=1, SQCLR=1, PID=NAK */
         hw_usb_hwrite_dcpctr(ptr, (uint16_t) ((USB_CSCLR | USB_SUREQCLR) | USB_SQCLR));
-#else   /* defined(BSP_MCU_GROUP_RA6M3) */
+ #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
         /* SUREQ=1, SQCLR=1, PID=NAK */
         hw_usb_hwrite_dcpctr(ptr, (uint16_t) (USB_SUREQCLR | USB_SQCLR));
-#endif  /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     }
     else
     {
@@ -315,9 +335,9 @@ void usb_hstd_ctrl_end (usb_utr_t *ptr, uint16_t status)
 
     /* CFIFO buffer clear */
     usb_cstd_chg_curpipe(ptr, (uint16_t) USB_PIPE0, (uint16_t) USB_CUSE, USB_FALSE);
-    hw_usb_set_bclr(ptr, USB_CUSE); /* Clear BVAL */
+    hw_usb_set_bclr(ptr, USB_CUSE);    /* Clear BVAL */
     usb_cstd_chg_curpipe(ptr, (uint16_t) USB_PIPE0, (uint16_t) USB_CUSE, (uint16_t) USB_ISEL);
-    hw_usb_set_bclr(ptr, USB_CUSE); /* Clear BVAL */
+    hw_usb_set_bclr(ptr, USB_CUSE);    /* Clear BVAL */
 
     /* Host Control sequence */
     if ((USB_CTRL_READING != status) && (USB_CTRL_WRITING != status))
@@ -326,65 +346,65 @@ void usb_hstd_ctrl_end (usb_utr_t *ptr, uint16_t status)
         g_usb_hstd_ctsq[ptr->ip] = USB_IDLEST;
     }
 
-    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->status = status;
+    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->status  = status;
     g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->pipectr = hw_usb_read_pipectr(ptr, (uint16_t) USB_PIPE0);
-    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->errcnt = (uint8_t) g_usb_hstd_ignore_cnt[ptr->ip][USB_PIPE0];
+    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->errcnt  = (uint8_t) g_usb_hstd_ignore_cnt[ptr->ip][USB_PIPE0];
 
     g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->ipp = ptr->ipp;
-    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->ip = ptr->ip;
+    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->ip  = ptr->ip;
 
     /* Callback */
-    if ( USB_NULL != g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0])
+    if (USB_NULL != g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0])
     {
-        if ( USB_NULL != (g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->complete))
+        if (USB_NULL != (g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->complete))
         {
             /* Process Done Callback */
-            (g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->complete)(g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0], USB_NULL, USB_NULL);
+            (g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->complete)(g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0], USB_NULL,
+                                                              USB_NULL);
         }
     }
-#if (BSP_CFG_RTOS == 2)
-    vPortFree (g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]);
-    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0] = (usb_utr_t*) USB_NULL;
-    usb_cstd_pipe0_msg_re_forward (ptr->ip);   /* Get PIPE0 Transfer wait que and Message send to HCD */
 
-#else   /* #if (BSP_CFG_RTOS == 2) */
-    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0] = (usb_utr_t*) USB_NULL;
+ #if (BSP_CFG_RTOS == 2)
+    vPortFree(g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]);
+    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0] = (usb_utr_t *) USB_NULL;
+    usb_cstd_pipe0_msg_re_forward(ptr->ip); /* Get PIPE0 Transfer wait que and Message send to HCD */
+ #else  /* #if (BSP_CFG_RTOS == 2) */
+    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0] = (usb_utr_t *) USB_NULL;
+ #endif /* #if (BSP_CFG_RTOS == 2) */
 
-#endif /* #if (BSP_CFG_RTOS == 2) */
-
-#if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
-    hw_usb_clear_enb_sofe( ptr );
-#endif /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
-
+ #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+    hw_usb_clear_enb_sofe(ptr);
+ #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 }
+
 /******************************************************************************
- End of function usb_hstd_ctrl_end
+ * End of function usb_hstd_ctrl_end
  ******************************************************************************/
 
 /******************************************************************************
- Function Name   : usb_hstd_setup_start
- Description     : Start control transfer setup stage. (Set global function re-
-                 : quired to start control transfer, and USB register).
- Arguments       : usb_utr_t *ptr : Pointer to usb_utr_t structure.
- Return          : none
+ * Function Name   : usb_hstd_setup_start
+ * Description     : Start control transfer setup stage. (Set global function re-
+ *                 : quired to start control transfer, and USB register).
+ * Arguments       : usb_utr_t *ptr : Pointer to usb_utr_t structure.
+ * Return          : none
  ******************************************************************************/
-void usb_hstd_setup_start (usb_utr_t *ptr)
+void usb_hstd_setup_start (usb_utr_t * ptr)
 {
-    uint16_t segment;
-    uint16_t dir;
-    uint16_t setup_req;
-    uint16_t setup_val;
-    uint16_t setup_indx;
-    uint16_t setup_leng;
-    uint16_t *p_setup;
+    uint16_t   segment;
+    uint16_t   dir;
+    uint16_t   setup_req;
+    uint16_t   setup_val;
+    uint16_t   setup_indx;
+    uint16_t   setup_leng;
+    uint16_t * p_setup;
 
     segment = (uint16_t) (g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->segment);
     p_setup = g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->p_setup;
 
-    setup_req = *p_setup++; /* Set Request data */
-    setup_val = *p_setup++; /* Set wValue data */
-    setup_indx = *p_setup++; /* Set wIndex data */
-    setup_leng = *p_setup++; /* Set wLength data */
+    setup_req  = *p_setup++;           /* Set Request data */
+    setup_val  = *p_setup++;           /* Set wValue data */
+    setup_indx = *p_setup++;           /* Set wIndex data */
+    setup_leng = *p_setup++;           /* Set wLength data */
 
     /* Max Packet Size + Device Number select */
     hw_usb_write_dcpmxps(ptr, g_usb_hstd_dcp_register[ptr->ip][*p_setup]);
@@ -399,6 +419,7 @@ void usb_hstd_setup_start (usb_utr_t *ptr)
             setup_leng = (uint16_t) g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->tranlen;
         }
     }
+
     if (setup_leng < g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->tranlen)
     {
         g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]->tranlen = (uint32_t) setup_leng;
@@ -490,11 +511,12 @@ void usb_hstd_setup_start (usb_utr_t *ptr)
         hw_usb_hset_sureq(ptr);
     }
 }
-/******************************************************************************
- End of function usb_hstd_setup_start
- ******************************************************************************/
-#endif  /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
 /******************************************************************************
- End  Of File
+ * End of function usb_hstd_setup_start
+ ******************************************************************************/
+#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+
+/******************************************************************************
+ * End  Of File
  ******************************************************************************/

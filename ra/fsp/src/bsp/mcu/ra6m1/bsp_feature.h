@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -64,6 +64,7 @@
 #define BSP_FEATURE_ADC_GROUP_B_SENSORS_ALLOWED           (1U)
 #define BSP_FEATURE_ADC_HAS_ADCER_ADPRC                   (1U)
 #define BSP_FEATURE_ADC_HAS_ADCER_ADRFMT                  (1U)
+#define BSP_FEATURE_BSP_HAS_CLOCK_SUPPLY_TYPEB            (0U)
 #define BSP_FEATURE_ADC_HAS_PGA                           (1U)
 #define BSP_FEATURE_ADC_HAS_SAMPLE_HOLD_REG               (1U)
 #define BSP_FEATURE_ADC_HAS_VREFAMPCNT                    (0U)
@@ -85,6 +86,7 @@
 #define BSP_FEATURE_BSP_FLASH_CACHE                       (1)
 #define BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM           (1U)
 #define BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER             (0)
+#define BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE             (0)
 #define BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK                 (0U)
 #define BSP_FEATURE_BSP_HAS_SCE5                          (0) // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SCE_ON_RA2                    (0) // Feature not available on this MCU
@@ -106,10 +108,10 @@
 #define BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED        (1U)
 #define BSP_FEATURE_BSP_HAS_DCDC_REGULATOR                (0U)
 #define BSP_FEATURE_BSP_RESET_TRNG                        (0U)
-#define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_NO_RAM_WAITS       (60000000U)  // The maximum frequency allowed without having RAM wait state enabled in SRAMWTSC.
-#define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_ONE_ROM_WAITS      (40000000U)  // The maximum frequency allowed without having one ROM wait cycle.
-#define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_THREE_ROM_WAITS    (0U)         // The maximum frequency allowed without having three ROM wait cycles (Set to zero if this is not an option).
-#define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_TWO_ROM_WAITS      (800000000U) // The maximum frequency allowed without having two ROM wait cycles.
+#define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_NO_RAM_WAITS       (60000000U) // The maximum frequency allowed without having RAM wait state enabled in SRAMWTSC.
+#define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_ONE_ROM_WAITS      (40000000U) // The maximum frequency allowed without having one ROM wait cycle.
+#define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_THREE_ROM_WAITS    (0U)        // The maximum frequency allowed without having three ROM wait cycles (Set to zero if this is not an option).
+#define BSP_FEATURE_BSP_SYS_CLOCK_FREQ_TWO_ROM_WAITS      (80000000U) // The maximum frequency allowed without having two ROM wait cycles.
 #define BSP_FEATURE_BSP_UNIQUE_ID_OFFSET                  (0x14)
 #define BSP_FEATURE_BSP_UNIQUE_ID_POINTER                 ((*(uint32_t *) BSP_FEATURE_BSP_MCU_INFO_POINTER_LOCATION) + \
                                                            BSP_FEATURE_BSP_UNIQUE_ID_OFFSET)
@@ -284,6 +286,8 @@
 
 #define BSP_FEATURE_SSI_FIFO_NUM_STAGES                   (32U)
 #define BSP_FEATURE_SSI_VALID_CHANNEL_MASK                (1U)
+
+#define BSP_FEATURE_TRNG_HAS_MODULE_STOP                  (0U)
 
 #define BSP_FEATURE_TZ_HAS_TRUSTZONE                      (0U)
 

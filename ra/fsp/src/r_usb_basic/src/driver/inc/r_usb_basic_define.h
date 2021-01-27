@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -212,13 +212,7 @@
 /* USB module definition */
 #define USB_M0                                 (R_USB_FS0)
 
-#if defined(BSP_MCU_GROUP_RA6M3)       /* High-speed module */
- #define USB_M1                                (R_USB_HS0)
-#else  /* defined(BSP_MCU_GROUP_RA6M3) */  /* Full-speed module*/
- #define R_USB_HS0_BASE                        0x40060000
- #define R_USB_HS0                             ((R_USB_HS0_Type *) R_USB_HS0_BASE)
- #define USB_M1                                (R_USB_HS0)
-#endif                                 /* defined(BSP_MCU_GROUP_RA6M3) */
+#define USB_M1                                 (R_USB_HS0)
 
 /* FIFO port register default access size */
 #define USB0_CFIFO_MBW                         (USB_MBW_16)
@@ -230,19 +224,27 @@
 #define USB1_D1FIFO_MBW                        (USB_MBW_32)
 
 /* Start Pipe No */
-#define USB_MIN_PIPE_NO                        (1U)
+#if defined(BSP_MCU_GROUP_RA2A1)
+ #define USB_MIN_PIPE_NO                       (4U)
+ #define USB_MAXPIPE_BULK                      (5U)
+ #define USB_BULK_PIPE_START                   (4U)
+ #define USB_INT_PIPE_END                      (7U)
+ #define USB_MAX_PIPE_NO                       (7U) /* PIPE4 ... PIPE7 */
+#else
+ #define USB_MIN_PIPE_NO                       (1U)
+ #define USB_MAXPIPE_BULK                      (5U)
+ #define USB_BULK_PIPE_START                   (1U)
+ #define USB_INT_PIPE_END                      (9U)
+ #define USB_MAX_PIPE_NO                       (9U) /* PIPE0 ... PIPE9 */
+#endif
 
-/* Max device */
-#define USB_MAXPIPE_BULK                       (5U)
-#define USB_MAXPIPE_ISO                        (2U)
 #define USB_MAXPIPE_NUM                        (9U)
-
-#define USB_BULK_PIPE_START                    (1U)
-#define USB_BULK_PIPE_END                      (5U)
 #define USB_INT_PIPE_START                     (6U)
-#define USB_INT_PIPE_END                       (9U)
+#define USB_BULK_PIPE_END                      (5U)
+
 #define USB_ISO_PIPE_START                     (1U)
 #define USB_ISO_PIPE_END                       (2U)
+#define USB_MAXPIPE_ISO                        (2U)
 
 /* SPEED mode */
 #define USB_HS_DISABLE                         ((uint16_t) 0U)
@@ -464,7 +466,6 @@
 #define USB_USEPIPE                            (0x00FEU)
 #define USB_PERIPIPE                           (0x00FDU)
 #define USB_CLRPIPE                            (0x00FCU) /* Clear Pipe registration */
-#define USB_MAX_PIPE_NO                        (9U)      /* PIPE0 ... PIPE9 */
 
 /* Pipe configuration table define */
 #define USB_EPL                                (6U)      /* Pipe configuration table length */
@@ -815,6 +816,8 @@
 /*#define USB_BC_DCPMODE                      (0x00U)*/
 
 #define USB_NOT_BC                             (0xFFFEU)
+
+#define USB_ODD                                (0x1U)
 
 /*************************************************************************
  * old basic_cfg.h #define

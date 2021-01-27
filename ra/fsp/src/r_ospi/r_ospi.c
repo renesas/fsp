@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -402,10 +402,12 @@ fsp_err_t R_OSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_addr
     FSP_ASSERT(0 != byte_count);
     FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
-    spi_flash_cfg_t const * p_cfg         = p_instance_ctrl->p_cfg;
-    uint16_t                erase_command = 0;
-    uint32_t                chip_address  = (uint32_t) p_device_address - BSP_FEATURE_OSPI_DEVICE_0_START_ADDRESS;
-    bool send_address = true;
+    spi_flash_cfg_t const * p_cfg             = p_instance_ctrl->p_cfg;
+    uint16_t                erase_command     = 0;
+    uint32_t                chip_address_base =
+        p_instance_ctrl->channel ? BSP_FEATURE_OSPI_DEVICE_1_START_ADDRESS : BSP_FEATURE_OSPI_DEVICE_0_START_ADDRESS;
+    uint32_t              chip_address = (uint32_t) p_device_address - chip_address_base;
+    bool                  send_address = true;
     ospi_extended_cfg_t * p_cfg_extend = (ospi_extended_cfg_t *) p_cfg->p_extend;
     FSP_ERROR_RETURN(false == r_ospi_status_sub(p_instance_ctrl, p_cfg->write_status_bit), FSP_ERR_DEVICE_BUSY);
 
@@ -538,8 +540,8 @@ fsp_err_t R_OSPI_Close (spi_flash_ctrl_t * p_ctrl)
     return FSP_SUCCESS;
 }
 
-/*******************************************************************************************************************//**
- * Get the driver version based on compile time macros.
+/***********************************************************************************************************************
+ * DEPRECATED Get the driver version based on compile time macros.
  *
  * Implements @ref spi_flash_api_t::versionGet.
  *

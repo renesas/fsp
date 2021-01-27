@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -39,8 +39,8 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CTSU_CODE_VERSION_MAJOR       (1U)
-#define CTSU_CODE_VERSION_MINOR       (2U)
+#define CTSU_CODE_VERSION_MAJOR       (1U) // DEPRECATED
+#define CTSU_CODE_VERSION_MINOR       (2U) // DEPRECATED
 
 #if (BSP_FEATURE_CTSU_VERSION == 2)
  #define CTSU_CORRECTION_POINT_NUM    (12) ///< number of correction table
@@ -154,6 +154,7 @@ typedef struct st_ctsu_correction_info
 } ctsu_correction_info_t;
 
 #if (BSP_FEATURE_CTSU_VERSION == 2)
+ #if (CTSU_CFG_NUM_CFC != 0)
 
 /** CFC correction information */
 typedef struct st_ctsu_corrcfc_info
@@ -170,6 +171,7 @@ typedef struct st_ctsu_corrcfc_info
     uint8_t  num_ts;                                                                ///< Number of CFC-TS for instance
     uint64_t stored_rx_bitmap;                                                      ///< Bitmap of registered CFC terminal
 } ctsu_corrcfc_info_t;
+ #endif
 #endif
 
 /** CTSU private control block. DO NOT MODIFY. Initialization occurs when R_CTSU_Open() is called. */
@@ -194,10 +196,12 @@ typedef struct st_ctsu_instance_ctrl
     uint16_t               * p_mutual_snd_data;  ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
     ctsu_correction_info_t * p_correction_info;  ///< Pointer to correction info
 #if (BSP_FEATURE_CTSU_VERSION == 2)
-    ctsu_range_t          range;                 ///< According to atune12. (20uA : 0, 40uA : 1, 80uA : 2, 160uA : 3)
-    uint8_t               ctsucr2;               ///< Copy from (posel, atune1, md) by Open API. FCMODE and SDPSEL and LOAD is set by HAL driver.
+    ctsu_range_t range;                          ///< According to atune12. (20uA : 0, 40uA : 1, 80uA : 2, 160uA : 3)
+    uint8_t      ctsucr2;                        ///< Copy from (posel, atune1, md) by Open API. FCMODE and SDPSEL and LOAD is set by HAL driver.
+ #if (CTSU_CFG_NUM_CFC != 0)
     uint64_t              cfc_rx_bitmap;         ///< Bitmap of CFC receive terminal.
     ctsu_corrcfc_info_t * p_corrcfc_info;        ///< pointer to CFC correction info
+ #endif
 #endif
     ctsu_cfg_t const * p_ctsu_cfg;               ///< Pointer to initial configurations.
     IRQn_Type          write_irq;                ///< Copy from config by Open API. CTSU_CTSUWR interrupt vector

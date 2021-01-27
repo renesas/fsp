@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -413,10 +413,10 @@ void usb_pstd_test_mode (usb_utr_t * p_utr)
         /* Continue */
         case USB_TEST_PACKET:
         {
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
             hw_usb_set_utst(p_utr, 0);
             hw_usb_set_utst(p_utr, (uint16_t) (g_usb_pstd_test_mode_select >> 8));
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
             break;
         }
 
@@ -496,12 +496,34 @@ void usb_pstd_set_stall_pipe0 (usb_utr_t * p_utr)
 uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * write_p, usb_utr_t * p_utr)
 {
     uint16_t even;
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     uint16_t odd;
     uint16_t hs_flag = 1;
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) */
+ #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     uint16_t hs_flag = 0;
- #endif /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+
+ #if defined(BSP_MCU_GROUP_RA2A1)
+
+    /* The value of "write_p" is odd */
+    if (USB_ODD == (write_p && USB_ODD))
+    {
+        /* 8bit access */
+        /* write_p == odd */
+        /* Change FIFO access width */
+        hw_usb_set_mbw(p_utr, pipemode, USB_MBW_8);
+
+        for ( ; (0 != count); count--)
+        {
+            USB0_CFIFO8 = *write_p++;
+        }
+
+        /* Return FIFO access width */
+        hw_usb_set_mbw(p_utr, pipemode, USB_MBW_16);
+
+        return write_p;
+    }
+ #endif                                /* defined(BSP_MCU_GROUP_RA2A1) */
 
     if ((USB_CFG_IP0 == p_utr->ip) || (0 == hs_flag))
     {
@@ -533,7 +555,7 @@ uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * writ
         }
     }
 
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     else
     {
         /* WAIT_LOOP */
@@ -577,7 +599,7 @@ uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * writ
         /* Return FIFO access width */
         hw_usb_set_mbw(p_utr, pipemode, USB_MBW_32);
     }
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     return write_p;
 }
 
@@ -600,12 +622,34 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
  #if USB_CFG_ENDIAN == USB_CFG_BIG
     uint16_t i;
  #endif
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     uint16_t odd;
     uint16_t hs_flag = 1;
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) */
+ #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     uint16_t hs_flag = 0;
- #endif /* defined(BSP_MCU_GROUP_RA6M3) */
+ #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+
+ #if defined(BSP_MCU_GROUP_RA2A1)
+
+    /* The value of "read_p" is odd */
+    if (USB_ODD == (read_p && USB_ODD))
+    {
+        /* 8bit access */
+        /* read_p == odd */
+        /* Change FIFO access width */
+        hw_usb_set_mbw(p_utr, pipemode, USB_MBW_8);
+
+        for ( ; (0 != count); count--)
+        {
+            *read_p++ = USB0_CFIFO8;
+        }
+
+        /* Return FIFO access width */
+        hw_usb_set_mbw(p_utr, pipemode, USB_MBW_16);
+
+        return read_p;
+    }
+ #endif                                /* defined(BSP_MCU_GROUP_RA2A1) */
 
     if ((USB_CFG_IP0 == p_utr->ip) || (0 == hs_flag))
     {
@@ -636,7 +680,7 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
         }
     }
 
- #if defined(BSP_MCU_GROUP_RA6M3)
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     else
     {
         /* WAIT_LOOP */
@@ -685,7 +729,7 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
   #endif                               /* USB_CFG_ENDIAN == USB_CFG_LITTLE */
         }
     }
- #endif /*  #if defined(BSP_MCU_GROUP_RA6M3) */
+ #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
     return read_p;
 }
