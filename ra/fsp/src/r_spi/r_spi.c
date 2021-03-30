@@ -201,7 +201,7 @@ fsp_err_t R_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
         FSP_ERROR_RETURN(SPI_CLK_PHASE_EDGE_EVEN == p_cfg->clk_phase, FSP_ERR_UNSUPPORTED);
     }
 
- #if BSP_FEATURE_SPI_HAS_SSL_LEVEL_KEEP == 0 || BSP_FEATURE_SPI_HAS_BYTE_SWAP == 0 || SPI_TRANSMIT_FROM_RXI_ISR == 1
+ #if BSP_FEATURE_SPI_HAS_SSL_LEVEL_KEEP == 0 || SPI_TRANSMIT_FROM_RXI_ISR == 1
     spi_extended_cfg_t * p_extend = (spi_extended_cfg_t *) p_cfg->p_extend;
  #endif
  #if SPI_TRANSMIT_FROM_RXI_ISR == 1
@@ -217,9 +217,6 @@ fsp_err_t R_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
     }
  #endif
 
- #if BSP_FEATURE_SPI_HAS_BYTE_SWAP == 0
-    FSP_ERROR_RETURN(SPI_BYTE_SWAP_DISABLE == p_extend->byte_swap, FSP_ERR_UNSUPPORTED);
- #endif
  #if BSP_FEATURE_SPI_HAS_SSL_LEVEL_KEEP == 0
     if ((SPI_MODE_MASTER == p_cfg->operating_mode))
     {

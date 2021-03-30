@@ -57,6 +57,7 @@
 #define BSP_FEATURE_ADC_UNIT_0_CHANNELS                   (0x7E07FF) // 0 to 10, 17 to 22 in unit 0
 #define BSP_FEATURE_ADC_UNIT_1_CHANNELS                   (0)
 #define BSP_FEATURE_ADC_VALID_UNIT_MASK                   (1U)
+#define BSP_FEATURE_ADC_HAS_ADBUF                         (0U)
 
 #define BSP_FEATURE_AGT_VALID_CHANNEL_MASK                (0x03)
 #define BSP_FEATURE_AGT_MAX_CHANNEL_NUM                   (1)
@@ -66,6 +67,7 @@
 #define BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER             (1)
 #define BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE             (0)
 #define BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK                 (0) // Feature not available on this MCU
+#define BSP_FEATURE_BSP_HAS_CANFD_CLOCK                   (0) // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SCE5                          (0) // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SCE_ON_RA2                    (1)
 #define BSP_FEATURE_CRYPTO_HAS_CTR_DRBG                   (0)
@@ -98,6 +100,8 @@
 #define BSP_FEATURE_CAN_CLOCK                             (FSP_PRIV_CLOCK_ICLK) // Feature not available on this MCU
 #define BSP_FEATURE_CAN_MCLOCK_ONLY                       (0U)                  // Feature not available on this MCU
 #define BSP_FEATURE_CAN_NUM_CHANNELS                      (0U)                  // Feature not available on this MCU
+
+#define BSP_FEATURE_CANFD_NUM_CHANNELS                    (0U)                  // Feature not available on this MCU
 
 #define BSP_FEATURE_CGC_HAS_BCLK                          (0U)
 #define BSP_FEATURE_CGC_HAS_FCLK                          (0U)
@@ -145,17 +149,18 @@
 #define BSP_FEATURE_CTSU_HAS_TXVSEL                       (1)
 #define BSP_FEATURE_CTSU_VERSION                          (2)
 
-#define BSP_FEATURE_DAC8_HAS_CHARGEPUMP                   (0)           // Feature not available on this MCU
-#define BSP_FEATURE_DAC8_HAS_DA_AD_SYNCHRONIZE            (0)           // Feature not available on this MCU
-#define BSP_FEATURE_DAC8_HAS_REALTIME_MODE                (0)           // Feature not available on this MCU
-#define BSP_FEATURE_DAC8_MAX_CHANNELS                     (0)           // Feature not available on this MCU
+#define BSP_FEATURE_DAC8_HAS_CHARGEPUMP                   (0)  // Feature not available on this MCU
+#define BSP_FEATURE_DAC8_HAS_DA_AD_SYNCHRONIZE            (0)  // Feature not available on this MCU
+#define BSP_FEATURE_DAC8_HAS_REALTIME_MODE                (0)  // Feature not available on this MCU
+#define BSP_FEATURE_DAC8_MAX_CHANNELS                     (0)  // Feature not available on this MCU
 
-#define BSP_FEATURE_DAC_HAS_CHARGEPUMP                    (0U)          // Feature not available on this MCU
-#define BSP_FEATURE_DAC_HAS_DAVREFCR                      (0U)          // Feature not available on this MCU
-#define BSP_FEATURE_DAC_HAS_OUTPUT_AMPLIFIER              (0U)          // Feature not available on this MCU
-#define BSP_FEATURE_DAC_MAX_CHANNELS                      (0U)          // Feature not available on this MCU
+#define BSP_FEATURE_DAC_HAS_CHARGEPUMP                    (0U) // Feature not available on this MCU
+#define BSP_FEATURE_DAC_HAS_DAVREFCR                      (0U) // Feature not available on this MCU
+#define BSP_FEATURE_DAC_HAS_OUTPUT_AMPLIFIER              (0U) // Feature not available on this MCU
+#define BSP_FEATURE_DAC_MAX_CHANNELS                      (0U) // Feature not available on this MCU
 
-#define BSP_FEATURE_DMAC_MAX_CHANNEL                      (0)           // Feature not available on this MCU
+#define BSP_FEATURE_DMAC_MAX_CHANNEL                      (0)  // Feature not available on this MCU
+#define BSP_FEATURE_DMAC_HAS_REPEAT_BLOCK_MODE            (0U)
 
 #define BSP_FEATURE_DWT_CYCCNT                            (0U)
 
@@ -237,6 +242,8 @@
 
 #define BSP_FEATURE_POEG_CHANNEL_MASK                     (0x3U)
 
+#define BSP_FEATURE_QSPI_DEVICE_START_ADDRESS             (0x0U)
+
 #define BSP_FEATURE_SCI_ADDRESS_MATCH_CHANNELS            (BSP_FEATURE_SCI_CHANNELS) // Feature not available on this MCU
 #define BSP_FEATURE_SCI_CHANNELS                          (0x207U)
 #define BSP_FEATURE_SCI_CLOCK                             (FSP_PRIV_CLOCK_PCLKB)
@@ -256,7 +263,6 @@
 #define BSP_FEATURE_SLCDC_MAX_NUM_SEG                     (0) // Feature not available on this MCU
 
 #define BSP_FEATURE_SPI_CLK                               (FSP_PRIV_CLOCK_PCLKB)
-#define BSP_FEATURE_SPI_HAS_BYTE_SWAP                     (1U)
 #define BSP_FEATURE_SPI_HAS_SPCR3                         (0) // Feature not available on this MCU
 #define BSP_FEATURE_SPI_HAS_SSL_LEVEL_KEEP                (0U)
 #define BSP_FEATURE_SPI_MAX_CHANNEL                       (1U)
@@ -267,5 +273,7 @@
 #define BSP_FEATURE_TRNG_HAS_MODULE_STOP                  (1U)
 
 #define BSP_FEATURE_TZ_HAS_TRUSTZONE                      (0) // Feature not available on this MCU
+
+#define BSP_FEATURE_BSP_NUM_PMSAR                         (0U)
 
 #endif

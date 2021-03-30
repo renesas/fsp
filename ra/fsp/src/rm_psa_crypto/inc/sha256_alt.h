@@ -44,19 +44,18 @@ extern "C" {
  */
 typedef struct mbedtls_sha256_context
 {
-    uint32_t total[2];                                                  /*!< The number of Bytes processed.  */
-    uint32_t state[8];                                                  /*!< The intermediate digest state.  */
-    unsigned char buffer[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES];     /*!< The data block being processed. */
-    int is224;                                                          /*!< Determines which function to use:
-                                                                          0: Use SHA-256, or 1: Use SHA-224. */
+    uint32_t      total[2];                                         /*!< The number of Bytes processed.  */
+    uint32_t      state[8];                                         /*!< The intermediate digest state.  */
+    unsigned char buffer[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES]; /*!< The data block being processed. */
+    int           is224;                                            /*!< Determines which function to use:
+                                                                     * 0: Use SHA-256, or 1: Use SHA-224. */
+} mbedtls_sha256_context;
+
+int mbedtls_internal_sha256_process_ext(mbedtls_sha256_context * ctx,
+                                     const unsigned char data[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES], uint32_t len);
+
+ #ifdef __cplusplus
 }
-mbedtls_sha256_context;
+ #endif
 
-
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* mbedtls_sha256.h */
+#endif                                 /* mbedtls_sha256.h */

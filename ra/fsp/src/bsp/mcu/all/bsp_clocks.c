@@ -1109,6 +1109,28 @@ void bsp_clock_init (void)
     R_BSP_OctaclkUpdate(&octaclk_settings);
 #endif                                 /* BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK && BSP_CFG_OCTASPI_CLOCK_ENABLE */
 
+    /* Set the CANFD clock if it exists on the MCU */
+#if BSP_FEATURE_BSP_HAS_CANFD_CLOCK && (BSP_CFG_CANFDCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED) && \
+    (BSP_CFG_CANFDCLK_SOURCE != BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
+
+    /* Request to stop the CANFD clock. */
+    R_SYSTEM->CANFDCKCR_b.CANFDCKSREQ = 1;
+
+    /* Wait for the CANFD clock to stop. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->CANFDCKCR_b.CANFDCKSRDY, 1U);
+
+    /* Select the CANFD clock divisor and source. */
+    R_SYSTEM->CANFDCKDIVCR = BSP_CFG_CANFDCLK_DIV;
+    R_SYSTEM->CANFDCKCR    = BSP_CFG_CANFDCLK_SOURCE | R_SYSTEM_CANFDCKCR_CANFDCKSREQ_Msk |
+                             R_SYSTEM_CANFDCKCR_CANFDCKSRDY_Msk;
+
+    /* Request to start the CANFD clock. */
+    R_SYSTEM->CANFDCKCR_b.CANFDCKSREQ = 0;
+
+    /* Wait for the CANFD clock to start. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->CANFDCKCR_b.CANFDCKSRDY, 0U);
+#endif
+
     /* Lock CGC and LPM protection registers. */
     R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_LOCK;
 
@@ -1302,8 +1324,8 @@ void R_BSP_OctaclkUpdate (bsp_octaclk_settings_t * p_octaclk_setting)
     R_SYSTEM->OCTACKDIVCR = (uint8_t) p_octaclk_setting->divider;
     R_SYSTEM->OCTACKCR    = (uint8_t) (p_octaclk_setting->source_clock | R_SYSTEM_OCTACKCR_OCTACKSREQ_Msk);
 
-    /* Start the OCTASPI Clock. */
-    R_SYSTEM->OCTACKCR = BSP_CLOCKS_SOURCE_CLOCK_PLL2;
+    /* Start the OCTASPI Clock by setting OCTACKSREQ to zero. */
+    R_SYSTEM->OCTACKCR = (uint8_t) p_octaclk_setting->source_clock;
 
     /* Wait for the OCTASPI Clock to be started. */
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OCTACKCR_b.OCTACKSRDY, 0U);

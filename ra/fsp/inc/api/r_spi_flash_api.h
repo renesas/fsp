@@ -180,6 +180,7 @@ typedef struct st_spi_flash_cfg
 /** SPI flash control block.  Allocate an instance specific control block to pass into the SPI flash API calls.
  * @par Implemented as
  * - qspi_instance_ctrl_t
+ * - ospi_instance_ctrl_t
  */
 typedef void spi_flash_ctrl_t;
 
@@ -196,6 +197,7 @@ typedef struct st_spi_flash_api
 {
     /** Open the SPI flash driver module.
      * @par Implemented as
+     * - @ref R_OSPI_Open()
      * - @ref R_QSPI_Open()
      *
      * @param[in] p_ctrl               Pointer to a driver handle
@@ -205,6 +207,7 @@ typedef struct st_spi_flash_api
 
     /** Write raw data to the SPI flash.
      * @par Implemented as
+     * - @ref R_OSPI_DirectWrite()
      * - @ref R_QSPI_DirectWrite()
      *
      * @param[in] p_ctrl                Pointer to a driver handle
@@ -220,6 +223,7 @@ typedef struct st_spi_flash_api
 
     /** Read raw data from the SPI flash. Must follow a call to @ref spi_flash_api_t::directWrite.
      * @par Implemented as
+     * - @ref R_OSPI_DirectRead()
      * - @ref R_QSPI_DirectRead()
      *
      * @param[in]  p_ctrl               Pointer to a driver handle
@@ -241,6 +245,7 @@ typedef struct st_spi_flash_api
 
     /** Change the SPI protocol in the driver. The application must change the SPI protocol on the device.
      * @par Implemented as
+     * - @ref R_OSPI_SpiProtocolSet()
      * - @ref R_QSPI_SpiProtocolSet()
      *
      * @param[in] p_ctrl                Pointer to a driver handle
@@ -250,6 +255,7 @@ typedef struct st_spi_flash_api
 
     /** Program a page of data to the flash.
      * @par Implemented as
+     * - @ref R_OSPI_Write()
      * - @ref R_QSPI_Write()
      *
      * @param[in] p_ctrl               Pointer to a driver handle
@@ -262,6 +268,7 @@ typedef struct st_spi_flash_api
 
     /** Erase a certain number of bytes of the flash.
      * @par Implemented as
+     * - @ref R_OSPI_Erase()
      * - @ref R_QSPI_Erase()
      *
      * @param[in] p_ctrl               Pointer to a driver handle
@@ -273,6 +280,7 @@ typedef struct st_spi_flash_api
 
     /** Get the write or erase status of the flash.
      * @par Implemented as
+     * - @ref R_OSPI_StatusGet()
      * - @ref R_QSPI_StatusGet()
      *
      * @param[in] p_ctrl               Pointer to a driver handle
@@ -282,6 +290,7 @@ typedef struct st_spi_flash_api
 
     /** Enter XIP mode.
      * @par Implemented as
+     * - @ref R_OSPI_XipEnter()
      * - @ref R_QSPI_XipEnter()
      *
      * @param[in] p_ctrl               Pointer to a driver handle
@@ -290,6 +299,7 @@ typedef struct st_spi_flash_api
 
     /** Exit XIP mode.
      * @par Implemented as
+     * - @ref R_OSPI_XipExit()
      * - @ref R_QSPI_XipExit()
      *
      * @param[in] p_ctrl               Pointer to a driver handle
@@ -298,6 +308,7 @@ typedef struct st_spi_flash_api
 
     /** Select the bank to access.  See implementation for details.
      * @par Implemented as
+     * - @ref R_OSPI_BankSet()
      * - @ref R_QSPI_BankSet()
      *
      * @param[in] p_ctrl               Pointer to a driver handle
@@ -307,6 +318,7 @@ typedef struct st_spi_flash_api
 
     /** Close the SPI flash driver module.
      * @par Implemented as
+     * - @ref R_OSPI_Close()
      * - @ref R_QSPI_Close()
      *
      * @param[in] p_ctrl               Pointer to a driver handle
@@ -315,6 +327,7 @@ typedef struct st_spi_flash_api
 
     /* DEPRECATED Get the driver version based on compile time macros.
      * @par Implemented as
+     * - @ref R_OSPI_VersionGet()
      * - @ref R_QSPI_VersionGet()
      *
      * @param[out]  p_version          Code and API version stored here.

@@ -46,6 +46,113 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+/** CAN Status */
+typedef enum e_can_status
+{
+    CAN_STATUS_NEW_DATA                 = 1,  ///< New Data status flag
+    CAN_STATUS_SENT_DATA                = 2,  ///< Sent Data status flag
+    CAN_STATUS_RECEIVE_FIFO             = 4,  ///< Receive FIFO status flag (Not supported)
+    CAN_STATUS_TRANSMIT_FIFO            = 8,  ///< Transmit FIFO status flag (Not supported)
+    CAN_STATUS_NORMAL_MBOX_MESSAGE_LOST = 16, ///< Normal mailbox message lost status flag
+    CAN_STATUS_FIFO_MBOX_MESSAGE_LOST   = 32, ///< FIFO mailbox message lost status flag (Not Supported)
+    CAN_STATUS_TRANSMISSION_ABORT       = 64, ///< Transmission abort status flag
+    CAN_STATUS_ERROR         = 128,           ///< Error status flag
+    CAN_STATUS_RESET_MODE    = 256,           ///< Reset mode status flag
+    CAN_STATUS_HALT_MODE     = 512,           ///< Halt mode status flag
+    CAN_STATUS_SLEEP_MODE    = 1024,          ///< Sleep mode status flag
+    CAN_STATUS_ERROR_PASSIVE = 2048,          ///< Error-passive status flag
+    CAN_STATUS_BUS_OFF       = 4096,          ///< Bus-off status flag
+} can_status_t;
+
+/** CAN Error Code */
+typedef enum e_can_error
+{
+    CAN_ERROR_STUFF         = 1,       ///< Stuff Error
+    CAN_ERROR_FORM          = 2,       ///< Form Error
+    CAN_ERROR_ACK           = 4,       ///< ACK Error
+    CAN_ERROR_CRC           = 8,       ///< CRC Error
+    CAN_ERROR_BIT_RECESSIVE = 16,      ///< Bit Error (recessive) Error
+    CAN_ERROR_BIT_DOMINANT  = 32,      ///< Bit Error (dominant) Error
+    CAN_ERROR_ACK_DELIMITER = 64,      ///< ACK Delimiter Error
+} can_error_t;
+
+/* CAN Time Segment 1 Time Quanta (DEPRECATED) */
+typedef enum e_can_time_segment1
+{
+    CAN_TIME_SEGMENT1_TQ2 = 2,
+    CAN_TIME_SEGMENT1_TQ3,
+    CAN_TIME_SEGMENT1_TQ4,
+    CAN_TIME_SEGMENT1_TQ5,
+    CAN_TIME_SEGMENT1_TQ6,
+    CAN_TIME_SEGMENT1_TQ7,
+    CAN_TIME_SEGMENT1_TQ8,
+    CAN_TIME_SEGMENT1_TQ9,
+    CAN_TIME_SEGMENT1_TQ10,
+    CAN_TIME_SEGMENT1_TQ11,
+    CAN_TIME_SEGMENT1_TQ12,
+    CAN_TIME_SEGMENT1_TQ13,
+    CAN_TIME_SEGMENT1_TQ14,
+    CAN_TIME_SEGMENT1_TQ15,
+    CAN_TIME_SEGMENT1_TQ16,
+    CAN_TIME_SEGMENT1_TQ17,
+    CAN_TIME_SEGMENT1_TQ18,
+    CAN_TIME_SEGMENT1_TQ19,
+    CAN_TIME_SEGMENT1_TQ20,
+    CAN_TIME_SEGMENT1_TQ21,
+    CAN_TIME_SEGMENT1_TQ22,
+    CAN_TIME_SEGMENT1_TQ23,
+    CAN_TIME_SEGMENT1_TQ24,
+    CAN_TIME_SEGMENT1_TQ25,
+    CAN_TIME_SEGMENT1_TQ26,
+    CAN_TIME_SEGMENT1_TQ27,
+    CAN_TIME_SEGMENT1_TQ28,
+    CAN_TIME_SEGMENT1_TQ29,
+    CAN_TIME_SEGMENT1_TQ30,
+    CAN_TIME_SEGMENT1_TQ31,
+    CAN_TIME_SEGMENT1_TQ32,
+} can_time_segment1_t;
+
+/* CAN Time Segment 2 Time Quanta (DEPRECATED) */
+typedef enum e_can_time_segment2
+{
+    CAN_TIME_SEGMENT2_TQ2 = 2,
+    CAN_TIME_SEGMENT2_TQ3,
+    CAN_TIME_SEGMENT2_TQ4,
+    CAN_TIME_SEGMENT2_TQ5,
+    CAN_TIME_SEGMENT2_TQ6,
+    CAN_TIME_SEGMENT2_TQ7,
+    CAN_TIME_SEGMENT2_TQ8,
+    CAN_TIME_SEGMENT2_TQ9,
+    CAN_TIME_SEGMENT2_TQ10,
+    CAN_TIME_SEGMENT2_TQ11,
+    CAN_TIME_SEGMENT2_TQ12,
+    CAN_TIME_SEGMENT2_TQ13,
+    CAN_TIME_SEGMENT2_TQ14,
+    CAN_TIME_SEGMENT2_TQ15,
+    CAN_TIME_SEGMENT2_TQ16,
+} can_time_segment2_t;
+
+/* CAN Synchronization Jump Width Time Quanta (DEPRECATED) */
+typedef enum e_can_sync_jump_width
+{
+    CAN_SYNC_JUMP_WIDTH_TQ1 = 1,
+    CAN_SYNC_JUMP_WIDTH_TQ2,
+    CAN_SYNC_JUMP_WIDTH_TQ3,
+    CAN_SYNC_JUMP_WIDTH_TQ4,
+    CAN_SYNC_JUMP_WIDTH_TQ5,
+    CAN_SYNC_JUMP_WIDTH_TQ6,
+    CAN_SYNC_JUMP_WIDTH_TQ7,
+    CAN_SYNC_JUMP_WIDTH_TQ8,
+    CAN_SYNC_JUMP_WIDTH_TQ9,
+    CAN_SYNC_JUMP_WIDTH_TQ10,
+    CAN_SYNC_JUMP_WIDTH_TQ11,
+    CAN_SYNC_JUMP_WIDTH_TQ12,
+    CAN_SYNC_JUMP_WIDTH_TQ13,
+    CAN_SYNC_JUMP_WIDTH_TQ14,
+    CAN_SYNC_JUMP_WIDTH_TQ15,
+    CAN_SYNC_JUMP_WIDTH_TQ16,
+} can_sync_jump_width_t;
+
 /* CAN Instance Control Block   */
 typedef struct st_can_instance_ctrl
 {
@@ -89,6 +196,7 @@ extern const can_api_t g_can_on_can;
 fsp_err_t R_CAN_Open(can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_cfg);
 fsp_err_t R_CAN_Close(can_ctrl_t * const p_api_ctrl);
 fsp_err_t R_CAN_Write(can_ctrl_t * const p_api_ctrl, uint32_t const mailbox, can_frame_t * const p_frame);
+fsp_err_t R_CAN_Read(can_ctrl_t * const p_api_ctrl, uint32_t mailbox, can_frame_t * const p_frame);
 fsp_err_t R_CAN_ModeTransition(can_ctrl_t * const   p_api_ctrl,
                                can_operation_mode_t operation_mode,
                                can_test_mode_t      test_mode);

@@ -500,7 +500,11 @@ fsp_err_t R_GPT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
 
     r_gpt_write_protect_disable(p_instance_ctrl);
 
-    p_instance_ctrl->p_reg->GTCCR[pin + 2] = duty_regs.gtccr_buffer;
+    /* Only update GTCCR if 0% or 100% duty is not requested */
+    if (!duty_regs.omdty)
+    {
+        p_instance_ctrl->p_reg->GTCCR[pin + 2] = duty_regs.gtccr_buffer;
+    }
 
     /* Read modify write bitfield access is used to update GTUDDTYC to make sure we don't clobber settings for the
      * other pin. */

@@ -154,8 +154,8 @@ void SystemInit (void)
     /* Seal the main stack for secure projects. Reference:
      * https://developer.arm.com/documentation/100720/0300
      * https://developer.arm.com/support/arm-security-updates/armv8-m-stack-sealing */
-    uint32_t * p_main_stack = (uint32_t *) __Vectors[0];
-    p_main_stack[BSP_CFG_STACK_MAIN_BYTES / sizeof(uint32_t)] = BSP_TZ_STACK_SEAL_VALUE;
+    uint32_t * p_main_stack_top = (uint32_t *) __Vectors[0];
+    *p_main_stack_top = BSP_TZ_STACK_SEAL_VALUE;
 #endif
 
 #if !BSP_TZ_NONSECURE_BUILD

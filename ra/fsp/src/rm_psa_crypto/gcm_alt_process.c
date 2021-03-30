@@ -344,14 +344,11 @@ int sce_gcm_crypt_and_tag (mbedtls_gcm_context * ctx,
             tag_bit_size[0] = change_endian_long(tag_len);
 
             /* Zero pad the tag if tag length is less than 16 bytes */
-            memcpy(padded_tag, &input[length], tag_len);
+            memcpy(padded_tag, tag, tag_len);
             err =
                 g_sce_aes_gcm_decrypt_final[key_len_idx]((uint32_t *) gcm_buffer, (uint32_t *) padded_tag,
                                                          aad_bit_size, data_bit_size, tag_bit_size,
                                                          (uint32_t *) &output[input_length]);
-
-            /* tag buffer value is validated by the caller (mbedcrypto). Copy the tag from the input buffer */
-            memcpy(tag, &input[length], tag_len);
         }
     }
 

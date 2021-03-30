@@ -40,11 +40,6 @@ extern const wifi_onchip_silex_cfg_t g_wifi_onchip_silex_cfg;
 
 static uint32_t prvConvertSecurityFromSilexAT(WIFISecurity_t xSecurity);
 
-/*******************************************************************************************************************//**
- * @addtogroup WIFI_ONCHIP_SILEX WIFI_ONCHIP_SILEX
- * @{
- **********************************************************************************************************************/
-
 /**
  *  Turns on Wi-Fi.
  *
@@ -420,10 +415,6 @@ BaseType_t WIFI_IsConnected (void) {
 
     return xIsConnected;
 }
-
-/*******************************************************************************************************************//**
- * @} (end addtogroup WIFI_ONCHIP_SILEX)
- **********************************************************************************************************************/
 
 static uint32_t prvConvertSecurityFromSilexAT (WIFISecurity_t xSecurity) {
     uint32_t xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_UNDEFINED;

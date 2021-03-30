@@ -257,12 +257,12 @@ fsp_err_t R_USB_EventGet (usb_ctrl_t * const p_api_ctrl, usb_status_t * event)
             g_usb_cstd_event.read_pointer = 0;
         }
     }
-
 #else                                  /* (BSP_CFG_RTOS == 0) */
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(*event);
     result = FSP_ERR_USB_FAILED;
 #endif /* (BSP_CFG_RTOS == 0) */
+
     return result;
 }                                      /* End of function R_USB_EventGet() */
 
@@ -291,6 +291,7 @@ fsp_err_t R_USB_Callback (usb_callback_t * p_callback)
     FSP_PARAMETER_NOT_USED(*p_callback);
     err = FSP_ERR_USB_FAILED;
 #endif                                 /* (BSP_CFG_RTOS == 2) */
+
     return err;
 } /* End of function R_USB_Callback() */
 
@@ -339,7 +340,6 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 #endif
 
 #if USB_CFG_PARAM_CHECKING_ENABLE
-
     /* Argument Checking */
     FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number)), FSP_ERR_USB_PARAMETER)
 
@@ -369,7 +369,6 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
             {
                 FSP_ERROR_RETURN(USB_SPEED_HS != p_cfg->usb_speed, FSP_ERR_USB_PARAMETER)
             }
-
  #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
             FSP_ERROR_RETURN(USB_SPEED_HS != p_cfg->usb_speed, FSP_ERR_USB_PARAMETER)
  #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
@@ -450,7 +449,6 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
     if (USB_MODE_HOST == p_cfg->usb_mode)
     {
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-
         /* Be sure set USB_MODE_HOST to g_usb_usbmode variable before calling usb_rtos_configuration function. */
         g_usb_usbmode[p_ctrl->module_number] = USB_MODE_HOST;
 #endif
@@ -458,7 +456,6 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
     else
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-
         /* Be sure set USB_MODE_PERI to g_usb_usbmode variable before calling usb_rtos_configuration function. */
         g_usb_usbmode[p_ctrl->module_number] = USB_MODE_PERI;
 #endif
@@ -475,7 +472,6 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
             return FSP_ERR_USB_FAILED;
         }
     }
-
  #else                                 /* (USB_NUM_USBIP == 2) */
     os_err = usb_rtos_configuration(p_cfg->usb_mode);
     if (UsbRtos_Success != os_err)
@@ -754,7 +750,6 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
         {
             usb_rtos_delete(p_ctrl->module_number);
         }
-
  #else                                 /* (USB_NUM_USBIP == 2) */
         usb_rtos_delete(p_ctrl->module_number);
  #endif /* (USB_NUM_USBIP == 2) */
@@ -896,7 +891,7 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
  *   Set the device class type in usb_ctrl_t structure member (type).
  *   Confirm after data write is completed by checking the return value (USB_STATUS_WRITE_COMPLETE)
  *   of the R_USB_GetEvent function.
- *   To request the transmission of a NULL packet, assign USB_NULL(0) to the third argument (size).
+ *   For sending a zero-length packet, please refer the following Note.
  *
  * 2. Control data transfer
  *
@@ -909,9 +904,13 @@ fsp_err_t R_USB_Read (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t s
  *                               USB device with same device address.
  * @retval FSP_ERR_ASSERTION     Parameter is NULL error.
  * @retval FSP_ERR_USB_PARAMETER Parameter error.
- * @note Do not call this API in the following function.
- * @note (1). Interrupt function.
- * @note (2). Callback function ( for RTOS ).
+ * @note 1.The user needs to send the zero-length packet(ZLP) since this USB driver does not send the ZLP automatically.
+ * @note   When sending a ZLP, the user sets USB_NULL in the third argument (size) of R_USB_Write function as follow.
+ * @note   e.g)
+ * @note   R_USB_Write (&g_basic0_ctrl, &g_buf, USB_NULL);
+ * @note 2.Do not call this API in the following function.
+ * @note   (1). Interrupt function.
+ * @note   (2). Callback function ( for RTOS ).
  ******************************************************************************/
 fsp_err_t R_USB_Write (usb_ctrl_t * const p_api_ctrl, uint8_t const * const p_buf, uint32_t size, uint8_t destination)
 {
@@ -1171,7 +1170,6 @@ fsp_err_t R_USB_Suspend (usb_ctrl_t * const p_api_ctrl)
     {
         ret_code = FSP_ERR_USB_FAILED;
     }
-
   #else                                /* (BSP_CFG_RTOS == 0) */
     if (USB_YES == gs_usb_suspend_ing[p_ctrl->module_number])
     {
@@ -1271,7 +1269,6 @@ fsp_err_t R_USB_Resume (usb_ctrl_t * const p_api_ctrl)
     {
         ret_code = FSP_ERR_USB_FAILED;
     }
-
   #else                                /* (BSP_CFG_RTOS == 0) */
     if (USB_YES == g_usb_resume_ing[p_ctrl->module_number])
     {
@@ -1298,6 +1295,7 @@ fsp_err_t R_USB_Resume (usb_ctrl_t * const p_api_ctrl)
     g_usb_resume_ing[p_ctrl->module_number] = USB_NO;
   #endif                               /* (BSP_CFG_RTOS == 0) */
  #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+
     return ret_code;
 #endif                                 /* USB_CFG_MODE == USB_CFG_PERI */
 }
@@ -1545,7 +1543,6 @@ fsp_err_t R_USB_InfoGet (usb_ctrl_t * const p_api_ctrl, usb_info_t * p_info, uin
         {
             p_info->bcport = USB_BCPORT_SDP; /* USB_SDP/USB_CDP/USB_DCP */
         }
-
  #else  /* #if USB_CFG_BC == USB_CFG_ENABLE */
         p_info->bcport = USB_BCPORT_SDP;     /* USB_SDP/USB_CDP/USB_DCP */
  #endif /* #if USB_CFG_BC == USB_CFG_ENABLE */
@@ -1824,16 +1821,20 @@ fsp_err_t R_USB_PipeRead (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32
  * The write data is stored in the area specified in the argument (p_buf).
  * After data write is completed, confirm the operation with the return value
  * (USB_STATUS_WRITE_COMPLETE) of the EventGet function.
- * To request the transmission of a NULL packet, assign USB_NULL (0) to the third argument (size).
+ * For sending a zero-length packet, please refer the following Note.
  *
  * @retval FSP_SUCCESS              Successfully completed.
  * @retval FSP_ERR_USB_BUSY         Specified pipe now handling data receive/send request.
  * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
  * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
  * @retval FSP_ERR_USB_PARAMETER    Parameter error.
- * @note Do not call this API in the following function.
- * @note (1). Interrupt function.
- * @note (2). Callback function ( for RTOS ).
+ * @note 1.The user needs to send the zero-length packet(ZLP) since this USB driver does not send the ZLP automatically.
+ * @note   When sending a ZLP, the user sets USB_NULL in the third argument (size) of R_USB_PipeWrite function as follow.
+ * @note   e.g)
+ * @note   R_USB_PipeWrite (&g_basic0_ctrl, &g_buf, USB_NULL, pipe_number);
+ * @note 2.Do not call this API in the following function.
+ * @note   (1). Interrupt function.
+ * @note   (2). Callback function ( for RTOS ).
  ******************************************************************************/
 fsp_err_t R_USB_PipeWrite (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size, uint8_t pipe_number)
 {
@@ -1862,7 +1863,6 @@ fsp_err_t R_USB_PipeWrite (usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint3
     p_ctrl->pipe = pipe_number;
 
  #if USB_CFG_PARAM_CHECKING_ENABLE
-
     /* Argument Checking */
     FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number)), FSP_ERR_USB_PARAMETER)
 
@@ -2038,7 +2038,6 @@ fsp_err_t R_USB_PipeStop (usb_ctrl_t * const p_api_ctrl, uint8_t pipe_number)
     p_ctrl->pipe = pipe_number;
 
  #if USB_CFG_PARAM_CHECKING_ENABLE
-
     /* Argument Checking */
     FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number)), FSP_ERR_USB_PARAMETER)
 
@@ -2193,7 +2192,6 @@ fsp_err_t R_USB_PipeInfoGet (usb_ctrl_t * const p_api_ctrl, usb_pipe_t * p_info,
     p_ctrl->pipe = pipe_number;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE
-
     /* Argument Checking */
     FSP_ERROR_RETURN(!((USB_IP0 != p_ctrl->module_number) && (USB_IP1 != p_ctrl->module_number)), FSP_ERR_USB_PARAMETER)
 
@@ -2260,7 +2258,6 @@ fsp_err_t R_USB_PipeInfoGet (usb_ctrl_t * const p_api_ctrl, usb_pipe_t * p_info,
     else
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-
         /* Get PIPE Number from Endpoint address */
         p_info->endpoint = (uint8_t) (g_usb_pipe_table[p_ctrl->module_number][p_ctrl->pipe].pipe_cfg & USB_EPNUMFIELD); /* Set EP num. */
         if (USB_DIR_P_IN == (g_usb_pipe_table[p_ctrl->module_number][p_ctrl->pipe].pipe_cfg & USB_DIRFIELD))            /* Check dir */
@@ -2363,8 +2360,9 @@ fsp_err_t R_USB_HostControlTransfer (usb_ctrl_t * const p_api_ctrl,
 {
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-    usb_er_t  err    = USB_ERROR;
-    fsp_err_t result = FSP_ERR_USB_FAILED;
+    usb_er_t   err    = USB_ERROR;
+    fsp_err_t  result = FSP_ERR_USB_FAILED;
+    usb_info_t info;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
@@ -2374,6 +2372,19 @@ fsp_err_t R_USB_HostControlTransfer (usb_ctrl_t * const p_api_ctrl,
 
     FSP_ERROR_RETURN(USB_MAXDEVADDR >= device_address, FSP_ERR_USB_PARAMETER)
 #endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
+
+    result = R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
+    if (FSP_SUCCESS == result)
+    {
+        if (USB_STATUS_CONFIGURED != info.device_status)
+        {
+            return FSP_ERR_USB_FAILED;
+        }
+    }
+    else
+    {
+        return FSP_ERR_USB_FAILED;
+    }
 
     p_ctrl->device_address       = device_address;
     p_ctrl->setup.request_type   = p_setup->request_type;
@@ -2413,6 +2424,7 @@ fsp_err_t R_USB_HostControlTransfer (usb_ctrl_t * const p_api_ctrl,
  * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
  * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
  * @retval FSP_ERR_USB_BUSY         Specified pipe now handling data receive/send request.
+ * @retval FSP_ERR_USB_PARAMETER    Parameter error.
  * @note Do not call this API in the following function.
  * @note (1). Interrupt function.
  * @note (2). Callback function ( for RTOS ).
@@ -2421,13 +2433,27 @@ fsp_err_t R_USB_PeriControlDataGet (usb_ctrl_t * const p_api_ctrl, uint8_t * p_b
 {
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-    usb_er_t  err    = USB_ERROR;
-    fsp_err_t result = FSP_ERR_USB_FAILED;
+    usb_er_t   err    = USB_ERROR;
+    fsp_err_t  result = FSP_ERR_USB_FAILED;
+    usb_info_t info;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ASSERT(p_buf)
-#endif                                        /* USB_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
+
+    result = R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
+    if (FSP_SUCCESS == result)
+    {
+        if (USB_STATUS_CONFIGURED != info.device_status)
+        {
+            return FSP_ERR_USB_FAILED;
+        }
+    }
+    else
+    {
+        return FSP_ERR_USB_FAILED;
+    }
 
     err = usb_ctrl_read(p_ctrl, p_buf, size); /* Request Control transfer */
     if (err == USB_QOVR)
@@ -2453,6 +2479,7 @@ fsp_err_t R_USB_PeriControlDataGet (usb_ctrl_t * const p_api_ctrl, uint8_t * p_b
  * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
  * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
  * @retval FSP_ERR_USB_BUSY         Specified pipe now handling data receive/send request.
+ * @retval FSP_ERR_USB_PARAMETER    Parameter error.
  * @note Do not call this API in the following function.
  * @note (1). Interrupt function.
  * @note (2). Callback function ( for RTOS ).
@@ -2461,13 +2488,27 @@ fsp_err_t R_USB_PeriControlDataSet (usb_ctrl_t * const p_api_ctrl, uint8_t * p_b
 {
     usb_instance_ctrl_t * p_ctrl = (usb_instance_ctrl_t *) p_api_ctrl;
 
-    usb_er_t  err    = USB_ERROR;
-    fsp_err_t result = FSP_ERR_USB_FAILED;
+    usb_er_t   err    = USB_ERROR;
+    fsp_err_t  result = FSP_ERR_USB_FAILED;
+    usb_info_t info;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
     FSP_ASSERT(p_buf)
-#endif                                         /* USB_CFG_PARAM_CHECKING_ENABLE */
+#endif                                 /* USB_CFG_PARAM_CHECKING_ENABLE */
+
+    result = R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
+    if (FSP_SUCCESS == result)
+    {
+        if (USB_STATUS_CONFIGURED != info.device_status)
+        {
+            return FSP_ERR_USB_FAILED;
+        }
+    }
+    else
+    {
+        return FSP_ERR_USB_FAILED;
+    }
 
     err = usb_ctrl_write(p_ctrl, p_buf, size); /* Request Control transfer */
     if (err == USB_QOVR)
@@ -2492,6 +2533,7 @@ fsp_err_t R_USB_PeriControlDataSet (usb_ctrl_t * const p_api_ctrl, uint8_t * p_b
  * @retval FSP_SUCCESS              Successful completion.
  * @retval FSP_ERR_USB_FAILED       The function could not be completed successfully.
  * @retval FSP_ERR_ASSERTION        Parameter is NULL error.
+ * @retval FSP_ERR_USB_PARAMETER    Parameter error.
  * @note Do not call this API in the following function.
  * @note (1). Interrupt function.
  * @note (2). Callback function ( for RTOS ).
@@ -2506,9 +2548,25 @@ fsp_err_t R_USB_PeriControlStatusSet (usb_ctrl_t * const p_api_ctrl, usb_setup_s
 
     return FSP_ERR_USB_FAILED;
 #else                                  /* USB_CFG_MODE == USB_CFG_HOST */
+    fsp_err_t  result = FSP_ERR_USB_FAILED;
+    usb_info_t info;
+
  #if USB_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl)
- #endif /* USB_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* USB_CFG_PARAM_CHECKING_ENABLE */
+
+    result = R_USB_InfoGet(p_ctrl, &info, p_ctrl->device_address);
+    if (FSP_SUCCESS == result)
+    {
+        if (USB_STATUS_CONFIGURED != info.device_status)
+        {
+            return FSP_ERR_USB_FAILED;
+        }
+    }
+    else
+    {
+        return FSP_ERR_USB_FAILED;
+    }
 
     p_ctrl->status = (uint16_t) status;
 
@@ -2567,7 +2625,6 @@ fsp_err_t R_USB_RemoteWakeup (usb_ctrl_t * const p_api_ctrl)
             break;
         }
     }
-
  #else                                 /* (BSP_CFG_RTOS == 0) */
     if (USB_YES == g_usb_resume_ing[p_ctrl->module_number])
     {

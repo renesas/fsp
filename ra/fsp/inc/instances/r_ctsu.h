@@ -125,31 +125,27 @@ typedef struct st_ctsu_mutual_buf
 /** Correction information */
 typedef struct st_ctsu_correction_info
 {
-    ctsu_correction_status_t status;                                 ///< Correction status
-    ctsu_ctsuwr_t            ctsuwr;                                 ///< Correction scan parameter
-    volatile ctsu_self_buf_t scanbuf;                                ///< Correction scan buffer
+    ctsu_correction_status_t status;                               ///< Correction status
+    ctsu_ctsuwr_t            ctsuwr;                               ///< Correction scan parameter
+    volatile ctsu_self_buf_t scanbuf;                              ///< Correction scan buffer
 #if (BSP_FEATURE_CTSU_VERSION == 2)
  #if (CTSU_CFG_TEMP_CORRECTION_SUPPORT == 1)
-  #if (CTSU_CFG_CALIB_RTRIM_SUPPORT == 1)
-    uint16_t tscap_voltage;                                          ///< TSCAP Voltage by ADC
-  #endif
-    uint16_t scan_index;                                             ///< Scan point index
-    uint16_t update_counter;                                         ///< Coefficient update counter
-    uint16_t ex_base_value;                                          ///< Value of external registance measurement
-    uint8_t  suadj0;                                                 ///< Stored SUADJ0 value
+    uint16_t scan_index;                                           ///< Scan point index
+    uint16_t update_counter;                                       ///< Coefficient update counter
+    uint16_t ex_base_value;                                        ///< Value of external registance measurement
+    uint8_t  suadj0;                                               ///< Stored SUADJ0 value
  #endif
-    uint16_t base_value[CTSU_RANGE_NUM];                             ///< Value of internal registance measurement
-    uint16_t error_rate[CTSU_RANGE_NUM];                             ///< Error rate of base vs DAC
-    uint16_t range_ratio[CTSU_RANGE_NUM - 1];                        ///< Ratio between 160uA range and other ranges
-    uint16_t real_value[CTSU_CORRECTION_POINT_NUM];                  ///< Value calculated by error rate for dac value
-    uint16_t dac_value[CTSU_CORRECTION_POINT_NUM];                   ///< Value of internal DAC measurement
-    uint16_t coefficient[CTSU_RANGE_NUM][CTSU_CORRECTION_POINT_NUM]; ///< Coefficient table
+    uint16_t base_value[CTSU_RANGE_NUM];                           ///< Value of internal registance measurement
+    uint16_t error_rate[CTSU_RANGE_NUM];                           ///< Error rate of base vs DAC
+    uint16_t range_ratio[CTSU_RANGE_NUM - 1];                      ///< Ratio between 160uA range and other ranges
+    uint16_t dac_value[CTSU_CORRECTION_POINT_NUM];                 ///< Value of internal DAC measurement
+    uint16_t ref_value[CTSU_RANGE_NUM][CTSU_CORRECTION_POINT_NUM]; ///< Value of reference
 #else
-    uint16_t first_val;                                              ///< 1st correction value
-    uint16_t second_val;                                             ///< 2nd correction value
-    uint32_t first_coefficient;                                      ///< 1st correction coefficient
-    uint32_t second_coefficient;                                     ///< 2nd correction coefficient
-    uint32_t ctsu_clock;                                             ///< CTSU clock [MHz]
+    uint16_t first_val;                                            ///< 1st correction value
+    uint16_t second_val;                                           ///< 2nd correction value
+    uint32_t first_coefficient;                                    ///< 1st correction coefficient
+    uint32_t second_coefficient;                                   ///< 2nd correction coefficient
+    uint32_t ctsu_clock;                                           ///< CTSU clock [MHz]
 #endif
 } ctsu_correction_info_t;
 
@@ -159,17 +155,17 @@ typedef struct st_ctsu_correction_info
 /** CFC correction information */
 typedef struct st_ctsu_corrcfc_info
 {
-    ctsu_correction_status_t status;                                                ///< Correction status
-    ctsu_ctsuwr_t            ctsuwr;                                                ///< Correction scan parameter
-    volatile ctsu_self_buf_t scanbuf[CTSU_CFG_NUM_CFC];                             ///< Correction scan buffer
-    uint16_t                 base_value[CTSU_CFG_NUM_CFC];                          ///< Value of CFC circuit measurement
-    uint16_t                 error_rate[CTSU_CFG_NUM_CFC];                          ///< Error rate of base vs DAC
-    uint16_t                 value[CTSU_CFG_NUM_CFC][CTSU_CORRCFC_POINT_NUM];       ///< Value of internal DAC measurement
-    uint16_t                 coefficient[CTSU_CFG_NUM_CFC][CTSU_CORRCFC_POINT_NUM]; ///< Coefficient table
-    uint8_t  ts_table[CTSU_CFG_NUM_CFC];                                            ///< Number of TS terminal
-    uint8_t  index;                                                                 ///< Index of ts_table
-    uint8_t  num_ts;                                                                ///< Number of CFC-TS for instance
-    uint64_t stored_rx_bitmap;                                                      ///< Bitmap of registered CFC terminal
+    ctsu_correction_status_t status;                                              ///< Correction status
+    ctsu_ctsuwr_t            ctsuwr;                                              ///< Correction scan parameter
+    volatile ctsu_self_buf_t scanbuf[CTSU_CFG_NUM_CFC];                           ///< Correction scan buffer
+    uint16_t                 base_value[CTSU_CFG_NUM_CFC];                        ///< Value of CFC circuit measurement
+    uint16_t                 error_rate[CTSU_CFG_NUM_CFC];                        ///< Error rate of base vs DAC
+    uint16_t                 dac_value[CTSU_CFG_NUM_CFC][CTSU_CORRCFC_POINT_NUM]; ///< Value of internal DAC measurement
+    uint16_t                 ref_value[CTSU_CFG_NUM_CFC][CTSU_CORRCFC_POINT_NUM]; ///< Value of reference
+    uint8_t  ts_table[CTSU_CFG_NUM_CFC];                                          ///< Number of TS terminal
+    uint8_t  index;                                                               ///< Index of ts_table
+    uint8_t  num_ts;                                                              ///< Number of CFC-TS for instance
+    uint64_t stored_rx_bitmap;                                                    ///< Bitmap of registered CFC terminal
 } ctsu_corrcfc_info_t;
  #endif
 #endif

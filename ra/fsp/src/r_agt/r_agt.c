@@ -923,6 +923,7 @@ void agt_int_isr (void)
         /* Stop timer */
         p_instance_ctrl->p_reg->AGTCR = AGT_PRV_AGTCR_FORCE_STOP;
         agtcr &= AGT_PRV_AGTCR_STATUS_FLAGS;
+        p_instance_ctrl->p_reg->AGTCR = (uint8_t) agtcr;
 
         /* Set counter to period minus one. */
         r_agt_period_register_set(p_instance_ctrl, p_instance_ctrl->period);
@@ -1010,6 +1011,9 @@ void agt_int_isr (void)
             /* Restore callback memory in case this is a nested interrupt. */
             *p_instance_ctrl->p_callback_memory = callback_args;
         }
+
+        /* Retreive AGTCR in case it was modified in the callback. */
+        agtcr = p_instance_ctrl->p_reg->AGTCR;
     }
 
     /* Clear flags in AGTCR. */

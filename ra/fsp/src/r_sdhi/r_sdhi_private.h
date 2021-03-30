@@ -101,7 +101,7 @@ FSP_HEADER
 
 /* Commands */
 #define SDHI_PRV_EMMC_SWITCH_ACCESS_WRITE_BYTE          (3U)
-#define SDHI_PRV_EMMC_HIGH_SPEED_52_MHZ_BIT             (1U)
+#define SDHI_PRV_EMMC_HIGH_SPEED_52_MHZ_BIT             (2U)
 #define SDHI_PRV_EMMC_HIGH_SPEED_MODE                   (((SDHI_PRV_EMMC_SWITCH_ACCESS_WRITE_BYTE << 24U) |  \
                                                           (SDHI_PRV_EMMC_EXT_CSD_HS_TIMING_OFFSET << 16U)) | \
                                                          (SDHI_PRV_EMMC_HIGH_SPEED_52_MHZ_BIT << 8U))

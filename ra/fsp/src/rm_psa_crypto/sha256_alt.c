@@ -21,6 +21,7 @@
  *
  *  This file is part of mbed TLS (https://tls.mbed.org)
  */
+
 /*
  *  The SHA-256 Secure Hash Standard was published by NIST in 2002.
  *
@@ -306,6 +307,7 @@ int mbedtls_sha256_update_ret( mbedtls_sha256_context *ctx,
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
     size_t fill;
     uint32_t left;
+    uint32_t sha256_block_aligned_size;
 
     SHA256_VALIDATE_RET( ctx != NULL );
     SHA256_VALIDATE_RET( ilen == 0 || input != NULL );
@@ -325,22 +327,21 @@ int mbedtls_sha256_update_ret( mbedtls_sha256_context *ctx,
     if( left && ilen >= fill )
     {
         memcpy( (void *) (ctx->buffer + left), input, fill );
-
-        if( ( ret = mbedtls_internal_sha256_process( ctx, ctx->buffer ) ) != 0 )
+        if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0 )
             return( ret );
 
         input += fill;
         ilen  -= fill;
         left = 0;
     }
-
-    while( ilen >= 64 )
+    if (ilen >= SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES)
     {
-        if( ( ret = mbedtls_internal_sha256_process( ctx, input ) ) != 0 )
+        sha256_block_aligned_size = ilen / SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES;
+        ilen = ilen - (sha256_block_aligned_size * SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES);
+        if( ( ret = mbedtls_internal_sha256_process_ext( ctx, input, sha256_block_aligned_size * SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES) ) != 0 )
             return( ret );
 
-        input += 64;
-        ilen  -= 64;
+        input += (sha256_block_aligned_size * SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES);
     }
 
     if( ilen > 0 )
@@ -387,8 +388,7 @@ int mbedtls_sha256_finish_ret( mbedtls_sha256_context *ctx,
     {
         /* We'll need an extra block */
         memset( ctx->buffer + used, 0, 64 - used );
-
-        if( ( ret = mbedtls_internal_sha256_process( ctx, ctx->buffer ) ) != 0 )
+        if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0 )
             return( ret );
 
         memset( ctx->buffer, 0, 56 );
@@ -404,9 +404,8 @@ int mbedtls_sha256_finish_ret( mbedtls_sha256_context *ctx,
     PUT_UINT32_BE( high, ctx->buffer, 56 );
     PUT_UINT32_BE( low,  ctx->buffer, 60 );
 
-    if( ( ret = mbedtls_internal_sha256_process( ctx, ctx->buffer ) ) != 0 )
+    if( ( ret = mbedtls_internal_sha256_process_ext( ctx, ctx->buffer, SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES ) ) != 0 )
         return( ret );
-
     /*
      * Output final state
      */

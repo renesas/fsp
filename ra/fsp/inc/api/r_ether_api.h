@@ -103,7 +103,7 @@ typedef enum e_ether_padding
     ETHER_PADDING_DISABLE = 0,
     ETHER_PADDING_1BYTE   = 1,
     ETHER_PADDING_2BYTE   = 2,
-    ETEHR_PADDING_3BYTE   = 3,
+    ETHER_PADDING_3BYTE   = 3,
 } ether_padding_t;
 
 /** EDMAC descriptor as defined in the hardware manual.

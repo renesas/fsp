@@ -32,24 +32,21 @@
 
 /* Register definitions, common services and error codes. */
 #include "bsp_api.h"
+#include "time.h"
 
-#include "iot_wifi.h"
-
+#include "r_ioport_api.h"
 #include "r_uart_api.h"
 #include "r_sci_uart.h"
-
-#include "rm_wifi_onchip_silex_cfg.h"
 
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "stream_buffer.h"
 
+#include "iot_wifi.h"
+
+#include "rm_wifi_onchip_silex_cfg.h"
 #include "aws_secure_sockets_config.h"
 #include "aws_wifi_config.h"
-
-#include "r_ioport_api.h"
-
-extern const ioport_instance_t g_ioport;
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -66,7 +63,7 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /** Silex ULPGN Wifi security types */
-typedef enum
+typedef enum e_sx_ulpgn_security
 {
     WIFI_ONCHIP_SILEX_SECURITY_OPEN = 0,
     WIFI_ONCHIP_SILEX_SECURITY_WPA,
@@ -76,7 +73,7 @@ typedef enum
 } sx_ulpgn_security_t;
 
 /** Silex ULPGN Wifi socket status types */
-typedef enum
+typedef enum e_sx_ulpgn_socket_status
 {
     WIFI_ONCHIP_SILEX_SOCKET_STATUS_CLOSED = 0,
     WIFI_ONCHIP_SILEX_SOCKET_STATUS_SOCKET,
@@ -86,21 +83,40 @@ typedef enum
 } sx_ulpgn_socket_status_t;
 
 /** Silex socket shutdown channels */
-typedef enum
+typedef enum e_sx_ulpgn_socket_rw
 {
     WIFI_ONCHIP_SILEX_SOCKET_READ  = 1,
     WIFI_ONCHIP_SILEX_SOCKET_WRITE = 2,
 } sx_ulpgn_socket_rw;
 
+/** Silex WiFi module enable/disable for SNTP */
+typedef enum e_wifi_onchip_silex_sntp_enable
+{
+    WIFI_ONCHIP_SILEX_SNTP_DISABLE = 0,
+    WIFI_ONCHIP_SILEX_SNTP_ENABLE  = 1,
+} wifi_onchip_silex_sntp_enable_t;
+
+/** Silex WiFi module enable/disable for SNTP */
+typedef enum e_wifi_onchip_silex_sntp_daylight_savings_enable
+{
+    WIFI_ONCHIP_SILEX_SNTP_DAYLIGHT_SAVINGS_DISABLE = 0,
+    WIFI_ONCHIP_SILEX_SNTP_DAYLIGHT_SAVINGS_ENABLE  = 1,
+} wifi_onchip_silex_sntp_daylight_savings_enable_t;
+
 /** User configuration structure, used in open function */
 typedef struct st_wifi_onchip_cfg
 {
-    const uint32_t          num_uarts;                                                   ///< Number of UART interfaces to use
-    const uint32_t          num_sockets;                                                 ///< Number of sockets to initialize
-    const bsp_io_port_pin_t reset_pin;                                                   ///< Reset pin used for module
-    const uart_instance_t * uart_instances[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS]; ///< SCI UART instances
-    void const            * p_context;                                                   ///< User defined context passed into callback function.
-    void const            * p_extend;                                                    ///< Pointer to extended configuration by instance of interface.
+    const uint32_t                        num_uarts;                                                   ///< Number of UART interfaces to use
+    const uint32_t                        num_sockets;                                                 ///< Number of sockets to initialize
+    const bsp_io_port_pin_t               reset_pin;                                                   ///< Reset pin used for module
+    const uart_instance_t               * uart_instances[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS]; ///< SCI UART instances
+    const wifi_onchip_silex_sntp_enable_t sntp_enabled;                                                ///< Enable/Disable the SNTP Client
+    const uint8_t                       * sntp_server_ip;                                              ///< The SNTP server IP address string
+    const int32_t  sntp_timezone_offset_from_utc_hours;                                                ///< Timezone offset from UTC in (+/-) hours
+    const uint32_t sntp_timezone_offset_from_utc_minutes;                                              ///< Timezone offset from UTC in minutes
+    const wifi_onchip_silex_sntp_daylight_savings_enable_t sntp_timezone_use_daylight_savings;         ///< Enable/Disable use of daylight saving time.
+    void const * p_context;                                                                            ///< User defined context passed into callback function.
+    void const * p_extend;                                                                             ///< Pointer to extended configuration by instance of interface.
 } wifi_onchip_silex_cfg_t;
 
 /** Silex ULPGN Wifi internal socket instance structure */
@@ -114,12 +130,6 @@ typedef struct
     uint32_t             socket_create_flag;                                         ///< Flag to determine in socket has been created.
     uint32_t             socket_read_write_flag;                                     ///< flag to determine if read and/or write channels are active.
 } ulpgn_socket_t;
-
-/** Silex ULPGN Wifi SCI UART state information */
-typedef struct
-{
-    SemaphoreHandle_t uart_tei_sem;    ///< UART transmission end binary semaphore
-} uart_state_t;
 
 /** WIFI_ONCHIP_SILEX private control block. DO NOT MODIFY. */
 typedef struct
@@ -146,9 +156,13 @@ typedef struct
     SemaphoreHandle_t    rx_sem;                                                             ///< Receive binary semaphore handle
     uint8_t              last_data[WIFI_ONCHIP_SILEX_RETURN_TEXT_LENGTH];                    ///< Tailing buffer used for command parser
     uart_instance_t    * uart_instance_objects[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS]; ///< UART instance objects
-    uart_state_t         uart_state_info[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS];       ///< UART instance state information
+    SemaphoreHandle_t    uart_tei_sem[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS];          ///< UART transmission end binary semaphore
     ulpgn_socket_t       sockets[WIFI_ONCHIP_SILEX_CFG_NUM_CREATEABLE_SOCKETS];              ///< Internal socket instances
 } wifi_onchip_silex_instance_ctrl_t;
+
+/*******************************************************************************************************************//**
+ * @} (end addtogroup WIFI_ONCHIP_SILEX)
+ **********************************************************************************************************************/
 
 /**********************************************************************************************************************
  * Public Function Prototypes
@@ -173,14 +187,44 @@ fsp_err_t rm_wifi_onchip_silex_socket_disconnect(uint32_t socket_no);
 fsp_err_t rm_wifi_onchip_silex_disconnect();
 fsp_err_t rm_wifi_onchip_silex_dns_query(const char * p_textstring, uint8_t * p_ip_addr);
 fsp_err_t rm_wifi_onchip_silex_socket_connected(fsp_err_t * p_status);
+void      rm_wifi_onchip_silex_uart_callback(uart_callback_args_t * p_args);
 
 /*******************************************************************************************************************//**
- *  Callback function for first UART port in command mode. Used specifically for the SCI UART driver.
- *
- * @param[in]  p_args           Pointer to callback arguments structure.
+ * @addtogroup WIFI_ONCHIP_SILEX WIFI_ONCHIP_SILEX
+ * @{
+ **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ *  Get the current system time as the number of seconds since epoch 1970-01-01 00:00:00 UTC
  *
  **********************************************************************************************************************/
-void rm_wifi_onchip_silex_uart_callback(uart_callback_args_t * p_args);
+fsp_err_t RM_WIFI_ONCHIP_SILEX_EpochTimeGet(time_t * p_utc_time);
+
+/*******************************************************************************************************************//**
+ *  Get the current local time based on current timezone in a string format
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_WIFI_ONCHIP_SILEX_LocalTimeGet(uint8_t * p_local_time, uint32_t size_string);
+
+/*******************************************************************************************************************//**
+ *  Enable or Disable the SNTP Client Service
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_WIFI_ONCHIP_SILEX_SntpEnableSet(wifi_onchip_silex_sntp_enable_t enable);
+
+/*******************************************************************************************************************//**
+ *  Update the SNTP Server IP Address
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_WIFI_ONCHIP_SILEX_SntpServerIpAddressSet(uint8_t * p_ip_address);
+
+/*******************************************************************************************************************//**
+ *  Update the SNTP Timezone
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_WIFI_ONCHIP_SILEX_SntpTimeZoneSet(int32_t                                          hours,
+                                               uint32_t                                         minutes,
+                                               wifi_onchip_silex_sntp_daylight_savings_enable_t daylightSavingsEnable);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

@@ -125,6 +125,8 @@ FSP_HEADER
 #define BSP_MSTP_BIT_FSP_IP_DOC(channel)        (1U << (13U - channel));
 #define BSP_MSTP_REG_FSP_IP_ELC(channel)        R_MSTP->MSTPCRC
 #define BSP_MSTP_BIT_FSP_IP_ELC(channel)        (1U << (14U - channel));
+#define BSP_MSTP_REG_FSP_IP_CANFD(channel)      R_MSTP->MSTPCRC
+#define BSP_MSTP_BIT_FSP_IP_CANFD(channel)      (1U << (27U));
 #define BSP_MSTP_REG_FSP_IP_TRNG(channel)       R_MSTP->MSTPCRC
 #define BSP_MSTP_BIT_FSP_IP_TRNG(channel)       (1U << (28U - channel));
 #define BSP_MSTP_REG_FSP_IP_SCE(channel)        R_MSTP->MSTPCRC

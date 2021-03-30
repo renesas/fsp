@@ -50,8 +50,10 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CTSU_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define CTSU_API_VERSION_MINOR    (2U) // DEPRECATED
+#define CTSU_API_VERSION_MAJOR    (1U)     // DEPRECATED
+#define CTSU_API_VERSION_MINOR    (2U)     // DEPRECATED
+
+#define CTSU_COUNT_MAX            (0xFFFF) ///< Value of Maximum count
 
 /**********************************************************************************************************************
  * Typedef definitions

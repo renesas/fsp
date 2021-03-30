@@ -27,6 +27,8 @@
 #if defined(MBEDTLS_PSA_CRYPTO_ACCEL_DRV_C)
  #include "asymmetric_vendor.h"
 
+#if defined(MBEDTLS_ECP_C)
+
  #if (defined(MBEDTLS_ECP_ALT)) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)))
 
 /* Generate an ECP keypair in vendor defined format. */
@@ -126,5 +128,7 @@ exit:
 }
 
  #endif                                /* (defined(MBEDTLS_ECP_ALT)) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT))) */
+
+#endif /* MBEDTLS_ECP_C */
 
 #endif                                 /* MBEDTLS_PSA_CRYPTO_ACCEL_DRV_C */

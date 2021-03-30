@@ -478,7 +478,7 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
             snzcr |= (uint32_t) (p_cfg->dtc_state_in_snooze << R_SYSTEM_SNZCR_SNZDTCEN_Pos);
 
             /* Set the source that can cause an exit from snooze to normal mode */
-            R_ICU->SELSR0_b.SELS = (uint8_t) p_cfg->snooze_cancel_sources;
+            R_ICU->SELSR0_b.SELS = R_ICU_SELSR0_SELS_Msk & p_cfg->snooze_cancel_sources;
 
             /* Set all sources that can cause an exit from snooze mode to software standby. */
             R_SYSTEM->SNZEDCR = (uint8_t) p_cfg->snooze_end_sources & UINT8_MAX;

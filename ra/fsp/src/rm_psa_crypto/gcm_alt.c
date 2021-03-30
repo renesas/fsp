@@ -505,8 +505,6 @@ int mbedtls_gcm_auth_decrypt( mbedtls_gcm_context *ctx,
                       const unsigned char *input,
                       unsigned char *output )
 {
-    int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
-    unsigned char check_tag[16];
     size_t i;
     int diff;
 
@@ -517,24 +515,9 @@ int mbedtls_gcm_auth_decrypt( mbedtls_gcm_context *ctx,
     GCM_VALIDATE_RET( length == 0 || input != NULL );
     GCM_VALIDATE_RET( length == 0 || output != NULL );
 
-    if( ( ret = mbedtls_gcm_crypt_and_tag( ctx, MBEDTLS_GCM_DECRYPT, length,
+    return ( mbedtls_gcm_crypt_and_tag( ctx, MBEDTLS_GCM_DECRYPT, length,
                                    iv, iv_len, add, add_len,
-                                   input, output, tag_len, check_tag ) ) != 0 )
-    {
-        return( ret );
-    }
-
-    /* Check tag in "constant-time" */
-    for( diff = 0, i = 0; i < tag_len; i++ )
-        diff |= tag[i] ^ check_tag[i];
-
-    if( diff != 0 )
-    {
-        mbedtls_platform_zeroize( output, length );
-        return( MBEDTLS_ERR_GCM_AUTH_FAILED );
-    }
-
-    return( 0 );
+                                   input, output, tag_len, (unsigned char *)tag ) );
 }
 
 void mbedtls_gcm_free( mbedtls_gcm_context *ctx )

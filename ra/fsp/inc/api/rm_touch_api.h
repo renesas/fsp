@@ -50,8 +50,11 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define TOUCH_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define TOUCH_API_VERSION_MINOR    (0U) // DEPRECATED
+#define TOUCH_API_VERSION_MAJOR    (1U)           // DEPRECATED
+#define TOUCH_API_VERSION_MINOR    (0U)           // DEPRECATED
+
+#define TOUCH_COUNT_MAX            CTSU_COUNT_MAX ///< Value of Maximum count
+#define TOUCH_OFF_VALUE            (0xFFFF)       ///< Value of Non-touch
 
 /**********************************************************************************************************************
  * Typedef definitions

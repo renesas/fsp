@@ -54,12 +54,36 @@
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * Uses the SCE to process the hash and returns the result.
+ * Uses the SCE to process the hash for len size of data and returns the result.
  *
  *
  * @retval 0                                       Hash calculation was successful.
  * @retval MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED    Hash calculation with the SCE failed
  **********************************************************************************************************************/
+int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
+                                         const unsigned char      data[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES],
+                                         uint32_t                 len)
+{
+    SHA256_VALIDATE_RET(ctx != NULL);
+    SHA256_VALIDATE_RET((const unsigned char *) data != NULL);
+
+    if (FSP_SUCCESS !=
+        HW_SCE_SHA256_UpdateHash((const uint32_t *) &data[0], BYTES_TO_WORDS(len), &ctx->state[0]))
+    {
+        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+
+    return 0;
+}
+
+/*******************************************************************************************************************//**
+ * Uses the SCE to process the hash for SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES bytes of data and returns the result.
+ *
+ *
+ * @retval 0                                       Hash calculation was successful.
+ * @retval MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED    Hash calculation with the SCE failed
+ **********************************************************************************************************************/
+
 int mbedtls_internal_sha256_process (mbedtls_sha256_context * ctx,
                                      const unsigned char      data[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES])
 {
@@ -68,7 +92,7 @@ int mbedtls_internal_sha256_process (mbedtls_sha256_context * ctx,
 
     if (FSP_SUCCESS !=
         HW_SCE_SHA256_UpdateHash((const uint32_t *) &data[0], BYTES_TO_WORDS(SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES),
-                                 (uint32_t *) &ctx->state[0])) // NOLINT(rea-tp-casting)
+                                 &ctx->state[0]))
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }

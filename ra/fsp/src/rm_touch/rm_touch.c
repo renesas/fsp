@@ -38,8 +38,6 @@
 /** "TOUC" in ASCII, used to determine if device is open. */
 #define TOUCH_OPEN                            (0x544F5543ULL)
 
-#define TOUCH_COUNT_MAX                       (0xFFFF)
-#define TOUCH_OFF_VALUE                       (0xFFFF)
 #define TOUCH_SLIDER_ELEMENTS_MIN             (3)
 #define TOUCH_SLIDER_ELEMENTS_MAX             (10)
 #define TOUCH_WHEEL_ELEMENTS_SMALL            (4)

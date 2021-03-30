@@ -56,26 +56,20 @@
  ******************************************************************************/
 
 /** Declare a task handler for the created tasks. **/
- #if (USB_UT_MODE == 0)
-  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 static TaskHandle_t g_hcd_tsk_hdl;
 static TaskHandle_t g_mgr_tsk_hdl;
-   #if USB_CFG_HUB == USB_CFG_ENABLE
+  #if USB_CFG_HUB == USB_CFG_ENABLE
 static TaskHandle_t g_hub_tsk_hdl;
-   #endif                              /* USB_CFG_HUB == USB_CFG_ENABLE */
-  #endif                               /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
- #endif                                /* #if (USB_UT_MODE == 0) */
+  #endif                               /* USB_CFG_HUB == USB_CFG_ENABLE */
+ #endif                                /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
 
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-  #if (USB_UT_MODE == 0)
 static TaskHandle_t g_pcd_tsk_hdl;
-  #endif
  #endif                                /* ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
  #if defined(USB_CFG_PMSC_USE)
-  #if (USB_UT_MODE == 0)
 static TaskHandle_t g_pmsc_tsk_hdl;
-  #endif                               /* (USB_UT_MODE == 0) */
  #endif                                /* defined(USB_CFG_PMSC_USE) */
 
  #if defined(USB_CFG_HMSC_USE)
@@ -124,24 +118,22 @@ static QueueHandle_t g_hcdc_mpl_hdl;
 static QueueHandle_t g_hhid_mpl_hdl;
 static QueueHandle_t g_pmsc_mpl_hdl;
 
- #if (USB_UT_MODE == 0)
-  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 static void * g_p_hcd_mpl[QUEUE_SIZE];
 static void * g_p_mgr_mpl[QUEUE_SIZE];
 static void * g_p_hub_mpl[QUEUE_SIZE];
 static void * g_p_cls_mpl[QUEUE_SIZE];
-   #if defined(USB_CFG_HMSC_USE)
+  #if defined(USB_CFG_HMSC_USE)
 static void * g_p_hmsc_mpl[QUEUE_SIZE];
 static void * g_p_hmsc_req_mpl[QUEUE_SIZE];
-   #endif                              /* defined(USB_CFG_HMSC_USE) */
-   #if defined(USB_CFG_HCDC_USE)
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
+  #if defined(USB_CFG_HCDC_USE)
 static void * g_p_hcdc_mpl[QUEUE_SIZE];
-   #endif                              /* defined(USB_CFG_HCDC_USE) */
-   #if defined(USB_CFG_HHID_USE)
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
+  #if defined(USB_CFG_HHID_USE)
 static void * g_p_hhid_mpl[QUEUE_SIZE];
-   #endif                              /* defined(USB_CFG_HHID_USE) */
-  #endif                               /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
- #endif                                /* (USB_UT_MODE == 0) */
+  #endif                               /* defined(USB_CFG_HHID_USE) */
+ #endif                                /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
 
 /** Declare an array of memory pool handlers. **/
 QueueHandle_t * g_mpl_table[] =
@@ -158,8 +150,6 @@ QueueHandle_t * g_mpl_table[] =
     &g_hhid_mpl_hdl,                   /* A memory pool handler of USB HHID task */
     &g_pmsc_mpl_hdl,                   /* A memory pool handler of USB PMSC task */
 };
-
- #if (USB_UT_MODE == 0)
 
 /******************************************************************************
  * Function Name: usb_rtos_configuration
@@ -183,7 +173,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
     if (USB_MODE_HOST == usb_mode)
     {
-  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
         uint16_t i;
         void   * tmptr = NULL;
 
@@ -224,7 +214,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
             return err;
         }
 
-   #if defined(USB_CFG_HMSC_USE)
+  #if defined(USB_CFG_HMSC_USE)
         vSemaphoreCreateBinary(SemaphoreHandleRead);
 
         /** USB Host MSC **/
@@ -244,9 +234,9 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-   #endif                              /* defined(USB_CFG_HMSC_USE) */
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
 
-   #if defined(USB_CFG_HCDC_USE)
+  #if defined(USB_CFG_HCDC_USE)
 
         /** USB Host CDC **/
         g_hcdc_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
@@ -256,9 +246,9 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-   #endif                              /* defined(USB_CFG_HCDC_USE) */
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
 
-   #if defined(USB_CFG_HHID_USE)
+  #if defined(USB_CFG_HHID_USE)
 
         /** USB Host HID **/
         g_hhid_mbx_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
@@ -268,7 +258,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-   #endif                              /* defined(USB_CFG_HHID_USE) */
+  #endif                               /* defined(USB_CFG_HHID_USE) */
 
         /** Create memory pool using for each task **/
         /** USB HCD task **/
@@ -282,16 +272,12 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 if (NULL == tmptr)
                 {
                     err = UsbRtos_Err_Init_Mpl;
+
+                    return err;
                 }
-                else if (UsbRtos_Success == err)
-                {
-                    g_p_hcd_mpl[i] = tmptr;
-                    xQueueSend(g_hcd_mpl_hdl, &tmptr, 0);
-                }
-                else
-                {
-                    /* None */
-                }
+
+                g_p_hcd_mpl[i] = tmptr;
+                xQueueSend(g_hcd_mpl_hdl, &tmptr, 0);
             }
         }
         else
@@ -317,16 +303,12 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 if (NULL == tmptr)
                 {
                     err = UsbRtos_Err_Init_Mpl;
+
+                    return err;
                 }
-                else if (UsbRtos_Success == err)
-                {
-                    g_p_mgr_mpl[i] = tmptr;
-                    xQueueSend(g_mgr_mpl_hdl, &tmptr, 0);
-                }
-                else
-                {
-                    /* None */
-                }
+
+                g_p_mgr_mpl[i] = tmptr;
+                xQueueSend(g_mgr_mpl_hdl, &tmptr, 0);
             }
         }
         else
@@ -352,16 +334,12 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 if (NULL == tmptr)
                 {
                     err = UsbRtos_Err_Init_Mpl;
+
+                    return err;
                 }
-                else if (UsbRtos_Success == err)
-                {
-                    g_p_hub_mpl[i] = tmptr;
-                    xQueueSend(g_hub_mpl_hdl, &tmptr, 0);
-                }
-                else
-                {
-                    /* None */
-                }
+
+                g_p_hub_mpl[i] = tmptr;
+                xQueueSend(g_hub_mpl_hdl, &tmptr, 0);
             }
         }
         else
@@ -387,16 +365,12 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 if (NULL == tmptr)
                 {
                     err = UsbRtos_Err_Init_Mpl;
+
+                    return err;
                 }
-                else if (UsbRtos_Success == err)
-                {
-                    g_p_cls_mpl[i] = tmptr;
-                    xQueueSend(g_cls_mpl_hdl, &tmptr, 0);
-                }
-                else
-                {
-                    /* None */
-                }
+
+                g_p_cls_mpl[i] = tmptr;
+                xQueueSend(g_cls_mpl_hdl, &tmptr, 0);
             }
         }
         else
@@ -411,7 +385,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
             return err;
         }
 
-   #if defined(USB_CFG_HMSC_USE)
+  #if defined(USB_CFG_HMSC_USE)
 
         /** USB Host MSC **/
         g_hmsc_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
@@ -424,16 +398,12 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 if (NULL == tmptr)
                 {
                     err = UsbRtos_Err_Init_Mpl;
+
+                    return err;
                 }
-                else if (UsbRtos_Success == err)
-                {
-                    g_p_hmsc_mpl[i] = tmptr;
-                    xQueueSend(g_hmsc_mpl_hdl, &tmptr, 0);
-                }
-                else
-                {
-                    /* None */
-                }
+
+                g_p_hmsc_mpl[i] = tmptr;
+                xQueueSend(g_hmsc_mpl_hdl, &tmptr, 0);
             }
         }
         else
@@ -459,16 +429,12 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 if (NULL == tmptr)
                 {
                     err = UsbRtos_Err_Init_Mpl;
+
+                    return err;
                 }
-                else if (UsbRtos_Success == err)
-                {
-                    g_p_hmsc_req_mpl[i] = tmptr;
-                    xQueueSend(g_hmsc_req_mpl_hdl, &tmptr, 0);
-                }
-                else
-                {
-                    /* None */
-                }
+
+                g_p_hmsc_req_mpl[i] = tmptr;
+                xQueueSend(g_hmsc_req_mpl_hdl, &tmptr, 0);
             }
         }
         else
@@ -482,9 +448,9 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
         {
             return err;
         }
-   #endif                              /* defined(USB_CFG_HMSC_USE) */
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
 
-   #if defined(USB_CFG_HCDC_USE)
+  #if defined(USB_CFG_HCDC_USE)
 
         /** USB Host CDC **/
         g_hcdc_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
@@ -500,15 +466,9 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
                     return err;
                 }
-                else if (UsbRtos_Success == err)
-                {
-                    g_p_hcdc_mpl[i] = tmptr;
-                    xQueueSend(g_hcdc_mpl_hdl, &tmptr, 0);
-                }
-                else
-                {
-                    /* None */
-                }
+
+                g_p_hcdc_mpl[i] = tmptr;
+                xQueueSend(g_hcdc_mpl_hdl, &tmptr, 0);
             }
         }
         else
@@ -522,9 +482,9 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
         {
             return err;
         }
-   #endif                              /* defined(USB_CFG_HCDC_USE) */
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
 
-   #if defined(USB_CFG_HHID_USE)
+  #if defined(USB_CFG_HHID_USE)
 
         /** USB Host HID **/
         g_hhid_mpl_hdl = xQueueCreate(QUEUE_SIZE, sizeof(void *));
@@ -540,11 +500,9 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
                     return err;
                 }
-                else
-                {
-                    g_p_hhid_mpl[i] = tmptr;
-                    xQueueSend(g_hhid_mpl_hdl, &tmptr, 0);
-                }
+
+                g_p_hhid_mpl[i] = tmptr;
+                xQueueSend(g_hhid_mpl_hdl, &tmptr, 0);
             }
         }
         else
@@ -553,7 +511,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-   #endif                                                     /* defined(USB_CFG_HHID_USE) */
+  #endif                                                      /* defined(USB_CFG_HHID_USE) */
 
         /** USB Tasks Creation **/
         ret = xTaskCreate((TaskFunction_t) usb_hstd_hcd_task, /** Entry function of USB HCD task  **/
@@ -569,7 +527,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
             return err;
         }
 
-   #if USB_CFG_HUB == USB_CFG_ENABLE
+  #if USB_CFG_HUB == USB_CFG_ENABLE
         ret = xTaskCreate((TaskFunction_t) usb_hhub_task, /** Entry function of USB HUB task  **/
                           "HUB_TSK",                      /** Name of USB HUB task            **/
                           HUB_STACK_SIZE,                 /** Stack size in words             **/
@@ -582,7 +540,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-   #endif                                                     /* USB_CFG_HUB == USB_CFG_ENABLE */
+  #endif                                                      /* USB_CFG_HUB == USB_CFG_ENABLE */
 
         ret = xTaskCreate((TaskFunction_t) usb_hstd_mgr_task, /** Entry function of USB MGR task  **/
                           "MGR_TSK",                          /** Name of USB MGR task            **/
@@ -596,11 +554,11 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-  #endif                               /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
+ #endif                                /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
     }
     else
     {
-  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+ #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
         /** Create mailbox **/
         /** USB PCD task **/
@@ -625,9 +583,9 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-  #endif                               /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
+ #endif                                /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
 
-  #if defined(USB_CFG_PMSC_USE)
+ #if defined(USB_CFG_PMSC_USE)
 
         /** Create mailbox **/
         /** USB PMSC task **/
@@ -652,13 +610,13 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
 
             return err;
         }
-  #endif                               /* defined(USB_CFG_PMSC_USE) */
+ #endif                                /* defined(USB_CFG_PMSC_USE) */
     }
 
-  #if (USB_NUM_USBIP == 2)
+ #if (USB_NUM_USBIP == 2)
     if ((g_usb_usbmode[0] == 0) || (g_usb_usbmode[1] == 0))
     {
-  #endif                               /* (USB_NUM_USBIP == 2) */
+ #endif                                /* (USB_NUM_USBIP == 2) */
     /* WAIT_LOOP */
     for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
     {
@@ -688,9 +646,9 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
         }
     }
 
-  #if (USB_NUM_USBIP == 2)
+ #if (USB_NUM_USBIP == 2)
 }
-  #endif                               /* (USB_NUM_USBIP == 2) */
+ #endif                                /* (USB_NUM_USBIP == 2) */
     return err;
 }                                      /* End of function usb_rtos_configuration() */
 
@@ -712,13 +670,13 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
     uint16_t       ip_loop;
     uint16_t       pipe_loop;
     uint16_t       addr_loop;
-  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
     uint16_t i;
-  #endif                               /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+ #endif                                /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
 
     if (USB_MODE_HOST == g_usb_usbmode[module_number])
     {
-  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
         /** Create mailbox for each task. **/
         /** USB HCD task **/
@@ -733,7 +691,7 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         /** USB Internal Communication mailbox **/
         vQueueDelete(g_cls_mbx_hdl);
 
-   #if defined(USB_CFG_HMSC_USE)
+  #if defined(USB_CFG_HMSC_USE)
         vSemaphoreDelete(SemaphoreHandleRead);
 
         /** USB Host MSC **/
@@ -741,19 +699,19 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
 
         /** USB Host MSC (for class request) **/
         vQueueDelete(g_hmsc_req_mbx_hdl);
-   #endif                              /* defined(USB_CFG_HMSC_USE) */
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
 
-   #if defined(USB_CFG_HCDC_USE)
+  #if defined(USB_CFG_HCDC_USE)
 
         /** USB Host CDC **/
         vQueueDelete(g_hcdc_mbx_hdl);
-   #endif                              /* defined(USB_CFG_HCDC_USE) */
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
 
-   #if defined(USB_CFG_HHID_USE)
+  #if defined(USB_CFG_HHID_USE)
 
         /** USB Host HID **/
         vQueueDelete(g_hhid_mbx_hdl);
-   #endif                              /* defined(USB_CFG_HHID_USE) */
+  #endif                               /* defined(USB_CFG_HHID_USE) */
 
         /** Create memory pool using for each task **/
         /** USB HCD task **/
@@ -784,7 +742,7 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
             vPortFree(g_p_cls_mpl[i]);
         }
 
-   #if defined(USB_CFG_HMSC_USE)
+  #if defined(USB_CFG_HMSC_USE)
 
         /** USB Host MSC **/
         vQueueDelete(g_hmsc_mpl_hdl);
@@ -799,9 +757,9 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         {
             vPortFree(g_p_hmsc_req_mpl[i]);
         }
-   #endif                              /* defined(USB_CFG_HMSC_USE) */
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
 
-   #if defined(USB_CFG_HCDC_USE)
+  #if defined(USB_CFG_HCDC_USE)
 
         /** USB Host CDC **/
         vQueueDelete(g_hcdc_mpl_hdl);
@@ -809,9 +767,9 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         {
             vPortFree(g_p_hcdc_mpl[i]);
         }
-   #endif                              /* defined(USB_CFG_HCDC_USE) */
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
 
-   #if defined(USB_CFG_HHID_USE)
+  #if defined(USB_CFG_HHID_USE)
 
         /** USB Host HID **/
         vQueueDelete(g_hhid_mpl_hdl);
@@ -819,20 +777,20 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         {
             vPortFree(g_p_hhid_mpl[i]);
         }
-   #endif                              /* defined(USB_CFG_HHID_USE) */
+  #endif                               /* defined(USB_CFG_HHID_USE) */
 
         /** USB Tasks Creation **/
         vTaskDelete(g_hcd_tsk_hdl);
 
-   #if USB_CFG_HUB == USB_CFG_ENABLE
+  #if USB_CFG_HUB == USB_CFG_ENABLE
         vTaskDelete(g_hub_tsk_hdl);
-   #endif                              /* USB_CFG_HUB == USB_CFG_ENABLE */
+  #endif                               /* USB_CFG_HUB == USB_CFG_ENABLE */
         vTaskDelete(g_mgr_tsk_hdl);
-  #endif                               /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
+ #endif                                /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
     }
     else
     {
-  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+ #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
         /** USB Tasks Creation **/
         vTaskDelete(g_pcd_tsk_hdl);
@@ -841,7 +799,7 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         /** USB PCD task **/
         vQueueDelete(g_pcd_mbx_hdl);
 
-   #if defined(USB_CFG_PMSC_USE)
+  #if defined(USB_CFG_PMSC_USE)
 
         /** USB Tasks Creation **/
         vTaskDelete(g_pmsc_tsk_hdl);
@@ -849,14 +807,14 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         /** Create mailbox **/
         /** USB PMSC task **/
         vQueueDelete(g_pmsc_mbx_hdl);
-   #endif                              /* defined(USB_CFG_PMSC_USE) */
-  #endif                               /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
+  #endif                               /* defined(USB_CFG_PMSC_USE) */
+ #endif                                /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
     }
 
-  #if (USB_NUM_USBIP == 2)
+ #if (USB_NUM_USBIP == 2)
     if ((g_usb_usbmode[0] == 0) || (g_usb_usbmode[1] == 0))
     {
-  #endif                               /* (USB_NUM_USBIP == 2) */
+ #endif                                /* (USB_NUM_USBIP == 2) */
     /* WAIT_LOOP */
     for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
     {
@@ -874,13 +832,11 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         }
     }
 
-  #if (USB_NUM_USBIP == 2)
+ #if (USB_NUM_USBIP == 2)
 }
-  #endif                               /* (USB_NUM_USBIP == 2) */
+ #endif                                /* (USB_NUM_USBIP == 2) */
     return err;
 }                                      /* End of function usb_rtos_delete() */
-
- #endif /* #if (USB_UT_MODE == 0) */
 
 /******************************************************************************
  * Function Name   : usb_cstd_rec_msg

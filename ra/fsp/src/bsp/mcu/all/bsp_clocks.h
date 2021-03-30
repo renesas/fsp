@@ -142,6 +142,12 @@ FSP_HEADER
 #define BSP_CLOCKS_OCTA_CLOCK_DIV_6            (3) // Divide OCTA source clock by 6
 #define BSP_CLOCKS_OCTA_CLOCK_DIV_8            (4) // Divide OCTA source clock by 8
 
+/* CANFD clock divider options. */
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_1           (0) // Divide CANFD source clock by 1
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_2           (1) // Divide CANFD source clock by 2
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_4           (2) // Divide CANFD source clock by 4
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_6           (3) // Divide CANFD source clock by 6
+
 /* PLL divider options. */
 #define BSP_CLOCKS_PLL_DIV_1                   (0)
 #define BSP_CLOCKS_PLL_DIV_2                   (1)

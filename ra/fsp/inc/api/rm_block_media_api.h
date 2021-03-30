@@ -32,6 +32,7 @@
  *
  * Implemented by:
  * - @ref RM_BLOCK_MEDIA_SDMMC
+ * - @ref RM_BLOCK_MEDIA_SPI
  * - @ref RM_BLOCK_MEDIA_USB
  *
  * @{
@@ -88,7 +89,7 @@ typedef struct st_rm_block_media_callback_args
 /** User configuration structure, used in open function */
 typedef struct st_rm_block_media_cfg
 {
-    uint32_t block_size;                                          ///< Block size, must be a power of 2 multiple of sector_size_bytes
+    uint32_t block_size;                                          /// DEPRECATED - Block size, must be a power of 2 multiple of sector_size_bytes
     void (* p_callback)(rm_block_media_callback_args_t * p_args); ///< Pointer to callback function
     void const * p_context;                                       ///< User defined context passed into callback function
     void const * p_extend;                                        ///< Extension parameter for hardware specific settings
@@ -106,6 +107,7 @@ typedef struct st_rm_block_media_status
 /** Block media API control block.  Allocate an instance specific control block to pass into the block media API calls.
  * @par Implemented as
  * - @ref rm_block_media_sdmmc_instance_ctrl_t
+ * - @ref rm_block_media_spi_instance_ctrl_t
  * - @ref rm_block_media_usb_instance_ctrl_t
  */
 typedef void rm_block_media_ctrl_t;
@@ -117,6 +119,7 @@ typedef struct st_rm_block_media_api
      * intitialization procedure.
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_Open
+     * - @ref RM_BLOCK_MEDIA_SPI_Open
      * - @ref RM_BLOCK_MEDIA_USB_Open
      *
      * @param[in]   p_ctrl              Pointer to control block. Must be declared by user. Elements set here.
@@ -128,6 +131,7 @@ typedef struct st_rm_block_media_api
      * This function blocks until media initialization is complete.
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_MediaInit
+     * - @ref RM_BLOCK_MEDIA_SPI_MediaInit
      * - @ref RM_BLOCK_MEDIA_USB_MediaInit
      *
      * @param[in]   p_ctrl              Control block set in @ref rm_block_media_api_t::open call.
@@ -137,6 +141,7 @@ typedef struct st_rm_block_media_api
     /** Reads blocks of data from the specified memory device address to the location specified by the caller.
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_Read
+     * - @ref RM_BLOCK_MEDIA_SPI_Read
      * - @ref RM_BLOCK_MEDIA_USB_Read
      *
      * @param[in]   p_ctrl              Control block set in @ref rm_block_media_api_t::open call.
@@ -150,6 +155,7 @@ typedef struct st_rm_block_media_api
     /** Writes blocks of data to the specified device memory address.
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_Write
+     * - @ref RM_BLOCK_MEDIA_SPI_Write
      * - @ref RM_BLOCK_MEDIA_USB_Write
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
@@ -163,6 +169,7 @@ typedef struct st_rm_block_media_api
     /** Erases blocks of data from the memory device.
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_Erase
+     * - @ref RM_BLOCK_MEDIA_SPI_Erase
      * - @ref RM_BLOCK_MEDIA_USB_Erase
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
@@ -190,6 +197,7 @@ typedef struct st_rm_block_media_api
      *
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_StatusGet
+     * - @ref RM_BLOCK_MEDIA_SPI_StatusGet
      * - @ref RM_BLOCK_MEDIA_USB_StatusGet
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
@@ -200,6 +208,7 @@ typedef struct st_rm_block_media_api
     /** Returns information about the block media device.
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_InfoGet
+     * - @ref RM_BLOCK_MEDIA_SPI_InfoGet
      * - @ref RM_BLOCK_MEDIA_USB_InfoGet
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
@@ -211,6 +220,7 @@ typedef struct st_rm_block_media_api
     /** Closes the module.
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_Close
+     * - @ref RM_BLOCK_MEDIA_SPI_Close
      * - @ref RM_BLOCK_MEDIA_USB_Close
      *
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
@@ -220,6 +230,7 @@ typedef struct st_rm_block_media_api
     /* DEPRECATED Gets version and stores it in provided pointer p_version.
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_VersionGet
+     * - @ref RM_BLOCK_MEDIA_SPI_VersionGet
      * - @ref RM_BLOCK_MEDIA_USB_VersionGet
      *
      * @param[out]  p_version          Code and API version used.

@@ -93,7 +93,11 @@ typedef enum e_transfer_mode
      *  @ref transfer_addr_mode_t.  After the block transfer is complete, transfer_info_t::num_blocks is
      *  decremented.  After the transfer_info_t::num_blocks reaches 0, transfer requests will not cause any
      *  further transfers. */
-    TRANSFER_MODE_BLOCK = 2
+    TRANSFER_MODE_BLOCK = 2,
+
+    /** In addition to block mode features, repeat-block mode supports a ring buffer of blocks and offsets
+     *  within a block (to split blocks into arrays of their first data, second data, etc.) */
+    TRANSFER_MODE_REPEAT_BLOCK = 3
 } transfer_mode_t;
 
 /** Transfer size specifies the size of each individual transfer.
@@ -123,14 +127,14 @@ typedef enum e_transfer_addr_mode
 } transfer_addr_mode_t;
 
 /** Repeat area options (source or destination).  In @ref TRANSFER_MODE_REPEAT, the selected pointer returns to its
- *  original value after transfer_info_t::length transfers.  In @ref TRANSFER_MODE_BLOCK, the selected pointer
- *  returns to its original value after each transfer. */
+ *  original value after transfer_info_t::length transfers.  In @ref TRANSFER_MODE_BLOCK and @ref TRANSFER_MODE_REPEAT_BLOCK,
+ *  the selected pointer returns to its original value after each transfer. */
 typedef enum e_transfer_repeat_area
 {
-    /** Destination area repeated in @ref TRANSFER_MODE_REPEAT or @ref TRANSFER_MODE_BLOCK. */
+    /** Destination area repeated in @ref TRANSFER_MODE_REPEAT or @ref TRANSFER_MODE_BLOCK or @ref TRANSFER_MODE_REPEAT_BLOCK. */
     TRANSFER_REPEAT_AREA_DESTINATION = 0,
 
-    /** Source area repeated in @ref TRANSFER_MODE_REPEAT or @ref TRANSFER_MODE_BLOCK. */
+    /** Source area repeated in @ref TRANSFER_MODE_REPEAT or @ref TRANSFER_MODE_BLOCK or @ref TRANSFER_MODE_REPEAT_BLOCK. */
     TRANSFER_REPEAT_AREA_SOURCE = 1
 } transfer_repeat_area_t;
 
@@ -218,11 +222,13 @@ typedef struct st_transfer_info
     void const * volatile p_src;       ///< Source pointer
     void * volatile       p_dest;      ///< Destination pointer
 
-    /** Number of blocks to transfer when using @ref TRANSFER_MODE_BLOCK (both DTC an DMAC) and
-     * @ref TRANSFER_MODE_REPEAT (DMAC only), unused in other modes. */
+    /** Number of blocks to transfer when using @ref TRANSFER_MODE_BLOCK (both DTC an DMAC) or
+     * @ref TRANSFER_MODE_REPEAT (DMAC only) or
+     * @ref TRANSFER_MODE_REPEAT_BLOCK (DMAC only), unused in other modes. */
     volatile uint16_t num_blocks;
 
-    /** Length of each transfer.  Range limited for @ref TRANSFER_MODE_BLOCK and @ref TRANSFER_MODE_REPEAT,
+    /** Length of each transfer.  Range limited for @ref TRANSFER_MODE_BLOCK, @ref TRANSFER_MODE_REPEAT,
+     *  and @ref TRANSFER_MODE_REPEAT_BLOCK
      *  see HAL driver for details. */
     volatile uint16_t length;
 } transfer_info_t;

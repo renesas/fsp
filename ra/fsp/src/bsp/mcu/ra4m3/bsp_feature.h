@@ -79,6 +79,7 @@
 #define BSP_FEATURE_ADC_UNIT_0_CHANNELS                   (0x33FF)   // 0 to 9, 12, 13
 #define BSP_FEATURE_ADC_UNIT_1_CHANNELS                   (0x7F0007) // 0 to 2, 16 to 22
 #define BSP_FEATURE_ADC_VALID_UNIT_MASK                   (3U)
+#define BSP_FEATURE_ADC_HAS_ADBUF                         (1U)
 
 #define BSP_FEATURE_AGT_VALID_CHANNEL_MASK                (0x3F)
 #define BSP_FEATURE_AGT_MAX_CHANNEL_NUM                   (5)
@@ -88,6 +89,7 @@
 #define BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER             (0)
 #define BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE             (1)
 #define BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK                 (0)  // Feature not available on this MCU
+#define BSP_FEATURE_BSP_HAS_CANFD_CLOCK                   (0)  // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SCE5                          (0)  // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SCE_ON_RA2                    (0)  // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SECURITY_MPU                  (0U)
@@ -119,6 +121,8 @@
 #define BSP_FEATURE_CAN_CLOCK                             (0U)
 #define BSP_FEATURE_CAN_MCLOCK_ONLY                       (0U)
 #define BSP_FEATURE_CAN_NUM_CHANNELS                      (2U)
+
+#define BSP_FEATURE_CANFD_NUM_CHANNELS                    (0U) // Feature not available on this MCU
 
 #define BSP_FEATURE_CGC_HAS_BCLK                          (0U)
 #define BSP_FEATURE_CGC_HAS_FCLK                          (1U)
@@ -179,6 +183,7 @@
 #define BSP_FEATURE_DAC_MAX_CHANNELS                      (2U)
 
 #define BSP_FEATURE_DMAC_MAX_CHANNEL                      (8U)
+#define BSP_FEATURE_DMAC_HAS_REPEAT_BLOCK_MODE            (1U)
 
 #define BSP_FEATURE_DWT_CYCCNT                            (1U)          // RA4M3 has Data Watchpoint Cycle Count Register
 
@@ -260,6 +265,8 @@
 
 #define BSP_FEATURE_POEG_CHANNEL_MASK                     (0xFU)
 
+#define BSP_FEATURE_QSPI_DEVICE_START_ADDRESS             (0x60000000U)
+
 #define BSP_FEATURE_SCI_ADDRESS_MATCH_CHANNELS            (0x219U)
 #define BSP_FEATURE_SCI_CHANNELS                          (0x21FU)
 #define BSP_FEATURE_SCI_CLOCK                             (FSP_PRIV_CLOCK_PCLKA)
@@ -279,7 +286,6 @@
 #define BSP_FEATURE_SLCDC_MAX_NUM_SEG                     (0)  // Feature not available on this MCU
 
 #define BSP_FEATURE_SPI_CLK                               (FSP_PRIV_CLOCK_PCLKA)
-#define BSP_FEATURE_SPI_HAS_BYTE_SWAP                     (1U)
 #define BSP_FEATURE_SPI_HAS_SPCR3                         (1U)
 #define BSP_FEATURE_SPI_HAS_SSL_LEVEL_KEEP                (1U)
 #define BSP_FEATURE_SPI_MAX_CHANNEL                       (1U)
@@ -290,5 +296,7 @@
 #define BSP_FEATURE_TRNG_HAS_MODULE_STOP                  (0U)
 
 #define BSP_FEATURE_TZ_HAS_TRUSTZONE                      (1U)
+
+#define BSP_FEATURE_BSP_NUM_PMSAR                         (9U)
 
 #endif

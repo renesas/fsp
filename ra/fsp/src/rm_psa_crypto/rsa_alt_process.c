@@ -390,12 +390,12 @@ int mbedtls_rsa_private (mbedtls_rsa_context * ctx,
     /* Write N into the buffer in reverse */
     if (0 != mbedtls_mpi_write_binary(&ctx->N, (uint8_t *) p_calloc_temp_buff_N, ctx->len))
     {
-        ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
+        ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
     }
     /* Write D into the buffer in reverse */
     else if (0 != mbedtls_mpi_write_binary(&ctx->D, (uint8_t *) p_calloc_temp_buff_D, private_key_size_bytes))
     {
-        ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
+        ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
     }
     else
     {

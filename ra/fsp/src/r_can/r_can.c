@@ -33,7 +33,7 @@
 #define CAN_TEST_LISTEN_ONLY                (3U)
 #define CAN_TEST_LOOPBACK_EXTERNAL          (5U)
 #define CAN_TEST_LOOPBACK_INTERNAL          (7U)
-#define CAN_MAX_DATA_LENGTH                 (8U)
+#define CAN_MAX_DATA_LENGTH                 (8)
 #define CAN_MAX_NO_MAILBOXES                (32U)
 
 #define CAN_BAUD_RATE_PRESCALER_MIN         (1U)
@@ -68,7 +68,7 @@
 #define CAN_TX_RX_INTERRUPTS_ENABLE         (0xFFFFFFFFU)
 #define CAN_TX_RX_INTERRUPTS_DISABLE        (0x00000000U)
 
-#define CAN_BAUD_RATE_PRESCALER_MASK        (0x3FU)
+#define CAN_BAUD_RATE_PRESCALER_MASK        (0x3FFU)
 
 #define CAN_TIMESTAMP_PRESCALER_8BITTIME    (0x3U)
 
@@ -148,6 +148,7 @@ const can_api_t g_can_on_can =
     .open           = R_CAN_Open,
     .close          = R_CAN_Close,
     .write          = R_CAN_Write,
+    .read           = R_CAN_Read,
     .modeTransition = R_CAN_ModeTransition,
     .infoGet        = R_CAN_InfoGet,
     .callbackSet    = R_CAN_CallbackSet,
@@ -317,8 +318,8 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
     p_ctrl->p_reg->BCR =
         (uint32_t) (((p_cfg->p_bit_timing->baud_rate_prescaler - 1) & CAN_BAUD_RATE_PRESCALER_MASK) <<
                     R_CAN0_BCR_BRP_Pos) |
-        (uint32_t) (p_cfg->p_bit_timing->time_segment_1 << R_CAN0_BCR_TSEG1_Pos) |
-        (uint32_t) (p_cfg->p_bit_timing->time_segment_2 << R_CAN0_BCR_TSEG2_Pos) |
+        ((p_cfg->p_bit_timing->time_segment_1 - 1U) << R_CAN0_BCR_TSEG1_Pos) |
+        ((p_cfg->p_bit_timing->time_segment_2 - 1U) << R_CAN0_BCR_TSEG2_Pos) |
         (uint32_t) ((p_cfg->p_bit_timing->synchronization_jump_width - 1U) << R_CAN0_BCR_SJW_Pos) |
         (uint32_t) (p_ctrl->clock_source << R_CAN0_BCR_CCLKS_Pos);
 
@@ -346,10 +347,11 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
         if (CAN_MAILBOX_RECEIVE == (p_cfg->p_mailbox[i].mailbox_type))
         {
             /* The IDE bit is enabled when the CTLR.IDFM[1:0] bits are 10b (mixed ID mode).
-             * Mixed ID mode is currently unsupported by this driver.
              * When the IDFM[1:0] bits are not 10b, only write 0 to IDE. It reads as 0.
              */
-            if (CAN_ID_MODE_STANDARD == p_cfg->id_mode)
+            if ((CAN_GLOBAL_ID_MODE_STANDARD == p_cfg->id_mode) ||
+                ((p_cfg->id_mode == CAN_GLOBAL_ID_MODE_MIXED) &&
+                 (p_cfg->p_mailbox[i].id_mode == CAN_ID_MODE_STANDARD)))
             {
                 p_ctrl->p_reg->MB[i].ID = ((uint32_t) (0U << R_CAN0_MB_ID_IDE_Pos) |
                                            (uint32_t) (p_cfg->p_mailbox[i].frame_type << R_CAN0_MB_ID_RTR_Pos) |
@@ -358,7 +360,9 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
             }
             else
             {
-                p_ctrl->p_reg->MB[i].ID = ((uint32_t) (0U << R_CAN0_MB_ID_IDE_Pos) |
+                uint32_t ide = ((p_cfg->id_mode == CAN_GLOBAL_ID_MODE_MIXED) &&
+                                p_cfg->p_mailbox[i].id_mode) ? 1U : 0U;
+                p_ctrl->p_reg->MB[i].ID = ((ide << R_CAN0_MB_ID_IDE_Pos) |
                                            (uint32_t) (p_cfg->p_mailbox[i].frame_type << R_CAN0_MB_ID_RTR_Pos) |
                                            (uint32_t) ((p_cfg->p_mailbox[i].mailbox_id & CAN_XID_MASK) <<
                                                        R_CAN0_MB_ID_EID_Pos));
@@ -382,7 +386,8 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
             /*  If the user has defined a mask */
             if (extended_cfg->p_mailbox_mask[i] < CAN_DEFAULT_MASK)
             {
-                if (CAN_ID_MODE_STANDARD == p_cfg->id_mode)
+                /* In Mixed ID mode the Standard ID mask (SID) is the upper 11 bits of the full Extended ID (SID+XID) */
+                if (CAN_GLOBAL_ID_MODE_STANDARD == p_cfg->id_mode)
                 {
                     /* Set standard ID mask. Set unused bits high */
                     p_ctrl->p_reg->MKR[i] = CAN_DEFAULT_MASK &
@@ -406,9 +411,6 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
     /* Set the Mask as invalid for mailboxes that do not use the mask. */
     p_ctrl->p_reg->MKIVLR = ~(mask_enabled);
 
-    /* Transition to requested test mode */
-    p_ctrl->p_reg->TCR = (uint8_t) p_cfg->test_mode;
-
     /* Go to normal operation. */
     r_can_mode_transition(p_ctrl, CAN_OPERATION_MODE_NORMAL, CAN_TEST_MODE_DISABLED);
 
@@ -418,13 +420,6 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
      * 'Control Register (CTLR)'- 'Note 4' of the RA4M1 manual R01UH0886EJ0100). */
     p_ctrl->p_reg->CTLR_b.TSRC = CAN_TIMESTAMP_RESET; /* Set Timestamp counter reset command */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CTLR_b.TSRC, !CAN_TIMESTAMP_RESET);
-
-    /* Transition to user defined mode
-     * Since the driver is already in the requested test mode this helper function
-     * will not go through halt mode again.
-     * Test mode transition will be ignored.
-     */
-    r_can_mode_transition(p_ctrl, p_cfg->operation_mode, p_cfg->test_mode);
 
     /* If successful, Lookup and store IRQ numbers. Enable interrupts. */
     r_can_bsp_irq_cfg_enable(p_ctrl, p_cfg->error_irq);
@@ -491,19 +486,23 @@ fsp_err_t R_CAN_Write (can_ctrl_t * const p_api_ctrl, uint32_t mailbox, can_fram
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_frame);
     FSP_ERROR_RETURN(p_ctrl->open == CAN_OPEN, FSP_ERR_NOT_OPEN);
+
     FSP_ERROR_RETURN(mailbox < p_ctrl->p_cfg->mailbox_count, FSP_ERR_INVALID_ARGUMENT);
 
     FSP_ERROR_RETURN(1U != p_ctrl->p_reg->MCTL_TX_b[mailbox].RECREQ, FSP_ERR_CAN_RECEIVE_MAILBOX);
 
     FSP_ERROR_RETURN((p_frame->data_length_code <= CAN_MAX_DATA_LENGTH), FSP_ERR_INVALID_ARGUMENT);
 #endif
+
     uint32_t i;
     FSP_ERROR_RETURN(0U == p_ctrl->p_reg->MCTL_TX_b[mailbox].TRMREQ, FSP_ERR_CAN_TRANSMIT_NOT_READY);
 
     /* Setup the frame to be transmitted. */
 
     /* Set the ID based on the ID mode */
-    if (CAN_ID_MODE_STANDARD == p_ctrl->p_cfg->id_mode)
+    if ((CAN_GLOBAL_ID_MODE_STANDARD == p_ctrl->p_cfg->id_mode) ||
+        ((p_ctrl->p_cfg->id_mode == CAN_GLOBAL_ID_MODE_MIXED) &&
+         (p_frame->id_mode == CAN_ID_MODE_STANDARD)))
     {
         p_ctrl->p_reg->MB[mailbox].ID = ((uint32_t) (0U << R_CAN0_MB_ID_IDE_Pos) |
                                          (uint32_t) (p_frame->type << R_CAN0_MB_ID_RTR_Pos) |
@@ -511,7 +510,8 @@ fsp_err_t R_CAN_Write (can_ctrl_t * const p_api_ctrl, uint32_t mailbox, can_fram
     }
     else
     {
-        p_ctrl->p_reg->MB[mailbox].ID = ((uint32_t) (0U << R_CAN0_MB_ID_IDE_Pos) |
+        uint32_t ide = ((p_ctrl->p_cfg->id_mode == CAN_GLOBAL_ID_MODE_MIXED) && p_frame->id_mode) ? 1U : 0U;
+        p_ctrl->p_reg->MB[mailbox].ID = ((ide << R_CAN0_MB_ID_IDE_Pos) |
                                          (uint32_t) (p_frame->type << R_CAN0_MB_ID_RTR_Pos) |
                                          (uint32_t) ((p_frame->id & CAN_XID_MASK) << R_CAN0_MB_ID_EID_Pos));
     }
@@ -529,6 +529,20 @@ fsp_err_t R_CAN_Write (can_ctrl_t * const p_api_ctrl, uint32_t mailbox, can_fram
     p_ctrl->p_reg->MCTL_TX[mailbox] = CAN_MAILBOX_TX;
 
     return FSP_SUCCESS;
+}
+
+/***************************************************************************************************************//**
+ * @ref can_api_t::read is not supported on CAN.
+ *
+ * @retval FSP_ERR_UNSUPPORTED              Function not supported in this implementation.
+ *****************************************************************************************************************/
+fsp_err_t R_CAN_Read (can_ctrl_t * const p_api_ctrl, uint32_t mailbox, can_frame_t * const p_frame)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(mailbox);
+    FSP_PARAMETER_NOT_USED(p_frame);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /***************************************************************************************************************//**
@@ -577,10 +591,10 @@ fsp_err_t R_CAN_InfoGet (can_ctrl_t * const p_api_ctrl, can_info_t * const p_inf
     FSP_ERROR_RETURN(p_ctrl->open == CAN_OPEN, FSP_ERR_NOT_OPEN);
 #endif
 
-    p_info->status               = (can_status_t) p_ctrl->p_reg->STR; // Status register value
-    p_info->error_count_receive  = p_ctrl->p_reg->RECR;               // Report receive error count
-    p_info->error_count_transmit = p_ctrl->p_reg->TECR;               // Report transmit error count
-    p_info->error_code           = (can_error_t) p_ctrl->p_reg->ECSR; // Report error code
+    p_info->status               = (can_status_t) p_ctrl->p_reg->STR;                  // Status register value
+    p_info->error_count_receive  = p_ctrl->p_reg->RECR;                                // Report receive error count
+    p_info->error_count_transmit = p_ctrl->p_reg->TECR;                                // Report transmit error count
+    p_info->error_code           = (can_error_t) p_ctrl->p_reg->ECSR & CAN_ERROR_MASK; // Report error code
 
     /* Since the error flags were read, we clear them to ensure that we won't read them again
      * Because register is volatile, we clear only the flags that we already read. Preserve the value
@@ -803,41 +817,43 @@ void can_mailbox_rx_isr (void)
     p_ctrl->p_reg->MSMR = CAN_RECEIVE_SEARCH;             // search for lowest numbered &mailbox with message received
     mailbox             = p_ctrl->p_reg->MSSR_b.MBNST;    // get mailbox number
     p_ctrl->p_reg->MSMR = saved_msmr;                     // Restore the previous MSMR value
-    can_frame_t frame;
 
     /* Get frame data. */
     uint32_t i;
     uint32_t mbox_id = p_ctrl->p_reg->MB[mailbox].ID;
 
     /* Get the frame type */
-    frame.type = (can_frame_type_t) ((mbox_id & R_CAN0_MB_ID_RTR_Msk) >> R_CAN0_MB_ID_RTR_Pos);
+    args.frame.type = (can_frame_type_t) ((mbox_id & R_CAN0_MB_ID_RTR_Msk) >> R_CAN0_MB_ID_RTR_Pos);
 
-    /* Get the frame id */
-    if (CAN_ID_MODE_STANDARD == p_ctrl->p_cfg->id_mode)
+    /* Get the ID mode */
+    args.frame.id_mode = (can_id_mode_t) ((p_ctrl->p_cfg->id_mode | p_ctrl->p_reg->MB[mailbox].ID_b.IDE) & 1);
+
+    /* Get the ID based on the mode */
+    if (CAN_ID_MODE_STANDARD == args.frame.id_mode)
     {
-        frame.id = (mbox_id & R_CAN0_MB_ID_SID_Msk) >> R_CAN0_MB_ID_SID_Pos;
+        args.frame.id = (mbox_id & R_CAN0_MB_ID_SID_Msk) >> R_CAN0_MB_ID_SID_Pos;
     }
     else
     {
-        frame.id = mbox_id;
+        args.frame.id = mbox_id & (R_CAN0_MB_ID_SID_Msk | R_CAN0_MB_ID_EID_Msk);
     }
 
     /* Get the frame data length code */
-    frame.data_length_code = p_ctrl->p_reg->MB[mailbox].DL_b.DLC;
+    args.frame.data_length_code = p_ctrl->p_reg->MB[mailbox].DL_b.DLC;
 
     /* Refer Note 1 about DLC[3:0] under Section 37.2.6
      * 'Mailbox Register j (MBj_ID, MBj_DL, MBj_Dm, MBj_TS) (j = 0 to 31; m = 0 to 7)'
      * of RA6M3 manual R01UH0886EJ010.
      */
-    if (frame.data_length_code > CAN_MAX_DATA_LENGTH)
+    if (args.frame.data_length_code > CAN_MAX_DATA_LENGTH)
     {
-        frame.data_length_code = CAN_MAX_DATA_LENGTH;
+        args.frame.data_length_code = CAN_MAX_DATA_LENGTH;
     }
 
     /* Be sure to check data_length_code in calling function */
-    for (i = 0U; i < frame.data_length_code; i++)
+    for (i = 0U; i < args.frame.data_length_code; i++)
     {
-        frame.data[i] = p_ctrl->p_reg->MB[mailbox].D[i]; // Copy receive data to buffer
+        args.frame.data[i] = p_ctrl->p_reg->MB[mailbox].D[i]; // Copy receive data to buffer
     }
 
     /* Clear rx data flag. Do not modify message-lost flag as this keeps track of
@@ -850,7 +866,7 @@ void can_mailbox_rx_isr (void)
      */
     p_ctrl->p_reg->MCTL_RX[mailbox] = CAN_MAILBOX_RX_MASK_MSGLOST;
 
-    args.p_frame = &frame;
+    args.p_frame = &args.frame;
     args.event   = CAN_EVENT_RX_COMPLETE;
 
     /* Save the receive mailbox number. */

@@ -192,6 +192,7 @@ typedef struct st_adc_extended_cfg
     adc_trigger_t        trigger_group_b;     ///< Group B trigger source; valid only for group mode
     adc_double_trigger_t double_trigger_mode; ///< Double-trigger mode setting
     adc_vref_control_t   adc_vref_control;    ///< VREFADC output voltage control
+    uint8_t              enable_adbuf;        ///< Enable ADC Ring Buffer, Valid only to use along with DMAC transfer
 } adc_extended_cfg_t;
 
 /** ADC channel(s) configuration       */

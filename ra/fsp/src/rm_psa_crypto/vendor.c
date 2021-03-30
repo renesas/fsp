@@ -136,7 +136,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
     }
     else
 #endif                                 /* defined(MBEDTLS_AES_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT))) */
-#if defined(MBEDTLS_RSA_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)))
+#if defined(MBEDTLS_RSA_C) && defined(MBEDTLS_RSA_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)))
     if (slot->attr.type == PSA_KEY_TYPE_RSA_KEY_PAIR)
     {
         mbedtls_rsa_context * rsa;
@@ -187,7 +187,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
     else
 #endif                                 /* defined(MBEDTLS_RSA_C) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT))) */
 
-#if defined(MBEDTLS_ECP_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)))
+#if defined(MBEDTLS_ECP_C) && defined(MBEDTLS_ECP_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)))
     if (PSA_KEY_TYPE_IS_ECC(slot->attr.type) && PSA_KEY_TYPE_IS_KEY_PAIR(slot->attr.type))
     {
         psa_ecc_curve_t      curve  = PSA_KEY_TYPE_GET_CURVE(slot->attr.type);
@@ -238,7 +238,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
         status          = PSA_SUCCESS;
     }
     else
-#endif                                 /* MBEDTLS_ECP_C && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT))) */
+#endif                                 /* MBEDTLS_ECP_C && MBEDTLS_ECP_ALT && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT))) */
     {
         status = PSA_ERROR_NOT_SUPPORTED;
     }
@@ -289,7 +289,7 @@ psa_status_t psa_import_key_into_slot_vendor (psa_key_slot_t * slot,
     }
     else
 #endif                                 /* defined(MBEDTLS_AES_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT))) */
-#if defined(MBEDTLS_ECP_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)))
+#if defined(MBEDTLS_ECP_C) && defined(MBEDTLS_ECP_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)))
     if (PSA_KEY_TYPE_IS_ECC_KEY_PAIR(slot->attr.type))
     {
         status = psa_import_ec_private_key_vendor(PSA_KEY_TYPE_GET_CURVE(slot->attr.type),
@@ -304,7 +304,7 @@ psa_status_t psa_import_key_into_slot_vendor (psa_key_slot_t * slot,
     else
 #endif                                 /* MBEDTLS_ECP_C  && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT))) */
 
-#if defined(MBEDTLS_RSA_ALT) && defined(MBEDTLS_PK_PARSE_C) && \
+#if defined(MBEDTLS_RSA_C) && defined(MBEDTLS_RSA_ALT) && defined(MBEDTLS_PK_PARSE_C) && \
     ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)))
     if (PSA_KEY_TYPE_IS_RSA(slot->attr.type))
     {

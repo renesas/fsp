@@ -85,6 +85,9 @@ typedef struct st_dmac_extended_cfg
     uint8_t   ipl;                     ///< DMAC interrupt priority
     int32_t   offset;                  ///< Offset value used with transfer_addr_mode_t::TRANSFER_ADDR_MODE_OFFSET.
 
+    /** Source ring buffer size for @ref TRANSFER_MODE_REPEAT_BLOCK. */
+    uint16_t src_buffer_size;
+
     /** Select which event will trigger the transfer.
      *  @note Select ELC_EVENT_NONE for software activation in order to use softwareStart and softwareStart to trigger
      * transfers. */

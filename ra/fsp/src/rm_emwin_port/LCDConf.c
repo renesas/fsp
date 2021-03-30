@@ -1048,23 +1048,55 @@ static int _DrawArcAA (int x0, int y0, int rx, int ry, long a0, long a1)
     d2_color         Color;
     const GUI_RECT * pRect;
     uint16_t         PenSize;
+    U32              Flag;
 
     GUI_USE_PARA(ry);
-    PenSize = GUI_GetPenSize();
-    Mode    = _GetD2Mode();
-    while (a1 < a0)
+
+    //
+    // If both angles are equal (e.g. 0 and 0 or 180 and 180) nothing has to be done
+    //
+    if (a0 == a1)
     {
-        a1 += 360000;
+        return 0;                      // Nothing to do, no angle - no arc
     }
 
-    nx0 = GUI__SinHQ(a0);
-    ny0 = GUI__CosHQ(a0);
+    if (a1 < a0)
+    {
+        return 0;                      // Nothing to do, emWin doesn't support this one
+    }
+
+    //
+    // If the angles not equal, but meet at the same position
+    // we don't draw an arc but a circle instead.
+    //
+    if (a1 > (a0 + 360000))
+    {
+        return _DrawCircleAA(x0, y0, rx); // a1 meets a0 after one round so we have a circle
+    }
+
+    if ((a0 % 360000) == (a1 % 360000))
+    {
+        return _DrawCircleAA(x0, y0, rx); // Both angles are at the same position but not equal, so we have a circle
+    }
+
+    PenSize = GUI_GetPenSize();
+    Mode    = _GetD2Mode();
+
+    nx0 = -GUI__SinHQ(a0);
+    ny0 = -GUI__CosHQ(a0);
     nx1 = GUI__SinHQ(a1);
     ny1 = GUI__CosHQ(a1);
-    if ((a1 - a0) <= 180000)
+
+    //
+    // If the difference between both is larger than 180 degrees we must use the concave flag
+    //
+    if (((a1 - a0) % 360000) <= 180000)
     {
-        nx0 *= -1;
-        ny0 *= -1;
+        Flag = 0;
+    }
+    else
+    {
+        Flag = d2_wf_concave;
     }
 
     //
@@ -1090,7 +1122,7 @@ static int _DrawArcAA (int x0, int y0, int rx, int ry, long a0, long a1)
                          ny0,
                          nx1,
                          ny1,
-                         0);
+                         Flag);
 
     //
     // Execute render operations

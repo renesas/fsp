@@ -78,6 +78,8 @@
 
 #define ADC_PRV_TSCR_TSN_ENABLE                     (R_TSN_CTRL_TSCR_TSEN_Msk | R_TSN_CTRL_TSCR_TSOE_Msk)
 
+#define ADC_PRV_ADBUF_ENABLED                       (1U)
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -479,6 +481,10 @@ fsp_err_t R_ADC_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_t 
                    (reg_id == ADC_CHANNEL_DUPLEX) || (reg_id == ADC_CHANNEL_DUPLEX_A) ||
                    (reg_id == ADC_CHANNEL_DUPLEX_B));
     }
+
+    /* Data is not available to be read from ADDRn registers when ADBUF is enabled. Read API cannot be used with ADBUF enabled. */
+    adc_extended_cfg_t * p_extend = (adc_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    FSP_ASSERT(1U != p_extend->enable_adbuf);
 #endif
 
     /* Read the data from the requested ADC conversion register and return it */
@@ -1180,6 +1186,15 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
         /* Enable Over current detection and VREFADC output */
         p_instance_ctrl->p_reg->VREFAMPCNT = (uint8_t) (p_cfg_extend->adc_vref_control);
     }
+#endif
+
+#if BSP_FEATURE_ADC_HAS_ADBUF
+    uint8_t adbuf = 0;
+    if (1U == p_cfg_extend->enable_adbuf)
+    {
+        adbuf = R_ADC0_ADBUFEN_BUFEN_Msk;
+    }
+    p_instance_ctrl->p_reg->ADBUFEN = adbuf;
 #endif
 }
 

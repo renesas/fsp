@@ -25,7 +25,7 @@ fsp_err_t HW_SCE_SHA256_UpdateHash (const uint32_t * p_source, uint32_t num_word
 {
     uint32_t  out_data[8] = {0};
     fsp_err_t err         = HW_SCE_Sha224256GenerateMessageDigestSub(p_digest, p_source, num_words, out_data);
-    memcpy(p_digest, out_data, (4U * num_words));
+    memcpy(p_digest, out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
 
     return err;
 }

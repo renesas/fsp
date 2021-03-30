@@ -1360,7 +1360,7 @@ void rtc_alarm_periodic_isr (void)
     rtc_instance_ctrl_t * p_ctrl = (rtc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
     /* Call the callback routine if one is available */
-    if (NULL != p_ctrl->p_cfg->p_callback)
+    if (NULL != p_ctrl->p_callback)
     {
         /* Set data to identify callback to user, then call user callback. */
         rtc_event_t event;

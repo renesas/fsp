@@ -530,7 +530,8 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
     /* Configure the transfer count. */
     dmcra = p_info->length;
 
-    if ((TRANSFER_MODE_BLOCK == p_info->mode) || (TRANSFER_MODE_REPEAT == p_info->mode))
+    if ((TRANSFER_MODE_BLOCK == p_info->mode) || (TRANSFER_MODE_REPEAT == p_info->mode) ||
+        (TRANSFER_MODE_REPEAT_BLOCK == p_info->mode))
     {
         /* Configure the reload count. */
         dmcra |= dmcra << DMAC_PRV_DMCRA_HIGH_OFFSET;
@@ -539,8 +540,11 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
         /* Configure the block count. */
         dmcrb = p_info->num_blocks;
 
-        /* Configure the repeat area */
-        dmtmd |= (uint32_t) (p_info->repeat_area << DMAC_PRV_DMTMD_DTS_OFFSET);
+        if ((TRANSFER_MODE_BLOCK == p_info->mode) || (TRANSFER_MODE_REPEAT == p_info->mode))
+        {
+            /* Configure the repeat area */
+            dmtmd |= (uint32_t) (p_info->repeat_area << DMAC_PRV_DMTMD_DTS_OFFSET);
+        }
     }
     else                               /* TRANSFER_MODE_NORMAL */
     {
@@ -561,14 +565,70 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
 
         if (TRANSFER_IRQ_EACH == p_info->irq)
         {
-            /* Enable the transfer end escape interrupt requests
-             * (Repeat size end and Extended Repeat area overflow requests). */
-            dmint |= (DMAC_PRV_DMINT_RPTIE_MASK | DMAC_PRV_DMINT_ESIE_MASK);
+            if (TRANSFER_MODE_REPEAT_BLOCK == p_info->mode)
+            {
+                /* Enable the transfer end escape interrupt requests.
+                 * Repeat size end and Extended Repeat area overflow requests are not
+                 * used with Repeat-Block mode. Reference section 16.2.9 "DMINT : DMA Interrupt Setting Register"
+                 * of RA6M4 hardware manual R01UH0890EJ0110. */
+                dmint |= DMAC_PRV_DMINT_ESIE_MASK;
+            }
+            else
+            {
+                /* Enable the transfer end escape interrupt requests
+                 * (Repeat size end and Extended Repeat area overflow requests). */
+                dmint |= (DMAC_PRV_DMINT_RPTIE_MASK | DMAC_PRV_DMINT_ESIE_MASK);
+            }
         }
 
         /* Enable the IRQ in the NVIC. */
         R_BSP_IrqCfgEnable(p_extend->irq, p_extend->ipl, p_ctrl);
     }
+
+#if BSP_FEATURE_DMAC_HAS_REPEAT_BLOCK_MODE
+    uint32_t dmsbs = 0;
+    uint32_t dmdbs = 0;
+
+    if (TRANSFER_MODE_REPEAT_BLOCK == p_info->mode)
+    {
+        uint16_t num_of_blocks = p_info->num_blocks;
+        uint16_t size_of_block;
+        size_of_block = p_info->length;
+        uint16_t src_buffer_size;
+        uint16_t dest_buffer_size;
+        if (TRANSFER_ADDR_MODE_OFFSET == p_info->src_addr_mode)
+        {
+            src_buffer_size = num_of_blocks;
+            dmamd          |= R_DMAC0_DMAMD_SADR_Msk;
+        }
+        else
+        {
+            src_buffer_size = p_extend->src_buffer_size;
+        }
+
+        if (TRANSFER_ADDR_MODE_OFFSET == p_info->dest_addr_mode)
+        {
+            dest_buffer_size = num_of_blocks;
+            dmamd           |= R_DMAC0_DMAMD_DADR_Msk;
+        }
+        else
+        {
+            dest_buffer_size = (uint16_t) (num_of_blocks * size_of_block);
+        }
+
+        dmsbs  = src_buffer_size;
+        dmsbs |= dmsbs << R_DMAC0_DMSBS_DMSBSH_Pos;
+
+        dmdbs  = dest_buffer_size;
+        dmdbs |= dmdbs << R_DMAC0_DMDBS_DMDBSH_Pos;
+
+        p_ctrl->p_reg->DMSRR = (uint32_t) p_info->p_src;
+        p_ctrl->p_reg->DMDRR = (uint32_t) p_info->p_dest;
+    }
+
+    p_ctrl->p_reg->DMSBS = dmsbs;
+    p_ctrl->p_reg->DMDBS = dmdbs;
+#endif
 
     /* Write register settings. */
     p_ctrl->p_reg->DMAMD = (uint16_t) dmamd;

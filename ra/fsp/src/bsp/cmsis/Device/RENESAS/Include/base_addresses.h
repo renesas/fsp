@@ -53,6 +53,7 @@
  #define R_OSPI_BASE            0x400A6000
  #define R_CAN0_BASE            0x400A8000
  #define R_CAN1_BASE            0x400A9000
+ #define R_CANFD_BASE           0x400B0000
  #define R_CTSU_BASE            0x400D0000
  #define R_PSCU_BASE            0x400E0000
  #define R_AGT0_BASE            0x400E8000
@@ -170,6 +171,7 @@
  #define R_OSPI             ((R_OSPI_Type *) R_OSPI_BASE)
  #define R_CAN0             ((R_CAN0_Type *) R_CAN0_BASE)
  #define R_CAN1             ((R_CAN0_Type *) R_CAN1_BASE)
+ #define R_CANFD            ((R_CANFD_Type *) R_CANFD_BASE)
  #define R_CTSU             ((R_CTSU_Type *) R_CTSU_BASE)
  #define R_PSCU             ((R_PSCU_Type *) R_PSCU_BASE)
  #define R_AGT0             ((R_AGT0_Type *) R_AGT0_BASE)
@@ -317,6 +319,7 @@
  #define R_GPT_POEG1_BASE              0x40042100
  #define R_GPT_POEG2_BASE              0x40042200
  #define R_GPT_POEG3_BASE              0x40042300
+ #define R_I3C_BASE                    0x40083000
  #define R_ICU_BASE                    0x40006000
  #define R_IIC0_BASE                   0x40053000
  #define R_IIC1_BASE                   0x40053100
@@ -457,6 +460,7 @@
  #define R_GPT_POEG1              ((R_GPT_POEG0_Type *) R_GPT_POEG1_BASE)
  #define R_GPT_POEG2              ((R_GPT_POEG0_Type *) R_GPT_POEG2_BASE)
  #define R_GPT_POEG3              ((R_GPT_POEG0_Type *) R_GPT_POEG3_BASE)
+ #define R_I3C                    ((R_I3C_Type *) R_I3C_BASE)
  #define R_ICU                    ((R_ICU_Type *) R_ICU_BASE)
  #define R_IIC0                   ((R_IIC0_Type *) R_IIC0_BASE)
  #define R_IIC1                   ((R_IIC0_Type *) R_IIC1_BASE)

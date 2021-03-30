@@ -107,6 +107,7 @@ typedef enum e_fsp_err
     FSP_ERR_NOT_INITIALIZED       = 33,                     ///< Required initialization not complete
     FSP_ERR_NOT_FOUND             = 34,                     ///< The requested item could not be found
     FSP_ERR_NO_CALLBACK_MEMORY    = 35,                     ///< Non-secure callback memory not provided for non-secure callback
+    FSP_ERR_BUFFER_EMPTY          = 36,                     ///< No data available in buffer
 
     /* Start of RTOS only error codes */
     FSP_ERR_INTERNAL     = 100,                             ///< Internal error

@@ -169,11 +169,12 @@ fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const 
                                   p_instance_ctrl->channel);
 
     /* Max = 256 bytes, i.e., Page size */
-    R_OSPI->DWSCTSR = OSPI_PRV_SHIFT(OSPI_PRV_PAGE_SIZE_BYTES << R_OSPI_DWSCTSR_CTSN0_Pos, p_instance_ctrl->channel);
+    R_OSPI->DWSCTSR = OSPI_PRV_SHIFT(p_instance_ctrl->p_cfg->page_size_bytes << R_OSPI_DWSCTSR_CTSN0_Pos,
+        p_instance_ctrl->channel);
 
     /* Read back to ensure value has been written */
     FSP_HARDWARE_REGISTER_WAIT(R_OSPI->DWSCTSR,
-                               OSPI_PRV_SHIFT(OSPI_PRV_PAGE_SIZE_BYTES << R_OSPI_DWSCTSR_CTSN0_Pos,
+                               OSPI_PRV_SHIFT(p_instance_ctrl->p_cfg->page_size_bytes << R_OSPI_DWSCTSR_CTSN0_Pos,
     p_instance_ctrl->channel));
 
     /* Setup SPI protocol specific registers */
@@ -312,6 +313,7 @@ fsp_err_t R_OSPI_XipExit (spi_flash_ctrl_t * p_ctrl)
  * @retval FSP_ERR_ASSERTION           p_instance_ctrl, p_dest or p_src is NULL, or byte_count crosses a page boundary.
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
  * @retval FSP_ERR_DEVICE_BUSY         Another Write/Erase transaction is in progress.
+ * @retval FSP_ERR_INVALID_SIZE        Write operation crosses page-boundary.
  **********************************************************************************************************************/
 fsp_err_t R_OSPI_Write (spi_flash_ctrl_t    * p_ctrl,
                         uint8_t const * const p_src,
@@ -323,9 +325,13 @@ fsp_err_t R_OSPI_Write (spi_flash_ctrl_t    * p_ctrl,
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_src);
     FSP_ASSERT(NULL != p_dest);
-    FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ASSERT(OSPI_PRV_PAGE_SIZE_BYTES >= byte_count);
     FSP_ASSERT(0 != byte_count);
+    FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    /* Check that space remaining in page is sufficient for requested write size */
+    uint32_t page_size   = p_instance_ctrl->p_cfg->page_size_bytes;
+    uint32_t page_offset = (uint32_t) p_dest & (page_size - 1);
+    FSP_ERROR_RETURN((page_size - page_offset) >= byte_count, FSP_ERR_INVALID_SIZE);
 #endif
 
     FSP_ERROR_RETURN(false == r_ospi_status_sub(p_instance_ctrl, p_instance_ctrl->p_cfg->write_status_bit),
