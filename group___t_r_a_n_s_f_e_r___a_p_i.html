@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.3.0</span>
+   &#160;<span id="projectnumber">Release v2.4.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -206,7 +206,7 @@ When using DTC, this structure must not be allocated in a temporary location. An
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a1ec10849374bd3afc5afb0865e8a1bab"></a>union <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#uniontransfer__info__t_8____unnamed____">transfer_info_t</a></td>
+<a id="a1a82377dc38a1a372b6ed6d9d8ab54b4"></a>union <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#uniontransfer__info__t_8____unnamed____">transfer_info_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -228,14 +228,14 @@ Destination pointer. </td></tr>
 <td class="fieldname">
 num_blocks</td>
 <td class="fielddoc">
-<p>Number of blocks to transfer when using <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a> (both DTC an DMAC) and <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a> (DMAC only), unused in other modes. </p>
+<p>Number of blocks to transfer when using <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a> (both DTC an DMAC) or <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a> (DMAC only) or <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fafb43c6e62b61f0dbb9a5bcd5575e79e2">TRANSFER_MODE_REPEAT_BLOCK</a> (DMAC only), unused in other modes. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="aa92c5d06d07e7d13c16f9704a431c7cb"></a>volatile uint16_t</td>
 <td class="fieldname">
 length</td>
 <td class="fielddoc">
-<p>Length of each transfer. Range limited for <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a> and <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a>, see HAL driver for details. </p>
+<p>Length of each transfer. Range limited for <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a>, <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a>, and <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fafb43c6e62b61f0dbb9a5bcd5575e79e2">TRANSFER_MODE_REPEAT_BLOCK</a> see HAL driver for details. </p>
 </td></tr>
 </table>
 
@@ -622,6 +622,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55"></a>TRANSFER_MODE_BLOCK&#160;</td><td class="fielddoc"><p>In block mode, each transfer request causes <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#aa92c5d06d07e7d13c16f9704a431c7cb">transfer_info_t::length</a> transfers of <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ga6c224e5afb174f3f6ea9eddbb9da8b12">transfer_size_t</a>. After each individual transfer, the source and destination pointers are updated according to <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#gadce62e6c2407d6ffd5a94636736f7c51">transfer_addr_mode_t</a>. After the block transfer is complete, <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a9781e58bb7cb2ee40de446936d523814">transfer_info_t::num_blocks</a> is decremented. After the <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a9781e58bb7cb2ee40de446936d523814">transfer_info_t::num_blocks</a> reaches 0, transfer requests will not cause any further transfers. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggadfb7c2a6a73bfdf993e50505aa92992fafb43c6e62b61f0dbb9a5bcd5575e79e2"></a>TRANSFER_MODE_REPEAT_BLOCK&#160;</td><td class="fielddoc"><p>In addition to block mode features, repeat-block mode supports a ring buffer of blocks and offsets within a block (to split blocks into arrays of their first data, second data, etc.) </p>
+</td></tr>
 </table>
 
 </div>
@@ -685,11 +687,11 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Repeat area options (source or destination). In <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a>, the selected pointer returns to its original value after <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#aa92c5d06d07e7d13c16f9704a431c7cb">transfer_info_t::length</a> transfers. In <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a>, the selected pointer returns to its original value after each transfer. </p>
+<p>Repeat area options (source or destination). In <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a>, the selected pointer returns to its original value after <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#aa92c5d06d07e7d13c16f9704a431c7cb">transfer_info_t::length</a> transfers. In <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a> and <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fafb43c6e62b61f0dbb9a5bcd5575e79e2">TRANSFER_MODE_REPEAT_BLOCK</a>, the selected pointer returns to its original value after each transfer. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga769464d2068881ccb44573c96167812ba77aeeab30b003de23742e40a57f19239"></a>TRANSFER_REPEAT_AREA_DESTINATION&#160;</td><td class="fielddoc"><p>Destination area repeated in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a> or <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a>. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga769464d2068881ccb44573c96167812ba77aeeab30b003de23742e40a57f19239"></a>TRANSFER_REPEAT_AREA_DESTINATION&#160;</td><td class="fielddoc"><p>Destination area repeated in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a> or <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a> or <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fafb43c6e62b61f0dbb9a5bcd5575e79e2">TRANSFER_MODE_REPEAT_BLOCK</a>. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga769464d2068881ccb44573c96167812ba2002ef7bbc49f7c9ebfac1618ba3c391"></a>TRANSFER_REPEAT_AREA_SOURCE&#160;</td><td class="fielddoc"><p>Source area repeated in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a> or <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a>. </p>
+<tr><td class="fieldname"><a id="gga769464d2068881ccb44573c96167812ba2002ef7bbc49f7c9ebfac1618ba3c391"></a>TRANSFER_REPEAT_AREA_SOURCE&#160;</td><td class="fielddoc"><p>Source area repeated in <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b">TRANSFER_MODE_REPEAT</a> or <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55">TRANSFER_MODE_BLOCK</a> or <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fafb43c6e62b61f0dbb9a5bcd5575e79e2">TRANSFER_MODE_REPEAT_BLOCK</a>. </p>
 </td></tr>
 </table>
 
@@ -766,7 +768,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

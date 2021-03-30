@@ -56,6 +56,7 @@ var group___c_t_s_u___a_p_i =
       [ "p_cfg", "group___c_t_s_u___a_p_i.html#a208d00886c92bc4c861f72ed490215a1", null ],
       [ "p_api", "group___c_t_s_u___a_p_i.html#a0dcb82bbb13f8051f06893feac7827d5", null ]
     ] ],
+    [ "CTSU_COUNT_MAX", "group___c_t_s_u___a_p_i.html#ga92ece09f9ea6f483617249f186b93c20", null ],
     [ "ctsu_ctrl_t", "group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98", null ],
     [ "ctsu_event_t", "group___c_t_s_u___a_p_i.html#gaf6b0abb6cb3e6996d8435268d5e7c9cf", [
       [ "CTSU_EVENT_SCAN_COMPLETE", "group___c_t_s_u___a_p_i.html#ggaf6b0abb6cb3e6996d8435268d5e7c9cfa110041f0d6a2dcfeac8b0d2ba3d2318b", null ],

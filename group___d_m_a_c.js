@@ -9,6 +9,7 @@ var group___d_m_a_c =
       [ "irq", "group___d_m_a_c.html#aa50d47176d2618694b18cfeb957f6036", null ],
       [ "ipl", "group___d_m_a_c.html#a01e1360a4094cbcf9d4d171223627f4c", null ],
       [ "offset", "group___d_m_a_c.html#a4d8669f5a4263d19902385b7e6b48262", null ],
+      [ "src_buffer_size", "group___d_m_a_c.html#a6a54c3a163ff659e26a6f7ed319f4777", null ],
       [ "activation_source", "group___d_m_a_c.html#ae520b30cee620c91a4aa4d123ef437bc", null ],
       [ "p_callback", "group___d_m_a_c.html#a1aa5df5a650e272348c4bd6c71ad4392", null ],
       [ "p_context", "group___d_m_a_c.html#a179371bb68b6d1ae0f7c1da5a2c46d34", null ]

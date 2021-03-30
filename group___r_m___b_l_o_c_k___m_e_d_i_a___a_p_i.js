@@ -11,7 +11,6 @@ var group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i =
       [ "p_context", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ab4bf95c6ac852ce84523363671b60af3", null ]
     ] ],
     [ "rm_block_media_cfg_t", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__cfg__t", [
-      [ "block_size", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ab70026957bd70833df1bb841c09e4ce6", null ],
       [ "p_callback", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#afcbc27df490a8fc36abd2a12694bf8aa", null ],
       [ "p_context", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ad9c7faa9d2308b2d1c1a5a4b95b26808", null ],
       [ "p_extend", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a05aeac48f8dd9b31bdb6d1ca5ddf8600", null ]

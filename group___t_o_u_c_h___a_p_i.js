@@ -56,6 +56,8 @@ var group___t_o_u_c_h___a_p_i =
       [ "p_cfg", "group___t_o_u_c_h___a_p_i.html#ac4cf31171420fbb2876f505b0fcae8c1", null ],
       [ "p_api", "group___t_o_u_c_h___a_p_i.html#a9a515a9bdf24440f52242a8f16a477e0", null ]
     ] ],
+    [ "TOUCH_COUNT_MAX", "group___t_o_u_c_h___a_p_i.html#ga8b4edf3cef442120333747ca550f6f0e", null ],
+    [ "TOUCH_OFF_VALUE", "group___t_o_u_c_h___a_p_i.html#ga059630d15afbefe6b652acb38949c02c", null ],
     [ "touch_ctrl_t", "group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d", null ],
     [ "touch_callback_args_t", "group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72", null ]
 ];

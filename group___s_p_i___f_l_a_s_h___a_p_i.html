@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.3.0</span>
+   &#160;<span id="projectnumber">Release v2.4.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -370,6 +370,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Open the SPI flash driver module. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#ga2db7644d6d69ab7f7f6e5c41e5951eee">R_OSPI_Open()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open()</a></li>
 </ul>
 </dd></dl>
@@ -395,6 +396,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Write raw data to the SPI flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#gaf6ab989b108b38433d20f040fab28058">R_OSPI_DirectWrite()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite()</a></li>
 </ul>
 </dd></dl>
@@ -422,6 +424,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Read raw data from the SPI flash. Must follow a call to <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a31a1d575f3d8876154d4e217caebf110">spi_flash_api_t::directWrite</a>. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#ga1564458b224a405eac16094481653146">R_OSPI_DirectRead()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#gacddc3f64e5e87d4df22dd0da7a444308">R_QSPI_DirectRead()</a></li>
 </ul>
 </dd></dl>
@@ -474,6 +477,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Change the SPI protocol in the driver. The application must change the SPI protocol on the device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#ga444cbc1cfd56931216589b0ead8be582">R_OSPI_SpiProtocolSet()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#ga7d09918d3ab7458bbd15908f17bae951">R_QSPI_SpiProtocolSet()</a></li>
 </ul>
 </dd></dl>
@@ -499,6 +503,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Program a page of data to the flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#gaf58c5c42d8c2e0b5f1d690fc30e923a4">R_OSPI_Write()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#ga9d449604f886f5f59952d9e789d5dc65">R_QSPI_Write()</a></li>
 </ul>
 </dd></dl>
@@ -526,6 +531,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Erase a certain number of bytes of the flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#gab6b1ae4fbb819789a75de733edad9ecb">R_OSPI_Erase()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#gaa0409e8bb9585e9bd0be17ba9840f8fb">R_QSPI_Erase()</a></li>
 </ul>
 </dd></dl>
@@ -552,6 +558,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Get the write or erase status of the flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#ga42589667f192024298c01bb2c41496e2">R_OSPI_StatusGet()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#ga03da39d9d9f82ea0dfd0f7cc4f253189">R_QSPI_StatusGet()</a></li>
 </ul>
 </dd></dl>
@@ -577,6 +584,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Enter XIP mode. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#gaf5282594853d8c2d8bb5949f21365e21">R_OSPI_XipEnter()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#ga13cbc9d58890d7094712edcf64bc1bf1">R_QSPI_XipEnter()</a></li>
 </ul>
 </dd></dl>
@@ -601,6 +609,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Exit XIP mode. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#gacea57f7086d808a872db9ec1c54794b8">R_OSPI_XipExit()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#ga9c894a8a9ef0bb28ba8db701e5a71b3a">R_QSPI_XipExit()</a></li>
 </ul>
 </dd></dl>
@@ -625,6 +634,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Select the bank to access. See implementation for details. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#ga6495853f86b39d1f524d5df3df6c455b">R_OSPI_BankSet()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#ga3762ca61aea95737c5a018d0aa9bd6f1">R_QSPI_BankSet()</a></li>
 </ul>
 </dd></dl>
@@ -650,6 +660,7 @@ write_in_progress</td>
       </table>
 </div><div class="memdoc">
 <p>Close the SPI flash driver module. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#gacc44a5f9c8c6b1b9d62726b7537429d4">R_OSPI_Close()</a></li>
 <li><a class="el" href="group___q_s_p_i.html#ga96b3e76ff7daef41184898e3af0aa1a4">R_QSPI_Close()</a></li>
 </ul>
 </dd></dl>
@@ -714,7 +725,8 @@ Pointer to the API structure for this instance. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>SPI flash control block. Allocate an instance specific control block to pass into the SPI flash API calls. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___q_s_p_i.html#structqspi__instance__ctrl__t">qspi_instance_ctrl_t</a> </li>
+<li><a class="el" href="group___q_s_p_i.html#structqspi__instance__ctrl__t">qspi_instance_ctrl_t</a></li>
+<li><a class="el" href="group___o_s_p_i.html#structospi__instance__ctrl__t">ospi_instance_ctrl_t</a> </li>
 </ul>
 </dd></dl>
 
@@ -891,7 +903,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.3.0</span>
+   &#160;<span id="projectnumber">Release v2.4.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -132,7 +132,7 @@ Functions</h2></td></tr>
 <p>Middleware for the Bluetooth peripheral on RA MCUs. This module implements the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html">BLE ABS Interface</a>. </p>
 <h1><a class="anchor" id="rm_ble_abs-overview"></a>
 Overview</h1>
-<p>This module provides BLE GAP functionality that complies with the Bluetooth Core Specification version 5.0 specified by the Bluetooth SIG. This module is configured via the <a href="https://www.renesas.com/qe-ble">QE for BLE</a>. QE for BLE provides standard services defined by standardization organization and custom services defined by user. <a href="https://www.renesas.com/us/en/software/D6004519.html">Bluetooth LE Profile API Document User's Manual</a> describes the APIs for standard services.</p>
+<p>This module provides BLE GAP functionality that complies with the Bluetooth Core Specification version 5.0 specified by the Bluetooth SIG. This module is configured via the <a href="https://www.renesas.com/qe-ble">QE for BLE</a>. QE for BLE provides standard services defined by standardization organization and custom services defined by user. <a href="https://www.renesas.com/us/en/document/apn/ra4w1-group-bluetooth-le-profile-api-document-users-manual">Bluetooth LE Profile API Document User's Manual</a> describes the APIs for standard services.</p>
 <h2><a class="anchor" id="rm_ble_abs-features"></a>
 Features</h2>
 <p>The Bluetooth Low Energy Abstraction module supports the following features:</p><ul>
@@ -412,7 +412,7 @@ Mid 0dBm(Transmission Power Maximum Value = +0dBm) / 0dBm(Transmission Power Max
 <li>
 Low -18dBm(Transmission Power Maximum Value = +0dBm) / -20dBm(Transmission Power Maximum Value = +4dBm)</li>
 </ul>
-</td><td>High 0dBm(Transmission Power Maximum Value = +0dBm) / +4dBm(Transmission Power Maximum Value = +4dBm) </td><td>Set default transmit power. Default transmit power is dependent on the configuration of Maximum transmission power(BLE_ABS_CFG_RF_MAX_TX_POW). </td></tr>
+</td><td>High 0dBm(Transmission Power Maximum Value = +0dBm) / +4dBm(Transmission Power Maximum Value = +4dBm) </td><td>Set default transmit power. Default transmit power is dependent on the configuration of Maximum transmission power(BLE_ABS_CFG_RF_DEF_TX_POW). </td></tr>
 <tr>
 <td>CLKOUT_RF Output</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -444,8 +444,8 @@ Enable</li>
 <tr>
 <td>Timer Slot Maximum Number</td><td>Value must be an integer between 1 and 10</td><td>10 </td><td>The maximum number of timer slot. </td></tr>
 </table>
- <h2>Configurations for Driver &gt; Network &gt; BLE Abstraction Driver on rm_ble_abs</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Network &gt; BLE Abstraction Driver on rm_ble_abs.<br />
+ <h2>Configurations for Middleware &gt; BLE &gt; BLE Abstraction Driver on rm_ble_abs</h2>
+This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; BLE &gt; BLE Abstraction Driver on rm_ble_abs.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -587,7 +587,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a74358d520547b4d6d96a493ef2e20ecf"></a>union <a class="el" href="group___b_l_e___a_b_s.html#unionabs__advertising__parameter__t_8advertising__parameter">abs_advertising_parameter_t</a></td>
+<a id="a69cd360c881ef743633bd53fc31968ac"></a>union <a class="el" href="group___b_l_e___a_b_s.html#unionabs__advertising__parameter__t_8advertising__parameter">abs_advertising_parameter_t</a></td>
 <td class="fieldname">
 advertising_parameter</td>
 <td class="fielddoc">
@@ -1378,7 +1378,7 @@ Set callback function pointer for RF_DEEP_SLEEP. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

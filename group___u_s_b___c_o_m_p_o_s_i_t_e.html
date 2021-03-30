@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.3.0</span>
+   &#160;<span id="projectnumber">Release v2.4.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -156,11 +156,12 @@ Delete USB Basic Instance</div></div>
 Device Class Selection Error</div></div>
 <h2><a class="anchor" id="r-usb_composite-limitations"></a>
 Limitations</h2>
-<p>The following composite device is not suppored when using RA2A1(MCU).</p>
+<p>1.The following composite device is not suppored when using RA2A1(MCU).</p>
 <ol type="1">
 <li>PMSC + PCDC</li>
 <li>PCDC + PCDC</li>
 </ol>
+<p>2.If you use PMSC, make sure to use usb_basic module with PMSC. There is a risk that the information on the PMSC storage media cannot be registered normally in the "USB Callback Context".</p>
 <h2><a class="anchor" id="r-usb_composite-notes"></a>
 Notes</h2>
 <p>Please determine by the member "pipe" in "usb_event_info" structure when getting PCDC channel number which the write event is completed in PCDC + PCDC. <br />
@@ -186,7 +187,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

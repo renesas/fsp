@@ -1,9 +1,8 @@
 var searchData=
 [
   ['magic_5fpacket',['magic_packet',['../group___e_t_h_e_r.html#a1f919131083d021455a2e75b0d1d2f4e',1,'ether_instance_ctrl_t']]],
-  ['mailbox',['mailbox',['../group___c_a_n___a_p_i.html#a92b2bae44686b544b24fb9f05647ad01',1,'can_callback_args_t']]],
   ['mailbox_5fcount',['mailbox_count',['../group___c_a_n___a_p_i.html#a66e92277959e9e01a6ce2105dcdcbae6',1,'can_cfg_t']]],
-  ['mailbox_5fid',['mailbox_id',['../group___c_a_n___a_p_i.html#aee84684f6d8674760af518e659ff9d98',1,'can_mailbox_t']]],
+  ['mailbox_5fid',['mailbox_id',['../group___c_a_n___a_p_i.html#aa0c1d24b5896560908adb0ac9761aa28',1,'can_mailbox_t']]],
   ['mailbox_5frx_5firq',['mailbox_rx_irq',['../group___c_a_n___a_p_i.html#a70c47efed0012e4512b7d7eca31e3e58',1,'can_cfg_t']]],
   ['mailbox_5ftx_5firq',['mailbox_tx_irq',['../group___c_a_n___a_p_i.html#afe91f3dd74163cacafbfb96ab2104df0',1,'can_cfg_t']]],
   ['mailbox_5ftype',['mailbox_type',['../group___c_a_n___a_p_i.html#aa6a30551456873fb921b933bd3ddbe23',1,'can_mailbox_t']]],

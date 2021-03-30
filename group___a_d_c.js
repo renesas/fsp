@@ -9,7 +9,8 @@ var group___a_d_c =
       [ "clearing", "group___a_d_c.html#a3ea48b1c97df4f5169bdfe5af3911396", null ],
       [ "trigger_group_b", "group___a_d_c.html#ae8c077fe7cbf5c28f605ed84f68dca9b", null ],
       [ "double_trigger_mode", "group___a_d_c.html#ad2be3785d3a8153d8ec71123583450b9", null ],
-      [ "adc_vref_control", "group___a_d_c.html#a4bc9f429e6477b2f8f526f670325030c", null ]
+      [ "adc_vref_control", "group___a_d_c.html#a4bc9f429e6477b2f8f526f670325030c", null ],
+      [ "enable_adbuf", "group___a_d_c.html#a4f9198f9cd87c8abaaec94946fda33bc", null ]
     ] ],
     [ "adc_channel_cfg_t", "group___a_d_c.html#structadc__channel__cfg__t", [
       [ "scan_mask", "group___a_d_c.html#a706f698d4cd3a57b1e04503c143003dc", null ],

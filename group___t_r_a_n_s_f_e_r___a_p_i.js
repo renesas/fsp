@@ -36,7 +36,8 @@ var group___t_r_a_n_s_f_e_r___a_p_i =
     [ "transfer_mode_t", "group___t_r_a_n_s_f_e_r___a_p_i.html#gadfb7c2a6a73bfdf993e50505aa92992f", [
       [ "TRANSFER_MODE_NORMAL", "group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fada90d8a89f98ff82475383b14141b08d", null ],
       [ "TRANSFER_MODE_REPEAT", "group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fa607c41bfd08797c08a5ee9bd4dfb9c8b", null ],
-      [ "TRANSFER_MODE_BLOCK", "group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55", null ]
+      [ "TRANSFER_MODE_BLOCK", "group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992faa4f65de2d9454af406f60172ff858d55", null ],
+      [ "TRANSFER_MODE_REPEAT_BLOCK", "group___t_r_a_n_s_f_e_r___a_p_i.html#ggadfb7c2a6a73bfdf993e50505aa92992fafb43c6e62b61f0dbb9a5bcd5575e79e2", null ]
     ] ],
     [ "transfer_size_t", "group___t_r_a_n_s_f_e_r___a_p_i.html#ga6c224e5afb174f3f6ea9eddbb9da8b12", [
       [ "TRANSFER_SIZE_1_BYTE", "group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12accfeb24892ec24e42ccf14e4d4896c21", null ],

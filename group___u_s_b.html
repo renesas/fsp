@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.3.0</span>
+   &#160;<span id="projectnumber">Release v2.4.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -406,7 +406,7 @@ Specify NULL when using the Host class. </td></tr>
 <tr>
 <td>USB RTOS Callback</td><td>Enter the address of the function.</td><td>NULL </td><td>If an RTOS is used, set the callback function here. </td></tr>
 <tr>
-<td>USB Callback Context</td><td>Enter the address of the context.</td><td>NULL </td><td>If an RTOS is used, set the callback context here. </td></tr>
+<td>USB Callback Context</td><td>Enter the address of the context.</td><td>NULL </td><td>Set the callback context here. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-usb_basic-clock-configuration"></a>
@@ -685,7 +685,7 @@ Typedefs</h2></td></tr>
 <p>Bulk/Interrupt data transfer and control data transfer. </p>
 <ol type="1">
 <li><p class="startli">Bulk/Interrupt data transfer</p>
-<p class="startli">Requests USB data write (bulk/interrupt transfer). Stores write data in area specified by argument (p_buf). Set the device class type in usb_ctrl_t structure member (type). Confirm after data write is completed by checking the return value (USB_STATUS_WRITE_COMPLETE) of the R_USB_GetEvent function. To request the transmission of a NULL packet, assign <a class="el" href="group___u_s_b___a_p_i.html#gacb1821e78ca6d77e518e0e45eda9d537" title="NULL pointer. ">USB_NULL(0)</a> to the third argument (size).</p>
+<p class="startli">Requests USB data write (bulk/interrupt transfer). Stores write data in area specified by argument (p_buf). Set the device class type in usb_ctrl_t structure member (type). Confirm after data write is completed by checking the return value (USB_STATUS_WRITE_COMPLETE) of the R_USB_GetEvent function. For sending a zero-length packet, please refer the following Note.</p>
 </li>
 <li><p class="startli">Control data transfer</p>
 <p class="startli">The R_USB_Read function is used to receive data in the data stage and the R_USB_Write function is used to send data to the USB host.</p>
@@ -701,7 +701,15 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dl class="section note"><dt>Note</dt><dd>1.The user needs to send the zero-length packet(ZLP) since this USB driver does not send the ZLP automatically. </dd>
+<dd>
+When sending a ZLP, the user sets USB_NULL in the third argument (size) of R_USB_Write function as follow. </dd>
+<dd>
+e.g) </dd>
+<dd>
+R_USB_Write (&amp;g_basic0_ctrl, &amp;g_buf, USB_NULL); </dd>
+<dd>
+2.Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -1020,7 +1028,7 @@ Typedefs</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Requests a data write (bulk/interrupt transfer). </p>
-<p>The write data is stored in the area specified in the argument (p_buf). After data write is completed, confirm the operation with the return value (USB_STATUS_WRITE_COMPLETE) of the EventGet function. To request the transmission of a NULL packet, assign USB_NULL (0) to the third argument (size).</p>
+<p>The write data is stored in the area specified in the argument (p_buf). After data write is completed, confirm the operation with the return value (USB_STATUS_WRITE_COMPLETE) of the EventGet function. For sending a zero-length packet, please refer the following Note.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully completed. </td></tr>
@@ -1031,7 +1039,15 @@ Typedefs</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Do not call this API in the following function. </dd>
+<dl class="section note"><dt>Note</dt><dd>1.The user needs to send the zero-length packet(ZLP) since this USB driver does not send the ZLP automatically. </dd>
+<dd>
+When sending a ZLP, the user sets USB_NULL in the third argument (size) of R_USB_PipeWrite function as follow. </dd>
+<dd>
+e.g) </dd>
+<dd>
+R_USB_PipeWrite (&amp;g_basic0_ctrl, &amp;g_buf, USB_NULL, pipe_number); </dd>
+<dd>
+2.Do not call this API in the following function. </dd>
 <dd>
 (1). Interrupt function. </dd>
 <dd>
@@ -1386,6 +1402,7 @@ Do not call this API in the interrupt function. </dd></dl>
     <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter is NULL error. </td></tr>
     <tr><td class="paramname">FSP_ERR_USB_BUSY</td><td>Specified pipe now handling data receive/send request. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1436,6 +1453,7 @@ Do not call this API in the interrupt function. </dd></dl>
     <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter is NULL error. </td></tr>
     <tr><td class="paramname">FSP_ERR_USB_BUSY</td><td>Specified pipe now handling data receive/send request. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1479,6 +1497,7 @@ Do not call this API in the interrupt function. </dd></dl>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successful completion. </td></tr>
     <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter is NULL error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1783,7 +1802,7 @@ Do not call this API in the interrupt function. </dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
