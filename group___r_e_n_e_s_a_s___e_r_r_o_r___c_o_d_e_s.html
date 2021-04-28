@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,9 +140,25 @@ $(document).ready(function(){initNavTree('group___r_e_n_e_s_a_s___e_r_r_o_r___c_
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
@@ -101,13 +168,6 @@ $(document).ready(function(){initNavTree('group___r_e_n_e_s_a_s___e_r_r_o_r___c_
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>All FSP modules share these common error codes. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:unionfsp__version__t"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a></td></tr>
-<tr class="separator:unionfsp__version__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structfsp__version__t_8____unnamed____"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#structfsp__version__t_8____unnamed____">fsp_version_t.__unnamed__</a></td></tr>
-<tr class="separator:structfsp__version__t_8____unnamed____"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gaf0afcbc9a110ac9366a811d96ee06029"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p)</td></tr>
@@ -124,81 +184,6 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gadfb1288da0fcc7ae1dc88c58601374f8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> </td></tr>
 <tr class="separator:gadfb1288da0fcc7ae1dc88c58601374f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="unionfsp__version__t" id="unionfsp__version__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#unionfsp__version__t">&#9670;&nbsp;</a></span>fsp_version_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">union fsp_version_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Common version structure </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a30a9a2b73548d20c22d0ba1f8aa42e27"></a>uint32_t</td>
-<td class="fieldname">
-version_id</td>
-<td class="fielddoc">
-<p>Version id </p>
-</td></tr>
-<tr><td class="fieldtype">
-<a id="ab6f2d6d80fdd480bdf6863284c6b3a32"></a>struct <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#structfsp__version__t_8____unnamed____">fsp_version_t</a></td>
-<td class="fieldname">
-__unnamed__</td>
-<td class="fielddoc">
-<p>Code version parameters </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a name="structfsp__version__t_8____unnamed____" id="structfsp__version__t_8____unnamed____"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structfsp__version__t_8____unnamed____">&#9670;&nbsp;</a></span>fsp_version_t.__unnamed__</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct fsp_version_t.__unnamed__</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Code version parameters </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="ad2d6666b93b9c6e95bc8e1d81fd9379e"></a>uint8_t</td>
-<td class="fieldname">
-code_version_minor</td>
-<td class="fielddoc">
-Code minor version. </td></tr>
-<tr><td class="fieldtype">
-<a id="a40292f8c4346751f08433b8e59ea657b"></a>uint8_t</td>
-<td class="fieldname">
-code_version_major</td>
-<td class="fielddoc">
-Code major version. </td></tr>
-<tr><td class="fieldtype">
-<a id="a96e96c3d29b2faf6ae8f3ecce1917bbd"></a>uint8_t</td>
-<td class="fieldname">
-api_version_minor</td>
-<td class="fielddoc">
-API minor version. </td></tr>
-<tr><td class="fieldtype">
-<a id="a361dcae2b6acd1b9a06bada602c57813"></a>uint8_t</td>
-<td class="fieldname">
-api_version_major</td>
-<td class="fielddoc">
-API major version. </td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gaf0afcbc9a110ac9366a811d96ee06029"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf0afcbc9a110ac9366a811d96ee06029">&#9670;&nbsp;</a></span>FSP_PARAMETER_NOT_USED</h2>
@@ -512,6 +497,8 @@ API major version. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a6240bb179602fe6d111b3cb464ca4612"></a>FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION&#160;</td><td class="fielddoc"><p>ETHERC/EDMAC has an error in the phy communication. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a092517cd93432a76ae16c3cc3ff4bc29"></a>FSP_ERR_ETHER_RECEIVE_BUFFER_ACTIVE&#160;</td><td class="fielddoc"><p>Receive buffer is active. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a629a12ea100187a63ddb2f8ee9a5c823"></a>FSP_ERR_ETHER_PHY_ERROR_LINK&#160;</td><td class="fielddoc"><p>PHY is not link up. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aad936f5a80f8c3fe3faa8d6220189098"></a>FSP_ERR_ETHER_PHY_NOT_READY&#160;</td><td class="fielddoc"><p>PHY has an error in the Auto-negotiation. </p>
@@ -525,6 +512,36 @@ API major version. </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a7cfb255a9b41bb7d578b892b94ec362c"></a>FSP_ERR_CTSU_NOT_GET_DATA&#160;</td><td class="fielddoc"><p>Not processed previous scan data. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a19beacb3a5e19f362431d08a1fcaaa5d"></a>FSP_ERR_CTSU_INCOMPLETE_TUNING&#160;</td><td class="fielddoc"><p>Incomplete initial offset tuning. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac3355a82b4fc612941c6d2b8f4f52f90"></a>FSP_ERR_CTSU_DIAG_NOT_YET&#160;</td><td class="fielddoc"><p>Diagnosis of data collected no yet. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aab6cc8f1186d7e953d0a25806106b01c"></a>FSP_ERR_CTSU_DIAG_LDO_OVER_VOLTAGE&#160;</td><td class="fielddoc"><p>Diagnosis of LDO over voltage failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a7ee7b868f3bfce9f09e5a45c47cce101"></a>FSP_ERR_CTSU_DIAG_CCO_HIGH&#160;</td><td class="fielddoc"><p>Diagnosis of CCO into 19.2uA failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a53bf2288d2174c426d5626885a9cf3a5"></a>FSP_ERR_CTSU_DIAG_CCO_LOW&#160;</td><td class="fielddoc"><p>Diagnosis of CCO into 2.4uA failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a55211caeb32fda85000d88eab4c4766d"></a>FSP_ERR_CTSU_DIAG_SSCG&#160;</td><td class="fielddoc"><p>Diagnosis of SSCG frequency failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a61d141714727223ba19d6303429ad330"></a>FSP_ERR_CTSU_DIAG_DAC&#160;</td><td class="fielddoc"><p>Diagnosis of non-touch count value failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a5c0d0b6394458760c2cdc05cdb237136"></a>FSP_ERR_CTSU_DIAG_OUTPUT_VOLTAGE&#160;</td><td class="fielddoc"><p>Diagnosis of LDO output voltage failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8aa895abb7c999f8a17f0b5c634abe6ae7"></a>FSP_ERR_CTSU_DIAG_OVER_VOLTAGE&#160;</td><td class="fielddoc"><p>Diagnosis of over voltage detection circuit failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ad8f0d03dcdebc03a19c8e4112c30b46b"></a>FSP_ERR_CTSU_DIAG_OVER_CURRENT&#160;</td><td class="fielddoc"><p>Diagnosis of over current detection circuit failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a17e6e9756acd02df02d6975161aa9998"></a>FSP_ERR_CTSU_DIAG_LOAD_RESISTANCE&#160;</td><td class="fielddoc"><p>Diagnosis of LDO internal resistance value failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8acf83225e14023205bc71ddddf1ef7a43"></a>FSP_ERR_CTSU_DIAG_CURRENT_SOURCE&#160;</td><td class="fielddoc"><p>Diagnosis of Current source value failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a886c9fb19f0d44f37da9259c09098e94"></a>FSP_ERR_CTSU_DIAG_SENSCLK_GAIN&#160;</td><td class="fielddoc"><p>Diagnosis of SENSCLK frequency gain failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ab3731e454e03487e43cfcad91be7643f"></a>FSP_ERR_CTSU_DIAG_SUCLK_GAIN&#160;</td><td class="fielddoc"><p>Diagnosis of SUCLK frequency gain failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ab33453ae13bd3c15751b3962f5188364"></a>FSP_ERR_CTSU_DIAG_CLOCK_RECOVERY&#160;</td><td class="fielddoc"><p>Diagnosis of SUCLK clock recovery function failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8afa6bc60b26c1b7b906b9854b4db5060d"></a>FSP_ERR_CTSU_DIAG_CFC_GAIN&#160;</td><td class="fielddoc"><p>Diagnosis of CFC oscillator gain failed. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a2ed5fe9a48f6c1a6e50b36b17158fc62"></a>FSP_ERR_CARD_INIT_FAILED&#160;</td><td class="fielddoc"><p>SD card or eMMC device failed to initialize. </p>
 </td></tr>
@@ -638,6 +655,12 @@ API major version. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8af1bec53bb97a928b39bb4e9d5f66eb04"></a>FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL&#160;</td><td class="fielddoc"><p>Failure to Init Cipher. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a7c0bcb38871c57b0cbaf0a7f94b4a3b6"></a>FSP_ERR_CRYPTO_SCE_AUTHENTICATION&#160;</td><td class="fielddoc"><p>Authentication failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a407432ab3c4ab46df3dbf12e27bd3ca8"></a>FSP_ERR_CRYPTO_SCE_PARAMETER&#160;</td><td class="fielddoc"><p>Input date is illegal. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8a03165ce74cc447e345998cc45810bb8f"></a>FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION&#160;</td><td class="fielddoc"><p>An invalid function call occurred. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8acfbdf09c1ae8d64e7eb388094bf54b9b"></a>FSP_ERR_CRYPTO_COMMON_NOT_OPENED&#160;</td><td class="fielddoc"><p>Crypto Framework Common is not opened. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadfb1288da0fcc7ae1dc88c58601374f8ac42e16e1358505398e631062a1afbd45"></a>FSP_ERR_CRYPTO_HAL_ERROR&#160;</td><td class="fielddoc"><p>Cryoto HAL module returned an error. </p>
@@ -662,7 +685,7 @@ API major version. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

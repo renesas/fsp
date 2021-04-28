@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="headertitle">
 <div class="title">Starting Development </div>  </div>
@@ -275,7 +343,7 @@ Starting Development Introduction</h1>
 <li>Read a few <a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> sections to see how to use API function calls, structures, enumerations, types and callbacks. These module guides provide the information you will use to implement your project code.</li>
 <li>After you have a Kit and you have downloaded and installed e2 studio and FSP, you can build and debug a simple project to test your installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e2 studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project in section <a class="el" href="_s_t_a_r_t__d_e_v.html#create-a-new-project-for-blinky">Create a New Project for Blinky</a>. It will use some of the key steps for managing projects within e2 studio and is a good way to learn the basics.</li>
 <li>Once you have successfully run Blinky you have a good starting point for using FSP for more complex projects. The Using HAL Drivers Tutorial, available at <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>, shows how to create a project from scratch, using FSP API functions. Do this next.</li>
-<li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>. Doing a couple of these labs provides further details on using FSP, and is also good practice. Running these labs is highly recommended.</li>
+<li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/category/31087/subcategory/31090">https://en-support.renesas.com/knowledgeBase/category/31087/subcategory/31090</a>. Doing a couple of these labs provides further details on using FSP, and is also good practice. Running these labs is highly recommended.</li>
 <li>The balance of the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> sections (that is, those not called out in step 2 above) contain additional reference material that may be helpful in the future. Scan them so you know what they contain, in case you need them.</li>
 <li>The balance of the e2 studio User Guide, starting with the <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-a-project">What is a Project?</a> section up to, but not including, <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section, provides a detailed description of each of the key steps, windows, and entries used to create, manage, configure, build and debug a project. Much of this may be familiar after running through the tutorials and Quick Labs. However, it is important to have a good grasp of what each of the configuration tabs are used for as that is where the bulk of the project preparation work takes place prior to writing code. Skim over this section as it may help with any questions in the future.</li>
 <li>Read the <a class="el" href="_s_t_a_r_t__d_e_v.html#writing-the-application">Writing the Application</a> section to get a short introduction to the steps used when creating application code with FSP. It covers both RTOS-independent and RTOS-dependent applications. It also includes a short description for several of the code accelerators you should be familiar with by now. Using additional Quick FSP Labs is a good way to become familiar with the application development process and links to them are included in the appropriate places in this section. You can find the complete list of available Quick FSP Labs here: <a href="https://en-support.renesas.com/knowledgeBase/19308277">https://en-support.renesas.com/knowledgeBase/19308277</a>.</li>
@@ -1865,7 +1933,7 @@ Modify existing RA project</h3>
 <li>Menu item name: Enter: RA Smart Configurator</li>
 <li>Command: Select "..." and navigate to <code>rasc.exe</code></li>
 <li>Initial Folder: Enter: <code>$P</code></li>
-<li>Arguments: Enter: <code>--device $D –compiler ARMv6 configuration.xml</code></li>
+<li>Arguments: Enter: <code>--device $D –-compiler ARMv6 configuration.xml</code></li>
 </ul>
 </li>
 <li>Device Partition Manager:<ul>
@@ -1971,7 +2039,7 @@ Notes and Restrictions</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

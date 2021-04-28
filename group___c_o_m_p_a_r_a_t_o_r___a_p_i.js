@@ -36,7 +36,6 @@ var group___c_o_m_p_a_r_a_t_o_r___a_p_i =
       [ "p_cfg", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a04056d44209a8b6ec58e1f41981bacd7", null ],
       [ "p_api", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#aa21e3a4d37347761a36aa94410c2074d", null ]
     ] ],
-    [ "COMPARATOR_API_VERSION_MAJOR", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ga2514389a0f688a400e6ef4181a114f3c", null ],
     [ "comparator_ctrl_t", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#gaa8093c248f21f1012385b4c0099a22c9", null ],
     [ "comparator_mode_t", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#gad04a64cdf6b227dd16f9f3c850718e3c", [
       [ "COMPARATOR_MODE_NORMAL", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ggad04a64cdf6b227dd16f9f3c850718e3ca84f01076935f978b3cf2d70a52c347b9", null ],

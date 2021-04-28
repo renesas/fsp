@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html',
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="headertitle">
 <div class="title">FSP Architecture </div>  </div>
@@ -233,7 +301,7 @@ FSP Interface Configuration Structure</h3>
 <h3><a class="anchor" id="fsp-interface-api-structure"></a>
 FSP Interface API Structure</h3>
 <p>All interfaces include an API structure which contains function pointers for all the supported interface functions. An example structure for the <a class="el" href="group___d_a_c.html">Digital to Analog Converter (r_dac)</a> is shown below.</p>
- <div class="fragment"><div class="line">typedef struct st_dac_api</div><div class="line">{</div><div class="line">    /** Initial configuration.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Open()</div><div class="line">     * - @ref R_DAC8_Open()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.</div><div class="line">     * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.</div><div class="line">     */</div><div class="line">    fsp_err_t (* open)(dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg);</div><div class="line"></div><div class="line">    /** Close the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Close()</div><div class="line">     * - @ref R_DAC8_Close()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* close)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Write sample value to the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Write()</div><div class="line">     * - @ref R_DAC8_Write()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     * @param[in]   value      Sample value to be written to the D/A Converter.</div><div class="line">     */</div><div class="line">    fsp_err_t (* write)(dac_ctrl_t * const p_ctrl, uint16_t value);</div><div class="line"></div><div class="line">    /** Start the D/A Converter if it has not been started yet.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Start()</div><div class="line">     * - @ref R_DAC8_Start()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* start)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Stop the D/A Converter if the converter is running.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Stop()</div><div class="line">     * - @ref R_DAC8_Stop()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* stop)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /* DEPRECATED Get version and store it in provided pointer p_version.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_VersionGet()</div><div class="line">     * - @ref R_DAC8_VersionGet()</div><div class="line">     *</div><div class="line">     * @param[out]  p_version  Code and API version used.</div><div class="line">     */</div><div class="line">    fsp_err_t (* versionGet)(fsp_version_t * p_version);</div><div class="line">} dac_api_t;</div></div><!-- fragment --></p>
+ <div class="fragment"><div class="line">typedef struct st_dac_api</div><div class="line">{</div><div class="line">    /** Initial configuration.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Open()</div><div class="line">     * - @ref R_DAC8_Open()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.</div><div class="line">     * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.</div><div class="line">     */</div><div class="line">    fsp_err_t (* open)(dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg);</div><div class="line"></div><div class="line">    /** Close the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Close()</div><div class="line">     * - @ref R_DAC8_Close()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* close)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Write sample value to the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Write()</div><div class="line">     * - @ref R_DAC8_Write()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     * @param[in]   value      Sample value to be written to the D/A Converter.</div><div class="line">     */</div><div class="line">    fsp_err_t (* write)(dac_ctrl_t * const p_ctrl, uint16_t value);</div><div class="line"></div><div class="line">    /** Start the D/A Converter if it has not been started yet.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Start()</div><div class="line">     * - @ref R_DAC8_Start()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* start)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Stop the D/A Converter if the converter is running.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Stop()</div><div class="line">     * - @ref R_DAC8_Stop()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* stop)(dac_ctrl_t * const p_ctrl);</div><div class="line">} dac_api_t;</div></div><!-- fragment --></p>
 <p>The API structure is what allows for modules to easily be swapped in and out for other modules that are instances of the same interface. Let's look at an example application using the DAC interface above.</p>
 <p>RA MCUs have an internal DAC peripheral. If the DAC API structure in the DAC interface is not used the application can make calls directly into the module. In the example below the application is making calls to the <a class="el" href="group___d_a_c.html#gad33261cb041a53bdd0e8978b2efcc435">R_DAC_Write()</a> function which is provided in the r_dac module.</p>
 <div class="image">
@@ -295,7 +363,7 @@ FSP Instance API</h2>
 FSP API Standards</h1>
 <h2><a class="anchor" id="fsp-function-names"></a>
 FSP Function Names</h2>
-<p>FSP functions start with the uppercase module name (<code>&lt;MODULE&gt;</code>). All modules have <code>&lt;MODULE&gt;_Open()</code> and <code>&lt;MODULE&gt;_Close()</code> functions. The <code>&lt;MODULE&gt;_Open()</code> function must be called before any of the other functions. The only exception is the <code>&lt;MODULE&gt;_VersionGet()</code> function which is not dependent upon any user provided information.</p>
+<p>FSP functions start with the uppercase module name (<code>&lt;MODULE&gt;</code>). All modules have <code>&lt;MODULE&gt;_Open()</code> and <code>&lt;MODULE&gt;_Close()</code> functions. The <code>&lt;MODULE&gt;_Open()</code> function must be called before any of the other functions.</p>
 <p>Other functions that will commonly be found are <code>&lt;MODULE&gt;_Read()</code>, <code>&lt;MODULE&gt;_Write()</code>, <code>&lt;MODULE&gt;_InfoGet()</code>, and <code>&lt;MODULE&gt;_StatusGet()</code>. The <code>&lt;MODULE&gt;_StatusGet()</code> function provides a status that could change asynchronously, while <code>&lt;MODULE&gt;_InfoGet()</code> provides information that cannot change after open or can only be updated by API calls. Example function names include:</p>
 <ul>
 <li><a class="el" href="group___s_p_i.html#ga9427801ef2c771a88fad0ab4524d7d42">R_SPI_Read()</a>, <a class="el" href="group___s_p_i.html#ga97b928cbe1a9df78d4ab5ff69732dbcd">R_SPI_Write()</a>, <a class="el" href="group___s_p_i.html#ga459fb4dfcfc9ee278599ae431237f549">R_SPI_WriteRead()</a></li>
@@ -311,9 +379,8 @@ Use of const in API parameters</h2>
 <p>The <code>const</code> qualifier after the pointer star for both <code>p_ctrl</code> and <code>p_cfg</code> ensures the FSP function does not modify the input pointer addresses. While not fool-proof by any means this does provide some extra checking inside the FSP code to ensure that arguments that should not be altered are treated as such.</p>
 <h2><a class="anchor" id="fsp-version-information"></a>
 FSP Version Information</h2>
-<p>All instances supply a <code>&lt;MODULE&gt;_VersionGet()</code> function which fills in a structure of type <code><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a></code>. This structure is made up of two version numbers: one for the interface (the API) and one for the underlying instance that is currently being used.</p>
- <div class="fragment"><div class="line">typedef union st_fsp_version</div><div class="line">{</div><div class="line">    /** Version id */</div><div class="line">    uint32_t version_id;</div><div class="line"></div><div class="line">    /** Code version parameters */</div><div class="line">    struct</div><div class="line">    {</div><div class="line">        uint8_t code_version_minor;    ///&lt; Code minor version</div><div class="line">        uint8_t code_version_major;    ///&lt; Code major version</div><div class="line">        uint8_t api_version_minor;     ///&lt; API minor version</div><div class="line">        uint8_t api_version_major;     ///&lt; API major version</div><div class="line">    };</div><div class="line">} fsp_version_t;</div></div><!-- fragment --></p>
-<p>The API version ideally never changes, and only rarely if it does. A change to the API may require users to go back and modify their code. The code version (the version of the current instance) may be updated more frequently due to bug fixes, enhancements, and additional features. Changes to the code version typically do not require changes to user code.</p>
+<p>The BSP provides a function <code><a class="el" href="group___b_s_p___m_c_u.html#gaf3ee66233fc75acfcc21a97d7a767aa1">R_FSP_VersionGet()</a></code> which fills in a structure of type <code><a class="el" href="group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#unionfsp__pack__version__t">fsp_pack_version_t</a></code>. This can be used to determine the FSP version at runtime.</p>
+<p>There are also <code>FSP_VERSION_*</code> macros in fsp_version.h that can be used to determine the FSP version at build time.</p>
 <h1><a class="anchor" id="fsp-build-time-configurations"></a>
 FSP Build Time Configurations</h1>
 <p>All modules have a build-time configuration header file. Most configuration options are supplied at run time, though options that are rarely used or apply to all instances of a module may be moved to build time. The advantage of using a build-time configuration option is to potentially reduce code size reduction by removing an unused feature.</p>
@@ -342,10 +409,10 @@ Callbacks in Non-Secure from Non-Secure Callable Modules</h2>
 Additional TrustZone Information</h2>
 <p>The following resources provide technical background, application notes and example projects that demonstrate key TrustZone concepts and implementation procedures.</p>
 <ul>
-<li><a href="https://www.renesas.com/en-us/www/doc/whitepapers/iot-security/arm-trustzone-wp.pdf">The Benefits of Using Arm® TrustZone® in Your Design</a> (Brochure)</li>
-<li><a href="https://www.renesas.com/en-us/doc/products/mpumcu/apn/ra/001/r20an0577eg0101-ra-trustzone-tooling.pdf">RA Arm® TrustZone® Tooling Primer</a> (Application Note)</li>
-<li><a href="https://www.renesas.com/en-us/doc/products/mpumcu/apn/ra/001/r11an0467eu0100-ra-trustzone-ip-protection.pdf">Renesas RA Family Security Design with Arm® TrustZone® - IP Protection</a> (Application Note)</li>
-<li><a href="https://www.renesas.com/en-us/doc/products/mpumcu/apn/ra/001/r11an0468eu0100-ra-securing-data-at-rest-trustzone.pdf">Renesas RA Family Securing Data at Rest Using the Arm® TrustZone®</a> (Application Note)</li>
+<li><a href="https://www.renesas.com/us/en/document/whp/benefits-using-arm-trustzone-your-design">The Benefits of Using Arm® TrustZone® in Your Design</a> (Brochure)</li>
+<li><a href="https://www.renesas.com/us/en/document/apn/ra-arm-trustzone-tooling-primer">RA Arm® TrustZone® Tooling Primer</a> (Application Note)</li>
+<li><a href="https://www.renesas.com/us/en/document/scd/renesas-ra-family-security-design-arm-trustzone-ip-protection">Renesas RA Family Security Design with Arm® TrustZone® - IP Protection</a> (Application Note)</li>
+<li><a href="https://www.renesas.com/us/en/document/scd/renesas-ra-family-securing-data-rest-using-arm-trustzone">Renesas RA Family Securing Data at Rest Using the Arm® TrustZone®</a> (Application Note)</li>
 </ul>
 <h1><a class="anchor" id="fsp-architecture-in-practice"></a>
 FSP Architecture in Practice</h1>
@@ -376,7 +443,7 @@ Use the Instance API in the Application</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

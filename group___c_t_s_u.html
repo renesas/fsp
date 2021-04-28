@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___c_t_s_u.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___c_t_s_u.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -112,6 +180,9 @@ Functions</h2></td></tr>
 <tr class="separator:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c966546f3774ce2228739a5ffc0ac19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga3c966546f3774ce2228739a5ffc0ac19">R_CTSU_CallbackSet</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:ga3c966546f3774ce2228739a5ffc0ac19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45103e8db4a16dfabf3a516ab2da9f26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga45103e8db4a16dfabf3a516ab2da9f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Diagnosis the CTSU peripheral. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e">ctsu_api_t::diagnosis</a>.  <a href="#ga45103e8db4a16dfabf3a516ab2da9f26">More...</a><br /></td></tr>
+<tr class="separator:ga45103e8db4a16dfabf3a516ab2da9f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga73b45020c568d57065c8a7adecaaeb4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga73b45020c568d57065c8a7adecaaeb4c">R_CTSU_Close</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:ga73b45020c568d57065c8a7adecaaeb4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified CTSU control block. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395">ctsu_api_t::close</a>.  <a href="#ga73b45020c568d57065c8a7adecaaeb4c">More...</a><br /></td></tr>
 <tr class="separator:ga73b45020c568d57065c8a7adecaaeb4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,7 +285,8 @@ Usage Notes</h1>
 <object type="image/svg+xml" data="r_ctsu_mutual_button.svg">r_ctsu_mutual_button.svg</object>
 <div class="caption">
 Mutual Button Image</div></div>
-<p> In mutual capacitance mode only 7 pins are necessary to scan 12 buttons. In self mode, 12 pins would be required.</p>
+<p>)</p>
+<p>In mutual capacitance mode only 7 pins are necessary to scan 12 buttons. In self mode, 12 pins would be required.</p>
 <ul>
 <li>Scan Order<ul>
 <li>The hardware scans the matrix by iterating over the TX pins first and the RX pins second.</li>
@@ -269,13 +341,15 @@ Shield pin Image</div></div>
 <p>The internal circuit of CTSU2 and r_adc can be used to compensate for temperature drift. This keeps the measured value constant even if the temperature changes. An instance for temperature correction is required to operate this function, and it is also necessary to measure this instance on a regular basis. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
 <h2>TrustZone Support</h2>
 <p>In r_ctsu and rm_touch module, Non-Secure Callable Guard Functions are only generated from QE for Capacitive Touch. QE can be used for tuning in secure or flat project, but not in non-secure project. If you want to use in non-secure project, copy the output file from secure or flat project. Refer to QE Help for more information.</p>
+<h2>Diagnosis Support</h2>
+<p>Diagnose the functions inside the chip. It can be implemented by adding an API function <a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a>.</p>
 <h1><a class="anchor" id="r-ctsu-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the CTSU in an application.</p>
-<div class="fragment"><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ctsu_callback (<a class="code" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___c_t_s_u___a_p_i.html#ggaf6b0abb6cb3e6996d8435268d5e7c9cfa110041f0d6a2dcfeac8b0d2ba3d2318b">CTSU_EVENT_SCAN_COMPLETE</a> == p_args-&gt;<a class="code" href="group___c_t_s_u___a_p_i.html#a40ee54221ab1d85ee5d2ce7a5cdd289a">event</a>)</div><div class="line">    {</div><div class="line">        g_scan_flag = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ctsu_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Multi-configuration Example</h2>
+<div class="fragment"><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ctsu_callback (<a class="code" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___c_t_s_u___a_p_i.html#ggaf6b0abb6cb3e6996d8435268d5e7c9cfa110041f0d6a2dcfeac8b0d2ba3d2318b">CTSU_EVENT_SCAN_COMPLETE</a> == p_args-&gt;<a class="code" href="group___c_t_s_u___a_p_i.html#a40ee54221ab1d85ee5d2ce7a5cdd289a">event</a>)</div><div class="line">    {</div><div class="line">        g_scan_flag = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ctsu_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Multi-configuration Example</h2>
 <p>This is a optional example of using both Self-capacitance and Mutual-capacitance configurations in the same project.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu_optional_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS + (CTSU_CFG_NUM_MUTUAL_ELEMENTS * 2)];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    handle_error(err);</div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl_mutual, &amp;g_ctsu_cfg_mutual);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl_mutual);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl_mutual, data);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ctsu_optional_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line">    uint16_t  data[CTSU_CFG_NUM_SELF_ELEMENTS + (CTSU_CFG_NUM_MUTUAL_ELEMENTS * 2)];</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl, &amp;g_ctsu_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>(&amp;g_ctsu_ctrl_mutual, &amp;g_ctsu_cfg_mutual);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl_mutual);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl_mutual, data);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structctsu__ctsuwr__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#structctsu__ctsuwr__t">ctsu_ctsuwr_t</a></td></tr>
@@ -493,10 +567,10 @@ CTSU clock [MHz]. </td></tr>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a257eb16ff64e017d0a67a0a3384fdbf7">open</a></td></tr>
 <tr class="memdesc:a257eb16ff64e017d0a67a0a3384fdbf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not driver is open. <br /></td></tr>
 <tr class="separator:a257eb16ff64e017d0a67a0a3384fdbf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8911c68e1eec2dfbaa3f7ed304401e74"><td class="memItemLeft" align="right" valign="top"><a id="a8911c68e1eec2dfbaa3f7ed304401e74"></a>
-<a class="el" href="group___c_t_s_u.html#ga9be3b4466784415a4193f9584362c2ce">ctsu_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a8911c68e1eec2dfbaa3f7ed304401e74">state</a></td></tr>
-<tr class="memdesc:a8911c68e1eec2dfbaa3f7ed304401e74"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU run state. <br /></td></tr>
-<tr class="separator:a8911c68e1eec2dfbaa3f7ed304401e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee16466f6ce29f3141a0413c1f30cfa8"><td class="memItemLeft" align="right" valign="top"><a id="aee16466f6ce29f3141a0413c1f30cfa8"></a>
+volatile <a class="el" href="group___c_t_s_u.html#ga9be3b4466784415a4193f9584362c2ce">ctsu_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#aee16466f6ce29f3141a0413c1f30cfa8">state</a></td></tr>
+<tr class="memdesc:aee16466f6ce29f3141a0413c1f30cfa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU run state. <br /></td></tr>
+<tr class="separator:aee16466f6ce29f3141a0413c1f30cfa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a200d61ec88212741eda11efdf320dcf2"><td class="memItemLeft" align="right" valign="top"><a id="a200d61ec88212741eda11efdf320dcf2"></a>
 <a class="el" href="group___c_t_s_u.html#gae3fb0beb148069bb590287ed34771117">ctsu_tuning_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a200d61ec88212741eda11efdf320dcf2">tuning</a></td></tr>
 <tr class="memdesc:a200d61ec88212741eda11efdf320dcf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU Initial offset tuning status. <br /></td></tr>
@@ -750,7 +824,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>This function should be called each time a periodic timer expires. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Before starting the next scan, first get the data with <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>. If a different control block scan should be run, check the scan is complete before executing. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a1df87278ab5d47fdd093994f53de96a6">ctsu_api_t::scanStart</a>. </p>
-<p>Example: </p><div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully configured. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
@@ -790,13 +864,14 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 
 <p>This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>. </p>
-<p>Example: </p><div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>(&amp;g_ctsu_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">        <span class="keywordflow">while</span> (!g_scan_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for scan end callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        g_scan_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>(&amp;g_ctsu_ctrl, data);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application specific data processing. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully configured. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_SCANNING</td><td>Scanning this instance. </td></tr>
     <tr><td class="paramname">FSP_ERR_CTSU_INCOMPLETE_TUNING</td><td>Incomplete initial offset tuning. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_NOT_YET</td><td>Diagnosis of data collected no yet. </td></tr>
   </table>
   </dd>
 </dl>
@@ -853,6 +928,49 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
+<a id="ga45103e8db4a16dfabf3a516ab2da9f26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga45103e8db4a16dfabf3a516ab2da9f26">&#9670;&nbsp;</a></span>R_CTSU_Diagnosis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_CTSU_Diagnosis </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Diagnosis the CTSU peripheral. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e">ctsu_api_t::diagnosis</a>. </p>
+<p>Example: </p><div class="fragment"><div class="line">            err = <a class="code" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a>(&amp;g_ctsu_ctrl_diagnosis);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_NOT_GET_DATA</td><td>The previous data has not been retrieved by DataGet. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_LDO_OVER_VOLTAGE</td><td>Diagnosis of LDO over voltage failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_CCO_HIGH</td><td>Diagnosis of CCO into 19.2uA failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_CCO_LOW</td><td>Diagnosis of CCO into 2.4uA failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_SSCG</td><td>Diagnosis of SSCG frequency failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_DAC</td><td>Diagnosis of non-touch count value failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_OUTPUT_VOLTAGE</td><td>Diagnosis of LDO output voltage failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_OVER_VOLTAGE</td><td>Diagnosis of over voltage detection circuit failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_OVER_CURRENT</td><td>Diagnosis of over current detection circuit failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_LOAD_RESISTANCE</td><td>Diagnosis of LDO internal resistance value failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_CURRENT_SOURCE</td><td>Diagnosis of LDO internal resistance value failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_SENSCLK_GAIN</td><td>Diagnosis of SENSCLK frequency gain failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_SUCLK_GAIN</td><td>Diagnosis of SUCLK frequency gain failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_CLOCK_RECOVERY</td><td>Diagnosis of SUCLK clock recovery function failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CTSU_DIAG_CFC_GAIN</td><td>Diagnosis of CFC oscillator gain failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga73b45020c568d57065c8a7adecaaeb4c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga73b45020c568d57065c8a7adecaaeb4c">&#9670;&nbsp;</a></span>R_CTSU_Close()</h2>
 
@@ -887,7 +1005,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -14,6 +14,7 @@ var group___b_s_p___m_c_u =
     [ "RA6M5", "group___b_s_p___m_c_u___r_a6_m5.html", null ],
     [ "RA6T1", "group___b_s_p___m_c_u___r_a6_t1.html", "group___b_s_p___m_c_u___r_a6_t1" ],
     [ "BSP_IRQ_DISABLED", "group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c", null ],
+    [ "FSP_LOG_PRINT", "group___b_s_p___m_c_u.html#ga0f428b0e243466083b74ab49b25bea8c", null ],
     [ "FSP_RETURN", "group___b_s_p___m_c_u.html#ga8c791e904efc648fb8b69b56d7dd37ba", null ],
     [ "FSP_ERROR_LOG", "group___b_s_p___m_c_u.html#ga960f46c44b67ba8ad5377cfc8e4e6a75", null ],
     [ "FSP_ASSERT", "group___b_s_p___m_c_u.html#gaa4fa8ae9390afa996af2dabee6552732", null ],
@@ -297,6 +298,5 @@ var group___b_s_p___m_c_u =
     [ "NMI_Handler", "group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc", null ],
     [ "R_BSP_RegisterProtectEnable", "group___b_s_p___m_c_u.html#ga6a9c6b74983237446de75a9d9b65e752", null ],
     [ "R_BSP_RegisterProtectDisable", "group___b_s_p___m_c_u.html#ga1bb35164e7e044bd1878a4ce015199c3", null ],
-    [ "SystemCoreClock", "group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6", null ],
-    [ "g_bsp_version", "group___b_s_p___m_c_u.html#gaaa2f4340010ddb682ca12fac46f83db8", null ]
+    [ "SystemCoreClock", "group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6", null ]
 ];

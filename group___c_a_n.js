@@ -1,5 +1,11 @@
 var group___c_a_n =
 [
+    [ "can_mailbox_t", "group___c_a_n.html#structcan__mailbox__t", [
+      [ "mailbox_id", "group___c_a_n.html#aa0c1d24b5896560908adb0ac9761aa28", null ],
+      [ "id_mode", "group___c_a_n.html#a9d3924b6ba4efb4c978a04d0e9a4fbc6", null ],
+      [ "mailbox_type", "group___c_a_n.html#aa6a30551456873fb921b933bd3ddbe23", null ],
+      [ "frame_type", "group___c_a_n.html#af01f0306a9ad2e430154d9d6a4e3404f", null ]
+    ] ],
     [ "can_status_t", "group___c_a_n.html#ga507b4ed3fc531e0c40aa8812174e3e1d", [
       [ "CAN_STATUS_NEW_DATA", "group___c_a_n.html#gga507b4ed3fc531e0c40aa8812174e3e1da44b1af154963d1f81a99d80cb68f279f", null ],
       [ "CAN_STATUS_SENT_DATA", "group___c_a_n.html#gga507b4ed3fc531e0c40aa8812174e3e1dad62a6cf78bc6f7eab84dcbb2a3401acd", null ],
@@ -23,6 +29,23 @@ var group___c_a_n =
       [ "CAN_ERROR_BIT_RECESSIVE", "group___c_a_n.html#gga6d777202844afdced277cb7edb5f659ca6695c5611227ddd4bd29bd5f965a3cde", null ],
       [ "CAN_ERROR_BIT_DOMINANT", "group___c_a_n.html#gga6d777202844afdced277cb7edb5f659caaa624ddb5e00f243bb07c3bd1530af30", null ],
       [ "CAN_ERROR_ACK_DELIMITER", "group___c_a_n.html#gga6d777202844afdced277cb7edb5f659ca3f50326451e594774edaaf5ec3d86102", null ]
+    ] ],
+    [ "can_mailbox_send_receive_t", "group___c_a_n.html#ga99db0880f7c03215e00781d3e57db3a3", [
+      [ "CAN_MAILBOX_RECEIVE", "group___c_a_n.html#gga99db0880f7c03215e00781d3e57db3a3a5f4004ddfe179e388be8bb240527450e", null ],
+      [ "CAN_MAILBOX_TRANSMIT", "group___c_a_n.html#gga99db0880f7c03215e00781d3e57db3a3a1c100296f7b9384c8e09b55fd611242d", null ]
+    ] ],
+    [ "can_global_id_mode_t", "group___c_a_n.html#gab798132b937282be9589b6ed177ea999", [
+      [ "CAN_GLOBAL_ID_MODE_STANDARD", "group___c_a_n.html#ggab798132b937282be9589b6ed177ea999af93ba7d9a4356ffa8c9b49f26c4f1b3d", null ],
+      [ "CAN_GLOBAL_ID_MODE_EXTENDED", "group___c_a_n.html#ggab798132b937282be9589b6ed177ea999a7dc9d3f494129db1c953915d1b781faa", null ],
+      [ "CAN_GLOBAL_ID_MODE_MIXED", "group___c_a_n.html#ggab798132b937282be9589b6ed177ea999aabdf871d5bbaf279c8dcf743ca64b488", null ]
+    ] ],
+    [ "can_message_mode_t", "group___c_a_n.html#ga42c6d0b24e77b50c47ec54bafcac7604", [
+      [ "CAN_MESSAGE_MODE_OVERWRITE", "group___c_a_n.html#gga42c6d0b24e77b50c47ec54bafcac7604ad8aab020d2b6d64777a0be580f44ddb4", null ],
+      [ "CAN_MESSAGE_MODE_OVERRUN", "group___c_a_n.html#gga42c6d0b24e77b50c47ec54bafcac7604af25ce6de3b35f5abe47186351372b8b7", null ]
+    ] ],
+    [ "can_clock_source_t", "group___c_a_n.html#ga5bf3c71a3b53b409e9ee682c69189a39", [
+      [ "CAN_CLOCK_SOURCE_PCLKB", "group___c_a_n.html#gga5bf3c71a3b53b409e9ee682c69189a39a7c0cedacb23a57e50692191f61915cbd", null ],
+      [ "CAN_CLOCK_SOURCE_CANMCLK", "group___c_a_n.html#gga5bf3c71a3b53b409e9ee682c69189a39a5c90a69c9ba1a8116b6ec45ff238e117", null ]
     ] ],
     [ "R_CAN_Open", "group___c_a_n.html#gac8ce7d5f6f419e35da64eb9c85099b3b", null ],
     [ "R_CAN_Close", "group___c_a_n.html#gadb3de4322c2ede349a1e4968c93933c0", null ],

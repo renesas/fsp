@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___f_l_a_s_h___h_p.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___f_l_a_s_h___h_p.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -127,6 +195,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga95b5a01a9c462a38f52397315a346a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2932aac9082f6418d518b9cbc7cdef01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#ga2932aac9082f6418d518b9cbc7cdef01">R_FLASH_HP_CallbackSet</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:ga2932aac9082f6418d518b9cbc7cdef01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae72b7f170f44f6fe6cde5f32b5b165a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#gae72b7f170f44f6fe6cde5f32b5b165a3">R_FLASH_HP_BankSwap</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:gae72b7f170f44f6fe6cde5f32b5b165a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3335f3f8b174db9b86b3773993f341c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#ga3335f3f8b174db9b86b3773993f341c6">R_FLASH_HP_InfoGet</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__info__t">flash_info_t</a> *const p_info)</td></tr>
 <tr class="separator:ga3335f3f8b174db9b86b3773993f341c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -137,7 +207,8 @@ Overview</h1>
 <p>The Flash HAL module APIs allow an application to write, erase and blank check both the data and ROM flash areas that reside within the MCU. The amount of flash memory available varies across MCU parts.</p>
 <h2><a class="anchor" id="r-flash-hp-features"></a>
 Features</h2>
-<p>The R_FLASH_HP module has the following key features:</p><ul>
+<p>The R_FLASH_HP module has the following key features:</p>
+<ul>
 <li>Blocking and non-blocking erasing, writing and blank-checking of data flash.<a class="anchor" id="um_flash_data_flash_blank_check_non_blocking"></a><a class="anchor" id="um_flash_data_flash_erase_non_blocking"></a><a class="anchor" id="um_flash_data_flash_write_non_blocking"></a></li>
 <li>Blocking erasing, writing and blank-checking of code flash.</li>
 <li>Callback functions for completion of non-blocking data flash operations.</li>
@@ -235,9 +306,11 @@ Limitations</h2>
 Examples</h1>
 <h2>High-Performance Flash Basic Example</h2>
 <p>This is a basic example of erasing and writing to data flash and code flash.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define FLASH_DF_BLOCK_0               0x40100000U </span><span class="comment">/*   64 B:  0x40100000 - 0x4010003F */</span><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#define FLASH_CF_BLOCK_8               0x00010000  </span><span class="comment">/*   32 KB: 0x00010000 - 0x00017FFF */</span><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#define FLASH_DATA_BLOCK_SIZE          (1024)</span></div><div class="line"><span class="preprocessor">#define FLASH_HP_EXAMPLE_WRITE_SIZE    32</span></div><div class="line">uint8_t        g_dest[TRANSFER_LENGTH];</div><div class="line">uint8_t        g_src[TRANSFER_LENGTH];</div><div class="line"><a class="code" href="group___f_l_a_s_h___a_p_i.html#ga79d0373f9f1ae1d8bd99c40edb44a5b6">flash_result_t</a> blank_check_result;</div><div class="line"><span class="keywordtype">void</span> r_flash_hp_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the flash hp instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___f_l_a_s_h___h_p.html#ga3c593b353cc97d311fb599142b05dc65">R_FLASH_HP_Open</a>(&amp;g_flash_ctrl, &amp;g_flash_cfg);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Erase 1 block of data flash starting at block 0. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaa862e982d6e602726ad908e76b7227ab">R_FLASH_HP_Erase</a>(&amp;g_flash_ctrl, FLASH_DF_BLOCK_0, 1);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check if block 0 is erased. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf981c87f5e9dadab1be7241553ff305b">R_FLASH_HP_BlankCheck</a>(&amp;g_flash_ctrl, FLASH_DF_BLOCK_0, FLASH_DATA_BLOCK_SIZE, &amp;blank_check_result);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Verify the previously erased area is blank */</span></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___f_l_a_s_h___a_p_i.html#gga79d0373f9f1ae1d8bd99c40edb44a5b6a0a2fa6cbf8b10c2aa1dfc0033f24717f">FLASH_RESULT_NOT_BLANK</a> == blank_check_result)</div><div class="line">    {</div><div class="line">        handle_error(<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a61a8e059198001f46af73f2930e6c144">FSP_ERR_BLANK_CHECK_FAILED</a>);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write 32 bytes to the first block of data flash. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf516a8b528062a3a47bc35f419879237">R_FLASH_HP_Write</a>(&amp;g_flash_ctrl, (uint32_t) g_src, FLASH_DF_BLOCK_0, FLASH_HP_EXAMPLE_WRITE_SIZE);</div><div class="line"></div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 != memcmp(g_src, (uint8_t *) FLASH_DF_BLOCK_0, FLASH_HP_EXAMPLE_WRITE_SIZE))</div><div class="line">    {</div><div class="line">        handle_error(<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a23d4ede168571c3084157c0f99f6c60c">FSP_ERR_WRITE_FAILED</a>);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Disable interrupts to prevent vector table access while code flash is in P/E mode. */</span></div><div class="line">    __disable_irq();</div><div class="line"></div><div class="line">    <span class="comment">/* Erase 1 block of code flash starting at block 10. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaa862e982d6e602726ad908e76b7227ab">R_FLASH_HP_Erase</a>(&amp;g_flash_ctrl, FLASH_CF_BLOCK_8, 1);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Write 32 bytes to the first block of data flash. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf516a8b528062a3a47bc35f419879237">R_FLASH_HP_Write</a>(&amp;g_flash_ctrl, (uint32_t) g_src, FLASH_CF_BLOCK_8, FLASH_HP_EXAMPLE_WRITE_SIZE);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable interrupts after code flash operations are complete. */</span></div><div class="line">    __enable_irq();</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 != memcmp(g_src, (uint8_t *) FLASH_CF_BLOCK_8, FLASH_HP_EXAMPLE_WRITE_SIZE))</div><div class="line">    {</div><div class="line">        handle_error(<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a23d4ede168571c3084157c0f99f6c60c">FSP_ERR_WRITE_FAILED</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>High-Performance Flash Advanced Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define FLASH_DF_BLOCK_0               0x40100000U </span><span class="comment">/*   64 B:  0x40100000 - 0x4010003F */</span><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#define FLASH_CF_BLOCK_8               0x00010000  </span><span class="comment">/*   32 KB: 0x00010000 - 0x00017FFF */</span><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#define FLASH_DATA_BLOCK_SIZE          (1024)</span></div><div class="line"><span class="preprocessor">#define FLASH_HP_EXAMPLE_WRITE_SIZE    32</span></div><div class="line">uint8_t        g_dest[TRANSFER_LENGTH];</div><div class="line">uint8_t        g_src[TRANSFER_LENGTH];</div><div class="line"><a class="code" href="group___f_l_a_s_h___a_p_i.html#ga79d0373f9f1ae1d8bd99c40edb44a5b6">flash_result_t</a> blank_check_result;</div><div class="line"><span class="keywordtype">void</span> r_flash_hp_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the flash hp instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___f_l_a_s_h___h_p.html#ga3c593b353cc97d311fb599142b05dc65">R_FLASH_HP_Open</a>(&amp;g_flash_ctrl, &amp;g_flash_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Erase 1 block of data flash starting at block 0. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaa862e982d6e602726ad908e76b7227ab">R_FLASH_HP_Erase</a>(&amp;g_flash_ctrl, FLASH_DF_BLOCK_0, 1);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check if block 0 is erased. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf981c87f5e9dadab1be7241553ff305b">R_FLASH_HP_BlankCheck</a>(&amp;g_flash_ctrl, FLASH_DF_BLOCK_0, FLASH_DATA_BLOCK_SIZE, &amp;blank_check_result);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Verify the previously erased area is blank */</span></div><div class="line">    assert(<a class="code" href="group___f_l_a_s_h___a_p_i.html#gga79d0373f9f1ae1d8bd99c40edb44a5b6ac8b28b541918a1275dc3ea21e0b1d028">FLASH_RESULT_BLANK</a> == blank_check_result);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write 32 bytes to the first block of data flash. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf516a8b528062a3a47bc35f419879237">R_FLASH_HP_Write</a>(&amp;g_flash_ctrl, (uint32_t) g_src, FLASH_DF_BLOCK_0, FLASH_HP_EXAMPLE_WRITE_SIZE);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    assert(0 == memcmp(g_src, (uint8_t *) FLASH_DF_BLOCK_0, FLASH_HP_EXAMPLE_WRITE_SIZE));</div><div class="line"></div><div class="line">    <span class="comment">/* Disable interrupts to prevent vector table access while code flash is in P/E mode. */</span></div><div class="line">    __disable_irq();</div><div class="line"></div><div class="line">    <span class="comment">/* Erase 1 block of code flash starting at block 10. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaa862e982d6e602726ad908e76b7227ab">R_FLASH_HP_Erase</a>(&amp;g_flash_ctrl, FLASH_CF_BLOCK_8, 1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Write 32 bytes to the first block of data flash. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf516a8b528062a3a47bc35f419879237">R_FLASH_HP_Write</a>(&amp;g_flash_ctrl, (uint32_t) g_src, FLASH_CF_BLOCK_8, FLASH_HP_EXAMPLE_WRITE_SIZE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable interrupts after code flash operations are complete. */</span></div><div class="line">    __enable_irq();</div><div class="line"></div><div class="line">    assert(0 == memcmp(g_src, (uint8_t *) FLASH_CF_BLOCK_8, FLASH_HP_EXAMPLE_WRITE_SIZE));</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>High-Performance Flash Advanced Example</h2>
 <p>This example demonstrates using BGO to do non-blocking operations on the data flash.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">bool</span>               interrupt_called;</div><div class="line"><a class="code" href="group___f_l_a_s_h___a_p_i.html#ga44753f7d426ae0121c94a307a95314a5">flash_event_t</a>      flash_event;</div><div class="line"><span class="keyword">static</span> <a class="code" href="group___f_l_a_s_h___a_p_i.html#structflash__cfg__t">flash_cfg_t</a> g_flash_bgo_example_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___f_l_a_s_h___a_p_i.html#ac80ffd6402722097911dc6da638cd54d">p_callback</a>     = flash_callback,</div><div class="line">    .p_context      = 0,</div><div class="line">    .p_extend       = NULL,</div><div class="line">    .data_flash_bgo = <span class="keyword">true</span>,            </div><div class="line">    .ipl            = 5,</div><div class="line">    .irq            = BSP_VECTOR_FLASH_HP_FRDYI_ISR,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_flash_hp_bgo_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the flash hp instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___f_l_a_s_h___h_p.html#ga3c593b353cc97d311fb599142b05dc65">R_FLASH_HP_Open</a>(&amp;g_flash_ctrl, &amp;g_flash_bgo_example_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    interrupt_called = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Erase 1 block of data flash starting at block 0. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaa862e982d6e602726ad908e76b7227ab">R_FLASH_HP_Erase</a>(&amp;g_flash_ctrl, FLASH_DF_BLOCK_0, 1);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!interrupt_called)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a47cf4f3983c35ca46fcfabeb1903e068">FLASH_EVENT_ERASE_COMPLETE</a> != flash_event)</div><div class="line">    {</div><div class="line">        handle_error(<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8aedf5bd340743b4cad2a5b5370bdf3184">FSP_ERR_ERASE_FAILED</a>);</div><div class="line">    }</div><div class="line"></div><div class="line">    interrupt_called = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Write 32 bytes to the first block of data flash. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf516a8b528062a3a47bc35f419879237">R_FLASH_HP_Write</a>(&amp;g_flash_ctrl, (uint32_t) g_src, FLASH_DF_BLOCK_0, FLASH_HP_EXAMPLE_WRITE_SIZE);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___f_l_a_s_h___a_p_i.html#gab551389322a209cca1dcc1a7b2440f7a">flash_status_t</a> status;</div><div class="line"></div><div class="line">    <span class="comment">/* Wait until the current flash operation completes. */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___f_l_a_s_h___h_p.html#ga68025e44839e70c533b8e5bd325fc64a">R_FLASH_HP_StatusGet</a>(&amp;g_flash_ctrl, &amp;status);</div><div class="line">    } <span class="keywordflow">while</span> ((FSP_SUCCESS == err) &amp;&amp; (<a class="code" href="group___f_l_a_s_h___a_p_i.html#ggab551389322a209cca1dcc1a7b2440f7aa9f0e163a2cd4ec43acbe02344235882a">FLASH_STATUS_BUSY</a> == status));</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* If the interrupt wasn&#39;t called process the error. */</span></div><div class="line">    <span class="keywordflow">if</span> (!interrupt_called)</div><div class="line">    {</div><div class="line">        handle_error(<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a23d4ede168571c3084157c0f99f6c60c">FSP_ERR_WRITE_FAILED</a>);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* If the event wasn&#39;t a write complete process the error. */</span></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a2a000e207e1a0db0f1a7c550599bb804">FLASH_EVENT_WRITE_COMPLETE</a> != flash_event)</div><div class="line">    {</div><div class="line">        handle_error(<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a23d4ede168571c3084157c0f99f6c60c">FSP_ERR_WRITE_FAILED</a>);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the data was written correctly. */</span></div><div class="line">    <span class="keywordflow">if</span> (0 != memcmp(g_src, (uint8_t *) FLASH_DF_BLOCK_0, FLASH_HP_EXAMPLE_WRITE_SIZE))</div><div class="line">    {</div><div class="line">        handle_error(<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a23d4ede168571c3084157c0f99f6c60c">FSP_ERR_WRITE_FAILED</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> flash_callback (<a class="code" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    interrupt_called = <span class="keyword">true</span>;</div><div class="line">    flash_event      = p_args-&gt;<a class="code" href="group___f_l_a_s_h___a_p_i.html#a85ce087229ae1cb0076dfb4e38238d7e">event</a>;</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="keywordtype">bool</span>               interrupt_called;</div><div class="line"><a class="code" href="group___f_l_a_s_h___a_p_i.html#ga44753f7d426ae0121c94a307a95314a5">flash_event_t</a>      flash_event;</div><div class="line"><span class="keyword">static</span> <a class="code" href="group___f_l_a_s_h___a_p_i.html#structflash__cfg__t">flash_cfg_t</a> g_flash_bgo_example_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___f_l_a_s_h___a_p_i.html#ac80ffd6402722097911dc6da638cd54d">p_callback</a>     = flash_callback,</div><div class="line">    .p_context      = 0,</div><div class="line">    .p_extend       = NULL,</div><div class="line">    .data_flash_bgo = <span class="keyword">true</span>,            </div><div class="line">    .ipl            = 5,</div><div class="line">    .irq            = BSP_VECTOR_FLASH_HP_FRDYI_ISR,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_flash_hp_bgo_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the flash hp instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___f_l_a_s_h___h_p.html#ga3c593b353cc97d311fb599142b05dc65">R_FLASH_HP_Open</a>(&amp;g_flash_ctrl, &amp;g_flash_bgo_example_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    interrupt_called = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Erase 1 block of data flash starting at block 0. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaa862e982d6e602726ad908e76b7227ab">R_FLASH_HP_Erase</a>(&amp;g_flash_ctrl, FLASH_DF_BLOCK_0, 1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!interrupt_called)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    assert(<a class="code" href="group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a47cf4f3983c35ca46fcfabeb1903e068">FLASH_EVENT_ERASE_COMPLETE</a> == flash_event);</div><div class="line"></div><div class="line">    interrupt_called = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Write 32 bytes to the first block of data flash. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf516a8b528062a3a47bc35f419879237">R_FLASH_HP_Write</a>(&amp;g_flash_ctrl, (uint32_t) g_src, FLASH_DF_BLOCK_0, FLASH_HP_EXAMPLE_WRITE_SIZE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___f_l_a_s_h___a_p_i.html#gab551389322a209cca1dcc1a7b2440f7a">flash_status_t</a> status;</div><div class="line"></div><div class="line">    <span class="comment">/* Wait until the current flash operation completes. */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___f_l_a_s_h___h_p.html#ga68025e44839e70c533b8e5bd325fc64a">R_FLASH_HP_StatusGet</a>(&amp;g_flash_ctrl, &amp;status);</div><div class="line">    } <span class="keywordflow">while</span> ((FSP_SUCCESS == err) &amp;&amp; (<a class="code" href="group___f_l_a_s_h___a_p_i.html#ggab551389322a209cca1dcc1a7b2440f7aa9f0e163a2cd4ec43acbe02344235882a">FLASH_STATUS_BUSY</a> == status));</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* If the interrupt wasn&#39;t called process the error. */</span></div><div class="line">    assert(interrupt_called);</div><div class="line"></div><div class="line">    <span class="comment">/* If the event wasn&#39;t a write complete process the error. */</span></div><div class="line">    assert(<a class="code" href="group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a2a000e207e1a0db0f1a7c550599bb804">FLASH_EVENT_WRITE_COMPLETE</a> == flash_event);</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the data was written correctly. */</span></div><div class="line">    assert(0 == memcmp(g_src, (uint8_t *) FLASH_DF_BLOCK_0, FLASH_HP_EXAMPLE_WRITE_SIZE));</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> flash_callback (<a class="code" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    interrupt_called = <span class="keyword">true</span>;</div><div class="line">    flash_event      = p_args-&gt;<a class="code" href="group___f_l_a_s_h___a_p_i.html#a85ce087229ae1cb0076dfb4e38238d7e">event</a>;</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>High-Performance Flash Bank Swap Example</h2>
+<p>This example demonstrates swapping which flash bank is located at address 0. This feature is only on select MCUs.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> r_flash_hp_bankswap_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the flash hp instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___f_l_a_s_h___h_p.html#ga3c593b353cc97d311fb599142b05dc65">R_FLASH_HP_Open</a>(&amp;g_flash_ctrl, &amp;g_flash_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Write the new application starting at 0x00200000. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Swap the block at address 0 with the one at 0x00200000 after the next restart.</span></div><div class="line"><span class="comment">     * The application at 0x00200000 must be written there by application code. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gae72b7f170f44f6fe6cde5f32b5b165a3">R_FLASH_HP_BankSwap</a>(&amp;g_flash_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any pre-reset operations here */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Reset the MCU to swap to the other bank */</span></div><div class="line">    __NVIC_SystemReset();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structflash__hp__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___h_p.html#structflash__hp__instance__ctrl__t">flash_hp_instance_ctrl_t</a></td></tr>
@@ -477,7 +550,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 <p>Performs a blank check on the specified address area. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#a285a6f933817c94e26a5aa11c48a1b3c">flash_api_t::blankCheck</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Check if block 0 is erased. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf981c87f5e9dadab1be7241553ff305b">R_FLASH_HP_BlankCheck</a>(&amp;g_flash_ctrl, FLASH_DF_BLOCK_0, FLASH_DATA_BLOCK_SIZE, &amp;blank_check_result);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Check if block 0 is erased. */</span></div><div class="line">    err = <a class="code" href="group___f_l_a_s_h___h_p.html#gaf981c87f5e9dadab1be7241553ff305b">R_FLASH_HP_BlankCheck</a>(&amp;g_flash_ctrl, FLASH_DF_BLOCK_0, FLASH_DATA_BLOCK_SIZE, &amp;blank_check_result);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Blank check operation completed with result in p_blank_check_result, or blank check started and in-progess (BGO mode). </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ADDRESS</td><td>Invalid data flash address was input. </td></tr>
@@ -852,6 +925,40 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
+<a id="gae72b7f170f44f6fe6cde5f32b5b165a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae72b7f170f44f6fe6cde5f32b5b165a3">&#9670;&nbsp;</a></span>R_FLASH_HP_BankSwap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_FLASH_HP_BankSwap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Swaps the flash bank located at address 0x00000000 and address 0x00200000. This can only be done when in dual bank mode. Dual bank mode can be enabled in the FSP Configuration Tool under BSP Properties. After a bank swap is done the MCU will need to be reset for the changes to take place. <a class="el" href="group___f_l_a_s_h___a_p_i.html#a27dd022e07eebb8750e1a1be7f80563f">flash_api_t::bankSwap</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Start-up area successfully toggled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>FLASH peripheral is busy with a prior operation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Code Flash Programming is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_PE_FAILURE</td><td>Failed to enter or exit Code Flash P/E mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Timed out waiting for the FCU to become ready. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Cannot switch banks while flash is in Linear mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>Flash write operation failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CMD_LOCKED</td><td>FCU is in locked state, typically as a result of having received an illegal command. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga3335f3f8b174db9b86b3773993f341c6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3335f3f8b174db9b86b3773993f341c6">&#9670;&nbsp;</a></span>R_FLASH_HP_InfoGet()</h2>
 
@@ -895,7 +1002,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

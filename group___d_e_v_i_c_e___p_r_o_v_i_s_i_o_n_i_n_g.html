@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_n_i_n_g.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="headertitle">
 <div class="title">AWS Device Provisioning<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
@@ -142,7 +210,7 @@ $(document).ready(function(){initNavTree('group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of provisioning a device using the AWS demo implementation.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define keyCLIENT_CERTIFICATE_PEM                                        \</span></div><div class="line"><span class="preprocessor">    &quot;-----BEGIN CERTIFICATE-----\n&quot;                                      \</span></div><div class="line"><span class="preprocessor">    &quot;MIIDETCCAfkCFHwd2yn8zn5qB2ChYUT9Mvbi9Xp1MA0GCSqGSIb3DQEBCwUAMEUx\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;CzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRl\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;cm5ldCBXaWRnaXRzIFB0eSBMdGQwHhcNMTkwOTExMjEyMjU0WhcNMjAwOTEwMjEy\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;MjU0WjBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UE\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;CgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMIIBIjANBgkqhkiG9w0BAQEFAAOC\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;AQ8AMIIBCgKCAQEAo8oThJXSMDo41oL7HTpC4TX8NalBvnkFw30Av67dl/oZDjVA\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;iXPnZkhVppLnj++0/Oed0M7UwNUO2nurQt6yTYrvW7E8ZPjAlC7ueJcGYZhOaVv2\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;bhSmigjFQru2lw5odSuYy5+22CCgxft58nrRCo5Bk+GwWgZmcrxe/BzutRHQ7X4x\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;dYJhyhBOi2R1Kt8XsbuWilfgfkVhhkVklFeKqiypdQM6cnPWo/G4DyW34jOXzzEM\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;FLWvQOQLCKUZOgjJBnFdbx8oOOwMkYCChbV7gqPE6cw0Zy26CvlLQiINyonLPbNT\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;c64sS/ZBGPZFOPJmb4tG2nipYgZ1hO/r++jCbwIDAQABMA0GCSqGSIb3DQEBCwUA\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;A4IBAQCdqq59ubdRY9EiV3bleKXeqG7+8HgBHdm0X9dgq10nD37p00YLyuZLE9NM\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;066G/VcflGrx/Nzw+/UuI7/UuBbBS/3ppHRnsZqBIl8nnr/ULrFQy8z3vKtL1q3C\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;DxabjPONlPO2keJeTTA71N/RCEMwJoa8i0XKXGdu/hQo6x4n+Gq73fEiGCl99xsc\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;4tIO4yPS4lv+uXBzEUzoEy0CLIkiDesnT5lLeCyPmUNoU89HU95IusZT7kygCHHd\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;72am1ic3X8PKc268KT3ilr3VMhK67C+iIIkfrM5AiU+oOIRrIHSC/p0RigJg3rXA\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;GBIRHvt+OYF9fDeG7U4QDJNCfGW+\n&quot;                                     \</span></div><div class="line"><span class="preprocessor">    &quot;-----END CERTIFICATE-----&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define keyCLIENT_PRIVATE_KEY_PEM                                        \</span></div><div class="line"><span class="preprocessor">    &quot;-----BEGIN RSA PRIVATE KEY-----\n&quot;                                  \</span></div><div class="line"><span class="preprocessor">    &quot;MIIEowIBAAKCAQEAo8oThJXSMDo41oL7HTpC4TX8NalBvnkFw30Av67dl/oZDjVA\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;iXPnZkhVppLnj++0/Oed0M7UwNUO2nurQt6yTYrvW7E8ZPjAlC7ueJcGYZhOaVv2\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;bhSmigjFQru2lw5odSuYy5+22CCgxft58nrRCo5Bk+GwWgZmcrxe/BzutRHQ7X4x\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;dYJhyhBOi2R1Kt8XsbuWilfgfkVhhkVklFeKqiypdQM6cnPWo/G4DyW34jOXzzEM\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;FLWvQOQLCKUZOgjJBnFdbx8oOOwMkYCChbV7gqPE6cw0Zy26CvlLQiINyonLPbNT\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;c64sS/ZBGPZFOPJmb4tG2nipYgZ1hO/r++jCbwIDAQABAoIBAQCGR2hC/ZVJhqIM\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;c2uuJZKpElpIIBBPOObZwwS3IYR4UUjzVgMn7UbbmxflLXD8lzfZU4YVp0vTH5lC\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;07qvYuXpHqtnj+GEok837VYCtUY9AuHeDM/2paV3awNV15E1PFG1Jd3pqnH7tJw6\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;VBZBDiGNNt1agN/UnoSlMfvpU0r8VGPXCBNxe3JY5QyBJPI1wF4LcxRI+eYmr7Ja\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;/cjn97DZotgz4B7gUNu8XIEkUOTwPabZINY1zcLWiXTMA+8qTniPVk653h14Xqt4\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;4o4D4YCTpwJcmxSV1m21/6+uyuXr9SIKAE+Ys2cYLA46x+rwLaW5fUoQ5hHa0Ytb\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;RYJ4SrtBAoGBANWtwlE69N0hq5xDPckSbNGubIeG8P4mBhGkJxIqYoqugGLMDiGX\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;4bltrjr2TPWaxTo3pPavLJiBMIsENA5KU+c/r0jLkxgEp9MIVJrtNgkCiDQqogBG\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;j4IJL2iQwXoLCqk2tx/dh9Mww+7SETE7EPNrv4UrYaGN5AEvpf5W+NHPAoGBAMQ6\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;wVa0Mx1PlA4enY2rfE3WXP8bzjleSOwR75JXqG2WbPC0/cszwbyPWOEqRpBZfvD/\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;QFkKx06xp1C09XwiQanr2gDucYXHeEKg/9iuJV1UkMQp95ojlhtSXdRZV7/l4pmN\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;fpB2vcAptX/4gY4tDrWMO08JNnRjE7duC+rmmk1hAoGAS4L0QLCNB/h2JOq+Uuhn\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;/FGfmOVfFPFrA6D3DbxcxpWUWVWzSLvb0SOphryzxbfEKyau7V5KbDp7ZSU/IC20\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;KOygjSEkAkDi7fjrrTRW/Cgg6g6G4YIOBO4qCtHdDbwJMHNdk6096qw5EZS67qLp\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;Apz5OZ5zChySjri/+HnTxJECgYBysGSP6IJ3fytplTtAshnU5JU2BWpi3ViBoXoE\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;bndilajWhvJO8dEqBB5OfAcCF0y6TnWtlT8oH21LHnjcNKlsRw0Dvllbd1oylybx\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;3da41dRG0sCEtoflMB7nHdDLt/DZDnoKtVvyFG6gfP47utn+Ahgn+Zp6K+46J3eP\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;s3g8AQKBgE/PJiaF8pbBXaZOuwRRA9GOMSbDIF6+jBYTYp4L9wk4+LZArKtyI+4k\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;Md2DUvHwMC+ddOtKqjYnLm+V5cSbvu7aPvBZtwxghzTUDcf7EvnA3V/bQBh3R0z7\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;pVsxTyGRmBSeLdbUWACUbX9LXdpudarPAJ59daWmP3mBEVmWdzUw\n&quot;             \</span></div><div class="line"><span class="preprocessor">    &quot;-----END RSA PRIVATE KEY-----&quot;</span></div><div class="line"><span class="keywordtype">void</span> device_provisioning_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize the crypto hardware acceleration. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(NULL);</div><div class="line"></div><div class="line">    ProvisioningParams_t params;</div><div class="line"></div><div class="line">    <span class="comment">/* Provision device with provided credentials. The provided credentials are written to data flash.</span></div><div class="line"><span class="comment">     * In production, the credentials can be provided over a comms channel instead of being linked into the image.</span></div><div class="line"><span class="comment">     * The same example provisioning function, vAlternateKeyProvisioning, can be used in that case. */</span></div><div class="line">    params.pucClientPrivateKey       = (uint8_t *) keyCLIENT_PRIVATE_KEY_PEM;</div><div class="line">    params.pucClientCertificate      = (uint8_t *) keyCLIENT_CERTIFICATE_PEM;</div><div class="line">    params.ulClientPrivateKeyLength  = 1 + strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *) params.pucClientPrivateKey);</div><div class="line">    params.ulClientCertificateLength = 1 + strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *) params.pucClientCertificate);</div><div class="line">    params.pucJITPCertificate        = NULL;</div><div class="line">    params.ulJITPCertificateLength   = 0;</div><div class="line">    vAlternateKeyProvisioning(&amp;params);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h1>Limitations</h1>
+<div class="fragment"><div class="line"><span class="preprocessor">#define keyCLIENT_CERTIFICATE_PEM                                        \</span></div><div class="line"><span class="preprocessor">    &quot;-----BEGIN CERTIFICATE-----\n&quot;                                      \</span></div><div class="line"><span class="preprocessor">    &quot;MIIDETCCAfkCFHwd2yn8zn5qB2ChYUT9Mvbi9Xp1MA0GCSqGSIb3DQEBCwUAMEUx\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;CzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRl\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;cm5ldCBXaWRnaXRzIFB0eSBMdGQwHhcNMTkwOTExMjEyMjU0WhcNMjAwOTEwMjEy\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;MjU0WjBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UE\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;CgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMIIBIjANBgkqhkiG9w0BAQEFAAOC\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;AQ8AMIIBCgKCAQEAo8oThJXSMDo41oL7HTpC4TX8NalBvnkFw30Av67dl/oZDjVA\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;iXPnZkhVppLnj++0/Oed0M7UwNUO2nurQt6yTYrvW7E8ZPjAlC7ueJcGYZhOaVv2\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;bhSmigjFQru2lw5odSuYy5+22CCgxft58nrRCo5Bk+GwWgZmcrxe/BzutRHQ7X4x\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;dYJhyhBOi2R1Kt8XsbuWilfgfkVhhkVklFeKqiypdQM6cnPWo/G4DyW34jOXzzEM\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;FLWvQOQLCKUZOgjJBnFdbx8oOOwMkYCChbV7gqPE6cw0Zy26CvlLQiINyonLPbNT\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;c64sS/ZBGPZFOPJmb4tG2nipYgZ1hO/r++jCbwIDAQABMA0GCSqGSIb3DQEBCwUA\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;A4IBAQCdqq59ubdRY9EiV3bleKXeqG7+8HgBHdm0X9dgq10nD37p00YLyuZLE9NM\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;066G/VcflGrx/Nzw+/UuI7/UuBbBS/3ppHRnsZqBIl8nnr/ULrFQy8z3vKtL1q3C\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;DxabjPONlPO2keJeTTA71N/RCEMwJoa8i0XKXGdu/hQo6x4n+Gq73fEiGCl99xsc\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;4tIO4yPS4lv+uXBzEUzoEy0CLIkiDesnT5lLeCyPmUNoU89HU95IusZT7kygCHHd\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;72am1ic3X8PKc268KT3ilr3VMhK67C+iIIkfrM5AiU+oOIRrIHSC/p0RigJg3rXA\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;GBIRHvt+OYF9fDeG7U4QDJNCfGW+\n&quot;                                     \</span></div><div class="line"><span class="preprocessor">    &quot;-----END CERTIFICATE-----&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define keyCLIENT_PRIVATE_KEY_PEM                                        \</span></div><div class="line"><span class="preprocessor">    &quot;-----BEGIN RSA PRIVATE KEY-----\n&quot;                                  \</span></div><div class="line"><span class="preprocessor">    &quot;MIIEowIBAAKCAQEAo8oThJXSMDo41oL7HTpC4TX8NalBvnkFw30Av67dl/oZDjVA\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;iXPnZkhVppLnj++0/Oed0M7UwNUO2nurQt6yTYrvW7E8ZPjAlC7ueJcGYZhOaVv2\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;bhSmigjFQru2lw5odSuYy5+22CCgxft58nrRCo5Bk+GwWgZmcrxe/BzutRHQ7X4x\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;dYJhyhBOi2R1Kt8XsbuWilfgfkVhhkVklFeKqiypdQM6cnPWo/G4DyW34jOXzzEM\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;FLWvQOQLCKUZOgjJBnFdbx8oOOwMkYCChbV7gqPE6cw0Zy26CvlLQiINyonLPbNT\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;c64sS/ZBGPZFOPJmb4tG2nipYgZ1hO/r++jCbwIDAQABAoIBAQCGR2hC/ZVJhqIM\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;c2uuJZKpElpIIBBPOObZwwS3IYR4UUjzVgMn7UbbmxflLXD8lzfZU4YVp0vTH5lC\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;07qvYuXpHqtnj+GEok837VYCtUY9AuHeDM/2paV3awNV15E1PFG1Jd3pqnH7tJw6\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;VBZBDiGNNt1agN/UnoSlMfvpU0r8VGPXCBNxe3JY5QyBJPI1wF4LcxRI+eYmr7Ja\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;/cjn97DZotgz4B7gUNu8XIEkUOTwPabZINY1zcLWiXTMA+8qTniPVk653h14Xqt4\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;4o4D4YCTpwJcmxSV1m21/6+uyuXr9SIKAE+Ys2cYLA46x+rwLaW5fUoQ5hHa0Ytb\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;RYJ4SrtBAoGBANWtwlE69N0hq5xDPckSbNGubIeG8P4mBhGkJxIqYoqugGLMDiGX\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;4bltrjr2TPWaxTo3pPavLJiBMIsENA5KU+c/r0jLkxgEp9MIVJrtNgkCiDQqogBG\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;j4IJL2iQwXoLCqk2tx/dh9Mww+7SETE7EPNrv4UrYaGN5AEvpf5W+NHPAoGBAMQ6\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;wVa0Mx1PlA4enY2rfE3WXP8bzjleSOwR75JXqG2WbPC0/cszwbyPWOEqRpBZfvD/\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;QFkKx06xp1C09XwiQanr2gDucYXHeEKg/9iuJV1UkMQp95ojlhtSXdRZV7/l4pmN\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;fpB2vcAptX/4gY4tDrWMO08JNnRjE7duC+rmmk1hAoGAS4L0QLCNB/h2JOq+Uuhn\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;/FGfmOVfFPFrA6D3DbxcxpWUWVWzSLvb0SOphryzxbfEKyau7V5KbDp7ZSU/IC20\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;KOygjSEkAkDi7fjrrTRW/Cgg6g6G4YIOBO4qCtHdDbwJMHNdk6096qw5EZS67qLp\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;Apz5OZ5zChySjri/+HnTxJECgYBysGSP6IJ3fytplTtAshnU5JU2BWpi3ViBoXoE\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;bndilajWhvJO8dEqBB5OfAcCF0y6TnWtlT8oH21LHnjcNKlsRw0Dvllbd1oylybx\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;3da41dRG0sCEtoflMB7nHdDLt/DZDnoKtVvyFG6gfP47utn+Ahgn+Zp6K+46J3eP\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;s3g8AQKBgE/PJiaF8pbBXaZOuwRRA9GOMSbDIF6+jBYTYp4L9wk4+LZArKtyI+4k\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;Md2DUvHwMC+ddOtKqjYnLm+V5cSbvu7aPvBZtwxghzTUDcf7EvnA3V/bQBh3R0z7\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;pVsxTyGRmBSeLdbUWACUbX9LXdpudarPAJ59daWmP3mBEVmWdzUw\n&quot;             \</span></div><div class="line"><span class="preprocessor">    &quot;-----END RSA PRIVATE KEY-----&quot;</span></div><div class="line"><span class="keywordtype">void</span> device_provisioning_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize IOT FreeRTOS Libraries */</span></div><div class="line">    SYSTEM_Init();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the crypto hardware acceleration. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(NULL);</div><div class="line"></div><div class="line">    ProvisioningParams_t params;</div><div class="line"></div><div class="line">    <span class="comment">/* Provision device with provided credentials. The provided credentials are written to data flash.</span></div><div class="line"><span class="comment">     * In production, the credentials can be provided over a comms channel instead of being linked into the image.</span></div><div class="line"><span class="comment">     * The same example provisioning function, vAlternateKeyProvisioning, can be used in that case. */</span></div><div class="line">    params.pucClientPrivateKey       = (uint8_t *) keyCLIENT_PRIVATE_KEY_PEM;</div><div class="line">    params.pucClientCertificate      = (uint8_t *) keyCLIENT_CERTIFICATE_PEM;</div><div class="line">    params.ulClientPrivateKeyLength  = 1 + strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *) params.pucClientPrivateKey);</div><div class="line">    params.ulClientCertificateLength = 1 + strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *) params.pucClientCertificate);</div><div class="line">    params.pucJITPCertificate        = NULL;</div><div class="line">    params.ulJITPCertificateLength   = 0;</div><div class="line">    vAlternateKeyProvisioning(&amp;params);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h1>Limitations</h1>
 <p>The provisioning code is an example provided by AWS. It must be modified to meet product requirements. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -150,7 +218,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

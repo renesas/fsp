@@ -36,9 +36,11 @@ var group___e_t_h_e_r___a_p_i =
       [ "close", "group___e_t_h_e_r___a_p_i.html#a1c0bc3caef73e0a216c2fe2edc4fff4b", null ],
       [ "read", "group___e_t_h_e_r___a_p_i.html#a41d56c8843a454690b1969f8f766d65a", null ],
       [ "bufferRelease", "group___e_t_h_e_r___a_p_i.html#aa38e7f82e66fd26fd8d51b11f46ae6e6", null ],
+      [ "rxBufferUpdate", "group___e_t_h_e_r___a_p_i.html#aa714b8287d1cef38d8442850dd9b9fb5", null ],
       [ "write", "group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233", null ],
       [ "linkProcess", "group___e_t_h_e_r___a_p_i.html#a125ca4ee69c6c63e1db42708324c0fb3", null ],
-      [ "wakeOnLANEnable", "group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad", null ]
+      [ "wakeOnLANEnable", "group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad", null ],
+      [ "txStatusGet", "group___e_t_h_e_r___a_p_i.html#a6fde51a3fef6b43ed0fada563fadfb4e", null ]
     ] ],
     [ "ether_instance_t", "group___e_t_h_e_r___a_p_i.html#structether__instance__t", [
       [ "p_ctrl", "group___e_t_h_e_r___a_p_i.html#a013ed407826d291e797c6b5eb44eb5ba", null ],

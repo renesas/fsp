@@ -74,7 +74,13 @@ var group___a_d_c =
       [ "ADC_VREF_CONTROL_VREFH", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9a8072df0bda056626d8fdb837e2b7e9c2", null ],
       [ "ADC_VREF_CONTROL_1_5V_OUTPUT", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9ae0702807252eb6041e26b09a99478496", null ],
       [ "ADC_VREF_CONTROL_2_0V_OUTPUT", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9a3b29fd8f4b57ca18e86b0e7675daf094", null ],
-      [ "ADC_VREF_CONTROL_2_5V_OUTPUT", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9a091bf95c38c3df5304ffb528c3394570", null ]
+      [ "ADC_VREF_CONTROL_2_5V_OUTPUT", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9a091bf95c38c3df5304ffb528c3394570", null ],
+      [ "ADC_VREF_CONTROL_AVCC0_AVSS0", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9aec854c22228db1dfa5f0a1bd972250a4", null ],
+      [ "ADC_VREF_CONTROL_VREFH0_AVSS0", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9a0da7299e3aa591f4cb97b065974579ad", null ],
+      [ "ADC_VREF_CONTROL_IVREF_AVSS0", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9a8588e997cacbd688d849fac4495be134", null ],
+      [ "ADC_VREF_CONTROL_AVCC0_VREFL0", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9a1ccaa796a89acb8a0b8cb7290011b2cf", null ],
+      [ "ADC_VREF_CONTROL_VREFH0_VREFL0", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9a6989ac5f611d6ee3b2ee8619e2d802dc", null ],
+      [ "ADC_VREF_CONTROL_IVREF_VREFL0", "group___a_d_c.html#gga03d10a44658a1383520ca2d9c3928eb9a7902695c4fccb9e61488cbe490cda59b", null ]
     ] ],
     [ "adc_sample_state_reg_t", "group___a_d_c.html#ga2817e17c728f9a2b041b54fd92244c3b", [
       [ "ADC_SAMPLE_STATE_CHANNEL_0", "group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3ba604a99834f18e561f607273935ba24ef", null ],

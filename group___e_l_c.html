@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___e_l_c.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___e_l_c.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -201,9 +269,9 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>Below is a basic example of minimal use of event linking in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* This struct is automatically generated based on the events configured by peripherals in the RA Configuration editor. */</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___e_l_c___a_p_i.html#structelc__cfg__t">elc_cfg_t</a> g_elc_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___e_l_c___a_p_i.html#ad58380dc39c1d257fc9128dda007865d">link</a>[ELC_PERIPHERAL_GPT_A]   = ELC_EVENT_ICU_IRQ0,</div><div class="line">    .link[ELC_PERIPHERAL_IOPORT1] = ELC_EVENT_GPT0_COUNTER_OVERFLOW</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> elc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the software and sets the links defined in the control structure. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Create or modify a link between a peripheral function and an event source. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_GPT0_COUNTER_OVERFLOW);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Globally enable event linking in the ELC. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4bcac22edb575069ba86d87ce9aea84c">R_ELC_Enable</a>(&amp;g_elc_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Software-Generated Events</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* This struct is automatically generated based on the events configured by peripherals in the RA Configuration editor. */</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___e_l_c___a_p_i.html#structelc__cfg__t">elc_cfg_t</a> g_elc_cfg =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___e_l_c___a_p_i.html#ad58380dc39c1d257fc9128dda007865d">link</a>[ELC_PERIPHERAL_GPT_A]   = ELC_EVENT_ICU_IRQ0,</div><div class="line">    .link[ELC_PERIPHERAL_IOPORT1] = ELC_EVENT_GPT0_COUNTER_OVERFLOW</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> elc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the software and sets the links defined in the control structure. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Create or modify a link between a peripheral function and an event source. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_GPT0_COUNTER_OVERFLOW);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Globally enable event linking in the ELC. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4bcac22edb575069ba86d87ce9aea84c">R_ELC_Enable</a>(&amp;g_elc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Software-Generated Events</h2>
 <p>This example demonstrates how to use a software-generated event to signal a peripheral. This can be useful when the desired event source is not supported by the ELC hardware.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Interrupt handler for peripheral event not supported by the ELC */</span></div><div class="line"><span class="keywordtype">void</span> peripheral_isr (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Generate an event signal through software to the linked peripheral. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#gaa8735a16325cfeff3c47a50345d11d82">R_ELC_SoftwareEventGenerate</a>(&amp;g_elc_ctrl, <a class="code" href="group___e_l_c___a_p_i.html#gga5fed76c06664ddad69c5a7ccb0330f0ea862eb8abb2f512a4b4caaa1ee6900d27">ELC_SOFTWARE_EVENT_0</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> elc_software_event (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Link ADC0 conversion start to software event 0. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_ELC_SOFTWARE_EVENT_0);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application code here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Interrupt handler for peripheral event not supported by the ELC */</span></div><div class="line"><span class="keywordtype">void</span> peripheral_isr (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Generate an event signal through software to the linked peripheral. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#gaa8735a16325cfeff3c47a50345d11d82">R_ELC_SoftwareEventGenerate</a>(&amp;g_elc_ctrl, <a class="code" href="group___e_l_c___a_p_i.html#gga5fed76c06664ddad69c5a7ccb0330f0ea862eb8abb2f512a4b4caaa1ee6900d27">ELC_SOFTWARE_EVENT_0</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> elc_software_event (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Link ADC0 conversion start to software event 0. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_ELC_SOFTWARE_EVENT_0);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application code here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structelc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_l_c.html#structelc__instance__ctrl__t">elc_instance_ctrl_t</a></td></tr>
@@ -317,7 +385,7 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Generate a software event in the Event Link Controller. Implements <a class="el" href="group___e_l_c___a_p_i.html#a5201eaeb1fbc56f6c78b9db34fb580e3">elc_api_t::softwareEventGenerate</a></p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Generate an event signal through software to the linked peripheral. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#gaa8735a16325cfeff3c47a50345d11d82">R_ELC_SoftwareEventGenerate</a>(&amp;g_elc_ctrl, <a class="code" href="group___e_l_c___a_p_i.html#gga5fed76c06664ddad69c5a7ccb0330f0ea862eb8abb2f512a4b4caaa1ee6900d27">ELC_SOFTWARE_EVENT_0</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Generate an event signal through software to the linked peripheral. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#gaa8735a16325cfeff3c47a50345d11d82">R_ELC_SoftwareEventGenerate</a>(&amp;g_elc_ctrl, <a class="code" href="group___e_l_c___a_p_i.html#gga5fed76c06664ddad69c5a7ccb0330f0ea862eb8abb2f512a4b4caaa1ee6900d27">ELC_SOFTWARE_EVENT_0</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Invalid event number or p_ctrl was NULL </td></tr>
@@ -360,7 +428,7 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Create a single event link. Implements <a class="el" href="group___e_l_c___a_p_i.html#a05af30d0ca7743f5a033b10d664ded59">elc_api_t::linkSet</a></p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Create or modify a link between a peripheral function and an event source. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_GPT0_COUNTER_OVERFLOW);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Create or modify a link between a peripheral function and an event source. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_GPT0_COUNTER_OVERFLOW);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL </td></tr>
@@ -468,7 +536,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

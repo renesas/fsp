@@ -27,6 +27,7 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "OPAMP Interface", "group___o_p_a_m_p___a_p_i.html", "group___o_p_a_m_p___a_p_i" ],
     [ "PDC Interface", "group___p_d_c___a_p_i.html", "group___p_d_c___a_p_i" ],
     [ "POEG Interface", "group___p_o_e_g___a_p_i.html", "group___p_o_e_g___a_p_i" ],
+    [ "PTP Interface", "group___p_t_p___a_p_i.html", "group___p_t_p___a_p_i" ],
     [ "RTC Interface", "group___r_t_c___a_p_i.html", "group___r_t_c___a_p_i" ],
     [ "SD/MMC Interface", "group___s_d_m_m_c___a_p_i.html", "group___s_d_m_m_c___a_p_i" ],
     [ "SLCDC Interface", "group___s_l_c_d_c___a_p_i.html", "group___s_l_c_d_c___a_p_i" ],
@@ -46,6 +47,7 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "WDT Interface", "group___w_d_t___a_p_i.html", "group___w_d_t___a_p_i" ],
     [ "BLE ABS Interface", "group___b_l_e___a_b_s___a_p_i.html", "group___b_l_e___a_b_s___a_p_i" ],
     [ "Block Media Interface", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i" ],
+    [ "FileX Block Media Port Interface", "group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a___a_p_i.html", "group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a___a_p_i" ],
     [ "FreeRTOS+FAT Port Interface", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i" ],
     [ "LittleFS Interface", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html", "group___r_m___l_i_t_t_l_e_f_s___a_p_i" ],
     [ "Motor angle Interface", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html", "group___m_o_t_o_r___a_n_g_l_e___a_p_i" ],
@@ -54,5 +56,6 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "Motor driver Interface", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i" ],
     [ "Motor speed Interface", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html", "group___m_o_t_o_r___s_p_e_e_d___a_p_i" ],
     [ "Touch Middleware Interface", "group___t_o_u_c_h___a_p_i.html", "group___t_o_u_c_h___a_p_i" ],
-    [ "Virtual EEPROM Interface", "group___r_m___v_e_e___a_p_i.html", "group___r_m___v_e_e___a_p_i" ]
+    [ "Virtual EEPROM Interface", "group___r_m___v_e_e___a_p_i.html", "group___r_m___v_e_e___a_p_i" ],
+    [ "SCE Interface", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i" ]
 ];

@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___a_w_s___m_q_t_t.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___a_w_s___m_q_t_t.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="headertitle">
 <div class="title">AWS MQTT<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
@@ -135,15 +203,15 @@ Limitations</h2>
 <h2><a class="anchor" id="r-AWS_MQTT-examples"></a>
 Examples</h2>
 <h3>Non-secure connection to a Mosquitto server</h3>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define IOT_LOG_STACK_SIZE                    (256)</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> uint8_t g_ip_address[4]      = {169, 254, 57, 49};</div><div class="line"><span class="keyword">const</span> uint8_t g_net_mask[4]        = {255, 255, 0, 0};</div><div class="line"><span class="keyword">const</span> uint8_t g_gateway_address[4] = {169, 254, 57, 49};</div><div class="line"><span class="keyword">const</span> uint8_t g_dns_address[4]     = {8, 8, 8, 8};</div><div class="line"><span class="keyword">const</span> uint8_t g_mac_address[6]     = {0x66, 0x66, 0x66, 0x66, 0x66, 0x66};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> mqtt_non_secure_example ()</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> connect_to_aws = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the crypto hardware acceleration. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(NULL);</div><div class="line"></div><div class="line">    xLoggingTaskInitialize(IOT_LOG_STACK_SIZE, 1, 10);</div><div class="line"></div><div class="line">    <span class="comment">/* Start up the network stack. */</span></div><div class="line">    FreeRTOS_IPInit(g_ip_address, g_net_mask, g_gateway_address, g_dns_address, g_mac_address);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (pdFALSE == FreeRTOS_IsNetworkUp())</div><div class="line">    {</div><div class="line">        vTaskDelay(1);</div><div class="line">    }</div><div class="line"></div><div class="line">    Socket_t socket = SOCKETS_Socket(SOCKETS_AF_INET, SOCKETS_SOCK_STREAM, SOCKETS_IPPROTO_TCP);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (SOCKETS_INVALID_SOCKET == socket)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Could not create socket. */</span></div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">const</span> IotNetworkServerInfo_t serverInfo =</div><div class="line">    {</div><div class="line">        .pHostName = <span class="stringliteral">&quot;192.168.0.100&quot;</span>,</div><div class="line">        .port      = 1883</div><div class="line">    };</div><div class="line"></div><div class="line">    IotSdk_Init();</div><div class="line"></div><div class="line">    RunMqttDemo(connect_to_aws, <span class="stringliteral">&quot;renesas-iot-demo&quot;</span>, (<span class="keywordtype">void</span> *) &amp;serverInfo, NULL, &amp;IotNetworkAfr);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Secure connection to a Mosquitto server</h3>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define IOT_LOG_STACK_SIZE                    (256)</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> uint8_t g_ip_address[4]      = {169, 254, 57, 49};</div><div class="line"><span class="keyword">const</span> uint8_t g_net_mask[4]        = {255, 255, 0, 0};</div><div class="line"><span class="keyword">const</span> uint8_t g_gateway_address[4] = {169, 254, 57, 49};</div><div class="line"><span class="keyword">const</span> uint8_t g_dns_address[4]     = {8, 8, 8, 8};</div><div class="line"><span class="keyword">const</span> uint8_t g_mac_address[6]     = {0x66, 0x66, 0x66, 0x66, 0x66, 0x66};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> mqtt_non_secure_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize IOT FreeRTOS Libraries */</span></div><div class="line">    SYSTEM_Init();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the crypto hardware acceleration. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(NULL);</div><div class="line"></div><div class="line">    xLoggingTaskInitialize(IOT_LOG_STACK_SIZE, 1, 10);</div><div class="line"></div><div class="line">    <span class="comment">/* Start up the network stack. */</span></div><div class="line">    FreeRTOS_IPInit(g_ip_address, g_net_mask, g_gateway_address, g_dns_address, g_mac_address);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (pdFALSE == FreeRTOS_IsNetworkUp())</div><div class="line">    {</div><div class="line">        vTaskDelay(1);</div><div class="line">    }</div><div class="line"></div><div class="line">    Socket_t socket = SOCKETS_Socket(SOCKETS_AF_INET, SOCKETS_SOCK_STREAM, SOCKETS_IPPROTO_TCP);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (SOCKETS_INVALID_SOCKET == socket)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Could not create socket. */</span></div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* AWS MQTT APIs can now be called. Please refer to the documentation linked above. */</span></div><div class="line">    <span class="comment">/* If using the MQTT Wrapper IotSdk_Init() must be called prior to using MQTT. */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Secure connection to a Mosquitto server</h3>
 <dl class="section note"><dt>Note</dt><dd>MbedTLS must be initialized and key provisioning must be done before starting a secure connection. Refer to <a class="el" href="group___a_w_s___s_e_c_u_r_e___s_o_c_k_e_t_s.html">AWS Secure Sockets</a>.</dd></dl>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define keyCLIENT_CERTIFICATE_PEM      \</span></div><div class="line"><span class="preprocessor">    &quot;-----BEGIN CERTIFICATE-----\n&quot;    \</span></div><div class="line"><span class="preprocessor">    &quot;example_certificate_formatting\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;-----END CERTIFICATE-----&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define keyCLIENT_PRIVATE_KEY_PEM       \</span></div><div class="line"><span class="preprocessor">    &quot;-----BEGIN RSA PRIVATE KEY-----\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;example_certificate_formatting\n&quot;  \</span></div><div class="line"><span class="preprocessor">    &quot;-----END RSA PRIVATE KEY-----&quot;</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">char</span> SERVER_CERTIFICATE_PEM[] = <span class="stringliteral">&quot;-----BEGIN CERTIFICATE-----\n&quot;</span></div><div class="line">                                       <span class="stringliteral">&quot;example_certificate_formatting\n&quot;</span></div><div class="line">                                       <span class="stringliteral">&quot;-----END CERTIFICATE-----&quot;</span>;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">char</span> CLIENT_CERTIFICATE_PEM[] = <span class="stringliteral">&quot;-----BEGIN CERTIFICATE-----\n&quot;</span></div><div class="line">                                       <span class="stringliteral">&quot;example_certificate_formatting\n&quot;</span></div><div class="line">                                       <span class="stringliteral">&quot;-----END CERTIFICATE-----&quot;</span>;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">char</span> CLIENT_KEY_PEM[] = <span class="stringliteral">&quot;-----BEGIN RSA PRIVATE KEY-----\n&quot;</span></div><div class="line">                               <span class="stringliteral">&quot;example_certificate_formatting\n&quot;</span></div><div class="line">                               <span class="stringliteral">&quot;-----END RSA PRIVATE KEY-----&quot;</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> mqtt_secure_example ()</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> connect_to_aws = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the crypto hardware acceleration. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(NULL);</div><div class="line"></div><div class="line">    xLoggingTaskInitialize(IOT_LOG_STACK_SIZE, 1, 10);</div><div class="line"></div><div class="line">    ProvisioningParams_t params;</div><div class="line"></div><div class="line">    <span class="comment">/* Write the keys into a secure region in data flash. */</span></div><div class="line">    params.pucClientPrivateKey       = (uint8_t *) keyCLIENT_PRIVATE_KEY_PEM;</div><div class="line">    params.pucClientCertificate      = (uint8_t *) keyCLIENT_CERTIFICATE_PEM;</div><div class="line">    params.ulClientPrivateKeyLength  = 1 + strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *) params.pucClientPrivateKey);</div><div class="line">    params.ulClientCertificateLength = 1 + strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *) params.pucClientCertificate);</div><div class="line">    params.pucJITPCertificate        = NULL;</div><div class="line">    params.ulJITPCertificateLength   = 0;</div><div class="line">    vAlternateKeyProvisioning(&amp;params);</div><div class="line"></div><div class="line">    <span class="comment">/* Start up the network stack. */</span></div><div class="line">    FreeRTOS_IPInit(g_ip_address, g_net_mask, g_gateway_address, g_dns_address, g_mac_address);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (pdFALSE == FreeRTOS_IsNetworkUp())</div><div class="line">    {</div><div class="line">        vTaskDelay(1);</div><div class="line">    }</div><div class="line"></div><div class="line">    Socket_t socket = SOCKETS_Socket(SOCKETS_AF_INET, SOCKETS_SOCK_STREAM, SOCKETS_IPPROTO_TCP);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (SOCKETS_INVALID_SOCKET == socket)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Could not create socket. */</span></div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">const</span> IotNetworkServerInfo_t serverInfo =</div><div class="line">    {</div><div class="line">        .pHostName = <span class="stringliteral">&quot;192.168.0.100&quot;</span>,</div><div class="line">        .port      = 8883</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="keyword">const</span> IotNetworkCredentials_t afrCredentials =</div><div class="line">    {</div><div class="line">        .pAlpnProtos       = NULL,</div><div class="line">        .maxFragmentLength = 1400,</div><div class="line">        .disableSni        = <span class="keyword">true</span>,</div><div class="line">        .pRootCa           = SERVER_CERTIFICATE_PEM,</div><div class="line">        .rootCaSize        = <span class="keyword">sizeof</span>(SERVER_CERTIFICATE_PEM),</div><div class="line">        .pClientCert       = CLIENT_CERTIFICATE_PEM,</div><div class="line">        .clientCertSize    = <span class="keyword">sizeof</span>(CLIENT_CERTIFICATE_PEM),</div><div class="line">        .pPrivateKey       = CLIENT_KEY_PEM,</div><div class="line">        .privateKeySize    = <span class="keyword">sizeof</span>(CLIENT_KEY_PEM),</div><div class="line">    };</div><div class="line"></div><div class="line">    IotSdk_Init();</div><div class="line"></div><div class="line">    RunMqttDemo(connect_to_aws, <span class="stringliteral">&quot;renesas-iot-demo&quot;</span>, (<span class="keywordtype">void</span> *) &amp;serverInfo, (<span class="keywordtype">void</span> *) &amp;afrCredentials, &amp;IotNetworkAfr);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define keyCLIENT_CERTIFICATE_PEM      \</span></div><div class="line"><span class="preprocessor">    &quot;-----BEGIN CERTIFICATE-----\n&quot;    \</span></div><div class="line"><span class="preprocessor">    &quot;example_certificate_formatting\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;-----END CERTIFICATE-----&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define keyCLIENT_PRIVATE_KEY_PEM       \</span></div><div class="line"><span class="preprocessor">    &quot;-----BEGIN RSA PRIVATE KEY-----\n&quot; \</span></div><div class="line"><span class="preprocessor">    &quot;example_certificate_formatting\n&quot;  \</span></div><div class="line"><span class="preprocessor">    &quot;-----END RSA PRIVATE KEY-----&quot;</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> mqtt_secure_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize IOT FreeRTOS Libraries */</span></div><div class="line">    SYSTEM_Init();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the crypto hardware acceleration. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(NULL);</div><div class="line"></div><div class="line">    xLoggingTaskInitialize(IOT_LOG_STACK_SIZE, 1, 10);</div><div class="line"></div><div class="line">    ProvisioningParams_t params;</div><div class="line"></div><div class="line">    <span class="comment">/* Write the keys into a secure region in data flash. */</span></div><div class="line">    params.pucClientPrivateKey       = (uint8_t *) keyCLIENT_PRIVATE_KEY_PEM;</div><div class="line">    params.pucClientCertificate      = (uint8_t *) keyCLIENT_CERTIFICATE_PEM;</div><div class="line">    params.ulClientPrivateKeyLength  = 1 + strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *) params.pucClientPrivateKey);</div><div class="line">    params.ulClientCertificateLength = 1 + strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *) params.pucClientCertificate);</div><div class="line">    params.pucJITPCertificate        = NULL;</div><div class="line">    params.ulJITPCertificateLength   = 0;</div><div class="line">    vAlternateKeyProvisioning(&amp;params);</div><div class="line"></div><div class="line">    <span class="comment">/* Start up the network stack. */</span></div><div class="line">    FreeRTOS_IPInit(g_ip_address, g_net_mask, g_gateway_address, g_dns_address, g_mac_address);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (pdFALSE == FreeRTOS_IsNetworkUp())</div><div class="line">    {</div><div class="line">        vTaskDelay(1);</div><div class="line">    }</div><div class="line"></div><div class="line">    Socket_t socket = SOCKETS_Socket(SOCKETS_AF_INET, SOCKETS_SOCK_STREAM, SOCKETS_IPPROTO_TCP);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (SOCKETS_INVALID_SOCKET == socket)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Could not create socket. */</span></div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* AWS MQTT APIs can now be called. Please refer to the documentation linked above. */</span></div><div class="line">    <span class="comment">/* If using the MQTT Wrapper IotSdk_Init() must be called prior to using MQTT. */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

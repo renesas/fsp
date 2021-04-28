@@ -1,5 +1,15 @@
 var NAVTREEINDEX8 =
 {
+"group___d_a_c___a_p_i.html#structdac__cfg__t":[3,2,8,1],
+"group___d_a_c___a_p_i.html#structdac__info__t":[3,2,8,0],
+"group___d_a_c___a_p_i.html#structdac__instance__t":[3,2,8,3],
+"group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_n_i_n_g.html":[3,1,88],
+"group___d_i_s_p_l_a_y___a_p_i.html":[3,2,9],
+"group___d_i_s_p_l_a_y___a_p_i.html#a01d406959ad30c41ebb8523d6de8f318":[3,2,9,7,0],
+"group___d_i_s_p_l_a_y___a_p_i.html#a039dd90ebbe34ecb4075628ee3dc2bcd":[3,2,9,15,1],
+"group___d_i_s_p_l_a_y___a_p_i.html#a0412acd091891419015275780cfd438d":[3,2,9,4,3],
+"group___d_i_s_p_l_a_y___a_p_i.html#a0c17403d02742ce4c0dc663c410047c2":[3,2,9,0,4],
+"group___d_i_s_p_l_a_y___a_p_i.html#a0d527f8a7654fc8b2cf49d350247d0db":[3,2,9,13,2],
 "group___d_i_s_p_l_a_y___a_p_i.html#a107a86007b109cc77be27abcc01e3d66":[3,2,9,10,2],
 "group___d_i_s_p_l_a_y___a_p_i.html#a1204de3d634d238b2e55e47fcece5f6f":[3,2,9,3,2],
 "group___d_i_s_p_l_a_y___a_p_i.html#a17df68c0dd89b50b244b249f6229647d":[3,2,9,4,2],
@@ -239,15 +249,5 @@ var NAVTREEINDEX8 =
 "group___e_l_c___a_p_i.html#a90896863b4141cbbd2eb4d2eea7e58e4":[3,2,11,2,1],
 "group___e_l_c___a_p_i.html#a91eea8824e8ea3d204860d16abb8d78a":[3,2,11,1,6],
 "group___e_l_c___a_p_i.html#a9919c68bc6249d294d121715277a53dd":[3,2,11,2,2],
-"group___e_l_c___a_p_i.html#ac4f753f3fcae95e036d24e3d6a84d1f5":[3,2,11,1,0],
-"group___e_l_c___a_p_i.html#ad58380dc39c1d257fc9128dda007865d":[3,2,11,0,0],
-"group___e_l_c___a_p_i.html#aded8ab0cdd59a636f2a5cc60313c54c5":[3,2,11,1,4],
-"group___e_l_c___a_p_i.html#ga5fed76c06664ddad69c5a7ccb0330f0e":[3,2,11,5],
-"group___e_l_c___a_p_i.html#ga71d9612a7e093ba6bbef8ff708266596":[3,2,11,3],
-"group___e_l_c___a_p_i.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7":[3,2,11,4],
-"group___e_l_c___a_p_i.html#gga5fed76c06664ddad69c5a7ccb0330f0ea4ba5ce998b49ee8ba5fd264f53146d6d":[3,2,11,5,1],
-"group___e_l_c___a_p_i.html#gga5fed76c06664ddad69c5a7ccb0330f0ea862eb8abb2f512a4b4caaa1ee6900d27":[3,2,11,5,0],
-"group___e_l_c___a_p_i.html#structelc__api__t":[3,2,11,1],
-"group___e_l_c___a_p_i.html#structelc__cfg__t":[3,2,11,0],
-"group___e_l_c___a_p_i.html#structelc__instance__t":[3,2,11,2]
+"group___e_l_c___a_p_i.html#ac4f753f3fcae95e036d24e3d6a84d1f5":[3,2,11,1,0]
 };

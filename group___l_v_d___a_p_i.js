@@ -34,7 +34,6 @@ var group___l_v_d___a_p_i =
       [ "p_cfg", "group___l_v_d___a_p_i.html#acc14da22971490a2feb6dc99165c2e1f", null ],
       [ "p_api", "group___l_v_d___a_p_i.html#a1a0db00661f2efcd73303c84498f4931", null ]
     ] ],
-    [ "LVD_API_VERSION_MAJOR", "group___l_v_d___a_p_i.html#ga4fd14abbd6bf9deafb972fd2af8bf3f6", null ],
     [ "lvd_ctrl_t", "group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a", null ],
     [ "lvd_threshold_t", "group___l_v_d___a_p_i.html#gacfeb6d23a9c897df8217734c11f10d5c", [
       [ "LVD_THRESHOLD_MONITOR_1_LEVEL_4_29V", "group___l_v_d___a_p_i.html#ggacfeb6d23a9c897df8217734c11f10d5ca443fed92ad21c3eddaa6234f61ccce98", null ],

@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___r_t_c.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___r_t_c.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -263,13 +331,13 @@ Limitations</h2>
 Examples</h1>
 <h2>RTC Basic Example</h2>
 <p>This is a basic example of minimal use of the RTC in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* rtc_time_t is an alias for the C Standard time.h struct &#39;tm&#39; */</span></div><div class="line"><a class="code" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> set_time =</div><div class="line">{</div><div class="line">    .tm_sec  = 10,</div><div class="line">    .tm_min  = 11,</div><div class="line">    .tm_hour = 12,</div><div class="line">    .tm_mday = 6,</div><div class="line">    .tm_wday = 3,</div><div class="line">    .tm_mon  = 11,</div><div class="line">    .tm_year = YEARS_SINCE_1900,</div><div class="line">};</div><div class="line"></div><div class="line"><a class="code" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> get_time;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the RTC module */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gaabcfafd522c18288ac274f6b56f76366">R_RTC_CalendarTimeGet</a>(&amp;g_rtc0_ctrl, &amp;get_time);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Periodic interrupt example</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* rtc_time_t is an alias for the C Standard time.h struct &#39;tm&#39; */</span></div><div class="line"><a class="code" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> set_time =</div><div class="line">{</div><div class="line">    .tm_sec  = 10,</div><div class="line">    .tm_min  = 11,</div><div class="line">    .tm_hour = 12,</div><div class="line">    .tm_mday = 6,</div><div class="line">    .tm_wday = 3,</div><div class="line">    .tm_mon  = 11,</div><div class="line">    .tm_year = YEARS_SINCE_1900,</div><div class="line">};</div><div class="line"></div><div class="line"><a class="code" href="group___r_t_c___a_p_i.html#gaf7de6d99d4c7fd767ebeaabf873fe56d">rtc_time_t</a> get_time;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the RTC module */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the calendar time */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gaabcfafd522c18288ac274f6b56f76366">R_RTC_CalendarTimeGet</a>(&amp;g_rtc0_ctrl, &amp;get_time);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Periodic interrupt example</h2>
 <p>This is an example of periodic interrupt in RTC.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_periodic_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* R_RTC_CalendarTimeSet must be called at least once to start the RTC */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the periodic interrupt rate to 1 second */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282">R_RTC_PeriodicIrqRateSet</a>(&amp;g_rtc0_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d">RTC_PERIODIC_IRQ_SELECT_1_SECOND</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the periodic interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Alarm interrupt example</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_periodic_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* R_RTC_CalendarTimeSet must be called at least once to start the RTC */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set the periodic interrupt rate to 1 second */</span></div><div class="line">    <a class="code" href="group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282">R_RTC_PeriodicIrqRateSet</a>(&amp;g_rtc0_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a35f83abe856065e723ec538a5e708a6d">RTC_PERIODIC_IRQ_SELECT_1_SECOND</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the periodic interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Alarm interrupt example</h2>
 <p>This is an example of alarm interrupt in RTC.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_alarm_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga5c39b02432cedcb7a29ae8bdc8fcefb8">R_RTC_CalendarAlarmSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the Alarm interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Error Adjustment example</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rtc_alarm_irq_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga5c39b02432cedcb7a29ae8bdc8fcefb8">R_RTC_CalendarAlarmSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the Alarm interrupt */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>RTC Error Adjustment example</h2>
 <p>This is an example of modifying error adjustment in RTC.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_erroradj_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc1_cfg);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line">    <span class="comment">/* Modify Error Adjustment after RTC is running */</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga6e0f357923c34057c8c938a52f6e8da8">R_RTC_ErrorAdjustmentSet</a>(&amp;g_rtc0_ctrl, &amp;err_cfg2);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rtc_erroradj_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/*Initialize the RTC module*/</span></div><div class="line">    <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;g_rtc0_ctrl, &amp;g_rtc1_cfg);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;g_rtc0_ctrl, &amp;set_time1.time);</div><div class="line"></div><div class="line">    <span class="comment">/* Modify Error Adjustment after RTC is running */</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga6e0f357923c34057c8c938a52f6e8da8">R_RTC_ErrorAdjustmentSet</a>(&amp;g_rtc0_ctrl, &amp;err_cfg2);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrtc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_t_c.html#structrtc__instance__ctrl__t">rtc_instance_ctrl_t</a></td></tr>
@@ -703,7 +771,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

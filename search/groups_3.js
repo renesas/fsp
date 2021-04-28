@@ -8,5 +8,6 @@ var searchData=
   ['data_20operation_20circuit_20_28r_5fdoc_29',['Data Operation Circuit (r_doc)',['../group___d_o_c.html',1,'']]],
   ['doc_20interface',['DOC Interface',['../group___d_o_c___a_p_i.html',1,'']]],
   ['d_2fave_202d_20port_20interface_20_28r_5fdrw_29',['D/AVE 2D Port Interface (r_drw)',['../group___d_r_w.html',1,'']]],
-  ['data_20transfer_20controller_20_28r_5fdtc_29',['Data Transfer Controller (r_dtc)',['../group___d_t_c.html',1,'']]]
+  ['data_20transfer_20controller_20_28r_5fdtc_29',['Data Transfer Controller (r_dtc)',['../group___d_t_c.html',1,'']]],
+  ['device_20class_20_28rm_5fusbx_5fport_29',['Device Class (rm_usbx_port)',['../group___u_s_b_x.html',1,'']]]
 ];

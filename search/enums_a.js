@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['lifecycle_5ft',['lifecycle_t',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#gae2f29870ec39cac8e7a7a7025215470e',1,'r_sce_api.h']]],
   ['lpm_5fdeep_5fstandby_5fcancel_5fedge_5ft',['lpm_deep_standby_cancel_edge_t',['../group___l_p_m___a_p_i.html#gaecb8b2da6c5e7bf0b3532799418b9f70',1,'r_lpm_api.h']]],
   ['lpm_5fdeep_5fstandby_5fcancel_5fsource_5ft',['lpm_deep_standby_cancel_source_t',['../group___l_p_m___a_p_i.html#gab83f1826bb070e32d292d48f139d0438',1,'r_lpm_api.h']]],
   ['lpm_5fio_5fport_5ft',['lpm_io_port_t',['../group___l_p_m___a_p_i.html#ga93645998bccd96ec1dc8b97d84eea1a3',1,'r_lpm_api.h']]],

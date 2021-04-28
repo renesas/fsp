@@ -16,7 +16,7 @@ var group___o_p_a_m_p =
       [ "minus_input_select_opamp2", "group___o_p_a_m_p.html#ac0f43f0f5a519b22ac931ad4a0b3a359", null ]
     ] ],
     [ "opamp_instance_ctrl_t", "group___o_p_a_m_p.html#structopamp__instance__ctrl__t", null ],
-    [ "OPAMP_CODE_VERSION_MAJOR", "group___o_p_a_m_p.html#ga8bf13ced87d34060d2bb54ca0e3eb0df", null ],
+    [ "OPAMP_MASK_CHANNEL_0", "group___o_p_a_m_p.html#ga08c1536fc7f2476305644d5b2972093d", null ],
     [ "opamp_trigger_t", "group___o_p_a_m_p.html#ga0d3e1efd7c7da420f0c6f86301557472", [
       [ "OPAMP_TRIGGER_SOFTWARE_START_SOFTWARE_STOP", "group___o_p_a_m_p.html#gga0d3e1efd7c7da420f0c6f86301557472a58b02b5ca08496348852fac591d61866", null ],
       [ "OPAMP_TRIGGER_AGT_START_SOFTWARE_STOP", "group___o_p_a_m_p.html#gga0d3e1efd7c7da420f0c6f86301557472ae8aa951c81f4e8156ce92b7749bc9d59", null ],

@@ -12,9 +12,8 @@ var group___s_c_i___u_a_r_t =
       [ "noise_cancel", "group___s_c_i___u_a_r_t.html#a0bbbfe8b19551f087925eed6409634e4", null ],
       [ "p_baud_setting", "group___s_c_i___u_a_r_t.html#a243def9a4105031a58642aa603cac6eb", null ],
       [ "rx_fifo_trigger", "group___s_c_i___u_a_r_t.html#a4f1ca52116b41cfc8ef07758a0554c2f", null ],
-      [ "uart_mode", "group___s_c_i___u_a_r_t.html#a5aca918689171a8fc982ac9d6ebacbfd", null ],
       [ "flow_control_pin", "group___s_c_i___u_a_r_t.html#ac5ec261549de2cae5c3a48abe9e2ee67", null ],
-      [ "ctsrts_en", "group___s_c_i___u_a_r_t.html#a1b0fb1820e985371cafc2af6cc4b07a1", null ]
+      [ "flow_control", "group___s_c_i___u_a_r_t.html#aa97993b4804fd761a731322038ec7730", null ]
     ] ],
     [ "sci_clk_src_t", "group___s_c_i___u_a_r_t.html#ga5775d25bc461e9b175b7fcb87d71b7c7", [
       [ "SCI_UART_CLOCK_INT", "group___s_c_i___u_a_r_t.html#gga5775d25bc461e9b175b7fcb87d71b7c7a628202878594fe0e906308ede0258d0f", null ],
@@ -22,10 +21,10 @@ var group___s_c_i___u_a_r_t =
       [ "SCI_UART_CLOCK_EXT8X", "group___s_c_i___u_a_r_t.html#gga5775d25bc461e9b175b7fcb87d71b7c7aa666a7bc730c28dd0cd7e6663414b7d7", null ],
       [ "SCI_UART_CLOCK_EXT16X", "group___s_c_i___u_a_r_t.html#gga5775d25bc461e9b175b7fcb87d71b7c7a0d1535fdf3d5751bc2bd5f7444dba419", null ]
     ] ],
-    [ "uart_mode_t", "group___s_c_i___u_a_r_t.html#ga93f7c73d772490ab4d22bda8fd0aa5a6", [
-      [ "UART_MODE_RS232", "group___s_c_i___u_a_r_t.html#gga93f7c73d772490ab4d22bda8fd0aa5a6a482b7fc0f778e9b4fcb0e666dc4714ed", null ],
-      [ "UART_MODE_RS485_HD", "group___s_c_i___u_a_r_t.html#gga93f7c73d772490ab4d22bda8fd0aa5a6a01a3080d6ed29e6d3d73fb34e90fce73", null ],
-      [ "UART_MODE_RS485_FD", "group___s_c_i___u_a_r_t.html#gga93f7c73d772490ab4d22bda8fd0aa5a6aced4309bb9703b71521e3937d5974e55", null ]
+    [ "sci_uart_flow_control_t", "group___s_c_i___u_a_r_t.html#gab4823b86315f1b32fe6f2c0d56c2b139", [
+      [ "SCI_UART_FLOW_CONTROL_RTS", "group___s_c_i___u_a_r_t.html#ggab4823b86315f1b32fe6f2c0d56c2b139aedebe19eeaa24e3cd423da139b8a9fb2", null ],
+      [ "SCI_UART_FLOW_CONTROL_CTS", "group___s_c_i___u_a_r_t.html#ggab4823b86315f1b32fe6f2c0d56c2b139acc27e82fb5fac9e2b83db7e9f890d15c", null ],
+      [ "SCI_UART_FLOW_CONTROL_CTSRTS", "group___s_c_i___u_a_r_t.html#ggab4823b86315f1b32fe6f2c0d56c2b139a76f2641dddc66691f83619bf48af11c1", null ]
     ] ],
     [ "sci_uart_rx_fifo_trigger_t", "group___s_c_i___u_a_r_t.html#gadf7235ba7fd675f3416ef98c55b810f6", [
       [ "SCI_UART_RX_FIFO_TRIGGER_1", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6acbf7b549f4da64e02ba6a63e7fb96f43", null ],
@@ -38,10 +37,6 @@ var group___s_c_i___u_a_r_t =
     [ "sci_uart_noise_cancellation_t", "group___s_c_i___u_a_r_t.html#ga39a35f02d1e2aa6560591dc6a54de2f6", [
       [ "SCI_UART_NOISE_CANCELLATION_DISABLE", "group___s_c_i___u_a_r_t.html#gga39a35f02d1e2aa6560591dc6a54de2f6ae2520375d106830858c0897a2282f777", null ],
       [ "SCI_UART_NOISE_CANCELLATION_ENABLE", "group___s_c_i___u_a_r_t.html#gga39a35f02d1e2aa6560591dc6a54de2f6ae1395e580c42c36838a0b626d3852a8f", null ]
-    ] ],
-    [ "sci_uart_ctsrts_config_t", "group___s_c_i___u_a_r_t.html#gadf48fb4b7b78272f39f4e29838c09d1b", [
-      [ "SCI_UART_CTSRTS_RTS_OUTPUT", "group___s_c_i___u_a_r_t.html#ggadf48fb4b7b78272f39f4e29838c09d1bae1278e4f9742de66c882e40f641aba78", null ],
-      [ "SCI_UART_CTSRTS_CTS_INPUT", "group___s_c_i___u_a_r_t.html#ggadf48fb4b7b78272f39f4e29838c09d1ba20560f0ff5586381c9c10ad61696c96e", null ]
     ] ],
     [ "R_SCI_UART_Open", "group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c", null ],
     [ "R_SCI_UART_Read", "group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165", null ],

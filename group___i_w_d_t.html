@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___i_w_d_t.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___i_w_d_t.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -212,9 +280,9 @@ Limitations</h2>
 Examples</h1>
 <h2>IWDT Basic Example</h2>
 <p>This is a basic example of minimal use of the IWDT in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> iwdt_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* In auto start mode, the IWDT starts counting immediately when the MCU is powered on. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#ga989ac08697fdbf8a0ca02f8fd3066080">R_IWDT_Open</a>(&amp;g_iwdt0_ctrl, &amp;g_iwdt0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI based on the setting. */</span></div><div class="line">        (void) <a class="code" href="group___i_w_d_t.html#ga74e708a8e45b1b93b2a9255d50007a4d">R_IWDT_Refresh</a>(&amp;g_iwdt0_ctrl);</div><div class="line"></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>IWDT Advanced Example</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> iwdt_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* In auto start mode, the IWDT starts counting immediately when the MCU is powered on. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#ga989ac08697fdbf8a0ca02f8fd3066080">R_IWDT_Open</a>(&amp;g_iwdt0_ctrl, &amp;g_iwdt0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI based on the setting. */</span></div><div class="line">        (void) <a class="code" href="group___i_w_d_t.html#ga74e708a8e45b1b93b2a9255d50007a4d">R_IWDT_Refresh</a>(&amp;g_iwdt0_ctrl);</div><div class="line"></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>IWDT Advanced Example</h2>
 <p>This example demonstrates using a start window and gives an example callback to handle an NMI generated by an underflow or refresh error.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define IWDT_TIMEOUT_COUNTS     (2048U)</span></div><div class="line"><span class="preprocessor">#define IWDT_MAX_COUNTER        (IWDT_TIMEOUT_COUNTS - 1U)</span></div><div class="line"><span class="preprocessor">#define IWDT_START_WINDOW_75    ((IWDT_MAX_COUNTER * 3) / 4)</span></div><div class="line"></div><div class="line"><span class="comment">/* Example callback called when a watchdog NMI occurs. */</span></div><div class="line"><span class="keywordtype">void</span> iwdt_callback (<a class="code" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Determine the source of the NMI. */</span></div><div class="line">    <a class="code" href="group___w_d_t___a_p_i.html#ga46c1d04f78b75ad1ad21314cac574935">wdt_status_t</a> status = <a class="code" href="group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a0f1543f47bca7e987fe86ab04dd16e46">WDT_STATUS_NO_ERROR</a>;</div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#ga9619fc0daddf190cda28ccae1213629d">R_IWDT_StatusGet</a>(&amp;g_iwdt0_ctrl, &amp;status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Log source of NMI and any other debug information. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Clear the error flags. */</span></div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#gaca4ac4abef1b4d4b3dd2982bc1b19278">R_IWDT_StatusClear</a>(&amp;g_iwdt0_ctrl, status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Issue a software reset to reset the MCU. */</span></div><div class="line">    __NVIC_SystemReset();</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> iwdt_advanced_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Enable the IWDT to count and generate NMI or reset when the</span></div><div class="line"><span class="comment">     * debugger is connected. */</span></div><div class="line">    R_DEBUG-&gt;DBGSTOPCR_b.DBGSTOP_IWDT = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Check if the IWDTRF flag is set to know if the system is</span></div><div class="line"><span class="comment">     * recovering from a IWDT reset. */</span></div><div class="line">    <span class="keywordflow">if</span> (R_SYSTEM-&gt;RSTSR1_b.IWDTRF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the flag. */</span></div><div class="line">        R_SYSTEM-&gt;RSTSR1 = 0U;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#ga989ac08697fdbf8a0ca02f8fd3066080">R_IWDT_Open</a>(&amp;g_iwdt0_ctrl, &amp;g_iwdt0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize other application code. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Do not call R_IWDT_Refresh() in auto start mode unless the</span></div><div class="line"><span class="comment">     * counter is in the acceptable refresh window. */</span></div><div class="line">    (void) <a class="code" href="group___i_w_d_t.html#ga74e708a8e45b1b93b2a9255d50007a4d">R_IWDT_Refresh</a>(&amp;g_iwdt0_ctrl);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* (Optional) If there is a chance the application takes less time than</span></div><div class="line"><span class="comment">         * the start window, verify the IWDT counter is past the start window</span></div><div class="line"><span class="comment">         * before refreshing the IWDT. */</span></div><div class="line">        uint32_t iwdt_counter = 0U;</div><div class="line">        <span class="keywordflow">do</span></div><div class="line">        {</div><div class="line"></div><div class="line">            <span class="comment">/* Read the current IWDT counter value. */</span></div><div class="line">            err = <a class="code" href="group___i_w_d_t.html#ga5e86ba83718eb70e72bfb892c39ddbb4">R_IWDT_CounterGet</a>(&amp;g_iwdt0_ctrl, &amp;iwdt_counter);</div><div class="line">            handle_error(err);</div><div class="line"></div><div class="line">        } <span class="keywordflow">while</span> (iwdt_counter &gt;= IWDT_START_WINDOW_75);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI. */</span></div><div class="line">        (void) <a class="code" href="group___i_w_d_t.html#ga74e708a8e45b1b93b2a9255d50007a4d">R_IWDT_Refresh</a>(&amp;g_iwdt0_ctrl);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="preprocessor">#define IWDT_TIMEOUT_COUNTS     (2048U)</span></div><div class="line"><span class="preprocessor">#define IWDT_MAX_COUNTER        (IWDT_TIMEOUT_COUNTS - 1U)</span></div><div class="line"><span class="preprocessor">#define IWDT_START_WINDOW_75    ((IWDT_MAX_COUNTER * 3) / 4)</span></div><div class="line"></div><div class="line"><span class="comment">/* Example callback called when a watchdog NMI occurs. */</span></div><div class="line"><span class="keywordtype">void</span> iwdt_callback (<a class="code" href="group___w_d_t___a_p_i.html#structwdt__callback__args__t">wdt_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Determine the source of the NMI. */</span></div><div class="line">    <a class="code" href="group___w_d_t___a_p_i.html#ga46c1d04f78b75ad1ad21314cac574935">wdt_status_t</a> status = <a class="code" href="group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a0f1543f47bca7e987fe86ab04dd16e46">WDT_STATUS_NO_ERROR</a>;</div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#ga9619fc0daddf190cda28ccae1213629d">R_IWDT_StatusGet</a>(&amp;g_iwdt0_ctrl, &amp;status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Log source of NMI and any other debug information. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Clear the error flags. */</span></div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#gaca4ac4abef1b4d4b3dd2982bc1b19278">R_IWDT_StatusClear</a>(&amp;g_iwdt0_ctrl, status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Issue a software reset to reset the MCU. */</span></div><div class="line">    __NVIC_SystemReset();</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> iwdt_advanced_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Enable the IWDT to count and generate NMI or reset when the</span></div><div class="line"><span class="comment">     * debugger is connected. */</span></div><div class="line">    R_DEBUG-&gt;DBGSTOPCR_b.DBGSTOP_IWDT = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Check if the IWDTRF flag is set to know if the system is</span></div><div class="line"><span class="comment">     * recovering from a IWDT reset. */</span></div><div class="line">    <span class="keywordflow">if</span> (R_SYSTEM-&gt;RSTSR1_b.IWDTRF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the flag. */</span></div><div class="line">        R_SYSTEM-&gt;RSTSR1 = 0U;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the module. */</span></div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#ga989ac08697fdbf8a0ca02f8fd3066080">R_IWDT_Open</a>(&amp;g_iwdt0_ctrl, &amp;g_iwdt0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize other application code. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Do not call R_IWDT_Refresh() in auto start mode unless the</span></div><div class="line"><span class="comment">     * counter is in the acceptable refresh window. */</span></div><div class="line">    (void) <a class="code" href="group___i_w_d_t.html#ga74e708a8e45b1b93b2a9255d50007a4d">R_IWDT_Refresh</a>(&amp;g_iwdt0_ctrl);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* (Optional) If there is a chance the application takes less time than</span></div><div class="line"><span class="comment">         * the start window, verify the IWDT counter is past the start window</span></div><div class="line"><span class="comment">         * before refreshing the IWDT. */</span></div><div class="line">        uint32_t iwdt_counter = 0U;</div><div class="line">        <span class="keywordflow">do</span></div><div class="line">        {</div><div class="line"></div><div class="line">            <span class="comment">/* Read the current IWDT counter value. */</span></div><div class="line">            err = <a class="code" href="group___i_w_d_t.html#ga5e86ba83718eb70e72bfb892c39ddbb4">R_IWDT_CounterGet</a>(&amp;g_iwdt0_ctrl, &amp;iwdt_counter);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        } <span class="keywordflow">while</span> (iwdt_counter &gt;= IWDT_START_WINDOW_75);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh before the counter underflows to prevent reset or NMI. */</span></div><div class="line">        (void) <a class="code" href="group___i_w_d_t.html#ga74e708a8e45b1b93b2a9255d50007a4d">R_IWDT_Refresh</a>(&amp;g_iwdt0_ctrl);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structiwdt__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_w_d_t.html#structiwdt__instance__ctrl__t">iwdt_instance_ctrl_t</a></td></tr>
@@ -348,7 +416,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 <p>Clear the IWDT status and error flags. Implements <a class="el" href="group___w_d_t___a_p_i.html#af66d798489c7ace801fee8b5a9c833c2">wdt_api_t::statusClear</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Clear the error flags. */</span></div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#gaca4ac4abef1b4d4b3dd2982bc1b19278">R_IWDT_StatusClear</a>(&amp;g_iwdt0_ctrl, status);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Clear the error flags. */</span></div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#gaca4ac4abef1b4d4b3dd2982bc1b19278">R_IWDT_StatusClear</a>(&amp;g_iwdt0_ctrl, status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>IWDT flag(s) successfully cleared. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer as a parameter. </td></tr>
@@ -386,7 +454,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 </div><div class="memdoc">
 <p>Read the IWDT status flags. When the IWDT is configured to output a reset on underflow or refresh error reading the status and error flags can be read after reset to establish if the IWDT caused the reset. Reading the status and error flags in NMI output mode indicates whether the IWDT generated the NMI interrupt.</p>
 <p>Indicates both status and error conditions.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Determine the source of the NMI. */</span></div><div class="line">    <a class="code" href="group___w_d_t___a_p_i.html#ga46c1d04f78b75ad1ad21314cac574935">wdt_status_t</a> status = <a class="code" href="group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a0f1543f47bca7e987fe86ab04dd16e46">WDT_STATUS_NO_ERROR</a>;</div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#ga9619fc0daddf190cda28ccae1213629d">R_IWDT_StatusGet</a>(&amp;g_iwdt0_ctrl, &amp;status);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Determine the source of the NMI. */</span></div><div class="line">    <a class="code" href="group___w_d_t___a_p_i.html#ga46c1d04f78b75ad1ad21314cac574935">wdt_status_t</a> status = <a class="code" href="group___w_d_t___a_p_i.html#gga46c1d04f78b75ad1ad21314cac574935a0f1543f47bca7e987fe86ab04dd16e46">WDT_STATUS_NO_ERROR</a>;</div><div class="line">    err = <a class="code" href="group___i_w_d_t.html#ga9619fc0daddf190cda28ccae1213629d">R_IWDT_StatusGet</a>(&amp;g_iwdt0_ctrl, &amp;status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>IWDT status successfully read. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer as a parameter. </td></tr>
@@ -423,7 +491,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 <p>Read the current count value of the IWDT. Implements <a class="el" href="group___w_d_t___a_p_i.html#a724c02d7265d5eaa846cf97a3556f5d6">wdt_api_t::counterGet</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">            <span class="comment">/* Read the current IWDT counter value. */</span></div><div class="line">            err = <a class="code" href="group___i_w_d_t.html#ga5e86ba83718eb70e72bfb892c39ddbb4">R_IWDT_CounterGet</a>(&amp;g_iwdt0_ctrl, &amp;iwdt_counter);</div><div class="line">            handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">            <span class="comment">/* Read the current IWDT counter value. */</span></div><div class="line">            err = <a class="code" href="group___i_w_d_t.html#ga5e86ba83718eb70e72bfb892c39ddbb4">R_IWDT_CounterGet</a>(&amp;g_iwdt0_ctrl, &amp;iwdt_counter);</div><div class="line">            assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>IWDT current count successfully read. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
@@ -527,7 +595,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_o_c_k___m_e_d_i_a___
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
@@ -182,9 +250,9 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the SPI block media implementation in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define RM_BLOCK_MEDIA_SPI_BLOCK_SIZE    (256U)</span></div><div class="line"></div><div class="line">uint8_t g_dest[RM_BLOCK_MEDIA_SPI_BLOCK_SIZE] BSP_ALIGN_VARIABLE(4);</div><div class="line">uint8_t g_src[RM_BLOCK_MEDIA_SPI_BLOCK_SIZE]  BSP_ALIGN_VARIABLE(4);</div><div class="line"><span class="keywordtype">void</span> rm_block_media_spi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; RM_BLOCK_MEDIA_SPI_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the RM_BLOCK_MEDIA_SPI driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga86e40e6a8ecc691e21a79bc75ddf3dda">RM_BLOCK_MEDIA_SPI_Open</a>(&amp;g_rm_block_media0_ctrl, &amp;g_rm_block_media0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI flash memory. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#gaa7b8596789a2241257680fada1a754ae">RM_BLOCK_MEDIA_SPI_MediaInit</a>(&amp;g_rm_block_media0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write a block of data to block 3 of the SPI flash memory. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga31db1ae9ccffb90a6ce5fb64474e994a">RM_BLOCK_MEDIA_SPI_Write</a>(&amp;g_rm_block_media0_ctrl, g_src, 3, 1);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read a block of data from block 3 of the SPI flash memory. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#gaeeab3e416ec8c5f687a3fb60d0749cad">RM_BLOCK_MEDIA_SPI_Read</a>(&amp;g_rm_block_media0_ctrl, g_dest, 3, 1);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Non-Blocking Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define RM_BLOCK_MEDIA_SPI_BLOCK_SIZE    (256U)</span></div><div class="line"></div><div class="line">uint8_t g_dest[RM_BLOCK_MEDIA_SPI_BLOCK_SIZE] BSP_ALIGN_VARIABLE(4);</div><div class="line">uint8_t g_src[RM_BLOCK_MEDIA_SPI_BLOCK_SIZE]  BSP_ALIGN_VARIABLE(4);</div><div class="line"><span class="keywordtype">void</span> rm_block_media_spi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; RM_BLOCK_MEDIA_SPI_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the RM_BLOCK_MEDIA_SPI driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga86e40e6a8ecc691e21a79bc75ddf3dda">RM_BLOCK_MEDIA_SPI_Open</a>(&amp;g_rm_block_media0_ctrl, &amp;g_rm_block_media0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI flash memory. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#gaa7b8596789a2241257680fada1a754ae">RM_BLOCK_MEDIA_SPI_MediaInit</a>(&amp;g_rm_block_media0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write a block of data to block 3 of the SPI flash memory. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga31db1ae9ccffb90a6ce5fb64474e994a">RM_BLOCK_MEDIA_SPI_Write</a>(&amp;g_rm_block_media0_ctrl, g_src, 3, 1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read a block of data from block 3 of the SPI flash memory. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#gaeeab3e416ec8c5f687a3fb60d0749cad">RM_BLOCK_MEDIA_SPI_Read</a>(&amp;g_rm_block_media0_ctrl, g_dest, 3, 1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Non-Blocking Example</h2>
 <p>This is a basic example of using the optional SPI callback to impliment non-blocking operation.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define RM_BLOCK_MEDIA_EXAMPLE_DEVICE_BLOCK_COUNT    0x1000</span></div><div class="line"><span class="keywordtype">void</span> rm_block_media_spi_non_blocking_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; RM_BLOCK_MEDIA_SPI_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the RM_BLOCK_MEDIA_SPI driver. This enables the card detection interrupt. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga86e40e6a8ecc691e21a79bc75ddf3dda">RM_BLOCK_MEDIA_SPI_Open</a>(&amp;g_rm_block_media0_ctrl, &amp;g_rm_block_media0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the Block Media SPI driver. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#gaa7b8596789a2241257680fada1a754ae">RM_BLOCK_MEDIA_SPI_MediaInit</a>(&amp;g_rm_block_media0_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Erase a large quantity of data from SPI Flash Memory */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga0eca20ba14ebc8ec583c1c545c9c9938">RM_BLOCK_MEDIA_SPI_Erase</a>(&amp;g_rm_block_media0_ctrl, 0, RM_BLOCK_MEDIA_EXAMPLE_DEVICE_BLOCK_COUNT);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* The optional callback is invoked for Read, Write, and Erase operations, whenever the operation completes or has</span></div><div class="line"><span class="comment"> * been blocked by the lower level SPI driver busy indication.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keywordtype">void</span> rm_block_media_spi_example_callback (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca5150a4a6be559ecc22ce94d509af55e3">RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE</a> == p_args-&gt;<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aa13fc0ea05379836574c850687293ade">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* TODO: Process operation complete. */</span></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96cad5d83659edff4f48bfda6d323aaed3e9">RM_BLOCK_MEDIA_EVENT_POLL_STATUS</a> == p_args-&gt;<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aa13fc0ea05379836574c850687293ade">event</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__status__t">rm_block_media_status_t</a> status;</div><div class="line">        <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> * p_ctrl = (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *) p_args-&gt;<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ab4bf95c6ac852ce84523363671b60af3">p_context</a>;</div><div class="line"></div><div class="line">        <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga1e9a81ed2d8512775a738c8b536cf01f">RM_BLOCK_MEDIA_SPI_StatusGet</a>(p_ctrl, &amp;status);</div><div class="line"></div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (<span class="keyword">true</span> == status.<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a3a4e62883ff430e1e9a1fbd940116697">busy</a>)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Run waiting tasks */</span></div><div class="line">            vTaskSuspend(xTaskGetCurrentTaskHandle());</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        assert(<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca1b08744b324298474f730a66fb9a8d44">RM_BLOCK_MEDIA_EVENT_ERROR</a> == p_args-&gt;<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aa13fc0ea05379836574c850687293ade">event</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* TODO: Process Read, Write, or Erase error. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define RM_BLOCK_MEDIA_EXAMPLE_DEVICE_BLOCK_COUNT    0x1000</span></div><div class="line"><span class="keywordtype">void</span> rm_block_media_spi_non_blocking_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; RM_BLOCK_MEDIA_SPI_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the RM_BLOCK_MEDIA_SPI driver. This enables the card detection interrupt. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga86e40e6a8ecc691e21a79bc75ddf3dda">RM_BLOCK_MEDIA_SPI_Open</a>(&amp;g_rm_block_media0_ctrl, &amp;g_rm_block_media0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the Block Media SPI driver. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#gaa7b8596789a2241257680fada1a754ae">RM_BLOCK_MEDIA_SPI_MediaInit</a>(&amp;g_rm_block_media0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Erase a large quantity of data from SPI Flash Memory */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga0eca20ba14ebc8ec583c1c545c9c9938">RM_BLOCK_MEDIA_SPI_Erase</a>(&amp;g_rm_block_media0_ctrl, 0, RM_BLOCK_MEDIA_EXAMPLE_DEVICE_BLOCK_COUNT);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* The optional callback is invoked for Read, Write, and Erase operations, whenever the operation completes or has</span></div><div class="line"><span class="comment"> * been blocked by the lower level SPI driver busy indication.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keywordtype">void</span> rm_block_media_spi_example_callback (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca5150a4a6be559ecc22ce94d509af55e3">RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE</a> == p_args-&gt;<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aa13fc0ea05379836574c850687293ade">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* TODO: Process operation complete. */</span></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96cad5d83659edff4f48bfda6d323aaed3e9">RM_BLOCK_MEDIA_EVENT_POLL_STATUS</a> == p_args-&gt;<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aa13fc0ea05379836574c850687293ade">event</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__status__t">rm_block_media_status_t</a> status;</div><div class="line">        <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> * p_ctrl = (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *) p_args-&gt;<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ab4bf95c6ac852ce84523363671b60af3">p_context</a>;</div><div class="line"></div><div class="line">        <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_p_i.html#ga1e9a81ed2d8512775a738c8b536cf01f">RM_BLOCK_MEDIA_SPI_StatusGet</a>(p_ctrl, &amp;status);</div><div class="line"></div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (<span class="keyword">true</span> == status.<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a3a4e62883ff430e1e9a1fbd940116697">busy</a>)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Run waiting tasks */</span></div><div class="line">            vTaskSuspend(xTaskGetCurrentTaskHandle());</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        assert(<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca1b08744b324298474f730a66fb9a8d44">RM_BLOCK_MEDIA_EVENT_ERROR</a> == p_args-&gt;<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aa13fc0ea05379836574c850687293ade">event</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* TODO: Process Read, Write, or Erase error. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga86e40e6a8ecc691e21a79bc75ddf3dda"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga86e40e6a8ecc691e21a79bc75ddf3dda">&#9670;&nbsp;</a></span>RM_BLOCK_MEDIA_SPI_Open()</h2>
 
@@ -580,7 +648,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

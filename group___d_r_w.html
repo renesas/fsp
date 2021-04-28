@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___d_r_w.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___d_r_w.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="headertitle">
 <div class="title">D/AVE 2D Port Interface (r_drw)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
@@ -97,7 +165,7 @@ $(document).ready(function(){initNavTree('group___d_r_w.html','');});
 <p>Driver for the DRW peripheral on RA MCUs. This module is a port of D/AVE 2D. </p>
 <h1><a class="anchor" id="r-drw-overview"></a>
 Overview</h1>
-<dl class="section note"><dt>Note</dt><dd><b>The D/AVE 2D Port Interface (D1 layer) is a HAL layer for the D/AVE D2 layer API and does not provide any interfaces to the user. Consult the <a href="https://www.renesas.com/us/en/software/dave2d-driver-docs.html">TES Dave2D Driver Documentation</a> for further information on using the D2 API.</b></dd>
+<dl class="section note"><dt>Note</dt><dd><b>The D/AVE 2D Port Interface (D1 layer) is a HAL layer for the D/AVE D2 layer API and does not provide any interfaces to the user. Consult the <a href="https://www.renesas.com/us/en/document/lbr/tes-dave2d-driver-documentation">TES Dave2D Driver Documentation</a> for further information on using the D2 API.</b></dd>
 <dd>
 For cross-platform compatibility purposes the D1 and D2 APIs are not bound by the FSP coding guidelines for function names and general module functionality.</dd></dl>
 <p><a class="anchor" id="um_drw_allocate_memory"></a><a class="anchor" id="um_drw_allocate_video_memory"></a><a class="anchor" id="um_drw_check_device_capability"></a><a class="anchor" id="um_drw_close_device"></a><a class="anchor" id="um_drw_copy_from_video_memory"></a><a class="anchor" id="um_drw_copy_to_video_memory"></a><a class="anchor" id="um_drw_disable_interrupt"></a><a class="anchor" id="um_drw_enable_interrupt"></a><a class="anchor" id="um_drw_flush_cache"></a><a class="anchor" id="um_drw_flush_cache_block"></a><a class="anchor" id="um_drw_free_memory"></a><a class="anchor" id="um_drw_free_video_memory"></a><a class="anchor" id="um_drw_get_memory_size"></a><a class="anchor" id="um_drw_get_register"></a><a class="anchor" id="um_drw_isr"></a><a class="anchor" id="um_drw_map_from_video_memory"></a><a class="anchor" id="um_drw_map_to_video_memory"></a><a class="anchor" id="um_drw_map_video_memory"></a><a class="anchor" id="um_drw_no_support_for_non_d1_dave2d"></a><a class="anchor" id="um_drw_open_device"></a><a class="anchor" id="um_drw_query_irq"></a><a class="anchor" id="um_drw_query_memory_architecture"></a><a class="anchor" id="um_drw_query_video_memory"></a><a class="anchor" id="um_drw_resume_a_thread"></a><a class="anchor" id="um_drw_return_d1_device_handle"></a><a class="anchor" id="um_drw_set_register"></a><a class="anchor" id="um_drw_support_d1_dave2d"></a><a class="anchor" id="um_drw_suspend_a_thread"></a><a class="anchor" id="um_drw_unmap_video_memory"></a><a class="anchor" id="um_drw_d2_layer"></a> </p>
@@ -169,7 +237,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

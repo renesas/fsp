@@ -7,7 +7,6 @@ var searchData=
   ['jpeg_20codec_20_28r_5fjpeg_29',['JPEG Codec (r_jpeg)',['../group___j_p_e_g.html',1,'']]],
   ['jpeg_20codec_20interface',['JPEG Codec Interface',['../group___j_p_e_g___a_p_i.html',1,'']]],
   ['jpeg_5fapi_5ft',['jpeg_api_t',['../group___j_p_e_g___a_p_i.html#structjpeg__api__t',1,'']]],
-  ['jpeg_5fapi_5fversion_5fmajor',['JPEG_API_VERSION_MAJOR',['../group___j_p_e_g___a_p_i.html#ga3a6725908bc77508f31e477f838ca723',1,'r_jpeg_api.h']]],
   ['jpeg_5fcallback_5fargs_5ft',['jpeg_callback_args_t',['../group___j_p_e_g___a_p_i.html#structjpeg__callback__args__t',1,'']]],
   ['jpeg_5fcfg_5ft',['jpeg_cfg_t',['../group___j_p_e_g___a_p_i.html#structjpeg__cfg__t',1,'']]],
   ['jpeg_5fcolor_5fspace_5ft',['jpeg_color_space_t',['../group___j_p_e_g___a_p_i.html#ga3aed73edf47174b12b8b99e41437d696',1,'r_jpeg_api.h']]],

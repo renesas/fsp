@@ -3,7 +3,6 @@ var searchData=
   ['uart_5fdata_5fbits_5ft',['uart_data_bits_t',['../group___u_a_r_t___a_p_i.html#gadc68b8fd9ded3990f84129df23fee798',1,'r_uart_api.h']]],
   ['uart_5fdir_5ft',['uart_dir_t',['../group___u_a_r_t___a_p_i.html#gac36c5a0dffa37b418fb9425a76c57740',1,'r_uart_api.h']]],
   ['uart_5fevent_5ft',['uart_event_t',['../group___u_a_r_t___a_p_i.html#gaf739f04f788018b4b59fb7ad75da0a8d',1,'r_uart_api.h']]],
-  ['uart_5fmode_5ft',['uart_mode_t',['../group___s_c_i___u_a_r_t.html#ga93f7c73d772490ab4d22bda8fd0aa5a6',1,'r_sci_uart.h']]],
   ['uart_5fparity_5ft',['uart_parity_t',['../group___u_a_r_t___a_p_i.html#ga6bcc37e31dd40c204b4ac6f6189e8878',1,'r_uart_api.h']]],
   ['uart_5fstop_5fbits_5ft',['uart_stop_bits_t',['../group___u_a_r_t___a_p_i.html#ga6da57a73bbdbf830b845d4116f8341d7',1,'r_uart_api.h']]],
   ['usb_5fatapi_5ft',['usb_atapi_t',['../group___u_s_b___h_m_s_c___a_p_i.html#gac5b28f1be9ca57fc904f9c93266a594d',1,'r_usb_hmsc_api.h']]],

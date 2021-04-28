@@ -1,5 +1,30 @@
 var group___u_s_b___a_p_i =
 [
+    [ "usb_cfg_t", "group___u_s_b___a_p_i.html#structusb__cfg__t", [
+      [ "usb_mode", "group___u_s_b___a_p_i.html#a8fe5427a9e577252b78e2e336b5f17fb", null ],
+      [ "usb_speed", "group___u_s_b___a_p_i.html#aa919f6650429527890059d928fc01ef5", null ],
+      [ "module_number", "group___u_s_b___a_p_i.html#a3817be75666f59778943364cc727469c", null ],
+      [ "type", "group___u_s_b___a_p_i.html#a210e81fd550ee15650d2261c72c3f46f", null ],
+      [ "p_usb_reg", "group___u_s_b___a_p_i.html#a88a9beff4fe7e9e3fa731976c6af7e91", null ],
+      [ "irq", "group___u_s_b___a_p_i.html#a25b539cca96656014ff10f58a4f5a4a8", null ],
+      [ "irq_r", "group___u_s_b___a_p_i.html#a475ead2d983c806e01d71b13b7ee123d", null ],
+      [ "irq_d0", "group___u_s_b___a_p_i.html#ae04e36ff3fa9300a3ef5d8164de4b208", null ],
+      [ "irq_d1", "group___u_s_b___a_p_i.html#aa1c35110017ef581a9bdd25fe1fefc65", null ],
+      [ "hsirq", "group___u_s_b___a_p_i.html#a83d5d9b65f3e72a2ad1bfd48dfa3f6b6", null ],
+      [ "hsirq_d0", "group___u_s_b___a_p_i.html#a9377fde92482c219b69dd97211de03db", null ],
+      [ "hsirq_d1", "group___u_s_b___a_p_i.html#a30a2bbf54db8e1ccd8a0e9bb76700297", null ],
+      [ "ipl", "group___u_s_b___a_p_i.html#a1c67012ce6e635e594c1ef531d0ea2a6", null ],
+      [ "ipl_r", "group___u_s_b___a_p_i.html#a04a700732b7fde3d4803489e303b62f3", null ],
+      [ "ipl_d0", "group___u_s_b___a_p_i.html#a561cf36bc2219882c59f299d290cac82", null ],
+      [ "ipl_d1", "group___u_s_b___a_p_i.html#a673353c9d6529d5f4999729604db3e5c", null ],
+      [ "hsipl", "group___u_s_b___a_p_i.html#ab0a258c964328a3036b9b19cc97839d8", null ],
+      [ "hsipl_d0", "group___u_s_b___a_p_i.html#a9b764125bd9610aba9ad3aad78285476", null ],
+      [ "hsipl_d1", "group___u_s_b___a_p_i.html#abcea3b0ac51a19d427aaf28ff997195a", null ],
+      [ "p_usb_apl_callback", "group___u_s_b___a_p_i.html#a58eb2b666cab78a4379cc49d802c019a", null ],
+      [ "p_context", "group___u_s_b___a_p_i.html#a50d0295fd704209b6cc0cab3347fe989", null ],
+      [ "p_transfer_tx", "group___u_s_b___a_p_i.html#adaef59d2c43e7ffefa6926894c8ca7e8", null ],
+      [ "p_transfer_rx", "group___u_s_b___a_p_i.html#ae2cd91b73a5b0970986567b045956db6", null ]
+    ] ],
     [ "usb_api_t", "group___u_s_b___a_p_i.html#structusb__api__t", [
       [ "open", "group___u_s_b___a_p_i.html#ad92d0a1d797e8e806082b4fb6cf65f03", null ],
       [ "close", "group___u_s_b___a_p_i.html#ab1d74faccf1b8d153bcaa2da00db0749", null ],
@@ -133,6 +158,7 @@ var group___u_s_b___a_p_i =
     [ "USB_CD_BLENGTH", "group___u_s_b___a_p_i.html#gaf4303ebb0c2cce51616c627bc78e2510", null ],
     [ "USB_ID_BLENGTH", "group___u_s_b___a_p_i.html#ga7b243e853abb079b397630a524c73556", null ],
     [ "USB_ED_BLENGTH", "group___u_s_b___a_p_i.html#ga191b5553785fb696f5c5855de0fd8ed3", null ],
+    [ "usb_ctrl_t", "group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230", null ],
     [ "usb_speed_t", "group___u_s_b___a_p_i.html#ga624cde5d2f6383faa35fd05108285a23", [
       [ "USB_SPEED_LS", "group___u_s_b___a_p_i.html#gga624cde5d2f6383faa35fd05108285a23abcd9329da8231e2d78e728b068d870c8", null ],
       [ "USB_SPEED_FS", "group___u_s_b___a_p_i.html#gga624cde5d2f6383faa35fd05108285a23a20bb7ec351e3d0ea8d4568e7258a8319", null ],

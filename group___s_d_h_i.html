@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___s_d_h_i.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___s_d_h_i.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
@@ -259,9 +327,10 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-sdhi-usage_notes"></a>
 Usage Notes</h1>
 <h2>Card Detection</h2>
-<p><a class="anchor" id="um_sdmmc_card_removal_notification"></a><a class="anchor" id="um_sdmmc_card_insertion_notification"></a> When Card Detection is configured to "CD Pin" in the RA Configuration editor, card detection is enabled during <a class="el" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open()</a>.</p>
+<p><a class="anchor" id="um_sdmmc_card_removal_notification"></a><a class="anchor" id="um_sdmmc_card_insertion_notification"></a> When Card Detection is configured to "CD Pin" in the RA Configuration editor, interrupt flags are cleared and card detection is enabled during <a class="el" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open()</a>.</p>
 <p><a class="el" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet()</a> can be called to retrieve the current status of the card (including whether a card is present). If the Card Interrupt Priority is enabled, a callback is called when a card is inserted or removed.</p>
 <p>If a card is removed and reinserted, <a class="el" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit()</a> must be called before reading from the card or writing to the card.</p>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet()</a> should be used to initially determine the card state after opening the interface.</dd></dl>
 <h2>DMA Request Interrupt Priority</h2>
 <p>When data transfers are not 4-byte aligned or not a multiple of 4 bytes, a software copy of the block size (up to 512 bytes) is done in the DMA Request interrupt. This blocks all other interrupts that are a lower or equal priority to the access interrupt until the software copy is complete.</p>
 <h2>Timing Notes for R_SDHI_MediaInit</h2>
@@ -282,9 +351,9 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the r_sdhi in an application.</p>
-<div class="fragment"><div class="line">uint8_t  g_dest[SDHI_MAX_BLOCK_SIZE] BSP_ALIGN_VARIABLE(4);</div><div class="line">uint8_t  g_src[SDHI_MAX_BLOCK_SIZE]  BSP_ALIGN_VARIABLE(4);</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line"><span class="keywordtype">void</span> r_sdhi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; SDHI_MAX_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the SDHI driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open</a>(&amp;g_sdmmc0_ctrl, &amp;g_sdmmc0_cfg);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card.  This should not be done until the card is plugged in for SD devices. */</span></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a>(&amp;g_sdmmc0_ctrl, NULL);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabb1d35740c235c80edf43549fa3427d7">R_SDHI_Write</a>(&amp;g_sdmmc0_ctrl, g_src, 3, 1);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for transfer. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#ga400250f503190acfb97e58a561feec69">R_SDHI_Read</a>(&amp;g_sdmmc0_ctrl, g_dest, 3, 1);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for transfer. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* The callback is called when a transfer completes. */</span></div><div class="line"><span class="keywordtype">void</span> r_sdhi_example_callback (<a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a07f4a417555c6cae25fc3d0ccfba499b">SDMMC_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_transfer_complete = 1;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Card Detection Example</h2>
+<div class="fragment"><div class="line">uint8_t  g_dest[SDHI_MAX_BLOCK_SIZE] BSP_ALIGN_VARIABLE(4);</div><div class="line">uint8_t  g_src[SDHI_MAX_BLOCK_SIZE]  BSP_ALIGN_VARIABLE(4);</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line"><span class="keywordtype">void</span> r_sdhi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; SDHI_MAX_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the SDHI driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open</a>(&amp;g_sdmmc0_ctrl, &amp;g_sdmmc0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card.  This should not be done until the card is plugged in for SD devices. */</span></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a>(&amp;g_sdmmc0_ctrl, NULL);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabb1d35740c235c80edf43549fa3427d7">R_SDHI_Write</a>(&amp;g_sdmmc0_ctrl, g_src, 3, 1);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for transfer. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#ga400250f503190acfb97e58a561feec69">R_SDHI_Read</a>(&amp;g_sdmmc0_ctrl, g_dest, 3, 1);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for transfer. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* The callback is called when a transfer completes. */</span></div><div class="line"><span class="keywordtype">void</span> r_sdhi_example_callback (<a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a07f4a417555c6cae25fc3d0ccfba499b">SDMMC_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_transfer_complete = 1;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Card Detection Example</h2>
 <p>This is an example of using SDHI when the card may not be plugged in. The card detection interrupt must be enabled to use this example.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">bool</span> g_card_inserted = <span class="keyword">false</span>;</div><div class="line"><span class="keywordtype">void</span> r_sdhi_card_detect_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the SDHI driver. This enables the card detection interrupt. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open</a>(&amp;g_sdmmc0_ctrl, &amp;g_sdmmc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check if card is inserted. */</span></div><div class="line">    <a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__status__t">sdmmc_status_t</a> status;</div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet</a>(&amp;g_sdmmc0_ctrl, &amp;status);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!status.<a class="code" href="group___s_d_m_m_c___a_p_i.html#a5cba3f15b550023a08fa16e446cf2a35">card_inserted</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">while</span> (!g_card_inserted)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for a card insertion interrupt. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card after card insertion is detected. */</span></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a>(&amp;g_sdmmc0_ctrl, NULL);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* The callback is called when a card detection event occurs if the card detection interrupt is enabled. */</span></div><div class="line"><span class="keywordtype">void</span> r_sdhi_card_detect_example_callback (<a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524af72a094283f5c4ed2bda7d27ec19df80">SDMMC_EVENT_CARD_INSERTED</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_card_inserted = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a878321ce4dc90270cc95f3019ee1aad6">SDMMC_EVENT_CARD_REMOVED</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_card_inserted = <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">bool</span> g_card_inserted = <span class="keyword">false</span>;</div><div class="line"><span class="keywordtype">void</span> r_sdhi_card_detect_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the SDHI driver. This enables the card detection interrupt. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open</a>(&amp;g_sdmmc0_ctrl, &amp;g_sdmmc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check if card is inserted. */</span></div><div class="line">    <a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__status__t">sdmmc_status_t</a> status;</div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#ga6bebd1e0295bac31b76888d4fca94f90">R_SDHI_StatusGet</a>(&amp;g_sdmmc0_ctrl, &amp;status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (!status.<a class="code" href="group___s_d_m_m_c___a_p_i.html#a5cba3f15b550023a08fa16e446cf2a35">card_inserted</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">while</span> (!g_card_inserted)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait for a card insertion interrupt. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card after card insertion is detected. */</span></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a>(&amp;g_sdmmc0_ctrl, NULL);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* The callback is called when a card detection event occurs if the card detection interrupt is enabled. */</span></div><div class="line"><span class="keywordtype">void</span> r_sdhi_card_detect_example_callback (<a class="code" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524af72a094283f5c4ed2bda7d27ec19df80">SDMMC_EVENT_CARD_INSERTED</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_card_inserted = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_d_m_m_c___a_p_i.html#ggacf3d8d33331e1ae9810f56d2410ea524a878321ce4dc90270cc95f3019ee1aad6">SDMMC_EVENT_CARD_REMOVED</a> == p_args-&gt;<a class="code" href="group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3">event</a>)</div><div class="line">    {</div><div class="line">        g_card_inserted = <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga37b6d1c11d0f6d92ef6ae985a420ffbb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga37b6d1c11d0f6d92ef6ae985a420ffbb">&#9670;&nbsp;</a></span>R_SDHI_Open()</h2>
 
@@ -937,7 +1006,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

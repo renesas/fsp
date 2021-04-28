@@ -27,7 +27,7 @@ var group___c_t_s_u =
     ] ],
     [ "ctsu_instance_ctrl_t", "group___c_t_s_u.html#structctsu__instance__ctrl__t", [
       [ "open", "group___c_t_s_u.html#a257eb16ff64e017d0a67a0a3384fdbf7", null ],
-      [ "state", "group___c_t_s_u.html#a8911c68e1eec2dfbaa3f7ed304401e74", null ],
+      [ "state", "group___c_t_s_u.html#aee16466f6ce29f3141a0413c1f30cfa8", null ],
       [ "tuning", "group___c_t_s_u.html#a200d61ec88212741eda11efdf320dcf2", null ],
       [ "num_elements", "group___c_t_s_u.html#a67a41db2c42e9d1e46a7547d803b8296", null ],
       [ "wr_index", "group___c_t_s_u.html#a2f07e521837e8b03d7b2e3b93c9161a5", null ],
@@ -79,5 +79,6 @@ var group___c_t_s_u =
     [ "R_CTSU_ScanStart", "group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525", null ],
     [ "R_CTSU_DataGet", "group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe", null ],
     [ "R_CTSU_CallbackSet", "group___c_t_s_u.html#ga3c966546f3774ce2228739a5ffc0ac19", null ],
+    [ "R_CTSU_Diagnosis", "group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26", null ],
     [ "R_CTSU_Close", "group___c_t_s_u.html#ga73b45020c568d57065c8a7adecaaeb4c", null ]
 ];

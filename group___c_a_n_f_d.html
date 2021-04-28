@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___c_a_n_f_d.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___c_a_n_f_d.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -111,7 +179,7 @@ Functions</h2></td></tr>
 <tr class="separator:gaa79e3baad3f67bc4a3d1741dea29a3ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga00c7557917ce6e78eb2969d7b5855890"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890">R_CANFD_ModeTransition</a> (<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___c_a_n___a_p_i.html#gac29bd7d00b06d7457ae786471c296ba7">can_operation_mode_t</a> operation_mode, <a class="el" href="group___c_a_n___a_p_i.html#ga93f2b2c53f782b0c21beeb1339a108b7">can_test_mode_t</a> test_mode)</td></tr>
 <tr class="separator:ga00c7557917ce6e78eb2969d7b5855890"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16ff5e9e44e32191944292aea98ab4cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n_f_d.html#ga16ff5e9e44e32191944292aea98ab4cb">R_CANFD_InfoGet</a> (<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_api_ctrl, can_info_t *const p_info)</td></tr>
+<tr class="memitem:ga16ff5e9e44e32191944292aea98ab4cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n_f_d.html#ga16ff5e9e44e32191944292aea98ab4cb">R_CANFD_InfoGet</a> (<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___c_a_n___a_p_i.html#structcan__info__t">can_info_t</a> *const p_info)</td></tr>
 <tr class="separator:ga16ff5e9e44e32191944292aea98ab4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga96f34361e525a46f121b11d627c3a1a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n_f_d.html#ga96f34361e525a46f121b11d627c3a1a8">R_CANFD_CallbackSet</a> (<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:ga96f34361e525a46f121b11d627c3a1a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -597,10 +665,10 @@ AFL Example</h2>
 Basic Example</h2>
 <p>This is a basic example of minimal use of the CANFD module in an application.</p>
 <dl class="section note"><dt>Note</dt><dd>It is recommended to use RX FIFOs for reception as there are no interrupts for RX message buffers.</dd></dl>
-<div class="fragment"><div class="line"><span class="preprocessor">#define CAN_EXAMPLE_ID    (0x20)</span></div><div class="line"></div><div class="line"><a class="code" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a> g_can_tx_frame;</div><div class="line"><a class="code" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a> g_can_rx_frame;</div><div class="line"></div><div class="line"><span class="keyword">volatile</span> <a class="code" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a> g_err_status = (<a class="code" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a>) 0;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> canfd_callback (<a class="code" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___c_a_n___a_p_i.html#a48fa3cf4c8c7e608c25ac8b907450096">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbaa0bc5e15cee037a1d102b517ef63e161">CAN_EVENT_RX_COMPLETE</a>:    <span class="comment">/* Receive complete event. */</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Read received frame */</span></div><div class="line">            memcpy(&amp;g_can_rx_frame, p_args-&gt;p_frame, <span class="keyword">sizeof</span>(<a class="code" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a>));</div><div class="line"></div><div class="line">            <span class="comment">/* Handle event */</span></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbac169b4940b7cb76562efd7439fc76949">CAN_EVENT_TX_COMPLETE</a>:    <span class="comment">/* Transmit complete event. */</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle event */</span></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba8adaa142ed94841f5f282232ce414333">CAN_EVENT_ERR_GLOBAL</a>:                        <span class="comment">/* Global error. */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbab16a5328b930c53524aecbc4d580bb24">CAN_EVENT_ERR_CHANNEL</a>:                       <span class="comment">/* Channel error. */</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Get error status */</span></div><div class="line">            g_err_status = (<a class="code" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a>) p_args-&gt;<a class="code" href="group___c_a_n___a_p_i.html#a39e131d3f8e8d6d8a14e9f248c1ac1e1">error</a>; <span class="comment">/* Check error code with canfd_error_t. */</span></div><div class="line"></div><div class="line">            <span class="comment">/* Handle event */</span></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> canfd_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the CAN module */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga664d1e07613b250a3084681a613334be">R_CANFD_Open</a>(&amp;g_canfd0_ctrl, &amp;g_canfd0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Setup frame to write to CAN ID 0x20 */</span></div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a49d4261f37f08f5a11cc3fc12c56cdc3">id</a>               = CAN_EXAMPLE_ID;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a4144eba26f77850571fca0498bec60ef">id_mode</a>          = <a class="code" href="group___c_a_n___a_p_i.html#ggabc98e244722dcea05b5ce91bdb4c70c8a5d29b837d94d14fb99868c2d0a5220b0">CAN_ID_MODE_STANDARD</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a79046fddb934fd7ea0d0cc70b8d7f26d">type</a>             = <a class="code" href="group___c_a_n___a_p_i.html#ggad3ffe1ae0429fcd1053a969d96c47610a1da44b52c2731b02cf02ca55eec08899">CAN_FRAME_TYPE_DATA</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#af58b9f3fe19ed69e0a635cd271c68404">data_length_code</a> = 8;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a27833816de50e1ad5b16b42856653ad8">options</a>          = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Write some data to the transmit frame */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; 8; i++)</div><div class="line">    {</div><div class="line">        g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#ad70086e98bfe0871e3f73d1f253138db">data</a>[i] = (uint8_t) i;</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Send data on the bus */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga9a43dfa148767d10e12b22cb317111a9">R_CANFD_Write</a>(&amp;g_canfd0_ctrl, CANFD_TX_MB_0, &amp;g_can_tx_frame);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a transmit callback event */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="r-canfd-examples-fd"></a>
+<div class="fragment"><div class="line"><span class="preprocessor">#define CAN_EXAMPLE_ID    (0x20)</span></div><div class="line"></div><div class="line"><a class="code" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a> g_can_tx_frame;</div><div class="line"><a class="code" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a> g_can_rx_frame;</div><div class="line"></div><div class="line"><span class="keyword">volatile</span> <a class="code" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a> g_err_status = (<a class="code" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a>) 0;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> canfd_callback (<a class="code" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___c_a_n___a_p_i.html#a48fa3cf4c8c7e608c25ac8b907450096">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbaa0bc5e15cee037a1d102b517ef63e161">CAN_EVENT_RX_COMPLETE</a>:    <span class="comment">/* Receive complete event. */</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Read received frame */</span></div><div class="line">            memcpy(&amp;g_can_rx_frame, p_args-&gt;p_frame, <span class="keyword">sizeof</span>(<a class="code" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a>));</div><div class="line"></div><div class="line">            <span class="comment">/* Handle event */</span></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbac169b4940b7cb76562efd7439fc76949">CAN_EVENT_TX_COMPLETE</a>:    <span class="comment">/* Transmit complete event. */</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle event */</span></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba8adaa142ed94841f5f282232ce414333">CAN_EVENT_ERR_GLOBAL</a>:                        <span class="comment">/* Global error. */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbab16a5328b930c53524aecbc4d580bb24">CAN_EVENT_ERR_CHANNEL</a>:                       <span class="comment">/* Channel error. */</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Get error status */</span></div><div class="line">            g_err_status = (<a class="code" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a>) p_args-&gt;<a class="code" href="group___c_a_n___a_p_i.html#a39e131d3f8e8d6d8a14e9f248c1ac1e1">error</a>; <span class="comment">/* Check error code with canfd_error_t. */</span></div><div class="line"></div><div class="line">            <span class="comment">/* Handle event */</span></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> canfd_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the CAN module */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga664d1e07613b250a3084681a613334be">R_CANFD_Open</a>(&amp;g_canfd0_ctrl, &amp;g_canfd0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Setup frame to write to CAN ID 0x20 */</span></div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a49d4261f37f08f5a11cc3fc12c56cdc3">id</a>               = CAN_EXAMPLE_ID;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a4144eba26f77850571fca0498bec60ef">id_mode</a>          = <a class="code" href="group___c_a_n___a_p_i.html#ggabc98e244722dcea05b5ce91bdb4c70c8a5d29b837d94d14fb99868c2d0a5220b0">CAN_ID_MODE_STANDARD</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a79046fddb934fd7ea0d0cc70b8d7f26d">type</a>             = <a class="code" href="group___c_a_n___a_p_i.html#ggad3ffe1ae0429fcd1053a969d96c47610a1da44b52c2731b02cf02ca55eec08899">CAN_FRAME_TYPE_DATA</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#af58b9f3fe19ed69e0a635cd271c68404">data_length_code</a> = 8;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a27833816de50e1ad5b16b42856653ad8">options</a>          = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Write some data to the transmit frame */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; 8; i++)</div><div class="line">    {</div><div class="line">        g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#ad70086e98bfe0871e3f73d1f253138db">data</a>[i] = (uint8_t) i;</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Send data on the bus */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga9a43dfa148767d10e12b22cb317111a9">R_CANFD_Write</a>(&amp;g_canfd0_ctrl, CANFD_TX_MB_0, &amp;g_can_tx_frame);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a transmit callback event */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="r-canfd-examples-fd"></a>
 Flexible Data</h2>
 <p>This example demonstrates sending an FD message with bitrate switching over external loopback. The CTX and CRX pins must be connected when using external loopback, though if a CAN tranciever is onboard a 120 Ohm resistor should be connected across CANH and CANL instead.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define CAN_EXAMPLE_64_BYTES    64</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> canfd_fd_loopback_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga664d1e07613b250a3084681a613334be">R_CANFD_Open</a>(&amp;g_canfd0_ctrl, &amp;g_canfd0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Switch to external loopback mode */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890">R_CANFD_ModeTransition</a>(&amp;g_canfd0_ctrl, <a class="code" href="group___c_a_n___a_p_i.html#ggac29bd7d00b06d7457ae786471c296ba7abde5d9e8f5711b6fe8374671c96e6f72">CAN_OPERATION_MODE_NORMAL</a>, <a class="code" href="group___c_a_n___a_p_i.html#gga93f2b2c53f782b0c21beeb1339a108b7a892393a146c929398882d92a7c9303eb">CAN_TEST_MODE_LOOPBACK_EXTERNAL</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Configure a frame to write 64 bytes with bitrate switching (BRS) enabled */</span></div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a49d4261f37f08f5a11cc3fc12c56cdc3">id</a>               = CAN_EXAMPLE_ID;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a4144eba26f77850571fca0498bec60ef">id_mode</a>          = <a class="code" href="group___c_a_n___a_p_i.html#ggabc98e244722dcea05b5ce91bdb4c70c8a5d29b837d94d14fb99868c2d0a5220b0">CAN_ID_MODE_STANDARD</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a79046fddb934fd7ea0d0cc70b8d7f26d">type</a>             = <a class="code" href="group___c_a_n___a_p_i.html#ggad3ffe1ae0429fcd1053a969d96c47610a1da44b52c2731b02cf02ca55eec08899">CAN_FRAME_TYPE_DATA</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#af58b9f3fe19ed69e0a635cd271c68404">data_length_code</a> = CAN_EXAMPLE_64_BYTES;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a27833816de50e1ad5b16b42856653ad8">options</a>          = <a class="code" href="group___c_a_n_f_d.html#gga6c4d104c3a9cce6b74a05035f0af6d87a46bb2a869fc5c7b63b16bc822d4ec712">CANFD_FRAME_OPTION_FD</a> | <a class="code" href="group___c_a_n_f_d.html#gga6c4d104c3a9cce6b74a05035f0af6d87a4a5ce70c8fb9ab5d9e320a79dd59aebf">CANFD_FRAME_OPTION_BRS</a>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write some data to the transmit frame */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; CAN_DATA_BUFFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#ad70086e98bfe0871e3f73d1f253138db">data</a>[i] = (uint8_t) i;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Send data on the bus */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga9a43dfa148767d10e12b22cb317111a9">R_CANFD_Write</a>(&amp;g_canfd0_ctrl, CANFD_TX_MB_0, &amp;g_can_tx_frame);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a transmit and/or receive callback event */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="r-canfd-examples-internal-bus"></a>
+<div class="fragment"><div class="line"><span class="preprocessor">#define CAN_EXAMPLE_64_BYTES    64</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> canfd_fd_loopback_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga664d1e07613b250a3084681a613334be">R_CANFD_Open</a>(&amp;g_canfd0_ctrl, &amp;g_canfd0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Switch to external loopback mode */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890">R_CANFD_ModeTransition</a>(&amp;g_canfd0_ctrl, <a class="code" href="group___c_a_n___a_p_i.html#ggac29bd7d00b06d7457ae786471c296ba7abde5d9e8f5711b6fe8374671c96e6f72">CAN_OPERATION_MODE_NORMAL</a>, <a class="code" href="group___c_a_n___a_p_i.html#gga93f2b2c53f782b0c21beeb1339a108b7a892393a146c929398882d92a7c9303eb">CAN_TEST_MODE_LOOPBACK_EXTERNAL</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Configure a frame to write 64 bytes with bitrate switching (BRS) enabled */</span></div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a49d4261f37f08f5a11cc3fc12c56cdc3">id</a>               = CAN_EXAMPLE_ID;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a4144eba26f77850571fca0498bec60ef">id_mode</a>          = <a class="code" href="group___c_a_n___a_p_i.html#ggabc98e244722dcea05b5ce91bdb4c70c8a5d29b837d94d14fb99868c2d0a5220b0">CAN_ID_MODE_STANDARD</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a79046fddb934fd7ea0d0cc70b8d7f26d">type</a>             = <a class="code" href="group___c_a_n___a_p_i.html#ggad3ffe1ae0429fcd1053a969d96c47610a1da44b52c2731b02cf02ca55eec08899">CAN_FRAME_TYPE_DATA</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#af58b9f3fe19ed69e0a635cd271c68404">data_length_code</a> = CAN_EXAMPLE_64_BYTES;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a27833816de50e1ad5b16b42856653ad8">options</a>          = <a class="code" href="group___c_a_n_f_d.html#gga6c4d104c3a9cce6b74a05035f0af6d87a46bb2a869fc5c7b63b16bc822d4ec712">CANFD_FRAME_OPTION_FD</a> | <a class="code" href="group___c_a_n_f_d.html#gga6c4d104c3a9cce6b74a05035f0af6d87a4a5ce70c8fb9ab5d9e320a79dd59aebf">CANFD_FRAME_OPTION_BRS</a>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write some data to the transmit frame */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; CAN_DATA_BUFFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#ad70086e98bfe0871e3f73d1f253138db">data</a>[i] = (uint8_t) i;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Send data on the bus */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga9a43dfa148767d10e12b22cb317111a9">R_CANFD_Write</a>(&amp;g_canfd0_ctrl, CANFD_TX_MB_0, &amp;g_can_tx_frame);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a transmit and/or receive callback event */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="r-canfd-examples-internal-bus"></a>
 Internal Bus</h2>
 <p>In this example two CANFD channels are connected to the Internal Bus test mode. API error checking has been omitted for clarity.</p>
 <dl class="section note"><dt>Note</dt><dd>Use of Global Modes for any other purpose is not recommended without consulting the device User's Manual.</dd></dl>
@@ -1057,7 +1125,7 @@ Global configuration (global error callback channel only) </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Write data to the CANFD channel.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Send data on the bus */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga9a43dfa148767d10e12b22cb317111a9">R_CANFD_Write</a>(&amp;g_canfd0_ctrl, CANFD_TX_MB_0, &amp;g_can_tx_frame);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Send data on the bus */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga9a43dfa148767d10e12b22cb317111a9">R_CANFD_Write</a>(&amp;g_canfd0_ctrl, CANFD_TX_MB_0, &amp;g_can_tx_frame);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Operation succeeded. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
@@ -1149,7 +1217,7 @@ Global configuration (global error callback channel only) </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Switch to a different channel, global or test mode.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Switch to external loopback mode */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890">R_CANFD_ModeTransition</a>(&amp;g_canfd0_ctrl, <a class="code" href="group___c_a_n___a_p_i.html#ggac29bd7d00b06d7457ae786471c296ba7abde5d9e8f5711b6fe8374671c96e6f72">CAN_OPERATION_MODE_NORMAL</a>, <a class="code" href="group___c_a_n___a_p_i.html#gga93f2b2c53f782b0c21beeb1339a108b7a892393a146c929398882d92a7c9303eb">CAN_TEST_MODE_LOOPBACK_EXTERNAL</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Switch to external loopback mode */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890">R_CANFD_ModeTransition</a>(&amp;g_canfd0_ctrl, <a class="code" href="group___c_a_n___a_p_i.html#ggac29bd7d00b06d7457ae786471c296ba7abde5d9e8f5711b6fe8374671c96e6f72">CAN_OPERATION_MODE_NORMAL</a>, <a class="code" href="group___c_a_n___a_p_i.html#gga93f2b2c53f782b0c21beeb1339a108b7a892393a146c929398882d92a7c9303eb">CAN_TEST_MODE_LOOPBACK_EXTERNAL</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Operation succeeded. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
@@ -1176,7 +1244,7 @@ Global configuration (global error callback channel only) </td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">can_info_t *const&#160;</td>
+          <td class="paramtype"><a class="el" href="group___c_a_n___a_p_i.html#structcan__info__t">can_info_t</a> *const&#160;</td>
           <td class="paramname"><em>p_info</em>&#160;</td>
         </tr>
         <tr>
@@ -1254,7 +1322,7 @@ Global configuration (global error callback channel only) </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

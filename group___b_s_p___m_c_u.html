@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___b_s_p___m_c_u.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___b_s_p___m_c_u.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -359,30 +427,6 @@ Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Select if the C runtime initialization in the BSP is to be used. If disabled, use the BSP_WARM_START_POST_CLOCK event to run user defined equivalent. </td></tr>
 <tr>
-<td>Main Oscillator Wait Time</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-0.25 us</li>
-<li>
-128 us</li>
-<li>
-256 us</li>
-<li>
-512 us</li>
-<li>
-1024 us</li>
-<li>
-2048 us</li>
-<li>
-4096 us</li>
-<li>
-8192 us</li>
-<li>
-16384 us</li>
-<li>
-32768 us</li>
-</ul>
-</td><td>32768 us </td><td>Number of cycles to wait for the main oscillator clock to stabilize. This setting can be overridden in board_cfg.h </td></tr>
-<tr>
 <td>Main Oscillator Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 External Oscillator</li>
@@ -448,6 +492,8 @@ Modules</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:gae685ec20bc3579295878f1586478b54c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c">BSP_IRQ_DISABLED</a></td></tr>
 <tr class="separator:gae685ec20bc3579295878f1586478b54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f428b0e243466083b74ab49b25bea8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga0f428b0e243466083b74ab49b25bea8c">FSP_LOG_PRINT</a>(X)</td></tr>
+<tr class="separator:ga0f428b0e243466083b74ab49b25bea8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8c791e904efc648fb8b69b56d7dd37ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga8c791e904efc648fb8b69b56d7dd37ba">FSP_RETURN</a>(err)</td></tr>
 <tr class="separator:ga8c791e904efc648fb8b69b56d7dd37ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga960f46c44b67ba8ad5377cfc8e4e6a75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#ga960f46c44b67ba8ad5377cfc8e4e6a75">FSP_ERROR_LOG</a>(err)</td></tr>
@@ -490,9 +536,6 @@ Enumerations</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:gaa3cd3e43291e81e795d642b79b6088e6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6">SystemCoreClock</a></td></tr>
 <tr class="separator:gaa3cd3e43291e81e795d642b79b6088e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa2f4340010ddb682ca12fac46f83db8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u.html#gaaa2f4340010ddb682ca12fac46f83db8">g_bsp_version</a></td></tr>
-<tr class="memdesc:gaaa2f4340010ddb682ca12fac46f83db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default initialization function.  <a href="#gaaa2f4340010ddb682ca12fac46f83db8">More...</a><br /></td></tr>
-<tr class="separator:gaaa2f4340010ddb682ca12fac46f83db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gae685ec20bc3579295878f1586478b54c"></a>
@@ -507,6 +550,25 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Used to signify that an ELC event is not able to be used as an interrupt. </p>
+
+</div>
+</div>
+<a id="ga0f428b0e243466083b74ab49b25bea8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0f428b0e243466083b74ab49b25bea8c">&#9670;&nbsp;</a></span>FSP_LOG_PRINT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSP_LOG_PRINT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">X</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Macro that can be defined in order to enable logging in FSP modules. </p>
 
 </div>
 </div>
@@ -1721,30 +1783,13 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gaaa2f4340010ddb682ca12fac46f83db8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaa2f4340010ddb682ca12fac46f83db8">&#9670;&nbsp;</a></span>g_bsp_version</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#unionfsp__version__t">fsp_version_t</a> g_bsp_version</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Default initialization function. </p>
-<p>Version data structure used by error logger macro. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

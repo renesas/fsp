@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___o_s_p_i.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___o_s_p_i.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -143,8 +211,12 @@ Features</h2>
 <li>Entering and exiting XIP (Single Continuous Read) mode<a class="anchor" id="um_ospi_xip_mode"></a></li>
 <li>3 byte addressing for SPI<a class="anchor" id="um_ospi_3byte_address"></a></li>
 <li>4 byte addressing for SPI and OPI<a class="anchor" id="um_ospi_4byte_address"></a></li>
-<li>Auto-calibration for OPI mode (SOPI and DOPI)<a class="anchor" id="um_ospi_autocalibration"></a> </li>
+<li>Auto-calibration for OPI mode (SOPI and DOPI)<a class="anchor" id="um_ospi_autocalibration"></a></li>
 </ul>
+<p>Additional build-time features:</p><ul>
+<li>Optional (build-time) DMAC support for data transmission.<a class="anchor" id="um_ospi_optional_dmac_support_for_data_transmission"></a></li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Use of DMAC for data transmission is strongly recommended. Without the use of DMAC, due to the high-speed hardware design of the OSPI peripheral, data transmission can be sensitive to timing variance, which could cause software-based memory-mapped operations to fail unexpectedly.</dd></dl>
 <h1><a class="anchor" id="r-ospi-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_ospi</h2>
@@ -162,6 +234,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr>
+<td>DMAC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable DMAC support for the OSPI module. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Storage &gt; OSPI Driver on r_ospi</h2>
 This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Storage &gt; OSPI Driver on r_ospi.<br />
@@ -374,6 +454,10 @@ Dual data rate OPI</li>
 </td><td>3 SPI/SOPI, 2.5 DOPI </td><td>Signal pull-down timing setting in OCTACLK units </td></tr>
 </table>
 </p>
+<h2><a class="anchor" id="r-ospi-dmac-configuration"></a>
+Enabling DMAC</h2>
+<p>DMAC data transmission support is configurable and is disabled from the build by default. Use of a high-priority (low channel number) DMAC for data transmission is strongly recommended.</p>
+<p>For further details on DMAC please refer <a class="el" href="group___d_m_a_c.html">Direct Memory Access Controller (r_dmac)</a>.</p>
 <h2><a class="anchor" id="r-ospi-clock-configuration"></a>
 Clock Configuration</h2>
 <p>PCLKB is the Octal-SPI bus interface, and PCLKA is used to set OSPI registers.</p>
@@ -425,11 +509,11 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p><a class="anchor" id="um_ospi_sections"></a> This is a basic example of minimal use of the OSPI in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[OSPI_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place data in the .ospi_flash section to flash it during programming. */</span></div><div class="line"><span class="keyword">const</span> uint8_t g_src[OSPI_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi_flash&quot;</span>) = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Place code in the .code_in_ospi section to flash it during programming. */</span></div><div class="line"><span class="keywordtype">void</span> r_ospi_example_function(<span class="keywordtype">void</span>) BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.code_in_ospi&quot;</span>) __attribute__((noinline));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_example_function (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Add code here. */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instancee */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#ga2db7644d6d69ab7f7f6e5c41e5951eee">R_OSPI_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line"></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Change SPI to DOPI mode */</span></div><div class="line">    r_ospi_example_spi_to_dopi();</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Reading Status Register Example (R_OSPI_DirectWrite, R_OSPI_DirectRead)</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[OSPI_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place data in the .ospi_flash section to flash it during programming. */</span></div><div class="line"><span class="keyword">const</span> uint8_t g_src[OSPI_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi_flash&quot;</span>) = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Place code in the .code_in_ospi section to flash it during programming. */</span></div><div class="line"><span class="keywordtype">void</span> r_ospi_example_function(<span class="keywordtype">void</span>) BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.code_in_ospi&quot;</span>) __attribute__((noinline));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_example_function (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Add code here. */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instancee */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#ga2db7644d6d69ab7f7f6e5c41e5951eee">R_OSPI_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Change SPI to DOPI mode */</span></div><div class="line">    r_ospi_example_spi_to_dopi();</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Reading Status Register Example (R_OSPI_DirectWrite, R_OSPI_DirectRead)</h2>
 <p>This is an example of using R_OSPI_DirectWrite followed by R_OSPI_DirectRead to send the read status register command and read back the status register from the device.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_COMMAND_READ_STATUS_REGISTER    (0x05U)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_direct_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    spi_flash_direct_transfer_t ospi_test_direct_transfer =</div><div class="line">    {</div><div class="line">        .command        = OSPI_TEST_READ_STATUS_COMMAND_SPI_MODE,</div><div class="line">        .address        = 0U,</div><div class="line">        .data           = 0U,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 0U,</div><div class="line">        .data_length    = 0U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#ga2db7644d6d69ab7f7f6e5c41e5951eee">R_OSPI_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write Enable */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaa20b1ceba816c6f2f5ef3406cf898a63">R_OSPI_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read Status Register */</span></div><div class="line">    ospi_test_direct_transfer.command     = OSPI_TEST_READ_STATUS_COMMAND_SPI_MODE;</div><div class="line">    ospi_test_direct_transfer.data_length = 1U;</div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaa20b1ceba816c6f2f5ef3406cf898a63">R_OSPI_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check if Write Enable is set */</span></div><div class="line">    <span class="keywordflow">if</span> (OSPI_WEN_BIT_MASK != (ospi_test_direct_transfer.data &amp; OSPI_WEN_BIT_MASK))</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Auto-calibration Example (R_OSPI_DirectOpen, R_OSPI_DirectWrite, R_OSPI_SpiProtocolSet)</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_COMMAND_READ_STATUS_REGISTER    (0x05U)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_direct_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    spi_flash_direct_transfer_t ospi_test_direct_transfer =</div><div class="line">    {</div><div class="line">        .command        = OSPI_TEST_READ_STATUS_COMMAND_SPI_MODE,</div><div class="line">        .address        = 0U,</div><div class="line">        .data           = 0U,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 0U,</div><div class="line">        .data_length    = 0U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#ga2db7644d6d69ab7f7f6e5c41e5951eee">R_OSPI_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write Enable */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaa20b1ceba816c6f2f5ef3406cf898a63">R_OSPI_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read Status Register */</span></div><div class="line">    ospi_test_direct_transfer.command     = OSPI_TEST_READ_STATUS_COMMAND_SPI_MODE;</div><div class="line">    ospi_test_direct_transfer.data_length = 1U;</div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaa20b1ceba816c6f2f5ef3406cf898a63">R_OSPI_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check if Write Enable is set */</span></div><div class="line">    <span class="keywordflow">if</span> (OSPI_WEN_BIT_MASK != (ospi_test_direct_transfer.data &amp; OSPI_WEN_BIT_MASK))</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Auto-calibration Example (R_OSPI_DirectOpen, R_OSPI_DirectWrite, R_OSPI_SpiProtocolSet)</h2>
 <p>This is an example of using R_OSPI_SpiProtocolSet to change the operating mode from SPI to SOPI and allow the driver to initiate auto-calibration.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define OSPI_DOPI_PREAMBLE_PATTERN_LENGTH_BYTES    (16U)</span></div><div class="line"><span class="preprocessor">#define OSPI_EXAMPLE_PREAMBLE_ADDRESS              (0x68000000U) </span><span class="comment">/* Device connected to CS0 */</span><span class="preprocessor"></span></div><div class="line"><span class="keyword">const</span> uint8_t g_preamble_bytes[OSPI_DOPI_PREAMBLE_PATTERN_LENGTH_BYTES] =</div><div class="line">{</div><div class="line">    0x00, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0x08, 0x00, 0x00, 0xF7, 0xFF, 0x00, 0x08, 0xF7, 0x00, 0xF7</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ospi_example_wait_until_wip (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>          err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> status;</div><div class="line">    status.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ae20d4bed523ca4e802f5da6fdec4ca43">write_in_progress</a> = <span class="keyword">true</span>;</div><div class="line">    uint32_t timeout = UINT32_MAX;</div><div class="line">    <span class="keywordflow">while</span> ((status.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ae20d4bed523ca4e802f5da6fdec4ca43">write_in_progress</a>) &amp;&amp; (--timeout))</div><div class="line">    {</div><div class="line"></div><div class="line">        err = <a class="code" href="group___o_s_p_i.html#ga42589667f192024298c01bb2c41496e2">R_OSPI_StatusGet</a>(&amp;g_ospi0_ctrl, &amp;status);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 == timeout)</div><div class="line">    {</div><div class="line">        handle_error(err);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_auto_calibrate_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <span class="comment">/* Set data_latch_delay_clocks to 0x0 to enable auto-calibration */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#ga2db7644d6d69ab7f7f6e5c41e5951eee">R_OSPI_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    uint8_t * preamble_pattern_addr = (uint8_t *) OSPI_EXAMPLE_PREAMBLE_ADDRESS;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaf58c5c42d8c2e0b5f1d690fc30e923a4">R_OSPI_Write</a>(&amp;g_ospi0_ctrl, g_preamble_bytes, preamble_pattern_addr, OSPI_EXAMPLE_PREAMBLE_ADDRESS);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait until write has been completed */</span></div><div class="line">    ospi_example_wait_until_wip();</div><div class="line"></div><div class="line">    <span class="comment">/* Change from SPI to DOPI mode */</span></div><div class="line">    r_ospi_example_spi_to_dopi();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Octaclk Update Example (R_OSPI_SpiProtocolSet)</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define OSPI_DOPI_PREAMBLE_PATTERN_LENGTH_BYTES    (16U)</span></div><div class="line"><span class="preprocessor">#define OSPI_EXAMPLE_PREAMBLE_ADDRESS              (0x68000000U) </span><span class="comment">/* Device connected to CS0 */</span><span class="preprocessor"></span></div><div class="line"><span class="keyword">const</span> uint8_t g_preamble_bytes[OSPI_DOPI_PREAMBLE_PATTERN_LENGTH_BYTES] =</div><div class="line">{</div><div class="line">    0x00, 0x00, 0xFF, 0xFF, 0xFF, 0x00, 0x08, 0x00, 0x00, 0xF7, 0xFF, 0x00, 0x08, 0xF7, 0x00, 0xF7</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ospi_example_wait_until_wip (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>          err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> status;</div><div class="line">    status.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ae20d4bed523ca4e802f5da6fdec4ca43">write_in_progress</a> = <span class="keyword">true</span>;</div><div class="line">    uint32_t timeout = UINT32_MAX;</div><div class="line">    <span class="keywordflow">while</span> ((status.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ae20d4bed523ca4e802f5da6fdec4ca43">write_in_progress</a>) &amp;&amp; (--timeout))</div><div class="line">    {</div><div class="line"></div><div class="line">        err = <a class="code" href="group___o_s_p_i.html#ga42589667f192024298c01bb2c41496e2">R_OSPI_StatusGet</a>(&amp;g_ospi0_ctrl, &amp;status);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 == timeout)</div><div class="line">    {</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_auto_calibrate_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <span class="comment">/* Set data_latch_delay_clocks to 0x0 to enable auto-calibration */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#ga2db7644d6d69ab7f7f6e5c41e5951eee">R_OSPI_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    uint8_t * preamble_pattern_addr = (uint8_t *) OSPI_EXAMPLE_PREAMBLE_ADDRESS;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaf58c5c42d8c2e0b5f1d690fc30e923a4">R_OSPI_Write</a>(&amp;g_ospi0_ctrl, g_preamble_bytes, preamble_pattern_addr, OSPI_EXAMPLE_PREAMBLE_ADDRESS);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait until write has been completed */</span></div><div class="line">    ospi_example_wait_until_wip();</div><div class="line"></div><div class="line">    <span class="comment">/* Change from SPI to DOPI mode */</span></div><div class="line">    r_ospi_example_spi_to_dopi();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Octaclk Update Example (R_OSPI_SpiProtocolSet)</h2>
 <p>This is an example of using R_BSP_OctaclkUpdate to change the Octal-SPI clock frequency during run time. The OCTACLK frequency must be updated before calling the R_OSPI_SpiProtocolSet with appropriate clock source and divider settings required to be set for the new SPI protocol mode. Ensure that the clock source selected is started.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> ospi_example_change_omclk (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Ensure clock source (PLL2 in this example) is running before changing the OCTACLK frequency */</span></div><div class="line">    bsp_octaclk_settings_t octaclk_settings;</div><div class="line">    octaclk_settings.source_clock = BSP_CLOCKS_CLOCK_PLL2;</div><div class="line">    octaclk_settings.divider      = BSP_CLOCKS_OCTACLK_DIV_2;</div><div class="line">    R_BSP_OctaclkUpdate(&amp;octaclk_settings);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>OSPI Data and IAR</h2>
 <p>When using the IAR compiler, OSPI data must be <code>const</code> qualified to be downloaded by the debugger.</p>
@@ -730,7 +814,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Read/Write raw data directly with the OctaFlash.</p>
 <p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a21da248768dd75281ea7b29f2d243afd">spi_flash_api_t::directTransfer</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Write Enable */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaa20b1ceba816c6f2f5ef3406cf898a63">R_OSPI_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Write Enable */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaa20b1ceba816c6f2f5ef3406cf898a63">R_OSPI_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>The flash was programmed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
@@ -875,7 +959,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Program a page of data to the flash.</p>
 <p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a61e667a9ae9af76c5f8fd9f1973c6838">spi_flash_api_t::write</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaf58c5c42d8c2e0b5f1d690fc30e923a4">R_OSPI_Write</a>(&amp;g_ospi0_ctrl, g_preamble_bytes, preamble_pattern_addr, OSPI_EXAMPLE_PREAMBLE_ADDRESS);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#gaf58c5c42d8c2e0b5f1d690fc30e923a4">R_OSPI_Write</a>(&amp;g_ospi0_ctrl, g_preamble_bytes, preamble_pattern_addr, OSPI_EXAMPLE_PREAMBLE_ADDRESS);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>The flash was programmed successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl, p_dest or p_src is NULL, or byte_count crosses a page boundary. </td></tr>
@@ -960,7 +1044,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the write or erase status of the flash.</p>
 <p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a1eea2761178ddd8ca7ef3aacd5c80507">spi_flash_api_t::statusGet</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        err = <a class="code" href="group___o_s_p_i.html#ga42589667f192024298c01bb2c41496e2">R_OSPI_StatusGet</a>(&amp;g_ospi0_ctrl, &amp;status);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        err = <a class="code" href="group___o_s_p_i.html#ga42589667f192024298c01bb2c41496e2">R_OSPI_StatusGet</a>(&amp;g_ospi0_ctrl, &amp;status);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>The write status is in p_status. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_instance_ctrl or p_status is NULL. </td></tr>
@@ -1013,7 +1097,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -13,6 +13,7 @@ var group___f_l_a_s_h___l_p =
     [ "R_FLASH_LP_Reset", "group___f_l_a_s_h___l_p.html#ga2192404c726bc0977297b511107ede86", null ],
     [ "R_FLASH_LP_StartUpAreaSelect", "group___f_l_a_s_h___l_p.html#ga5db1f5f2c99d6503300567c8f39b60a7", null ],
     [ "R_FLASH_LP_CallbackSet", "group___f_l_a_s_h___l_p.html#ga7df14b3ab66b39f90175f199c67574ad", null ],
+    [ "R_FLASH_LP_BankSwap", "group___f_l_a_s_h___l_p.html#gabe0d36d77021016d4b2d9e0b8da4ea2c", null ],
     [ "R_FLASH_LP_UpdateFlashClockFreq", "group___f_l_a_s_h___l_p.html#ga71e978be35b105e56bfa9bf6bd1630cb", null ],
     [ "R_FLASH_LP_InfoGet", "group___f_l_a_s_h___l_p.html#gad765ebc7908a00697121bdfb9cd282a8", null ]
 ];

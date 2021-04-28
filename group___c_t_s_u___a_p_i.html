@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___c_t_s_u___a_p_i.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,10 +140,26 @@ $(document).ready(function(){initNavTree('group___c_t_s_u___a_p_i.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
@@ -120,13 +187,6 @@ Data Structures</h2></td></tr>
 <tr class="separator:structctsu__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structctsu__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__instance__t">ctsu_instance_t</a></td></tr>
 <tr class="separator:structctsu__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga92ece09f9ea6f483617249f186b93c20"><td class="memItemLeft" align="right" valign="top"><a id="ga92ece09f9ea6f483617249f186b93c20"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#ga92ece09f9ea6f483617249f186b93c20">CTSU_COUNT_MAX</a></td></tr>
-<tr class="memdesc:ga92ece09f9ea6f483617249f186b93c20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value of Maximum count. <br /></td></tr>
-<tr class="separator:ga92ece09f9ea6f483617249f186b93c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -393,6 +453,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a1df87278ab5d47fdd093994f53de96a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadcc6930b4e9d0ad86b6f607e86c28f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">dataGet</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint16_t *p_data)</td></tr>
 <tr class="separator:aadcc6930b4e9d0ad86b6f607e86c28f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42a81fef42f2bf61bde59cba4796cc0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e">diagnosis</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a42a81fef42f2bf61bde59cba4796cc0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adda480537f35733dbed856a30b89be50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#adda480537f35733dbed856a30b89be50">callbackSet</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:adda480537f35733dbed856a30b89be50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb44bb4a59bad9025f0897cee306a395"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395">close</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
@@ -467,6 +529,30 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_data</td><td>Pointer to get data array. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a42a81fef42f2bf61bde59cba4796cc0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42a81fef42f2bf61bde59cba4796cc0e">&#9670;&nbsp;</a></span>diagnosis</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ctsu_api_t::diagnosis) (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Diagnosis. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -740,6 +826,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga3bb35bd3c3041f0a80dceac7c1590d06a1e67985ce6bc112436d3b41f0eea4ef1"></a>CTSU_MODE_CORRECTION_SCAN&#160;</td><td class="fielddoc"><p>Correction scan mode (CTSU2 Only) </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga3bb35bd3c3041f0a80dceac7c1590d06acb485a2b335ebbec5f64865b8a73a016"></a>CTSU_MODE_DIAGNOSIS_SCAN&#160;</td><td class="fielddoc"><p>Diagnosis scan mode. </p>
+</td></tr>
 </table>
 
 </div>
@@ -824,7 +912,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

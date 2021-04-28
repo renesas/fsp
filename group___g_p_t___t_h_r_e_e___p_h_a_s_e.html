@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___g_p_t___t_h_r_e_e___p_h_a_s_e.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___g_p_t___t_h_r_e_e___p_h_a_s_e.
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -259,7 +327,7 @@ Buffer Modes</h2>
 Examples</h1>
 <h2>GPT Three-Phase Basic Example</h2>
 <p>This is a basic example of minimal use of the GPT Three-Phase module in an application. The duty cycle is updated at every timer trough with the previously loaded buffer value, then the duty cycle buffer is reloaded in the trough interrupt callback.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> gpt_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>                err;</div><div class="line">    <a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#structthree__phase__duty__cycle__t">three_phase_duty_cycle_t</a> duty_cycle;</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba83cb2de8ac629fcd95525e94b94089f0">TIMER_EVENT_TROUGH</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Update duty cycle values (example) */</span></div><div class="line">        duty_cycle.<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a1e0c2575f75d5aed37039d04b13a757b">duty</a>[<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829adbd8e756792980f936cba835004f9657">THREE_PHASE_CHANNEL_U</a>] = get_duty_counts(<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829adbd8e756792980f936cba835004f9657">THREE_PHASE_CHANNEL_U</a>);</div><div class="line">        duty_cycle.<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a1e0c2575f75d5aed37039d04b13a757b">duty</a>[<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829af0f00883ade0daa8e4d71bf1e4eb853b">THREE_PHASE_CHANNEL_V</a>] = get_duty_counts(<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829af0f00883ade0daa8e4d71bf1e4eb853b">THREE_PHASE_CHANNEL_V</a>);</div><div class="line">        duty_cycle.<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a1e0c2575f75d5aed37039d04b13a757b">duty</a>[<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829a74977f349b0be1427d0c38602575e473">THREE_PHASE_CHANNEL_W</a>] = get_duty_counts(<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829a74977f349b0be1427d0c38602575e473">THREE_PHASE_CHANNEL_W</a>);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Update duty cycle values */</span></div><div class="line">        err = <a class="code" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga17a5ead483eb9c65c1c0e6aae4e968b0">R_GPT_THREE_PHASE_DutyCycleSet</a>(&amp;g_gpt_three_phase_ctrl, &amp;duty_cycle);</div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle crest event. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> gpt_three_phase_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga776f6c4ff8d40a4d5c0407aa00ed05af">R_GPT_THREE_PHASE_Open</a>(&amp;g_gpt_three_phase_ctrl, &amp;g_gpt_three_phase_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga37d33bb736f75695d27f33a65ce4a0db">R_GPT_THREE_PHASE_Start</a>(&amp;g_gpt_three_phase_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> gpt_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>                err;</div><div class="line">    <a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#structthree__phase__duty__cycle__t">three_phase_duty_cycle_t</a> duty_cycle;</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba83cb2de8ac629fcd95525e94b94089f0">TIMER_EVENT_TROUGH</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Update duty cycle values (example) */</span></div><div class="line">        duty_cycle.<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a1e0c2575f75d5aed37039d04b13a757b">duty</a>[<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829adbd8e756792980f936cba835004f9657">THREE_PHASE_CHANNEL_U</a>] = get_duty_counts(<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829adbd8e756792980f936cba835004f9657">THREE_PHASE_CHANNEL_U</a>);</div><div class="line">        duty_cycle.<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a1e0c2575f75d5aed37039d04b13a757b">duty</a>[<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829af0f00883ade0daa8e4d71bf1e4eb853b">THREE_PHASE_CHANNEL_V</a>] = get_duty_counts(<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829af0f00883ade0daa8e4d71bf1e4eb853b">THREE_PHASE_CHANNEL_V</a>);</div><div class="line">        duty_cycle.<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a1e0c2575f75d5aed37039d04b13a757b">duty</a>[<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829a74977f349b0be1427d0c38602575e473">THREE_PHASE_CHANNEL_W</a>] = get_duty_counts(<a class="code" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#gga012330a6f9685e6143def5e3e3dd3829a74977f349b0be1427d0c38602575e473">THREE_PHASE_CHANNEL_W</a>);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Update duty cycle values */</span></div><div class="line">        err = <a class="code" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga17a5ead483eb9c65c1c0e6aae4e968b0">R_GPT_THREE_PHASE_DutyCycleSet</a>(&amp;g_gpt_three_phase_ctrl, &amp;duty_cycle);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle crest event. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> gpt_three_phase_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga776f6c4ff8d40a4d5c0407aa00ed05af">R_GPT_THREE_PHASE_Open</a>(&amp;g_gpt_three_phase_ctrl, &amp;g_gpt_three_phase_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga37d33bb736f75695d27f33a65ce4a0db">R_GPT_THREE_PHASE_Start</a>(&amp;g_gpt_three_phase_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structgpt__three__phase__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#structgpt__three__phase__instance__ctrl__t">gpt_three_phase_instance_ctrl_t</a></td></tr>
@@ -429,7 +497,7 @@ Data Structures</h2></td></tr>
 <p>In symmetric PWM mode duty cycle values are reflected after the next trough. In asymmetric PWM mode values are reflected at the next trough OR crest, whichever comes first.</p>
 <p>When double-buffering is enabled the values in <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a12e51857fcd253e9b3e35d1532e66694">three_phase_duty_cycle_t::duty_buffer</a> are set to the double-buffer registers. When values are reflected the first time the single buffer values (<a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a1e0c2575f75d5aed37039d04b13a757b">three_phase_duty_cycle_t::duty</a>) are used. On the second reflection the duty_buffer values are used. In asymmetric PWM mode this enables both count-up and count-down PWM values to be set at trough (or crest) exclusively.</p>
 <dl class="section note"><dt>Note</dt><dd>It is recommended to call this function in a high-priority callback to ensure that it is not interrupted and that no GPT events occur during setting that would result in a duty cycle buffer load operation.</dd></dl>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Update duty cycle values */</span></div><div class="line">        err = <a class="code" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga17a5ead483eb9c65c1c0e6aae4e968b0">R_GPT_THREE_PHASE_DutyCycleSet</a>(&amp;g_gpt_three_phase_ctrl, &amp;duty_cycle);</div><div class="line">        handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">        <span class="comment">/* Update duty cycle values */</span></div><div class="line">        err = <a class="code" href="group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#ga17a5ead483eb9c65c1c0e6aae4e968b0">R_GPT_THREE_PHASE_DutyCycleSet</a>(&amp;g_gpt_three_phase_ctrl, &amp;duty_cycle);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Duty cycle updated successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL </td></tr>
@@ -523,7 +591,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

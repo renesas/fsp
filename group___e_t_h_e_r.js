@@ -33,7 +33,9 @@ var group___e_t_h_e_r =
     [ "R_ETHER_Close", "group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158", null ],
     [ "R_ETHER_Read", "group___e_t_h_e_r.html#ga174de3d54336469ca7a1e5949820bd3f", null ],
     [ "R_ETHER_BufferRelease", "group___e_t_h_e_r.html#ga3bc8e53a14aa52d4d2b9b247ddd7cce8", null ],
+    [ "R_ETHER_RxBufferUpdate", "group___e_t_h_e_r.html#ga7ea6c9f72dc3b81cdcf6de7c84a87d53", null ],
     [ "R_ETHER_Write", "group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112", null ],
     [ "R_ETHER_LinkProcess", "group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311", null ],
-    [ "R_ETHER_WakeOnLANEnable", "group___e_t_h_e_r.html#ga992be578c310d212389be65762d1b6ea", null ]
+    [ "R_ETHER_WakeOnLANEnable", "group___e_t_h_e_r.html#ga992be578c310d212389be65762d1b6ea", null ],
+    [ "R_ETHER_TxStatusGet", "group___e_t_h_e_r.html#ga8993d43da08dc2f328d67be680fa85e0", null ]
 ];

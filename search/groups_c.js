@@ -11,5 +11,6 @@ var searchData=
   ['motor_20sensorless_20vector_20control_20_28rm_5fmotor_5fsensorless_29',['Motor Sensorless Vector Control (rm_motor_sensorless)',['../group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html',1,'']]],
   ['motor_20speed_20_28rm_5fmotor_5fspeed_29',['Motor Speed (rm_motor_speed)',['../group___m_o_t_o_r___s_p_e_e_d.html',1,'']]],
   ['motor_20speed_20interface',['Motor speed Interface',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html',1,'']]],
-  ['modules',['Modules',['../group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html',1,'']]]
+  ['modules',['Modules',['../group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html',1,'']]],
+  ['mcuboot_20port_20_28rm_5fmcuboot_5fport_29',['MCUboot Port (rm_mcuboot_port)',['../group___r_m___m_c_u_b_o_o_t___p_o_r_t.html',1,'']]]
 ];

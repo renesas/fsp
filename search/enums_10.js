@@ -1,7 +1,7 @@
 var searchData=
 [
   ['sci_5fclk_5fsrc_5ft',['sci_clk_src_t',['../group___s_c_i___u_a_r_t.html#ga5775d25bc461e9b175b7fcb87d71b7c7',1,'r_sci_uart.h']]],
-  ['sci_5fuart_5fctsrts_5fconfig_5ft',['sci_uart_ctsrts_config_t',['../group___s_c_i___u_a_r_t.html#gadf48fb4b7b78272f39f4e29838c09d1b',1,'r_sci_uart.h']]],
+  ['sci_5fuart_5fflow_5fcontrol_5ft',['sci_uart_flow_control_t',['../group___s_c_i___u_a_r_t.html#gab4823b86315f1b32fe6f2c0d56c2b139',1,'r_sci_uart.h']]],
   ['sci_5fuart_5fnoise_5fcancellation_5ft',['sci_uart_noise_cancellation_t',['../group___s_c_i___u_a_r_t.html#ga39a35f02d1e2aa6560591dc6a54de2f6',1,'r_sci_uart.h']]],
   ['sci_5fuart_5frx_5ffifo_5ftrigger_5ft',['sci_uart_rx_fifo_trigger_t',['../group___s_c_i___u_a_r_t.html#gadf7235ba7fd675f3416ef98c55b810f6',1,'r_sci_uart.h']]],
   ['sci_5fuart_5fstart_5fbit_5fdetect_5ft',['sci_uart_start_bit_detect_t',['../group___s_c_i___u_a_r_t.html#ga373d96cc125e44fc8491e98bf54a0459',1,'r_sci_uart.h']]],

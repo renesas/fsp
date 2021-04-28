@@ -56,7 +56,6 @@ var group___j_p_e_g___a_p_i =
       [ "p_cfg", "group___j_p_e_g___a_p_i.html#ac8aaf9ddf96f05720b053288ab78ae76", null ],
       [ "p_api", "group___j_p_e_g___a_p_i.html#aab523226c7c35455feccacecf8c52061", null ]
     ] ],
-    [ "JPEG_API_VERSION_MAJOR", "group___j_p_e_g___a_p_i.html#ga3a6725908bc77508f31e477f838ca723", null ],
     [ "jpeg_ctrl_t", "group___j_p_e_g___a_p_i.html#gadcda3a404659199f5fc9b90a8eb4b543", null ],
     [ "jpeg_color_space_t", "group___j_p_e_g___a_p_i.html#ga3aed73edf47174b12b8b99e41437d696", [
       [ "JPEG_COLOR_SPACE_YCBCR444", "group___j_p_e_g___a_p_i.html#gga3aed73edf47174b12b8b99e41437d696a378512585a77dd3d25ddb73ed7761fe0", null ],

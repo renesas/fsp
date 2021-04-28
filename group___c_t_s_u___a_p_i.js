@@ -48,6 +48,7 @@ var group___c_t_s_u___a_p_i =
       [ "open", "group___c_t_s_u___a_p_i.html#ae8f2c7b3cc9e33f0f790f76655d3d723", null ],
       [ "scanStart", "group___c_t_s_u___a_p_i.html#a1df87278ab5d47fdd093994f53de96a6", null ],
       [ "dataGet", "group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5", null ],
+      [ "diagnosis", "group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e", null ],
       [ "callbackSet", "group___c_t_s_u___a_p_i.html#adda480537f35733dbed856a30b89be50", null ],
       [ "close", "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395", null ]
     ] ],
@@ -56,7 +57,6 @@ var group___c_t_s_u___a_p_i =
       [ "p_cfg", "group___c_t_s_u___a_p_i.html#a208d00886c92bc4c861f72ed490215a1", null ],
       [ "p_api", "group___c_t_s_u___a_p_i.html#a0dcb82bbb13f8051f06893feac7827d5", null ]
     ] ],
-    [ "CTSU_COUNT_MAX", "group___c_t_s_u___a_p_i.html#ga92ece09f9ea6f483617249f186b93c20", null ],
     [ "ctsu_ctrl_t", "group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98", null ],
     [ "ctsu_event_t", "group___c_t_s_u___a_p_i.html#gaf6b0abb6cb3e6996d8435268d5e7c9cf", [
       [ "CTSU_EVENT_SCAN_COMPLETE", "group___c_t_s_u___a_p_i.html#ggaf6b0abb6cb3e6996d8435268d5e7c9cfa110041f0d6a2dcfeac8b0d2ba3d2318b", null ],
@@ -91,7 +91,8 @@ var group___c_t_s_u___a_p_i =
       [ "CTSU_MODE_MUTUAL_FULL_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a197562b688e70fae2404d42ddec1cb63", null ],
       [ "CTSU_MODE_MUTUAL_CFC_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a8f092552a327730e4bc4f28f8944a4cf", null ],
       [ "CTSU_MODE_CURRENT_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a91f565d8ade1120a9ec5a6c210ff6b8c", null ],
-      [ "CTSU_MODE_CORRECTION_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a1e67985ce6bc112436d3b41f0eea4ef1", null ]
+      [ "CTSU_MODE_CORRECTION_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06a1e67985ce6bc112436d3b41f0eea4ef1", null ],
+      [ "CTSU_MODE_DIAGNOSIS_SCAN", "group___c_t_s_u___a_p_i.html#gga3bb35bd3c3041f0a80dceac7c1590d06acb485a2b335ebbec5f64865b8a73a016", null ]
     ] ],
     [ "ctsu_posel_t", "group___c_t_s_u___a_p_i.html#ga6246d9e85e33b347a40542a07b42395a", [
       [ "CTSU_POSEL_LOW_GPIO", "group___c_t_s_u___a_p_i.html#gga6246d9e85e33b347a40542a07b42395aabda330f6fc6d7a65ed7304aa90804372", null ],

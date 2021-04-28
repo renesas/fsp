@@ -8,5 +8,16 @@ var searchData=
   ['poeg_5fgtetrg_5fnoise_5ffilter_5ft',['poeg_gtetrg_noise_filter_t',['../group___p_o_e_g___a_p_i.html#gab482b24d14d1c94f6f4ba9f5e39f8d0b',1,'r_poeg_api.h']]],
   ['poeg_5fgtetrg_5fpolarity_5ft',['poeg_gtetrg_polarity_t',['../group___p_o_e_g___a_p_i.html#gaab60100277a3b044c01007e6142704b9',1,'r_poeg_api.h']]],
   ['poeg_5fstate_5ft',['poeg_state_t',['../group___p_o_e_g___a_p_i.html#ga6964e3b0b8b2d32d2428d86b32dfeef2',1,'r_poeg_api.h']]],
-  ['poeg_5ftrigger_5ft',['poeg_trigger_t',['../group___p_o_e_g___a_p_i.html#gad3a55ae7d23b90cc2621a83116d2e7d9',1,'r_poeg_api.h']]]
+  ['poeg_5ftrigger_5ft',['poeg_trigger_t',['../group___p_o_e_g___a_p_i.html#gad3a55ae7d23b90cc2621a83116d2e7d9',1,'r_poeg_api.h']]],
+  ['ptp_5fclock_5fcorrection_5fmode_5ft',['ptp_clock_correction_mode_t',['../group___p_t_p___a_p_i.html#ga994397de43f548192e34142b61035199',1,'r_ptp_api.h']]],
+  ['ptp_5fclock_5fdelay_5fmechanism_5ft',['ptp_clock_delay_mechanism_t',['../group___p_t_p___a_p_i.html#gac083daddd3b756a4ef8b381b16d767de',1,'r_ptp_api.h']]],
+  ['ptp_5fethernet_5fphy_5finterface_5ft',['ptp_ethernet_phy_interface_t',['../group___p_t_p___a_p_i.html#gaec209fe84b18e38b2475e3c4f7c18e2f',1,'r_ptp_api.h']]],
+  ['ptp_5fevent_5ft',['ptp_event_t',['../group___p_t_p___a_p_i.html#gabed0a6a111a82eb8e8eb55254e1f3c0c',1,'r_ptp_api.h']]],
+  ['ptp_5fframe_5ffilter_5fmode_5ft',['ptp_frame_filter_mode_t',['../group___p_t_p___a_p_i.html#ga2934142038c79d935eaeda6b9e47fac3',1,'r_ptp_api.h']]],
+  ['ptp_5fframe_5fformat_5ft',['ptp_frame_format_t',['../group___p_t_p___a_p_i.html#gad14117b95f42287d2f41f9b8c7787638',1,'r_ptp_api.h']]],
+  ['ptp_5fmessage_5finterval_5ft',['ptp_message_interval_t',['../group___p_t_p___a_p_i.html#ga328e6fb8531c106b8f8374ae6df93395',1,'r_ptp_api.h']]],
+  ['ptp_5fmessage_5ftype_5ft',['ptp_message_type_t',['../group___p_t_p___a_p_i.html#gad488af97304ef1466637952ecb35ea37',1,'r_ptp_api.h']]],
+  ['ptp_5fport_5fstate_5ft',['ptp_port_state_t',['../group___p_t_p___a_p_i.html#ga5093799b09bcf8a2ec5865d38f1c46a1',1,'r_ptp_api.h']]],
+  ['ptp_5fstca_5fclock_5ffreq_5ft',['ptp_stca_clock_freq_t',['../group___p_t_p___a_p_i.html#ga1e783497c1170cb2f37547d91dd2838c',1,'r_ptp_api.h']]],
+  ['ptp_5fstca_5fclock_5fsel_5ft',['ptp_stca_clock_sel_t',['../group___p_t_p___a_p_i.html#gade7110068650c2c6db71b542c27c33b0',1,'r_ptp_api.h']]]
 ];

@@ -27,7 +27,6 @@ var group___o_p_a_m_p___a_p_i =
       [ "p_cfg", "group___o_p_a_m_p___a_p_i.html#aacf1caa4bd1f3075a2b77ea4fba93f21", null ],
       [ "p_api", "group___o_p_a_m_p___a_p_i.html#a4cdb52cc57d41641946ae6607ebb4f84", null ]
     ] ],
-    [ "OPAMP_API_VERSION_MAJOR", "group___o_p_a_m_p___a_p_i.html#ga889bc6e69b09cd8ecb00e58b5927f645", null ],
     [ "opamp_ctrl_t", "group___o_p_a_m_p___a_p_i.html#gad6ded75dcb1a95240026fb4ad0b6ab63", null ],
     [ "opamp_trim_cmd_t", "group___o_p_a_m_p___a_p_i.html#gaaaf9fc8a2d64abefdf3f6f0dd8b0e42b", [
       [ "OPAMP_TRIM_CMD_START", "group___o_p_a_m_p___a_p_i.html#ggaaaf9fc8a2d64abefdf3f6f0dd8b0e42ba586061f8a88712f67e40fd4fc839511f", null ],

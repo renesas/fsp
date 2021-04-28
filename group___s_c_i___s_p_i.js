@@ -1,5 +1,8 @@
 var group___s_c_i___s_p_i =
 [
+    [ "sci_spi_div_setting_t", "group___s_c_i___s_p_i.html#structsci__spi__div__setting__t", [
+      [ "mddr", "group___s_c_i___s_p_i.html#a75a4aa93f63467708d5cb45ecd9d3213", null ]
+    ] ],
     [ "R_SCI_SPI_Open", "group___s_c_i___s_p_i.html#ga9ce8ace26bb551a1ad4b320202c894ec", null ],
     [ "R_SCI_SPI_Read", "group___s_c_i___s_p_i.html#ga9fdab8bddaabefc2116cc078c207bc4f", null ],
     [ "R_SCI_SPI_Write", "group___s_c_i___s_p_i.html#ga7f7f0fbe5dc85ac7dac6c5676965e432", null ],

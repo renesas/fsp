@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___c_a_n___a_p_i.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___c_a_n___a_p_i.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
@@ -116,14 +184,14 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structcan__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#structcan__info__t">can_info_t</a></td></tr>
+<tr class="separator:structcan__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcan__bit__timing__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#structcan__bit__timing__cfg__t">can_bit_timing_cfg_t</a></td></tr>
 <tr class="separator:structcan__bit__timing__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcan__frame__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a></td></tr>
 <tr class="separator:structcan__frame__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcan__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a></td></tr>
 <tr class="separator:structcan__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structcan__mailbox__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#structcan__mailbox__t">can_mailbox_t</a></td></tr>
-<tr class="separator:structcan__mailbox__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcan__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#structcan__cfg__t">can_cfg_t</a></td></tr>
 <tr class="separator:structcan__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structcan__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#structcan__api__t">can_api_t</a></td></tr>
@@ -146,18 +214,64 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga93f2b2c53f782b0c21beeb1339a108b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc98e244722dcea05b5ce91bdb4c70c8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#gabc98e244722dcea05b5ce91bdb4c70c8">can_id_mode_t</a> </td></tr>
 <tr class="separator:gabc98e244722dcea05b5ce91bdb4c70c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab798132b937282be9589b6ed177ea999"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#gab798132b937282be9589b6ed177ea999">can_global_id_mode_t</a> </td></tr>
-<tr class="separator:gab798132b937282be9589b6ed177ea999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad3ffe1ae0429fcd1053a969d96c47610"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#gad3ffe1ae0429fcd1053a969d96c47610">can_frame_type_t</a> </td></tr>
 <tr class="separator:gad3ffe1ae0429fcd1053a969d96c47610"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga42c6d0b24e77b50c47ec54bafcac7604"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#ga42c6d0b24e77b50c47ec54bafcac7604">can_message_mode_t</a> </td></tr>
-<tr class="separator:ga42c6d0b24e77b50c47ec54bafcac7604"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5bf3c71a3b53b409e9ee682c69189a39"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#ga5bf3c71a3b53b409e9ee682c69189a39">can_clock_source_t</a> </td></tr>
-<tr class="separator:ga5bf3c71a3b53b409e9ee682c69189a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga99db0880f7c03215e00781d3e57db3a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#ga99db0880f7c03215e00781d3e57db3a3">can_mailbox_send_receive_t</a> </td></tr>
-<tr class="separator:ga99db0880f7c03215e00781d3e57db3a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structcan__info__t" id="structcan__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcan__info__t">&#9670;&nbsp;</a></span>can_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct can_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>CAN status info </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aec9d4439f59b61933c2205e4d3ea9210"></a>uint32_t</td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+Useful information from the CAN status register. </td></tr>
+<tr><td class="fieldtype">
+<a id="ade07c155f14547df76ac44249e0d0feb"></a>uint32_t</td>
+<td class="fieldname">
+rx_mb_status</td>
+<td class="fielddoc">
+CANFD RX Message Buffer New Data flags. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7cd7ac782cdb433247cc0f28f2755f81"></a>uint32_t</td>
+<td class="fieldname">
+rx_fifo_status</td>
+<td class="fielddoc">
+CANFD RX FIFO Empty flags. </td></tr>
+<tr><td class="fieldtype">
+<a id="ada0fe3e8eb824d0ebb36332f98e3c771"></a>uint8_t</td>
+<td class="fieldname">
+error_count_transmit</td>
+<td class="fielddoc">
+Transmit error count. </td></tr>
+<tr><td class="fieldtype">
+<a id="a59787b23ec15fa38f51d167e10389081"></a>uint8_t</td>
+<td class="fieldname">
+error_count_receive</td>
+<td class="fielddoc">
+Receive error count. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1ea2aaf80adb9f24fdee9828cae02e05"></a>uint32_t</td>
+<td class="fieldname">
+error_code</td>
+<td class="fielddoc">
+Error code, cleared after reading. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structcan__bit__timing__cfg__t" id="structcan__bit__timing__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structcan__bit__timing__cfg__t">&#9670;&nbsp;</a></span>can_bit_timing_cfg_t</h2>
 
@@ -314,48 +428,6 @@ Received frame data. </td></tr>
 
 </div>
 </div>
-<a name="structcan__mailbox__t" id="structcan__mailbox__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structcan__mailbox__t">&#9670;&nbsp;</a></span>can_mailbox_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct can_mailbox_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>CAN Mailbox </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="aa0c1d24b5896560908adb0ac9761aa28"></a>uint32_t</td>
-<td class="fieldname">
-mailbox_id</td>
-<td class="fielddoc">
-Mailbox ID. </td></tr>
-<tr><td class="fieldtype">
-<a id="a9d3924b6ba4efb4c978a04d0e9a4fbc6"></a><a class="el" href="group___c_a_n___a_p_i.html#gabc98e244722dcea05b5ce91bdb4c70c8">can_id_mode_t</a></td>
-<td class="fieldname">
-id_mode</td>
-<td class="fielddoc">
-Standard or Extended ID. Only used in Mixed ID mode. </td></tr>
-<tr><td class="fieldtype">
-<a id="aa6a30551456873fb921b933bd3ddbe23"></a><a class="el" href="group___c_a_n___a_p_i.html#ga99db0880f7c03215e00781d3e57db3a3">can_mailbox_send_receive_t</a></td>
-<td class="fieldname">
-mailbox_type</td>
-<td class="fielddoc">
-Receive or Transmit mailbox type. </td></tr>
-<tr><td class="fieldtype">
-<a id="af01f0306a9ad2e430154d9d6a4e3404f"></a><a class="el" href="group___c_a_n___a_p_i.html#gad3ffe1ae0429fcd1053a969d96c47610">can_frame_type_t</a></td>
-<td class="fieldname">
-frame_type</td>
-<td class="fielddoc">
-Frame type for receive mailbox. </td></tr>
-</table>
-
-</div>
-</div>
 <a name="structcan__cfg__t" id="structcan__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structcan__cfg__t">&#9670;&nbsp;</a></span>can_cfg_t</h2>
 
@@ -398,30 +470,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#ac958a7179da3a9f365a3bf55707fac6d">error_irq</a></td></tr>
 <tr class="memdesc:ac958a7179da3a9f365a3bf55707fac6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error IRQ number. <br /></td></tr>
 <tr class="separator:ac958a7179da3a9f365a3bf55707fac6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70c47efed0012e4512b7d7eca31e3e58"><td class="memItemLeft" align="right" valign="top"><a id="a70c47efed0012e4512b7d7eca31e3e58"></a>
-IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#a70c47efed0012e4512b7d7eca31e3e58">mailbox_rx_irq</a></td></tr>
-<tr class="memdesc:a70c47efed0012e4512b7d7eca31e3e58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive IRQ number. <br /></td></tr>
-<tr class="separator:a70c47efed0012e4512b7d7eca31e3e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe91f3dd74163cacafbfb96ab2104df0"><td class="memItemLeft" align="right" valign="top"><a id="afe91f3dd74163cacafbfb96ab2104df0"></a>
-IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#afe91f3dd74163cacafbfb96ab2104df0">mailbox_tx_irq</a></td></tr>
-<tr class="memdesc:afe91f3dd74163cacafbfb96ab2104df0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit IRQ number. <br /></td></tr>
-<tr class="separator:afe91f3dd74163cacafbfb96ab2104df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a564584ef9e48317f93f432a0b86b9af8"><td class="memItemLeft" align="right" valign="top"><a id="a564584ef9e48317f93f432a0b86b9af8"></a>
-<a class="el" href="group___c_a_n___a_p_i.html#structcan__mailbox__t">can_mailbox_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#a564584ef9e48317f93f432a0b86b9af8">p_mailbox</a></td></tr>
-<tr class="memdesc:a564584ef9e48317f93f432a0b86b9af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to mailboxes. <br /></td></tr>
-<tr class="separator:a564584ef9e48317f93f432a0b86b9af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34bf75f61795800b3df706b240fd7907"><td class="memItemLeft" align="right" valign="top"><a id="a34bf75f61795800b3df706b240fd7907"></a>
-<a class="el" href="group___c_a_n___a_p_i.html#gab798132b937282be9589b6ed177ea999">can_global_id_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#a34bf75f61795800b3df706b240fd7907">id_mode</a></td></tr>
-<tr class="memdesc:a34bf75f61795800b3df706b240fd7907"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard or Extended ID mode. <br /></td></tr>
-<tr class="separator:a34bf75f61795800b3df706b240fd7907"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66e92277959e9e01a6ce2105dcdcbae6"><td class="memItemLeft" align="right" valign="top"><a id="a66e92277959e9e01a6ce2105dcdcbae6"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#a66e92277959e9e01a6ce2105dcdcbae6">mailbox_count</a></td></tr>
-<tr class="memdesc:a66e92277959e9e01a6ce2105dcdcbae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of mailboxes. <br /></td></tr>
-<tr class="separator:a66e92277959e9e01a6ce2105dcdcbae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cb83f81e41146d1e688f88a69231d38"><td class="memItemLeft" align="right" valign="top"><a id="a0cb83f81e41146d1e688f88a69231d38"></a>
-<a class="el" href="group___c_a_n___a_p_i.html#ga42c6d0b24e77b50c47ec54bafcac7604">can_message_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#a0cb83f81e41146d1e688f88a69231d38">message_mode</a></td></tr>
-<tr class="memdesc:a0cb83f81e41146d1e688f88a69231d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overwrite message or overrun. <br /></td></tr>
-<tr class="separator:a0cb83f81e41146d1e688f88a69231d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88ba0583ec46ae65985a733c38975c38"><td class="memItemLeft" align="right" valign="top"><a id="a88ba0583ec46ae65985a733c38975c38"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#a88ba0583ec46ae65985a733c38975c38">rx_irq</a></td></tr>
+<tr class="memdesc:a88ba0583ec46ae65985a733c38975c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive IRQ number. <br /></td></tr>
+<tr class="separator:a88ba0583ec46ae65985a733c38975c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac495ac44fdee552f013eea5ba0e86b06"><td class="memItemLeft" align="right" valign="top"><a id="ac495ac44fdee552f013eea5ba0e86b06"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#ac495ac44fdee552f013eea5ba0e86b06">tx_irq</a></td></tr>
+<tr class="memdesc:ac495ac44fdee552f013eea5ba0e86b06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit IRQ number. <br /></td></tr>
+<tr class="separator:ac495ac44fdee552f013eea5ba0e86b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -450,7 +506,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="separator:a32ec8d31d80a709bae881f2e28d36d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb37a7735c6ac61a151a083b2d25153b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#afb37a7735c6ac61a151a083b2d25153b">modeTransition</a> )(<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___c_a_n___a_p_i.html#gac29bd7d00b06d7457ae786471c296ba7">can_operation_mode_t</a> operation_mode, <a class="el" href="group___c_a_n___a_p_i.html#ga93f2b2c53f782b0c21beeb1339a108b7">can_test_mode_t</a> test_mode)</td></tr>
 <tr class="separator:afb37a7735c6ac61a151a083b2d25153b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba27908c89442250d365d4a44304e3c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#aba27908c89442250d365d4a44304e3c1">infoGet</a> )(<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_ctrl, can_info_t *const p_info)</td></tr>
+<tr class="memitem:aba27908c89442250d365d4a44304e3c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#aba27908c89442250d365d4a44304e3c1">infoGet</a> )(<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_n___a_p_i.html#structcan__info__t">can_info_t</a> *const p_info)</td></tr>
 <tr class="separator:aba27908c89442250d365d4a44304e3c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0eeb3995e651ce4b77e8860ab50597a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n___a_p_i.html#a0eeb3995e651ce4b77e8860ab50597a9">callbackSet</a> )(<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:a0eeb3995e651ce4b77e8860ab50597a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -593,7 +649,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  can_api_t::infoGet) (<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_ctrl, can_info_t *const p_info)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  can_api_t::infoGet) (<a class="el" href="group___c_a_n___a_p_i.html#ga6e2484e96eefbe59327b13e2589a0049">can_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_n___a_p_i.html#structcan__info__t">can_info_t</a> *const p_info)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -812,29 +868,6 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
-<a id="gab798132b937282be9589b6ed177ea999"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab798132b937282be9589b6ed177ea999">&#9670;&nbsp;</a></span>can_global_id_mode_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___c_a_n___a_p_i.html#gab798132b937282be9589b6ed177ea999">can_global_id_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Global CAN ID mode settings </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab798132b937282be9589b6ed177ea999af93ba7d9a4356ffa8c9b49f26c4f1b3d"></a>CAN_GLOBAL_ID_MODE_STANDARD&#160;</td><td class="fielddoc"><p>Standard IDs of 11 bits used. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggab798132b937282be9589b6ed177ea999a7dc9d3f494129db1c953915d1b781faa"></a>CAN_GLOBAL_ID_MODE_EXTENDED&#160;</td><td class="fielddoc"><p>Extended IDs of 29 bits used. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggab798132b937282be9589b6ed177ea999aabdf871d5bbaf279c8dcf743ca64b488"></a>CAN_GLOBAL_ID_MODE_MIXED&#160;</td><td class="fielddoc"><p>Both Standard and Extended IDs used. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <a id="gad3ffe1ae0429fcd1053a969d96c47610"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad3ffe1ae0429fcd1053a969d96c47610">&#9670;&nbsp;</a></span>can_frame_type_t</h2>
 
@@ -856,76 +889,13 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
-<a id="ga42c6d0b24e77b50c47ec54bafcac7604"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga42c6d0b24e77b50c47ec54bafcac7604">&#9670;&nbsp;</a></span>can_message_mode_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___c_a_n___a_p_i.html#ga42c6d0b24e77b50c47ec54bafcac7604">can_message_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>CAN Message Modes </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga42c6d0b24e77b50c47ec54bafcac7604ad8aab020d2b6d64777a0be580f44ddb4"></a>CAN_MESSAGE_MODE_OVERWRITE&#160;</td><td class="fielddoc"><p>Receive data will be overwritten if not read before the next frame. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga42c6d0b24e77b50c47ec54bafcac7604af25ce6de3b35f5abe47186351372b8b7"></a>CAN_MESSAGE_MODE_OVERRUN&#160;</td><td class="fielddoc"><p>Receive data will be retained until it is read. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ga5bf3c71a3b53b409e9ee682c69189a39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5bf3c71a3b53b409e9ee682c69189a39">&#9670;&nbsp;</a></span>can_clock_source_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___c_a_n___a_p_i.html#ga5bf3c71a3b53b409e9ee682c69189a39">can_clock_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>CAN Source Clock </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5bf3c71a3b53b409e9ee682c69189a39a7c0cedacb23a57e50692191f61915cbd"></a>CAN_CLOCK_SOURCE_PCLKB&#160;</td><td class="fielddoc"><p>PCLKB is the source of the CAN Clock. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga5bf3c71a3b53b409e9ee682c69189a39a5c90a69c9ba1a8116b6ec45ff238e117"></a>CAN_CLOCK_SOURCE_CANMCLK&#160;</td><td class="fielddoc"><p>CANMCLK is the source of the CAN Clock. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ga99db0880f7c03215e00781d3e57db3a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga99db0880f7c03215e00781d3e57db3a3">&#9670;&nbsp;</a></span>can_mailbox_send_receive_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___c_a_n___a_p_i.html#ga99db0880f7c03215e00781d3e57db3a3">can_mailbox_send_receive_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>CAN Mailbox type </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga99db0880f7c03215e00781d3e57db3a3a5f4004ddfe179e388be8bb240527450e"></a>CAN_MAILBOX_RECEIVE&#160;</td><td class="fielddoc"><p>Mailbox is for receiving. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga99db0880f7c03215e00781d3e57db3a3a1c100296f7b9384c8e09b55fd611242d"></a>CAN_MAILBOX_TRANSMIT&#160;</td><td class="fielddoc"><p>Mailbox is for sending. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

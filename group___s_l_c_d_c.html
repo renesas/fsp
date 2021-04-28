@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___s_l_c_d_c.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___s_l_c_d_c.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -278,10 +346,10 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>Below is a basic example of minimal use of the SLCDC in an application. The SLCDC driver is initialized, output is started and a pattern is written to the segment registers.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> slcdc_init (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Open SLCDC driver */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gadd4a39981e57f232de59b94611936e22">R_SLCDC_Open</a>(&amp;g_slcdc_ctrl, &amp;g_slcdc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* When using internal boost mode this delay is required to allow the boost circuit to charge. See RA4M1 User&#39;s</span></div><div class="line"><span class="comment">     * Manual (R01UH0887EJ0100) 8.2.18 &quot;Segment LCD Source Clock Control Register (SLCDSCKCR)&quot; for details. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(5, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start SLCDC output */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gaf8e1565799e0c90a1a1b7e8599761559">R_SLCDC_Start</a>(&amp;g_slcdc_ctrl);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Write pattern to display */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#ga80519e8ebeaddc2e62a25b1fdaebd35a">R_SLCDC_Write</a>(&amp;g_slcdc_ctrl, 0, segment_data, NUM_SEGMENTS);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>While the SLCDC is running, pattern data is constantly being output. No latching or buffering is required when writing or reading segment data.</dd></dl>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> slcdc_init (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Open SLCDC driver */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gadd4a39981e57f232de59b94611936e22">R_SLCDC_Open</a>(&amp;g_slcdc_ctrl, &amp;g_slcdc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* When using internal boost mode this delay is required to allow the boost circuit to charge. See RA4M1 User&#39;s</span></div><div class="line"><span class="comment">     * Manual (R01UH0887EJ0100) 8.2.18 &quot;Segment LCD Source Clock Control Register (SLCDSCKCR)&quot; for details. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(5, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start SLCDC output */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gaf8e1565799e0c90a1a1b7e8599761559">R_SLCDC_Start</a>(&amp;g_slcdc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Write pattern to display */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#ga80519e8ebeaddc2e62a25b1fdaebd35a">R_SLCDC_Write</a>(&amp;g_slcdc_ctrl, 0, segment_data, NUM_SEGMENTS);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>While the SLCDC is running, pattern data is constantly being output. No latching or buffering is required when writing or reading segment data.</dd></dl>
 <h2>Blinking Output</h2>
 <p>This example demonstrates how to set up blinking output using the RTC periodic interrupt. In this example it is assumed that the SLCDC has already been started.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> slcdc_blink (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Open RTC and set time/date */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;r_rtc_ctrl, &amp;r_rtc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;r_rtc_ctrl, &amp;g_rtc_time);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set RTC periodic interrupt to 2 Hz (display blink cycle will be 1 Hz) */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282">R_RTC_PeriodicIrqRateSet</a>(&amp;r_rtc_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a5d684a2ff7ceabe98acb755095705f4e">RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_2_SECOND</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set display to blink */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gaf1e62cb977cfab65f01ef81274a1bfff">R_SLCDC_SetDisplayArea</a>(&amp;g_slcdc_ctrl, <a class="code" href="group___s_l_c_d_c___a_p_i.html#gga78a7cb1be89b6b370513ef5eb0782a0fa753912d38a021436a17a80cdf7c29af4">SLCDC_DISP_BLINK</a>);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Display will now continuously blink */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> slcdc_blink (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Open RTC and set time/date */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;r_rtc_ctrl, &amp;r_rtc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;r_rtc_ctrl, &amp;g_rtc_time);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set RTC periodic interrupt to 2 Hz (display blink cycle will be 1 Hz) */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282">R_RTC_PeriodicIrqRateSet</a>(&amp;r_rtc_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a5d684a2ff7ceabe98acb755095705f4e">RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_2_SECOND</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set display to blink */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gaf1e62cb977cfab65f01ef81274a1bfff">R_SLCDC_SetDisplayArea</a>(&amp;g_slcdc_ctrl, <a class="code" href="group___s_l_c_d_c___a_p_i.html#gga78a7cb1be89b6b370513ef5eb0782a0fa753912d38a021436a17a80cdf7c29af4">SLCDC_DISP_BLINK</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Display will now continuously blink */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structslcdc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_l_c_d_c.html#structslcdc__instance__ctrl__t">slcdc_instance_ctrl_t</a></td></tr>
@@ -607,7 +675,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

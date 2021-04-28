@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___p_d_c.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___p_d_c.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -256,7 +324,7 @@ PDC setup with external camera</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the PDC in an application. This example shows how this driver can be used for capturing data from an external I/O device such as an image sensor.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> g_pdc_user_callback (<a class="code" href="group___p_d_c___a_p_i.html#structpdc__callback__args__t">pdc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___p_d_c___a_p_i.html#gga31162259e060f212b6d1cb04778f3adbad22565606f1dc388ea5c3102272ea7f3">PDC_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___p_d_c___a_p_i.html#a311c38c08e8717b53d7f98d1d61c6513">event</a>)</div><div class="line">    {</div><div class="line">        g_capture_ready = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the PDC module */</span></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga37bc265a61b2aa8735d74acd3a94c88c">R_PDC_Open</a>(&amp;g_pdc0_ctrl, &amp;g_pdc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the camera module at this point. This implementation is camera vendor specific. */</span></div><div class="line">    camera_module_initialization();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize capture ready flag to false. This gets set to true in PDC callback upon successful frame capture. */</span></div><div class="line">    g_capture_ready = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga6ef8ec2670efe6a82faf4b5059c8d933">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    uint32_t timeout_ms = PDC_DELAY_MS;</div><div class="line"></div><div class="line">    <span class="comment">/* Since there is nothing else to do, block until Callback triggers*/</span></div><div class="line">    <span class="keywordflow">while</span> ((<span class="keyword">true</span> != g_capture_ready) &amp;&amp; timeout_ms)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        timeout_ms--;;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0U == timeout_ms)</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> camera_module_initialization (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Camera vendor specific initialization to be done here */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> g_pdc_user_callback (<a class="code" href="group___p_d_c___a_p_i.html#structpdc__callback__args__t">pdc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___p_d_c___a_p_i.html#gga31162259e060f212b6d1cb04778f3adbad22565606f1dc388ea5c3102272ea7f3">PDC_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___p_d_c___a_p_i.html#a311c38c08e8717b53d7f98d1d61c6513">event</a>)</div><div class="line">    {</div><div class="line">        g_capture_ready = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the PDC module */</span></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga37bc265a61b2aa8735d74acd3a94c88c">R_PDC_Open</a>(&amp;g_pdc0_ctrl, &amp;g_pdc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the camera module at this point. This implementation is camera vendor specific. */</span></div><div class="line">    camera_module_initialization();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize capture ready flag to false. This gets set to true in PDC callback upon successful frame capture. */</span></div><div class="line">    g_capture_ready = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga6ef8ec2670efe6a82faf4b5059c8d933">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    uint32_t timeout_ms = PDC_DELAY_MS;</div><div class="line"></div><div class="line">    <span class="comment">/* Since there is nothing else to do, block until Callback triggers*/</span></div><div class="line">    <span class="keywordflow">while</span> ((<span class="keyword">true</span> != g_capture_ready) &amp;&amp; timeout_ms)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        timeout_ms--;;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0U == timeout_ms)</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> camera_module_initialization (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Camera vendor specific initialization to be done here */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structpdc__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#structpdc__instance__ctrl__t">pdc_instance_ctrl_t</a></td></tr>
@@ -392,7 +460,7 @@ Data Structures</h2></td></tr>
 <p>Starts a capture. Enables interrupts. </p>
 <p>Implements <a class="el" href="group___p_d_c___a_p_i.html#a110d0725d82910e086afb31056378b2b">pdc_api_t::captureStart</a>.</p>
 <p>Sets up the transfer interface to transfer data from the PDC into the specified buffer. Configures the PDC settings as previously set by the <a class="el" href="group___p_d_c___a_p_i.html#a8990d4fe3eedd0988cd4f1398015db41">pdc_api_t::open</a> API. These settings are configured here as the PIXCLK input must be active for the PDC reset operation. When a capture is complete the callback registered during <a class="el" href="group___p_d_c___a_p_i.html#a8990d4fe3eedd0988cd4f1398015db41">pdc_api_t::open</a> API call will be called.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga6ef8ec2670efe6a82faf4b5059c8d933">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    handle_error(err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga6ef8ec2670efe6a82faf4b5059c8d933">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Capture start successful. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>One or more of the following parameters is NULL<ol type="1">
@@ -415,7 +483,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

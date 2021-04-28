@@ -19,6 +19,10 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
 <script type="text/javascript">
   $(document).ready(function() { init_search(); });
 </script>
@@ -33,23 +37,23 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v2.4.0</span>
+   &#160;<span id="projectnumber">Release v3.0.0</span>
    </div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
                alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
-        </div>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
 </td>
  </tr>
  </tbody>
@@ -74,6 +78,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <script type="text/javascript">
 $(document).ready(function(){initNavTree('group___l_p_m.html','');});
 </script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,6 +140,23 @@ $(document).ready(function(){initNavTree('group___l_p_m.html','');});
 </iframe>
 </div>
 
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -218,8 +286,8 @@ Limitations</h2>
 Examples</h1>
 <h2>LPM Sleep Example</h2>
 <p>This is a basic example of minimal use of the LPM in an application. The LPM instance is opened and the configured low-power mode is entered.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_sleep (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_sleep);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>LPM Deep Software Standby Example</h2>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_deep_software_standby (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check the Deep Software Standby Reset Flag. */</span></div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.DPSRSTF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the IOKEEP bit to allow I/O Port use. */</span></div><div class="line">        err = <a class="code" href="group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38">R_LPM_IoKeepClear</a>(&amp;g_lpm_ctrl);</div><div class="line">        handle_error(err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Add user code here. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Reconfigure the module to set the IOKEEP bit before entering deep software standby. */</span></div><div class="line">    err = <a class="code" href="group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319">R_LPM_LowPowerReconfigure</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Code after R_LPM_LowPowerModeEnter when using Deep Software Standby never be executed.</span></div><div class="line"><span class="comment">     * Deep software standby exits by resetting the MCU. */</span></div><div class="line">    handle_error(err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_sleep (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_sleep);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>LPM Deep Software Standby Example</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_lpm_deep_software_standby (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga16cb25caff90bf78509e73de4dc58cb5">R_LPM_Open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check the Deep Software Standby Reset Flag. */</span></div><div class="line">    <span class="keywordflow">if</span> (1U == R_SYSTEM-&gt;RSTSR0_b.DPSRSTF)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Clear the IOKEEP bit to allow I/O Port use. */</span></div><div class="line">        err = <a class="code" href="group___l_p_m.html#gaa5b0f1914df6f1be8d5ed3399b723c38">R_LPM_IoKeepClear</a>(&amp;g_lpm_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Add user code here. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Reconfigure the module to set the IOKEEP bit before entering deep software standby. */</span></div><div class="line">    err = <a class="code" href="group___l_p_m.html#gadb1bdd2c6f7701e918aa88d81f7dd319">R_LPM_LowPowerReconfigure</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg_deep_software_standby);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_p_m.html#ga9768304d0a6af030631ad145b3752f07">R_LPM_LowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Code after R_LPM_LowPowerModeEnter when using Deep Software Standby never be executed.</span></div><div class="line"><span class="comment">     * Deep software standby exits by resetting the MCU. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structlpm__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_p_m.html#structlpm__instance__ctrl__t">lpm_instance_ctrl_t</a></td></tr>
@@ -455,7 +523,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v2.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
