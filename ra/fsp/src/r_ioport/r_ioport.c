@@ -93,15 +93,6 @@ static void bsp_vbatt_init(ioport_cfg_t const * const p_pin_cfg); // Used intern
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_ioport_version =
-{
-    .api_version_minor  = IOPORT_API_VERSION_MINOR,
-    .api_version_major  = IOPORT_API_VERSION_MAJOR,
-    .code_version_major = IOPORT_CODE_VERSION_MAJOR,
-    .code_version_minor = IOPORT_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -123,7 +114,6 @@ const ioport_api_t g_ioport_on_ioport =
     .portEventOutputWrite = R_IOPORT_PortEventOutputWrite,
     .portRead             = R_IOPORT_PortRead,
     .portWrite            = R_IOPORT_PortWrite,
-    .versionGet           = R_IOPORT_VersionGet,
 };
 
 #if BSP_MCU_VBATT_SUPPORT
@@ -679,27 +669,6 @@ fsp_err_t R_IOPORT_PinEventOutputWrite (ioport_ctrl_t * const p_ctrl, bsp_io_por
     }
 
     r_ioport_hw_pin_event_output_data_write(port, set_bits, reset_bits, pin_value);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Returns IOPort HAL driver version. Implements @ref ioport_api_t::versionGet.
- *
- * @retval FSP_SUCCESS        Version information read
- * @retval FSP_ERR_ASSERTION  The parameter p_data is NULL
- *
- * @note This function is reentrant.
- **********************************************************************************************************************/
-fsp_err_t R_IOPORT_VersionGet (fsp_version_t * p_data)
-{
-#if (1 == IOPORT_CFG_PARAM_CHECKING_ENABLE)
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_data);
-#endif
-
-    *p_data = g_ioport_version;
 
     return FSP_SUCCESS;
 }

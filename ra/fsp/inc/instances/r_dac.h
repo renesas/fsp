@@ -40,8 +40,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define DAC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define DAC_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -81,7 +79,6 @@ fsp_err_t R_DAC_Write(dac_ctrl_t * p_api_ctrl, uint16_t value);
 fsp_err_t R_DAC_Start(dac_ctrl_t * p_api_ctrl);
 fsp_err_t R_DAC_Stop(dac_ctrl_t * p_api_ctrl);
 fsp_err_t R_DAC_Close(dac_ctrl_t * p_api_ctrl);
-fsp_err_t R_DAC_VersionGet(fsp_version_t * p_version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup DAC)

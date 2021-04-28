@@ -49,8 +49,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CAC_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define CAC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -212,11 +210,6 @@ typedef struct st_cac_api
      * @param[in]  p_ctrl        Pointer to CAC device control.
      */
     fsp_err_t (* close)(cac_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get the CAC API and code version information.
-     * @param[out]  p_version is value returned.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * p_version);
 } cac_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

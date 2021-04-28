@@ -41,8 +41,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define FLASH_HP_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define FLASH_HP_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
 /* If Code Flash programming is enabled, then all API functions must execute out of RAM. */
 #if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
@@ -142,7 +140,7 @@ fsp_err_t R_FLASH_HP_CallbackSet(flash_ctrl_t * const          p_api_ctrl,
                                  void (                      * p_callback)(flash_callback_args_t *),
                                  void const * const            p_context,
                                  flash_callback_args_t * const p_callback_memory);
-fsp_err_t R_FLASH_HP_VersionGet(fsp_version_t * const p_version);
+fsp_err_t R_FLASH_HP_BankSwap(flash_ctrl_t * const p_api_ctrl);
 fsp_err_t R_FLASH_HP_InfoGet(flash_ctrl_t * const p_api_ctrl, flash_info_t * const p_info);
 
 /*******************************************************************************************************************//**

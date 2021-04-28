@@ -38,8 +38,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RM_BLOCK_MEDIA_SPI_CODE_VERSION_MAJOR    (1U)
-#define RM_BLOCK_MEDIA_SPI_CODE_VERSION_MINOR    (6U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -105,7 +103,6 @@ fsp_err_t RM_BLOCK_MEDIA_SPI_CallbackSet(rm_block_media_ctrl_t * const p_ctrl,
 fsp_err_t RM_BLOCK_MEDIA_SPI_StatusGet(rm_block_media_ctrl_t * const p_ctrl, rm_block_media_status_t * const p_status);
 fsp_err_t RM_BLOCK_MEDIA_SPI_InfoGet(rm_block_media_ctrl_t * const p_ctrl, rm_block_media_info_t * const p_info);
 fsp_err_t RM_BLOCK_MEDIA_SPI_Close(rm_block_media_ctrl_t * const p_ctrl);
-fsp_err_t RM_BLOCK_MEDIA_SPI_VersionGet(fsp_version_t * const p_version);
 
 #endif                                 /* FSP_INC_FRAMEWORK_INSTANCES_RM_BLOCK_MEDIA_SPI_H_ */
 

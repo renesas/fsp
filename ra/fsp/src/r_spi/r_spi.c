@@ -124,15 +124,6 @@ void spi_eri_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t module_version =
-{
-    .api_version_major  = SPI_API_VERSION_MAJOR,
-    .api_version_minor  = SPI_API_VERSION_MINOR,
-    .code_version_major = SPI_CODE_VERSION_MAJOR,
-    .code_version_minor = SPI_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
@@ -145,7 +136,6 @@ const spi_api_t g_spi_on_spi =
     .write       = R_SPI_Write,
     .writeRead   = R_SPI_WriteRead,
     .close       = R_SPI_Close,
-    .versionGet  = R_SPI_VersionGet,
     .callbackSet = R_SPI_CallbackSet
 };
 
@@ -417,23 +407,6 @@ fsp_err_t R_SPI_Close (spi_ctrl_t * const p_api_ctrl)
      * RA6M3 manual R01UH0886EJ0100. */
     p_ctrl->p_regs->SPSR;
     p_ctrl->p_regs->SPSR = 0;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED This function gets the version information of the underlying driver. Implements @ref spi_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS            Successful version get.
- * @retval      FSP_ERR_ASSERTION      The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_SPI_VersionGet (fsp_version_t * p_version)
-{
-#if SPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(p_version != NULL);
-#endif
-
-    p_version->version_id = module_version.version_id;
 
     return FSP_SUCCESS;
 }

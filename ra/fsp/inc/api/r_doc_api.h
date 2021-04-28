@@ -52,8 +52,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define DOC_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define DOC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -137,14 +135,6 @@ typedef struct st_doc_api
      * @param[in]   data        data to be written to DOC DODIR register.
      */
     fsp_err_t (* write)(doc_ctrl_t * const p_ctrl, uint16_t data);
-
-    /* DEPRECATED Get version and stores it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_DOC_VersionGet()
-     *
-     * @param[out]  p_version  Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 
     /**
      * Specify callback function and optional context pointer and working memory pointer.

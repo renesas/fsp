@@ -40,8 +40,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define IOPORT_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define IOPORT_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -299,7 +297,6 @@ fsp_err_t R_IOPORT_PortWrite(ioport_ctrl_t * const p_ctrl, bsp_io_port_t port, i
 fsp_err_t R_IOPORT_EthernetModeCfg(ioport_ctrl_t * const     p_ctrl,
                                    ioport_ethernet_channel_t channel,
                                    ioport_ethernet_mode_t    mode);
-fsp_err_t R_IOPORT_VersionGet(fsp_version_t * p_data);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup IOPORT)

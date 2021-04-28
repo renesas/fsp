@@ -89,15 +89,6 @@ static void  rm_motor_speed_first_order_lpf_gain_calc(motor_speed_lpf_t * st_lpf
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure. */
-static const fsp_version_t g_motor_speed_version =
-{
-    .api_version_minor  = MOTOR_SPEED_API_VERSION_MINOR,
-    .api_version_major  = MOTOR_SPEED_API_VERSION_MAJOR,
-    .code_version_major = MOTOR_SPEED_CODE_VERSION_MAJOR,
-    .code_version_minor = MOTOR_SPEED_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
@@ -112,7 +103,6 @@ const motor_speed_api_t g_motor_speed_on_motor_speed =
     .speedControl      = RM_MOTOR_SPEED_SpeedControl,
     .parameterGet      = RM_MOTOR_SPEED_ParameterGet,
     .parameterUpdate   = RM_MOTOR_SPEED_ParameterUpdate,
-    .versionGet        = RM_MOTOR_SPEED_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -515,25 +505,6 @@ fsp_err_t RM_MOTOR_SPEED_ParameterUpdate (motor_speed_ctrl_t * const p_ctrl, mot
                                        p_extended_cfg->ol_param.f4_ol_id_ref,
                                        p_extended_cfg->ol_param.f4_id_down_speed_rad * MOTOR_SPEED_TWOPI_60,
                                        p_extended_cfg->f_speed_ctrl_period);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return Motor Speed Control module version. Implements @ref motor_speed_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS             Version information successfully read.
- * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter
- **********************************************************************************************************************/
-fsp_err_t RM_MOTOR_SPEED_VersionGet (fsp_version_t * const p_version)
-{
-#if MOTOR_SPEED_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_motor_speed_version.version_id;
 
     return FSP_SUCCESS;
 }

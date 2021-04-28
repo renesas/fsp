@@ -121,15 +121,6 @@ static fsp_err_t r_dmac_enable_parameter_checking(dmac_instance_ctrl_t * const p
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_dmac_version =
-{
-    .api_version_minor  = TRANSFER_API_VERSION_MINOR,
-    .api_version_major  = TRANSFER_API_VERSION_MAJOR,
-    .code_version_major = DMAC_CODE_VERSION_MAJOR,
-    .code_version_minor = DMAC_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Exported global variables
  **********************************************************************************************************************/
@@ -146,7 +137,6 @@ const transfer_api_t g_transfer_on_dmac =
     .enable        = R_DMAC_Enable,
     .disable       = R_DMAC_Disable,
     .close         = R_DMAC_Close,
-    .versionGet    = R_DMAC_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -425,25 +415,6 @@ fsp_err_t R_DMAC_Close (transfer_ctrl_t * const p_api_ctrl)
 
     /* Clear ID so control block can be reused. */
     p_ctrl->open = 0U;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Set driver version based on compile time macros.
- *
- * @retval FSP_SUCCESS              Successful close.
- * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
- **********************************************************************************************************************/
-fsp_err_t R_DMAC_VersionGet (fsp_version_t * const p_version)
-{
-#if DMAC_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_dmac_version.version_id;
 
     return FSP_SUCCESS;
 }

@@ -54,15 +54,6 @@ void r_icu_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_icu_version =
-{
-    .api_version_minor  = EXTERNAL_IRQ_API_VERSION_MINOR,
-    .api_version_major  = EXTERNAL_IRQ_API_VERSION_MAJOR,
-    .code_version_major = ICU_CODE_VERSION_MAJOR,
-    .code_version_minor = ICU_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -75,7 +66,6 @@ const external_irq_api_t g_external_irq_on_icu =
     .disable     = R_ICU_ExternalIrqDisable,
     .callbackSet = R_ICU_ExternalIrqCallbackSet,
     .close       = R_ICU_ExternalIrqClose,
-    .versionGet  = R_ICU_ExternalIrqVersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -297,23 +287,6 @@ fsp_err_t R_ICU_ExternalIrqClose (external_irq_ctrl_t * const p_api_ctrl)
     }
 
     p_ctrl->open = 0U;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Set driver version based on compile time macros.  Implements @ref external_irq_api_t::versionGet.
- *
- * @retval     FSP_SUCCESS        Successful close.
- * @retval     FSP_ERR_ASSERTION  The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_ICU_ExternalIrqVersionGet (fsp_version_t * const p_version)
-{
-#if ICU_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_icu_version.version_id;
 
     return FSP_SUCCESS;
 }

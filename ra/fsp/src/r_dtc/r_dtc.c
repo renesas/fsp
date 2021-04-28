@@ -94,15 +94,6 @@ static fsp_err_t r_dtc_source_destination_parameter_check(transfer_info_t * p_in
 static transfer_info_t * gp_dtc_vector_table[DTC_VECTOR_TABLE_ENTRIES] BSP_ALIGN_VARIABLE(1024)
 DTC_SECTION_ATTRIBUTE;
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_dtc_version =
-{
-    .api_version_minor  = TRANSFER_API_VERSION_MINOR,
-    .api_version_major  = TRANSFER_API_VERSION_MAJOR,
-    .code_version_major = DTC_CODE_VERSION_MAJOR,
-    .code_version_minor = DTC_CODE_VERSION_MINOR,
-};
-
 /***********************************************************************************************************************
  * Exported global variables
  **********************************************************************************************************************/
@@ -119,7 +110,6 @@ const transfer_api_t g_transfer_on_dtc =
     .enable        = R_DTC_Enable,
     .disable       = R_DTC_Disable,
     .close         = R_DTC_Close,
-    .versionGet    = R_DTC_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -454,25 +444,6 @@ fsp_err_t R_DTC_Close (transfer_ctrl_t * const p_api_ctrl)
     p_ctrl->open = 0U;
 
     return err;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the driver version based on compile time macros.  Implements @ref transfer_api_t::versionGet.
- *
- * @retval FSP_SUCCESS              Version information written to p_version.
- * @retval FSP_ERR_ASSERTION        An input parameter is invalid.
- **********************************************************************************************************************/
-fsp_err_t R_DTC_VersionGet (fsp_version_t * const p_version)
-{
-#if DTC_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_dtc_version.version_id;
-
-    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

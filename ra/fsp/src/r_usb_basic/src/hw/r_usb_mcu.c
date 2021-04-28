@@ -31,9 +31,9 @@
 #include "inc/r_usb_bitdefine.h"
 #include "inc/r_usb_reg_access.h"
 
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS == 1)
  #include "../driver/inc/r_usb_cstd_rtos.h"
-#endif                                 /* #if (BSP_CFG_RTOS == 2) */
+#endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
  #include "inc/r_usb_dmac.h"
@@ -47,10 +47,6 @@
  #if USB_CFG_DTC == USB_CFG_ENABLE
   #error  In HID class, can not set USB_CFG_ENABLE to USB_CFG_DTC in r_usb_basic_cfg.h.
  #endif                                /* USB_CFG_DTC == USB_CFG_ENABLE */
-
- #if USB_CFG_DMA == USB_CFG_ENABLE
-  #error  In HID class, can not set USB_CFG_ENABLE to USB_CFG_DMA in r_usb_basic_cfg.h.
- #endif                                /* USB_CFG_DMA == USB_CFG_ENABLE */
 
 #endif                                 /* defined(USB_CFG_HHID_USE) || defined(USB_CFG_PHID_USE) */
 
@@ -259,7 +255,6 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
     if (USB_IP0 == ip_type)
     {
 #if (!defined(BSP_MCU_GROUP_RA4M1)) && (!defined(BSP_MCU_GROUP_RA2A1))
-
         /* Deep standby USB monitor register
          * b0      SRPC0    USB0 single end control
          * b1      PRUE0    DP Pull-Up Resistor control
@@ -306,7 +301,6 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
     if (ip_type == USB_IP1)
     {
 #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
-
         /* Interrupt enable register
          * b0 IEN0 Interrupt enable bit
          * b1 IEN1 Interrupt enable bit
@@ -364,13 +358,11 @@ void usb_cpu_delay_xms (uint16_t time)
 {
 #if (BSP_CFG_RTOS == 0)
     R_BSP_SoftwareDelay((uint32_t) time, BSP_DELAY_UNITS_MILLISECONDS);
-#endif                                 /* (BSP_CFG_RTOS == 0) */
-
-#if (BSP_CFG_RTOS == 2)
+#elif (BSP_CFG_RTOS == 1)
+    tx_thread_sleep(time);
+#elif (BSP_CFG_RTOS == 2)
     vTaskDelay((TickType_t) (time / portTICK_PERIOD_MS));
-
-// R_BSP_SoftwareDelay((uint32_t)time, BSP_DELAY_UNITS_MILLISECONDS);
-#endif                                 /* (BSP_CFG_RTOS == 2) */
+#endif                                 /* #if (BSP_CFG_RTOS == 0) */
 }
 
 /******************************************************************************
@@ -397,10 +389,9 @@ void usb_cpu_int_enable (void)
      * b6 IEN6 Interrupt enable bit
      * b7 IEN7 Interrupt enable bit
      */
-    R_BSP_IrqCfgEnable(host_cfg->irq, host_cfg->ipl, host_cfg); /* USBI enable */
+    R_BSP_IrqCfgEnable(host_cfg->irq, host_cfg->ipl, host_cfg);     /* USBI enable */
 
  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
-
     /* Interrupt enable register (USB1 USBIO enable)
      * b0 IEN0 Interrupt enable bit
      * b1 IEN1 Interrupt enable bit
@@ -440,7 +431,6 @@ void usb_cpu_int_disable (void)
     R_BSP_IrqDisable(host_cfg->irq);   /* USBI enable */
 
  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
-
     /* Interrupt enable register (USB1 USBIO disable)
      * b0 IEN0 Interrupt enable bit
      * b1 IEN1 Interrupt enable bit

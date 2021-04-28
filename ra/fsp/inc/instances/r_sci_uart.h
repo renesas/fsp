@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define SCI_UART_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define SCI_UART_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -55,13 +53,13 @@ typedef enum e_sci_clk_src
     SCI_UART_CLOCK_EXT16X                    ///< Use external clock 16x baud rate
 } sci_clk_src_t;
 
-/** UART communication mode definition */
-typedef enum e_uart_mode
+/** UART flow control mode definition */
+typedef enum e_flow_control
 {
-    UART_MODE_RS232    = 0U,           ///< Enables RS232 communication mode
-    UART_MODE_RS485_HD = 1U,           ///< Enables RS485 half duplex communication mode
-    UART_MODE_RS485_FD = 2U,           ///< Enables RS485 full duplex communication mode
-} uart_mode_t;
+    SCI_UART_FLOW_CONTROL_RTS    = 0U, ///< Use SCI pin for RTS
+    SCI_UART_FLOW_CONTROL_CTS    = 1U, ///< Use SCI pin for CTS
+    SCI_UART_FLOW_CONTROL_CTSRTS = 3U, ///< Use SCI pin for CTS, external pin for RTS
+} sci_uart_flow_control_t;
 
 /** UART instance control block. */
 typedef struct st_sci_uart_instance_ctrl
@@ -121,13 +119,6 @@ typedef enum e_sci_uart_noise_cancellation
     SCI_UART_NOISE_CANCELLATION_ENABLE  = 0x1, ///< Enable noise cancellation
 } sci_uart_noise_cancellation_t;
 
-/** CTS/RTS function of the SSn pin. */
-typedef enum e_sci_uart_ctsrts_config
-{
-    SCI_UART_CTSRTS_RTS_OUTPUT = 0x0,  ///< Disable CTS function (RTS output function is enabled)
-    SCI_UART_CTSRTS_CTS_INPUT  = 0x1,  ///< Enable CTS function
-} sci_uart_ctsrts_config_t;
-
 /** Register settings to acheive a desired baud rate and modulation duty. */
 typedef struct st_baud_setting_t
 {
@@ -154,17 +145,13 @@ typedef struct st_baud_setting_t
 /** UART on SCI device Configuration */
 typedef struct st_sci_uart_extended_cfg
 {
-    sci_clk_src_t                 clock;         ///< The source clock for the baud-rate generator. If internal optionally output baud rate on SCK
-    sci_uart_start_bit_detect_t   rx_edge_start; ///< Start reception on falling edge
-    sci_uart_noise_cancellation_t noise_cancel;  ///< Noise cancellation setting
-
-    baud_setting_t * p_baud_setting;             ///< Register settings for a desired baud rate.
-
-    sci_uart_rx_fifo_trigger_t rx_fifo_trigger;  ///< Receive FIFO trigger level, unused if channel has no FIFO or if DTC is used.
-
-    uart_mode_t              uart_mode;          ///< UART communication mode selection
-    bsp_io_port_pin_t        flow_control_pin;   ///< UART Driver Enable pin
-    sci_uart_ctsrts_config_t ctsrts_en;          ///< CTS/RTS function of the SSn pin
+    sci_clk_src_t                 clock;            ///< The source clock for the baud-rate generator. If internal optionally output baud rate on SCK
+    sci_uart_start_bit_detect_t   rx_edge_start;    ///< Start reception on falling edge
+    sci_uart_noise_cancellation_t noise_cancel;     ///< Noise cancellation setting
+    baud_setting_t              * p_baud_setting;   ///< Register settings for a desired baud rate.
+    sci_uart_rx_fifo_trigger_t    rx_fifo_trigger;  ///< Receive FIFO trigger level, unused if channel has no FIFO or if DTC is used.
+    bsp_io_port_pin_t             flow_control_pin; ///< UART Driver Enable pin
+    sci_uart_flow_control_t       flow_control;     ///< CTS/RTS function of the SSn pin
 } sci_uart_extended_cfg_t;
 
 /**********************************************************************************************************************
@@ -183,7 +170,6 @@ fsp_err_t R_SCI_UART_Write(uart_ctrl_t * const p_api_ctrl, uint8_t const * const
 fsp_err_t R_SCI_UART_BaudSet(uart_ctrl_t * const p_api_ctrl, void const * const p_baud_setting);
 fsp_err_t R_SCI_UART_InfoGet(uart_ctrl_t * const p_api_ctrl, uart_info_t * const p_info);
 fsp_err_t R_SCI_UART_Close(uart_ctrl_t * const p_api_ctrl);
-fsp_err_t R_SCI_UART_VersionGet(fsp_version_t * p_version);
 fsp_err_t R_SCI_UART_Abort(uart_ctrl_t * const p_api_ctrl, uart_dir_t communication_to_abort);
 fsp_err_t R_SCI_UART_BaudCalculate(uint32_t               baudrate,
                                    bool                   bitrate_modulation,

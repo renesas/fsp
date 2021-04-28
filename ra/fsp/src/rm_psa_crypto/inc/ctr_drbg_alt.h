@@ -43,7 +43,7 @@
 
 #ifndef MBEDTLS_CTR_DRBG_ALT_H
  #define MBEDTLS_CTR_DRBG_ALT_H
-
+#if defined(MBEDTLS_CTR_DRBG_C_ALT)
  #if !defined(MBEDTLS_CONFIG_FILE)
   #include "mbedtls/config.h"
  #else
@@ -571,5 +571,5 @@ void sw_aes_256_enc_test(void);
  #ifdef __cplusplus
 }
  #endif
-
-#endif                                 /* ctr_drbg.h */
+#endif /* defined(MBEDTLS_CTR_DRBG_C_ALT */
+#endif /* MBEDTLS_CTR_DRBG_ALT_H*/

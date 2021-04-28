@@ -141,15 +141,6 @@ static void ether_phy_trans_1to0(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static void ether_phy_mii_write1(ether_phy_instance_ctrl_t * p_instance_ctrl);
 static void ether_phy_mii_write0(ether_phy_instance_ctrl_t * p_instance_ctrl);
 
-/** ETHER_PHYHAL module version data structure */
-static const fsp_version_t module_version =
-{
-    .api_version_minor  = ETHER_PHY_API_VERSION_MINOR,
-    .api_version_major  = ETHER_PHY_API_VERSION_MAJOR,
-    .code_version_major = ETHER_PHY_CODE_VERSION_MAJOR,
-    .code_version_minor = ETHER_PHY_CODE_VERSION_MINOR
-};
-
 /** ETHER_PHY HAL API mapping for Ethernet PHY Controller interface */
 /*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
 const ether_phy_api_t g_ether_phy_on_ether_phy =
@@ -159,7 +150,6 @@ const ether_phy_api_t g_ether_phy_on_ether_phy =
     .startAutoNegotiate    = R_ETHER_PHY_StartAutoNegotiate,
     .linkPartnerAbilityGet = R_ETHER_PHY_LinkPartnerAbilityGet,
     .linkStatusGet         = R_ETHER_PHY_LinkStatusGet,
-    .versionGet            = R_ETHER_PHY_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -433,26 +423,6 @@ fsp_err_t R_ETHER_PHY_LinkStatusGet (ether_phy_ctrl_t * const p_ctrl)
 
     return err;
 }                                      /* End of function R_ETHER_PHY_LinkStatusGet() */
-
-/************************************************************************************************************************
- * DEPRECATED Provides API and code version in the user provided pointer. Implements @ref ether_phy_api_t::versionGet.
- *
- * @param[in] p_version   Version number set here
- *
- * @retval  FSP_SUCCESS                  Version information stored in provided p_version.
- * @retval  FSP_ERR_ASSERTION            p_version is NULL.
- ***********************************************************************************************************************/
-
-__INLINE fsp_err_t R_ETHER_PHY_VersionGet (fsp_version_t * const p_version)
-{
-#if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
-    FSP_ASSERT(p_version);
-#endif
-
-    *p_version = module_version;
-
-    return FSP_SUCCESS;
-}                                      /* End of function R_ETHER_PHY_VersionGet() */
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup ETHER_PHY)

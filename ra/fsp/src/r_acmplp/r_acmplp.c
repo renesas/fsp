@@ -61,15 +61,6 @@ static void acmplp_hardware_initialize(acmplp_instance_ctrl_t * const p_instance
  **********************************************************************************************************************/
 void comp_lp_int_isr(void);
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_acmplp_version =
-{
-    .api_version_minor  = COMPARATOR_API_VERSION_MINOR,
-    .api_version_major  = COMPARATOR_API_VERSION_MAJOR,
-    .code_version_major = ACMPLP_CODE_VERSION_MAJOR,
-    .code_version_minor = ACMPLP_CODE_VERSION_MINOR
-};
-
 /* Maps valid enums to register values. */
 static const uint8_t acmplp_filter_map[] =
 {
@@ -94,7 +85,6 @@ const comparator_api_t g_comparator_on_acmplp =
     .infoGet      = R_ACMPLP_InfoGet,
     .statusGet    = R_ACMPLP_StatusGet,
     .close        = R_ACMPLP_Close,
-    .versionGet   = R_ACMPLP_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -371,26 +361,6 @@ fsp_err_t R_ACMPLP_Close (comparator_ctrl_t * p_ctrl)
     /* Mark driver as closed   */
     p_instance_ctrl->open = 0U;
     gp_acmplp_ctrl[p_instance_ctrl->p_cfg->channel] = NULL;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Gets the API and code version. Implements @ref comparator_api_t::versionGet().
- *
- * @retval  FSP_SUCCESS        Version information available in p_version.
- * @retval  FSP_ERR_ASSERTION  The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_ACMPLP_VersionGet (fsp_version_t * const p_version)
-{
-#if (1 == ACMPLP_CFG_PARAM_CHECKING_ENABLE)
-
-    /* Verify the pointer is not NULL. */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    /* Return the version number */
-    p_version->version_id = g_acmplp_version.version_id;
 
     return FSP_SUCCESS;
 }

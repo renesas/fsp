@@ -183,7 +183,7 @@
  #define R_TSN_CTRL         ((R_TSN_CTRL_Type *) R_TSN_CTRL_BASE)
  #define R_CRC              ((R_CRC_Type *) R_CRC_BASE)
  #define R_DOC              ((R_DOC_Type *) R_DOC_BASE)
- #define R_ETHERC_EDMAC0    ((R_ETHERC_EDMAC0_Type *) R_ETHERC_EDMAC0_BASE)
+ #define R_ETHERC_EDMAC     ((R_ETHERC_EDMAC_Type *) R_ETHERC_EDMAC_BASE)
  #define R_ETHERC0          ((R_ETHERC0_Type *) R_ETHERC0_BASE)
  #define R_SCI0             ((R_SCI0_Type *) R_SCI0_BASE)
  #define R_SCI1             ((R_SCI0_Type *) R_SCI1_BASE)
@@ -289,6 +289,7 @@
  #define R_ELC_BASE                    0x40041000
  #define R_ETHERC0_BASE                0x40064100
  #define R_ETHERC_EDMAC_BASE           0x40064000
+ #define R_PTP_EDMAC_BASE              0x40064400
  #define R_ETHERC_EPTPC_BASE           0x40065800
  #define R_ETHERC_EPTPC1_BASE          0x40065C00
  #define R_ETHERC_EPTPC_CFG_BASE       0x40064500
@@ -430,6 +431,7 @@
  #define R_ELC                    ((R_ELC_Type *) R_ELC_BASE)
  #define R_ETHERC0                ((R_ETHERC0_Type *) R_ETHERC0_BASE)
  #define R_ETHERC_EDMAC           ((R_ETHERC_EDMAC_Type *) R_ETHERC_EDMAC_BASE)
+ #define R_PTP_EDMAC              ((R_ETHERC_EDMAC_Type *) R_PTP_EDMAC_BASE)
  #define R_ETHERC_EPTPC           ((R_ETHERC_EPTPC_Type *) R_ETHERC_EPTPC_BASE)
  #define R_ETHERC_EPTPC1          ((R_ETHERC_EPTPC0_Type *) R_ETHERC_EPTPC1_BASE)
  #define R_ETHERC_EPTPC_CFG       ((R_ETHERC_EPTPC_CFG_Type *) R_ETHERC_EPTPC_CFG_BASE)

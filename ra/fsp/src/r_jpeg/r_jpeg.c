@@ -150,23 +150,13 @@ const jpeg_api_t g_jpeg_on_jpeg =
 #if JPEG_CFG_ENCODE_ENABLE && JPEG_CFG_DECODE_ENABLE
     .modeSet             = R_JPEG_ModeSet,
 #endif
-    .statusGet  = R_JPEG_StatusGet,
-    .close      = R_JPEG_Close,
-    .versionGet = R_JPEG_VersionGet,
+    .statusGet = R_JPEG_StatusGet,
+    .close     = R_JPEG_Close,
 };
 
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-
-/* Version data structure used by error logger macro */
-static const fsp_version_t g_module_version =
-{
-    .api_version_minor  = JPEG_API_VERSION_MINOR,
-    .api_version_major  = JPEG_API_VERSION_MAJOR,
-    .code_version_major = JPEG_CODE_VERSION_MAJOR,
-    .code_version_minor = JPEG_CODE_VERSION_MINOR
-};
 
 /*******************************************************************************************************************//**
  * @addtogroup JPEG
@@ -888,23 +878,6 @@ fsp_err_t R_JPEG_StatusGet (jpeg_ctrl_t * p_api_ctrl, jpeg_status_t * p_status)
     {
         return p_ctrl->error_code;
     }
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the version of the JPEG Codec driver.
- *
- * @retval      FSP_SUCCESS        Version number returned successfully.
- * @retval      FSP_ERR_ASSERTION  The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_JPEG_VersionGet (fsp_version_t * p_version)
-{
-#if JPEG_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    *p_version = g_module_version;
 
     return FSP_SUCCESS;
 }

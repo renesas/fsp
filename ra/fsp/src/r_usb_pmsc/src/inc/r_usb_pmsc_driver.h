@@ -31,42 +31,6 @@
  * Macro definitions
  ***********************************************************************************************************************/
 
-#define STRG_SECTSIZE                  (0x0200UL)      /* 512 bytes per sector */
-
-#define STA_NOINIT                     (0x01)          /* Drive not initialized */
-#define STA_NODISK                     (0x02)          /* No medium in the drive */
-#define STA_PROTECT                    (0x04)          /* Write protected */
-
-#define USB_MEDIA_ADDRESS              (0x20008000UL)  /* Media Head Address */
-#define STRG_MEDIASIZE                 (64UL * 1024UL) /* Media size */
-#define STRG_TOTALSECT                 (STRG_MEDIASIZE / STRG_SECTSIZE)
-
-/* #define RAMDISK_MEDIATYPE              (0xF8u)    Fixed media
- * #define RAMDISK_MEDIATYPE              (0xF0u)    Removable media */
-#define RAMDISK_MEDIATYPE              (0xF8U)
-
-#define RAMDISK_SIGNATURE              (0xAA55U)
-
-#define RAMDISK_CLSTSIZE               (0x01U)
-#define RAMDISK_FATNUM                 (0x02U)
-
-#define USB_MEDIA_FAT12_LEN            (0x155UL) /* FAT12 */
-#define USB_MEDIA_FAT16_LEN            (0x100UL) /* FAT16 */
-#define USB_MEDIA_FAT32_LEN            (0x80UL)  /* FAT32 */
-
-#define USB_MEDIA_SECTOR_SIZE_4096     (4096U)
-#define USB_MEDIA_SECTOR_SIZE_65536    (65536U)
-
-/*
- * If the number of data areas of clusters is smaller
- * than that of value 4085(4096-11), it is FAT12.
- * If the number of data areas of clusters is smaller
- * than that of value 65525(65536-11), it is FAT16.
- * Otherwise it is FAT32.
- */
-
-#define RAMDISK_FATSIZE                (((STRG_TOTALSECT - 8) / RAMDISK_FATLENGTH) + 1)
-
 /***********************************************************************************************************************
  * Typedef definitions
  ***********************************************************************************************************************/

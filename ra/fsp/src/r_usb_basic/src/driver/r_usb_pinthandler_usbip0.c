@@ -34,9 +34,13 @@
  ******************************************************************************/
 usb_int_t g_usb_pstd_usb_int;
 
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS != 0)
 static usb_utr_t g_usb_pstd_int[USB_INT_BUFSIZE];
- #endif                                /* #if (BSP_CFG_RTOS == 2)*/
+ #endif                                /* #if (BSP_CFG_RTOS != 0)*/
+
+ #if (BSP_CFG_RTOS == 1)
+extern TX_QUEUE g_pcd_mbx_hdl;
+ #endif                                /* (BSP_CFG_RTOS == 1) */
 
 /******************************************************************************
  * Renesas Abstracted common Interrupt handler functions
@@ -51,11 +55,11 @@ static usb_utr_t g_usb_pstd_int[USB_INT_BUFSIZE];
  ******************************************************************************/
 void usb_pstd_usb_handler (void)
 {
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS != 0)
     usb_utr_t * p;
 
     p = get_usb_int_buf();
- #endif                                /*(BSP_CFG_RTOS == 2)*/
+ #endif                                /*(BSP_CFG_RTOS != 0)*/
     IRQn_Type   irq;
     usb_cfg_t * p_cfg;
 
@@ -65,7 +69,7 @@ void usb_pstd_usb_handler (void)
     usb_pstd_interrupt_clock(p_cfg->module_number);
 
     /* Push Interrupt info */
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS != 0)
     p->msginfo       = USB_MSG_PCD_INT;
     p->ip            = p_cfg->module_number;
     p->p_transfer_rx = p_cfg->p_transfer_rx;
@@ -73,7 +77,7 @@ void usb_pstd_usb_handler (void)
     usb_pstd_interrupt_handler(&p->keyword, &p->status, p->ip);
 
     USB_ISND_MSG(USB_PCD_MBX, (usb_msg_t *) p);
- #endif                                /*(BSP_CFG_RTOS == 2)*/
+ #endif                                /*(BSP_CFG_RTOS != 0)*/
 
  #if (BSP_CFG_RTOS == 0)
     g_usb_pstd_usb_int.buf[g_usb_pstd_usb_int.wp].p_cfg = p_cfg;
@@ -91,7 +95,7 @@ void usb_pstd_usb_handler (void)
  * End of function usb_pstd_usb_handler
  ******************************************************************************/
 
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS != 0)
 
 /******************************************************************************
  * Function Name   : get_usb_int_buf
@@ -115,7 +119,7 @@ usb_utr_t * get_usb_int_buf (void)
 /******************************************************************************
  * End of function get_usb_int_buf
  ******************************************************************************/
- #endif                                /* #if (BSP_CFG_RTOS == 2) */
+ #endif                                /* #if (BSP_CFG_RTOS != 0) */
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 

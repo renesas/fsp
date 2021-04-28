@@ -37,8 +37,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define SCI_SPI_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define SCI_SPI_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -106,7 +104,6 @@ fsp_err_t R_SCI_SPI_WriteRead(spi_ctrl_t * const    p_api_ctrl,
                               uint32_t const        length,
                               spi_bit_width_t const bit_width);
 fsp_err_t R_SCI_SPI_Close(spi_ctrl_t * const p_api_ctrl);
-fsp_err_t R_SCI_SPI_VersionGet(fsp_version_t * p_version);
 fsp_err_t R_SCI_SPI_CalculateBitrate(uint32_t bitrate, sci_spi_div_setting_t * sclk_div, bool use_mddr);
 fsp_err_t R_SCI_SPI_CallbackSet(spi_ctrl_t * const          p_api_ctrl,
                                 void (                    * p_callback)(spi_callback_args_t *),

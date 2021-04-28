@@ -70,15 +70,6 @@ static inline void r_gpt_write_protect_disable_all(gpt_three_phase_instance_ctrl
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_gpt_three_phase_version =
-{
-    .api_version_minor  = THREE_PHASE_API_VERSION_MINOR,
-    .api_version_major  = THREE_PHASE_API_VERSION_MAJOR,
-    .code_version_major = GPT_THREE_PHASE_CODE_VERSION_MAJOR,
-    .code_version_minor = GPT_THREE_PHASE_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -93,7 +84,6 @@ const three_phase_api_t g_gpt_three_phase_on_gpt_three_phase =
     .dutyCycleSet = R_GPT_THREE_PHASE_DutyCycleSet,
     .callbackSet  = R_GPT_THREE_PHASE_CallbackSet,
     .close        = R_GPT_THREE_PHASE_Close,
-    .versionGet   = R_GPT_THREE_PHASE_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -376,25 +366,6 @@ fsp_err_t R_GPT_THREE_PHASE_Close (three_phase_ctrl_t * const p_ctrl)
     }
 
     return err;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Sets driver version based on compile time macros. Implements @ref three_phase_api_t::versionGet.
- *
- * @retval FSP_SUCCESS                 Version stored in p_version.
- * @retval FSP_ERR_ASSERTION           p_version was NULL.
- **********************************************************************************************************************/
-fsp_err_t R_GPT_THREE_PHASE_VersionGet (fsp_version_t * const p_version)
-{
-#if GPT_THREE_PHASE_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_gpt_three_phase_version.version_id;
-
-    return FSP_SUCCESS;
 }
 
 /** @} (end addtogroup GPT_THREE_PHASE) */

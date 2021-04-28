@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_DRIVER_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define MOTOR_DRIVER_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -138,8 +136,6 @@ fsp_err_t RM_MOTOR_DRIVER_FlagCurrentOffsetGet(motor_driver_ctrl_t * const p_ctr
 fsp_err_t RM_MOTOR_DRIVER_CurrentOffsetRestart(motor_driver_ctrl_t * const p_ctrl);
 
 fsp_err_t RM_MOTOR_DRIVER_ParameterUpdate(motor_driver_ctrl_t * const p_ctrl, motor_driver_cfg_t const * const p_cfg);
-
-fsp_err_t RM_MOTOR_DRIVER_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

@@ -125,15 +125,6 @@ static void r_wdt_nmi_initialize(wdt_instance_ctrl_t * const p_instance_ctrl, wd
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure. */
-static const fsp_version_t g_wdt_version =
-{
-    .api_version_minor  = WDT_API_VERSION_MINOR,
-    .api_version_major  = WDT_API_VERSION_MAJOR,
-    .code_version_major = WDT_CODE_VERSION_MAJOR,
-    .code_version_minor = WDT_CODE_VERSION_MINOR
-};
-
 static const uint8_t g_wdtcr_timeout[] =
 {
     0xFFU,                             // WDTCR value for WDT_TIMEOUT_128 (not supported by WDT).
@@ -188,7 +179,6 @@ const wdt_api_t g_wdt_on_wdt =
     .counterGet  = R_WDT_CounterGet,
     .timeoutGet  = R_WDT_TimeoutGet,
     .callbackSet = R_WDT_CallbackSet,
-    .versionGet  = R_WDT_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -528,23 +518,6 @@ fsp_err_t R_WDT_CallbackSet (wdt_ctrl_t * const          p_ctrl,
 #endif
     p_instance_ctrl->p_context         = p_context;
     p_instance_ctrl->p_callback_memory = p_callback_memory;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return WDT HAL driver version. Implements @ref wdt_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS             Version information successfully read.
- * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter
- **********************************************************************************************************************/
-fsp_err_t R_WDT_VersionGet (fsp_version_t * const p_version)
-{
-#if WDT_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_wdt_version.version_id;
 
     return FSP_SUCCESS;
 }

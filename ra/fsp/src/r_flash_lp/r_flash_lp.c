@@ -326,18 +326,9 @@ const flash_api_t g_flash_on_flash_lp =
     .idCodeSet            = R_FLASH_LP_IdCodeSet,
     .reset                = R_FLASH_LP_Reset,
     .startupAreaSelect    = R_FLASH_LP_StartUpAreaSelect,
+    .bankSwap             = R_FLASH_LP_BankSwap,
     .updateFlashClockFreq = R_FLASH_LP_UpdateFlashClockFreq,
     .callbackSet          = R_FLASH_LP_CallbackSet,
-    .versionGet           = R_FLASH_LP_VersionGet
-};
-
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_flash_lp_version =
-{
-    .api_version_minor  = FLASH_API_VERSION_MINOR,
-    .api_version_major  = FLASH_API_VERSION_MAJOR,
-    .code_version_major = FLASH_LP_CODE_VERSION_MAJOR,
-    .code_version_minor = FLASH_LP_CODE_VERSION_MINOR
 };
 
 /** Name of module used by error logger macro */
@@ -939,6 +930,20 @@ fsp_err_t R_FLASH_LP_StartUpAreaSelect (flash_ctrl_t * const      p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
+ * Unsupported
+ * @ref flash_api_t::bankSwap.
+ *
+ * @retval     FSP_ERR_UNSUPPORTED       Module does not support Bank Swap.
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_LP_BankSwap (flash_ctrl_t * const p_api_ctrl)
+{
+    /* Eliminate unused warning. */
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * Indicate to the already open Flash API that the FCLK has changed. Implements flash_api_t::updateFlashClockFreq.
  *
  * This could be the case if the application has changed the system clock, and therefore the FCLK. Failure to call this
@@ -1053,26 +1058,6 @@ fsp_err_t R_FLASH_LP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
     FSP_PARAMETER_NOT_USED(p_context);
 
     return FSP_ERR_UNSUPPORTED;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get Flash LP driver version.
- *
- * @retval     FSP_SUCCESS        Operation performed successfully
- * @retval     FSP_ERR_ASSERTION  Null Pointer
- **********************************************************************************************************************/
-fsp_err_t R_FLASH_LP_VersionGet (fsp_version_t * const p_version)
-{
-#if FLASH_LP_CFG_PARAM_CHECKING_ENABLE
-
-    /* If null pointer return error. */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    /* Return the version id of the flash lp module. */
-    p_version->version_id = g_flash_lp_version.version_id;
-
-    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

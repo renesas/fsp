@@ -37,8 +37,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define WDT_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define WDT_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -84,8 +82,6 @@ fsp_err_t R_WDT_CallbackSet(wdt_ctrl_t * const          p_ctrl,
                             void (                    * p_callback)(wdt_callback_args_t *),
                             void const * const          p_context,
                             wdt_callback_args_t * const p_callback_memory);
-
-fsp_err_t R_WDT_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

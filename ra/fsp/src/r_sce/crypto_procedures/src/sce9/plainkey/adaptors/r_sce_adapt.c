@@ -24,6 +24,7 @@
 #include "SCE_ProcCommon.h"
 #include "hw_sce_ra_private.h"
 #include "hw_sce_private.h"
+#include "hw_sce_trng_private.h"
 
 /***********************************************************************************************************************
  * Macro definitions

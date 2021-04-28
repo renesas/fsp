@@ -89,15 +89,6 @@ void           canfd_channel_tx_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_canfd_version =
-{
-    .api_version_minor  = CAN_API_VERSION_MINOR,
-    .api_version_major  = CAN_API_VERSION_MAJOR,
-    .code_version_major = CANFD_CODE_VERSION_MAJOR,
-    .code_version_minor = CANFD_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -115,7 +106,6 @@ const can_api_t g_canfd_on_canfd =
     .modeTransition = R_CANFD_ModeTransition,
     .infoGet        = R_CANFD_InfoGet,
     .callbackSet    = R_CANFD_CallbackSet,
-    .versionGet     = R_CANFD_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -335,9 +325,9 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
         R_BSP_IrqCfgEnable(p_cfg->error_irq, p_cfg->ipl, p_ctrl);
     }
 
-    if (p_cfg->mailbox_tx_irq >= 0)
+    if (p_cfg->tx_irq >= 0)
     {
-        R_BSP_IrqCfgEnable(p_cfg->mailbox_tx_irq, p_cfg->ipl, p_ctrl);
+        R_BSP_IrqCfgEnable(p_cfg->tx_irq, p_cfg->ipl, p_ctrl);
     }
 
     /* Set global mode to Operation and wait for transition */
@@ -385,9 +375,9 @@ fsp_err_t R_CANFD_Close (can_ctrl_t * const p_api_ctrl)
         R_BSP_IrqDisable(p_cfg->error_irq);
     }
 
-    if (p_cfg->mailbox_tx_irq >= 0)
+    if (p_cfg->tx_irq >= 0)
     {
-        R_BSP_IrqDisable(p_cfg->mailbox_tx_irq);
+        R_BSP_IrqDisable(p_cfg->tx_irq);
     }
 
     /* Disable Global Error interrupt if the handler channel is being closed */
@@ -706,26 +696,6 @@ fsp_err_t R_CANFD_CallbackSet (can_ctrl_t * const          p_api_ctrl,
 #endif
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get CAN module code and API versions.
- *
- * @retval  FSP_SUCCESS             Operation succeeded.
- * @retval  FSP_ERR_ASSERTION       Null pointer presented
- **********************************************************************************************************************/
-fsp_err_t R_CANFD_VersionGet (fsp_version_t * const p_version)
-{
-#if CANFD_CFG_PARAM_CHECKING_ENABLE
-
-    /* Check pointer for NULL value */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    /* Return module version information. */
-    p_version->version_id = g_canfd_version.version_id;
 
     return FSP_SUCCESS;
 }

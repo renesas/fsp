@@ -41,13 +41,11 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /** Version of code that implements the API defined in this file */
-#define OPAMP_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define OPAMP_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
-#define OPAMP_MASK_CHANNEL_0        (1U << 0)
-#define OPAMP_MASK_CHANNEL_1        (1U << 1)
-#define OPAMP_MASK_CHANNEL_2        (1U << 2)
-#define OPAMP_MASK_CHANNEL_3        (1U << 3)
+#define OPAMP_MASK_CHANNEL_0    (1U << 0)
+#define OPAMP_MASK_CHANNEL_1    (1U << 1)
+#define OPAMP_MASK_CHANNEL_2    (1U << 2)
+#define OPAMP_MASK_CHANNEL_3    (1U << 3)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -178,7 +176,6 @@ fsp_err_t R_OPAMP_Trim(opamp_ctrl_t * const            p_api_ctrl,
                        opamp_trim_cmd_t const          cmd,
                        opamp_trim_args_t const * const p_args);
 fsp_err_t R_OPAMP_Close(opamp_ctrl_t * const p_api_ctrl);
-fsp_err_t R_OPAMP_VersionGet(fsp_version_t * const p_version);
 
 /** @cond INC_HEADER_DEFS_SEC */
 /** Interface Structure for user access */

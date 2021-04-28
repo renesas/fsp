@@ -18,12 +18,16 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#include "bsp_api.h"
-
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
+#include "bsp_api.h"
 #include "r_ospi.h"
+
+#if OSPI_CFG_DMAC_SUPPORT_ENABLE
+ #include "r_transfer_api.h"
+ #include "r_dmac.h"
+#endif
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -60,15 +64,6 @@ static void r_ospi_direct_transfer(ospi_instance_ctrl_t              * p_instanc
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_ospi_version =
-{
-    .api_version_minor  = SPI_FLASH_API_VERSION_MINOR,
-    .api_version_major  = SPI_FLASH_API_VERSION_MAJOR,
-    .code_version_major = OSPI_CODE_VERSION_MAJOR,
-    .code_version_minor = OSPI_CODE_VERSION_MINOR
-};
-
 /*******************************************************************************************************************//**
  * @addtogroup OSPI
  * @{
@@ -92,7 +87,6 @@ const spi_flash_api_t g_ospi_on_spi_flash =
     .xipExit        = R_OSPI_XipExit,
     .bankSet        = R_OSPI_BankSet,
     .close          = R_OSPI_Close,
-    .versionGet     = R_OSPI_VersionGet,
 };
 
 /***********************************************************************************************************************
@@ -131,6 +125,17 @@ fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const 
     p_instance_ctrl->p_cfg        = p_cfg;
     p_instance_ctrl->spi_protocol = p_cfg->spi_protocol;
     p_instance_ctrl->channel      = p_cfg_extend->channel;
+
+#if OSPI_CFG_DMAC_SUPPORT_ENABLE
+    transfer_instance_t const * p_transfer = p_cfg_extend->p_lower_lvl_transfer;
+
+ #if OSPI_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_transfer);
+ #endif
+
+    /* Initialize transfer instance */
+    p_transfer->p_api->open(p_transfer->p_ctrl, p_transfer->p_cfg);
+#endif
 
     /* Perform OSPI initial setup as described in hardware manual (see Section 34.3.6.1
      * 'Initial Settings' of the RA6M4 manual R01UH0890EJ0100). */
@@ -339,6 +344,43 @@ fsp_err_t R_OSPI_Write (spi_flash_ctrl_t    * p_ctrl,
 
     r_ospi_wen(p_instance_ctrl);
 
+#if OSPI_CFG_DMAC_SUPPORT_ENABLE
+
+    /* Setup and start DMAC transfer. */
+    ospi_extended_cfg_t       * p_cfg_extend = (ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    transfer_instance_t const * p_transfer   = p_cfg_extend->p_lower_lvl_transfer;
+
+    /* Enable Octa-SPI DMA Bufferable Write */
+    dmac_extended_cfg_t const * p_dmac_extend = p_transfer->p_cfg->p_extend;
+    R_DMAC0_Type              * p_dma_reg     = R_DMAC0 + (sizeof(R_DMAC0_Type) * p_dmac_extend->channel);
+    p_dma_reg->DMBWR = R_DMAC0_DMBWR_BWE_Msk;
+
+    /* Update the block-mode transfer settings */
+    p_transfer->p_cfg->p_info->p_src      = p_src;
+    p_transfer->p_cfg->p_info->p_dest     = p_dest;
+    p_transfer->p_cfg->p_info->num_blocks = 1U;
+    p_transfer->p_cfg->p_info->length     = (uint16_t) byte_count;
+    fsp_err_t err = p_transfer->p_api->reconfigure(p_transfer->p_ctrl, p_transfer->p_cfg->p_info);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Start DMA */
+    err = p_transfer->p_api->softwareStart(p_transfer->p_ctrl, TRANSFER_START_MODE_SINGLE);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Wait for DMAC to complete to maintain deterministic processing and backward compatability */
+    transfer_properties_t transfer_properties = {0U};
+    err = p_transfer->p_api->infoGet(p_transfer->p_ctrl, &transfer_properties);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    while (FSP_SUCCESS == err && transfer_properties.block_count_remaining > 0)
+    {
+        err = p_transfer->p_api->infoGet(p_transfer->p_ctrl, &transfer_properties);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    }
+
+    /* Disable Octa-SPI DMA Bufferable Write */
+    p_dma_reg->DMBWR = 0U;
+#else
     uint32_t i = 0;
 
     /* Perform entire write opetation keeping the same access width to remain in single continuous write mode (see Section 34.5.1, point#3
@@ -382,6 +424,7 @@ fsp_err_t R_OSPI_Write (spi_flash_ctrl_t    * p_ctrl,
             p_dest[i] = p_src[i];
         }
     }
+#endif
 
     return FSP_SUCCESS;
 }
@@ -538,30 +581,19 @@ fsp_err_t R_OSPI_Close (spi_flash_ctrl_t * p_ctrl)
     FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+#if OSPI_CFG_DMAC_SUPPORT_ENABLE
+
+    /* Initialize transfer instance */
+    ospi_extended_cfg_t       * p_cfg_extend = (ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    transfer_instance_t const * p_transfer   = p_cfg_extend->p_lower_lvl_transfer;
+
+    p_transfer->p_api->close(p_transfer->p_ctrl);
+#endif
+
     p_instance_ctrl->open = 0U;
 
     /* Disable clock to the OSPI block */
     R_BSP_MODULE_STOP(FSP_IP_OSPI, 0U);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the driver version based on compile time macros.
- *
- * Implements @ref spi_flash_api_t::versionGet.
- *
- * @retval     FSP_SUCCESS          Successful close.
- * @retval     FSP_ERR_ASSERTION    p_version is NULL.
- *
- **********************************************************************************************************************/
-fsp_err_t R_OSPI_VersionGet (fsp_version_t * const p_version)
-{
-#if OSPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_ospi_version.version_id;
 
     return FSP_SUCCESS;
 }

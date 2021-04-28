@@ -38,6 +38,19 @@
 #define RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT (0U)
 #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED (1U)
 
+ #define PSA_ECC_BYTES_VENDOR_RAW(bit_length)                                                                      \
+    ((bit_length) ==                                                                                               \
+     PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_LENGTH_BITS) : \
+     (bit_length) ==                                                                                               \
+     PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_LENGTH_BITS) : \
+     0)
+ #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED_SIZE_BYTES(bit_length)                                                                      \
+    ((bit_length) ==                                                                                               \
+     ECC_256_PRIVATE_KEY_LENGTH_BITS ? PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS) : \
+     (bit_length) ==                                                                                               \
+     ECC_384_PRIVATE_KEY_LENGTH_BITS ? PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS) : \
+     0)
+
 /*
  * default mbed TLS elliptic curve arithmetic implementation
  *

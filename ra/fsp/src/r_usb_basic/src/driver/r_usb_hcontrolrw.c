@@ -364,17 +364,21 @@ void usb_hstd_ctrl_end (usb_utr_t * ptr, uint16_t status)
         }
     }
 
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS == 0)
+    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0] = (usb_utr_t *) USB_NULL;
+ #else                                      /* (BSP_CFG_RTOS == 0) */
+  #if (BSP_CFG_RTOS == 1)
+    USB_REL_BLK(1, g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]);
+  #elif (BSP_CFG_RTOS == 2)                 /* #if (BSP_CFG_RTOS == 1) */
     vPortFree(g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0]);
+  #endif                                    /* #if (BSP_CFG_RTOS == 1) */
     g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0] = (usb_utr_t *) USB_NULL;
     usb_cstd_pipe0_msg_re_forward(ptr->ip); /* Get PIPE0 Transfer wait que and Message send to HCD */
- #else  /* #if (BSP_CFG_RTOS == 2) */
-    g_p_usb_hstd_pipe[ptr->ip][USB_PIPE0] = (usb_utr_t *) USB_NULL;
- #endif /* #if (BSP_CFG_RTOS == 2) */
+ #endif                                     /* #if (BSP_CFG_RTOS == 0) */
 
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
     hw_usb_clear_enb_sofe(ptr);
- #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+ #endif                                     /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 }
 
 /******************************************************************************

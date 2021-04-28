@@ -28,23 +28,16 @@
 
 /* The section names come from the scatter file */
 REGION_DECLARE(Load$$LR$$, LR_NS_PARTITION, $$Base);
+REGION_DECLARE(Load$$LR$$, LR_NS_IMAGE, $$Base);
 REGION_DECLARE(Load$$LR$$, LR_VENEER, $$Base);
 REGION_DECLARE(Load$$LR$$, LR_VENEER, $$Limit);
-#ifdef BL2
-REGION_DECLARE(Load$$LR$$, LR_SECONDARY_PARTITION, $$Base);
-#endif /* BL2 */
 
 const struct memory_region_limits memory_regions = {
     .non_secure_code_start =
-        (uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
-        BL2_HEADER_SIZE,
+        (uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_IMAGE, $$Base),
 
     .non_secure_partition_base =
         (uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base),
-
-    .non_secure_partition_limit =
-        (uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
-        NS_PARTITION_SIZE - 1,
 
     .veneer_base =
         (uint32_t)&REGION_NAME(Load$$LR$$, LR_VENEER, $$Base),
@@ -52,14 +45,6 @@ const struct memory_region_limits memory_regions = {
     .veneer_limit =
         (uint32_t)&REGION_NAME(Load$$LR$$, LR_VENEER, $$Limit),
 
-#ifdef BL2
-    .secondary_partition_base =
-        (uint32_t)&REGION_NAME(Load$$LR$$, LR_SECONDARY_PARTITION, $$Base),
-
-    .secondary_partition_limit =
-        (uint32_t)&REGION_NAME(Load$$LR$$, LR_SECONDARY_PARTITION, $$Base) +
-        SECONDARY_PARTITION_SIZE - 1,
-#endif /* BL2 */
 };
 
 /* To write into AIRCR register, 0x5FA value must be write to the VECTKEY field,

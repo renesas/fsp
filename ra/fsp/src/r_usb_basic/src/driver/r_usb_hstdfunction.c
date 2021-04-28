@@ -30,11 +30,13 @@
 #include "../hw/inc/r_usb_bitdefine.h"
 #include "../hw/inc/r_usb_reg_access.h"
 
-#if defined(USB_CFG_HCDC_USE)
- #include "r_usb_hcdc_api.h"
- #include "r_usb_hcdc.h"
+#if (BSP_CFG_RTOS != 1)
+ #if defined(USB_CFG_HCDC_USE)
+  #include "r_usb_hcdc_api.h"
+  #include "r_usb_hcdc.h"
 
-#endif                                 /* defined(USB_CFG_HCDC_USE) */
+ #endif                                /* defined(USB_CFG_HCDC_USE) */
+#endif /* #if (BSP_CFG_RTOS != 1) */
 #if defined(USB_CFG_HMSC_USE)
  #include "r_usb_hmsc_api.h"
 
@@ -183,18 +185,18 @@ void usb_hdriver_init (usb_utr_t * ptr, usb_cfg_t const * const cfg)
  #if (BSP_CFG_RTOS == 0)
         g_usb_cstd_event.write_pointer = USB_NULL; /* Write pointer */
         g_usb_cstd_event.read_pointer  = USB_NULL; /* Read pointer */
- #endif
+ #endif /* (BSP_CFG_RTOS == 0) */
 
         /* WAIT_LOOP */
         for (i = 0; i < USB_EVENT_MAX; i++)
         {
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS != 0)
             g_usb_cstd_event[i].event          = USB_STATUS_NONE;
             g_usb_cstd_event[i].device_address = USB_NULL;
- #else
+ #else                                 /* (BSP_CFG_RTOS != 0) */
             g_usb_cstd_event.code[i]                = USB_STATUS_NONE;
             g_usb_cstd_event.ctrl[i].device_address = USB_NULL;
- #endif
+ #endif /* (BSP_CFG_RTOS != 0) */
         }
 
         g_usb_cstd_driver_open = USB_TRUE;
@@ -213,11 +215,17 @@ void usb_hdriver_init (usb_utr_t * ptr, usb_cfg_t const * const cfg)
 
     usb_hstd_mgr_open(ptr);            /* Manager open */
     usb_hstd_hcd_open(ptr);            /* Hcd open */
- #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || defined(USB_CFG_HVND_USE)
+ #if (BSP_CFG_RTOS == 1)
+    usb_host_registration(ptr);        /* Class Registration */
+ #else
+  #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || defined(USB_CFG_HVND_USE)
     usb_class_driver_start(ptr);       /* Init host class driver task. */
     usb_host_registration(ptr);        /* Class Registration */
- #endif /* defined(USB_CFG_HCDC_USE)||defined(USB_CFG_HHID_USE)||defined(USB_CFG_HMSC_USE)||defined(USB_CFG_HVND_USE) */
+  #endif /* defined(USB_CFG_HCDC_USE)||defined(USB_CFG_HHID_USE)||defined(USB_CFG_HMSC_USE)||defined(USB_CFG_HVND_USE) */
+ #endif
 } /* End of function usb_hdriver_init() */
+
+ #if (BSP_CFG_RTOS != 1)
 
 /******************************************************************************
  * Function Name   : usb_class_driver_start
@@ -228,19 +236,21 @@ void usb_hdriver_init (usb_utr_t * ptr, usb_cfg_t const * const cfg)
 void usb_class_driver_start (usb_utr_t * ptr)
 {
     (void) ptr;
- #if defined(USB_CFG_HCDC_USE)
+  #if defined(USB_CFG_HCDC_USE)
     usb_hcdc_driver_start(ptr);
- #endif                                /* defined(USB_CFG_HCDC_USE) */
- #if defined(USB_CFG_HMSC_USE)
+  #endif                               /* defined(USB_CFG_HCDC_USE) */
+  #if defined(USB_CFG_HMSC_USE)
     usb_hmsc_driver_start(ptr->ip);
     usb_hmsc_storage_driver_start(ptr->ip);
- #endif                                /* defined(USB_CFG_HMSC_USE) */
- #if defined(USB_CFG_HHID_USE)
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
+  #if defined(USB_CFG_HHID_USE)
     usb_hhid_driver_start(ptr);
- #endif                                /* defined(USB_CFG_HHID_USE) */
+  #endif                               /* defined(USB_CFG_HHID_USE) */
 } /* End of function usb_class_driver_start() */
 
- #if (BSP_CFG_RTOS == 2)
+ #endif /*  #if (BSP_CFG_RTOS != 1) */
+
+ #if (BSP_CFG_RTOS != 0)
 
 /******************************************************************************
  * Function Name   : class_trans_result
@@ -313,7 +323,7 @@ uint16_t class_trans_wait_tmo (usb_utr_t * ptr, uint16_t tmo)
     return result;
 }                                      /* End of function class_trans_wait_tmo() */
 
- #endif /* (BSP_CFG_RTOS == 2) */
+ #endif /* (BSP_CFG_RTOS != 0) */
 
 #endif  /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 

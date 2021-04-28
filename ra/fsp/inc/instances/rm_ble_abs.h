@@ -37,8 +37,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BLE_ABS_CODE_VERSION_MAJOR                    (1U) // DEPRECATED
-#define BLE_ABS_CODE_VERSION_MINOR                    (0U) // DEPRECATED
 
 #define BLE_ABS_EVENT_NOTIFY_CONNECTION_START_POS     (0)
 #define BLE_ABS_EVENT_NOTIFY_ADVERTISING_POS          (1)
@@ -222,8 +220,6 @@ fsp_err_t RM_BLE_ABS_Open(ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * c
 fsp_err_t RM_BLE_ABS_Close(ble_abs_ctrl_t * const p_ctrl);
 
 fsp_err_t RM_BLE_ABS_Reset(ble_abs_ctrl_t * const p_ctrl, ble_event_cb_t init_callback);
-
-fsp_err_t RM_BLE_ABS_VersionGet(fsp_version_t * const p_version);
 
 fsp_err_t RM_BLE_ABS_StartLegacyAdvertising(ble_abs_ctrl_t * const                               p_ctrl,
                                             ble_abs_legacy_advertising_parameter_t const * const p_advertising_parameter);

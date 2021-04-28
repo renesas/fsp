@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_ESTIMATE_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define MOTOR_ESTIMATE_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -165,8 +163,6 @@ fsp_err_t RM_MOTOR_ESTIMATE_EstimatedComponentGet(motor_angle_ctrl_t * const p_c
                                                   float * const              p_eq);
 
 fsp_err_t RM_MOTOR_ESTIMATE_ParameterUpdate(motor_angle_ctrl_t * const p_ctrl, motor_angle_cfg_t const * p_cfg);
-
-fsp_err_t RM_MOTOR_ESTIMATE_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

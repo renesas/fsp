@@ -104,15 +104,6 @@ void           rtc_carry_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t s_rtc_version =
-{
-    .api_version_minor  = RTC_API_VERSION_MINOR,
-    .api_version_major  = RTC_API_VERSION_MAJOR,
-    .code_version_major = RTC_CODE_VERSION_MAJOR,
-    .code_version_minor = RTC_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -130,7 +121,6 @@ const rtc_api_t g_rtc_on_rtc =
     .infoGet            = R_RTC_InfoGet,
     .errorAdjustmentSet = R_RTC_ErrorAdjustmentSet,
     .callbackSet        = R_RTC_CallbackSet,
-    .versionGet         = R_RTC_VersionGet,
 };
 
 #if RTC_CFG_PARAM_CHECKING_ENABLE
@@ -689,25 +679,6 @@ fsp_err_t R_RTC_ErrorAdjustmentSet (rtc_ctrl_t * const p_ctrl, rtc_error_adjustm
 
     /* Set Error Adjustment values */
     r_rtc_error_adjustment_set(err_adj_cfg);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get driver version based on compile time macros.
- *
- * Implements @ref rtc_api_t::versionGet
- *
- * @retval     FSP_SUCCESS          Successful close.
- * @retval     FSP_ERR_ASSERTION    The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_RTC_VersionGet (fsp_version_t * p_version)
-{
-#if RTC_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(p_version);
-#endif
-
-    p_version->version_id = s_rtc_version.version_id;
 
     return FSP_SUCCESS;
 }

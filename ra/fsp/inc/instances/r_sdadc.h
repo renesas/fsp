@@ -40,10 +40,7 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-#define SDADC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define SDADC_CODE_VERSION_MINOR    (0U) // DEPRECATED
-
-#define SDADC_MAX_NUM_CHANNELS      (5U)
+#define SDADC_MAX_NUM_CHANNELS    (5U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -241,7 +238,6 @@ fsp_err_t R_SDADC_Read32(adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint32
 fsp_err_t R_SDADC_OffsetSet(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, int32_t const offset);
 fsp_err_t R_SDADC_Calibrate(adc_ctrl_t * const p_ctrl, void * const p_extend);
 fsp_err_t R_SDADC_Close(adc_ctrl_t * p_ctrl);
-fsp_err_t R_SDADC_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup ADC)

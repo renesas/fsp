@@ -36,8 +36,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define IIC_MASTER_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define IIC_MASTER_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -133,7 +131,6 @@ fsp_err_t R_IIC_MASTER_SlaveAddressSet(i2c_master_ctrl_t * const    p_api_ctrl,
                                        uint32_t const               slave,
                                        i2c_master_addr_mode_t const addr_mode);
 fsp_err_t R_IIC_MASTER_Close(i2c_master_ctrl_t * const p_api_ctrl);
-fsp_err_t R_IIC_MASTER_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_IIC_MASTER_CallbackSet(i2c_master_ctrl_t * const          p_api_ctrl,
                                    void (                           * p_callback)(i2c_master_callback_args_t *),
                                    void const * const                 p_context,

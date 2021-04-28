@@ -51,15 +51,6 @@ static uint32_t crc_calculated_value_get(crc_instance_ctrl_t * const p_instance_
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t s_crc_version =
-{
-    .api_version_minor  = CRC_API_VERSION_MINOR,
-    .api_version_major  = CRC_API_VERSION_MAJOR,
-    .code_version_major = CRC_CODE_VERSION_MAJOR,
-    .code_version_minor = CRC_CODE_VERSION_MINOR
-};
-
 /* Filled in Interface API structure for this Instance. */
 const crc_api_t g_crc_on_crc =
 {
@@ -69,7 +60,6 @@ const crc_api_t g_crc_on_crc =
     .crcResultGet = R_CRC_CalculatedValueGet,
     .snoopEnable  = R_CRC_SnoopEnable,
     .snoopDisable = R_CRC_SnoopDisable,
-    .versionGet   = R_CRC_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -281,26 +271,6 @@ fsp_err_t R_CRC_SnoopDisable (crc_ctrl_t * const p_ctrl)
 
     /* Clear CRCSEN to disable snoop operation */
     R_CRC->CRCCR1 = 0;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the driver version based on compile time macros.
- *
- * Implements @ref crc_api_t::versionGet
- *
- * @retval     FSP_SUCCESS          Successful close.
- * @retval     FSP_ERR_ASSERTION    p_version is NULL.
- *
- **********************************************************************************************************************/
-fsp_err_t R_CRC_VersionGet (fsp_version_t * const p_version)
-{
-#if CRC_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(p_version);
-#endif
-
-    p_version->version_id = s_crc_version.version_id;
 
     return FSP_SUCCESS;
 }

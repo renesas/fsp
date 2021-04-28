@@ -64,15 +64,6 @@
                                               (sizeof(rm_vee_seg_hdr_t) + (p_ctrl->p_cfg->ref_data_size * 2) + \
                                                sizeof(rm_vee_ref_hdr_t) + RM_VEE_FLASH_REC_OVERHEAD))
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_vee_version =
-{
-    .api_version_minor  = RM_VEE_API_VERSION_MINOR,
-    .api_version_major  = RM_VEE_API_VERSION_MAJOR,
-    .code_version_major = RM_VEE_FLASH_CODE_VERSION_MAJOR,
-    .code_version_minor = RM_VEE_FLASH_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -176,7 +167,6 @@ const rm_vee_api_t g_rm_vee_on_flash =
     .refresh       = RM_VEE_FLASH_Refresh,
     .format        = RM_VEE_FLASH_Format,
     .close         = RM_VEE_FLASH_Close,
-    .versionGet    = RM_VEE_FLASH_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -737,25 +727,6 @@ fsp_err_t RM_VEE_FLASH_Close (rm_vee_ctrl_t * const p_api_ctrl)
 
     p_ctrl->mode  = RM_VEE_FLASH_PRV_MODE_NORMAL;
     p_ctrl->state = RM_VEE_FLASH_PRV_STATES_UNINITIALIZED;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the driver version based on compile time macros.
- *
- * Implements @ref rm_vee_api_t::versionGet
- *
- * @retval FSP_SUCCESS               Successful.
- * @retval FSP_ERR_ASSERTION         p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t RM_VEE_FLASH_VersionGet (fsp_version_t * const p_version)
-{
-#if (RM_VEE_FLASH_CFG_PARAM_CHECKING_ENABLE)
-    FSP_ASSERT(p_version);
-#endif
-
-    p_version->version_id = g_vee_version.version_id;
 
     return FSP_SUCCESS;
 }

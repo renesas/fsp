@@ -51,10 +51,6 @@ FSP_HEADER
  * Macro definitions
  *********************************************************************************************************************/
 
-/* Version Number of API. */
-#define FLASH_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define FLASH_API_VERSION_MINOR    (0U) // DEPRECATED
-
 /*********************************************************************************************************************
  * Typedef definitions
  *********************************************************************************************************************/
@@ -330,6 +326,14 @@ typedef struct st_flash_api
     fsp_err_t (* startupAreaSelect)(flash_ctrl_t * const p_ctrl, flash_startup_area_swap_t swap_type,
                                     bool is_temporary);
 
+    /** Swap the bank used as the startup area. Only valid in dual bank mode.
+     * @par Implemented as
+     * - @ref R_FLASH_HP_BankSwap()
+     *
+     * @param[in]  p_ctrl        Pointer to FLASH device control.
+     */
+    fsp_err_t (* bankSwap)(flash_ctrl_t * const p_ctrl);
+
     /** Specify callback function and optional context pointer and working memory pointer.
      * @par Implemented as
      * - @ref R_FLASH_HP_CallbackSet()
@@ -342,15 +346,6 @@ typedef struct st_flash_api
      */
     fsp_err_t (* callbackSet)(flash_ctrl_t * const p_api_ctrl, void (* p_callback)(flash_callback_args_t *),
                               void const * const p_context, flash_callback_args_t * const p_callback_memory);
-
-    /* DEPRECATED Get Flash driver version.
-     * @par Implemented as
-     * - @ref R_FLASH_LP_VersionGet()
-     * - @ref R_FLASH_HP_VersionGet()
-     *
-     * @param[out]  p_version Returns version.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * p_version);
 } flash_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

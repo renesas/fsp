@@ -54,8 +54,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define DISPLAY_API_VERSION_MAJOR          (1U) // DEPRECATED
-#define DISPLAY_API_VERSION_MINOR          (0U) // DEPRECATED
 
 #define DISPLAY_GAMMA_CURVE_ELEMENT_NUM    (16)
 
@@ -427,13 +425,6 @@ typedef struct st_display_api
      * @param[in]   status     Pointer to display interface status structure.
      */
     fsp_err_t (* statusGet)(display_ctrl_t const * const p_ctrl, display_status_t * const p_status);
-
-    /* DEPRECATED Get version.
-     * @par Implemented as
-     * - @ref R_GLCDC_VersionGet()
-     * @param[in]   p_version  Pointer to the memory to store the version information.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * p_version);
 } display_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

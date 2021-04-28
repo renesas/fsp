@@ -96,15 +96,6 @@ static float rm_motor_driver_mod_get_vamax(motor_driver_modulation_t * p_mod);
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure. */
-static const fsp_version_t g_motor_driver_version =
-{
-    .api_version_minor  = MOTOR_DRIVER_API_VERSION_MINOR,
-    .api_version_major  = MOTOR_DRIVER_API_VERSION_MAJOR,
-    .code_version_major = MOTOR_DRIVER_CODE_VERSION_MAJOR,
-    .code_version_minor = MOTOR_DRIVER_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
@@ -118,7 +109,6 @@ const motor_driver_api_t g_motor_driver_on_motor_driver =
     .flagCurrentOffsetGet = RM_MOTOR_DRIVER_FlagCurrentOffsetGet,
     .currentOffsetRestart = RM_MOTOR_DRIVER_CurrentOffsetRestart,
     .parameterUpdate      = RM_MOTOR_DRIVER_ParameterUpdate,
-    .versionGet           = RM_MOTOR_DRIVER_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -428,25 +418,6 @@ fsp_err_t RM_MOTOR_DRIVER_ParameterUpdate (motor_driver_ctrl_t * const p_ctrl, m
     p_instance_ctrl->st_modulation = p_extended_cfg->mod_param;
     rm_motor_driver_mod_set_max_duty(&(p_instance_ctrl->st_modulation), p_extended_cfg->mod_param.f4_max_duty);
     rm_motor_driver_mod_set_min_duty(&(p_instance_ctrl->st_modulation), p_extended_cfg->mod_param.f4_min_duty);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return Motor Driver Module version. Implements @ref motor_driver_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS             Version information successfully read.
- * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter
- **********************************************************************************************************************/
-fsp_err_t RM_MOTOR_DRIVER_VersionGet (fsp_version_t * const p_version)
-{
-#if MOTOR_DRIVER_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_motor_driver_version.version_id;
 
     return FSP_SUCCESS;
 }

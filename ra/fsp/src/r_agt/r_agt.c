@@ -84,15 +84,6 @@ void agt_int_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure. */
-static const fsp_version_t s_agt_version =
-{
-    .api_version_minor  = TIMER_API_VERSION_MINOR,
-    .api_version_major  = TIMER_API_VERSION_MAJOR,
-    .code_version_minor = AGT_CODE_VERSION_MINOR,
-    .code_version_major = AGT_CODE_VERSION_MAJOR,
-};
-
 /* The period for even channels must be known to calculate the frequency of odd channels if the count source is AGT
  * underflow. */
 static uint32_t gp_prv_agt_periods[BSP_FEATURE_AGT_MAX_CHANNEL_NUM + 1];
@@ -116,7 +107,6 @@ const timer_api_t g_timer_on_agt =
     .statusGet    = R_AGT_StatusGet,
     .callbackSet  = R_AGT_CallbackSet,
     .close        = R_AGT_Close,
-    .versionGet   = R_AGT_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -570,25 +560,6 @@ fsp_err_t R_AGT_Close (timer_ctrl_t * const p_ctrl)
     }
 
     p_instance_ctrl->open = 0U;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Sets driver version based on compile time macros.  Implements @ref timer_api_t::versionGet.
- *
- * @retval     FSP_SUCCESS          Version in p_version.
- * @retval     FSP_ERR_ASSERTION    The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_AGT_VersionGet (fsp_version_t * const p_version)
-{
-#if AGT_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = s_agt_version.version_id;
 
     return FSP_SUCCESS;
 }

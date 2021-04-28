@@ -36,8 +36,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define SCI_I2C_MASTER_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define SCI_I2C_MASTER_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -114,7 +112,6 @@ extern i2c_master_api_t const g_i2c_master_on_sci;
 /***********************************************************************************************************************
  * Public APIs
  **********************************************************************************************************************/
-fsp_err_t R_SCI_I2C_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_SCI_I2C_Open(i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cfg_t const * const p_cfg);
 fsp_err_t R_SCI_I2C_Close(i2c_master_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_I2C_Read(i2c_master_ctrl_t * const p_api_ctrl,

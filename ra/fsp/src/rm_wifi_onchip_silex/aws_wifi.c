@@ -116,7 +116,8 @@ WIFIReturnCode_t WIFI_ConnectAP (const WIFINetworkParams_t * const pxNetworkPara
     int32_t          ret     = -1;
     uint32_t         convert_security;
 
-    if ((NULL == pxNetworkParams) || (NULL == pxNetworkParams->pcSSID) || (NULL == pxNetworkParams->pcPassword))
+    if ((NULL == pxNetworkParams) || (0 == pxNetworkParams->ucSSIDLength) ||
+        (0 == pxNetworkParams->xPassword.xWPA.ucLength))
     {
         return eWiFiFailure;
     }
@@ -126,7 +127,7 @@ WIFIReturnCode_t WIFI_ConnectAP (const WIFINetworkParams_t * const pxNetworkPara
         return eWiFiFailure;
     }
 
-    if ((NULL == pxNetworkParams->pcPassword) &&
+    if ((0 == pxNetworkParams->xPassword.xWPA.ucLength) &&
         (eWiFiSecurityOpen != pxNetworkParams->xSecurity))
     {
         return eWiFiFailure;
@@ -137,7 +138,7 @@ WIFIReturnCode_t WIFI_ConnectAP (const WIFINetworkParams_t * const pxNetworkPara
         return eWiFiFailure;
     }
 
-    if (pxNetworkParams->ucPasswordLength > wificonfigMAX_PASSPHRASE_LEN)
+    if (pxNetworkParams->xPassword.xWPA.ucLength > wificonfigMAX_PASSPHRASE_LEN)
     {
         return eWiFiFailure;
     }
@@ -145,7 +146,9 @@ WIFIReturnCode_t WIFI_ConnectAP (const WIFINetworkParams_t * const pxNetworkPara
     convert_security = prvConvertSecurityFromSilexAT(pxNetworkParams->xSecurity);
 
     ret =
-        (int32_t) rm_wifi_onchip_silex_connect(pxNetworkParams->pcSSID, convert_security, pxNetworkParams->pcPassword);
+        (int32_t) rm_wifi_onchip_silex_connect((char *) pxNetworkParams->ucSSID,
+                                               convert_security,
+                                               pxNetworkParams->xPassword.xWPA.cPassphrase);
     if (!ret)
     {
         xRetVal = eWiFiSuccess;
@@ -284,23 +287,25 @@ WIFIReturnCode_t WIFI_Ping (uint8_t * pucIPAddr, uint16_t usCount, uint32_t ulIn
 }
 
 /**
- *  Retrieves the Wi-Fi interface's IP address.
+ * @brief Get IP configuration (IP address, NetworkMask, Gateway and
+ *        DNS server addresses).
  *
- * @param[out] pucIPAddr    IP Address buffer.
+ * @param[out] pxIPInfo - Current IP configuration.
  *
  * @return eWiFiSuccess if successful and IP Address buffer has the interface's IP address,
  * failure code otherwise.
  *
+ * **Example**
  * @code
- * uint8_t ucIPAddr[ 4 ];
- * WIFI_GetIP( &ucIPAddr[0] );
+ * WIFIIPConfiguration_t xIPInfo;
+ * WIFI_GetIPInfo( &xIPInfo );
  * @endcode
  */
-WIFIReturnCode_t WIFI_GetIP (uint8_t * pucIPAddr) {
+WIFIReturnCode_t WIFI_GetIPInfo (WIFIIPConfiguration_t * pxIPInfo) {
     WIFIReturnCode_t xRetVal = eWiFiFailure;
     int32_t          ret     = -1;
 
-    ret = (int32_t) rm_wifi_onchip_silex_ip_addr_get(pucIPAddr);
+    ret = (int32_t) rm_wifi_onchip_silex_ip_addr_get(pxIPInfo->xIPAddress.ulAddress);
     if (!ret)
     {
         xRetVal = eWiFiSuccess;
@@ -399,13 +404,17 @@ WIFIReturnCode_t WIFI_GetPMMode (WIFIPMMode_t * pxPMModeType, void * pvOptionVal
 }
 
 /**
- *  Check if the Wi-Fi is connected.
  *
- * @return pdTRUE if the link is up, pdFalse otherwise.
+ * @brief Check if the Wi-Fi is connected and the AP configuration matches the query.
+ *
+ * param[in] pxNetworkParams - Network parameters to query, if NULL then just check the
+ * Wi-Fi link status.
  */
-BaseType_t WIFI_IsConnected (void) {
+BaseType_t WIFI_IsConnected (const WIFINetworkParams_t * pxNetworkParams) {
     BaseType_t xIsConnected = pdFALSE;
     fsp_err_t  status       = FSP_SUCCESS;
+
+    FSP_PARAMETER_NOT_USED(pxNetworkParams);
 
     rm_wifi_onchip_silex_socket_connected(&status);
     if (0 == status)
@@ -446,6 +455,12 @@ static uint32_t prvConvertSecurityFromSilexAT (WIFISecurity_t xSecurity) {
         }
 
         case eWiFiSecurityWPA2_ent:
+        {
+            xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_UNDEFINED;
+            break;
+        }
+
+        case eWiFiSecurityWPA3:
         {
             xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_UNDEFINED;
             break;

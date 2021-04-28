@@ -61,7 +61,6 @@ void      R_BSP_RegisterProtectDisable(bsp_reg_protect_t regs_to_unprotect);
 fsp_err_t R_BSP_GroupIrqWrite(bsp_grp_irq_t irq, void (* p_callback)(bsp_grp_irq_t irq));
 void      R_BSP_OctaclkUpdate(bsp_octaclk_settings_t * p_octaclk_setting);
 void      R_BSP_SoftwareDelay(uint32_t delay, bsp_delay_units_t units);
-fsp_err_t R_BSP_VersionGet(fsp_version_t * p_version);
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

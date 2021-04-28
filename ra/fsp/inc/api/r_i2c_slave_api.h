@@ -50,8 +50,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define I2C_SLAVE_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define I2C_SLAVE_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -176,14 +174,6 @@ typedef struct st_i2c_slave_api
      * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      */
     fsp_err_t (* close)(i2c_slave_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Gets version information and stores it in the provided version struct.
-     * @par Implemented as
-     * - @ref R_IIC_SLAVE_VersionGet()
-     *
-     * @param[out] p_version  Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } i2c_slave_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

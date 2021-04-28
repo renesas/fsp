@@ -39,9 +39,6 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-#define GLCDC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define GLCDC_CODE_VERSION_MINOR    (0U) // DEPRECATED
-
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -236,7 +233,6 @@ fsp_err_t R_GLCDC_ClutEdit(display_ctrl_t const * const p_api_ctrl,
                            uint8_t                      index,
                            uint32_t                     color);
 fsp_err_t R_GLCDC_StatusGet(display_ctrl_t const * const p_api_ctrl, display_status_t * const status);
-fsp_err_t R_GLCDC_VersionGet(fsp_version_t * p_version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup GLCDC)

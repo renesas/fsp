@@ -50,10 +50,7 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CTSU_API_VERSION_MAJOR    (1U)     // DEPRECATED
-#define CTSU_API_VERSION_MINOR    (2U)     // DEPRECATED
-
-#define CTSU_COUNT_MAX            (0xFFFF) ///< Value of Maximum count
+#define CTSU_COUNT_MAX    (0xFFFF)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -112,7 +109,8 @@ typedef enum e_ctsu_mode
     CTSU_MODE_MUTUAL_FULL_SCAN = 3,    ///< Mutual capacitance full scan mode
     CTSU_MODE_MUTUAL_CFC_SCAN  = 7,    ///< Mutual capacitance cfc scan mode (CTSU2 Only)
     CTSU_MODE_CURRENT_SCAN     = 9,    ///< Current scan mode (CTSU2 Only)
-    CTSU_MODE_CORRECTION_SCAN  = 17    ///< Correction scan mode (CTSU2 Only)
+    CTSU_MODE_CORRECTION_SCAN  = 17,   ///< Correction scan mode (CTSU2 Only)
+    CTSU_MODE_DIAGNOSIS_SCAN   = 33    ///< Diagnosis scan mode
 } ctsu_md_t;
 
 /** CTSU Non-Measured Channel Output Select (CTSU2 Only) */
@@ -234,6 +232,14 @@ typedef struct st_ctsu_api
      */
     fsp_err_t (* dataGet)(ctsu_ctrl_t * const p_ctrl, uint16_t * p_data);
 
+    /** Diagnosis.
+     * @par Implemented as
+     * - @ref R_CTSU_Diagnosis()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     */
+    fsp_err_t (* diagnosis)(ctsu_ctrl_t * const p_ctrl);
+
     /** Specify callback function and optional context pointer and working memory pointer.
      * @par Implemented as
      * - @ref R_CTSU_CallbackSet()
@@ -254,15 +260,6 @@ typedef struct st_ctsu_api
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(ctsu_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Return the version of the driver.
-     * @par Implemented as
-     * - @ref R_CTSU_VersionGet()
-     *
-     * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[out] p_data       Memory address to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_data);
 } ctsu_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

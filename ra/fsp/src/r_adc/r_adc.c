@@ -73,6 +73,9 @@
 /* Stabilization time when BGR is enabled */
 #define ADC_BGR_STABILIZATION_DELAY_US              (150U)
 
+/* Bit set in adc_vref_control if the internal voltage reference is used for VREFH. */
+#define ADC_PRV_ADHVREFCNT_VREF_INTERNAL_BIT_1      (1U << 1)
+
 #define ADC_PRV_ADCSR_ADST_TRGE_MASK                (R_ADC0_ADCSR_ADST_Msk | R_ADC0_ADCSR_TRGE_Msk)
 #define ADC_PRV_ADCSR_CLEAR_ADST_TRGE               (~ADC_PRV_ADCSR_ADST_TRGE_MASK)
 
@@ -136,15 +139,6 @@ void           adc_scan_end_isr(void);
 static int32_t r_adc_lowest_channel_get(uint32_t adc_mask);
 static void    r_adc_scan_end_common_isr(adc_event_t event);
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_adc_version =
-{
-    .api_version_minor  = ADC_API_VERSION_MINOR,
-    .api_version_major  = ADC_API_VERSION_MAJOR,
-    .code_version_major = ADC_CODE_VERSION_MAJOR,
-    .code_version_minor = ADC_CODE_VERSION_MINOR
-};
-
 /** Look-up table for ADSTRGR values */
 static const uint32_t adc_elc_trigger_lut[] =
 {
@@ -182,7 +176,6 @@ const adc_api_t g_adc_on_adc =
     .read          = R_ADC_Read,
     .read32        = R_ADC_Read32,
     .close         = R_ADC_Close,
-    .versionGet    = R_ADC_VersionGet,
     .calibrate     = R_ADC_Calibrate,
     .offsetSet     = R_ADC_OffsetSet,
     .callbackSet   = R_ADC_CallbackSet,
@@ -722,26 +715,6 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
     return FSP_SUCCESS;
 }
 
-/***********************************************************************************************************************
- * DEPRECATED Retrieve the API version number.
- *
- * @retval FSP_SUCCESS                 Version stored in the provided p_version.
- * @retval FSP_ERR_ASSERTION           An input argument is invalid.
- **********************************************************************************************************************/
-fsp_err_t R_ADC_VersionGet (fsp_version_t * const p_version)
-{
-#if ADC_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    /* Return the version number */
-    p_version->version_id = g_adc_version.version_id;
-
-    return FSP_SUCCESS;
-}
-
 /*******************************************************************************************************************//**
  * Initiates calibration of the ADC on MCUs that require calibration.  This function must be called before starting
  * a scan on MCUs that require calibration.
@@ -1186,6 +1159,22 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
         /* Enable Over current detection and VREFADC output */
         p_instance_ctrl->p_reg->VREFAMPCNT = (uint8_t) (p_cfg_extend->adc_vref_control);
     }
+#endif
+
+#if BSP_FEATURE_ADC_HAS_ADHVREFCNT
+
+    /* If the internal voltage is set as VREFH, discharge the VREF node for 1 us before setting ADHVREFCNT.HVSEL to 2.
+     * Reference section 35.7 "A/D Conversion Procedure when Selecting Internal Reference Voltage as High-Potential
+     * Reference Voltage" in the RA4M1 manual R01UH0887EJ0100.
+     *
+     * Also wait 5 us before using the ADC. This wait is the responsibility of the application. */
+    if (ADC_PRV_ADHVREFCNT_VREF_INTERNAL_BIT_1 & p_cfg_extend->adc_vref_control)
+    {
+        p_instance_ctrl->p_reg->ADHVREFCNT = (uint8_t) (p_cfg_extend->adc_vref_control | R_ADC0_ADHVREFCNT_HVSEL_Msk);
+
+        R_BSP_SoftwareDelay(1U, BSP_DELAY_UNITS_MICROSECONDS);
+    }
+    p_instance_ctrl->p_reg->ADHVREFCNT = (uint8_t) p_cfg_extend->adc_vref_control;
 #endif
 
 #if BSP_FEATURE_ADC_HAS_ADBUF

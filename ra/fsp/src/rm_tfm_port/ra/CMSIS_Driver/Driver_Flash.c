@@ -40,11 +40,8 @@ const ARM_DRIVER_VERSION Flash_Driver_Version =
     ARM_FLASH_DRV_VERSION
 };
 
-#define DFLASH_DEV    g_tfm_fsp_flash
-#define CFLASH_DEV    g_tfm_fsp_flash
-
-extern flash_instance_t DFLASH_DEV;
-extern flash_instance_t CFLASH_DEV;
+/* Instance structure to use this module. */
+extern const flash_instance_t * gp_mcuboot_flash_instance;
 
 /**
  * Data types values
@@ -117,9 +114,9 @@ enum
  */
 typedef struct _FLASHx_Resources
 {
-    flash_instance_t * dev;            /*!< FLASH memory device structure */
-    ARM_FLASH_INFO   * data;           /*!< FLASH memory device data */
-    ARM_FLASH_STATUS * status;
+    flash_instance_t const * dev;      /*!< FLASH memory device structure */
+    ARM_FLASH_INFO         * data;     /*!< FLASH memory device data */
+    ARM_FLASH_STATUS       * status;
 } ARM_FLASHx_Resources;
 
 static ARM_DRIVER_VERSION ARM_Flash_GetVersion (void)
@@ -140,14 +137,17 @@ static int32_t ARM_Flashx_Initialize (ARM_FLASHx_Resources  * ARM_FLASHx_DEV,
     uint32_t flash_size = 0U;
     uint32_t page_size  = 0U;
 
+    ARM_FLASHx_DEV->dev = gp_mcuboot_flash_instance;
+
     ARM_FLASHx_DEV->status->error = DRIVER_STATUS_ERROR;
-    ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_BUSY;
+    ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_BUSY;
 
     R_FLASH_HP_Close(ARM_FLASHx_DEV->dev->p_ctrl);
     fsp_err_t err = R_FLASH_HP_Open(ARM_FLASHx_DEV->dev->p_ctrl, ARM_FLASHx_DEV->dev->p_cfg);
     if (FSP_SUCCESS != err)
     {
         ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
         return ARM_DRIVER_ERROR;
     }
 
@@ -156,6 +156,7 @@ static int32_t ARM_Flashx_Initialize (ARM_FLASHx_Resources  * ARM_FLASHx_DEV,
     {
         R_FLASH_HP_Close(ARM_FLASHx_DEV->dev->p_ctrl);
         ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
         return ARM_DRIVER_ERROR;
     }
 
@@ -182,11 +183,12 @@ static int32_t ARM_Flashx_Initialize (ARM_FLASHx_Resources  * ARM_FLASHx_DEV,
     {
         R_FLASH_HP_Close(ARM_FLASHx_DEV->dev->p_ctrl);
         ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
         return ARM_DRIVER_ERROR_PARAMETER;
     }
 
     ARM_FLASHx_DEV->status->error = DRIVER_STATUS_NO_ERROR;
-    ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+    ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
 
     return ARM_DRIVER_OK;
 }
@@ -233,13 +235,14 @@ static int32_t ARM_Flashx_ReadData (ARM_FLASHx_Resources * ARM_FLASHx_DEV,
     flash_result_t blank_check_result = FLASH_RESULT_BLANK;
 
     ARM_FLASHx_DEV->status->error = DRIVER_STATUS_ERROR;
-    ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_BUSY;
+    ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_BUSY;
 
     flash_info_t info;
     if (FSP_SUCCESS != R_FLASH_HP_InfoGet(ARM_FLASHx_DEV->dev->p_ctrl, &info))
     {
         R_FLASH_HP_Close(ARM_FLASHx_DEV->dev->p_ctrl);
         ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
         return ARM_DRIVER_ERROR;
     }
 
@@ -265,6 +268,7 @@ static int32_t ARM_Flashx_ReadData (ARM_FLASHx_Resources * ARM_FLASHx_DEV,
              (ARM_FLASHx_DEV->data->sector_size * ARM_FLASHx_DEV->data->sector_count)))
         {
             ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
             return ARM_DRIVER_ERROR_PARAMETER;
         }
 
@@ -282,6 +286,7 @@ static int32_t ARM_Flashx_ReadData (ARM_FLASHx_Resources * ARM_FLASHx_DEV,
             }
 
             ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
             return ARM_DRIVER_ERROR;
         }
     }
@@ -321,17 +326,20 @@ static int32_t ARM_Flashx_ProgramData (ARM_FLASHx_Resources * ARM_FLASHx_DEV,
         if ((err == FSP_ERR_INVALID_ADDRESS) ||
             (err == FSP_ERR_INVALID_SIZE))
         {
-            ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
+            ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
             /* The native driver checks aligment and range */
             return ARM_DRIVER_ERROR_PARAMETER;
         }
 
-        ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
+        ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
         return ARM_DRIVER_ERROR;
     }
 
     ARM_FLASHx_DEV->status->error = DRIVER_STATUS_NO_ERROR;
     ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
+
     return ARM_DRIVER_OK;
 }
 
@@ -354,15 +362,19 @@ static int32_t ARM_Flashx_EraseSector (ARM_FLASHx_Resources * ARM_FLASHx_DEV, ui
     {
         if (err == FSP_ERR_INVALID_ADDRESS)
         {
-            ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
+            ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
             return ARM_DRIVER_ERROR_PARAMETER;
         }
-        ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
+
+        ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
         return ARM_DRIVER_ERROR;
     }
 
     ARM_FLASHx_DEV->status->error = DRIVER_STATUS_NO_ERROR;
     ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
+
     return ARM_DRIVER_OK;
 }
 
@@ -383,7 +395,7 @@ static int32_t ARM_Flashx_EraseChip (ARM_FLASHx_Resources * ARM_FLASHx_DEV, driv
 
     if (err != FSP_SUCCESS)
     {
-        ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
+        ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
 
         return ARM_DRIVER_ERROR;
     }
@@ -403,12 +415,14 @@ static int32_t ARM_Flashx_EraseChip (ARM_FLASHx_Resources * ARM_FLASHx_DEV, driv
 
     if (err != FSP_SUCCESS)
     {
-        ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
+        ARM_FLASHx_DEV->status->busy = DRIVER_STATUS_IDLE;
+
         return ARM_DRIVER_ERROR;
     }
 
     ARM_FLASHx_DEV->status->error = DRIVER_STATUS_NO_ERROR;
     ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_IDLE;
+
     return ARM_DRIVER_OK;
 }
 
@@ -443,9 +457,8 @@ static ARM_FLASH_STATUS shared_status =
 
 static ARM_FLASHx_Resources ARM_DFLASH_DEV =
 {
-    .dev    = &DFLASH_DEV,       /* Shared between DFlash and Cflash */
     .data   = &(ARM_DFLASH_DEV_DATA),
-    .status = &shared_status,    /* Shared between DFlash and Cflash */
+    .status = &shared_status,          /* Shared between DFlash and Cflash */
 };
 
 static ARM_DRIVER_VERSION ARM_DFlash_GetVersion (void)
@@ -520,22 +533,21 @@ ARM_DRIVER_FLASH Driver_DFLASH =
 
 static ARM_FLASH_INFO ARM_CFLASH_DEV_DATA =
 {
-    .sector_info  = NULL,                                                                                           /* Uniform sector layout */
+    .sector_info  = NULL,                                                    /* Uniform sector layout */
     .sector_count =
         ((BSP_ROM_SIZE_BYTES) / BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE), /* (flash size of 32k blocks only) / 32kB */
-    .sector_size  = BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE,                                                     /* 32kB - as there are no sectors the page size
-                                                                                                                     *        size is used here
-                                                                                                                     */
-    .page_size    = BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE,                                                     /* 32kB */
-    .program_unit = BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE,                                                             /* Minimum write size in bytes */
+    .sector_size  = BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE,              /* 32kB - as there are no sectors the page size
+                                                                              *        size is used here
+                                                                              */
+    .page_size    = BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE,              /* 32kB */
+    .program_unit = BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE,                      /* Minimum write size in bytes */
     .erased_value = 0xFF
 };
 
 static ARM_FLASHx_Resources ARM_CFLASH_DEV =
 {
-    .dev    = &CFLASH_DEV,       /* Shared between DFlash and Cflash */
     .data   = &ARM_CFLASH_DEV_DATA,
-    .status = &shared_status,    /* Shared between DFlash and Cflash */
+    .status = &shared_status,          /* Shared between DFlash and Cflash */
 };
 
 static ARM_DRIVER_VERSION ARM_CFlash_GetVersion (void)

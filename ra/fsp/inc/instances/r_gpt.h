@@ -38,8 +38,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define GPT_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define GPT_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -59,13 +57,6 @@ typedef enum e_gpt_pin_level
     GPT_PIN_LEVEL_LOW  = 0,            ///< Pin level low
     GPT_PIN_LEVEL_HIGH = 1,            ///< Pin level high
 } gpt_pin_level_t;
-
-/* DEPRECATED - Do not use. */
-typedef enum e_gpt_shortest_level
-{
-    GPT_SHORTEST_LEVEL_OFF = 0,
-    GPT_SHORTEST_LEVEL_ON  = 1,
-} gpt_shortest_level_t;
 
 /** Sources can be used to start the timer, stop the timer, count up, or count down. These enumerations represent
  * a bitmask. Multiple sources can be ORed together. */
@@ -287,14 +278,13 @@ typedef struct st_gpt_extended_pwm_cfg
 /** GPT extension configures the output pins for GPT. */
 typedef struct st_gpt_extended_cfg
 {
-    gpt_output_pin_t     gtioca;              ///< Configuration for GPT I/O pin A
-    gpt_output_pin_t     gtiocb;              ///< Configuration for GPT I/O pin B
-    gpt_shortest_level_t shortest_pwm_signal; // DEPRECATED - Do not use
-    gpt_source_t         start_source;        ///< Event sources that trigger the timer to start
-    gpt_source_t         stop_source;         ///< Event sources that trigger the timer to stop
-    gpt_source_t         clear_source;        ///< Event sources that trigger the timer to clear
-    gpt_source_t         capture_a_source;    ///< Event sources that trigger capture of GTIOCA
-    gpt_source_t         capture_b_source;    ///< Event sources that trigger capture of GTIOCB
+    gpt_output_pin_t gtioca;           ///< Configuration for GPT I/O pin A
+    gpt_output_pin_t gtiocb;           ///< Configuration for GPT I/O pin B
+    gpt_source_t     start_source;     ///< Event sources that trigger the timer to start
+    gpt_source_t     stop_source;      ///< Event sources that trigger the timer to stop
+    gpt_source_t     clear_source;     ///< Event sources that trigger the timer to clear
+    gpt_source_t     capture_a_source; ///< Event sources that trigger capture of GTIOCA
+    gpt_source_t     capture_b_source; ///< Event sources that trigger capture of GTIOCB
 
     /** Event sources that trigger a single up count. If GPT_SOURCE_NONE is selected for both count_up_source
      * and count_down_source, then the timer count source is PCLK.  */
@@ -351,7 +341,6 @@ fsp_err_t R_GPT_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
                             void const * const            p_context,
                             timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_GPT_Close(timer_ctrl_t * const p_ctrl);
-fsp_err_t R_GPT_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup GPT)

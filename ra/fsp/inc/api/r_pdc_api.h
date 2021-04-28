@@ -50,8 +50,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define PDC_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define PDC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -169,15 +167,6 @@ typedef struct st_pdc_api
      * @param[in]  p_buffer     Pointer to store captured image data.
      */
     fsp_err_t (* captureStart)(pdc_ctrl_t * const p_ctrl, uint8_t * const p_buffer);
-
-    /* DEPRECATED Return the version of the driver.
-     * @par Implemented as
-     * - @ref R_PDC_VersionGet()
-     *
-     * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[out] p_data       Memory address to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_data);
 } pdc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

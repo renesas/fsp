@@ -307,15 +307,6 @@ void sdhimmc_sdio_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_sdmmc_version =
-{
-    .api_version_minor  = SDMMC_API_VERSION_MINOR,
-    .api_version_major  = SDMMC_API_VERSION_MAJOR,
-    .code_version_major = SDHI_CODE_VERSION_MAJOR,
-    .code_version_minor = SDHI_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -336,7 +327,6 @@ const sdmmc_api_t g_sdmmc_on_sdhi =
     .erase       = R_SDHI_Erase,
     .callbackSet = R_SDHI_CallbackSet,
     .close       = R_SDHI_Close,
-    .versionGet  = R_SDHI_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -395,6 +385,9 @@ fsp_err_t R_SDHI_Open (sdmmc_ctrl_t * const p_api_ctrl, sdmmc_cfg_t const * cons
 
     /* Clear module stop bit (turn module on). */
     R_BSP_MODULE_START(FSP_IP_SDHIMMC, p_cfg->channel);
+
+    /* Reset stale interrupt flags */
+    p_ctrl->p_reg->SD_INFO1 = 0U;
 
     /* Reset SDHI. */
     p_ctrl->p_reg->SOFT_RST = 0x0U;
@@ -1121,26 +1114,6 @@ fsp_err_t R_SDHI_Close (sdmmc_ctrl_t * const p_api_ctrl)
      * the card could be unplugged and waiting for the response timeout in this function is not desireable. */
 
     return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Returns the version of the firmware and API.  Implements @ref sdmmc_api_t::versionGet().
- *
- * @retval     FSP_SUCCESS        Function executed successfully.
- * @retval     FSP_ERR_ASSERTION  Null Pointer.
- **********************************************************************************************************************/
-fsp_err_t R_SDHI_VersionGet (fsp_version_t * const p_version)
-{
-    fsp_err_t err = FSP_SUCCESS;
-
-#if SDHI_CFG_PARAM_CHECKING_ENABLE
-
-    /* Check pointers for NULL values */
-    FSP_ASSERT(NULL != p_version);
-#endif
-    p_version->version_id = g_sdmmc_version.version_id;
-
-    return err;
 }
 
 /*******************************************************************************************************************//**

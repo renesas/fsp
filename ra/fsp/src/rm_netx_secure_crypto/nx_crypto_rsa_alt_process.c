@@ -1,0 +1,165 @@
+/***********************************************************************************************************************
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ *
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * File Name    : nx_crypto_rsa_alt_process.c
+ * Description  : Functions interfacing with SCE
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Includes
+ **********************************************************************************************************************/
+
+#include "rm_netx_secure_crypto_cfg.h"
+#if ((1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT) || \
+    (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT) ||  \
+    (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT))
+ #include "nx_crypto_rsa.h"
+ #include "hw_sce_private.h"
+ #include "hw_sce_ra_private.h"
+ #include "hw_sce_rsa_private.h"
+ #include "rm_netx_secure_crypto.h"
+
+/***********************************************************************************************************************
+ * Macro definitions
+ **********************************************************************************************************************/
+ #define RM_NETX_SECURE_CRYPTO_RSA_EXPONENT_LENGTH_BYTES    (4U)
+
+/*******************************************************************************************************************//**
+ * @addtogroup RM_NETX_SECURE_CRYPTO
+ * @{
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * Functions
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
+ * RSA Operation - Encryption/Decryption
+ * This function performs an RSA encryption/decryption operation based on the exponent length input (public/private key).
+ * Wrapped or plain private key can be provided.
+ * Unformatted/standard public key must be provided.
+ * @retval NX_CRYPTO_SUCCESS              Encryption/decryption operation was successful.
+ * @retval NX_CRYPTO_NOT_SUCCESSFUL       Encryption/decryption operation failed.
+ * @retval NX_CRYPTO_UNSUPPORTED_KEY_SIZE Unsupported key size based on the exponent length passed.
+ **********************************************************************************************************************/
+UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
+                                  UINT          exponent_length,
+                                  const UCHAR * modulus,
+                                  UINT          modulus_length,
+                                  const UCHAR * input,
+                                  UINT          input_length,
+                                  UCHAR       * output)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    /* Check exponent length to determine key type and format */
+    if (exponent_length <= RM_NETX_SECURE_CRYPTO_RSA_EXPONENT_LENGTH_BYTES)
+    {
+        /* Unformatted public key : This is an Encryption operation */
+        uint8_t padded_exponent[4U] = {0};
+        NX_CRYPTO_MEMCPY(&padded_exponent[RM_NETX_SECURE_CRYPTO_RSA_EXPONENT_LENGTH_BYTES - exponent_length],
+                         exponent,
+                         exponent_length);
+
+        /* Check for modulus size to determine RSA size */
+        switch (modulus_length)
+        {
+            case HW_SCE_RSA_4096_KEY_N_LENGTH_BYTE_SIZE:
+            {
+ #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT)
+                err =
+                    HW_SCE_RSA_4096PublicKeyEncrypt((uint32_t *) input,
+                                                    (uint32_t *) padded_exponent,
+                                                    (uint32_t *) modulus,
+                                                    (uint32_t *) output);
+ #endif
+                break;
+            }
+
+            case HW_SCE_RSA_3072_KEY_N_LENGTH_BYTE_SIZE:
+            {
+ #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT)
+                err =
+                    HW_SCE_RSA_3072PublicKeyEncrypt((uint32_t *) input,
+                                                    (uint32_t *) padded_exponent,
+                                                    (uint32_t *) modulus,
+                                                    (uint32_t *) output);
+ #endif
+                break;
+            }
+
+            case HW_SCE_RSA_2048_KEY_N_LENGTH_BYTE_SIZE:
+            {
+ #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT)
+                err =
+                    HW_SCE_RSA_2048PublicKeyEncrypt((uint32_t *) input,
+                                                    (uint32_t *) padded_exponent,
+                                                    (uint32_t *) modulus,
+                                                    (uint32_t *) output);
+ #endif
+                break;
+            }
+
+            default:
+            {
+                return NX_CRYPTO_UNSUPPORTED_KEY_SIZE;
+            }
+        }
+    }
+
+ #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT)
+    else if (HW_SCE_RSA_2048_KEY_D_LENGTH_BYTE_SIZE == exponent_length)
+    {
+        uint32_t key[HW_SCE_RSA2048_ND_KEY_BYTE_SIZE >> 2U] = {0};
+        NX_CRYPTO_MEMCPY(key, modulus, modulus_length);
+        NX_CRYPTO_MEMCPY(&key[modulus_length >> 2U], exponent, exponent_length);
+
+        /* Plain private key: This is a decryption operation */
+        err = HW_SCE_RSA_2048PrivateKeyDecrypt((uint32_t *) input, NULL, key, (uint32_t *) output);
+    }
+    /* This is a special case where the entire wrapped key is passed through the exponent parameter */
+    else if (RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(HW_SCE_RSA2048_ND_KEY_INDEX_WORD_SIZE) == exponent_length)
+    {
+        /* Check the input message length to ensure its not larger than the modulus size.
+         * Note: Since the wrapped key (and not the plain modulus) is passed during init API,
+         * a larger length is allowed by the caller during the operation API.
+         * (Wrapped key length is larger than plain modulus length)
+         * Verify length to preserve security. */
+        if (input_length > HW_SCE_RSA_2048_KEY_N_LENGTH_BYTE_SIZE)
+        {
+            return NX_CRYPTO_PTR_ERROR;
+        }
+
+        /* Wrapped private key : This is a decryption operation */
+        err =
+            HW_SCE_HRK_RSA_2048PrivateKeyDecrypt((uint32_t *) input, (uint32_t *) exponent, NULL, (uint32_t *) output);
+    }
+ #endif
+    else
+    {
+        return NX_CRYPTO_UNSUPPORTED_KEY_SIZE;
+    }
+    FSP_ERROR_RETURN((FSP_SUCCESS == err), NX_CRYPTO_NOT_SUCCESSFUL);
+
+    return NX_CRYPTO_SUCCESS;
+}
+
+#endif

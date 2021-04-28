@@ -44,8 +44,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
- #define RM_FREERTOS_PLUS_FAT_CODE_VERSION_MAJOR    (1U) // DEPRECATED
- #define RM_FREERTOS_PLUS_FAT_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -82,7 +80,6 @@ fsp_err_t RM_FREERTOS_PLUS_FAT_InfoGet(rm_freertos_plus_fat_ctrl_t * const p_ctr
                                        FF_Disk_t * const                   p_disk,
                                        rm_freertos_plus_fat_info_t * const p_info);
 fsp_err_t RM_FREERTOS_PLUS_FAT_Close(rm_freertos_plus_fat_ctrl_t * const p_ctrl);
-fsp_err_t RM_FREERTOS_PLUS_FAT_VersionGet(fsp_version_t * const p_version);
 
  #ifdef __cplusplus
 }                                      /* extern "C" */

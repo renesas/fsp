@@ -31,6 +31,13 @@
 #include "../hw/inc/r_usb_bitdefine.h"
 #include "../hw/inc/r_usb_reg_access.h"
 
+#if (BSP_CFG_RTOS == 1)
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_api.h"
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_system.h"
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_utility.h"
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_device_stack.h"
+#endif                                 /* #if (BSP_CFG_RTOS == 1) */
+
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /******************************************************************************
@@ -38,8 +45,11 @@
  ******************************************************************************/
  #if USB_CFG_BC == USB_CFG_ENABLE
 extern uint16_t g_usb_bc_detect;
-
  #endif                                /* USB_CFG_BC == USB_CFG_ENABLE */
+
+ #if (BSP_CFG_RTOS == 1)
+extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
 
 /******************************************************************************
  * Renesas Abstracted Peripheral signal control functions
@@ -63,6 +73,34 @@ void usb_pstd_bus_reset (usb_utr_t * p_utr)
     usb_pstd_clr_mem();
     connect_info = usb_cstd_port_speed(p_utr);
 
+ #if (BSP_CFG_RTOS == 1)
+    switch (connect_info)
+    {
+        case USB_HSCONNECT:
+        {
+            _ux_system_slave->ux_system_slave_speed = (uint32_t) UX_HIGH_SPEED_DEVICE;
+            break;
+        }
+
+        case USB_FSCONNECT:
+        {
+            _ux_system_slave->ux_system_slave_speed = (uint32_t) UX_FULL_SPEED_DEVICE;
+            break;
+        }
+
+        case USB_LSCONNECT:
+        {
+            _ux_system_slave->ux_system_slave_speed = (uint32_t) UX_LOW_SPEED_DEVICE;
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
+
     /* Callback */
     if (USB_NULL != g_usb_pstd_driver.devdefault)
     {
@@ -71,6 +109,10 @@ void usb_pstd_bus_reset (usb_utr_t * p_utr)
  #else                                 /* USB_CFG_BC == USB_CFG_ENABLE */
         (*g_usb_pstd_driver.devdefault)(p_utr, connect_info, USB_NULL);
  #endif /* USB_CFG_BC == USB_CFG_ENABLE */
+
+ #if (BSP_CFG_RTOS == 1)
+        usb_peri_usbx_initialize_complete();
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
     }
 
     /* DCP configuration register  (0x5C) */
@@ -133,6 +175,10 @@ void usb_pstd_detach_process (usb_utr_t * p_utr)
         {
             usb_pstd_forced_termination(i, (uint16_t) USB_DATA_STOP, p_utr);
             usb_cstd_clr_pipe_cnfg(p_utr, i);
+ #if (BSP_CFG_RTOS == 1)
+            tx_semaphore_put(&g_usb_peri_usbx_sem[i]);
+            tx_semaphore_delete(&g_usb_peri_usbx_sem[i]);
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
         }
     }
 

@@ -38,8 +38,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ICU_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define ICU_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /*********************************************************************************************************************
  * Typedef definitions
@@ -79,8 +77,6 @@ fsp_err_t R_ICU_ExternalIrqOpen(external_irq_ctrl_t * const p_api_ctrl, external
 fsp_err_t R_ICU_ExternalIrqEnable(external_irq_ctrl_t * const p_api_ctrl);
 
 fsp_err_t R_ICU_ExternalIrqDisable(external_irq_ctrl_t * const p_api_ctrl);
-
-fsp_err_t R_ICU_ExternalIrqVersionGet(fsp_version_t * const p_version);
 
 fsp_err_t R_ICU_ExternalIrqCallbackSet(external_irq_ctrl_t * const          p_api_ctrl,
                                        void (                             * p_callback)(external_irq_callback_args_t *),

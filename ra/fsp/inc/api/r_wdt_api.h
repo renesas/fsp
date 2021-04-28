@@ -50,8 +50,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define WDT_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define WDT_API_VERSION_MINOR    (0U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -235,15 +233,6 @@ typedef struct st_wdt_api
      */
     fsp_err_t (* callbackSet)(wdt_ctrl_t * const p_api_ctrl, void (* p_callback)(wdt_callback_args_t *),
                               void const * const p_context, wdt_callback_args_t * const p_callback_memory);
-
-    /* DEPRECATED Return the version of the driver.
-     * @par Implemented as
-     * - @ref R_WDT_VersionGet()
-     * - @ref R_IWDT_VersionGet()
-     * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[out] p_data       Memory address to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_data);
 } wdt_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

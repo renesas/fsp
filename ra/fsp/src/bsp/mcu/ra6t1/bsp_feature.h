@@ -64,6 +64,7 @@
 #define BSP_FEATURE_ADC_GROUP_B_SENSORS_ALLOWED           (1U)
 #define BSP_FEATURE_ADC_HAS_ADCER_ADPRC                   (1U)
 #define BSP_FEATURE_ADC_HAS_ADCER_ADRFMT                  (1U)
+#define BSP_FEATURE_ADC_HAS_ADHVREFCNT                    (0U)
 #define BSP_FEATURE_BSP_HAS_CLOCK_SUPPLY_TYPEB            (0U)
 #define BSP_FEATURE_ADC_HAS_PGA                           (1U)
 #define BSP_FEATURE_ADC_HAS_SAMPLE_HOLD_REG               (1U)
@@ -139,7 +140,7 @@
 #define BSP_FEATURE_CGC_HAS_PLL                           (1U)
 #define BSP_FEATURE_CGC_HAS_PLL2                          (0U) // On the RA6M4 there is another PLL that can be used as a clock source for USB and OCTASPI.
 #define BSP_FEATURE_CGC_HAS_SRAMPRCR2                     (0U) // On the RA6M4 there is another register to enable write access for SRAMWTSC.
-#define BSP_FEATURE_CGC_HAS_SRAMWTSC                      (1U)
+#define BSP_FEATURE_CGC_HAS_SRAMWTSC                      (0U)
 #define BSP_FEATURE_CGC_HOCOSF_BEFORE_OPCCR               (0U)
 #define BSP_FEATURE_CGC_HOCOWTCR_64MHZ_ONLY               (0U)
 #define BSP_FEATURE_CGC_ICLK_DIV_RESET                    (BSP_CLOCKS_SYS_CLOCK_DIV_4)
@@ -199,6 +200,7 @@
 #define BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE                (64U)
 #define BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE                (4U)
 #define BSP_FEATURE_FLASH_HP_HAS_FMEPROT                  (0) // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK           (0) // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_HP_VERSION                      (40U)
 #define BSP_FEATURE_FLASH_LP_AWS_FAW_MASK                 (0) // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_LP_AWS_FAW_SHIFT                (0) // Feature not available on this MCU
@@ -288,6 +290,8 @@
 #define BSP_FEATURE_SPI_HAS_SPCR3                         (0U)
 #define BSP_FEATURE_SPI_HAS_SSL_LEVEL_KEEP                (1U)
 #define BSP_FEATURE_SPI_MAX_CHANNEL                       (2U)
+
+#define BSP_FEATURE_SRAM_SRAMWTSC_WAIT_CYCLE_ENABLE       (0) // Feature not available on this MCU
 
 #define BSP_FEATURE_SSI_FIFO_NUM_STAGES                   (0U)
 #define BSP_FEATURE_SSI_VALID_CHANNEL_MASK                (0U)

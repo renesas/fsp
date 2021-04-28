@@ -38,8 +38,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define DMAC_CODE_VERSION_MAJOR            (1U) // DEPRECATED
-#define DMAC_CODE_VERSION_MINOR            (0U) // DEPRECATED
 
 /** Max configurable number of transfers in TRANSFER_MODE_NORMAL. */
 #define DMAC_MAX_NORMAL_TRANSFER_LENGTH    (0xFFFF)
@@ -125,7 +123,6 @@ fsp_err_t R_DMAC_Enable(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DMAC_Disable(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DMAC_InfoGet(transfer_ctrl_t * const p_api_ctrl, transfer_properties_t * const p_info);
 fsp_err_t R_DMAC_Close(transfer_ctrl_t * const p_api_ctrl);
-fsp_err_t R_DMAC_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_DMAC_BlockReset(transfer_ctrl_t * const p_ctrl,
                             void const * volatile   p_src,
                             void * volatile         p_dest,

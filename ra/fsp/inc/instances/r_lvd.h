@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define LVD_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define LVD_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -76,7 +74,6 @@ fsp_err_t R_LVD_Open(lvd_ctrl_t * const p_api_ctrl, lvd_cfg_t const * const p_cf
 fsp_err_t R_LVD_Close(lvd_ctrl_t * const p_api_ctrl);
 fsp_err_t R_LVD_StatusGet(lvd_ctrl_t * const p_api_ctrl, lvd_status_t * p_lvd_status);
 fsp_err_t R_LVD_StatusClear(lvd_ctrl_t * const p_api_ctrl);
-fsp_err_t R_LVD_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_LVD_CallbackSet(lvd_ctrl_t * const          p_api_ctrl,
                             void (                    * p_callback)(lvd_callback_args_t *),
                             void const * const          p_context,

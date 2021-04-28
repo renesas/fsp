@@ -40,8 +40,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_SENSORLESS_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define MOTOR_SENSORLESS_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -152,8 +150,6 @@ fsp_err_t RM_MOTOR_SENSORLESS_AngleGet(motor_ctrl_t * const p_ctrl, float * cons
 fsp_err_t RM_MOTOR_SENSORLESS_SpeedGet(motor_ctrl_t * const p_ctrl, float * const p_speed_rpm);
 
 fsp_err_t RM_MOTOR_SENSORLESS_ErrorCheck(motor_ctrl_t * const p_ctrl, uint16_t * const p_error);
-
-fsp_err_t RM_MOTOR_SENSORLESS_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup MOTOR_SENSORLESS)

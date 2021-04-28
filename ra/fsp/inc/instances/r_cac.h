@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CAC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define CAC_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -79,7 +77,6 @@ fsp_err_t R_CAC_StopMeasurement(cac_ctrl_t * const p_ctrl);
 fsp_err_t R_CAC_Read(cac_ctrl_t * const p_ctrl, uint16_t * const p_counter);
 fsp_err_t R_CAC_Reset(cac_ctrl_t * const p_ctrl);
 fsp_err_t R_CAC_Close(cac_ctrl_t * const p_ctrl);
-fsp_err_t R_CAC_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_CAC_CallbackSet(cac_ctrl_t * const          p_ctrl,
                             void (                    * p_callback)(cac_callback_args_t *),
                             void const * const          p_context,

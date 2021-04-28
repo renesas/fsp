@@ -50,8 +50,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define TRANSFER_API_VERSION_MAJOR            (1U) // DEPRECATED
-#define TRANSFER_API_VERSION_MINOR            (0U) // DEPRECATED
 
 #define TRANSFER_SETTINGS_MODE_BITS           (30U)
 #define TRANSFER_SETTINGS_SIZE_BITS           (28U)
@@ -353,14 +351,6 @@ typedef struct st_transfer_api
      * @param[in]     p_ctrl    Control block set in @ref transfer_api_t::open call for this transfer.
      */
     fsp_err_t (* close)(transfer_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Gets version and stores it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_DTC_VersionGet()
-     * - @ref R_DMAC_VersionGet()
-     * @param[out]    p_version  Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } transfer_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

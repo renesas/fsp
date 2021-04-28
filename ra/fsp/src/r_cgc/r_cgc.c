@@ -182,15 +182,6 @@ static fsp_err_t r_cgc_pllccr_pll_hz_calculate(cgc_pll_cfg_t const * const p_pll
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_cgc_version =
-{
-    .api_version_minor  = CGC_API_VERSION_MINOR,
-    .api_version_major  = CGC_API_VERSION_MAJOR,
-    .code_version_major = CGC_CODE_VERSION_MAJOR,
-    .code_version_minor = CGC_CODE_VERSION_MINOR
-};
-
 /** Global pointer to control structure for use by the NMI callback.  */
 static cgc_instance_ctrl_t * gp_cgc_ctrl = NULL;
 
@@ -251,7 +242,6 @@ const cgc_api_t g_cgc_on_cgc =
     .oscStopStatusClear   = R_CGC_OscStopStatusClear,
     .callbackSet          = R_CGC_CallbackSet,
     .close                = R_CGC_Close,
-    .versionGet           = R_CGC_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -1227,22 +1217,6 @@ fsp_err_t R_CGC_Close (cgc_ctrl_t * const p_ctrl)
     p_instance_ctrl->open = 0U;
 
     /* All done, return success. */
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return the driver version.  Implements @ref cgc_api_t::versionGet.
- *
- * @retval FSP_SUCCESS                 Module version provided in p_version.
- * @retval FSP_ERR_ASSERTION           Invalid input argument.
- **********************************************************************************************************************/
-fsp_err_t R_CGC_VersionGet (fsp_version_t * const p_version)
-{
-#if CGC_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-    p_version->version_id = g_cgc_version.version_id;
-
     return FSP_SUCCESS;
 }
 

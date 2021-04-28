@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CAN_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define CAN_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -75,6 +73,13 @@ typedef enum e_can_error
     CAN_ERROR_BIT_DOMINANT  = 32,      ///< Bit Error (dominant) Error
     CAN_ERROR_ACK_DELIMITER = 64,      ///< ACK Delimiter Error
 } can_error_t;
+
+/** CAN  Mailbox type */
+typedef enum e_can_mailbox_send_receive
+{
+    CAN_MAILBOX_RECEIVE,               ///< Mailbox is for receiving.
+    CAN_MAILBOX_TRANSMIT,              ///< Mailbox is for sending.
+} can_mailbox_send_receive_t;
 
 /* CAN Time Segment 1 Time Quanta (DEPRECATED) */
 typedef enum e_can_time_segment1
@@ -153,6 +158,37 @@ typedef enum e_can_sync_jump_width
     CAN_SYNC_JUMP_WIDTH_TQ16,
 } can_sync_jump_width_t;
 
+/** Global CAN ID mode settings */
+typedef enum e_can_global_id_mode
+{
+    CAN_GLOBAL_ID_MODE_STANDARD,       ///< Standard IDs of 11 bits used.
+    CAN_GLOBAL_ID_MODE_EXTENDED,       ///< Extended IDs of 29 bits used.
+    CAN_GLOBAL_ID_MODE_MIXED,          ///< Both Standard and Extended IDs used.
+} can_global_id_mode_t;
+
+/** CAN Message Modes */
+typedef enum e_can_message_mode
+{
+    CAN_MESSAGE_MODE_OVERWRITE = 0,    ///< Receive data will be overwritten if not read before the next frame.
+    CAN_MESSAGE_MODE_OVERRUN,          ///< Receive data will be retained until it is read.
+} can_message_mode_t;
+
+/** CAN Source Clock */
+typedef enum e_can_clock_source
+{
+    CAN_CLOCK_SOURCE_PCLKB = 0,        ///< PCLKB is the source of the CAN Clock
+    CAN_CLOCK_SOURCE_CANMCLK,          ///< CANMCLK is the source of the CAN Clock
+} can_clock_source_t;
+
+/** CAN Mailbox */
+typedef struct st_can_mailbox
+{
+    uint32_t                   mailbox_id;   ///< Mailbox ID.
+    can_id_mode_t              id_mode;      ///< Standard or Extended ID. Only used in Mixed ID mode.
+    can_mailbox_send_receive_t mailbox_type; ///< Receive or Transmit mailbox type.
+    can_frame_type_t           frame_type;   ///< Frame type for receive mailbox.
+} can_mailbox_t;
+
 /* CAN Instance Control Block   */
 typedef struct st_can_instance_ctrl
 {
@@ -176,8 +212,12 @@ typedef struct st_can_instance_ctrl
 /* CAN clock configuration and mailbox mask to be pointed to by p_extend. */
 typedef struct st_can_extended_cfg
 {
-    can_clock_source_t clock_source;   ///< Source of the CAN clock.
-    uint32_t         * p_mailbox_mask; ///< Mailbox mask, one for every 4 mailboxes.
+    can_clock_source_t   clock_source;   ///< Source of the CAN clock.
+    uint32_t           * p_mailbox_mask; ///< Mailbox mask, one for every 4 mailboxes.
+    can_mailbox_t      * p_mailbox;      ///< Pointer to mailboxes.
+    can_global_id_mode_t global_id_mode; ///< Standard or Extended ID mode.
+    uint32_t             mailbox_count;  ///< Number of mailboxes.
+    can_message_mode_t   message_mode;   ///< Overwrite message or overrun.
 } can_extended_cfg_t;
 
 /**********************************************************************************************************************
@@ -205,7 +245,6 @@ fsp_err_t R_CAN_CallbackSet(can_ctrl_t * const          p_api_ctrl,
                             void (                    * p_callback)(can_callback_args_t *),
                             void const * const          p_context,
                             can_callback_args_t * const p_callback_memory);
-fsp_err_t R_CAN_VersionGet(fsp_version_t * const version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup CAN)

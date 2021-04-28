@@ -33,6 +33,8 @@
 #if (BSP_CFG_RTOS == 2)                // FreeRTOS
  #include "FreeRTOS.h"
  #include "semphr.h"
+#elif (BSP_CFG_RTOS == 1)              // ThreadX
+ #include "tx_api.h"
 #endif
 
 /**********************************************************************************************************************
@@ -54,6 +56,8 @@
  **********************************************************************************************************************/
 #if (BSP_CFG_RTOS == 0)                // No RTOS
 static volatile d1_int_t g_dlist_done = 0;
+#elif (BSP_CFG_RTOS == 1)              // ThreadX
+static TX_SEMAPHORE g_d1_queryirq_sem;
 #elif (BSP_CFG_RTOS == 2)              // FreeRTOS
 static SemaphoreHandle_t g_d1_queryirq_sem;
 static StaticSemaphore_t g_d1_queryirq_sem_data;
@@ -81,8 +85,8 @@ void drw_int_isr(void);
  * Initializes DRW_INT.
  *
  * @param[in] handle    Pointer to the d1_device object.
- * @retval    0         The function returns 0 if DRW_INT is successfully initialized.
- * @retval    1         The function returns 1 if the IRQ number is invalid.
+ * @retval    0         The function returns 0 if the IRQ number is invalid.
+ * @retval    1         The function returns 1 if DRW_INT is successfully initialized.
  **********************************************************************************************************************/
 d1_int_t d1_initirq_intern (d1_device_flex * handle)
 {
@@ -100,9 +104,18 @@ d1_int_t d1_initirq_intern (d1_device_flex * handle)
 
         /* Initialize semaphore for use in d1_queryirq() */
         g_d1_queryirq_sem = xSemaphoreCreateBinaryStatic(&g_d1_queryirq_sem_data);
-#endif
 
         ret = 1;
+#elif (BSP_CFG_RTOS == 1)              // ThreadX
+
+        /* Initialize semaphore for use in d1_queryirq() */
+        if (TX_SUCCESS == tx_semaphore_create(&g_d1_queryirq_sem, (CHAR *) "g_d1_isr_semaphore", 0))
+        {
+            ret = 1;
+        }
+#else
+        ret = 1;
+#endif
     }
 
     return ret;
@@ -128,6 +141,10 @@ d1_int_t d1_shutdownirq_intern (d1_device_flex * handle)
 
     /* Delete semaphore */
     vSemaphoreDelete(g_d1_queryirq_sem);
+#elif (BSP_CFG_RTOS == 1)              // ThreadX
+
+    /* Delete semaphore */
+    tx_semaphore_delete(&g_d1_queryirq_sem);
 #endif
 
     return 1;
@@ -158,6 +175,14 @@ d1_int_t d1_queryirq (d1_device * handle, d1_int_t irqmask, d1_int_t timeout)
 
     /* If the wait timed out return 0. */
     if (pdPASS != err)
+    {
+        ret = 0;
+    }
+#elif (BSP_CFG_RTOS == 1)              // ThreadX
+
+    /* Wait for dlist processing to complete. */
+    /* d1_to_wait_forever (D2) == -1 == TX_WAIT_FOREVER (ThreadX), so just pass the raw timeout through. */
+    if (TX_SUCCESS != tx_semaphore_get(&g_d1_queryirq_sem, (ULONG) timeout))
     {
         ret = 0;
     }
@@ -236,6 +261,10 @@ void drw_int_isr (void)
 
             /* Pend a context switch at the end of this ISR, if necessary */
             portYIELD_FROM_ISR(context_switch);
+#elif (BSP_CFG_RTOS == 1)              // ThreadX
+
+            /* Put semaphore */
+            tx_semaphore_ceiling_put(&g_d1_queryirq_sem, 1UL);
 #else
 
             /* Increment dlist completion flag. */

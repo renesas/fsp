@@ -30,10 +30,12 @@
 #include "../hw/inc/r_usb_bitdefine.h"
 #include "../hw/inc/r_usb_reg_access.h"
 
-#if defined(USB_CFG_HCDC_USE)
- #include "r_usb_hcdc_api.h"
+#if (BSP_CFG_RTOS != 1)
+ #if defined(USB_CFG_HCDC_USE)
+  #include "r_usb_hcdc_api.h"
 
-#endif                                 /* defined(USB_CFG_HCDC_USE) */
+ #endif                                /* defined(USB_CFG_HCDC_USE) */
+#endif /* #if (BSP_CFG_RTOS != 1) */
 
 #if defined(USB_CFG_HHID_USE)
  #include "r_usb_hhid_api.h"
@@ -361,7 +363,7 @@ uint16_t usb_cstd_port_speed (usb_utr_t * ptr)
  ******************************************************************************/
 #endif                                 /* #if (USB_UT_MODE == 0) */
 
-#if (!(USB_UT_MODE == 1 && BSP_CFG_RTOS == 2))
+#if (!(USB_UT_MODE == 1 && BSP_CFG_RTOS != 0))
 
 /******************************************************************************
  * Function Name   : usb_set_event
@@ -372,7 +374,7 @@ uint16_t usb_cstd_port_speed (usb_utr_t * ptr)
  ******************************************************************************/
 void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
 {
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS != 0)
     static uint16_t count = 0;
 
     p_ctrl->event           = event;
@@ -464,7 +466,7 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
 
     count = (uint16_t) ((count + 1) % USB_EVENT_MAX);
                                        /* UNCRUSTIFY-ON */
- #else                                 /* #if (BSP_CFG_RTOS == 2) */
+ #else                                 /* #if (BSP_CFG_RTOS != 0) */
     g_usb_cstd_event.code[g_usb_cstd_event.write_pointer] = event;
     g_usb_cstd_event.ctrl[g_usb_cstd_event.write_pointer] = *p_ctrl;
     g_usb_cstd_event.write_pointer++;
@@ -472,12 +474,12 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
     {
         g_usb_cstd_event.write_pointer = 0;
     }
- #endif                                /*#if (BSP_CFG_RTOS == 2)*/
+ #endif                                /* #if (BSP_CFG_RTOS != 0) */
     } /* End of function usb_set_event() */
 
 #endif                                 /* #if(!(USB_UT_MODE == 1 && BSP_CFG_RTOS == 2)) */
 
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS != 0)
 
 /***************************************************************************//**
  * @brief Getting semaphore processing for the thread safe function
@@ -532,7 +534,7 @@ fsp_err_t usb_cstd_rel_semaphore (usb_instance_ctrl_t * p_ctrl)
 
     if (pdPASS == retval)
     {
-        g_usb_cur_task_hdl[usbip_no]     = (usb_hdl_t) USB_NULL;
+        g_usb_cur_task_hdl[usbip_no]     = (rtos_task_id_t) USB_NULL;
         g_usb_semaphore_holder[usbip_no] = 0;
 
         return FSP_SUCCESS;
@@ -549,7 +551,7 @@ fsp_err_t usb_cstd_rel_semaphore (usb_instance_ctrl_t * p_ctrl)
 /******************************************************************************
  * End of function usb_cstd_rel_semaphore
  ******************************************************************************/
-#endif                                 /* #if (BSP_CFG_RTOS == 2) */
+#endif                                 /* #if (BSP_CFG_RTOS != 0) */
 
 #if (BSP_CFG_RTOS == 0)
 
@@ -681,6 +683,29 @@ uint16_t usb_cstd_remote_wakeup (usb_utr_t * p_utr)
     return USB_ERROR;
 #endif /* (USB_CFG_MODE == USB_CFG_PERI) */
 }                                      /* End of function usb_cstd_remote_wakeup */
+
+#if (BSP_CFG_RTOS == 1)
+
+/******************************************************************************
+ * Function Name   : usb_cstd_usbx_callback
+ * Description     : The callback function is not used when using USBX.
+ *                   Therefore, prepared an empty function.
+ * Arguments       : usb_event_info_t *p_api_event :
+ *                   usb_hdl_t cur_task            :
+ *                   usb_onoff_t usb_state         :
+ * Return value    : none
+ ******************************************************************************/
+void usb_cstd_usbx_callback (usb_event_info_t * p_api_event, usb_hdl_t cur_task, usb_onoff_t usb_state)
+{
+    FSP_PARAMETER_NOT_USED(p_api_event);
+    FSP_PARAMETER_NOT_USED(cur_task);
+    FSP_PARAMETER_NOT_USED(usb_state);
+}
+
+/******************************************************************************
+ * End of function usb_cstd_usbx_callback
+ ******************************************************************************/
+#endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 /******************************************************************************
  * End  Of File

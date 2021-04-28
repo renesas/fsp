@@ -36,8 +36,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define USB_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define USB_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -91,8 +89,6 @@ fsp_err_t R_USB_PipeInfoGet(usb_ctrl_t * const p_api_ctrl, usb_pipe_t * p_info, 
 fsp_err_t R_USB_PullUp(usb_ctrl_t * const p_api_ctrl, uint8_t state);
 
 fsp_err_t R_USB_EventGet(usb_ctrl_t * const p_api_ctrl, usb_status_t * event);
-
-fsp_err_t R_USB_VersionGet(fsp_version_t * const p_version);
 
 fsp_err_t R_USB_Callback(usb_callback_t * p_callback);
 

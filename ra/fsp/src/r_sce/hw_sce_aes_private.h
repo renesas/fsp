@@ -41,17 +41,13 @@
 #define SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 8)
 #define SIZE_AES_192BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED) / 32)
 
-#define SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED     (416)
-#define SIZE_AES_256BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 8)
-#define SIZE_AES_256BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 32)
-
-#define SIZE_AES_192BIT_KEYLEN_BITS             (192)
-#define SIZE_AES_192BIT_KEYLEN_BYTES            ((SIZE_AES_192BIT_KEYLEN_BITS) / 8)
-#define SIZE_AES_192BIT_KEYLEN_WORDS            ((SIZE_AES_192BIT_KEYLEN_BITS) / 32)
-
 #define SIZE_AES_256BIT_KEYLEN_BITS             (256)
 #define SIZE_AES_256BIT_KEYLEN_BYTES            ((SIZE_AES_256BIT_KEYLEN_BITS) / 8)
 #define SIZE_AES_256BIT_KEYLEN_WORDS            ((SIZE_AES_256BIT_KEYLEN_BITS) / 32)
+
+#define SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED     (416)
+#define SIZE_AES_256BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 8)
+#define SIZE_AES_256BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED) / 32)
 
 #define SIZE_AES_BLOCK_BITS                     (128)
 #define SIZE_AES_BLOCK_BYTES                    (128 / 8)
@@ -133,6 +129,27 @@ extern fsp_err_t HW_SCE_AES_192EcbDecrypt(const uint32_t * InData_Key,
                                           const uint32_t * InData_Text,
                                           uint32_t       * OutData_Text);
 
+extern fsp_err_t HW_SCE_AES_192CbcEncrypt(const uint32_t * InData_Key,
+                                          const uint32_t * InData_IV,
+                                          const uint32_t   num_words,
+                                          const uint32_t * InData_Text,
+                                          uint32_t       * OutData_Text,
+                                          uint32_t       * OutData_IV);
+
+extern fsp_err_t HW_SCE_AES_192CbcDecrypt(const uint32_t * InData_Key,
+                                          const uint32_t * InData_IV,
+                                          const uint32_t   num_words,
+                                          const uint32_t * InData_Text,
+                                          uint32_t       * OutData_Text,
+                                          uint32_t       * OutData_IV);
+
+extern fsp_err_t HW_SCE_AES_192CtrEncrypt(const uint32_t * InData_Key,
+                                          const uint32_t * InData_IV,
+                                          const uint32_t   num_words,
+                                          const uint32_t * InData_Text,
+                                          uint32_t       * OutData_Text,
+                                          uint32_t       * OutData_IV);
+
 extern fsp_err_t HW_SCE_AES_256EcbEncrypt(const uint32_t * InData_Key,
                                           const uint32_t   num_words,
                                           const uint32_t * InData_Text,
@@ -190,6 +207,27 @@ extern fsp_err_t HW_SCE_AES_128EcbDecryptUsingEncryptedKey(const uint32_t * InDa
                                                            const uint32_t * InData_Text,
                                                            uint32_t       * OutData_Text);
 
+extern fsp_err_t HW_SCE_AES_128CbcEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t * InData_IV,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text,
+                                                           uint32_t       * OutData_IV);
+
+extern fsp_err_t HW_SCE_AES_128CbcDecryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t * InData_IV,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text,
+                                                           uint32_t       * OutData_IV);
+
+extern fsp_err_t HW_SCE_AES_128CtrEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t * InData_IV,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text,
+                                                           uint32_t       * OutData_IV);
+
 extern fsp_err_t HW_SCE_AES_192CreateEncryptedKey(uint32_t * OutData_KeyIndex);
 
 extern fsp_err_t HW_SCE_AES_192EcbEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
@@ -202,6 +240,27 @@ extern fsp_err_t HW_SCE_AES_192EcbDecryptUsingEncryptedKey(const uint32_t * InDa
                                                            const uint32_t * InData_Text,
                                                            uint32_t       * OutData_Text);
 
+extern fsp_err_t HW_SCE_AES_192CbcEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t * InData_IV,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text,
+                                                           uint32_t       * OutData_IV);
+
+extern fsp_err_t HW_SCE_AES_192CbcDecryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t * InData_IV,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text,
+                                                           uint32_t       * OutData_IV);
+
+extern fsp_err_t HW_SCE_AES_192CtrEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t * InData_IV,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text,
+                                                           uint32_t       * OutData_IV);
+
 extern fsp_err_t HW_SCE_AES_256CreateEncryptedKey(uint32_t * OutData_KeyIndex);
 
 extern fsp_err_t HW_SCE_AES_256EcbEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
@@ -213,6 +272,27 @@ extern fsp_err_t HW_SCE_AES_256EcbDecryptUsingEncryptedKey(const uint32_t * InDa
                                                            const uint32_t   num_words,
                                                            const uint32_t * InData_Text,
                                                            uint32_t       * OutData_Text);
+
+extern fsp_err_t HW_SCE_AES_256CbcEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t * InData_IV,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text,
+                                                           uint32_t       * OutData_IV);
+
+extern fsp_err_t HW_SCE_AES_256CbcDecryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t * InData_IV,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text,
+                                                           uint32_t       * OutData_IV);
+
+extern fsp_err_t HW_SCE_AES_256CtrEncryptUsingEncryptedKey(const uint32_t * InData_KeyIndex,
+                                                           const uint32_t * InData_IV,
+                                                           const uint32_t   num_words,
+                                                           const uint32_t * InData_Text,
+                                                           uint32_t       * OutData_Text,
+                                                           uint32_t       * OutData_IV);
 
 extern fsp_err_t HW_SCE_Aes128EncryptDecryptInit(const uint32_t * InData_Cmd,
                                                  const uint32_t * InData_KeyIndex,

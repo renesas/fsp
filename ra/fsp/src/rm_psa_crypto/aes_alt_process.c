@@ -317,6 +317,86 @@ int mbedtls_internal_aes_encrypt (mbedtls_aes_context * ctx, const unsigned char
     return ret;
 }
 
+int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context *ctx, unsigned int length, unsigned char *iv, const unsigned char *input, unsigned char *output)
+{
+    (void) output;
+    fsp_err_t err = FSP_ERR_CRYPTO_UNKNOWN;
+    int       ret = 0;
+
+    if (ctx->nr == 10)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_128CbcEncryptUsingEncryptedKey(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                                          (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+  #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+  #endif                               /* (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT))) */
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_128CbcEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                         (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+        }
+    }
+
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+    else if (ctx->nr == 12)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
+            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_192CbcEncryptUsingEncryptedKey(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                                           (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+   #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+   #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_192CbcEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                          (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+        }
+    }
+  #endif
+    else if (ctx->nr == 14)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_256CbcEncryptUsingEncryptedKey(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                                           (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+  #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+  #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_256CbcEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                          (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+        }
+    }
+    else
+    {
+        return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+    }
+
+    if (FSP_SUCCESS != err)
+    {
+        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+
+    return ret;
+}
+
  #endif                                /* !MBEDTLS_AES_ENCRYPT_ALT */
 
 /*
@@ -351,7 +431,7 @@ int mbedtls_internal_aes_decrypt (mbedtls_aes_context * ctx, const unsigned char
     }
 
   #if BSP_FEATURE_CRYPTO_HAS_SCE9
-    if (ctx->nr == 12)
+    else if (ctx->nr == 12)
     {
         if (true == (bool) ctx->vendor_ctx)
         {
@@ -389,6 +469,167 @@ int mbedtls_internal_aes_decrypt (mbedtls_aes_context * ctx, const unsigned char
             err =
                 HW_SCE_AES_256EcbDecrypt(ctx->buf, SIZE_AES_BLOCK_WORDS, (uint32_t *) &input[0],
                                          (uint32_t *) &output[0]);
+        }
+    }
+    else
+    {
+        ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+    }
+
+    if ((FSP_SUCCESS != err) && (0 == ret))
+    {
+        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+
+    return ret;
+}
+
+int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context *ctx, unsigned int length, unsigned char *iv, const unsigned char *input, unsigned char *output)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_UNKNOWN;
+    int       ret = 0;
+
+    if (ctx->nr == 10)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_128CbcDecryptUsingEncryptedKey(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                                              (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+  #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+  #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_128CbcDecrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                             (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+        }
+    }
+
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+    else if (ctx->nr == 12)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
+            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_192CbcDecryptUsingEncryptedKey(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                                           (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+   #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+   #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_192CbcDecrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                          (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+        }
+    }
+  #endif
+    else if (ctx->nr == 14)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_256CbcDecryptUsingEncryptedKey(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                                           (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+  #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+  #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_256CbcDecrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                          (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+        }
+    }
+    else
+    {
+        ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+    }
+
+    if ((FSP_SUCCESS != err) && (0 == ret))
+    {
+        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+
+    return ret;
+}
+
+ #endif                                /* !MBEDTLS_AES_DECRYPT_ALT */
+
+#if defined(MBEDTLS_AES_DECRYPT_ALT) || defined(MBEDTLS_AES_ENCRYPT_ALT)
+int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context *ctx, unsigned int length, unsigned char *iv, const unsigned char *input, unsigned char *output)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_UNKNOWN;
+    int       ret = 0;
+
+    if (ctx->nr == 10)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_128CtrEncryptUsingEncryptedKey(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                                              (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+  #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+  #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_128CtrEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                             (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+        }
+    }
+
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9
+    else if (ctx->nr == 12)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+   #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && \
+            ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_192CtrEncryptUsingEncryptedKey(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                                           (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+   #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+   #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_192CtrEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                          (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+        }
+    }
+  #endif
+    else if (ctx->nr == 14)
+    {
+        if (true == (bool) ctx->vendor_ctx)
+        {
+  #if (1 == BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
+            err =
+                HW_SCE_AES_256CtrEncryptUsingEncryptedKey(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                                           (uint32_t *) &output[0], (uint32_t *) &iv[0]);
+  #else
+            ret = MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+  #endif
+        }
+        else
+        {
+            err =
+                HW_SCE_AES_256CtrEncrypt(ctx->buf, (uint32_t *) &iv[0], (length / 4U), (uint32_t *) &input[0],
+                                          (uint32_t *) &output[0], (uint32_t *) &iv[0]);
         }
     }
     else

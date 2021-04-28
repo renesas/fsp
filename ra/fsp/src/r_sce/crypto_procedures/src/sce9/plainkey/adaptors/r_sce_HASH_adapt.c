@@ -20,6 +20,7 @@
 
 #include "hw_sce_ra_private.h"
 #include "hw_sce_private.h"
+#include "hw_sce_hash_private.h"
 
 fsp_err_t HW_SCE_SHA256_UpdateHash (const uint32_t * p_source, uint32_t num_words, uint32_t * p_digest)
 {

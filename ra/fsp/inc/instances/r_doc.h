@@ -34,8 +34,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define DOC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define DOC_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -70,7 +68,6 @@ fsp_err_t R_DOC_Open(doc_ctrl_t * const p_api_ctrl, doc_cfg_t const * const p_cf
 fsp_err_t R_DOC_Close(doc_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DOC_StatusGet(doc_ctrl_t * const p_api_ctrl, doc_status_t * p_status);
 fsp_err_t R_DOC_Write(doc_ctrl_t * const p_api_ctrl, uint16_t data);
-fsp_err_t R_DOC_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_DOC_CallbackSet(doc_ctrl_t * const          p_api_ctrl,
                             void (                    * p_callback)(doc_callback_args_t *),
                             void const * const          p_context,

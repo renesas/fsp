@@ -72,15 +72,6 @@ void fsp_error_log_internal(fsp_err_t err, const char * file, int32_t line); ///
  * Exported global variables (to be accessed by other files)
  **********************************************************************************************************************/
 
-/* BSP version structure. */
-const fsp_version_t g_bsp_version =
-{
-    .api_version_minor  = BSP_API_VERSION_MINOR,
-    .api_version_major  = BSP_API_VERSION_MAJOR,
-    .code_version_major = BSP_CODE_VERSION_MAJOR,
-    .code_version_minor = BSP_CODE_VERSION_MINOR
-};
-
 /* FSP pack version structure. */
 static BSP_DONT_REMOVE const fsp_pack_version_t g_fsp_version BSP_PLACE_IN_SECTION (FSP_SECTION_VERSION) =
 {
@@ -106,30 +97,6 @@ static BSP_DONT_REMOVE const uint8_t g_fsp_version_build_string[] BSP_PLACE_IN_S
 /***********************************************************************************************************************
  * Private global variables and functions
  **********************************************************************************************************************/
-
-/***********************************************************************************************************************
- * DEPRECATED Get the BSP version based on compile time macros.
- *
- * @param[out] p_version        Memory address to return version information to.
- *
- * @retval FSP_SUCCESS          Version information stored.
- * @retval FSP_ERR_ASSERTION    The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_BSP_VersionGet (fsp_version_t * p_version)
-{
-#if BSP_CFG_PARAM_CHECKING_ENABLE
-
-    /** Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->api_version_major  = BSP_API_VERSION_MAJOR;
-    p_version->api_version_minor  = BSP_API_VERSION_MINOR;
-    p_version->code_version_major = BSP_CODE_VERSION_MAJOR;
-    p_version->code_version_minor = BSP_CODE_VERSION_MINOR;
-
-    return FSP_SUCCESS;
-}
 
 /*******************************************************************************************************************//**
  * Get the FSP version based on compile time macros.
@@ -188,7 +155,8 @@ void bsp_init_internal (void * p_args)
  * Default implementation of assert for AC6.
  **********************************************************************************************************************/
 __attribute__((weak, noreturn))
-void __aeabi_assert (const char * expr, const char * file, int line) {
+void __aeabi_assert (const char * expr, const char * file, int line)
+{
     FSP_PARAMETER_NOT_USED(expr);
     FSP_PARAMETER_NOT_USED(file);
     FSP_PARAMETER_NOT_USED(line);
@@ -198,5 +166,30 @@ void __aeabi_assert (const char * expr, const char * file, int line) {
         /* Do nothing. */
     }
 }
+
+#elif defined(__GNUC__)
+
+/* The default assert implementation for GCC brings in printing/formatting code.  FSP overrides the default assert
+ * behavior to reduce code size. */
+
+ #if !BSP_CFG_USE_STANDARD_ASSERT
+
+/*******************************************************************************************************************//**
+ * Default implementation of assert for GCC.
+ **********************************************************************************************************************/
+BSP_WEAK_REFERENCE void __assert_func (const char * file, int line, const char * func, const char * expr)
+{
+    FSP_PARAMETER_NOT_USED(file);
+    FSP_PARAMETER_NOT_USED(line);
+    FSP_PARAMETER_NOT_USED(func);
+    FSP_PARAMETER_NOT_USED(expr);
+    __BKPT(0);
+    while (1)
+    {
+        /* Do nothing. */
+    }
+}
+
+ #endif
 
 #endif

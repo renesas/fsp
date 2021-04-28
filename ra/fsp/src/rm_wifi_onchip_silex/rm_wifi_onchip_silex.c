@@ -37,15 +37,6 @@
 
 /*! \cond PRIVATE */
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_wifi_onchip_version =
-{
-    .api_version_minor  = 0,
-    .api_version_major  = 0,
-    .code_version_major = WIFI_ONCHIP_SILEX_CODE_VERSION_MAJOR,
-    .code_version_minor = WIFI_ONCHIP_SILEX_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Externs
  **********************************************************************************************************************/
@@ -424,7 +415,7 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
                              &g_baud_setting_115200);
 
     uart0_cfg_extended_115200.p_baud_setting   = &g_baud_setting_115200;
-    uart0_cfg_extended_115200.ctsrts_en        = SCI_UART_CTSRTS_RTS_OUTPUT;
+    uart0_cfg_extended_115200.flow_control     = SCI_UART_FLOW_CONTROL_RTS;
     uart0_cfg_extended_115200.flow_control_pin =
         (bsp_io_port_pin_t) WIFI_ONCHIP_SILEX_BSP_PIN_PORT_INVALID;
 
@@ -840,25 +831,6 @@ fsp_err_t rm_wifi_onchip_silex_disconnect ()
 }
 
 /*******************************************************************************************************************//**
- *  Returns the WIFI_ONCHIP_SILEX Middleware module versions.
- *
- *  @param[out]  p_version    Memory address to return version information to.
- *
- *  @retval FSP_SUCCESS              Function completed successfully.
- *  @retval FSP_ERR_ASSERTION        The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_silex_version_get (fsp_version_t * const p_version)
-{
-#if (WIFI_ONCHIP_SILEX_CFG_PARAM_CHECKING_ENABLED == 1)
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_wifi_onchip_version.version_id;
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
  *  Check if a specific socket instance is connected.
  *
  * @param[out]  p_status            Pointer to integer holding the socket connection status.
@@ -1227,7 +1199,7 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
     do
     {
         /* Test for end of list */
-        p_results[idx].cSSID[0] = '\0';
+        p_results[idx].ucSSID[0] = '\0';
         int32_t test_ssid = strncmp(ptr, "ssid =", 6);
         if (0 != test_ssid)
         {
@@ -1241,7 +1213,7 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
         snprintf(string_build, sizeof(string_build), "ssid = %%%us", wificonfigMAX_SSID_LEN);
 
         // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
-        err = sscanf(ptr, string_build, p_results[idx].cSSID);
+        err = sscanf(ptr, string_build, p_results[idx].ucSSID);
         if (1 != err)
         {
             ret = FSP_ERR_WIFI_FAILED;
@@ -1309,7 +1281,7 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
             break;
         }
 
-        p_results[idx].cChannel = (int8_t) temp_val;
+        p_results[idx].ucChannel = (uint8_t) temp_val;
 
         /* Advance to string pointer next section of scan info */
         ptr = strchr(ptr, '\n');
@@ -1520,7 +1492,7 @@ fsp_err_t rm_wifi_onchip_silex_ping (uint8_t * p_ip_addr, uint32_t count, uint32
  * @retval FSP_ERR_ASSERTION        The parameter p_ip_addr is NULL.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_silex_ip_addr_get (uint8_t * p_ip_addr)
+fsp_err_t rm_wifi_onchip_silex_ip_addr_get (uint32_t * p_ip_addr)
 {
     fsp_err_t    ret;
     int32_t      err;

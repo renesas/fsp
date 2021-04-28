@@ -39,7 +39,7 @@ const mbedtls_cipher_info_t * mbedtls_cipher_info_from_psa(psa_algorithm_t      
                                                            size_t                key_bits,
                                                            mbedtls_cipher_id_t * cipher_id);
 
-psa_status_t prepare_raw_data_slot_vendor(psa_key_type_t type, size_t bits, struct raw_data * raw);
+psa_status_t prepare_raw_data_slot_vendor(psa_key_type_t type, size_t bits, struct key_data * key);
 
  #ifdef __cplusplus
 }

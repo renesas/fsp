@@ -54,8 +54,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ETHER_PHY_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define ETHER_PHY_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -155,14 +153,6 @@ typedef struct st_ether_phy_api
      * @param[in]  p_api_ctrl       Pointer to control structure.
      */
     fsp_err_t (* linkStatusGet)(ether_phy_ctrl_t * const p_api_ctrl);
-
-    /* DEPRECATED Return the version of the driver.
-     * @par Implemented as
-     * - @ref R_ETHER_PHY_VersionGet()
-     *
-     * @param[out] p_data       Memory address to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_data);
 } ether_phy_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

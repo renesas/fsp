@@ -209,14 +209,6 @@ void touch_uart_callback(uart_callback_args_t * p_args);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_touch_version =
-{
-    .api_version_minor  = TOUCH_API_VERSION_MINOR,
-    .api_version_major  = TOUCH_API_VERSION_MAJOR,
-    .code_version_major = TOUCH_CODE_VERSION_MAJOR,
-    .code_version_minor = TOUCH_CODE_VERSION_MINOR
-};
 #if (TOUCH_CFG_NUM_BUTTONS != 0)
 static uint8_t  g_touch_button_index = 0;
 static uint16_t g_touch_button_threshold[TOUCH_CFG_NUM_BUTTONS];
@@ -279,7 +271,6 @@ const touch_api_t g_touch_on_ctsu =
     .dataGet    = RM_TOUCH_DataGet,
     .padDataGet = RM_TOUCH_PadDataGet,
     .close      = RM_TOUCH_Close,
-    .versionGet = RM_TOUCH_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -1443,23 +1434,6 @@ fsp_err_t RM_TOUCH_Close (touch_ctrl_t * const p_ctrl)
 #endif
 
     return err;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return TOUCH Middle module version. Implements @ref touch_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS             Version information successfully read.
- * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter
- **********************************************************************************************************************/
-fsp_err_t RM_TOUCH_VersionGet (fsp_version_t * const p_version)
-{
-#if TOUCH_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(p_version);
-#endif
-
-    p_version->version_id = g_touch_version.version_id;
-
-    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

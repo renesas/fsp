@@ -55,8 +55,6 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define WIFI_ONCHIP_SILEX_RETURN_TEXT_LENGTH    (13 + 1) // Length of the tailing buffer used by command parser
-#define WIFI_ONCHIP_SILEX_CODE_VERSION_MAJOR    (1U)     // DEPRECATED
-#define WIFI_ONCHIP_SILEX_CODE_VERSION_MINOR    (2U)     // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -168,13 +166,12 @@ typedef struct
  * Public Function Prototypes
  **********************************************************************************************************************/
 fsp_err_t rm_wifi_onchip_silex_open(wifi_onchip_silex_cfg_t const * const p_cfg);
-fsp_err_t rm_wifi_onchip_silex_version_get(fsp_version_t * const p_version);
 fsp_err_t rm_wifi_onchip_silex_close();
 fsp_err_t rm_wifi_onchip_silex_connect(const char * p_ssid, uint32_t security, const char * p_passphrase);
 fsp_err_t rm_wifi_onchip_silex_mac_addr_get(uint8_t * p_macaddr);
 fsp_err_t rm_wifi_onchip_silex_scan(WIFIScanResult_t * p_results, uint32_t maxNetworks);
 fsp_err_t rm_wifi_onchip_silex_ping(uint8_t * p_ip_addr, uint32_t count, uint32_t interval_ms);
-fsp_err_t rm_wifi_onchip_silex_ip_addr_get(uint8_t * p_ip_addr);
+fsp_err_t rm_wifi_onchip_silex_ip_addr_get(uint32_t * p_ip_addr);
 fsp_err_t rm_wifi_onchip_silex_avail_socket_get(uint32_t * p_socket_id);
 fsp_err_t rm_wifi_onchip_silex_socket_status_get(uint32_t socket_no, uint32_t * p_socket_status);
 fsp_err_t rm_wifi_onchip_silex_socket_create(uint32_t socket_no, uint32_t type, uint32_t ipversion);

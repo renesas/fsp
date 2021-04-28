@@ -40,7 +40,7 @@
 #include "iot_secure_sockets.h"
 #if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
  #include "iot_tls.h"
- #include "iot_pkcs11.h"
+ #include "core_pkcs11.h"
  #include "iot_crypto.h"
 #endif
 

@@ -55,8 +55,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define UART_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define UART_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -258,14 +256,6 @@ typedef struct st_uart_api
      * @param[in]   p_ctrl     Pointer to the UART control block.
      */
     fsp_err_t (* close)(uart_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get version.
-     * @par Implemented as
-     * - @ref R_SCI_UART_VersionGet()
-     *
-     * @param[in]   p_version  Pointer to the memory to store the version information.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * p_version);
 } uart_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

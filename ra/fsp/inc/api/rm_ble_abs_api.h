@@ -53,8 +53,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define BLE_ABS_API_VERSION_MAJOR         (1U)   // DEPRECATED
-#define BLE_ABS_API_VERSION_MINOR         (0U)   // DEPRECATED
 
 #define BLE_ABS_ADVERTISING_PHY_LEGACY    (0x00) ///< Non-Connectable Legacy Advertising phy setting.
 #define BLE_BD_ADDR_LEN                   (0x06)
@@ -801,13 +799,6 @@ typedef struct st_ble_abs_api
      * @param[in]  init_callback callback function to initialize Host Stack.
      */
     fsp_err_t (* reset)(ble_abs_ctrl_t * const p_ctrl, ble_event_cb_t init_callback);
-
-    /* DEPRECATED Return the version of the driver.
-     * @par Implemented as
-     * - RM_BLE_ABS_VersionGet()
-     * @param[out] p_data       Memory address to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_data);
 
     /** Start Legacy Connectable Advertising.
      * @par Implemented as

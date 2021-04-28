@@ -50,8 +50,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  *********************************************************************************************************************/
-#define KEYMATRIX_API_VERSION_MAJOR    (1U) // DEPRECATED ///< KEY MATRIX API version number (Major)
-#define KEYMATRIX_API_VERSION_MINOR    (1U) // DEPRECATED ///< KEY MATRIX API version number (Minor)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -127,14 +125,6 @@ typedef struct st_keymatrix_api
      * @param[in]  p_ctrl      Control block pointer set in Open call for this Key interrupt.
      */
     fsp_err_t (* close)(keymatrix_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get version and store it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_KINT_VersionGet()
-     *
-     * @param[out]  p_version  Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } keymatrix_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

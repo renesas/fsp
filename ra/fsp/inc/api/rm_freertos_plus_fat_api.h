@@ -51,8 +51,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
- #define RM_FREERTOS_PLUS_FAT_API_VERSION_MAJOR    (1U) // DEPRECATED
- #define RM_FREERTOS_PLUS_FAT_API_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -117,18 +115,10 @@ typedef struct st_rm_freertos_plus_fat_cfg
 
 typedef struct st_rm_freertos_plus_fat_disk_cfg
 {
-    union
-    {
-        rm_freertos_plus_fat_device_t device; ///< Device sector data
-        struct
-        {
-            uint32_t num_sectors;             // DEPRECATED
-            uint32_t sector_size_bytes;       // DEPRECATED
-        };
-    };
-    uint32_t  cache_size_bytes;               ///< Chache memory size
-    uint8_t * p_cache;                        ///< Pointer to cache memory
-    uint8_t   partition_number;               ///< Partition number for this disk
+    rm_freertos_plus_fat_device_t device; ///< Device sector data
+    uint32_t  cache_size_bytes;           ///< Chache memory size
+    uint8_t * p_cache;                    ///< Pointer to cache memory
+    uint8_t   partition_number;           ///< Partition number for this disk
 } rm_freertos_plus_fat_disk_cfg_t;
 
 typedef void rm_freertos_plus_fat_ctrl_t;
@@ -194,14 +184,6 @@ typedef struct st_rm_freertos_plus_fat_api
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(rm_freertos_plus_fat_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get the driver version.
-     * @par Implemented as
-     * - @ref RM_FREERTOS_PLUS_FAT_VersionGet()
-     *
-     * @param[in]  p_ctrl       Pointer to control structure.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } rm_freertos_plus_fat_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

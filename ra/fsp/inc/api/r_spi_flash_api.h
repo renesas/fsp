@@ -48,8 +48,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define SPI_FLASH_API_VERSION_MAJOR        (1U) // DEPRECATED
-#define SPI_FLASH_API_VERSION_MINOR        (0U) // DEPRECATED
 
 #define SPI_FLASH_ERASE_SIZE_CHIP_ERASE    (UINT32_MAX)
 
@@ -324,15 +322,6 @@ typedef struct st_spi_flash_api
      * @param[in] p_ctrl               Pointer to a driver handle
      **/
     fsp_err_t (* close)(spi_flash_ctrl_t * p_ctrl);
-
-    /* DEPRECATED Get the driver version based on compile time macros.
-     * @par Implemented as
-     * - @ref R_OSPI_VersionGet()
-     * - @ref R_QSPI_VersionGet()
-     *
-     * @param[out]  p_version          Code and API version stored here.
-     **/
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } spi_flash_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

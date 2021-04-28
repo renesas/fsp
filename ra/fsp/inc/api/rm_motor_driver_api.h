@@ -51,8 +51,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_DRIVER_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define MOTOR_DRIVER_API_VERSION_MINOR    (0U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -180,14 +178,6 @@ typedef struct st_motor_driver_api
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.
      */
     fsp_err_t (* parameterUpdate)(motor_driver_ctrl_t * const p_ctrl, motor_driver_cfg_t const * const p_cfg);
-
-    /* DEPRECATED Return the version of the driver.
-     * @par Implemented as
-     * - @ref RM_MOTOR_DRIVER_VersionGet()
-     *
-     * @param[out] p_version    Memory address to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } motor_driver_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

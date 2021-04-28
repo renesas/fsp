@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CRC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define CRC_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -72,7 +70,6 @@ fsp_err_t R_CRC_Calculate(crc_ctrl_t * const p_ctrl, crc_input_t * const p_crc_i
 fsp_err_t R_CRC_CalculatedValueGet(crc_ctrl_t * const p_ctrl, uint32_t * calculatedValue);
 fsp_err_t R_CRC_SnoopEnable(crc_ctrl_t * const p_ctrl, uint32_t crc_seed);
 fsp_err_t R_CRC_SnoopDisable(crc_ctrl_t * const p_ctrl);
-fsp_err_t R_CRC_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup CRC)

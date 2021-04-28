@@ -54,10 +54,6 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-/* Version Number of API.  */
-#define ADC_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define ADC_API_VERSION_MINOR    (0U)  // DEPRECATED
-
 /*****************************************************************************
  * Typedef definitions
  ******************************************************************************/
@@ -330,16 +326,6 @@ typedef struct st_adc_api
      * @param[out]  p_adc_info   Pointer to ADC information structure
      */
     fsp_err_t (* infoGet)(adc_ctrl_t * const p_ctrl, adc_info_t * const p_adc_info);
-
-    /* DEPRECATED Retrieve the API version.
-     * @par Implemented as
-     * - @ref R_ADC_VersionGet()
-     * - @ref R_SDADC_VersionGet()
-     *
-     * @pre This function retrieves the API version.
-     * @param[in]  p_version   Pointer to version structure
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } adc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

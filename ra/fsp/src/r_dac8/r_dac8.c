@@ -44,26 +44,16 @@
  **********************************************************************************************************************/
 const dac_api_t g_dac_on_dac8 =
 {
-    .open       = R_DAC8_Open,
-    .close      = R_DAC8_Close,
-    .write      = R_DAC8_Write,
-    .start      = R_DAC8_Start,
-    .stop       = R_DAC8_Stop,
-    .versionGet = R_DAC8_VersionGet,
+    .open  = R_DAC8_Open,
+    .close = R_DAC8_Close,
+    .write = R_DAC8_Write,
+    .start = R_DAC8_Start,
+    .stop  = R_DAC8_Stop,
 };
 
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_dac8_version =
-{
-    .api_version_minor  = DAC_API_VERSION_MINOR,
-    .api_version_major  = DAC_API_VERSION_MAJOR,
-    .code_version_major = DAC8_CODE_VERSION_MAJOR,
-    .code_version_minor = DAC8_CODE_VERSION_MINOR
-};
 
 /*******************************************************************************************************************//**
  * @addtogroup DAC8
@@ -299,23 +289,6 @@ fsp_err_t R_DAC8_Close (dac_ctrl_t * const p_ctrl)
     p_instance_ctrl->channel_started = false;
 
     /* All done, return success. */
-    return FSP_SUCCESS;
-}
-
-/**********************************************************************************************************************
- * DEPRECATED Get version and store it in provided pointer p_version.
- *
- * @retval  FSP_SUCCESS           Successfully retrieved version information.
- * @retval  FSP_ERR_ASSERTION     p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_DAC8_VersionGet (fsp_version_t * p_version)
-{
-#if DAC8_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_dac8_version.version_id;
-
     return FSP_SUCCESS;
 }
 

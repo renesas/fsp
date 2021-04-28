@@ -35,8 +35,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define SLCDC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define SLCDC_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -77,7 +75,6 @@ fsp_err_t R_SLCDC_Stop(slcdc_ctrl_t * const p_ctrl);
 fsp_err_t R_SLCDC_SetContrast(slcdc_ctrl_t * const p_ctrl, slcdc_contrast_t const contrast);
 fsp_err_t R_SLCDC_SetDisplayArea(slcdc_ctrl_t * const p_ctrl, slcdc_display_area_t const display_area);
 fsp_err_t R_SLCDC_Close(slcdc_ctrl_t * const p_ctrl);
-fsp_err_t R_SLCDC_VersionGet(fsp_version_t * p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

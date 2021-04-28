@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define DTC_CODE_VERSION_MAJOR            (1U) // DEPRECATED
-#define DTC_CODE_VERSION_MINOR            (0U) // DEPRECATED
 
 /** Max configurable number of transfers in NORMAL MODE */
 #define DTC_MAX_NORMAL_TRANSFER_LENGTH    (0x10000)
@@ -97,7 +95,6 @@ fsp_err_t R_DTC_Enable(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DTC_Disable(transfer_ctrl_t * const p_api_ctrl);
 fsp_err_t R_DTC_InfoGet(transfer_ctrl_t * const p_api_ctrl, transfer_properties_t * const p_properties);
 fsp_err_t R_DTC_Close(transfer_ctrl_t * const p_api_ctrl);
-fsp_err_t R_DTC_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

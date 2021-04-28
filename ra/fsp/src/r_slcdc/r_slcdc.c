@@ -55,15 +55,6 @@ static fsp_err_t r_slcdc_clock_operation(slcdc_cfg_t const * const p_cfg);
  * Private global variables
  **********************************************************************************************************************/
 
-/** SLCDC HAL module version data structure */
-static const fsp_version_t module_version =
-{
-    .api_version_minor  = SLCDC_API_VERSION_MINOR,
-    .api_version_major  = SLCDC_API_VERSION_MAJOR,
-    .code_version_major = SLCDC_CODE_VERSION_MAJOR,
-    .code_version_minor = SLCDC_CODE_VERSION_MINOR,
-};
-
 /** SLCDC HAL module API function pointer list */
 const slcdc_api_t g_slcdc_on_slcdc =
 {
@@ -75,7 +66,6 @@ const slcdc_api_t g_slcdc_on_slcdc =
     .setContrast    = R_SLCDC_SetContrast,
     .setDisplayArea = R_SLCDC_SetDisplayArea,
     .close          = R_SLCDC_Close,
-    .versionGet     = R_SLCDC_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -435,25 +425,6 @@ fsp_err_t R_SLCDC_Close (slcdc_ctrl_t * const p_ctrl)
 
     /* Set driver to closed */
     p_instance_ctrl->open = SLCDC_CLOSED;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Retrieve the API version number. Implements slcdc_api_t::versionGet.
- *
- * @retval  FSP_SUCCESS        Successful return.
- * @retval  FSP_ERR_ASSERTION  p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_SLCDC_VersionGet (fsp_version_t * const p_version)
-{
-#if (1 == SLCDC_CFG_PARAM_CHECKING_ENABLE)
-
-    /** Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    *p_version = module_version;
 
     return FSP_SUCCESS;
 }

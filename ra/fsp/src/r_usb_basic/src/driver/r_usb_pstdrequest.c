@@ -35,6 +35,21 @@
  #include "r_usb_pmsc_api.h"
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
 
+#if (BSP_CFG_RTOS == 1)
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_api.h"
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_system.h"
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_utility.h"
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_device_stack.h"
+#endif                                 /* #if (BSP_CFG_RTOS == 1) */
+
+/******************************************************************************
+ * Macro definitions
+ ******************************************************************************/
+#define STRING_BUFFER_LEN    (256)
+#define VALUE_FFH            (0xFF)
+#define FSP_SETUP_REQUEST    (1)
+#define FSP_SETUP_VALUE      (2)
+#define FSP_SETUP_LENGTH     (6)
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /******************************************************************************
@@ -57,10 +72,20 @@ static void usb_pstd_set_interface0(usb_utr_t * p_utr);
 static void usb_pstd_set_interface3(usb_utr_t * p_utr);
 static void usb_pstd_synch_rame1(usb_utr_t * p_utr);
 
+ #if (BSP_CFG_RTOS == 1)
+static void usb_peri_class_request_usbx(usb_setup_t * p_req);
+static void usb_peri_class_reqeust_usbx_get_data(usb_setup_t * p_req, usb_utr_t * p_utr);
+
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
+
  #if USB_CFG_REQUEST == USB_CFG_ENABLE
 static void usb_pstd_request_event_set(usb_utr_t * p_utr);
 
  #endif                                /* USB_CFG_REQUEST == USB_CFG_ENABLE */
+
+ #if (BSP_CFG_RTOS == 1)
+static uint8_t g_usbx_string[STRING_BUFFER_LEN];
+ #endif /* #if (BSP_CFG_RTOS == 1) */
 
 /******************************************************************************
  * Renesas Abstracted Peripheral standard request functions
@@ -255,9 +280,11 @@ void usb_pstd_stand_req3 (usb_utr_t * p_utr)
         ctrl.status               = USB_SETUP_STATUS_ACK;
         ctrl.type                 = USB_CLASS_REQUEST;
         ctrl.module_number        = p_utr->ip;
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS == 1)
+        ctrl.p_data = (void *) tx_thread_identify();
+ #elif (BSP_CFG_RTOS == 2)             /* (BSP_CFG_RTOS == 1) */
         ctrl.p_data = (void *) xTaskGetCurrentTaskHandle();
- #endif                                /* (BSP_CFG_RTOS == 2) */
+ #endif                                /* (BSP_CFG_RTOS == 1) */
         usb_set_event(USB_STATUS_REQUEST_COMPLETE, &ctrl);
 
         g_usb_pstd_std_request = USB_NO;
@@ -329,9 +356,11 @@ void usb_pstd_stand_req4 (usb_utr_t * p_utr)
         ctrl.status               = USB_SETUP_STATUS_ACK;
         ctrl.type                 = USB_CLASS_REQUEST;
         ctrl.module_number        = p_utr->ip;
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS == 1)
+        ctrl.p_data = (void *) tx_thread_identify();
+ #elif (BSP_CFG_RTOS == 2)             /* (BSP_CFG_RTOS == 1) */
         ctrl.p_data = (void *) xTaskGetCurrentTaskHandle();
- #endif                                /* (BSP_CFG_RTOS == 2) */
+ #endif                                /* (BSP_CFG_RTOS == 1) */
         usb_set_event(USB_STATUS_REQUEST_COMPLETE, &ctrl);
 
         g_usb_pstd_std_request = USB_NO;
@@ -376,9 +405,11 @@ void usb_pstd_stand_req5 (usb_utr_t * p_utr)
         ctrl.status        = USB_SETUP_STATUS_ACK;
         ctrl.type          = USB_CLASS_REQUEST;
         ctrl.module_number = p_utr->ip;
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS == 1)
+        ctrl.p_data = (void *) tx_thread_identify();
+ #elif (BSP_CFG_RTOS == 2)             /* (BSP_CFG_RTOS == 1) */
         ctrl.p_data = (void *) xTaskGetCurrentTaskHandle();
- #endif                                /* (BSP_CFG_RTOS == 2) */
+ #endif                                /* (BSP_CFG_RTOS == 1) */
 
         usb_set_event(USB_STATUS_REQUEST_COMPLETE, &ctrl);
 
@@ -480,7 +511,6 @@ static void usb_pstd_get_status1 (usb_utr_t * p_utr)
                     /* Control read start */
                     usb_pstd_ctrl_read((uint32_t) 2, tbl, p_utr);
                 }
-
                 /* EP1 to max */
                 else if (ep <= USB_MAX_EP_NO)
                 {
@@ -551,6 +581,9 @@ static void usb_pstd_get_descriptor1 (usb_utr_t * p_utr)
     uint16_t  idx;
     uint8_t * p_table;
     uint16_t  connect_info;
+ #if (BSP_CFG_RTOS == 1)
+    uint8_t i = 0;
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
 
     if (USB_DEVICE == (g_usb_pstd_req_type & USB_BMREQUESTTYPERECIP))
     {
@@ -628,6 +661,33 @@ static void usb_pstd_get_descriptor1 (usb_utr_t * p_utr)
             {
                 if (idx < g_usb_pstd_driver.num_string)
                 {
+ #if (BSP_CFG_RTOS == 1)
+                    g_usbx_string[1] = USB_DT_STRING;
+                    p_table          = g_usb_pstd_driver.p_stringtbl[idx];
+                    if (0 == idx)
+                    {
+                        /* Lang ID */
+                        len              = 4;
+                        g_usbx_string[0] = (uint8_t) len;
+                        g_usbx_string[2] = *p_table;
+                        g_usbx_string[3] = *(p_table + 1);
+                    }
+                    else
+                    {
+                        /* Other than Land ID */
+                        len              = (uint16_t) (*(p_table + 3));
+                        g_usbx_string[0] = (uint8_t) ((len * 2) + 2);
+                        for (i = 0; i < len; i++)
+                        {
+                            g_usbx_string[2 + (i * 2)] = *(p_table + i + 4);
+                            g_usbx_string[3 + (i * 2)] = 0x00;
+                        }
+
+                        len = (uint16_t) ((len * 2) + 2);
+                    }
+
+                    usb_pstd_ctrl_read((uint32_t) len, g_usbx_string, p_utr);
+ #else                                 /* #if (BSP_CFG_RTOS == 1) */
                     p_table = g_usb_pstd_driver.p_stringtbl[idx];
                     len     = (uint16_t) (*(uint8_t *) ((uint32_t) p_table + (uint32_t) 0));
                     if (g_usb_pstd_req_length < len)
@@ -640,6 +700,7 @@ static void usb_pstd_get_descriptor1 (usb_utr_t * p_utr)
                         /* Control read start */
                         usb_pstd_ctrl_read((uint32_t) len, p_table, p_utr);
                     }
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
                 }
                 else
                 {
@@ -928,7 +989,6 @@ static void usb_pstd_clr_feature3 (usb_utr_t * p_utr)
                         /* Set pipe PID_BUF */
                         usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
                     }
-
                     /* EP1 to max */
                     else if (ep <= USB_MAX_EP_NO)
                     {
@@ -1130,7 +1190,6 @@ static void usb_pstd_set_feature3 (usb_utr_t * p_utr)
                         /* Set pipe PID_BUF */
                         usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
                     }
-
                     /* EP1 to max */
                     else if (ep <= USB_MAX_EP_NO)
                     {
@@ -1276,6 +1335,10 @@ static void usb_pstd_set_configuration0 (usb_utr_t * p_utr)
         {
             /* Registration open function call */
             (*g_usb_pstd_driver.devconfig)(p_utr, g_usb_pstd_config_num, USB_NULL);
+
+ #if (BSP_CFG_RTOS == 1)
+            _ux_device_stack_configuration_set((uint32_t) g_usb_pstd_config_num);
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
         }
     }
 }
@@ -1439,6 +1502,95 @@ static void usb_pstd_synch_rame1 (usb_utr_t * p_utr)
  * End of function usb_pstd_synch_rame1
  ******************************************************************************/
 
+ #if (BSP_CFG_RTOS == 1)
+
+/******************************************************************************
+ * Function Name   : usb_peri_class_request_usbx
+ * Description     : Class request processing for data stage (USBX)
+ * Arguments       : usb_setup_t *p_req : Pointer to usb_setup_t structure
+ * Return value    : none
+ ******************************************************************************/
+static void usb_peri_class_request_usbx (usb_setup_t * p_req)
+{
+    UX_SLAVE_DEVICE      * device;
+    UX_SLAVE_CLASS       * class;
+    UX_SLAVE_CLASS_COMMAND class_command;
+    uint32_t               class_index;
+    UX_SLAVE_TRANSFER    * transfer_request;
+    uint32_t               status;
+
+    if ((USB_CLASS == (p_req->request_type & USB_BMREQUESTTYPETYPE)) ||
+        (USB_VENDOR == (p_req->request_type & USB_BMREQUESTTYPETYPE)))
+    {
+        class_command.ux_slave_class_command_request = UX_SLAVE_CLASS_COMMAND_REQUEST;
+        for (class_index = 0; class_index < UX_MAX_SLAVE_INTERFACES; class_index++)
+        {
+            if (USB_INTERFACE == (p_req->request_type & USB_BMREQUESTTYPERECIP))
+            {
+                if ((p_req->request_index & VALUE_FFH) != class_index)
+                {
+                    continue;
+                }
+
+                class = _ux_system_slave->ux_system_slave_interface_class_array[class_index];
+                if (UX_NULL == class)
+                {
+                    continue;
+                }
+
+                device           = &_ux_system_slave->ux_system_slave_device;
+                transfer_request =
+                    &device->ux_slave_device_control_endpoint.ux_slave_endpoint_transfer_request;
+                *(transfer_request->ux_slave_transfer_request_setup +
+                  FSP_SETUP_REQUEST) = (uint8_t) (p_req->request_type >> 8);
+                *(uint16_t *) (transfer_request->ux_slave_transfer_request_setup +
+                               FSP_SETUP_VALUE) = p_req->request_value;
+                *(uint16_t *) (transfer_request->ux_slave_transfer_request_setup +
+                               FSP_SETUP_LENGTH)               = p_req->request_length;
+                class_command.ux_slave_class_command_class_ptr = class;
+                status = class->ux_slave_class_entry_function(&class_command);
+                if (status == UX_SUCCESS)
+                {
+                    break;
+                }
+            }
+        }
+    }
+}                                      /* End of function usb_peri_class_request_usbx */
+
+/******************************************************************************
+ * Function Name   : usb_peri_class_reqeust_usbx_get_data
+ * Description     : Class request processing for data stage (USBX)
+ * Arguments       : usb_setup_t *p_req : Pointer to usb_setup_t structure
+ * Return value    : none
+ ******************************************************************************/
+static void usb_peri_class_reqeust_usbx_get_data (usb_setup_t * p_req, usb_utr_t * p_utr)
+{
+    FSP_PARAMETER_NOT_USED(p_req);
+    UX_SLAVE_DEVICE   * device;
+    UX_SLAVE_TRANSFER * transfer_request;
+    usb_utr_t           tran_data;
+
+    tran_data.ip     = p_utr->ip;
+    device           = &_ux_system_slave->ux_system_slave_device;
+    transfer_request = &device->ux_slave_device_control_endpoint.ux_slave_endpoint_transfer_request;
+
+    if (USB_YES == g_usb_pstd_pipe0_request)
+    {
+        while (1)
+        {
+            ;
+        }
+    }
+
+    g_usb_pstd_std_request = USB_YES;
+    usb_pstd_ctrl_write(transfer_request->ux_slave_transfer_request_requested_length,
+                        transfer_request->ux_slave_transfer_request_data_pointer,
+                        &tran_data);
+}                                      /* End of function usb_peri_class_reqeust_usbx_get_data */
+
+ #endif /* #if (BSP_CFG_RTOS == 1) */
+
 /******************************************************************************
  * Function Name   : usb_peri_class_request
  * Description     : Class request processing for Device class
@@ -1533,9 +1685,8 @@ void usb_peri_class_request_ioss (usb_setup_t * req)
  ******************************************************************************/
 void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
 {
-    usb_instance_ctrl_t ctrl;
-
  #if defined(USB_CFG_PMSC_USE)
+    usb_instance_ctrl_t ctrl;
 
     /* Is a request receive target Interface? */
     if (USB_INTERFACE == (req->request_type & USB_BMREQUESTTYPERECIP))
@@ -1560,7 +1711,24 @@ void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
         /* Set Stall */
         usb_pstd_set_stall_pipe0(p_utr); /* Req Error */
     }
+
  #else /* defined(USB_CFG_PMSC_USE) */
+  #if (BSP_CFG_RTOS == 1)
+    FSP_PARAMETER_NOT_USED(p_utr);
+    if (0 != (req->request_type & USB_BMREQUESTTYPEDIR))
+    {
+        /* In Data */
+        usb_peri_class_request_usbx(req);
+    }
+    else
+    {
+        /* Out Data */
+        usb_peri_class_reqeust_usbx_get_data(req, p_utr);
+    }
+
+  #else                                /* #if (BSP_CFG_RTOS == 1) */
+    usb_instance_ctrl_t ctrl;
+
     /* Is a request receive target Interface? */
     ctrl.module_number = p_utr->ip;
     ctrl.setup         = *req;         /* Save setup data. */
@@ -1568,8 +1736,24 @@ void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
     ctrl.status        = USB_SETUP_STATUS_ACK;
     ctrl.type          = USB_CLASS_REQUEST;
     usb_set_event(USB_STATUS_REQUEST, &ctrl);
+  #endif                               /* #if (BSP_CFG_RTOS == 1) */
  #endif                                /* defined(USB_CFG_PMSC_USE) */
 } /* End of function usb_peri_class_request_rwds */
+
+ #if defined(USB_CFG_PMSC_USE)
+
+/******************************************************************************
+ * Function Name   : usb_peri_class_request_wds
+ * Description     : Class request processing (control write data stage)
+ * Arguments       : usb_utr_t *p_utr : Pointer to usb_utr_t structure.
+ * Return value    : none
+ ******************************************************************************/
+void usb_peri_class_request_wds (usb_utr_t * p_utr)
+{
+    usb_pstd_set_stall_pipe0(p_utr);
+}                                      /* End of function usb_peri_class_request_wds */
+
+ #endif /* defined(USB_CFG_PMSC_USE) */
 
 /******************************************************************************
  * Function Name   : usb_peri_other_request
@@ -1579,6 +1763,10 @@ void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
  ******************************************************************************/
 void usb_peri_other_request (usb_setup_t * req, usb_utr_t * p_utr)
 {
+ #if (BSP_CFG_RTOS == 1)
+    FSP_PARAMETER_NOT_USED(p_utr);
+    usb_peri_class_request_usbx(req);
+ #else                                 /* #if (BSP_CFG_RTOS == 1) */
     usb_instance_ctrl_t ctrl;
 
     ctrl.type          = USB_CLASS_REQUEST;
@@ -1587,6 +1775,7 @@ void usb_peri_other_request (usb_setup_t * req, usb_utr_t * p_utr)
     ctrl.data_size     = 0;
     ctrl.status        = USB_SETUP_STATUS_ACK;
     usb_set_event(USB_STATUS_REQUEST, &ctrl);
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
 }                                      /* End of function usb_peri_other_request */
 
 /******************************************************************************
@@ -1597,9 +1786,8 @@ void usb_peri_other_request (usb_setup_t * req, usb_utr_t * p_utr)
  ******************************************************************************/
 void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
 {
-    usb_instance_ctrl_t ctrl;
-
  #if defined(USB_CFG_PMSC_USE)
+    usb_instance_ctrl_t ctrl;
 
     /* Is a request receive target Interface? */
     if (USB_INTERFACE == (req->request_type & USB_BMREQUESTTYPERECIP))
@@ -1627,15 +1815,22 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
     {
         usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
     }
+
  #else /* defined(USB_CFG_PMSC_USE) */
+  #if (BSP_CFG_RTOS != 1)
+
     /* Is a request receive target Interface? */
-    ctrl.setup         = *req;                             /* Save setup data. */
+    usb_instance_ctrl_t ctrl;
+    ctrl.setup         = *req;         /* Save setup data. */
     ctrl.module_number = p_utr->ip;
     ctrl.data_size     = 0;
     ctrl.status        = USB_SETUP_STATUS_ACK;
     ctrl.type          = USB_CLASS_REQUEST;
     usb_set_event(USB_STATUS_REQUEST, &ctrl);
-
+  #else                                                /* #if (BSP_CFG_RTOS != 1) */
+    FSP_PARAMETER_NOT_USED(req);
+    usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);     /* Set pipe PID_BUF */
+  #endif  /* #if (BSP_CFG_RTOS != 1) */
     usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
  #endif /* defined(USB_CFG_PMSC_USE) */
 } /* End of function usb_peri_class_request_wnss */
@@ -1665,9 +1860,11 @@ void usb_peri_class_request_rss (usb_setup_t * req, usb_utr_t * p_utr)
         ctrl.data_size     = 0;
         ctrl.status        = USB_SETUP_STATUS_ACK;
         ctrl.type          = USB_CLASS_REQUEST;
-  #if (BSP_CFG_RTOS == 2)
+  #if (BSP_CFG_RTOS == 1)
+        p_tran_data->cur_task_hdl = tx_thread_identify();
+  #elif (BSP_CFG_RTOS == 2)            /* (BSP_CFG_RTOS == 1) */
         ctrl.p_data = (void *) xTaskGetCurrentTaskHandle();
-  #endif                               /* (BSP_CFG_RTOS == 2) */
+  #endif                               /* (BSP_CFG_RTOS == 1) */
         usb_set_event(USB_STATUS_REQUEST_COMPLETE, &ctrl);
         g_usb_pstd_std_request = USB_NO;
     }
@@ -1675,6 +1872,7 @@ void usb_peri_class_request_rss (usb_setup_t * req, usb_utr_t * p_utr)
     usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
  #else  /* defined(USB_CFG_PMSC_USE) */
     /* Is a request receive target Interface? */
+  #if (BSP_CFG_RTOS != 1)
     usb_instance_ctrl_t ctrl;
 
     ctrl.setup = *req;                             /* Save setup data. */
@@ -1683,10 +1881,16 @@ void usb_peri_class_request_rss (usb_setup_t * req, usb_utr_t * p_utr)
     ctrl.data_size     = 0;
     ctrl.status        = USB_SETUP_STATUS_ACK;
     ctrl.type          = USB_CLASS_REQUEST;
-  #if (BSP_CFG_RTOS == 2)
+   #if (BSP_CFG_RTOS == 1)
+    ctrl.p_data = (void *) tx_thread_identify();
+   #elif (BSP_CFG_RTOS == 2)                           /* (BSP_CFG_RTOS == 1) */
     ctrl.p_data = (void *) xTaskGetCurrentTaskHandle();
-  #endif                                               /* (BSP_CFG_RTOS == 2) */
+   #endif                                              /* (BSP_CFG_RTOS == 1) */
     usb_set_event(USB_STATUS_REQUEST_COMPLETE, &ctrl);
+  #else /* #if (BSP_CFG_RTOS != 1) */
+    FSP_PARAMETER_NOT_USED(req);
+    usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);     /* Set pipe PID_BUF */
+  #endif /* #if (BSP_CFG_RTOS != 1) */
     g_usb_pstd_std_request = USB_NO;
 
     usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
@@ -1701,6 +1905,7 @@ void usb_peri_class_request_rss (usb_setup_t * req, usb_utr_t * p_utr)
  ******************************************************************************/
 void usb_peri_class_request_wss (usb_setup_t * req, usb_utr_t * p_utr)
 {
+ #if (BSP_CFG_RTOS != 1)
     usb_instance_ctrl_t ctrl;
 
     ctrl.setup = *req;
@@ -1709,13 +1914,22 @@ void usb_peri_class_request_wss (usb_setup_t * req, usb_utr_t * p_utr)
     ctrl.data_size     = ctrl.setup.request_length - g_usb_pstd_data_cnt[USB_PIPE0];
     ctrl.status        = USB_SETUP_STATUS_ACK;
     ctrl.type          = USB_CLASS_REQUEST;
- #if (BSP_CFG_RTOS == 2)
+  #if (BSP_CFG_RTOS == 1)
+    ctrl.p_data = (void *) tx_thread_identify();
+  #elif (BSP_CFG_RTOS == 2)                        /* (BSP_CFG_RTOS == 1) */
     ctrl.p_data = (void *) xTaskGetCurrentTaskHandle();
- #endif                                /* (BSP_CFG_RTOS == 2) */
+  #endif                                           /* (BSP_CFG_RTOS == 1) */
     usb_set_event(USB_STATUS_REQUEST_COMPLETE, &ctrl);
+ #else  /*#if (BSP_CFG_RTOS != 1) */
+    FSP_PARAMETER_NOT_USED(req);
+    usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0); /* Set BUF */
+ #endif /*#if (BSP_CFG_RTOS != 1) */
     g_usb_pstd_std_request = USB_NO;
 
     usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr);
+ #if (BSP_CFG_RTOS == 1)
+    usb_peri_class_request_usbx(req);
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
 }                                      /* End of function usb_peri_class_request_wss */
 
  #if USB_CFG_REQUEST == USB_CFG_ENABLE

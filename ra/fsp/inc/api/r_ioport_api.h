@@ -48,8 +48,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define IOPORT_API_VERSION_MAJOR      (1U) // DEPRECATED
-#define IOPORT_API_VERSION_MINOR      (0U) // DEPRECATED
 
 /* Private definition to set enumeration values. */
 #define IOPORT_PRV_PFS_PSEL_OFFSET    (24)
@@ -339,13 +337,6 @@ typedef struct st_ioport_api
      * @param[in]  mask                 Mask controlling which pins on the port are written to.
      */
     fsp_err_t (* portWrite)(ioport_ctrl_t * const p_ctrl, bsp_io_port_t port, ioport_size_t value, ioport_size_t mask);
-
-    /* DEPRECATED Return the version of the IOPort driver.
-     * @par Implemented as
-     * - @ref R_IOPORT_VersionGet()
-     * @param[out]  p_data              Memory address to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * p_data);
 } ioport_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

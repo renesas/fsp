@@ -49,15 +49,6 @@
  * Private global variables.
  **********************************************************************************************************************/
 
-/** SPI HAL module version data structure */
-static const fsp_version_t g_sci_spi_version =
-{
-    .api_version_major  = SPI_API_VERSION_MAJOR,
-    .api_version_minor  = SPI_API_VERSION_MINOR,
-    .code_version_major = SCI_SPI_CODE_VERSION_MAJOR,
-    .code_version_minor = SCI_SPI_CODE_VERSION_MINOR
-};
-
 const spi_api_t g_spi_on_sci =
 {
     .open        = R_SCI_SPI_Open,
@@ -65,7 +56,6 @@ const spi_api_t g_spi_on_sci =
     .write       = R_SCI_SPI_Write,
     .writeRead   = R_SCI_SPI_WriteRead,
     .close       = R_SCI_SPI_Close,
-    .versionGet  = R_SCI_SPI_VersionGet,
     .callbackSet = R_SCI_SPI_CallbackSet
 };
 
@@ -426,23 +416,6 @@ fsp_err_t R_SCI_SPI_Close (spi_ctrl_t * const p_api_ctrl)
     }
 
     p_ctrl->open = 0U;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the version information of the underlying driver. Implements @ref spi_api_t::versionGet.
- * @param      p_version          Pointer to version structure.
- * @retval     FSP_SUCCESS        Successful version get.
- * @retval     FSP_ERR_ASSERTION  The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_SCI_SPI_VersionGet (fsp_version_t * p_version)
-{
-#if SCI_SPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_sci_spi_version.version_id;
 
     return FSP_SUCCESS;
 }

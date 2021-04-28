@@ -51,8 +51,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RM_LITTLEFS_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define RM_LITTLEFS_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -90,14 +88,6 @@ typedef struct st_rm_littlefs_api
      * @param[in]   p_ctrl             Control block set in @ref rm_littlefs_api_t::open call.
      */
     fsp_err_t (* close)(rm_littlefs_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Gets version and stores it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref RM_LITTLEFS_FLASH_VersionGet
-     *
-     * @param[out]  p_version          Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } rm_littlefs_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

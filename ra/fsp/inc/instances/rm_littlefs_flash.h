@@ -43,8 +43,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RM_LITTLEFS_FLASH_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define RM_LITTLEFS_FLASH_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -83,8 +81,6 @@ extern const rm_littlefs_api_t g_rm_littlefs_on_flash;
 fsp_err_t RM_LITTLEFS_FLASH_Open(rm_littlefs_ctrl_t * const p_ctrl, rm_littlefs_cfg_t const * const p_cfg);
 
 fsp_err_t RM_LITTLEFS_FLASH_Close(rm_littlefs_ctrl_t * const p_ctrl);
-
-fsp_err_t RM_LITTLEFS_FLASH_VersionGet(fsp_version_t * const p_version);
 
 int rm_littlefs_flash_read(const struct lfs_config * c, lfs_block_t block, lfs_off_t off, void * buffer,
                            lfs_size_t size);

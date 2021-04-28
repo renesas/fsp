@@ -52,9 +52,6 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-#define CRC_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define CRC_API_VERSION_MINOR    (0U)  // DEPRECATED
-
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -213,12 +210,6 @@ typedef struct st_crc_api
      * @param[out] crc_result     The calculated value of the CRC calculation.
      **/
     fsp_err_t (* calculate)(crc_ctrl_t * const p_ctrl, crc_input_t * const p_crc_input, uint32_t * p_crc_result);
-
-    /* DEPRECATED Get the driver version based on compile time macros.
-     * @par Implemented as
-     * - @ref R_CRC_VersionGet()
-     **/
-    fsp_err_t (* versionGet)(fsp_version_t * version);
 } crc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

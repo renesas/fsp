@@ -25,6 +25,7 @@
  ******************************************************************************/
 #include <stdint.h>
 #include "r_usb_basic_api.h"
+#include "r_usb_cstd_rtos.h"
 #include "r_usb_basic.h"
 #include "r_usb_basic_define.h"
 
@@ -70,18 +71,18 @@ typedef struct usb_utr
     uint32_t     tranlen;                      /* Transfer data length */
     uint16_t   * p_setup;                      /* Setup packet(for control only) */
     void       * p_usr_data;
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS != 0)
     usb_hdl_t cur_task_hdl;                    /* Task Handle */
-#endif /* #if (BSP_CFG_RTOS == 2) */
+#endif /* #if (BSP_CFG_RTOS != 0) */
     uint16_t msginfo;                          /* Message Info for F/W */
     uint16_t keyword;                          /* Root port / Device address / Pipe number */
     uint8_t  ip;                               /* USB module number(0 or 1) */
     uint16_t result;                           /* Result */
     uint16_t status;                           /* Status */
     uint16_t pipectr;                          /* Pipe control register */
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS != 0)
     uint16_t setup_data[5];                    /* Save setup for Request */
-#endif /* #if (BSP_CFG_RTOS == 2) */
+#endif /* #if (BSP_CFG_RTOS != 0) */
     uint8_t errcnt;                            /* Error count */
     uint8_t segment;                           /* Last flag */
     const transfer_instance_t * p_transfer_tx; ///< Send context
@@ -162,16 +163,16 @@ typedef struct
 
 typedef struct
 {
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS != 0)
     uint16_t type;
     uint16_t status;
     uint16_t ip;
     uint16_t fifo_type;
-#else                                    /* #if (BSP_CFG_RTOS == 2) */
+#else                                    /* #if (BSP_CFG_RTOS != 0) */
     usb_int_info_t buf[USB_INT_BUFSIZE]; /* Interrupt Info */
     uint8_t        wp;                   /* Write pointer */
     uint8_t        rp;                   /* Read pointer */
-#endif /* #if (BSP_CFG_RTOS == 2) */
+#endif /* #if (BSP_CFG_RTOS != 0) */
 } usb_int_t;
 
 typedef struct
@@ -183,29 +184,29 @@ typedef struct
 
 typedef struct
 {
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS != 0)
     uint16_t type;
     uint16_t status;
     uint16_t ip;
     uint16_t fifo_type;
-#else                                     /* #if (BSP_CFG_RTOS == 2) */
+#else                                     /* #if (BSP_CFG_RTOS != 0) */
     usb_fifo_type_t buf[USB_INT_BUFSIZE]; /* Complete DMA Info */
     uint8_t         wp;                   /* Write pointer */
     uint8_t         rp;                   /* Read pointer */
-#endif /* #if (BSP_CFG_RTOS == 2) */
+#endif /* #if (BSP_CFG_RTOS != 0) */
 } usb_dma_int_t;
 
 typedef struct usb_event
 {
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS != 0)
     usb_instance_ctrl_t ctrl;                /* Control Information */
     uint8_t             code;
-#else /* #if (BSP_CFG_RTOS == 2) */
+#else /* #if (BSP_CFG_RTOS != 0) */
     uint8_t             write_pointer;       /* Write pointer */
     uint8_t             read_pointer;        /* Read pointer */
     usb_status_t        code[USB_EVENT_MAX]; /* Event code */
     usb_instance_ctrl_t ctrl[USB_EVENT_MAX]; /* Control Information */
-#endif /* #if (BSP_CFG_RTOS == 2) */
+#endif /* #if (BSP_CFG_RTOS != 0) */
 } usb_event_t;
 
 typedef struct usb_pipe_table

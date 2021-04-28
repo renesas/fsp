@@ -100,15 +100,6 @@ static void r_cac_isr_handler(cac_event_t event, uint32_t clear_mask);
 static const char g_module_name[] = "cac";
 #endif
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_cac_version =
-{
-    .api_version_minor  = CAC_API_VERSION_MINOR,
-    .api_version_major  = CAC_API_VERSION_MAJOR,
-    .code_version_major = CAC_CODE_VERSION_MAJOR,
-    .code_version_minor = CAC_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -122,7 +113,6 @@ const cac_api_t g_cac_on_cac =
     .read             = R_CAC_Read,
     .callbackSet      = R_CAC_CallbackSet,
     .close            = R_CAC_Close,
-    .versionGet       = R_CAC_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -332,23 +322,6 @@ fsp_err_t R_CAC_Close (cac_ctrl_t * const p_ctrl)
     R_BSP_MODULE_STOP(FSP_IP_CAC, 0);
 
     p_instance_ctrl->open = 0U;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the API and code version information.
- *
- * @retval FSP_SUCCESS              Version info returned.
- * @retval FSP_ERR_ASSERTION        An argument is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_CAC_VersionGet (fsp_version_t * const p_version)
-{
-#if CAC_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_cac_version.version_id;
 
     return FSP_SUCCESS;
 }

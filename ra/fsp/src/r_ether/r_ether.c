@@ -165,6 +165,7 @@ static void      ether_enable_icu(ether_instance_ctrl_t * const p_instance_ctrl)
 static void      ether_disable_icu(ether_instance_ctrl_t * const p_instance_ctrl);
 static void      ether_reset_mac(R_ETHERC_EDMAC_Type * const p_reg);
 static void      ether_init_descriptors(ether_instance_ctrl_t * const p_instance_ctrl);
+static void      ether_init_buffers(ether_instance_ctrl_t * const p_instance_ctrl);
 static fsp_err_t ether_buffer_get(ether_instance_ctrl_t * const p_instance_ctrl,
                                   void ** const                 p_buffer,
                                   uint32_t                    * p_buffer_size);
@@ -195,31 +196,21 @@ static const char g_module_name[] = "ether";
 /* This structure is affected by warnings from a GCC compiler bug. This pragma suppresses the warnings in this
  * structure only.*/
 
-/*LDRA_INSPECTED 69 S */
  #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #endif
 
-/** ETHER HAL module version data structure */
-static const fsp_version_t module_version =
-{
-    .api_version_minor  = ETHER_API_VERSION_MINOR,
-    .api_version_major  = ETHER_API_VERSION_MAJOR,
-    .code_version_major = ETHER_CODE_VERSION_MAJOR,
-    .code_version_minor = ETHER_CODE_VERSION_MINOR
-};
-
-/** ETHER HAL API mapping for Ethernet Controller interface */
-/*LDRA_INSPECTED 27 D This structure must be accessible in user code. It cannot be static. */
+/** ETHER HAL API mapping for Ethernet Controller interface. */
 const ether_api_t g_ether_on_ether =
 {
     .open            = R_ETHER_Open,
     .close           = R_ETHER_Close,
     .read            = R_ETHER_Read,
     .bufferRelease   = R_ETHER_BufferRelease,
+    .rxBufferUpdate  = R_ETHER_RxBufferUpdate,
     .write           = R_ETHER_Write,
     .linkProcess     = R_ETHER_LinkProcess,
     .wakeOnLANEnable = R_ETHER_WakeOnLANEnable,
-    .versionGet      = R_ETHER_VersionGet
+    .txStatusGet     = R_ETHER_TxStatusGet,
 };
 
 /*
@@ -269,7 +260,6 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
     ether_instance_ctrl_t * p_instance_ctrl = (ether_instance_ctrl_t *) p_ctrl;
     R_ETHERC0_Type        * p_reg_etherc;
     R_ETHERC_EDMAC_Type   * p_reg_edmac;
-    uint32_t                i;
 
     fsp_err_t phy_ret;
 
@@ -307,15 +297,8 @@ fsp_err_t R_ETHER_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p
            sizeof(ether_instance_descriptor_t) *
            p_instance_ctrl->p_ether_cfg->num_tx_descriptors);
 
-    /* Initialize the Ether buffer */
-    for (i = 0;
-         i < (p_instance_ctrl->p_ether_cfg->num_tx_descriptors + p_instance_ctrl->p_ether_cfg->num_rx_descriptors);
-         i++)
-    {
-        memset(p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i],
-               0x00,
-               p_instance_ctrl->p_ether_cfg->ether_buffer_size);
-    }
+    /* Initialize the Ethernet buffer */
+    ether_init_buffers(p_instance_ctrl);
 
     R_BSP_MODULE_START(FSP_IP_ETHER, p_instance_ctrl->p_ether_cfg->channel);
 
@@ -497,6 +480,74 @@ fsp_err_t R_ETHER_BufferRelease (ether_ctrl_t * const p_ctrl)
 }                                      /* End of function R_ETHER_BufferRelease() */
 
 /********************************************************************************************************************//**
+ * @brief Change the buffer pointer of the current rx buffer descriptor. Implements @ref ether_api_t::rxBufferUpdate.
+ *
+ * @retval  FSP_SUCCESS                             Processing completed successfully.
+ * @retval  FSP_ERR_ASSERTION                       A pointer argument is NULL.
+ * @retval  FSP_ERR_NOT_OPEN                        The control block has not been opened.
+ * @retval  FSP_ERR_INVALID_POINTER                 The pointer of buffer is NULL or not aligned on a 32-bit boundary.
+ * @retval  FSP_ERR_INVALID_MODE                    Driver is configured to non zero copy mode.
+ * @retval  FSP_ERR_ETHER_RECEIVE_BUFFER_ACTIVE     All descriptor is active.
+ ***********************************************************************************************************************/
+fsp_err_t R_ETHER_RxBufferUpdate (ether_ctrl_t * const p_ctrl, void * const p_buffer)
+{
+    fsp_err_t               err = FSP_SUCCESS;
+    R_ETHERC_EDMAC_Type   * p_reg_edmac;
+    ether_instance_ctrl_t * p_instance_ctrl = (ether_instance_ctrl_t *) p_ctrl;
+    uint32_t                status;
+
+    /* Check argument */
+#if (ETHER_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    ETHER_ERROR_RETURN(ETHER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    ETHER_ERROR_RETURN(NULL != p_buffer, FSP_ERR_INVALID_POINTER);
+    ETHER_ERROR_RETURN(0 == ((uint32_t) p_buffer & (uint32_t) ETHER_BUFFER_32BYTE_ALIGNMENT_MASK),
+                       FSP_ERR_INVALID_POINTER);
+    ETHER_ERROR_RETURN(ETHER_ZEROCOPY_ENABLE == p_instance_ctrl->p_ether_cfg->zerocopy, FSP_ERR_INVALID_MODE);
+#endif
+
+    if (ETHER_RD0_RACT != (p_instance_ctrl->p_rx_descriptor->status & ETHER_RD0_RACT))
+    {
+        p_instance_ctrl->p_rx_descriptor->p_buffer = p_buffer;
+
+        /* Reset current descriptor */
+        status  = ETHER_RD0_RFP1;
+        status |= ETHER_RD0_RFP0;
+        status |= ETHER_RD0_RFE;
+        status |= ETHER_RD0_RFS9_RFOVER;
+        status |= ETHER_RD0_RFS8_RAD;
+        status |= ETHER_RD0_RFS7_RMAF;
+        status |= ETHER_RD0_RFS4_RRF;
+        status |= ETHER_RD0_RFS3_RTLF;
+        status |= ETHER_RD0_RFS2_RTSF;
+        status |= ETHER_RD0_RFS1_PRE;
+        status |= ETHER_RD0_RFS0_CERF;
+
+        p_instance_ctrl->p_rx_descriptor->status &= (~status);
+
+        /* Enable current descriptor */
+        p_instance_ctrl->p_rx_descriptor->status |= ETHER_RD0_RACT;
+
+        /* Move to next descriptor */
+        p_instance_ctrl->p_rx_descriptor = p_instance_ctrl->p_rx_descriptor->p_next;
+
+        p_reg_edmac = (R_ETHERC_EDMAC_Type *) p_instance_ctrl->p_reg_edmac;
+
+        if (ETHER_EDMAC_EDRRR_RECEIVE_REQUEST != p_reg_edmac->EDRRR)
+        {
+            /* Restart if stopped */
+            p_reg_edmac->EDRRR = ETHER_EDMAC_EDRRR_RECEIVE_REQUEST;
+        }
+    }
+    else
+    {
+        err = FSP_ERR_ETHER_RECEIVE_BUFFER_ACTIVE;
+    }
+
+    return err;
+}
+
+/********************************************************************************************************************//**
  * @brief The Link up processing, the Link down processing, and the magic packet detection processing are executed.
  *  Implements @ref ether_api_t::linkProcess.
  *
@@ -520,8 +571,6 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
     ether_callback_args_t                 callback_arg;
     ether_cfg_t const                   * p_ether_cfg;
     volatile ether_previous_link_status_t previous_link_status;
-
-    uint32_t i;
 
 #if (ETHER_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_instance_ctrl);
@@ -616,16 +665,8 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
                    0x00,
                    sizeof(ether_instance_descriptor_t) * p_instance_ctrl->p_ether_cfg->num_tx_descriptors);
 
-            /* Initialize the Ether buffer */
-            for (i = 0;
-                 i <
-                 (p_instance_ctrl->p_ether_cfg->num_tx_descriptors + p_instance_ctrl->p_ether_cfg->num_rx_descriptors);
-                 i++)
-            {
-                memset(p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i],
-                       0x00,
-                       p_instance_ctrl->p_ether_cfg->ether_buffer_size);
-            }
+            /* Initialize the Ethernet buffer */
+            ether_init_buffers(p_instance_ctrl);
 
             p_instance_ctrl->link_establish_status = ETHER_LINK_ESTABLISH_STATUS_UP;
 
@@ -676,15 +717,8 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
                0x00,
                sizeof(ether_instance_descriptor_t) * p_instance_ctrl->p_ether_cfg->num_tx_descriptors);
 
-        /* Initialize the Ether buffer */
-        for (i = 0;
-             i < (p_instance_ctrl->p_ether_cfg->num_tx_descriptors + p_instance_ctrl->p_ether_cfg->num_rx_descriptors);
-             i++)
-        {
-            memset(p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i],
-                   0x00,
-                   p_instance_ctrl->p_ether_cfg->ether_buffer_size);
-        }
+        /* Initialize the Ethernet buffer */
+        ether_init_buffers(p_instance_ctrl);
 
         p_instance_ctrl->link_establish_status = ETHER_LINK_ESTABLISH_STATUS_UP;
 
@@ -701,8 +735,9 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
         {
             if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
             {
-                callback_arg.channel = p_instance_ctrl->p_ether_cfg->channel;
-                callback_arg.event   = ETHER_EVENT_LINK_ON;
+                callback_arg.channel   = p_instance_ctrl->p_ether_cfg->channel;
+                callback_arg.event     = ETHER_EVENT_LINK_ON;
+                callback_arg.p_context = p_instance_ctrl->p_ether_cfg->p_context;
                 (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
             }
         }
@@ -739,8 +774,9 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
 
             if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
             {
-                callback_arg.channel = p_instance_ctrl->p_ether_cfg->channel;
-                callback_arg.event   = ETHER_EVENT_LINK_OFF;
+                callback_arg.channel   = p_instance_ctrl->p_ether_cfg->channel;
+                callback_arg.event     = ETHER_EVENT_LINK_OFF;
+                callback_arg.p_context = p_instance_ctrl->p_ether_cfg->p_context;
                 (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
             }
         }
@@ -760,8 +796,9 @@ fsp_err_t R_ETHER_LinkProcess (ether_ctrl_t * const p_ctrl)
 
         if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
         {
-            callback_arg.channel = p_instance_ctrl->p_ether_cfg->channel;
-            callback_arg.event   = ETHER_EVENT_LINK_OFF;
+            callback_arg.channel   = p_instance_ctrl->p_ether_cfg->channel;
+            callback_arg.event     = ETHER_EVENT_LINK_OFF;
+            callback_arg.p_context = p_instance_ctrl->p_ether_cfg->p_context;
             (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
         }
 #endif
@@ -995,11 +1032,6 @@ fsp_err_t R_ETHER_Write (ether_ctrl_t * const p_ctrl, void * const p_buffer, uin
     ETHER_ERROR_RETURN(NULL != p_buffer, FSP_ERR_INVALID_POINTER);
     ETHER_ERROR_RETURN((ETHER_MINIMUM_FRAME_SIZE <= frame_length) && (ETHER_MAXIMUM_FRAME_SIZE >= frame_length),
                        FSP_ERR_INVALID_ARGUMENT);
-    if (ETHER_ZEROCOPY_ENABLE == p_instance_ctrl->p_ether_cfg->zerocopy)
-    {
-        ETHER_ERROR_RETURN(0 == ((uint32_t) p_buffer & (uint32_t) ETHER_BUFFER_32BYTE_ALIGNMENT_MASK),
-                           FSP_ERR_INVALID_POINTER);
-    }
 #endif
 
     /* When the Link up processing is not completed, return error */
@@ -1061,21 +1093,59 @@ fsp_err_t R_ETHER_Write (ether_ctrl_t * const p_ctrl, void * const p_buffer, uin
     return err;
 }                                      /* End of function R_ETHER_Write() */
 
-/************************************************************************************************************************
- * DEPRECATED Provides API and code version in the user provided pointer. Implements @ref ether_api_t::versionGet.
+/**********************************************************************************************************************//**
+ * Provides status of Ethernet driver in the user provided pointer. Implements @ref ether_api_t::txStatusGet.
  *
- * @retval  FSP_SUCCESS                  Version information stored in provided p_version.
- * @retval  FSP_ERR_ASSERTION            p_version is NULL.
+ * @retval  FSP_SUCCESS                  Transmit buffer address is stored in provided p_buffer_address.
+ * @retval  FSP_ERR_ASSERTION            Pointer to ETHER control block is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_INVALID_POINTER      p_status is NULL.
+ * @retval  FSP_ERR_NOT_FOUND            Transmit buffer address has been overwritten in transmit descriptor.
  ***********************************************************************************************************************/
-__INLINE fsp_err_t R_ETHER_VersionGet (fsp_version_t * const p_version)
+fsp_err_t R_ETHER_TxStatusGet (ether_ctrl_t * const p_ctrl, void * const p_buffer_address)
 {
+    ether_instance_ctrl_t       * p_instance_ctrl = (ether_instance_ctrl_t *) p_ctrl;
+    R_ETHERC_EDMAC_Type         * p_reg_edmac;
+    ether_instance_descriptor_t * p_descriptor;
+    uint8_t ** p_sent_buffer_address = (uint8_t **) p_buffer_address;
+    fsp_err_t  err = FSP_ERR_NOT_FOUND;
+
 #if (ETHER_CFG_PARAM_CHECKING_ENABLE)
-    FSP_ASSERT(p_version);
+    FSP_ASSERT(p_instance_ctrl);
+    ETHER_ERROR_RETURN(ETHER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    ETHER_ERROR_RETURN(NULL != p_buffer_address, FSP_ERR_INVALID_POINTER);
 #endif
 
-    *p_version = module_version;
+    p_reg_edmac = (R_ETHERC_EDMAC_Type *) p_instance_ctrl->p_reg_edmac;
 
-    return FSP_SUCCESS;
+    p_descriptor = (ether_instance_descriptor_t *) p_reg_edmac->TDFAR;
+
+    /* Descriptor is NULL, when no packet transmitted. */
+    if (NULL != p_descriptor)
+    {
+        uint32_t num_tx_descriptors = p_instance_ctrl->p_ether_cfg->num_tx_descriptors;
+        ether_instance_descriptor_t * p_tx_descriptors = p_instance_ctrl->p_ether_cfg->p_tx_descriptors;
+
+        p_descriptor = (ether_instance_descriptor_t *) ((uint8_t *) p_descriptor - sizeof(ether_instance_descriptor_t));
+
+        if (p_descriptor < p_tx_descriptors)
+        {
+            p_descriptor = &p_tx_descriptors[num_tx_descriptors - 1];
+        }
+
+        /* Check that the descriptor is not overridden. */
+        if ((NULL != p_descriptor->p_buffer) && (ETHER_TD0_TACT != (p_descriptor->status & ETHER_TD0_TACT)))
+        {
+            *p_sent_buffer_address = p_descriptor->p_buffer;
+            err = FSP_SUCCESS;
+        }
+        else
+        {
+            ;
+        }
+    }
+
+    return err;
 }                                      /* End of function R_ETHER_VersionGet() */
 
 /*******************************************************************************************************************//**
@@ -1099,7 +1169,7 @@ __INLINE fsp_err_t R_ETHER_VersionGet (fsp_version_t * const p_version)
  * @retval  FSP_ERR_ALREADY_OPEN         Control block has already been opened
  * @retval  FSP_ERR_INVALID_CHANNEL      Invalid channel number is given.
  * @retval  FSP_ERR_INVALID_POINTER      Pointer to MAC address is NULL.
- * @retval  FSP_ERR_INVALID_ARGUMENT      Irq number lower then 0.
+ * @retval  FSP_ERR_INVALID_ARGUMENT     Irq number lower then 0.
  **********************************************************************************************************************/
 static fsp_err_t ether_open_param_check (ether_instance_ctrl_t const * const p_instance_ctrl,
                                          ether_cfg_t const * const           p_cfg)
@@ -1114,6 +1184,11 @@ static fsp_err_t ether_open_param_check (ether_instance_ctrl_t const * const p_i
     if (p_cfg->padding != ETHER_PADDING_DISABLE)
     {
         ETHER_ERROR_RETURN((p_cfg->padding_offset <= ETHER_MAXIMUM_PADDING_OFFSET), FSP_ERR_INVALID_ARGUMENT);
+    }
+
+    if (p_cfg->zerocopy == ETHER_ZEROCOPY_DISABLE)
+    {
+        ETHER_ERROR_RETURN((p_cfg->pp_ether_buffers != NULL), FSP_ERR_INVALID_ARGUMENT);
     }
 
     ETHER_ERROR_RETURN((ETHER_OPEN != p_instance_ctrl->open), FSP_ERR_ALREADY_OPEN);
@@ -1158,11 +1233,19 @@ static void ether_init_descriptors (ether_instance_ctrl_t * const p_instance_ctr
     for (i = 0; i < p_instance_ctrl->p_ether_cfg->num_rx_descriptors; i++)
     {
         p_descriptor              = &p_instance_ctrl->p_ether_cfg->p_rx_descriptors[i];
-        p_descriptor->p_buffer    = p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i];
         p_descriptor->buffer_size = (uint16_t) p_instance_ctrl->p_ether_cfg->ether_buffer_size;
         p_descriptor->size        = 0;
-        p_descriptor->status      = ETHER_RD0_RACT;
         p_descriptor->p_next      = &p_instance_ctrl->p_ether_cfg->p_rx_descriptors[(i + 1)];
+
+        if (NULL != p_instance_ctrl->p_ether_cfg->pp_ether_buffers)
+        {
+            p_descriptor->p_buffer = p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i];
+            p_descriptor->status   = ETHER_RD0_RACT;
+        }
+        else
+        {
+            p_descriptor->p_buffer = NULL;
+        }
     }
 
     if (NULL != p_descriptor)
@@ -1178,15 +1261,24 @@ static void ether_init_descriptors (ether_instance_ctrl_t * const p_instance_ctr
     /* Initialize the transmit descriptors */
     for (i = 0; i < p_instance_ctrl->p_ether_cfg->num_tx_descriptors; i++)
     {
-        p_descriptor           = &p_instance_ctrl->p_ether_cfg->p_tx_descriptors[i];
-        p_descriptor->p_buffer =
-            p_instance_ctrl->p_ether_cfg->pp_ether_buffers[(p_instance_ctrl->p_ether_cfg->num_rx_descriptors + i)];
+        p_descriptor              = &p_instance_ctrl->p_ether_cfg->p_tx_descriptors[i];
         p_descriptor->buffer_size = 1; /* Set a value equal to or greater than 1. (reference to UMH)
                                         * When transmitting data, the value of size is set to the function argument
                                         * R_ETHER_Write. */
         p_descriptor->size        = 0; /* Reserved : The write value should be 0. (reference to UMH) */
         p_descriptor->status      = 0;
         p_descriptor->p_next      = &p_instance_ctrl->p_ether_cfg->p_tx_descriptors[(i + 1)];
+
+        if ((ETHER_ZEROCOPY_DISABLE == p_instance_ctrl->p_ether_cfg->zerocopy) &&
+            (NULL != p_instance_ctrl->p_ether_cfg->pp_ether_buffers))
+        {
+            p_descriptor->p_buffer =
+                p_instance_ctrl->p_ether_cfg->pp_ether_buffers[(p_instance_ctrl->p_ether_cfg->num_rx_descriptors + i)];
+        }
+        else
+        {
+            p_descriptor->p_buffer = NULL;
+        }
     }
 
     if (NULL != p_descriptor)
@@ -1199,6 +1291,40 @@ static void ether_init_descriptors (ether_instance_ctrl_t * const p_instance_ctr
         p_instance_ctrl->p_tx_descriptor = &p_instance_ctrl->p_ether_cfg->p_tx_descriptors[0];
     }
 }                                      /* End of function ether_init_descriptors() */
+
+/***********************************************************************************************************************
+ * Function Name: ether_init_buffers
+ * Description  : The driver buffers are initialized.
+ * Arguments    : p_instance_ctrl -
+ *                    ETHERC control block.
+ * Return Value : none
+ ***********************************************************************************************************************/
+static void ether_init_buffers (ether_instance_ctrl_t * const p_instance_ctrl)
+{
+    uint32_t i;
+    uint32_t buffer_num;
+
+    if (NULL != p_instance_ctrl->p_ether_cfg->pp_ether_buffers)
+    {
+        if (ETHER_ZEROCOPY_DISABLE == p_instance_ctrl->p_ether_cfg->zerocopy)
+        {
+            buffer_num =
+                (uint32_t) (p_instance_ctrl->p_ether_cfg->num_tx_descriptors +
+                            p_instance_ctrl->p_ether_cfg->num_rx_descriptors);
+        }
+        else
+        {
+            buffer_num = (uint32_t) p_instance_ctrl->p_ether_cfg->num_rx_descriptors;
+        }
+
+        for (i = 0; i < buffer_num; i++)
+        {
+            memset(p_instance_ctrl->p_ether_cfg->pp_ether_buffers[i],
+                   0x00,
+                   p_instance_ctrl->p_ether_cfg->ether_buffer_size);
+        }
+    }
+}                                      /* End of function ether_init_buffers() */
 
 /********************************************************************************************************************//**
  * @brief Get Points to the buffer pointer used by the stack.
@@ -1705,6 +1831,7 @@ void ether_eint_isr (void)
         callback_arg.event       = ETHER_EVENT_INTERRUPT;
         callback_arg.status_ecsr = status_ecsr;
         callback_arg.status_eesr = status_eesr;
+        callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
         (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
     }
 

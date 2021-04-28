@@ -51,9 +51,6 @@ FSP_HEADER
  * Macro definitions
  ********************************************************************************************************************/
 
-#define SPI_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define SPI_API_VERSION_MINOR    (0U)  // DEPRECATED
-
 /*********************************************************************************************************************
  * Typedef definitions
  ********************************************************************************************************************/
@@ -248,15 +245,6 @@ typedef struct st_spi_api
      * @param[in]  p_ctrl  Pointer to the control block for the channel.
      */
     fsp_err_t (* close)(spi_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get the version information of the underlying driver.
-     * @par Implemented as
-     * - @ref R_SPI_VersionGet()
-     * - @ref R_SCI_SPI_VersionGet()
-     *
-     * @param[out]  p_version pointer to memory location to return version number
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * p_version);
 } spi_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

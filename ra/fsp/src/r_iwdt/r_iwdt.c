@@ -84,15 +84,6 @@ static uint32_t wdt_clock_divider_get(wdt_clock_division_t division);
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_iwdt_version =
-{
-    .api_version_minor  = WDT_API_VERSION_MINOR,
-    .api_version_major  = WDT_API_VERSION_MAJOR,
-    .code_version_major = IWDT_CODE_VERSION_MAJOR,
-    .code_version_minor = IWDT_CODE_VERSION_MINOR
-};
-
 static const uint8_t g_ofs0_timeout[] =
 {
     0x00U,                             ///< IWDTCR value for WDT_TIMEOUT_128
@@ -143,7 +134,6 @@ const wdt_api_t g_wdt_on_iwdt =
     .counterGet  = R_IWDT_CounterGet,
     .timeoutGet  = R_IWDT_TimeoutGet,
     .callbackSet = R_IWDT_CallbackSet,
-    .versionGet  = R_IWDT_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -433,23 +423,6 @@ fsp_err_t R_IWDT_CallbackSet (wdt_ctrl_t * const          p_ctrl,
 #endif
     p_instance_ctrl->p_context         = p_context;
     p_instance_ctrl->p_callback_memory = p_callback_memory;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return IWDT HAL driver version. Implements @ref wdt_api_t::versionGet.
- *
- * @retval          FSP_SUCCESS         Call successful.
- * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter.
- **********************************************************************************************************************/
-fsp_err_t R_IWDT_VersionGet (fsp_version_t * const p_data)
-{
-#if (1 == IWDT_CFG_PARAM_CHECKING_ENABLE)
-    FSP_ASSERT(p_data != NULL);
-#endif
-
-    p_data->version_id = g_iwdt_version.version_id;
 
     return FSP_SUCCESS;
 }

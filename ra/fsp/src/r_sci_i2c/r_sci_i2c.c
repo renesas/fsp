@@ -160,15 +160,6 @@ static void sci_i2c_enable_transfer_support_tx(sci_i2c_instance_ctrl_t * const p
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static fsp_version_t const g_sci_i2c_master_version =
-{
-    .api_version_major  = I2C_MASTER_API_VERSION_MAJOR,
-    .api_version_minor  = I2C_MASTER_API_VERSION_MINOR,
-    .code_version_minor = SCI_I2C_MASTER_CODE_VERSION_MINOR,
-    .code_version_major = SCI_I2C_MASTER_CODE_VERSION_MAJOR,
-};
-
 /* constant used as the source location for the DTC dummy write  */
 static const uint8_t g_dummy_write_data_for_read_op = SCI_I2C_PRV_DUMMY_WRITE_DATA_FOR_READ_OP;
 
@@ -185,7 +176,6 @@ i2c_master_api_t const g_i2c_master_on_sci =
     .abort           = R_SCI_I2C_Abort,
     .slaveAddressSet = R_SCI_I2C_SlaveAddressSet,
     .close           = R_SCI_I2C_Close,
-    .versionGet      = R_SCI_I2C_VersionGet,
     .callbackSet     = R_SCI_I2C_CallbackSet
 };
 
@@ -501,23 +491,6 @@ fsp_err_t R_SCI_I2C_Close (i2c_master_ctrl_t * const p_api_ctrl)
     }
 #endif
     R_BSP_MODULE_STOP(FSP_IP_SCI, p_ctrl->p_cfg->channel);
-
-    return FSP_SUCCESS;
-}
-
-/**********************************************************************************************************************
- * DEPRECATED Sets driver version based on compile time macros.
- *
- * @retval  FSP_SUCCESS                 Successful version get.
- * @retval  FSP_ERR_ASSERTION           The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_SCI_I2C_VersionGet (fsp_version_t * const p_version)
-{
-#if SCI_I2C_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(p_version != NULL);
-#endif
-
-    p_version->version_id = g_sci_i2c_master_version.version_id;
 
     return FSP_SUCCESS;
 }

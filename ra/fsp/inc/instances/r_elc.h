@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ELC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define ELC_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -74,7 +72,6 @@ fsp_err_t R_ELC_LinkSet(elc_ctrl_t * const p_ctrl, elc_peripheral_t peripheral, 
 fsp_err_t R_ELC_LinkBreak(elc_ctrl_t * const p_ctrl, elc_peripheral_t peripheral);
 fsp_err_t R_ELC_Enable(elc_ctrl_t * const p_ctrl);
 fsp_err_t R_ELC_Disable(elc_ctrl_t * const p_ctrl);
-fsp_err_t R_ELC_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

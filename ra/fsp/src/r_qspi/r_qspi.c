@@ -78,15 +78,6 @@ static fsp_err_t qspi_program_param_check(qspi_instance_ctrl_t * p_instance_ctrl
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_qspi_version =
-{
-    .api_version_minor  = SPI_FLASH_API_VERSION_MINOR,
-    .api_version_major  = SPI_FLASH_API_VERSION_MAJOR,
-    .code_version_major = QSPI_CODE_VERSION_MAJOR,
-    .code_version_minor = QSPI_CODE_VERSION_MINOR
-};
-
 #if QSPI_CFG_SUPPORT_EXTENDED_SPI_MULTI_LINE_PROGRAM
 
 /* Page program command.  Index by [data_lines].  data_lines is 0 for 1 data line, 1 for 2 data lines, or
@@ -121,7 +112,6 @@ const spi_flash_api_t g_qspi_on_spi_flash =
     .xipExit        = R_QSPI_XipExit,
     .bankSet        = R_QSPI_BankSet,
     .close          = R_QSPI_Close,
-    .versionGet     = R_QSPI_VersionGet,
 };
 
 /***********************************************************************************************************************
@@ -605,26 +595,6 @@ fsp_err_t R_QSPI_Close (spi_flash_ctrl_t * p_ctrl)
 
     /* Disable clock to the QSPI block */
     R_BSP_MODULE_STOP(FSP_IP_QSPI, 0U);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the driver version based on compile time macros.
- *
- * Implements @ref spi_flash_api_t::versionGet.
- *
- * @retval     FSP_SUCCESS          Successful close.
- * @retval     FSP_ERR_ASSERTION    p_version is NULL.
- *
- **********************************************************************************************************************/
-fsp_err_t R_QSPI_VersionGet (fsp_version_t * const p_version)
-{
-#if QSPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_qspi_version.version_id;
 
     return FSP_SUCCESS;
 }

@@ -40,8 +40,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ETHER_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define ETHER_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -172,13 +170,15 @@ fsp_err_t R_ETHER_Read(ether_ctrl_t * const p_ctrl, void * const p_buffer, uint3
 
 fsp_err_t R_ETHER_BufferRelease(ether_ctrl_t * const p_ctrl);
 
+fsp_err_t R_ETHER_RxBufferUpdate(ether_ctrl_t * const p_ctrl, void * const p_buffer);
+
 fsp_err_t R_ETHER_Write(ether_ctrl_t * const p_ctrl, void * const p_buffer, uint32_t const frame_length);
 
 fsp_err_t R_ETHER_LinkProcess(ether_ctrl_t * const p_ctrl);
 
 fsp_err_t R_ETHER_WakeOnLANEnable(ether_ctrl_t * const p_ctrl);
 
-fsp_err_t R_ETHER_VersionGet(fsp_version_t * const p_version);
+fsp_err_t R_ETHER_TxStatusGet(ether_ctrl_t * const p_ctrl, void * const p_buffer_address);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup ETHER)

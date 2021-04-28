@@ -38,8 +38,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define KINT_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define KINT_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -69,7 +67,6 @@ fsp_err_t R_KINT_Open(keymatrix_ctrl_t * const p_api_ctrl, keymatrix_cfg_t const
 fsp_err_t R_KINT_Enable(keymatrix_ctrl_t * const p_api_ctrl);
 fsp_err_t R_KINT_Disable(keymatrix_ctrl_t * const p_api_ctrl);
 fsp_err_t R_KINT_Close(keymatrix_ctrl_t * const p_api_ctrl);
-fsp_err_t R_KINT_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup KINT)

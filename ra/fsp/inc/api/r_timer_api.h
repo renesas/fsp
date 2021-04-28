@@ -55,8 +55,6 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /* Leading zeroes removed to avoid coding standard violation. */
-#define TIMER_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define TIMER_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -306,15 +304,6 @@ typedef struct st_timer_api
      * @param[in]   p_ctrl     Control block set in @ref timer_api_t::open call for this timer.
      */
     fsp_err_t (* close)(timer_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get version and store it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_GPT_VersionGet()
-     * - @ref R_AGT_VersionGet()
-     *
-     * @param[out]  p_version  Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } timer_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

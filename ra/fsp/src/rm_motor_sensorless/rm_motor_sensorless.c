@@ -125,15 +125,6 @@ static uint16_t rm_motor_sensorless_statemachine_event(motor_sensorless_instance
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure. */
-static const fsp_version_t g_motor_sensorless_version =
-{
-    .api_version_major  = MOTOR_API_VERSION_MAJOR,
-    .api_version_minor  = MOTOR_API_VERSION_MINOR,
-    .code_version_major = MOTOR_SENSORLESS_CODE_VERSION_MAJOR,
-    .code_version_minor = MOTOR_SENSORLESS_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
@@ -150,7 +141,6 @@ const motor_api_t g_motor_on_sensorless =
     .angleGet   = RM_MOTOR_SENSORLESS_AngleGet,
     .speedGet   = RM_MOTOR_SENSORLESS_SpeedGet,
     .errorCheck = RM_MOTOR_SENSORLESS_ErrorCheck,
-    .versionGet = RM_MOTOR_SENSORLESS_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -604,23 +594,6 @@ fsp_err_t RM_MOTOR_SENSORLESS_ErrorCheck (motor_ctrl_t * const p_ctrl, uint16_t 
     }
 
     return err;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return MOTOR Sensorless driver version. Implements @ref motor_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS             Version information successfully read.
- * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter
- **********************************************************************************************************************/
-fsp_err_t RM_MOTOR_SENSORLESS_VersionGet (fsp_version_t * const p_version)
-{
-#if MOTOR_SENSORLESS_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_motor_sensorless_version.version_id;
-
-    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

@@ -163,8 +163,8 @@ BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_id_code             = 
   #endif
 
  #elif defined(__GNUC__)
-extern const uint32_t __tz_FLASH_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash = &__tz_FLASH_N;
+extern const uint32_t FLASH_NS_IMAGE_START;
+BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash = &FLASH_NS_IMAGE_START;
  #endif
 
  #if BSP_TZ_SECURE_BUILD

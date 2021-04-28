@@ -52,8 +52,6 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /* Leading zeroes removed to avoid coding standard violation. */
-#define THREE_PHASE_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define THREE_PHASE_API_VERSION_MINOR    (0U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -170,14 +168,6 @@ typedef struct st_three_phase_api
      * @param[in]   p_ctrl     Control block set in @ref three_phase_api_t::open call for this timer.
      */
     fsp_err_t (* close)(three_phase_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get version and store it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_GPT_THREE_PHASE_VersionGet()
-     *
-     * @param[out]  p_version  Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } three_phase_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

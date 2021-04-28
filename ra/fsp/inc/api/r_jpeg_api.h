@@ -50,8 +50,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define JPEG_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define JPEG_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -250,14 +248,6 @@ typedef struct st_jpeg_api
      * @param[in]     p_ctrl      Control block set in jpeg_api_t::open call.
      */
     fsp_err_t (* close)(jpeg_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get version and store it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_JPEG_VersionGet()
-     *
-     * @param[out]  p_version  Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * p_version);
 
 #if JPEG_CFG_DECODE_ENABLE
 

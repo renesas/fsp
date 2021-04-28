@@ -19,6 +19,7 @@
  **********************************************************************************************************************/
 #include "hw_sce_ra_private.h"
 #include "hw_sce_private.h"
+#include "hw_sce_ecc_private.h"
 
 fsp_err_t HW_SCE_ECC_256HrkGenerateKey (const uint32_t * InData_DomainParam,
                                         const uint32_t * InData_G,
@@ -161,6 +162,7 @@ fsp_err_t HW_SCE_ECC_384GenerateSign (const uint32_t * InData_DomainParam,
                                       uint32_t       * OutData_R,
                                       uint32_t       * OutData_S)
 {
+    FSP_PARAMETER_NOT_USED(InData_G);
     uint32_t signature[HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 4U] = {0};
     uint32_t wrapped_private_key[17U];
     sce_oem_cmd_t key_command;
@@ -207,6 +209,7 @@ fsp_err_t HW_SCE_ECC_384HrkGenerateSign (const uint32_t * InData_DomainParam,
                                          uint32_t       * OutData_R,
                                          uint32_t       * OutData_S)
 {
+    FSP_PARAMETER_NOT_USED(InData_G);    
     uint32_t signature[HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 4U] = {0};
     fsp_err_t    err = HW_SCE_EcdsaP384SignatureGenerateSub(InData_DomainParam, InData_KeyIndex, InData_MsgDgst, signature);
     if (FSP_SUCCESS == err)
@@ -268,6 +271,7 @@ fsp_err_t HW_SCE_ECC_384VerifySign (const uint32_t * InData_DomainParam,
                                     const uint32_t * InData_R,
                                     const uint32_t * InData_S)
 {
+    FSP_PARAMETER_NOT_USED(InData_G);
     uint32_t signature[HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 4U] = {0};
     uint32_t formatted_public_key[29U];
     memcpy(signature, InData_R, (HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 2U));

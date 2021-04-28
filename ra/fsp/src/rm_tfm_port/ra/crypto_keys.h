@@ -34,7 +34,7 @@ typedef struct st_iak_data_t
 {
     uint8_t         key[MAX_IAK_BYTES];
     uint32_t        key_size;
-    psa_ecc_curve_t curve_type;
+    psa_ecc_family_t  curve_type;
 } iak_data_t;
 
 /** HUK definition. */

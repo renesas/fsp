@@ -44,10 +44,8 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ELC_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define ELC_API_VERSION_MINOR    (0U)  // DEPRECATED
 
-#define ELC_PERIPHERAL_NUM       (23U)
+#define ELC_PERIPHERAL_NUM    (23U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -162,15 +160,6 @@ typedef struct st_elc_api
      * @param[in]   p_ctrl  Pointer to control structure.
      **/
     fsp_err_t (* disable)(elc_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get the driver version based on compile time macros.
-     * @par Implemented as
-     * - @ref R_ELC_VersionGet()
-     *
-     * @param[in]   p_ctrl  Pointer to control structure.
-     * @param[out]  p_version is value returned.
-     **/
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } elc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

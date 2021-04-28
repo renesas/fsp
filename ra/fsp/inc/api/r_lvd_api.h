@@ -47,8 +47,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define LVD_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define LVD_API_VERSION_MINOR    (0U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -265,13 +263,6 @@ typedef struct st_lvd_api
      * @param[in]   p_ctrl      Pointer to the control structure for the driver instance
      **/
     fsp_err_t (* close)(lvd_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Returns the LVD driver version based on compile time macros.
-     * @par Implemented as
-     * - @ref R_LVD_VersionGet()
-     * @param[in,out]   p_version   Pointer to version structure
-     **/
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } lvd_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

@@ -27,9 +27,9 @@
 #if defined(MBEDTLS_PSA_CRYPTO_ACCEL_DRV_C)
  #include "asymmetric_vendor.h"
 
-#if defined(MBEDTLS_ECP_C)
+ #if defined(MBEDTLS_ECP_C)
 
- #if (defined(MBEDTLS_ECP_ALT)) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)))
+  #if (defined(MBEDTLS_ECP_ALT)) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)))
 
 /* Generate an ECP keypair in vendor defined format. */
 int ecp_gen_key_vendor (mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair * key)
@@ -64,7 +64,7 @@ int ecp_gen_key_vendor (mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair * key)
 /* Import a private key given as a byte string which is the private value
  * in big-endian order. */
 
-psa_status_t psa_import_ec_private_key_vendor (psa_ecc_curve_t        curve,
+psa_status_t psa_import_ec_private_key_vendor (psa_ecc_family_t       curve,
                                                const uint8_t        * data,
                                                size_t                 data_length,
                                                mbedtls_ecp_keypair ** p_ecp)
@@ -127,8 +127,8 @@ exit:
     return status;
 }
 
- #endif                                /* (defined(MBEDTLS_ECP_ALT)) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT))) */
+  #endif                               /* (defined(MBEDTLS_ECP_ALT)) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT))) */
 
-#endif /* MBEDTLS_ECP_C */
+ #endif /* MBEDTLS_ECP_C */
 
 #endif                                 /* MBEDTLS_PSA_CRYPTO_ACCEL_DRV_C */

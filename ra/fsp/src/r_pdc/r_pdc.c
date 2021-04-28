@@ -82,15 +82,6 @@ static void r_pdc_error_handler(pdc_instance_ctrl_t * p_ctrl);
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_pdc_version =
-{
-    .api_version_minor  = PDC_API_VERSION_MINOR,
-    .api_version_major  = PDC_API_VERSION_MAJOR,
-    .code_version_major = PDC_CODE_VERSION_MAJOR,
-    .code_version_minor = PDC_CODE_VERSION_MINOR,
-};
-
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
@@ -101,7 +92,6 @@ const pdc_api_t g_pdc_on_pdc =
     .open         = R_PDC_Open,
     .close        = R_PDC_Close,
     .captureStart = R_PDC_CaptureStart,
-    .versionGet   = R_PDC_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -381,27 +371,6 @@ fsp_err_t R_PDC_CaptureStart (pdc_ctrl_t * const p_api_ctrl, uint8_t * const p_b
 
     /* Set PCCR1.PCE as 1 */
     R_PDC->PCCR1 = 1;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return PDC HAL driver version.
- *
- * Implements @ref pdc_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS             Version information successfully read.
- * @retval      FSP_ERR_ASSERTION       p_version is NULL
- *
- * @note This function is reentrant.
- **********************************************************************************************************************/
-fsp_err_t R_PDC_VersionGet (fsp_version_t * const p_version)
-{
-#if (PDC_CFG_PARAM_CHECKING_ENABLE)
-    FSP_ASSERT(p_version != NULL);
-#endif
-
-    p_version->version_id = g_pdc_version.version_id;
 
     return FSP_SUCCESS;
 }

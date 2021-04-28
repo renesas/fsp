@@ -52,21 +52,11 @@ const rm_block_media_api_t g_rm_block_media_on_spi =
     .statusGet   = RM_BLOCK_MEDIA_SPI_StatusGet,
     .infoGet     = RM_BLOCK_MEDIA_SPI_InfoGet,
     .close       = RM_BLOCK_MEDIA_SPI_Close,
-    .versionGet  = RM_BLOCK_MEDIA_SPI_VersionGet
 };
 
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
-
-/* Version data structure used by error logger macro. -- DEPRECATED */
-static const fsp_version_t g_block_media_spi_version =
-{
-    .api_version_minor  = RM_BLOCK_MEDIA_API_VERSION_MINOR,
-    .api_version_major  = RM_BLOCK_MEDIA_API_VERSION_MAJOR,
-    .code_version_major = RM_BLOCK_MEDIA_SPI_CODE_VERSION_MAJOR,
-    .code_version_minor = RM_BLOCK_MEDIA_SPI_CODE_VERSION_MINOR
-};
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -215,21 +205,18 @@ fsp_err_t RM_BLOCK_MEDIA_SPI_Read (rm_block_media_ctrl_t * const p_ctrl,
     FSP_ASSERT(num_blocks > 0U);
     FSP_ERROR_RETURN(RM_BLOCK_MEDIA_SPI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
+#endif
 
     rm_block_media_spi_extended_cfg_t * p_extended_cfg;
     p_extended_cfg = (rm_block_media_spi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
-    uint32_t base_address      = p_extended_cfg->base_address;
-    uint32_t block_size        = p_extended_cfg->block_size_bytes;
-    uint32_t read_bytes_remain = num_blocks * block_size;
-    uint32_t rom_address       = (base_address + (block_size * start_block));
+    uint32_t block_count = p_extended_cfg->block_count_total;
 
     /* Check if the address is within flash size */
-    if ((rom_address + read_bytes_remain) > (p_extended_cfg->block_count_total * block_size) + base_address)
+    if (block_count < (start_block + num_blocks))
     {
         return FSP_ERR_INVALID_ADDRESS;
     }
-#endif
 
     fsp_err_t err = rm_block_media_spi_rom_read(p_instance_ctrl, p_dest, start_block, num_blocks);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
@@ -317,25 +304,21 @@ fsp_err_t RM_BLOCK_MEDIA_SPI_Write (rm_block_media_ctrl_t * const p_ctrl,
     p_extended_cfg = (rm_block_media_spi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
     /* Calculate the address of flash */
-    ;
-    uint32_t base_address = p_extended_cfg->base_address;
-    uint32_t rom_address  = base_address + (p_extended_cfg->block_size_bytes * start_block);
+    uint32_t block_count = p_extended_cfg->block_count_total;
 
-#if RM_BLOCK_MEDIA_SPI_CFG_PARAM_CHECKING_ENABLE
-
-    /* Check if the address of flash is within flash size*/
-    if (((rom_address + (num_blocks * p_extended_cfg->block_size_bytes))) >
-        ((p_extended_cfg->block_count_total * p_extended_cfg->block_size_bytes) + base_address))
+    /* Check if the address is within flash size */
+    if (block_count < (start_block + num_blocks))
     {
         return FSP_ERR_INVALID_ADDRESS;
     }
-#endif
 
     fsp_err_t err = FSP_SUCCESS;
     err = RM_BLOCK_MEDIA_SPI_Erase(p_instance_ctrl, start_block, num_blocks);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Write data into the block media SPI flash */
+    uint32_t base_address = p_extended_cfg->base_address;
+    uint32_t rom_address  = base_address + (p_extended_cfg->block_size_bytes * start_block);
     err = rm_block_media_spi_program(p_instance_ctrl, (uint8_t *) rom_address, p_src, num_blocks);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
@@ -390,23 +373,6 @@ fsp_err_t RM_BLOCK_MEDIA_SPI_Close (rm_block_media_ctrl_t * const p_ctrl)
     return FSP_SUCCESS;
 }
 
-/**********************************************************************************************************************
- * DEPRECATED Provides API and code version in the user provided pointer. Implements @ref rm_block_media_api_t::versionGet.
- *
- * @retval FSP_SUCCESS              Function executed successfully.
- * @retval FSP_ERR_ASSERTION        Null Pointer.
- **********************************************************************************************************************/
-fsp_err_t RM_BLOCK_MEDIA_SPI_VersionGet (fsp_version_t * const p_version)
-{
-#if RM_BLOCK_MEDIA_SPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_block_media_spi_version.version_id;
-
-    return FSP_SUCCESS;
-}
-
 /*******************************************************************************************************************//**
  * This function erases blocks of the SPI device. By default, this is a function is blocking. Non-blocking operation
  * may be achieved by yielding control within the optional callback function.
@@ -440,13 +406,18 @@ fsp_err_t RM_BLOCK_MEDIA_SPI_Erase (rm_block_media_ctrl_t * const p_ctrl,
 #endif
 
     p_extended_cfg = (rm_block_media_spi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    uint32_t block_size = p_extended_cfg->block_size_bytes;
+    uint32_t block_count = p_extended_cfg->block_count_total;
+    uint32_t block_size  = p_extended_cfg->block_size_bytes;
+
+    /* Check if the address is within flash size */
+    if (block_count < (start_block + num_blocks))
+    {
+        return FSP_ERR_INVALID_ADDRESS;
+    }
 
 #if RM_BLOCK_MEDIA_SPI_CFG_PARAM_CHECKING_ENABLE
 
     /* Confirm start and end blocks are within range */
-    uint32_t block_count = p_extended_cfg->block_count_total;
-    FSP_ERROR_RETURN((block_size * block_count) >= (block_size * (start_block + num_blocks)), FSP_ERR_INVALID_ADDRESS);
     FSP_ERROR_RETURN(p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
 #endif
 
@@ -461,15 +432,16 @@ fsp_err_t RM_BLOCK_MEDIA_SPI_Erase (rm_block_media_ctrl_t * const p_ctrl,
     while ((iteration > 0U) && (FSP_SUCCESS == err))
     {
         err = p_spi_flash->p_api->erase(p_spi_flash->p_ctrl, rom_address, block_size);
-        FSP_ERROR_LOG(err);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
         /* Wait until operation is in complete */
+        err = p_spi_flash->p_api->statusGet(p_spi_flash->p_ctrl, &status);
         while ((FSP_SUCCESS == err) &&
-               (FSP_SUCCESS == p_spi_flash->p_api->statusGet(p_spi_flash->p_ctrl, &status)) &&
                (true == status.write_in_progress))
         {
             /* Notify application of erase in progress */
             rm_block_media_call_callback(p_instance_ctrl, RM_BLOCK_MEDIA_EVENT_POLL_STATUS);
+            err = p_spi_flash->p_api->statusGet(p_spi_flash->p_ctrl, &status);
         }
 
         /* Calculate next block address */
@@ -520,14 +492,15 @@ static fsp_err_t rm_block_media_spi_program (rm_block_media_spi_instance_ctrl_t 
     while ((iteration > 0U) && (FSP_SUCCESS == err))
     {
         err = p_spi_flash->p_api->write(p_spi_flash->p_ctrl, p_buffer, p_device_address, page_size);
-        FSP_ERROR_LOG(err);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
+        err = p_spi_flash->p_api->statusGet(p_spi_flash->p_ctrl, &status);
         while ((FSP_SUCCESS == err) &&
-               (FSP_SUCCESS == p_spi_flash->p_api->statusGet(p_spi_flash->p_ctrl, &status)) &&
                (true == status.write_in_progress))
         {
             /* Notify application of read in progress */
             rm_block_media_call_callback(p_instance_ctrl, RM_BLOCK_MEDIA_EVENT_POLL_STATUS);
+            err = p_spi_flash->p_api->statusGet(p_spi_flash->p_ctrl, &status);
         }
 
         p_device_address = p_device_address + page_size;

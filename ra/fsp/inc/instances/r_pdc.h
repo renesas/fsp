@@ -35,8 +35,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define PDC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define PDC_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -72,8 +70,6 @@ fsp_err_t R_PDC_Open(pdc_ctrl_t * const p_api_ctrl, pdc_cfg_t const * const p_cf
 fsp_err_t R_PDC_Close(pdc_ctrl_t * const p_api_ctrl);
 
 fsp_err_t R_PDC_CaptureStart(pdc_ctrl_t * const p_api_ctrl, uint8_t * const p_buffer);
-
-fsp_err_t R_PDC_VersionGet(fsp_version_t * const P_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

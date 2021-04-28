@@ -52,15 +52,6 @@
 void        comp_hs_int_isr(void);
 static void acmphs_hardware_initialize(acmphs_instance_ctrl_t * const p_instance_ctrl);
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_acmphs_version =
-{
-    .api_version_minor  = COMPARATOR_API_VERSION_MINOR,
-    .api_version_major  = COMPARATOR_API_VERSION_MAJOR,
-    .code_version_major = ACMPHS_CODE_VERSION_MAJOR,
-    .code_version_minor = ACMPHS_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -73,7 +64,6 @@ const comparator_api_t g_comparator_on_acmphs =
     .infoGet      = R_ACMPHS_InfoGet,
     .statusGet    = R_ACMPHS_StatusGet,
     .close        = R_ACMPHS_Close,
-    .versionGet   = R_ACMPHS_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -334,26 +324,6 @@ fsp_err_t R_ACMPHS_Close (comparator_ctrl_t * p_ctrl)
 
     /* Enter the module-stop state. */
     R_BSP_MODULE_STOP(FSP_IP_ACMPHS, p_instance_ctrl->p_cfg->channel);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Gets the API and code version. Implements @ref comparator_api_t::versionGet().
- *
- * @retval  FSP_SUCCESS        Version information available in p_version.
- * @retval  FSP_ERR_ASSERTION  The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_ACMPHS_VersionGet (fsp_version_t * const p_version)
-{
-#if (1 == ACMPHS_CFG_PARAM_CHECKING_ENABLE)
-
-    /* Verify the pointer is not NULL. */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    /* Return the version number */
-    p_version->version_id = g_acmphs_version.version_id;
 
     return FSP_SUCCESS;
 }

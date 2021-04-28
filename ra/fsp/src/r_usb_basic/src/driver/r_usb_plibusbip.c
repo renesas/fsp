@@ -50,6 +50,13 @@
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /******************************************************************************
+ * Exported global variables (to be accessed by other files)
+ ******************************************************************************/
+ #if (BSP_CFG_RTOS == 1)
+extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
+
+/******************************************************************************
  * Renesas Abstracted Host Lib IP functions
  ******************************************************************************/
 
@@ -232,7 +239,6 @@ void usb_pstd_send_start (uint16_t pipe)
         }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-
         /* D0FIFO DMA */
         case USB_D0USE:
 
@@ -497,7 +503,6 @@ void usb_pstd_receive_start (uint16_t pipe)
         }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-
         /* D0FIFO DMA */
         case USB_D0USE:
 
@@ -587,7 +592,9 @@ uint16_t usb_pstd_read_data (uint16_t pipe, uint16_t pipemode, usb_utr_t * p_utr
         usb_cstd_set_nak(p_utr, pipe);
 
         count = (uint16_t) g_usb_pstd_data_cnt[pipe];
+ #if BSP_CFG_RTOS != 1
         g_usb_pstd_data_cnt[pipe] = dtln;
+ #endif                                /* BSP_CFG_RTOS != 1 */
     }
     else if (g_usb_pstd_data_cnt[pipe] == dtln)
     {
@@ -712,7 +719,6 @@ void usb_pstd_data_end (uint16_t pipe, uint16_t status, usb_utr_t * p_utr)
         }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-
         /* D0FIFO DMA */
         case USB_D0USE:
         {
@@ -771,13 +777,18 @@ void usb_pstd_data_end (uint16_t pipe, uint16_t status, usb_utr_t * p_utr)
         g_p_usb_pstd_pipe[pipe]->pipectr = hw_usb_read_pipectr(p_utr, pipe);
         g_p_usb_pstd_pipe[pipe]->keyword = pipe;
         ((usb_cb_t) g_p_usb_pstd_pipe[pipe]->complete)(g_p_usb_pstd_pipe[pipe], USB_NULL, USB_NULL);
- #if (BSP_CFG_RTOS == 2)
+
+ #if (BSP_CFG_RTOS == 0)
+        g_p_usb_pstd_pipe[pipe] = (usb_utr_t *) USB_NULL;
+ #else                                               /* (BSP_CFG_RTOS == 0) */
+  #if (BSP_CFG_RTOS == 1)
+        USB_REL_BLK(1, g_p_usb_pstd_pipe[pipe]);
+  #elif (BSP_CFG_RTOS == 2)                          /* #if (BSP_CFG_RTOS == 1) */
         vPortFree(g_p_usb_pstd_pipe[pipe]);
+  #endif                                             /* #if (BSP_CFG_RTOS == 1) */
         g_p_usb_pstd_pipe[pipe] = (usb_utr_t *) USB_NULL;
         usb_cstd_pipe_msg_re_forward(USB_IP0, pipe); /* Get PIPE Transfer wait que and Message send to PCD */
- #else  /* (BSP_CFG_RTOS == 2) */
-        g_p_usb_pstd_pipe[pipe] = (usb_utr_t *) USB_NULL;
- #endif /* (BSP_CFG_RTOS == 2) */
+ #endif                                              /* (BSP_CFG_RTOS == 0) */
     }
 }
 
@@ -1115,6 +1126,10 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
         pipe_maxp = (uint16_t) descriptor[USB_EP_B_MAXPACKETSIZE_L];
         pipe_maxp = (uint16_t) (pipe_maxp | ((uint16_t) descriptor[USB_EP_B_MAXPACKETSIZE_H] << 8));
 
+ #if (BSP_CFG_RTOS == 1)
+        tx_semaphore_create(&g_usb_peri_usbx_sem[pipe_no], "USB_FSP_SEMX", 0);
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
+
         /* Set Pipe table block */
         g_usb_pipe_table[p_utr->ip][pipe_no].use_flag  = USB_TRUE;
         g_usb_pipe_table[p_utr->ip][pipe_no].pipe_cfg  = pipe_cfg;
@@ -1406,7 +1421,6 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
                     }
                 }
   #else
-
                 /* Check Free pipe */
                 if (USB_FALSE == g_usb_pipe_table[p_utr->ip][pipe].use_flag)
                 {

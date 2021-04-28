@@ -1001,13 +1001,17 @@ void usb_hstd_forced_termination (usb_utr_t * ptr, uint16_t pipe, uint16_t statu
             (g_p_usb_hstd_pipe[ptr->ip][pipe]->complete)(g_p_usb_hstd_pipe[ptr->ip][pipe], 0, 0);
         }
 
- #if (BSP_CFG_RTOS == 2)
+ #if (BSP_CFG_RTOS == 0)
+        g_p_usb_hstd_pipe[ptr->ip][pipe] = (usb_utr_t *) USB_NULL;
+ #else                                               /* (BSP_CFG_RTOS == 0) */
+  #if (BSP_CFG_RTOS == 1)
+        USB_REL_BLK(1, g_p_usb_hstd_pipe[ptr->ip][pipe]);
+  #elif (BSP_CFG_RTOS == 2)                          /* #if (BSP_CFG_RTOS == 1) */
         vPortFree(g_p_usb_hstd_pipe[ptr->ip][pipe]);
+  #endif                                             /* #if (BSP_CFG_RTOS == 1) */
         g_p_usb_hstd_pipe[ptr->ip][pipe] = (usb_utr_t *) USB_NULL;
         usb_cstd_pipe_msg_re_forward(ptr->ip, pipe); /* Get PIPE Transfer wait que and Message send to HCD */
- #else  /* (BSP_CFG_RTOS == 2) */
-        g_p_usb_hstd_pipe[ptr->ip][pipe] = (usb_utr_t *) USB_NULL;
- #endif /* (BSP_CFG_RTOS == 2) */
+ #endif                                              /* (BSP_CFG_RTOS == 0) */
     }
 }
 

@@ -10361,7 +10361,60 @@ typedef struct                         /*!< (@ 0x40065800) R_ETHERC_EPTPC Struct
             uint32_t              : 15;
         } FFLTR_b;
     };
-    __IM uint32_t RESERVED10[31];
+    __IM uint32_t RESERVED10[7];
+
+    union
+    {
+        __IOM uint32_t FMAC0RU;          /*!< (@ 0x00000160) Frame Reception Filter MAC Address 0 Setting
+                                          *                  Register Upper                                             */
+
+        struct
+        {
+            __IOM uint32_t FMAC0RU : 24; /*!< [23..0] These bits specify the upper-order 24 bits of the destination
+                                          *   MAC address for received multicast frames.                                */
+            uint32_t : 8;
+        } FMAC0RU_b;
+    };
+
+    union
+    {
+        __IOM uint32_t FMAC0RL;          /*!< (@ 0x00000164) Frame Reception Filter MAC Address 0 Setting
+                                          *                  Register Lower                                             */
+
+        struct
+        {
+            __IOM uint32_t FMAC0RL : 24; /*!< [23..0] These bits specify the lower-order 24 bits of the destination
+                                          *   MAC address for received multicast frames.                                */
+            uint32_t : 8;
+        } FMAC0RL_b;
+    };
+
+    union
+    {
+        __IOM uint32_t FMAC1RU;          /*!< (@ 0x00000168) Frame Reception Filter MAC Address 1 Setting
+                                          *                  Register Upper                                             */
+
+        struct
+        {
+            __IOM uint32_t FMAC1RU : 24; /*!< [23..0] These bits specify the upper-order 24 bits of the destination
+                                          *   MAC address for received multicast frames.                                */
+            uint32_t : 8;
+        } FMAC1RU_b;
+    };
+
+    union
+    {
+        __IOM uint32_t FMAC1RL;          /*!< (@ 0x0000016C) Frame Reception Filter MAC Address 1 Setting
+                                          *                  Register Lower                                             */
+
+        struct
+        {
+            __IOM uint32_t FMAC1RL : 24; /*!< [23..0] These bits specify the lower-order 24 bits of the destination
+                                          *   MAC address for received multicast frames.                                */
+            uint32_t : 8;
+        } FMAC1RL_b;
+    };
+    __IM uint32_t RESERVED11[20];
 
     union
     {
@@ -11285,7 +11338,7 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
                                         *   are not retained by these bits (always read as 0x00).Only
                                         *   secure access can write to this register. Both secure access
                                         *   and non-secure read access are allowed. Non-secure writeaccess
-                                        *   is denied, but TrustZo                                                    */
+                                        *   is denied, but Trust                                                      */
             uint16_t          : 7;
             __OM uint16_t KEY : 8;     /*!< [15..8] KEY Code                                                          */
         } FMEPROT_b;
@@ -16186,7 +16239,7 @@ typedef struct                         /*!< (@ 0x40040D00) R_PMISC Structure    
     };
     __IM uint16_t            RESERVED2[5];
     __IOM R_PMISC_PMSAR_Type PMSAR[12]; /*!< (@ 0x00000010) Port Security Attribution Register                         */
-} R_PMISC_Type;                         /*!< Size = 34 (0x22)                                                          */
+} R_PMISC_Type;                         /*!< Size = 40 (0x28)                                                          */
 
 /* =========================================================================================================================== */
 /* ================                                          R_QSPI                                           ================ */
@@ -17878,7 +17931,7 @@ typedef struct                          /*!< (@ 0x40062000) R_SDHI0 Structure   
                                         *   STP has been set to 1, the buffer access error bit (ERR5
                                         *   or ERR4) in SD_INFO2 will be set accordingly.- When STP
                                         *   has been set to 1 during transfer for single block write,
-                                        *   the access end flag is set when SD_BUF becomes emp                        */
+                                        *   the access end flag is set when SD_BUF becomes e                          */
             uint32_t           : 7;
             __IOM uint32_t SEC : 1;    /*!< [8..8] Block Count EnableSet SEC to 1 at multiple block transfer.When
                                         *   SD_CMD is set as follows to start the command sequence
@@ -17888,7 +17941,7 @@ typedef struct                          /*!< (@ 0x40062000) R_SDHI0 Structure   
                                         *   = 000)2. SD_CMD[15:13] = 001 in extended mode (CMD12 is
                                         *   automatically issued, multiple block transfer)When the
                                         *   command sequence is halted because of a communications
-                                        *   error or timeout, CMD12 is not automatically i                            */
+                                        *   error or timeout, CMD12 is not automatically                              */
             uint32_t : 23;
         } SD_STOP_b;
     };
@@ -18106,7 +18159,7 @@ typedef struct                          /*!< (@ 0x40062000) R_SDHI0 Structure   
                                         *   without automatic issuing of CMD12, as well as 512 bytes,
                                         *   32, 64, 128, and 256 bytes are specifiable. However, in
                                         *   the reading of 32, 64, 128, and 256 bytes for the transfer
-                                        *   of multiple blocks, this is restricted to mult                            */
+                                        *   of multiple blocks, this is restricted to mu                              */
             uint32_t : 22;
         } SD_SIZE_b;
     };
@@ -18653,23 +18706,9 @@ typedef struct                         /*!< (@ 0x40002000) R_SRAM Structure     
             __OM uint8_t  KW       : 7; /*!< [7..1] Write Key Code                                                     */
         } SRAMPRCR_b;
     };
-    __IM uint8_t RESERVED1[3];
-
-    union
-    {
-        __IOM uint8_t SRAMWTSC;             /*!< (@ 0x00000008) RAM Wait State Control Register                            */
-
-        struct
-        {
-            __IOM uint8_t ECCRAMWRWTEN : 1; /*!< [0..0] ECCRAM Write Wait Enable                                           */
-            __IOM uint8_t ECCRAMRDWTEN : 1; /*!< [1..1] ECCRAM Read wait enable                                            */
-            __IOM uint8_t SRAM0WTEN    : 1; /*!< [2..2] SRAM0 Wait Enable                                                  */
-            __IOM uint8_t SRAM1WTEN    : 1; /*!< [3..3] SRAM1 Wait Enable                                                  */
-            __IOM uint8_t SRAMHSWTEN   : 1; /*!< [4..4] SRAMHS Wait Enable                                                 */
-            uint8_t                    : 3;
-        } SRAMWTSC_b;
-    };
-    __IM uint8_t RESERVED2[3];
+    __IM uint8_t  RESERVED1[3];
+    __IOM uint8_t SRAMWTSC;             /*!< (@ 0x00000008) RAM Wait State Control Register                            */
+    __IM uint8_t  RESERVED2[3];
 
     union
     {
@@ -25548,8 +25587,6 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
  #define R_PSCU_PSARC_PSARC12_Msk    (0x1000UL)     /*!< PSARC12 (Bitfield-Mask: 0x01)                         */
  #define R_PSCU_PSARC_PSARC13_Pos    (13UL)         /*!< PSARC13 (Bit 13)                                      */
  #define R_PSCU_PSARC_PSARC13_Msk    (0x2000UL)     /*!< PSARC13 (Bitfield-Mask: 0x01)                         */
- #define R_PSCU_PSARC_PSARC26_Pos    (26UL)         /*!< PSARC26 (Bit 26)                                      */
- #define R_PSCU_PSARC_PSARC26_Msk    (0x4000000UL)  /*!< PSARC26 (Bitfield-Mask: 0x01)                         */
  #define R_PSCU_PSARC_PSARC27_Pos    (27UL)         /*!< PSARC27 (Bit 27)                                      */
  #define R_PSCU_PSARC_PSARC27_Msk    (0x8000000UL)  /*!< PSARC27 (Bitfield-Mask: 0x01)                         */
  #define R_PSCU_PSARC_PSARC31_Pos    (31UL)         /*!< PSARC31 (Bit 31)                                      */
@@ -28660,6 +28697,18 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
  #define R_ETHERC_EPTPC_FFLTR_PRT_Msk              (0x2UL)        /*!< PRT (Bitfield-Mask: 0x01)                             */
  #define R_ETHERC_EPTPC_FFLTR_SEL_Pos              (0UL)          /*!< SEL (Bit 0)                                           */
  #define R_ETHERC_EPTPC_FFLTR_SEL_Msk              (0x1UL)        /*!< SEL (Bitfield-Mask: 0x01)                             */
+/* ========================================================  FMAC0RU  ======================================================== */
+ #define R_ETHERC_EPTPC_FMAC0RU_FMAC0RU_Pos        (0UL)          /*!< FMAC0RU (Bit 0)                                       */
+ #define R_ETHERC_EPTPC_FMAC0RU_FMAC0RU_Msk        (0xffffffUL)   /*!< FMAC0RU (Bitfield-Mask: 0xffffff)                     */
+/* ========================================================  FMAC0RL  ======================================================== */
+ #define R_ETHERC_EPTPC_FMAC0RL_FMAC0RL_Pos        (0UL)          /*!< FMAC0RL (Bit 0)                                       */
+ #define R_ETHERC_EPTPC_FMAC0RL_FMAC0RL_Msk        (0xffffffUL)   /*!< FMAC0RL (Bitfield-Mask: 0xffffff)                     */
+/* ========================================================  FMAC1RU  ======================================================== */
+ #define R_ETHERC_EPTPC_FMAC1RU_FMAC1RU_Pos        (0UL)          /*!< FMAC1RU (Bit 0)                                       */
+ #define R_ETHERC_EPTPC_FMAC1RU_FMAC1RU_Msk        (0xffffffUL)   /*!< FMAC1RU (Bitfield-Mask: 0xffffff)                     */
+/* ========================================================  FMAC1RL  ======================================================== */
+ #define R_ETHERC_EPTPC_FMAC1RL_FMAC1RL_Pos        (0UL)          /*!< FMAC1RL (Bit 0)                                       */
+ #define R_ETHERC_EPTPC_FMAC1RL_FMAC1RL_Msk        (0xffffffUL)   /*!< FMAC1RL (Bitfield-Mask: 0xffffff)                     */
 /* ========================================================  DASYMRU  ======================================================== */
  #define R_ETHERC_EPTPC_DASYMRU_DASYMRU_Pos        (0UL)          /*!< DASYMRU (Bit 0)                                       */
  #define R_ETHERC_EPTPC_DASYMRU_DASYMRU_Msk        (0xffffUL)     /*!< DASYMRU (Bitfield-Mask: 0xffff)                       */
@@ -31206,6 +31255,8 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
  #define R_MSTP_MSTPCRC_MSTPC31_Msk    (0x80000000UL) /*!< MSTPC31 (Bitfield-Mask: 0x01)                         */
  #define R_MSTP_MSTPCRC_MSTPC28_Pos    (28UL)         /*!< MSTPC28 (Bit 28)                                      */
  #define R_MSTP_MSTPCRC_MSTPC28_Msk    (0x10000000UL) /*!< MSTPC28 (Bitfield-Mask: 0x01)                         */
+ #define R_MSTP_MSTPCRC_MSTPC27_Pos    (27UL)         /*!< MSTPC27 (Bit 27)                                      */
+ #define R_MSTP_MSTPCRC_MSTPC27_Msk    (0x8000000UL)  /*!< MSTPC27 (Bitfield-Mask: 0x01)                         */
  #define R_MSTP_MSTPCRC_MSTPC14_Pos    (14UL)         /*!< MSTPC14 (Bit 14)                                      */
  #define R_MSTP_MSTPCRC_MSTPC14_Msk    (0x4000UL)     /*!< MSTPC14 (Bitfield-Mask: 0x01)                         */
  #define R_MSTP_MSTPCRC_MSTPC13_Pos    (13UL)         /*!< MSTPC13 (Bit 13)                                      */
@@ -32701,57 +32752,47 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
 /* =========================================================================================================================== */
 
 /* ========================================================  PARIOAD  ======================================================== */
- #define R_SRAM_PARIOAD_OAD_Pos              (0UL)    /*!< OAD (Bit 0)                                           */
- #define R_SRAM_PARIOAD_OAD_Msk              (0x1UL)  /*!< OAD (Bitfield-Mask: 0x01)                             */
+ #define R_SRAM_PARIOAD_OAD_Pos            (0UL)    /*!< OAD (Bit 0)                                           */
+ #define R_SRAM_PARIOAD_OAD_Msk            (0x1UL)  /*!< OAD (Bitfield-Mask: 0x01)                             */
 /* =======================================================  SRAMPRCR  ======================================================== */
- #define R_SRAM_SRAMPRCR_KW_Pos              (1UL)    /*!< KW (Bit 1)                                            */
- #define R_SRAM_SRAMPRCR_KW_Msk              (0xfeUL) /*!< KW (Bitfield-Mask: 0x7f)                              */
- #define R_SRAM_SRAMPRCR_SRAMPRCR_Pos        (0UL)    /*!< SRAMPRCR (Bit 0)                                      */
- #define R_SRAM_SRAMPRCR_SRAMPRCR_Msk        (0x1UL)  /*!< SRAMPRCR (Bitfield-Mask: 0x01)                        */
+ #define R_SRAM_SRAMPRCR_KW_Pos            (1UL)    /*!< KW (Bit 1)                                            */
+ #define R_SRAM_SRAMPRCR_KW_Msk            (0xfeUL) /*!< KW (Bitfield-Mask: 0x7f)                              */
+ #define R_SRAM_SRAMPRCR_SRAMPRCR_Pos      (0UL)    /*!< SRAMPRCR (Bit 0)                                      */
+ #define R_SRAM_SRAMPRCR_SRAMPRCR_Msk      (0x1UL)  /*!< SRAMPRCR (Bitfield-Mask: 0x01)                        */
 /* =======================================================  SRAMWTSC  ======================================================== */
- #define R_SRAM_SRAMWTSC_SRAMHSWTEN_Pos      (4UL)    /*!< SRAMHSWTEN (Bit 4)                                    */
- #define R_SRAM_SRAMWTSC_SRAMHSWTEN_Msk      (0x10UL) /*!< SRAMHSWTEN (Bitfield-Mask: 0x01)                      */
- #define R_SRAM_SRAMWTSC_SRAM1WTEN_Pos       (3UL)    /*!< SRAM1WTEN (Bit 3)                                     */
- #define R_SRAM_SRAMWTSC_SRAM1WTEN_Msk       (0x8UL)  /*!< SRAM1WTEN (Bitfield-Mask: 0x01)                       */
- #define R_SRAM_SRAMWTSC_SRAM0WTEN_Pos       (2UL)    /*!< SRAM0WTEN (Bit 2)                                     */
- #define R_SRAM_SRAMWTSC_SRAM0WTEN_Msk       (0x4UL)  /*!< SRAM0WTEN (Bitfield-Mask: 0x01)                       */
- #define R_SRAM_SRAMWTSC_ECCRAMRDWTEN_Pos    (1UL)    /*!< ECCRAMRDWTEN (Bit 1)                                  */
- #define R_SRAM_SRAMWTSC_ECCRAMRDWTEN_Msk    (0x2UL)  /*!< ECCRAMRDWTEN (Bitfield-Mask: 0x01)                    */
- #define R_SRAM_SRAMWTSC_ECCRAMWRWTEN_Pos    (0UL)    /*!< ECCRAMWRWTEN (Bit 0)                                  */
- #define R_SRAM_SRAMWTSC_ECCRAMWRWTEN_Msk    (0x1UL)  /*!< ECCRAMWRWTEN (Bitfield-Mask: 0x01)                    */
 /* ========================================================  ECCMODE  ======================================================== */
- #define R_SRAM_ECCMODE_ECCMOD_Pos           (0UL)    /*!< ECCMOD (Bit 0)                                        */
- #define R_SRAM_ECCMODE_ECCMOD_Msk           (0x3UL)  /*!< ECCMOD (Bitfield-Mask: 0x03)                          */
+ #define R_SRAM_ECCMODE_ECCMOD_Pos         (0UL)    /*!< ECCMOD (Bit 0)                                        */
+ #define R_SRAM_ECCMODE_ECCMOD_Msk         (0x3UL)  /*!< ECCMOD (Bitfield-Mask: 0x03)                          */
 /* ========================================================  ECC2STS  ======================================================== */
- #define R_SRAM_ECC2STS_ECC2ERR_Pos          (0UL)    /*!< ECC2ERR (Bit 0)                                       */
- #define R_SRAM_ECC2STS_ECC2ERR_Msk          (0x1UL)  /*!< ECC2ERR (Bitfield-Mask: 0x01)                         */
+ #define R_SRAM_ECC2STS_ECC2ERR_Pos        (0UL)    /*!< ECC2ERR (Bit 0)                                       */
+ #define R_SRAM_ECC2STS_ECC2ERR_Msk        (0x1UL)  /*!< ECC2ERR (Bitfield-Mask: 0x01)                         */
 /* =======================================================  ECC1STSEN  ======================================================= */
- #define R_SRAM_ECC1STSEN_E1STSEN_Pos        (0UL)    /*!< E1STSEN (Bit 0)                                       */
- #define R_SRAM_ECC1STSEN_E1STSEN_Msk        (0x1UL)  /*!< E1STSEN (Bitfield-Mask: 0x01)                         */
+ #define R_SRAM_ECC1STSEN_E1STSEN_Pos      (0UL)    /*!< E1STSEN (Bit 0)                                       */
+ #define R_SRAM_ECC1STSEN_E1STSEN_Msk      (0x1UL)  /*!< E1STSEN (Bitfield-Mask: 0x01)                         */
 /* ========================================================  ECC1STS  ======================================================== */
- #define R_SRAM_ECC1STS_ECC1ERR_Pos          (0UL)    /*!< ECC1ERR (Bit 0)                                       */
- #define R_SRAM_ECC1STS_ECC1ERR_Msk          (0x1UL)  /*!< ECC1ERR (Bitfield-Mask: 0x01)                         */
+ #define R_SRAM_ECC1STS_ECC1ERR_Pos        (0UL)    /*!< ECC1ERR (Bit 0)                                       */
+ #define R_SRAM_ECC1STS_ECC1ERR_Msk        (0x1UL)  /*!< ECC1ERR (Bitfield-Mask: 0x01)                         */
 /* ========================================================  ECCPRCR  ======================================================== */
- #define R_SRAM_ECCPRCR_KW_Pos               (1UL)    /*!< KW (Bit 1)                                            */
- #define R_SRAM_ECCPRCR_KW_Msk               (0xfeUL) /*!< KW (Bitfield-Mask: 0x7f)                              */
- #define R_SRAM_ECCPRCR_ECCPRCR_Pos          (0UL)    /*!< ECCPRCR (Bit 0)                                       */
- #define R_SRAM_ECCPRCR_ECCPRCR_Msk          (0x1UL)  /*!< ECCPRCR (Bitfield-Mask: 0x01)                         */
+ #define R_SRAM_ECCPRCR_KW_Pos             (1UL)    /*!< KW (Bit 1)                                            */
+ #define R_SRAM_ECCPRCR_KW_Msk             (0xfeUL) /*!< KW (Bitfield-Mask: 0x7f)                              */
+ #define R_SRAM_ECCPRCR_ECCPRCR_Pos        (0UL)    /*!< ECCPRCR (Bit 0)                                       */
+ #define R_SRAM_ECCPRCR_ECCPRCR_Msk        (0x1UL)  /*!< ECCPRCR (Bitfield-Mask: 0x01)                         */
 /* =======================================================  ECCPRCR2  ======================================================== */
- #define R_SRAM_ECCPRCR2_KW2_Pos             (1UL)    /*!< KW2 (Bit 1)                                           */
- #define R_SRAM_ECCPRCR2_KW2_Msk             (0xfeUL) /*!< KW2 (Bitfield-Mask: 0x7f)                             */
- #define R_SRAM_ECCPRCR2_ECCPRCR2_Pos        (0UL)    /*!< ECCPRCR2 (Bit 0)                                      */
- #define R_SRAM_ECCPRCR2_ECCPRCR2_Msk        (0x1UL)  /*!< ECCPRCR2 (Bitfield-Mask: 0x01)                        */
+ #define R_SRAM_ECCPRCR2_KW2_Pos           (1UL)    /*!< KW2 (Bit 1)                                           */
+ #define R_SRAM_ECCPRCR2_KW2_Msk           (0xfeUL) /*!< KW2 (Bitfield-Mask: 0x7f)                             */
+ #define R_SRAM_ECCPRCR2_ECCPRCR2_Pos      (0UL)    /*!< ECCPRCR2 (Bit 0)                                      */
+ #define R_SRAM_ECCPRCR2_ECCPRCR2_Msk      (0x1UL)  /*!< ECCPRCR2 (Bitfield-Mask: 0x01)                        */
 /* ========================================================  ECCETST  ======================================================== */
- #define R_SRAM_ECCETST_TSTBYP_Pos           (0UL)    /*!< TSTBYP (Bit 0)                                        */
- #define R_SRAM_ECCETST_TSTBYP_Msk           (0x1UL)  /*!< TSTBYP (Bitfield-Mask: 0x01)                          */
+ #define R_SRAM_ECCETST_TSTBYP_Pos         (0UL)    /*!< TSTBYP (Bit 0)                                        */
+ #define R_SRAM_ECCETST_TSTBYP_Msk         (0x1UL)  /*!< TSTBYP (Bitfield-Mask: 0x01)                          */
 /* ========================================================  ECCOAD  ========================================================= */
- #define R_SRAM_ECCOAD_OAD_Pos               (0UL)    /*!< OAD (Bit 0)                                           */
- #define R_SRAM_ECCOAD_OAD_Msk               (0x1UL)  /*!< OAD (Bitfield-Mask: 0x01)                             */
+ #define R_SRAM_ECCOAD_OAD_Pos             (0UL)    /*!< OAD (Bit 0)                                           */
+ #define R_SRAM_ECCOAD_OAD_Msk             (0x1UL)  /*!< OAD (Bitfield-Mask: 0x01)                             */
 /* =======================================================  SRAMPRCR2  ======================================================= */
- #define R_SRAM_SRAMPRCR2_SRAMPRCR2_Pos      (0UL)    /*!< SRAMPRCR2 (Bit 0)                                     */
- #define R_SRAM_SRAMPRCR2_SRAMPRCR2_Msk      (0x1UL)  /*!< SRAMPRCR2 (Bitfield-Mask: 0x01)                       */
- #define R_SRAM_SRAMPRCR2_KW_Pos             (1UL)    /*!< KW (Bit 1)                                            */
- #define R_SRAM_SRAMPRCR2_KW_Msk             (0xfeUL) /*!< KW (Bitfield-Mask: 0x7f)                              */
+ #define R_SRAM_SRAMPRCR2_SRAMPRCR2_Pos    (0UL)    /*!< SRAMPRCR2 (Bit 0)                                     */
+ #define R_SRAM_SRAMPRCR2_SRAMPRCR2_Msk    (0x1UL)  /*!< SRAMPRCR2 (Bitfield-Mask: 0x01)                       */
+ #define R_SRAM_SRAMPRCR2_KW_Pos           (1UL)    /*!< KW (Bit 1)                                            */
+ #define R_SRAM_SRAMPRCR2_KW_Msk           (0xfeUL) /*!< KW (Bitfield-Mask: 0x7f)                              */
 
 /* =========================================================================================================================== */
 /* ================                                           R_SRC                                           ================ */

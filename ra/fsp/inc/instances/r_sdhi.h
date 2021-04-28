@@ -38,10 +38,8 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define SDHI_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define SDHI_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
-#define SDHI_MAX_BLOCK_SIZE        (512U)
+#define SDHI_MAX_BLOCK_SIZE    (512U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -164,7 +162,6 @@ fsp_err_t R_SDHI_CallbackSet(sdmmc_ctrl_t * const          p_api_ctrl,
                              void const * const            p_context,
                              sdmmc_callback_args_t * const p_callback_memory);
 fsp_err_t R_SDHI_Close(sdmmc_ctrl_t * const p_api_ctrl);
-fsp_err_t R_SDHI_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

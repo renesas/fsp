@@ -68,7 +68,7 @@
 
 #define BSP_ALIGN_VARIABLE(x)      __attribute__((aligned(x)))
 
-#define BSP_PACKED                    __attribute__((aligned(1)))
+#define BSP_PACKED                    __attribute__((aligned(1))) // DEPRECATED
 
 #define BSP_WEAK_REFERENCE            __attribute__((weak))
 

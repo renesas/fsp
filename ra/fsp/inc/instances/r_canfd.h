@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CANFD_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define CANFD_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -343,7 +341,6 @@ fsp_err_t R_CANFD_CallbackSet(can_ctrl_t * const          p_api_ctrl,
                               void (                    * p_callback)(can_callback_args_t *),
                               void const * const          p_context,
                               can_callback_args_t * const p_callback_memory);
-fsp_err_t R_CANFD_VersionGet(fsp_version_t * const version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup CAN)

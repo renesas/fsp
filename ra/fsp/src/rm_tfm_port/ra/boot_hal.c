@@ -5,12 +5,15 @@
  *
  */
 
-#include "target_cfg.h"
+#include <stdio.h>
 #include "cmsis.h"
+#include "region.h"
+#include "target_cfg.h"
 #include "boot_hal.h"
 #include "Driver_Flash.h"
 #include "region_defs.h"
-#include "bootutil/bootutil_log.h"
+#include "flash_layout.h"
+#include "bootutil/fault_injection_hardening.h"
 #include "crypto_keys.h"
 
 #include "r_flash_hp.h"
@@ -21,65 +24,31 @@
  #include "platform.h"
 #endif
 
-#if defined(__ARMCC_VERSION)
-__attribute__((naked)) void boot_clear_bl2_ram_area (void)
+/* Flash device name must be specified by target */
+extern ARM_DRIVER_FLASH FLASH_DEV_NAME;
+
+REGION_DECLARE(Image$$, ER_DATA, $$Base)[];
+REGION_DECLARE(Image$$, ARM_LIB_HEAP, $$ZI$$Limit)[];
+REGION_DECLARE(Image$$, ARM_LIB_STACK, $$ZI$$Base);
+
+__attribute__((naked)) void boot_clear_bl2_ram_area(void)
 {
-    __asm volatile (
-        ".syntax unified                             \n"
+    __ASM volatile(
         "mov     r0, #0                              \n"
-        "ldr     r1, =Image$$DATA$$Base           \n"
-        "ldr     r2, =Image$$ARM_LIB_HEAP$$ZI$$Limit \n"
-        "subs    r2, r2, r1                          \n"
+        "subs    %1, %1, %0                          \n"
         "Loop:                                       \n"
-        "subs    r2, #4                              \n"
+        "subs    %1, #4                              \n"
         "itt     ge                                  \n"
-        "strge   r0, [r1, r2]                        \n"
+        "strge   r0, [%0, %1]                        \n"
         "bge     Loop                                \n"
         "bx      lr                                  \n"
-        : : : "r0", "r1", "r2", "memory"
-        );
+        :
+        : "r" (REGION_NAME(Image$$, ER_DATA, $$Base)),
+          "r" (REGION_NAME(Image$$, ARM_LIB_HEAP, $$ZI$$Limit))
+        : "r0", "memory"
+    );
 }
 
-#elif defined(__GNUC__)
-__attribute__((naked)) void boot_clear_bl2_ram_area (void)
-{
-    __asm volatile (
-        ".syntax unified                             \n"
-        "mov     r0, #0                              \n"
-        "ldr     r1, =__data_start__                 \n"
-        "ldr     r2, =__HeapLimit                    \n"
-        "subs    r2, r2, r1                          \n"
-        "Loop:                                       \n"
-        "subs    r2, #4                              \n"
-        "itt     ge                                  \n"
-        "strge   r0, [r1, r2]                        \n"
-        "bge     Loop                                \n"
-        "bx      lr                                  \n"
-        : : : "r0", "r1", "r2", "memory"
-        );
-}
-
-#elif defined(__ICCARM__)
-extern uint32_t HEAP$$Limit;
-extern uint32_t data$$Base;
-__attribute__((naked)) void boot_clear_bl2_ram_area (void)
-{
-    __asm volatile (
-        "mov     r0, #0                              \n"
-        "ldr     r1, = data$$Base                    \n"
-        "ldr     r2, = HEAP$$Limit                   \n"
-        "subs    r2, r2, r1                          \n"
-        "Loop:                                       \n"
-        "subs    r2, #4                              \n"
-        "itt     ge                                  \n"
-        "strge   r0, [r1, r2]                        \n"
-        "bge     Loop                                \n"
-        "bx      lr                                  \n"
-        : : : "r0", "r1", "r2", "memory"
-        );
-}
-
-#endif
 
 /*
  * The below structure contains the hard coded version of the ECDSA P-256 secret key in:
@@ -102,7 +71,7 @@ const iak_data_t iak_data =
         0x4B, 0x92, 0xA1, 0x93, 0x71, 0x34, 0x58, 0x5F
     },
     MAX_IAK_BYTES,
-    PSA_ECC_CURVE_SECP_R1
+    PSA_ECC_FAMILY_SECP_R1
 };
 
 /*

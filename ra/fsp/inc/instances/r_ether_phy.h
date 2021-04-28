@@ -40,8 +40,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ETHER_PHY_CODE_VERSION_MAJOR        (1U) // DEPRECATED
-#define ETHER_PHY_CODE_VERSION_MINOR        (2U) // DEPRECATED
 
 #define ETHER_PHY_CFG_USE_PHY_KSZ8091RNB    (1)
 #define ETHER_PHY_CFG_USE_PHY_KSZ8041       (2)
@@ -95,8 +93,6 @@ fsp_err_t R_ETHER_PHY_LinkPartnerAbilityGet(ether_phy_ctrl_t * const p_ctrl,
                                             uint32_t * const         p_partner_pause);
 
 fsp_err_t R_ETHER_PHY_LinkStatusGet(ether_phy_ctrl_t * const p_ctrl);
-
-fsp_err_t R_ETHER_PHY_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup ETHER_PHY)

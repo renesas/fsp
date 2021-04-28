@@ -180,13 +180,6 @@ static void      iic_master_txi_send_address(iic_master_instance_ctrl_t * const 
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-static fsp_version_t const g_iic_master_version =
-{
-    .api_version_minor  = I2C_MASTER_API_VERSION_MINOR,
-    .api_version_major  = I2C_MASTER_API_VERSION_MAJOR,
-    .code_version_major = IIC_MASTER_CODE_VERSION_MAJOR,
-    .code_version_minor = IIC_MASTER_CODE_VERSION_MINOR
-};
 
 /***********************************************************************************************************************
  * Global variables
@@ -201,7 +194,6 @@ i2c_master_api_t const g_i2c_master_on_iic =
     .abort           = R_IIC_MASTER_Abort,
     .slaveAddressSet = R_IIC_MASTER_SlaveAddressSet,
     .close           = R_IIC_MASTER_Close,
-    .versionGet      = R_IIC_MASTER_VersionGet,
     .callbackSet     = R_IIC_MASTER_CallbackSet
 };
 
@@ -519,23 +511,6 @@ fsp_err_t R_IIC_MASTER_Close (i2c_master_ctrl_t * const p_api_ctrl)
     R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
 
     R_BSP_MODULE_STOP(FSP_IP_IIC, p_ctrl->p_cfg->channel);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Gets version information and stores it in the provided version structure.
- *
- * @retval  FSP_SUCCESS                 Successful version get.
- * @retval  FSP_ERR_ASSERTION           p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_IIC_MASTER_VersionGet (fsp_version_t * const p_version)
-{
-#if IIC_MASTER_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(p_version != NULL);
-#endif
-
-    p_version->version_id = g_iic_master_version.version_id;
 
     return FSP_SUCCESS;
 }

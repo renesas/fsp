@@ -70,14 +70,6 @@ static fsp_err_t rm_freertos_plus_fat_wait_event(rm_freertos_plus_fat_instance_c
                                                  uint32_t                               timeout);
 static fsp_err_t rm_freertos_plus_fat_wait_for_device(rm_freertos_plus_fat_instance_ctrl_t * p_instance_ctrl);
 
-const fsp_version_t g_rm_freertos_plus_fat_version =
-{
-    .api_version_major  = RM_FREERTOS_PLUS_FAT_API_VERSION_MAJOR,
-    .api_version_minor  = RM_FREERTOS_PLUS_FAT_API_VERSION_MINOR,
-    .code_version_major = RM_FREERTOS_PLUS_FAT_CODE_VERSION_MAJOR,
-    .code_version_minor = RM_FREERTOS_PLUS_FAT_CODE_VERSION_MINOR
-};
-
 /** FAT HAL API mapping for FreeRTOS_plus_FAT Controller interface */
 const rm_freertos_plus_fat_api_t g_fat_on_freertos =
 {
@@ -87,7 +79,6 @@ const rm_freertos_plus_fat_api_t g_fat_on_freertos =
     .diskDeinit = RM_FREERTOS_PLUS_FAT_DiskDeinit,
     .infoGet    = RM_FREERTOS_PLUS_FAT_InfoGet,
     .close      = RM_FREERTOS_PLUS_FAT_Close,
-    .versionGet = RM_FREERTOS_PLUS_FAT_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -346,25 +337,6 @@ fsp_err_t RM_FREERTOS_PLUS_FAT_Close (rm_freertos_plus_fat_ctrl_t * const p_ctrl
 #if 2 == BSP_CFG_RTOS
     vSemaphoreDelete(p_instance_ctrl->p_mutex);
 #endif
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Returns the version of this module.
- *
- * Implements @ref rm_freertos_plus_fat_api_t::versionGet().
- *
- * @retval FSP_SUCCESS        Success.
- * @retval FSP_ERR_ASSERTION  Failed in acquiring version information.
- **********************************************************************************************************************/
-fsp_err_t RM_FREERTOS_PLUS_FAT_VersionGet (fsp_version_t * const p_version)
-{
-#if RM_FREERTOS_PLUS_FAT_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_rm_freertos_plus_fat_version.version_id;
 
     return FSP_SUCCESS;
 }

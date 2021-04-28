@@ -51,8 +51,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RM_BLOCK_MEDIA_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define RM_BLOCK_MEDIA_API_VERSION_MINOR    (2U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -64,10 +62,12 @@ typedef enum e_rm_block_media_event
     RM_BLOCK_MEDIA_EVENT_MEDIA_REMOVED      = 1U << 0, ///< Media removed event
     RM_BLOCK_MEDIA_EVENT_MEDIA_INSERTED     = 1U << 1, ///< Media inserted event
     RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE = 1U << 2, ///< Read, write, or erase completed
-    RM_BLOCK_MEDIA_EVENT_ERROR              = 1U << 3, ///< Media inserted event
+    RM_BLOCK_MEDIA_EVENT_ERROR              = 1U << 3, ///< Error on media operation
     RM_BLOCK_MEDIA_EVENT_POLL_STATUS        = 1U << 4, ///< Poll @ref rm_block_media_api_t::statusGet for write/erase completion
     RM_BLOCK_MEDIA_EVENT_MEDIA_SUSPEND      = 1U << 5, ///< Media suspended event
     RM_BLOCK_MEDIA_EVENT_MEDIA_RESUME       = 1U << 6, ///< Media resumed event
+    RM_BLOCK_MEDIA_EVENT_WAIT               = 1U << 7, ///< Indication to user that they should wait for an interrupt on a pending operation
+    RM_BLOCK_MEDIA_EVENT_WAIT_END           = 1U << 8, ///< Indication to user that interrupt has been received and waiting can end
 } rm_block_media_event_t;
 
 /** Block media device information supported by the instance */
@@ -116,7 +116,7 @@ typedef void rm_block_media_ctrl_t;
 typedef struct st_rm_block_media_api
 {
     /** Initialize block media device. @ref rm_block_media_api_t::mediaInit must be called to complete the
-     * intitialization procedure.
+     * initialization procedure.
      * @par Implemented as
      * - @ref RM_BLOCK_MEDIA_SDMMC_Open
      * - @ref RM_BLOCK_MEDIA_SPI_Open
@@ -226,16 +226,6 @@ typedef struct st_rm_block_media_api
      * @param[in]   p_ctrl             Control block set in @ref rm_block_media_api_t::open call.
      */
     fsp_err_t (* close)(rm_block_media_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Gets version and stores it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref RM_BLOCK_MEDIA_SDMMC_VersionGet
-     * - @ref RM_BLOCK_MEDIA_SPI_VersionGet
-     * - @ref RM_BLOCK_MEDIA_USB_VersionGet
-     *
-     * @param[out]  p_version          Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } rm_block_media_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

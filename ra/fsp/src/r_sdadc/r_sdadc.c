@@ -110,15 +110,6 @@ void sdadc_adi_isr(void);
 void sdadc_scanend_isr(void);
 void sdadc_caliend_isr(void);
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_sdadc_version =
-{
-    .api_version_minor  = ADC_API_VERSION_MINOR,
-    .api_version_major  = ADC_API_VERSION_MAJOR,
-    .code_version_major = SDADC_CODE_VERSION_MAJOR,
-    .code_version_minor = SDADC_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -137,7 +128,6 @@ const adc_api_t g_adc_on_sdadc =
     .read32        = R_SDADC_Read32,
     .calibrate     = R_SDADC_Calibrate,
     .close         = R_SDADC_Close,
-    .versionGet    = R_SDADC_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -734,26 +724,6 @@ fsp_err_t R_SDADC_Close (adc_ctrl_t * p_ctrl)
     R_BSP_MODULE_STOP(FSP_IP_SDADC, 0U);
 
     /* Return the error code */
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Gets the API and code version. Implements @ref adc_api_t::versionGet().
- *
- * @retval  FSP_SUCCESS        Version information available in p_version.
- * @retval  FSP_ERR_ASSERTION  The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_SDADC_VersionGet (fsp_version_t * const p_version)
-{
-#if (1 == SDADC_CFG_PARAM_CHECKING_ENABLE)
-
-    /* Verify the pointer is not NULL. */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    /* Return the version number */
-    p_version->version_id = g_sdadc_version.version_id;
-
     return FSP_SUCCESS;
 }
 

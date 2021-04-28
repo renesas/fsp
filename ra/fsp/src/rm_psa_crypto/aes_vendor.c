@@ -40,12 +40,12 @@
  * \param[out] raw     Equivalent standard key size in bits
  */
 
-psa_status_t prepare_raw_data_slot_vendor (psa_key_type_t type, size_t bits, struct raw_data * raw)
+psa_status_t prepare_raw_data_slot_vendor (psa_key_type_t type, size_t bits, struct key_data * key)
 {
     (void) type;
     (void) bits;
-    (void) raw;
-    uint32_t   * p_temp_rawdata;
+    (void) key;
+    uint32_t   * p_temp_keydata;
     psa_status_t ret = PSA_SUCCESS;
 
  #if defined(MBEDTLS_AES_ALT)
@@ -65,21 +65,21 @@ psa_status_t prepare_raw_data_slot_vendor (psa_key_type_t type, size_t bits, str
             case SIZE_AES_128BIT_KEYLEN_BITS:
             case SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED:
             {
-                raw->bytes = SIZE_AES_128BIT_KEYLEN_BYTES_WRAPPED;
+                key->bytes = SIZE_AES_128BIT_KEYLEN_BYTES_WRAPPED;
                 break;
             }
 
             case SIZE_AES_192BIT_KEYLEN_BITS:
             case SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED:
             {
-                raw->bytes = SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED;
+                key->bytes = SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED;
                 break;
             }
 
             case SIZE_AES_256BIT_KEYLEN_BITS:
             case SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED:
             {
-                raw->bytes = SIZE_AES_256BIT_KEYLEN_BYTES_WRAPPED;
+                key->bytes = SIZE_AES_256BIT_KEYLEN_BYTES_WRAPPED;
                 break;
             }
 
@@ -98,11 +98,11 @@ psa_status_t prepare_raw_data_slot_vendor (psa_key_type_t type, size_t bits, str
     if (!ret)
     {
 /* Allocate memory for the key */
-        p_temp_rawdata = mbedtls_calloc((raw->bytes / 4), sizeof(uint32_t));
-        raw->data      = (uint8_t *) p_temp_rawdata;
-        if (raw->data == NULL)
+        p_temp_keydata = mbedtls_calloc((key->bytes / 4), sizeof(uint32_t));
+        key->data      = (uint8_t *) p_temp_keydata;
+        if (key->data == NULL)
         {
-            raw->bytes = 0;
+            key->bytes = 0;
 
             ret = PSA_ERROR_INSUFFICIENT_MEMORY;
         }
@@ -198,27 +198,20 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
 }
 
 psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
-                                      psa_key_handle_t         handle,
+                                      psa_key_slot_t *         slot,
                                       psa_algorithm_t          alg,
                                       mbedtls_operation_t      cipher_operation)
 {
     (void) operation;
-    (void) handle;
+    (void) slot;
     (void) alg;
     (void) cipher_operation;
     psa_status_t status = PSA_ERROR_NOT_SUPPORTED;
  #if defined(MBEDTLS_AES_ALT)
     int              ret  = 0;
-    psa_key_slot_t * slot = NULL;
     (void) alg;
     size_t key_bits = 0;
     const mbedtls_cipher_info_t * cipher_info = NULL;
-
-    status = psa_get_key_slot(handle, &slot);
-    if (status != PSA_SUCCESS)
-    {
-        return status;
-    }
 
     /* The mbedcrypto implementation obtains the list of methods based on the keybit size.
      * Since the wrapped keybit size does not correspond to the raw key size i.e the
@@ -233,7 +226,8 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
         return status;
     }
 
-    cipher_info = mbedtls_cipher_info_from_psa(alg, slot->attr.type, key_bits, NULL);
+    /* Strip out the vendor flag from the key type since the PSA code does not recognize it*/
+    cipher_info = mbedtls_cipher_info_from_psa(alg, (psa_key_type_t)(slot->attr.type & ~PSA_KEY_TYPE_VENDOR_FLAG), key_bits, NULL);
     if (cipher_info == NULL)
     {
         status = PSA_ERROR_NOT_SUPPORTED;
@@ -246,7 +240,7 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
         goto exit;
     }
 
-    if (PSA_KEY_TYPE_IS_AES(slot->attr.type) && (PSA_KEY_LIFETIME_IS_VENDOR_DEFINED(slot->attr.lifetime)))
+    if (PSA_KEY_TYPE_IS_AES(slot->attr.type) && (PSA_KEY_TYPE_IS_VENDOR_DEFINED(slot->attr.type)))
     {
         mbedtls_aes_context * p_aes_ctx = NULL;
 
@@ -276,7 +270,7 @@ psa_status_t psa_cipher_setup_vendor (psa_cipher_operation_t * operation,
     else
   #endif
     {
-        ret = mbedtls_cipher_setkey(&operation->ctx.cipher, slot->data.raw.data, (int) key_bits, cipher_operation);
+        ret = mbedtls_cipher_setkey(&operation->ctx.cipher, slot->data.key.data, (int) key_bits, cipher_operation);
     }
 
     if (ret != 0)

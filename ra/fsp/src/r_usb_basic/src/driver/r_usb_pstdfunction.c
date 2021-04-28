@@ -29,11 +29,35 @@
 #include "../hw/inc/r_usb_bitdefine.h"
 #include "../hw/inc/r_usb_reg_access.h"
 
+#if (BSP_CFG_RTOS == 1)
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_api.h"
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_system.h"
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_utility.h"
+ #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_device_stack.h"
+#endif                                 /* #if (BSP_CFG_RTOS == 1) */
+
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+
+/******************************************************************************
+ * Macro definitions
+ ******************************************************************************/
+ #define NUM_STRING_DESC    (32)
 
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
  ******************************************************************************/
+
+/******************************************************************************
+ * Private global variables and functions
+ ******************************************************************************/
+
+ #if (BSP_CFG_RTOS == 1)
+static uint8_t        * g_p_usbx_string_table[NUM_STRING_DESC];
+static usb_descriptor_t g_usbx_descriptor;
+
+void usb_pstd_ux_descriptor_to_basic(usb_cfg_t * p_cfg);
+
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
 
 /******************************************************************************
  * Renesas Abstracted Peripheral standard function functions
@@ -131,6 +155,120 @@ void usb_pstd_suspend_function (void)
  * End of function usb_pstd_suspend_function
  ******************************************************************************/
 
+ #if (BSP_CFG_RTOS == 1)
+
+/******************************************************************************
+ * Function Name   : usb_pstd_ux_descriptor_to_basic
+ * Description     : conversion from USBX descriptor to USB basic descriptor
+ * Arguments       : p_cfg  : Pointer to USB basic configuration structure
+ * Return value    : none
+ ******************************************************************************/
+void usb_pstd_ux_descriptor_to_basic (usb_cfg_t * p_cfg)
+{
+    uint8_t * start_address;
+    uint8_t * end_address;
+    uint8_t * p;
+    uint8_t   index;
+    uint8_t   num_string = 0;
+    uint32_t  length;
+
+    /* Check the speed and set the correct descriptor.  */
+    if (USB_SPEED_FS == p_cfg->usb_speed)
+    {
+        start_address = (uint8_t *) (_ux_system_slave->ux_system_slave_device_framework_full_speed);
+        length        = _ux_system_slave->ux_system_slave_device_framework_length_full_speed;
+    }
+    else
+    {
+        start_address = (uint8_t *) (_ux_system_slave->ux_system_slave_device_framework_high_speed);
+        length        = _ux_system_slave->ux_system_slave_device_framework_length_high_speed;
+    }
+
+    end_address = (start_address + length);
+
+    p = start_address;
+    while (p < end_address)
+    {
+        switch (*(p + 1))
+        {
+            case USB_DT_DEVICE:
+            {
+                p_cfg->p_usb_reg->p_device = p;
+                break;
+            }
+
+            case USB_DT_CONFIGURATION:
+            {
+                if (USB_SPEED_FS == p_cfg->usb_speed)
+                {
+                    p_cfg->p_usb_reg->p_config_f = p;
+                }
+                else
+                {
+                    p_cfg->p_usb_reg->p_config_h = p;
+                }
+
+                break;
+            }
+
+            case USB_DT_OTHER_SPEED_CONF:
+            {
+                if (USB_SPEED_FS == p_cfg->usb_speed)
+                {
+                    p_cfg->p_usb_reg->p_config_h = p;
+                }
+                else
+                {
+                    p_cfg->p_usb_reg->p_config_f = p;
+                }
+
+                break;
+            }
+
+            case USB_DT_DEVICE_QUALIFIER:
+            {
+                p_cfg->p_usb_reg->p_qualifier = p;
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+
+        length = *p;
+        p      = p + length;
+    }
+
+    if (USB_NULL != _ux_system_slave->ux_system_slave_language_id_framework)
+    {
+        g_p_usbx_string_table[0] = _ux_system_slave->ux_system_slave_language_id_framework;
+    }
+
+    if (USB_NULL != _ux_system_slave->ux_system_slave_string_framework)
+    {
+        start_address = (uint8_t *) (_ux_system_slave->ux_system_slave_string_framework);
+        length        = (uint16_t) (_ux_system_slave->ux_system_slave_string_framework_length);
+        end_address   = (start_address + length);
+
+        p = start_address;
+        while (p < end_address)
+        {
+            index = *(p + 2);
+            g_p_usbx_string_table[index] = p;
+            length = *(p + 3);
+            num_string++;
+            p = p + length + 4;
+        }
+    }
+
+    p_cfg->p_usb_reg->p_string   = g_p_usbx_string_table;
+    p_cfg->p_usb_reg->num_string = (uint8_t) (num_string + 1);
+}                                      /* End of function usb_pdriver_init() */
+
+ #endif /* #if (BSP_CFG_RTOS == 1) */
+
 /******************************************************************************
  * Function Name   : usb_pdriver_init
  * Description     :
@@ -193,8 +331,18 @@ void usb_pdriver_init (usb_instance_ctrl_t * ctrl, usb_cfg_t const * const cfg)
     g_usb_pstd_config_num    = 0;         /* Configuration number */
     g_usb_pstd_remote_wakeup = USB_FALSE; /* Remote wake up enable flag */
 
+ #if (BSP_CFG_RTOS == 1)
+    {
+        usb_cfg_t cfg_usbx;
+        cfg_usbx           = *cfg;
+        cfg_usbx.p_usb_reg = &g_usbx_descriptor;
+        usb_pstd_ux_descriptor_to_basic(&cfg_usbx);
+        usb_peri_registration(ctrl, &cfg_usbx);
+    }
+ #else                                 /* #if (BSP_CFG_RTOS == 1) */
     usb_peri_registration(ctrl, cfg);
-} /* End of function usb_pdriver_init() */
+ #endif /* #if (BSP_CFG_RTOS == 1) */
+}                                      /* End of function usb_pdriver_init() */
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 

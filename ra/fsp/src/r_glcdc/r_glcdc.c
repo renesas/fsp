@@ -252,15 +252,6 @@ static void r_glcdc_gamma_correction(display_cfg_t const * const p_cfg);
  * Private global variables
  **********************************************************************************************************************/
 
-/* GLCDC HAL module version data structure */
-static const fsp_version_t module_version =
-{
-    .api_version_minor  = DISPLAY_API_VERSION_MINOR,
-    .api_version_major  = DISPLAY_API_VERSION_MAJOR,
-    .code_version_major = GLCDC_CODE_VERSION_MAJOR,
-    .code_version_minor = GLCDC_CODE_VERSION_MINOR
-};
-
 /* GLCDC HAL module API function pointer list */
 const display_api_t g_display_on_glcdc =
 {
@@ -275,8 +266,7 @@ const display_api_t g_display_on_glcdc =
 #if GLCDC_CFG_COLOR_CORRECTION_ENABLE
     .correction   = R_GLCDC_ColorCorrection,
 #endif
-    .statusGet  = R_GLCDC_StatusGet,
-    .versionGet = R_GLCDC_VersionGet
+    .statusGet    = R_GLCDC_StatusGet,
 };
 
 /* GLCDC control block */
@@ -488,7 +478,7 @@ fsp_err_t R_GLCDC_Close (display_ctrl_t * const p_api_ctrl)
 
     if (p_ctrl->p_cfg->underflow_2_irq >= 0)
     {
-        R_BSP_IrqDisable(p_ctrl->p_cfg->underflow_1_irq);
+        R_BSP_IrqDisable(p_ctrl->p_cfg->underflow_2_irq);
     }
 
     /* Disable the GLCDC interrupts */
@@ -570,8 +560,7 @@ fsp_err_t R_GLCDC_Stop (display_ctrl_t * const p_api_ctrl)
     FSP_ERROR_RETURN(false == (bool) (R_GLCDC->OUT.VLATCH_b.VEN), FSP_ERR_INVALID_UPDATE_TIMING);
     FSP_ERROR_RETURN(false == (bool) (R_GLCDC->BG.EN_b.VEN), FSP_ERR_INVALID_UPDATE_TIMING);
 
-    /* Stop outputting the vertical and horizontal synchronization signals and screen data. */
-    /**< disables background plane operation */
+    /* Disable background plane operation */
     R_GLCDC->BG.EN_b.EN = 0U;
 
     p_ctrl->state = DISPLAY_STATE_OPENED;
@@ -861,19 +850,6 @@ fsp_err_t R_GLCDC_StatusGet (display_ctrl_t const * const p_api_ctrl, display_st
             }
         }
     }
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get version of R_GLCDC module. Implements display_api_t::versionGet.
- *
- * @retval  FSP_SUCCESS   Got version information successfully.
- * @note    This function is re-entrant.
- **********************************************************************************************************************/
-fsp_err_t R_GLCDC_VersionGet (fsp_version_t * p_version)
-{
-    *p_version = module_version;
 
     return FSP_SUCCESS;
 }

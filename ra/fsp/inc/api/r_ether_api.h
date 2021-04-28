@@ -56,8 +56,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ETHER_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define ETHER_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -227,6 +225,15 @@ typedef struct st_ether_api
      */
     fsp_err_t (* bufferRelease)(ether_ctrl_t * const p_api_ctrl);
 
+    /** Update the buffer pointer in the current receive descriptor.
+     * @par Implemented as
+     * - @ref R_ETHER_RxBufferUpdate()
+     *
+     * @param[in]  p_api_ctrl       Pointer to control structure.
+     * @param[in]  p_buffer         New address to write into the rx buffer descriptor.
+     */
+    fsp_err_t (* rxBufferUpdate)(ether_ctrl_t * const p_api_ctrl, void * const p_buffer);
+
     /** Write packet.
      * @par Implemented as
      * - @ref R_ETHER_Write()
@@ -253,13 +260,14 @@ typedef struct st_ether_api
      */
     fsp_err_t (* wakeOnLANEnable)(ether_ctrl_t * const p_api_ctrl);
 
-    /* DEPRECATED Return the version of the driver.
+    /** Get the address of the most recently sent buffer.
      * @par Implemented as
-     * - @ref R_ETHER_VersionGet()
+     * - @ref R_ETHER_TxStatusGet()
      *
-     * @param[out] p_data       Memory address to return version information to.
+     * @param[in]   p_api_ctrl     Pointer to control structure.
+     * @param[out]  p_buffer_address   Pointer to the address of the most recently sent buffer.
      */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_data);
+    fsp_err_t (* txStatusGet)(ether_ctrl_t * const p_api_ctrl, void * const p_buffer_address);
 } ether_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

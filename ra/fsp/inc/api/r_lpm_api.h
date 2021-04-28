@@ -50,8 +50,6 @@
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define LPM_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define LPM_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -410,14 +408,6 @@ typedef struct st_lpm_api
      * - @ref R_LPM_IoKeepClear()
      **/
     fsp_err_t (* ioKeepClear)(lpm_ctrl_t * const p_api_ctrl);
-
-    /* DEPRECATED Get the driver version based on compile time macros.
-     * @par Implemented as
-     * - @ref R_LPM_VersionGet()
-     *
-     * @param[out]  p_version  Code and API version used.
-     **/
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } lpm_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

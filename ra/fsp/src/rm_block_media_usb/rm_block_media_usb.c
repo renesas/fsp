@@ -55,15 +55,6 @@ void rm_block_media_usb_callback(usb_event_info_t * p_usb_event_info, usb_hdl_t 
  **********************************************************************************************************************/
 const uint8_t g_block_media_usb_erase_data[512] __attribute__((__aligned__(4))) = {0};
 
-/** Version data structure. */
-static const fsp_version_t g_rm_block_media_usb_version =
-{
-    .api_version_minor  = RM_BLOCK_MEDIA_API_VERSION_MINOR,
-    .api_version_major  = RM_BLOCK_MEDIA_API_VERSION_MAJOR,
-    .code_version_major = RM_BLOCK_MEDIA_USB_CODE_VERSION_MAJOR,
-    .code_version_minor = RM_BLOCK_MEDIA_USB_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -79,7 +70,6 @@ const rm_block_media_api_t g_rm_block_media_on_usb =
     .infoGet     = RM_BLOCK_MEDIA_USB_InfoGet,
     .statusGet   = RM_BLOCK_MEDIA_USB_StatusGet,
     .close       = RM_BLOCK_MEDIA_USB_Close,
-    .versionGet  = RM_BLOCK_MEDIA_USB_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -485,26 +475,6 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Close (rm_block_media_ctrl_t * const p_ctrl)
     p_instance_ctrl->open = 0U;
 
     return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Returns the version of the firmware and API.  Implements @ref rm_block_media_api_t::versionGet().
- *
- * @retval     FSP_SUCCESS        Function executed successfully.
- * @retval     FSP_ERR_ASSERTION  Null Pointer.
- **********************************************************************************************************************/
-fsp_err_t RM_BLOCK_MEDIA_USB_VersionGet (fsp_version_t * const p_version)
-{
-    fsp_err_t err = FSP_SUCCESS;
-
-#if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
-
-    /* Check pointers for NULL values */
-    FSP_ASSERT(NULL != p_version);
-#endif
-    p_version->version_id = g_rm_block_media_usb_version.version_id;
-
-    return err;
 }
 
 /*******************************************************************************************************************//**

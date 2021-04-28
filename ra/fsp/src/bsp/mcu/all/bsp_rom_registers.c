@@ -60,7 +60,9 @@
  * Private global variables and functions
  **********************************************************************************************************************/
 
-#if 33U != __CORTEX_M                  // NOLINT(readability-magic-numbers)
+#if !BSP_CFG_BOOT_IMAGE
+
+ #if 33U != __CORTEX_M                 // NOLINT(readability-magic-numbers)
 
 /** ROM registers defined here. Some have masks to make sure reserved bits are set appropriately. */
 BSP_DONT_REMOVE static const uint32_t g_bsp_rom_registers[] BSP_PLACE_IN_SECTION (BSP_SECTION_ROM_REGISTERS) =
@@ -86,23 +88,23 @@ BSP_DONT_REMOVE static const uint32_t g_bsp_rom_registers[] BSP_PLACE_IN_SECTION
 BSP_DONT_REMOVE static const uint32_t g_bsp_id_codes[] BSP_PLACE_IN_SECTION (BSP_SECTION_ID_CODE) =
 {
     BSP_CFG_ID_CODE_LONG_1,
- #if BSP_FEATURE_BSP_OSIS_PADDING
+  #if BSP_FEATURE_BSP_OSIS_PADDING
     0xFFFFFFFFU,
- #endif
+  #endif
     BSP_CFG_ID_CODE_LONG_2,
- #if BSP_FEATURE_BSP_OSIS_PADDING
+  #if BSP_FEATURE_BSP_OSIS_PADDING
     0xFFFFFFFFU,
- #endif
+  #endif
     BSP_CFG_ID_CODE_LONG_3,
- #if BSP_FEATURE_BSP_OSIS_PADDING
+  #if BSP_FEATURE_BSP_OSIS_PADDING
     0xFFFFFFFFU,
- #endif
+  #endif
     BSP_CFG_ID_CODE_LONG_4
 };
 
-#else                                  /* CM33 parts */
+ #else                                 /* CM33 parts */
 
- #if !BSP_TZ_NONSECURE_BUILD
+  #if !BSP_TZ_NONSECURE_BUILD
 
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_ofs0") g_bsp_rom_ofs0 =
     BSP_CFG_ROM_REG_OFS0;
@@ -111,7 +113,7 @@ BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_dual
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_sas") g_bsp_rom_sas =
     0xFFFFFFFF;
 
- #else
+  #else
 
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_ofs1") g_bsp_rom_ofs1 =
     BSP_ROM_REG_OFS1_SETTING;
@@ -130,9 +132,9 @@ BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_pbps
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_pbps2") g_bsp_rom_pbps2 =
     BSP_CFG_ROM_REG_PBPS2;
 
- #endif
+  #endif
 
- #if !BSP_TZ_NONSECURE_BUILD
+  #if !BSP_TZ_NONSECURE_BUILD
 
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_ofs1_sec") g_bsp_rom_ofs1_sec =
     BSP_ROM_REG_OFS1_SETTING;
@@ -161,7 +163,10 @@ BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_sel2") g_bsp_rom_bps_sel2 =
     BSP_CFG_ROM_REG_BPS_SEL2;
 
+  #endif
+
  #endif
+
 #endif
 
 /** @} (end addtogroup BSP_MCU) */

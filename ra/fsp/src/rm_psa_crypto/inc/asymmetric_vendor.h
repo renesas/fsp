@@ -28,8 +28,13 @@
 #include "vendor.h"
 #include "mbedtls/ecdsa.h"
 #include "mbedtls/ecp.h"
+#include "mbedtls/rsa.h"
+
+psa_status_t psa_remove_key_data_from_memory(psa_key_slot_t * slot);
+psa_status_t psa_allocate_buffer_to_slot(psa_key_slot_t * slot, size_t buffer_length);
 
 #if defined(MBEDTLS_ECP_ALT)
+ #include "hw_sce_ecc_private.h"
 
 /** Standard bit length to vendor type bit length translation.
  *
@@ -46,8 +51,8 @@
      0)
 
 /* Functions used directly from mbedCrypto */
-mbedtls_ecp_group_id mbedtls_ecc_group_of_psa(psa_ecc_curve_t curve, size_t byte_length);
-psa_status_t         psa_import_ec_public_key(psa_ecc_curve_t        curve,
+mbedtls_ecp_group_id mbedtls_ecc_group_of_psa(psa_ecc_family_t curve, size_t byte_length);
+psa_status_t         psa_import_ec_public_key(psa_ecc_family_t       curve,
                                               const uint8_t        * data,
                                               size_t                 data_length,
                                               mbedtls_ecp_keypair ** p_ecp);
@@ -65,7 +70,7 @@ psa_status_t psa_ecdsa_verify(mbedtls_ecp_keypair * ecp,
                               size_t                signature_length);
 
 /* Functions to support vendor defined format */
-psa_status_t psa_import_ec_private_key_vendor(psa_ecc_curve_t        curve,
+psa_status_t psa_import_ec_private_key_vendor(psa_ecc_family_t       curve,
                                               const uint8_t        * data,
                                               size_t                 data_length,
                                               mbedtls_ecp_keypair ** p_ecp);
@@ -82,13 +87,22 @@ psa_status_t psa_import_ec_private_key_vendor(psa_ecc_curve_t        curve,
  */
 int ecp_gen_key_vendor(mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair * key);
 
+psa_status_t psa_import_ecp_key(psa_key_slot_t * slot, const uint8_t * data, size_t data_length);
+psa_status_t psa_export_ecp_key( psa_key_type_t type,
+                                        mbedtls_ecp_keypair *ecp,
+                                        uint8_t *data,
+                                        size_t data_size,
+                                        size_t *data_length );
+
 #endif                                 /* MBEDTLS_ECP_ALT */
 
 #if defined(MBEDTLS_RSA_ALT)
-psa_status_t psa_import_rsa_key(psa_key_type_t         type,
-                                const uint8_t        * data,
-                                size_t                 data_length,
-                                mbedtls_rsa_context ** p_rsa);
+psa_status_t psa_export_rsa_key(psa_key_type_t        type,
+                                mbedtls_rsa_context * rsa,
+                                uint8_t             * data,
+                                size_t                data_size,
+                                size_t              * data_length);
+psa_status_t psa_import_rsa_key(psa_key_slot_t * slot, const uint8_t * data, size_t data_length);
 psa_status_t psa_read_rsa_exponent(const uint8_t * domain_parameters, size_t domain_parameters_size, int * exponent);
 psa_status_t psa_rsa_sign(mbedtls_rsa_context * rsa,
                           psa_algorithm_t       alg,

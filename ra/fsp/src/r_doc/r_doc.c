@@ -52,15 +52,6 @@ void doc_int_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_doc_version =
-{
-    .api_version_major  = DOC_API_VERSION_MAJOR,
-    .code_version_minor = DOC_CODE_VERSION_MINOR,
-    .code_version_major = DOC_CODE_VERSION_MAJOR,
-    .api_version_minor  = DOC_API_VERSION_MINOR,
-};
-
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
@@ -73,7 +64,6 @@ const doc_api_t g_doc_on_doc =
     .close       = R_DOC_Close,
     .statusGet   = R_DOC_StatusGet,
     .write       = R_DOC_Write,
-    .versionGet  = R_DOC_VersionGet,
     .callbackSet = R_DOC_CallbackSet,
 };
 
@@ -227,26 +217,6 @@ fsp_err_t R_DOC_Write (doc_ctrl_t * const p_api_ctrl, uint16_t data)
 
     /* Writes the user supplied data to the DODIR register for data operation in Comparison, Addition and subtraction modes */
     R_DOC->DODIR = data;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Returns DOC HAL driver version.
- *
- * @retval FSP_SUCCESS          Version information successfully read.
- * @retval FSP_ERR_ASSERTION    Pointer pointing to NULL.
- *
- **********************************************************************************************************************/
-fsp_err_t R_DOC_VersionGet (fsp_version_t * const p_version)
-{
-    /* Validate the parameter */
-#if DOC_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    /* Store the version id from version data structure to the user supplied location */
-    p_version->version_id = g_doc_version.version_id;
 
     return FSP_SUCCESS;
 }

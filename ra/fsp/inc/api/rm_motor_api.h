@@ -50,8 +50,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define MOTOR_API_VERSION_MINOR    (0U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -187,14 +185,6 @@ typedef struct st_motor_api
      * @param[out] p_error      Pointer to get occured error
      */
     fsp_err_t (* errorCheck)(motor_ctrl_t * const p_ctrl, uint16_t * const p_error);
-
-    /* DEPRECATED Return the version of the driver.
-     * @par Implemented as
-     * - @ref RM_MOTOR_SENSORLESS_VersionGet()
-     *
-     * @param[out] p_version    Memory address to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } motor_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

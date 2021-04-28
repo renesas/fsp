@@ -43,13 +43,13 @@
 #define USB_VERSION_MINOR        (0)
 
 #define CLSDATASIZE              (512U) /* Transfer data size for Standard Request */
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS != 0)
 
 /* The buffer size of interrupt info is increased to avoid overlapping interrupt events. */
  #define USB_INT_BUFSIZE         (32U)  /* Size of Interrupt info buffer */
-#else /* #if (BSP_CFG_RTOS == 2) */
+#else /* #if (BSP_CFG_RTOS != 0) */
  #define USB_INT_BUFSIZE         (10U)  /* Size of Interrupt info buffer */
-#endif /* #if (BSP_CFG_RTOS == 2) */
+#endif /* #if (BSP_CFG_RTOS != 0) */
 #define USB_EVENT_MAX            (10)
 
 /* Scheduler use define */
@@ -96,7 +96,7 @@
 #define USB_HUB_MBX              (USB_HUB_TSK) /* Mailbox ID */
 #define USB_HUB_MPL              (USB_HUB_TSK) /* Memory pool ID */
 
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS != 0)
 
 /* Class Request for Internal Communication  */
  #define USB_CLS_TSK             (USB_TID_4)   /* Task ID */
@@ -106,7 +106,7 @@
 /* Peripheral Control Driver Task */
  #define USB_PCD_TSK             (USB_TID_5)   /* Task ID */
  #define USB_PCD_MBX             (USB_PCD_TSK) /* Mailbox ID */
-#endif /* #if (BSP_CFG_RTOS == 2) */
+#endif /* #if (BSP_CFG_RTOS != 0) */
 
 /* Error discrimination */
 #define USB_DEBUG_HOOK_HWR       (0x0100)

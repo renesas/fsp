@@ -38,8 +38,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ACMPLP_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define ACMPLP_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /*********************************************************************************************************************
  * Typedef definitions
@@ -93,7 +91,6 @@ fsp_err_t R_ACMPLP_OutputEnable(comparator_ctrl_t * const p_ctrl);
 fsp_err_t R_ACMPLP_InfoGet(comparator_ctrl_t * const p_ctrl, comparator_info_t * const p_info);
 fsp_err_t R_ACMPLP_StatusGet(comparator_ctrl_t * const p_ctrl, comparator_status_t * const p_status);
 fsp_err_t R_ACMPLP_Close(comparator_ctrl_t * const p_ctrl);
-fsp_err_t R_ACMPLP_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup ACMPLP)

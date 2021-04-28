@@ -56,15 +56,6 @@ static fsp_err_t r_elc_common_parameter_checking(elc_instance_ctrl_t * p_instanc
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t s_elc_version =
-{
-    .api_version_minor  = ELC_API_VERSION_MINOR,
-    .api_version_major  = ELC_API_VERSION_MAJOR,
-    .code_version_major = ELC_CODE_VERSION_MAJOR,
-    .code_version_minor = ELC_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -79,7 +70,6 @@ const elc_api_t g_elc_on_elc =
     .linkBreak             = R_ELC_LinkBreak,
     .enable                = R_ELC_Enable,
     .disable               = R_ELC_Disable,
-    .versionGet            = R_ELC_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -295,24 +285,6 @@ fsp_err_t R_ELC_Disable (elc_ctrl_t * const p_ctrl)
 
     /* Globally disable ELC function */
     R_ELC->ELCR = ELC_ELCR_ELCON_DISABLE;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the driver version based on compile time macros. Implements @ref elc_api_t::versionGet
- *
- * @retval     FSP_SUCCESS          Successful close.
- * @retval     FSP_ERR_ASSERTION    p_version is NULL.
- *
- **********************************************************************************************************************/
-fsp_err_t R_ELC_VersionGet (fsp_version_t * const p_version)
-{
-#if ELC_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = s_elc_version.version_id;
 
     return FSP_SUCCESS;
 }

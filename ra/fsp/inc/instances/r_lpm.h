@@ -36,8 +36,6 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define LPM_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define LPM_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -64,7 +62,6 @@ fsp_err_t R_LPM_Open(lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_cf
 fsp_err_t R_LPM_Close(lpm_ctrl_t * const p_api_ctrl);
 fsp_err_t R_LPM_LowPowerReconfigure(lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_cfg);
 fsp_err_t R_LPM_LowPowerModeEnter(lpm_ctrl_t * const p_api_ctrl);
-fsp_err_t R_LPM_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_LPM_IoKeepClear(lpm_ctrl_t * const p_api_ctrl);
 
 #endif

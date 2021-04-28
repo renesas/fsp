@@ -54,8 +54,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CAN_API_VERSION_MAJOR      (1U) // DEPRECATED
-#define CAN_API_VERSION_MINOR      (1U) // DEPRECATED
 
 #if BSP_FEATURE_CANFD_NUM_CHANNELS
  #define CAN_DATA_BUFFER_LENGTH    (64)
@@ -106,6 +104,7 @@ typedef enum e_can_test_mode
     CAN_TEST_MODE_INTERNAL_BUS      = 0x80 ///< CANFD Internal CAN Bus Communication Test Mode.
 } can_test_mode_t;
 
+/** CAN status info */
 typedef struct st_can_info
 {
     uint32_t status;                   ///< Useful information from the CAN status register.
@@ -123,41 +122,12 @@ typedef enum e_can_id_mode
     CAN_ID_MODE_EXTENDED,              ///< Extended IDs of 29 bits used.
 } can_id_mode_t;
 
-/** Global CAN ID mode settings */
-typedef enum e_can_global_id_mode
-{
-    CAN_GLOBAL_ID_MODE_STANDARD,       ///< Standard IDs of 11 bits used.
-    CAN_GLOBAL_ID_MODE_EXTENDED,       ///< Extended IDs of 29 bits used.
-    CAN_GLOBAL_ID_MODE_MIXED,          ///< Both Standard and Extended IDs used.
-} can_global_id_mode_t;
-
 /** CAN frame types */
 typedef enum e_can_frame_type
 {
     CAN_FRAME_TYPE_DATA,               ///< Data frame.
     CAN_FRAME_TYPE_REMOTE,             ///< Remote frame.
 } can_frame_type_t;
-
-/** CAN Message Modes */
-typedef enum e_can_message_mode
-{
-    CAN_MESSAGE_MODE_OVERWRITE = 0,    ///< Receive data will be overwritten if not read before the next frame.
-    CAN_MESSAGE_MODE_OVERRUN,          ///< Receive data will be retained until it is read.
-} can_message_mode_t;
-
-/** CAN Source Clock */
-typedef enum e_can_clock_source
-{
-    CAN_CLOCK_SOURCE_PCLKB = 0,        ///< PCLKB is the source of the CAN Clock
-    CAN_CLOCK_SOURCE_CANMCLK,          ///< CANMCLK is the source of the CAN Clock
-} can_clock_source_t;
-
-/** CAN Mailbox type */
-typedef enum e_can_mailbox_send_receive
-{
-    CAN_MAILBOX_RECEIVE,               ///< Mailbox is for receiving.
-    CAN_MAILBOX_TRANSMIT,              ///< Mailbox is for sending.
-} can_mailbox_send_receive_t;
 
 /** CAN bit rate configuration. */
 typedef struct st_can_bit_timing_cfg
@@ -167,9 +137,6 @@ typedef struct st_can_bit_timing_cfg
     uint32_t time_segment_2;             ///< Time segment 2 control.
     uint32_t synchronization_jump_width; ///< Synchronization jump width.
 } can_bit_timing_cfg_t;
-
-/* DEPRECATED CAN Id */
-typedef uint32_t can_id_t;
 
 /** CAN data Frame */
 typedef struct st_can_frame
@@ -198,15 +165,6 @@ typedef struct st_can_callback_args
     can_frame_t   frame;               ///< Received frame data.
 } can_callback_args_t;
 
-/** CAN Mailbox */
-typedef struct st_can_mailbox
-{
-    uint32_t                   mailbox_id;   ///< Mailbox ID.
-    can_id_mode_t              id_mode;      ///< Standard or Extended ID. Only used in Mixed ID mode.
-    can_mailbox_send_receive_t mailbox_type; ///< Receive or Transmit mailbox type.
-    can_frame_type_t           frame_type;   ///< Frame type for receive mailbox.
-} can_mailbox_t;
-
 /** CAN Configuration */
 typedef struct st_can_cfg
 {
@@ -219,15 +177,11 @@ typedef struct st_can_cfg
     void const * p_context;                            ///< User defined callback context.
 
     /* Pointer to CAN peripheral specific configuration */
-    void const         * p_extend;                     ///< CAN hardware dependent configuration
-    uint8_t              ipl;                          ///< Error/Transmit/Receive interrupt priority
-    IRQn_Type            error_irq;                    ///< Error IRQ number
-    IRQn_Type            mailbox_rx_irq;               ///< Receive IRQ number
-    IRQn_Type            mailbox_tx_irq;               ///< Transmit IRQ number
-    can_mailbox_t      * p_mailbox;                    ///< Pointer to mailboxes.
-    can_global_id_mode_t id_mode;                      ///< Standard or Extended ID mode.
-    uint32_t             mailbox_count;                ///< Number of mailboxes.
-    can_message_mode_t   message_mode;                 ///< Overwrite message or overrun.
+    void const * p_extend;                             ///< CAN hardware dependent configuration
+    uint8_t      ipl;                                  ///< Error/Transmit/Receive interrupt priority
+    IRQn_Type    error_irq;                            ///< Error IRQ number
+    IRQn_Type    rx_irq;                               ///< Receive IRQ number
+    IRQn_Type    tx_irq;                               ///< Transmit IRQ number
 } can_cfg_t;
 
 /** CAN control block.  Allocate an instance specific control block to pass into the CAN API calls.
@@ -311,14 +265,6 @@ typedef struct st_can_api
      */
     fsp_err_t (* callbackSet)(can_ctrl_t * const p_api_ctrl, void (* p_callback)(can_callback_args_t *),
                               void const * const p_context, can_callback_args_t * const p_callback_memory);
-
-    /* DEPRECATED Version get function for CAN device
-     * @par Implemented as
-     * - R_CAN_VersionGet()
-     * - R_CANFD_VersionGet()
-     * @param[in]   p_version  Pointer to the memory to store the version information
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } can_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

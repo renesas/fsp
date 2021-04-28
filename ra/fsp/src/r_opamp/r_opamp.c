@@ -62,15 +62,6 @@
 
 static void r_opamp_hardware_init(opamp_instance_ctrl_t * const p_instance_ctrl);
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_opamp_version =
-{
-    .api_version_minor  = OPAMP_API_VERSION_MINOR,
-    .api_version_major  = OPAMP_API_VERSION_MAJOR,
-    .code_version_major = OPAMP_CODE_VERSION_MAJOR,
-    .code_version_minor = OPAMP_CODE_VERSION_MINOR
-};
-
 /** Lookup table to select the minimum stabilization wait time for respective power mode based on OPAMP Characteristics
  *  Chapter 47 of RA2A1 hardware manual R01UM0008EU0130 and
  *  Chapter 48 of RA4M1 hardware manual R01UM0007EU0110
@@ -90,14 +81,13 @@ static const uint32_t g_opamp_stabilization_lookup[] =
 /** OPAMP Implementation of OPAMP interface. */
 const opamp_api_t g_opamp_on_opamp =
 {
-    .open       = R_OPAMP_Open,
-    .start      = R_OPAMP_Start,
-    .stop       = R_OPAMP_Stop,
-    .trim       = R_OPAMP_Trim,
-    .infoGet    = R_OPAMP_InfoGet,
-    .statusGet  = R_OPAMP_StatusGet,
-    .close      = R_OPAMP_Close,
-    .versionGet = R_OPAMP_VersionGet
+    .open      = R_OPAMP_Open,
+    .start     = R_OPAMP_Start,
+    .stop      = R_OPAMP_Stop,
+    .trim      = R_OPAMP_Trim,
+    .infoGet   = R_OPAMP_InfoGet,
+    .statusGet = R_OPAMP_StatusGet,
+    .close     = R_OPAMP_Close,
 };
 
 /***********************************************************************************************************************
@@ -480,26 +470,6 @@ fsp_err_t R_OPAMP_Close (opamp_ctrl_t * const p_api_ctrl)
     R_BSP_MODULE_STOP(FSP_IP_OPAMP, 0);
 
     /* Return the error code */
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Gets the API and code version. Implements @ref opamp_api_t::versionGet.
- *
- * @retval  FSP_SUCCESS        Version information available in p_version.
- * @retval  FSP_ERR_ASSERTION  The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_OPAMP_VersionGet (fsp_version_t * const p_version)
-{
-#if (1 == OPAMP_CFG_PARAM_CHECKING_ENABLE)
-
-    /* Verify the pointer is not NULL. */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    /* Return the version number */
-    p_version->version_id = g_opamp_version.version_id;
-
     return FSP_SUCCESS;
 }
 

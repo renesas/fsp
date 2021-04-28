@@ -33,14 +33,16 @@
 #include "r_ospi_cfg.h"
 #include "r_spi_flash_api.h"
 
+#if OSPI_CFG_DMAC_SUPPORT_ENABLE
+ #include "r_transfer_api.h"
+#endif
+
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define OSPI_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define OSPI_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -126,6 +128,9 @@ typedef struct st_ospi_extended_cfg
     ospi_opi_command_set_t const * p_opi_commands;                          ///< If OPI commands are not used set this to NULL
     uint8_t                        opi_mem_read_dummy_cycles;               ///< Dummy cycles to be inserted for memory mapped reads
     uint8_t                      * p_autocalibration_preamble_pattern_addr; ///< OctaFlash memory address holding the preamble pattern
+#if OSPI_CFG_DMAC_SUPPORT_ENABLE
+    transfer_instance_t const * p_lower_lvl_transfer;                       ///< DMA Transfer instance used for data transmission
+#endif
 } ospi_extended_cfg_t;
 
 /** Instance control block. DO NOT INITIALIZE.  Initialization occurs when @ref spi_flash_api_t::open is called */
@@ -167,7 +172,6 @@ fsp_err_t R_OSPI_Write(spi_flash_ctrl_t    * p_ctrl,
 fsp_err_t R_OSPI_Erase(spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_address, uint32_t byte_count);
 fsp_err_t R_OSPI_StatusGet(spi_flash_ctrl_t * p_ctrl, spi_flash_status_t * const p_status);
 fsp_err_t R_OSPI_BankSet(spi_flash_ctrl_t * p_ctrl, uint32_t bank);
-fsp_err_t R_OSPI_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

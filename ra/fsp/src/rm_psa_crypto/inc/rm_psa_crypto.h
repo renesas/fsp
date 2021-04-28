@@ -21,8 +21,22 @@
 #ifndef RM_PSA_CRYPTO_H
  #define RM_PSA_CRYPTO_H
 
- #define PSA_KEY_LIFETIME_PERSISTENT_WRAPPED    (PSA_KEY_LIFETIME_VENDOR_FLAG | PSA_KEY_LIFETIME_PERSISTENT)
- #define PSA_KEY_LIFETIME_VOLATILE_WRAPPED      (PSA_KEY_LIFETIME_VENDOR_FLAG | PSA_KEY_LIFETIME_VOLATILE)
+ #define PSA_KEY_TYPE_AES_WRAPPED                  (PSA_KEY_TYPE_VENDOR_FLAG | PSA_KEY_TYPE_AES)
+ #define PSA_KEY_TYPE_RSA_KEY_PAIR_WRAPPED         (PSA_KEY_TYPE_VENDOR_FLAG | PSA_KEY_TYPE_RSA_KEY_PAIR)
+ #define PSA_KEY_TYPE_ECC_KEY_PAIR_BASE_WRAPPED    (PSA_KEY_TYPE_VENDOR_FLAG | PSA_KEY_TYPE_ECC_KEY_PAIR_BASE)
+
+/** Elliptic curve key pair.
+ *
+ * \param curve     A value that identifies the  ECC curve to be used.
+ */
+ #define PSA_KEY_TYPE_ECC_KEY_PAIR_WRAPPED(curve)      (PSA_KEY_TYPE_ECC_KEY_PAIR_BASE_WRAPPED | (curve))
+
+/** Whether a key type is a wrapped RSA key pair. */
+ #define PSA_KEY_TYPE_IS_RSA_KEY_PAIR_WRAPPED(type)    (type == (PSA_KEY_TYPE_RSA_KEY_PAIR | PSA_KEY_TYPE_VENDOR_FLAG))
+
+/** Whether a key type is wrapped elliptic curve key pair. */
+ #define PSA_KEY_TYPE_IS_ECC_KEY_PAIR_WRAPPED(type)    (((type) & ~PSA_KEY_TYPE_ECC_CURVE_MASK) ==  \
+		 	 	 	 	 	 	 	 	 	 	 	 	 PSA_KEY_TYPE_ECC_KEY_PAIR_BASE_WRAPPED)
 
  #if defined(MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT)
 

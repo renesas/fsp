@@ -33,8 +33,6 @@
 /***********************************************************************************************************************
  * Macro definitions
  ***********************************************************************************************************************/
-#define IIC_SLAVE_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define IIC_SLAVE_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -108,7 +106,6 @@ fsp_err_t R_IIC_SLAVE_Open(i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_t 
 fsp_err_t R_IIC_SLAVE_Read(i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * const p_dest, uint32_t const bytes);
 fsp_err_t R_IIC_SLAVE_Write(i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * const p_src, uint32_t const bytes);
 fsp_err_t R_IIC_SLAVE_Close(i2c_slave_ctrl_t * const p_api_ctrl);
-fsp_err_t R_IIC_SLAVE_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_IIC_SLAVE_CallbackSet(i2c_slave_ctrl_t * const          p_api_ctrl,
                                   void (                          * p_callback)(i2c_slave_callback_args_t *),
                                   void const * const                p_context,

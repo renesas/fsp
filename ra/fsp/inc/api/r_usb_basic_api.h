@@ -48,6 +48,8 @@
  #include "queue.h"
  #include "timers.h"
  #include "semphr.h"
+#elif   (BSP_CFG_RTOS == 1)
+ #include "tx_api.h"
 #endif                                 /* #if (BSP_CFG_RTOS == 2) */
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
@@ -56,10 +58,6 @@ FSP_HEADER
 /******************************************************************************
  * Macro definitions
  ******************************************************************************/
-
-/* USB Version Info */
-#define USB_API_VERSION_MINOR      (2U)      // DEPRECATED      ///< Minor version of the API.
-#define USB_API_VERSION_MAJOR      (1U)      // DEPRECATED      ///< Major version of the API.
 
 /* USB Request Type Register */
 #define USB_BREQUEST               (0xFF00U) ///< b15-8
@@ -302,6 +300,10 @@ typedef enum e_usb_address
     USB_ADDRESS5,
 } usb_address_t;
 
+/** USB control block.  Allocate an instance specific control block to pass into the USB API calls.
+ * @par Implemented as
+ * - usb_instance_ctrl_t
+ */
 typedef void    usb_ctrl_t;
 typedef void (* usb_compliance_cb_t)(void *);
 
@@ -361,13 +363,19 @@ typedef struct st_usb_event_info
     const transfer_instance_t * p_transfer_rx;  ///< Receive context
 } usb_event_info_t;
 
+#if (BSP_CFG_RTOS == 0)
+typedef void (usb_callback_t)(void *);
+#endif
+#if (BSP_CFG_RTOS == 1)
+typedef TX_THREAD * usb_hdl_t;
+typedef void        (usb_callback_t)(usb_event_info_t *, usb_hdl_t, usb_onoff_t);
+#endif
 #if (BSP_CFG_RTOS == 2)
 typedef TaskHandle_t usb_hdl_t;
 typedef void         (usb_callback_t)(usb_event_info_t *, usb_hdl_t, usb_onoff_t);
-#else                                  /* #if (BSP_CFG_RTOS == 2) */
-typedef void (usb_callback_t)(void *);
-#endif /* #if (BSP_CFG_RTOS == 2) */
+#endif                                 /* #if (BSP_CFG_RTOS == 2) */
 
+/** USB configuration. */
 typedef struct st_usb_cfg
 {
     usb_mode_t                  usb_mode;           ///< USB_MODE_HOST/USB_MODE_PERI
@@ -390,7 +398,7 @@ typedef struct st_usb_cfg
     uint8_t                     hsipl;              ///< Variable to store the interrupt priority of USBIR.
     uint8_t                     hsipl_d0;           ///< Variable to store the interrupt priority of HS D0FIFO.
     uint8_t                     hsipl_d1;           ///< Variable to store the interrupt priority of HS D1FIFO.
-    usb_callback_t            * p_usb_apl_callback; ///< Aplication Callback
+    usb_callback_t            * p_usb_apl_callback; ///< Application Callback
     void const                * p_context;          ///< Other Context
     const transfer_instance_t * p_transfer_tx;      ///< Send context
     const transfer_instance_t * p_transfer_rx;      ///< Receive context
@@ -533,14 +541,6 @@ typedef struct st_usb_api
      * @param[in]  pipe_number      Pipe Number.
      */
     fsp_err_t (* pipeInfoGet)(usb_ctrl_t * const p_api_ctrl, usb_pipe_t * p_info, uint8_t pipe_number);
-
-    /* DEPRECATED Get the driver version
-     * @par Implemented as
-     * - @ref R_USB_VersionGet()
-     *
-     * @param[out] p_version      Version number.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 
     /** Return USB-related completed events (OS less only)
      * @par Implemented as

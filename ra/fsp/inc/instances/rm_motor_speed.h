@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_SPEED_CODE_VERSION_MAJOR                (1U)     // DEPRECATED
-#define MOTOR_SPEED_CODE_VERSION_MINOR                (0U)     // DEPRECATED
 
 /***********************************************************************************************************************
  * Library Macro definitions
@@ -251,8 +249,6 @@ fsp_err_t RM_MOTOR_SPEED_SpeedControl(motor_speed_ctrl_t * const p_ctrl);
 fsp_err_t RM_MOTOR_SPEED_ParameterGet(motor_speed_ctrl_t * const p_ctrl, motor_speed_output_t * const p_st_output);
 
 fsp_err_t RM_MOTOR_SPEED_ParameterUpdate(motor_speed_ctrl_t * const p_ctrl, motor_speed_cfg_t const * const p_cfg);
-
-fsp_err_t RM_MOTOR_SPEED_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

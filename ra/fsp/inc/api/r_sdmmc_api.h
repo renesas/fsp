@@ -49,8 +49,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define SDMMC_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define SDMMC_API_VERSION_MINOR    (1U) // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -489,15 +487,6 @@ typedef struct st_sdmmc_api
      * @param[in]     p_ctrl    Pointer to an open SD/MMC instance control block.
      */
     fsp_err_t (* close)(sdmmc_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Returns the version of the SD/MMC driver.
-     *
-     * @par Implemented as
-     * - @ref R_SDHI_VersionGet()
-     *
-     * @param[out]  p_version       Pointer to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } sdmmc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

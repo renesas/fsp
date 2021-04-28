@@ -47,10 +47,6 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-/* Version of code that implements the API defined in this file */
-#define ADC_CODE_VERSION_MAJOR                 (1U) // DEPRECATED
-#define ADC_CODE_VERSION_MINOR                 (1U) // DEPRECATED
-
 /* Typical values that can be used to modify the sample states.
  * The minimum sample state count value is either 6 or 7 depending on the clock ratios.
  * It is fixed to 7 based on the fact that at the lowest ADC conversion clock supported (1 MHz)
@@ -127,14 +123,34 @@ typedef enum e_adc_clear
     ADC_CLEAR_AFTER_READ_ON  = 1       ///< Clear after read on
 } adc_clear_t;
 
-/** ADC VREFAMPCNT config options
- * Reference Table 32.12 "VREFADC output voltage control list" in the RA2A1 manual R01UH0888EJ0100.*/
+/* VREF configuration options, not all options are available on all MCUs. If the MCU does not have VREFAMPCNT or
+ * ADHVREFCNT. */
 typedef enum e_adc_vref_control
 {
-    ADC_VREF_CONTROL_VREFH       = 0,  ///< VREFAMPCNT reset value. VREFADC Output voltage is Hi-Z
-    ADC_VREF_CONTROL_1_5V_OUTPUT = 25, ///< BGR turn ON. VREFADC Output voltage is 1.5 V
-    ADC_VREF_CONTROL_2_0V_OUTPUT = 29, ///< BGR turn ON. VREFADC Output voltage is 2.0 V
-    ADC_VREF_CONTROL_2_5V_OUTPUT = 31, ///< BGR turn ON. VREFADC Output voltage is 2.5 V
+    /* Available selections on MCUs with VREFAMPCNT.
+     * Reference Table 32.12 "VREFADC output voltage control list" in the RA2A1 manual R01UH0888EJ0100.*/
+
+    ADC_VREF_CONTROL_VREFH       = 0,      ///< VREFAMPCNT reset value. VREFADC Output voltage is Hi-Z
+    ADC_VREF_CONTROL_1_5V_OUTPUT = 25,     ///< BGR turn ON. VREFADC Output voltage is 1.5 V
+    ADC_VREF_CONTROL_2_0V_OUTPUT = 29,     ///< BGR turn ON. VREFADC Output voltage is 2.0 V
+    ADC_VREF_CONTROL_2_5V_OUTPUT = 31,     ///< BGR turn ON. VREFADC Output voltage is 2.5 V
+
+    /* Available selections on MCUs with ADHVREFCNT.
+     * Reference Section 35.2.31 "A/D High-Potential/Low-Potential Reference Voltage Control Register (ADHVREFCNT)"
+     * in the RA4M1 manual R01UH0887EJ0100.*/
+
+    ADC_VREF_CONTROL_AVCC0_AVSS0  = 0x0,   ///< High potential is AVCC0, low potential is AVSS0
+    ADC_VREF_CONTROL_VREFH0_AVSS0 = 0x1,   ///< High potential is VREFH0, low potential is AVSS0
+
+    /** High potential is internal reference voltage, low potential is AVSS0. When the high potential is set to the
+     * internal reference voltage, wait 5 us after R_ADC_Open() to start an ADC measurement. */
+    ADC_VREF_CONTROL_IVREF_AVSS0   = 0x2,
+    ADC_VREF_CONTROL_AVCC0_VREFL0  = 0x10, ///< High potential is AVCC0, low potential is VREFL0
+    ADC_VREF_CONTROL_VREFH0_VREFL0 = 0x11, ///< High potential is VREFH0, low potential is VREFL0
+
+    /** High potential is internal reference voltage, low potential is VREFL0. When the high potential is set to the
+     * internal reference voltage, wait 5 us after R_ADC_Open() to start an ADC measurement. */
+    ADC_VREF_CONTROL_IVREF_VREFL0 = 0x12,
 } adc_vref_control_t;
 
 /** ADC sample state registers */
@@ -254,7 +270,6 @@ fsp_err_t R_ADC_SampleStateCountSet(adc_ctrl_t * p_ctrl, adc_sample_state_t * p_
 fsp_err_t R_ADC_Close(adc_ctrl_t * p_ctrl);
 fsp_err_t R_ADC_OffsetSet(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, int32_t offset);
 fsp_err_t R_ADC_Calibrate(adc_ctrl_t * const p_ctrl, void * const p_extend);
-fsp_err_t R_ADC_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_ADC_CallbackSet(adc_ctrl_t * const          p_api_ctrl,
                             void (                    * p_callback)(adc_callback_args_t *),
                             void const * const          p_context,

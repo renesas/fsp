@@ -26,7 +26,7 @@
  **********************************************************************************************************************/
 
 /* FSP Common Includes. */
-#include "../../inc/fsp_common_api.h"
+#include "fsp_common_api.h"
 
 /* Gets MCU configuration information. */
 #include "bsp_cfg.h"

@@ -26,13 +26,15 @@
  #include "mbedtls/cipher.h"
  #include "psa/crypto_accel_driver.h"
  #include "psa/crypto_sizes.h"
+ #include "psa/crypto_types.h"
 
  #include <assert.h>
  #include <stdlib.h>
  #include <string.h>
  #include "mbedtls/platform.h"
-
  #include "mbedtls/bignum.h"
+
+ #include "rm_psa_crypto.h"
 
  #ifdef __cplusplus
 extern "C"

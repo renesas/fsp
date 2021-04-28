@@ -308,8 +308,12 @@ int sce_gcm_crypt_and_tag (mbedtls_gcm_context * ctx,
         length_remaining = length % MBEDTLS_MAX_BLOCK_LENGTH;
         input_length    -= length_remaining;
 
-        g_sce_aes_gcm_crypt_update[key_len_idx][mode]((uint32_t *) input, (uint32_t *) output,
-                                                      BYTES_TO_WORDS(input_length));
+        if (input_length)
+        {
+            g_sce_aes_gcm_crypt_update[key_len_idx][mode]((uint32_t *) input, (uint32_t *) output,
+                                                          BYTES_TO_WORDS(input_length));
+        }
+
         if (length_remaining)
         {
             memset(work_buffer, 0, sizeof(work_buffer));

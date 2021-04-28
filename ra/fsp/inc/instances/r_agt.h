@@ -36,14 +36,12 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /* Leading zeroes removed to avoid coding standards violation. */
-#define AGT_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define AGT_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
 /** Maximum number of clock counts in 16 bit timer. */
-#define AGT_MAX_CLOCK_COUNTS      (UINT16_MAX)
+#define AGT_MAX_CLOCK_COUNTS    (UINT16_MAX)
 
 /** Maximum period value allowed for AGT. */
-#define AGT_MAX_PERIOD            (UINT16_MAX + 1U)
+#define AGT_MAX_PERIOD          (UINT16_MAX + 1U)
 
 /*******************************************************************************************************************//**
  * @addtogroup AGT
@@ -57,14 +55,13 @@ FSP_HEADER
 /** Count source */
 typedef enum e_agt_clock
 {
-    AGT_CLOCK_PCLKB          = 0x00,   ///< PCLKB count source, division by 1, 2, or 8 allowed
-    AGT_CLOCK_LOCO           = 0x40,   ///< LOCO count source, division by 1, 2, 4, 8, 16, 32, 64, or 128 allowed
-    AGT_CLOCK_AGT_UNDERFLOW  = 0x50,   ///< Underflow event signal from next lowest AGT channel, division must be 1
-    AGT_CLOCK_AGT0_UNDERFLOW = 0x50,   // Underflow event signal from AGT0, division must be 1 (deprecated)
-    AGT_CLOCK_SUBCLOCK       = 0x60,   ///< Subclock count source, division by 1, 2, 4, 8, 16, 32, 64, or 128 allowed
-    AGT_CLOCK_P402           = 0x92,   ///< Counts events on P402, events are counted in deep software standby mode
-    AGT_CLOCK_P403           = 0x93,   ///< Counts events on P403, events are counted in deep software standby mode
-    AGT_CLOCK_AGTIO          = 0x80,   ///< Counts events on AGTIOn, events are not counted in software standby modes
+    AGT_CLOCK_PCLKB         = 0x00,    ///< PCLKB count source, division by 1, 2, or 8 allowed
+    AGT_CLOCK_LOCO          = 0x40,    ///< LOCO count source, division by 1, 2, 4, 8, 16, 32, 64, or 128 allowed
+    AGT_CLOCK_AGT_UNDERFLOW = 0x50,    ///< Underflow event signal from next lowest AGT channel, division must be 1
+    AGT_CLOCK_SUBCLOCK      = 0x60,    ///< Subclock count source, division by 1, 2, 4, 8, 16, 32, 64, or 128 allowed
+    AGT_CLOCK_P402          = 0x92,    ///< Counts events on P402, events are counted in deep software standby mode
+    AGT_CLOCK_P403          = 0x93,    ///< Counts events on P403, events are counted in deep software standby mode
+    AGT_CLOCK_AGTIO         = 0x80,    ///< Counts events on AGTIOn, events are not counted in software standby modes
 } agt_clock_t;
 
 /** Enable pin for event counting mode. */
@@ -180,7 +177,6 @@ fsp_err_t R_AGT_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
                             void (                      * p_callback)(timer_callback_args_t *),
                             void const * const            p_context,
                             timer_callback_args_t * const p_callback_memory);
-fsp_err_t R_AGT_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup AGT)

@@ -59,26 +59,16 @@
 
 const dac_api_t g_dac_on_dac =
 {
-    .open       = R_DAC_Open,
-    .write      = R_DAC_Write,
-    .start      = R_DAC_Start,
-    .stop       = R_DAC_Stop,
-    .close      = R_DAC_Close,
-    .versionGet = R_DAC_VersionGet
+    .open  = R_DAC_Open,
+    .write = R_DAC_Write,
+    .start = R_DAC_Start,
+    .stop  = R_DAC_Stop,
+    .close = R_DAC_Close,
 };
 
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_dac_version =
-{
-    .api_version_minor  = DAC_API_VERSION_MINOR,
-    .api_version_major  = DAC_API_VERSION_MAJOR,
-    .code_version_major = DAC_CODE_VERSION_MAJOR,
-    .code_version_minor = DAC_CODE_VERSION_MINOR
-};
 
 /*******************************************************************************************************************//**
  * @addtogroup DAC
@@ -382,23 +372,6 @@ fsp_err_t R_DAC_Close (dac_ctrl_t * p_api_ctrl)
 
     /* Update the channel state information. */
     p_ctrl->channel_opened = 0U;
-
-    return FSP_SUCCESS;
-}
-
-/**********************************************************************************************************************
- * DEPRECATED Get version and store it in provided pointer p_version.
- *
- * @retval  FSP_SUCCESS           Successfully retrieved version information.
- * @retval  FSP_ERR_ASSERTION     p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_DAC_VersionGet (fsp_version_t * p_version)
-{
-#if DAC_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_dac_version.version_id;
 
     return FSP_SUCCESS;
 }

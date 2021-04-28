@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CGC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define CGC_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -90,7 +88,6 @@ fsp_err_t R_CGC_CallbackSet(cgc_ctrl_t * const          p_api_ctrl,
                             void const * const          p_context,
                             cgc_callback_args_t * const p_callback_memory);
 fsp_err_t R_CGC_Close(cgc_ctrl_t * const p_ctrl);
-fsp_err_t R_CGC_VersionGet(fsp_version_t * version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup CGC)

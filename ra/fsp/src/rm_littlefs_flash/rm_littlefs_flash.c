@@ -46,20 +46,11 @@ static const uint32_t rm_littlefs_flash_data_start = RM_LITTLEFS_FLASH_DATA_STAR
 /** "RLFS" in ASCII, used to determine if channel is open. */
 #define RM_LITTLEFS_FLASH_OPEN           (0x524C4653ULL)
 
-const fsp_version_t g_rm_littlefs_flash_version =
-{
-    .api_version_major  = RM_LITTLEFS_API_VERSION_MAJOR,
-    .api_version_minor  = RM_LITTLEFS_API_VERSION_MINOR,
-    .code_version_major = RM_LITTLEFS_FLASH_CODE_VERSION_MAJOR,
-    .code_version_minor = RM_LITTLEFS_FLASH_CODE_VERSION_MINOR
-};
-
 /** LittleFS API mapping for LittleFS Port interface */
 const rm_littlefs_api_t g_rm_littlefs_on_flash =
 {
-    .open       = RM_LITTLEFS_FLASH_Open,
-    .close      = RM_LITTLEFS_FLASH_Close,
-    .versionGet = RM_LITTLEFS_FLASH_VersionGet,
+    .open  = RM_LITTLEFS_FLASH_Open,
+    .close = RM_LITTLEFS_FLASH_Close,
 };
 
 /*******************************************************************************************************************//**
@@ -163,25 +154,6 @@ fsp_err_t RM_LITTLEFS_FLASH_Close (rm_littlefs_ctrl_t * const p_ctrl)
 #if LFS_THREAD_SAFE
     vSemaphoreDelete(p_instance_ctrl->xSemaphore);
 #endif
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Returns the version of this module.
- *
- * Implements @ref rm_littlefs_api_t::versionGet().
- *
- * @retval FSP_SUCCESS        Success.
- * @retval FSP_ERR_ASSERTION  Failed in acquiring version information.
- **********************************************************************************************************************/
-fsp_err_t RM_LITTLEFS_FLASH_VersionGet (fsp_version_t * const p_version)
-{
-#if RM_LITTLEFS_FLASH_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_rm_littlefs_flash_version.version_id;
 
     return FSP_SUCCESS;
 }

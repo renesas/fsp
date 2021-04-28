@@ -50,8 +50,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define DAC_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define DAC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -134,15 +132,6 @@ typedef struct st_dac_api
      * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.
      */
     fsp_err_t (* stop)(dac_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get version and store it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_DAC_VersionGet()
-     * - @ref R_DAC8_VersionGet()
-     *
-     * @param[out]  p_version  Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * p_version);
 } dac_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

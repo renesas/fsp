@@ -50,16 +50,28 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /** Used to signify that an ELC event is not able to be used as an interrupt. */
-#define BSP_IRQ_DISABLED          (0xFFU)
+#define BSP_IRQ_DISABLED    (0xFFU)
 
 /* Version of this module's code and API. */
-#define BSP_CODE_VERSION_MAJOR    (1U)
-#define BSP_CODE_VERSION_MINOR    (2U)
-#define BSP_API_VERSION_MAJOR     (1U)
-#define BSP_API_VERSION_MINOR     (0U)
 
-#define FSP_CONTEXT_SAVE
-#define FSP_CONTEXT_RESTORE
+#if 1 == BSP_CFG_RTOS                  /* ThreadX */
+ #include "tx_user.h"
+ #if defined(TX_ENABLE_EVENT_TRACE) || defined(TX_ENABLE_EXECUTION_CHANGE_NOTIFY)
+  #define FSP_CONTEXT_SAVE       tx_isr_start((uint32_t) R_FSP_CurrentIrqGet());
+  #define FSP_CONTEXT_RESTORE    tx_isr_end((uint32_t) R_FSP_CurrentIrqGet());
+ #else
+  #define FSP_CONTEXT_SAVE
+  #define FSP_CONTEXT_RESTORE
+ #endif
+#else
+ #define FSP_CONTEXT_SAVE
+ #define FSP_CONTEXT_RESTORE
+#endif
+
+/** Macro that can be defined in order to enable logging in FSP modules. */
+#ifndef FSP_LOG_PRINT
+ #define FSP_LOG_PRINT(X)
+#endif
 
 /** Macro to log and return error without an assertion. */
 #ifndef FSP_RETURN
@@ -112,9 +124,6 @@ FSP_HEADER
 #ifndef FSP_HARDWARE_REGISTER_WAIT
  #define FSP_HARDWARE_REGISTER_WAIT(reg, required_value)    while (reg != required_value) { /* Wait. */}
 #endif
-
-/** Version data structure used by error logger macro. */
-extern const fsp_version_t g_bsp_version;
 
 /****************************************************************
  *

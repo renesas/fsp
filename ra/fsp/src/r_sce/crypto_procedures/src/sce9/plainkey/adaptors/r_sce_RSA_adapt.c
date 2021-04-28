@@ -19,6 +19,7 @@
  **********************************************************************************************************************/
 #include "hw_sce_private.h"
 #include "hw_sce_ra_private.h"
+#include "hw_sce_rsa_private.h"
 
 fsp_err_t HW_SCE_RSA_4096PublicKeyEncrypt (const uint32_t * InData_Text,
                                            const uint32_t * InData_PublicKey,

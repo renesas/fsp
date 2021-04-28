@@ -49,8 +49,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define I2S_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define I2S_API_VERSION_MINOR    (0U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -253,14 +251,6 @@ typedef struct st_i2s_api
      * @param[in]   p_ctrl     Control block set in @ref i2s_api_t::open call for this instance.
      */
     fsp_err_t (* close)(i2s_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get version and store it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_SSI_VersionGet()
-     *
-     * @param[out]  p_version  Code and API version used.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 
     /**
      * Specify callback function and optional context pointer and working memory pointer.

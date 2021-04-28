@@ -39,12 +39,13 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CTSU_CODE_VERSION_MAJOR       (1U) // DEPRECATED
-#define CTSU_CODE_VERSION_MINOR       (2U) // DEPRECATED
 
 #if (BSP_FEATURE_CTSU_VERSION == 2)
- #define CTSU_CORRECTION_POINT_NUM    (12) ///< number of correction table
- #define CTSU_CORRCFC_POINT_NUM       (5)  ///< number of CFC correction table
+ #define CTSU_CORRECTION_POINT_NUM        (12) ///< number of correction table
+ #define CTSU_CORRCFC_POINT_NUM           (5)  ///< number of CFC correction table
+
+ #define CTSU_DIAG_HIGH_CURRENT_SOURCE    (16) ///< number of high current source table at Diagnosis
+ #define CTSU_DIAG_LOW_CURRENT_SOURCE     (10) ///< number of low current source table at Diagnosis
 #endif
 
 /***********************************************************************************************************************
@@ -75,6 +76,44 @@ typedef enum e_ctsu_correction_status
     CTSU_CORRECTION_COMPLETE,          ///< Correction complete.
     CTSU_CORRECTION_ERROR              ///< Correction error.
 } ctsu_correction_status_t;
+
+#if (BSP_FEATURE_CTSU_VERSION == 1)
+ #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
+
+/** CTSU Diagnosis status */
+typedef enum e_ctsu_diagnosis_status
+{
+    CTSU_DIAG_INIT,                    ///< Diagnosis initial status.
+    CTSU_DIAG_OVER_VOLTAGE,            ///< Diagnosis of over_voltage running.
+    CTSU_DIAG_CCO_HIGH,                ///< Diagnosis of oscillator 19.2uA running.
+    CTSU_DIAG_CCO_LOW,                 ///< Diagnosis of oscillator 2.4uA running.
+    CTSU_DIAG_SSCG,                    ///< Diagnosis of sscg_oscillator running.
+    CTSU_DIAG_DAC,                     ///< Diagnosis of dac running.
+    CTSU_DIAG_COMPLETE                 ///< Diagnosis complete.
+} ctsu_diagnosis_status_t;
+ #endif
+#endif
+
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+ #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
+
+/** CTSU Diagnosis status */
+typedef enum e_ctsu_diagnosis_state
+{
+    CTSU_DIAG_INIT,                    ///< Diagnosis initial status.
+    CTSU_DIAG_OUTPUT_VOLTAGE,          ///< Diagnosis of output voltage running.
+    CTSU_DIAG_OVER_VOLTAGE,            ///< Diagnosis of over voltage running.
+    CTSU_DIAG_OVER_CURRENT,            ///< Diagnosis of over current running.
+    CTSU_DIAG_LOAD_RESISTANCE,         ///< Diagnosis of load resistance running.
+    CTSU_DIAG_CURRENT_SOURCE,          ///< Diagnosis of current source running.
+    CTSU_DIAG_SENSCLK,                 ///< Diagnosis of SENCLK running.
+    CTSU_DIAG_SUCLK,                   ///< Diagnosis of SUCLK running.
+    CTSU_DIAG_CLOCK_RECOVERY,          ///< Diagnosis of clock recovery running.
+    CTSU_DIAG_CFC,                     ///< Diagnosis of CFC running.
+    CTSU_DIAG_COMPLETE                 ///< Diagnosis complete.
+} ctsu_diagnosis_state_t;
+ #endif
+#endif
 
 /** CTSU range definition */
 typedef enum e_ctsu_range
@@ -170,11 +209,60 @@ typedef struct st_ctsu_corrcfc_info
  #endif
 #endif
 
+#if (BSP_FEATURE_CTSU_VERSION == 1)
+ #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
+
+/** Correction information */
+typedef struct st_ctsu_diag_info
+{
+    volatile ctsu_diagnosis_status_t state; ///< Diagnosis state
+    ctsu_ctsuwr_t            ctsuwr;        ///< Correction scan parameter
+    uint8_t                  loop_count;    ///< Diagnosis loop counter
+    volatile ctsu_self_buf_t scanbuf;       ///< Diagnosis scan buffer
+    uint16_t                 correct_data;  ///< Diagnosis correct value
+    volatile uint8_t         icomp;         ///< Diagnosis icomp flag
+    uint16_t                 cco_high;      ///< Diagnosis cco high count
+    uint16_t                 cco_low;       ///< Diagnosis cco low count
+    uint16_t                 sscg;          ///< Diagnosis sscg count
+    uint16_t                 dac_cnt[6];    ///< Diagnosis dac count
+    uint16_t                 so0_4uc_val;   ///< Diagnosis dac value
+    uint16_t                 dac_init;      ///< Diagnosis dac
+    ctsu_tuning_t            tuning;        ///< Diagnosis dac initial tuning flag
+    int32_t                  tuning_diff;   ///< Diagnosis
+} ctsu_diag_info_t;
+ #endif
+#endif
+
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+ #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
+
+/** Correction information */
+typedef struct st_ctsu_diag_info
+{
+    volatile ctsu_diagnosis_state_t state;                                                      ///< Diagnosis state
+    ctsu_ctsuwr_t ctsuwr;                                                                       ///< Correction scan parameter
+    uint8_t       lvmode;                                                                       ///< Diagnosis lv mode flag
+    uint8_t       loop_count;                                                                   ///< Diagnosis loop counter
+    uint32_t      ctsuscnt[3];                                                                  ///< Diagnosis raw data (suclk count value & sens count value)
+    uint32_t      error_registance[CTSU_RANGE_NUM];                                             ///< Diagnosis error regista
+    uint16_t      output_voltage_cnt[CTSU_RANGE_NUM * 2];                                       ///< Diagnosis load resistance count value
+    uint16_t      icomp0_value;                                                                 ///< Diagnosis icomp0 register value in over voltage test
+    uint16_t      icomp1_value;                                                                 ///< Diagnosis icomp1 register value in over current test
+    uint16_t      load_resistance[CTSU_RANGE_NUM];                                              ///< Diagnosis load resistance count value
+    uint16_t      current_source[CTSU_DIAG_HIGH_CURRENT_SOURCE + CTSU_DIAG_LOW_CURRENT_SOURCE]; ///< Diagnosis current source count value
+    uint16_t      sensclk_cnt[CTSU_CORRECTION_POINT_NUM];                                       ///< Diagnosis sensclk count value
+    uint16_t      suclk_cnt[CTSU_CORRECTION_POINT_NUM];                                         ///< Diagnosis suclk count value
+    uint16_t      suclk_count_clk_recv[3];                                                      ///< Diagnosis clock recovery suclk count value
+    uint16_t      cfc_cnt[CTSU_CORRCFC_POINT_NUM];                                              ///< Diagnosis cfc count value
+} ctsu_diag_info_t;
+ #endif
+#endif
+
 /** CTSU private control block. DO NOT MODIFY. Initialization occurs when R_CTSU_Open() is called. */
 typedef struct st_ctsu_instance_ctrl
 {
     uint32_t                 open;               ///< Whether or not driver is open.
-    ctsu_state_t             state;              ///< CTSU run state.
+    volatile ctsu_state_t    state;              ///< CTSU run state.
     ctsu_tuning_t            tuning;             ///< CTSU Initial offset tuning status.
     uint16_t                 num_elements;       ///< Number of elements to scan
     uint16_t                 wr_index;           ///< Word index into ctsuwr register array.
@@ -191,12 +279,22 @@ typedef struct st_ctsu_instance_ctrl
     uint16_t               * p_mutual_pri_data;  ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
     uint16_t               * p_mutual_snd_data;  ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
     ctsu_correction_info_t * p_correction_info;  ///< Pointer to correction info
+
+#if (BSP_FEATURE_CTSU_VERSION == 1)
+ #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
+    ctsu_diag_info_t * p_diag_info;              ///< pointer to diagnosis info
+ #endif
+#endif
+
 #if (BSP_FEATURE_CTSU_VERSION == 2)
     ctsu_range_t range;                          ///< According to atune12. (20uA : 0, 40uA : 1, 80uA : 2, 160uA : 3)
     uint8_t      ctsucr2;                        ///< Copy from (posel, atune1, md) by Open API. FCMODE and SDPSEL and LOAD is set by HAL driver.
  #if (CTSU_CFG_NUM_CFC != 0)
     uint64_t              cfc_rx_bitmap;         ///< Bitmap of CFC receive terminal.
     ctsu_corrcfc_info_t * p_corrcfc_info;        ///< pointer to CFC correction info
+ #endif
+ #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
+    ctsu_diag_info_t * p_diag_info;              ///< pointer to diagnosis info
  #endif
 #endif
     ctsu_cfg_t const * p_ctsu_cfg;               ///< Pointer to initial configurations.
@@ -228,8 +326,8 @@ fsp_err_t R_CTSU_CallbackSet(ctsu_ctrl_t * const          p_api_ctrl,
                              void (                     * p_callback)(ctsu_callback_args_t *),
                              void const * const           p_context,
                              ctsu_callback_args_t * const p_callback_memory);
+fsp_err_t R_CTSU_Diagnosis(ctsu_ctrl_t * const p_ctrl);
 fsp_err_t R_CTSU_Close(ctsu_ctrl_t * const p_ctrl);
-fsp_err_t R_CTSU_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

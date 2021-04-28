@@ -80,15 +80,6 @@ static void motor_current_transform_dq_uvw_abs(const float f_angle, const float 
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure. */
-static const fsp_version_t g_motor_current_version =
-{
-    .api_version_minor  = MOTOR_CURRENT_API_VERSION_MINOR,
-    .api_version_major  = MOTOR_CURRENT_API_VERSION_MAJOR,
-    .code_version_major = MOTOR_CURRENT_CODE_VERSION_MAJOR,
-    .code_version_minor = MOTOR_CURRENT_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
@@ -106,7 +97,6 @@ const motor_current_api_t g_motor_current_on_motor_current =
     .currentGet          = RM_MOTOR_CURRENT_CurrentGet,
     .phaseVoltageGet     = RM_MOTOR_CURRENT_PhaseVoltageGet,
     .parameterUpdate     = RM_MOTOR_CURRENT_ParameterUpdate,
-    .versionGet          = RM_MOTOR_CURRENT_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -564,25 +554,6 @@ fsp_err_t RM_MOTOR_CURRENT_ParameterUpdate (motor_current_ctrl_t * const      p_
     rm_motor_voltage_error_compensation_init(&(p_instance_ctrl->st_vcomp));
 
     return err;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return Motor Speed Control module version. Implements @ref motor_current_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS             Version information successfully read.
- * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter
- **********************************************************************************************************************/
-fsp_err_t RM_MOTOR_CURRENT_VersionGet (fsp_version_t * const p_version)
-{
-#if MOTOR_CURRENT_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_motor_current_version.version_id;
-
-    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

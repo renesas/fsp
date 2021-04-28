@@ -51,10 +51,6 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-/** Version Number of API.  */
-#define COMPARATOR_API_VERSION_MAJOR    (1U) // DEPRECATED
-#define COMPARATOR_API_VERSION_MINOR    (1U) // DEPRECATED
-
 /*****************************************************************************
  * Typedef definitions
  ******************************************************************************/
@@ -204,16 +200,6 @@ typedef struct st_comparator_api
      * @param[in]  p_ctrl   Pointer to instance control block
      */
     fsp_err_t (* close)(comparator_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Retrieve the API version.
-     * @par Implemented as
-     * - @ref R_ACMPHS_VersionGet()
-     * - @ref R_ACMPLP_VersionGet()
-     *
-     * @pre This function retrieves the API version.
-     * @param[in]  p_version   Pointer to version structure
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } comparator_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

@@ -490,14 +490,6 @@ void ble_abs_hw_timer_callback(timer_callback_args_t * callback_args);
 
 /*** ble timer functions end ***/
 
-/* Version data structure. */
-static const fsp_version_t g_ble_abs_version =
-{
-    .api_version_minor  = BLE_ABS_API_VERSION_MINOR,
-    .api_version_major  = BLE_ABS_API_VERSION_MAJOR,
-    .code_version_minor = BLE_ABS_CODE_VERSION_MINOR,
-    .code_version_major = BLE_ABS_CODE_VERSION_MAJOR
-};
 
 /** BLE ABS on BLE HAL API mapping for BLE ABS interface */
 const ble_abs_api_t g_ble_abs_on_ble =
@@ -505,7 +497,6 @@ const ble_abs_api_t g_ble_abs_on_ble =
     .open                           = RM_BLE_ABS_Open,
     .close                          = RM_BLE_ABS_Close,
     .reset                          = RM_BLE_ABS_Reset,
-    .versionGet                     = RM_BLE_ABS_VersionGet,
     .startLegacyAdvertising         = RM_BLE_ABS_StartLegacyAdvertising,
     .startExtendedAdvertising       = RM_BLE_ABS_StartExtendedAdvertising,
     .startNonConnectableAdvertising = RM_BLE_ABS_StartNonConnectableAdvertising,
@@ -708,24 +699,6 @@ fsp_err_t RM_BLE_ABS_Reset (ble_abs_ctrl_t * const p_ctrl, ble_event_cb_t init_c
 
     return FSP_SUCCESS;
 }
-
-/***********************************************************************************************************************
- * DEPRECATED Get BLE module code and API versions.
- * Implements @ref ble_abs_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS            Operation succeeded.
- * @retval      FSP_ERR_ASSERTION      The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t RM_BLE_ABS_VersionGet (fsp_version_t * const p_version)
-{
-#if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(p_version);
-#endif
-
-    p_version->version_id = g_ble_abs_version.version_id;
-
-    return FSP_SUCCESS;
-}                                      /* End of function RM_BLE_ABS_VersionGet() */
 
 /*******************************************************************************************************************//**
  * Start Legacy Advertising after setting advertising parameters, advertising data and scan response data.

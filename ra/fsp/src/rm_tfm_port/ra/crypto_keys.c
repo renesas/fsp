@@ -107,7 +107,7 @@ enum tfm_plat_err_t tfm_plat_get_huk_derived_key (const uint8_t * label,
 enum tfm_plat_err_t tfm_plat_get_initial_attest_key (uint8_t          * key_buf,
                                                      uint32_t           size,
                                                      struct ecc_key_t * ecc_key,
-                                                     psa_ecc_curve_t  * curve_type)
+                                                     psa_ecc_family_t  * curve_type)
 {
     iak_data_t * p_initial_attestation = (iak_data_t *) BOOT_TFM_SHARED_IAK_BASE;
     int          rc;

@@ -45,8 +45,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RM_BLOCK_MEDIA_USB_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define RM_BLOCK_MEDIA_USB_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -107,7 +105,6 @@ fsp_err_t RM_BLOCK_MEDIA_USB_StatusGet(rm_block_media_ctrl_t * const   p_api_ctr
                                        rm_block_media_status_t * const p_status);
 fsp_err_t RM_BLOCK_MEDIA_USB_InfoGet(rm_block_media_ctrl_t * const p_ctrl, rm_block_media_info_t * const p_info);
 fsp_err_t RM_BLOCK_MEDIA_USB_Close(rm_block_media_ctrl_t * const p_ctrl);
-fsp_err_t RM_BLOCK_MEDIA_USB_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

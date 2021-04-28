@@ -56,10 +56,6 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-/* Version Number of API. */
-#define CGC_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define CGC_API_VERSION_MINOR    (1U)  // DEPRECATED
-
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -347,13 +343,6 @@ typedef struct
      * @param[in]   p_ctrl          Pointer to instance control block
      */
     fsp_err_t (* close)(cgc_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Gets the CGC driver version.
-     * @par Implemented as
-     * - @ref R_CGC_VersionGet()
-     * @param[out]  p_version   Code and API version used
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * p_version);
 } cgc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

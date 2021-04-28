@@ -149,15 +149,6 @@ static void iic_err_slave(iic_slave_instance_ctrl_t * p_ctrl);
  * Private global variables
  *********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static fsp_version_t const g_iic_slave_version =
-{
-    .api_version_minor  = I2C_SLAVE_API_VERSION_MINOR,
-    .api_version_major  = I2C_SLAVE_API_VERSION_MAJOR,
-    .code_version_major = IIC_SLAVE_CODE_VERSION_MAJOR,
-    .code_version_minor = IIC_SLAVE_CODE_VERSION_MINOR
-};
-
 /**********************************************************************************************************************
  * Global variables
  *********************************************************************************************************************/
@@ -169,7 +160,6 @@ i2c_slave_api_t const g_i2c_slave_on_iic =
     .read        = R_IIC_SLAVE_Read,
     .write       = R_IIC_SLAVE_Write,
     .close       = R_IIC_SLAVE_Close,
-    .versionGet  = R_IIC_SLAVE_VersionGet,
     .callbackSet = R_IIC_SLAVE_CallbackSet
 };
 
@@ -382,23 +372,6 @@ fsp_err_t R_IIC_SLAVE_Close (i2c_slave_ctrl_t * const p_api_ctrl)
     R_BSP_IrqDisable(p_ctrl->p_cfg->tei_irq);
 
     R_BSP_MODULE_STOP(FSP_IP_IIC, p_ctrl->p_cfg->channel);
-
-    return FSP_SUCCESS;
-}
-
-/**********************************************************************************************************************
- * DEPRECATED Gets version information and stores it in the provided version structure.
- *
- * @retval  FSP_SUCCESS                 Successful version get.
- * @retval  FSP_ERR_ASSERTION           p_version is NULL.
- *********************************************************************************************************************/
-fsp_err_t R_IIC_SLAVE_VersionGet (fsp_version_t * const p_version)
-{
-#if IIC_SLAVE_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(p_version != NULL);
-#endif
-
-    p_version->version_id = g_iic_slave_version.version_id;
 
     return FSP_SUCCESS;
 }

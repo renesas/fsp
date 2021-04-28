@@ -48,6 +48,11 @@
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
+ #if (USB_CFG_DMA == USB_CFG_ENABLE)
+extern transfer_instance_t * g_p_usbx_transfer_tx;
+extern transfer_instance_t * g_p_usbx_transfer_rx;
+ #endif                                /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
+
 /******************************************************************************
  * Renesas Abstracted Host Lib IP functions
  ******************************************************************************/
@@ -341,7 +346,6 @@ uint16_t usb_hstd_pipe2fport (usb_utr_t * ptr, uint16_t pipe)
     }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-    if ((0 != ptr->p_transfer_tx) || (0 != ptr->p_transfer_rx))
     {
         if ((USB_PIPE1 == pipe) || (USB_PIPE2 == pipe))
         {
@@ -350,15 +354,36 @@ uint16_t usb_hstd_pipe2fport (usb_utr_t * ptr, uint16_t pipe)
             usb_dir = usb_dir & USB_DIRFIELD;
             if (0 == usb_dir)
             {
-                fifo_mode = USB_D0USE;
+  #if (BSP_CFG_RTOS == 1)
+                if (0 != g_p_usbx_transfer_rx)
+                {
+                    fifo_mode = USB_D0USE;
+                }
+
+  #else
+                if (0 != ptr->p_transfer_rx)
+                {
+                    fifo_mode = USB_D0USE;
+                }
+  #endif
             }
             else
             {
-                fifo_mode = USB_D1USE;
+  #if (BSP_CFG_RTOS == 1)
+                if (0 != g_p_usbx_transfer_tx)
+                {
+                    fifo_mode = USB_D1USE;
+                }
+
+  #else
+                if (0 != ptr->p_transfer_tx)
+                {
+                    fifo_mode = USB_D1USE;
+                }
+  #endif
             }
         }
     }
-
  #else                                 /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
     (void) *ptr;
  #endif
@@ -841,7 +866,9 @@ uint16_t usb_hstd_read_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
         end_flag = USB_READOVER;
         usb_cstd_set_nak(ptr, pipe);   /* Set NAK */
         count = (uint16_t) g_usb_hstd_data_cnt[ptr->ip][pipe];
+#if BSP_CFG_RTOS != 1
         g_usb_hstd_data_cnt[ptr->ip][pipe] = dtln;
+#endif  /* BSP_CFG_RTOS != 1 */
     }
     else if (g_usb_hstd_data_cnt[ptr->ip][pipe] == dtln)
     {
@@ -998,13 +1025,18 @@ void usb_hstd_data_end (usb_utr_t * ptr, uint16_t pipe, uint16_t status)
         g_p_usb_hstd_pipe[ip][pipe]->ipp     = usb_hstd_get_usb_ip_adr(ip);
         g_p_usb_hstd_pipe[ip][pipe]->ip      = ip;
         (g_p_usb_hstd_pipe[ip][pipe]->complete)(g_p_usb_hstd_pipe[ip][pipe], USB_NULL, USB_NULL);
- #if BSP_CFG_RTOS == 2
+
+ #if (BSP_CFG_RTOS == 0)
+        g_p_usb_hstd_pipe[ip][pipe] = (usb_utr_t *) USB_NULL;
+ #else                                          /* (BSP_CFG_RTOS == 0) */
+  #if (BSP_CFG_RTOS == 1)
+        USB_REL_BLK(1, g_p_usb_hstd_pipe[ip][pipe]);
+  #elif (BSP_CFG_RTOS == 2)                     /* #if (BSP_CFG_RTOS == 1) */
         vPortFree(g_p_usb_hstd_pipe[ip][pipe]);
+  #endif                                        /* #if (BSP_CFG_RTOS == 1) */
         g_p_usb_hstd_pipe[ip][pipe] = (usb_utr_t *) USB_NULL;
         usb_cstd_pipe_msg_re_forward(ip, pipe); /* Get PIPE Transfer wait que and Message send to HCD */
- #else  /* BSP_CFG_RTOS == 2 */
-        g_p_usb_hstd_pipe[ip][pipe] = (usb_utr_t *) USB_NULL;
- #endif /* BSP_CFG_RTOS == 2 */
+ #endif                                         /* (BSP_CFG_RTOS == 0) */
     }
 }
 
@@ -1416,10 +1448,14 @@ void usb_hstd_clr_pipe_table (uint16_t ip_no, uint16_t device_address)
                     g_usb_pipe_table[ip_no][pipe_no].pipe_buf = USB_NULL;
                 }
  #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #if BSP_CFG_RTOS == 1
+                tx_semaphore_put(&g_usb_host_usbx_sem[ip_no][pipe_no]);
+                tx_semaphore_delete(&g_usb_host_usbx_sem[ip_no][pipe_no]);
+ #endif
             }
         }
     }
-} /* eof usb_hstd_clr_pipe_table() */
+}                                      /* eof usb_hstd_clr_pipe_table() */
 
 /******************************************************************************
  * Function Name   : usb_hstd_set_pipe_reg

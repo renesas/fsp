@@ -39,11 +39,9 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RTC_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define RTC_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /* Counting mode */
-#define RTC_CALENDAR_MODE         (0)
+#define RTC_CALENDAR_MODE    (0)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -84,7 +82,6 @@ fsp_err_t R_RTC_CalendarAlarmGet(rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * c
 fsp_err_t R_RTC_PeriodicIrqRateSet(rtc_ctrl_t * const p_ctrl, rtc_periodic_irq_select_t const rate);
 fsp_err_t R_RTC_ErrorAdjustmentSet(rtc_ctrl_t * const p_ctrl, rtc_error_adjustment_cfg_t const * const err_adj_cfg);
 fsp_err_t R_RTC_InfoGet(rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_info);
-fsp_err_t R_RTC_VersionGet(fsp_version_t * version);
 fsp_err_t R_RTC_CallbackSet(rtc_ctrl_t * const          p_ctrl,
                             void (                    * p_callback)(rtc_callback_args_t *),
                             void const * const          p_context,

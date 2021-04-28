@@ -53,15 +53,6 @@ void rm_block_media_sdmmc_callback(sdmmc_callback_args_t * p_args);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure. */
-static const fsp_version_t g_rm_block_media_sdmmc_version =
-{
-    .api_version_minor  = RM_BLOCK_MEDIA_API_VERSION_MINOR,
-    .api_version_major  = RM_BLOCK_MEDIA_API_VERSION_MAJOR,
-    .code_version_major = RM_BLOCK_MEDIA_SDMMC_CODE_VERSION_MAJOR,
-    .code_version_minor = RM_BLOCK_MEDIA_SDMMC_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -77,7 +68,6 @@ const rm_block_media_api_t g_rm_block_media_on_sdmmc =
     .infoGet     = RM_BLOCK_MEDIA_SDMMC_InfoGet,
     .statusGet   = RM_BLOCK_MEDIA_SDMMC_StatusGet,
     .close       = RM_BLOCK_MEDIA_SDMMC_Close,
-    .versionGet  = RM_BLOCK_MEDIA_SDMMC_VersionGet,
 };
 
 /*******************************************************************************************************************//**
@@ -429,26 +419,6 @@ fsp_err_t RM_BLOCK_MEDIA_SDMMC_Close (rm_block_media_ctrl_t * const p_ctrl)
     p_sdmmc->p_api->close(p_sdmmc->p_ctrl);
 
     return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Returns the version of the firmware and API.  Implements @ref rm_block_media_api_t::versionGet().
- *
- * @retval     FSP_SUCCESS        Function executed successfully.
- * @retval     FSP_ERR_ASSERTION  Null Pointer.
- **********************************************************************************************************************/
-fsp_err_t RM_BLOCK_MEDIA_SDMMC_VersionGet (fsp_version_t * const p_version)
-{
-    fsp_err_t err = FSP_SUCCESS;
-
-#if RM_BLOCK_MEDIA_SDMMC_CFG_PARAM_CHECKING_ENABLE
-
-    /* Check pointers for NULL values */
-    FSP_ASSERT(NULL != p_version);
-#endif
-    p_version->version_id = g_rm_block_media_sdmmc_version.version_id;
-
-    return err;
 }
 
 /*******************************************************************************************************************//**

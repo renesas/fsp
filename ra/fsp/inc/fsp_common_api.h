@@ -225,6 +225,7 @@ typedef enum e_fsp_err
     FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL = 4003, ///< Transmit buffer is not empty
     FSP_ERR_ETHER_ERROR_FILTERING            = 4004, ///< Detect multicast frame when multicast frame filtering enable
     FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION    = 4005, ///< ETHERC/EDMAC has an error in the phy communication
+    FSP_ERR_ETHER_RECEIVE_BUFFER_ACTIVE      = 4006, ///< Receive buffer is active.
 
     /* Start of ETHER_PHY Driver specific */
     FSP_ERR_ETHER_PHY_ERROR_LINK = 5000,             ///< PHY is not link up.
@@ -235,9 +236,24 @@ typedef enum e_fsp_err
     FSP_ERR_QUEUE_EMPTY = 10001,                     ///< Queue is empty, no data to dequeue
 
     /* Start of CTSU Driver specific */
-    FSP_ERR_CTSU_SCANNING          = 6000,           ///< Scanning.
-    FSP_ERR_CTSU_NOT_GET_DATA      = 6001,           ///< Not processed previous scan data.
-    FSP_ERR_CTSU_INCOMPLETE_TUNING = 6002,           ///< Incomplete initial offset tuning.
+    FSP_ERR_CTSU_SCANNING              = 6000,       ///< Scanning.
+    FSP_ERR_CTSU_NOT_GET_DATA          = 6001,       ///< Not processed previous scan data.
+    FSP_ERR_CTSU_INCOMPLETE_TUNING     = 6002,       ///< Incomplete initial offset tuning.
+    FSP_ERR_CTSU_DIAG_NOT_YET          = 6003,       ///< Diagnosis of data collected no yet.
+    FSP_ERR_CTSU_DIAG_LDO_OVER_VOLTAGE = 6004,       ///< Diagnosis of LDO over voltage failed.
+    FSP_ERR_CTSU_DIAG_CCO_HIGH         = 6005,       ///< Diagnosis of CCO into 19.2uA failed.
+    FSP_ERR_CTSU_DIAG_CCO_LOW          = 6006,       ///< Diagnosis of CCO into 2.4uA failed.
+    FSP_ERR_CTSU_DIAG_SSCG             = 6007,       ///< Diagnosis of SSCG frequency failed.
+    FSP_ERR_CTSU_DIAG_DAC              = 6008,       ///< Diagnosis of non-touch count value failed.
+    FSP_ERR_CTSU_DIAG_OUTPUT_VOLTAGE   = 6009,       ///< Diagnosis of LDO output voltage failed.
+    FSP_ERR_CTSU_DIAG_OVER_VOLTAGE     = 6010,       ///< Diagnosis of over voltage detection circuit failed.
+    FSP_ERR_CTSU_DIAG_OVER_CURRENT     = 6011,       ///< Diagnosis of over current detection circuit failed.
+    FSP_ERR_CTSU_DIAG_LOAD_RESISTANCE  = 6012,       ///< Diagnosis of LDO internal resistance value failed.
+    FSP_ERR_CTSU_DIAG_CURRENT_SOURCE   = 6013,       ///< Diagnosis of Current source value failed.
+    FSP_ERR_CTSU_DIAG_SENSCLK_GAIN     = 6014,       ///< Diagnosis of SENSCLK frequency gain failed.
+    FSP_ERR_CTSU_DIAG_SUCLK_GAIN       = 6015,       ///< Diagnosis of SUCLK frequency gain failed.
+    FSP_ERR_CTSU_DIAG_CLOCK_RECOVERY   = 6016,       ///< Diagnosis of SUCLK clock recovery function failed.
+    FSP_ERR_CTSU_DIAG_CFC_GAIN         = 6017,       ///< Diagnosis of CFC oscillator gain failed.
 
     /* Start of SDMMC specific */
     FSP_ERR_CARD_INIT_FAILED     = 40000,            ///< SD card or eMMC device failed to initialize.
@@ -310,7 +326,9 @@ typedef enum e_fsp_err
     FSP_ERR_CRYPTO_INSTALL_KEY_FAILED    = 0x10010,  ///< Specified input key is invalid.
     FSP_ERR_CRYPTO_AUTHENTICATION_FAILED = 0x10011,  ///< Authentication failed
     FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      = 0x10012,  ///< Failure to Init Cipher
-    FSP_ERR_CRYPTO_SCE_AUTHENTICATION    = 0x10013,
+    FSP_ERR_CRYPTO_SCE_AUTHENTICATION    = 0x10013,  ///< Authentication failed
+    FSP_ERR_CRYPTO_SCE_PARAMETER         = 0x10014,  ///< Input date is illegal.
+    FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION = 0x10015,  ///< An invalid function call occurred.
 
     /* Start of SF_CRYPTO specific */
     FSP_ERR_CRYPTO_COMMON_NOT_OPENED      = 0x20000, ///< Crypto Framework Common is not opened
@@ -325,22 +343,6 @@ typedef enum e_fsp_err
      *        Refer to sf_cryoto_err.h for Crypto error codes.
      */
 } fsp_err_t;
-
-/** Common version structure */
-typedef union st_fsp_version
-{
-    /** Version id */
-    uint32_t version_id;
-
-    /** Code version parameters */
-    struct
-    {
-        uint8_t code_version_minor;    ///< Code minor version
-        uint8_t code_version_major;    ///< Code major version
-        uint8_t api_version_minor;     ///< API minor version
-        uint8_t api_version_major;     ///< API major version
-    };
-} fsp_version_t;
 
 /** @} */
 

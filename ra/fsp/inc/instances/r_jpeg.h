@@ -40,8 +40,6 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define JPEG_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define JPEG_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -87,7 +85,6 @@ fsp_err_t R_JPEG_OutputBufferSet(jpeg_ctrl_t * p_api_ctrl, void * output_buffer,
 fsp_err_t R_JPEG_InputBufferSet(jpeg_ctrl_t * constp_api_ctrl, void * p_data_buffer, uint32_t data_buffer_size);
 fsp_err_t R_JPEG_StatusGet(jpeg_ctrl_t * p_api_ctrl, jpeg_status_t * p_status);
 fsp_err_t R_JPEG_Close(jpeg_ctrl_t * p_api_ctrl);
-fsp_err_t R_JPEG_VersionGet(fsp_version_t * p_version);
 
 #if JPEG_CFG_ENCODE_ENABLE
 fsp_err_t R_JPEG_EncodeImageSizeSet(jpeg_ctrl_t * const p_api_ctrl, jpeg_encode_image_size_t * p_image_size);

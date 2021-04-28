@@ -146,15 +146,6 @@ fsp_err_t r_ssi_rx_unload_fifo(ssi_instance_ctrl_t * const p_instance_ctrl, void
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_version =
-{
-    .api_version_minor  = I2S_API_VERSION_MINOR,
-    .api_version_major  = I2S_API_VERSION_MAJOR,
-    .code_version_major = SSI_CODE_VERSION_MAJOR,
-    .code_version_minor = SSI_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -170,7 +161,6 @@ const i2s_api_t g_i2s_on_ssi =
     .mute        = R_SSI_Mute,
     .statusGet   = R_SSI_StatusGet,
     .close       = R_SSI_Close,
-    .versionGet  = R_SSI_VersionGet,
     .callbackSet = R_SSI_CallbackSet,
 };
 
@@ -621,25 +611,6 @@ fsp_err_t R_SSI_Close (i2s_ctrl_t * const p_ctrl)
 
     /* Stop feeding clock to SSI peripheral to deactivate it. */
     R_BSP_MODULE_STOP(FSP_IP_SSI, p_instance_ctrl->p_cfg->channel);
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Sets driver version based on compile time macros.
- *
- * @retval     FSP_SUCCESS          Successful close.
- * @retval     FSP_ERR_ASSERTION    The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_SSI_VersionGet (fsp_version_t * const p_version)
-{
-#if SSI_CFG_PARAM_CHECKING_ENABLE
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_version.version_id;
 
     return FSP_SUCCESS;
 }

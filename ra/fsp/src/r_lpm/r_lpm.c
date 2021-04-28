@@ -66,15 +66,6 @@
  * Private global variables
  **********************************************************************************************************************/
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_lpm_version =
-{
-    .api_version_major  = LPM_API_VERSION_MAJOR,
-    .api_version_minor  = LPM_API_VERSION_MINOR,
-    .code_version_major = LPM_CODE_VERSION_MAJOR,
-    .code_version_minor = LPM_CODE_VERSION_MINOR
-};
-
 /* This array stores the address of the register containing the stop bit for each clock. All of these registers are
  * 8-bit registers and only bit 0 is valid.  All other bits are read as 0 and should be written to 0.  Bit 0 of each
  * of these registers indicates that the corresponding clock is stopped when set, or that the corresponding clock
@@ -101,7 +92,6 @@ const lpm_api_t g_lpm_on_lpm =
     .lowPowerReconfigure = R_LPM_LowPowerReconfigure,
     .lowPowerModeEnter   = R_LPM_LowPowerModeEnter,
     .ioKeepClear         = R_LPM_IoKeepClear,
-    .versionGet          = R_LPM_VersionGet,
 };
 
 /***********************************************************************************************************************
@@ -290,23 +280,6 @@ fsp_err_t R_LPM_Close (lpm_ctrl_t * const p_api_ctrl)
 #endif
 
     p_ctrl->lpm_open = 0;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Get the driver version based on compile time macros.
- *
- * @retval     FSP_SUCCESS        Successfully got version.
- * @retval     FSP_ERR_ASSERTION  p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_LPM_VersionGet (fsp_version_t * const p_version)
-{
-#if LPM_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_lpm_version.version_id;
 
     return FSP_SUCCESS;
 }

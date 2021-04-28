@@ -29,15 +29,15 @@
  #pragma GCC diagnostic ignored "-Wmacro-redefined"
 #endif
 
-#include "iot_pkcs11.h"
+#include "core_pkcs11.h"
 
 #if defined(__ARMCC_VERSION)
  #pragma GCC diagnostic pop
 #endif
 
-#include "iot_pkcs11_config.h"
+#include "core_pkcs11_config.h"
 #include "portmacro.h"
-#include "iot_pkcs11_pal.h"
+#include "core_pkcs11_pal.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "mbedtls/sha256.h"

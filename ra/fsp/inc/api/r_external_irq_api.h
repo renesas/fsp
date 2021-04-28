@@ -49,8 +49,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  *********************************************************************************************************************/
-#define EXTERNAL_IRQ_API_VERSION_MAJOR    (1U) // DEPRECATED ///< EXTERNAL IRQ API version number (Major)
-#define EXTERNAL_IRQ_API_VERSION_MINOR    (0U) // DEPRECATED ///< EXTERNAL IRQ API version number (Minor)
 
 /*********************************************************************************************************************
  * Typedef definitions
@@ -159,13 +157,6 @@ typedef struct st_external_irq_api
      * @param[in]  p_ctrl      Control block set in Open call for this external interrupt.
      */
     fsp_err_t (* close)(external_irq_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Get version and store it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_ICU_ExternalIrqVersionGet()
-     *
-     * @param[out]  p_version  Code and API version used.     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_version);
 } external_irq_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

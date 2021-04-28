@@ -40,8 +40,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define QSPI_CODE_VERSION_MAJOR      (1U) // DEPRECATED
-#define QSPI_CODE_VERSION_MINOR      (1U) // DEPRECATED
 
 #define QSPI_DEVICE_START_ADDRESS    (0x60000000)
 
@@ -150,7 +148,6 @@ fsp_err_t R_QSPI_Write(spi_flash_ctrl_t    * p_ctrl,
 fsp_err_t R_QSPI_Erase(spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_address, uint32_t byte_count);
 fsp_err_t R_QSPI_StatusGet(spi_flash_ctrl_t * p_ctrl, spi_flash_status_t * const p_status);
 fsp_err_t R_QSPI_BankSet(spi_flash_ctrl_t * p_ctrl, uint32_t bank);
-fsp_err_t R_QSPI_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

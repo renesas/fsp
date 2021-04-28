@@ -50,11 +50,9 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define TOUCH_API_VERSION_MAJOR    (1U)           // DEPRECATED
-#define TOUCH_API_VERSION_MINOR    (0U)           // DEPRECATED
 
-#define TOUCH_COUNT_MAX            CTSU_COUNT_MAX ///< Value of Maximum count
-#define TOUCH_OFF_VALUE            (0xFFFF)       ///< Value of Non-touch
+#define TOUCH_COUNT_MAX    CTSU_COUNT_MAX ///< Value of Maximum count
+#define TOUCH_OFF_VALUE    (0xFFFF)       ///< Value of Non-touch
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -191,15 +189,6 @@ typedef struct st_touch_api
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(touch_ctrl_t * const p_ctrl);
-
-    /* DEPRECATED Return the version of the driver.
-     * @par Implemented as
-     * - @ref RM_TOUCH_VersionGet()
-     *
-     * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[out] p_data       Memory address to return version information to.
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const p_data);
 } touch_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

@@ -39,8 +39,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_CURRENT_CODE_VERSION_MAJOR                       (1U) // DEPRECATED
-#define MOTOR_CURRENT_CODE_VERSION_MINOR                       (0U) // DEPRECATED
 
 /* For Voltage Compensation */
 #define MOTOR_CURRENT_VOLTAGE_COMPENSATION_TABLE_ARRAY_SIZE    (5)
@@ -197,8 +195,6 @@ fsp_err_t RM_MOTOR_CURRENT_PhaseVoltageGet(motor_current_ctrl_t * const        p
 
 fsp_err_t RM_MOTOR_CURRENT_ParameterUpdate(motor_current_ctrl_t * const      p_ctrl,
                                            motor_current_cfg_t const * const p_cfg);
-
-fsp_err_t RM_MOTOR_CURRENT_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

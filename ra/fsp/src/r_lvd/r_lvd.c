@@ -110,15 +110,6 @@ void        lvd_lvd_isr(void);
 /** Stored context for NMI handler. */
 static lvd_instance_ctrl_t * gp_ctrls[LVD_PRV_NUMBER_OF_MONITORS] = {NULL};
 
-/** Version data structure used by error logger macro. */
-static const fsp_version_t g_lvd_version =
-{
-    .api_version_minor  = LVD_API_VERSION_MINOR,
-    .api_version_major  = LVD_API_VERSION_MAJOR,
-    .code_version_major = LVD_CODE_VERSION_MAJOR,
-    .code_version_minor = LVD_CODE_VERSION_MINOR
-};
-
 /* Look-up tables for writing to monitor 1 and monitor 2 registers. */
 static uint8_t volatile * const g_lvdncr0_lut[] = {&(R_SYSTEM->LVD1CR0), &(R_SYSTEM->LVD2CR0)};
 static uint8_t volatile * const g_lvdncr1_lut[] = {&(R_SYSTEM->LVD1CR1), &(R_SYSTEM->LVD2CR1)};
@@ -145,7 +136,6 @@ const lvd_api_t g_lvd_on_lvd =
     .statusGet   = R_LVD_StatusGet,
     .statusClear = R_LVD_StatusClear,
     .close       = R_LVD_Close,
-    .versionGet  = R_LVD_VersionGet,
     .callbackSet = R_LVD_CallbackSet
 };
 
@@ -397,26 +387,6 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
 
     gp_ctrls[monitor_index] = NULL;
     p_ctrl->open            = 0;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Returns the LVD driver version based on compile time macros.
- *
- * @param[in]       p_version           Pointer to the version structure
- *
- * @retval          FSP_SUCCESS         Successful
- * @retval          FSP_ERR_ASSERTION   p_version was NULL
- *
- **********************************************************************************************************************/
-fsp_err_t R_LVD_VersionGet (fsp_version_t * const p_version)
-{
-#if (0 != LVD_CFG_PARAM_CHECKING_ENABLE)
-    FSP_ERROR_RETURN((NULL != p_version), FSP_ERR_ASSERTION);
-#endif
-
-    p_version->version_id = g_lvd_version.version_id;
 
     return FSP_SUCCESS;
 }

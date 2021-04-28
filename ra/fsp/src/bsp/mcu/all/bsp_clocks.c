@@ -32,47 +32,46 @@
  **********************************************************************************************************************/
 
 /* Key code for writing PRCR register. */
-#define BSP_PRV_PRCR_KEY                      (0xA500U)
-#define BSP_PRV_PRCR_UNLOCK                   ((BSP_PRV_PRCR_KEY) | 0x3U)
-#define BSP_PRV_PRCR_LOCK                     ((BSP_PRV_PRCR_KEY) | 0x0U)
+#define BSP_PRV_PRCR_KEY                        (0xA500U)
+#define BSP_PRV_PRCR_UNLOCK                     ((BSP_PRV_PRCR_KEY) | 0x3U)
+#define BSP_PRV_PRCR_LOCK                       ((BSP_PRV_PRCR_KEY) | 0x0U)
 
-#define BSP_PRV_MAXIMUM_HOCOWTR_HSTS          ((uint8_t) 0x6U)
+#define BSP_PRV_MAXIMUM_HOCOWTR_HSTS            ((uint8_t) 0x6U)
 
 /* Wait state definitions for MEMWAIT. */
-#define BSP_PRV_MEMWAIT_ZERO_WAIT_CYCLES      (0U)
-#define BSP_PRV_MEMWAIT_TWO_WAIT_CYCLES       (1U)
-#define BSP_PRV_MEMWAIT_MAX_ZERO_WAIT_FREQ    (32000000U)
+#define BSP_PRV_MEMWAIT_ZERO_WAIT_CYCLES        (0U)
+#define BSP_PRV_MEMWAIT_TWO_WAIT_CYCLES         (1U)
+#define BSP_PRV_MEMWAIT_MAX_ZERO_WAIT_FREQ      (32000000U)
 
 /* Wait state definitions for FLDWAITR. */
-#define BSP_PRV_FLDWAITR_ONE_WAIT_CYCLES      (0U)
-#define BSP_PRV_FLDWAITR_TWO_WAIT_CYCLES      (1U)
-#define BSP_PRV_FLDWAITR_MAX_ONE_WAIT_FREQ    (32000000U)
+#define BSP_PRV_FLDWAITR_ONE_WAIT_CYCLES        (0U)
+#define BSP_PRV_FLDWAITR_TWO_WAIT_CYCLES        (1U)
+#define BSP_PRV_FLDWAITR_MAX_ONE_WAIT_FREQ      (32000000U)
 
 /* Temporary solution until R_FACI is added to renesas.h. */
-#define BSP_PRV_FLDWAITR_REG_ACCESS           (*((volatile uint8_t *) (0x407EFFC4U)))
+#define BSP_PRV_FLDWAITR_REG_ACCESS             (*((volatile uint8_t *) (0x407EFFC4U)))
 
 /* Wait state definitions for MCUS with SRAMWTSC and FLWT. */
-#define BSP_PRV_SRAMWTSC_ZERO_WAIT_CYCLES     (0U)
-#define BSP_PRV_SRAMWTSC_ONE_WAIT_CYCLES      (0xEU)
-#define BSP_PRV_ROM_ZERO_WAIT_CYCLES          (0U)
-#define BSP_PRV_ROM_ONE_WAIT_CYCLES           (1U)
-#define BSP_PRV_ROM_TWO_WAIT_CYCLES           (2U)
-#define BSP_PRV_ROM_THREE_WAIT_CYCLES         (3U)
-#define BSP_PRV_SRAM_PRCR_KEY                 (0x78U)
-#define BSP_PRV_SRAM_UNLOCK                   (((BSP_PRV_SRAM_PRCR_KEY) << 1) | 0x1U)
-#define BSP_PRV_SRAM_LOCK                     (((BSP_PRV_SRAM_PRCR_KEY) << 1) | 0x0U)
+#define BSP_PRV_SRAMWTSC_WAIT_CYCLES_DISABLE    (0U)
+#define BSP_PRV_ROM_ZERO_WAIT_CYCLES            (0U)
+#define BSP_PRV_ROM_ONE_WAIT_CYCLES             (1U)
+#define BSP_PRV_ROM_TWO_WAIT_CYCLES             (2U)
+#define BSP_PRV_ROM_THREE_WAIT_CYCLES           (3U)
+#define BSP_PRV_SRAM_PRCR_KEY                   (0x78U)
+#define BSP_PRV_SRAM_UNLOCK                     (((BSP_PRV_SRAM_PRCR_KEY) << 1) | 0x1U)
+#define BSP_PRV_SRAM_LOCK                       (((BSP_PRV_SRAM_PRCR_KEY) << 1) | 0x0U)
 
 /* Calculate value to write to MOMCR (MODRV controls main clock drive strength and MOSEL determines the source of the
  * main oscillator). */
-#define BSP_PRV_MOMCR_MOSEL_BIT               (6)
-#define BSP_PRV_MODRV                         ((CGC_MAINCLOCK_DRIVE << BSP_FEATURE_CGC_MODRV_SHIFT) & \
-                                               BSP_FEATURE_CGC_MODRV_MASK)
-#define BSP_PRV_MOSEL                         (BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE << BSP_PRV_MOMCR_MOSEL_BIT)
-#define BSP_PRV_MOMCR                         (BSP_PRV_MODRV | BSP_PRV_MOSEL)
+#define BSP_PRV_MOMCR_MOSEL_BIT                 (6)
+#define BSP_PRV_MODRV                           ((CGC_MAINCLOCK_DRIVE << BSP_FEATURE_CGC_MODRV_SHIFT) & \
+                                                 BSP_FEATURE_CGC_MODRV_MASK)
+#define BSP_PRV_MOSEL                           (BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE << BSP_PRV_MOMCR_MOSEL_BIT)
+#define BSP_PRV_MOMCR                           (BSP_PRV_MODRV | BSP_PRV_MOSEL)
 
 /* Locations of bitfields used to configure CLKOUT. */
-#define BSP_PRV_CKOCR_CKODIV_BIT              (4U)
-#define BSP_PRV_CKOCR_CKOEN_BIT               (7U)
+#define BSP_PRV_CKOCR_CKODIV_BIT                (4U)
+#define BSP_PRV_CKOCR_CKOEN_BIT                 (7U)
 
 #ifdef BSP_CFG_UCK_DIV
 
@@ -678,11 +677,11 @@ static void bsp_prv_clock_set_hard_reset (void)
   #if BSP_STARTUP_ICLK_HZ <= BSP_FEATURE_BSP_SYS_CLOCK_FREQ_NO_RAM_WAITS
    #if BSP_FEATURE_CGC_HAS_SRAMPRCR2 == 1
     R_SRAM->SRAMPRCR2 = BSP_PRV_SRAM_UNLOCK;
-    R_SRAM->SRAMWTSC  = BSP_PRV_SRAMWTSC_ZERO_WAIT_CYCLES;
+    R_SRAM->SRAMWTSC  = BSP_PRV_SRAMWTSC_WAIT_CYCLES_DISABLE;
     R_SRAM->SRAMPRCR2 = BSP_PRV_SRAM_LOCK;
    #else
     R_SRAM->SRAMPRCR = BSP_PRV_SRAM_UNLOCK;
-    R_SRAM->SRAMWTSC = BSP_PRV_SRAMWTSC_ZERO_WAIT_CYCLES;
+    R_SRAM->SRAMWTSC = BSP_PRV_SRAMWTSC_WAIT_CYCLES_DISABLE;
     R_SRAM->SRAMPRCR = BSP_PRV_SRAM_LOCK;
    #endif
   #endif
@@ -1163,11 +1162,11 @@ static uint8_t bsp_clock_set_prechange (uint32_t requested_freq_hz)
     {
  #ifdef BSP_FEATURE_CGC_HAS_SRAMPRCR2
         R_SRAM->SRAMPRCR2 = BSP_PRV_SRAM_UNLOCK;
-        R_SRAM->SRAMWTSC  = BSP_PRV_SRAMWTSC_ONE_WAIT_CYCLES;
+        R_SRAM->SRAMWTSC  = BSP_FEATURE_SRAM_SRAMWTSC_WAIT_CYCLE_ENABLE;
         R_SRAM->SRAMPRCR2 = BSP_PRV_SRAM_LOCK;
  #else
         R_SRAM->SRAMPRCR = BSP_PRV_SRAM_UNLOCK;
-        R_SRAM->SRAMWTSC = BSP_PRV_SRAMWTSC_ONE_WAIT_CYCLES;
+        R_SRAM->SRAMWTSC = BSP_FEATURE_SRAM_SRAMWTSC_WAIT_CYCLE_ENABLE;
         R_SRAM->SRAMPRCR = BSP_PRV_SRAM_LOCK;
  #endif
     }
@@ -1266,11 +1265,11 @@ static void bsp_clock_set_postchange (uint32_t updated_freq_hz, uint8_t new_rom_
     {
  #if BSP_FEATURE_CGC_HAS_SRAMPRCR2 == 1
         R_SRAM->SRAMPRCR2 = BSP_PRV_SRAM_UNLOCK;
-        R_SRAM->SRAMWTSC  = BSP_PRV_SRAMWTSC_ZERO_WAIT_CYCLES;
+        R_SRAM->SRAMWTSC  = BSP_PRV_SRAMWTSC_WAIT_CYCLES_DISABLE;
         R_SRAM->SRAMPRCR2 = BSP_PRV_SRAM_LOCK;
  #else
         R_SRAM->SRAMPRCR = BSP_PRV_SRAM_UNLOCK;
-        R_SRAM->SRAMWTSC = BSP_PRV_SRAMWTSC_ZERO_WAIT_CYCLES;
+        R_SRAM->SRAMWTSC = BSP_PRV_SRAMWTSC_WAIT_CYCLES_DISABLE;
         R_SRAM->SRAMPRCR = BSP_PRV_SRAM_LOCK;
  #endif
     }

@@ -37,8 +37,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define SSI_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define SSI_CODE_VERSION_MINOR    (1U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -48,7 +46,6 @@ FSP_HEADER
 typedef enum e_ssi_audio_clock
 {
     SSI_AUDIO_CLOCK_EXTERNAL = 0,      ///< Audio clock source is the AUDIO_CLK input pin
-    SSI_AUDIO_CLOCK_GTIOC1A  = 1,      // Audio clock source is internal connection to GPT channel 1 output (Deprecated)
     SSI_AUDIO_CLOCK_INTERNAL = 1,      ///< Audio clock source is internal connection to a MCU specific GPT channel output
 } ssi_audio_clock_t;
 
@@ -125,7 +122,6 @@ fsp_err_t R_SSI_WriteRead(i2s_ctrl_t * const p_ctrl, void const * const p_src, v
                           uint32_t const bytes);
 fsp_err_t R_SSI_Mute(i2s_ctrl_t * const p_ctrl, i2s_mute_t const mute_enable);
 fsp_err_t R_SSI_Close(i2s_ctrl_t * const p_ctrl);
-fsp_err_t R_SSI_VersionGet(fsp_version_t * const p_version);
 fsp_err_t R_SSI_CallbackSet(i2s_ctrl_t * const          p_api_ctrl,
                             void (                    * p_callback)(i2s_callback_args_t *),
                             void const * const          p_context,

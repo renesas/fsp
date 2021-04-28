@@ -38,8 +38,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define GPT_THREE_PHASE_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define GPT_THREE_PHASE_CODE_VERSION_MINOR    (0U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -79,7 +77,6 @@ fsp_err_t R_GPT_THREE_PHASE_CallbackSet(three_phase_ctrl_t * const    p_ctrl,
                                         void const * const            p_context,
                                         timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_GPT_THREE_PHASE_Close(three_phase_ctrl_t * const p_ctrl);
-fsp_err_t R_GPT_THREE_PHASE_VersionGet(fsp_version_t * const p_version);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup GPT_THREE_PHASE)

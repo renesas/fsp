@@ -44,7 +44,7 @@
  #define USB_BIT_16_WIDTH              (2)
 
  #if (USB_CFG_DMA == USB_CFG_ENABLE)
-  #define USB_DMAC_PRV_REG(ch)    ((R_DMAC0_Type *) ((R_DMAC1 - R_DMAC0) * ch + R_DMAC0))
+  #define USB_DMAC_PRV_REG(ch)    ((R_DMAC0_Type *) ((R_DMAC1_BASE - R_DMAC0_BASE) * ch + R_DMAC0_BASE))
  #endif                                                                 /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
 
 /******************************************************************************

@@ -53,8 +53,6 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RTC_API_VERSION_MAJOR    (1U)  // DEPRECATED
-#define RTC_API_VERSION_MINOR    (1U)  // DEPRECATED
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -280,14 +278,6 @@ typedef struct st_rtc_api
      * @param[out]  p_rtc_info   Pointer to RTC information structure
      */
     fsp_err_t (* infoGet)(rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_info);
-
-    /* DEPRECATED Gets version and stores it in provided pointer p_version.
-     * @par Implemented as
-     * - @ref R_RTC_VersionGet()
-     *
-     * @param[out]  p_version  Code and API version used
-     */
-    fsp_err_t (* versionGet)(fsp_version_t * const version);
 } rtc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

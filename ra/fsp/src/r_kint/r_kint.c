@@ -35,15 +35,6 @@
 
 void key_int_isr(void);
 
-/* Version data structure used by error logger macro. */
-static const fsp_version_t g_kint_version =
-{
-    .api_version_minor  = KEYMATRIX_API_VERSION_MINOR,
-    .api_version_major  = KEYMATRIX_API_VERSION_MAJOR,
-    .code_version_major = KINT_CODE_VERSION_MAJOR,
-    .code_version_minor = KINT_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
@@ -51,11 +42,10 @@ static const fsp_version_t g_kint_version =
 /* KeyMatrix Implementation of Key Interrupt  */
 const keymatrix_api_t g_keymatrix_on_kint =
 {
-    .open       = R_KINT_Open,
-    .enable     = R_KINT_Enable,
-    .disable    = R_KINT_Disable,
-    .close      = R_KINT_Close,
-    .versionGet = R_KINT_VersionGet
+    .open    = R_KINT_Open,
+    .enable  = R_KINT_Enable,
+    .disable = R_KINT_Disable,
+    .close   = R_KINT_Close,
 };
 
 /***********************************************************************************************************************
@@ -206,23 +196,6 @@ fsp_err_t R_KINT_Disable (keymatrix_ctrl_t * const p_api_ctrl)
 
     /* Disable interrupts in the KINT peripheral */
     R_KINT->KRM = 0U;
-
-    return FSP_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Set driver version based on compile time macros.
- *
- * @retval     FSP_SUCCESS        Successful return.
- * @retval     FSP_ERR_ASSERTION  The parameter p_version is NULL.
- **********************************************************************************************************************/
-fsp_err_t R_KINT_VersionGet (fsp_version_t * const p_version)
-{
-#if KINT_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_version);
-#endif
-
-    p_version->version_id = g_kint_version.version_id;
 
     return FSP_SUCCESS;
 }

@@ -24,7 +24,7 @@
  */
 
 /* FreeRTOS Includes. */
-#include "iot_pkcs11.h"
+#include "core_pkcs11.h"
 #include "FreeRTOS.h"
 #include "mbedtls/sha256.h"
 

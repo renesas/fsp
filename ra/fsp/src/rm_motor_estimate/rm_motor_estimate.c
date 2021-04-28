@@ -56,15 +56,6 @@
  * Private global variables
  **********************************************************************************************************************/
 
-/* Version data structure. */
-static const fsp_version_t g_motor_estimate_version =
-{
-    .api_version_major  = MOTOR_ANGLE_API_VERSION_MAJOR,
-    .api_version_minor  = MOTOR_ANGLE_API_VERSION_MINOR,
-    .code_version_major = MOTOR_ESTIMATE_CODE_VERSION_MAJOR,
-    .code_version_minor = MOTOR_ESTIMATE_CODE_VERSION_MINOR
-};
-
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
@@ -79,7 +70,6 @@ const motor_angle_api_t g_motor_angle_on_motor_estimate =
     .angleSpeedGet         = RM_MOTOR_ESTIMATE_AngleSpeedGet,
     .estimatedComponentGet = RM_MOTOR_ESTIMATE_EstimatedComponentGet,
     .parameterUpdate       = RM_MOTOR_ESTIMATE_ParameterUpdate,
-    .versionGet            = RM_MOTOR_ESTIMATE_VersionGet
 };
 
 /*******************************************************************************************************************//**
@@ -449,25 +439,6 @@ fsp_err_t RM_MOTOR_ESTIMATE_ParameterUpdate (motor_angle_ctrl_t * const p_ctrl, 
     }
 
     return err;
-}
-
-/***********************************************************************************************************************
- * DEPRECATED Return Motor Angle Estimation Middle module version. Implements @ref motor_angle_api_t::versionGet.
- *
- * @retval      FSP_SUCCESS             Version information successfully read.
- * @retval      FSP_ERR_ASSERTION       Null pointer passed as a parameter
- **********************************************************************************************************************/
-fsp_err_t RM_MOTOR_ESTIMATE_VersionGet (fsp_version_t * const p_version)
-{
-#if (MOTOR_ESTIMATE_CFG_PARAM_CHECKING_ENABLE)
-
-    /* Verify parameters are valid */
-    FSP_ASSERT(p_version != NULL);
-#endif
-
-    p_version->version_id = g_motor_estimate_version.version_id;
-
-    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

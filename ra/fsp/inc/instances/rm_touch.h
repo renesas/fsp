@@ -38,8 +38,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define TOUCH_CODE_VERSION_MAJOR    (1U) // DEPRECATED
-#define TOUCH_CODE_VERSION_MINOR    (2U) // DEPRECATED
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -132,7 +130,6 @@ fsp_err_t RM_TOUCH_CallbackSet(touch_ctrl_t * const          p_api_ctrl,
                                void const * const            p_context,
                                touch_callback_args_t * const p_callback_memory);
 fsp_err_t RM_TOUCH_Close(touch_ctrl_t * const p_ctrl);
-fsp_err_t RM_TOUCH_VersionGet(fsp_version_t * const p_version);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

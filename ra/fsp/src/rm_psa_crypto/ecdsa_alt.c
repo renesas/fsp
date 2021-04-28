@@ -18,11 +18,11 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 
-#if !defined(MBEDTLS_CONFIG_FILE)
- #include "mbedtls/config.h"
-#else
- #include MBEDTLS_CONFIG_FILE
-#endif
+/*
+ * NOTE: This file is not a modification of ecdsa.c; it contains SCE specific implementations for sign and verify only. 
+ * There is no need to update this file when mbedtls versions are updated. 
+ */
+#include "common.h"
 
 #if defined(MBEDTLS_ECDSA_C)
 
@@ -44,8 +44,10 @@
   #define mbedtls_free      free
  #endif
 
- #include "psa/crypto.h"
- #include "hw_sce_private.h"
+#include "mbedtls/platform_util.h"
+#include "mbedtls/error.h"
+#include "psa/crypto.h"
+#include "hw_sce_private.h"
 
 /* Parameter validation macros based on platform_util.h */
  #define ECDSA_VALIDATE_RET(cond) \
