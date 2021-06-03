@@ -199,7 +199,7 @@
 #define BSP_FEATURE_GPT_VALID_CHANNEL_MASK                (0x3F1)
 
 #define BSP_FEATURE_ICU_HAS_WUPEN1                        (0) // Feature not available on this MCU
-#define BSP_FEATURE_ICU_IRQ_CHANNELS_MASK                 (0x0FU)
+#define BSP_FEATURE_ICU_IRQ_CHANNELS_MASK                 (0xFFU)
 #define BSP_FEATURE_ICU_WUPEN_MASK                        (0xF38F00FFU)
 
 #define BSP_FEATURE_IIC_FAST_MODE_PLUS                    (0U)

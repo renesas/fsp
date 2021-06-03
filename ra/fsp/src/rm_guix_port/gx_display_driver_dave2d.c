@@ -383,10 +383,10 @@ extern void * rm_guix_port_jpeg_instance_get(ULONG display_handle);
 /***********************************************************************************************************************
  * GUIX display driver function prototypes (called by GUIX)
  **********************************************************************************************************************/
-VOID _gx_synergy_buffer_toggle(GX_CANVAS * canvas, GX_RECTANGLE * dirty);
+VOID _gx_ra_buffer_toggle(GX_CANVAS * canvas, GX_RECTANGLE * dirty);
 
 #if (GX_USE_SYNERGY_JPEG == 1)
-VOID _gx_synergy_jpeg_draw(GX_DRAW_CONTEXT * p_context, INT x, INT y, GX_PIXELMAP * p_pixelmap);
+VOID _gx_renesas_jpeg_draw(GX_DRAW_CONTEXT * p_context, INT x, INT y, GX_PIXELMAP * p_pixelmap);
 
 #endif
 
@@ -2573,7 +2573,7 @@ VOID _gx_dave2d_buffer_toggle (GX_CANVAS * canvas, GX_RECTANGLE * dirty)
  * @param[in]    canvas        Pointer to a GUIX canvas
  * @param[in]   dirty          Pointer to a dirty rectangle area
  **********************************************************************************************************************/
-VOID _gx_synergy_buffer_toggle (GX_CANVAS * canvas, GX_RECTANGLE * dirty)
+VOID _gx_ra_buffer_toggle (GX_CANVAS * canvas, GX_RECTANGLE * dirty)
 {
     GX_PARAMETER_NOT_USED(dirty);
 
@@ -2669,7 +2669,7 @@ void _gx_renesas_jpeg_callback (jpeg_callback_args_t * p_args)
  * @param   y[in]               y axis pixel offset
  * @param   p_pixelmap[in]      Pointer to a pixelmap
  **********************************************************************************************************************/
-VOID _gx_synergy_jpeg_draw (GX_DRAW_CONTEXT * p_context, INT x, INT y, GX_PIXELMAP * p_pixelmap)
+VOID _gx_renesas_jpeg_draw (GX_DRAW_CONTEXT * p_context, INT x, INT y, GX_PIXELMAP * p_pixelmap)
 {
     INT                           ret;
     jpeg_instance_t             * p_jpeg;
@@ -4300,7 +4300,7 @@ static VOID gx_renesas_display_driver_16bpp_32argb_pixelmap_rotate (GX_DRAW_CONT
 
 /*******************************************************************************************************************//**
  * @brief  GUIX display driver for FSP, Subroutine for Hardware accelerated JPEG draw to open JPEG driver.
- *  This function is called by _gx_synergy_jpeg_draw().
+ *  This function is called by _gx_renesas_jpeg_draw().
  * @param   p_context[in]               Pointer to a GUIX draw context
  * @param   p_jpeg[in,out]    Pointer to a JPEG driver instance
  * @param   p_jpeg[in,out]    Pointer to a JPEG driver instance
@@ -4334,7 +4334,7 @@ static INT gx_renesas_jpeg_draw_open (GX_DRAW_CONTEXT * p_context, jpeg_instance
 /*******************************************************************************************************************//**
  * @brief  Subroutine for YCBCR444 specific height which is called by Hardware accelerated JPEG draw that performs
  * JPEG decoding in output streaming mode.
- * This function is called by _gx_synergy_jpeg_draw_minimum_height().
+ * This function is called by _gx_renesas_jpeg_draw_minimum_height().
  * @param   width[in]           Image width
  * @param   height[in]          Image height
  * @retval  minimum_height      Minimum height for JPEG decoding
@@ -4359,7 +4359,7 @@ static UINT gx_renesas_jpeg_draw_minimum_height_ycbcr444 (GX_VALUE width, GX_VAL
 /*******************************************************************************************************************//**
  * @brief  Subroutine for YCBCR422 specific height which is called by Hardware accelerated JPEG draw that performs
  * JPEG decoding in output streaming mode.
- * This function is called by _gx_synergy_jpeg_draw_minimum_height().
+ * This function is called by _gx_renesas_jpeg_draw_minimum_height().
  * @param   width[in]           Image width
  * @param   height[in]          Image height
  * @retval  minimum_height      Minimum height for JPEG decoding
@@ -4384,7 +4384,7 @@ static UINT gx_renesas_jpeg_draw_minimum_height_ycbcr422 (GX_VALUE width, GX_VAL
 /*******************************************************************************************************************//**
  * @brief  Subroutine for YCBCR411 specific height which is called by Hardware accelerated JPEG draw that performs
  * JPEG decoding in output streaming mode.
- * This function is called by _gx_synergy_jpeg_draw_minimum_height().
+ * This function is called by _gx_renesas_jpeg_draw_minimum_height().
  * @param   width[in]           Image width
  * @param   height[in]          Image height
  * @retval  minimum_height      Minimum height for JPEG decoding
@@ -4409,7 +4409,7 @@ static UINT gx_renesas_jpeg_draw_minimum_height_ycbcr411 (GX_VALUE width, GX_VAL
 /*******************************************************************************************************************//**
  * @brief  Subroutine for YCBCR420 specific height which is called by Hardware accelerated JPEG draw that performs
  * JPEG decoding in output streaming mode.
- * This function is called by _gx_synergy_jpeg_draw_minimum_height().
+ * This function is called by _gx_renesas_jpeg_draw_minimum_height().
  * @param   width[in]           Image width
  * @param   height[in]          Image height
  * @retval  minimum_height      Minimum height for JPEG decoding
@@ -4433,7 +4433,7 @@ static UINT gx_renesas_jpeg_draw_minimum_height_ycbcr420 (GX_VALUE width, GX_VAL
 
 /*******************************************************************************************************************//**
  * @brief  GUIX display driver for FSP, Subroutine for Hardware accelerated JPEG draw to get minimum height.
- *  This function is called by _gx_synergy_jpeg_draw().
+ *  This function is called by _gx_renesas_jpeg_draw().
  * @param   format[in]          JPEG color format (YCbCr)
  * @param   width[in]           Image width
  * @param   height[in]          Image height
@@ -4483,7 +4483,7 @@ static UINT gx_renesas_jpeg_draw_minimum_height_get (jpeg_color_space_t format, 
 
 /*******************************************************************************************************************//**
  * @brief  Subroutine for Hardware accelerated JPEG draw to perform JPEG decoding in output streaming mode.
- *  This function is called by _gx_synergy_jpeg_draw_output_streaming().
+ *  This function is called by _gx_renesas_jpeg_draw_output_streaming().
  * @param   p_jpeg[in]                 Pointer to a parameter set for the JPEG decode framework instance
  * @retval  FSP_SUCCESS       Display device was opened successfully.
  * @retval  Others            See @ref Common_Error_Codes for other possible return codes. This function calls
@@ -4518,7 +4518,7 @@ static INT gx_renesas_jpeg_draw_output_streaming_wait ()
 /*******************************************************************************************************************//**
  * @brief  GUIX display driver for FSP, Subroutine for Hardware accelerated JPEG draw to perform JPEG decoding in
  * output streaming mode.
- *  This function is called by _gx_synergy_jpeg_draw().
+ *  This function is called by _gx_renesas_jpeg_draw().
  * @param   p_param[in]                 Pointer to a parameter set for the JPEG decode output steaming
  **********************************************************************************************************************/
 static VOID gx_renesas_jpeg_draw_output_streaming (jpeg_output_streaming_param_t * p_param)
@@ -4644,8 +4644,8 @@ static VOID gx_renesas_jpeg_draw_output_streaming (jpeg_output_streaming_param_t
 
 /*******************************************************************************************************************//**
  * @brief  GUIX display driver for FSP, Frame buffer toggle operation with copying data by software without
- * D/AVE 2D acceleration and screen rotation. This function is called by _gx_synergy_buffer_toggle().
- * This function is called by _gx_synergy_buffer_toggle.
+ * D/AVE 2D acceleration and screen rotation. This function is called by _gx_ra_buffer_toggle().
+ * This function is called by _gx_ra_buffer_toggle.
  * @param[in]     canvas            Pointer to a canvas
  * @param[in]     copy              Pointer to a rectangle region to copy.
  **********************************************************************************************************************/
@@ -4883,7 +4883,7 @@ static VOID gx_rotate_canvas_to_working_16bpp_draw_rorate270 (USHORT * pGetRow,
 
 /*******************************************************************************************************************//**
  * @brief  GUIX display driver for FSP, Frame buffer software copy operation with screen rotation for 16bpp color
- * format. This function is called by _gx_synergy_buffer_toggle().
+ * format. This function is called by _gx_ra_buffer_toggle().
  * @param[in]     canvas            Pointer to a canvas
  * @param[in]     copy              Pointer to a rectangle region to copy.
  * @param[in]     angle    Rotation angle (0, 90, 180 or 270)
@@ -5123,7 +5123,7 @@ static VOID gx_rotate_canvas_to_working_32bpp_draw_rorate270 (ULONG * pGetRow,
 
 /*******************************************************************************************************************//**
  * @brief  GUIX display driver for FSP, Frame buffer software copy operation with screen rotation for 32bpp color
- * format. This function is called by _gx_synergy_buffer_toggle().
+ * format. This function is called by _gx_ra_buffer_toggle().
  * @param[in]     canvas            Pointer to a canvas
  * @param[in]     copy              Pointer to a rectangle region to copy.
  * @param[in]     angle    Rotation angle (0, 90, 180 or 270)

@@ -201,7 +201,7 @@
 #define BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE                (64U)
 #define BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE                (4U)
 #define BSP_FEATURE_FLASH_HP_HAS_FMEPROT                  (1)
-#define BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK           (1)
+#define BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK           (0) // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_HP_VERSION                      (40U)
 #define BSP_FEATURE_FLASH_LP_AWS_FAW_MASK                 (0) // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_LP_AWS_FAW_SHIFT                (0) // Feature not available on this MCU
@@ -236,7 +236,7 @@
 #define BSP_FEATURE_LPM_DPSIEGR_MASK                      (0x13FFFFU)
 #define BSP_FEATURE_LPM_DPSIER_MASK                       (0x0D1FFFFFU)
 #define BSP_FEATURE_LPM_HAS_DEEP_STANDBY                  (1U)
-#define BSP_FEATURE_LPM_HAS_SBYCR_OPE                     (1U)
+#define BSP_FEATURE_LPM_HAS_SBYCR_OPE                     (0U)
 #define BSP_FEATURE_LPM_HAS_SNZEDCR1                      (1U)
 #define BSP_FEATURE_LPM_HAS_SNZREQCR1                     (1U)
 #define BSP_FEATURE_LPM_HAS_STCONR                        (0U)

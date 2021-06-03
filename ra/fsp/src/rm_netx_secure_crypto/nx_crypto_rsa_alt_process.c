@@ -59,6 +59,7 @@
  * @retval NX_CRYPTO_SUCCESS              Encryption/decryption operation was successful.
  * @retval NX_CRYPTO_NOT_SUCCESSFUL       Encryption/decryption operation failed.
  * @retval NX_CRYPTO_UNSUPPORTED_KEY_SIZE Unsupported key size based on the exponent length passed.
+ * @retval NX_CRYPTO_SIZE_ERROR           Invalid modulus length.
  **********************************************************************************************************************/
 UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
                                   UINT          exponent_length,
@@ -73,6 +74,20 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
     /* Check exponent length to determine key type and format */
     if (exponent_length <= RM_NETX_SECURE_CRYPTO_RSA_EXPONENT_LENGTH_BYTES)
     {
+        UINT modulus_size_max = 0;
+ #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT)
+        uint32_t aligned_modulus[HW_SCE_RSA_4096_KEY_D_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+        modulus_size_max = (UINT) HW_SCE_RSA_4096_KEY_D_LENGTH_BYTE_SIZE;
+ #elif (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT)
+        uint32_t aligned_modulus[HW_SCE_RSA_3072_KEY_D_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+        modulus_size_max = (UINT) HW_SCE_RSA_3072_KEY_D_LENGTH_BYTE_SIZE;
+ #else
+        uint32_t aligned_modulus[HW_SCE_RSA_2048_KEY_D_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+        modulus_size_max = (UINT) HW_SCE_RSA_2048_KEY_D_LENGTH_BYTE_SIZE;
+ #endif
+        FSP_ERROR_RETURN((modulus_size_max >= modulus_length), NX_CRYPTO_SIZE_ERROR);
+        NX_CRYPTO_MEMCPY(aligned_modulus, modulus, modulus_length);
+
         /* Unformatted public key : This is an Encryption operation */
         uint8_t padded_exponent[4U] = {0};
         NX_CRYPTO_MEMCPY(&padded_exponent[RM_NETX_SECURE_CRYPTO_RSA_EXPONENT_LENGTH_BYTES - exponent_length],
@@ -85,11 +100,12 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
             case HW_SCE_RSA_4096_KEY_N_LENGTH_BYTE_SIZE:
             {
  #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT)
+                uint32_t aligned_work_buffer[HW_SCE_RSA_4096_KEY_N_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+                NX_CRYPTO_MEMCPY(aligned_work_buffer, input, sizeof(aligned_work_buffer));
                 err =
-                    HW_SCE_RSA_4096PublicKeyEncrypt((uint32_t *) input,
-                                                    (uint32_t *) padded_exponent,
-                                                    (uint32_t *) modulus,
-                                                    (uint32_t *) output);
+                    HW_SCE_RSA_4096PublicKeyEncrypt((uint32_t *) aligned_work_buffer, (uint32_t *) padded_exponent,
+                                                    (uint32_t *) aligned_modulus, (uint32_t *) aligned_work_buffer);
+                NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
  #endif
                 break;
             }
@@ -97,11 +113,12 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
             case HW_SCE_RSA_3072_KEY_N_LENGTH_BYTE_SIZE:
             {
  #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT)
+                uint32_t aligned_work_buffer[HW_SCE_RSA_3072_KEY_N_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+                NX_CRYPTO_MEMCPY(aligned_work_buffer, input, sizeof(aligned_work_buffer));
                 err =
-                    HW_SCE_RSA_3072PublicKeyEncrypt((uint32_t *) input,
-                                                    (uint32_t *) padded_exponent,
-                                                    (uint32_t *) modulus,
-                                                    (uint32_t *) output);
+                    HW_SCE_RSA_3072PublicKeyEncrypt((uint32_t *) aligned_work_buffer, (uint32_t *) padded_exponent,
+                                                    (uint32_t *) aligned_modulus, (uint32_t *) aligned_work_buffer);
+                NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
  #endif
                 break;
             }
@@ -109,11 +126,14 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
             case HW_SCE_RSA_2048_KEY_N_LENGTH_BYTE_SIZE:
             {
  #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT)
+                uint32_t aligned_work_buffer[HW_SCE_RSA_2048_KEY_N_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+                NX_CRYPTO_MEMCPY(aligned_work_buffer, input, sizeof(aligned_work_buffer));
                 err =
-                    HW_SCE_RSA_2048PublicKeyEncrypt((uint32_t *) input,
+                    HW_SCE_RSA_2048PublicKeyEncrypt((uint32_t *) aligned_work_buffer,
                                                     (uint32_t *) padded_exponent,
-                                                    (uint32_t *) modulus,
-                                                    (uint32_t *) output);
+                                                    aligned_modulus,
+                                                    (uint32_t *) aligned_work_buffer);
+                NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
  #endif
                 break;
             }
@@ -129,15 +149,25 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
     else if (HW_SCE_RSA_2048_KEY_D_LENGTH_BYTE_SIZE == exponent_length)
     {
         uint32_t key[HW_SCE_RSA2048_ND_KEY_BYTE_SIZE >> 2U] = {0};
+        uint32_t aligned_work_buffer[HW_SCE_RSA_2048_KEY_N_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+        NX_CRYPTO_MEMCPY(aligned_work_buffer, input, sizeof(aligned_work_buffer));
         NX_CRYPTO_MEMCPY(key, modulus, modulus_length);
         NX_CRYPTO_MEMCPY(&key[modulus_length >> 2U], exponent, exponent_length);
 
         /* Plain private key: This is a decryption operation */
-        err = HW_SCE_RSA_2048PrivateKeyDecrypt((uint32_t *) input, NULL, key, (uint32_t *) output);
+        err = HW_SCE_RSA_2048PrivateKeyDecrypt((uint32_t *) aligned_work_buffer,
+                                               NULL,
+                                               key,
+                                               (uint32_t *) aligned_work_buffer);
+        NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
     }
     /* This is a special case where the entire wrapped key is passed through the exponent parameter */
     else if (RM_NETX_SECURE_CRYPTO_WORDS_TO_BYTES(HW_SCE_RSA2048_ND_KEY_INDEX_WORD_SIZE) == exponent_length)
     {
+        /* Input parameters are expected to be word aligned here as this section is executed when
+         * the user application directly. NetX Secure does not get to this section.
+         */
+
         /* Check the input message length to ensure its not larger than the modulus size.
          * Note: Since the wrapped key (and not the plain modulus) is passed during init API,
          * a larger length is allowed by the caller during the operation API.
@@ -148,7 +178,7 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
             return NX_CRYPTO_PTR_ERROR;
         }
 
-        /* Wrapped private key : This is a decryption operation */
+        /* Wrapped private key : This is a decryption operation. */
         err =
             HW_SCE_HRK_RSA_2048PrivateKeyDecrypt((uint32_t *) input, (uint32_t *) exponent, NULL, (uint32_t *) output);
     }

@@ -152,6 +152,11 @@
    #define TOUCH_UART_CTSUSNUM_SHIFT          (10)
    #define TOUCH_UART_CTSUSDPA_SHIFT          (8)
   #endif
+
+/* UART Command version */
+  #define TOUCH_UART_VERSION_MAJOR            ((uint8_t) 0x01U)
+  #define TOUCH_UART_VERSION_MINOR            ((uint8_t) 0x00U)
+
  #endif
 
 /* Method Number Maximum */
@@ -200,6 +205,11 @@ static void touch_wheel_decode(touch_wheel_info_t * p_winfo,
 
 #endif
 
+#if (TOUCH_CFG_PAD_ENABLE)
+static void touch_pad_decode(touch_pad_info_t * p_pinfo, uint8_t num_x, uint8_t num_y, uint8_t max_touch);
+
+#endif
+
 #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
 void touch_uart_callback(uart_callback_args_t * p_args);
 
@@ -240,6 +250,8 @@ static uint8_t  g_touch_pad_max_touch;
 static uint16_t g_touch_pad_drift_count;
 static int32_t  g_touch_pad_drift_buf[CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX];
 static uint16_t g_touch_pad_base[CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX];
+static uint16_t g_touch_pad_buf[CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX * 2];
+static uint8_t  g_touch_base_set_falg = 0;
 #endif
 #if TOUCH_CFG_MONITOR_ENABLE
 static volatile uint8_t g_touch_monitor_buf[TOUCH_MONITOR_BUFFER_SIZE];
@@ -266,11 +278,12 @@ uint8_t g_touch_uart_monitor_num;
  **********************************************************************************************************************/
 const touch_api_t g_touch_on_ctsu =
 {
-    .open       = RM_TOUCH_Open,
-    .scanStart  = RM_TOUCH_ScanStart,
-    .dataGet    = RM_TOUCH_DataGet,
-    .padDataGet = RM_TOUCH_PadDataGet,
-    .close      = RM_TOUCH_Close,
+    .open        = RM_TOUCH_Open,
+    .scanStart   = RM_TOUCH_ScanStart,
+    .dataGet     = RM_TOUCH_DataGet,
+    .padDataGet  = RM_TOUCH_PadDataGet,
+    .callbackSet = RM_TOUCH_CallbackSet,
+    .close       = RM_TOUCH_Close,
 };
 
 /*******************************************************************************************************************//**
@@ -599,13 +612,22 @@ fsp_err_t RM_TOUCH_DataGet (touch_ctrl_t * const p_ctrl,
 #if (TOUCH_CFG_PARAM_CHECKING_ENABLE == 1)
     FSP_ASSERT(p_instance_ctrl);
  #if (TOUCH_CFG_NUM_BUTTONS != 0)
-    FSP_ASSERT(p_button_status);
+    if (0 != p_instance_ctrl->p_touch_cfg->num_buttons)
+    {
+        FSP_ASSERT(p_button_status);
+    }
  #endif
  #if (TOUCH_CFG_NUM_SLIDERS != 0)
-    FSP_ASSERT(p_slider_position);
+    if (0 != p_instance_ctrl->p_touch_cfg->num_sliders)
+    {
+        FSP_ASSERT(p_slider_position);
+    }
  #endif
  #if (TOUCH_CFG_NUM_WHEELS != 0)
-    FSP_ASSERT(p_wheel_position);
+    if (0 != p_instance_ctrl->p_touch_cfg->num_wheels)
+    {
+        FSP_ASSERT(p_wheel_position);
+    }
  #endif
     TOUCH_ERROR_RETURN(TOUCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
@@ -817,7 +839,7 @@ fsp_err_t RM_TOUCH_DataGet (touch_ctrl_t * const p_ctrl,
         g_touch_monitor_buf[3]       = (uint8_t) (index >> 8);
         g_touch_uart_transmit_flag   = 1;
         gp_touch_uart_instance->p_api->write(gp_touch_uart_instance->p_ctrl,
-                                             (uint8_t const * const) &g_touch_monitor_buf,
+                                             (uint8_t *) g_touch_monitor_buf,
                                              index);
     }
  #endif
@@ -843,37 +865,17 @@ fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
     fsp_err_t               err             = FSP_SUCCESS;
     touch_instance_ctrl_t * p_instance_ctrl = (touch_instance_ctrl_t *) p_ctrl;
 #if (TOUCH_CFG_PAD_ENABLE)
-    static uint16_t pad_buf[CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX * 2];
-    static uint8_t  base_flag = 0;
-    uint16_t        i;
-    uint16_t        j;
-    uint8_t         loop;
-    int32_t         max_diff;
-    uint16_t        max_x;
-    uint16_t        max_y;
-    int32_t         x_parameter;
-    int32_t         y_parameter;
-    int16_t         heat_map[TOUCH_MAP_X * TOUCH_MAP_Y];
-    uint8_t         use_map[TOUCH_MAP_X * TOUCH_MAP_Y];
-    uint8_t         num_x;
-    uint8_t         num_y;
-    uint16_t        pitch_x;
-    uint16_t        pitch_y;
-    int16_t         tmp_count;
-    uint16_t        tmp_value;
-    int32_t         tmp_diff;
-    int32_t         tmp_heat;
-    int32_t         tmp_x1;            /* Work for calculating x parameter1 */
-    int32_t         tmp_x2;            /* Work for calculating x parameter2 */
-    int32_t         tmp_x3;            /* Work for calculating x parameter3 */
-    int32_t         tmp_x4;            /* Work for calculating x parameter4 */
-    int32_t         tmp_y1;            /* Work for calculating y parameter1 */
-    int32_t         tmp_y2;            /* Work for calculating y parameter2 */
-    int32_t         tmp_y3;            /* Work for calculating y parameter3 */
-    int32_t         tmp_y4;            /* Work for calculating y parameter4 */
-    uint16_t        element_num;
-    int32_t         drift_diff;
-    uint8_t         max_touch;         /* number of max touch */
+    uint16_t i;
+    uint16_t j;
+    uint8_t  loop;
+    uint8_t  num_x;
+    uint8_t  num_y;
+    int16_t  tmp_count;
+    uint16_t tmp_value;
+    int32_t  tmp_diff;
+    uint16_t element_num;
+    int32_t  drift_diff;
+    uint8_t  max_touch;                /* number of max touch */
  #if (TOUCH_CFG_MONITOR_ENABLE)
     uint16_t index = 0;
  #endif
@@ -886,19 +888,20 @@ fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
     TOUCH_ERROR_RETURN(TOUCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
  #endif
 
-    /* initialize touch number */
-    *(p_instance_ctrl->pinfo.p_num_touch) = 0;
+    /* initialize touch number and corrdinate */
+    *(p_instance_ctrl->pinfo.p_num_touch)     = 0;
+    *(p_instance_ctrl->pinfo.p_rx_coordinate) = TOUCH_OFF_VALUE;
+    *(p_instance_ctrl->pinfo.p_tx_coordinate) = TOUCH_OFF_VALUE;
 
     /* Get local variable (TS number & data pinch) */
-    num_x       = p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_rx;
-    num_y       = p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_tx;
+    num_x = p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_rx;
+    TOUCH_ERROR_RETURN(0 != num_x, FSP_ERR_ASSERTION);
+    num_y = p_instance_ctrl->p_touch_cfg->p_ctsu_instance->p_cfg->num_tx;
+    TOUCH_ERROR_RETURN(0 != num_y, FSP_ERR_ASSERTION);
     element_num = (uint16_t) (num_x * num_y);
 
-    pitch_x = (uint16_t) (*(p_instance_ctrl->pinfo.p_rx_pixel) / num_x);
-    pitch_y = (uint16_t) (*(p_instance_ctrl->pinfo.p_tx_pixel) / num_y);
-
     /* Data get */
-    err = p_instance_ctrl->p_ctsu_instance->p_api->dataGet(p_instance_ctrl->p_ctsu_instance->p_ctrl, pad_buf);
+    err = p_instance_ctrl->p_ctsu_instance->p_api->dataGet(p_instance_ctrl->p_ctsu_instance->p_ctrl, g_touch_pad_buf);
     FSP_ERROR_RETURN(FSP_ERR_CTSU_SCANNING != err, FSP_ERR_CTSU_SCANNING);
 
     /* check for max touch */
@@ -915,11 +918,11 @@ fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
     for (i = 0; i < element_num; i++)
     {
         /* save to buffer in the first half */
-        pad_buf[i] = (uint16_t) (pad_buf[(i * 2) + 1] - pad_buf[i * 2]);
+        g_touch_pad_buf[i] = (uint16_t) (g_touch_pad_buf[(i * 2) + 1] - g_touch_pad_buf[i * 2]);
     }
 
     /* Data get section */
-    if (!base_flag)
+    if (!g_touch_base_set_falg)
     {
         /* format base value , changing the order */
         for (j = 0; j < num_x; j++)
@@ -927,12 +930,12 @@ fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
             for (i = 0; i < num_y; i++)
             {
                 *(p_instance_ctrl->pinfo.p_base_buf + j + (i * num_x)) =
-                    (pad_buf[*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_rx + j) +
-                             (*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_tx + i) * num_x)]);
+                    (g_touch_pad_buf[*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_rx + j) +
+                                     (*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_tx + i) * num_x)]);
             }
         }
 
-        base_flag = 1;
+        g_touch_base_set_falg = 1;
     }
     else
     {
@@ -942,14 +945,14 @@ fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
             for (i = 0; i < num_y; i++)
             {
                 /* get count data ,and changing the order */
-                tmp_value = pad_buf[*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_rx + j) +
-                                    (*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_tx + i) * num_x)];
+                tmp_value = g_touch_pad_buf[*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_rx + j) +
+                                            (*(p_instance_ctrl->p_touch_cfg->p_pad->p_elem_index_tx + i) * num_x)];
 
                 /* make difference from base value */
                 tmp_diff = *(p_instance_ctrl->pinfo.p_base_buf + j + (i * num_x)) - tmp_value;
 
                 /* save difference value to buffer in the second half */
-                pad_buf[element_num + j + (i * num_x)] = (uint16_t) tmp_diff;
+                g_touch_pad_buf[element_num + j + (i * num_x)] = (uint16_t) tmp_diff;
             }
         }
     }
@@ -959,238 +962,13 @@ fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
     /* copy from second half to first half for monitor */
     for (i = 0; i < element_num; i++)
     {
-        pad_buf[i] = pad_buf[element_num + i];
+        g_touch_pad_buf[i] = g_touch_pad_buf[element_num + i];
     }
  #endif
 
-    *(p_instance_ctrl->pinfo.p_rx_coordinate) = TOUCH_OFF_VALUE;
-    *(p_instance_ctrl->pinfo.p_tx_coordinate) = TOUCH_OFF_VALUE;
-
-    if (base_flag)
+    if (g_touch_base_set_falg)
     {
-        /* Get coordinate data for the Max touch */
-        for (loop = 0; loop < max_touch; loop++)
-        {
-            /* initialize heat-map variables */
-            max_diff = 0;
-            max_y    = 0;
-            max_x    = 0;
-
-            /* Clear heat map ,and initial use map */
-            for (i = 0; i < (TOUCH_MAP_X * TOUCH_MAP_Y); i++)
-            {
-                heat_map[i] = 0;
-                use_map[i]  = 1;
-            }
-
-            /* Maximum value search */
-            for (j = 0; j < num_x; j++)
-            {
-                for (i = 0; i < num_y; i++)
-                {
-                    if ((int16_t) pad_buf[element_num + j + (i * num_x)] > max_diff)
-                    {
-                        max_diff = (int16_t) pad_buf[element_num + j + (i * num_x)];
-                        max_y    = i;
-                        max_x    = j;
-                    }
-                }
-            }
-
-            /* touch check */
-            if (max_diff >= *(p_instance_ctrl->pinfo.p_threshold))
-            {
-                /* make use map */
-                if (0 == max_y)
-                {
-                    /* If map position is Top. */
-                    use_map[0] = 0;
-                    use_map[1] = 0;
-                    use_map[2] = 0;
-                }
-                else if ((num_y - 1) == max_y)
-                {
-                    /* If map position is Bottom. */
-                    use_map[6] = 0;
-                    use_map[7] = 0;
-                    use_map[8] = 0;
-                }
-                else
-                {
-                }
-
-                if (0 == max_x)
-                {
-                    /* If map position is Left. */
-                    use_map[0] = 0;
-                    use_map[3] = 0;
-                    use_map[6] = 0;
-                }
-                else if ((num_x - 1) == max_x)
-                {
-                    /* If map position is Right. */
-                    use_map[2] = 0;
-                    use_map[5] = 0;
-                    use_map[8] = 0;
-                }
-                else
-                {
-                }
-
-                /* make heat mapping */
-                for (i = 0; i < TOUCH_MAP_X; i++)
-                {
-                    for (j = 0; j < TOUCH_MAP_Y; j++)
-                    {
-                        if (use_map[j + (i * TOUCH_MAP_X)])
-                        {
-                            heat_map[j + (i * TOUCH_MAP_X)] =
-                                (int16_t) pad_buf[element_num + (max_x - 1 + j) + (max_y - 1 + i) * num_x];
-                        }
-                    }
-                }
-
-                /* get x value */
-                /* Calculate right + bottom value. (x1/y1) */
-                tmp_heat = heat_map[5] + heat_map[7];
-                if (tmp_heat == 0)
-                {
-                    /* When dividing by zero, set the calculation result to zero */
-                    tmp_x1 = 0;                                      /* x parameter1 */
-                    tmp_y1 = 0;                                      /* y parameter1 */
-                }
-                else
-                {
-                    tmp_x1 = (heat_map[8] * heat_map[5]) / tmp_heat; /* x parameter1 */
-                    tmp_y1 = (heat_map[8] * heat_map[7]) / tmp_heat; /* y parameter1 */
-                }
-
-                /* Calculate right + up value. (x2/y4) */
-                tmp_heat = heat_map[5] + heat_map[1];
-                if (tmp_heat == 0)
-                {
-                    /* When dividing by zero, set the calculation result to zero */
-                    tmp_x2 = 0;                                      /* x parameter2 */
-                    tmp_y4 = 0;                                      /* y parameter4 */
-                }
-                else
-                {
-                    tmp_x2 = (heat_map[2] * heat_map[5]) / tmp_heat; /* x parameter2 */
-                    tmp_y4 = (heat_map[2] * heat_map[1]) / tmp_heat; /* y parameter4 */
-                }
-
-                /* Calculate left + up value. (x3/y3) */
-                tmp_heat = heat_map[3] + heat_map[1];
-                if (tmp_heat == 0)
-                {
-                    /* When dividing by zero, set the calculation result to zero */
-                    tmp_x3 = 0;                                      /* x parameter3 */
-                    tmp_y3 = 0;                                      /* y parameter3 */
-                }
-                else
-                {
-                    tmp_x3 = (heat_map[0] * heat_map[3]) / tmp_heat; /* x parameter3 */
-                    tmp_y3 = (heat_map[0] * heat_map[1]) / tmp_heat; /* y parameter3 */
-                }
-
-                /* Calculate left + down value. (x4/y2) */
-                tmp_heat = heat_map[3] + heat_map[7];
-                if (tmp_heat == 0)
-                {
-                    /* When dividing by zero, set the calculation result to zero */
-                    tmp_x4 = 0;                                      /* x parameter4 */
-                    tmp_y2 = 0;                                      /* y parameter2 */
-                }
-                else
-                {
-                    tmp_x4 = (heat_map[6] * heat_map[3]) / tmp_heat; /* x parameter4 */
-                    tmp_y2 = (heat_map[6] * heat_map[7]) / tmp_heat; /* y parameter2 */
-                }
-
-                if (heat_map[4] == 0)
-                {
-                    x_parameter = 0;
-                }
-                else
-                {
-                    /* x coordinate value calculation*/
-                    x_parameter = ((pitch_x / 2) *
-                                   (heat_map[5] + tmp_x1 + tmp_x2 -
-                                    heat_map[3] - tmp_x3 - tmp_x4) /
-                                   heat_map[4]);
-                }
-
-                /* Fit to pitch */
-                if (x_parameter > pitch_x / 2)
-                {
-                    x_parameter = pitch_x / 2;
-                }
-                else if (x_parameter < -(pitch_x / 2))
-                {
-                    x_parameter = -(pitch_x / 2);
-                }
-                else
-                {
-                    /* no operation */
-                }
-
-                /* Coordinate x value based on pitch */
-                *(p_instance_ctrl->pinfo.p_rx_coordinate + loop) =
-                    (uint16_t) ((pitch_x * (max_x + 1) - pitch_x / 2) + x_parameter);
-
-                /* get y value */
-                if (heat_map[4] == 0)
-                {
-                    y_parameter = 0;
-                }
-                else
-                {
-                    /* y coordinate value calculation*/
-                    y_parameter = ((pitch_y / 2) *
-                                   (heat_map[7] + tmp_y1 + tmp_y2 -
-                                    heat_map[1] - tmp_y3 - tmp_y4) /
-                                   heat_map[4]);
-                }
-
-                /* Fit to pitch */
-                if (y_parameter > pitch_y / 2)
-                {
-                    y_parameter = pitch_y / 2;
-                }
-                else if (y_parameter < -(pitch_y / 2))
-                {
-                    y_parameter = -(pitch_y / 2);
-                }
-                else
-                {
-                    /* no operation */
-                }
-
-                /* Coordinate y value based on pitch  */
-                *(p_instance_ctrl->pinfo.p_tx_coordinate + loop) =
-                    (uint16_t) ((pitch_y * (max_y + 1) - pitch_y / 2) + y_parameter);
-
-                /* If touching ,then counter increment */
-                (*(p_instance_ctrl->pinfo.p_num_touch))++;
-
-                /* Clear the processed heat map area */
-                for (i = 0; i < TOUCH_MAP_X; i++)
-                {
-                    for (j = 0; j < TOUCH_MAP_Y; j++)
-                    {
-                        if (use_map[i * TOUCH_MAP_X + j])
-                        {
-                            pad_buf[element_num + (max_x - 1 + j) + (max_y - 1 + i) * num_x] = 0;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                *(p_instance_ctrl->pinfo.p_rx_coordinate + loop) = TOUCH_OFF_VALUE;
-                *(p_instance_ctrl->pinfo.p_tx_coordinate + loop) = TOUCH_OFF_VALUE;
-            }
-        }
+        touch_pad_decode(&p_instance_ctrl->pinfo, num_x, num_y, max_touch);
 
         /* the drift correction process. */
         if (0 < p_instance_ctrl->pinfo.num_drift)
@@ -1205,7 +983,7 @@ fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
                     for (j = 0; j < num_x; j++)
                     {
                         /* It is an addition for the drift correction average calculation */
-                        tmp_count = (int16_t) pad_buf[element_num + j + (i * num_x)];
+                        tmp_count = (int16_t) g_touch_pad_buf[element_num + j + (i * num_x)];
 
                         *(p_instance_ctrl->pinfo.p_drift_buf + (j + (i * num_x))) += (int32_t) tmp_count;
 
@@ -1284,7 +1062,7 @@ fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
 
         for (i = 0; i < element_num; i++)
         {
-            tmp_value = pad_buf[i];
+            tmp_value = g_touch_pad_buf[i];
             if (tmp_value & TOUCH_PAD_TEMP_VALUE_OVERFLOW_BIT)
             {
                 tmp_value = 0;
@@ -1336,7 +1114,7 @@ fsp_err_t RM_TOUCH_PadDataGet (touch_ctrl_t * const p_ctrl,
         g_touch_monitor_buf[3]       = (uint8_t) (index >> 8);
         g_touch_uart_transmit_flag   = 1;
         gp_touch_uart_instance->p_api->write(gp_touch_uart_instance->p_ctrl,
-                                             (uint8_t const * const) &g_touch_monitor_buf,
+                                             (uint8_t *) g_touch_monitor_buf,
                                              index);
     }
   #endif
@@ -1870,6 +1648,273 @@ void touch_wheel_decode (touch_wheel_info_t * p_winfo, uint16_t * wheel_data, ui
 
 #endif
 
+#if (TOUCH_CFG_PAD_ENABLE)
+
+/***********************************************************************************************************************
+ * Function Name: touch_pad_decode
+ * Description  : Pad Decode function
+ * Arguments    : touch_pad_info_t  p_pinfo : Pointer to Pad Information structure
+ *              : uint16_t *wheel_data        : Pointer to Wheel data array
+ *              : uint8_t  num_elements       : Number of element on wheel
+ *              : uint8_t  wheel_id           : Wheel ID
+ * Return Value : None
+ ***********************************************************************************************************************/
+void touch_pad_decode (touch_pad_info_t * p_pinfo, uint8_t num_x, uint8_t num_y, uint8_t max_touch)
+{
+    uint16_t i;
+    uint16_t j;
+    uint8_t  loop;
+    uint16_t pitch_x;
+    uint16_t pitch_y;
+    uint16_t element_num;
+    int32_t  max_diff;
+    uint16_t max_x;
+    uint16_t max_y;
+    int32_t  x_parameter;
+    int32_t  y_parameter;
+    int16_t  heat_map[TOUCH_MAP_X * TOUCH_MAP_Y];
+    uint8_t  use_map[TOUCH_MAP_X * TOUCH_MAP_Y];
+    int32_t  tmp_heat;
+    int32_t  tmp_x1;                   /* Work for calculating x parameter1 */
+    int32_t  tmp_x2;                   /* Work for calculating x parameter2 */
+    int32_t  tmp_x3;                   /* Work for calculating x parameter3 */
+    int32_t  tmp_x4;                   /* Work for calculating x parameter4 */
+    int32_t  tmp_y1;                   /* Work for calculating y parameter1 */
+    int32_t  tmp_y2;                   /* Work for calculating y parameter2 */
+    int32_t  tmp_y3;                   /* Work for calculating y parameter3 */
+    int32_t  tmp_y4;                   /* Work for calculating y parameter4 */
+
+    element_num = (uint16_t) (num_x * num_y);
+    pitch_x     = (uint16_t) (*(p_pinfo->p_rx_pixel) / num_x);
+    pitch_y     = (uint16_t) (*(p_pinfo->p_tx_pixel) / num_y);
+
+    /* Get coordinate data for the Max touch */
+    for (loop = 0; loop < max_touch; loop++)
+    {
+        /* initialize heat-map variables */
+        max_diff = 0;
+        max_y    = 0;
+        max_x    = 0;
+
+        /* Clear heat map ,and initial use map */
+        for (i = 0; i < (TOUCH_MAP_X * TOUCH_MAP_Y); i++)
+        {
+            heat_map[i] = 0;
+            use_map[i]  = 1;
+        }
+
+        /* Maximum value search */
+        for (j = 0; j < num_x; j++)
+        {
+            for (i = 0; i < num_y; i++)
+            {
+                if ((int16_t) g_touch_pad_buf[element_num + j + (i * num_x)] > max_diff)
+                {
+                    max_diff = (int16_t) g_touch_pad_buf[element_num + j + (i * num_x)];
+                    max_y    = i;
+                    max_x    = j;
+                }
+            }
+        }
+
+        /* touch check */
+        if (max_diff >= *(p_pinfo->p_threshold))
+        {
+            /* make use map */
+            if (0 == max_y)
+            {
+                /* If map position is Top. */
+                use_map[0] = 0;
+                use_map[1] = 0;
+                use_map[2] = 0;
+            }
+            else if ((num_y - 1) == max_y)
+            {
+                /* If map position is Bottom. */
+                use_map[6] = 0;
+                use_map[7] = 0;
+                use_map[8] = 0;
+            }
+            else
+            {
+            }
+
+            if (0 == max_x)
+            {
+                /* If map position is Left. */
+                use_map[0] = 0;
+                use_map[3] = 0;
+                use_map[6] = 0;
+            }
+            else if ((num_x - 1) == max_x)
+            {
+                /* If map position is Right. */
+                use_map[2] = 0;
+                use_map[5] = 0;
+                use_map[8] = 0;
+            }
+            else
+            {
+            }
+
+            /* make heat mapping */
+            for (i = 0; i < TOUCH_MAP_X; i++)
+            {
+                for (j = 0; j < TOUCH_MAP_Y; j++)
+                {
+                    if (use_map[j + (i * TOUCH_MAP_X)])
+                    {
+                        heat_map[j + (i * TOUCH_MAP_X)] =
+                            (int16_t) g_touch_pad_buf[element_num + (max_x - 1 + j) + (max_y - 1 + i) * num_x];
+                    }
+                }
+            }
+
+            /* get x value */
+            /* Calculate right + bottom value. (x1/y1) */
+            tmp_heat = heat_map[5] + heat_map[7];
+            if (tmp_heat == 0)
+            {
+                /* When dividing by zero, set the calculation result to zero */
+                tmp_x1 = 0;                                      /* x parameter1 */
+                tmp_y1 = 0;                                      /* y parameter1 */
+            }
+            else
+            {
+                tmp_x1 = (heat_map[8] * heat_map[5]) / tmp_heat; /* x parameter1 */
+                tmp_y1 = (heat_map[8] * heat_map[7]) / tmp_heat; /* y parameter1 */
+            }
+
+            /* Calculate right + up value. (x2/y4) */
+            tmp_heat = heat_map[5] + heat_map[1];
+            if (tmp_heat == 0)
+            {
+                /* When dividing by zero, set the calculation result to zero */
+                tmp_x2 = 0;                                      /* x parameter2 */
+                tmp_y4 = 0;                                      /* y parameter4 */
+            }
+            else
+            {
+                tmp_x2 = (heat_map[2] * heat_map[5]) / tmp_heat; /* x parameter2 */
+                tmp_y4 = (heat_map[2] * heat_map[1]) / tmp_heat; /* y parameter4 */
+            }
+
+            /* Calculate left + up value. (x3/y3) */
+            tmp_heat = heat_map[3] + heat_map[1];
+            if (tmp_heat == 0)
+            {
+                /* When dividing by zero, set the calculation result to zero */
+                tmp_x3 = 0;                                      /* x parameter3 */
+                tmp_y3 = 0;                                      /* y parameter3 */
+            }
+            else
+            {
+                tmp_x3 = (heat_map[0] * heat_map[3]) / tmp_heat; /* x parameter3 */
+                tmp_y3 = (heat_map[0] * heat_map[1]) / tmp_heat; /* y parameter3 */
+            }
+
+            /* Calculate left + down value. (x4/y2) */
+            tmp_heat = heat_map[3] + heat_map[7];
+            if (tmp_heat == 0)
+            {
+                /* When dividing by zero, set the calculation result to zero */
+                tmp_x4 = 0;                                      /* x parameter4 */
+                tmp_y2 = 0;                                      /* y parameter2 */
+            }
+            else
+            {
+                tmp_x4 = (heat_map[6] * heat_map[3]) / tmp_heat; /* x parameter4 */
+                tmp_y2 = (heat_map[6] * heat_map[7]) / tmp_heat; /* y parameter2 */
+            }
+
+            if (heat_map[4] == 0)
+            {
+                x_parameter = 0;
+            }
+            else
+            {
+                /* x coordinate value calculation*/
+                x_parameter = ((pitch_x / 2) *
+                               (heat_map[5] + tmp_x1 + tmp_x2 -
+                                heat_map[3] - tmp_x3 - tmp_x4) /
+                               heat_map[4]);
+            }
+
+            /* Fit to pitch */
+            if (x_parameter > pitch_x / 2)
+            {
+                x_parameter = pitch_x / 2;
+            }
+            else if (x_parameter < -(pitch_x / 2))
+            {
+                x_parameter = -(pitch_x / 2);
+            }
+            else
+            {
+                /* no operation */
+            }
+
+            /* Coordinate x value based on pitch */
+            *(p_pinfo->p_rx_coordinate + loop) =
+                (uint16_t) ((pitch_x * (max_x + 1) - pitch_x / 2) + x_parameter);
+
+            /* get y value */
+            if (heat_map[4] == 0)
+            {
+                y_parameter = 0;
+            }
+            else
+            {
+                /* y coordinate value calculation*/
+                y_parameter = ((pitch_y / 2) *
+                               (heat_map[7] + tmp_y1 + tmp_y2 -
+                                heat_map[1] - tmp_y3 - tmp_y4) /
+                               heat_map[4]);
+            }
+
+            /* Fit to pitch */
+            if (y_parameter > pitch_y / 2)
+            {
+                y_parameter = pitch_y / 2;
+            }
+            else if (y_parameter < -(pitch_y / 2))
+            {
+                y_parameter = -(pitch_y / 2);
+            }
+            else
+            {
+                /* no operation */
+            }
+
+            /* Coordinate y value based on pitch  */
+            *(p_pinfo->p_tx_coordinate + loop) =
+                (uint16_t) ((pitch_y * (max_y + 1) - pitch_y / 2) + y_parameter);
+
+            /* If touching ,then counter increment */
+            (*(p_pinfo->p_num_touch))++;
+
+            /* Clear the processed heat map area */
+            for (i = 0; i < TOUCH_MAP_X; i++)
+            {
+                for (j = 0; j < TOUCH_MAP_Y; j++)
+                {
+                    if (use_map[i * TOUCH_MAP_X + j])
+                    {
+                        g_touch_pad_buf[element_num + (max_x - 1 + j) + (max_y - 1 + i) * num_x] = 0;
+                    }
+                }
+            }
+        }
+        else
+        {
+            *(p_pinfo->p_rx_coordinate + loop) = TOUCH_OFF_VALUE;
+            *(p_pinfo->p_tx_coordinate + loop) = TOUCH_OFF_VALUE;
+        }
+    }
+}
+
+#endif
+
 #if TOUCH_CFG_MONITOR_ENABLE
  #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
 
@@ -2161,8 +2206,8 @@ void touch_uart_callback (uart_callback_args_t * p_args)
         }
         else if (g_touch_uart_rx_buf[1] == TOUCH_UART_COMMAND_VERSION)
         {
-            g_touch_monitor_buf[index++] = g_touch_version.code_version_minor;
-            g_touch_monitor_buf[index++] = g_touch_version.code_version_major;
+            g_touch_monitor_buf[index++] = TOUCH_UART_VERSION_MINOR;
+            g_touch_monitor_buf[index++] = TOUCH_UART_VERSION_MAJOR;
         }
         else
         {
@@ -2178,7 +2223,7 @@ void touch_uart_callback (uart_callback_args_t * p_args)
         /* Start transmission */
         g_touch_uart_transmit_flag = 1;
         gp_touch_uart_instance->p_api->write(gp_touch_uart_instance->p_ctrl,
-                                             (uint8_t const * const) &g_touch_monitor_buf,
+                                             (uint8_t *) g_touch_monitor_buf,
                                              index);
 
         /* Restart reception */

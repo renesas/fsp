@@ -187,7 +187,7 @@ extern void rm_guix_port_display_8bit_palette_assign(ULONG display_handle);
  **********************************************************************************************************************/
 
 extern VOID _gx_dave2d_drawing_initiate(GX_DISPLAY * display, GX_CANVAS * canvas);
-VOID        _gx_synergy_buffer_toggle_8bpp(GX_CANVAS * canvas, GX_RECTANGLE * dirty);
+VOID        _gx_ra_buffer_toggle_8bpp(GX_CANVAS * canvas, GX_RECTANGLE * dirty);
 VOID        _gx_display_driver_8bit_palette_assign(GX_DISPLAY * display, GX_COLOR * palette, INT count);
 
 #if (GX_USE_SYNERGY_DRW == 1)
@@ -1133,7 +1133,7 @@ VOID _gx_display_driver_8bit_palette_assign (GX_DISPLAY * display, GX_COLOR * pa
  * @param[in]   canvas         Pointer to a GUIX canvas
  * @param[in]   dirty          Pointer to a dirty rectangle area
  **********************************************************************************************************************/
-VOID _gx_synergy_buffer_toggle_8bpp (GX_CANVAS * canvas, GX_RECTANGLE * dirty)
+VOID _gx_ra_buffer_toggle_8bpp (GX_CANVAS * canvas, GX_RECTANGLE * dirty)
 {
     GX_PARAMETER_NOT_USED(dirty);
 
@@ -1633,7 +1633,7 @@ static VOID gx_sw_8bpp_glyph_1bit_draw (GX_DRAW_CONTEXT * context,
 /*******************************************************************************************************************//**
  * @brief  GUIX display driver for FSP, Frame buffer toggle operation with copying data by software without
  * D/AVE 2D acceleration and screen rotation.
- * This function is called by _gx_synergy_buffer_toggle_8bpp().
+ * This function is called by _gx_ra_buffer_toggle_8bpp().
  * @param[in]     canvas            Pointer to a canvas
  * @param[in]     copy              Pointer to a rectangle region to copy
  **********************************************************************************************************************/
@@ -1851,7 +1851,7 @@ static VOID gx_rotate_canvas_to_working_8bpp_draw_rorate270 (GX_UBYTE * pGetRow,
 
 /*******************************************************************************************************************//**
  * @brief  GUIX display driver for FSP, 8bpp Frame buffer software copy operation with screen rotation.
- * This function is called by _gx_synergy_buffer_toggle_8bpp().
+ * This function is called by _gx_ra_buffer_toggle_8bpp().
  * @param[in]     canvas            Pointer to a canvas
  * @param[in]     copy              Pointer to a rectangle region to copy.
  * @param[in]     angle    Rotation angle (0, 90, 180 or 270)

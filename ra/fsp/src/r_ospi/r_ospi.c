@@ -465,7 +465,7 @@ fsp_err_t R_OSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_addr
         /* If requested byte_count is supported by underlying flash, store the command. */
         if (byte_count == p_cfg->p_erase_command_list[index].size)
         {
-            if (p_cfg_extend->memory_size == byte_count)
+            if (SPI_FLASH_ERASE_SIZE_CHIP_ERASE == byte_count)
             {
                 /* Don't send address for chip erase. */
                 send_address = false;

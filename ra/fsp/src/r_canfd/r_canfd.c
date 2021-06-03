@@ -1053,7 +1053,7 @@ static void r_canfd_mode_transition (canfd_instance_ctrl_t * p_ctrl, can_operati
             /* Enable RX FIFOs */
             for (uint32_t i = 0; i < CANFD_PRV_RX_FIFO_MAX; i++)
             {
-                R_CANFD->CFDRFCC_b[i].RFE = p_global_cfg->rx_fifo_config[i] & 1U;
+                R_CANFD->CFDRFCC[i] = p_global_cfg->rx_fifo_config[i];
             }
         }
     }

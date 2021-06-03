@@ -24,10 +24,10 @@
  #include MBEDTLS_CONFIG_FILE
 #endif
 
-#include "entropy.h"
-#include "entropy_poll.h"
+#include "mbedtls/entropy.h"
+#include "mbedtls/entropy_poll.h"
 
-#include "platform.h"
+#include "mbedtls/platform.h"
 
 #if defined(MBEDTLS_ENTROPY_HARDWARE_ALT)
  #include "rm_psa_crypto.h"

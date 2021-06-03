@@ -1037,12 +1037,27 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
     (void) data2;
     uint8_t       pipe;
     UX_TRANSFER * transfer_request;
+    uint16_t      pipe_reg;
 
     pipe             = (uint8_t) p_utr->keyword;
     transfer_request = g_p_usb_host_usbx_transfer_request[p_utr->ip][pipe];
 
     tx_semaphore_put(&g_usb_host_usbx_sem[p_utr->ip][pipe]);
-    *g_p_usb_host_actural_length[p_utr->ip][pipe] = p_utr->read_req_len - p_utr->tranlen;
+
+    hw_usb_write_pipesel(p_utr, pipe);
+    pipe_reg = hw_usb_read_pipecfg(p_utr);
+
+    if (0 != (pipe_reg & USB_DIRFIELD))
+    {
+        /* transmission */
+        *g_p_usb_host_actural_length[p_utr->ip][pipe] = p_utr->read_req_len;
+    }
+    else
+    {
+        /* reception */
+        *g_p_usb_host_actural_length[p_utr->ip][pipe] = p_utr->read_req_len - p_utr->tranlen;
+    }
+
     _ux_utility_semaphore_put(&transfer_request->ux_transfer_request_semaphore);
 }                                      /* End of function usb_hstd_transfer_complete_cb() */
 

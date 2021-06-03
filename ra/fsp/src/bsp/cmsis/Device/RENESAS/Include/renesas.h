@@ -989,52 +989,52 @@ typedef struct
 {
     union
     {
-        __IM uint32_t ID;              /*!< (@ 0x00000000) Common FIFO Access ID Register                             */
+        __IOM uint32_t ID;             /*!< (@ 0x00000000) Common FIFO Access ID Register                             */
 
         struct
         {
-            __IM uint32_t CFID  : 29;  /*!< [28..0] Common FIFO Buffer ID Field                                       */
-            uint32_t            : 1;
-            __IM uint32_t CFRTR : 1;   /*!< [30..30] Common FIFO Buffer RTR Frame                                     */
-            __IM uint32_t CFIDE : 1;   /*!< [31..31] Common FIFO Buffer IDE Bit                                       */
+            __IOM uint32_t CFID  : 29; /*!< [28..0] Common FIFO Buffer ID Field                                       */
+            uint32_t             : 1;
+            __IOM uint32_t CFRTR : 1;  /*!< [30..30] Common FIFO Buffer RTR Frame                                     */
+            __IOM uint32_t CFIDE : 1;  /*!< [31..31] Common FIFO Buffer IDE Bit                                       */
         } ID_b;
     };
 
     union
     {
-        __IM uint32_t PTR;             /*!< (@ 0x00000004) Common FIFO Access Pointer Register                        */
+        __IOM uint32_t PTR;            /*!< (@ 0x00000004) Common FIFO Access Pointer Register                        */
 
         struct
         {
-            __IM uint32_t CFTS  : 16;  /*!< [15..0] Common FIFO Timestamp Field                                       */
-            uint32_t            : 12;
-            __IM uint32_t CFDLC : 4;   /*!< [31..28] Common FIFO Buffer DLC Field                                     */
+            __IOM uint32_t CFTS  : 16; /*!< [15..0] Common FIFO Timestamp Field                                       */
+            uint32_t             : 12;
+            __IOM uint32_t CFDLC : 4;  /*!< [31..28] Common FIFO Buffer DLC Field                                     */
         } PTR_b;
     };
 
     union
     {
-        __IM uint32_t FDSTS;           /*!< (@ 0x00000008) Common FIFO Access CAN-FD Status Register                  */
+        __IOM uint32_t FDSTS;          /*!< (@ 0x00000008) Common FIFO Access CAN-FD Status Register                  */
 
         struct
         {
-            __IM uint32_t CFESI : 1;   /*!< [0..0] Error State Indicator bit                                          */
-            __IM uint32_t CFBRS : 1;   /*!< [1..1] Bit Rate Switch bit                                                */
-            __IM uint32_t CFFDF : 1;   /*!< [2..2] CAN FD Format bit                                                  */
-            uint32_t            : 5;
-            __IM uint32_t CFIFL : 2;   /*!< [9..8] Common FIFO Buffer Information Label Field                         */
-            uint32_t            : 6;
-            __IM uint32_t CFPTR : 16;  /*!< [31..16] Common FIFO Buffer Pointer Field                                 */
+            __IOM uint32_t CFESI : 1;  /*!< [0..0] Error State Indicator bit                                          */
+            __IOM uint32_t CFBRS : 1;  /*!< [1..1] Bit Rate Switch bit                                                */
+            __IOM uint32_t CFFDF : 1;  /*!< [2..2] CAN FD Format bit                                                  */
+            uint32_t             : 5;
+            __IOM uint32_t CFIFL : 2;  /*!< [9..8] Common FIFO Buffer Information Label Field                         */
+            uint32_t             : 6;
+            __IOM uint32_t CFPTR : 16; /*!< [31..16] Common FIFO Buffer Pointer Field                                 */
         } FDSTS_b;
     };
 
     union
     {
-        __IM uint8_t DF[64];           /*!< (@ 0x0000000C) Common FIFO Access Data Field Registers                    */
+        __IOM uint8_t DF[64];          /*!< (@ 0x0000000C) Common FIFO Access Data Field Registers                    */
 
         struct
         {
-            __IM uint8_t CFDB : 8;     /*!< [7..0] Common FIFO Buffer Data Byte                                       */
+            __IOM uint8_t CFDB : 8;    /*!< [7..0] Common FIFO Buffer Data Byte                                       */
         } DF_b[64];
     };
     __IM uint32_t RESERVED[13];
@@ -6235,24 +6235,23 @@ typedef struct                         /*!< (@ 0x400B0000) R_CANFD Structure    
     __IOM R_CANFD_CFDRM_Type   CFDRM[32];   /*!< (@ 0x00002000) RX Message Buffer Access Registers                         */
     __IM uint32_t              RESERVED41[3072];
     __IOM R_CANFD_CFDRF_Type   CFDRF[8];    /*!< (@ 0x00006000) RX FIFO Access Registers                                   */
-    __IM uint32_t              RESERVED42[8];
-    __IOM R_CANFD_CFDCF_Type   CFDCF[5];    /*!< (@ 0x00006420) Common FIFO Access Registers                               */
-    __IM uint32_t              RESERVED43[1624];
+    __IOM R_CANFD_CFDCF_Type   CFDCF[5];    /*!< (@ 0x00006400) Common FIFO Access Registers                               */
+    __IM uint32_t              RESERVED42[1632];
     __IOM R_CANFD_CFDTHL_Type  CFDTHL[2];   /*!< (@ 0x00008000) Channel TX History List                                    */
-    __IM uint32_t              RESERVED44[252];
+    __IM uint32_t              RESERVED43[252];
 
     union
     {
-        __IOM uint32_t CFDRPGACC[64];   /*!< (@ 0x00008400) RAM Test Page Access Registers                             */
+        __IOM uint32_t CFDRPGACC[64];    /*!< (@ 0x00008400) RAM Test Page Access Registers                             */
 
         struct
         {
-            __IOM uint32_t RDTA : 32;   /*!< [31..0] RAM Data Test Access                                              */
+            __IOM uint32_t RDTA : 32;    /*!< [31..0] RAM Data Test Access                                              */
         } CFDRPGACC_b[64];
     };
-    __IM uint32_t            RESERVED45[7872];
-    __IOM R_CANFD_CFDTM_Type CFDTM[32]; /*!< (@ 0x00010000) TX Message Buffer Access Registers                         */
-} R_CANFD_Type;                         /*!< Size = 69632 (0x11000)                                                    */
+    __IM uint32_t            RESERVED44[7872];
+    __IOM R_CANFD_CFDTM_Type CFDTM[128]; /*!< (@ 0x00010000) TX Message Buffer Access Registers                         */
+} R_CANFD_Type;                          /*!< Size = 81920 (0x14000)                                                    */
 
 /* =========================================================================================================================== */
 /* ================                                           R_CRC                                           ================ */

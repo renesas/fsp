@@ -25,7 +25,7 @@
 #endif
 
 #if defined(MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT)
- #include "platform.h"
+ #include "mbedtls/platform.h"
  #include "hw_sce_private.h"
 
  #if defined(CONFIG_MEDTLS_USE_AFR_MEMORY) && defined(MBEDTLS_PLATFORM_MEMORY) && \

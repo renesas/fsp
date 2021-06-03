@@ -114,7 +114,7 @@ typedef enum e_ptp_port_state
     /** Configure the PTP instance to operate as a E2E Master. */
     PTP_PORT_STATE_E2E_MASTER = (PTP_PORT_STATE_GENERATE_ANNOUNCE |
                                  PTP_PORT_STATE_GENERATE_SYNC |
-                                 PTP_PORT_STATE_PROCESS_DELAY_RESP |
+                                 PTP_PORT_STATE_PROCESS_DELAY_REQ |
                                  PTP_PORT_STATE_PASSIVE),
 
     /** Configure the PTP instance to operate as a E2E Slave. */
@@ -128,7 +128,8 @@ typedef enum e_ptp_port_state
     PTP_PORT_STATE_P2P_MASTER = (PTP_PORT_STATE_GENERATE_ANNOUNCE |
                                  PTP_PORT_STATE_GENERATE_SYNC |
                                  PTP_PORT_STATE_GENERATE_PDELAY_REQ |
-                                 PTP_PORT_STATE_PROCESS_DELAY_RESP |
+                                 PTP_PORT_STATE_PROCESS_PDELAY_REQ |
+                                 PTP_PORT_STATE_PROCESS_PDELAY_RESP |
                                  PTP_PORT_STATE_PROCESS_PDELAY_RESP_FOLLOW_UP |
                                  PTP_PORT_STATE_PASSIVE),
 
@@ -136,7 +137,8 @@ typedef enum e_ptp_port_state
     PTP_PORT_STATE_P2P_SLAVE = (PTP_PORT_STATE_GENERATE_PDELAY_REQ |
                                 PTP_PORT_STATE_PROCESS_SYNC |
                                 PTP_PORT_STATE_PROCESS_FOLLOW_UP |
-                                PTP_PORT_STATE_PROCESS_DELAY_RESP |
+                                PTP_PORT_STATE_PROCESS_PDELAY_REQ |
+                                PTP_PORT_STATE_PROCESS_PDELAY_RESP |
                                 PTP_PORT_STATE_PROCESS_PDELAY_RESP_FOLLOW_UP |
                                 PTP_PORT_STATE_PASSIVE),
 

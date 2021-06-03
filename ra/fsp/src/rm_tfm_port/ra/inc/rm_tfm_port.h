@@ -24,7 +24,7 @@
 #include "tfm_common_config.h"
 #include "tfm_arch.h"
 #include "system_core_init.h"
-#include "platform.h"
+#include "mbedtls/platform.h"
 
 extern void tfm_main(void);
 

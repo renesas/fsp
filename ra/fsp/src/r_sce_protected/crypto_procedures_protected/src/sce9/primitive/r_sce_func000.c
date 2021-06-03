@@ -75,7 +75,7 @@ void R_SCE_func000(uint32_t *InData_PaddedMsg, int32_t MAX_CNT)
     (void)OFS_ADR;
     (void)MAX_CNT2;
     SCE->REG_104H = 0x000000b4U;
-    for (iLoop = 0; iLoop < MAX_CNT; iLoop = iLoop + 16)
+    for (iLoop = 0; iLoop < (uint32_t)MAX_CNT; iLoop = iLoop + 16)
     {
         /* WAIT_LOOP */
         while (1U != SCE->REG_104H_b.B31)

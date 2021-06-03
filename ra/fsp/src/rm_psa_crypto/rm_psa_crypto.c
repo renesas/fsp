@@ -25,7 +25,7 @@
 #endif
 
 #if defined(MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT)
- #include "platform.h"
+ #include "mbedtls/platform.h"
  #include "rm_psa_crypto.h"
 
  #define RM_PSA_CRYPTO_TRNG_REGISTER_SIZE_WORDS    (4U)

@@ -235,7 +235,7 @@
 #define BSP_FEATURE_LPM_DPSIEGR_MASK                      (0x13DFF3U)
 #define BSP_FEATURE_LPM_DPSIER_MASK                       (0x0D1FDFF3)
 #define BSP_FEATURE_LPM_HAS_DEEP_STANDBY                  (1U)
-#define BSP_FEATURE_LPM_HAS_SBYCR_OPE                     (1U)
+#define BSP_FEATURE_LPM_HAS_SBYCR_OPE                     (0U)
 #define BSP_FEATURE_LPM_HAS_SNZEDCR1                      (1U)
 #define BSP_FEATURE_LPM_HAS_SNZREQCR1                     (1U)
 #define BSP_FEATURE_LPM_HAS_STCONR                        (0U)

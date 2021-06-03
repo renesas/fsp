@@ -3848,6 +3848,7 @@ static fsp_err_t prepare_gcm_iv (uint8_t               * initial_vector,
         }
         else                           /* if (SCE_KEY_INDEX_TYPE_AES256 == wrapped_key->type) */
         {
+            ret = R_SCE_Aes256EncryptDecryptInitSub(&indata_cmd, wrapped_key->value, zero);
             if (FSP_SUCCESS == ret)
             {
                 R_SCE_Aes256EncryptDecryptUpdateSub(zero, hash_subkey, 4);

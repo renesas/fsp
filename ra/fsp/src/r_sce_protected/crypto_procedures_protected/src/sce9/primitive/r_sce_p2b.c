@@ -1099,7 +1099,7 @@ fsp_err_t R_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *Out
                     }
                     S_RAM[0+1 + 0] = change_endian_long(SCE->REG_100H);
                     SCE->REG_ECH = 0x000037e9U;
-                    for(jLoop = 0; jLoop < S_RAM[0+1]; jLoop = jLoop + 1)
+                    for(jLoop = 0; jLoop < (int32_t)S_RAM[0+1]; jLoop = jLoop + 1)
                     {
                         SCE->REG_24H = 0x000009c0U;
                         /* WAIT_LOOP */

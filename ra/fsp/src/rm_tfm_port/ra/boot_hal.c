@@ -21,7 +21,7 @@
 
 #include "psa/crypto.h"
 #if defined(MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT)
- #include "platform.h"
+ #include "mbedtls/platform.h"
 #endif
 
 /* Flash device name must be specified by target */
