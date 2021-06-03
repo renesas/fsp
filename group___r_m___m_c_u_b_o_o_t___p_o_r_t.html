@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.0</span>
+   &#160;<span id="projectnumber">Release v3.0.1</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -194,6 +194,14 @@ Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Always check the signature of the image in the primary slot before booting, even if no upgrade was performed. This is recommended if the boot time penalty is acceptable. </td></tr>
 <tr>
+<td>General &gt; Downgrade Prevention (Overwrite Only)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Prevent downgrades by enforcing incrementing version numbers. When this option is set, any upgrade must have greater major version or greater minor version with equal major version. This mechanism only protects against some attacks against version downgrades (for example, a JTAG could be used to write an older version). </td></tr>
+<tr>
 <td>General &gt; Number of Images Per Application</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 1</li>
@@ -280,7 +288,7 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-mcuboot-port-usage-notes"></a>
 Usage Notes</h1>
 <h2>Getting Started: Creating an MCUboot Project</h2>
-<p>Start by creating a new project in e2 studio or RA SC. If the MCU supports TrustZone, select a Flat project. The bootloader resides entirely in Secure memory, but it is considered a flat project because it does not provide any Non-Secure Callable functions. On the Stacks tab, add New &gt; Linaro &gt; Bootloader &gt; MCUboot. Resolve any constraint errors and edit configurations as desired. Add either the example keys or generate your own key. The MCUboot key generation tool is provided at ra/mcu-tools/MCUboot/scripts/imgtool.py and documented at <a href="https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md">https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md</a>. Install the following required python packages to use imgtool.py: <a href="https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt">https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt</a>.</p>
+<p>Start by creating a new project in e2 studio or RA SC. If the MCU supports TrustZone, select a Flat project. The bootloader resides entirely in Secure memory, but it is considered a flat project because it does not provide any Non-Secure Callable functions. On the Stacks tab, add New &gt; Bootloader &gt; MCUboot. Resolve any constraint errors and edit configurations as desired. Add either the example keys or generate your own key. The MCUboot key generation tool is provided at ra/mcu-tools/MCUboot/scripts/imgtool.py and documented at <a href="https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md">https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md</a>. Install the following required python packages to use imgtool.py: <a href="https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt">https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt</a>.</p>
 <p>In src/hal_entry.c, drag in Developer Assistance &gt; HAL/Common &gt; MCUboot &gt; Quick Setup &gt; Call Quick Setup. Add a call to mcuboot_quick_setup() in the application and make any desired updates.</p>
 <h2>Getting Started: Signing Tool Prerequisite</h2>
 <p>To use the MCUboot signing tool, ensure you have Python 3.x installed on your system. Then install the Python packages required for the signing tool with the following command:</p>
@@ -337,7 +345,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

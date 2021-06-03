@@ -335,6 +335,7 @@ var searchData=
   ['aux_5fprop',['aux_prop',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae43f5abb71f03c1dd3441cc6c230a8db',1,'st_ble_gatts_db_attr_cfg_t']]],
   ['ave_5frssi',['ave_rssi',['../group___v_s___a_p_i.html#a36d626c5ba9203f16ddf3b414875a62f',1,'st_ble_vs_test_end_evt_t']]],
   ['average',['average',['../group___c_t_s_u.html#aadfb1f17208413aec59916e5c0d030c2',1,'ctsu_instance_ctrl_t']]],
+  ['aws_20https',['AWS HTTPS',['../group___a_w_s___h_t_t_p_s.html',1,'']]],
   ['aws_20mqtt',['AWS MQTT',['../group___a_w_s___m_q_t_t.html',1,'']]],
   ['aws_20pkcs11_20pal_20_28rm_5faws_5fpkcs11_5fpal_29',['AWS PKCS11 PAL (rm_aws_pkcs11_pal)',['../group___a_w_s___p_k_c_s11___p_a_l.html',1,'']]],
   ['aws_20pkcs11_20pal_20littlefs_20_28rm_5faws_5fpkcs11_5fpal_5flittlefs_29',['AWS PKCS11 PAL LITTLEFS (rm_aws_pkcs11_pal_littlefs)',['../group___a_w_s___p_k_c_s11___p_a_l___l_i_t_t_l_e_f_s.html',1,'']]],

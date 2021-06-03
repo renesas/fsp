@@ -286,6 +286,7 @@ var group___b_s_p___m_c_u =
     [ "R_FSP_VersionGet", "group___b_s_p___m_c_u.html#gaf3ee66233fc75acfcc21a97d7a767aa1", null ],
     [ "Reset_Handler", "group___b_s_p___m_c_u.html#gae7ee340978f5c25f52f0cad1457c6616", null ],
     [ "Default_Handler", "group___b_s_p___m_c_u.html#ga4e0c522c1bb26af24accaf20e6b87d12", null ],
+    [ "NMI_Handler", "group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc", null ],
     [ "SystemInit", "group___b_s_p___m_c_u.html#ga93f514700ccf00d08dbdcff7f1224eb2", null ],
     [ "R_BSP_WarmStart", "group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7", null ],
     [ "R_FSP_CurrentIrqGet", "group___b_s_p___m_c_u.html#ga50cae0c65c54074c32d30eb4108d9a09", null ],
@@ -295,7 +296,6 @@ var group___b_s_p___m_c_u =
     [ "R_BSP_FlashCacheEnable", "group___b_s_p___m_c_u.html#ga9d86d933ae3e2bd194f10e755f8078e8", null ],
     [ "R_BSP_SoftwareDelay", "group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b", null ],
     [ "R_BSP_GroupIrqWrite", "group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba", null ],
-    [ "NMI_Handler", "group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc", null ],
     [ "R_BSP_RegisterProtectEnable", "group___b_s_p___m_c_u.html#ga6a9c6b74983237446de75a9d9b65e752", null ],
     [ "R_BSP_RegisterProtectDisable", "group___b_s_p___m_c_u.html#ga1bb35164e7e044bd1878a4ce015199c3", null ],
     [ "SystemCoreClock", "group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6", null ]

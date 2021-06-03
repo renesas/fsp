@@ -1,5 +1,6 @@
 var NAVTREEINDEX14 =
 {
+"group___g_l_c_d_c.html#ggacf44debe1897bea667d2440541ebb50eaccfc177c8f04c65d5a63ccf7696c522c":[3,1,22,10,1],
 "group___g_l_c_d_c.html#ggadb4e7eab53d957d1f8b5368e0bbb0662a332b7de3dfc8cb463789e1faccb2b82a":[3,1,22,13,1],
 "group___g_l_c_d_c.html#ggadb4e7eab53d957d1f8b5368e0bbb0662a721a568d68eb6a50fca65e0bcf10339a":[3,1,22,13,0],
 "group___g_l_c_d_c.html#ggadb4e7eab53d957d1f8b5368e0bbb0662aa298c0027f2c10f3d9b1e3c2274a9a98":[3,1,22,13,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX14 =
 "group___i2_c___s_l_a_v_e___a_p_i.html#ggad8b613f0d4e9d1b9511ca0b6d6ab7e8cac04326f0bdc42f852e082d2fc0e7ad65":[3,2,17,7,1],
 "group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__api__t":[3,2,17,2],
 "group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t":[3,2,17,0],
-"group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__cfg__t":[3,2,17,1],
-"group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__instance__t":[3,2,17,3]
+"group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__cfg__t":[3,2,17,1]
 };

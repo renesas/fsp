@@ -1,5 +1,6 @@
 var NAVTREEINDEX8 =
 {
+"group___d_a_c___a_p_i.html#structdac__api__t":[3,2,8,2],
 "group___d_a_c___a_p_i.html#structdac__cfg__t":[3,2,8,1],
 "group___d_a_c___a_p_i.html#structdac__info__t":[3,2,8,0],
 "group___d_a_c___a_p_i.html#structdac__instance__t":[3,2,8,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX8 =
 "group___e_l_c___a_p_i.html#a666a726dd9209856799d03b62b703029":[3,2,11,2,0],
 "group___e_l_c___a_p_i.html#a90896863b4141cbbd2eb4d2eea7e58e4":[3,2,11,2,1],
 "group___e_l_c___a_p_i.html#a91eea8824e8ea3d204860d16abb8d78a":[3,2,11,1,6],
-"group___e_l_c___a_p_i.html#a9919c68bc6249d294d121715277a53dd":[3,2,11,2,2],
-"group___e_l_c___a_p_i.html#ac4f753f3fcae95e036d24e3d6a84d1f5":[3,2,11,1,0]
+"group___e_l_c___a_p_i.html#a9919c68bc6249d294d121715277a53dd":[3,2,11,2,2]
 };

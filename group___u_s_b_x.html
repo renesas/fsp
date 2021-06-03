@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.0</span>
+   &#160;<span id="projectnumber">Release v3.0.1</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -219,7 +219,9 @@ Specify value of Timer Ticks Per Second</div></div>
 Specify value of Thread priority</div></div>
  <h1><a class="anchor" id="rm_usbx_pcdc-descriptor"></a>
 Descriptor</h1>
-<p>Templates for USBX descriptors can be found in ra/fsp/src/rm_usbx_port folder. Also, please be sure to use your vendor ID.</p>
+<p>Templates for USBX descriptors can be found in ra/fsp/src/rm_usbx_port folder. Also, please be sure to use your vendor ID. Change the rm_usbx_pcdc_descriptor.c.template file as follows if High-speed mode is used.</p>
+<p>1.Comment on lines 102 and 227.</p>
+<p>2.Delete the "//" on lines 103 and 226.</p>
 <h1><a class="anchor" id="rm_usbx_pcdc-examples"></a>
 Examples</h1>
 <h2>USBX PCDC Example</h2>
@@ -238,7 +240,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

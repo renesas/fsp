@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.0</span>
+   &#160;<span id="projectnumber">Release v3.0.1</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -224,7 +224,7 @@ Use Standalone Crypto Only</li>
 <li>
 Use with TLS</li>
 </ul>
-</td><td>Use Standalone Crypto Only </td><td>Defines NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT. </td></tr>
+</td><td>Use Standalone Crypto Only </td><td>Defines NX_CRYPTO_STANDALONE_ENABLE. </td></tr>
 <tr>
 <td>Maximum RSA Modulus size (bits)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -337,7 +337,7 @@ Hardware Initialization</h2>
 <p>_nx_crypto_initialize() must be invoked before using the NetX Crypto APIs to ensure that the SCE peripheral is initialized.</p>
 <h2><a class="anchor" id="rm-netx-secure-crypto-memory-usage"></a>
 Memory Usage</h2>
-<p>Sufficient memory must be allocated to be used as 'crypto_metadata' for the chosen crypto operation(s). Refer <a href="https://docs.microsoft.com/en-us/azure/rtos/netx/netx-crypto/chapter4">Azure RTOS NetX Crypto API description</a> for recommended 'crypto_metadata_size' based on selected crypto operations.</p>
+<p>Sufficient memory must be allocated to be used as 'crypto_metadata' for the chosen crypto operation(s). Refer <a href="https://docs.microsoft.com/en-us/azure/rtos/netx/netx-crypto/chapter4">Azure RTOS NetX Crypto API description</a> for recommended 'crypto_metadata_size' based on selected crypto operations. Sufficient amount of memory must be allocated for the thread stack to support low level crypto operations when using this module in the standalone mode or through NetX Secure (TLS).</p>
 <h2><a class="anchor" id="rm-netx-secure-aes-usage"></a>
 AES Usage</h2>
 <h3><a class="anchor" id="rm-netx-secure-crypto-gcm-mode"></a>
@@ -412,7 +412,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

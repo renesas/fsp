@@ -89,6 +89,7 @@ var group___r_e_n_e_s_a_s___m_o_d_u_l_e_s =
     [ "Device Class (rm_usbx_port)", "group___u_s_b_x.html", null ],
     [ "Virtual EEPROM (rm_vee_flash)", "group___r_m___v_e_e___f_l_a_s_h.html", "group___r_m___v_e_e___f_l_a_s_h" ],
     [ "AWS Device Provisioning", "group___d_e_v_i_c_e___p_r_o_v_i_s_i_o_n_i_n_g.html", null ],
+    [ "AWS HTTPS", "group___a_w_s___h_t_t_p_s.html", null ],
     [ "AWS MQTT", "group___a_w_s___m_q_t_t.html", null ],
     [ "Wifi Middleware (rm_wifi_onchip_silex)", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x" ],
     [ "AWS Secure Sockets", "group___a_w_s___s_e_c_u_r_e___s_o_c_k_e_t_s.html", null ]

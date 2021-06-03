@@ -3,6 +3,7 @@ var searchData=
   ['analog_20to_20digital_20converter_20_28r_5fadc_29',['Analog to Digital Converter (r_adc)',['../group___a_d_c.html',1,'']]],
   ['adc_20interface',['ADC Interface',['../group___a_d_c___a_p_i.html',1,'']]],
   ['asynchronous_20general_20purpose_20timer_20_28r_5fagt_29',['Asynchronous General Purpose Timer (r_agt)',['../group___a_g_t.html',1,'']]],
+  ['aws_20https',['AWS HTTPS',['../group___a_w_s___h_t_t_p_s.html',1,'']]],
   ['aws_20mqtt',['AWS MQTT',['../group___a_w_s___m_q_t_t.html',1,'']]],
   ['aws_20pkcs11_20pal_20_28rm_5faws_5fpkcs11_5fpal_29',['AWS PKCS11 PAL (rm_aws_pkcs11_pal)',['../group___a_w_s___p_k_c_s11___p_a_l.html',1,'']]],
   ['aws_20pkcs11_20pal_20littlefs_20_28rm_5faws_5fpkcs11_5fpal_5flittlefs_29',['AWS PKCS11 PAL LITTLEFS (rm_aws_pkcs11_pal_littlefs)',['../group___a_w_s___p_k_c_s11___p_a_l___l_i_t_t_l_e_f_s.html',1,'']]],
