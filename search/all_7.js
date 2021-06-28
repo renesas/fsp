@@ -26,6 +26,9 @@ var searchData=
   ['hstride',['hstride',['../group___d_i_s_p_l_a_y___a_p_i.html#a8789df7cb3a6f24f0e4f7bda9256bf74',1,'display_input_cfg_t']]],
   ['hsync_5fpolarity',['hsync_polarity',['../group___p_d_c___a_p_i.html#ab82be0c50aadbb28051b55aaa3d8b372',1,'pdc_cfg_t']]],
   ['htiming',['htiming',['../group___d_i_s_p_l_a_y___a_p_i.html#a7d9bd0b388f63d87d236a55510527eab',1,'display_output_cfg_t']]],
+  ['humidity',['humidity',['../group___r_m___h_s300_x___a_p_i.html#ad8d48666aaa654a2cf4b1067abb9fa63',1,'rm_hs300x_raw_data_t::humidity()'],['../group___r_m___z_m_o_d4_x_x_x.html#acc0fd9dc724ac58683c06e570bc00ccd',1,'rm_zmod4xxx_instance_ctrl_t::humidity()']]],
   ['hw_5fcode',['hw_code',['../group___g_a_p___a_p_i.html#a748664edc8dab5959fcdfb7a41ec8dad',1,'st_ble_gap_hw_err_evt_t']]],
-  ['hysteresis',['hysteresis',['../group___t_o_u_c_h___a_p_i.html#a4752c9106a2936804192b0f02398d6f5',1,'touch_button_cfg_t']]]
+  ['hysteresis',['hysteresis',['../group___t_o_u_c_h___a_p_i.html#a4752c9106a2936804192b0f02398d6f5',1,'touch_button_cfg_t']]],
+  ['hs300x_20sensor_20middleware_20_28rm_5fhs300x_29',['HS300X Sensor Middleware (rm_hs300x)',['../group___r_m___h_s300_x.html',1,'']]],
+  ['hs300x_20middleware_20interface',['HS300X Middleware Interface',['../group___r_m___h_s300_x___a_p_i.html',1,'']]]
 ];

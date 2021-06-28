@@ -66,7 +66,8 @@ var group___t_i_m_e_r___a_p_i =
       [ "TIMER_MODE_ONE_SHOT", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a", null ],
       [ "TIMER_MODE_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac", null ],
       [ "TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a6a3c462f9e9cc1b26ab68f38efd79b14", null ],
-      [ "TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a204001ad413e9ad0db08a66d004a555a", null ]
+      [ "TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a204001ad413e9ad0db08a66d004a555a", null ],
+      [ "TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aa2eb9fa5372856039d5d53dfbbbe6040", null ]
     ] ],
     [ "timer_direction_t", "group___t_i_m_e_r___a_p_i.html#ga8d600bb7885c5490bb7e8f989aa2ff83", [
       [ "TIMER_DIRECTION_DOWN", "group___t_i_m_e_r___a_p_i.html#gga8d600bb7885c5490bb7e8f989aa2ff83a6a5c25392297a9e6adcc2a31d210e654", null ],

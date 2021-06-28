@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.1</span>
+   &#160;<span id="projectnumber">Release v3.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -275,6 +275,7 @@ Limitations</h2>
 <li>For MCUs having more than 1 DAC channel, both channels are synchronized with ADC unit 1 if synchronization is enabled.</li>
 </ul>
 </li>
+<li>Pin configuration does not support setting ASEL and PSEL bit fields for the same pin. In order to set the PSEL when DAC pin is enabled, maually update the setting of the DAC pin to .pin_cfg = ((uint32_t)IOPORT_CFG_ANALOG_ENABLE | IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_CAC_AD)}.</li>
 </ul>
 <h1><a class="anchor" id="r-dac-examples"></a>
 Examples</h1>
@@ -509,7 +510,7 @@ Data format. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

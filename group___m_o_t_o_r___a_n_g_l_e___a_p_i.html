@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.1</span>
+   &#160;<span id="projectnumber">Release v3.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -160,7 +160,8 @@ $(document).ready(function(){initNavTree('group___m_o_t_o_r___a_n_g_l_e___a_p_i.
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Motor angle Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
 </div><!--header-->
@@ -171,7 +172,8 @@ $(document).ready(function(){initNavTree('group___m_o_t_o_r___a_n_g_l_e___a_p_i.
 Summary</h1>
 <p>The Motor angle interface calculates the rotor angle and rotational speed from other data.</p>
 <p>The motor angle interface can be implemented by:</p><ul>
-<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html">Motor Angle and Speed Estimation (rm_motor_estimate)</a> </li>
+<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html">Motor Angle and Speed Estimation (rm_motor_estimate)</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html">Motor Angle and Speed Calculation with an Encoder (rm_motor_sense_encoder)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -189,6 +191,11 @@ Data Structures</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga8961e3efb000814487fb7a9457a2f80e"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a></td></tr>
 <tr class="separator:ga8961e3efb000814487fb7a9457a2f80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga2eb16cd62372fd50c5d7ad5048f693ce"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga2eb16cd62372fd50c5d7ad5048f693ce">motor_sense_encoder_angle_adjust_t</a> </td></tr>
+<tr class="separator:ga2eb16cd62372fd50c5d7ad5048f693ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structmotor__angle__cfg__t" id="structmotor__angle__cfg__t"></a>
@@ -262,10 +269,18 @@ q-axis current </td></tr>
 <tr class="separator:a95e98bd293774d7e12058ef204fd00a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0de7bb1da46eb37b8dbf2e533452207c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a0de7bb1da46eb37b8dbf2e533452207c">flagPiCtrlSet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, uint32_t const flag_pi)</td></tr>
 <tr class="separator:a0de7bb1da46eb37b8dbf2e533452207c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a259b2cbfaa01bfffe0ff6ab43b4767a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a259b2cbfaa01bfffe0ff6ab43b4767a3">internalCalculate</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a259b2cbfaa01bfffe0ff6ab43b4767a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad3acb6cc95597c3d1b8741cb3fe57fa0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ad3acb6cc95597c3d1b8741cb3fe57fa0">angleSpeedGet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, float *const p_angle, float *const p_speed, float *const p_phase_err)</td></tr>
 <tr class="separator:ad3acb6cc95597c3d1b8741cb3fe57fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b294316a2f3f357c4c826a9097cd271"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a2b294316a2f3f357c4c826a9097cd271">angleAdjust</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a2b294316a2f3f357c4c826a9097cd271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f623617d95f398d8e4e00d3be6833a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a6f623617d95f398d8e4e00d3be6833a8">encoderCyclic</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a6f623617d95f398d8e4e00d3be6833a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02b9994b5d96935df89d463f66dbe5a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a02b9994b5d96935df89d463f66dbe5a3">estimatedComponentGet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, float *const p_ed, float *const p_eq)</td></tr>
 <tr class="separator:a02b9994b5d96935df89d463f66dbe5a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9bcf47d0dd2b983b9f76ba3850da432"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ab9bcf47d0dd2b983b9f76ba3850da432">infoGet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, motor_angle_encoder_info_t *const p_info)</td></tr>
+<tr class="separator:ab9bcf47d0dd2b983b9f76ba3850da432"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af63edfe16658b986a471a15bb7856a1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#af63edfe16658b986a471a15bb7856a1f">parameterUpdate</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__cfg__t">motor_angle_cfg_t</a> const *p_cfg)</td></tr>
 <tr class="separator:af63edfe16658b986a471a15bb7856a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -283,6 +298,7 @@ q-axis current </td></tr>
 </div><div class="memdoc">
 <p>Initialize the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaab7c6d5f78d470f2ee26a0038c892ff4">RM_MOTOR_ESTIMATE_Open()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga872e1083c53f27b82a0c1e6140b77916">RM_MOTOR_SENSE_ENCODER_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -308,6 +324,7 @@ q-axis current </td></tr>
 </div><div class="memdoc">
 <p>Close (Finish) the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga0ab013eca12b1baa07e8425778220774">RM_MOTOR_ESTIMATE_Close()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaba0c9a99fae3a271c5a80e75a7acc747">RM_MOTOR_SENSE_ENCODER_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -332,6 +349,7 @@ q-axis current </td></tr>
 </div><div class="memdoc">
 <p>Reset the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gab74cafc810856e1ba9197199ada9defe">RM_MOTOR_ESTIMATE_Reset()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gadae598aac0a4cf1924e9abb98aa22340">RM_MOTOR_SENSE_ENCODER_Reset()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -356,6 +374,7 @@ q-axis current </td></tr>
 </div><div class="memdoc">
 <p>Set (Input) Current &amp; Voltage Reference data into the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaf08f0ac2cd66b7eae0bc0339e148121f">RM_MOTOR_ESTIMATE_CurrentSet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaccdf1dc37bd74676ad140595d17c702f">RM_MOTOR_SENSE_ENCODER_CurrentSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -382,6 +401,7 @@ q-axis current </td></tr>
 </div><div class="memdoc">
 <p>Set (Input) Speed Information into the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaf371ca48f84228a55966e8c6ff7b510c">RM_MOTOR_ESTIMATE_SpeedSet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga19d69547a77cf49e6a06079715c49e13">RM_MOTOR_SENSE_ENCODER_SpeedSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -408,12 +428,38 @@ q-axis current </td></tr>
 </div><div class="memdoc">
 <p>Set the flag of PI Control runs. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga3069a2a3350193c0894eda657016baa4">RM_MOTOR_ESTIMATE_FlagPiCtrlSet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga990617d4a8f9afc689ec3a2c66f6755c">RM_MOTOR_SENSE_ENCODER_FlagPiCtrlSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">flag_pi</td><td>The flag of PI control runs </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a259b2cbfaa01bfffe0ff6ab43b4767a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a259b2cbfaa01bfffe0ff6ab43b4767a3">&#9670;&nbsp;</a></span>internalCalculate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_angle_api_t::internalCalculate) (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculate internal parameters of encoder process. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga5aff1a699995c8ba8f55f8e5813fd488">RM_MOTOR_ESTIMATE_InternalCalculate()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga5fdccb46cbbb87404c66be9476619569">RM_MOTOR_SENSE_ENCODER_InternalCalculate()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -433,6 +479,7 @@ q-axis current </td></tr>
 </div><div class="memdoc">
 <p>Get rotor angle and rotational speed from the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga762a451cee6f7dfa4430afa8f8b11819">RM_MOTOR_ESTIMATE_AngleSpeedGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gabfdb1bac4344e5839477a7190240bca7">RM_MOTOR_SENSE_ENCODER_AngleSpeedGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -441,6 +488,56 @@ q-axis current </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_angl</td><td>Memory address to get rotor angle data </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_speed</td><td>Memory address to get rotational speed data </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_phase_err</td><td>Memory address to get phase(angle) error data </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2b294316a2f3f357c4c826a9097cd271"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b294316a2f3f357c4c826a9097cd271">&#9670;&nbsp;</a></span>angleAdjust</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_angle_api_t::angleAdjust) (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Angle Adjustment Process. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga26831e2a843a85a5ad6d1bb2f743f4ca">RM_MOTOR_ESTIMATE_AngleAdjust()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaa8d9fbed3f6a00c577f1bf245ec22950">RM_MOTOR_SENSE_ENCODER_AngleAdjust()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6f623617d95f398d8e4e00d3be6833a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f623617d95f398d8e4e00d3be6833a8">&#9670;&nbsp;</a></span>encoderCyclic</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_angle_api_t::encoderCyclic) (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encoder Cyclic Process. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga5bd8dc2cee1b6630cd57f112aa52353a">RM_MOTOR_ESTIMATE_EncoderCyclic()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga2f090bf0e113cf9cb539cb03d718394c">RM_MOTOR_SENSE_ENCODER_EncoderCyclic()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -460,6 +557,7 @@ q-axis current </td></tr>
 </div><div class="memdoc">
 <p>Get estimated d/q-axis component from the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga859290e2a7cf91a48d0e2852790b3811">RM_MOTOR_ESTIMATE_EstimatedComponentGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gac6288e2d4ee07e4d81d09e79769196ce">RM_MOTOR_SENSE_ENCODER_EstimatedComponentGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -467,6 +565,32 @@ q-axis current </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_ed</td><td>Memory address to get estimated d-axis component </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_eq</td><td>Memory address to get estimated q-axis component </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab9bcf47d0dd2b983b9f76ba3850da432"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9bcf47d0dd2b983b9f76ba3850da432">&#9670;&nbsp;</a></span>infoGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_angle_api_t::infoGet) (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, motor_angle_encoder_info_t *const p_info)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get Encoder Calculate Information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga112f36bdb669ddaa125b3df710038bb3">RM_MOTOR_ESTIMATE_InfoGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gad59eec5ae3ec9e350a7c14bb497c1e44">RM_MOTOR_SENSE_ENCODER_InfoGet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_info</td><td>Memory address to get encoder calculate information </td></tr>
   </table>
   </dd>
 </dl>
@@ -486,6 +610,7 @@ q-axis current </td></tr>
 </div><div class="memdoc">
 <p>Update Parameters for the calculation in the Motor_Angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaaa47afb770dc694652a2d9a9e8f03acb">RM_MOTOR_ESTIMATE_ParameterUpdate()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaacd5bd7ee906994af6be5ca6c33a238b">RM_MOTOR_SENSE_ENCODER_ParameterUpdate()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -556,13 +681,36 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga2eb16cd62372fd50c5d7ad5048f693ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2eb16cd62372fd50c5d7ad5048f693ce">&#9670;&nbsp;</a></span>motor_sense_encoder_angle_adjust_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga2eb16cd62372fd50c5d7ad5048f693ce">motor_sense_encoder_angle_adjust_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga2eb16cd62372fd50c5d7ad5048f693ceabf57ab4f5dd76dd91361a6adaef76e25"></a>MOTOR_SENSE_ENCODER_ANGLE_ADJUST_90_DEGREE&#160;</td><td class="fielddoc"><p>Roter Angle Adjustment to pull in 90degree. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2eb16cd62372fd50c5d7ad5048f693ceaf49f3ae5efe392405265ebcf01238a70"></a>MOTOR_SENSE_ENCODER_ANGLE_ADJUST_0_DEGREE&#160;</td><td class="fielddoc"><p>Roter Angle Adjustment to pull in 0degree. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2eb16cd62372fd50c5d7ad5048f693ceabdc84801f9ab7bf71aa21189128ef96e"></a>MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH&#160;</td><td class="fielddoc"><p>Roter Angle Adjustment Finish. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

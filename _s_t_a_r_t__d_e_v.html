@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.1</span>
+   &#160;<span id="projectnumber">Release v3.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -571,7 +571,6 @@ Configuring Pins</h3>
 <div class="caption">
 Pins Configuration</div></div>
 <p> The pin configurator includes a built-in conflict checker, so if the same pin is allocated to another peripheral or I/O function the pin will be shown as red in the package view and also with white cross in a red square in the <b>Pin Selection</b> pane and <b>Pin Configuration</b> pane in the main <b>Pins</b> tab. The <b>Pin Conflicts</b> view provides a list of conflicts, so conflicts can be quickly identified and fixed.</p>
-<dl class="section note"><dt>Note</dt><dd>There is a limitation in the pin configuration where it does not support setting ASEL and PSEL bit fields for the same pin. Example: When configure the DAC pin in A2A1 device, only the ASEL bit is set and the generated pin data does not match the expected pin data.</dd></dl>
 <p>In the example shown below, port P611 is already used by the CAC, and the attempt to connect this port to the Serial Communications Interface (SCI) results in a dangling connection error. To fix this error, select another port from the pin drop-down list or disable the CAC in the <b>Pin Selection</b> pane on the left side of the tab.</p>
 <div class="image">
 <img src="sd-e2-pin-config.png" alt="sd-e2-pin-config.png"/>
@@ -624,7 +623,7 @@ Viewing Event Links</div></div>
 <dl class="section note"><dt>Note</dt><dd>When selecting an ELC event to receive for a module (or when manually defining an event link), only the events that are made available by the modules configured in the project will be shown.</dd></dl>
 <h2><a class="anchor" id="adding-threads-and-drivers"></a>
 Adding Threads and Drivers</h2>
-<p>Every FreeRTOS-based RA Project includes at least one RTOS Thread and a stack of FSP modules running in that thread. The <b>Stacks</b> tab is a graphical user interface which helps you to add the right modules to a thread and configure the properties of both the threads and the modules associated with each thread. Once you have configured the thread, e2 studio automatically generates the code reflecting your configuration choices.</p>
+<p>Every RTOS-based RA Project includes at least one RTOS Thread and a stack of FSP modules running in that thread. The <b>Stacks</b> tab is a graphical user interface which helps you to add the right modules to a thread and configure the properties of both the threads and the modules associated with each thread. Once you have configured the thread, e2 studio automatically generates the code reflecting your configuration choices.</p>
 <p>For any driver, or, more generally, any module that you add to a thread, e2 studio automatically resolves all dependencies with other modules and creates the appropriate stack. This stack is displayed in the Stacks pane, which e2 studio populates with the selected modules and module options for the selected thread.</p>
 <p>The default view of the <b>Stacks</b> tab includes a Common Thread called <b>HAL/Common</b>. This thread includes the driver for I/O control (IOPORT). The default stack is shown in the <b>HAL/Common Stacks</b> pane. The default modules added to the HAL/Common driver are special in that the FSP only requires a single instance of each, which e2 studio then includes in every user-defined thread by default.</p>
 <p>In applications that do not use an RTOS or run outside of the RTOS, the HAL/Common thread becomes the default location where you can add additional drivers to your application.</p>
@@ -723,7 +722,7 @@ Configuring Module or Driver properties</div></div>
 <p>The configuration header files for all included modules and drivers are created or overwritten in the following folders: <code>ra_cfg/fsp_cfg/&lt;header files&gt;</code></p>
 <h3><a class="anchor" id="configuring-threads"></a>
 Configuring Threads</h3>
-<p>If the application uses the FreeRTOS, the <b>Stacks</b> tab can be used to simplify the creation of FreeRTOS threads, semaphores, mutexes, and event flags.</p>
+<p>If the application uses an RTOS, the <b>Stacks</b> tab can be used to simplify the creation of RTOS threads, semaphores, mutexes, and event flags.</p>
 <p>The components of each thread can be configured from the <b>Properties</b> view as shown below.</p>
 <div class="image">
 <img src="sd-new-thread-properties.png" alt="sd-new-thread-properties.png"/>
@@ -731,7 +730,7 @@ Configuring Threads</h3>
 New Thread Properties</div></div>
 <p> The <b>Properties</b> view contains settings common for all Threads (<b>Common</b>) and settings for this particular thread (<b>Thread</b>).</p>
 <p>For this thread instance, the thread's name and properties (such as priority level or stack size) can be easily configured. e2 studio checks that the entries in the property field are valid. For example, it will verify that the field <b>Priority</b>, which requires an integer value, only contains numeric values between 0 and 9.</p>
-<p>To add FreeRTOS resources to a Thread, select a thread and click on <b>New Object</b> in the Thread Objects pane. The pane takes on the name of the selected thread, in this case <b>My Thread Objects</b>.</p>
+<p>To add RTOS resources to a Thread, select a thread and click on <b>New Object</b> in the Thread Objects pane. The pane takes on the name of the selected thread, in this case <b>My Thread Objects</b>.</p>
 <div class="image">
 <img src="sd-configuring-thread-object-properties.png" alt="sd-configuring-thread-object-properties.png"/>
 <div class="caption">
@@ -873,7 +872,7 @@ Adding user code to hal_entry.c</div></div>
 <p>The WDT example is a HAL level application which does not use an RTOS. The user guides for each module also include basic application code that you can add to <code>hal_entry.c</code>.</p>
 <h3><a class="anchor" id="rtos-applications"></a>
 RTOS Applications</h3>
-<p>To write RTOS-aware application code using FreeRTOS, follow these steps:</p>
+<p>To write RTOS-aware application code using RTOS, follow these steps:</p>
 <ol type="1">
 <li>Add a thread using the <b>Stacks</b> tab.</li>
 <li>Provide a unique name for the thread in the <b>Properties</b> view for this thread.</li>
@@ -1889,7 +1888,7 @@ Using RA Smart Configurator with Keil MDK</h2>
 <h3><a class="anchor" id="RASC-MDK-prerequisites"></a>
 Prerequisites</h3>
 <ul>
-<li>Keil MDK and Arm compiler are installed and licensed. Please refer to the Release notes for the version to be installed.</li>
+<li>Keil MDK and Arm compiler are installed and licensed. Please refer to the RASC Release notes for the version to be installed.</li>
 <li>Import the RA device pack. Download the RA device pack archive file (ex: MDK_Device_Packs_2.x.x.zip) from the <a href="https://github.com/renesas/fsp/releases">FSP GitHub release page</a>. Extract the archive file to locate the RA device pack. To import the RA device pack, launch the PackInstaller.exe from <code>&lt;keil_mdk_install_dir&gt;\UV4</code>. Select the menu item <b>File &gt; Import...</b> and browse to the extracted .pack file.</li>
 <li>Verify that the latest updates for RA devices are included in Keil MDK. To verify, select the menu "Packs" in Pack Installer and verify that the menu item <b>Check for Updates on Launch</b> is selected. If not, select <b>Check for Updates on Launch</b> and relaunch Pack Installer.</li>
 <li>For flashing and debugging, the latest Segger J-Link DLL is installed into Keil MDK.</li>
@@ -2039,7 +2038,7 @@ Notes and Restrictions</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

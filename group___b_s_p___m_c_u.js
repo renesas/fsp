@@ -89,7 +89,8 @@ var group___b_s_p___m_c_u =
       [ "FSP_IP_JPEG", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ac4afe762c064a169b0ebf6d64332ac80", null ],
       [ "FSP_IP_DAC8", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a06230bf415328965e43426efed64f1e1", null ],
       [ "FSP_IP_USBHS", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a40e3e5c071f08ce93fabf8adad8c548e", null ],
-      [ "FSP_IP_OSPI", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a9bbcf1f4070b401d62dcaa2f96ca881a", null ]
+      [ "FSP_IP_OSPI", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a9bbcf1f4070b401d62dcaa2f96ca881a", null ],
+      [ "FSP_IP_CEC", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a52f816456b7c8037eb65624f0a6bc582", null ]
     ] ],
     [ "fsp_signal_t", "group___b_s_p___m_c_u.html#ga0f8db6472715cfd8203eb499b26904e8", [
       [ "FSP_SIGNAL_ADC_COMPARE_MATCH", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a01eff7ed733107ef531ba6ad52a1c7c3", null ],

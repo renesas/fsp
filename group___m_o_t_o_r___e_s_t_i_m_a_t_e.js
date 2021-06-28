@@ -8,5 +8,9 @@ var group___m_o_t_o_r___e_s_t_i_m_a_t_e =
     [ "RM_MOTOR_ESTIMATE_FlagPiCtrlSet", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga3069a2a3350193c0894eda657016baa4", null ],
     [ "RM_MOTOR_ESTIMATE_AngleSpeedGet", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga762a451cee6f7dfa4430afa8f8b11819", null ],
     [ "RM_MOTOR_ESTIMATE_EstimatedComponentGet", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga859290e2a7cf91a48d0e2852790b3811", null ],
-    [ "RM_MOTOR_ESTIMATE_ParameterUpdate", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaaa47afb770dc694652a2d9a9e8f03acb", null ]
+    [ "RM_MOTOR_ESTIMATE_ParameterUpdate", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaaa47afb770dc694652a2d9a9e8f03acb", null ],
+    [ "RM_MOTOR_ESTIMATE_InternalCalculate", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga5aff1a699995c8ba8f55f8e5813fd488", null ],
+    [ "RM_MOTOR_ESTIMATE_AngleAdjust", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga26831e2a843a85a5ad6d1bb2f743f4ca", null ],
+    [ "RM_MOTOR_ESTIMATE_EncoderCyclic", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga5bd8dc2cee1b6630cd57f112aa52353a", null ],
+    [ "RM_MOTOR_ESTIMATE_InfoGet", "group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga112f36bdb669ddaa125b3df710038bb3", null ]
 ];

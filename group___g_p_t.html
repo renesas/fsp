@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.1</span>
+   &#160;<span id="projectnumber">Release v3.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -223,13 +223,14 @@ Features</h2>
 <li>APIs are provided to get the current period, source clock frequency, and count direction.<a class="anchor" id="um_timer_count_direction"></a></li>
 <li>APIs are provided to get the current timer status and counter value.<a class="anchor" id="um_timer_status"></a></li>
 <li>Supports start, stop, clear, count up, count down, and capture by external sources from GTETRG pins, GTIOC pins, or ELC events.<a class="anchor" id="um_gpt_count_down_external_source"></a><a class="anchor" id="um_gpt_start_external_source"></a><a class="anchor" id="um_gpt_stop_external_source"></a><a class="anchor" id="um_gpt_clear_external_source"></a></li>
-<li>Supports symmetric and asymmetric PWM waveform generation.<a class="anchor" id="um_gpt_symmetric_pwm"></a><a class="anchor" id="um_gpt_asymmetric_pwm"></a></li>
+<li>Supports symmetric and asymmetric PWM waveform generation.<a class="anchor" id="um_gpt_symmetric_pwm"></a><a class="anchor" id="um_gpt_asymmetric_pwm"></a><a class="anchor" id="um_gpt_pwm_mode3"></a></li>
 <li>Supports automatic addition of dead time.<a class="anchor" id="um_gpt_pwm_dead_time"></a></li>
 <li>Supports generating ELC events to start an ADC scan at a compare match value (see <a class="el" href="group___e_l_c.html">Event Link Controller (r_elc)</a>) and updating the compare match value.<a class="anchor" id="um_gpt_adc_trigger"></a><a class="anchor" id="um_gpt_adc_trigger_update"></a></li>
 <li>Supports linking with a POEG channel to automatically disable GPT output when an error condition is detected.<a class="anchor" id="um_gpt_poeg_link"></a></li>
 <li>Supports setting the counter value while the timer is stopped.<a class="anchor" id="um_gpt_counter_set"></a></li>
 <li>Supports enabling and disabling output pins.<a class="anchor" id="um_gpt_output_disable"></a><a class="anchor" id="um_gpt_output_enable"></a></li>
-<li>Supports skipping up to seven overflow/underflow (crest/trough) interrupts at a time<a class="anchor" id="um_gpt_interrupt_skip"></a> </li>
+<li>Supports skipping up to seven overflow/underflow (crest/trough) interrupts at a time<a class="anchor" id="um_gpt_interrupt_skip"></a></li>
+<li>Supports generating custom PWM waveforms by configuring the pin's output level at each compare match and cycle end.<a class="anchor" id="um_gpt_custom_waveform"></a> </li>
 </ul>
 <h2><a class="anchor" id="r-gpt-selecting-a-timer"></a>
 Selecting a Timer</h2>
@@ -272,7 +273,7 @@ Enabled</li>
 <li>
 Enabled with Extra Features</li>
 </ul>
-</td><td>Disabled </td><td>If selected code for outputting a waveform to a pin is included in the build. </td></tr>
+</td><td>Disabled </td><td>Enables or disables support for outputting PWM waveforms on GTIOCx pins. The "Enabled with Extra Features" option enables support for Triangle wave modes and also enables the features located in the "Extra Features" section of each module instance. </td></tr>
 <tr>
 <td>Write Protect Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -303,6 +304,8 @@ PWM</li>
 Triangle-Wave Symmetric PWM</li>
 <li>
 Triangle-Wave Asymmetric PWM</li>
+<li>
+Triangle-Wave Asymmetric PWM (Mode 3)</li>
 </ul>
 </td><td>Periodic </td><td>Mode selection.<br />
 Periodic: Generates periodic interrupts or square waves.<br />
@@ -332,6 +335,94 @@ Hertz</li>
 Kilohertz</li>
 </ul>
 </td><td>Raw Counts </td><td>Unit of the period specified above </td></tr>
+<tr>
+<td>Output &gt; Custom Waveform &gt; GTIOA &gt; Initial Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Pin Level Low</li>
+<li>
+Pin Level High</li>
+</ul>
+</td><td>Pin Level Low </td><td>Set the initial output level of GTIOCxA. </td></tr>
+<tr>
+<td>Output &gt; Custom Waveform &gt; GTIOA &gt; Cycle End Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Pin Level Retain</li>
+<li>
+Pin Level Low</li>
+<li>
+Pin Level High</li>
+<li>
+Pin Level Toggle</li>
+</ul>
+</td><td>Pin Level Retain </td><td>Set the output level of GTIOCxA at cycle end. </td></tr>
+<tr>
+<td>Output &gt; Custom Waveform &gt; GTIOA &gt; Compare Match Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Pin Level Retain</li>
+<li>
+Pin Level Low</li>
+<li>
+Pin Level High</li>
+<li>
+Pin Level Toggle</li>
+</ul>
+</td><td>Pin Level Retain </td><td>Set the output level of GTIOCxA at compare match. </td></tr>
+<tr>
+<td>Output &gt; Custom Waveform &gt; GTIOA &gt; Retain Output Level at Count Stop</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Retain the current GTIOxA output level when counting is stopped. </td></tr>
+<tr>
+<td>Output &gt; Custom Waveform &gt; GTIOB &gt; Initial Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Pin Level Low</li>
+<li>
+Pin Level High</li>
+</ul>
+</td><td>Pin Level Low </td><td>Set the initial output level of GTIOCxB. </td></tr>
+<tr>
+<td>Output &gt; Custom Waveform &gt; GTIOB &gt; Cycle End Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Pin Level Retain</li>
+<li>
+Pin Level Low</li>
+<li>
+Pin Level High</li>
+<li>
+Pin Level Toggle</li>
+</ul>
+</td><td>Pin Level Retain </td><td>Set the output level of GTIOCxB at cycle end. </td></tr>
+<tr>
+<td>Output &gt; Custom Waveform &gt; GTIOB &gt; Compare Match Output Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Pin Level Retain</li>
+<li>
+Pin Level Low</li>
+<li>
+Pin Level High</li>
+<li>
+Pin Level Toggle</li>
+</ul>
+</td><td>Pin Level Retain </td><td>Set the output level of GTIOCxB at compare match. </td></tr>
+<tr>
+<td>Output &gt; Custom Waveform &gt; GTIOB &gt; Retain Output Level at Count Stop</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Retain the current GTIOxB output level when counting is stopped. </td></tr>
+<tr>
+<td>Output &gt; Custom Waveform &gt; Custom Waveform Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable custom waveform configuration. </td></tr>
 <tr>
 <td>Output &gt; Duty Cycle Percent (only applicable in PWM mode)</td><td>Value must be between 0 and 100</td><td>50 </td><td>Specify the timer duty cycle percent. Only used in PWM mode. </td></tr>
 <tr>
@@ -421,7 +512,7 @@ Filter PCLKD / 64</li>
 <tr>
 <td>Interrupts &gt; Capture B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for capture B. </td></tr>
 <tr>
-<td>Interrupts &gt; Trough Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for the trough interrupt (triangle-wave PWM only). </td></tr>
+<td>Interrupts &gt; Underflow/Trough Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for the trough interrupt (triangle-wave PWM only). </td></tr>
 <tr>
 <td>Extra Features &gt; Output Disable &gt; POEG Link</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -633,6 +724,8 @@ Examples</h1>
 Data Structures</h2></td></tr>
 <tr class="memitem:structgpt__output__pin__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#structgpt__output__pin__t">gpt_output_pin_t</a></td></tr>
 <tr class="separator:structgpt__output__pin__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structgpt__gtior__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#structgpt__gtior__setting__t">gpt_gtior_setting_t</a></td></tr>
+<tr class="separator:structgpt__gtior__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structgpt__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#structgpt__instance__ctrl__t">gpt_instance_ctrl_t</a></td></tr>
 <tr class="separator:structgpt__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structgpt__extended__pwm__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#structgpt__extended__pwm__cfg__t">gpt_extended_pwm_cfg_t</a></td></tr>
@@ -696,6 +789,21 @@ stop_level</td>
 Select a stop level from <a class="el" href="group___g_p_t.html#ga454c639e426428470ce78115af5d3648">gpt_pin_level_t</a>. </td></tr>
 </table>
 
+</div>
+</div>
+<a name="structgpt__gtior__setting__t" id="structgpt__gtior__setting__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structgpt__gtior__setting__t">&#9670;&nbsp;</a></span>gpt_gtior_setting_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gpt_gtior_setting_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </p>
+</div>
 </div>
 </div>
 <a name="structgpt__instance__ctrl__t" id="structgpt__instance__ctrl__t"></a>
@@ -804,13 +912,13 @@ ADC events to skip when interrupt skipping is enabled. </td></tr>
 <td class="fieldname">
 gtioca_disable_setting</td>
 <td class="fielddoc">
-Select how to configure GTIOCA when output is disabled. </td></tr>
+DEPRECATED - Select how to configure GTIOCA when output is disabled. </td></tr>
 <tr><td class="fieldtype">
 <a id="aa34079abac90aaced078650c626c9820"></a><a class="el" href="group___g_p_t.html#ga82d61d33edf38d50f1247d1d55ec506b">gpt_gtioc_disable_t</a></td>
 <td class="fieldname">
 gtiocb_disable_setting</td>
 <td class="fielddoc">
-Select how to configure GTIOCB when output is disabled. </td></tr>
+DEPRECATED - Select how to configure GTIOCB when output is disabled. </td></tr>
 </table>
 
 </div>
@@ -834,13 +942,13 @@ Select how to configure GTIOCB when output is disabled. </td></tr>
 <td class="fieldname">
 gtioca</td>
 <td class="fielddoc">
-Configuration for GPT I/O pin A. </td></tr>
+DEPRECATED - Configuration for GPT I/O pin A. </td></tr>
 <tr><td class="fieldtype">
 <a id="a78476af74debd54ee8394dd0aa6d2505"></a><a class="el" href="group___g_p_t.html#structgpt__output__pin__t">gpt_output_pin_t</a></td>
 <td class="fieldname">
 gtiocb</td>
 <td class="fielddoc">
-Configuration for GPT I/O pin B. </td></tr>
+DEPRECATED - Configuration for GPT I/O pin B. </td></tr>
 <tr><td class="fieldtype">
 <a id="a3b894424ab45e17d02938de9c211911a"></a><a class="el" href="group___g_p_t.html#gaa1457c9c1f178fff4dd1558832db196a">gpt_source_t</a></td>
 <td class="fieldname">
@@ -927,6 +1035,12 @@ Capture B interrupt. </td></tr>
 p_pwm_cfg</td>
 <td class="fielddoc">
 Advanced PWM features, optional. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad8b8b467339a151f016017d175df2f9c"></a><a class="el" href="group___g_p_t.html#structgpt__gtior__setting__t">gpt_gtior_setting_t</a></td>
+<td class="fieldname">
+gtior_setting</td>
+<td class="fielddoc">
+Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 </table>
 
 </div>
@@ -950,6 +1064,10 @@ Advanced PWM features, optional. </td></tr>
 <tr><td class="fieldname"><a id="ggaabd4a03d16b1b4254cc44c7779f44c60aebd74a7b9507fb082ec4cce60ebe9369"></a>GPT_IO_PIN_GTIOCB&#160;</td><td class="fielddoc"><p>GTIOCB. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaabd4a03d16b1b4254cc44c7779f44c60a2b44d1e05050c34cc6e8d9ee4093294d"></a>GPT_IO_PIN_GTIOCA_AND_GTIOCB&#160;</td><td class="fielddoc"><p>GTIOCA and GTIOCB. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaabd4a03d16b1b4254cc44c7779f44c60ac68b7e1ef5c48c55960faacd7eb538b9"></a>GPT_IO_PIN_TROUGH&#160;</td><td class="fielddoc"><p>Used in <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a> when Triangle-wave PWM Mode 3 is selected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaabd4a03d16b1b4254cc44c7779f44c60acb3ba96929217eb6bb1ec5b2f1ccf9d4"></a>GPT_IO_PIN_CREST&#160;</td><td class="fielddoc"><p>Used in <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a> when Triangle-wave PWM Mode 3 is selected. </p>
 </td></tr>
 </table>
 
@@ -1541,6 +1659,7 @@ Advanced PWM features, optional. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL or the pin is not one of gpt_io_pin_t </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Duty cycle is larger than period. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>GPT_IO_PIN_TROUGH, and GPT_IO_PIN_CREST settings are invalid in the this mode. </td></tr>
     <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>GPT_CFG_OUTPUT_SUPPORT_ENABLE is 0. </td></tr>
   </table>
   </dd>
@@ -1861,7 +1980,7 @@ Advanced PWM features, optional. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

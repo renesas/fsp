@@ -60,7 +60,7 @@ var group___i_o_p_o_r_t___a_p_i =
       [ "IOPORT_PERIPHERAL_LCD_GRAPHICS", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a90c6c9da7046edfa46f22a16994d13f9", null ],
       [ "IOPORT_PERIPHERAL_TRACE", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8aa104329a7773f8ffbed0f7fbad258e6d", null ],
       [ "IOPORT_PERIPHERAL_OSPI", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a83951c39c247388f70f38287edd67a2d", null ],
-      [ "IOPORT_PERIPHERAL_END", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8a9885514f43d9d1c466ae689ef3608a9a", null ]
+      [ "IOPORT_PERIPHERAL_CEC", "group___i_o_p_o_r_t___a_p_i.html#ggaebbb969fda93422aaf1878d6f4ff8fe8afd795256ce7d3bc9bd58d36d1f41e294", null ]
     ] ],
     [ "ioport_ethernet_channel_t", "group___i_o_p_o_r_t___a_p_i.html#gaf6a78fbc73b4e8acef86a12c21df2da0", [
       [ "IOPORT_ETHERNET_CHANNEL_0", "group___i_o_p_o_r_t___a_p_i.html#ggaf6a78fbc73b4e8acef86a12c21df2da0ad6e933716d34a0fbba5b3d9f589f7637", null ],

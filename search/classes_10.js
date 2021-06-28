@@ -199,5 +199,7 @@ var searchData=
   ['st_5fble_5fvs_5fset_5ftx_5fpwr_5fcomp_5fevt_5ft',['st_ble_vs_set_tx_pwr_comp_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__set__tx__pwr__comp__evt__t',1,'']]],
   ['st_5fble_5fvs_5ftest_5fend_5fevt_5ft',['st_ble_vs_test_end_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__test__end__evt__t',1,'']]],
   ['st_5fble_5fvs_5ftx_5fflow_5fchg_5fevt_5ft',['st_ble_vs_tx_flow_chg_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__tx__flow__chg__evt__t',1,'']]],
-  ['st_5fble_5fvs_5ftx_5ftest_5fparam_5ft',['st_ble_vs_tx_test_param_t',['../group___v_s___a_p_i.html#structst__ble__vs__tx__test__param__t',1,'']]]
+  ['st_5fble_5fvs_5ftx_5ftest_5fparam_5ft',['st_ble_vs_tx_test_param_t',['../group___v_s___a_p_i.html#structst__ble__vs__tx__test__param__t',1,'']]],
+  ['sulfur_5fodor_5fhandle_5ft',['sulfur_odor_handle_t',['../structsulfur__odor__handle__t.html',1,'']]],
+  ['sulfur_5fodor_5fresults_5ft',['sulfur_odor_results_t',['../structsulfur__odor__results__t.html',1,'']]]
 ];

@@ -4,6 +4,9 @@ var group___i2_c___m_a_s_t_e_r___a_p_i =
       [ "p_context", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ab98d1221b3a246270ef56a57d947ac0c", null ],
       [ "event", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a3a8cc9e360253e44176a6d3cecb5ece8", null ]
     ] ],
+    [ "i2c_master_status_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__status__t", [
+      [ "open", "group___i2_c___m_a_s_t_e_r___a_p_i.html#af5a9589a49c68b926de7deaefc272267", null ]
+    ] ],
     [ "i2c_master_cfg_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__cfg__t", [
       [ "channel", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ab51668940cafabfefc502f06fddc9ae4", null ],
       [ "rate", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a14a4f6b4fb30067212155c989e5a65d2", null ],
@@ -27,6 +30,7 @@ var group___i2_c___m_a_s_t_e_r___a_p_i =
       [ "abort", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a0a0800aaa24f36b2eac8b315a0c5437e", null ],
       [ "slaveAddressSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a6e1d2e41f4dc058c06c1f5aae0c7bce5", null ],
       [ "callbackSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a1a0c2ac15d2c2eb6a50baed682498620", null ],
+      [ "statusGet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a518c35fc22e49d6969fb6e15aa1e09cd", null ],
       [ "close", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a7d093cf28da6a99e56dbeb7b82ad3f5f", null ]
     ] ],
     [ "i2c_master_instance_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t", [

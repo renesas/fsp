@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.1</span>
+   &#160;<span id="projectnumber">Release v3.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -203,17 +203,15 @@ Functions</h2></td></tr>
 <tr class="memitem:gafba5f225ac4f28d7224d71969ab4c4c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gafba5f225ac4f28d7224d71969ab4c4c4">RM_MOTOR_CURRENT_ParameterUpdate</a> (<a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ga151de5363c2dcaa7f377c7caec25dea9">motor_current_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__cfg__t">motor_current_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="memdesc:gafba5f225ac4f28d7224d71969ab4c4c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the parameters of Current Control. Implements <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ad16a2f88a5bf5d1974bc1486ee797b8d">motor_current_api_t::parameterUpdate</a>.  <a href="#gafba5f225ac4f28d7224d71969ab4c4c4">More...</a><br /></td></tr>
 <tr class="separator:gafba5f225ac4f28d7224d71969ab4c4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8389d3b3fce2951d644edf40c2bb3812"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga8389d3b3fce2951d644edf40c2bb3812">rm_motor_current_encoder_cyclic</a> (<a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__instance__t">motor_current_instance_t</a> const *p_ctrl)</td></tr>
+<tr class="separator:ga8389d3b3fce2951d644edf40c2bb3812"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Calculation process for the motor control on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html">Motor current Interface</a>. </p>
 <h1><a class="anchor" id="rm-motor_current-overview"></a>
 Overview</h1>
 <p>The motor current is used to control the electric current of motor rotation in an appication. This module should be called cyclically after the A/D conversion of electric current of each phase in an application. This module calculates each phase voltage with input current reference, electric current and rotor angle.</p>
-<div class="image">
-<object type="image/svg+xml" data="motor_control_block_diagram.svg">motor_control_block_diagram.svg</object>
-<div class="caption">
-Image of Current Control Module(yellow block)</div></div>
- <h2><a class="anchor" id="rm-motor_current-features"></a>
+<h2><a class="anchor" id="rm-motor_current-features"></a>
 Features</h2>
 <p>The Motor Current Module has below features.</p><ul>
 <li>Calculate each phase(U/V/W) voltage.</li>
@@ -246,11 +244,27 @@ This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Mo
 <tr>
 <td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_motor_current0 </td><td>Module name. </td></tr>
 <tr>
-<td>General &gt; Current Control Decimation</td><td>Manual Entry</td><td>0 </td><td>Decimation of Current Control. </td></tr>
+<td>General &gt; Sensor type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Sensorless</li>
+<li>
+Encoder</li>
+</ul>
+</td><td>Sensorless </td><td>Select sensor type </td></tr>
 <tr>
-<td>General &gt; PWM Carrier Frequency[kHz]</td><td>Manual Entry</td><td>20.0F </td><td>PWM Carrier Frequency. </td></tr>
+<td>General &gt; Current control decimation</td><td>Manual Entry</td><td>0 </td><td>Decimation of current control. </td></tr>
 <tr>
-<td>General &gt; Input Voltage</td><td>Manual Entry</td><td>24.0F </td><td>Input voltage for limitation of current PI control. </td></tr>
+<td>General &gt; PWM carrier frequency (kHz)</td><td>Manual Entry</td><td>20.0F </td><td>PWM carrier frequency. </td></tr>
+<tr>
+<td>General &gt; Input voltage</td><td>Manual Entry</td><td>24.0F </td><td>Input voltage for limitation of current PI control. </td></tr>
+<tr>
+<td>General &gt; Sample delay compensation</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Enable </td><td>Select enable/disable sample delay compensation. </td></tr>
 <tr>
 <td>General &gt; Voltage error compensation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -258,7 +272,7 @@ Disable</li>
 <li>
 Enable</li>
 </ul>
-</td><td>Enable </td><td>Select enable/disable Voltage error compensation. </td></tr>
+</td><td>Enable </td><td>Select enable/disable voltage error compensation. </td></tr>
 <tr>
 <td>General &gt; Voltage error compensation table of voltage 1</td><td>Manual Entry</td><td>0.672F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
@@ -282,21 +296,21 @@ Enable</li>
 <tr>
 <td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
 <tr>
-<td>Design Prameter &gt; Current PI Loop Omega</td><td>Manual Entry</td><td>300.0F </td><td>Current PI Loop Omega </td></tr>
+<td>Design Parameter &gt; Current PI loop omega</td><td>Manual Entry</td><td>300.0F </td><td>Current PI loop omega </td></tr>
 <tr>
-<td>Design Prameter &gt; Current PI Loop Zeta</td><td>Manual Entry</td><td>1.0F </td><td>Current PI Loop Zeta </td></tr>
+<td>Design Parameter &gt; Current PI loop zeta</td><td>Manual Entry</td><td>1.0F </td><td>Current PI loop zeta </td></tr>
 <tr>
-<td>Motor Parameter &gt; Pole Pairs</td><td>Manual Entry</td><td>2 </td><td>Pole Pairs </td></tr>
+<td>Motor Parameter &gt; Pole pairs</td><td>Manual Entry</td><td>2 </td><td>Pole pairs </td></tr>
 <tr>
-<td>Motor Parameter &gt; Resistance[ohm]</td><td>Manual Entry</td><td>8.5F </td><td>Resistance </td></tr>
+<td>Motor Parameter &gt; Resistance (ohm)</td><td>Manual Entry</td><td>8.5F </td><td>Resistance </td></tr>
 <tr>
-<td>Motor Parameter &gt; Inductance of d-axis[H]</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of d-axis </td></tr>
+<td>Motor Parameter &gt; Inductance of d-axis (H)</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of d-axis </td></tr>
 <tr>
-<td>Motor Parameter &gt; Inductance of q-axis[H]</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
+<td>Motor Parameter &gt; Inductance of q-axis (H)</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
 <tr>
-<td>Motor Parameter &gt; Permanent magnetic flux[Wb]</td><td>Manual Entry</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
+<td>Motor Parameter &gt; Permanent magnetic flux (Wb)</td><td>Manual Entry</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
 <tr>
-<td>Motor Parameter &gt; Rotor inertia[kgm^2]</td><td>Manual Entry</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
+<td>Motor Parameter &gt; Rotor inertia (kgm^2)</td><td>Manual Entry</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-motor_current-clock-configuration"></a>
@@ -774,13 +788,32 @@ Examples</h1>
 
 </div>
 </div>
+<a id="ga8389d3b3fce2951d644edf40c2bb3812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8389d3b3fce2951d644edf40c2bb3812">&#9670;&nbsp;</a></span>rm_motor_current_encoder_cyclic()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rm_motor_current_encoder_cyclic </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__instance__t">motor_current_instance_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>(end addtogroup MOTOR_CURRENT) </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

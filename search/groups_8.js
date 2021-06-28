@@ -9,5 +9,7 @@ var searchData=
   ['i_2fo_20ports_20_28r_5fioport_29',['I/O Ports (r_ioport)',['../group___i_o_p_o_r_t.html',1,'']]],
   ['i_2fo_20port_20interface',['I/O Port Interface',['../group___i_o_p_o_r_t___a_p_i.html',1,'']]],
   ['independent_20watchdog_20timer_20_28r_5fiwdt_29',['Independent Watchdog Timer (r_iwdt)',['../group___i_w_d_t.html',1,'']]],
-  ['interfaces',['Interfaces',['../group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html',1,'']]]
+  ['interfaces',['Interfaces',['../group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html',1,'']]],
+  ['i2c_20communicatons_20middleware_20_28rm_5fcomms_5fi2c_29',['I2C Communicatons Middleware (rm_comms_i2c)',['../group___r_m___c_o_m_m_s___i2_c.html',1,'']]],
+  ['intel_20tinycrypt_20_28rm_5ftinycrypt_5fport_29',['Intel TinyCrypt (rm_tinycrypt_port)',['../group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html',1,'']]]
 ];

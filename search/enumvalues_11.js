@@ -16,6 +16,7 @@ var searchData=
   ['timer_5fmode_5fperiodic',['TIMER_MODE_PERIODIC',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e',1,'r_timer_api.h']]],
   ['timer_5fmode_5fpwm',['TIMER_MODE_PWM',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac',1,'r_timer_api.h']]],
   ['timer_5fmode_5ftriangle_5fwave_5fasymmetric_5fpwm',['TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a204001ad413e9ad0db08a66d004a555a',1,'r_timer_api.h']]],
+  ['timer_5fmode_5ftriangle_5fwave_5fasymmetric_5fpwm_5fmode3',['TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aa2eb9fa5372856039d5d53dfbbbe6040',1,'r_timer_api.h']]],
   ['timer_5fmode_5ftriangle_5fwave_5fsymmetric_5fpwm',['TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a6a3c462f9e9cc1b26ab68f38efd79b14',1,'r_timer_api.h']]],
   ['timer_5fsource_5fdiv_5f1',['TIMER_SOURCE_DIV_1',['../group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada387f7122153dd7d860762a6f73485fb8',1,'r_timer_api.h']]],
   ['timer_5fsource_5fdiv_5f1024',['TIMER_SOURCE_DIV_1024',['../group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5adaee99148dc7c32f0764c7cb3b3e45ca30',1,'r_timer_api.h']]],

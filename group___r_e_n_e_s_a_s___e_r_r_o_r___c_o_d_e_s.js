@@ -210,6 +210,10 @@ var group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s =
       [ "FSP_ERR_CRYPTO_BUF_OVERFLOW", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a74865c26e4916c9348c2ee5c0201f9d9", null ],
       [ "FSP_ERR_CRYPTO_INVALID_OPERATION_MODE", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ab4d37806bc2d73603698a975fad28672", null ],
       [ "FSP_ERR_MESSAGE_TOO_LONG", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8acbae29129db25e1b1d6c599f91f0dac4", null ],
-      [ "FSP_ERR_RSA_DECRYPTION_ERROR", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a41434bdcf52a833b4fe1cc5ae322fe7a", null ]
+      [ "FSP_ERR_RSA_DECRYPTION_ERROR", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a41434bdcf52a833b4fe1cc5ae322fe7a", null ],
+      [ "FSP_ERR_SENSOR_INVALID_DATA", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a47bedb95f9926c8f1330bcf7846a548e", null ],
+      [ "FSP_ERR_SENSOR_IN_STABILIZATION", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a585fcafaa5e5dbe0209e063f5ecf8898", null ],
+      [ "FSP_ERR_SENSOR_MEASUREMENT_NOT_FINISHED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a445a886afbb0951782907ac56e93d729", null ],
+      [ "FSP_ERR_COMMS_BUS_NOT_OPEN", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ad40d6aaad44e18804d771e2a7872a2de", null ]
     ] ]
 ];

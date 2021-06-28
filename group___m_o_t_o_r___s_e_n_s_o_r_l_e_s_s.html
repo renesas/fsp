@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.1</span>
+   &#160;<span id="projectnumber">Release v3.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -201,17 +201,16 @@ Functions</h2></td></tr>
 <tr class="memitem:ga526e1f2e08b5b8ec13ec92e4481e10af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga526e1f2e08b5b8ec13ec92e4481e10af">RM_MOTOR_SENSORLESS_ErrorCheck</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, uint16_t *const p_error)</td></tr>
 <tr class="memdesc:ga526e1f2e08b5b8ec13ec92e4481e10af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the occurunce of Error. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a4646d3816e8fb2b123246a83a6034888">motor_api_t::errorCheck</a>.  <a href="#ga526e1f2e08b5b8ec13ec92e4481e10af">More...</a><br /></td></tr>
 <tr class="separator:ga526e1f2e08b5b8ec13ec92e4481e10af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36f325fde67d3386cebab2bfa20137b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga36f325fde67d3386cebab2bfa20137b9">RM_MOTOR_SENSORLESS_PositionSet</a> (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, motor_speed_position_data_t const *const p_position)</td></tr>
+<tr class="memdesc:ga36f325fde67d3386cebab2bfa20137b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set position reference. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a6ac2a0d0999335ee0a30ad84b378c0dd">motor_api_t::positionSet</a>.  <a href="#ga36f325fde67d3386cebab2bfa20137b9">More...</a><br /></td></tr>
+<tr class="separator:ga36f325fde67d3386cebab2bfa20137b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Usual control of a SPM motor on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html">Motor Sensorless Vector Control (rm_motor_sensorless)</a>. </p>
 <h1><a class="anchor" id="rm-motor_sensorless-overview"></a>
 Overview</h1>
 <p>The motor sensorless vector control is used to control a motor rotation in an appication. This module is implemented with using SPM motor. User can start/stop motor rotation simply.</p>
-<div class="image">
-<object type="image/svg+xml" data="motor_control_block_diagram.svg">motor_control_block_diagram.svg</object>
-<div class="caption">
-Image of Sensorless Vector Control Structure</div></div>
- <h2><a class="anchor" id="rm-motor_sensorless-features"></a>
+<h2><a class="anchor" id="rm-motor_sensorless-features"></a>
 Features</h2>
 <p>The Motor Sensorless Module has below features.</p><ul>
 <li>Start/Stop a motor rotation</li>
@@ -225,7 +224,7 @@ The following build time configurations are defined in fsp_cfg/rm_motor_sensorle
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Parameter checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Default (BSP)</li>
 <li>
@@ -235,23 +234,23 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Middleware &gt; Motor &gt; Motor Sensorless Vector Control</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Motor &gt; Motor Sensorless Vector Control.<br />
+ <h2>Configurations for Middleware &gt; Motor &gt; Motor sensorless vector control</h2>
+This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Motor &gt; Motor sensorless vector control.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_motor_sensorless0 </td><td>Module name. </td></tr>
 <tr>
-<td>General &gt; Limit of Over Current[A]</td><td>Manual Entry</td><td>0.42F </td><td>Limit of Over Current.(Detection Threshold) </td></tr>
+<td>General &gt; Limit of over current (A)</td><td>Manual Entry</td><td>0.42F </td><td>Limit of over current.(Detection threshold) </td></tr>
 <tr>
-<td>General &gt; Limit of Over Voltage[V]</td><td>Manual Entry</td><td>28.0F </td><td>Limit of Over Voltage.(Detection Threshold) </td></tr>
+<td>General &gt; Limit of over voltage (V)</td><td>Manual Entry</td><td>28.0F </td><td>Limit of over voltage.(Detection threshold) </td></tr>
 <tr>
-<td>General &gt; Limit of Over Speed[rpm]</td><td>Manual Entry</td><td>3000.0F </td><td>Limit of Over Speed.(Detection Threshold) </td></tr>
+<td>General &gt; Limit of over speed (rpm)</td><td>Manual Entry</td><td>3000.0F </td><td>Limit of over speed.(Detection threshold) </td></tr>
 <tr>
-<td>General &gt; Limit of Low Voltage[V]</td><td>Manual Entry</td><td>14.0F </td><td>Limit of Low Voltage.(Detection Threshold) </td></tr>
+<td>General &gt; Limit of low voltage (V)</td><td>Manual Entry</td><td>14.0F </td><td>Limit of low voltage.(Detection threshold) </td></tr>
 <tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at Speed Control Cyclic interrupt. </td></tr>
+<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at speed control cyclic interrupt. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-motor_sensorless-clock-configuration"></a>
@@ -736,13 +735,51 @@ event</td>
 
 </div>
 </div>
+<a id="ga36f325fde67d3386cebab2bfa20137b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga36f325fde67d3386cebab2bfa20137b9">&#9670;&nbsp;</a></span>RM_MOTOR_SENSORLESS_PositionSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_SENSORLESS_PositionSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">motor_speed_position_data_t const *const&#160;</td>
+          <td class="paramname"><em>p_position</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set position reference. Implements <a class="el" href="group___m_o_t_o_r___a_p_i.html#a6ac2a0d0999335ee0a30ad84b378c0dd">motor_api_t::positionSet</a>. </p>
+<p>Example:</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.1</span>
+   &#160;<span id="projectnumber">Release v3.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -171,7 +171,8 @@ $(document).ready(function(){initNavTree('group___m_o_t_o_r___a_p_i.html','');})
 Summary</h1>
 <p>The Motor interface provides Motor functionality.</p>
 <p>Implemented by:</p><ul>
-<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html">Motor Sensorless Vector Control (rm_motor_sensorless)</a> </li>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html">Motor Sensorless Vector Control (rm_motor_sensorless)</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html">Motor encoder vector control (rm_motor_encoder)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -260,6 +261,8 @@ Placeholder for user extension. </td></tr>
 <tr class="separator:a1f302c2b7f82f4aa52b44be05a575eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4635002c9229fddac19e06d05fb3207"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#af4635002c9229fddac19e06d05fb3207">speedSet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, float const speed_rpm)</td></tr>
 <tr class="separator:af4635002c9229fddac19e06d05fb3207"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ac2a0d0999335ee0a30ad84b378c0dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a6ac2a0d0999335ee0a30ad84b378c0dd">positionSet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, motor_speed_position_data_t const *const p_position)</td></tr>
+<tr class="separator:a6ac2a0d0999335ee0a30ad84b378c0dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a292e940165b226b56d83a0b3e9a20a8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a292e940165b226b56d83a0b3e9a20a8c">statusGet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, uint8_t *const p_status)</td></tr>
 <tr class="separator:a292e940165b226b56d83a0b3e9a20a8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2667442da1af9179b7ea009e67d74c77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a2667442da1af9179b7ea009e67d74c77">angleGet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, float *const p_angle_rad)</td></tr>
@@ -283,6 +286,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Open driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga6825d930d49b00b475d84b435da23a03">RM_MOTOR_SENSORLESS_Open()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#gaecd01568f210cefeeb276b97ad04e4ee">RM_MOTOR_ENCODER_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -308,6 +312,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Close driver. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga23cbbc2134c7357859a9a810a5aa2dcd">RM_MOTOR_SENSORLESS_Close()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga9f21ecbab1a5056a36836231b5d68515">RM_MOTOR_ENCODER_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -332,6 +337,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Run the motor. (Start the motor rotation.) </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gabf12d514070de65a4f2d27ac585a17b6">RM_MOTOR_SENSORLESS_Run()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga985687d27ae1c1678fcd8985b09f0b35">RM_MOTOR_ENCODER_Run()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -356,6 +362,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Stop the motor. (Stop the motor rotation.) </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gaf7780babe25d9defb5b8d423b526aea2">RM_MOTOR_SENSORLESS_Stop()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga7cd50e2d1aff3b470b007f06ee1032b8">RM_MOTOR_ENCODER_Stop()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -380,6 +387,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Reset the motor control. (Recover from the error status.) </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga31f166c241521b3d83e8b20c53b8e374">RM_MOTOR_SENSORLESS_Reset()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga2daebe4ca8593caf678284bb38f85909">RM_MOTOR_ENCODER_Reset()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -404,6 +412,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Set Error Information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga1fe3c7c943b0296c70bb4f8f8490fddf">RM_MOTOR_SENSORLESS_ErrorSet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga583f5f46a956624fc746b7956ea5ed7c">RM_MOTOR_ENCODER_ErrorSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -429,12 +438,39 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Set rotation speed. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gada67cd9968dfc0db075478fa69565e2f">RM_MOTOR_SENSORLESS_SpeedSet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga63a42e780314d29c52f1dcf39797ec60">RM_MOTOR_ENCODER_SpeedSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">speed_rpm</td><td>Required rotation speed [rpm] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6ac2a0d0999335ee0a30ad84b378c0dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ac2a0d0999335ee0a30ad84b378c0dd">&#9670;&nbsp;</a></span>positionSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_api_t::positionSet) (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, motor_speed_position_data_t const *const p_position)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set reference position. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga36f325fde67d3386cebab2bfa20137b9">RM_MOTOR_SENSORLESS_PositionSet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga9b00009036879df702ff75bea45fb3c0">RM_MOTOR_ENCODER_PositionSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_position</td><td>Pointer to set required data </td></tr>
   </table>
   </dd>
 </dl>
@@ -454,6 +490,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Get the motor control status. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gaef47adefadf91147d95fba13f058190f">RM_MOTOR_SENSORLESS_StatusGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga33da9fde0aadb4e8f565b96ff1c9b547">RM_MOTOR_ENCODER_StatusGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -479,6 +516,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Get the rotor angle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga84c1eb58db8f6cbad123ca3413aa7b2a">RM_MOTOR_SENSORLESS_AngleGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga27fbe507dce70c440d1e65904364c2e0">RM_MOTOR_ENCODER_AngleGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -504,6 +542,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Get the rotation speed. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga737b83c18e18f49488b90bdb71b0eef9">RM_MOTOR_SENSORLESS_SpeedGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3c85184d654dd4e3dabbfc5d6b031b23">RM_MOTOR_ENCODER_SpeedGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -529,6 +568,7 @@ Placeholder for user extension. </td></tr>
 </div><div class="memdoc">
 <p>Check the error occurrence </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga526e1f2e08b5b8ec13ec92e4481e10af">RM_MOTOR_SENSORLESS_ErrorCheck()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#gaceff5b6babf7eddc59469185a1c8e756">RM_MOTOR_ENCODER_ErrorCheck()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -605,7 +645,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

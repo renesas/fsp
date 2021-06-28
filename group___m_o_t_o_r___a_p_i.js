@@ -14,6 +14,7 @@ var group___m_o_t_o_r___a_p_i =
       [ "reset", "group___m_o_t_o_r___a_p_i.html#a73d4de514894759ab5917709b1399208", null ],
       [ "errorSet", "group___m_o_t_o_r___a_p_i.html#a1f302c2b7f82f4aa52b44be05a575eaf", null ],
       [ "speedSet", "group___m_o_t_o_r___a_p_i.html#af4635002c9229fddac19e06d05fb3207", null ],
+      [ "positionSet", "group___m_o_t_o_r___a_p_i.html#a6ac2a0d0999335ee0a30ad84b378c0dd", null ],
       [ "statusGet", "group___m_o_t_o_r___a_p_i.html#a292e940165b226b56d83a0b3e9a20a8c", null ],
       [ "angleGet", "group___m_o_t_o_r___a_p_i.html#a2667442da1af9179b7ea009e67d74c77", null ],
       [ "speedGet", "group___m_o_t_o_r___a_p_i.html#a9cdbead2d65894e3243ea33fbfcb89cb", null ],

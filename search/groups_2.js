@@ -5,6 +5,8 @@ var searchData=
   ['controller_20area_20network_20_28r_5fcan_29',['Controller Area Network (r_can)',['../group___c_a_n.html',1,'']]],
   ['can_20interface',['CAN Interface',['../group___c_a_n___a_p_i.html',1,'']]],
   ['controller_20area_20network_20_2d_20flexible_20data_20_28r_5fcanfd_29',['Controller Area Network - Flexible Data (r_canfd)',['../group___c_a_n_f_d.html',1,'']]],
+  ['consumer_20electronics_20control_20_28r_5fcec_29',['Consumer Electronics Control (r_cec)',['../group___c_e_c.html',1,'']]],
+  ['cec_20interface',['CEC Interface',['../group___c_e_c___a_p_i.html',1,'']]],
   ['clock_20generation_20circuit_20_28r_5fcgc_29',['Clock Generation Circuit (r_cgc)',['../group___c_g_c.html',1,'']]],
   ['cgc_20interface',['CGC Interface',['../group___c_g_c___a_p_i.html',1,'']]],
   ['comparator_20interface',['Comparator Interface',['../group___c_o_m_p_a_r_a_t_o_r___a_p_i.html',1,'']]],
@@ -13,6 +15,7 @@ var searchData=
   ['capacitive_20touch_20sensing_20unit_20_28r_5fctsu_29',['Capacitive Touch Sensing Unit (r_ctsu)',['../group___c_t_s_u.html',1,'']]],
   ['ctsu_20interface',['CTSU Interface',['../group___c_t_s_u___a_p_i.html',1,'']]],
   ['common_20error_20codes',['Common Error Codes',['../group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html',1,'']]],
+  ['communicatons_20middleware_20interface',['Communicatons Middleware Interface',['../group___r_m___c_o_m_m_s___a_p_i.html',1,'']]],
   ['crypto_20middleware_20_28rm_5fpsa_5fcrypto_29',['Crypto Middleware (rm_psa_crypto)',['../group___r_m___p_s_a___c_r_y_p_t_o.html',1,'']]],
   ['capacitive_20touch_20middleware_20_28rm_5ftouch_29',['Capacitive Touch Middleware (rm_touch)',['../group___t_o_u_c_h.html',1,'']]]
 ];

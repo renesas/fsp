@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.0.1</span>
+   &#160;<span id="projectnumber">Release v3.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -183,7 +183,7 @@ Azure RTOS GUIX Port Block Diagram</div></div>
  <dl class="section note"><dt>Note</dt><dd>This port layer primarily enables hardware acceleration and background handling of many display operations and does not contain code intended to be directly called by the user. For information about how to use GUIX and GUIX Studio (including example code) please consult the <a href="https://docs.microsoft.com/en-us/azure/rtos/guix/">Azure RTOS GUIX documentation</a>.</dd></dl>
 <h2><a class="anchor" id="rm-guix-port-hw-accel"></a>
 Hardware Acceleration</h2>
-<p><a class="anchor" id="um_guix_close"></a><a class="anchor" id="um_guix_single_buffer"></a><a class="anchor" id="um_guix_hw_init"></a><a class="anchor" id="um_guix_rgb565"></a><a class="anchor" id="um_guix_composite_layers"></a><a class="anchor" id="um_guix_studio"></a><a class="anchor" id="um_guix_hw_pixelmap_blend"></a><a class="anchor" id="um_guix_hw_circle"></a><a class="anchor" id="um_guix_hw_arc"></a><a class="anchor" id="um_guix_sw_ellipse"></a><a class="anchor" id="um_guix_hw_polygon"></a><a class="anchor" id="um_guix_hw_line"></a><a class="anchor" id="um_guix_hw_pixel"></a><a class="anchor" id="um_guix_hw_block_move"></a><a class="anchor" id="um_guix_hw_glyph_blend"></a><a class="anchor" id="um_guix_hw_pixelmap_rotate"></a><a class="anchor" id="um_guix_rgb888"></a><a class="anchor" id="um_guix_argb8888"></a><a class="anchor" id="um_guix_glcdc_overflow"></a><a class="anchor" id="um_guix_screen_rotation"></a> The following functions are currently performed with hardware acceleration:</p><ul>
+<p><a class="anchor" id="um_guix_hw_init"></a><a class="anchor" id="um_guix_deinit"></a><a class="anchor" id="um_guix_rgb565"></a><a class="anchor" id="um_guix_studio"></a><a class="anchor" id="um_guix_hw_pixelmap"></a><a class="anchor" id="um_guix_hw_jpeg"></a><a class="anchor" id="um_guix_hw_circle"></a><a class="anchor" id="um_guix_hw_arc"></a><a class="anchor" id="um_guix_hw_pie"></a><a class="anchor" id="um_guix_sw_ellipse"></a><a class="anchor" id="um_guix_hw_polygon"></a><a class="anchor" id="um_guix_hw_line"></a><a class="anchor" id="um_guix_hw_pixel"></a><a class="anchor" id="um_guix_hw_block_move"></a><a class="anchor" id="um_guix_hw_glyph"></a><a class="anchor" id="um_guix_hw_pixelmap_rotate"></a><a class="anchor" id="um_guix_rgb888"></a><a class="anchor" id="um_guix_glcdc_underflow"></a><a class="anchor" id="um_guix_single_buffer"></a> The following functions are currently performed with hardware acceleration:</p><ul>
 <li>DRW Engine (<a class="el" href="group___d_r_w.html">D/AVE 2D Port Interface (r_drw)</a>)<ul>
 <li>Drawing bitmaps</li>
 <li>8, 4 and 1bpp uncompressed and compressed (RLE) font rendering</li>
@@ -230,6 +230,8 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Select whether or not to use the DRW Engine for hardware acceleration. </td></tr>
+<tr>
+<td>Hardware Acceleration &gt; Max DRW Operations</td><td>Value must be a positive integer</td><td>85 </td><td>Specifies the maximum number of DRW operations before flushing the display list. Reducing this value may reduce the peak heap used by the application but may reduce performance. </td></tr>
 <tr>
 <td>Internal Thread &gt; Stack Size</td><td>Value must be greater than zero</td><td>4096 </td><td>GUIX internal thread stack size in bytes. Must be greater than zero. </td></tr>
 <tr>
@@ -285,13 +287,17 @@ This module can be added to the Stacks tab via New Stack &gt; Azure RTOS &gt; GU
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
-<td>Display Rotation &gt; Angle (Clockwise)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Display Rotation &gt; Screen Orientation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
-180 degrees</li>
+CW (90 degrees)</li>
+<li>
+FLIP (180 degrees)</li>
+<li>
+CCW (270 degrees)</li>
 </ul>
-</td><td>None </td><td>Select the clockwise screen rotation angle. If the screen is rotated the Canvas Buffer must be enabled. </td></tr>
+</td><td>None </td><td>Select the display orientation specified in the GUIX Studio project. The Canvas Buffer must be enabled when rotating 180 degrees (FLIP). </td></tr>
 <tr>
 <td>Display Rotation &gt; Use Canvas Buffer</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -337,18 +343,27 @@ Getting Started</h2>
 <li>Ensure the configuration options for GUIX and the port layer are set as necessary for your application</li>
 <li>Set the proporties for the GLCDC module to match the timing and memory requirements of your display panel</li>
 <li>Set the input color format in the GLCDC module (Input -&gt; Graphics Layer * -&gt; General -&gt; Color format) and the output color format in the JPEG Codec module if applicable (Decode -&gt; Output color format) per your project specification</li>
+<li>Click the BSP tab in the configuration editor and confirm the heap size in the Properties pane is sufficient (see Note below)</li>
 <li>Click Generate Project Content to save and commit configuration changes</li>
 <li>Drop the Quick Setup entry in Developer Assistance into the desired thread entry C file and update the items marked with TODO as necessary</li>
 <li>Call the Quick Setup function from the thread entry function (or where desired)</li>
 </ol>
 <p>At this point the project is now ready to build and run your GUIX Studio project. Please refer to the documentation for Azure RTOS GUIX and GUIX Studio for details on how to create and edit a GUI application.</p>
+<dl class="section note"><dt>Note</dt><dd>It is recommended to start with 8K-32K of heap to begin development. Actual heap use is typically far lower than this but must be characterized by the developer.</dd></dl>
 <h2><a class="anchor" id="rm-guix-port-limitations"></a>
-Limitations</h2>
-<p>Developers should be aware of the following limitations when using Azure RTOS GUIX with FSP:</p>
+Using Hardware Acceleration</h2>
+<p>In most cases there is no need to perform additional configuration to ensure the DRW Engine is used. However, there are some guidelines that should be followed:</p>
 <ul>
-<li>Only 0 and 180 degree screen rotation is currently supported.</li>
+<li>Avoid transparent pixelmaps in 8-bit display mode as they are rendered in software. In particular, ensure PNGs to be used in 8bpp GUIX Studio projects are saved without transparency data if no transparency is needed.</li>
+<li>The following items may require a large heap to draw successfully:<ul>
+<li>Polygons (more sides = more heap)</li>
+<li>Filled arcs and ellipses (more framebuffer lines occupied = more heap)</li>
+<li><code>gx_canvas_pixelmap_tile</code> (more tiles = more heap)</li>
 </ul>
-<hr/>
+</li>
+<li>When using hardware acceleration, images used for tile fill of shapes must have dimensions that are a power of 2. This limitation does not apply to <code>gx_canvas_pixelmap_tile</code> as well as certain arc/ellipse fill functions as GUIX manually draws pixelmaps to fill these shapes (at the expense of heap space). <hr/>
+</li>
+</ul>
 <h1><a class="anchor" id="rm-guix-port-examples"></a>
 Examples</h1>
 <h2><a class="anchor" id="rm-guix-port-examples-minimal"></a>
@@ -367,8 +382,6 @@ Enumerations</h2></td></tr>
 <tr class="separator:gaeb98b129bce754c16ed688e2410fb699"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga405fa57e46e3313d2e01c7e218126a1f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___g_u_i_x___p_o_r_t.html#ga405fa57e46e3313d2e01c7e218126a1f">rm_guix_port_event_t</a> </td></tr>
 <tr class="separator:ga405fa57e46e3313d2e01c7e218126a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2c805ad4808f3f69c9fe5058e6217644"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___g_u_i_x___p_o_r_t.html#ga2c805ad4808f3f69c9fe5058e6217644">rm_guix_port_rotation_angle_t</a> </td></tr>
-<tr class="separator:ga2c805ad4808f3f69c9fe5058e6217644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structrm__guix__port__callback__args__t" id="structrm__guix__port__callback__args__t"></a>
@@ -456,27 +469,6 @@ Error code if RM_GUIX_PORT_EVENT_ERROR. </td></tr>
 
 </div>
 </div>
-<a id="ga2c805ad4808f3f69c9fe5058e6217644"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2c805ad4808f3f69c9fe5058e6217644">&#9670;&nbsp;</a></span>rm_guix_port_rotation_angle_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___r_m___g_u_i_x___p_o_r_t.html#ga2c805ad4808f3f69c9fe5058e6217644">rm_guix_port_rotation_angle_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Display rotation angle </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga2c805ad4808f3f69c9fe5058e6217644a10fc392f17b47c5abdcea8eacad4444a"></a>RM_GUIX_PORT_ROTATION_ANGLE_0&#160;</td><td class="fielddoc"><p>No rotation. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga2c805ad4808f3f69c9fe5058e6217644a9f3fed4fc897571242bca280e1635526"></a>RM_GUIX_PORT_ROTATION_ANGLE_180&#160;</td><td class="fielddoc"><p>Rotate screen 180 degrees. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga8f58183b71096559109eff1f15331c75"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8f58183b71096559109eff1f15331c75">&#9670;&nbsp;</a></span>rm_guix_port_hw_initialize()</h2>
@@ -511,7 +503,7 @@ Error code if RM_GUIX_PORT_EVENT_ERROR. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.0.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
