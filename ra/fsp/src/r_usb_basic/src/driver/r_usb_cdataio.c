@@ -52,9 +52,11 @@
  #include "r_usb_hhid_cfg.h"
 #endif                                 /* defined(USB_CFG_HHID_USE) */
 
-#if defined(USB_CFG_HMSC_USE)
- #include "r_usb_hmsc.h"
-#endif                                 /* defined(USB_CFG_HMSC_USE) */
+#if (BSP_CFG_RTOS != 1)
+ #if defined(USB_CFG_HMSC_USE)
+  #include "r_usb_hmsc.h"
+ #endif                                /* defined(USB_CFG_HMSC_USE) */
+#endif /* #if (BSP_CFG_RTOS != 1) */
 
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
  #include "../hw/inc/r_usb_dmac.h"
@@ -320,6 +322,7 @@ usb_er_t usb_ctrl_read (usb_instance_ctrl_t * p_ctrl, uint8_t * buf, uint32_t si
         usb_pstd_ctrl_write(size, buf, &tran_data_peri);
     }
  #endif                                /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
+
     return USB_OK;
 } /* End of function usb_ctrl_read() */
 
@@ -724,7 +727,6 @@ uint8_t usb_get_usepipe (usb_instance_ctrl_t * p_ctrl, usb_transfer_t dir)
     if (USB_CLASS_INTERNAL_PVND < (usb_class_internal_t) (p_ctrl->type))
     {
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-
         /* Host */
         idx =
             (uint8_t) (((((usb_class_internal_t) p_ctrl->type - USB_CLASS_INTERNAL_HCDC) * 8) +
@@ -735,7 +737,6 @@ uint8_t usb_get_usepipe (usb_instance_ctrl_t * p_ctrl, usb_transfer_t dir)
     else
     {
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-
         /* Peripheral */
         idx  = (uint8_t) ((p_ctrl->type * 2) + dir);
         pipe = g_usb_pipe_peri[idx];

@@ -164,6 +164,14 @@ fsp_err_t RM_MOTOR_ESTIMATE_EstimatedComponentGet(motor_angle_ctrl_t * const p_c
 
 fsp_err_t RM_MOTOR_ESTIMATE_ParameterUpdate(motor_angle_ctrl_t * const p_ctrl, motor_angle_cfg_t const * p_cfg);
 
+fsp_err_t RM_MOTOR_ESTIMATE_InternalCalculate(motor_angle_ctrl_t * const p_ctrl);
+
+fsp_err_t RM_MOTOR_ESTIMATE_AngleAdjust(motor_angle_ctrl_t * const p_ctrl);
+
+fsp_err_t RM_MOTOR_ESTIMATE_EncoderCyclic(motor_angle_ctrl_t * const p_ctrl);
+
+fsp_err_t RM_MOTOR_ESTIMATE_InfoGet(motor_angle_ctrl_t * const p_ctrl, motor_angle_encoder_info_t * const p_info);
+
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 

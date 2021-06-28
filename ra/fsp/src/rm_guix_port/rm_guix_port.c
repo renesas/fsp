@@ -26,7 +26,7 @@
 
 #include "r_glcdc.h"
 
-#if GX_USE_SYNERGY_DRW
+#if GX_RENESAS_DAVE2D_DRAW
  #include "dave_driver.h"
 #endif
 
@@ -64,7 +64,7 @@ static void rm_guix_port_canvas_clear(GX_DISPLAY * p_display, rm_guix_port_insta
 
 void _rm_guix_port_display_callback(display_callback_args_t * p_args);
 
-#if GX_USE_SYNERGY_DRW
+#if GX_RENESAS_DAVE2D_DRAW
 static d2_s32 rm_guix_port_d2_open_format_get(GX_DISPLAY * p_display);
 
 static fsp_err_t rm_guix_port_d2_open(GX_DISPLAY * p_display, rm_guix_port_instance_ctrl_t * const p_ctrl);
@@ -229,7 +229,7 @@ fsp_err_t rm_guix_port_hw_deinitialize ()
         tx_thread_sleep(1);
     }
 
-#if GX_USE_SYNERGY_DRW
+#if GX_RENESAS_DAVE2D_DRAW
 
     /** Stop DRW Engine */
     rm_guix_port_d2_close(&_g_guix_port_ctrl);
@@ -344,7 +344,7 @@ static fsp_err_t rm_guix_port_driver_setup (GX_DISPLAY * p_display, rm_guix_port
     /** Setups GUIX draw functions */
     _gx_ra_display_driver_setup(p_display);
 
-#if GX_USE_SYNERGY_DRW
+#if GX_RENESAS_DAVE2D_DRAW
 
     /** Setups D/AVE 2D */
     error = rm_guix_port_d2_open(p_display, p_ctrl);
@@ -412,7 +412,7 @@ static void rm_guix_port_canvas_clear (GX_DISPLAY * p_display, rm_guix_port_inst
     }
 }                                      /* End of function rm_guix_port_canvas_clear() */
 
-#if GX_USE_SYNERGY_DRW
+#if GX_RENESAS_DAVE2D_DRAW
 
 /*******************************************************************************************************************//**
  * @brief  rm_guix_port_d2_open sub-routine to select a D/AVE 2D color format corresponding to the GUIX color format.
@@ -491,11 +491,11 @@ static fsp_err_t rm_guix_port_d2_open (GX_DISPLAY * p_display, rm_guix_port_inst
  #if !RM_GUIX_PORT_CFG_DRW_BURST_WRITE_ENABLED
 
     /* Disable the cache of the Dave2D so it doesn't do burst writes. */
-    p_display->gx_display_accelerator = d2_opendevice(4);
+    p_display->gx_display_accelerator = d2_opendevice(d2_df_no_fbcache);
  #else
 
     /* Enable the cache of the Dave2D so it perform burst writes. */
-    p_display->gx_display_accelerator = d2_opendevice(0);
+    p_display->gx_display_accelerator = d2_opendevice(0U);
  #endif
 
     /** Initializes 2D Drawing Engine hardware */
@@ -579,7 +579,7 @@ void rm_guix_port_display_actual_size_get (ULONG display_handle, INT * p_width, 
  **********************************************************************************************************************/
 void * rm_guix_port_jpeg_buffer_get (ULONG display_handle, INT * p_memory_size)
 {
-#if GX_USE_SYNERGY_JPEG
+#if GX_USE_RENESAS_JPEG
     rm_guix_port_instance_ctrl_t * p_ctrl = (rm_guix_port_instance_ctrl_t *) (display_handle);
 
     if (p_memory_size)
@@ -607,7 +607,7 @@ void * rm_guix_port_jpeg_buffer_get (ULONG display_handle, INT * p_memory_size)
  **********************************************************************************************************************/
 void * rm_guix_port_jpeg_instance_get (ULONG display_handle)
 {
-#if GX_USE_SYNERGY_JPEG
+#if GX_USE_RENESAS_JPEG
     rm_guix_port_instance_ctrl_t * p_ctrl = (rm_guix_port_instance_ctrl_t *) (display_handle);
 
     return p_ctrl->p_jpeg_instance;
@@ -632,6 +632,7 @@ void rm_guix_port_display_8bit_palette_assign (ULONG display_handle)
     clut_cfg.start  = (uint16_t) 0;
     clut_cfg.size   = (uint16_t) p_ctrl->p_display->gx_display_palette_size;
 
+    /* Write palette data to GLCDC CLUT */
     R_GLCDC_ClutUpdate(p_ctrl->p_display_instance->p_ctrl, &clut_cfg, p_ctrl->inherit_frame_layer);
 }                                      /* End of function rm_guix_port_display_8bit_palette_assign() */
 

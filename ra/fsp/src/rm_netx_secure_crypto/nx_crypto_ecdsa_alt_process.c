@@ -227,7 +227,9 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
                                  UINT           hash_length,
                                  UCHAR        * public_key,
                                  UCHAR        * signature_r,
-                                 UCHAR        * signature_s)
+                                 UINT           r_size,
+                                 UCHAR        * signature_s,
+                                 UINT           s_size)
 {
     fsp_err_t     err                    = FSP_SUCCESS;
     uint32_t      cmd                    = 0;
@@ -236,6 +238,13 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
     sce_oem_cmd_t key_command            = SCE_OEM_CMD_ECC_P256_PUBLIC;
     uint32_t      zero_padding_words     = 0;
     uint32_t      padded_coordinate_size = RM_NETX_SECURE_CRYPTO_P256_CURVE_SIZE_BYTES;
+
+    /* For case where the R and S components of signature start with one or more 0s the inherent encoding eliminates them.
+     * These need to be readded at the time of re-creating the signature value.
+     * The difference between the curve size and the R/S length is the number of 0 byte prefex omitted.
+     */
+    uint32_t signature_r_repad_length = curve_size - r_size;
+    uint32_t signature_s_repad_length = curve_size - s_size;
 
     /* Due to the padding logic in the NX stack the signature buffers will not be word alogned.
      * Create word aligned local buffers to store the input signature from the byte aligned user signature buffers.
@@ -314,9 +323,13 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
     NX_CRYPTO_MEMCPY(&pub_key[zero_padding_words], public_key, curve_size);
     NX_CRYPTO_MEMCPY(&pub_key[(padded_coordinate_size / 4U) + zero_padding_words], &public_key[curve_size], curve_size);
 
-    /* Copy the signature into the local buffer */
-    NX_CRYPTO_MEMCPY(&sign[zero_padding_words], signature_r, curve_size);
-    NX_CRYPTO_MEMCPY(&sign[(padded_coordinate_size / 4U) + zero_padding_words], signature_s, curve_size);
+    /* Copy the signature into the local buffer
+     * Advance signature_r_repad_length/signature_s_repad_length number of bytes to re-pad with 0s.
+     */
+    NX_CRYPTO_MEMCPY(((uint8_t *) &sign[zero_padding_words]) + signature_r_repad_length, signature_r, r_size);
+    NX_CRYPTO_MEMCPY(((uint8_t *) &sign[(padded_coordinate_size / 4U) + zero_padding_words]) + signature_s_repad_length,
+                     signature_s,
+                     s_size);
 
     /* Install the plaintext public key to get the formatted public key */
     err = HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,

@@ -28,6 +28,7 @@
  *
  * The motor angle interface can be implemented by:
  * - @ref MOTOR_ESTIMATE
+ * - @ref MOTOR_SENSE_ENCODER
  *
  * @{
  **********************************************************************************************************************/
@@ -79,12 +80,27 @@ typedef struct st_motor_angle_voltage_reference
     float vq;                          ///< q-axis voltage reference
 } motor_angle_voltage_reference_t;
 
+/* encoder angle adjustment status */
+typedef enum e_motor_sense_encoder_angle_adjust
+{
+    MOTOR_SENSE_ENCODER_ANGLE_ADJUST_90_DEGREE = 1, ///< Roter Angle Adjustment to pull in 90degree
+    MOTOR_SENSE_ENCODER_ANGLE_ADJUST_0_DEGREE,      ///< Roter Angle Adjustment to pull in 0degree
+    MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH,        ///< Roter Angle Adjustment Finish
+} motor_sense_encoder_angle_adjust_t;
+
+typedef struct st_motor_angle_encoder_info
+{
+    motor_sense_encoder_angle_adjust_t e_adjust_status; ///< Encoder Adjustment Status
+    uint8_t u1_adjust_count_full;                       ///< Adjustment count became full
+} motor_angle_encoder_info_t;
+
 /** Functions implemented as application interface will follow these APIs. */
 typedef struct st_motor_angle_api
 {
     /** Initialize the Motor_Angle.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_Open()
+     * - @ref RM_MOTOR_SENSE_ENCODER_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -94,6 +110,7 @@ typedef struct st_motor_angle_api
     /** Close (Finish) the Motor_Angle.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_Close()
+     * - @ref RM_MOTOR_SENSE_ENCODER_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -102,6 +119,7 @@ typedef struct st_motor_angle_api
     /** Reset the Motor_Angle.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_Reset()
+     * - @ref RM_MOTOR_SENSE_ENCODER_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -110,6 +128,7 @@ typedef struct st_motor_angle_api
     /** Set (Input) Current & Voltage Reference data into the Motor_Angle.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_CurrentSet()
+     * - @ref RM_MOTOR_SENSE_ENCODER_CurrentSet()
      *
      * @param[in]  p_ctrl         Pointer to control structure.
      * @param[in]  p_st_current   Pointer to current structure
@@ -121,6 +140,7 @@ typedef struct st_motor_angle_api
     /** Set (Input) Speed Information into the Motor_Angle.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_SpeedSet()
+     * - @ref RM_MOTOR_SENSE_ENCODER_SpeedSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  speed_ctrl   Control reference of rotational speed [rad/s]
@@ -131,15 +151,26 @@ typedef struct st_motor_angle_api
     /** Set the flag of PI Control runs.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_FlagPiCtrlSet()
+     * - @ref RM_MOTOR_SENSE_ENCODER_FlagPiCtrlSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  flag_pi      The flag of PI control runs
      */
     fsp_err_t (* flagPiCtrlSet)(motor_angle_ctrl_t * const p_ctrl, uint32_t const flag_pi);
 
+    /** Calculate internal parameters of encoder process.
+     * @par Implemented as
+     * - @ref RM_MOTOR_ESTIMATE_InternalCalculate()
+     * - @ref RM_MOTOR_SENSE_ENCODER_InternalCalculate()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     */
+    fsp_err_t (* internalCalculate)(motor_angle_ctrl_t * const p_ctrl);
+
     /** Get rotor angle and rotational speed from the Motor_Angle.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_AngleSpeedGet()
+     * - @ref RM_MOTOR_SENSE_ENCODER_AngleSpeedGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_angl       Memory address to get rotor angle data
@@ -149,9 +180,28 @@ typedef struct st_motor_angle_api
     fsp_err_t (* angleSpeedGet)(motor_angle_ctrl_t * const p_ctrl, float * const p_angle, float * const p_speed,
                                 float * const p_phase_err);
 
+    /** Angle Adjustment Process.
+     * @par Implemented as
+     * - @ref RM_MOTOR_ESTIMATE_AngleAdjust()
+     * - @ref RM_MOTOR_SENSE_ENCODER_AngleAdjust()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     */
+    fsp_err_t (* angleAdjust)(motor_angle_ctrl_t * const p_ctrl);
+
+    /** Encoder Cyclic Process.
+     * @par Implemented as
+     * - @ref RM_MOTOR_ESTIMATE_EncoderCyclic()
+     * - @ref RM_MOTOR_SENSE_ENCODER_EncoderCyclic()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     */
+    fsp_err_t (* encoderCyclic)(motor_angle_ctrl_t * const p_ctrl);
+
     /** Get estimated d/q-axis component from the Motor_Angle.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_EstimatedComponentGet()
+     * - @ref RM_MOTOR_SENSE_ENCODER_EstimatedComponentGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_ed         Memory address to get estimated d-axis component
@@ -159,9 +209,20 @@ typedef struct st_motor_angle_api
      */
     fsp_err_t (* estimatedComponentGet)(motor_angle_ctrl_t * const p_ctrl, float * const p_ed, float * const p_eq);
 
+    /** Get Encoder Calculate Information.
+     * @par Implemented as
+     * - @ref RM_MOTOR_ESTIMATE_InfoGet()
+     * - @ref RM_MOTOR_SENSE_ENCODER_InfoGet()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[out] p_info       Memory address to get encoder calculate information
+     */
+    fsp_err_t (* infoGet)(motor_angle_ctrl_t * const p_ctrl, motor_angle_encoder_info_t * const p_info);
+
     /** Update Parameters for the calculation in the Motor_Angle.
      * @par Implemented as
      * - @ref RM_MOTOR_ESTIMATE_ParameterUpdate()
+     * - @ref RM_MOTOR_SENSE_ENCODER_ParameterUpdate()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure include update parameters.

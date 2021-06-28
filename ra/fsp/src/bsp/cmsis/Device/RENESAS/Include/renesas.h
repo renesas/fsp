@@ -15528,7 +15528,8 @@ typedef struct                         /*!< (@ 0x40047000) R_MSTP Structure     
             uint32_t               : 1;
             __IOM uint32_t MSTPB1  : 1; /*!< [1..1] RCAN1 Module Stop                                                  */
             __IOM uint32_t MSTPB2  : 1; /*!< [2..2] RCAN0 Module Stop                                                  */
-            uint32_t               : 2;
+            __IOM uint32_t MSTPB3  : 1; /*!< [3..3] RCEC Module Stop                                                   */
+            uint32_t               : 1;
             __IOM uint32_t MSTPB5  : 1; /*!< [5..5] IrDA Module Stop                                                   */
             __IOM uint32_t MSTPB6  : 1; /*!< [6..6] Queued Serial Peripheral Interface Module Stop                     */
             __IOM uint32_t MSTPB7  : 1; /*!< [7..7] I2C Bus Interface 2 Module Stop                                    */
@@ -23375,6 +23376,360 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
         } CPUDSAR_b;
     };
 } R_CPSCU_Type;                         /*!< Size = 436 (0x1b4)                                                        */
+
+/* =========================================================================================================================== */
+/* ================                                           R_CEC                                           ================ */
+/* =========================================================================================================================== */
+
+/**
+ * @brief Consumer Electronics Control (R_CEC)
+ */
+
+typedef struct                         /*!< (@ 0x400AC000) R_CEC Structure                                            */
+{
+    union
+    {
+        __IOM uint16_t CADR;           /*!< (@ 0x00000000) CEC Local Address Setting Register                         */
+
+        struct
+        {
+            __IOM uint16_t ADR00 : 1;  /*!< [0..0] Local Address at Address 0 (TV)                                    */
+            __IOM uint16_t ADR01 : 1;  /*!< [1..1] Local Address Setting at Address 1 (recording device
+                                        *   1)                                                                        */
+            __IOM uint16_t ADR02 : 1;  /*!< [2..2] Local Address Setting at Address 2 (recording device
+                                        *   2)                                                                        */
+            __IOM uint16_t ADR03 : 1;  /*!< [3..3] Local Address Setting at Address 3 (tuner 1)                       */
+            __IOM uint16_t ADR04 : 1;  /*!< [4..4] Local Address Setting at Address 4 (playback device 1)             */
+            __IOM uint16_t ADR05 : 1;  /*!< [5..5] Local Address Setting at Address 5 (audio system)                  */
+            __IOM uint16_t ADR06 : 1;  /*!< [6..6] Local Address Setting at Address 6 (tuner 2)                       */
+            __IOM uint16_t ADR07 : 1;  /*!< [7..7] Local Address Setting at Address 7 (tuner 3)                       */
+            __IOM uint16_t ADR08 : 1;  /*!< [8..8] Local Address Setting at Address 8 (playback device 2)             */
+            __IOM uint16_t ADR09 : 1;  /*!< [9..9] Local Address Setting at Address 9 (recording device
+                                        *   3)                                                                        */
+            __IOM uint16_t ADR10 : 1;  /*!< [10..10] Local Address Setting at Address 10 (tuner 4)                    */
+            __IOM uint16_t ADR11 : 1;  /*!< [11..11] Local Address Setting at Address 11 (playback device
+                                        *   3)                                                                        */
+            __IOM uint16_t ADR12 : 1;  /*!< [12..12] Local Address Setting at Address 12 (reserved)                   */
+            __IOM uint16_t ADR13 : 1;  /*!< [13..13] Local Address Setting at Address 13 (reserved)                   */
+            __IOM uint16_t ADR14 : 1;  /*!< [14..14] Local Address Setting at Address 14 (specific use)               */
+            uint16_t             : 1;
+        } CADR_b;
+    };
+
+    union
+    {
+        __IOM uint8_t CECCTL1;         /*!< (@ 0x00000002) CEC Control Register 1                                     */
+
+        struct
+        {
+            __IOM uint8_t SFT   : 2;   /*!< [1..0] Signal-Free Time Data Bit Width Select                             */
+            __IOM uint8_t CESEL : 2;   /*!< [3..2] Communication Complete Interrupt (INTCE) Generation Timing
+                                        *   Select                                                                    */
+            __IOM uint8_t STERRD : 1;  /*!< [4..4] Start Bit Error Detection Select                                   */
+            __IOM uint8_t BLERRD : 1;  /*!< [5..5] Bus Lock Detection Select                                          */
+            __IOM uint8_t CINTMK : 1;  /*!< [6..6] CEC Data Interrupt (INTDA) Generation Select                       */
+            __IOM uint8_t CDFC   : 1;  /*!< [7..7] Digital Filter Select                                              */
+        } CECCTL1_b;
+    };
+    __IM uint8_t RESERVED;
+
+    union
+    {
+        __IOM uint16_t STATB;          /*!< (@ 0x00000004) CEC Transmission Start Bit Width Setting Register          */
+
+        struct
+        {
+            __IOM uint16_t STATB : 9;  /*!< [8..0] CEC Transmission Start Bit Width Setting                           */
+            uint16_t             : 7;
+        } STATB_b;
+    };
+
+    union
+    {
+        __IOM uint16_t STATL;          /*!< (@ 0x00000006) CEC Transmission Start Bit Low Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t STATL : 9;  /*!< [8..0] CEC Transmission Start Bit Low Width Setting                       */
+            uint16_t             : 7;
+        } STATL_b;
+    };
+
+    union
+    {
+        __IOM uint16_t LGC0L;          /*!< (@ 0x00000008) CEC Transmission Logical 0 Low Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t LGC0L : 9;  /*!< [8..0] CEC Transmission Logical 0 Low Width Setting                       */
+            uint16_t             : 7;
+        } LGC0L_b;
+    };
+
+    union
+    {
+        __IOM uint16_t LGC1L;          /*!< (@ 0x0000000A) CEC Transmission Logical 1 Low Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t LGC1L : 9;  /*!< [8..0] CEC Transmission Logical 1 Low Width Setting                       */
+            uint16_t             : 7;
+        } LGC1L_b;
+    };
+
+    union
+    {
+        __IOM uint16_t DATB;           /*!< (@ 0x0000000C) CEC Transmission Data Bit Width Setting Register           */
+
+        struct
+        {
+            __IOM uint16_t DATB : 9;   /*!< [8..0] CEC Transmission Data Bit Width Setting                            */
+            uint16_t            : 7;
+        } DATB_b;
+    };
+
+    union
+    {
+        __IOM uint16_t NOMT;           /*!< (@ 0x0000000E) CEC Reception Data Sampling Time Setting Register          */
+
+        struct
+        {
+            __IOM uint16_t NOMT : 9;   /*!< [8..0] CEC Reception Data Sampling Time Setting,                          */
+            uint16_t            : 7;
+        } NOMT_b;
+    };
+
+    union
+    {
+        __IOM uint16_t STATLL;         /*!< (@ 0x00000010) CEC Reception Start Bit Minimum Low Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t STATLL : 9; /*!< [8..0] CEC Reception Start Bit Minimum Low Width Setting                  */
+            uint16_t              : 7;
+        } STATLL_b;
+    };
+
+    union
+    {
+        __IOM uint16_t STATLH;         /*!< (@ 0x00000012) CEC Reception Start Bit Maximum Low Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t STATLH : 9; /*!< [8..0] CEC Reception Start Bit Maximum Bit Width Setting                  */
+            uint16_t              : 7;
+        } STATLH_b;
+    };
+
+    union
+    {
+        __IOM uint16_t STATBL;         /*!< (@ 0x00000014) CEC Reception Start Bit Minimum Bit Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t STATBL : 9; /*!< [8..0] CEC Reception Start Bit Minimum Bit Width Setting                  */
+            uint16_t              : 7;
+        } STATBL_b;
+    };
+
+    union
+    {
+        __IOM uint16_t STATBH;         /*!< (@ 0x00000016) CEC Reception Start Bit Maximum Bit Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t STATBH : 9; /*!< [8..0] CEC Reception Start Bit Maximum Bit Width Setting                  */
+            uint16_t              : 7;
+        } STATBH_b;
+    };
+
+    union
+    {
+        __IOM uint16_t LGC0LL;         /*!< (@ 0x00000018) CEC Reception Logical 0 Minimum Low Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t LGC0LL : 9; /*!< [8..0] CEC Reception Logical 0 Minimum Low Width Setting                  */
+            uint16_t              : 7;
+        } LGC0LL_b;
+    };
+
+    union
+    {
+        __IOM uint16_t LGC0LH;         /*!< (@ 0x0000001A) CEC Reception Logical 0 Maximum Low Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t LGC0LH : 9; /*!< [8..0] CEC Reception Logical 0 Minimum Low Width Setting                  */
+            uint16_t              : 7;
+        } LGC0LH_b;
+    };
+
+    union
+    {
+        __IOM uint16_t LGC1LL;         /*!< (@ 0x0000001C) CEC Reception Logical 1 Minimum Low Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t LGC1LL : 9; /*!< [8..0] CEC Reception Logical 1 Minimum Low Width Setting                  */
+            uint16_t              : 7;
+        } LGC1LL_b;
+    };
+
+    union
+    {
+        __IOM uint16_t LGC1LH;         /*!< (@ 0x0000001E) CEC Reception Logical 1 Maximum Low Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t LGC1LH : 9; /*!< [8..0] CEC Reception Logical 1 Maximum Low Width Setting                  */
+            uint16_t              : 7;
+        } LGC1LH_b;
+    };
+
+    union
+    {
+        __IOM uint16_t DATBL;          /*!< (@ 0x00000020) CEC Reception Data Bit Minimum Bit Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t DATBL : 9;  /*!< [8..0] CEC Reception Data Bit Minimum Bit Width Setting                   */
+            uint16_t             : 7;
+        } DATBL_b;
+    };
+
+    union
+    {
+        __IOM uint16_t DATBH;          /*!< (@ 0x00000022) CEC Reception Data Bit Maximum Bit Width Setting
+                                        *                  Register                                                   */
+
+        struct
+        {
+            __IOM uint16_t DATBH : 9;  /*!< [8..0] CEC Reception Data Bit Maximum Bit Width Setting                   */
+            uint16_t             : 7;
+        } DATBH_b;
+    };
+
+    union
+    {
+        __IOM uint16_t NOMP;           /*!< (@ 0x00000024) CEC Data Bit Reference Width Setting Register              */
+
+        struct
+        {
+            __IOM uint16_t NOMP : 9;   /*!< [8..0] CEC Data Bit Reference Width Setting                               */
+            uint16_t            : 7;
+        } NOMP_b;
+    };
+    __IM uint16_t RESERVED1;
+
+    union
+    {
+        __IOM uint8_t CECEXMD;         /*!< (@ 0x00000028) CEC Extension Mode Register                                */
+
+        struct
+        {
+            uint8_t                  : 4;
+            __IOM uint8_t LERPLEN    : 1; /*!< [4..4] Pulse Output Function Enable by Long Bit Width Error               */
+            __IOM uint8_t RERCVEN    : 1; /*!< [5..5] Start Detection Reception Restart Enable                           */
+            uint8_t                  : 1;
+            __IOM uint8_t RCVINTDSEL : 1; /*!< [7..7] INTDA Reception Interrupt Timing Change                            */
+        } CECEXMD_b;
+    };
+    __IM uint8_t RESERVED2;
+
+    union
+    {
+        __IOM uint8_t CECEXMON;        /*!< (@ 0x0000002A) CEC Extension Monitor Register                             */
+
+        struct
+        {
+            __IM uint8_t CECLNMON : 1; /*!< [0..0] CEC Line Monitor                                                   */
+            __IM uint8_t ACKF     : 1; /*!< [1..1] ACK Flag                                                           */
+            uint8_t               : 6;
+        } CECEXMON_b;
+    };
+    __IM uint8_t  RESERVED3;
+    __IM uint16_t RESERVED4[10];
+    __IOM uint8_t CTXD;                /*!< (@ 0x00000040) CEC Transmission Buffer Register                           */
+    __IOM uint8_t CRXD;                /*!< (@ 0x00000041) CEC Reception Buffer Register                              */
+
+    union
+    {
+        __IOM uint8_t CECES;           /*!< (@ 0x00000042) CEC Communication Error Status Register                    */
+
+        struct
+        {
+            __IM uint8_t OERR   : 1;   /*!< [0..0] Overrun Error Detection Flag                                       */
+            __IM uint8_t UERR   : 1;   /*!< [1..1] Underrun Error Detection Flag                                      */
+            __IM uint8_t ACKERR : 1;   /*!< [2..2] ACK Error Detection Flag                                           */
+            __IM uint8_t TERR   : 1;   /*!< [3..3] Timing Error Detection Flag                                        */
+            __IM uint8_t TXERR  : 1;   /*!< [4..4] Transmission Error Detection Flag                                  */
+            __IM uint8_t AERR   : 1;   /*!< [5..5] Arbitration Loss Detection Flag                                    */
+            __IM uint8_t BLERR  : 1;   /*!< [6..6] Bus Lock Error Detection Flag                                      */
+            uint8_t             : 1;
+        } CECES_b;
+    };
+
+    union
+    {
+        __IOM uint8_t CECS;            /*!< (@ 0x00000043) CEC Communication Status Register                          */
+
+        struct
+        {
+            __IM uint8_t ADRF  : 1;    /*!< [0..0] Address Match Detection Flag                                       */
+            __IM uint8_t BUSST : 1;    /*!< [1..1] Bus Busy Detection Flag                                            */
+            __IM uint8_t TXST  : 1;    /*!< [2..2] Transmission Status Flag                                           */
+            __IM uint8_t EOMF  : 1;    /*!< [3..3] EOM Flag                                                           */
+            __IM uint8_t ITCEF : 1;    /*!< [4..4] INTCE Generation Source Flag                                       */
+            uint8_t            : 2;
+            __IM uint8_t SFTST : 1;    /*!< [7..7] Signal-Free Time Rewrite Disable Report Flag                       */
+        } CECS_b;
+    };
+
+    union
+    {
+        __IOM uint8_t CECFC;           /*!< (@ 0x00000044) CEC Communication Error Flag Clear Trigger Register        */
+
+        struct
+        {
+            __OM uint8_t OCTRG   : 1;  /*!< [0..0] Overrun Error Detection Flag Clear Trigger                         */
+            __OM uint8_t UCTRG   : 1;  /*!< [1..1] Underrun Error Detection Flag Clear Trigger                        */
+            __OM uint8_t ACKCTRG : 1;  /*!< [2..2] ACK Error Detection Flag Clear Trigger                             */
+            __OM uint8_t TCTRG   : 1;  /*!< [3..3] Timing Error Detection Flag Clear Trigger                          */
+            __OM uint8_t TXCTRG  : 1;  /*!< [4..4] Transmission Error Detection Flag Clear Trigger                    */
+            __OM uint8_t ACTRG   : 1;  /*!< [5..5] Arbitration Loss Detection Flag Clear Trigger                      */
+            __OM uint8_t BLCTRG  : 1;  /*!< [6..6] Bus Lock Error Detection Flag Clear Trigger                        */
+            uint8_t              : 1;
+        } CECFC_b;
+    };
+
+    union
+    {
+        __IOM uint8_t CECCTL0;         /*!< (@ 0x00000045) CEC Control Register 0                                     */
+
+        struct
+        {
+            __IOM uint8_t EOM     : 1; /*!< [0..0] EOM Setting                                                        */
+            __IOM uint8_t CECRXEN : 1; /*!< [1..1] Reception Enable Control                                           */
+            __OM uint8_t  TXTRG   : 1; /*!< [2..2] Transmission Start Trigger                                         */
+            __IOM uint8_t CCL     : 3; /*!< [5..3] CEC Clock (CECCLK) Select                                          */
+            __IOM uint8_t ACKTEN  : 1; /*!< [6..6] ACK Bit Timing Error (Bit Width) Check Enable                      */
+            __IOM uint8_t CECE    : 1; /*!< [7..7] CEC Operation Enable Flag                                          */
+        } CECCTL0_b;
+    };
+} R_CEC_Type;                          /*!< Size = 70 (0x46)                                                          */
 
 /* =========================================================================================================================== */
 /* ================                                          R_OSPI                                           ================ */
@@ -31245,6 +31600,8 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
  #define R_MSTP_MSTPCRB_MSTPB6_Msk     (0x40UL)       /*!< MSTPB6 (Bitfield-Mask: 0x01)                          */
  #define R_MSTP_MSTPCRB_MSTPB5_Pos     (5UL)          /*!< MSTPB5 (Bit 5)                                        */
  #define R_MSTP_MSTPCRB_MSTPB5_Msk     (0x20UL)       /*!< MSTPB5 (Bitfield-Mask: 0x01)                          */
+ #define R_MSTP_MSTPCRB_MSTPB3_Pos     (3UL)          /*!< MSTPB3 (Bit 3)                                        */
+ #define R_MSTP_MSTPCRB_MSTPB3_Msk     (0x8UL)        /*!< MSTPB3 (Bitfield-Mask: 0x01)                          */
  #define R_MSTP_MSTPCRB_MSTPB2_Pos     (2UL)          /*!< MSTPB2 (Bit 2)                                        */
  #define R_MSTP_MSTPCRB_MSTPB2_Msk     (0x4UL)        /*!< MSTPB2 (Bitfield-Mask: 0x01)                          */
  #define R_MSTP_MSTPCRB_MSTPB1_Pos     (1UL)          /*!< MSTPB1 (Bit 1)                                        */
@@ -34460,6 +34817,176 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
 /* ========================================================  CPUDSAR  ======================================================== */
  #define R_CPSCU_CPUDSAR_CPUDSA0_Pos        (0UL)          /*!< CPUDSA0 (Bit 0)                                       */
  #define R_CPSCU_CPUDSAR_CPUDSA0_Msk        (0x1UL)        /*!< CPUDSA0 (Bitfield-Mask: 0x01)                         */
+
+/* =========================================================================================================================== */
+/* ================                                           R_CEC                                           ================ */
+/* =========================================================================================================================== */
+
+/* =========================================================  CADR  ========================================================== */
+ #define R_CEC_CADR_ADR00_Pos            (0UL)      /*!< ADR00 (Bit 0)                                         */
+ #define R_CEC_CADR_ADR00_Msk            (0x1UL)    /*!< ADR00 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR01_Pos            (1UL)      /*!< ADR01 (Bit 1)                                         */
+ #define R_CEC_CADR_ADR01_Msk            (0x2UL)    /*!< ADR01 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR02_Pos            (2UL)      /*!< ADR02 (Bit 2)                                         */
+ #define R_CEC_CADR_ADR02_Msk            (0x4UL)    /*!< ADR02 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR03_Pos            (3UL)      /*!< ADR03 (Bit 3)                                         */
+ #define R_CEC_CADR_ADR03_Msk            (0x8UL)    /*!< ADR03 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR04_Pos            (4UL)      /*!< ADR04 (Bit 4)                                         */
+ #define R_CEC_CADR_ADR04_Msk            (0x10UL)   /*!< ADR04 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR05_Pos            (5UL)      /*!< ADR05 (Bit 5)                                         */
+ #define R_CEC_CADR_ADR05_Msk            (0x20UL)   /*!< ADR05 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR06_Pos            (6UL)      /*!< ADR06 (Bit 6)                                         */
+ #define R_CEC_CADR_ADR06_Msk            (0x40UL)   /*!< ADR06 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR07_Pos            (7UL)      /*!< ADR07 (Bit 7)                                         */
+ #define R_CEC_CADR_ADR07_Msk            (0x80UL)   /*!< ADR07 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR08_Pos            (8UL)      /*!< ADR08 (Bit 8)                                         */
+ #define R_CEC_CADR_ADR08_Msk            (0x100UL)  /*!< ADR08 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR09_Pos            (9UL)      /*!< ADR09 (Bit 9)                                         */
+ #define R_CEC_CADR_ADR09_Msk            (0x200UL)  /*!< ADR09 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR10_Pos            (10UL)     /*!< ADR10 (Bit 10)                                        */
+ #define R_CEC_CADR_ADR10_Msk            (0x400UL)  /*!< ADR10 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR11_Pos            (11UL)     /*!< ADR11 (Bit 11)                                        */
+ #define R_CEC_CADR_ADR11_Msk            (0x800UL)  /*!< ADR11 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR12_Pos            (12UL)     /*!< ADR12 (Bit 12)                                        */
+ #define R_CEC_CADR_ADR12_Msk            (0x1000UL) /*!< ADR12 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR13_Pos            (13UL)     /*!< ADR13 (Bit 13)                                        */
+ #define R_CEC_CADR_ADR13_Msk            (0x2000UL) /*!< ADR13 (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CADR_ADR14_Pos            (14UL)     /*!< ADR14 (Bit 14)                                        */
+ #define R_CEC_CADR_ADR14_Msk            (0x4000UL) /*!< ADR14 (Bitfield-Mask: 0x01)                           */
+/* ========================================================  CECCTL1  ======================================================== */
+ #define R_CEC_CECCTL1_SFT_Pos           (0UL)      /*!< SFT (Bit 0)                                           */
+ #define R_CEC_CECCTL1_SFT_Msk           (0x3UL)    /*!< SFT (Bitfield-Mask: 0x03)                             */
+ #define R_CEC_CECCTL1_CESEL_Pos         (2UL)      /*!< CESEL (Bit 2)                                         */
+ #define R_CEC_CECCTL1_CESEL_Msk         (0xcUL)    /*!< CESEL (Bitfield-Mask: 0x03)                           */
+ #define R_CEC_CECCTL1_STERRD_Pos        (4UL)      /*!< STERRD (Bit 4)                                        */
+ #define R_CEC_CECCTL1_STERRD_Msk        (0x10UL)   /*!< STERRD (Bitfield-Mask: 0x01)                          */
+ #define R_CEC_CECCTL1_BLERRD_Pos        (5UL)      /*!< BLERRD (Bit 5)                                        */
+ #define R_CEC_CECCTL1_BLERRD_Msk        (0x20UL)   /*!< BLERRD (Bitfield-Mask: 0x01)                          */
+ #define R_CEC_CECCTL1_CINTMK_Pos        (6UL)      /*!< CINTMK (Bit 6)                                        */
+ #define R_CEC_CECCTL1_CINTMK_Msk        (0x40UL)   /*!< CINTMK (Bitfield-Mask: 0x01)                          */
+ #define R_CEC_CECCTL1_CDFC_Pos          (7UL)      /*!< CDFC (Bit 7)                                          */
+ #define R_CEC_CECCTL1_CDFC_Msk          (0x80UL)   /*!< CDFC (Bitfield-Mask: 0x01)                            */
+/* =========================================================  STATB  ========================================================= */
+ #define R_CEC_STATB_STATB_Pos           (0UL)      /*!< STATB (Bit 0)                                         */
+ #define R_CEC_STATB_STATB_Msk           (0x1ffUL)  /*!< STATB (Bitfield-Mask: 0x1ff)                          */
+/* =========================================================  STATL  ========================================================= */
+ #define R_CEC_STATL_STATL_Pos           (0UL)      /*!< STATL (Bit 0)                                         */
+ #define R_CEC_STATL_STATL_Msk           (0x1ffUL)  /*!< STATL (Bitfield-Mask: 0x1ff)                          */
+/* =========================================================  LGC0L  ========================================================= */
+ #define R_CEC_LGC0L_LGC0L_Pos           (0UL)      /*!< LGC0L (Bit 0)                                         */
+ #define R_CEC_LGC0L_LGC0L_Msk           (0x1ffUL)  /*!< LGC0L (Bitfield-Mask: 0x1ff)                          */
+/* =========================================================  LGC1L  ========================================================= */
+ #define R_CEC_LGC1L_LGC1L_Pos           (0UL)      /*!< LGC1L (Bit 0)                                         */
+ #define R_CEC_LGC1L_LGC1L_Msk           (0x1ffUL)  /*!< LGC1L (Bitfield-Mask: 0x1ff)                          */
+/* =========================================================  DATB  ========================================================== */
+ #define R_CEC_DATB_DATB_Pos             (0UL)      /*!< DATB (Bit 0)                                          */
+ #define R_CEC_DATB_DATB_Msk             (0x1ffUL)  /*!< DATB (Bitfield-Mask: 0x1ff)                           */
+/* =========================================================  NOMT  ========================================================== */
+ #define R_CEC_NOMT_NOMT_Pos             (0UL)      /*!< NOMT (Bit 0)                                          */
+ #define R_CEC_NOMT_NOMT_Msk             (0x1ffUL)  /*!< NOMT (Bitfield-Mask: 0x1ff)                           */
+/* ========================================================  STATLL  ========================================================= */
+ #define R_CEC_STATLL_STATLL_Pos         (0UL)      /*!< STATLL (Bit 0)                                        */
+ #define R_CEC_STATLL_STATLL_Msk         (0x1ffUL)  /*!< STATLL (Bitfield-Mask: 0x1ff)                         */
+/* ========================================================  STATLH  ========================================================= */
+ #define R_CEC_STATLH_STATLH_Pos         (0UL)      /*!< STATLH (Bit 0)                                        */
+ #define R_CEC_STATLH_STATLH_Msk         (0x1ffUL)  /*!< STATLH (Bitfield-Mask: 0x1ff)                         */
+/* ========================================================  STATBL  ========================================================= */
+ #define R_CEC_STATBL_STATBL_Pos         (0UL)      /*!< STATBL (Bit 0)                                        */
+ #define R_CEC_STATBL_STATBL_Msk         (0x1ffUL)  /*!< STATBL (Bitfield-Mask: 0x1ff)                         */
+/* ========================================================  STATBH  ========================================================= */
+ #define R_CEC_STATBH_STATBH_Pos         (0UL)      /*!< STATBH (Bit 0)                                        */
+ #define R_CEC_STATBH_STATBH_Msk         (0x1ffUL)  /*!< STATBH (Bitfield-Mask: 0x1ff)                         */
+/* ========================================================  LGC0LL  ========================================================= */
+ #define R_CEC_LGC0LL_LGC0LL_Pos         (0UL)      /*!< LGC0LL (Bit 0)                                        */
+ #define R_CEC_LGC0LL_LGC0LL_Msk         (0x1ffUL)  /*!< LGC0LL (Bitfield-Mask: 0x1ff)                         */
+/* ========================================================  LGC0LH  ========================================================= */
+ #define R_CEC_LGC0LH_LGC0LH_Pos         (0UL)      /*!< LGC0LH (Bit 0)                                        */
+ #define R_CEC_LGC0LH_LGC0LH_Msk         (0x1ffUL)  /*!< LGC0LH (Bitfield-Mask: 0x1ff)                         */
+/* ========================================================  LGC1LL  ========================================================= */
+ #define R_CEC_LGC1LL_LGC1LL_Pos         (0UL)      /*!< LGC1LL (Bit 0)                                        */
+ #define R_CEC_LGC1LL_LGC1LL_Msk         (0x1ffUL)  /*!< LGC1LL (Bitfield-Mask: 0x1ff)                         */
+/* ========================================================  LGC1LH  ========================================================= */
+ #define R_CEC_LGC1LH_LGC1LH_Pos         (0UL)      /*!< LGC1LH (Bit 0)                                        */
+ #define R_CEC_LGC1LH_LGC1LH_Msk         (0x1ffUL)  /*!< LGC1LH (Bitfield-Mask: 0x1ff)                         */
+/* =========================================================  DATBL  ========================================================= */
+ #define R_CEC_DATBL_DATBL_Pos           (0UL)      /*!< DATBL (Bit 0)                                         */
+ #define R_CEC_DATBL_DATBL_Msk           (0x1ffUL)  /*!< DATBL (Bitfield-Mask: 0x1ff)                          */
+/* =========================================================  DATBH  ========================================================= */
+ #define R_CEC_DATBH_DATBH_Pos           (0UL)      /*!< DATBH (Bit 0)                                         */
+ #define R_CEC_DATBH_DATBH_Msk           (0x1ffUL)  /*!< DATBH (Bitfield-Mask: 0x1ff)                          */
+/* =========================================================  NOMP  ========================================================== */
+ #define R_CEC_NOMP_NOMP_Pos             (0UL)      /*!< NOMP (Bit 0)                                          */
+ #define R_CEC_NOMP_NOMP_Msk             (0x1ffUL)  /*!< NOMP (Bitfield-Mask: 0x1ff)                           */
+/* ========================================================  CECEXMD  ======================================================== */
+ #define R_CEC_CECEXMD_LERPLEN_Pos       (4UL)      /*!< LERPLEN (Bit 4)                                       */
+ #define R_CEC_CECEXMD_LERPLEN_Msk       (0x10UL)   /*!< LERPLEN (Bitfield-Mask: 0x01)                         */
+ #define R_CEC_CECEXMD_RERCVEN_Pos       (5UL)      /*!< RERCVEN (Bit 5)                                       */
+ #define R_CEC_CECEXMD_RERCVEN_Msk       (0x20UL)   /*!< RERCVEN (Bitfield-Mask: 0x01)                         */
+ #define R_CEC_CECEXMD_RCVINTDSEL_Pos    (7UL)      /*!< RCVINTDSEL (Bit 7)                                    */
+ #define R_CEC_CECEXMD_RCVINTDSEL_Msk    (0x80UL)   /*!< RCVINTDSEL (Bitfield-Mask: 0x01)                      */
+/* =======================================================  CECEXMON  ======================================================== */
+ #define R_CEC_CECEXMON_CECLNMON_Pos     (0UL)      /*!< CECLNMON (Bit 0)                                      */
+ #define R_CEC_CECEXMON_CECLNMON_Msk     (0x1UL)    /*!< CECLNMON (Bitfield-Mask: 0x01)                        */
+ #define R_CEC_CECEXMON_ACKF_Pos         (1UL)      /*!< ACKF (Bit 1)                                          */
+ #define R_CEC_CECEXMON_ACKF_Msk         (0x2UL)    /*!< ACKF (Bitfield-Mask: 0x01)                            */
+/* =========================================================  CTXD  ========================================================== */
+/* =========================================================  CRXD  ========================================================== */
+/* =========================================================  CECES  ========================================================= */
+ #define R_CEC_CECES_OERR_Pos            (0UL)      /*!< OERR (Bit 0)                                          */
+ #define R_CEC_CECES_OERR_Msk            (0x1UL)    /*!< OERR (Bitfield-Mask: 0x01)                            */
+ #define R_CEC_CECES_UERR_Pos            (1UL)      /*!< UERR (Bit 1)                                          */
+ #define R_CEC_CECES_UERR_Msk            (0x2UL)    /*!< UERR (Bitfield-Mask: 0x01)                            */
+ #define R_CEC_CECES_ACKERR_Pos          (2UL)      /*!< ACKERR (Bit 2)                                        */
+ #define R_CEC_CECES_ACKERR_Msk          (0x4UL)    /*!< ACKERR (Bitfield-Mask: 0x01)                          */
+ #define R_CEC_CECES_TERR_Pos            (3UL)      /*!< TERR (Bit 3)                                          */
+ #define R_CEC_CECES_TERR_Msk            (0x8UL)    /*!< TERR (Bitfield-Mask: 0x01)                            */
+ #define R_CEC_CECES_TXERR_Pos           (4UL)      /*!< TXERR (Bit 4)                                         */
+ #define R_CEC_CECES_TXERR_Msk           (0x10UL)   /*!< TXERR (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CECES_AERR_Pos            (5UL)      /*!< AERR (Bit 5)                                          */
+ #define R_CEC_CECES_AERR_Msk            (0x20UL)   /*!< AERR (Bitfield-Mask: 0x01)                            */
+ #define R_CEC_CECES_BLERR_Pos           (6UL)      /*!< BLERR (Bit 6)                                         */
+ #define R_CEC_CECES_BLERR_Msk           (0x40UL)   /*!< BLERR (Bitfield-Mask: 0x01)                           */
+/* =========================================================  CECS  ========================================================== */
+ #define R_CEC_CECS_ADRF_Pos             (0UL)      /*!< ADRF (Bit 0)                                          */
+ #define R_CEC_CECS_ADRF_Msk             (0x1UL)    /*!< ADRF (Bitfield-Mask: 0x01)                            */
+ #define R_CEC_CECS_BUSST_Pos            (1UL)      /*!< BUSST (Bit 1)                                         */
+ #define R_CEC_CECS_BUSST_Msk            (0x2UL)    /*!< BUSST (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CECS_TXST_Pos             (2UL)      /*!< TXST (Bit 2)                                          */
+ #define R_CEC_CECS_TXST_Msk             (0x4UL)    /*!< TXST (Bitfield-Mask: 0x01)                            */
+ #define R_CEC_CECS_EOMF_Pos             (3UL)      /*!< EOMF (Bit 3)                                          */
+ #define R_CEC_CECS_EOMF_Msk             (0x8UL)    /*!< EOMF (Bitfield-Mask: 0x01)                            */
+ #define R_CEC_CECS_ITCEF_Pos            (4UL)      /*!< ITCEF (Bit 4)                                         */
+ #define R_CEC_CECS_ITCEF_Msk            (0x10UL)   /*!< ITCEF (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CECS_SFTST_Pos            (7UL)      /*!< SFTST (Bit 7)                                         */
+ #define R_CEC_CECS_SFTST_Msk            (0x80UL)   /*!< SFTST (Bitfield-Mask: 0x01)                           */
+/* =========================================================  CECFC  ========================================================= */
+ #define R_CEC_CECFC_OCTRG_Pos           (0UL)      /*!< OCTRG (Bit 0)                                         */
+ #define R_CEC_CECFC_OCTRG_Msk           (0x1UL)    /*!< OCTRG (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CECFC_UCTRG_Pos           (1UL)      /*!< UCTRG (Bit 1)                                         */
+ #define R_CEC_CECFC_UCTRG_Msk           (0x2UL)    /*!< UCTRG (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CECFC_ACKCTRG_Pos         (2UL)      /*!< ACKCTRG (Bit 2)                                       */
+ #define R_CEC_CECFC_ACKCTRG_Msk         (0x4UL)    /*!< ACKCTRG (Bitfield-Mask: 0x01)                         */
+ #define R_CEC_CECFC_TCTRG_Pos           (3UL)      /*!< TCTRG (Bit 3)                                         */
+ #define R_CEC_CECFC_TCTRG_Msk           (0x8UL)    /*!< TCTRG (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CECFC_TXCTRG_Pos          (4UL)      /*!< TXCTRG (Bit 4)                                        */
+ #define R_CEC_CECFC_TXCTRG_Msk          (0x10UL)   /*!< TXCTRG (Bitfield-Mask: 0x01)                          */
+ #define R_CEC_CECFC_ACTRG_Pos           (5UL)      /*!< ACTRG (Bit 5)                                         */
+ #define R_CEC_CECFC_ACTRG_Msk           (0x20UL)   /*!< ACTRG (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CECFC_BLCTRG_Pos          (6UL)      /*!< BLCTRG (Bit 6)                                        */
+ #define R_CEC_CECFC_BLCTRG_Msk          (0x40UL)   /*!< BLCTRG (Bitfield-Mask: 0x01)                          */
+/* ========================================================  CECCTL0  ======================================================== */
+ #define R_CEC_CECCTL0_EOM_Pos           (0UL)      /*!< EOM (Bit 0)                                           */
+ #define R_CEC_CECCTL0_EOM_Msk           (0x1UL)    /*!< EOM (Bitfield-Mask: 0x01)                             */
+ #define R_CEC_CECCTL0_CECRXEN_Pos       (1UL)      /*!< CECRXEN (Bit 1)                                       */
+ #define R_CEC_CECCTL0_CECRXEN_Msk       (0x2UL)    /*!< CECRXEN (Bitfield-Mask: 0x01)                         */
+ #define R_CEC_CECCTL0_TXTRG_Pos         (2UL)      /*!< TXTRG (Bit 2)                                         */
+ #define R_CEC_CECCTL0_TXTRG_Msk         (0x4UL)    /*!< TXTRG (Bitfield-Mask: 0x01)                           */
+ #define R_CEC_CECCTL0_CCL_Pos           (3UL)      /*!< CCL (Bit 3)                                           */
+ #define R_CEC_CECCTL0_CCL_Msk           (0x38UL)   /*!< CCL (Bitfield-Mask: 0x07)                             */
+ #define R_CEC_CECCTL0_ACKTEN_Pos        (6UL)      /*!< ACKTEN (Bit 6)                                        */
+ #define R_CEC_CECCTL0_ACKTEN_Msk        (0x40UL)   /*!< ACKTEN (Bitfield-Mask: 0x01)                          */
+ #define R_CEC_CECCTL0_CECE_Pos          (7UL)      /*!< CECE (Bit 7)                                          */
+ #define R_CEC_CECCTL0_CECE_Msk          (0x80UL)   /*!< CECE (Bitfield-Mask: 0x01)                            */
 
 /* =========================================================================================================================== */
 /* ================                                          R_OSPI                                           ================ */

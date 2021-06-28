@@ -1,30 +1,26 @@
 /***********************************************************************************************************************
- * DISCLAIMER
- * This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products. No
- * other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
- * applicable laws, including copyright laws.
- * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
- * THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED. TO THE MAXIMUM
- * EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES
- * SHALL BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO THIS
- * SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- * Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability of
- * this software. By using this software, you agree to the additional terms and conditions found by accessing the
- * following link:
- * http://www.renesas.com/disclaimer
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
- * Copyright (C) 2020 Renesas Electronics Corporation. All rights reserved.
- ***********************************************************************************************************************/
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
+ **********************************************************************************************************************/
 
 /***********************************************************************************************************************
  * File Name   : rm_motor_speed_library.h
  * Description : Definitions for Motor Speed library functions
- ***********************************************************************************************************************/
-
-/**********************************************************************************************************************
- * History : DD.MM.YYYY Version
- *         : 01.09.2020 1.00
  ***********************************************************************************************************************/
 
 #ifndef RM_MOTOR_SPEED_LIBRARY_H
@@ -73,5 +69,19 @@ float rm_motor_speed_opl2less_iq_calc(float f4_ed, float f4_eq, float f4_id, flo
 
 float rm_motor_speed_limitfabs(float f4_value, float f4_limit_value);
 float rm_motor_speed_first_order_lpf(motor_speed_lpf_t * p_lpf, float f_input);
+
+void  rm_motor_speed_observer_init(motor_speed_observer_t * p_sob);
+void  rm_motor_speed_observer_reset(motor_speed_observer_t * p_sob);
+float rm_motor_speed_observer(motor_speed_observer_t        * p_sob,
+                              motor_speed_motor_parameter_t * p_motor,
+                              float                           f4_iq_ref,
+                              float                           f4_speed_rad);
+void rm_motor_speed_observer_gain_calc(motor_speed_observer_t      * p_sob,
+                                       motor_speed_design_params_t * p_design_params,
+                                       float                         f4_speed_ctrl_period);
+void rm_motor_speed_observer_SecondOrderLpffGainCalc(motor_speed_2nd_order_lpf_t * p_lpf,
+                                                     float                         f4_omega,
+                                                     float                         f4_zeta,
+                                                     float                         f4_ctrl_period);
 
 #endif                                 /* RM_MOTOR_SPEED_LIBRARY_H */

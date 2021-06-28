@@ -37,7 +37,7 @@
 #define MOTOR_SENSORLESS_FLG_CLR                               (0)
 #define MOTOR_SENSORLESS_FLG_SET                               (1)
 
-/* For Statemachine */
+/* For statemachine */
 #define MOTOR_SENSORLESS_STATEMACHINE_SIZE_STATE               (3)
 #define MOTOR_SENSORLESS_STATEMACHINE_SIZE_EVENT               (4)
 
@@ -60,7 +60,7 @@
  * Private function prototypes
  **********************************************************************************************************************/
 
-/* Speed Control <=> Current Control Interface functions */
+/* Speed control <=> Current control interface functions */
 void rm_motor_sensorless_current_callback(motor_current_callback_args_t * p_args);
 void rm_motor_sensorless_speed_callback(motor_speed_callback_args_t * p_args);
 
@@ -77,7 +77,7 @@ static void rm_motor_sensorless_copy_speed_current(motor_speed_output_t  * st_ou
 static void rm_motor_sensorless_copy_current_speed(motor_current_output_t * st_output,
                                                    motor_speed_input_t    * st_input);
 
-/* action functions */
+/* Action functions */
 static uint8_t rm_motor_sensorless_active(motor_sensorless_instance_ctrl_t * p_ctrl);
 static uint8_t rm_motor_sensorless_inactive(motor_sensorless_instance_ctrl_t * p_ctrl);
 static uint8_t rm_motor_sensorless_reset(motor_sensorless_instance_ctrl_t * p_ctrl);
@@ -115,7 +115,7 @@ static const motor_sensorless_action_t motor_sensorless_action_table[MOTOR_SENSO
 /* 3:EVENT_RESET    */ {rm_motor_sensorless_reset,    rm_motor_sensorless_error,    rm_motor_sensorless_reset       },
 };
 
-/* statemachine functions */
+/* Statemachine functions */
 static void     rm_motor_sensorless_statemachine_init(motor_sensorless_statemachine_t * p_state_machine);
 static void     rm_motor_sensorless_statemachine_reset(motor_sensorless_statemachine_t * p_state_machine);
 static uint16_t rm_motor_sensorless_statemachine_event(motor_sensorless_instance_ctrl_t * p_ctrl,
@@ -130,17 +130,18 @@ static uint16_t rm_motor_sensorless_statemachine_event(motor_sensorless_instance
  **********************************************************************************************************************/
 const motor_api_t g_motor_on_sensorless =
 {
-    .open       = RM_MOTOR_SENSORLESS_Open,
-    .close      = RM_MOTOR_SENSORLESS_Close,
-    .run        = RM_MOTOR_SENSORLESS_Run,
-    .stop       = RM_MOTOR_SENSORLESS_Stop,
-    .reset      = RM_MOTOR_SENSORLESS_Reset,
-    .errorSet   = RM_MOTOR_SENSORLESS_ErrorSet,
-    .speedSet   = RM_MOTOR_SENSORLESS_SpeedSet,
-    .statusGet  = RM_MOTOR_SENSORLESS_StatusGet,
-    .angleGet   = RM_MOTOR_SENSORLESS_AngleGet,
-    .speedGet   = RM_MOTOR_SENSORLESS_SpeedGet,
-    .errorCheck = RM_MOTOR_SENSORLESS_ErrorCheck,
+    .open        = RM_MOTOR_SENSORLESS_Open,
+    .close       = RM_MOTOR_SENSORLESS_Close,
+    .run         = RM_MOTOR_SENSORLESS_Run,
+    .stop        = RM_MOTOR_SENSORLESS_Stop,
+    .reset       = RM_MOTOR_SENSORLESS_Reset,
+    .errorSet    = RM_MOTOR_SENSORLESS_ErrorSet,
+    .speedSet    = RM_MOTOR_SENSORLESS_SpeedSet,
+    .statusGet   = RM_MOTOR_SENSORLESS_StatusGet,
+    .angleGet    = RM_MOTOR_SENSORLESS_AngleGet,
+    .speedGet    = RM_MOTOR_SENSORLESS_SpeedGet,
+    .errorCheck  = RM_MOTOR_SENSORLESS_ErrorCheck,
+    .positionSet = RM_MOTOR_SENSORLESS_PositionSet,
 };
 
 /*******************************************************************************************************************//**
@@ -179,7 +180,7 @@ fsp_err_t RM_MOTOR_SENSORLESS_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t con
     FSP_ASSERT(NULL != p_cfg);
     MOTOR_SENSORLESS_ERROR_RETURN(MOTOR_SENSORLESS_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
-    /* using modules' instance check */
+    /* Using modules' instance check */
     MOTOR_SENSORLESS_ERROR_RETURN(NULL != p_cfg->p_motor_speed_instance, FSP_ERR_ASSERTION);
     MOTOR_SENSORLESS_ERROR_RETURN(NULL != p_cfg->p_motor_current_instance, FSP_ERR_ASSERTION);
 
@@ -236,14 +237,13 @@ fsp_err_t RM_MOTOR_SENSORLESS_Close (motor_ctrl_t * const p_ctrl)
     FSP_ASSERT(NULL != p_instance_ctrl);
     MOTOR_SENSORLESS_ERROR_RETURN(MOTOR_SENSORLESS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
-    /* using modules' instance check */
+    /* Using modules' instance check */
     MOTOR_SENSORLESS_ERROR_RETURN(NULL != p_instance_ctrl->p_cfg->p_motor_speed_instance, FSP_ERR_ASSERTION);
     MOTOR_SENSORLESS_ERROR_RETURN(NULL != p_instance_ctrl->p_cfg->p_motor_current_instance, FSP_ERR_ASSERTION);
 #endif
 
-    /* close using modules */
-    p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->close(
-        p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    /* Close using modules */
+    p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->close(p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
 
     p_instance_ctrl->p_cfg->p_motor_current_instance->p_api->close(
         p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
@@ -279,7 +279,7 @@ fsp_err_t RM_MOTOR_SENSORLESS_Reset (motor_ctrl_t * const p_ctrl)
     MOTOR_SENSORLESS_ERROR_RETURN(MOTOR_SENSORLESS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    /* Reset is valid only at "ERROR" status */
+    /* Reset is valid only at "error" status */
     if (MOTOR_ERROR_NONE != p_instance_ctrl->u2_error_info)
     {
         rm_motor_sensorless_statemachine_event(p_instance_ctrl, MOTOR_SENSORLESS_CTRL_EVENT_RESET);
@@ -287,7 +287,7 @@ fsp_err_t RM_MOTOR_SENSORLESS_Reset (motor_ctrl_t * const p_ctrl)
         rm_motor_sensorless_init_speed_input(&(p_instance_ctrl->st_speed_input));
         rm_motor_sensorless_init_speed_output(&(p_instance_ctrl->st_speed_output));
 
-        /* clear error info */
+        /* Clear error information */
         p_instance_ctrl->u2_error_info = MOTOR_ERROR_NONE;
     }
 
@@ -597,14 +597,33 @@ fsp_err_t RM_MOTOR_SENSORLESS_ErrorCheck (motor_ctrl_t * const p_ctrl, uint16_t 
 }
 
 /*******************************************************************************************************************//**
+ * @brief Set position reference. Implements @ref motor_api_t::positionSet.
+ *
+ * Example:
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ *
+ * @note
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_SENSORLESS_PositionSet (motor_ctrl_t * const                      p_ctrl,
+                                           motor_speed_position_data_t const * const p_position)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_position);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup MOTOR_SENSORLESS)
  **********************************************************************************************************************/
 
 /***********************************************************************************************************************
- * Private Functions
+ * Private functions
  **********************************************************************************************************************/
 
-/*****  For Status Transition *****/
+/*****  For status transition *****/
 
 /***********************************************************************************************************************
  * Function Name : rm_motor_sensorless_active
@@ -658,10 +677,9 @@ static uint8_t rm_motor_sensorless_inactive (motor_sensorless_instance_ctrl_t * 
  **********************************************************************************************************************/
 static uint8_t rm_motor_sensorless_nowork (motor_sensorless_instance_ctrl_t * p_ctrl)
 {
-    /* Do Nothing */
-
     if (p_ctrl->p_cfg->p_motor_speed_instance != NULL)
     {
+        /* Do nothing */
     }
 
     return 0;
@@ -785,7 +803,7 @@ static uint16_t rm_motor_sensorless_statemachine_event (motor_sensorless_instanc
     func_action = motor_sensorless_action_table[u1_event][p_ctrl->st_statem.u1_status];
     action_ret  = func_action(p_ctrl);
 
-    /* If return value is not zero, set the Action Exception flag */
+    /* If return value is not zero, set the action exception flag */
     if (action_ret != 0U)
     {
         p_ctrl->st_statem.u2_error_status |= MOTOR_SENSORLESS_STATEMACHINE_ERROR_ACTIONEXCEPTION;
@@ -795,8 +813,6 @@ static uint16_t rm_motor_sensorless_statemachine_event (motor_sensorless_instanc
 
     return p_ctrl->st_statem.u2_error_status;
 }                                      /* End of function rm_motor_sensorless_statemachine_event */
-
-/*****  For Status Transition *****/
 
 /***********************************************************************************************************************
  * Function Name : rm_motor_check_over_speed_error
@@ -926,24 +942,16 @@ static uint16_t rm_motor_sensorless_error_check (motor_sensorless_instance_ctrl_
     uint16_t u2_error_flags = 0U;
     motor_sensorless_extended_cfg_t * p_extended_cfg = (motor_sensorless_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-    /*==================================*/
-    /*     Over current error check     */
-    /*==================================*/
+    /* Over current error check */
     u2_error_flags |= rm_motor_check_over_current_error(f_iu, f_iv, f_iw, p_extended_cfg->f_overcurrent_limit);
 
-    /*==================================*/
-    /*     Over voltage error check     */
-    /*==================================*/
+    /* Over voltage error check */
     u2_error_flags |= rm_motor_check_over_voltage_error(f_vdc, p_extended_cfg->f_overvoltage_limit);
 
-    /*==================================*/
-    /*     Low voltage error check      */
-    /*==================================*/
+    /* Low voltage error check */
     u2_error_flags |= rm_motor_check_low_voltage_error(f_vdc, p_extended_cfg->f_lowvoltage_limit);
 
-    /*================================*/
-    /* Over speed error check     */
-    /*================================*/
+    /* Over speed error check */
     u2_error_flags |= rm_motor_check_over_speed_error(f_speed, p_extended_cfg->f_overspeed_limit);
 
     return u2_error_flags;
@@ -1019,7 +1027,7 @@ static void rm_motor_sensorless_copy_current_speed (motor_current_output_t * st_
     st_input->u1_flag_get_iref = st_output->u1_flag_get_iref;
 }                                      /* End of function rm_motor_sensorless_copy_current_speed() */
 
-/*****  Callback Function *****/
+/*****  Callback function *****/
 
 /***********************************************************************************************************************
  * Function Name : rm_motor_sensorless_current_callback

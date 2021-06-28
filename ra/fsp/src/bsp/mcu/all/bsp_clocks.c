@@ -701,11 +701,19 @@ void bsp_clock_freq_var_init (void)
 static void bsp_clock_freq_var_init (void)
 #endif
 {
-    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_HOCO]     = BSP_HOCO_HZ;
-    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_MOCO]     = BSP_MOCO_FREQ_HZ;
-    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_LOCO]     = BSP_LOCO_FREQ_HZ;
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_HOCO] = BSP_HOCO_HZ;
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_MOCO] = BSP_MOCO_FREQ_HZ;
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_LOCO] = BSP_LOCO_FREQ_HZ;
+#if BSP_CLOCK_CFG_MAIN_OSC_POPULATED
     g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC] = BSP_CFG_XTAL_HZ;
+#else
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC] = 0U;
+#endif
+#if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
     g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK] = BSP_SUBCLOCK_FREQ_HZ;
+#else
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK] = 0U;
+#endif
 #if BSP_PRV_PLL_SUPPORTED
  #if BSP_CLOCKS_SOURCE_CLOCK_PLL == BSP_CFG_CLOCK_SOURCE
 
@@ -736,18 +744,19 @@ void bsp_clock_init (void)
     /* Unlock CGC and LPM protection registers. */
     R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_UNLOCK;
 
-#if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
- #if !BSP_CFG_USE_LOW_VOLTAGE_MODE && BSP_FEATURE_BSP_FLASH_CACHE
+#if BSP_FEATURE_BSP_FLASH_CACHE
+ #if !BSP_CFG_USE_LOW_VOLTAGE_MODE && BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
 
     /* Disable flash cache before modifying MEMWAIT, SOPCCR, or OPCCR. */
     R_BSP_FlashCacheDisable();
- #endif
-#else
+ #else
 
     /* Enable the flash cache and don't disable it while running from flash. On these MCUs, the flash cache does not
      * need to be disabled when adjusting the operating power mode. */
     R_BSP_FlashCacheEnable();
+ #endif
 #endif
+
 #if BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER
 
     /* Disable the flash prefetch buffer. */
@@ -756,7 +765,8 @@ void bsp_clock_init (void)
 
     bsp_clock_freq_var_init();
 
-#if BSP_CFG_SOFT_RESET_SUPPORTED
+#if BSP_CLOCK_CFG_MAIN_OSC_POPULATED
+ #if BSP_CFG_SOFT_RESET_SUPPORTED
 
     /* Update the main oscillator drive, source, and wait states if the main oscillator is stopped.  If the main
      * oscillator is running, the drive, source, and wait states are assumed to be already set appropriately. */
@@ -772,13 +782,14 @@ void bsp_clock_init (void)
         R_SYSTEM->MOSCWTCR = (uint8_t) BSP_CLOCK_CFG_MAIN_OSC_WAIT;
     }
 
-#else
+ #else
 
     /* Configure main oscillator drive. */
     R_SYSTEM->MOMCR = BSP_PRV_MOMCR;
 
     /* Set the main oscillator wait time. */
     R_SYSTEM->MOSCWTCR = (uint8_t) BSP_CLOCK_CFG_MAIN_OSC_WAIT;
+ #endif
 #endif
 
 #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED

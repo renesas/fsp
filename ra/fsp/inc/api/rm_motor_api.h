@@ -28,6 +28,7 @@
  *
  * Implemented by:
  * - @ref MOTOR_SENSORLESS
+ * - @ref MOTOR_ENCODER
  *
  * @{
  **********************************************************************************************************************/
@@ -94,6 +95,7 @@ typedef struct st_motor_api
     /** Open driver.
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Open()
+     * - @ref RM_MOTOR_ENCODER_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -103,6 +105,7 @@ typedef struct st_motor_api
     /** Close driver.
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Close()
+     * - @ref RM_MOTOR_ENCODER_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -111,6 +114,7 @@ typedef struct st_motor_api
     /** Run the motor. (Start the motor rotation.)
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Run()
+     * - @ref RM_MOTOR_ENCODER_Run()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -119,6 +123,7 @@ typedef struct st_motor_api
     /** Stop the motor. (Stop the motor rotation.)
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Stop()
+     * - @ref RM_MOTOR_ENCODER_Stop()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -127,6 +132,7 @@ typedef struct st_motor_api
     /** Reset the motor control. (Recover from the error status.)
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Reset()
+     * - @ref RM_MOTOR_ENCODER_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -135,6 +141,7 @@ typedef struct st_motor_api
     /** Set Error Information.
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_ErrorSet()
+     * - @ref RM_MOTOR_ENCODER_ErrorSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  error        Happend error code
@@ -144,15 +151,27 @@ typedef struct st_motor_api
     /** Set rotation speed.
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_SpeedSet()
+     * - @ref RM_MOTOR_ENCODER_SpeedSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  speed_rpm    Required rotation speed [rpm]
      */
     fsp_err_t (* speedSet)(motor_ctrl_t * const p_ctrl, float const speed_rpm);
 
+    /** Set reference position.
+     * @par Implemented as
+     * - @ref RM_MOTOR_SENSORLESS_PositionSet()
+     * - @ref RM_MOTOR_ENCODER_PositionSet()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_position   Pointer to set required data
+     */
+    fsp_err_t (* positionSet)(motor_ctrl_t * const p_ctrl, motor_speed_position_data_t const * const p_position);
+
     /** Get the motor control status.
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_StatusGet()
+     * - @ref RM_MOTOR_ENCODER_StatusGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_status     Pointer to get the motor control status
@@ -162,6 +181,7 @@ typedef struct st_motor_api
     /** Get the rotor angle.
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_AngleGet()
+     * - @ref RM_MOTOR_ENCODER_AngleGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_angle_rad  Pointer to get the rotor angle [rad]
@@ -171,6 +191,7 @@ typedef struct st_motor_api
     /** Get the rotation speed.
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_SpeedGet()
+     * - @ref RM_MOTOR_ENCODER_SpeedGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_speed_rpm  Pointer to get the rotation speed [rpm]
@@ -180,6 +201,7 @@ typedef struct st_motor_api
     /** Check the error occurrence
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_ErrorCheck()
+     * - @ref RM_MOTOR_ENCODER_ErrorCheck()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_error      Pointer to get occured error

@@ -151,6 +151,9 @@ fsp_err_t RM_MOTOR_SENSORLESS_SpeedGet(motor_ctrl_t * const p_ctrl, float * cons
 
 fsp_err_t RM_MOTOR_SENSORLESS_ErrorCheck(motor_ctrl_t * const p_ctrl, uint16_t * const p_error);
 
+fsp_err_t RM_MOTOR_SENSORLESS_PositionSet(motor_ctrl_t * const                      p_ctrl,
+                                          motor_speed_position_data_t const * const p_position);
+
 /*******************************************************************************************************************//**
  * @} (end addtogroup MOTOR_SENSORLESS)
  **********************************************************************************************************************/

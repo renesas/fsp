@@ -194,6 +194,7 @@ i2c_master_api_t const g_i2c_master_on_iic =
     .abort           = R_IIC_MASTER_Abort,
     .slaveAddressSet = R_IIC_MASTER_SlaveAddressSet,
     .close           = R_IIC_MASTER_Close,
+    .statusGet       = R_IIC_MASTER_StatusGet,
     .callbackSet     = R_IIC_MASTER_CallbackSet
 };
 
@@ -458,6 +459,26 @@ fsp_err_t R_IIC_MASTER_CallbackSet (i2c_master_ctrl_t * const          p_api_ctr
 #endif
     p_ctrl->p_context         = p_context;
     p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Provides driver status.
+ *
+ * @retval     FSP_SUCCESS                   Status stored in p_status.
+ * @retval     FSP_ERR_ASSERTION             NULL pointer.
+ **********************************************************************************************************************/
+fsp_err_t R_IIC_MASTER_StatusGet (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_status_t * p_status)
+{
+    iic_master_instance_ctrl_t * p_ctrl = (iic_master_instance_ctrl_t *) p_api_ctrl;
+
+#if IIC_MASTER_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl != NULL);
+    FSP_ASSERT(p_status != NULL);
+#endif
+
+    p_status->open = (IIC_MASTER_OPEN == p_ctrl->open);
 
     return FSP_SUCCESS;
 }

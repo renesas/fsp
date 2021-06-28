@@ -42,10 +42,11 @@
 
 #endif                                 /* defined(USB_CFG_HHID_USE) */
 
-#if defined(USB_CFG_HMSC_USE)
- #include "r_usb_hmsc_api.h"
-
-#endif                                 /* defined(USB_CFG_HMSC_USE) */
+#if (BSP_CFG_RTOS != 1)
+ #if defined(USB_CFG_HMSC_USE)
+  #include "r_usb_hmsc_api.h"
+ #endif                                /* defined(USB_CFG_HMSC_USE) */
+#endif /* #if (BSP_CFG_RTOS != 1) */
 
 #if defined(USB_CFG_PCDC_USE)
  #include "r_usb_pcdc_api.h"
@@ -425,7 +426,8 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
             if (USB_MODE_HOST == g_usb_usbmode[p_ctrl->module_number])
             {
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-                (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data,
+                (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count],
+                                                             (usb_hdl_t) p_ctrl->p_data,
                                                              USB_OFF);
   #endif                               /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
             }
@@ -435,13 +437,15 @@ void usb_set_event (usb_status_t event, usb_instance_ctrl_t * p_ctrl)
                 if (0 == p_ctrl->setup.request_length)
                 {
                     /* Processing for USB request has the no data stage */
-                    (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) USB_NULL,
+                    (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count],
+                                                                 (usb_hdl_t) USB_NULL,
                                                                  USB_OFF);
                 }
                 else
                 {
                     /* Processing for USB request has the data state */
-                    (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count], (usb_hdl_t) p_ctrl->p_data,
+                    (*g_usb_apl_callback[p_ctrl->module_number])(&g_usb_cstd_event[count],
+                                                                 (usb_hdl_t) p_ctrl->p_data,
                                                                  USB_OFF);
                 }
   #endif                               /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
@@ -579,9 +583,9 @@ void usb_cstd_usb_task (void)
             usb_class_task();
         }
     }
+
     /* WAIT_LOOP */
     while (USB_FALSE != g_drive_search_lock);
-
   #else                                          /* defined(USB_CFG_HMSC_USE) */
     usb_cstd_scheduler();                        /* Scheduler */
 
@@ -603,7 +607,9 @@ void usb_cstd_usb_task (void)
     usb_pstd_pcd_task();
 
   #if defined(USB_CFG_PMSC_USE)
+   #if (USB_CFG_RTOS != 1)
     usb_pmsc_task();
+   #endif                              /* USB_CFG_RTOS != 1 */
   #endif                               /* defined(USB_CFG_PMSC_USE) */
  #endif                                /*( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI )*/
 } /* End of function usb_cstd_usb_task() */
@@ -671,7 +677,6 @@ uint16_t usb_cstd_remote_wakeup (usb_utr_t * p_utr)
     }
     else
     {
-
         // ret_code = FSP_ERR_USB_FAILED;
         return USB_ERROR;
     }

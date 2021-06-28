@@ -502,15 +502,9 @@ NX_CRYPTO_KEEP UINT _nx_crypto_ecdsa_verify(NX_CRYPTO_EC *curve, UCHAR *hash, UI
     {
         curve_size++;
     }
-    /* Re-pad the signature with prefix 0s */
-    UCHAR sign[(RM_NETX_SECURE_CRYPTO_LARGEST_SUPPORTED_SIGNATURE_COORDINATE_SIZE_WORDS * 2U * 4U)] = {0};
-    NX_CRYPTO_MEMCPY(&sign[curve_size - len_r], signature_r, len_r);
-    NX_CRYPTO_MEMCPY(&sign[(2*curve_size) - len_s], signature_s, len_s);
-    uint32_t pub_key[RM_NETX_SECURE_CRYPTO_LARGEST_SUPPORTED_PUBLIC_KEY_SIZE_WORDS] = {0};
-    NX_CRYPTO_MEMCPY(pub_key, &public_key[1], curve_size * 2U);
     status =
-        sce_nx_crypto_ecdsa_verify(curve, hash, hash_length, (UCHAR *) pub_key, (UCHAR *) sign,
-                                   (UCHAR *) &sign[curve_size]);
+        sce_nx_crypto_ecdsa_verify(curve, hash, hash_length, (UCHAR *) &public_key[1], (UCHAR *) signature_r, len_r,
+                                   (UCHAR *) signature_s, len_s);
     if (status != NX_CRYPTO_SUCCESS)
     {
         return status;

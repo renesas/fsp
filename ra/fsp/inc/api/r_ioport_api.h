@@ -146,8 +146,8 @@ typedef enum e_ioport_peripheral
     /** Pin will function as a OSPI peripheral pin */
     IOPORT_PERIPHERAL_OSPI = (0x1CUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
-    /** Marks end of enum - used by parameter checking */
-    IOPORT_PERIPHERAL_END
+    /** Pin will function as a CEC peripheral pin */
+    IOPORT_PERIPHERAL_CEC = (0x1DUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 } ioport_peripheral_t;
 
 /** Superset of Ethernet channels. */

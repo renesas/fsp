@@ -223,6 +223,7 @@
 #define BSP_FEATURE_ICU_HAS_WUPEN1                        (1U)
 #define BSP_FEATURE_ICU_IRQ_CHANNELS_MASK                 (0xFFFFU)
 #define BSP_FEATURE_ICU_WUPEN_MASK                        (0x7FB0DFFFFULL) // Note there is another WUPEN1 register
+#define BSP_FEATURE_ICU_HAS_INTERRUPT_GROUPS              (0U)
 
 #define BSP_FEATURE_IIC_FAST_MODE_PLUS                    (1U << 0U)
 #define BSP_FEATURE_IIC_VALID_CHANNEL_MASK                (0x03)

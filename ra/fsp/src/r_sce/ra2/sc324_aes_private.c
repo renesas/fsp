@@ -62,20 +62,10 @@ __STATIC_INLINE void hw_sc324_aes_kernel_chaining_mode_set (hw_sc324_aes_modes_t
 
 static void hw_sc324_aes_endian_convert (uint32_t * p_dest, const uint32_t * p_source, uint32_t num_words)
 {
-    uint32_t             nw;
-    crypto_word_endian_t flag;
-
-    flag = HW_SCE_EndianFlagGet();
+    uint32_t nw;
     for (nw = 0; nw < num_words; nw++)
     {
-        if (CRYPTO_WORD_ENDIAN_LITTLE == flag)
-        {
-            p_dest[nw] = __REV(p_source[nw]);
-        }
-        else
-        {
-            p_dest[nw] = p_source[nw];
-        }
+        p_dest[nw] = __REV(p_source[nw]);
     }
 }
 

@@ -22,6 +22,12 @@
 /* Product ID */
 #define USB_PRODUCTID                   (0x0002U)
 
+/* Interface Association Descriptor Type */
+#define USB_IAD_TYPE                    (0x0B)
+
+/* Communications Class Subclass Codes */
+#define USB_PCDC_CLASS_SUBCLASS_CODE_ABS_CTR_MDL                (0x02U)
+
 /* Class-Specific Configuration Descriptors */
 #define     USB_PCDC_CS_INTERFACE                               (0x24U)
 
@@ -44,7 +50,7 @@
 
 /* Descriptor length */
 #define USB_PCDC_QD_LEN               (10U)
-#define USB_PCDC_CD1_LEN              (67U)
+#define USB_PCDC_CD1_LEN              (75U)
 #define STRING_DESCRIPTOR0_LEN        (4U)
 #define STRING_DESCRIPTOR1_LEN        (16U)
 #define STRING_DESCRIPTOR2_LEN        (44U)
@@ -58,10 +64,10 @@
 #define USB_W_TOTAL_LENGTH_MASK       (256U)
 #define USB_W_MAX_PACKET_SIZE_MASK    (64U)
 
-#define VALUE_95 (95U)
-#define VALUE_85 (85U)
-#define VALUE_105 (105U)
-#define VALUE_2 (2U)
+#define VALUE_103                     (103U)
+#define VALUE_93                      (93U)
+#define VALUE_105                     (105U)
+#define VALUE_2                       (2U)
 
 /******************************************************************************
  Private global variables and functions
@@ -75,7 +81,7 @@
  Exported global functions (to be accessed by other files)
  ******************************************************************************/
 
-#define DEVICE_FRAME_LENGTH_FULL_SPEED  (VALUE_85)
+#define DEVICE_FRAME_LENGTH_FULL_SPEED  (VALUE_93)
 /* Standard Device Descriptor */
 uint8_t g_device_framework_full_speed[DEVICE_FRAME_LENGTH_FULL_SPEED] =
 {
@@ -108,6 +114,16 @@ uint8_t g_device_framework_full_speed[DEVICE_FRAME_LENGTH_FULL_SPEED] =
     0,                              /*  6:iConfiguration */
     USB_CF_RESERVED | USB_CF_SELFP, /*  7:bmAttributes */
     (10 / 2),                       /*  8:MAXPower (2mA unit) */
+
+    /* Interface Association Descriptor (IAD) */
+    0x08,                           /*  0:bLength */
+    USB_IAD_TYPE,                   /*  1:bDescriptorType */
+    0x00,                           /*  2:bFirstInterface */
+    0x02,                           /*  3:bInterfaceCount */
+    USB_IFCLS_CDCC,                 /*  4:bFunctionClass  */
+    USB_PCDC_CLASS_SUBCLASS_CODE_ABS_CTR_MDL, /* 5:bFunctionSubClass */
+    0x00,                           /*  6:bFunctionProtocol */
+    0x00,                           /*  7:iFunction */
 
     /* Interface Descriptor */
     USB_ID_BLENGTH,                 /*  0:bLength */
@@ -189,7 +205,7 @@ uint8_t g_device_framework_full_speed[DEVICE_FRAME_LENGTH_FULL_SPEED] =
         0,                          /*  6:bInterval */
 };
 
-#define DEVICE_FRAME_LENGTH_HI_SPEED    (VALUE_95)
+#define DEVICE_FRAME_LENGTH_HI_SPEED    (VALUE_103)
 uint8_t g_device_framework_hi_speed[DEVICE_FRAME_LENGTH_HI_SPEED] =
 {
     USB_DD_BLENGTH,                                     /*  0:bLength */
@@ -232,6 +248,16 @@ uint8_t g_device_framework_hi_speed[DEVICE_FRAME_LENGTH_HI_SPEED] =
     0,                              /*  6:iConfiguration */
     USB_CF_RESERVED | USB_CF_SELFP, /*  7:bmAttributes */
     (10 / 2),                       /*  8:MAXPower (2mA unit) */
+
+    /* Interface Association Descriptor (IAD) */
+    0x08,                           /*  0:bLength */
+    USB_IAD_TYPE,                   /*  1:bDescriptorType */
+    0x00,                           /*  2:bFirstInterface */
+    0x02,                           /*  3:bInterfaceCount */
+    USB_IFCLS_CDCC,                 /*  4:bFunctionClass  */
+    USB_PCDC_CLASS_SUBCLASS_CODE_ABS_CTR_MDL, /* 5:bFunctionSubClass */
+    0x00,                           /*  6:bFunctionProtocol */
+    0x00,                           /*  7:iFunction */
 
     /* Interface Descriptor */
     9,                              /*  0:bLength */

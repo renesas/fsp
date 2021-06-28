@@ -219,6 +219,7 @@
 #define BSP_FEATURE_ICU_HAS_WUPEN1                        (0U)
 #define BSP_FEATURE_ICU_IRQ_CHANNELS_MASK                 (0xFFU)
 #define BSP_FEATURE_ICU_WUPEN_MASK                        (0xF38F00FFU)
+#define BSP_FEATURE_ICU_HAS_INTERRUPT_GROUPS              (1U)
 
 #define BSP_FEATURE_IIC_FAST_MODE_PLUS                    (0U)
 #define BSP_FEATURE_IIC_VALID_CHANNEL_MASK                (0x07)

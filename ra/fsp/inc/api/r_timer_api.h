@@ -110,6 +110,13 @@ typedef enum e_timer_mode
     TIMER_MODE_PWM,                               ///< Timer generates saw-wave PWM output.
     TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM  = 4U, ///< Timer generates symmetric triangle-wave PWM output.
     TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM = 5U, ///< Timer generates asymmetric triangle-wave PWM output.
+
+    /**
+     * Timer generates Asymmetric Triangle-wave PWM output. In PWM mode 3, the duty cycle does
+     * not need to be updated at each tough/crest interrupt. Instead, the trough and crest duty cycle values can be
+     * set once and only need to be updated when the application needs to change the duty cycle.
+     */
+    TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3 = 6U,
 } timer_mode_t;
 
 /** Direction of timer count */

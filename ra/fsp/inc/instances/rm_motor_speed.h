@@ -32,6 +32,7 @@
 #include "bsp_api.h"
 
 #include "rm_motor_speed_api.h"
+#include "rm_motor_speed_cfg.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -60,10 +61,18 @@ FSP_HEADER
                                                                 * is out of range [VFWRATIO_MIN, 1.0]  */
 #define MOTOR_SPEED_FLUXWKN_CHK_MASK                  (0xF000) /* Mask value to check error */
 #define MOTOR_SPEED_FLUXWKN_INVALID_CHK               (0x9000) /* Value to check Invalidate */
+#define MOTOR_SPEED_METHOD_PID                        (1)
+#define MOTOR_SPEED_METHOD_IPD                        (2)
 
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+typedef enum  e_motor_speed_control_type
+{
+    MOTOR_SPEED_CONTROL_TYPE_SENSORLESS = 0, ///< Sensorless type
+    MOTOR_SPEED_CONTROL_TYPE_ENCODER    = 1  ///< Encoder type
+} motor_speed_control_type_t;
+
 typedef struct st_motor_speed_pi_params
 {
     float f_err;                       ///< Error
@@ -81,6 +90,8 @@ typedef struct motor_speed_design_params
     float f_ed_hpf_omega;              ///< Natural frequency[Hz] for HPF in open-loop damping gain design
     float f_ol_damping_zeta;           ///< Damping ratio for open-loop damping gain design
     float f_phase_err_lpf_cut_freq;    ///< The cut-off frequency [Hz] of phase error LPF gain design
+    float f_observer_omega;            ///< Natural frequency[Hz] for speed observer
+    float f_observer_zeta;             ///< Damping ratio for speed observer
 } motor_speed_design_params_t;
 
 /* First order LPF structure */
@@ -93,11 +104,26 @@ typedef struct motor_speed_lpf
     float f_gain_kb;                   ///< LPF gain
 } motor_speed_lpf_t;
 
+/* Second order LPF structure */
+typedef struct motor_speed_2nd_order_lpf
+{
+    float f4_pre_output;               ///< Previous value of output
+    float f4_pre2_output;              ///< Before last value of output
+    float f4_pre_input;                ///< Previous value of input
+    float f4_pre2_input;               ///< Before last value of input
+    float f4_omega_t;                  ///< Calculate value
+    float f4_omega2_t;                 ///< Calculate value
+    float f4_omega2_t2;                ///< Calculate value
+    float f4_gain_ka;                  ///< LPF gain
+    float f4_gain_kb;                  ///< LPF gain
+    float f4_gain_kc;                  ///< LPF gain
+} motor_speed_2nd_order_lpf_t;
+
 /* For Openloop damping */
 typedef enum  e_motor_speed_openloop_damping
 {
-    MOTOR_SPEED_OPENLOOP_DAMPING_DISABLE = 0,
-    MOTOR_SPEED_OPENLOOP_DAMPING_ENABLE  = 1
+    MOTOR_SPEED_OPENLOOP_DAMPING_DISABLE = 0, ///< Disable openloop damping
+    MOTOR_SPEED_OPENLOOP_DAMPING_ENABLE  = 1  ///< Enable openloop damping
 } motor_speed_openloop_damping_t;
 
 typedef struct st_motor_speed_oldamp_sub
@@ -122,8 +148,8 @@ typedef struct st_motor_speed_oldamp
 /* For Flux Weakening */
 typedef enum  e_motor_speed_flux_weaken
 {
-    MOTOR_SPEED_FLUX_WEAKEN_DISABLE = 0,
-    MOTOR_SPEED_FLUX_WEAKEN_ENABLE  = 1
+    MOTOR_SPEED_FLUX_WEAKEN_DISABLE = 0, ///< Disable flux-weakening control
+    MOTOR_SPEED_FLUX_WEAKEN_ENABLE  = 1  ///< Enable flux-weakening control
 } motor_speed_flux_weaken_t;
 
 typedef struct st_motor_speed_motor_parameter
@@ -153,12 +179,39 @@ typedef struct st_motor_speed_flux_weakening
 
 typedef enum  e_motor_speed_less_switch
 {
-    MOTOR_SPEED_LESS_SWITCH_DISABLE = 0,
-    MOTOR_SPEED_LESS_SWITCH_ENABLE  = 1
+    MOTOR_SPEED_LESS_SWITCH_DISABLE = 0, ///< Disable soft switching between open-loop mode and normal FOC mode
+    MOTOR_SPEED_LESS_SWITCH_ENABLE  = 1  ///< Enable soft switching between open-loop mode and normal FOC mode
 } motor_speed_less_switch_t;
+
+/* For Speed Observer */
+typedef enum  e_motor_speed_observer_switch
+{
+    MOTOR_SPEED_OBSERVER_SWITCH_DISABLE = 0, ///< Disable speed observer
+    MOTOR_SPEED_OBSERVER_SWITCH_ENABLE  = 1  ///< Enable speed observer
+} motor_speed_observer_switch_t;
+
+typedef struct st_motor_speed_observer
+{
+    float f4_speed_rad;                 ///< speed observer output speed [rad/s] (electrical)
+    float f4_ref_torque;                ///< reference torque
+    float f4_ref_pre_torque;            ///< previous value of reference torque
+    float f4_ref_speed_rad;             ///< reference speed for sob [rad/s] (electrical)
+    float f4_ref_pre_speed_rad;         ///< previous value of reference speed for sob [rad/s] (electrical)
+    float f4_hpf_k1;                    ///< HPF gain for sob
+    float f4_hpf_k2;                    ///< HPF gain for sob
+    float f4_hpf_k3;                    ///< HPF gain for sob
+    float f4_k1;                        ///< K1 gain for sob
+    float f4_k2;                        ///< K2 gain for sob
+    float f4_hpf_ref_speed_rad;         ///< HPF output reference speed [rad/s]
+    float f4_hpf_ref_pre_speed_rad;     ///< previous value of HPF output reference speed [rad/s]
+    float f4_hpf_omega;                 ///< natural frequency for speed observer HPF
+    motor_speed_2nd_order_lpf_t st_lpf; ///< second order LPF structure
+} motor_speed_observer_t;
 
 typedef struct st_motor_speed_extended_cfg
 {
+    uint8_t u1_ctrl_method;                             ///< Feedback control method
+
     float f_speed_ctrl_period;                          ///< Speed control period [usec]
     float f_limit_speed_change;                         ///< Reference speed max change limit [rad/s]
     float f_max_speed_rad;                              ///< Maximum speed command value [rad/s]
@@ -168,51 +221,71 @@ typedef struct st_motor_speed_extended_cfg
 
     float f_ol_fb_speed_limit_rate;                     ///< Rate of reference speed for feedback speed limitter
 
-    motor_speed_openloop_damping_t u1_openloop_damping; ///< Openloop Damping Active Flag
-    motor_speed_flux_weaken_t      u1_flux_weakening;   ///< Flux Weakening Active Flag
-    motor_speed_less_switch_t      u1_less_switch;      ///< Soft switching Active Flag
+    motor_speed_openloop_damping_t u1_openloop_damping; ///< Openloop damping active flag
+    motor_speed_flux_weaken_t      u1_flux_weakening;   ///< Flux weakening active flag
+    motor_speed_less_switch_t      u1_less_switch;      ///< Soft switching active flag
+    motor_speed_observer_switch_t  u1_observer_swtich;  ///< Speed observer active flag
 
-    motor_speed_oldamp_t          ol_param;
-    motor_speed_oldamp_sub_t      ol_sub_param;
-    motor_speed_design_params_t   d_param;
-    motor_speed_motor_parameter_t mtr_param;
+    motor_speed_oldamp_t          ol_param;             ///< Parameter for open-loop damping
+    motor_speed_oldamp_sub_t      ol_sub_param;         ///< Sub parameter for open-loop damping
+    motor_speed_design_params_t   d_param;              ///< Design parameter for speed control
+    motor_speed_control_type_t    control_type;         ///< Motor control type
+    motor_speed_motor_parameter_t mtr_param;            ///< Motor parameter
 } motor_speed_extended_cfg_t;
+
+typedef enum  e_motor_speed_ctrl_status
+{
+    MOTOR_SPEED_CTRL_STATUS_INIT = 0,  ///< Speed control status is INIT
+    MOTOR_SPEED_CTRL_STATUS_BOOT,      ///< Speed control status is BOOT
+    MOTOR_SPEED_CTRL_STATUS_RUN,       ///< Speed control status is RUN
+} motor_speed_ctrl_status_t;
 
 typedef struct st_motor_speed_instance_ctrl
 {
     uint32_t open;
 
-    uint8_t u1_active;                 ///< Flag to set active/inactive the speed control
-    uint8_t u1_state_speed_ref;        ///< The speed control status
-    uint8_t u1_flag_get_iref;          ///< Flag to get d/q-axis current reference
-    uint8_t u1_state_id_ref;           ///< The d-axis current command status
-    uint8_t u1_state_iq_ref;           ///< The q-axis current command status
-    float   f_id_ref;                  ///< D-axis current reference [A] for calculation
-    float   f_iq_ref;                  ///< Q-axis current reference [A] for calculation
-    float   f_rpm2rad;                 ///< Coeficient to translate [rpm] to [rad/s]
-    float   f_ref_speed_rad_ctrl;      ///< Command speed value for speed PI control[rad/s]
-    float   f_ref_speed_rad;           ///< Reference speed value [rad/s]
-    float   f_speed_lpf_rad;           ///< Speed processed by LPF
+    uint8_t u1_active;                                     ///< Flag to set active/inactive the speed control
+    uint8_t u1_state_speed_ref;                            ///< The speed control status
+    uint8_t u1_flag_get_iref;                              ///< Flag to get d/q-axis current reference
+    uint8_t u1_state_id_ref;                               ///< The d-axis current command status
+    uint8_t u1_state_iq_ref;                               ///< The q-axis current command status
+    float   f_id_ref;                                      ///< D-axis current reference [A] for calculation
+    float   f_iq_ref;                                      ///< Q-axis current reference [A] for calculation
+    float   f_rpm2rad;                                     ///< Coeficient to translate [rpm] to [rad/s]
+    float   f_ref_speed_rad_ctrl;                          ///< Command speed value for speed PI control[rad/s]
+    float   f_ref_speed_rad;                               ///< Reference speed value [rad/s]
+    float   f_speed_lpf_rad;                               ///< Speed processed by LPF
+    motor_speed_ctrl_status_t e_status;
 
     /* Openloop damping related valiable */
-    uint8_t u1_flag_down_to_ol;        ///< The open-loop drive flag
-    float   f_ol_iq_down_step;         ///< The q-axis current reference ramping down rate [A/ms]
-    float   f_phase_err_rad_lpf;       ///< LPF value of phase error[rad]
-    float   f_init_phase_err_rad;      ///< Initialization value of phase error rate
-    float   f_opl_torque_current;      ///< The torque current (Iq) in sensor-less switching
-    float   f_damp_comp_speed;         ///< The speed for open-loop damping
-    float   f_damp_comp_gain;          ///< The gain for open-loop damping
-    float   f_fb_speed_limit_rate;     ///< The limit of speed feed-back rate
+    uint8_t u1_flag_down_to_ol;                            ///< The open-loop drive flag
+    float   f_ol_iq_down_step;                             ///< The q-axis current reference ramping down rate [A/ms]
+    float   f_phase_err_rad_lpf;                           ///< LPF value of phase error[rad]
+    float   f_init_phase_err_rad;                          ///< Initialization value of phase error rate
+    float   f_opl_torque_current;                          ///< The torque current (Iq) in sensor-less switching
+    float   f_damp_comp_speed;                             ///< The speed for open-loop damping
+    float   f_damp_comp_gain;                              ///< The gain for open-loop damping
+    float   f_fb_speed_limit_rate;                         ///< The limit of speed feed-back rate
 
     /* Flux Weakening related valiable */
-    uint8_t u1_enable_flux_weakning;   ///< The flag for enable/disable flux weakening process
-    motor_speed_flux_weakening_t st_flxwkn;
+    uint8_t u1_enable_flux_weakning;                       ///< The flag for enable/disable flux weakening process
+    motor_speed_flux_weakening_t st_flxwkn;                ///< Data for flux-weakening control
 
     motor_speed_cfg_t const * p_cfg;
-    motor_speed_pi_params_t   pi_param;
-    motor_speed_input_t       st_input;
-    motor_speed_lpf_t         st_speed_lpf;
-    motor_speed_lpf_t         st_phase_err_lpf;
+    motor_speed_pi_params_t   pi_param;                    ///< Data for flux-weakening control
+    motor_speed_input_t       st_input;                    ///< Input data buffer
+    motor_speed_lpf_t         st_speed_lpf;                ///< Speed LPF structure
+    motor_speed_lpf_t         st_phase_err_lpf;            ///< Phase error LPF structure
+    motor_speed_observer_t    st_observer;                 ///< Speed observer structure
+
+    motor_speed_position_data_t st_position_data;          ///< Data for position control
+
+    /* cyclic timer callback */
+    timer_callback_args_t timer_args;                      ///< Cyclic timer callback
+
+#if MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1
+    motor_position_instance_t const * p_position_instance; ///< Position module instance
+#endif
 } motor_speed_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -241,6 +314,9 @@ fsp_err_t RM_MOTOR_SPEED_Reset(motor_speed_ctrl_t * const p_ctrl);
 fsp_err_t RM_MOTOR_SPEED_Run(motor_speed_ctrl_t * const p_ctrl);
 
 fsp_err_t RM_MOTOR_SPEED_SpeedReferenceSet(motor_speed_ctrl_t * const p_ctrl, float const speed_reference_rpm);
+
+fsp_err_t RM_MOTOR_SPEED_PositionReferenceSet(motor_speed_ctrl_t * const                p_ctrl,
+                                              motor_speed_position_data_t const * const p_position_data);
 
 fsp_err_t RM_MOTOR_SPEED_ParameterSet(motor_speed_ctrl_t * const p_ctrl, motor_speed_input_t const * const p_st_input);
 

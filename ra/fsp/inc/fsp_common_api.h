@@ -342,6 +342,14 @@ typedef enum e_fsp_err
     /** @note SF_CRYPTO APIs may return an error code starting from 0x10000 which is of Crypto module.
      *        Refer to sf_cryoto_err.h for Crypto error codes.
      */
+
+    /* Start of Sensor specific */
+    FSP_ERR_SENSOR_INVALID_DATA             = 0x30000, ///< Data is invalid.
+    FSP_ERR_SENSOR_IN_STABILIZATION         = 0x30001, ///< Sensor is stabilizing.
+    FSP_ERR_SENSOR_MEASUREMENT_NOT_FINISHED = 0x30002, ///< Measurement is not finished.
+
+    /* Start of COMMS specific */
+    FSP_ERR_COMMS_BUS_NOT_OPEN = 0x40000,              ///< Bus is not open.
 } fsp_err_t;
 
 /** @} */

@@ -1,4 +1,22 @@
-/* ${REA_DISCLAIMER_PLACEHOLDER} */
+/***********************************************************************************************************************
+ * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ *
+ * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
+ * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
+ * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
+ * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
+ * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
+ * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
+ * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
+ * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
+ * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
+ * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
+ * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
+ * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
+ * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
+ * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
+ **********************************************************************************************************************/
 
 #ifndef BSP_FEATURE_H
 #define BSP_FEATURE_H
@@ -137,7 +155,7 @@
 #define BSP_FEATURE_CGC_SODRV_SHIFT                       (0x0U)
 #define BSP_FEATURE_CGC_STARTUP_OPCCR_MODE                (1)
 
-#define BSP_FEATURE_CRYPTO_HAS_AES                        (1) // skipped for now
+#define BSP_FEATURE_CRYPTO_HAS_AES                        (1)
 #define BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED                (0) //
 #define BSP_FEATURE_CRYPTO_HAS_ECC                        (0) //
 #define BSP_FEATURE_CRYPTO_HAS_ECC_WRAPPED                (0) //
@@ -201,6 +219,7 @@
 #define BSP_FEATURE_ICU_HAS_WUPEN1                        (0) // Feature not available on this MCU
 #define BSP_FEATURE_ICU_IRQ_CHANNELS_MASK                 (0xFFU)
 #define BSP_FEATURE_ICU_WUPEN_MASK                        (0xF38F00FFU)
+#define BSP_FEATURE_ICU_HAS_INTERRUPT_GROUPS              (1U)
 
 #define BSP_FEATURE_IIC_FAST_MODE_PLUS                    (0U)
 #define BSP_FEATURE_IIC_VALID_CHANNEL_MASK                (1)
@@ -246,7 +265,7 @@
 
 #define BSP_FEATURE_QSPI_DEVICE_START_ADDRESS             (0x0U)
 
-#define BSP_FEATURE_SCI_ADDRESS_MATCH_CHANNELS            (BSP_FEATURE_SCI_CHANNELS) // Feature not available on this MCU
+#define BSP_FEATURE_SCI_ADDRESS_MATCH_CHANNELS            (BSP_FEATURE_SCI_CHANNELS)
 #define BSP_FEATURE_SCI_CHANNELS                          (0x207U)
 #define BSP_FEATURE_SCI_CLOCK                             (FSP_PRIV_CLOCK_PCLKB)
 #define BSP_FEATURE_SCI_UART_FIFO_CHANNELS                (0x1U)

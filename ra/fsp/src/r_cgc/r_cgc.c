@@ -1295,7 +1295,7 @@ static void r_cgc_post_change (cgc_prv_change_t change)
 
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
- #if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
+ #if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM && BSP_FEATURE_BSP_FLASH_CACHE
     R_BSP_FlashCacheEnable();
  #endif
 #endif

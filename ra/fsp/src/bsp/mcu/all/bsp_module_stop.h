@@ -79,6 +79,8 @@ FSP_HEADER
 #define BSP_MSTP_BIT_FSP_IP_DTC(channel)        (1U << (22U));
 #define BSP_MSTP_REG_FSP_IP_CAN(channel)        R_MSTP->MSTPCRB
 #define BSP_MSTP_BIT_FSP_IP_CAN(channel)        (1U << (2U - channel));
+#define BSP_MSTP_REG_FSP_IP_CEC(channel)        R_MSTP->MSTPCRB
+#define BSP_MSTP_BIT_FSP_IP_CEC(channel)        (1U << (3U));
 #define BSP_MSTP_REG_FSP_IP_IRDA(channel)       R_MSTP->MSTPCRB
 #define BSP_MSTP_BIT_FSP_IP_IRDA(channel)       (1U << (5U - channel));
 #define BSP_MSTP_REG_FSP_IP_QSPI(channel)       R_MSTP->MSTPCRB

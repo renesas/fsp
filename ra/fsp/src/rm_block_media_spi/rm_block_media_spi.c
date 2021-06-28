@@ -540,7 +540,7 @@ static fsp_err_t rm_block_media_spi_rom_read (rm_block_media_spi_instance_ctrl_t
     p_instance_ctrl->read_in_progress = true;
     memcpy(p_dest, (uint8_t *) rom_address, read_bytes);
 
-    /* Notify appication of completion */
+    /* Notify application of completion */
     p_instance_ctrl->read_in_progress = false;
     rm_block_media_call_callback(p_instance_ctrl, RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE);
 

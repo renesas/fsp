@@ -293,7 +293,8 @@ fsp_err_t R_GPT_THREE_PHASE_DutyCycleSet (three_phase_ctrl_t * const       p_ctr
         p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRE] = p_duty_cycle->duty[ch];
 
         /* Set double-buffer registers (if applicable) */
-        if (THREE_PHASE_BUFFER_MODE_DOUBLE == p_instance_ctrl->buffer_mode)
+        if ((THREE_PHASE_BUFFER_MODE_DOUBLE == p_instance_ctrl->buffer_mode) ||
+            (TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3 == p_instance_ctrl->p_cfg->p_timer_instance[0]->p_cfg->mode))
         {
             p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRD] = p_duty_cycle->duty_buffer[ch];
             p_instance_ctrl->p_reg[ch]->GTCCR[GPT_THREE_PHASE_PRV_GTCCRF] = p_duty_cycle->duty_buffer[ch];

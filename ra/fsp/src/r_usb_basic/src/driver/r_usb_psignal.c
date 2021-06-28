@@ -49,6 +49,7 @@ extern uint16_t g_usb_bc_detect;
 
  #if (BSP_CFG_RTOS == 1)
 extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
+extern bool         g_usb_peri_usbx_is_detach[USB_MAX_PIPE_NO + 1];
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
 
 /******************************************************************************
@@ -176,6 +177,7 @@ void usb_pstd_detach_process (usb_utr_t * p_utr)
             usb_pstd_forced_termination(i, (uint16_t) USB_DATA_STOP, p_utr);
             usb_cstd_clr_pipe_cnfg(p_utr, i);
  #if (BSP_CFG_RTOS == 1)
+            g_usb_peri_usbx_is_detach[i] = USB_YES;
             tx_semaphore_put(&g_usb_peri_usbx_sem[i]);
             tx_semaphore_delete(&g_usb_peri_usbx_sem[i]);
  #endif                                /* #if (BSP_CFG_RTOS == 1) */

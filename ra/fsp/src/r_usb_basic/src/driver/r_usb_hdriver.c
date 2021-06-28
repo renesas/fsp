@@ -42,10 +42,12 @@
 
 #endif                                 /* defined(USB_CFG_HHID_USE) */
 
-#if defined(USB_CFG_HMSC_USE)
- #include "r_usb_hmsc_api.h"
+#if (BSP_CFG_RTOS != 1)
+ #if defined(USB_CFG_HMSC_USE)
+  #include "r_usb_hmsc_api.h"
 
-#endif                                 /* defined(USB_CFG_HMSC_USE) */
+ #endif                                /* defined(USB_CFG_HMSC_USE) */
+#endif /* #if (BSP_CFG_RTOS != 1) */
 
 #if defined(USB_CFG_PCDC_USE)
  #include "r_usb_pcdc_api.h"
@@ -297,14 +299,12 @@ usb_er_t usb_hstd_transfer_start_req (usb_utr_t * ptr)
     {
         USB_PRINTF1("### usb_hstd_transfer_start_req snd_msg error (%ld)\n", err);
     }
-
  #elif (BSP_CFG_RTOS == 1)             /* (BSP_CFG_RTOS == 0) */
     err = USB_PGET_BLK(1, &p_tran_data);
     if (TX_SUCCESS != err)
     {
         return USB_ERROR;
     }
-
  #elif (BSP_CFG_RTOS == 2)             /* (BSP_CFG_RTOS == 0) */
     p_tran_data = (usb_utr_t *) pvPortMalloc(sizeof(usb_utr_t));
     if (NULL == p_tran_data)
@@ -616,7 +616,6 @@ static void usb_hstd_set_submitutr (usb_utr_t * ptr)
         {
             usb_cstd_pipe_msg_clear(ptr, pipenum);
         }
-
  #else                                 /* #if (BSP_CFG_RTOS != 0) */
         if (USB_PIPE0 == pipenum)
         {
@@ -634,7 +633,6 @@ static void usb_hstd_set_submitutr (usb_utr_t * ptr)
     }
 
  #if (BSP_CFG_RTOS != 0)
-
     /* Pipe Transfer Process check */
     if (USB_NULL != g_p_usb_hstd_pipe[ptr->ip][pipenum])
     {
@@ -941,7 +939,6 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
         case USB_INT_PDDETINT0:
         {
   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
-
             /* Port0 PDDETINT interrupt function */
             if (USB_IP1 == ptr->ip)
             {
@@ -972,7 +969,6 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
                 usb_compliance_disp((void *) &disp_param);
                 usb_hstd_ctrl_end(ptr, (uint16_t) USB_DATA_STOP);
             }
-
  #else                                 /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
             /* User program */
             hw_usb_clear_enb_sofe(ptr);
@@ -1207,7 +1203,6 @@ void usb_hstd_hcd_task (void * stacd)
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
 
  #if (BSP_CFG_RTOS != 0)
-
     /* WAIT_LOOP */
     while (1)
     {
@@ -1353,7 +1348,6 @@ void usb_hstd_hcd_task (void * stacd)
                 usb_hstd_ovrcr_enable(ptr);                      /* Interrupt Enable */
                 usb_hstd_vbus_control(ptr, (uint16_t) USB_VBON); /* USB VBUS control ON */
  #if USB_CFG_BC == USB_CFG_DISABLE
-
                 /* 100ms wait */
                 usb_cpu_delay_xms((uint16_t) USB_VALUE_100U);
  #endif                                                          /* USB_CFG_BC == USB_CFG_DISABLE */
@@ -1418,7 +1412,6 @@ void usb_hstd_hcd_task (void * stacd)
             case USB_MSG_HCD_CLR_STALL_RESULT:
             {
  #if (BSP_CFG_RTOS != 0)
-
                 /** Do nothing when running in RTOS
                  * The result will be checked immediately after issuing a "USB_MSG_HCD_CLR_STALL" request. **/
  #else                                 /* #if (BSP_CFG_RTOS != 0) */
@@ -1543,7 +1536,6 @@ void usb_hstd_hcd_task (void * stacd)
     {
         continue;
     }
-
  #else                                 /* #if (BSP_CFG_RTOS != 0) */
     if (result == 2)
     {
@@ -1617,7 +1609,6 @@ void usb_hstd_send_start (usb_utr_t * ptr, uint16_t pipe)
         }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-
         /* D0FIFO DMA */
         case USB_D0USE:
 
@@ -3022,7 +3013,6 @@ static uint8_t usb_hvnd_get_pipe_no (usb_utr_t * p_utr, uint8_t type, uint8_t di
                     break;
                 }
             }
-
   #else
             if (USB_FALSE == g_usb_pipe_table[p_utr->ip][pipe].use_flag)
             {

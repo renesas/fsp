@@ -277,7 +277,9 @@ __STATIC_INLINE bsp_unique_id_t const * R_BSP_UniqueIdGet ()
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_FlashCacheDisable ()
 {
+#if BSP_FEATURE_BSP_FLASH_CACHE
     R_FCACHE->FCACHEE = 0U;
+#endif
 
 #if BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
 
@@ -291,6 +293,8 @@ __STATIC_INLINE void R_BSP_FlashCacheDisable ()
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_FlashCacheEnable ()
 {
+#if BSP_FEATURE_BSP_FLASH_CACHE
+
     /* Invalidate the flash cache and wait until it is invalidated. (See section 55.3.2.2 "Operation" of the Flash Cache
      * in the RA6M3 manual R01UH0878EJ0100). */
     R_FCACHE->FCACHEIV = 1U;
@@ -298,6 +302,7 @@ __STATIC_INLINE void R_BSP_FlashCacheEnable ()
 
     /* Enable flash cache. */
     R_FCACHE->FCACHEE = 1U;
+#endif
 
 #if BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
 

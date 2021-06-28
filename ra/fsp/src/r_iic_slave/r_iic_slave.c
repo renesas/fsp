@@ -434,12 +434,9 @@ static fsp_err_t iic_slave_read_write (i2c_slave_ctrl_t * const p_api_ctrl,
     p_ctrl->p_reg->ICMR3_b.ACKWP = 1;  /* Write Enable */
     p_ctrl->p_reg->ICMR3_b.ACKBT = 0;  /* Write */
 
-    /* Enable timeouts. Timeouts are disabled at the end of a IIC Slave transaction. */
-    /* Allow timeouts to be generated on the low value of SCL using long count mode */
-    p_ctrl->p_reg->ICMR2 = IIC_SLAVE_BUS_MODE_REGISTER_2_MASK;
-
-    /* Enable timeout function */
-    p_ctrl->p_reg->ICFER_b.TMOE = 1;
+    /* Timeouts are enabled by the driver code at the end of an IIC Slave callback.
+     * Do not enable them here to prevent time restricting the application code.
+     */
 
     p_ctrl->transaction_completed = false;
 
@@ -659,12 +656,16 @@ static void iic_slave_initiate_transaction (iic_slave_instance_ctrl_t * p_ctrl, 
         {
             /* Enable the Start condition detection to trigger ERI ISR */
 
-            /* Since address match is detected, enable STOP detection.
-             * This has been done already for Slave Read at the beginning of RXI ISR to handle 0 byte master writes.
-             * It is ok to clear the stop condition flag again for the case of Slave Read.
-             *
-             * Clear the Start and Stop condition flag for Slave Read/Write operation */
-            p_ctrl->p_reg->ICSR2 &= ((uint8_t) ~((uint8_t) ICSR2_STOP_BIT | (uint8_t) ICSR2_START_BIT));
+            /* Since address match is detected, enable STOP and RESTART detection for Master Read Slave Write.
+             * This must be done conditionally only for Master Read Slave Write to prevent clearing the start bit
+             * in case a restart occurred (and got captured) while we were in the user callback.
+             * This capturing is made possible in the 'iic_rxi_slave' after the dummy read.
+             */
+            if (IIC_SLAVE_TRANSFER_DIR_MASTER_READ_SLAVE_WRITE == p_ctrl->direction)
+            {
+                /* Clear the Start and Stop condition flag for Slave Read/Write operation */
+                p_ctrl->p_reg->ICSR2 &= ((uint8_t) ~((uint8_t) ICSR2_STOP_BIT | (uint8_t) ICSR2_START_BIT));
+            }
 
             /* Enable the Start and Stop condition detection interrupt */
             p_ctrl->p_reg->ICIER = (uint8_t) ((uint8_t) IIC_STP_EN_BIT |
@@ -750,21 +751,36 @@ static void iic_rxi_slave (iic_slave_instance_ctrl_t * p_ctrl)
     {
         p_ctrl->do_dummy_read = true;
 
-        volatile uint8_t dummy = p_ctrl->p_reg->ICDRR;
-        (void) dummy;
+        volatile uint8_t address_and_intent = p_ctrl->p_reg->ICDRR;
 
         /* The below code enables/services 0 byte writes from Master.*/
 
-        /* Since address match detected, enable STOP detection */
-        /* Clear the Stop condition flag */
-        p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(ICSR2_STOP_BIT);
+        /* Since address match detected, enable STOP detection in case of Master Read Slave Write Operation;
+         * and enable STOP and START (RESTART) detection in case of Master Write Slave Read Operation.
+         * This is done so that RESTART handling is not maissed if the user callback takes long and the Master
+         * issues the restart on the bus.
+         */
+        if (address_and_intent & 1U)
+        {
+            p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(ICSR2_STOP_BIT);
+        }
+        else
+        {
+            p_ctrl->p_reg->ICSR2 &= ((uint8_t) ~((uint8_t) ICSR2_STOP_BIT | (uint8_t) ICSR2_START_BIT));
+        }
 
         /* Enable the Stop condition detection interrupt.
          * In case this is a greater than 0 byte write from Master and MasterWriteSlaveRead API is called
          * in the callback with valid parameters, this flag will be appropriately updated by helper function -
-         * iic_slave_initiate_transaction. */
+         * iic_slave_initiate_transaction.
+         * Start condition is enabled here for Master Write Slave Read case to trigger an interrupt on detecting
+         * a restart on the bus when slave is processing a long user callback.
+         * This enablement is harmless for Master Read Slave Write operation as its Start bit is not cleared
+         * (set during this address match).
+         * */
         p_ctrl->p_reg->ICIER = (uint8_t) ((uint8_t) IIC_RXI_EN_BIT |
                                           (uint8_t) IIC_TXI_EN_BIT |
+                                          (uint8_t) IIC_STR_EN_BIT |
                                           (uint8_t) IIC_STP_EN_BIT);
     }
     else

@@ -70,6 +70,10 @@ const motor_angle_api_t g_motor_angle_on_motor_estimate =
     .angleSpeedGet         = RM_MOTOR_ESTIMATE_AngleSpeedGet,
     .estimatedComponentGet = RM_MOTOR_ESTIMATE_EstimatedComponentGet,
     .parameterUpdate       = RM_MOTOR_ESTIMATE_ParameterUpdate,
+    .internalCalculate     = RM_MOTOR_ESTIMATE_InternalCalculate,
+    .angleAdjust           = RM_MOTOR_ESTIMATE_AngleAdjust,
+    .encoderCyclic         = RM_MOTOR_ESTIMATE_EncoderCyclic,
+    .infoGet               = RM_MOTOR_ESTIMATE_InfoGet,
 };
 
 /*******************************************************************************************************************//**
@@ -117,10 +121,8 @@ fsp_err_t RM_MOTOR_ESTIMATE_Open (motor_angle_ctrl_t * const p_ctrl, motor_angle
 
     rm_motor_estimate_bemf_obs_init(&(p_instance_ctrl->st_bemf_obs), &(p_extended_cfg->st_motor_params));
 
-    rm_motor_estimate_bemf_observer_gain_calc(&(p_extended_cfg->st_motor_params),
-                                              p_extended_cfg,
-                                              &(p_instance_ctrl->st_bemf_obs),
-                                              p_extended_cfg->f4_ctrl_period);
+    rm_motor_estimate_bemf_observer_gain_calc(&(p_extended_cfg->st_motor_params), p_extended_cfg,
+                                              &(p_instance_ctrl->st_bemf_obs), p_extended_cfg->f4_ctrl_period);
 
     rm_motor_estimate_speed_gain_calc(p_extended_cfg, &(p_instance_ctrl->st_pll_est), p_extended_cfg->f4_ctrl_period);
 
@@ -331,8 +333,7 @@ fsp_err_t RM_MOTOR_ESTIMATE_AngleSpeedGet (motor_angle_ctrl_t * const p_ctrl,
             }
 
             /* Estimate angle and speed */
-            rm_motor_estimate_speed_pll(&(p_instance_ctrl->st_pll_est),
-                                        p_instance_ctrl->f4_phase_err_rad,
+            rm_motor_estimate_speed_pll(&(p_instance_ctrl->st_pll_est), p_instance_ctrl->f4_phase_err_rad,
                                         &(p_instance_ctrl->f4_speed_rad));
         }
         else
@@ -428,15 +429,102 @@ fsp_err_t RM_MOTOR_ESTIMATE_ParameterUpdate (motor_angle_ctrl_t * const p_ctrl, 
     {
         p_instance_ctrl->p_cfg = p_cfg;
 
-        rm_motor_estimate_bemf_observer_gain_calc(&(p_extended_cfg->st_motor_params),
-                                                  p_extended_cfg,
-                                                  &(p_instance_ctrl->st_bemf_obs),
-                                                  p_extended_cfg->f4_ctrl_period);
+        rm_motor_estimate_bemf_observer_gain_calc(&(p_extended_cfg->st_motor_params), p_extended_cfg,
+                                                  &(p_instance_ctrl->st_bemf_obs), p_extended_cfg->f4_ctrl_period);
 
-        rm_motor_estimate_speed_gain_calc(p_extended_cfg,
-                                          &(p_instance_ctrl->st_pll_est),
+        rm_motor_estimate_speed_gain_calc(p_extended_cfg, &(p_instance_ctrl->st_pll_est),
                                           p_extended_cfg->f4_ctrl_period);
     }
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Calculate internal parameters. Implements @ref motor_angle_api_t::internalCalculate
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ESTIMATE_InternalCalculate (motor_angle_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_ERR_UNSUPPORTED;
+
+#if (MOTOR_ESTIMATE_CFG_PARAM_CHECKING_ENABLE)
+    motor_estimate_instance_ctrl_t * p_instance_ctrl = (motor_estimate_instance_ctrl_t *) p_ctrl;
+    FSP_ASSERT(p_instance_ctrl != NULL);
+    FSP_ERROR_RETURN(MOTOR_ESTIMATE_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Angle Adjustment Process. Implements @ref motor_angle_api_t::angleAdjust
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ESTIMATE_AngleAdjust (motor_angle_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_ERR_UNSUPPORTED;
+
+#if (MOTOR_ESTIMATE_CFG_PARAM_CHECKING_ENABLE)
+    motor_estimate_instance_ctrl_t * p_instance_ctrl = (motor_estimate_instance_ctrl_t *) p_ctrl;
+    FSP_ASSERT(p_instance_ctrl != NULL);
+    FSP_ERROR_RETURN(MOTOR_ESTIMATE_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Encoder Cyclic Process (Call in cyclic timer). Implements @ref motor_angle_api_t::encoderCyclic
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ESTIMATE_EncoderCyclic (motor_angle_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_ERR_UNSUPPORTED;
+
+#if (MOTOR_ESTIMATE_CFG_PARAM_CHECKING_ENABLE)
+    motor_estimate_instance_ctrl_t * p_instance_ctrl = (motor_estimate_instance_ctrl_t *) p_ctrl;
+    FSP_ASSERT(p_instance_ctrl != NULL);
+    FSP_ERROR_RETURN(MOTOR_ESTIMATE_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Gets information of Encoder Angle Module. Implements @ref motor_angle_api_t::infoGet
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ESTIMATE_InfoGet (motor_angle_ctrl_t * const p_ctrl, motor_angle_encoder_info_t * const p_info)
+{
+    fsp_err_t err = FSP_ERR_UNSUPPORTED;
+
+#if (MOTOR_ESTIMATE_CFG_PARAM_CHECKING_ENABLE)
+    motor_estimate_instance_ctrl_t * p_instance_ctrl = (motor_estimate_instance_ctrl_t *) p_ctrl;
+    FSP_ASSERT(p_instance_ctrl != NULL);
+    FSP_ASSERT(p_info != NULL);
+    FSP_ERROR_RETURN(MOTOR_ESTIMATE_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+#endif
+    FSP_PARAMETER_NOT_USED(p_info);
 
     return err;
 }

@@ -301,6 +301,7 @@ void hw_usb_pmodule_init (uint8_t usb_ip)
         USB_M1->D1FIFOSEL |= USB_BIGEND;
   #endif                               /* USB_CFG_ENDIAN == USB_CFG_BIG */
 
+        USB_M1->INTSTS0 = 0;
         USB_M1->INTENB0 = (USB_BEMPE | USB_BRDYE | USB_VBSE | USB_DVSE | USB_CTRE);
  #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     }

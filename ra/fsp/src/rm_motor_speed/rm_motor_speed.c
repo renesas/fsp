@@ -32,34 +32,39 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_SPEED_OPEN                  (0X4D535043L)
+#define     MOTOR_SPEED_OPEN                            (0X4D535043L)
 
-#define     MOTOR_SPEED_FLG_CLR               (0)                         /* For flag clear */
-#define     MOTOR_SPEED_FLG_SET               (1)                         /* For flag set */
+#define     MOTOR_SPEED_FLAG_CLEAR                      (0)                         /* For flag clear */
+#define     MOTOR_SPEED_FLAG_SET                        (1)                         /* For flag set */
 
-#define     MOTOR_SPEED_MULTIPLE_2            (2.0F)
-#define     MOTOR_SPEED_TWOPI                 (3.14159265358979F * 2.0F)
-#define     MOTOR_SPEED_TWOPI_60              (MOTOR_SPEED_TWOPI / 60.0F) /* To translate rpm => rad/s */
-#define     MOTOR_SPEED_DIV_8BIT              (1.0F / 256.0F)
-#define     MOTOR_SPEED_RAD_TRANS             (3.14159265359F / 180.0F)
-#define     MOTOR_SPEED_ROOT3                 (1.7320508F)
+#define     MOTOR_SPEED_MULTIPLE_2                      (2.0F)
+#define     MOTOR_SPEED_TWOPI                           (3.14159265358979F * 2.0F)
+#define     MOTOR_SPEED_TWOPI_60                        (MOTOR_SPEED_TWOPI / 60.0F) /* To translate rpm => rad/s */
+#define     MOTOR_SPEED_DIV_8BIT                        (1.0F / 256.0F)
+#define     MOTOR_SPEED_RAD_TRANS                       (3.14159265359F / 180.0F)
+#define     MOTOR_SPEED_ROOT3                           (1.7320508F)
 
 /* Speed reference status */
-#define     MOTOR_SPEED_SPEED_ZERO_CONST      (0)
-#define     MOTOR_SPEED_SPEED_CHANGE          (2)
+#define     MOTOR_SPEED_SPEED_ZERO_CONST                (0)
+#define     MOTOR_SPEED_POSITION_CONTROL                (1)
+#define     MOTOR_SPEED_SPEED_CHANGE                    (2)
 
 /* Id reference status */
-#define     MOTOR_SPEED_ID_UP                 (0)
-#define     MOTOR_SPEED_ID_CONST              (1)
-#define     MOTOR_SPEED_ID_DOWN               (2)
-#define     MOTOR_SPEED_ID_ZERO_CONST         (3)
-#define     MOTOR_SPEED_ID_FLUXWKN            (4)
+#define     MOTOR_SPEED_ID_UP                           (0)
+#define     MOTOR_SPEED_ID_CONST                        (1)
+#define     MOTOR_SPEED_ID_DOWN                         (2)
+#define     MOTOR_SPEED_ID_ZERO_CONST                   (3)
+#define     MOTOR_SPEED_ID_FLUXWKN                      (4)
 
 /* Iq reference status */
-#define     MOTOR_SPEED_IQ_ZERO_CONST         (0)
-#define     MOTOR_SPEED_IQ_SPEED_PI_OUTPUT    (1)
-#define     MOTOR_SPEED_IQ_AUTO_ADJ           (2)
-#define     MOTOR_SPEED_IQ_DOWN               (3)
+#define     MOTOR_SPEED_IQ_ZERO_CONST                   (0)
+#define     MOTOR_SPEED_IQ_SPEED_PI_OUTPUT              (1)
+#define     MOTOR_SPEED_IQ_AUTO_ADJ                     (2)
+#define     MOTOR_SPEED_IQ_DOWN                         (3)
+
+#define     MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_90DEG    (1)
+#define     MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_0DEG     (2)
+#define     MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN      (3)
 
 #ifndef MOTOR_SPEED_ERROR_RETURN
 
@@ -77,10 +82,21 @@ void rm_motor_speed_cyclic(timer_callback_args_t * p_args);
 
 static void  rm_motor_speed_set_param_ref_speed(motor_speed_instance_ctrl_t * p_ctrl, float f_ref_speed_rpm);
 static float rm_motor_speed_speed_rate_limit(motor_speed_instance_ctrl_t * p_ctrl);
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 0)
 static float rm_motor_speed_set_iq_ref(motor_speed_instance_ctrl_t * p_ctrl);
 static float rm_motor_speed_set_id_ref(motor_speed_instance_ctrl_t * p_ctrl);
-static float rm_motor_speed_speed_pi(motor_speed_instance_ctrl_t * p_ctrl, float f_speed_rad);
 static float rm_motor_speed_set_speed_ref(motor_speed_instance_ctrl_t * p_ctrl);
+
+#endif
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+static float rm_motor_speed_set_iq_ref_encoder(motor_speed_instance_ctrl_t * p_ctrl);
+static float rm_motor_speed_set_id_ref_encoder(motor_speed_instance_ctrl_t * p_ctrl);
+static float rm_motor_speed_set_speed_ref_encoder(motor_speed_instance_ctrl_t * p_ctrl);
+
+#endif
+static float rm_motor_speed_speed_pi(motor_speed_instance_ctrl_t * p_ctrl, float f_speed_rad);
 static float rm_motor_speed_pi_control(motor_speed_pi_params_t * pi_ctrl);
 static void  rm_motor_speed_first_order_lpf_init(motor_speed_lpf_t * st_lpf);
 static void  rm_motor_speed_first_order_lpf_gain_calc(motor_speed_lpf_t * st_lpf, float f_omega, float f_ctrl_period);
@@ -94,15 +110,16 @@ static void  rm_motor_speed_first_order_lpf_gain_calc(motor_speed_lpf_t * st_lpf
  **********************************************************************************************************************/
 const motor_speed_api_t g_motor_speed_on_motor_speed =
 {
-    .open              = RM_MOTOR_SPEED_Open,
-    .close             = RM_MOTOR_SPEED_Close,
-    .reset             = RM_MOTOR_SPEED_Reset,
-    .run               = RM_MOTOR_SPEED_Run,
-    .speedReferenceSet = RM_MOTOR_SPEED_SpeedReferenceSet,
-    .parameterSet      = RM_MOTOR_SPEED_ParameterSet,
-    .speedControl      = RM_MOTOR_SPEED_SpeedControl,
-    .parameterGet      = RM_MOTOR_SPEED_ParameterGet,
-    .parameterUpdate   = RM_MOTOR_SPEED_ParameterUpdate,
+    .open                 = RM_MOTOR_SPEED_Open,
+    .close                = RM_MOTOR_SPEED_Close,
+    .reset                = RM_MOTOR_SPEED_Reset,
+    .run                  = RM_MOTOR_SPEED_Run,
+    .speedReferenceSet    = RM_MOTOR_SPEED_SpeedReferenceSet,
+    .positionReferenceSet = RM_MOTOR_SPEED_PositionReferenceSet,
+    .parameterSet         = RM_MOTOR_SPEED_ParameterSet,
+    .speedControl         = RM_MOTOR_SPEED_SpeedControl,
+    .parameterGet         = RM_MOTOR_SPEED_ParameterGet,
+    .parameterUpdate      = RM_MOTOR_SPEED_ParameterUpdate,
 };
 
 /*******************************************************************************************************************//**
@@ -140,22 +157,29 @@ fsp_err_t RM_MOTOR_SPEED_Open (motor_speed_ctrl_t * const p_ctrl, motor_speed_cf
     FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_speed_ctrl_period, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_limit_speed_change, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_max_speed_rad, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(((MOTOR_SPEED_CONTROL_TYPE_ENCODER != p_extended_cfg->control_type) ||
+                      (NULL != p_cfg->p_position_instance)),
+                     FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(((MOTOR_SPEED_CONTROL_TYPE_SENSORLESS != p_extended_cfg->control_type) ||
+                      (NULL == p_cfg->p_position_instance)),
+                     FSP_ERR_INVALID_ARGUMENT);
 #endif
 
     p_instance_ctrl->p_cfg = p_cfg;
 
-    p_instance_ctrl->u1_active                 = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->u1_active                 = MOTOR_SPEED_FLAG_CLEAR;
     p_instance_ctrl->u1_state_speed_ref        = MOTOR_SPEED_SPEED_ZERO_CONST;
-    p_instance_ctrl->st_input.u1_flag_get_iref = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->st_input.u1_flag_get_iref = MOTOR_SPEED_FLAG_CLEAR;
     p_instance_ctrl->u1_state_id_ref           = MOTOR_SPEED_ID_UP;
     p_instance_ctrl->u1_state_iq_ref           = MOTOR_SPEED_IQ_ZERO_CONST;
 
     p_instance_ctrl->f_rpm2rad = (float) (p_extended_cfg->mtr_param.u2_mtr_pp) * MOTOR_SPEED_TWOPI_60;
 
+    p_instance_ctrl->f_id_ref             = 0.0F;
     p_instance_ctrl->f_ref_speed_rad_ctrl = 0.0F;
     p_instance_ctrl->st_input.f_speed_rad = 0.0F;
     p_instance_ctrl->f_speed_lpf_rad      = 0.0F;
-    p_instance_ctrl->u1_flag_down_to_ol   = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->u1_flag_down_to_ol   = MOTOR_SPEED_FLAG_CLEAR;
 
     p_instance_ctrl->pi_param.f_ilimit = p_extended_cfg->f_iq_limit * MOTOR_SPEED_ROOT3;
     rm_motor_speed_pi_gain_calc(&(p_extended_cfg->mtr_param),
@@ -173,11 +197,9 @@ fsp_err_t RM_MOTOR_SPEED_Open (motor_speed_ctrl_t * const p_ctrl, motor_speed_cf
                                              p_extended_cfg->f_omega_t,
                                              p_extended_cfg->f_speed_ctrl_period);
 
-    rm_motor_speed_fluxwkn_init(&(p_instance_ctrl->st_flxwkn),
-                                p_extended_cfg->f_iq_limit * MOTOR_SPEED_ROOT3,
-                                1.0F,
+    rm_motor_speed_fluxwkn_init(&(p_instance_ctrl->st_flxwkn), p_extended_cfg->f_iq_limit * MOTOR_SPEED_ROOT3, 1.0F,
                                 &(p_extended_cfg->mtr_param));
-    p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_CLEAR;
 
     rm_motor_speed_opl_damp_init(&(p_extended_cfg->ol_sub_param), p_extended_cfg->f_ol_fb_speed_limit_rate);
     rm_motor_speed_opl_damp_r_set_gain(&(p_extended_cfg->ol_sub_param),
@@ -190,12 +212,32 @@ fsp_err_t RM_MOTOR_SPEED_Open (motor_speed_ctrl_t * const p_ctrl, motor_speed_cf
                                        p_extended_cfg->ol_param.f4_id_down_speed_rad * MOTOR_SPEED_TWOPI_60,
                                        p_extended_cfg->f_speed_ctrl_period);
 
+    /* Speed Observer */
+    if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
+    {
+        rm_motor_speed_observer_init(&(p_instance_ctrl->st_observer));
+        rm_motor_speed_observer_gain_calc(&(p_instance_ctrl->st_observer),
+                                          &(p_extended_cfg->d_param),
+                                          p_extended_cfg->f_speed_ctrl_period);
+    }
+
     /* Set used timer instance */
     if (p_cfg->p_timer_instance != NULL)
     {
         p_cfg->p_timer_instance->p_api->open(p_cfg->p_timer_instance->p_ctrl, p_cfg->p_timer_instance->p_cfg);
         p_cfg->p_timer_instance->p_api->start(p_cfg->p_timer_instance->p_ctrl);
     }
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+
+    /* Set used motor position instance */
+    if (p_cfg->p_position_instance != NULL)
+    {
+        p_instance_ctrl->p_position_instance = p_cfg->p_position_instance;
+        p_cfg->p_position_instance->p_api->open(p_cfg->p_position_instance->p_ctrl, p_cfg->p_position_instance->p_cfg);
+    }
+#endif
+    p_instance_ctrl->e_status = MOTOR_SPEED_CTRL_STATUS_INIT;
 
     /* Mark driver as open */
     p_instance_ctrl->open = MOTOR_SPEED_OPEN;
@@ -219,15 +261,32 @@ fsp_err_t RM_MOTOR_SPEED_Close (motor_speed_ctrl_t * const p_ctrl)
     MOTOR_SPEED_ERROR_RETURN(MOTOR_SPEED_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    motor_speed_cfg_t * p_cfg = (motor_speed_cfg_t *) p_instance_ctrl->p_cfg;
+    motor_speed_cfg_t          * p_cfg          = (motor_speed_cfg_t *) p_instance_ctrl->p_cfg;
+    motor_speed_extended_cfg_t * p_extended_cfg =
+        (motor_speed_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
-    p_instance_ctrl->u1_active = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->u1_active = MOTOR_SPEED_FLAG_CLEAR;
+    p_instance_ctrl->e_status  = MOTOR_SPEED_CTRL_STATUS_INIT;
+
+    if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
+    {
+        rm_motor_speed_observer_reset(&(p_instance_ctrl->st_observer));
+    }
 
     /* Close used timer instance */
     if (p_cfg->p_timer_instance != NULL)
     {
         p_cfg->p_timer_instance->p_api->close(p_cfg->p_timer_instance->p_ctrl);
     }
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+
+    /* Close used motor position instance */
+    if (p_cfg->p_position_instance != NULL)
+    {
+        p_cfg->p_position_instance->p_api->close(p_cfg->p_position_instance->p_ctrl);
+    }
+#endif
 
     p_instance_ctrl->open = 0U;
 
@@ -253,12 +312,13 @@ fsp_err_t RM_MOTOR_SPEED_Reset (motor_speed_ctrl_t * const p_ctrl)
     motor_speed_extended_cfg_t * p_extended_cfg =
         (motor_speed_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
-    p_instance_ctrl->u1_active                 = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->u1_active                 = MOTOR_SPEED_FLAG_CLEAR;
     p_instance_ctrl->u1_state_speed_ref        = MOTOR_SPEED_SPEED_ZERO_CONST;
-    p_instance_ctrl->st_input.u1_flag_get_iref = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->st_input.u1_flag_get_iref = MOTOR_SPEED_FLAG_CLEAR;
     p_instance_ctrl->u1_state_id_ref           = MOTOR_SPEED_ID_UP;
     p_instance_ctrl->u1_state_iq_ref           = MOTOR_SPEED_IQ_ZERO_CONST;
 
+    p_instance_ctrl->f_id_ref             = 0.0F;
     p_instance_ctrl->f_ref_speed_rad_ctrl = 0.0F;
     p_instance_ctrl->st_input.f_speed_rad = 0.0F;
     p_instance_ctrl->f_speed_lpf_rad      = 0.0F;
@@ -269,10 +329,30 @@ fsp_err_t RM_MOTOR_SPEED_Reset (motor_speed_ctrl_t * const p_ctrl)
     p_instance_ctrl->st_speed_lpf.f_pre_output = 0.0F;
     p_instance_ctrl->st_speed_lpf.f_pre_input  = 0.0F;
 
-    p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_CLEAR;
     rm_motor_speed_fluxwkn_reset(&(p_instance_ctrl->st_flxwkn));
 
     rm_motor_speed_opl_damp_reset(&(p_extended_cfg->ol_sub_param));
+
+    if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
+    {
+        rm_motor_speed_observer_reset(&(p_instance_ctrl->st_observer));
+    }
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+    if (p_instance_ctrl->p_position_instance != NULL)
+    {
+        p_instance_ctrl->p_position_instance->p_api->reset(p_instance_ctrl->p_position_instance->p_ctrl);
+
+        if (MOTOR_SPEED_LOOP_MODE_SPEED == p_instance_ctrl->st_position_data.e_loop_mode)
+        {
+            p_instance_ctrl->p_position_instance->p_api->controlModeSet(p_instance_ctrl->p_position_instance->p_ctrl,
+                                                                        MOTOR_POSITION_CTRL_MODE_CONSTANT);
+        }
+    }
+#endif
+
+    p_instance_ctrl->e_status = MOTOR_SPEED_CTRL_STATUS_INIT;
 
     return FSP_SUCCESS;
 }
@@ -293,7 +373,7 @@ fsp_err_t RM_MOTOR_SPEED_Run (motor_speed_ctrl_t * const p_ctrl)
     MOTOR_SPEED_ERROR_RETURN(MOTOR_SPEED_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    p_instance_ctrl->u1_active = MOTOR_SPEED_FLG_SET;
+    p_instance_ctrl->u1_active = MOTOR_SPEED_FLAG_SET;
 
     return FSP_SUCCESS;
 }
@@ -320,6 +400,42 @@ fsp_err_t RM_MOTOR_SPEED_SpeedReferenceSet (motor_speed_ctrl_t * const p_ctrl, f
 }
 
 /*******************************************************************************************************************//**
+ * @brief Set Position Reference Data. Implements @ref motor_speed_api_t::positionReferenceSet
+ *
+ * @retval FSP_SUCCESS              Successfully data is set.
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_ARGUMENT Input structure pointer is NULL.
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_SPEED_PositionReferenceSet (motor_speed_ctrl_t * const                p_ctrl,
+                                               motor_speed_position_data_t const * const p_position_data)
+{
+    motor_speed_instance_ctrl_t * p_instance_ctrl = (motor_speed_instance_ctrl_t *) p_ctrl;
+
+#if MOTOR_SPEED_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    MOTOR_SPEED_ERROR_RETURN(MOTOR_SPEED_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    MOTOR_SPEED_ERROR_RETURN(NULL != p_position_data, FSP_ERR_INVALID_ARGUMENT);
+#endif
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+    motor_position_instance_t const * p_position = p_instance_ctrl->p_position_instance;
+#endif
+
+    p_instance_ctrl->st_position_data = *p_position_data;
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+    if (p_position != NULL)
+    {
+        p_position->p_api->positionReferenceSet(p_position->p_ctrl,
+                                                p_instance_ctrl->st_position_data.position_reference_degree);
+    }
+#endif
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * @brief Set Input parameters. Implements @ref motor_speed_api_t::parameterSet
  *
  * @retval FSP_SUCCESS              Successfully data is set.
@@ -338,6 +454,15 @@ fsp_err_t RM_MOTOR_SPEED_ParameterSet (motor_speed_ctrl_t * const p_ctrl, motor_
     MOTOR_SPEED_ERROR_RETURN(NULL != p_st_input, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+    motor_position_instance_t const * p_position = p_instance_ctrl->p_position_instance;
+
+    if (p_position != NULL)
+    {
+        p_position->p_api->positionSet(p_position->p_ctrl, p_st_input->f_position_rad);
+    }
+#endif
+
     p_instance_ctrl->st_input = *p_st_input;
 
     return FSP_SUCCESS;
@@ -352,7 +477,9 @@ fsp_err_t RM_MOTOR_SPEED_ParameterSet (motor_speed_ctrl_t * const p_ctrl, motor_
  **********************************************************************************************************************/
 fsp_err_t RM_MOTOR_SPEED_SpeedControl (motor_speed_ctrl_t * const p_ctrl)
 {
-    float f4_temp0      = 0.0F;
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 0)
+    float f4_temp0 = 0.0F;
+#endif
     float f4_idq_ref[2] = {0.0F};
     motor_speed_instance_ctrl_t * p_instance_ctrl = (motor_speed_instance_ctrl_t *) p_ctrl;
 
@@ -364,6 +491,100 @@ fsp_err_t RM_MOTOR_SPEED_SpeedControl (motor_speed_ctrl_t * const p_ctrl)
     motor_speed_extended_cfg_t * p_extended_cfg =
         (motor_speed_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+    motor_speed_callback_args_t       temp_args_t;
+    motor_position_instance_t const * p_position = p_instance_ctrl->p_position_instance;
+
+    /* Encoder Process */
+    /***** Id, Iq, speed reference setting *****/
+    if (MOTOR_SPEED_FLAG_SET == p_instance_ctrl->st_input.u1_flag_get_iref)
+    {
+        if (MOTOR_SPEED_CTRL_STATUS_INIT == p_instance_ctrl->e_status)
+        {
+            // Adjustment mode is MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_HALL
+            if (1U == p_instance_ctrl->st_input.u1_adjust_mode)
+            {
+                /* Invoke the encoder function if it is set. */
+                if (NULL != p_instance_ctrl->p_cfg->p_callback)
+                {
+                    temp_args_t.event     = MOTOR_SPEED_EVENT_ENCODER_CYCLIC;
+                    temp_args_t.p_context = p_instance_ctrl->p_cfg->p_context;
+                    (p_instance_ctrl->p_cfg->p_callback)(&temp_args_t);
+                    p_instance_ctrl->e_status = MOTOR_SPEED_CTRL_STATUS_RUN;
+                }
+            }
+            else if (0U == p_instance_ctrl->st_input.u1_adjust_mode)
+            {
+                p_instance_ctrl->e_status = MOTOR_SPEED_CTRL_STATUS_BOOT;
+            }
+            else
+            {
+            }
+        }
+        else
+        {
+            if (MOTOR_SPEED_STEP_ENABLE == p_instance_ctrl->st_position_data.e_step_mode)
+            {
+                if (p_position != NULL)
+                {
+                    p_position->p_api->controlModeSet(p_position->p_ctrl, MOTOR_POSITION_CTRL_MODE_STEP);
+                }
+            }
+            else
+            {
+                if (MOTOR_SPEED_CTRL_STATUS_RUN == p_instance_ctrl->e_status)
+                {
+                    if (p_position != NULL)
+                    {
+                        p_position->p_api->controlModeSet(p_position->p_ctrl, MOTOR_POSITION_CTRL_MODE_TRAPEZOID);
+                    }
+                }
+            }
+
+            /* Position Control */
+            if (p_position != NULL)
+            {
+                p_position->p_api->positionControl(p_position->p_ctrl);
+            }
+
+            p_instance_ctrl->f_ref_speed_rad_ctrl = rm_motor_speed_set_speed_ref_encoder(p_instance_ctrl);
+            f4_idq_ref[1] = rm_motor_speed_set_iq_ref_encoder(p_instance_ctrl);
+            f4_idq_ref[0] = rm_motor_speed_set_id_ref_encoder(p_instance_ctrl);
+
+            // if (MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_FIN == p_instance_ctrl->st_input.u1_adjust_status)
+            if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN == p_instance_ctrl->st_input.u1_adjust_status)
+            {
+                p_instance_ctrl->e_status = MOTOR_SPEED_CTRL_STATUS_RUN;
+            }
+        }
+
+        /* Flux weakening */
+        if (MOTOR_SPEED_FLUX_WEAKEN_ENABLE == p_extended_cfg->u1_flux_weakening)
+        {
+            /* This function will over-write the dq-axis current command */
+            if (MOTOR_SPEED_FLAG_SET == p_instance_ctrl->u1_enable_flux_weakning)
+            {
+                rm_motor_speed_fluxwkn_set_vamax(&(p_instance_ctrl->st_flxwkn), p_instance_ctrl->st_input.f_vamax);
+
+                // if (0.0F != p_instance_ctrl->st_input.f_speed_rad)
+                if ((0.0F < p_instance_ctrl->st_input.f_speed_rad) ||
+                    (0.0F > p_instance_ctrl->st_input.f_speed_rad))
+                {
+                    rm_motor_speed_fluxwkn_run(&(p_instance_ctrl->st_flxwkn), p_instance_ctrl->st_input.f_speed_rad,
+                                               &(p_instance_ctrl->st_input.f_id), &(f4_idq_ref[0]));
+                }
+
+                if (f4_idq_ref[0] > 0.0F)
+                {
+                    f4_idq_ref[0] = 0.0F;
+                }
+            }
+        }
+    }
+
+#else
+
+    /* Sensorless Process */
     /***** Sensor-less to open-loop *****/
     /* Filter for phase error */
     p_instance_ctrl->f_phase_err_rad_lpf =
@@ -379,33 +600,32 @@ fsp_err_t RM_MOTOR_SPEED_SpeedControl (motor_speed_ctrl_t * const p_ctrl)
         f4_temp0 = fabsf(p_instance_ctrl->f_speed_lpf_rad);
         if (f4_temp0 < (p_extended_cfg->f_id_up_speed_rad) * MOTOR_SPEED_TWOPI_60)
         {
-            p_instance_ctrl->u1_flag_down_to_ol   = MOTOR_SPEED_FLG_SET;
+            p_instance_ctrl->u1_flag_down_to_ol   = MOTOR_SPEED_FLAG_SET;
             p_instance_ctrl->f_ref_speed_rad_ctrl = p_instance_ctrl->f_speed_lpf_rad;
         }
     }
 
     /***** Id, Iq, speed reference setting *****/
-    if (MOTOR_SPEED_FLG_SET == p_instance_ctrl->st_input.u1_flag_get_iref)
+    if (MOTOR_SPEED_FLAG_SET == p_instance_ctrl->st_input.u1_flag_get_iref)
     {
         p_instance_ctrl->f_ref_speed_rad_ctrl = rm_motor_speed_set_speed_ref(p_instance_ctrl);
         f4_idq_ref[1] = rm_motor_speed_set_iq_ref(p_instance_ctrl);
         f4_idq_ref[0] = rm_motor_speed_set_id_ref(p_instance_ctrl);
     }
 
-    p_instance_ctrl->u1_flag_down_to_ol = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->u1_flag_down_to_ol = MOTOR_SPEED_FLAG_CLEAR;
 
     if (MOTOR_SPEED_FLUX_WEAKEN_ENABLE == p_extended_cfg->u1_flux_weakening)
     {
         /* This function will over-write the dq-axis current command */
-        if (MOTOR_SPEED_FLG_SET == p_instance_ctrl->u1_enable_flux_weakning)
+        if (MOTOR_SPEED_FLAG_SET == p_instance_ctrl->u1_enable_flux_weakning)
         {
             rm_motor_speed_fluxwkn_set_vamax(&(p_instance_ctrl->st_flxwkn), p_instance_ctrl->st_input.f_vamax);
-            rm_motor_speed_fluxwkn_run(&(p_instance_ctrl->st_flxwkn),
-                                       p_instance_ctrl->f_speed_lpf_rad,
-                                       &(p_instance_ctrl->st_input.f_id),
-                                       &(f4_idq_ref[0]));
+            rm_motor_speed_fluxwkn_run(&(p_instance_ctrl->st_flxwkn), p_instance_ctrl->f_speed_lpf_rad,
+                                       &(p_instance_ctrl->st_input.f_id), &(f4_idq_ref[0]));
         }
     }
+#endif
 
     p_instance_ctrl->f_id_ref = f4_idq_ref[0];
     p_instance_ctrl->f_iq_ref = f4_idq_ref[1];
@@ -436,10 +656,10 @@ fsp_err_t RM_MOTOR_SPEED_ParameterGet (motor_speed_ctrl_t * const p_ctrl, motor_
     p_st_output->f_ref_speed_rad_ctrl = p_instance_ctrl->f_ref_speed_rad_ctrl;
     p_st_output->f_damp_comp_speed    = p_instance_ctrl->f_damp_comp_speed;
 
-    p_st_output->u1_flag_pi = MOTOR_SPEED_FLG_CLR;
+    p_st_output->u1_flag_pi = MOTOR_SPEED_FLAG_CLEAR;
     if (MOTOR_SPEED_IQ_SPEED_PI_OUTPUT == p_instance_ctrl->u1_state_iq_ref)
     {
-        p_st_output->u1_flag_pi = MOTOR_SPEED_FLG_SET;
+        p_st_output->u1_flag_pi = MOTOR_SPEED_FLAG_SET;
     }
 
     return FSP_SUCCESS;
@@ -489,11 +709,9 @@ fsp_err_t RM_MOTOR_SPEED_ParameterUpdate (motor_speed_ctrl_t * const p_ctrl, mot
                                              p_extended_cfg->f_omega_t,
                                              p_extended_cfg->f_speed_ctrl_period);
 
-    rm_motor_speed_fluxwkn_init(&(p_instance_ctrl->st_flxwkn),
-                                p_extended_cfg->f_iq_limit * MOTOR_SPEED_ROOT3,
-                                1.0F,
+    rm_motor_speed_fluxwkn_init(&(p_instance_ctrl->st_flxwkn), p_extended_cfg->f_iq_limit * MOTOR_SPEED_ROOT3, 1.0F,
                                 &(p_extended_cfg->mtr_param));
-    p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLG_CLR;
+    p_instance_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_CLEAR;
 
     rm_motor_speed_opl_damp_init(&(p_extended_cfg->ol_sub_param), p_extended_cfg->f_ol_fb_speed_limit_rate);
     rm_motor_speed_opl_damp_r_set_gain(&(p_extended_cfg->ol_sub_param),
@@ -505,6 +723,13 @@ fsp_err_t RM_MOTOR_SPEED_ParameterUpdate (motor_speed_ctrl_t * const p_ctrl, mot
                                        p_extended_cfg->ol_param.f4_ol_id_ref,
                                        p_extended_cfg->ol_param.f4_id_down_speed_rad * MOTOR_SPEED_TWOPI_60,
                                        p_extended_cfg->f_speed_ctrl_period);
+
+    if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
+    {
+        rm_motor_speed_observer_gain_calc(&(p_instance_ctrl->st_observer),
+                                          &(p_extended_cfg->d_param),
+                                          p_extended_cfg->f_speed_ctrl_period);
+    }
 
     return FSP_SUCCESS;
 }
@@ -544,7 +769,7 @@ void rm_motor_speed_cyclic (timer_callback_args_t * p_args)
     }
 
     /* Perform Speed Control Process */
-    if (MOTOR_SPEED_FLG_SET == p_instance_ctrl->u1_active)
+    if (MOTOR_SPEED_FLAG_SET == p_instance_ctrl->u1_active)
     {
         p_instance->p_api->speedControl(p_instance->p_ctrl);
     }
@@ -616,6 +841,8 @@ static float rm_motor_speed_speed_pi (motor_speed_instance_ctrl_t * p_ctrl, floa
     return f4_iq_ref_calc;
 }                                      /* End of function rm_motor_speed_speed_pi */
 
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 0)
+
 /***********************************************************************************************************************
  * Function Name : rm_motor_speed_set_speed_ref
  * Description   : Updates the speed reference
@@ -662,9 +889,116 @@ static float rm_motor_speed_set_speed_ref (motor_speed_instance_ctrl_t * p_ctrl)
     return f4_speed_rad_ref_buff;
 }                                      /* End of function rm_motor_speed_set_speed_ref */
 
+#endif
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_speed_set_speed_ref_encoder
+ * Description   : Updates the speed reference
+ * Arguments     : p_ctrl - The pointer to the FOC data instance
+ * Return Value  : Speed reference
+ **********************************************************************************************************************/
+static float rm_motor_speed_set_speed_ref_encoder (motor_speed_instance_ctrl_t * p_ctrl)
+{
+    float f4_speed_ref_calc_rad = 0.0F;
+
+    motor_speed_extended_cfg_t      * p_extended_cfg = (motor_speed_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    motor_position_instance_t const * p_position     = p_ctrl->p_position_instance;
+
+    switch (p_ctrl->u1_state_speed_ref)
+    {
+        case MOTOR_SPEED_SPEED_ZERO_CONST:
+        {
+            /* speed must be zero while encoder angle adjustment */
+
+            // if (MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
+            if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
+            {
+                /* check control loop mode */
+                if (MOTOR_SPEED_LOOP_MODE_SPEED == p_ctrl->st_position_data.e_loop_mode)
+                {
+                    p_ctrl->u1_state_speed_ref = MOTOR_SPEED_SPEED_CHANGE;
+                }
+                else if (MOTOR_SPEED_LOOP_MODE_POSITION == p_ctrl->st_position_data.e_loop_mode)
+                {
+                    p_ctrl->u1_state_speed_ref = MOTOR_SPEED_POSITION_CONTROL;
+                }
+                else
+                {
+                    /* Do Nothing */
+                }
+            }
+
+            break;
+        }
+
+        case MOTOR_SPEED_POSITION_CONTROL:
+        {
+            /* check control method mode */
+            if (MOTOR_SPEED_METHOD_PID == p_extended_cfg->u1_ctrl_method)
+            {
+                if (p_position != NULL)
+                {
+                    p_position->p_api->speedReferencePControlGet(p_position->p_ctrl, &f4_speed_ref_calc_rad);
+                }
+            }
+            else if (MOTOR_SPEED_METHOD_IPD == p_extended_cfg->u1_ctrl_method)
+            {
+                if (p_position != NULL)
+                {
+                    p_position->p_api->speedReferenceIpdControlGet(p_position->p_ctrl,
+                                                                   (p_extended_cfg->f_max_speed_rad) * MOTOR_SPEED_TWOPI_60,
+                                                                   &f4_speed_ref_calc_rad);
+                }
+            }
+            else
+            {
+                /* Do Nothing */
+            }
+
+            /* Speed Reference Profiling mode */
+            if ((MOTOR_SPEED_STEP_DISABLE == p_ctrl->st_position_data.e_step_mode) &&
+                (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status))
+            {
+                if (p_position != NULL)
+                {
+                    /* speed feed-forward control */
+                    p_position->p_api->speedReferenceFeedforwardGet(p_position->p_ctrl, &f4_speed_ref_calc_rad);
+                }
+            }
+
+            break;
+        }
+
+        case MOTOR_SPEED_SPEED_CHANGE:
+        {
+            f4_speed_ref_calc_rad = rm_motor_speed_speed_rate_limit(p_ctrl);
+            break;
+        }
+
+        default:
+        {
+            /* Do Nothing */
+            break;
+        }
+    }
+
+    /* speed reference limit */
+    f4_speed_ref_calc_rad = rm_motor_speed_limitfabs(f4_speed_ref_calc_rad,
+                                                     (p_extended_cfg->f_max_speed_rad) * MOTOR_SPEED_TWOPI_60);
+
+    /* return speed reference */
+    return f4_speed_ref_calc_rad;
+}
+
+#endif
+
 /**********************************************************************************************************************
  * Set Current Reference
  **********************************************************************************************************************/
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 0)
 
 /***********************************************************************************************************************
  * Function Name : rm_motor_speed_set_iq_ref
@@ -676,12 +1010,12 @@ static float rm_motor_speed_set_iq_ref (motor_speed_instance_ctrl_t * p_ctrl)
 {
     float   f4_iq_ref_buff = 0.0F;
     float   f4_temp0       = 0.0F;
-    uint8_t u1_temp0       = MOTOR_SPEED_FLG_CLR;
+    uint8_t u1_temp0       = MOTOR_SPEED_FLAG_CLEAR;
 
     motor_speed_extended_cfg_t * p_extended_cfg =
         (motor_speed_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-    if (MOTOR_SPEED_FLG_SET == p_ctrl->u1_flag_down_to_ol)
+    if (MOTOR_SPEED_FLAG_SET == p_ctrl->u1_flag_down_to_ol)
     {
         p_ctrl->u1_state_iq_ref   = MOTOR_SPEED_IQ_DOWN;
         p_ctrl->f_ol_iq_down_step = (p_extended_cfg->ol_param.f4_ol_iq_down_step_ratio) * MOTOR_SPEED_DIV_8BIT *
@@ -724,7 +1058,7 @@ static float rm_motor_speed_set_iq_ref (motor_speed_instance_ctrl_t * p_ctrl)
                 }
 
                 /* Openloop Damping is active */
-                if (MOTOR_SPEED_FLG_SET == p_extended_cfg->u1_openloop_damping)
+                if (MOTOR_SPEED_FLAG_SET == p_extended_cfg->u1_openloop_damping)
                 {
                     /* Open-loop damping control reset */
                     rm_motor_speed_opl_damp_reset(&(p_extended_cfg->ol_sub_param));
@@ -764,7 +1098,7 @@ static float rm_motor_speed_set_iq_ref (motor_speed_instance_ctrl_t * p_ctrl)
                 /* Do nothing */
             }
 
-            if (MOTOR_SPEED_FLG_SET == u1_temp0)
+            if (MOTOR_SPEED_FLAG_SET == u1_temp0)
             {
                 p_ctrl->u1_state_iq_ref      = MOTOR_SPEED_IQ_SPEED_PI_OUTPUT;
                 p_ctrl->f_init_phase_err_rad = 0.0F;
@@ -826,7 +1160,7 @@ static float rm_motor_speed_set_id_ref (motor_speed_instance_ctrl_t * p_ctrl)
     motor_speed_extended_cfg_t * p_extended_cfg =
         (motor_speed_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-    if (MOTOR_SPEED_FLG_SET == p_ctrl->u1_flag_down_to_ol)
+    if (MOTOR_SPEED_FLAG_SET == p_ctrl->u1_flag_down_to_ol)
     {
         p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_UP;
     }
@@ -834,7 +1168,7 @@ static float rm_motor_speed_set_id_ref (motor_speed_instance_ctrl_t * p_ctrl)
     if (MOTOR_SPEED_FLUX_WEAKEN_ENABLE == p_extended_cfg->u1_flux_weakening)
     {
         /* Flux-weakening process should be ignored unless d-axis current command in certain state */
-        p_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLG_CLR;
+        p_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_CLEAR;
     }
 
     switch (p_ctrl->u1_state_id_ref)
@@ -882,7 +1216,7 @@ static float rm_motor_speed_set_id_ref (motor_speed_instance_ctrl_t * p_ctrl)
             if (MOTOR_SPEED_FLUX_WEAKEN_ENABLE == p_extended_cfg->u1_flux_weakening)
             {
                 /* Enables the Flux-weakening when the open-loop has completely ended */
-                p_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLG_SET;
+                p_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_SET;
                 if (1 == rm_motor_speed_fluxwkn_check_bypass(&(p_ctrl->st_flxwkn)))
                 {
                     p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_FLUXWKN;
@@ -906,6 +1240,170 @@ static float rm_motor_speed_set_id_ref (motor_speed_instance_ctrl_t * p_ctrl)
     /* Return id reference */
     return f4_id_ref_buff;
 }                                      /* End of function rm_motor_speed_set_id_ref */
+
+#endif
+
+#if (MOTOR_SPEED_CFG_POSITION_SUPPORTED == 1)
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_speed_set_iq_ref_encoder
+ * Description   : Updates the q-axis current reference with Encoder
+ * Arguments     : p_ctrl - The pointer to the ctrl instance
+ * Return Value  : Iq reference
+ **********************************************************************************************************************/
+static float rm_motor_speed_set_iq_ref_encoder (motor_speed_instance_ctrl_t * p_ctrl)
+{
+    float f4_iq_ref_calc    = 0.0F;
+    float f4_temp_speed_rad = 0.0F;
+
+    motor_speed_extended_cfg_t * p_extended_cfg = (motor_speed_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    motor_position_instance_t const * p_position = p_ctrl->p_position_instance;
+
+    // if (MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
+    if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
+    {
+        if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
+        {
+            f4_temp_speed_rad = rm_motor_speed_observer(&p_ctrl->st_observer,
+                                                        &p_extended_cfg->mtr_param,
+                                                        p_ctrl->f_iq_ref,
+                                                        p_ctrl->st_input.f_speed_rad);
+        }
+
+        /*** speed PI control ***/
+        if (MOTOR_SPEED_METHOD_PID == p_extended_cfg->u1_ctrl_method)
+        {
+            f4_iq_ref_calc = rm_motor_speed_speed_pi(p_ctrl, f4_temp_speed_rad);
+        }
+        else if (MOTOR_SPEED_METHOD_IPD == p_extended_cfg->u1_ctrl_method)
+        {
+            if (p_position != NULL)
+            {
+                p_position->p_api->ipdSpeedPControl(p_position->p_ctrl,
+                                                    p_ctrl->f_ref_speed_rad_ctrl,
+                                                    f4_temp_speed_rad,
+                                                    &f4_iq_ref_calc);
+            }
+        }
+        else
+        {
+            /* Do Nothing */
+        }
+
+        /*** iq reference limit ***/
+        f4_iq_ref_calc = rm_motor_speed_limitfabs(f4_iq_ref_calc, p_extended_cfg->f_iq_limit);
+    }
+
+    /* return iq reference */
+    return f4_iq_ref_calc;
+}                                      /* End of function rm_motor_speed_set_iq_ref_encoder */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_speed_set_id_ref_encoder
+ * Description   : Updates the d-axis current reference with Encoder
+ * Arguments     : p_ctrl - The pointer of speed control instance
+ * Return Value  : Id reference
+ **********************************************************************************************************************/
+static float rm_motor_speed_set_id_ref_encoder (motor_speed_instance_ctrl_t * p_ctrl)
+{
+    float f4_id_ref_buff = 0.0F;
+    motor_speed_callback_args_t temp_args_t;
+
+    motor_speed_extended_cfg_t * p_extended_cfg = (motor_speed_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    if (MOTOR_SPEED_FLUX_WEAKEN_ENABLE == p_extended_cfg->u1_flux_weakening)
+    {
+        /* Flux-weakening process should be ignored unless d-axis current command in certain state */
+        p_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_CLEAR;
+    }
+
+    switch (p_ctrl->u1_state_id_ref)
+    {
+        case MOTOR_SPEED_ID_UP:
+        {
+            f4_id_ref_buff = p_ctrl->f_id_ref + p_extended_cfg->ol_param.f4_ol_id_up_step;
+            if (f4_id_ref_buff >= p_extended_cfg->ol_param.f4_ol_id_ref)
+            {
+                f4_id_ref_buff          = p_extended_cfg->ol_param.f4_ol_id_ref;
+                p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_CONST;
+            }
+
+            break;
+        }
+
+        case MOTOR_SPEED_ID_CONST:
+        {
+            f4_id_ref_buff = p_ctrl->f_id_ref;
+
+            if (1U == p_ctrl->st_input.u1_adjust_count_full)
+            {
+                f4_id_ref_buff = 0.0F;
+
+                /* angle adjusted to 0 degree */
+
+                // if (MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_0DEG == p_ctrl->st_input.u1_adjust_status)
+                if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_0DEG == p_ctrl->st_input.u1_adjust_status)
+                {
+                    /* repeat soft start */
+                    p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_UP;
+                }
+                /* angle adjusted to Finish */
+
+                // else if (MOTOR_ENCODER_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
+                else if (MOTOR_SPEED_CALCULATE_ANGLE_ADJUST_FIN == p_ctrl->st_input.u1_adjust_status)
+                {
+                    /* id mode transition to zero constant mode */
+                    p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_ZERO_CONST;
+                }
+                else
+                {
+                    /* Do Nothing */
+                }
+            }
+
+            if (NULL != p_ctrl->p_cfg->p_callback)
+            {
+                temp_args_t.event     = MOTOR_SPEED_EVENT_ENCODER_ADJUST;
+                temp_args_t.p_context = p_ctrl->p_cfg->p_context;
+                (p_ctrl->p_cfg->p_callback)(&temp_args_t);
+            }
+
+            break;
+        }
+
+        case MOTOR_SPEED_ID_ZERO_CONST:
+        case MOTOR_SPEED_ID_FLUXWKN:
+        {
+            if (MOTOR_SPEED_FLUX_WEAKEN_ENABLE == p_extended_cfg->u1_flux_weakening)
+            {
+                /* Enables the Flux-weakening when the open-loop has completely ended */
+                p_ctrl->u1_enable_flux_weakning = MOTOR_SPEED_FLAG_SET;
+                if (1 == rm_motor_speed_fluxwkn_check_bypass(&(p_ctrl->st_flxwkn)))
+                {
+                    p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_FLUXWKN;
+                }
+                else
+                {
+                    p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_ZERO_CONST;
+                }
+            }
+
+            break;
+        }
+
+        default:
+        {
+            /* Do nothing */
+            break;
+        }
+    }
+
+    /* Return id reference */
+    return f4_id_ref_buff;
+}                                      /* End of function rm_motor_speed_set_id_ref */
+
+#endif
 
 /**********************************************************************************************************************
  * Low Pass Filter for Speed

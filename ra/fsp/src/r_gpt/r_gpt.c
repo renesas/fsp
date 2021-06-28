@@ -471,15 +471,28 @@ fsp_err_t R_GPT_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
  * @retval FSP_ERR_ASSERTION           p_ctrl was NULL or the pin is not one of gpt_io_pin_t
  * @retval FSP_ERR_NOT_OPEN            The instance is not opened.
  * @retval FSP_ERR_INVALID_ARGUMENT    Duty cycle is larger than period.
+ * @retval FSP_ERR_INVALID_MODE        GPT_IO_PIN_TROUGH, and GPT_IO_PIN_CREST settings are invalid in the this mode.
  * @retval FSP_ERR_UNSUPPORTED         GPT_CFG_OUTPUT_SUPPORT_ENABLE is 0.
  **********************************************************************************************************************/
 fsp_err_t R_GPT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_cycle_counts, uint32_t const pin)
 {
 #if GPT_CFG_OUTPUT_SUPPORT_ENABLE
+    uint32_t              tmp_pin         = pin & 3U;
     gpt_instance_ctrl_t * p_instance_ctrl = (gpt_instance_ctrl_t *) p_ctrl;
  #if GPT_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
-    FSP_ASSERT(pin <= GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+    FSP_ASSERT(tmp_pin <= GPT_IO_PIN_GTIOCA_AND_GTIOCB);
+    bool pwm_mode3_pin = 0 != (pin & (GPT_IO_PIN_CREST | GPT_IO_PIN_TROUGH));
+    if (TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3 == p_instance_ctrl->p_cfg->mode)
+    {
+        /* In TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3, the duty cycle must be for either a trough or crest. */
+        FSP_ERROR_RETURN(pwm_mode3_pin, FSP_ERR_INVALID_MODE);
+    }
+    else
+    {
+        FSP_ERROR_RETURN(!pwm_mode3_pin, FSP_ERR_INVALID_MODE);
+    }
+
     FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(duty_cycle_counts <= (p_instance_ctrl->p_reg->GTPR + 1), FSP_ERR_INVALID_ARGUMENT);
  #endif
@@ -493,21 +506,30 @@ fsp_err_t R_GPT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
     /* Only update GTCCR if 0% or 100% duty is not requested */
     if (!duty_regs.omdty)
     {
-        p_instance_ctrl->p_reg->GTCCR[pin + 2] = duty_regs.gtccr_buffer;
+        uint32_t reg_offset = 2U;
+        if (0 != (pin & GPT_IO_PIN_CREST))
+        {
+            /*
+             * In TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3, if this is a crest duty cycle, then update the crest
+             * duty cycle register. Otherwise, update the trough duty cycle register.
+             */
+            reg_offset = 4U;
+        }
+
+        p_instance_ctrl->p_reg->GTCCR[tmp_pin + reg_offset] = duty_regs.gtccr_buffer;
     }
 
     /* Read modify write bitfield access is used to update GTUDDTYC to make sure we don't clobber settings for the
      * other pin. */
-
     uint32_t gtuddtyc = p_instance_ctrl->p_reg->GTUDDTYC;
-    if (GPT_IO_PIN_GTIOCB != pin)
+    if (GPT_IO_PIN_GTIOCB != tmp_pin)
     {
         /* GTIOCA or both GTIOCA and GTIOCB. */
         gtuddtyc &= ~R_GPT0_GTUDDTYC_OADTY_Msk;
         gtuddtyc |= duty_regs.omdty << R_GPT0_GTUDDTYC_OADTY_Pos;
     }
 
-    if (GPT_IO_PIN_GTIOCA != pin)
+    if (GPT_IO_PIN_GTIOCA != tmp_pin)
     {
         /* GTIOCB or both GTIOCA and GTIOCB. */
         gtuddtyc &= ~R_GPT0_GTUDDTYC_OBDTY_Msk;
@@ -953,7 +975,7 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     p_instance_ctrl->p_reg->GTPR  = gtpr;
 
     uint32_t gtuddtyc = 0U;
-    uint32_t gtior    = 0U;
+    uint32_t gtior    = p_extend->gtior_setting.gtior;
 
 #if GPT_CFG_OUTPUT_SUPPORT_ENABLE
 
@@ -984,17 +1006,21 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     gtuddtyc |= duty_regs.omdty << R_GPT0_GTUDDTYC_OADTY_Pos;
     gtuddtyc |= duty_regs.omdty << R_GPT0_GTUDDTYC_OBDTY_Pos;
 
-    /* Calculate GTIOR. */
-    if (p_extend->gtioca.output_enabled)
+    /* Check if custom GTIOR settings are provided. */
+    if (0 == p_extend->gtior_setting.gtior)
     {
-        uint32_t gtioca_gtior = gpt_gtior_calculate(p_cfg, p_extend->gtioca.stop_level);
-        gtior |= gtioca_gtior << R_GPT0_GTIOR_GTIOA_Pos;
-    }
+        /* If custom GTIOR settings are not provided, calculate GTIOR. */
+        if (p_extend->gtioca.output_enabled)
+        {
+            uint32_t gtioca_gtior = gpt_gtior_calculate(p_cfg, p_extend->gtioca.stop_level);
+            gtior |= gtioca_gtior << R_GPT0_GTIOR_GTIOA_Pos;
+        }
 
-    if (p_extend->gtiocb.output_enabled)
-    {
-        uint32_t gtiocb_gtior = gpt_gtior_calculate(p_cfg, p_extend->gtiocb.stop_level);
-        gtior |= gtiocb_gtior << R_GPT0_GTIOR_GTIOB_Pos;
+        if (p_extend->gtiocb.output_enabled)
+        {
+            uint32_t gtiocb_gtior = gpt_gtior_calculate(p_cfg, p_extend->gtiocb.stop_level);
+            gtior |= gtiocb_gtior << R_GPT0_GTIOR_GTIOB_Pos;
+        }
     }
 #endif
 
@@ -1033,8 +1059,13 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
         }
  #endif
 
-        gtior |= (uint32_t) (p_pwm_cfg->gtioca_disable_setting << R_GPT0_GTIOR_OADF_Pos);
-        gtior |= (uint32_t) (p_pwm_cfg->gtiocb_disable_setting << R_GPT0_GTIOR_OBDF_Pos);
+        /* Check if custom GTIOR settings are provided. */
+        if (0 == p_extend->gtior_setting.gtior)
+        {
+            /* If custom GTIOR settings are not provided, set gtioca_disable_settings and gtiocb_disable_settings. */
+            gtior |= (uint32_t) (p_pwm_cfg->gtioca_disable_setting << R_GPT0_GTIOR_OADF_Pos);
+            gtior |= (uint32_t) (p_pwm_cfg->gtiocb_disable_setting << R_GPT0_GTIOR_OBDF_Pos);
+        }
 
         p_instance_ctrl->p_reg->GTDTCR = gtdtcr;
     }
@@ -1048,9 +1079,16 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
         /* GTDVU, GTDVD, GTDBU, GTDBD, and GTSOTR are not used if GTDTCR is cleared. */
     }
 
-    /* Configure the noise filter for the GTIOC pins. */
-    gtior |= (uint32_t) (p_extend->capture_filter_gtioca << R_GPT0_GTIOR_NFAEN_Pos);
-    gtior |= (uint32_t) (p_extend->capture_filter_gtiocb << R_GPT0_GTIOR_NFBEN_Pos);
+    /* Check if custom GTIOR settings are provided. */
+    if (0 == p_extend->gtior_setting.gtior)
+    {
+        /*
+         * If custom GTIOR settings are not provided, configure the noise filter for
+         * the GTIOC pins.
+         */
+        gtior |= (uint32_t) (p_extend->capture_filter_gtioca << R_GPT0_GTIOR_NFAEN_Pos);
+        gtior |= (uint32_t) (p_extend->capture_filter_gtiocb << R_GPT0_GTIOR_NFBEN_Pos);
+    }
 
     /* Enable the compare match buffer. */
     p_instance_ctrl->p_reg->GTBER = GPT_PRV_GTBER_BUFFER_ENABLE_FORCE_TRANSFER;

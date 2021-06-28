@@ -32,16 +32,18 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_CURRENT_OPEN        (0X4D435043L)
+#define     MOTOR_CURRENT_OPEN         (0X4D435043L)
 
-#define     MOTOR_CURRENT_FLG_CLR     (0)                           /* For flag clear */
-#define     MOTOR_CURRENT_FLG_SET     (1)                           /* For flag set */
+#define     MOTOR_CURRENT_FLG_CLR      (0)                           /* For flag clear */
+#define     MOTOR_CURRENT_FLG_SET      (1)                           /* For flag set */
 
-#define     MOTOR_CURRENT_TWOPI       (3.14159265358979F * 2.0F)
-#define     MOTOR_CURRENT_60_TWOPI    (60.0F / MOTOR_CURRENT_TWOPI) /* To translate rad/s => rpm */
-#define     MOTOR_CURRENT_SQRT_2      (1.41421356F)                 /* Sqrt(2) */
-#define     MOTOR_CURRENT_SQRT_3      (1.7320508F)                  /* Sqrt(3) */
-#define     MOTOR_CURRENT_DIV_KHZ     (0.001F)
+#define     MOTOR_CURRENT_TWOPI        (3.14159265358979F * 2.0F)
+#define     MOTOR_CURRENT_60_TWOPI     (60.0F / MOTOR_CURRENT_TWOPI) /* To translate rad/s => rpm */
+#define     MOTOR_CURRENT_SQRT_2       (1.41421356F)                 /* Sqrt(2) */
+#define     MOTOR_CURRENT_SQRT_3       (1.7320508F)                  /* Sqrt(3) */
+#define     MOTOR_CURRENT_DIV_KHZ      (0.001F)
+
+#define     MOTOR_CURRENT_MAGNITUDE    (1.0F)
 
 #ifndef MOTOR_CURRENT_ERROR_RETURN
  #define    MOTOR_CURRENT_ERROR_RETURN(a, err)    FSP_ERROR_RETURN((a), (err))
@@ -75,6 +77,8 @@ static void  motor_current_decoupling(motor_current_instance_ctrl_t         * p_
 static void motor_current_voltage_limit(motor_current_instance_ctrl_t * p_ctrl);
 static void motor_current_transform_uvw_dq_abs(const float f_angle, const float * f_uvw, float * f_dq);
 static void motor_current_transform_dq_uvw_abs(const float f_angle, const float * f_dq, float * f_uvw);
+
+static float motor_current_sample_delay_compensation(float f4_angle_rad, float f4_speed_rad, float f4_ctrl_period);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -128,16 +132,18 @@ fsp_err_t RM_MOTOR_CURRENT_Open (motor_current_ctrl_t * const p_ctrl, motor_curr
 
     motor_current_extended_cfg_t * p_extended_cfg = (motor_current_extended_cfg_t *) p_cfg->p_extend;
 
+    p_instance_ctrl->p_driver_instance = p_cfg->p_motor_driver_instance;
+    p_instance_ctrl->p_angle_instance  = p_cfg->p_motor_angle_instance;
+
 #if MOTOR_CURRENT_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_extended_cfg);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_driver_instance);
+    FSP_ASSERT(NULL != p_instance_ctrl->p_angle_instance);
     float check_period = 0.0F;
     check_period = p_extended_cfg->f_current_ctrl_period * MOTOR_CURRENT_DIV_KHZ;
 
     MOTOR_CURRENT_ERROR_RETURN(check_period >= 0.0F, FSP_ERR_INVALID_ARGUMENT);
 #endif
-
-    p_instance_ctrl->p_driver_instance = p_cfg->p_motor_driver_instance;
-    p_instance_ctrl->p_angle_instance  = p_cfg->p_motor_angle_instance;
 
     FSP_ERROR_RETURN(MOTOR_CURRENT_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
@@ -207,13 +213,13 @@ fsp_err_t RM_MOTOR_CURRENT_Close (motor_current_ctrl_t * const p_ctrl)
 
     rm_motor_voltage_error_compensation_init(&(p_instance_ctrl->st_vcomp));
 
-    /* close motor driver access */
+    /* Close motor driver access */
     if (p_instance_ctrl->p_driver_instance != NULL)
     {
         p_instance_ctrl->p_driver_instance->p_api->close(p_instance_ctrl->p_driver_instance->p_ctrl);
     }
 
-    /* close motor angle */
+    /* Close motor angle */
     if (p_instance_ctrl->p_angle_instance != NULL)
     {
         p_instance_ctrl->p_angle_instance->p_api->close(p_instance_ctrl->p_angle_instance->p_ctrl);
@@ -243,7 +249,7 @@ fsp_err_t RM_MOTOR_CURRENT_Reset (motor_current_ctrl_t * const p_ctrl)
 
     p_instance_ctrl->u1_active = MOTOR_CURRENT_FLG_CLR;
 
-    /* reset motor driver access */
+    /* Reset motor driver access */
     if (p_instance_ctrl->p_driver_instance != NULL)
     {
         p_instance_ctrl->p_driver_instance->p_api->reset(p_instance_ctrl->p_driver_instance->p_ctrl);
@@ -253,7 +259,7 @@ fsp_err_t RM_MOTOR_CURRENT_Reset (motor_current_ctrl_t * const p_ctrl)
 
     rm_motor_voltage_error_compensation_reset(&(p_instance_ctrl->st_vcomp));
 
-    /* reset motor angle */
+    /* Reset motor angle */
     if (p_instance_ctrl->p_angle_instance != NULL)
     {
         p_instance_ctrl->p_angle_instance->p_api->reset(p_instance_ctrl->p_angle_instance->p_ctrl);
@@ -410,6 +416,9 @@ fsp_err_t RM_MOTOR_CURRENT_ParameterGet (motor_current_ctrl_t * const   p_ctrl,
     motor_current_extended_cfg_t * p_extended_cfg =
         (motor_current_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
+    motor_angle_instance_t const * p_angle = p_instance_ctrl->p_angle_instance;
+    motor_angle_encoder_info_t     temp_info;
+
     p_st_output->f_id        = p_instance_ctrl->f_id_ad;
     p_st_output->f_iq        = p_instance_ctrl->f_iq_ad;
     p_st_output->f_vamax     = p_instance_ctrl->f_va_max;
@@ -417,10 +426,18 @@ fsp_err_t RM_MOTOR_CURRENT_ParameterGet (motor_current_ctrl_t * const   p_ctrl,
     p_st_output->f_speed_rpm = p_instance_ctrl->f_speed_rad / p_extended_cfg->p_motor_parameter->u2_mtr_pp *
                                MOTOR_CURRENT_60_TWOPI;
     p_st_output->f_rotor_angle    = p_instance_ctrl->f_rotor_angle;
+    p_st_output->f_position_rad   = p_instance_ctrl->f_position_rad;
     p_st_output->f_ed             = p_instance_ctrl->f_ed;
     p_st_output->f_eq             = p_instance_ctrl->f_eq;
     p_st_output->f_phase_err_rad  = p_instance_ctrl->f_phase_err;
     p_st_output->u1_flag_get_iref = p_instance_ctrl->u1_flag_crnt_offset;
+
+    if (MOTOR_CURRENT_CONTROL_TYPE_ENCODER == p_extended_cfg->u1_control_type)
+    {
+        p_angle->p_api->infoGet(p_angle->p_ctrl, &temp_info);
+        p_st_output->u1_adjust_status     = (uint8_t) temp_info.e_adjust_status;
+        p_st_output->u1_adjust_count_full = temp_info.u1_adjust_count_full;
+    }
 
     return err;
 }
@@ -445,8 +462,7 @@ fsp_err_t RM_MOTOR_CURRENT_CurrentGet (motor_current_ctrl_t * const p_ctrl, floa
     MOTOR_CURRENT_ERROR_RETURN(p_iq != NULL, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    motor_current_transform_uvw_dq_abs(p_instance_ctrl->f_rotor_angle,
-                                       &(p_instance_ctrl->f_iu_ad),
+    motor_current_transform_uvw_dq_abs(p_instance_ctrl->f_rotor_angle, &(p_instance_ctrl->f_iu_ad),
                                        &(p_instance_ctrl->f_id_ad));
 
     *p_id = p_instance_ctrl->f_id_ad;
@@ -479,33 +495,31 @@ fsp_err_t RM_MOTOR_CURRENT_PhaseVoltageGet (motor_current_ctrl_t * const        
     motor_current_extended_cfg_t * p_extended_cfg =
         (motor_current_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
-    /*====================================*/
-    /*     Feedback control (Current)     */
-    /*====================================*/
+    /* Feedback control (Current) */
     motor_current_pi_calculation(p_instance_ctrl);
 
-    /*============================*/
-    /*     Decoupling control     */
-    /*============================*/
+    /* Decoupling control */
     motor_current_decoupling(p_instance_ctrl, p_instance_ctrl->f_speed_rad, p_extended_cfg->p_motor_parameter);
 
-    /*============================*/
-    /*    Limit voltage vector    */
-    /*============================*/
+    /* Limit voltage vector */
     motor_current_voltage_limit(p_instance_ctrl);
     p_voltage->vd_reference = p_instance_ctrl->f_vd_ref;
     p_voltage->vq_reference = p_instance_ctrl->f_vq_ref;
 
-    /*=================================================*/
-    /*    Coordinate transformation (dq->uvw)          */
-    /*=================================================*/
-    motor_current_transform_dq_uvw_abs(p_instance_ctrl->f_rotor_angle,
-                                       &(p_instance_ctrl->f_vd_ref),
+    // Encoder New Process (Angle Update by sample delay compensation)
+    if (MOTOR_CURRENT_SAMPLE_DELAY_COMPENSATION_ENABLE == p_extended_cfg->u1_sample_delay_comp_enable)
+    {
+        p_instance_ctrl->f_rotor_angle =
+            motor_current_sample_delay_compensation(p_instance_ctrl->f_rotor_angle,
+                                                    p_instance_ctrl->f_speed_rad,
+                                                    p_extended_cfg->f_current_ctrl_period * MOTOR_CURRENT_DIV_KHZ);
+    }
+
+    /* Coordinate transformation (dq->uvw) */
+    motor_current_transform_dq_uvw_abs(p_instance_ctrl->f_rotor_angle, &(p_instance_ctrl->f_vd_ref),
                                        &(p_instance_ctrl->f_refu));
 
-    /*====================================*/
-    /*     Voltage error compensation     */
-    /*====================================*/
+    /* Voltage error compensation */
     motor_current_transform_dq_uvw_abs(p_instance_ctrl->f_rotor_angle, &(p_instance_ctrl->f_id_ref), &(f4_iuvw_ref[0]));
 
     rm_motor_voltage_error_compensation_main(&(p_instance_ctrl->st_vcomp),
@@ -565,6 +579,37 @@ fsp_err_t RM_MOTOR_CURRENT_ParameterUpdate (motor_current_ctrl_t * const      p_
  **********************************************************************************************************************/
 
 /***********************************************************************************************************************
+ * Function Name : rm_motor_current_encoder_cyclic
+ * Description   : Wrapper Cyclic Process of Encoder Control by Current Control
+ * Arguments     : p_ctrl - The pointer to current control
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_current_encoder_cyclic (motor_current_instance_t const * p_ctrl)
+{
+    motor_current_instance_ctrl_t * p_instance_ctrl  = (motor_current_instance_ctrl_t *) p_ctrl->p_ctrl;
+    motor_angle_instance_t const  * p_angle_instance = p_instance_ctrl->p_angle_instance;
+
+    p_angle_instance->p_api->encoderCyclic(p_angle_instance->p_ctrl);
+}
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_current_encoder_angle_adjust
+ * Description   : Wrapper Angle Adjustment Process of Encoder Control by Current Control
+ * Arguments     : p_ctrl - The pointer to current control
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_current_encoder_angle_adjust (motor_current_instance_t const * p_ctrl)
+{
+    motor_current_instance_ctrl_t * p_instance_ctrl  = (motor_current_instance_ctrl_t *) p_ctrl->p_ctrl;
+    motor_angle_instance_t const  * p_angle_instance = p_instance_ctrl->p_angle_instance;
+
+    if (MOTOR_CURRENT_FLG_SET == p_instance_ctrl->u1_active)
+    {
+        p_angle_instance->p_api->angleAdjust(p_angle_instance->p_ctrl);
+    }
+}
+
+/***********************************************************************************************************************
  * Function Name : rm_motor_current_cyclic
  * Description   : Cyclic Process of Current Control (Performed at ADC Finish Interrupt)
  * Arguments     : p_args - The pointer to used arguments
@@ -616,9 +661,7 @@ void rm_motor_current_cyclic (motor_driver_callback_args_t * p_args)
 
             f_iv_ad = -(f_iu_ad + f_iw_ad);
 
-            /**********************************/
-            /*     Active Current Control     */
-            /**********************************/
+            /* Active Current Control */
             if (MOTOR_CURRENT_FLG_SET == p_instance_ctrl->u1_active)
             {
                 /* Measure current offset values */
@@ -636,9 +679,7 @@ void rm_motor_current_cyclic (motor_driver_callback_args_t * p_args)
                         (p_instance->p_cfg->p_callback)(&temp_args_t);
                     }
 
-                    /*=============================================*/
-                    /*       Coordinate transformation (UVW->dq)   */
-                    /*=============================================*/
+                    /* Coordinate transformation (UVW->dq) */
                     temp_input_current.iu     = f_iu_ad;
                     temp_input_current.iv     = f_iv_ad;
                     temp_input_current.iw     = f_iw_ad;
@@ -647,22 +688,17 @@ void rm_motor_current_cyclic (motor_driver_callback_args_t * p_args)
 
                     p_instance->p_api->currentSet(p_instance_ctrl, &temp_input_current, &temp_input_voltage);
 
-                    p_instance->p_api->currentGet(p_instance_ctrl,
-                                                  &(p_instance_ctrl->f_id_ad),
+                    p_instance->p_api->currentGet(p_instance_ctrl, &(p_instance_ctrl->f_id_ad),
                                                   &(p_instance_ctrl->f_iq_ad));
 
-                    /*==============================*/
-                    /*     Angle & speed process    */
-                    /*==============================*/
+                    /* Angle & speed process */
                     motor_current_angle_cyclic(p_instance);
 
                     p_instance->p_api->speedPhaseSet(p_instance_ctrl,
                                                      p_instance_ctrl->f_speed_rad,
                                                      p_instance_ctrl->f_rotor_angle);
 
-                    /*=========================*/
-                    /*     Current control     */
-                    /*=========================*/
+                    /* Current control */
                     p_instance->p_api->currentReferenceSet(p_instance_ctrl,
                                                            p_instance_ctrl->st_input.f_id_ref,
                                                            p_instance_ctrl->st_input.f_iq_ref);
@@ -673,9 +709,7 @@ void rm_motor_current_cyclic (motor_driver_callback_args_t * p_args)
                     f_ref[1] = temp_get_voltage.v_voltage;
                     f_ref[2] = temp_get_voltage.w_voltage;
 
-                    /*===============================*/
-                    /*    Space vector modulation    */
-                    /*===============================*/
+                    /* Space vector modulation */
                     p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl, f_ref[0], f_ref[1], f_ref[2]);
                 }
             }
@@ -713,25 +747,43 @@ static void motor_current_angle_cyclic (motor_current_instance_t * p_instance)
 {
     motor_current_instance_ctrl_t * p_ctrl = (motor_current_instance_ctrl_t *) p_instance->p_ctrl;
 
-    motor_angle_instance_t const  * p_angle = p_ctrl->p_angle_instance;
-    motor_angle_current_t           temp_current;
-    motor_angle_voltage_reference_t temp_vol_ref;
+    motor_current_extended_cfg_t * p_extended_cfg =
+        (motor_current_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-    temp_current.id = p_ctrl->f_id_ad;
-    temp_current.iq = p_ctrl->f_iq_ad;
-    temp_vol_ref.vd = p_ctrl->f_vd_ref;
-    temp_vol_ref.vq = p_ctrl->f_vq_ref;
+    motor_angle_instance_t const * p_angle = p_ctrl->p_angle_instance;
 
-    p_angle->p_api->flagPiCtrlSet(p_angle->p_ctrl, p_ctrl->st_input.u1_flag_pi);
-    p_angle->p_api->speedSet(p_angle->p_ctrl,
-                             p_ctrl->st_input.f_ref_speed_rad_ctrl,
-                             p_ctrl->st_input.f_damp_comp_speed);
-    p_angle->p_api->currentSet(p_angle->p_ctrl, &temp_current, &temp_vol_ref);
-    p_angle->p_api->angleSpeedGet(p_angle->p_ctrl,
-                                  &(p_ctrl->f_rotor_angle),
-                                  &(p_ctrl->f_speed_rad),
-                                  &(p_ctrl->f_phase_err));
-    p_angle->p_api->estimatedComponentGet(p_angle->p_ctrl, &(p_ctrl->f_ed), &(p_ctrl->f_eq));
+    if (MOTOR_CURRENT_CONTROL_TYPE_SENSORLESS == p_extended_cfg->u1_control_type)
+    {
+        motor_angle_current_t           temp_current;
+        motor_angle_voltage_reference_t temp_vol_ref;
+
+        temp_current.id = p_ctrl->f_id_ad;
+        temp_current.iq = p_ctrl->f_iq_ad;
+        temp_vol_ref.vd = p_ctrl->f_vd_ref;
+        temp_vol_ref.vq = p_ctrl->f_vq_ref;
+
+        p_angle->p_api->flagPiCtrlSet(p_angle->p_ctrl, p_ctrl->st_input.u1_flag_pi);
+        p_angle->p_api->speedSet(p_angle->p_ctrl,
+                                 p_ctrl->st_input.f_ref_speed_rad_ctrl,
+                                 p_ctrl->st_input.f_damp_comp_speed);
+        p_angle->p_api->currentSet(p_angle->p_ctrl, &temp_current, &temp_vol_ref);
+        p_angle->p_api->angleSpeedGet(p_angle->p_ctrl, &(p_ctrl->f_rotor_angle), &(p_ctrl->f_speed_rad),
+                                      &(p_ctrl->f_phase_err));
+        p_angle->p_api->estimatedComponentGet(p_angle->p_ctrl, &(p_ctrl->f_ed), &(p_ctrl->f_eq));
+    }
+    else if (MOTOR_CURRENT_CONTROL_TYPE_ENCODER == p_extended_cfg->u1_control_type)
+    {
+        /* Position & speed calculation */
+        p_angle->p_api->internalCalculate(p_angle->p_ctrl);
+
+        /* Speed & angle detection */
+        p_angle->p_api->angleSpeedGet(p_angle->p_ctrl, &(p_ctrl->f_rotor_angle), &(p_ctrl->f_speed_rad),
+                                      &(p_ctrl->f_position_rad));
+    }
+    else
+    {
+        /* Do nothing */
+    }
 }                                      /* End of function motor_current_angle_cyclic */
 
 /***********************************************************************************************************************
@@ -773,7 +825,7 @@ static void motor_current_reset (motor_current_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static float motor_current_limit_abs (float f4_value, float f4_limit_value)
 {
-    float f4_temp0;
+    float f4_temp0 = 0.0F;
 
     f4_temp0 = fabsf(f4_value);
     if (f4_temp0 > f4_limit_value)
@@ -827,7 +879,7 @@ static float motor_current_pi_control (motor_current_pi_params_t * pi_ctrl)
     f4_refp  = f4_err * f4_kp;         /* Proportional part */
     f4_refi += (f4_err * f4_ki);       /* Integral part */
 
-    /*** Integral part limit ***/
+    /* Integral part limit */
     f4_refi         = motor_current_limit_abs(f4_refi, f4_ilimit);
     pi_ctrl->f_refi = f4_refi;
 
@@ -848,7 +900,7 @@ static void motor_current_decoupling (motor_current_instance_ctrl_t         * p_
                                       float                                   f_speed_rad,
                                       const motor_current_motor_parameter_t * p_mtr)
 {
-    float f4_temp0;
+    float f4_temp0 = 0.0F;
 
     f4_temp0          = p_mtr->f4_mtr_lq * p_ctrl->f_iq_ad; /* Lq * Iq */
     f4_temp0          = f_speed_rad * f4_temp0;             /* Speed * Lq * Iq */
@@ -868,9 +920,9 @@ static void motor_current_decoupling (motor_current_instance_ctrl_t         * p_
  **********************************************************************************************************************/
 static void motor_current_voltage_limit (motor_current_instance_ctrl_t * p_ctrl)
 {
-    float f4_vq_lim;
-    float f4_vd_ref;
-    float f4_va_max;
+    float f4_vq_lim = 0.0F;
+    float f4_vd_ref = 0.0F;
+    float f4_va_max = 0.0F;
 
     f4_vd_ref = p_ctrl->f_vd_ref;
     f4_va_max = p_ctrl->f_va_max;
@@ -904,10 +956,10 @@ static void motor_current_voltage_limit (motor_current_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static void motor_current_transform_uvw_dq_abs (const float f_angle, const float * f_uvw, float * f_dq)
 {
-    float f4_temp0;
-    float f4_temp1;
-    float f4_temp2;
-    float f4_temp3;
+    float f4_temp0   = 0.0F;
+    float f4_temp1   = 0.0F;
+    float f4_temp2   = 0.0F;
+    float f4_temp3   = 0.0F;
     float f4_u       = f_uvw[0];
     float f4_v_sub_w = f_uvw[1] - f_uvw[2];
     float f4_cos     = cosf(f_angle);
@@ -931,14 +983,14 @@ static void motor_current_transform_uvw_dq_abs (const float f_angle, const float
  **********************************************************************************************************************/
 static void motor_current_transform_dq_uvw_abs (const float f_angle, const float * f_dq, float * f_uvw)
 {
-    float f4_cos_div_sqrt3;
-    float f4_sin_div_sqrt3;
-    float f4_output_d;
-    float f4_output_q;
-    float f4_input_d = f_dq[0];
-    float f4_input_q = f_dq[1];
-    float f4_cos     = cosf(f_angle);
-    float f4_sin     = sinf(f_angle);
+    float f4_cos_div_sqrt3 = 0.0F;
+    float f4_sin_div_sqrt3 = 0.0F;
+    float f4_output_d      = 0.0F;
+    float f4_output_q      = 0.0F;
+    float f4_input_d       = f_dq[0];
+    float f4_input_q       = f_dq[1];
+    float f4_cos           = cosf(f_angle);
+    float f4_sin           = sinf(f_angle);
 
     f4_cos_div_sqrt3 = f4_cos * (1.0F / MOTOR_CURRENT_SQRT_3);
     f4_sin_div_sqrt3 = f4_sin * (1.0F / MOTOR_CURRENT_SQRT_3);
@@ -953,3 +1005,35 @@ static void motor_current_transform_dq_uvw_abs (const float f_angle, const float
     f4_output_q = (f4_sin_div_sqrt3 - f4_cos) * f4_input_q;
     f_uvw[2]    = (f4_output_d + f4_output_q) * (1.0F / MOTOR_CURRENT_SQRT_2);
 }                                      /* End of function motor_current_transform_dq_uvw_abs */
+
+/***********************************************************************************************************************
+ * Function Name: motor_current_sample_delay_compensation
+ * Description  : current control sampling delay compensation
+ * Arguments    : f4_angle_rad   - motor angle (electrical) [rad]
+ *              : f4_speed_rad   - motor speed (electrical) [rad/s]
+ *              : f4_ctrl_period - motor current control period
+ * Return Value : motor angle (electrical) [rad/s]
+ **********************************************************************************************************************/
+static float motor_current_sample_delay_compensation (float f4_angle_rad, float f4_speed_rad, float f4_ctrl_period)
+{
+    float f4_comp_angle_rad = 0.0F;
+
+    f4_comp_angle_rad = f4_speed_rad * f4_ctrl_period * MOTOR_CURRENT_MAGNITUDE;
+    f4_comp_angle_rad = f4_angle_rad + f4_comp_angle_rad;
+
+    /* Limit angle value of one rotation */
+    if (f4_comp_angle_rad >= MOTOR_CURRENT_TWOPI)
+    {
+        f4_comp_angle_rad -= MOTOR_CURRENT_TWOPI;
+    }
+    else if (f4_comp_angle_rad < 0.0F)
+    {
+        f4_comp_angle_rad += MOTOR_CURRENT_TWOPI;
+    }
+    else
+    {
+        /* Do nothing */
+    }
+
+    return f4_comp_angle_rad;
+}                                      /* End of function motor_current_sample_delay_compensation */

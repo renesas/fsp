@@ -30,7 +30,7 @@
 #include "hw_sce_private.h"
 #include "nx_crypto.h"
 
-#ifdef NX_CRYPTO_FIPS
+#ifdef NX_CRYPTO_SELF_TEST
 
 /* Include necessary system files.  */
 
@@ -38,7 +38,7 @@
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _nx_crypto_fips_memcpy                              PORTABLE C      */
+/*    _nx_crypto_self_test_memcpy                              PORTABLE C      */
 /*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -78,7 +78,7 @@
 /*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-NX_CRYPTO_KEEP VOID * _nx_crypto_fips_memcpy (void * dest, const void * src, size_t size)
+NX_CRYPTO_KEEP VOID * _nx_crypto_self_test_memcpy (void * dest, const void * src, size_t size)
 {
     char       * from, * to;
     unsigned int i;
@@ -98,7 +98,7 @@ NX_CRYPTO_KEEP VOID * _nx_crypto_fips_memcpy (void * dest, const void * src, siz
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _nx_crypto_fips_memset                              PORTABLE C      */
+/*    _nx_crypto_self_test_memset                              PORTABLE C      */
 /*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -138,7 +138,7 @@ NX_CRYPTO_KEEP VOID * _nx_crypto_fips_memcpy (void * dest, const void * src, siz
 /*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-NX_CRYPTO_KEEP VOID * _nx_crypto_fips_memset (void * dest, int value, size_t size)
+NX_CRYPTO_KEEP VOID * _nx_crypto_self_test_memset (void * dest, int value, size_t size)
 {
     char       * to;
     unsigned int i;
@@ -158,7 +158,7 @@ NX_CRYPTO_KEEP VOID * _nx_crypto_fips_memset (void * dest, int value, size_t siz
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _nx_crypto_fips_memcmp                              PORTABLE C      */
+/*    _nx_crypto_self_test_memcmp                              PORTABLE C      */
 /*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -200,7 +200,7 @@ NX_CRYPTO_KEEP VOID * _nx_crypto_fips_memset (void * dest, int value, size_t siz
 /*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-NX_CRYPTO_KEEP int _nx_crypto_fips_memcmp (const void * str1, const void * str2, size_t size)
+NX_CRYPTO_KEEP int _nx_crypto_self_test_memcmp (const void * str1, const void * str2, size_t size)
 {
     char       * string1;
     char       * string2;
@@ -223,7 +223,7 @@ NX_CRYPTO_KEEP int _nx_crypto_fips_memcmp (const void * str1, const void * str2,
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _nx_crypto_fips_memmove                             PORTABLE C      */
+/*    _nx_crypto_self_test_memmove                             PORTABLE C      */
 /*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -262,7 +262,7 @@ NX_CRYPTO_KEEP int _nx_crypto_fips_memcmp (const void * str1, const void * str2,
 /*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-NX_CRYPTO_KEEP void * _nx_crypto_fips_memmove (void * dest, const void * src, size_t size)
+NX_CRYPTO_KEEP void * _nx_crypto_self_test_memmove (void * dest, const void * src, size_t size)
 {
     char       * from, * to;
     unsigned int i;

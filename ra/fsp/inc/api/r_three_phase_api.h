@@ -75,8 +75,19 @@ typedef enum e_three_phase_buffer_mode
 /** Struct for passing duty cycle values to @ref three_phase_api_t::dutyCycleSet */
 typedef struct st_three_phase_duty_cycle
 {
-    uint32_t duty[3];                  ///< Duty cycle
-    uint32_t duty_buffer[3];           ///< Double-buffer for duty cycle values
+    /**
+     * Duty cycle.
+     * Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3,
+     *       this value sets the duty cycle count that is transfered to GTCCRA/B at the trough.
+     */
+    uint32_t duty[3];
+
+    /**
+     * Double-buffer for duty cycle values.
+     * Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3,
+     *       this value sets the duty cycle count that is transfered to GTCCRA/B at the crest.
+     */
+    uint32_t duty_buffer[3];
 } three_phase_duty_cycle_t;
 
 /** Three-Phase control block.  Allocate an instance specific control block to pass into the timer API calls.

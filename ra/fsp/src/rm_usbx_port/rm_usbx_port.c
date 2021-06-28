@@ -34,6 +34,13 @@
  #include "ux_system.h"
  #include "ux_utility.h"
  #include "ux_device_stack.h"
+
+ #if defined(USB_CFG_PMSC_USE)
+  #include "r_usb_pmsc_cfg.h"
+  #include "ux_device_class_storage.h"
+  #include "rm_block_media_api.h"
+ #endif                                /* defined(USB_CFG_PMSC_USE) */
+
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
   #include "ux_host_stack.h"
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
@@ -57,14 +64,44 @@
  #define UX_FSP_INTERRUPT_ENDPOINT        (3U)
  #define UX_FSP_ISOCHRONOUS_ENDPOINT      (1U)
 
+ #define USB_PERI_USBX_REMOVABLE_MEDIA    (0x80U)
+
 /******************************************************************************
  * Private global variables and functions
  ******************************************************************************/
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-static UINT usb_peri_usbx_to_basic(UX_SLAVE_DCD * dcd, UINT function, VOID * parameter);
-static void usb_peri_usbx_transfer_complete_cb(usb_utr_t * p_mess, uint16_t data1, uint16_t data2);
+static UINT     usb_peri_usbx_to_basic(UX_SLAVE_DCD * dcd, UINT function, VOID * parameter);
+static void     usb_peri_usbx_transfer_complete_cb(usb_utr_t * p_mess, uint16_t data1, uint16_t data2);
+static uint32_t usb_peri_usbx_initialize_common(uint32_t dcd_io);
+static void     usb_peri_usbx_initialize_common_complete(void);
 
 static ULONG * g_p_usb_actural_length[USB_MAX_PIPE_NO + 1U];
+  #if defined(USB_CFG_PMSC_USE)
+static UX_SLAVE_CLASS_STORAGE_PARAMETER g_usb_peri_usbx_pmsc_parameter;
+static uint32_t g_media_total_sector;
+static uint32_t g_media_sector_size_bytes;
+static bool     g_media_write_protected = 0;
+static rm_block_media_instance_t * gp_block_media_instance;
+volatile bool        g_blockmedia_complete_event     = false;
+static volatile bool g_blockmedia_poll_status_events = false;
+static volatile bool g_status_busy = false;
+
+static UINT usb_peri_usbx_media_read(VOID  * storage,
+                                     ULONG   lun,
+                                     UCHAR * data_pointer,
+                                     ULONG   number_blocks,
+                                     ULONG   lba,
+                                     ULONG * media_status);
+static UINT usb_peri_usbx_media_write(VOID  * storage,
+                                      ULONG   lun,
+                                      UCHAR * data_pointer,
+                                      ULONG   number_blocks,
+                                      ULONG   lba,
+                                      ULONG * media_status);
+static UINT usb_peri_usbx_media_status(VOID * storage, ULONG lun, ULONG media_id, ULONG * media_status);
+static void usb_peri_usbx_pmsc_storage_init(void);
+
+  #endif                               /* defined(USB_CFG_PMSC_USE) */
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
@@ -98,13 +135,22 @@ static const uint16_t g_usb_host_usbx_device_tpl[] =
  * Exported global variables (to be accessed by other files)
  ******************************************************************************/
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-uint32_t usb_peri_usbx_initialize(uint32_t dcd_io);
-uint32_t usb_peri_usbx_uninitialize(uint32_t dcd_io);
-uint32_t usb_peri_usbx_initialize_common(uint32_t dcd_io);
-void     usb_peri_usbx_initialize_common_complete(void);
-uint32_t usb_peri_usbx_remote_wakeup(uint8_t module_number);
+uint32_t  usb_peri_usbx_initialize(uint32_t dcd_io);
+uint32_t  usb_peri_usbx_uninitialize(uint32_t dcd_io);
+uint32_t  usb_peri_usbx_remote_wakeup(uint8_t module_number);
+fsp_err_t usb_peri_usbx_pmsc_media_initialize(void const * p_context);
 
+bool                g_usb_peri_usbx_is_detach[USB_MAX_PIPE_NO + 1];
 extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
+
+  #if defined(USB_CFG_PMSC_USE)
+fsp_err_t usb_peri_usbx_media_initialize(void const * p_context);
+fsp_err_t usb_peri_usbx_media_close(void);
+void      r_usb_pmsc_block_media_event_callback(rm_block_media_callback_args_t * p_args);
+
+volatile bool g_card_inserted = false;
+
+  #endif                               /* defined(USB_CFG_PMSC_USE) */
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
@@ -113,6 +159,17 @@ uint32_t usb_host_usbx_uninitialize(uint32_t hcd_io);
 
 UX_DEVICE  * g_p_usbx_device[USB_NUM_USBIP];
 TX_SEMAPHORE g_usb_host_usbx_sem[USB_NUM_USBIP][USB_MAX_PIPE_NO + 1];
+
+  #if defined(USB_CFG_HMSC_USE)
+static uint16_t             g_usb_hmsc_in_pipectr[USB_NUM_USBIP][1];  /* Pipectr(SQTGL) */
+static uint16_t             g_usb_hmsc_out_pipectr[USB_NUM_USBIP][1]; /* Pipectr(SQTGL) */
+static usb_pipe_table_reg_t g_usb_hmsc_pipe_table[1][USB_PIPE_DIR_MAX];
+static uint16_t             g_usb_hmsc_in_pipe[USB_NUM_USBIP][1];
+static uint16_t             g_usb_hmsc_out_pipe[USB_NUM_USBIP][1];
+   #if (USB_CFG_DMA == USB_CFG_ENABLE)
+static void * g_p_usbx_hmsc_dma_buf[USB_MAXDEVADDR] = {0};
+   #endif                              /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
+  #endif /* #if defined(USB_CFG_HMSC_USE) */
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
 
  #if (USB_CFG_DMA == USB_CFG_ENABLE)
@@ -131,6 +188,10 @@ extern const transfer_instance_t * g_p_usbx_transfer_rx;
 uint32_t usb_peri_usbx_initialize (uint32_t dcd_io)
 {
     uint32_t status;
+
+  #if defined(USB_CFG_PMSC_USE)
+    usb_peri_usbx_pmsc_storage_init();
+  #endif                               /* defined(USB_CFG_PMSC_USE) */
 
     status = usb_peri_usbx_initialize_common(dcd_io);
     if (UX_SUCCESS == status)
@@ -175,7 +236,7 @@ uint32_t usb_peri_usbx_uninitialize (uint32_t dcd_io)
  * Argument        : uint32_t dcd_io : Address of USB module 0 or USB module 1
  * Return          : UX_SUCCESS
  ******************************************************************************/
-uint32_t usb_peri_usbx_initialize_common (uint32_t dcd_io)
+static uint32_t usb_peri_usbx_initialize_common (uint32_t dcd_io)
 {
     UX_SLAVE_DCD * dcd;
 
@@ -197,7 +258,7 @@ uint32_t usb_peri_usbx_initialize_common (uint32_t dcd_io)
  * Argument        : None
  * Return          : None
  ******************************************************************************/
-void usb_peri_usbx_initialize_common_complete (void)
+static void usb_peri_usbx_initialize_common_complete (void)
 {
     UX_SLAVE_DCD * dcd = &_ux_system_slave->ux_system_slave_dcd;
 
@@ -344,7 +405,7 @@ static void usb_peri_usbx_transfer_complete_cb (usb_utr_t * p_mess, uint16_t dat
  ******************************************************************************/
 static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * parameter)
 {
-    uint32_t            status = (uint32_t) UX_SUCCESS;
+    volatile uint32_t   status = (uint32_t) UX_SUCCESS;
     UX_SLAVE_ENDPOINT * endpoint;
     UX_SLAVE_TRANSFER * transfer_request;
     usb_utr_t           tran_data;
@@ -425,7 +486,26 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
 
                 if (USB_OK == err)
                 {
-                    status = (uint32_t) UX_SUCCESS;
+                    if (USB_YES == g_usb_peri_usbx_is_detach[pipe])
+                    {
+                        g_usb_peri_usbx_is_detach[pipe] = USB_NO;
+  #if defined(USB_CFG_PMSC_USE)
+                        if ((USB_CFG_PMSC_BULK_IN == pipe) || (USB_CFG_PMSC_BULK_OUT == pipe))
+                        {
+                            status = (uint32_t) UX_TRANSFER_ERROR;
+                        }
+                        else
+                        {
+                            status = (uint32_t) UX_SUCCESS;
+                        }
+  #else                                /* defined(USB_CFG_PMSC_USE) */
+                        status = (uint32_t) UX_SUCCESS;
+  #endif /* define(USB_CFG_PMSC_USE */
+                    }
+                    else
+                    {
+                        status = (uint32_t) UX_SUCCESS;
+                    }
                 }
                 else
                 {
@@ -493,6 +573,17 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
 
         case (uint32_t) UX_DCD_STALL_ENDPOINT:
         {
+            endpoint       = (UX_SLAVE_ENDPOINT *) parameter;
+            endpoint_index = endpoint->ux_slave_endpoint_descriptor.bEndpointAddress;
+            if (0 != endpoint_index)
+            {
+                pipe = usb_pstd_epadr2pipe((uint16_t) endpoint_index, &tran_data);
+            }
+            else
+            {
+                pipe = USB_PIPE0;
+            }
+
             usb_pstd_set_stall(pipe, &tran_data);
 
             status = (uint32_t) UX_SUCCESS;
@@ -559,6 +650,347 @@ uint32_t usb_peri_usbx_remote_wakeup (uint8_t module_number)
 
     return (uint32_t) UX_ERROR;
 }
+
+  #if defined(USB_CFG_PMSC_USE)
+
+/******************************************************************************
+ * Function Name   : usb_peri_usbx_media_read
+ * Description     : Wrapper function for media read
+ * Argument        : VOID   *storage        : Pointer to VOID area
+ *                 : ULONG  lun             : Logical Unit Number
+ *                 : UCHAR  *data_pointer   : Pointer to area to store read data
+ *                 : ULONG  number_blocks   : Read data size
+ *                 : ULONG  lba             : logical block address
+ *                 : ULNG   *media_status   : Pointer to area to store media status
+ * Return          : UX_SUCCESS
+ ******************************************************************************/
+static UINT usb_peri_usbx_media_read (VOID  * storage,
+                                      ULONG   lun,
+                                      UCHAR * data_pointer,
+                                      ULONG   number_blocks,
+                                      ULONG   lba,
+                                      ULONG * media_status)
+{
+    FSP_PARAMETER_NOT_USED(storage);
+    FSP_PARAMETER_NOT_USED(lun);
+    FSP_PARAMETER_NOT_USED(media_status);
+
+    fsp_err_t               err_code;
+    rm_block_media_status_t status;
+    uint32_t                timeout = UINT32_MAX;
+    rm_block_media_status_t status_wait;
+    uint32_t                timeout_wait = UINT32_MAX;
+
+    err_code = gp_block_media_instance->p_api->statusGet(gp_block_media_instance->p_ctrl, &status);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err_code, err_code);
+    if ((status.initialized == true) && (status.busy == false) && (status.media_inserted == true))
+    {
+        err_code = gp_block_media_instance->p_api->read(gp_block_media_instance->p_ctrl,
+                                                        (uint8_t * const) data_pointer,
+                                                        (uint32_t const) lba,
+                                                        (uint32_t const) number_blocks);
+        if (err_code == FSP_SUCCESS)
+        {
+            while (timeout > 0)
+            {
+                timeout--;
+                if (g_blockmedia_complete_event == true)
+                {
+                    break;
+                }
+
+                if (g_blockmedia_poll_status_events == true)
+                {
+                    memset(&status_wait, 0U, sizeof(status_wait));
+                    do
+                    {
+                        timeout_wait--;
+                        if (0U == timeout_wait)
+                        {
+                            break;
+                        }
+
+                        gp_block_media_instance->p_api->statusGet(gp_block_media_instance->p_ctrl, &status_wait);
+                    } while (status.busy);
+
+                    g_blockmedia_complete_event     = false;
+                    g_blockmedia_poll_status_events = false;
+                    break;
+                }
+            }
+
+            g_blockmedia_complete_event = false;
+        }
+    }
+    else
+    {
+        g_status_busy = true;
+    }
+
+    if (err_code == FSP_SUCCESS)
+    {
+        return UX_SUCCESS;
+    }
+    else
+    {
+        return UX_ERROR;
+    }
+}                                      /* End of function usb_peri_usbx_media_read() */
+
+/******************************************************************************
+ * Function Name   : usb_peri_usbx_media_write
+ * Description     : Wrapper function for media write
+ * Argument        : VOID   *storage        : Pointer to VOID area
+ *                 : ULONG  lun             : Logical Unit Number
+ *                 : UCHAR  *data_pointer   : Pointer to the area write data is stored
+ *                 : ULONG  number_blocks   : Write data size
+ *                 : ULONG  lba             : logical block address
+ *                 : ULNG   *media_status   : Pointer to area to store media status
+ * Return          : UX_SUCCESS
+ ******************************************************************************/
+static UINT usb_peri_usbx_media_write (VOID  * storage,
+                                       ULONG   lun,
+                                       UCHAR * data_pointer,
+                                       ULONG   number_blocks,
+                                       ULONG   lba,
+                                       ULONG * media_status)
+{
+    FSP_PARAMETER_NOT_USED(storage);
+    FSP_PARAMETER_NOT_USED(lun);
+    FSP_PARAMETER_NOT_USED(media_status);
+
+    fsp_err_t               err_code;
+    rm_block_media_status_t status;
+    uint32_t                timeout = UINT32_MAX;
+    rm_block_media_status_t status_wait;
+    uint32_t                timeout_wait = UINT32_MAX;
+
+    err_code = gp_block_media_instance->p_api->statusGet(gp_block_media_instance->p_ctrl, &status);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err_code, err_code);
+    if ((status.initialized == true) && (status.busy == false) && (status.media_inserted == true))
+    {
+        err_code =
+            gp_block_media_instance->p_api->write(gp_block_media_instance->p_ctrl,
+                                                  (uint8_t * const) data_pointer,
+                                                  (uint32_t const) lba,
+                                                  (uint32_t const) number_blocks);
+        if (err_code == FSP_SUCCESS)
+        {
+            while (timeout > 0)
+            {
+                timeout--;
+                if (g_blockmedia_complete_event == true)
+                {
+                    break;
+                }
+
+                if (g_blockmedia_poll_status_events == true)
+                {
+                    memset(&status_wait, 0U, sizeof(status_wait));
+                    do
+                    {
+                        timeout_wait--;
+                        if (0U == timeout_wait)
+                        {
+                            break;
+                        }
+
+                        gp_block_media_instance->p_api->statusGet(gp_block_media_instance->p_ctrl, &status_wait);
+                    } while (status.busy);
+
+                    g_blockmedia_complete_event     = false;
+                    g_blockmedia_poll_status_events = false;
+                    break;
+                }
+            }
+
+            g_blockmedia_complete_event = false;
+        }
+    }
+    else
+    {
+        g_status_busy = true;
+    }
+
+    if (err_code == FSP_SUCCESS)
+    {
+        return UX_SUCCESS;
+    }
+    else
+    {
+        return UX_ERROR;
+    }
+}                                      /* End of function usb_peri_usbx_media_write() */
+
+/******************************************************************************
+ * Function Name   : usb_peri_usbx_media_status
+ * Description     : Block media status check function
+ * Argument        : VOID   *storage        : Pointer to VOID area
+ *                 : ULONG  lun             : Logical Unit Number
+ *                 : ULONG  media_id        : Media ID number
+ *                 : ULNG   *media_status   : Pointer to area to store media status
+ * Return          : UX_SUCCESS
+ ******************************************************************************/
+static UINT usb_peri_usbx_media_status (VOID * storage, ULONG lun, ULONG media_id, ULONG * media_status)
+{
+    (void) storage;
+    (void) lun;
+    (void) media_id;
+    (void) media_status;
+
+    return UX_SUCCESS;
+}                                      /* End of function usb_peri_usbx_media_status() */
+
+/******************************************************************************
+ * Function Name   : usb_peri_usbx_pmsc_media_initialize
+ * Description     : Block media initialize processing
+ * Argument        : void const * p_context :
+ * Return          : FSP_SUCCESS/FSP_ERR_USB_FAILED
+ ******************************************************************************/
+fsp_err_t usb_peri_usbx_pmsc_media_initialize (void const * p_context)
+{
+    fsp_err_t               err_code = FSP_ERR_USB_FAILED;
+    rm_block_media_status_t status;
+    rm_block_media_info_t   info;
+
+    if (USB_NULL != p_context)
+    {
+        gp_block_media_instance = (rm_block_media_instance_t *) p_context;
+        err_code                = gp_block_media_instance->p_api->open(gp_block_media_instance->p_ctrl,
+                                                                       gp_block_media_instance->p_cfg);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err_code, FSP_ERR_USB_FAILED);
+        err_code = gp_block_media_instance->p_api->mediaInit(gp_block_media_instance->p_ctrl);
+        if (FSP_SUCCESS == err_code)
+        {
+            err_code = gp_block_media_instance->p_api->statusGet(gp_block_media_instance->p_ctrl, &status);
+            if (FSP_SUCCESS == err_code)
+            {
+                if ((status.initialized == true) && (status.busy == false) && (status.media_inserted == true))
+                {
+                    err_code = gp_block_media_instance->p_api->infoGet(gp_block_media_instance->p_ctrl, &info);
+                    if (FSP_SUCCESS == err_code)
+                    {
+                        g_media_total_sector      = info.num_sectors;
+                        g_media_sector_size_bytes = info.sector_size_bytes;
+                        g_media_write_protected   = info.write_protected;
+                    }
+                    else
+                    {
+                        gp_block_media_instance->p_api->close(gp_block_media_instance->p_ctrl);
+                        err_code = FSP_ERR_USB_FAILED;
+                    }
+                }
+                else
+                {
+                    gp_block_media_instance->p_api->close(gp_block_media_instance->p_ctrl);
+                    err_code = FSP_ERR_USB_FAILED;
+                }
+            }
+            else
+            {
+                gp_block_media_instance->p_api->close(gp_block_media_instance->p_ctrl);
+                err_code = FSP_ERR_USB_FAILED;
+            }
+        }
+        else
+        {
+            gp_block_media_instance->p_api->close(gp_block_media_instance->p_ctrl);
+            err_code = FSP_ERR_USB_FAILED;
+        }
+    }
+
+    return err_code;
+}                                      /* End of function usb_peri_usbx_pmsc_media_initialize() */
+
+/******************************************************************************
+ * Function Name   : usb_peri_usbx_media_close
+ * Description     : Block media close processing
+ * Argument        : void const * p_context :
+ * Return          : FSP_SUCCESS
+ ******************************************************************************/
+fsp_err_t usb_peri_usbx_media_close (void)
+{
+    fsp_err_t err_code;
+
+    err_code = gp_block_media_instance->p_api->close(gp_block_media_instance->p_ctrl);
+
+    return err_code;
+}                                      /* End of function usb_peri_usbx_media_close() */
+
+/******************************************************************************
+ * Function Name   : usb_peri_usbx_pmsc_storage_init
+ * Description     : Initialization processing for USBX PMSC
+ * Argument        : None
+ * Return          : None
+ ******************************************************************************/
+static void usb_peri_usbx_pmsc_storage_init (void)
+{
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_number_lun = 1;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_last_lba =
+        g_media_total_sector;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_block_length =
+        g_media_sector_size_bytes;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_type =
+        UX_SLAVE_CLASS_STORAGE_MEDIA_FAT_DISK;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_removable_flag =
+        USB_PERI_USBX_REMOVABLE_MEDIA;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_read_only_flag =
+        g_media_write_protected;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_read =
+        usb_peri_usbx_media_read;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_write =
+        usb_peri_usbx_media_write;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_flush =
+        UX_NULL;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_status =
+        usb_peri_usbx_media_status;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_notification =
+        UX_NULL;
+
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_instance_activate        = UX_NULL;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_instance_deactivate      = UX_NULL;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_vendor_id      = (UCHAR *) USB_CFG_PMSC_VENDOR;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_product_id     = (UCHAR *) USB_CFG_PMSC_PRODUCT;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_product_rev    = (UCHAR *) USB_CFG_PMSC_REVISION;
+    g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_product_serial = (uint8_t *) "NULL";
+
+    ux_device_stack_class_register(_ux_system_slave_class_storage_name,
+                                   ux_device_class_storage_entry,
+                                   1,
+                                   0x00,
+                                   (void *) &g_usb_peri_usbx_pmsc_parameter);
+}                                      /* End of function usb_peri_usbx_pmsc_storage_init() */
+
+/******************************************************************************
+ * Function Name   : r_usb_pmsc_block_media_event_callback
+ * Description     : Callback for USBX PMSC
+ * Argument        : p_args : Pointer to rm_block_media_callback_args_t structure
+ * Return          : None
+ ******************************************************************************/
+void r_usb_pmsc_block_media_event_callback (rm_block_media_callback_args_t * p_args)
+{
+    if (RM_BLOCK_MEDIA_EVENT_MEDIA_INSERTED == p_args->event)
+    {
+        g_card_inserted = true;
+    }
+
+    if (RM_BLOCK_MEDIA_EVENT_MEDIA_REMOVED == p_args->event)
+    {
+        g_card_inserted = false;
+    }
+
+    if (RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE == p_args->event)
+    {
+        g_blockmedia_complete_event = true;
+    }
+
+    if (RM_BLOCK_MEDIA_EVENT_POLL_STATUS & p_args->event)
+    {
+        g_blockmedia_poll_status_events = true;
+    }
+}                                      /* End of function r_usb_pmsc_block_media_event_callback() */
+
+  #endif                               /* defined(USB_CFG_PMSC_USE) */
 
  #endif                                /* ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
@@ -652,7 +1084,6 @@ uint32_t usb_host_usbx_uninitialize (uint32_t hcd_io)
 
     if (UX_SUCCESS != status)
     {
-
         /* Return failure status  */
         return (uint32_t) FSP_ERR_USB_FAILED;
     }
@@ -804,21 +1235,20 @@ void usb_host_usbx_registration (usb_utr_t * p_utr)
     driver.devresume  = (usb_cb_t) &usb_hstd_dummy_function;         /* Device resume */
 
   #if USB_CFG_HUB == USB_CFG_ENABLE
-
     /* WAIT_LOOP */
-    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)  /* Loop support CDC device count */
+    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)                 /* Loop support CDC device count */
     {
-        usb_hstd_driver_registration(p_utr, &driver); /* Host CDC class driver registration. */
+        usb_hstd_driver_registration(p_utr, &driver);                /* Host CDC class driver registration. */
     }
 
    #if (BSP_CFG_RTOS == 0)
-    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);    /* Hub Task Priority set */
+    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);                   /* Hub Task Priority set */
    #endif /* (BSP_CFG_RTOS == 0) */
-    usb_hhub_registration(p_utr, USB_NULL);           /* Hub registration. */
-  #else                                               /* USB_CFG_HUB == USB_CFG_ENABLE */
-    usb_hstd_driver_registration(p_utr, &driver);     /* Host CDC class driver registration. */
+    usb_hhub_registration(p_utr, USB_NULL);                          /* Hub registration. */
+  #else                                                              /* USB_CFG_HUB == USB_CFG_ENABLE */
+    usb_hstd_driver_registration(p_utr, &driver);                    /* Host CDC class driver registration. */
   #endif /* USB_CFG_HUB == USB_CFG_ENABLE */
-}                                                     /* End of function usb_host_usbx_registration() */
+}                                                                    /* End of function usb_host_usbx_registration() */
 
 /******************************************************************************
  * Function Name    : usb_host_usbx_class_check
@@ -829,14 +1259,16 @@ void usb_host_usbx_registration (usb_utr_t * p_utr)
  ******************************************************************************/
 void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
 {
-  #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE)
-    uint16_t             speed;
-    uint16_t             length;
-    uint16_t             offset;
-    uint16_t             usb_class;
-    uint8_t            * p_config;
+  #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE)
+    uint16_t  speed;
+    uint16_t  length;
+    uint16_t  offset;
+    uint16_t  usb_class;
+    uint8_t * p_config;
+   #if !defined(USB_CFG_HMSC_USE)
     uint8_t              pipe_no;
     usb_pipe_table_reg_t ep_tbl;
+   #endif                              /* #if !defined(USB_CFG_HMSC_USE) */
 
     speed    = *table[6];
     p_config = (uint8_t *) table[1];
@@ -851,11 +1283,41 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
     usb_class = USB_CLASS_INTERNAL_HHID;
    #endif
 
+   #if defined(USB_CFG_HMSC_USE)
+    usb_class = USB_CLASS_INTERNAL_HMSC;
+   #endif
+
     offset = 0;
     while (offset < length)
     {
         if (USB_DT_ENDPOINT == *(p_config + offset + USB_EP_B_DESCRIPTORTYPE))
         {
+   #if defined(USB_CFG_HMSC_USE)
+            if (USB_EP_IN == (*(p_config + offset + USB_EP_B_ENDPOINTADDRESS) & USB_EP_DIRMASK))
+            {
+                g_usb_hmsc_in_pipe[p_utr->ip][0] = usb_hstd_make_pipe_reg_info(p_utr->ip,
+                                                                               USB_DEVICEADDR,
+                                                                               usb_class,
+                                                                               speed,
+                                                                               (p_config + offset),
+                                                                               &g_usb_hmsc_pipe_table[0][
+                                                                                   USB_PIPE_DIR_IN]);
+
+                g_usb_hmsc_in_pipectr[p_utr->ip][0] = 0;
+            }
+            else
+            {
+                g_usb_hmsc_out_pipe[p_utr->ip][0] = usb_hstd_make_pipe_reg_info(p_utr->ip,
+                                                                                USB_DEVICEADDR,
+                                                                                usb_class,
+                                                                                speed,
+                                                                                (p_config + offset),
+                                                                                &g_usb_hmsc_pipe_table[0][
+                                                                                    USB_PIPE_DIR_OUT]);
+
+                g_usb_hmsc_out_pipectr[p_utr->ip][0] = 0;
+            }
+   #else                               /* defined(USB_CFG_HMSC_USE) */
             pipe_no = usb_hstd_make_pipe_reg_info(p_utr->ip,
                                                   USB_DEVICEADDR,
                                                   usb_class,
@@ -873,6 +1335,7 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
                     ;
                 }
             }
+   #endif                              /* defined(USB_CFG_HMSC_USE) */
         }
 
         offset = (uint16_t) (offset + (*(p_config + offset)));
@@ -1038,25 +1501,73 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
     uint8_t       pipe;
     UX_TRANSFER * transfer_request;
     uint16_t      pipe_reg;
+  #if defined(USB_CFG_HMSC_USE)
+   #if (USB_CFG_DMA == USB_CFG_ENABLE)
+    uint32_t  counter;
+    uint8_t * p_read;
+    uint8_t * p_write;
+   #endif                              /* (USB_CFG_DMA == USB_CFG_ENABLE) */
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
 
     pipe             = (uint8_t) p_utr->keyword;
     transfer_request = g_p_usb_host_usbx_transfer_request[p_utr->ip][pipe];
 
-    tx_semaphore_put(&g_usb_host_usbx_sem[p_utr->ip][pipe]);
+    if (USB_PIPE0 == pipe)
+    {
+        tx_semaphore_put(&g_usb_host_usbx_sem[p_utr->ip][pipe]);
+    }
 
     hw_usb_write_pipesel(p_utr, pipe);
     pipe_reg = hw_usb_read_pipecfg(p_utr);
 
     if (0 != (pipe_reg & USB_DIRFIELD))
     {
-        /* transmission */
+        /* IN */
         *g_p_usb_host_actural_length[p_utr->ip][pipe] = p_utr->read_req_len;
     }
     else
     {
-        /* reception */
+        /* OUT */
         *g_p_usb_host_actural_length[p_utr->ip][pipe] = p_utr->read_req_len - p_utr->tranlen;
     }
+
+  #if defined(USB_CFG_HMSC_USE)
+    if (USB_DATA_STALL == p_utr->status)
+    {
+        g_usb_hmsc_in_pipectr[p_utr->ip][0] = 0;
+        transfer_request->ux_transfer_request_completion_code = UX_TRANSFER_STALLED;
+    }
+    else
+    {
+        transfer_request->ux_transfer_request_completion_code = UX_SUCCESS;
+
+        if (0 != (pipe_reg & USB_DIRFIELD))
+        {
+            /* OUT */
+            g_usb_hmsc_out_pipectr[p_utr->ip][0] = hw_usb_read_pipectr(p_utr, pipe);
+        }
+        else
+        {
+            /* IN */
+   #if (USB_CFG_DMA == USB_CFG_ENABLE)
+            if (0 != g_p_usbx_hmsc_dma_buf[USB_DEVICEADDR - 1])
+            {
+                p_read  = (uint8_t *) g_p_usbx_hmsc_dma_buf[USB_DEVICEADDR - 1];
+                p_write = transfer_request->ux_transfer_request_data_pointer;
+
+                for (counter = 0UL; counter != p_utr->read_req_len; counter++)
+                {
+                    *(p_write + counter) = *(p_read + counter);
+                }
+
+                _ux_utility_memory_free(g_p_usbx_hmsc_dma_buf[USB_DEVICEADDR - 1]);
+                g_p_usbx_hmsc_dma_buf[USB_DEVICEADDR - 1] = (void *) 0;
+            }
+   #endif                              /* (USB_CFG_DMA == USB_CFG_ENABLE) */
+            g_usb_hmsc_in_pipectr[p_utr->ip][0] = hw_usb_read_pipectr(p_utr, pipe);
+        }
+    }
+  #endif                               /* #if defined(USB_CFG_HMSC_USE) */
 
     _ux_utility_semaphore_put(&transfer_request->ux_transfer_request_semaphore);
 }                                      /* End of function usb_hstd_transfer_complete_cb() */
@@ -1079,6 +1590,13 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
     uint32_t      size;
     uint8_t       pipe_number;
     usb_er_t      err;
+  #if defined(USB_CFG_HMSC_USE)
+   #if (USB_CFG_DMA == USB_CFG_ENABLE)
+    uint32_t allocation_size;
+    uint16_t max_packet_size;
+    uint8_t  is_in_transfer = USB_NO;
+   #endif                              /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
+  #endif                               /* #if defined(USB_CFG_HMSC_USE) */
 
     if (R_USB_HS0_BASE == hcd->ux_hcd_io)
     {
@@ -1151,6 +1669,57 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
                 case (uint32_t) UX_FSP_BULK_ENDPOINT:
                 case (uint32_t) UX_FSP_INTERRUPT_ENDPOINT:
                 {
+  #if defined(USB_CFG_HMSC_USE)
+                    if (endpoint->ux_endpoint_descriptor.bEndpointAddress & USB_ENDPOINT_DIRECTION)
+                    {
+                        /* IN */
+   #if (USB_CFG_DMA == USB_CFG_ENABLE)
+                        is_in_transfer = USB_YES;
+   #endif                              /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
+
+                        usb_hstd_set_pipe_info(module_number,
+                                               g_usb_hmsc_in_pipe[module_number][0],
+                                               &g_usb_hmsc_pipe_table[0][USB_PIPE_DIR_IN]);
+                        usb_hstd_set_pipe_reg(&g_usb_host_usbx_req_msg[module_number],
+                                              g_usb_hmsc_in_pipe[module_number][0]);
+
+                        if (USB_SQMON == (USB_SQMON & g_usb_hmsc_in_pipectr[module_number][0]))
+                        {
+                            hw_usb_set_sqset(&g_usb_host_usbx_req_msg[module_number],
+                                             g_usb_hmsc_in_pipe[module_number][0]);
+                        }
+                        else
+                        {
+                            hw_usb_set_sqclr(&g_usb_host_usbx_req_msg[module_number],
+                                             g_usb_hmsc_in_pipe[module_number][0]);
+                        }
+                    }
+                    else
+                    {
+                        /* OUT */
+   #if (USB_CFG_DMA == USB_CFG_ENABLE)
+                        is_in_transfer = USB_NO;
+   #endif                              /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
+
+                        usb_hstd_set_pipe_info(module_number,
+                                               g_usb_hmsc_out_pipe[module_number][0],
+                                               &g_usb_hmsc_pipe_table[0][USB_PIPE_DIR_OUT]);
+                        usb_hstd_set_pipe_reg(&g_usb_host_usbx_req_msg[module_number],
+                                              g_usb_hmsc_out_pipe[module_number][0]);
+
+                        if (USB_SQMON == (USB_SQMON & g_usb_hmsc_out_pipectr[module_number][0]))
+                        {
+                            hw_usb_set_sqset(&g_usb_host_usbx_req_msg[module_number],
+                                             g_usb_hmsc_out_pipe[module_number][0]);
+                        }
+                        else
+                        {
+                            hw_usb_set_sqclr(&g_usb_host_usbx_req_msg[module_number],
+                                             g_usb_hmsc_out_pipe[module_number][0]);
+                        }
+                    }
+  #endif
+
                     size        = transfer_request->ux_transfer_request_requested_length;
                     ep_number   = endpoint->ux_endpoint_descriptor.bEndpointAddress & USB_EPNUMFIELD;
                     pipe_number = usb_host_usbx_endpoint_to_pipe(module_number, ep_number); /* Pipe Number */
@@ -1158,7 +1727,26 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
                     g_usb_host_usbx_req_msg[module_number].keyword      = pipe_number;      /* Pipe Number */
                     g_usb_host_usbx_req_msg[module_number].p_tranadr    =
                         transfer_request->ux_transfer_request_data_pointer;                 /* Data address */
-                    g_usb_host_usbx_req_msg[module_number].tranlen  = size;                 /* Request Data Size */
+
+  #if defined(USB_CFG_HMSC_USE)
+   #if (USB_CFG_DMA == USB_CFG_ENABLE)
+                    if (USB_YES == is_in_transfer)
+                    {
+                        // IN transfere
+                        max_packet_size = (uint16_t) endpoint->ux_endpoint_descriptor.wMaxPacketSize;
+                        if (0 != (size % max_packet_size))
+                        {
+                            allocation_size = ((size / max_packet_size) + 1) * max_packet_size;
+                            g_p_usbx_hmsc_dma_buf[USB_DEVICEADDR - 1] =
+                                _ux_utility_memory_allocate(UX_NO_ALIGN, UX_REGULAR_MEMORY, allocation_size);
+
+                            g_usb_host_usbx_req_msg[module_number].p_tranadr =
+                                g_p_usbx_hmsc_dma_buf[USB_DEVICEADDR - 1];
+                        }
+                    }
+   #endif                                                                   /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
+  #endif                                                                    /* #if defined(USB_CFG_HMSC_USE) */
+                    g_usb_host_usbx_req_msg[module_number].tranlen  = size; /* Request Data Size */
                     g_usb_host_usbx_req_msg[module_number].complete = usb_host_usbx_transfer_complete_cb;
 
                     /* Callback function */

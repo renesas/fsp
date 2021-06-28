@@ -60,13 +60,6 @@ typedef enum e_rm_guix_port_event
     RM_GUIX_PORT_EVENT_UNDERFLOW     = 3, ///< Display interface underflow
 } rm_guix_port_event_t;
 
-/** Display rotation angle */
-typedef enum e_rm_guix_port_rotation_angle_t
-{
-    RM_GUIX_PORT_ROTATION_ANGLE_0   = 0,   ///< No rotation
-    RM_GUIX_PORT_ROTATION_ANGLE_180 = 180, ///< Rotate screen 180 degrees
-} rm_guix_port_rotation_angle_t;
-
 /** Callback arguments for the FSP GUIX Port */
 typedef struct st_rm_guix_port_callback_args
 {
@@ -87,8 +80,8 @@ typedef struct st_rm_guix_port_cfg
     void   * p_context;                                         // Pointer to a context
     void   * p_jpegbuffer;                                      // Pointer to a JPEG work buffer
     uint32_t jpegbuffer_size;                                   // Size of a JPEG work buffer
-    rm_guix_port_rotation_angle_t rotation_angle;               // Screen rotation angle
-    void * p_jpeg_instance;                                     // Pointer to a JPEG Codec driver instance
+    int32_t  rotation_angle;                                    // Screen rotation angle
+    void   * p_jpeg_instance;                                   // Pointer to a JPEG Codec driver instance
 } rm_guix_port_cfg_t;
 
 /* Instance control block for GUIX Port */
@@ -105,8 +98,8 @@ typedef struct st_rm_guix_port_instance_ctrl
     bool     display_list_flushed;                              // Flag to show the display list is flushed
     void   * p_jpegbuffer;                                      // Pointer to a JPEG work buffer
     uint32_t jpegbuffer_size;                                   // Size of a JPEG work buffer
-    rm_guix_port_rotation_angle_t rotation_angle;               // Screen rotation angle
-    void * p_jpeg_instance;                                     // Pointer to a JPEG Codec instance
+    int32_t  rotation_angle;                                    // Screen rotation angle
+    void   * p_jpeg_instance;                                   // Pointer to a JPEG Codec instance
 } rm_guix_port_instance_ctrl_t;
 
 /**********************************************************************************************************************

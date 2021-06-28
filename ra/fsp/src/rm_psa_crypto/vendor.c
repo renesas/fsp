@@ -190,6 +190,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
         if (status != PSA_SUCCESS)
         {
             mbedtls_rsa_free(rsa);
+            mbedtls_free(rsa);
 
             return status;
         }
@@ -200,6 +201,8 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
                                     RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES,
                                     &slot->data.key.bytes);
         mbedtls_rsa_free(rsa);
+        mbedtls_free(rsa);
+
         if (status != PSA_SUCCESS)
         {
             psa_remove_key_data_from_memory(slot);
@@ -257,6 +260,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
         if (status != PSA_SUCCESS)
         {
             mbedtls_ecp_keypair_free(ecp);
+            mbedtls_free(ecp);
 
             return status;
         }
@@ -264,6 +268,8 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
         status = mbedtls_to_psa_error(mbedtls_ecp_write_key(ecp, slot->data.key.data, ecc_bytes));
 
         mbedtls_ecp_keypair_free(ecp);
+        mbedtls_free(ecp);
+
         if (status != PSA_SUCCESS)
         {
             memset(slot->data.key.data, 0, ecc_bytes);
@@ -282,10 +288,10 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
 /** Import key data into a slot. `slot->attr.type` must have been set
  * previously. This function assumes that the slot does not contain
  * any key material yet. On failure, the slot content is unchanged. */
-psa_status_t psa_import_key_into_slot_vendor (psa_key_slot_t       * slot,
-                                              const uint8_t        * data,
-                                              size_t                 data_length,
-                                              bool                   write_to_persistent_memory)
+psa_status_t psa_import_key_into_slot_vendor (psa_key_slot_t * slot,
+                                              const uint8_t  * data,
+                                              size_t           data_length,
+                                              bool             write_to_persistent_memory)
 {
     psa_status_t status = PSA_ERROR_NOT_SUPPORTED;
     (void) slot;

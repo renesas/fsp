@@ -53,6 +53,7 @@
  #define R_OSPI_BASE            0x400A6000
  #define R_CAN0_BASE            0x400A8000
  #define R_CAN1_BASE            0x400A9000
+ #define R_CEC_BASE             0x400AC000
  #define R_CANFD_BASE           0x400B0000
  #define R_CTSU_BASE            0x400D0000
  #define R_PSCU_BASE            0x400E0000
@@ -171,6 +172,7 @@
  #define R_OSPI             ((R_OSPI_Type *) R_OSPI_BASE)
  #define R_CAN0             ((R_CAN0_Type *) R_CAN0_BASE)
  #define R_CAN1             ((R_CAN0_Type *) R_CAN1_BASE)
+ #define R_CEC              ((R_CEC_Type *) R_CEC_BASE)
  #define R_CANFD            ((R_CANFD_Type *) R_CANFD_BASE)
  #define R_CTSU             ((R_CTSU_Type *) R_CTSU_BASE)
  #define R_PSCU             ((R_PSCU_Type *) R_PSCU_BASE)

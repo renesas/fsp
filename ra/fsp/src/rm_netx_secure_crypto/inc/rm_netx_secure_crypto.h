@@ -193,7 +193,9 @@ UINT sce_nx_crypto_ecdsa_verify(NX_CRYPTO_EC * curve,
                                 UINT           hash_length,
                                 UCHAR        * public_key,
                                 UCHAR        * signature_r,
-                                UCHAR        * signature_s);
+                                UINT           r_size,
+                                UCHAR        * signature_s,
+                                UINT           s_size);
 
 UINT sce_nx_crypto_ecdh_key_pair_import(NX_CRYPTO_ECDH * ecdh_ptr,
                                         NX_CRYPTO_EC   * curve,

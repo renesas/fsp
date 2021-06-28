@@ -72,9 +72,14 @@ typedef uint32_t     rtos_time_t;
 
 /** USB task stack size in words **/
   #if (BSP_CFG_RTOS == 1)
-   #define HCD_STACK_SIZE     (1536)
+   #if defined(USB_CFG_HMSC_USE)
+    #define HCD_STACK_SIZE    (2048)
+    #define MGR_STACK_SIZE    (2048)
+   #else
+    #define HCD_STACK_SIZE    (1536)
+    #define MGR_STACK_SIZE    (1536)
+   #endif
    #define HUB_STACK_SIZE     (512)
-   #define MGR_STACK_SIZE     (1536)
    #define PCD_STACK_SIZE     (1024)
    #define PMSC_STACK_SIZE    (512)
    #define HCDC_STACK_SIZE    (512)

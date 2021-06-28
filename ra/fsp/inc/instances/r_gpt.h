@@ -49,6 +49,8 @@ typedef enum e_gpt_io_pin
     GPT_IO_PIN_GTIOCA            = 0,  ///< GTIOCA
     GPT_IO_PIN_GTIOCB            = 1,  ///< GTIOCB
     GPT_IO_PIN_GTIOCA_AND_GTIOCB = 2,  ///< GTIOCA and GTIOCB
+    GPT_IO_PIN_TROUGH            = 4,  ///< Used in @ref R_GPT_DutyCycleSet when Triangle-wave PWM Mode 3 is selected.
+    GPT_IO_PIN_CREST             = 8,  ///< Used in @ref R_GPT_DutyCycleSet when Triangle-wave PWM Mode 3 is selected.
 } gpt_io_pin_t;
 
 /** Level of GPT pin */
@@ -144,6 +146,39 @@ typedef struct s_gpt_output_pin
     bool            output_enabled;    ///< Set to true to enable output, false to disable output
     gpt_pin_level_t stop_level;        ///< Select a stop level from ::gpt_pin_level_t
 } gpt_output_pin_t;
+
+/** Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. */
+typedef struct s_gpt_gtior_setting
+{
+    union
+    {
+        uint32_t gtior;
+        struct
+        {
+            /* Settings for GTIOCxA pin. */
+            uint32_t gtioa  : 5;       ///< GTIOCA Pin Function Select.
+            uint32_t        : 1;       // Reserved
+            uint32_t oadflt : 1;       ///< GTIOCA Pin Output Value Setting at the Count Stop.
+            uint32_t oahld  : 1;       ///< GTIOCA Pin Output Setting at the Start/Stop Count.
+            uint32_t oae    : 1;       ///< GTIOCA Pin Output Enable
+            uint32_t oadf   : 2;       ///< GTIOCA Pin Disable Value Setting.
+            uint32_t        : 2;       /// Reserved
+            uint32_t nfaen  : 1;       /// Noise Filter A Enable.
+            uint32_t nfcsa  : 2;       /// Noise Filter A Sampling Clock Select.
+
+            /* Settings for GTIOCxB pin. */
+            uint32_t gtiob  : 5;       ///< GTIOCB Pin Function Select.
+            uint32_t        : 1;       // Reserved
+            uint32_t obdflt : 1;       ///< GTIOCB Pin Output Value Setting at the Count Stop.
+            uint32_t obhld  : 1;       ///< GTIOCB Pin Output Setting at the Start/Stop Count.
+            uint32_t obe    : 1;       ///< GTIOCB Pin Output Enable
+            uint32_t obdf   : 2;       ///< GTIOCB Pin Disable Value Setting.
+            uint32_t        : 2;       /// Reserved
+            uint32_t nfben  : 1;       /// Noise Filter B Enable.
+            uint32_t nfcsb  : 2;       /// Noise Filter B Sampling Clock Select.
+        } gtior_b;
+    };
+} gpt_gtior_setting_t;
 
 /** Input capture signal noise filter (debounce) setting. Only available for input signals GTIOCxA and GTIOCxB.
  *   The noise filter samples the external signal at intervals of the PCLK divided by one of the values.
@@ -271,15 +306,15 @@ typedef struct st_gpt_extended_pwm_cfg
     gpt_interrupt_skip_source_t interrupt_skip_source;  ///< Interrupt source to count for interrupt skipping
     gpt_interrupt_skip_count_t  interrupt_skip_count;   ///< Number of interrupts to skip between events
     gpt_interrupt_skip_adc_t    interrupt_skip_adc;     ///< ADC events to skip when interrupt skipping is enabled
-    gpt_gtioc_disable_t         gtioca_disable_setting; ///< Select how to configure GTIOCA when output is disabled
-    gpt_gtioc_disable_t         gtiocb_disable_setting; ///< Select how to configure GTIOCB when output is disabled
+    gpt_gtioc_disable_t         gtioca_disable_setting; ///< DEPRECATED - Select how to configure GTIOCA when output is disabled
+    gpt_gtioc_disable_t         gtiocb_disable_setting; ///< DEPRECATED - Select how to configure GTIOCB when output is disabled
 } gpt_extended_pwm_cfg_t;
 
 /** GPT extension configures the output pins for GPT. */
 typedef struct st_gpt_extended_cfg
 {
-    gpt_output_pin_t gtioca;           ///< Configuration for GPT I/O pin A
-    gpt_output_pin_t gtiocb;           ///< Configuration for GPT I/O pin B
+    gpt_output_pin_t gtioca;           ///< DEPRECATED - Configuration for GPT I/O pin A
+    gpt_output_pin_t gtiocb;           ///< DEPRECATED - Configuration for GPT I/O pin B
     gpt_source_t     start_source;     ///< Event sources that trigger the timer to start
     gpt_source_t     stop_source;      ///< Event sources that trigger the timer to stop
     gpt_source_t     clear_source;     ///< Event sources that trigger the timer to clear
@@ -294,17 +329,18 @@ typedef struct st_gpt_extended_cfg
      * and count_down_source, then the timer count source is PCLK.  */
     gpt_source_t count_down_source;
 
-    /* Debounce filter for GTIOCxA input signal pin. */
+    /* Debounce filter for GTIOCxA input signal pin (DEPRECATED). */
     gpt_capture_filter_t capture_filter_gtioca;
 
-    /* Debounce filter for GTIOCxB input signal pin. */
+    /* Debounce filter for GTIOCxB input signal pin (DEPRECATED). */
     gpt_capture_filter_t capture_filter_gtiocb;
 
-    uint8_t   capture_a_ipl;                  ///< Capture A interrupt priority
-    uint8_t   capture_b_ipl;                  ///< Capture B interrupt priority
-    IRQn_Type capture_a_irq;                  ///< Capture A interrupt
-    IRQn_Type capture_b_irq;                  ///< Capture B interrupt
-    gpt_extended_pwm_cfg_t const * p_pwm_cfg; ///< Advanced PWM features, optional
+    uint8_t   capture_a_ipl;                      ///< Capture A interrupt priority
+    uint8_t   capture_b_ipl;                      ///< Capture B interrupt priority
+    IRQn_Type capture_a_irq;                      ///< Capture A interrupt
+    IRQn_Type capture_b_irq;                      ///< Capture B interrupt
+    gpt_extended_pwm_cfg_t const * p_pwm_cfg;     ///< Advanced PWM features, optional
+    gpt_gtior_setting_t            gtior_setting; ///< Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins.
 } gpt_extended_cfg_t;
 
 /**********************************************************************************************************************

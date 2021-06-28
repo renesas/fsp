@@ -34,9 +34,11 @@
  #include "../hw/inc/r_usb_dmac.h"
 #endif                                 /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
 
-#if defined(USB_CFG_HMSC_USE)
- #include "../../../r_usb_hmsc/src/inc/r_usb_hmsc_driver.h"
-#endif                                 /* defined(USB_CFG_HMSC_USE) */
+#if (BSP_CFG_RTOS != 1)
+ #if defined(USB_CFG_HMSC_USE)
+  #include "../../../r_usb_hmsc/src/inc/r_usb_hmsc_driver.h"
+ #endif                                /* defined(USB_CFG_HMSC_USE) */
+#endif /* #if (BSP_CFG_RTOS != 1) */
 
 #if defined(USB_CFG_HCDC_USE)
  #include "r_usb_hcdc_cfg.h"
@@ -253,7 +255,6 @@ uint16_t usb_hstd_chk_dev_addr (usb_utr_t * ptr, uint16_t addr)
     buffer = hw_usb_hread_devadd(ptr, addr);
     if (USB_ERROR != buffer)
     {
-
         /* Return Address check result */
         return (uint16_t) (buffer & USB_USBSPD);
     }
@@ -282,7 +283,6 @@ uint16_t usb_hstd_get_dev_speed (usb_utr_t * ptr, uint16_t addr)
     buffer = hw_usb_hread_devadd(ptr, addr);
     if (USB_ERROR != buffer)
     {
-
         /* Return device speed */
         return (uint16_t) (buffer & USB_USBSPD);
     }
@@ -359,7 +359,6 @@ uint16_t usb_hstd_pipe2fport (usb_utr_t * ptr, uint16_t pipe)
                 {
                     fifo_mode = USB_D0USE;
                 }
-
   #else
                 if (0 != ptr->p_transfer_rx)
                 {
@@ -374,7 +373,6 @@ uint16_t usb_hstd_pipe2fport (usb_utr_t * ptr, uint16_t pipe)
                 {
                     fifo_mode = USB_D1USE;
                 }
-
   #else
                 if (0 != ptr->p_transfer_tx)
                 {
@@ -608,7 +606,6 @@ uint16_t usb_hstd_write_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
     /* Check error */
     if (USB_FIFOERROR == buffer)
     {
-
         /* FIFO access error */
         return USB_FIFOERROR;
     }
@@ -779,7 +776,6 @@ void usb_hstd_receive_start (usb_utr_t * ptr, uint16_t pipe)
         }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-
         /* D1FIFO DMA */
         case USB_D1USE:
 
@@ -850,7 +846,6 @@ uint16_t usb_hstd_read_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
     buffer = usb_cstd_is_set_frdy(ptr, pipe, pipemode, USB_FALSE);
     if (USB_FIFOERROR == buffer)
     {
-
         /* FIFO access error */
         return USB_FIFOERROR;
     }
@@ -866,9 +861,9 @@ uint16_t usb_hstd_read_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
         end_flag = USB_READOVER;
         usb_cstd_set_nak(ptr, pipe);   /* Set NAK */
         count = (uint16_t) g_usb_hstd_data_cnt[ptr->ip][pipe];
-#if BSP_CFG_RTOS != 1
+ #if BSP_CFG_RTOS != 1
         g_usb_hstd_data_cnt[ptr->ip][pipe] = dtln;
-#endif  /* BSP_CFG_RTOS != 1 */
+ #endif /* BSP_CFG_RTOS != 1 */
     }
     else if (g_usb_hstd_data_cnt[ptr->ip][pipe] == dtln)
     {
@@ -964,7 +959,6 @@ void usb_hstd_data_end (usb_utr_t * ptr, uint16_t pipe, uint16_t status)
         }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-
         /* D0FIFO DMA */
         case USB_D0USE:
         {
@@ -1511,9 +1505,11 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
  #if defined(USB_CFG_HVND_USE)
     uint16_t pipe;
  #endif                                /* defined(USB_CFG_HVND_USE) */
- #if defined(USB_CFG_HMSC_USE)
+ #if (BSP_CFG_RTOS != 1)
+  #if defined(USB_CFG_HMSC_USE)
     uint16_t side;
- #endif                                /* defined(USB_CFG_HMSC_USE) */
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
+ #endif /* #if (BSP_CFG_RTOS != 1) */
 
     switch (usb_class)
     {
@@ -1688,6 +1684,7 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
  #if defined(USB_CFG_HMSC_USE)
             if (USB_EP_BULK == type)
             {
+  #if (BSP_CFG_RTOS != 1)
                 /* Add USB IP no. for USB Device address */
                 if (USB_IP1 == ip_no)
                 {
@@ -1703,6 +1700,9 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
                     /* Calculate the pipe number corresponding to the drive number */
                     pipe_no = (uint8_t) (USB_PIPE1 + side);
                 }
+  #else                                /* #if (BSP_CFG_RTOS != 1) */
+                pipe_no = USB_PIPE1;
+  #endif /* #if (BSP_CFG_RTOS != 1) */
             }
  #endif                                /* defined(USB_CFG_HMSC_USE) */
             break;
