@@ -482,7 +482,9 @@ void rm_netxduo_ether_receive_packet (rm_netxduo_ether_instance_t * p_netxduo_et
                                    ((UINT) (*(p_nx_buffers[index]->nx_packet_prepend_ptr + 13)));
 
                 if ((packet_type == NX_ETHERNET_IP) ||
+#ifndef NX_DISABLE_IPV6
                     (packet_type == NX_ETHERNET_IPV6) ||
+#endif                    
                     (packet_type == NX_ETHERNET_ARP)
 #if RM_NETXDUO_ETHER_RARP_SUPPORT
                     || (packet_type == NX_ETHERNET_RARP)
