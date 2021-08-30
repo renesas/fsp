@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -182,6 +182,10 @@ Data Structures</h2></td></tr>
 <tr class="separator:structmotor__angle__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmotor__angle__current__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__current__t">motor_angle_current_t</a></td></tr>
 <tr class="separator:structmotor__angle__current__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__angle__voltage__reference__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__voltage__reference__t">motor_angle_voltage_reference_t</a></td></tr>
+<tr class="separator:structmotor__angle__voltage__reference__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__angle__encoder__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__encoder__info__t">motor_angle_encoder_info_t</a></td></tr>
+<tr class="separator:structmotor__angle__encoder__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmotor__angle__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__api__t">motor_angle_api_t</a></td></tr>
 <tr class="separator:structmotor__angle__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmotor__angle__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__instance__t">motor_angle_instance_t</a></td></tr>
@@ -243,6 +247,66 @@ q-axis current </td></tr>
 
 </div>
 </div>
+<a name="structmotor__angle__voltage__reference__t" id="structmotor__angle__voltage__reference__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__angle__voltage__reference__t">&#9670;&nbsp;</a></span>motor_angle_voltage_reference_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_angle_voltage_reference_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor angle voltage reference </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a9b39071d195ba340bbdfcc765fe6c09f"></a>float</td>
+<td class="fieldname">
+vd</td>
+<td class="fielddoc">
+d-axis voltage reference </td></tr>
+<tr><td class="fieldtype">
+<a id="ab30923ba51b00c341d90804b24aaebf6"></a>float</td>
+<td class="fieldname">
+vq</td>
+<td class="fielddoc">
+q-axis voltage reference </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__angle__encoder__info__t" id="structmotor__angle__encoder__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__angle__encoder__info__t">&#9670;&nbsp;</a></span>motor_angle_encoder_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_angle_encoder_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor angle encoder adjustment info </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a73e470b5d97213689ecf2603e8fa68ce"></a><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga2eb16cd62372fd50c5d7ad5048f693ce">motor_sense_encoder_angle_adjust_t</a></td>
+<td class="fieldname">
+e_adjust_status</td>
+<td class="fielddoc">
+Encoder Adjustment Status. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3c272518a04545f0736f810de1bf9232"></a>uint8_t</td>
+<td class="fieldname">
+u1_adjust_count_full</td>
+<td class="fielddoc">
+Adjustment count became full. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structmotor__angle__api__t" id="structmotor__angle__api__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structmotor__angle__api__t">&#9670;&nbsp;</a></span>motor_angle_api_t</h2>
 
@@ -263,7 +327,7 @@ q-axis current </td></tr>
 <tr class="separator:a858a638ad95923d5b6fa541a7ae24cd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae4410e4978e4f26ed8a5eb621201d41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#aae4410e4978e4f26ed8a5eb621201d41">reset</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:aae4410e4978e4f26ed8a5eb621201d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2f738485245cc7b892dad6a7d1d07fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ae2f738485245cc7b892dad6a7d1d07fc">currentSet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__current__t">motor_angle_current_t</a> *const p_st_current, motor_angle_voltage_reference_t *const p_st_voltage)</td></tr>
+<tr class="memitem:ae2f738485245cc7b892dad6a7d1d07fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ae2f738485245cc7b892dad6a7d1d07fc">currentSet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__current__t">motor_angle_current_t</a> *const p_st_current, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__voltage__reference__t">motor_angle_voltage_reference_t</a> *const p_st_voltage)</td></tr>
 <tr class="separator:ae2f738485245cc7b892dad6a7d1d07fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95e98bd293774d7e12058ef204fd00a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a95e98bd293774d7e12058ef204fd00a9">speedSet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, float const speed_ctrl, float const damp_speed)</td></tr>
 <tr class="separator:a95e98bd293774d7e12058ef204fd00a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -279,7 +343,7 @@ q-axis current </td></tr>
 <tr class="separator:a6f623617d95f398d8e4e00d3be6833a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02b9994b5d96935df89d463f66dbe5a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a02b9994b5d96935df89d463f66dbe5a3">estimatedComponentGet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, float *const p_ed, float *const p_eq)</td></tr>
 <tr class="separator:a02b9994b5d96935df89d463f66dbe5a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9bcf47d0dd2b983b9f76ba3850da432"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ab9bcf47d0dd2b983b9f76ba3850da432">infoGet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, motor_angle_encoder_info_t *const p_info)</td></tr>
+<tr class="memitem:ab9bcf47d0dd2b983b9f76ba3850da432"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ab9bcf47d0dd2b983b9f76ba3850da432">infoGet</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__encoder__info__t">motor_angle_encoder_info_t</a> *const p_info)</td></tr>
 <tr class="separator:ab9bcf47d0dd2b983b9f76ba3850da432"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af63edfe16658b986a471a15bb7856a1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#af63edfe16658b986a471a15bb7856a1f">parameterUpdate</a> )(<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__cfg__t">motor_angle_cfg_t</a> const *p_cfg)</td></tr>
 <tr class="separator:af63edfe16658b986a471a15bb7856a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -368,7 +432,7 @@ q-axis current </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_angle_api_t::currentSet) (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__current__t">motor_angle_current_t</a> *const p_st_current, motor_angle_voltage_reference_t *const p_st_voltage)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_angle_api_t::currentSet) (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__current__t">motor_angle_current_t</a> *const p_st_current, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__voltage__reference__t">motor_angle_voltage_reference_t</a> *const p_st_voltage)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -578,7 +642,7 @@ q-axis current </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_angle_api_t::infoGet) (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, motor_angle_encoder_info_t *const p_info)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_angle_api_t::infoGet) (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__encoder__info__t">motor_angle_encoder_info_t</a> *const p_info)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -710,7 +774,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -180,6 +180,8 @@ Summary</h1>
 Data Structures</h2></td></tr>
 <tr class="memitem:structspi__flash__erase__command__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__erase__command__t">spi_flash_erase_command_t</a></td></tr>
 <tr class="separator:structspi__flash__erase__command__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structspi__flash__direct__transfer__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a></td></tr>
+<tr class="separator:structspi__flash__direct__transfer__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structspi__flash__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t">spi_flash_cfg_t</a></td></tr>
 <tr class="separator:structspi__flash__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structspi__flash__status__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a></td></tr>
@@ -236,6 +238,66 @@ Erase command. </td></tr>
 size</td>
 <td class="fielddoc">
 Size of erase for associated command, set to SPI_FLASH_ERASE_SIZE_CHIP_ERASE for chip erase. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structspi__flash__direct__transfer__t" id="structspi__flash__direct__transfer__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structspi__flash__direct__transfer__t">&#9670;&nbsp;</a></span>spi_flash_direct_transfer_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct spi_flash_direct_transfer_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Structure to define a direct transfer. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a5120cdb55dcd4ce8da04eb8baa69254d"></a>uint32_t</td>
+<td class="fieldname">
+address</td>
+<td class="fielddoc">
+Starting address. </td></tr>
+<tr><td class="fieldtype">
+<a id="a52ae9ed9880e98f7a02107c2b31b673b"></a>uint32_t</td>
+<td class="fieldname">
+data</td>
+<td class="fielddoc">
+Data. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab20fca5fa35e25becd87abc7539a4246"></a>uint16_t</td>
+<td class="fieldname">
+command</td>
+<td class="fielddoc">
+Transfer command. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad4a653cf90fd97dc9d0a5f8fce3c3795"></a>uint8_t</td>
+<td class="fieldname">
+dummy_cycles</td>
+<td class="fielddoc">
+Number of dummy cycles. </td></tr>
+<tr><td class="fieldtype">
+<a id="a521505cf1d98e638aef0e72ca5eb6463"></a>uint8_t</td>
+<td class="fieldname">
+command_length</td>
+<td class="fielddoc">
+Command length. </td></tr>
+<tr><td class="fieldtype">
+<a id="a63de64208374fd3c6ea1db4ffb07111f"></a>uint8_t</td>
+<td class="fieldname">
+address_length</td>
+<td class="fielddoc">
+Address lengrh. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5e3c48eb88187944722f745231f955f3"></a>uint8_t</td>
+<td class="fieldname">
+data_length</td>
+<td class="fielddoc">
+Data length. </td></tr>
 </table>
 
 </div>
@@ -406,7 +468,7 @@ write_in_progress</td>
 <tr class="separator:a31a1d575f3d8876154d4e217caebf110"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3366fdcb333cb6950ff38bb35618c401"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a3366fdcb333cb6950ff38bb35618c401">directRead</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td></tr>
 <tr class="separator:a3366fdcb333cb6950ff38bb35618c401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21da248768dd75281ea7b29f2d243afd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a21da248768dd75281ea7b29f2d243afd">directTransfer</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, spi_flash_direct_transfer_t *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td></tr>
+<tr class="memitem:a21da248768dd75281ea7b29f2d243afd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a21da248768dd75281ea7b29f2d243afd">directTransfer</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td></tr>
 <tr class="separator:a21da248768dd75281ea7b29f2d243afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3328711e7e70c8379f4373d2861d785a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a3328711e7e70c8379f4373d2861d785a">spiProtocolSet</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535">spi_flash_protocol_t</a> spi_protocol)</td></tr>
 <tr class="separator:a3328711e7e70c8379f4373d2861d785a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -514,7 +576,7 @@ write_in_progress</td>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::directTransfer) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, spi_flash_direct_transfer_t *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::directTransfer) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -971,7 +1033,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

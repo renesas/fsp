@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -204,7 +204,7 @@ Features</h2>
 </ul>
 </li>
 <li>MSB/LSB first</li>
-<li>8-Bit, 16-Bit, 32-Bit data frames<ul>
+<li>8-Bit, 9-bit, 10-bit, 11-bit, 12-bit, 13-bit, 14-bit, 15-bit, 16-Bit, 20-bit, 24-bit, and 32-Bit data frames<ul>
 <li>Hardware endian swap in 16-Bit and 32-Bit mode</li>
 </ul>
 </li>
@@ -504,6 +504,7 @@ Limitations</h2>
 <li>In order to use CPHA=0 setting in slave mode, the master must toggle the SSL pin after every data frame (Even if the device supports SSL Level Keeping). Because of this hardware limitation, the module will return FSP_ERR_UNSUPPORTED when it is configured to use CPHA=0 setting in slave mode.</li>
 <li>The module does not support communicating with multiple slaves using different SSL pins. In order to achieve this, the module must either be closed and re-opened to change the SSL pin or drive SSL in software. It is recommended that SSL be driven in software when controlling multiple slave devices.</li>
 <li>The SPI peripheral has a minimum 3 SPI CLK delay between each data frame.</li>
+<li>The behavior for Byte Swap operation is not guaranteed for data frames other than 8-bit, 16-bit and 32bit.</li>
 </ul>
 <h1><a class="anchor" id="r-spi-examples"></a>
 Examples</h1>
@@ -1246,7 +1247,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

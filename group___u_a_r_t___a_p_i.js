@@ -37,7 +37,8 @@ var group___u_a_r_t___a_p_i =
       [ "infoGet", "group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50", null ],
       [ "communicationAbort", "group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11", null ],
       [ "callbackSet", "group___u_a_r_t___a_p_i.html#a51b74df27fb26e85700d9524cdfc7c01", null ],
-      [ "close", "group___u_a_r_t___a_p_i.html#a4e7e47514702ff0e3515280590dd9659", null ]
+      [ "close", "group___u_a_r_t___a_p_i.html#a4e7e47514702ff0e3515280590dd9659", null ],
+      [ "readStop", "group___u_a_r_t___a_p_i.html#acb47c360a2ac4ddd36e53f0a4ad71b92", null ]
     ] ],
     [ "uart_instance_t", "group___u_a_r_t___a_p_i.html#structuart__instance__t", [
       [ "p_ctrl", "group___u_a_r_t___a_p_i.html#ae01cedb63e8739651eb14d0ccc9b54a4", null ],

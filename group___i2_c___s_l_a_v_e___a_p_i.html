@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -291,8 +291,16 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <tr class="separator:a923331b5e9e6564b4246e559d66bc3c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7a71b00ee0f0392feea934f395599a3"><td class="memItemLeft" align="right" valign="top"><a id="ae7a71b00ee0f0392feea934f395599a3"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#ae7a71b00ee0f0392feea934f395599a3">ipl</a></td></tr>
-<tr class="memdesc:ae7a71b00ee0f0392feea934f395599a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt priority level. <br /></td></tr>
+<tr class="memdesc:ae7a71b00ee0f0392feea934f395599a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt priority level for RXI, TXI and TER interrupts. <br /></td></tr>
 <tr class="separator:ae7a71b00ee0f0392feea934f395599a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fa45eb7423e7b93f78839b2bb612776"><td class="memItemLeft" align="right" valign="top"><a id="a4fa45eb7423e7b93f78839b2bb612776"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#a4fa45eb7423e7b93f78839b2bb612776">eri_ipl</a></td></tr>
+<tr class="memdesc:a4fa45eb7423e7b93f78839b2bb612776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt priority level for ERI interrupt. <br /></td></tr>
+<tr class="separator:a4fa45eb7423e7b93f78839b2bb612776"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf45b7d102061452a09f5db26bdd1148"><td class="memItemLeft" align="right" valign="top"><a id="aaf45b7d102061452a09f5db26bdd1148"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#aaf45b7d102061452a09f5db26bdd1148">clock_stretching_enable</a></td></tr>
+<tr class="memdesc:aaf45b7d102061452a09f5db26bdd1148"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low Hold SCL during reception for the period between the 9th and the 1st clock cycle. <br /></td></tr>
+<tr class="separator:aaf45b7d102061452a09f5db26bdd1148"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac194239c95dc0a5a71e220937295d67c"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#ac194239c95dc0a5a71e220937295d67c">p_callback</a> )(<a class="el" href="group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t">i2c_slave_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:ac194239c95dc0a5a71e220937295d67c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function.  <a href="#ac194239c95dc0a5a71e220937295d67c">More...</a><br /></td></tr>
 <tr class="separator:ac194239c95dc0a5a71e220937295d67c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -655,7 +663,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

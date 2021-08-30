@@ -22,5 +22,6 @@ var searchData=
   ['agt_5fmeasure_5ft',['agt_measure_t',['../group___a_g_t.html#ga53f383c41ec6fc2cd240e67fab1b969f',1,'r_agt.h']]],
   ['agt_5foutput_5fpin_5ft',['agt_output_pin_t',['../group___a_g_t.html#gab3f3aa0cc9a2951751e76f493dd429eb',1,'r_agt.h']]],
   ['agt_5fpin_5fcfg_5ft',['agt_pin_cfg_t',['../group___a_g_t.html#gabb88a55a2156cdd322947f71189da627',1,'r_agt.h']]],
-  ['agt_5ftrigger_5fedge_5ft',['agt_trigger_edge_t',['../group___a_g_t.html#ga1d568085c1ce9738b532fde46c47d908',1,'r_agt.h']]]
+  ['agt_5ftrigger_5fedge_5ft',['agt_trigger_edge_t',['../group___a_g_t.html#ga1d568085c1ce9738b532fde46c47d908',1,'r_agt.h']]],
+  ['audio_5fplayback_5fevent_5ft',['audio_playback_event_t',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#ga937592eccbaa6ebe521017d834580610',1,'rm_audio_playback_api.h']]]
 ];

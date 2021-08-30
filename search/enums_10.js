@@ -59,7 +59,6 @@ var searchData=
   ['spi_5fssl_5fselect_5ft',['spi_ssl_select_t',['../group___s_p_i.html#ga1076d7126f44ab3450a4360b558c961b',1,'r_spi.h']]],
   ['ssi_5faudio_5fclock_5ft',['ssi_audio_clock_t',['../group___s_s_i.html#ga57213e467410bf6c3afe0c2338820260',1,'r_ssi.h']]],
   ['ssi_5fclock_5fdiv_5ft',['ssi_clock_div_t',['../group___s_s_i.html#gab2ee4147d471591bc86faf6ae993ccff',1,'r_ssi.h']]],
-  ['sx_5fulpgn_5fsecurity_5ft',['sx_ulpgn_security_t',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#gae1f8d076c57b9aaeef81d5ff0dcd6cb0',1,'rm_wifi_onchip_silex.h']]],
   ['sx_5fulpgn_5fsocket_5frw',['sx_ulpgn_socket_rw',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga4b33cb8f4ffcfe2d73f101fa7709d5dc',1,'rm_wifi_onchip_silex.h']]],
   ['sx_5fulpgn_5fsocket_5fstatus_5ft',['sx_ulpgn_socket_status_t',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga487798a94eaafdb1cb15cac5e9a3dfc1',1,'rm_wifi_onchip_silex.h']]]
 ];

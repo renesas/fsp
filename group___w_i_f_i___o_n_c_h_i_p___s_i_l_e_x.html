@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -304,8 +304,6 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gae1f8d076c57b9aaeef81d5ff0dcd6cb0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#gae1f8d076c57b9aaeef81d5ff0dcd6cb0">sx_ulpgn_security_t</a> </td></tr>
-<tr class="separator:gae1f8d076c57b9aaeef81d5ff0dcd6cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga487798a94eaafdb1cb15cac5e9a3dfc1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga487798a94eaafdb1cb15cac5e9a3dfc1">sx_ulpgn_socket_status_t</a> </td></tr>
 <tr class="separator:ga487798a94eaafdb1cb15cac5e9a3dfc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4b33cb8f4ffcfe2d73f101fa7709d5dc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga4b33cb8f4ffcfe2d73f101fa7709d5dc">sx_ulpgn_socket_rw</a> </td></tr>
@@ -529,7 +527,7 @@ Current UART instance index for data. </td></tr>
 <td class="fieldname">
 cmd_rx_queue_buf[WIFI_ONCHIP_SILEX_CFG_CMD_RX_BUF_SIZE]</td>
 <td class="fielddoc">
-Command port receive buffer used by byte queue. </td></tr>
+Command port receive buffer used by byte queue // FreeRTOS. </td></tr>
 <tr><td class="fieldtype">
 <a id="a5aa3b639aae3b546bc943278aabb962d"></a>StreamBufferHandle_t</td>
 <td class="fieldname">
@@ -625,21 +623,6 @@ Internal socket instances. </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="gae1f8d076c57b9aaeef81d5ff0dcd6cb0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae1f8d076c57b9aaeef81d5ff0dcd6cb0">&#9670;&nbsp;</a></span>sx_ulpgn_security_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#gae1f8d076c57b9aaeef81d5ff0dcd6cb0">sx_ulpgn_security_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Silex ULPGN Wifi security types </p>
-
-</div>
-</div>
 <a id="ga487798a94eaafdb1cb15cac5e9a3dfc1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga487798a94eaafdb1cb15cac5e9a3dfc1">&#9670;&nbsp;</a></span>sx_ulpgn_socket_status_t</h2>
 
@@ -911,7 +894,7 @@ Internal socket instances. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

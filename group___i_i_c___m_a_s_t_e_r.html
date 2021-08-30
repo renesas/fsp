@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -291,6 +291,14 @@ Long Mode</li>
 </ul>
 </td><td>Short Mode </td><td>Select the timeout mode to detect bus hang. </td></tr>
 <tr>
+<td>Timeout during SCL Low</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Select if the timeout can occur when SCL is held low for a duration longer than what is set in the timeout mode. </td></tr>
+<tr>
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function must be provided. This will be called from the interrupt service routine (ISR) upon IIC transaction completion reporting the transaction status. </td></tr>
 <tr>
 <td>Interrupt Priority Level</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority level. This is set for TXI, RXI, TEI and ERI interrupts. </td></tr>
@@ -358,6 +366,8 @@ Data Structures</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:gaf8ecd43a76bfa058281bb8b6b3981d3f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#gaf8ecd43a76bfa058281bb8b6b3981d3f">iic_master_timeout_mode_t</a> </td></tr>
 <tr class="separator:gaf8ecd43a76bfa058281bb8b6b3981d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9789e54472d093bd5348f202205d28ec"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#ga9789e54472d093bd5348f202205d28ec">iic_master_timeout_scl_low_t</a> </td></tr>
+<tr class="separator:ga9789e54472d093bd5348f202205d28ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structiic__master__clock__settings__t" id="structiic__master__clock__settings__t"></a>
@@ -432,6 +442,12 @@ timeout_mode</td>
 <td class="fielddoc">
 Timeout Detection Time Select: Long Mode = 0 and Short Mode = 1. </td></tr>
 <tr><td class="fieldtype">
+<a id="af255cfc08c0e74ebe9e15f4dda240b53"></a><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#ga9789e54472d093bd5348f202205d28ec">iic_master_timeout_scl_low_t</a></td>
+<td class="fieldname">
+timeout_scl_low</td>
+<td class="fielddoc">
+Allows timeouts to occur when SCL is held low. </td></tr>
+<tr><td class="fieldtype">
 <a id="a3e2c32c0a211b6485aff83502c3c41a2"></a><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#structiic__master__clock__settings__t">iic_master_clock_settings_t</a></td>
 <td class="fieldname">
 clock_settings</td>
@@ -458,6 +474,26 @@ I2C Clock settings. </td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf8ecd43a76bfa058281bb8b6b3981d3facc441997b6e18766361457d26227b4bd"></a>IIC_MASTER_TIMEOUT_MODE_LONG&#160;</td><td class="fielddoc"><p>Timeout Detection Time Select: Long Mode -&gt; TMOS = 0. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaf8ecd43a76bfa058281bb8b6b3981d3fa4afacd0b267f604d06e2b83891c0e577"></a>IIC_MASTER_TIMEOUT_MODE_SHORT&#160;</td><td class="fielddoc"><p>Timeout Detection Time Select: Short Mode -&gt; TMOS = 1. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga9789e54472d093bd5348f202205d28ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9789e54472d093bd5348f202205d28ec">&#9670;&nbsp;</a></span>iic_master_timeout_scl_low_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___i_i_c___m_a_s_t_e_r.html#ga9789e54472d093bd5348f202205d28ec">iic_master_timeout_scl_low_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9789e54472d093bd5348f202205d28eca0773c9356e560a84576f1d5498234a09"></a>IIC_MASTER_TIMEOUT_SCL_LOW_DISABLED&#160;</td><td class="fielddoc"><p>Timeout detection during SCL low disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9789e54472d093bd5348f202205d28eca62238f63df0d06f25af5b158bbfb2169"></a>IIC_MASTER_TIMEOUT_SCL_LOW_ENABLED&#160;</td><td class="fielddoc"><p>Timeout detection during SCL low enabled. </p>
 </td></tr>
 </table>
 
@@ -803,7 +839,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

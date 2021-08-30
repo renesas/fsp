@@ -20,6 +20,10 @@ var group___o_s_p_i =
       [ "OSPI_COMMAND_CS_PULLDOWN_CLOCKS_4", "group___o_s_p_i.html#ggacc92842060aee9fb19b55d3cf911f990a8b2eaedaac2d5230fae8e90951d13fa2", null ],
       [ "OSPI_COMMAND_CS_PULLDOWN_CLOCKS_5", "group___o_s_p_i.html#ggacc92842060aee9fb19b55d3cf911f990adb998ebbfc63030c39a64b5e6d17ebbf", null ]
     ] ],
+    [ "ospi_dopi_byte_order_t", "group___o_s_p_i.html#ga15ee1a2021fab7f7c42cfd937d97a6c0", [
+      [ "OSPI_DOPI_BYTE_ORDER_0123", "group___o_s_p_i.html#gga15ee1a2021fab7f7c42cfd937d97a6c0a77e8090c1bcce0d62b56e224f2ef922e", null ],
+      [ "OSPI_DOPI_BYTE_ORDER_1032", "group___o_s_p_i.html#gga15ee1a2021fab7f7c42cfd937d97a6c0a888796528e2feeaeb5ca4c711b132daa", null ]
+    ] ],
     [ "R_OSPI_Open", "group___o_s_p_i.html#ga2db7644d6d69ab7f7f6e5c41e5951eee", null ],
     [ "R_OSPI_Close", "group___o_s_p_i.html#gacc44a5f9c8c6b1b9d62726b7537429d4", null ],
     [ "R_OSPI_DirectWrite", "group___o_s_p_i.html#gaf6ab989b108b38433d20f040fab28058", null ],

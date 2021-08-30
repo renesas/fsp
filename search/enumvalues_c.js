@@ -44,5 +44,7 @@ var searchData=
   ['ospi_5fcommand_5fcs_5fpullup_5fclocks_5f8',['OSPI_COMMAND_CS_PULLUP_CLOCKS_8',['../group___o_s_p_i.html#gga0c0370d42bd59554b52b17675637a84ea66fa3f3ff23933f0dd4932fd9aab8dee',1,'r_ospi.h']]],
   ['ospi_5fcommand_5fcs_5fpullup_5fclocks_5f9',['OSPI_COMMAND_CS_PULLUP_CLOCKS_9',['../group___o_s_p_i.html#gga0c0370d42bd59554b52b17675637a84ea2634bc10e6d837b7cc10af14053e40af',1,'r_ospi.h']]],
   ['ospi_5fdevice_5fnumber_5f0',['OSPI_DEVICE_NUMBER_0',['../group___o_s_p_i.html#gga0dd809af09334f30599a1d6290c497b1a9ba21a26be1d4607323e2c5a4d88b696',1,'r_ospi.h']]],
-  ['ospi_5fdevice_5fnumber_5f1',['OSPI_DEVICE_NUMBER_1',['../group___o_s_p_i.html#gga0dd809af09334f30599a1d6290c497b1a4f999cfe7d7d3deff619c1b066651c0c',1,'r_ospi.h']]]
+  ['ospi_5fdevice_5fnumber_5f1',['OSPI_DEVICE_NUMBER_1',['../group___o_s_p_i.html#gga0dd809af09334f30599a1d6290c497b1a4f999cfe7d7d3deff619c1b066651c0c',1,'r_ospi.h']]],
+  ['ospi_5fdopi_5fbyte_5forder_5f0123',['OSPI_DOPI_BYTE_ORDER_0123',['../group___o_s_p_i.html#gga15ee1a2021fab7f7c42cfd937d97a6c0a77e8090c1bcce0d62b56e224f2ef922e',1,'r_ospi.h']]],
+  ['ospi_5fdopi_5fbyte_5forder_5f1032',['OSPI_DOPI_BYTE_ORDER_1032',['../group___o_s_p_i.html#gga15ee1a2021fab7f7c42cfd937d97a6c0a888796528e2feeaeb5ca4c711b132daa',1,'r_ospi.h']]]
 ];

@@ -111,6 +111,7 @@ var group___a_d_c___a_p_i =
       [ "ADC_CHANNEL_25", "group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a31855ff8fefcff144e9dc4911466ce52", null ],
       [ "ADC_CHANNEL_26", "group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aa9c18e09bdb5cdf44c8c89ecdd7770d3", null ],
       [ "ADC_CHANNEL_27", "group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814ad002942933ed78124a50b3276f9d88cc", null ],
+      [ "ADC_CHANNEL_28", "group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a558a69bc271b849d3c3a2cca05ebbba0", null ],
       [ "ADC_CHANNEL_DUPLEX_A", "group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aadc3763b403f4b9ab667602137a9de57", null ],
       [ "ADC_CHANNEL_DUPLEX_B", "group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aa66d57680818caebf7be4d68f8c505be", null ],
       [ "ADC_CHANNEL_DUPLEX", "group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a2602b0a06ce1ce485d0812de6f6f4091", null ],

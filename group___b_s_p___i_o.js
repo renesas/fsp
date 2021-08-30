@@ -218,6 +218,7 @@ var group___b_s_p___i_o =
     ] ],
     [ "R_BSP_PinRead", "group___b_s_p___i_o.html#ga6764c3fac52569cadd44b83a6d3f432d", null ],
     [ "R_BSP_PinWrite", "group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4", null ],
+    [ "R_BSP_PinCfg", "group___b_s_p___i_o.html#ga11048095cca3498b98909951aba4a710", null ],
     [ "R_BSP_PinAccessEnable", "group___b_s_p___i_o.html#ga0ad2123f7a5152cf108883163581f11b", null ],
     [ "R_BSP_PinAccessDisable", "group___b_s_p___i_o.html#gab5aab592b5fbbfa18d542c0812850b98", null ]
 ];

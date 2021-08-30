@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -187,6 +187,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga864f43cde0ddc087748610357cbcd6c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad990fe4af20d895bf37fd26721677410"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#gad990fe4af20d895bf37fd26721677410">R_SCI_UART_CallbackSet</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:gad990fe4af20d895bf37fd26721677410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae084836f4ee37c2730f7a8b332d58325"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#gae084836f4ee37c2730f7a8b332d58325">R_SCI_UART_ReadStop</a> (<a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const p_api_ctrl, uint32_t *remaining_bytes)</td></tr>
+<tr class="separator:gae084836f4ee37c2730f7a8b332d58325"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the SCI peripheral on RA MCUs. This module implements the <a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a>. </p>
@@ -1068,13 +1070,55 @@ CTS/RTS function of the SSn pin. </td></tr>
 
 </div>
 </div>
+<a id="gae084836f4ee37c2730f7a8b332d58325"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae084836f4ee37c2730f7a8b332d58325">&#9670;&nbsp;</a></span>R_SCI_UART_ReadStop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_UART_ReadStop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_a_r_t___a_p_i.html#gad04bd656a84140eaef1e8aa0f86564a8">uart_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>remaining_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides API to abort ongoing read. Reception is still enabled after abort(). Any characters received after abort() and before the transfer is reset in the next call to read(), will arrive via the callback function with event UART_EVENT_RX_CHAR. Implements <a class="el" href="group___u_a_r_t___a_p_i.html#acb47c360a2ac4ddd36e53f0a4ad71b92">uart_api_t::readStop</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>UART transaction aborted successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>The requested Abort direction is unsupported.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. This function calls:<ul>
+<li><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#a3188207ba386da0ec85946e134b4327a">transfer_api_t::disable</a> </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

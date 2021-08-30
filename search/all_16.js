@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['w_5fvoltage',['w_voltage',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a31cd1b7fbc2b610d2f3dcb8976140956',1,'motor_current_get_voltage_t']]],
   ['wakeonlanenable',['wakeOnLANEnable',['../group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad',1,'ether_api_t']]],
   ['waveform',['waveform',['../group___s_l_c_d_c___a_p_i.html#adda9ae477524da8bab1a09185795d709',1,'slcdc_cfg_t']]],
   ['watchdog_20timer_20_28r_5fwdt_29',['Watchdog Timer (r_wdt)',['../group___w_d_t.html',1,'']]],

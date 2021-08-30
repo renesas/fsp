@@ -161,6 +161,7 @@ var group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s =
       [ "FSP_ERR_CAN_RECEIVE_MAILBOX", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a52e6bb08e856dae157893d1b6097f958", null ],
       [ "FSP_ERR_CAN_TRANSMIT_MAILBOX", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a998bd409cde19062422795ab5ea13c77", null ],
       [ "FSP_ERR_CAN_MESSAGE_LOST", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a094ba75816525a5f0d620bdce195cc9e", null ],
+      [ "FSP_ERR_CAN_TRANSMIT_FIFO_FULL", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a18b27ed6db9097ea399215224ad62d82", null ],
       [ "FSP_ERR_WIFI_CONFIG_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ad59d257fc10762fe60683c45a3f1b90a", null ],
       [ "FSP_ERR_WIFI_INIT_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8ae1e9fb09fdb6841cf4379097812e6156", null ],
       [ "FSP_ERR_WIFI_TRANSMIT_FAILED", "group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8adeb727c2591c971117d47d29edec70e6", null ],

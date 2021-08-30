@@ -25,5 +25,6 @@ var group___m_o_t_o_r___a_p_i =
       [ "p_cfg", "group___m_o_t_o_r___a_p_i.html#a9fc20e5fb7fc19705da5b1135ac871bc", null ],
       [ "p_api", "group___m_o_t_o_r___a_p_i.html#ae6621d41a6575e51c2934d769f300028", null ]
     ] ],
-    [ "motor_ctrl_t", "group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2", null ]
+    [ "motor_ctrl_t", "group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2", null ],
+    [ "motor_error_t", "group___m_o_t_o_r___a_p_i.html#ga784f73463404e63a5445a38193681629", null ]
 ];

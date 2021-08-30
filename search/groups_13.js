@@ -1,6 +1,7 @@
 var searchData=
 [
   ['usb_20hmsc_20block_20media_20implementation_20_28rm_5fblock_5fmedia_5fusb_29',['USB HMSC Block Media Implementation (rm_block_media_usb)',['../group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html',1,'']]],
+  ['user_20block_20media_20implementation_20_28rm_5fblock_5fmedia_5fuser_29',['User Block Media Implementation (rm_block_media_user)',['../group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_e_r.html',1,'']]],
   ['uart_20interface',['UART Interface',['../group___u_a_r_t___a_p_i.html',1,'']]],
   ['usb_20_28r_5fusb_5fbasic_29',['USB (r_usb_basic)',['../group___u_s_b.html',1,'']]],
   ['usb_20interface',['USB Interface',['../group___u_s_b___a_p_i.html',1,'']]],

@@ -48,7 +48,6 @@ var group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x =
       [ "uart_tei_sem", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a29219196deb30eaad489b7c46cd9df0d", null ],
       [ "sockets", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a4d214a2b237552a3c47e03ac2ee793e9", null ]
     ] ],
-    [ "sx_ulpgn_security_t", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#gae1f8d076c57b9aaeef81d5ff0dcd6cb0", null ],
     [ "sx_ulpgn_socket_status_t", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga487798a94eaafdb1cb15cac5e9a3dfc1", null ],
     [ "sx_ulpgn_socket_rw", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga4b33cb8f4ffcfe2d73f101fa7709d5dc", null ],
     [ "wifi_onchip_silex_sntp_enable_t", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#ga28cec0db63a7cfc3d0f2e85e8d06b25a", null ],

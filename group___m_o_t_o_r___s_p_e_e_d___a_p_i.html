@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -179,6 +179,8 @@ Summary</h1>
 Data Structures</h2></td></tr>
 <tr class="memitem:structmotor__speed__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__callback__args__t">motor_speed_callback_args_t</a></td></tr>
 <tr class="separator:structmotor__speed__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structmotor__speed__position__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t">motor_speed_position_data_t</a></td></tr>
+<tr class="separator:structmotor__speed__position__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmotor__speed__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__cfg__t">motor_speed_cfg_t</a></td></tr>
 <tr class="separator:structmotor__speed__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmotor__speed__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__api__t">motor_speed_api_t</a></td></tr>
@@ -227,6 +229,42 @@ Placeholder for user data. </td></tr>
 event</td>
 <td class="fielddoc">
 </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structmotor__speed__position__data__t" id="structmotor__speed__position__data__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmotor__speed__position__data__t">&#9670;&nbsp;</a></span>motor_speed_position_data_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct motor_speed_position_data_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Motor speed and position structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af1924d1b7cd0689223eb75ba5503a370"></a><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#gaf50bebe25b4c3e57b458d0a247da4003">motor_speed_step_t</a></td>
+<td class="fieldname">
+e_step_mode</td>
+<td class="fielddoc">
+Select step mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5be8184c8d6bbe9ef5a2cf03b9a545ac"></a><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga355ffb36e0cddc08159352d8727d462f">motor_speed_loop_mode_t</a></td>
+<td class="fieldname">
+e_loop_mode</td>
+<td class="fielddoc">
+Select control mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6df62534194ef681866f5b12f941280e"></a>int16_t</td>
+<td class="fieldname">
+position_reference_degree</td>
+<td class="fielddoc">
+Position reference [degree]. </td></tr>
 </table>
 
 </div>
@@ -289,7 +327,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:acde89e8095779fb0ce38ae821f235199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38b23b6fc630b2cdf18b460079b2c2cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a38b23b6fc630b2cdf18b460079b2c2cd">speedReferenceSet</a> )(<a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga9220468c1f3885d6c6cf4ddcbfcb796d">motor_speed_ctrl_t</a> *const p_ctrl, float const speed_reference_rpm)</td></tr>
 <tr class="separator:a38b23b6fc630b2cdf18b460079b2c2cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2918df01f0adbfaccb0ce53b55522cf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a2918df01f0adbfaccb0ce53b55522cf5">positionReferenceSet</a> )(<a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga9220468c1f3885d6c6cf4ddcbfcb796d">motor_speed_ctrl_t</a> *const p_ctrl, motor_speed_position_data_t const *const p_position_data)</td></tr>
+<tr class="memitem:a2918df01f0adbfaccb0ce53b55522cf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a2918df01f0adbfaccb0ce53b55522cf5">positionReferenceSet</a> )(<a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga9220468c1f3885d6c6cf4ddcbfcb796d">motor_speed_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t">motor_speed_position_data_t</a> const *const p_position_data)</td></tr>
 <tr class="separator:a2918df01f0adbfaccb0ce53b55522cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70647ddb7f97e09ec29f553e19da9834"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a70647ddb7f97e09ec29f553e19da9834">parameterSet</a> )(<a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga9220468c1f3885d6c6cf4ddcbfcb796d">motor_speed_ctrl_t</a> *const p_ctrl, motor_speed_input_t const *const p_st_input)</td></tr>
 <tr class="separator:a70647ddb7f97e09ec29f553e19da9834"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -430,7 +468,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_speed_api_t::positionReferenceSet) (<a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga9220468c1f3885d6c6cf4ddcbfcb796d">motor_speed_ctrl_t</a> *const p_ctrl, motor_speed_position_data_t const *const p_position_data)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_speed_api_t::positionReferenceSet) (<a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga9220468c1f3885d6c6cf4ddcbfcb796d">motor_speed_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t">motor_speed_position_data_t</a> const *const p_position_data)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -677,7 +715,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

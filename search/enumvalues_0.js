@@ -35,6 +35,7 @@ var searchData=
   ['adc_5fchannel_5f25',['ADC_CHANNEL_25',['../group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a31855ff8fefcff144e9dc4911466ce52',1,'r_adc_api.h']]],
   ['adc_5fchannel_5f26',['ADC_CHANNEL_26',['../group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aa9c18e09bdb5cdf44c8c89ecdd7770d3',1,'r_adc_api.h']]],
   ['adc_5fchannel_5f27',['ADC_CHANNEL_27',['../group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814ad002942933ed78124a50b3276f9d88cc',1,'r_adc_api.h']]],
+  ['adc_5fchannel_5f28',['ADC_CHANNEL_28',['../group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a558a69bc271b849d3c3a2cca05ebbba0',1,'r_adc_api.h']]],
   ['adc_5fchannel_5f3',['ADC_CHANNEL_3',['../group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a6ca054f67bee5197eec92a0379cffb6e',1,'r_adc_api.h']]],
   ['adc_5fchannel_5f4',['ADC_CHANNEL_4',['../group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131',1,'r_adc_api.h']]],
   ['adc_5fchannel_5f5',['ADC_CHANNEL_5',['../group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a',1,'r_adc_api.h']]],
@@ -158,5 +159,6 @@ var searchData=
   ['agt_5fpin_5fcfg_5fstart_5flevel_5flow',['AGT_PIN_CFG_START_LEVEL_LOW',['../group___a_g_t.html#ggabb88a55a2156cdd322947f71189da627a3fab671eb8f52a392eeb9bb91896f5f5',1,'r_agt.h']]],
   ['agt_5ftrigger_5fedge_5fboth',['AGT_TRIGGER_EDGE_BOTH',['../group___a_g_t.html#gga1d568085c1ce9738b532fde46c47d908ae990ca758f4d7b309ceda49d6f251241',1,'r_agt.h']]],
   ['agt_5ftrigger_5fedge_5ffalling',['AGT_TRIGGER_EDGE_FALLING',['../group___a_g_t.html#gga1d568085c1ce9738b532fde46c47d908a9fccbb321ba218243530c82a1d867e30',1,'r_agt.h']]],
-  ['agt_5ftrigger_5fedge_5frising',['AGT_TRIGGER_EDGE_RISING',['../group___a_g_t.html#gga1d568085c1ce9738b532fde46c47d908a146dda2432ec6753d11b0a9da11cad06',1,'r_agt.h']]]
+  ['agt_5ftrigger_5fedge_5frising',['AGT_TRIGGER_EDGE_RISING',['../group___a_g_t.html#gga1d568085c1ce9738b532fde46c47d908a146dda2432ec6753d11b0a9da11cad06',1,'r_agt.h']]],
+  ['audio_5fplayback_5fevent_5fplayback_5fcomplete',['AUDIO_PLAYBACK_EVENT_PLAYBACK_COMPLETE',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#gga937592eccbaa6ebe521017d834580610a8b02a2a7d463c5ac93f9816ebd744551',1,'rm_audio_playback_api.h']]]
 ];

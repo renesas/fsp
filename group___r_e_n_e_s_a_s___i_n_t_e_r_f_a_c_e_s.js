@@ -46,6 +46,8 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "USB PHID Interface", "group___u_s_b___p_h_i_d___a_p_i.html", null ],
     [ "USB PMSC Interface", "group___u_s_b___p_m_s_c___a_p_i.html", "group___u_s_b___p_m_s_c___a_p_i" ],
     [ "WDT Interface", "group___w_d_t___a_p_i.html", "group___w_d_t___a_p_i" ],
+    [ "ADPCM Decoder Interface", "group___r_m___a_d_p_c_m___d_e_c_o_d_e_r___a_p_i.html", "group___r_m___a_d_p_c_m___d_e_c_o_d_e_r___a_p_i" ],
+    [ "AUDIO PLAYBACK Interface", "group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html", "group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i" ],
     [ "BLE ABS Interface", "group___b_l_e___a_b_s___a_p_i.html", "group___b_l_e___a_b_s___a_p_i" ],
     [ "Block Media Interface", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html", "group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i" ],
     [ "Communicatons Middleware Interface", "group___r_m___c_o_m_m_s___a_p_i.html", "group___r_m___c_o_m_m_s___a_p_i" ],

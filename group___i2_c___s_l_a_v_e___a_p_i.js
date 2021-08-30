@@ -16,6 +16,8 @@ var group___i2_c___s_l_a_v_e___a_p_i =
       [ "tei_irq", "group___i2_c___s_l_a_v_e___a_p_i.html#ad1cc54031228e56ffcbf398278e39e98", null ],
       [ "eri_irq", "group___i2_c___s_l_a_v_e___a_p_i.html#a923331b5e9e6564b4246e559d66bc3c9", null ],
       [ "ipl", "group___i2_c___s_l_a_v_e___a_p_i.html#ae7a71b00ee0f0392feea934f395599a3", null ],
+      [ "eri_ipl", "group___i2_c___s_l_a_v_e___a_p_i.html#a4fa45eb7423e7b93f78839b2bb612776", null ],
+      [ "clock_stretching_enable", "group___i2_c___s_l_a_v_e___a_p_i.html#aaf45b7d102061452a09f5db26bdd1148", null ],
       [ "p_callback", "group___i2_c___s_l_a_v_e___a_p_i.html#ac194239c95dc0a5a71e220937295d67c", null ],
       [ "p_context", "group___i2_c___s_l_a_v_e___a_p_i.html#a6cc910e14348a5c42bb4ffbf41dad5ba", null ],
       [ "p_extend", "group___i2_c___s_l_a_v_e___a_p_i.html#a6b56336af0eaf92db7006a028876c575", null ]

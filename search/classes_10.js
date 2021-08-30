@@ -58,6 +58,7 @@ var searchData=
   ['spi_5fextended_5fcfg_5ft',['spi_extended_cfg_t',['../group___s_p_i.html#structspi__extended__cfg__t',1,'']]],
   ['spi_5fflash_5fapi_5ft',['spi_flash_api_t',['../group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__api__t',1,'']]],
   ['spi_5fflash_5fcfg_5ft',['spi_flash_cfg_t',['../group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t',1,'']]],
+  ['spi_5fflash_5fdirect_5ftransfer_5ft',['spi_flash_direct_transfer_t',['../group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t',1,'']]],
   ['spi_5fflash_5ferase_5fcommand_5ft',['spi_flash_erase_command_t',['../group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__erase__command__t',1,'']]],
   ['spi_5fflash_5finstance_5ft',['spi_flash_instance_t',['../group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__instance__t',1,'']]],
   ['spi_5fflash_5fstatus_5ft',['spi_flash_status_t',['../group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t',1,'']]],

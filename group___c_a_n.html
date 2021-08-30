@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -196,6 +196,7 @@ Features</h2>
 <li>Supports speeds upto 1 Mbps <a class="anchor" id="um_can_speeds_up_to_1mbps"></a></li>
 <li>Support for bit timing configuration as defined in the CAN specification</li>
 <li>Supports up to 32 transmit or receive mailboxes with standard or extended ID frames <a class="anchor" id="um_can_standard_id"></a><a class="anchor" id="um_can_extended_id"></a></li>
+<li>Optional support for a 4-stage transmit and receive FIFO <a class="anchor" id="um_can_fifo_status"></a><a class="anchor" id="um_can_fifo_receive"></a><a class="anchor" id="um_can_fifo_transmit"></a></li>
 <li>Receive mailboxes can be configured to capture either data or remote CAN Frames <a class="anchor" id="um_can_data_and_remote_frame_receive"></a><a class="anchor" id="um_can_data_and_remote_frame_transmit"></a></li>
 <li>Receive mailboxes can be configured to receive a range of IDs using mailbox masks <a class="anchor" id="um_can_support_receive_masks"></a><a class="anchor" id="um_can_configurable_mailbox_ids"></a></li>
 <li>Mailboxes can be configured with Overwrite or Overrun mode <a class="anchor" id="um_can_overwrite_mode"></a><a class="anchor" id="um_can_overrun_mode"></a></li>
@@ -218,6 +219,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr>
+<td>FIFO Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>When FIFOs are enabled, a transmit FIFO replaces mailboxes 24-27 and a receive FIFO replaces mailboxes 28-31. </td></tr>
 </table>
  <h2>Configurations for Driver &gt; Connectivity &gt; CAN Driver on r_can</h2>
 This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; CAN Driver on r_can. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -257,9 +266,11 @@ Mixed ID Mode</li>
 <li>
 16 Mailboxes</li>
 <li>
+24 Mailboxes</li>
+<li>
 32 Mailboxes</li>
 </ul>
-</td><td>32 Mailboxes </td><td>Select 4, 8, 16 or 32 mailboxes. </td></tr>
+</td><td>32 Mailboxes </td><td>Select 4, 8, 16, 24 or 32 mailboxes. In FIFO mailbox mode up to 24 mailboxes are available. </td></tr>
 <tr>
 <td>Baud Rate Settings &gt; Auto-generated Settings &gt; Sample-Point (%)</td><td>Must be a valid integer between 0 and 100. Ignore when Override Baud Settings is Enabled.</td><td>75 </td><td>Sample-Point = (TSEG1 + 1) / (TSEG1 + TSEG2 + 1). </td></tr>
 <tr>
@@ -311,7 +322,55 @@ Disabled</li>
 <tr>
 <td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>can_callback </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time any interrupt occurs. </td></tr>
 <tr>
-<td>Interrupts &gt; Interrupt Priority Level</td><td>MCU Specific Options</td><td></td><td>Error/Receive/Transmit interrupt priority. </td></tr>
+<td>Interrupts &gt; Interrupt Priority Level</td><td>MCU Specific Options</td><td></td><td>Transmit/Receive/Error interrupt priority. </td></tr>
+<tr>
+<td>Interrupts &gt; Transmit FIFO Interrupt Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Every Message</li>
+<li>
+Empty</li>
+</ul>
+</td><td>Every Message </td><td>Select whether the receive FIFO should throw an interrupt on every received message or when it becomes empty. </td></tr>
+<tr>
+<td>Input &gt; Receive FIFO &gt; Receive ID 1 &gt; ID</td><td>Value must be decimal or HEX integer of 0x1FFFFFFF or less.</td><td>0 </td><td>Select the first ID for the receive FIFO, between 0 and 0x7ff when using standard IDs, between 0 and 0x1FFFFFFF when using extended IDs. </td></tr>
+<tr>
+<td>Input &gt; Receive FIFO &gt; Receive ID 1 &gt; ID Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Standard ID</li>
+<li>
+Extended ID</li>
+</ul>
+</td><td>Standard ID </td><td>Select whether the receive FIFO is used to receive Standard or Extended ID messages. This setting is only valid when Global ID Mode is set to 'Mixed ID Mode'. </td></tr>
+<tr>
+<td>Input &gt; Receive FIFO &gt; Receive ID 1 &gt; Frame Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Data Mailbox</li>
+<li>
+Remote Mailbox</li>
+</ul>
+</td><td>Remote Mailbox </td><td>Select whether the receive FIFO is used to capture data frames or remote frames. </td></tr>
+<tr>
+<td>Input &gt; Receive FIFO &gt; Receive ID 1 &gt; Mask</td><td>Value must be decimal or HEX integer of 0x1FFFFFFF or less.</td><td>0x1FFFFFFF </td><td>Select the Mask for the receive FIFO. In Mixed ID Mode the Standard ID mask is the upper 11 bits of the full 29-bit mask value. </td></tr>
+<tr>
+<td>Input &gt; Receive FIFO &gt; Receive ID 2 &gt; ID</td><td>Value must be decimal or HEX integer of 0x1FFFFFFF or less.</td><td>0 </td><td>Select the second ID for the receive FIFO, between 0 and 0x7ff when using standard IDs, between 0 and 0x1FFFFFFF when using extended IDs. </td></tr>
+<tr>
+<td>Input &gt; Receive FIFO &gt; Receive ID 2 &gt; ID Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Standard ID</li>
+<li>
+Extended ID</li>
+</ul>
+</td><td>Standard ID </td><td>Select whether the receive FIFO is used to receive Standard or Extended ID messages. This setting is only valid when Global ID Mode is set to 'Mixed ID Mode'. </td></tr>
+<tr>
+<td>Input &gt; Receive FIFO &gt; Receive ID 2 &gt; Frame Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Data Mailbox</li>
+<li>
+Remote Mailbox</li>
+</ul>
+</td><td>Remote Mailbox </td><td>Select whether the receive FIFO is used to capture data frames or remote frames. </td></tr>
+<tr>
+<td>Input &gt; Receive FIFO &gt; Receive ID 2 &gt; Mask</td><td>Value must be decimal or HEX integer of 0x1FFFFFFF or less.</td><td>0x1FFFFFFF </td><td>Select the Mask for the receive FIFO. In Mixed ID Mode the Standard ID mask is the upper 11 bits of the full 29-bit mask value. </td></tr>
 <tr>
 <td>Input &gt; Mailbox 0-3 Group &gt; Mailbox ID &gt; Mailbox 0 ID</td><td>Value must be decimal or HEX integer of 0x1FFFFFFF or less.</td><td>0 </td><td>Select the receive ID for mailbox 0, between 0 and 0x7ff when using standard IDs, between 0 and 0x1FFFFFFF when using extended IDs. Value is not used when the mailbox is set as transmit type. </td></tr>
 <tr>
@@ -1165,15 +1224,22 @@ Remote Mailbox</li>
 <h2><a class="anchor" id="r-can-clock-configuration"></a>
 Clock Configuration</h2>
 <p>The CAN peripheral uses the CANMCLK (main-clock oscillator) or PCLKB as its clock source (fCAN, CAN System Clock.) The default CAN configuration will provide a CAN bit rate of 500 Kbit using CANMCLK as the clock source. To set the PCLKB frequency, use the <b>Clocks</b> tab of the RA Configuration editor. To change the clock frequency at run-time, use the CGC Interface. Refer to the CGC module guide for more information on configuring clocks.</p>
+<h2><a class="anchor" id="r-can-clock-limitations"></a>
+Clock Limitations</h2>
+<p>The following clock limitations apply when using the CAN peripheral:</p>
 <ul>
-<li>The user application must start the main-clock oscillator (CANMCLK or XTAL) at run-time using the CGC Interface if it has not already started (for example, if it is not used as the MCU clock source.)</li>
-<li>For RA6, RA4 and RA2 MCUs, the following clock restriction must be satisfied for the CAN HAL module when the clock source is the main-clock oscillator (CANMCLK):<ul>
+<li>When using the main oscillator (CANMCLK) as the clock source:<ul>
 <li>fPCLKB &gt;= fCANCLK (fCANCLK = XTAL / Baud Rate Prescaler)</li>
+<li>The user application must start the main-clock oscillator (XTAL) at run-time using the CGC Interface if it has not already started (for example, if it is not used as the MCU clock source.)</li>
 </ul>
 </li>
-<li>For RA6 and RA4 MCUs, the source of the peripheral module clocks must be PLL for the CAN HAL module when the clock source is PCLKB.</li>
-<li>For RA4M1, and RA4W1 MCUs, the clock frequency ratio of PCLKA and PCLKB must be 2:1 when using the CAN HAL module. Operation is not guaranteed for other settings.</li>
-<li>For RA2 MCUs, only CANMCLK may be used as a clock source. The clock frequency ratio of ICLK and PCLKB must be 2:1 when using the CAN HAL module. Operation is not guaranteed for other settings. <a class="anchor" id="um_can_pclkb_and_canmclk"></a> </li>
+<li>When using PCLKB as the clock source:<ul>
+<li>For RA6 and RA4 MCUs, the source of the peripheral module clocks must be PLL for the CAN HAL module.</li>
+</ul>
+</li>
+<li>For RA4M1 and RA4W1 MCUs, the clock frequency ratio of PCLKA and PCLKB must be 2:1 when using the CAN HAL module. Operation is not guaranteed for other settings.</li>
+<li>For RA2 MCUs only CANMCLK (XTAL) may be used as a clock source. The clock frequency ratio of ICLK and PCLKB must be 2:1 when using the CAN HAL module. Operation is not guaranteed for other settings. <a class="anchor" id="um_can_pclkb_and_canmclk"></a> <dl class="section note"><dt>Note</dt><dd>When using CANMCLK (XTAL) as the CAN clock source while running at a reduced main clock speed (under 2x XTAL) be sure to confirm that the XTAL frequency divided by the baud rate prescaler is equal to or less than PCLKB.</dd></dl>
+</li>
 </ul>
 <h2><a class="anchor" id="r-can-pin-configuration"></a>
 Pin Configuration</h2>
@@ -1182,6 +1248,9 @@ Pin Configuration</h2>
 Usage Notes</h1>
 <h2>Bit Rate Calculation</h2>
 <p>For convenience, the baudrate of the CAN peripheral is automatically set through the RA Configuration editor using a best effort approach. If the auto-generated baud settings cause deviation that is not tolerable by the application, the user can override the auto-generated settings and put in manually calculated values through RA Configuration editor. For more details on how the baudrate is set refer to section 37.4 "Data Transfer Rate Configuration" of the RA6M3 User's Manual (R01UH0886EJ0100).</p>
+<h2>FIFO Support</h2>
+<p>When FIFO Support is enabled, mailboxes 24-27 form a 4-stage transmit FIFO and mailboxes 28-31 form a 4-stage receive FIFO. The receive FIFO supports two independent ID/mask settings for acceptance filtering.</p>
+<dl class="section note"><dt>Note</dt><dd>Only the base mailbox of each FIFO may be accessed. When writing to the TX FIFO it is recommended to use <code>CAN_MAILBOX_ID_TX_FIFO</code>.</dd></dl>
 <h2>Limitations</h2>
 <p>Developers should be aware of the following limitations when using CAN:</p>
 <ul>
@@ -1198,6 +1267,12 @@ Examples</h1>
 Data Structures</h2></td></tr>
 <tr class="memitem:structcan__mailbox__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#structcan__mailbox__t">can_mailbox_t</a></td></tr>
 <tr class="separator:structcan__mailbox__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structcan__fifo__interrupt__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#structcan__fifo__interrupt__cfg__t">can_fifo_interrupt_cfg_t</a></td></tr>
+<tr class="separator:structcan__fifo__interrupt__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structcan__rx__fifo__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#structcan__rx__fifo__cfg__t">can_rx_fifo_cfg_t</a></td></tr>
+<tr class="separator:structcan__rx__fifo__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structcan__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#structcan__extended__cfg__t">can_extended_cfg_t</a></td></tr>
+<tr class="separator:structcan__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -1205,6 +1280,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga507b4ed3fc531e0c40aa8812174e3e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6d777202844afdced277cb7edb5f659c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#ga6d777202844afdced277cb7edb5f659c">can_error_t</a> </td></tr>
 <tr class="separator:ga6d777202844afdced277cb7edb5f659c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8cd795f6bb7f8f2f3a617771669a9c7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#gaf8cd795f6bb7f8f2f3a617771669a9c7">can_mailbox_number_t</a> </td></tr>
+<tr class="separator:gaf8cd795f6bb7f8f2f3a617771669a9c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga99db0880f7c03215e00781d3e57db3a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#ga99db0880f7c03215e00781d3e57db3a3">can_mailbox_send_receive_t</a> </td></tr>
 <tr class="separator:ga99db0880f7c03215e00781d3e57db3a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab798132b937282be9589b6ed177ea999"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#gab798132b937282be9589b6ed177ea999">can_global_id_mode_t</a> </td></tr>
@@ -1213,6 +1290,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga42c6d0b24e77b50c47ec54bafcac7604"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5bf3c71a3b53b409e9ee682c69189a39"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#ga5bf3c71a3b53b409e9ee682c69189a39">can_clock_source_t</a> </td></tr>
 <tr class="separator:ga5bf3c71a3b53b409e9ee682c69189a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fcacc2675765b361fd25302b927cf09"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_n.html#ga0fcacc2675765b361fd25302b927cf09">can_fifo_interrupt_mode_t</a> </td></tr>
+<tr class="separator:ga0fcacc2675765b361fd25302b927cf09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structcan__mailbox__t" id="structcan__mailbox__t"></a>
@@ -1242,17 +1321,161 @@ id_mode</td>
 <td class="fielddoc">
 Standard or Extended ID. Only used in Mixed ID mode. </td></tr>
 <tr><td class="fieldtype">
-<a id="aa6a30551456873fb921b933bd3ddbe23"></a><a class="el" href="group___c_a_n.html#ga99db0880f7c03215e00781d3e57db3a3">can_mailbox_send_receive_t</a></td>
-<td class="fieldname">
-mailbox_type</td>
-<td class="fielddoc">
-Receive or Transmit mailbox type. </td></tr>
-<tr><td class="fieldtype">
 <a id="af01f0306a9ad2e430154d9d6a4e3404f"></a><a class="el" href="group___c_a_n___a_p_i.html#gad3ffe1ae0429fcd1053a969d96c47610">can_frame_type_t</a></td>
 <td class="fieldname">
 frame_type</td>
 <td class="fielddoc">
 Frame type for receive mailbox. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa6a30551456873fb921b933bd3ddbe23"></a><a class="el" href="group___c_a_n.html#ga99db0880f7c03215e00781d3e57db3a3">can_mailbox_send_receive_t</a></td>
+<td class="fieldname">
+mailbox_type</td>
+<td class="fielddoc">
+Receive or Transmit mailbox type. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structcan__fifo__interrupt__cfg__t" id="structcan__fifo__interrupt__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcan__fifo__interrupt__cfg__t">&#9670;&nbsp;</a></span>can_fifo_interrupt_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct can_fifo_interrupt_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>CAN FIFO interrupt configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aecc2f40ba71650d1a0368cb0780291c7"></a><a class="el" href="group___c_a_n.html#ga0fcacc2675765b361fd25302b927cf09">can_fifo_interrupt_mode_t</a></td>
+<td class="fieldname">
+fifo_int_mode</td>
+<td class="fielddoc">
+FIFO interrupts mode (RX and TX combined). </td></tr>
+<tr><td class="fieldtype">
+<a id="af6aa64dad0e8a9d251c79767e757bd59"></a>IRQn_Type</td>
+<td class="fieldname">
+tx_fifo_irq</td>
+<td class="fielddoc">
+TX FIFO IRQ. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac52e40367e2a152996f45dd7a7dc431b"></a>IRQn_Type</td>
+<td class="fieldname">
+rx_fifo_irq</td>
+<td class="fielddoc">
+RX FIFO IRQ. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structcan__rx__fifo__cfg__t" id="structcan__rx__fifo__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcan__rx__fifo__cfg__t">&#9670;&nbsp;</a></span>can_rx_fifo_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct can_rx_fifo_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>CAN RX FIFO configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aa62995a7f6c9682df9c8f33549ca6e47"></a>uint32_t</td>
+<td class="fieldname">
+rx_fifo_mask1</td>
+<td class="fielddoc">
+RX FIFO acceptance filter mask 1. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae650c726561ef95868f3c8fd9ad61c5f"></a>uint32_t</td>
+<td class="fieldname">
+rx_fifo_mask2</td>
+<td class="fielddoc">
+RX FIFO acceptance filter mask 1. </td></tr>
+<tr><td class="fieldtype">
+<a id="accb92966653379846667088d66a50e73"></a><a class="el" href="group___c_a_n.html#structcan__mailbox__t">can_mailbox_t</a></td>
+<td class="fieldname">
+rx_fifo_id1</td>
+<td class="fielddoc">
+RX FIFO acceptance filter ID 1. </td></tr>
+<tr><td class="fieldtype">
+<a id="a627e30a04bc654abf7c8996b8eec20f0"></a><a class="el" href="group___c_a_n.html#structcan__mailbox__t">can_mailbox_t</a></td>
+<td class="fieldname">
+rx_fifo_id2</td>
+<td class="fielddoc">
+RX FIFO acceptance filter ID 2. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structcan__extended__cfg__t" id="structcan__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structcan__extended__cfg__t">&#9670;&nbsp;</a></span>can_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct can_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>CAN extended configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a2eaf51891d54e504a54474827a6acda9"></a><a class="el" href="group___c_a_n.html#ga5bf3c71a3b53b409e9ee682c69189a39">can_clock_source_t</a></td>
+<td class="fieldname">
+clock_source</td>
+<td class="fielddoc">
+Source of the CAN clock. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae31b11e119a21785575b76a76754867d"></a>uint32_t *</td>
+<td class="fieldname">
+p_mailbox_mask</td>
+<td class="fielddoc">
+Mailbox mask, one for every 4 mailboxes. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5b0ff2d0acabca701193557b0fd2c957"></a><a class="el" href="group___c_a_n.html#structcan__mailbox__t">can_mailbox_t</a> *</td>
+<td class="fieldname">
+p_mailbox</td>
+<td class="fielddoc">
+Pointer to mailboxes. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4a26f9abfeaf1b913d5ee7643f371416"></a><a class="el" href="group___c_a_n.html#gab798132b937282be9589b6ed177ea999">can_global_id_mode_t</a></td>
+<td class="fieldname">
+global_id_mode</td>
+<td class="fielddoc">
+Standard or Extended ID mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="a276cc9bb634ecb7fe5b032faef08e40e"></a>uint32_t</td>
+<td class="fieldname">
+mailbox_count</td>
+<td class="fielddoc">
+Number of mailboxes. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae47d6ae35a96922d7906eb523a43940d"></a><a class="el" href="group___c_a_n.html#ga42c6d0b24e77b50c47ec54bafcac7604">can_message_mode_t</a></td>
+<td class="fieldname">
+message_mode</td>
+<td class="fielddoc">
+Overwrite message or overrun. </td></tr>
+<tr><td class="fieldtype">
+<a id="af1c8e2fcc840ac59c8cc9d0b29140f16"></a><a class="el" href="group___c_a_n.html#structcan__fifo__interrupt__cfg__t">can_fifo_interrupt_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_fifo_int_cfg</td>
+<td class="fielddoc">
+Pointer to FIFO interrupt configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="a47f39cf903da249f5950f73811c706bc"></a><a class="el" href="group___c_a_n.html#structcan__rx__fifo__cfg__t">can_rx_fifo_cfg_t</a> *</td>
+<td class="fieldname">
+p_rx_fifo_cfg</td>
+<td class="fielddoc">
+Pointer to RX FIFO configuration. </td></tr>
 </table>
 
 </div>
@@ -1275,13 +1498,13 @@ Frame type for receive mailbox. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga507b4ed3fc531e0c40aa8812174e3e1dad62a6cf78bc6f7eab84dcbb2a3401acd"></a>CAN_STATUS_SENT_DATA&#160;</td><td class="fielddoc"><p>Sent Data status flag. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga507b4ed3fc531e0c40aa8812174e3e1daee4425fae03c9c915eea5c2a4fda609f"></a>CAN_STATUS_RECEIVE_FIFO&#160;</td><td class="fielddoc"><p>Receive FIFO status flag (Not supported) </p>
+<tr><td class="fieldname"><a id="gga507b4ed3fc531e0c40aa8812174e3e1daee4425fae03c9c915eea5c2a4fda609f"></a>CAN_STATUS_RECEIVE_FIFO&#160;</td><td class="fielddoc"><p>Receive FIFO status flag. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga507b4ed3fc531e0c40aa8812174e3e1dab2dda75d9dec6f4f6780e2f968dc177d"></a>CAN_STATUS_TRANSMIT_FIFO&#160;</td><td class="fielddoc"><p>Transmit FIFO status flag (Not supported) </p>
+<tr><td class="fieldname"><a id="gga507b4ed3fc531e0c40aa8812174e3e1dab2dda75d9dec6f4f6780e2f968dc177d"></a>CAN_STATUS_TRANSMIT_FIFO&#160;</td><td class="fielddoc"><p>Transmit FIFO status flag. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga507b4ed3fc531e0c40aa8812174e3e1dad7fbdfdfe8636dbc45739fda699b8fa2"></a>CAN_STATUS_NORMAL_MBOX_MESSAGE_LOST&#160;</td><td class="fielddoc"><p>Normal mailbox message lost status flag. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga507b4ed3fc531e0c40aa8812174e3e1dab6a11467700aa53191e9ae8c7c4ab23f"></a>CAN_STATUS_FIFO_MBOX_MESSAGE_LOST&#160;</td><td class="fielddoc"><p>FIFO mailbox message lost status flag (Not Supported) </p>
+<tr><td class="fieldname"><a id="gga507b4ed3fc531e0c40aa8812174e3e1dab6a11467700aa53191e9ae8c7c4ab23f"></a>CAN_STATUS_FIFO_MBOX_MESSAGE_LOST&#160;</td><td class="fielddoc"><p>FIFO mailbox message lost status flag. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga507b4ed3fc531e0c40aa8812174e3e1dace73309e8a8c0937ecf442f1a90ecc14"></a>CAN_STATUS_TRANSMISSION_ABORT&#160;</td><td class="fielddoc"><p>Transmission abort status flag. </p>
 </td></tr>
@@ -1329,6 +1552,21 @@ Frame type for receive mailbox. </td></tr>
 <tr><td class="fieldname"><a id="gga6d777202844afdced277cb7edb5f659ca3f50326451e594774edaaf5ec3d86102"></a>CAN_ERROR_ACK_DELIMITER&#160;</td><td class="fielddoc"><p>ACK Delimiter Error. </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<a id="gaf8cd795f6bb7f8f2f3a617771669a9c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf8cd795f6bb7f8f2f3a617771669a9c7">&#9670;&nbsp;</a></span>can_mailbox_number_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_a_n.html#gaf8cd795f6bb7f8f2f3a617771669a9c7">can_mailbox_number_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CAN Mailbox IDs (MB + FIFO) </p>
 
 </div>
 </div>
@@ -1415,6 +1653,21 @@ Frame type for receive mailbox. </td></tr>
 <tr><td class="fieldname"><a id="gga5bf3c71a3b53b409e9ee682c69189a39a5c90a69c9ba1a8116b6ec45ff238e117"></a>CAN_CLOCK_SOURCE_CANMCLK&#160;</td><td class="fielddoc"><p>CANMCLK is the source of the CAN Clock. </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<a id="ga0fcacc2675765b361fd25302b927cf09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0fcacc2675765b361fd25302b927cf09">&#9670;&nbsp;</a></span>can_fifo_interrupt_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_a_n.html#ga0fcacc2675765b361fd25302b927cf09">can_fifo_interrupt_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CAN FIFO Interrupt Modes </p>
 
 </div>
 </div>
@@ -1520,6 +1773,7 @@ Frame type for receive mailbox. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Operation succeeded. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_CAN_TRANSMIT_NOT_READY</td><td>Transmit in progress, cannot write data at this time. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CAN_TRANSMIT_FIFO_FULL</td><td>Transmit FIFO is full. </td></tr>
     <tr><td class="paramname">FSP_ERR_CAN_RECEIVE_MAILBOX</td><td>Mailbox is setup for receive and cannot send. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Data length or frame type invalid. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer presented </td></tr>
@@ -1560,10 +1814,11 @@ Frame type for receive mailbox. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="el" href="group___c_a_n___a_p_i.html#af6c0a7c4a078f852e7c332369f8de9e2">can_api_t::read</a> is not supported on CAN.</p>
+<p>Read data from a mailbox or FIFO.</p>
+<dl class="section note"><dt>Note</dt><dd>This function is not supported.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1705,7 +1960,7 @@ Frame type for receive mailbox. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

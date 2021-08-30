@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -220,6 +220,14 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Copies the boot data into the secure RAM, intended to be used by the secure App. </td></tr>
 <tr>
+<td>General &gt; Data Sharing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Copies the user data into the secure RAM, intended to be used by the secure App. </td></tr>
+<tr>
 <td>Signing Options &gt; TrustZone &gt; Boot Record (Image 2)</td><td>String length must be 12 characters or less.</td><td></td><td>Create CBOR encoded boot record TLV for Image 2. Represents the role of the software component (e.g. CoFM for coprocessor firmware). [max. 12 characters] </td></tr>
 <tr>
 <td>Signing Options &gt; TrustZone &gt; Custom (Image 2)</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
@@ -290,6 +298,7 @@ Usage Notes</h1>
 <h2>Getting Started: Creating an MCUboot Project</h2>
 <p>Start by creating a new project in e2 studio or RA SC. If the MCU supports TrustZone, select a Flat project. The bootloader resides entirely in Secure memory, but it is considered a flat project because it does not provide any Non-Secure Callable functions. On the Stacks tab, add New &gt; Bootloader &gt; MCUboot. Resolve any constraint errors and edit configurations as desired. Add either the example keys or generate your own key. The MCUboot key generation tool is provided at ra/mcu-tools/MCUboot/scripts/imgtool.py and documented at <a href="https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md">https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md</a>. Install the following required python packages to use imgtool.py: <a href="https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt">https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt</a>.</p>
 <p>In src/hal_entry.c, drag in Developer Assistance &gt; HAL/Common &gt; MCUboot &gt; Quick Setup &gt; Call Quick Setup. Add a call to mcuboot_quick_setup() in the application and make any desired updates.</p>
+<dl class="section note"><dt>Note</dt><dd><b>MCUboot will contain either the verificaton public key or its hash. During production it is necessary to permanently lock the flash region where MCUboot is programmed to prevent the keys or the code from being modified.</b></dd></dl>
 <h2>Getting Started: Signing Tool Prerequisite</h2>
 <p>To use the MCUboot signing tool, ensure you have Python 3.x installed on your system. Then install the Python packages required for the signing tool with the following command:</p>
 <p><code>pip3 install --user -r ra/mcu-tools/MCUboot/scripts/requirements.txt</code></p>
@@ -322,6 +331,10 @@ Usage Notes</h1>
 <li>For the Secure and Non-Secure project *.elf file, load Symbols Only.</li>
 <li>After starting to debug, load the signed Secure image and the signed Non-Secure image into the addresses specified in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h. This can be done with the Load Ancillary File button when debugging in e2 studio. Upgrade images can be loaded to the upgrade image slots using the same method.</li>
 </ol>
+<h2>Confirming Upgrade in Swap Mode</h2>
+<p>In Swap Mode operation, if the upgrade image is signed with the &ndash;pad option, MCUboot will install that image as a temporary update where if nothing else is done, a reboot will cause MCUboot to revert to the image version that was swapped out during the upgrade. In order for the updated image to prevent this reversion and make the update permanent, the boot_set_confirmed() must be called from the application.</p>
+<p>To avail this capability in the application image, from the Stacks tab, add New &gt; Bootloader &gt; MCUboot Image Utilities (Swap Mode). Resolve any constraint errors and edit configurations as desired.</p>
+<p>In src/hal_entry.c, drag in Developer Assistance &gt; HAL/Common &gt; MCUboot Image Utilities &gt; Quick Setup &gt; Confirm Primary Image. Add a call to boot_set_confirmed() in the application and confirm the image in the primary slot.</p>
 <h2>MCUboot Memory Map</h2>
 <p>For single image projects, the default memory map looks like:</p>
 <div class="image">
@@ -333,19 +346,38 @@ MCUboot Memory Map</div></div>
 <object type="image/svg+xml" data="rm_mcuboot_port_map_tz.svg">rm_mcuboot_port_map_tz.svg</object>
 <div class="caption">
 MCUboot Memory Map (TrustZone)</div></div>
- <h2>Limitations</h2>
+ <h2>MCUboot Crypto Stack Options</h2>
+<p>The following crypto stacks can be used with MCUboot in FSP:</p><ol type="1">
+<li>MbedTLS, which is hardware accelerated on all RA devices. On the RA2 which has an AES engine only, ECC/RSA/SHA operations are in software.</li>
+<li>TinyCrypt (S/W Only) can be used with all devices.</li>
+<li>TinyCrypt (H/W Accelerated) has AES operations accelerated for the RA2 family only. When using MCUboot without encryption there is no difference between using this or the S/W only version.</li>
+<li>SCE9 Protected Mode on devices that have the SCE9 (eg: RA6M4, RA4M3, RA4M2)</li>
+</ol>
+<p>MbedTLS provides the best performance for MCUBoot signature verification on the RA6 and RA4 devices but has a much larger code footprint compared to TinyCrypt. For RA2 devices TinyCrypt is the best option.</p>
+<h2>Using SCE9 Protected Mode Crypto Stack</h2>
+<p>Using this crypto stack with MCUBoot provides additional security by ensuring that any keys that are used were securely provisioned for the specific device. The Application Note R11AN0496 provides detailed steps on how to go about installing these keys. Since the section "Preparing Keys for Installation and Update Using RFP" document currently only provides information on how to install an AES key, this section will provide information on how to install an ECC public key.</p>
+<dl class="section note"><dt>Note</dt><dd><b>When using the SCE9 Protected Mode Stack with MCUboot it is required that the public keys in the format described in the "MCUboot Example Keys" module in the stack is also provided in the project.</b></dd></dl>
+<ol type="1">
+<li>Generate an ECC key pair. There are various ways to do this but you can use openSSL to do so: "openssl ecparam -name secp256k1 -genkey -noout -out my_ecc_secp256k1_key.pem".</li>
+<li>Once the key is generated, in order to install the public key using RFP (Renesas Flash Programmer) the user needs to have their own UFPK (User Factory Programming Key) and W-UFPK (Wrapped User Factory Programming Key). Refer to R11AN0496 on how to obtain these keys.</li>
+<li>Once the UFPK and W-UFPK are available, we need to extract the public key from the pem file. The public key can be viewed by using "openssl ec -noout -text -in my_ecc_secp256k1_key.pem". Note that when the ECC public key is printed out this way, it will contain a 0x04 ASN.1 demarcator at the start which should be discarded.</li>
+<li>Use the rfp-util.exe utility from the RFP installation folder to wrap the public key using the UFPK and W-UFPK into a format that can be installed by RFP and the factory bootloader on the MCU.</li>
+<li>Use RFP as described in R11AN0496 to install the key to the location of mcuboot_sce9_key section.</li>
+</ol>
+<p>These are examples that install the default keys provided with MCUboot in ra/mcu-tools/MCUboot/. The examples assume that UFPK nd W-UFPK are already available.</p>
+<div class="fragment"><div class="line">  //Print out the EC-P256 Public Key using openSSL</div><div class="line">C:\ openssl ec -noout -text -in root-ec-p256.pem</div><div class="line"></div><div class="line">read EC key</div><div class="line">Private-Key: (256 bit)</div><div class="line">priv:</div><div class="line">    d7:98:d5:2f:83:01:24:3b:d3:54:2b:7e:55:ed:4c:</div><div class="line">    74:61:19:00:b0:f9:50:5a:82:4f:e1:e8:ec:06:3b:</div><div class="line">    cf:f1</div><div class="line">pub:</div><div class="line">    04:2a:cb:40:3c:e8:fe:ed:5b:a4:49:95:a1:a9:1d:</div><div class="line">    ae:e8:db:be:19:37:cd:14:fb:2f:24:57:37:e5:95:</div><div class="line">    39:88:d9:94:b9:d6:5a:eb:d7:cd:d5:30:8a:d6:fe:</div><div class="line">    48:b2:4a:6a:81:0e:e5:f0:7d:8b:68:34:cc:3a:6a:</div><div class="line">    fc:53:8e:fa:c1</div><div class="line">ASN1 OID: prime256v1</div><div class="line">NIST CURVE: P-256</div><div class="line"></div><div class="line">//Use the public key (ignore the 0x04 ASN.1 demarcator) in the RFP command line to convert the public key into an installable format</div><div class="line">C:\ &quot;C:\Program Files (x86)\Renesas Electronics\Programming Tools\Renesas Flash Programmer V3.08\rfp-util.exe&quot; /genkey /ufpk &quot;C:\ufpk.key&quot; /wufpk &quot;C:\ufpk.key_enc.key&quot; /key &quot;2acb403ce8feed5ba44995a1a91daee8dbbe1937cd14fb2f245737e5953988d994b9d65aebd7cdd5308ad6fe48b24a6a810ee5f07d8b6834cc3a6afc538efac1&quot; /userkey &quot;16&quot; /output &quot;C:\ECC_pub_install.rkey&quot;</div><div class="line"></div><div class="line">// From the bootloader map file determine the address of mcuboot_sce9_key section</div><div class="line">Use RFP to install &quot;ECC_pub_install.rkey&quot; as described in R11AN0496 to the address where the mcuboot_sce9_key section is located.</div></div><!-- fragment --><h2>Limitations</h2>
 <p>MCUboot tooling updates to adjust available flash in application images are currently only supported for the GCC compiler. IAR and AC6 support will be added in a future release.</p>
 <h1><a class="anchor" id="r-mcuboot-port-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is an example of using MCUboot in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_mcuboot_port_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize mbedtls. */</span></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line">    assert(0 == <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx));</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) To check for updates, call boot_set_pending. */</span></div><div class="line">    <span class="keywordtype">bool</span> update = 0;</div><div class="line">    <span class="keywordflow">if</span> (update)</div><div class="line">    {</div><div class="line">        boot_set_pending(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the boot image and get its location. */</span></div><div class="line">    <span class="keyword">struct </span>boot_rsp rsp;</div><div class="line">    assert(0 == boot_go(&amp;rsp));</div><div class="line"></div><div class="line">    <span class="comment">/* Enter the application. */</span></div><div class="line">    RM_MCUBOOT_PORT_BootApp(&amp;rsp);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_mcuboot_port_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="preprocessor">#ifdef MCUBOOT_USE_MBED_TLS</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize mbedtls. */</span></div><div class="line">    <a class="code" href="structmbedtls__platform__context.html">mbedtls_platform_context</a> ctx = {0};</div><div class="line">    assert(0 == <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(&amp;ctx));</div><div class="line"><span class="preprocessor">#elif defined(MCUBOOT_USE_TINYCRYPT)</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize TinyCrypt port. */</span></div><div class="line">    assert(FSP_SUCCESS == <a class="code" href="group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html#gaaff886271ad29c31a3c148b6d4bd0f92">RM_TINCYRYPT_PORT_Init</a>());</div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize SCE9 Protected Mode driver. */</span></div><div class="line">    <a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#structsce__instance__ctrl__t">sce_instance_ctrl_t</a> sce_ctrl;</div><div class="line">    <span class="keyword">const</span> <a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__cfg__t">sce_cfg_t</a>     sce_cfg =</div><div class="line">    {.<a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a9293397005f7f38d4872a61932e30760">lifecycle</a> = SCE_SSD};</div><div class="line">    assert(FSP_SUCCESS == <a class="code" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#gae41c48db65491a6884039929b6734557">R_SCE_Open</a>(&amp;sce_ctrl, &amp;sce_cfg));</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) To check for updates, call boot_set_pending. */</span></div><div class="line">    <span class="keywordtype">bool</span> update = 0;</div><div class="line">    <span class="keywordflow">if</span> (update)</div><div class="line">    {</div><div class="line">        boot_set_pending(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Verify the boot image and get its location. */</span></div><div class="line">    <span class="keyword">struct </span>boot_rsp rsp;</div><div class="line">    assert(0 == boot_go(&amp;rsp));</div><div class="line"></div><div class="line">    <span class="comment">/* Enter the application. */</span></div><div class="line">    RM_MCUBOOT_PORT_BootApp(&amp;rsp);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

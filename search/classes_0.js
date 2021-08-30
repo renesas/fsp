@@ -12,7 +12,16 @@ var searchData=
   ['adc_5finstance_5ft',['adc_instance_t',['../group___a_d_c___a_p_i.html#structadc__instance__t',1,'']]],
   ['adc_5fsample_5fstate_5ft',['adc_sample_state_t',['../group___a_d_c.html#structadc__sample__state__t',1,'']]],
   ['adc_5fstatus_5ft',['adc_status_t',['../group___a_d_c___a_p_i.html#structadc__status__t',1,'']]],
+  ['adpcm_5fdecoder_5fapi_5ft',['adpcm_decoder_api_t',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r___a_p_i.html#structadpcm__decoder__api__t',1,'']]],
+  ['adpcm_5fdecoder_5fcfg_5ft',['adpcm_decoder_cfg_t',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r___a_p_i.html#structadpcm__decoder__cfg__t',1,'']]],
+  ['adpcm_5fdecoder_5finstance_5fctrl_5ft',['adpcm_decoder_instance_ctrl_t',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r.html#structadpcm__decoder__instance__ctrl__t',1,'']]],
+  ['adpcm_5fdecoder_5finstance_5ft',['adpcm_decoder_instance_t',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r___a_p_i.html#structadpcm__decoder__instance__t',1,'']]],
   ['agt_5fextended_5fcfg_5ft',['agt_extended_cfg_t',['../group___a_g_t.html#structagt__extended__cfg__t',1,'']]],
   ['agt_5finstance_5fctrl_5ft',['agt_instance_ctrl_t',['../group___a_g_t.html#structagt__instance__ctrl__t',1,'']]],
-  ['algorithm_5fversion',['algorithm_version',['../structalgorithm__version.html',1,'']]]
+  ['algorithm_5fversion',['algorithm_version',['../structalgorithm__version.html',1,'']]],
+  ['audio_5fplayback_5fapi_5ft',['audio_playback_api_t',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#structaudio__playback__api__t',1,'']]],
+  ['audio_5fplayback_5fcallback_5fargs_5ft',['audio_playback_callback_args_t',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#structaudio__playback__callback__args__t',1,'']]],
+  ['audio_5fplayback_5fcfg_5ft',['audio_playback_cfg_t',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#structaudio__playback__cfg__t',1,'']]],
+  ['audio_5fplayback_5finstance_5ft',['audio_playback_instance_t',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#structaudio__playback__instance__t',1,'']]],
+  ['audio_5fplayback_5fpwm_5finstance_5fctrl_5ft',['audio_playback_pwm_instance_ctrl_t',['../group___r_m___a_u_d_i_o___p_l_a_y_b_a_c_k___p_w_m.html#structaudio__playback__pwm__instance__ctrl__t',1,'']]]
 ];

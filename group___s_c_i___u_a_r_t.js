@@ -46,5 +46,6 @@ var group___s_c_i___u_a_r_t =
     [ "R_SCI_UART_Close", "group___s_c_i___u_a_r_t.html#ga49e8b74b71d1901a209a94ed4c220d4d", null ],
     [ "R_SCI_UART_Abort", "group___s_c_i___u_a_r_t.html#ga816beee7f9f27113cd2d792c54c6af53", null ],
     [ "R_SCI_UART_BaudCalculate", "group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2", null ],
-    [ "R_SCI_UART_CallbackSet", "group___s_c_i___u_a_r_t.html#gad990fe4af20d895bf37fd26721677410", null ]
+    [ "R_SCI_UART_CallbackSet", "group___s_c_i___u_a_r_t.html#gad990fe4af20d895bf37fd26721677410", null ],
+    [ "R_SCI_UART_ReadStop", "group___s_c_i___u_a_r_t.html#gae084836f4ee37c2730f7a8b332d58325", null ]
 ];

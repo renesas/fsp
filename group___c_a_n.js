@@ -3,8 +3,29 @@ var group___c_a_n =
     [ "can_mailbox_t", "group___c_a_n.html#structcan__mailbox__t", [
       [ "mailbox_id", "group___c_a_n.html#aa0c1d24b5896560908adb0ac9761aa28", null ],
       [ "id_mode", "group___c_a_n.html#a9d3924b6ba4efb4c978a04d0e9a4fbc6", null ],
-      [ "mailbox_type", "group___c_a_n.html#aa6a30551456873fb921b933bd3ddbe23", null ],
-      [ "frame_type", "group___c_a_n.html#af01f0306a9ad2e430154d9d6a4e3404f", null ]
+      [ "frame_type", "group___c_a_n.html#af01f0306a9ad2e430154d9d6a4e3404f", null ],
+      [ "mailbox_type", "group___c_a_n.html#aa6a30551456873fb921b933bd3ddbe23", null ]
+    ] ],
+    [ "can_fifo_interrupt_cfg_t", "group___c_a_n.html#structcan__fifo__interrupt__cfg__t", [
+      [ "fifo_int_mode", "group___c_a_n.html#aecc2f40ba71650d1a0368cb0780291c7", null ],
+      [ "tx_fifo_irq", "group___c_a_n.html#af6aa64dad0e8a9d251c79767e757bd59", null ],
+      [ "rx_fifo_irq", "group___c_a_n.html#ac52e40367e2a152996f45dd7a7dc431b", null ]
+    ] ],
+    [ "can_rx_fifo_cfg_t", "group___c_a_n.html#structcan__rx__fifo__cfg__t", [
+      [ "rx_fifo_mask1", "group___c_a_n.html#aa62995a7f6c9682df9c8f33549ca6e47", null ],
+      [ "rx_fifo_mask2", "group___c_a_n.html#ae650c726561ef95868f3c8fd9ad61c5f", null ],
+      [ "rx_fifo_id1", "group___c_a_n.html#accb92966653379846667088d66a50e73", null ],
+      [ "rx_fifo_id2", "group___c_a_n.html#a627e30a04bc654abf7c8996b8eec20f0", null ]
+    ] ],
+    [ "can_extended_cfg_t", "group___c_a_n.html#structcan__extended__cfg__t", [
+      [ "clock_source", "group___c_a_n.html#a2eaf51891d54e504a54474827a6acda9", null ],
+      [ "p_mailbox_mask", "group___c_a_n.html#ae31b11e119a21785575b76a76754867d", null ],
+      [ "p_mailbox", "group___c_a_n.html#a5b0ff2d0acabca701193557b0fd2c957", null ],
+      [ "global_id_mode", "group___c_a_n.html#a4a26f9abfeaf1b913d5ee7643f371416", null ],
+      [ "mailbox_count", "group___c_a_n.html#a276cc9bb634ecb7fe5b032faef08e40e", null ],
+      [ "message_mode", "group___c_a_n.html#ae47d6ae35a96922d7906eb523a43940d", null ],
+      [ "p_fifo_int_cfg", "group___c_a_n.html#af1c8e2fcc840ac59c8cc9d0b29140f16", null ],
+      [ "p_rx_fifo_cfg", "group___c_a_n.html#a47f39cf903da249f5950f73811c706bc", null ]
     ] ],
     [ "can_status_t", "group___c_a_n.html#ga507b4ed3fc531e0c40aa8812174e3e1d", [
       [ "CAN_STATUS_NEW_DATA", "group___c_a_n.html#gga507b4ed3fc531e0c40aa8812174e3e1da44b1af154963d1f81a99d80cb68f279f", null ],
@@ -30,6 +51,7 @@ var group___c_a_n =
       [ "CAN_ERROR_BIT_DOMINANT", "group___c_a_n.html#gga6d777202844afdced277cb7edb5f659caaa624ddb5e00f243bb07c3bd1530af30", null ],
       [ "CAN_ERROR_ACK_DELIMITER", "group___c_a_n.html#gga6d777202844afdced277cb7edb5f659ca3f50326451e594774edaaf5ec3d86102", null ]
     ] ],
+    [ "can_mailbox_number_t", "group___c_a_n.html#gaf8cd795f6bb7f8f2f3a617771669a9c7", null ],
     [ "can_mailbox_send_receive_t", "group___c_a_n.html#ga99db0880f7c03215e00781d3e57db3a3", [
       [ "CAN_MAILBOX_RECEIVE", "group___c_a_n.html#gga99db0880f7c03215e00781d3e57db3a3a5f4004ddfe179e388be8bb240527450e", null ],
       [ "CAN_MAILBOX_TRANSMIT", "group___c_a_n.html#gga99db0880f7c03215e00781d3e57db3a3a1c100296f7b9384c8e09b55fd611242d", null ]
@@ -47,6 +69,7 @@ var group___c_a_n =
       [ "CAN_CLOCK_SOURCE_PCLKB", "group___c_a_n.html#gga5bf3c71a3b53b409e9ee682c69189a39a7c0cedacb23a57e50692191f61915cbd", null ],
       [ "CAN_CLOCK_SOURCE_CANMCLK", "group___c_a_n.html#gga5bf3c71a3b53b409e9ee682c69189a39a5c90a69c9ba1a8116b6ec45ff238e117", null ]
     ] ],
+    [ "can_fifo_interrupt_mode_t", "group___c_a_n.html#ga0fcacc2675765b361fd25302b927cf09", null ],
     [ "R_CAN_Open", "group___c_a_n.html#gac8ce7d5f6f419e35da64eb9c85099b3b", null ],
     [ "R_CAN_Close", "group___c_a_n.html#gadb3de4322c2ede349a1e4968c93933c0", null ],
     [ "R_CAN_Write", "group___c_a_n.html#ga30d9371c5b32915b17834d0616ca893c", null ],

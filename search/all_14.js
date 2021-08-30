@@ -1,6 +1,11 @@
 var searchData=
 [
   ['usb_20hmsc_20block_20media_20implementation_20_28rm_5fblock_5fmedia_5fusb_29',['USB HMSC Block Media Implementation (rm_block_media_usb)',['../group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_b.html',1,'']]],
+  ['user_20block_20media_20implementation_20_28rm_5fblock_5fmedia_5fuser_29',['User Block Media Implementation (rm_block_media_user)',['../group___r_m___b_l_o_c_k___m_e_d_i_a___u_s_e_r.html',1,'']]],
+  ['u1_5fadjust_5fcount_5ffull',['u1_adjust_count_full',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a3c272518a04545f0736f810de1bf9232',1,'motor_angle_encoder_info_t::u1_adjust_count_full()'],['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#abf01fec7f3bbef78f0a3585f0a18a2da',1,'motor_current_output_t::u1_adjust_count_full()']]],
+  ['u1_5fadjust_5fstatus',['u1_adjust_status',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a6eb9c59db46057cc1006bc6758f696b9',1,'motor_current_output_t']]],
+  ['u1_5fflag_5fget_5firef',['u1_flag_get_iref',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ae7614e22637a6ce6a8ad9c17483e9bea',1,'motor_current_output_t']]],
+  ['u_5fvoltage',['u_voltage',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a2af65c10218c15d3fd7c62e3b70c7951',1,'motor_current_get_voltage_t']]],
   ['uart_20interface',['UART Interface',['../group___u_a_r_t___a_p_i.html',1,'']]],
   ['uart_5fapi_5ft',['uart_api_t',['../group___u_a_r_t___a_p_i.html#structuart__api__t',1,'']]],
   ['uart_5fcallback_5fargs_5ft',['uart_callback_args_t',['../group___u_a_r_t___a_p_i.html#structuart__callback__args__t',1,'']]],

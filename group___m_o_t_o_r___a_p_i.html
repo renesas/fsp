@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -160,7 +160,8 @@ $(document).ready(function(){initNavTree('group___m_o_t_o_r___a_p_i.html','');})
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Motor Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a></div></div>  </div>
 </div><!--header-->
@@ -188,6 +189,11 @@ Data Structures</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga73470821c0b02f097f60128e0021a6e2"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a></td></tr>
 <tr class="separator:ga73470821c0b02f097f60128e0021a6e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga784f73463404e63a5445a38193681629"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#ga784f73463404e63a5445a38193681629">motor_error_t</a> </td></tr>
+<tr class="separator:ga784f73463404e63a5445a38193681629"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structmotor__cfg__t" id="structmotor__cfg__t"></a>
@@ -257,11 +263,11 @@ Placeholder for user extension. </td></tr>
 <tr class="separator:a051b819e5c9013e881d1ed831d733c2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73d4de514894759ab5917709b1399208"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a73d4de514894759ab5917709b1399208">reset</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a73d4de514894759ab5917709b1399208"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f302c2b7f82f4aa52b44be05a575eaf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a1f302c2b7f82f4aa52b44be05a575eaf">errorSet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, motor_error_t const error)</td></tr>
+<tr class="memitem:a1f302c2b7f82f4aa52b44be05a575eaf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a1f302c2b7f82f4aa52b44be05a575eaf">errorSet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_p_i.html#ga784f73463404e63a5445a38193681629">motor_error_t</a> const error)</td></tr>
 <tr class="separator:a1f302c2b7f82f4aa52b44be05a575eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4635002c9229fddac19e06d05fb3207"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#af4635002c9229fddac19e06d05fb3207">speedSet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, float const speed_rpm)</td></tr>
 <tr class="separator:af4635002c9229fddac19e06d05fb3207"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ac2a0d0999335ee0a30ad84b378c0dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a6ac2a0d0999335ee0a30ad84b378c0dd">positionSet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, motor_speed_position_data_t const *const p_position)</td></tr>
+<tr class="memitem:a6ac2a0d0999335ee0a30ad84b378c0dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a6ac2a0d0999335ee0a30ad84b378c0dd">positionSet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t">motor_speed_position_data_t</a> const *const p_position)</td></tr>
 <tr class="separator:a6ac2a0d0999335ee0a30ad84b378c0dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a292e940165b226b56d83a0b3e9a20a8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___a_p_i.html#a292e940165b226b56d83a0b3e9a20a8c">statusGet</a> )(<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, uint8_t *const p_status)</td></tr>
 <tr class="separator:a292e940165b226b56d83a0b3e9a20a8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -406,7 +412,7 @@ Placeholder for user extension. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_api_t::errorSet) (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, motor_error_t const error)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_api_t::errorSet) (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_p_i.html#ga784f73463404e63a5445a38193681629">motor_error_t</a> const error)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -458,7 +464,7 @@ Placeholder for user extension. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_api_t::positionSet) (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, motor_speed_position_data_t const *const p_position)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  motor_api_t::positionSet) (<a class="el" href="group___m_o_t_o_r___a_p_i.html#ga73470821c0b02f097f60128e0021a6e2">motor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t">motor_speed_position_data_t</a> const *const p_position)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -639,13 +645,29 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga784f73463404e63a5445a38193681629"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga784f73463404e63a5445a38193681629">&#9670;&nbsp;</a></span>motor_error_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___a_p_i.html#ga784f73463404e63a5445a38193681629">motor_error_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Error information </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

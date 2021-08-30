@@ -10,5 +10,6 @@ var searchData=
   ['opamp_5ftrim_5finput_5ft',['opamp_trim_input_t',['../group___o_p_a_m_p___a_p_i.html#ga225f7a2a63ee3dc11ce9853ada741b54',1,'r_opamp_api.h']]],
   ['ospi_5fcommand_5fcs_5fpulldown_5fclocks_5ft',['ospi_command_cs_pulldown_clocks_t',['../group___o_s_p_i.html#gacc92842060aee9fb19b55d3cf911f990',1,'r_ospi.h']]],
   ['ospi_5fcommand_5fcs_5fpullup_5fclocks_5ft',['ospi_command_cs_pullup_clocks_t',['../group___o_s_p_i.html#ga0c0370d42bd59554b52b17675637a84e',1,'r_ospi.h']]],
-  ['ospi_5fdevice_5fnumber_5ft',['ospi_device_number_t',['../group___o_s_p_i.html#ga0dd809af09334f30599a1d6290c497b1',1,'r_ospi.h']]]
+  ['ospi_5fdevice_5fnumber_5ft',['ospi_device_number_t',['../group___o_s_p_i.html#ga0dd809af09334f30599a1d6290c497b1',1,'r_ospi.h']]],
+  ['ospi_5fdopi_5fbyte_5forder_5ft',['ospi_dopi_byte_order_t',['../group___o_s_p_i.html#ga15ee1a2021fab7f7c42cfd937d97a6c0',1,'r_ospi.h']]]
 ];

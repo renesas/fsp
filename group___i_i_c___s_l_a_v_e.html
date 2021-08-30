@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -224,6 +224,10 @@ This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connec
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
+<td>Interrupt Priority Level &gt; Transmit, Receive, and Transmit End</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority level. This is set for TXI, RXI, and TEI interrupts. </td></tr>
+<tr>
+<td>Interrupt Priority Level &gt; Error</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority level. This is set for ERI interrupt. </td></tr>
+<tr>
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_i2c_slave0 </td><td>Module name. </td></tr>
 <tr>
 <td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the IIC channel. </td></tr>
@@ -292,9 +296,15 @@ Disabled</li>
 </ul>
 </td><td>7-Bit </td><td>Select the slave address mode. </td></tr>
 <tr>
-<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function must be provided. This will be called from the interrupt service routine (ISR) to report I2C Slave transaction events and status. </td></tr>
+<td>Clock Stretching</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Configure Clock Stretching. </td></tr>
 <tr>
-<td>Interrupt Priority Level</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority level. This is set for TXI, RXI, TEI and ERI interrupts. </td></tr>
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function must be provided. This will be called from the interrupt service routine (ISR) to report I2C Slave transaction events and status. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-iic_slave-clock-configuration"></a>
@@ -309,6 +319,10 @@ Usage Notes</h1>
 Interrupt Configuration</h2>
 <ul>
 <li>The IIC error (EEI), receive buffer full (RXI), transmit buffer empty (TXI) and transmit end (TEI) interrupts for the selected channel must be enabled in the properties of the selected device.</li>
+<li>The interrupt priority of ERI can be set higher than or equal to the interrupt priorities of RXI, TXI and TEI. <dl class="section note"><dt>Note</dt><dd>: During master-write slave-read type of operations if the slave device requires to perform clock stretching after the last data byte is received, a higher priority ERI will ensure that the ongoing transaction is completed (by accepting the Stop/Restart condition from the master) before the next transaction is initiated. </dd>
+<dd>
+: To support clock stretching (Holding SCL low after the falling edge of the 9th clock cycle), 'Clock Stretching' configuration must be enabled.</dd></dl>
+</li>
 </ul>
 <h2><a class="anchor" id="r-iic_slave-callbacks"></a>
 Callback</h2>
@@ -357,6 +371,10 @@ Callback</h2>
 IIC Slave Rate Calculation</h2>
 <ul>
 <li>The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate. The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLKB settings is calculated and used.</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li>When 'Clock Stretching' configuration is enabled, the receive operation will not utilize the double buffer arrangement in hardware for a continuous read. This means that the read operation would happen in single byte units such that the active master would send the next byte only when the slave has read the current byte of data. </li>
 </ul>
 <h1><a class="anchor" id="r-iic_slave-examples"></a>
 Examples</h1>
@@ -650,7 +668,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -5,6 +5,8 @@ var searchData=
   ['motor_5fencoder_5fcallback_5fevent_5ft',['motor_encoder_callback_event_t',['../group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3b065368ba50cddebd05d19827444a80',1,'rm_motor_encoder.h']]],
   ['motor_5fencoder_5fctrl_5fevent_5ft',['motor_encoder_ctrl_event_t',['../group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga0feb7dece163f5af5cccd8f307f630dc',1,'rm_motor_encoder.h']]],
   ['motor_5fencoder_5fctrl_5ft',['motor_encoder_ctrl_t',['../group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga8482f9db6908b2be9cf7950493511c77',1,'rm_motor_encoder.h']]],
+  ['motor_5ferror_5ft',['motor_error_t',['../group___m_o_t_o_r___a_p_i.html#ga784f73463404e63a5445a38193681629',1,'rm_motor_api.h']]],
+  ['motor_5fposition_5fctrl_5fmode_5ft',['motor_position_ctrl_mode_t',['../group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#gac587def649947014173cac649a4b73e0',1,'rm_motor_position_api.h']]],
   ['motor_5fposition_5fipd_5flpf_5ft',['motor_position_ipd_lpf_t',['../group___m_o_t_o_r___p_o_s_i_t_i_o_n.html#ga1c61ffa3f115131a8db5d183c688b460',1,'rm_motor_position.h']]],
   ['motor_5fsense_5fencoder_5fangle_5fadjust_5ft',['motor_sense_encoder_angle_adjust_t',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga2eb16cd62372fd50c5d7ad5048f693ce',1,'rm_motor_angle_api.h']]],
   ['motor_5fsense_5fencoder_5floop_5ft',['motor_sense_encoder_loop_t',['../group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga46301fa621305fbc5d6837a7952a2cc1',1,'rm_motor_sense_encoder.h']]],

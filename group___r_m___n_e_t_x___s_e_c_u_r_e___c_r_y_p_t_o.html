@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -167,9 +167,23 @@ $(document).ready(function(){initNavTree('group___r_m___n_e_t_x___s_e_c_u_r_e___
 <h1><a class="anchor" id="rm-netx-secure-crypto-overview"></a>
 Overview</h1>
 <p>Please refer to the <a href="https://docs.microsoft.com/en-us/azure/rtos/netx/netx-crypto/chapter1">NetXDuo - NetX Crypto documentation</a> for further details.</p>
+<h2>HW Overview</h2>
+<table class="doxtable">
+<tr>
+<th>Crypto Peripheral version </th><th>Devices  </th></tr>
+<tr>
+<td>SCE9 </td><td>RA6M4, RA4M3, RA4M2, RA6M5 </td></tr>
+<tr>
+<td>SCE7 </td><td>RA6M3, RA6M2, RA6M1, RA6T1 </td></tr>
+<tr>
+<td>SCE5 </td><td>RA4W1, RA4M1 </td></tr>
+<tr>
+<td>AES Engine </td><td>RA2A1, RA2E1, RA2E2, RA2L1 </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>NetX Crypto hardware acceleration is unsupported on 'SCE5' and 'AES Engine' crypto peripherals listed above. </dd></dl>
 <h2><a class="anchor" id="rm-netx-secure-crypto-features"></a>
 Features</h2>
-<p>This module provides hardware support for the following NetX Crypto operations</p><ul>
+<p>This module provides SCE9 hardware support for the following NetX Crypto operations</p><ul>
 <li>SHA256 calculation <a class="anchor" id="um_crypto_sha256_hash_calculation"></a><a class="anchor" id="um_crypto_sha256_hash_multipart_calculation"></a><a class="anchor" id="um_crypto_sha256_hash_read"></a></li>
 <li>SHA224 calculation <a class="anchor" id="um_crypto_sha224_hash_calculation"></a><a class="anchor" id="um_crypto_sha224_hash_multipart_calculation"></a><a class="anchor" id="um_crypto_sha224_hash_read"></a></li>
 <li>MAC Operations<ul>
@@ -206,7 +220,27 @@ Features</h2>
 <li>RSA<ul>
 <li>Signature Generation - RSA 2048 (Plain or Wrapped private) key. (This can be used for decryption) <a class="anchor" id="um_crypto_RSA_2048_wrapped_key"></a></li>
 <li>Signature Verification - RSA 2048, RSA 3072 and RSA 4096 keys. (This can be used for encryption) <a class="anchor" id="um_crypto_RSA_2048"></a><a class="anchor" id="um_crypto_RSA_3072"></a><a class="anchor" id="um_crypto_RSA_4096"></a></li>
-<li>Supported encoding scheme: PKCS1V15 <a class="anchor" id="um_crypto_RSA_PKCS1V15_sign_verify"></a></li>
+<li>Supported encoding scheme: PKCS1V15 <a class="anchor" id="um_crypto_RSA_PKCS1V15_sign_verify"></a> This module provides SCE7 hardware support for the following NetX Crypto operations</li>
+</ul>
+</li>
+<li>AES<ul>
+<li>Keybits - 128, 256<ul>
+<li>Encryption and Decryption.</li>
+<li>Chaining Modes: CBC, CTR, GCM mode <table class="doxtable">
+<tr>
+<th>AES Chaining Mode </th><th>HW Acceleration  </th></tr>
+<tr>
+<td>CBC </td><td>Fully accelerated </td></tr>
+<tr>
+<td>CTR </td><td>Only block cipher unit is HW accelerated </td></tr>
+<tr>
+<td>GCM </td><td>Only block cipher unit is HW accelerated </td></tr>
+<tr>
+<td>CCM </td><td>Only block cipher unit is HW accelerated </td></tr>
+</table>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -256,31 +290,13 @@ The following build time configurations are defined in fsp_cfg/middleware/rm_net
 <tr>
 <td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA</td><td>MCU Specific Options</td><td></td><td>Enables/Disables RSA HW support </td></tr>
 <tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA 2048 (HW)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT to allow HW support </td></tr>
+<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA 2048 (HW)</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT to allow HW support </td></tr>
 <tr>
 <td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA 3072 Verify/Encryption (HW)</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT to allow HW support </td></tr>
 <tr>
 <td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA 4096 Verify/Encryption (HW)</td><td>MCU Specific Options</td><td></td><td>Enables RSA NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT to allow HW support </td></tr>
 <tr>
-<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA Scratch Buffer Size (Bytes)</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled (HW)</li>
-<li>
-1304 (Modulus: 1024bits) (SW)</li>
-<li>
-2584 (Modulus: 2048bits) (SW)</li>
-<li>
-3864 (Modulus: 3072bits) (SW)</li>
-<li>
-5144 (Modulus: 4096bits) (SW)</li>
-</ul>
-</td><td>Disabled (HW) </td><td>Sets value of NX_CRYPTO_ECDSA_SCRATCH_BUFFER_SIZE </td></tr>
+<td>Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA &gt; RSA Scratch Buffer Size (Bytes)</td><td>MCU Specific Options</td><td></td><td>Sets value of NX_CRYPTO_RSA_SCRATCH_BUFFER_SIZE </td></tr>
 <tr>
 <td>Hardware Acceleration &gt; TRNG</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -337,7 +353,7 @@ Hardware Initialization</h2>
 <p>_nx_crypto_initialize() must be invoked before using the NetX Crypto APIs to ensure that the SCE peripheral is initialized.</p>
 <h2><a class="anchor" id="rm-netx-secure-crypto-memory-usage"></a>
 Memory Usage</h2>
-<p>Sufficient memory must be allocated to be used as 'crypto_metadata' for the chosen crypto operation(s). Refer <a href="https://docs.microsoft.com/en-us/azure/rtos/netx/netx-crypto/chapter4">Azure RTOS NetX Crypto API description</a> for recommended 'crypto_metadata_size' based on selected crypto operations. Sufficient amount of memory must be allocated for the thread stack to support low level crypto operations when using this module in the standalone mode or through NetX Secure (TLS).</p>
+<p>Sufficient memory must be allocated to be used as 'crypto_metadata' for the chosen crypto operation(s). Refer <a href="https://docs.microsoft.com/en-us/azure/rtos/netx/netx-crypto/chapter4">Azure RTOS NetX Crypto API description</a> for recommended 'crypto_metadata_size' based on selected crypto operations. Sufficient amount of memory must be allocated for the thread stack to support low level crypto operations when using this module in the standalone mode or through NetX Secure (TLS). A minimum stack of 0x1000 is required to use ECC and RSA. This is either the main stack in a bare metal application or the specific thread stack for an RTOS based application.</p>
 <h2><a class="anchor" id="rm-netx-secure-aes-usage"></a>
 AES Usage</h2>
 <h3><a class="anchor" id="rm-netx-secure-crypto-gcm-mode"></a>
@@ -412,7 +428,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

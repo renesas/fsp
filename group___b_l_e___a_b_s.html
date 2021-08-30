@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -268,7 +268,7 @@ BLE Library Configuration</h2>
 <p>There are three types of BLE Protocol Stacks, and the functions provided are different depending on the type of BLE Protocol Stack you select.</p>
 <table class="doxtable">
 <tr>
-<th>BLE library feature </th><th>All </th><th>Balance </th><th>Compact  </th></tr>
+<th>BLE library feature </th><th>Extended </th><th>Balance </th><th>Compact  </th></tr>
 <tr>
 <td>GAP Role </td><td>Central Peripheral Observer Broadcaster </td><td>Central Peripheral Observer Broadcaster </td><td>Peripheral Broadcaster </td></tr>
 <tr>
@@ -775,6 +775,12 @@ advertising_timer_handle</td>
 <td class="fielddoc">
 Advertising timer for legacy advertising. </td></tr>
 <tr><td class="fieldtype">
+<a id="a25c758a75eed3241ad2576c0b03460ea"></a>uint32_t</td>
+<td class="fieldname">
+scan_timer_handle</td>
+<td class="fielddoc">
+Scan interval timer. </td></tr>
+<tr><td class="fieldtype">
 <a id="a71dc03f61aa199d53e6721879c4727c5"></a><a class="el" href="group___b_l_e___a_b_s.html#structabs__advertising__parameter__t">abs_advertising_parameter_t</a></td>
 <td class="fieldname">
 advertising_sets[<a class="el" href="group___g_a_p___a_p_i.html#gab3493ebe5bfd669a30f846edb8f01fb5">BLE_MAX_NO_OF_ADV_SETS_SUPPORTED</a>]</td>
@@ -1229,7 +1235,7 @@ Set callback function pointer for RF_DEEP_SLEEP. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>p_advertising_parameter is specified as NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>The advertising parameter is out of range. </td></tr>
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Subordinate modules do not support this feature. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This feature is not supported in this configuration. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1269,6 +1275,9 @@ Set callback function pointer for RF_DEEP_SLEEP. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>p_scan_parameter is specified as NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>The scan parameter is out of range. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>This API is called in scanning. </td></tr>
+    <tr><td class="paramname">FSP_ERR_BLE_ABS_NOT_FOUND</td><td>Usable timer slot not found. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This feature is not supported in this configuration. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1308,8 +1317,9 @@ Set callback function pointer for RF_DEEP_SLEEP. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>p_connection_parameter is specified as NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>The create connection parameter is out of range. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>This API is called while creating a link by previous API call. </td></tr>
     <tr><td class="paramname">FSP_ERR_BLE_ABS_NOT_FOUND</td><td>Couldn't find a valid timer. </td></tr>
-    <tr><td class="paramname">FSP_ERR_BLE_ABS_INVALID_OPERATION</td><td>Invalid operation for the selected timer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This feature is not supported in this configuration. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1446,7 +1456,7 @@ Set callback function pointer for RF_DEEP_SLEEP. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

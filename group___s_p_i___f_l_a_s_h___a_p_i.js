@@ -4,6 +4,15 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "command", "group___s_p_i___f_l_a_s_h___a_p_i.html#a27f37ac5d1f031fd33f3b2ff5b914751", null ],
       [ "size", "group___s_p_i___f_l_a_s_h___a_p_i.html#afb42b93f396ec30b863646150e9bb91d", null ]
     ] ],
+    [ "spi_flash_direct_transfer_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t", [
+      [ "address", "group___s_p_i___f_l_a_s_h___a_p_i.html#a5120cdb55dcd4ce8da04eb8baa69254d", null ],
+      [ "data", "group___s_p_i___f_l_a_s_h___a_p_i.html#a52ae9ed9880e98f7a02107c2b31b673b", null ],
+      [ "command", "group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246", null ],
+      [ "dummy_cycles", "group___s_p_i___f_l_a_s_h___a_p_i.html#ad4a653cf90fd97dc9d0a5f8fce3c3795", null ],
+      [ "command_length", "group___s_p_i___f_l_a_s_h___a_p_i.html#a521505cf1d98e638aef0e72ca5eb6463", null ],
+      [ "address_length", "group___s_p_i___f_l_a_s_h___a_p_i.html#a63de64208374fd3c6ea1db4ffb07111f", null ],
+      [ "data_length", "group___s_p_i___f_l_a_s_h___a_p_i.html#a5e3c48eb88187944722f745231f955f3", null ]
+    ] ],
     [ "spi_flash_cfg_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__cfg__t", [
       [ "spi_protocol", "group___s_p_i___f_l_a_s_h___a_p_i.html#a6f3cdf4d6de603634118801dcb54a6d5", null ],
       [ "read_mode", "group___s_p_i___f_l_a_s_h___a_p_i.html#a40a6269760d8c4aaf75bf84613d1f551", null ],

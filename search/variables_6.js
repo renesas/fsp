@@ -17,6 +17,7 @@ var searchData=
   ['get_5fstatus',['get_status',['../group___g_a_p___a_p_i.html#a2efaaf8f4457c82cb7da2405d04f4bbc',1,'st_ble_gap_dev_info_evt_t']]],
   ['global_5fconfig',['global_config',['../group___c_a_n_f_d.html#afd7545e297144152431f5b1f3628fff7',1,'canfd_global_cfg_t']]],
   ['global_5ferr_5fipl',['global_err_ipl',['../group___c_a_n_f_d.html#a6ce35aac50e44ac4353bfd20e12639a4',1,'canfd_global_cfg_t']]],
+  ['global_5fid_5fmode',['global_id_mode',['../group___c_a_n.html#a4a26f9abfeaf1b913d5ee7643f371416',1,'can_extended_cfg_t']]],
   ['global_5finterrupts',['global_interrupts',['../group___c_a_n_f_d.html#ac6305ab75909afd62029f3c76b235549',1,'canfd_global_cfg_t']]],
   ['gradient_5fworst10_5finterval',['gradient_worst10_interval',['../group___p_t_p___a_p_i.html#a6a29b1beb38a9e80b6d945c8c37c9e8e',1,'ptp_stca_cfg_t']]],
   ['gtioca',['gtioca',['../group___g_p_t.html#ad323c6db6a695028d2926dfbf0a0dda8',1,'gpt_extended_cfg_t']]],

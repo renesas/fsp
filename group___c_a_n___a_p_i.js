@@ -17,8 +17,8 @@ var group___c_a_n___a_p_i =
     [ "can_frame_t", "group___c_a_n___a_p_i.html#structcan__frame__t", [
       [ "id", "group___c_a_n___a_p_i.html#a49d4261f37f08f5a11cc3fc12c56cdc3", null ],
       [ "id_mode", "group___c_a_n___a_p_i.html#a4144eba26f77850571fca0498bec60ef", null ],
-      [ "data_length_code", "group___c_a_n___a_p_i.html#af58b9f3fe19ed69e0a635cd271c68404", null ],
       [ "type", "group___c_a_n___a_p_i.html#a79046fddb934fd7ea0d0cc70b8d7f26d", null ],
+      [ "data_length_code", "group___c_a_n___a_p_i.html#af58b9f3fe19ed69e0a635cd271c68404", null ],
       [ "options", "group___c_a_n___a_p_i.html#a27833816de50e1ad5b16b42856653ad8", null ],
       [ "data", "group___c_a_n___a_p_i.html#ad70086e98bfe0871e3f73d1f253138db", null ]
     ] ],
@@ -66,7 +66,8 @@ var group___c_a_n___a_p_i =
       [ "CAN_EVENT_TX_ABORTED", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba973c55ab2a29a1554f488fedf29fea8a", null ],
       [ "CAN_EVENT_RX_COMPLETE", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbaa0bc5e15cee037a1d102b517ef63e161", null ],
       [ "CAN_EVENT_TX_COMPLETE", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbac169b4940b7cb76562efd7439fc76949", null ],
-      [ "CAN_EVENT_ERR_GLOBAL", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba8adaa142ed94841f5f282232ce414333", null ]
+      [ "CAN_EVENT_ERR_GLOBAL", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba8adaa142ed94841f5f282232ce414333", null ],
+      [ "CAN_EVENT_TX_FIFO_EMPTY", "group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba838c3a494516ccd0326bc1dad93e35d8", null ]
     ] ],
     [ "can_operation_mode_t", "group___c_a_n___a_p_i.html#gac29bd7d00b06d7457ae786471c296ba7", [
       [ "CAN_OPERATION_MODE_NORMAL", "group___c_a_n___a_p_i.html#ggac29bd7d00b06d7457ae786471c296ba7abde5d9e8f5711b6fe8374671c96e6f72", null ],

@@ -2,6 +2,7 @@ var searchData=
 [
   ['macaddrset',['macAddrSet',['../group___p_t_p___a_p_i.html#a807b189c7987b1f2d972f4f1fb5af55b',1,'ptp_api_t']]],
   ['magic_5fpacket',['magic_packet',['../group___e_t_h_e_r.html#a1f919131083d021455a2e75b0d1d2f4e',1,'ether_instance_ctrl_t']]],
+  ['mailbox_5fcount',['mailbox_count',['../group___c_a_n.html#a276cc9bb634ecb7fe5b032faef08e40e',1,'can_extended_cfg_t']]],
   ['mailbox_5fid',['mailbox_id',['../group___c_a_n.html#aa0c1d24b5896560908adb0ac9761aa28',1,'can_mailbox_t']]],
   ['mailbox_5ftype',['mailbox_type',['../group___c_a_n.html#aa6a30551456873fb921b933bd3ddbe23',1,'can_mailbox_t']]],
   ['mainosc_5fstate',['mainosc_state',['../group___c_g_c___a_p_i.html#ab2a7b402ef0700179bbc3cc303ecb6b3',1,'cgc_clocks_cfg_t']]],
@@ -28,6 +29,7 @@ var searchData=
   ['mendi_5fipl',['mendi_ipl',['../group___c_a_c___a_p_i.html#ac22dc55641d5ad032d9472b969f62aec',1,'cac_cfg_t']]],
   ['mendi_5firq',['mendi_irq',['../group___c_a_c___a_p_i.html#a1e0c0324456b6a19e0437ec3d6b55c9b',1,'cac_cfg_t']]],
   ['message_5flength',['message_length',['../group___p_t_p___a_p_i.html#a5f59ab0b3aad174817b679b0cf33efeb',1,'ptp_message_header_t']]],
+  ['message_5fmode',['message_mode',['../group___c_a_n.html#ae47d6ae35a96922d7906eb523a43940d',1,'can_extended_cfg_t']]],
   ['message_5ftimeout',['message_timeout',['../group___p_t_p___a_p_i.html#a21ec3cfaa60eaff97d0bdbf00005b0b8',1,'ptp_synfp_cfg_t']]],
   ['message_5ftype',['message_type',['../group___p_t_p___a_p_i.html#aec1dad61d1dcce0e13690e7f3c70615b',1,'ptp_message_header_t']]],
   ['messageflagsset',['messageFlagsSet',['../group___p_t_p___a_p_i.html#abe50284d5ff38e62e2702c135f0674d2',1,'ptp_api_t']]],

@@ -1,5 +1,9 @@
 var searchData=
 [
+  ['u1_5fadjust_5fcount_5ffull',['u1_adjust_count_full',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a3c272518a04545f0736f810de1bf9232',1,'motor_angle_encoder_info_t::u1_adjust_count_full()'],['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#abf01fec7f3bbef78f0a3585f0a18a2da',1,'motor_current_output_t::u1_adjust_count_full()']]],
+  ['u1_5fadjust_5fstatus',['u1_adjust_status',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a6eb9c59db46057cc1006bc6758f696b9',1,'motor_current_output_t']]],
+  ['u1_5fflag_5fget_5firef',['u1_flag_get_iref',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ae7614e22637a6ce6a8ad9c17483e9bea',1,'motor_current_output_t']]],
+  ['u_5fvoltage',['u_voltage',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a2af65c10218c15d3fd7c62e3b70c7951',1,'motor_current_get_voltage_t']]],
   ['uart_5finstance_5fobjects',['uart_instance_objects',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a3238e2de584875a89203c412b7a7fa66',1,'wifi_onchip_silex_instance_ctrl_t']]],
   ['uart_5finstances',['uart_instances',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a64c6d100c73279cb794db805b1ece673',1,'wifi_onchip_silex_cfg_t']]],
   ['uart_5ftei_5fsem',['uart_tei_sem',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#a29219196deb30eaad489b7c46cd9df0d',1,'wifi_onchip_silex_instance_ctrl_t']]],

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -703,7 +703,10 @@ The event links for the ELC must be configured outside this module.</dd></dl>
 <img src="r_gpt_interrupt_skipping.png" alt="r_gpt_interrupt_skipping.png"/>
 <div class="caption">
 Crest interrupt skipping in triangle-wave PWM modes (skip count 2)</div></div>
- <h1><a class="anchor" id="r-gpt-examples"></a>
+ <h2>Complementary Output</h2>
+<p>By using the Custom Waveform option the output pins can be made to output complementary waveforms. To ensure these waveforms stay in sync, the duty cycle for both pins can be set simultaneously by calling R_GPT_DutyCycleSet once with a pin parameter of GPT_IO_PIN_GTIOCA_AND_GTIOCB.</p>
+<dl class="section note"><dt>Note</dt><dd>The pin level for 0% and 100% duty cycle is determined by the Cycle End Output Level in normal PWM mode and the Initial Output Level in triangle PWM modes. 100% duty will output the configured level and 0% will output the opposite. Do not use Pin Level Toggle or Pin Level Retain for the Cycle End Output Level if normal PWM waveforms are desired.</dd></dl>
+<h1><a class="anchor" id="r-gpt-examples"></a>
 Examples</h1>
 <h2>GPT Basic Example</h2>
 <p>This is a basic example of minimal use of the GPT in an application.</p>
@@ -1980,7 +1983,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

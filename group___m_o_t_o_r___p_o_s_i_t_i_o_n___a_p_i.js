@@ -23,5 +23,6 @@ var group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i =
       [ "p_cfg", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#aa669b7acf95d4c60c1975de5fc975f1f", null ],
       [ "p_api", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#a4db445af5f39808153fa60416ba75e5b", null ]
     ] ],
-    [ "motor_position_ctrl_t", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576", null ]
+    [ "motor_position_ctrl_t", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#ga60795718f3f7f3d44938aa6079186576", null ],
+    [ "motor_position_ctrl_mode_t", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#gac587def649947014173cac649a4b73e0", null ]
 ];

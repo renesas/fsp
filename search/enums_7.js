@@ -15,6 +15,7 @@ var searchData=
   ['i2s_5fws_5fcontinue_5ft',['i2s_ws_continue_t',['../group___i2_s___a_p_i.html#ga092a6134063f1318dcada394bdf648e6',1,'r_i2s_api.h']]],
   ['icu_5fevent_5ft',['icu_event_t',['../group___b_s_p___m_c_u___r_a2_e1.html#ga1e962f78bb332dfe44840fd60e119a8b',1,'icu_event_t():&#160;bsp_icu.h'],['../group___b_s_p___m_c_u___r_a2_l1.html#ga1e962f78bb332dfe44840fd60e119a8b',1,'icu_event_t():&#160;bsp_icu.h']]],
   ['iic_5fmaster_5ftimeout_5fmode_5ft',['iic_master_timeout_mode_t',['../group___i_i_c___m_a_s_t_e_r.html#gaf8ecd43a76bfa058281bb8b6b3981d3f',1,'r_iic_master.h']]],
+  ['iic_5fmaster_5ftimeout_5fscl_5flow_5ft',['iic_master_timeout_scl_low_t',['../group___i_i_c___m_a_s_t_e_r.html#ga9789e54472d093bd5348f202205d28ec',1,'r_iic_master.h']]],
   ['ioport_5fcfg_5foptions_5ft',['ioport_cfg_options_t',['../group___i_o_p_o_r_t___a_p_i.html#gac617eebcb7c2c1e45fa8e04fc473e574',1,'r_ioport_api.h']]],
   ['ioport_5fethernet_5fchannel_5ft',['ioport_ethernet_channel_t',['../group___i_o_p_o_r_t___a_p_i.html#gaf6a78fbc73b4e8acef86a12c21df2da0',1,'r_ioport_api.h']]],
   ['ioport_5fethernet_5fmode_5ft',['ioport_ethernet_mode_t',['../group___i_o_p_o_r_t___a_p_i.html#gacaee6fc466858446638e79354043bb78',1,'r_ioport_api.h']]],

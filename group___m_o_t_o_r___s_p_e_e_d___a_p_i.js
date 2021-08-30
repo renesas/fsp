@@ -3,6 +3,11 @@ var group___m_o_t_o_r___s_p_e_e_d___a_p_i =
     [ "motor_speed_callback_args_t", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__callback__args__t", [
       [ "p_context", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a59fb5e3cafe0592586b82b929638e532", null ]
     ] ],
+    [ "motor_speed_position_data_t", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__position__data__t", [
+      [ "e_step_mode", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#af1924d1b7cd0689223eb75ba5503a370", null ],
+      [ "e_loop_mode", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a5be8184c8d6bbe9ef5a2cf03b9a545ac", null ],
+      [ "position_reference_degree", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#a6df62534194ef681866f5b12f941280e", null ]
+    ] ],
     [ "motor_speed_cfg_t", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#structmotor__speed__cfg__t", [
       [ "st_input", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#aa3aae56a751e10209404328ecb6a2b0e", null ],
       [ "st_output", "group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#aee450918afe0cb9133f3805f019c3f7e", null ],

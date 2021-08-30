@@ -18,6 +18,7 @@ var group___b_l_e___a_b_s =
       [ "abs_delete_bond_callback", "group___b_l_e___a_b_s.html#acb9fe105040554b6a69a9387968bc0a5", null ],
       [ "connection_timer_handle", "group___b_l_e___a_b_s.html#ae6d58e2aeeb4a45de24bbea9009a8f7f", null ],
       [ "advertising_timer_handle", "group___b_l_e___a_b_s.html#a0afbfaaf47bcd34401496bdbced73d1d", null ],
+      [ "scan_timer_handle", "group___b_l_e___a_b_s.html#a25c758a75eed3241ad2576c0b03460ea", null ],
       [ "advertising_sets", "group___b_l_e___a_b_s.html#a71dc03f61aa199d53e6721879c4727c5", null ],
       [ "abs_scan", "group___b_l_e___a_b_s.html#aa40a6373baf51438acfa2b7ec297e311", null ],
       [ "loc_bd_addr", "group___b_l_e___a_b_s.html#ab43119208f625f3f228c8caa87c86b23", null ],

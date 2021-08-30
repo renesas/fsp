@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -472,7 +472,7 @@ Specify NULL when using the Host class. </td></tr>
 <tr>
 <td>USBHS D1FIFO Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority used by the USBHS D1FIFO ISR. </td></tr>
 <tr>
-<td>USB RTOS Callback</td><td>Enter the address of the function.</td><td>NULL </td><td>If an RTOS is used, set the callback function here. </td></tr>
+<td>USB RTOS Callback</td><td>Enter the address of the function.</td><td>NULL </td><td>If an FreeRTOS is used, set the callback function here. </td></tr>
 <tr>
 <td>USB Callback Context</td><td>Enter the address of the context.</td><td>NULL </td><td>Set the callback context here. </td></tr>
 </table>
@@ -518,7 +518,9 @@ Descriptor definition</h1>
 Usage Notes</h1>
 <h2>Program Structure</h2>
 <p>USB applications (whether using an RTOS or not) should be written as an event-handling loop. Either a callback function (RTOS only) or R_USB_EventGet should be used to provide event data to the application loop where a switch statement handles the event.</p>
-<dl class="section note"><dt>Note</dt><dd>The USB_STATUS_CONFIGURED event should be confirmed before calling R_USB_Read or R_USB_Write.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>1.The USB_STATUS_CONFIGURED event should be confirmed before calling R_USB_Read or R_USB_Write.<br />
+ 2.When attaching to USB Host, Suspend event is notified to the application program in USB peripheral mode. Notification of this event to the application program does not affect the operation.<br />
+</dd></dl>
 <h2><a class="anchor" id="r-usb_basic-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the USB driver:</p>
@@ -1870,7 +1872,7 @@ Do not call this API in the interrupt function. </dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

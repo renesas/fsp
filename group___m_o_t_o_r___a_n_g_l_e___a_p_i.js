@@ -5,6 +5,14 @@ var group___m_o_t_o_r___a_n_g_l_e___a_p_i =
       [ "id", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ac154ba4be2d27510387072ab635c1c5b", null ],
       [ "iq", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a6420b158e7943b5974428327d62d9034", null ]
     ] ],
+    [ "motor_angle_voltage_reference_t", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__voltage__reference__t", [
+      [ "vd", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a9b39071d195ba340bbdfcc765fe6c09f", null ],
+      [ "vq", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ab30923ba51b00c341d90804b24aaebf6", null ]
+    ] ],
+    [ "motor_angle_encoder_info_t", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__encoder__info__t", [
+      [ "e_adjust_status", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a73e470b5d97213689ecf2603e8fa68ce", null ],
+      [ "u1_adjust_count_full", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a3c272518a04545f0736f810de1bf9232", null ]
+    ] ],
     [ "motor_angle_api_t", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__api__t", [
       [ "open", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ada3a5f139312adbeeb69fc594791a883", null ],
       [ "close", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a858a638ad95923d5b6fa541a7ae24cd6", null ],

@@ -90,6 +90,7 @@ var searchData=
   ['glcdc_5ftcon_5fsignal_5fselect_5ft',['glcdc_tcon_signal_select_t',['../group___g_l_c_d_c.html#ga69083bd9f631cc2259c5fd30f32a54ba',1,'r_glcdc.h']]],
   ['global_5fconfig',['global_config',['../group___c_a_n_f_d.html#afd7545e297144152431f5b1f3628fff7',1,'canfd_global_cfg_t']]],
   ['global_5ferr_5fipl',['global_err_ipl',['../group___c_a_n_f_d.html#a6ce35aac50e44ac4353bfd20e12639a4',1,'canfd_global_cfg_t']]],
+  ['global_5fid_5fmode',['global_id_mode',['../group___c_a_n.html#a4a26f9abfeaf1b913d5ee7643f371416',1,'can_extended_cfg_t']]],
   ['global_5finterrupts',['global_interrupts',['../group___c_a_n_f_d.html#ac6305ab75909afd62029f3c76b235549',1,'canfd_global_cfg_t']]],
   ['general_20pwm_20timer_20_28r_5fgpt_29',['General PWM Timer (r_gpt)',['../group___g_p_t.html',1,'']]],
   ['gpt_5fadc_5fcompare_5fmatch_5fadc_5fa',['GPT_ADC_COMPARE_MATCH_ADC_A',['../group___g_p_t.html#gga2a838fffcbafd97778bbe3ffbfbf54b1a6f5dba4e42352f1bea9dccd3201021cc',1,'r_gpt.h']]],

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -243,13 +243,13 @@ Useful information from the CAN status register. </td></tr>
 <td class="fieldname">
 rx_mb_status</td>
 <td class="fielddoc">
-CANFD RX Message Buffer New Data flags. </td></tr>
+RX Message Buffer New Data flags. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7cd7ac782cdb433247cc0f28f2755f81"></a>uint32_t</td>
 <td class="fieldname">
 rx_fifo_status</td>
 <td class="fielddoc">
-CANFD RX FIFO Empty flags. </td></tr>
+RX FIFO Empty flags. </td></tr>
 <tr><td class="fieldtype">
 <a id="ada0fe3e8eb824d0ebb36332f98e3c771"></a>uint8_t</td>
 <td class="fieldname">
@@ -341,17 +341,17 @@ id_mode</td>
 <td class="fielddoc">
 Standard or Extended ID (IDE). </td></tr>
 <tr><td class="fieldtype">
-<a id="af58b9f3fe19ed69e0a635cd271c68404"></a>uint8_t</td>
-<td class="fieldname">
-data_length_code</td>
-<td class="fielddoc">
-CAN Data Length Code (DLC). </td></tr>
-<tr><td class="fieldtype">
 <a id="a79046fddb934fd7ea0d0cc70b8d7f26d"></a><a class="el" href="group___c_a_n___a_p_i.html#gad3ffe1ae0429fcd1053a969d96c47610">can_frame_type_t</a></td>
 <td class="fieldname">
 type</td>
 <td class="fielddoc">
 Frame type (RTR). </td></tr>
+<tr><td class="fieldtype">
+<a id="af58b9f3fe19ed69e0a635cd271c68404"></a>uint8_t</td>
+<td class="fieldname">
+data_length_code</td>
+<td class="fielddoc">
+CAN Data Length Code (DLC). </td></tr>
 <tr><td class="fieldtype">
 <a id="a27833816de50e1ad5b16b42856653ad8"></a>uint32_t</td>
 <td class="fieldname">
@@ -791,6 +791,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggacc2e5bc68e8b707c069ca27f521695dba8adaa142ed94841f5f282232ce414333"></a>CAN_EVENT_ERR_GLOBAL&#160;</td><td class="fielddoc"><p>Global error has occurred. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggacc2e5bc68e8b707c069ca27f521695dba838c3a494516ccd0326bc1dad93e35d8"></a>CAN_EVENT_TX_FIFO_EMPTY&#160;</td><td class="fielddoc"><p>Transmit FIFO is empty. </p>
+</td></tr>
 </table>
 
 </div>
@@ -895,7 +897,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

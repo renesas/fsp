@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.1.0</span>
+   &#160;<span id="projectnumber">Release v3.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -195,7 +195,7 @@ Features</h2>
 <p>The TinyCrypt port module provides hardware support for the following operations</p><ul>
 <li>AES<ul>
 <li>Keybits - 128 <a class="anchor" id="um_tc_AES128_encryption_decryption"></a></li>
-<li>ECB, CBC, CTR, CCM and CMAC modes <a class="anchor" id="um_tc_AES128_cbc_encryption_decryption"></a> -TRNG <a class="anchor" id="um_rng_hardware_acceleration"></a></li>
+<li>ECB, CBC, CTR, CCM and CMAC modes <a class="anchor" id="um_tc_AES128_cbc_encryption_decryption"></a> -TRNG <a class="anchor" id="um_rng_hardware_acceleration"></a> </li>
 </ul>
 </li>
 </ul>
@@ -228,14 +228,15 @@ Hardware Initialization</h2>
 <p>Invoke RM_TINCYRYPT_PORT_Init () to initialize the hardware before using Tinycrypt if either hardware acceleration or the TRNG is to be used.</p>
 <h2><a class="anchor" id="rm-tinycrypt-prng_usage"></a>
 Random Number Generation</h2>
-<p>There are two Pseudo-random Number Generators (PRNG) provided in TinyCrypt</p><ul>
+<p>There are two Pseudo-random Number Generators (PRNG) provided in TinyCrypt</p>
+<ul>
 <li>CTR-PRNG which uses AES128 internally in its implementation. Enabling AES128 hardware acceleration will improve the performance of this module.</li>
 <li>HMAC-PRNG which uses SHA256 internally in its implementation.</li>
 </ul>
 <p><b> Both these implementations will only be able to provide a random pseudo-random number sequence if they are seeded with truly random data. The TRNG module that is present in hardware and available in rm_tinycrypt_port must be used to seed these modules.</b> <a class="anchor" id="um_tc_prng_seed"></a>When using CTR-PRNG or HMAC-PRNG, use the <a class="el" href="group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html#ga7c2f26b3efb9ca315f40754bfb926eb0" title="Reads requested length of random data from the TRNG. Generate num_req_bytes of random bytes and store...">RM_TINCYRYPT_PORT_TRNG_Read()</a> function to obtain random data from the TRNG hardware and use that to seed the PRNG modules before invoking the pseudo-random number generation. If purely random data is sufficient for the application, then <a class="el" href="group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html#ga7c2f26b3efb9ca315f40754bfb926eb0" title="Reads requested length of random data from the TRNG. Generate num_req_bytes of random bytes and store...">RM_TINCYRYPT_PORT_TRNG_Read()</a> can be used directly instead. The hardware TRNG implements the CTR_DRBG spec.</p>
 <h2><a class="anchor" id="rm-tinycrypt-csprng_usage"></a>
 Default CSPRNG</h2>
-<p>The TinyCrypt ECC implementation requires a platform specific implementation of the <a class="el" href="group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html#ga09389b89e02115f59a1da9cccc0b09f8" title="Implements the Cryptographically Secure Pseudo-Random Number Generator function required byt TinyCryp...">default_CSPRNG()</a> function. This function has been implemented using the hardware TRNG in the port to support software ECC usage.</p>
+<p>The TinyCrypt ECC implementation requires a platform specific implementation of the <a class="el" href="group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html#ga09389b89e02115f59a1da9cccc0b09f8" title="Implements the Cryptographically Secure Pseudo-Random Number Generator function required byt TinyCryp...">default_CSPRNG()</a> function. This function has been implemented using the hardware TRNG in the port to support software ECC usage. When using TinyCrypt in S/W mode, it is necessary to implement <a class="el" href="group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html#ga09389b89e02115f59a1da9cccc0b09f8" title="Implements the Cryptographically Secure Pseudo-Random Number Generator function required byt TinyCryp...">default_CSPRNG()</a> if using ECC signature generation (ECDSA) or key derivation (ECDH).</p>
 <h2><a class="anchor" id="rm-tinycrypt-aes-usage"></a>
 AES-128 Usage</h2>
 <p>The AES ECB mode implementation is provided in aes_encrypt.decrypt.c. All the other modes of AES operation including CBC, CCN, CMAC and CTR use the ECB mode for the block operation. On the RA2, the ECB mode has been hardware accelerated which improves performance of the other modes as well. Additionally the CBC mode has also been accelerated.</p>
@@ -244,6 +245,8 @@ AES-128 Usage</h2>
 Memory Usage</h2>
 <p>TinyCrypt does not use dynamic allocation so there is no heap requirement.</p>
 <h2>Limitations</h2>
+<h3>Usage with RA4 and RA6 devices</h3>
+<p>TinyCrypt (S/W Only) can be used on RA4 and RA6 devices. However, since ECC signature generation (ECDSA) and key derivation (ECDH) requires a random number source, that operation is currently not supported on these devices when using TinyCrypt (S/W Only). In order to support those operations the function <a class="el" href="group___r_m___t_i_n_y_c_r_y_p_t___p_o_r_t.html#ga09389b89e02115f59a1da9cccc0b09f8" title="Implements the Cryptographically Secure Pseudo-Random Number Generator function required byt TinyCryp...">default_CSPRNG()</a> must be implemented in the user code.</p>
 <h3>TinyCrypt</h3>
 <ul>
 <li>No padding is supported; the user is expected to provide adequately padded data depending on the algorithm used.</li>
@@ -371,7 +374,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.1.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.2.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
