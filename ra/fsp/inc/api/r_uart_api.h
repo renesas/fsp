@@ -256,6 +256,15 @@ typedef struct st_uart_api
      * @param[in]   p_ctrl     Pointer to the UART control block.
      */
     fsp_err_t (* close)(uart_ctrl_t * const p_ctrl);
+
+    /** Stop ongoing read and return the number of bytes remaining in the read.
+     * @par Implemented as
+     * - @ref R_SCI_UART_ReadStop()
+     *
+     * @param[in]   p_ctrl                  Pointer to the UART control block.
+     * @param[in,out]   remaining_bytes     Pointer to location to store remaining bytes for read.
+     */
+    fsp_err_t (* readStop)(uart_ctrl_t * const p_ctrl, uint32_t * remaining_bytes);
 } uart_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

@@ -38,10 +38,18 @@ FSP_HEADER
 /* Leading zeroes removed to avoid coding standards violation. */
 
 /** Maximum number of clock counts in 16 bit timer. */
-#define AGT_MAX_CLOCK_COUNTS    (UINT16_MAX)
+#if BSP_FEATURE_AGT_HAS_AGTW
+ #define AGT_MAX_CLOCK_COUNTS    (UINT32_MAX)
+#else
+ #define AGT_MAX_CLOCK_COUNTS    (UINT16_MAX)
+#endif
 
 /** Maximum period value allowed for AGT. */
-#define AGT_MAX_PERIOD          (UINT16_MAX + 1U)
+#if BSP_FEATURE_AGT_HAS_AGTW
+ #define AGT_MAX_PERIOD          (UINT32_MAX)
+#else
+ #define AGT_MAX_PERIOD          (UINT16_MAX + 1U)
+#endif
 
 /*******************************************************************************************************************//**
  * @addtogroup AGT
@@ -86,9 +94,9 @@ typedef enum e_agt_agtio_filter
 /** Enable pin for event counting mode. */
 typedef enum e_agt_enable_pin
 {
-    AGT_ENABLE_PIN_NOT_USED    = 0U,    ///< AGTEE is not used
-    AGT_ENABLE_PIN_ACTIVE_LOW  = 0x40U, ///< Events are only counted when AGTEE is low
-    AGT_ENABLE_PIN_ACTIVE_HIGH = 0x44U, ///< Events are only counted when AGTEE is high
+    AGT_ENABLE_PIN_NOT_USED    = 0U,    ///< AGTEE/AGTWEE is not used
+    AGT_ENABLE_PIN_ACTIVE_LOW  = 0x40U, ///< Events are only counted when AGTEE/AGTWEE is low
+    AGT_ENABLE_PIN_ACTIVE_HIGH = 0x44U, ///< Events are only counted when AGTEE/AGTWEE is high
 } agt_enable_pin_t;
 
 /** Trigger edge for pulse period measurement mode and event counting mode. */
@@ -102,8 +110,8 @@ typedef enum e_agt_trigger_edge
 /** Output pins, used to select which duty cycle to update in R_AGT_DutyCycleSet(). */
 typedef enum e_agt_output_pin
 {
-    AGT_OUTPUT_PIN_AGTOA = 0,          ///< GTIOCA
-    AGT_OUTPUT_PIN_AGTOB = 1,          ///< GTIOCB
+    AGT_OUTPUT_PIN_AGTOA = 0,          ///< AGTOA
+    AGT_OUTPUT_PIN_AGTOB = 1,          ///< AGTOB
 } agt_output_pin_t;
 
 /** Level of AGT pin */
@@ -119,8 +127,12 @@ typedef struct st_agt_instance_ctrl
 {
     uint32_t            open;                     // Whether or not channel is open
     const timer_cfg_t * p_cfg;                    // Pointer to initial configurations
-    R_AGT0_Type       * p_reg;                    // Base register for this channel
-    uint32_t            period;                   // Current timer period (counts)
+#if BSP_FEATURE_AGT_HAS_AGTW
+    R_AGTW0_Type * p_reg;                         // Base register for this channel
+#else
+    R_AGT0_Type * p_reg;                          // Base register for this channel
+#endif
+    uint32_t period;                              // Current timer period (counts)
 
     void (* p_callback)(timer_callback_args_t *); // Pointer to callback that is called when a timer_event_t occurs.
     timer_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
@@ -138,9 +150,9 @@ typedef struct st_agt_extended_cfg
         uint8_t agtoab_settings;
         struct
         {
-            agt_pin_cfg_t agtoa : 3;     ///< Configure AGTOA pin
+            agt_pin_cfg_t agtoa : 3;     ///< Configure AGTOA/AGTWOA pin
             uint8_t             : 1;
-            agt_pin_cfg_t agtob : 3;     ///< Configure AGTOB pin
+            agt_pin_cfg_t agtob : 3;     ///< Configure AGTOB/AGTWOB pin
         };
     };
     agt_pin_cfg_t agto : 3;              ///< Configure AGTO pin @note AGTIO polarity is opposite AGTO

@@ -74,6 +74,7 @@ typedef struct st_motor_angle_current
     float iq;                          ///< q-axis current
 } motor_angle_current_t;
 
+/** Motor angle voltage reference */
 typedef struct st_motor_angle_voltage_reference
 {
     float vd;                          ///< d-axis voltage reference
@@ -88,6 +89,7 @@ typedef enum e_motor_sense_encoder_angle_adjust
     MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH,        ///< Roter Angle Adjustment Finish
 } motor_sense_encoder_angle_adjust_t;
 
+/** Motor angle encoder adjustment info */
 typedef struct st_motor_angle_encoder_info
 {
     motor_sense_encoder_angle_adjust_t e_adjust_status; ///< Encoder Adjustment Status

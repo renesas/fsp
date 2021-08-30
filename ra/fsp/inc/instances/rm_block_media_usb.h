@@ -61,12 +61,14 @@ typedef struct st_rm_block_media_usb_instance_ctrl
 {
     uint32_t open;
     rm_block_media_cfg_t const * p_cfg;
-    uint32_t           sector_count;
-    uint32_t           sector_size_bytes;
-    uint8_t            device_address;
-    bool               initialized;
-    uint8_t            p_read_buffer[USB_HMSC_SECTOR_SIZE] __attribute__((__aligned__(4)));
+    uint32_t sector_count;
+    uint32_t sector_size_bytes;
+    uint8_t  device_address;
+    bool     initialized;
+    uint8_t  p_read_buffer[USB_HMSC_SECTOR_SIZE] __attribute__((__aligned__(4)));
+#if 2 == BSP_CFG_RTOS
     EventGroupHandle_t event_group;
+#endif
 } rm_block_media_usb_instance_ctrl_t;
 
 /**********************************************************************************************************************

@@ -21,32 +21,34 @@
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
-#include <string.h>
-#include "FreeRTOS.h"
-#include "list.h"
-#include "task.h"
-#include "semphr.h"
-#include "limits.h"
 #include "rm_wifi_onchip_silex.h"
 #include "rm_wifi_onchip_silex_cfg.h"
 
+#if (BSP_CFG_RTOS == 2)
+ #include <string.h>
+ #include "FreeRTOS.h"
+ #include "list.h"
+ #include "task.h"
+ #include "semphr.h"
+ #include "limits.h"
+
 /* Undefine the macro for Keil Compiler to avoid conflict: */
 /* __PASTE macro redefinition [-Wmacro-redefinition] */
-#if defined(__ARMCC_VERSION)
- #pragma GCC diagnostic push
- #pragma GCC diagnostic ignored "-Wmacro-redefined"
-#endif
+ #if defined(__ARMCC_VERSION)
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wmacro-redefined"
+ #endif
 
-#include "iot_secure_sockets.h"
-#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
- #include "iot_tls.h"
- #include "core_pkcs11.h"
- #include "iot_crypto.h"
-#endif
+ #include "iot_secure_sockets.h"
+ #if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+  #include "iot_tls.h"
+  #include "core_pkcs11.h"
+  #include "iot_crypto.h"
+ #endif
 
-#if defined(__ARMCC_VERSION)
- #pragma GCC diagnostic pop
-#endif
+ #if defined(__ARMCC_VERSION)
+  #pragma GCC diagnostic pop
+ #endif
 
 /* Internal context structure. */
 typedef struct SSOCKETContext
@@ -251,7 +253,7 @@ int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Sockle
         }
 
         /* Negotiate TLS if requested. */
-#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+ #if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
         if ((SOCKETS_ERROR_NONE == lStatus) && (pdTRUE == pxContext->xRequireTLS))
         {
             TLSParams_t xTLSParams = {0};
@@ -273,7 +275,7 @@ int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Sockle
                 }
             }
         }
-#endif
+ #endif
     }
     else
     {
@@ -310,14 +312,14 @@ int32_t SOCKETS_Recv (Socket_t xSocket, void * pvBuffer, size_t xBufferLength, u
     if ((xSocket != SOCKETS_INVALID_SOCKET) && (pvBuffer != NULL))
     {
         pxContext->xRecvFlags = (BaseType_t) ulFlags;
-#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+ #if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
         if (pdTRUE == pxContext->xRequireTLS)
         {
             /* Receive through TLS pipe, if negotiated. */
             lStatus = TLS_Recv(pxContext->pvTLSContext, pvBuffer, xBufferLength);
         }
         else
-#endif
+ #endif
         {
             /* Receive unencrypted. */
             lStatus = prvNetworkRecv(pxContext, pvBuffer, xBufferLength);
@@ -351,14 +353,14 @@ int32_t SOCKETS_Send (Socket_t xSocket, const void * pvBuffer, size_t xDataLengt
     {
         pxContext->xSendFlags = (BaseType_t) ulFlags;
 
-#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+ #if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
         if (pdTRUE == pxContext->xRequireTLS)
         {
             /* Send through TLS pipe, if negotiated. */
             lStatus = TLS_Send(pxContext->pvTLSContext, pvBuffer, xDataLength);
         }
         else
-#endif
+ #endif
         {
             /* Send unencrypted. */
             lStatus = prvNetworkSend(pxContext, pvBuffer, xDataLength);
@@ -437,7 +439,7 @@ int32_t SOCKETS_Close (Socket_t xSocket)
     if (((int) NULL != (int) pxContext) && ((int) SOCKETS_INVALID_SOCKET != (int) pxContext) &&
         ((int) pxContext->xSocket < WIFI_ONCHIP_SILEX_CFG_NUM_CREATEABLE_SOCKETS))
     {
-#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+ #if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
         if (NULL != pxContext->pcDestination)
         {
             vPortFree(pxContext->pcDestination);
@@ -452,7 +454,7 @@ int32_t SOCKETS_Close (Socket_t xSocket)
         {
             TLS_Cleanup(pxContext->pvTLSContext);
         }
-#endif
+ #endif
 
         ret = (int32_t) rm_wifi_onchip_silex_socket_disconnect(((uint32_t) pxContext->xSocket));
         if (ret != 0)
@@ -560,7 +562,7 @@ int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
         {
             case SOCKETS_SO_SERVER_NAME_INDICATION:
             {
-#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+ #if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
 
                 /* Do not set the SNI options if the socket is possibly already connected. */
                 if (WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED == status)
@@ -583,15 +585,15 @@ int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
                     }
                 }
 
-#else
+ #else
                 lStatus = SOCKETS_EINVAL;
-#endif
+ #endif
                 break;
             }
 
             case SOCKETS_SO_TRUSTED_SERVER_CERTIFICATE:
             {
-#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+ #if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
 
                 /* Do not set the trusted server certificate if the socket is possibly already connected. */
                 if (WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED == status)
@@ -614,15 +616,15 @@ int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
                     }
                 }
 
-#else
+ #else
                 lStatus = SOCKETS_EINVAL;
-#endif
+ #endif
                 break;
             }
 
             case SOCKETS_SO_REQUIRE_TLS:
             {
-#if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
+ #if WIFI_ONCHIP_SILEX_CFG_TLS_SUPPORT
 
                 /* Do not set the TLS option if the socket is possibly already connected. */
                 if (WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED == status)
@@ -634,9 +636,9 @@ int32_t SOCKETS_SetSockOpt (Socket_t     xSocket,
                     pxContext->xRequireTLS = pdTRUE;
                 }
 
-#else
+ #else
                 lStatus = SOCKETS_EINVAL;
-#endif
+ #endif
 
                 break;
             }
@@ -742,3 +744,5 @@ BaseType_t SOCKETS_Init (void)
 
     return pdPASS;
 }
+
+#endif

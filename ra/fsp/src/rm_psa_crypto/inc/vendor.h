@@ -43,7 +43,7 @@ extern "C"
 
 /* Functions used directly from mbedCrypto */
 psa_status_t mbedtls_to_psa_error(int ret);
-psa_status_t psa_finish_key_creation(psa_key_slot_t * slot, psa_se_drv_table_entry_t * driver);
+psa_status_t psa_finish_key_creation(psa_key_slot_t * slot, psa_se_drv_table_entry_t * driver, mbedtls_svc_key_id_t * key);
 psa_status_t psa_internal_export_key(const psa_key_slot_t * slot,
                                      uint8_t              * data,
                                      size_t                 data_size,

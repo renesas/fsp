@@ -157,7 +157,7 @@ USHORT result;
     result = (USHORT)((result >> 8) + counter_block[12]);
     counter_block[12] = (UCHAR)(result & 0xFF);
 }
-
+#if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) || (0U == BSP_FEATURE_CRYPTO_HAS_SCE9)
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
@@ -246,7 +246,7 @@ UCHAR mask;
         }
     }
 }
-
+#endif
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
@@ -294,7 +294,7 @@ UCHAR mask;
 /**************************************************************************/
 NX_CRYPTO_KEEP static VOID _nx_crypto_gcm_ghash_update(UCHAR *hkey, UCHAR *input, UINT input_length, UCHAR *output)
 {
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
     sce_nx_crypto_gcm_ghash_update(hkey, input, input_length, output);
 #else
 UCHAR tmp_block[NX_CRYPTO_GCM_BLOCK_SIZE];
@@ -509,7 +509,8 @@ UCHAR iv_len;
         tmp_block[NX_CRYPTO_GCM_BLOCK_SIZE - 1] = (UCHAR)((iv_len << 3) & 0x00FF);
         _nx_crypto_gcm_ghash_update(hkey, tmp_block, NX_CRYPTO_GCM_BLOCK_SIZE, j0);
     }
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
+    NX_CRYPTO_PARAMETER_NOT_USED(counter);
     UINT ret = sce_nx_crypto_gcm_encrypt_init ((NX_CRYPTO_AES *)crypto_metadata, j0, additional_data, additional_len);
     if (NX_CRYPTO_SUCCESS != ret)
     {
@@ -596,10 +597,11 @@ UCHAR *counter = gcm_metadata -> nx_crypto_gcm_counter;
     {
         return(NX_CRYPTO_PTR_ERROR);
     }
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
     NX_CRYPTO_PARAMETER_NOT_USED(hkey);
     NX_CRYPTO_PARAMETER_NOT_USED(s);
     NX_CRYPTO_PARAMETER_NOT_USED(counter);
+    NX_CRYPTO_PARAMETER_NOT_USED(crypto_function);
     UINT ret = sce_nx_crypto_gcm_encrypt_update((NX_CRYPTO_AES *)crypto_metadata, input, output, length);
     if (NX_CRYPTO_SUCCESS != ret)
     {
@@ -698,10 +700,11 @@ UINT length;
     tmp_block[13] = (UCHAR)(((length << 3) & 0x00FF0000) >> 16);
     tmp_block[14] = (UCHAR)(((length << 3) & 0x0000FF00) >> 8);
     tmp_block[15] = (UCHAR)((length << 3) & 0x000000FF);
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
     NX_CRYPTO_PARAMETER_NOT_USED(hkey);
     NX_CRYPTO_PARAMETER_NOT_USED(s);
     NX_CRYPTO_PARAMETER_NOT_USED(j0);
+    NX_CRYPTO_PARAMETER_NOT_USED(crypto_function);
     UINT ret = sce_nx_crypto_gcm_encrypt_calculate((NX_CRYPTO_AES *)crypto_metadata, tmp_block, icv_len, output);
 #ifdef NX_SECURE_KEY_CLEAR
     NX_CRYPTO_MEMSET(tmp_block, 0, sizeof(tmp_block));
@@ -903,7 +906,7 @@ UINT i;
     return(NX_CRYPTO_SUCCESS);
 }
 
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
 /***********************************************************************************************************************
  * GCM Decrypt Init and AAD setup. This includes preparing the IV.
  *

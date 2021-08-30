@@ -102,7 +102,7 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 /**  Configuration set Command offset*/
 #define FLASH_HP_FCU_CONFIG_SET_ID_BYTE               (0x0000A150U)
 #if !(defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA4M2) || \
-    defined(BSP_MCU_GROUP_RA6M5))
+    defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA4E1) || defined(BSP_MCU_GROUP_RA6E1))
  #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP       (0x0000A160U)
 #else
  #define FLASH_HP_FCU_CONFIG_SET_DUAL_MODE            (0x0100A110U)
@@ -1261,7 +1261,7 @@ static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, u
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_check_errors (fsp_err_t previous_error, uint32_t error_bits, fsp_err_t return_error)
 {
-    /* See "Recovery from the Command-Locked State": Section 7.3.6 in SC32_FlashMemory_supplement(RV40F_Ph2)_20160204.*/
+    /* See "Recovery from the Command-Locked State": Section 47.9.3.6 of the RA6M4 manual R01UH0890EJ0100.*/
     fsp_err_t err = FSP_SUCCESS;
     if (1U == R_FACI_HP->FASTAT_b.CMDLK)
     {
@@ -1924,7 +1924,7 @@ static fsp_err_t flash_hp_df_erase (flash_hp_instance_ctrl_t * p_ctrl, uint32_t 
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_pe_mode_exit ()
 {
-    /* See "Transition to Read Mode": Section 7.3.5 in SC32_FlashMemory_supplement(RV40F_Ph2)_20160204. */
+    /* See "Transition to Read Mode": Section 47.9.3.5 of the RA6M4 manual R01UH0890EJ0100. */
     /* FRDY and CMDLK are checked after the previous commands complete and do not need to be checked again. */
     fsp_err_t err      = FSP_SUCCESS;
     fsp_err_t temp_err = FSP_SUCCESS;
@@ -2041,7 +2041,7 @@ static fsp_err_t flash_hp_reset (flash_hp_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_stop ()
 {
-    /* See "Forced Stop Command": Section 7.3.13 in SC32_FlashMemory_supplement(RV40F_Ph2)_20160204. If the CMDLK bit
+    /* See "Forced Stop Command": Section 47.9.3.13 of the RA6M4 manual R01UH0890EJ0100. If the CMDLK bit
      * is still set after issuing the force stop command return an error. */
     volatile uint32_t wait_count = FLASH_HP_FRDY_CMD_TIMEOUT;
 
@@ -2073,7 +2073,7 @@ static fsp_err_t flash_hp_stop ()
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_status_clear ()
 {
-    /* See "Status Clear Command": Section 7.3.12 in SC32_FlashMemory_supplement(RV40F_Ph2)_20160204. */
+    /* See "Status Clear Command": Section 47.9.3.12 of the RA6M4 manual R01UH0890EJ0100. */
     /* Timeout counter. */
     volatile uint32_t wait_count = FLASH_HP_FRDY_CMD_TIMEOUT;
 
@@ -2336,7 +2336,7 @@ static fsp_err_t flash_hp_configuration_area_write (flash_hp_instance_ctrl_t * p
 {
     volatile uint32_t timeout = p_ctrl->timeout_write_config;
 
-    /* See "Configuration Set Command": Section 7.3.16 in SC32_FlashMemory_supplement(RV40F_Ph2)_20160204. */
+    /* See "Configuration Set Command": Section 47.9.3.15 of the RA6M4 manual R01UH0890EJ0100. */
     R_FACI_HP->FSADDR        = fsaddr;
     R_FACI_HP_CMD->FACI_CMD8 = FLASH_HP_FACI_CMD_CONFIG_SET_1;
     R_FACI_HP_CMD->FACI_CMD8 = FLASH_HP_FACI_CMD_CONFIG_SET_2;
@@ -2581,7 +2581,7 @@ static fsp_err_t flash_hp_enter_pe_df_mode (flash_hp_instance_ctrl_t * const p_c
 {
     fsp_err_t err = FSP_SUCCESS;
 
-    /* See "Transition to Data Flash P/E Mode": Section 7.3.4 in SC32_FlashMemory_supplement(RV40F_Ph2)_20160204. */
+    /* See "Transition to Data Flash P/E Mode": Section 47.9.3.4 of the RA6M4 manual R01UH0890EJ0100. */
     /* Timeout counter. */
     volatile uint32_t wait_count = FLASH_HP_FRDY_CMD_TIMEOUT;
 
@@ -2628,7 +2628,7 @@ static fsp_err_t flash_hp_enter_pe_cf_mode (flash_hp_instance_ctrl_t * const p_c
 {
     fsp_err_t err = FSP_SUCCESS;
 
-    /* See "Transition to Code Flash P/E Mode": Section 7.3.5 in SC32_FlashMemory_supplement(RV40F_Ph2)_20160204. */
+    /* See "Transition to Code Flash P/E Mode": Section 47.9.3.3 of the RA6M4 manual R01UH0890EJ0100. */
     /* Timeout counter. */
     volatile uint32_t wait_count = FLASH_HP_FRDY_CMD_TIMEOUT;
 

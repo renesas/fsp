@@ -31,7 +31,7 @@
 #endif
 
 #include <stddef.h>
-#include "vector_data.h"
+#include "../../src/bsp/mcu/all/bsp_arm_exceptions.h"
 #include "cmsis_compiler.h"
 
 #if   __ARM_ARCH_7EM__

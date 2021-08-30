@@ -80,25 +80,27 @@
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes128EcbEncryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex)
 {
+    uint32_t indata_keytype = 0; /* For normal */
     uint32_t indata_cmd   = 0;
     uint32_t indata_iv[4] =            /* dummy */
     {
         0
     };
 
-    if (SCE_KEY_INDEX_TYPE_AES128 == InData_KeyIndex->type)
-    {
-        indata_cmd = change_endian_long(0); /* ECB-Encrypt command */
-    }
-    else
+    if ((SCE_KEY_INDEX_TYPE_AES128 != InData_KeyIndex->type) && (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH != InData_KeyIndex->type))
     {
         return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
     }
-
-    return R_SCE_Aes128EncryptDecryptInitSub(&indata_cmd, InData_KeyIndex->value, indata_iv);
+    indata_cmd = change_endian_long(0); /* ECB-Encrypt command */
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes128EncryptDecryptInitSub(&indata_keytype, &indata_cmd, InData_KeyIndex->value, indata_iv);
 }
 
 /*******************************************************************************************************************//**
@@ -142,25 +144,27 @@ fsp_err_t R_SCE_Aes128EcbEncryptFinalPrivate (uint32_t * OutData_Text, uint32_t 
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes128EcbDecryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex)
 {
+    uint32_t indata_keytype = 0; /* For normal */
     uint32_t indata_cmd   = 0;
     uint32_t indata_iv[4] =            /* dummy */
     {
         0
     };
 
-    if (SCE_KEY_INDEX_TYPE_AES128 == InData_KeyIndex->type)
-    {
-        indata_cmd = change_endian_long(1); /* ECB-Decrypt command */
-    }
-    else
+    if ((SCE_KEY_INDEX_TYPE_AES128 != InData_KeyIndex->type) && (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH != InData_KeyIndex->type))
     {
         return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
     }
-
-    return R_SCE_Aes128EncryptDecryptInitSub(&indata_cmd, InData_KeyIndex->value, indata_iv);
+    indata_cmd = change_endian_long(1); /* ECB-Decrypt command */
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes128EncryptDecryptInitSub(&indata_keytype, &indata_cmd, InData_KeyIndex->value, indata_iv);
 }
 
 /*******************************************************************************************************************//**
@@ -204,25 +208,27 @@ fsp_err_t R_SCE_Aes128EcbDecryptFinalPrivate (uint32_t * OutData_Text, uint32_t 
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes256EcbEncryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex)
 {
+    uint32_t indata_keytype = 0; /* For normal */
     uint32_t indata_cmd   = 0;
     uint32_t indata_iv[4] =            /* dummy */
     {
         0
     };
 
-    if (SCE_KEY_INDEX_TYPE_AES256 == InData_KeyIndex->type)
-    {
-        indata_cmd = change_endian_long(0); /* ECB-Encrypt command */
-    }
-    else
+    if ((SCE_KEY_INDEX_TYPE_AES256 != InData_KeyIndex->type) && (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH != InData_KeyIndex->type))
     {
         return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
     }
-
-    return R_SCE_Aes256EncryptDecryptInitSub(&indata_cmd, InData_KeyIndex->value, indata_iv);
+    indata_cmd = change_endian_long(0); /* ECB-Encrypt command */
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes256EncryptDecryptInitSub(&indata_keytype, &indata_cmd, InData_KeyIndex->value, indata_iv);
 }
 
 /*******************************************************************************************************************//**
@@ -266,25 +272,27 @@ fsp_err_t R_SCE_Aes256EcbEncryptFinalPrivate (uint32_t * OutData_Text, uint32_t 
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes256EcbDecryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex)
 {
+    uint32_t indata_keytype = 0; /* For normal */
     uint32_t indata_cmd   = 0;
     uint32_t indata_iv[4] =            /* dummy */
     {
         0
     };
 
-    if (SCE_KEY_INDEX_TYPE_AES256 == InData_KeyIndex->type)
-    {
-        indata_cmd = change_endian_long(1); /* ECB-Decrypt command */
-    }
-    else
+    if ((SCE_KEY_INDEX_TYPE_AES256 != InData_KeyIndex->type) && (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH != InData_KeyIndex->type))
     {
         return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
     }
-
-    return R_SCE_Aes256EncryptDecryptInitSub(&indata_cmd, InData_KeyIndex->value, indata_iv);
+    indata_cmd = change_endian_long(1); /* ECB-Decrypt command */
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes256EncryptDecryptInitSub(&indata_keytype, &indata_cmd, InData_KeyIndex->value, indata_iv);
 }
 
 /*******************************************************************************************************************//**
@@ -329,21 +337,31 @@ fsp_err_t R_SCE_Aes256EcbDecryptFinalPrivate (uint32_t * OutData_Text, uint32_t 
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes128CbcEncryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex, uint32_t * InData_IV)
 {
+    uint32_t indata_keytype = 0; /* For normal */
     uint32_t indata_cmd = 0;
 
-    if (SCE_KEY_INDEX_TYPE_AES128 == InData_KeyIndex->type)
-    {
-        indata_cmd = change_endian_long(2); /* CBC-Encrypt command */
-    }
-    else
+    if ((SCE_KEY_INDEX_TYPE_AES128 != InData_KeyIndex->type) && ((SCE_KEY_INDEX_TYPE_AES128_FOR_TLS != InData_KeyIndex->type)
+    && (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH != InData_KeyIndex->type)))
     {
         return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
     }
-
-    return R_SCE_Aes128EncryptDecryptInitSub(&indata_cmd, InData_KeyIndex->value, InData_IV);
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_TLS != InData_KeyIndex->type)
+    {
+        indata_cmd = change_endian_long(2); /* CBC-Encrypt command */
+        if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+        {
+            indata_keytype = change_endian_long(2); /* For ECDH */
+        }
+    }
+    else
+    {
+        indata_cmd = change_endian_long(5); /* CBC-Encrypt for TLS command */
+    }
+    return R_SCE_Aes128EncryptDecryptInitSub(&indata_keytype, &indata_cmd, InData_KeyIndex->value, InData_IV);
 }
 
 /*******************************************************************************************************************//**
@@ -388,21 +406,31 @@ fsp_err_t R_SCE_Aes128CbcEncryptFinalPrivate (uint32_t * OutData_Text, uint32_t 
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes128CbcDecryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex, uint32_t * InData_IV)
 {
+    uint32_t indata_keytype = 0; /* For normal */
     uint32_t indata_cmd = 0;
 
-    if (SCE_KEY_INDEX_TYPE_AES128 == InData_KeyIndex->type)
-    {
-        indata_cmd = change_endian_long(3); /* CBC-Decrypt command */
-    }
-    else
+    if ((SCE_KEY_INDEX_TYPE_AES128 != InData_KeyIndex->type) && ((SCE_KEY_INDEX_TYPE_AES128_FOR_TLS != InData_KeyIndex->type)
+    && (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH != InData_KeyIndex->type)))
     {
         return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
     }
-
-    return R_SCE_Aes128EncryptDecryptInitSub(&indata_cmd, InData_KeyIndex->value, InData_IV);
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_TLS != InData_KeyIndex->type)
+    {
+        indata_cmd = change_endian_long(3); /* CBC-Decrypt command */
+        if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+        {
+            indata_keytype = change_endian_long(2); /* For ECDH */
+        }
+    }
+    else
+    {
+        indata_cmd = change_endian_long(6); /* CBC-Decrypt for TLS command */
+    }
+    return R_SCE_Aes128EncryptDecryptInitSub(&indata_keytype, &indata_cmd, InData_KeyIndex->value, InData_IV);
 }
 
 /*******************************************************************************************************************//**
@@ -447,21 +475,31 @@ fsp_err_t R_SCE_Aes128CbcDecryptFinalPrivate (uint32_t * OutData_Text, uint32_t 
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes256CbcEncryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex, uint32_t * InData_IV)
 {
+    uint32_t indata_keytype = 0; /* For normal */
     uint32_t indata_cmd = 0;
 
-    if (SCE_KEY_INDEX_TYPE_AES256 == InData_KeyIndex->type)
-    {
-        indata_cmd = change_endian_long(2); /* CBC-Encrypt command */
-    }
-    else
+    if ((SCE_KEY_INDEX_TYPE_AES256 != InData_KeyIndex->type) && ((SCE_KEY_INDEX_TYPE_AES256_FOR_TLS != InData_KeyIndex->type)
+    && (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH != InData_KeyIndex->type)))
     {
         return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
     }
-
-    return R_SCE_Aes256EncryptDecryptInitSub(&indata_cmd, InData_KeyIndex->value, InData_IV);
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_TLS != InData_KeyIndex->type)
+    {
+        indata_cmd = change_endian_long(2); /* CBC-Encrypt command */
+        if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+        {
+            indata_keytype = change_endian_long(2); /* For ECDH */
+        }
+    }
+    else
+    {
+        indata_cmd = change_endian_long(5); /* CBC-Encrypt for TLS command */
+    }
+    return R_SCE_Aes256EncryptDecryptInitSub(&indata_keytype, &indata_cmd, InData_KeyIndex->value, InData_IV);
 }
 
 /*******************************************************************************************************************//**
@@ -506,21 +544,31 @@ fsp_err_t R_SCE_Aes256CbcEncryptFinalPrivate (uint32_t * OutData_Text, uint32_t 
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes256CbcDecryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex, uint32_t * InData_IV)
 {
+    uint32_t indata_keytype = 0; /* For normal */
     uint32_t indata_cmd = 0;
 
-    if (SCE_KEY_INDEX_TYPE_AES256 == InData_KeyIndex->type)
-    {
-        indata_cmd = change_endian_long(3); /* CBC-Decrypt command */
-    }
-    else
+    if ((SCE_KEY_INDEX_TYPE_AES256 != InData_KeyIndex->type) && ((SCE_KEY_INDEX_TYPE_AES256_FOR_TLS != InData_KeyIndex->type)
+    && (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH != InData_KeyIndex->type)))
     {
         return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
     }
-
-    return R_SCE_Aes256EncryptDecryptInitSub(&indata_cmd, InData_KeyIndex->value, InData_IV);
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_TLS != InData_KeyIndex->type)
+    {
+        indata_cmd = change_endian_long(3); /* CBC-Decrypt command */
+        if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+        {
+            indata_keytype = change_endian_long(2); /* For ECDH */
+        }
+    }
+    else
+    {
+        indata_cmd = change_endian_long(6); /* CBC-Decrypt for TLS command */
+    }
+    return R_SCE_Aes256EncryptDecryptInitSub(&indata_keytype, &indata_cmd, InData_KeyIndex->value, InData_IV);
 }
 
 /*******************************************************************************************************************//**
@@ -733,10 +781,17 @@ fsp_err_t R_SCE_Aes128GcmDecryptFinalPrivate (uint32_t * InData_Text,
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes256GcmEncryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex, uint32_t * InData_IV)
 {
-    return R_SCE_Aes256GcmEncryptInitSub(InData_KeyIndex->value, InData_IV);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes256GcmEncryptInitSub(&indata_keytype, InData_KeyIndex->value, InData_IV);
 }
 
 /*******************************************************************************************************************//**
@@ -800,10 +855,17 @@ fsp_err_t R_SCE_Aes256GcmEncryptFinalPrivate (uint32_t * InData_Text,
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes256GcmDecryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex, uint32_t * InData_IV)
 {
-    return R_SCE_Aes256GcmDecryptInitSub(InData_KeyIndex->value, InData_IV);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes256GcmDecryptInitSub(&indata_keytype, InData_KeyIndex->value, InData_IV);
 }
 
 /*******************************************************************************************************************//**
@@ -916,7 +978,13 @@ fsp_err_t R_SCE_Aes128CcmEncryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyI
                                               uint32_t              * InData_Header,
                                               uint32_t                Header_Len)
 {
-    return R_SCE_Aes128CcmEncryptInitSub(InData_KeyIndex->value, InData_IV, InData_Header, Header_Len);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes128CcmEncryptInitSub(&indata_keytype, InData_KeyIndex->value, InData_IV, InData_Header, Header_Len);
 }
 
 /*******************************************************************************************************************//**
@@ -972,7 +1040,13 @@ fsp_err_t R_SCE_Aes128CcmDecryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyI
                                               uint32_t              * InData_Header,
                                               uint32_t                Header_Len)
 {
-    return R_SCE_Aes128CcmDecryptInitSub(InData_KeyIndex->value, InData_IV, InData_Header, Header_Len);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes128CcmDecryptInitSub(&indata_keytype, InData_KeyIndex->value, InData_IV, InData_Header, Header_Len);
 }
 
 /*******************************************************************************************************************//**
@@ -1030,7 +1104,13 @@ fsp_err_t R_SCE_Aes256CcmEncryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyI
                                               uint32_t              * InData_Header,
                                               uint32_t                Header_Len)
 {
-    return R_SCE_Aes256CcmEncryptInitSub(InData_KeyIndex->value, InData_IV, InData_Header, Header_Len);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes256CcmEncryptInitSub(&indata_keytype, InData_KeyIndex->value, InData_IV, InData_Header, Header_Len);
 }
 
 /*******************************************************************************************************************//**
@@ -1086,7 +1166,13 @@ fsp_err_t R_SCE_Aes256CcmDecryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyI
                                               uint32_t              * InData_Header,
                                               uint32_t                Header_Len)
 {
-    return R_SCE_Aes256CcmDecryptInitSub(InData_KeyIndex->value, InData_IV, InData_Header, Header_Len);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes256CcmDecryptInitSub(&indata_keytype, InData_KeyIndex->value, InData_IV, InData_Header, Header_Len);
 }
 
 /*******************************************************************************************************************//**
@@ -1134,10 +1220,17 @@ fsp_err_t R_SCE_Aes256CcmDecryptFinalPrivate (uint32_t * InData_Text,
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes128CmacGenerateInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex)
 {
-    return R_SCE_Aes128CmacInitSub(InData_KeyIndex->value);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes128CmacInitSub(&indata_keytype, InData_KeyIndex->value);
 }
 
 /*******************************************************************************************************************//**
@@ -1195,10 +1288,17 @@ fsp_err_t R_SCE_Aes128CmacGenerateFinalPrivate (uint32_t All_Msg_Len, uint32_t *
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes128CmacVerifyInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex)
 {
-    return R_SCE_Aes128CmacInitSub(InData_KeyIndex->value);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes128CmacInitSub(&indata_keytype, InData_KeyIndex->value);
 }
 
 /*******************************************************************************************************************//**
@@ -1259,10 +1359,17 @@ fsp_err_t R_SCE_Aes128CmacVerifyFinalPrivate (uint32_t   All_Msg_Len,
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes256CmacGenerateInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex)
 {
-    return R_SCE_Aes256CmacInitSub(InData_KeyIndex->value);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes256CmacInitSub(&indata_keytype, InData_KeyIndex->value);
 }
 
 /*******************************************************************************************************************//**
@@ -1320,10 +1427,17 @@ fsp_err_t R_SCE_Aes256CmacGenerateFinalPrivate (uint32_t All_Msg_Len, uint32_t *
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes256CmacVerifyInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex)
 {
-    return R_SCE_Aes256CmacInitSub(InData_KeyIndex->value);
+    uint32_t indata_keytype = 0; /* For normal */
+
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    return R_SCE_Aes256CmacInitSub(&indata_keytype, InData_KeyIndex->value);
 }
 
 /*******************************************************************************************************************//**
@@ -1593,13 +1707,19 @@ fsp_err_t R_SCE_Sha256HmacGenerateInitPrivate (sce_hmac_sha_handle_t      * hand
                                                 sce_hmac_sha_wrapped_key_t * InData_KeyIndex)
 {
     uint32_t indata_keytype = 0;
-    uint32_t key_length     = 0;
+    uint32_t key_length     = SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE;
 
     FSP_PARAMETER_NOT_USED(handle);
 
-    indata_keytype = change_endian_long(0);
-    key_length     = HW_SCE_HMAC_KEY_INDEX_WORD_SIZE;
-
+    if (SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    if (SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_TLS == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(1); /* For TLS */
+        key_length = SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE;
+    }
     return R_SCE_Sha256HmacInitSub(&indata_keytype, InData_KeyIndex->value, key_length);
 }
 
@@ -1646,7 +1766,7 @@ fsp_err_t R_SCE_Sha256HmacGenerateFinalPrivate (sce_hmac_sha_handle_t * handle, 
 }
 
 /*******************************************************************************************************************//**
- * prepares to generate the SHA256 HMAC hash value
+ * prepares to generate the SHA256 HMAC hash value for TLS
  *
  * @param handle          SHA256 HMAC handler (work area).
  * @param InData_KeyIndex key index
@@ -1661,11 +1781,17 @@ fsp_err_t R_SCE_Sha256HmacVerifyInitPrivate (sce_hmac_sha_handle_t      * handle
     FSP_PARAMETER_NOT_USED(handle);
 
     uint32_t indata_keytype = 0;
-    uint32_t key_length     = 0;
+    uint32_t key_length     = SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE;
 
-    indata_keytype = change_endian_long(0);
-    key_length     = HW_SCE_HMAC_KEY_INDEX_WORD_SIZE;
-
+    if (SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    if (SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_TLS == InData_KeyIndex->type)
+    {
+        indata_keytype = change_endian_long(1); /* For TLS */
+        key_length = SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE;
+    }
     return R_SCE_Sha256HmacInitSub(&indata_keytype, InData_KeyIndex->value, key_length);
 }
 
@@ -1800,23 +1926,25 @@ fsp_err_t R_SCE_EcdhCalculateSharedSecretIndexPrivate (uint32_t * InData_KeyType
 /*******************************************************************************************************************//**
  * Key is derived using the shared secret "Z" as the key material.
  *
- * @param InData_KeyIndex  key index of shared secret "Z"
- * @param InData_PaddedMsg additional data used for key derivation, preceded by Algorithm ID encoded value,
- *                         followed by stop bit and data length
- * @param MAX_CNT          maximum number of loops when reading InData_PaddedMsg
- * @param OutData_KeyIndex key index of KEK
+ * @param InData_KeyIndexType Derived key type(0:AES-128, 1:AES-256, 2:HMAC-SHA256)
+ * @param InData_KeyIndex     key index of shared secret "Z"
+ * @param InData_KDFType      Algorithm used for key derivation calculation(0:SHA256, 1:HMAC-SHA256)
+ * @param InData_PaddedMsg    additional data used for key derivation, preceded by Algorithm ID encoded value,
+ *                            followed by stop bit and data length
+ * @param MAX_CNT             maximum number of loops when reading InData_PaddedMsg
+ * @param InData_SaltKeyIndex Salt key index
+ * @param OutData_KeyIndex    key index of KEK
  *
  * @retval FSP_SUCCESS                          Normal termination.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information
- * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  **********************************************************************************************************************/
-fsp_err_t R_SCE_EcdhKeyDerivationPrivate (uint32_t * InData_KeyIndex,
-                                           uint32_t * InData_PaddedMsg,
-                                           uint32_t   MAX_CNT,
-                                           uint32_t * OutData_KeyIndex)
+fsp_err_t R_SCE_EcdhKeyDerivationPrivate (uint32_t *InData_KeyIndexType, uint32_t *InData_KeyIndex,
+        uint32_t *InData_KDFType, uint32_t *InData_PaddedMsg, uint32_t MAX_CNT, uint32_t *InData_SaltKeyIndex,
+        uint32_t *OutData_KeyIndex)
 {
-    return R_SCE_DlmsCosemCalculateKekSub(InData_KeyIndex, InData_PaddedMsg, MAX_CNT, OutData_KeyIndex);
+    return R_SCE_DlmsCosemCalculateKekSub(InData_KeyIndexType, InData_KeyIndex, InData_KDFType, InData_PaddedMsg,
+            MAX_CNT, InData_SaltKeyIndex, OutData_KeyIndex);
 }
 
 /*******************************************************************************************************************//**

@@ -97,8 +97,13 @@ static const uint8_t g_usb_pipe_host[] =
  #endif                                          /* defined(USB_CFG_HCDC_USE) */
 
  #if defined(USB_CFG_HHID_USE)
+  #if (BSP_CFG_RTOS != 1)
     USB_CFG_HHID_INT_IN,   USB_CFG_HHID_INT_OUT, /* HHID: Address 1 */
     USB_CFG_HHID_INT_IN,   USB_CFG_HHID_INT_OUT, /* HHID: Address 2 using Hub */
+  #else                                          /* (BSP_CFG_RTOS != 1) */
+    USB_CFG_HHID_INT_IN,   USB_NULL,             /* HHID: Address 1 */
+    USB_CFG_HHID_INT_IN,   USB_NULL,             /* HHID: Address 2 using Hub */
+  #endif                                         /* (BSP_CFG_RTOS != 1) */
     USB_CFG_HHID_INT_IN2,  USB_NULL,             /* HHID: Address 3 using Hub */
     USB_CFG_HHID_INT_IN3,  USB_NULL,             /* HHID: Address 4 using Hub */
  #else                                           /* defined(USB_CFG_HHID_USE) */
@@ -127,7 +132,11 @@ static const uint8_t g_usb_pipe_peri[] =
  #endif                                          /* defined(USB_CFG_PCDC_USE) */
 
  #if defined(USB_CFG_PHID_USE)
+  #if (BSP_CFG_RTOS != 1)
     USB_CFG_PHID_INT_OUT,   USB_CFG_PHID_INT_IN, /* USB_PHID */
+  #else /* #if (BSP_CFG_RTOS != 1) */
+    USB_NULL,               USB_CFG_PHID_INT_IN, /* USB_PHID */
+  #endif /* #if (BSP_CFG_RTOS != 1) */
  #else                                           /* defined(USB_CFG_PHID_USE) */
     USB_NULL,               USB_NULL,
  #endif                                          /* defined(USB_CFG_PHID_USE) */
@@ -157,66 +166,74 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
     /* PCDC, PCDCC */
 #if defined(USB_CFG_PCDC_USE)
  #if (BSP_CFG_RTOS == 1)
-    USB_NULL, USB_NULL,                              /* USB_PCDC  (0) */
-    USB_NULL, USB_NULL,                              /* USB_PCDCC (1) */
-    USB_NULL, USB_NULL,                              /* USB_PCDC2  (0) */
-    USB_NULL, USB_NULL,                              /* USB_PCDCC2 (1) */
+    USB_NULL,               USB_NULL,                /* USB_PCDC  (0) */
+    USB_NULL,               USB_NULL,                /* USB_PCDCC (1) */
+    USB_NULL,               USB_NULL,                /* USB_PCDC2  (0) */
+    USB_NULL,               USB_NULL,                /* USB_PCDCC2 (1) */
  #else  /* #if (BSP_CFG_RTOS == 1) */
     usb_pcdc_read_complete, usb_pcdc_write_complete, /* USB_PCDC  (0) */
-    USB_NULL, usb_pcdc_write_complete,               /* USB_PCDCC (1) */
+    USB_NULL,               usb_pcdc_write_complete, /* USB_PCDCC (1) */
     usb_pcdc_read_complete, usb_pcdc_write_complete, /* USB_PCDC2  (0) */
-    USB_NULL, usb_pcdc_write_complete,               /* USB_PCDCC2 (1) */
+    USB_NULL,               usb_pcdc_write_complete, /* USB_PCDCC2 (1) */
  #endif /* #if (BSP_CFG_RTOS == 1) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_PCDC  (0) */
-    USB_NULL, USB_NULL,                              /* USB_PCDCC (1) */
-    USB_NULL, USB_NULL,                              /* USB_PCDC2  (0) */
-    USB_NULL, USB_NULL,                              /* USB_PCDCC2 (1) */
+    USB_NULL,               USB_NULL,                /* USB_PCDC  (0) */
+    USB_NULL,               USB_NULL,                /* USB_PCDCC (1) */
+    USB_NULL,               USB_NULL,                /* USB_PCDC2  (0) */
+    USB_NULL,               USB_NULL,                /* USB_PCDCC2 (1) */
 #endif
 
     /* PHID */
 #if defined(USB_CFG_PHID_USE)
+ #if (BSP_CFG_RTOS != 1)
     usb_phid_read_complete, usb_phid_write_complete, /* USB_PHID (2) */
+ #else /*  #if (BSP_CFG_RTOS == 1) */
+    USB_NULL,               USB_NULL,
+ #endif /*  #if (BSP_CFG_RTOS == 1) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_PHID (2) */
+    USB_NULL,               USB_NULL,  /* USB_PHID (2) */
 #endif
 
     /* PVND */
-    USB_NULL, USB_NULL,                              /* USB_PVND  (3) */
+    USB_NULL,               USB_NULL,  /* USB_PVND  (3) */
 
     /* HCDC, HCDCC */
 #if defined(USB_CFG_HCDC_USE)
  #if (BSP_CFG_RTOS == 1)
-    USB_NULL, USB_NULL,                              /* USB_HCDC  (4) */
-    USB_NULL, USB_NULL,                              /* USB_HCDCC (5) */
+    USB_NULL,               USB_NULL,                /* USB_HCDC  (4) */
+    USB_NULL,               USB_NULL,                /* USB_HCDCC (5) */
  #else  /* #if (BSP_CFG_RTOS == 1) */
     usb_hcdc_read_complete, usb_hcdc_write_complete, /* USB_HCDC  (4) */
     usb_hcdc_read_complete, USB_NULL,                /* USB_HCDCC (5) */
  #endif /* #if (BSP_CFG_RTOS == 1) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_HCDC  (4) */
-    USB_NULL, USB_NULL,                              /* USB_HCDCC (5) */
+    USB_NULL,               USB_NULL,                /* USB_HCDC  (4) */
+    USB_NULL,               USB_NULL,                /* USB_HCDCC (5) */
 #endif
 
     /* HHID */
 #if defined(USB_CFG_HHID_USE)
+ #if (BSP_CFG_RTOS == 1)
+    USB_NULL,               USB_NULL,
+ #else                                               /* #if (BSP_CFG_RTOS == 1) */
     usb_hhid_read_complete, usb_hhid_write_complete, /* USB_HHID  (6) */
+ #endif /* #if (BSP_CFG_RTOS == 1) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_HHID  (6) */
+    USB_NULL,               USB_NULL,                /* USB_HHID  (6) */
 #endif
 
     /* HVND */
 #if defined(USB_CFG_HVND_USE)
     usb_hvnd_read_complete, usb_hvnd_write_complete, /* USB_HVND  (7) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_HVND  (7) */
+    USB_NULL,               USB_NULL,                /* USB_HVND  (7) */
 #endif
 
     /* HMSC */
-    USB_NULL, USB_NULL,                              /* USB_HMSC  (8) */
+    USB_NULL,               USB_NULL,                /* USB_HMSC  (8) */
 
     /* PMSC */
-    USB_NULL, USB_NULL,                              /* USB_PMSC  (9) */
+    USB_NULL,               USB_NULL,                /* USB_PMSC  (9) */
 };                                                   /* const void (g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) */
 
 #if defined(USB_CFG_PCDC_USE)

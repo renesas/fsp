@@ -61,6 +61,39 @@ fsp_err_t (* final[])(void) =
     [SCE_AES_KEY_SIZE_256] = HW_SCE_Aes256EncryptDecryptFinalSub,
 };
 
+static fsp_err_t hw_sce_aes_encrypt_decrypt_init(sce_aes_key_size_t key_size,
+                                                 uint32_t           command,
+                                                 const uint32_t   * InData_IV,
+                                                 const uint32_t   * InData_KeyIndex);
+
+static fsp_err_t hw_sce_aes_encrypt_decrypt_init (sce_aes_key_size_t key_size,
+                                                  uint32_t           command,
+                                                  const uint32_t   * InData_IV,
+                                                  const uint32_t   * InData_KeyIndex)
+{
+    fsp_err_t status     = FSP_ERR_CRYPTO_SCE_FAIL;
+    uint32_t  indata_cmd = change_endian_long(command);
+    if (((uint32_t) SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION == command) ||
+        ((uint32_t) SCE_AES_IN_DATA_CMD_ECB_DECRYPTION == command)) /* ECB */
+    {
+        uint32_t Dummy_IV[4] = {0};
+        status = init[key_size](&indata_cmd, InData_KeyIndex, Dummy_IV);
+    }
+    else
+    {
+        status = init[key_size](&indata_cmd, InData_KeyIndex, InData_IV);
+    }
+
+    if (FSP_SUCCESS != status)
+    {
+        return FSP_ERR_CRYPTO_SCE_FAIL;
+    }
+    else
+    {
+        return FSP_SUCCESS;
+    }
+}
+
 static fsp_err_t hw_sce_aes_encrypt_decrypt(sce_aes_key_size_t key_size,
                                             uint32_t           command,
                                             const uint32_t   * InData_IV,
@@ -77,18 +110,9 @@ static fsp_err_t hw_sce_aes_encrypt_decrypt (sce_aes_key_size_t key_size,
                                              const uint32_t   * InData_Text,
                                              uint32_t         * OutData_Text)
 {
-    fsp_err_t status     = FSP_ERR_CRYPTO_SCE_FAIL;
-    uint32_t  indata_cmd = change_endian_long(command);
-    if (((uint32_t) SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION == command) ||
-        ((uint32_t) SCE_AES_IN_DATA_CMD_ECB_DECRYPTION == command)) /* ECB */
-    {
-        uint32_t Dummy_IV[4] = {0};
-        status = init[key_size](&indata_cmd, InData_KeyIndex, Dummy_IV);
-    }
-    else
-    {
-        status = init[key_size](&indata_cmd, InData_KeyIndex, InData_IV);
-    }
+    fsp_err_t status      = FSP_ERR_CRYPTO_SCE_FAIL;
+
+    status = hw_sce_aes_encrypt_decrypt_init(key_size, command, InData_IV, InData_KeyIndex);
 
     if (FSP_SUCCESS == status)
     {
@@ -801,4 +825,160 @@ fsp_err_t HW_SCE_AES_256CtrEncryptUsingEncryptedKey (const uint32_t * InData_Key
     }
 
     return status;
+}
+
+fsp_err_t HW_SCE_Aes128EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_128, (uint32_t)SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes128EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_128, (uint32_t)SCE_AES_IN_DATA_CMD_ECB_DECRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes192EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_192, (uint32_t)SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes192EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_192, (uint32_t)SCE_AES_IN_DATA_CMD_ECB_DECRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes256EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_256, (uint32_t)SCE_AES_IN_DATA_CMD_ECB_ENCRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes256EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_256, (uint32_t)SCE_AES_IN_DATA_CMD_ECB_DECRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes128CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_128, (uint32_t)SCE_AES_IN_DATA_CMD_CBC_ENCRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes128CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_128, (uint32_t)SCE_AES_IN_DATA_CMD_CBC_DECRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes192CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_192, (uint32_t)SCE_AES_IN_DATA_CMD_CBC_ENCRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes192CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_192, (uint32_t)SCE_AES_IN_DATA_CMD_CBC_DECRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes256CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_256, (uint32_t)SCE_AES_IN_DATA_CMD_CBC_ENCRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes256CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_256, (uint32_t)SCE_AES_IN_DATA_CMD_CBC_DECRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes128CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                       uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_128, (uint32_t)SCE_AES_IN_DATA_CMD_CTR_ENCRYPTION_DECRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes192CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                       uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_192, (uint32_t)SCE_AES_IN_DATA_CMD_CTR_ENCRYPTION_DECRYPTION, InData_IV, InData_KeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes256CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                       uint32_t * InData_IV)
+{
+    return hw_sce_aes_encrypt_decrypt_init(SCE_AES_KEY_SIZE_256, (uint32_t)SCE_AES_IN_DATA_CMD_CTR_ENCRYPTION_DECRYPTION, InData_IV, InData_KeyIndex);
+}
+
+void HW_SCE_Aes128EncryptDecryptUpdate(const uint32_t * InData_Text,
+                                       uint32_t       * OutData_Text,
+                                       const uint32_t   num_words)
+{
+    update[SCE_AES_KEY_SIZE_128](InData_Text, OutData_Text, num_words);
+}
+
+fsp_err_t HW_SCE_Aes128EncryptDecryptFinal(void)
+{
+    fsp_err_t status      = FSP_ERR_CRYPTO_SCE_FAIL;
+    status = final[SCE_AES_KEY_SIZE_128]();
+
+    if (FSP_SUCCESS != status)
+    {
+        return FSP_ERR_CRYPTO_SCE_FAIL;
+    }
+    else
+    {
+        return FSP_SUCCESS;
+    }
+}
+
+void HW_SCE_Aes192EncryptDecryptUpdate(const uint32_t * InData_Text,
+                                       uint32_t       * OutData_Text,
+                                       const uint32_t   num_words)
+{
+    update[SCE_AES_KEY_SIZE_192](InData_Text, OutData_Text, num_words);
+}
+
+fsp_err_t HW_SCE_Aes192EncryptDecryptFinal(void)
+{
+    fsp_err_t status      = FSP_ERR_CRYPTO_SCE_FAIL;
+    status = final[SCE_AES_KEY_SIZE_192]();
+
+    if (FSP_SUCCESS != status)
+    {
+        return FSP_ERR_CRYPTO_SCE_FAIL;
+    }
+    else
+    {
+        return FSP_SUCCESS;
+    }
+}
+
+void HW_SCE_Aes256EncryptDecryptUpdate(const uint32_t * InData_Text,
+                                       uint32_t       * OutData_Text,
+                                       const uint32_t   num_words)
+{
+    update[SCE_AES_KEY_SIZE_256](InData_Text, OutData_Text, num_words);
+}
+
+fsp_err_t HW_SCE_Aes256EncryptDecryptFinal(void)
+{
+    fsp_err_t status      = FSP_ERR_CRYPTO_SCE_FAIL;
+    status = final[SCE_AES_KEY_SIZE_256]();
+
+    if (FSP_SUCCESS != status)
+    {
+        return FSP_ERR_CRYPTO_SCE_FAIL;
+    }
+    else
+    {
+        return FSP_SUCCESS;
+    }
 }

@@ -24,6 +24,11 @@
 #include "rm_block_media_usb.h"
 #include "rm_block_media_usb_cfg.h"
 #include "r_usb_hmsc.h"
+#if (BSP_CFG_RTOS == 0)
+ #include "r_usb_typedef.h"
+ #include "r_usb_extern.h"
+ #include "../r_usb_hmsc/src/inc/r_usb_hmsc_driver.h"
+#endif                                 /* (BSP_CFG_RTOS == 0) */
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -47,6 +52,10 @@
  **********************************************************************************************************************/
 #if (BSP_CFG_RTOS == 2)
 void rm_block_media_usb_callback(usb_event_info_t * p_usb_event_info, usb_hdl_t current_task, usb_onoff_t usb_state);
+
+#endif
+#if (BSP_CFG_RTOS == 0)
+static void rm_block_media_usb_waitloop(void);
 
 #endif
 
@@ -121,8 +130,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Open (rm_block_media_ctrl_t * const p_ctrl, rm_bloc
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     p_instance_ctrl->device_address = RM_BLOCK_MEDIA_USB_INVALID_DEVICE_ADDRESS;
 
+#if 2 == BSP_CFG_RTOS
+
     /* Event group create */
     p_instance_ctrl->event_group = xEventGroupCreate();
+#endif
 
     /* This module is now open. */
     p_instance_ctrl->initialized = false;
@@ -165,11 +177,24 @@ fsp_err_t RM_BLOCK_MEDIA_USB_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
                                                        p_instance_ctrl->device_address);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
+#if 2 == BSP_CFG_RTOS
     xEventGroupWaitBits(p_instance_ctrl->event_group,
                         RM_BLOCK_MEDIA_USB_COMMAND_COMPLETE,
                         pdTRUE,
                         pdFALSE,
                         portMAX_DELAY);
+#else
+    usb_event_info_t event_info;
+    usb_status_t     event;
+    while (1)
+    {
+        R_USB_EventGet(&event_info, &event);
+        if (USB_STATUS_MSC_CMD_COMPLETE == event)
+        {
+            break;
+        }
+    }
+#endif
 
     p_instance_ctrl->sector_count      = __REV(*(uint32_t *) &p_instance_ctrl->p_read_buffer[0]) + 1;
     p_instance_ctrl->sector_size_bytes = __REV(*(uint32_t *) &p_instance_ctrl->p_read_buffer[4]);
@@ -188,6 +213,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
  * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
  * @retval     FSP_ERR_NOT_OPEN              Module is not open.
  * @retval     FSP_ERR_NOT_INITIALIZED       Module has not been initialized.
+ * @retval     FSP_ERR_USB_FAILED            The message could not received completed successfully.
  *
  * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
  **********************************************************************************************************************/
@@ -196,6 +222,10 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Read (rm_block_media_ctrl_t * const p_ctrl,
                                    uint32_t const                block_address,
                                    uint32_t const                num_blocks)
 {
+#if BSP_CFG_RTOS == 0
+    uint16_t    data;
+    usb_utr_t * p_mess;
+#endif                                 /* BSP_CFG_RTOS == 0 */
     rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
 
 #if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
@@ -224,6 +254,42 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Read (rm_block_media_ctrl_t * const p_ctrl,
     err = R_USB_HMSC_StorageReadSector(p_drive, p_dest_address, block_address, (uint16_t) num_blocks);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
+#if BSP_CFG_RTOS == 0
+
+    /* Wait USB read sequence(READ10) */
+    do
+    {
+        /* Check Detach */
+        data = usb_hmsc_get_dev_sts(p_drive);
+        rm_block_media_usb_waitloop();                                           /* Task Schedule */
+        err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+    } while ((err != USB_OK) && (data != USB_FALSE));
+
+    if (err == USB_OK)
+    {
+        /* Complete R_USB_HmscStrgReadSector() */
+        err = p_mess->result;          /* Set result for R_USB_HmscStrgReadSector() */
+        USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
+    }
+    else
+    {
+        /* Device detach */
+        rm_block_media_usb_waitloop();                                           /* Task Schedule */
+        err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+        if (USB_OK == err)
+        {
+            USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
+        }
+
+        err = USB_ERROR;
+    }
+
+    if (err != USB_OK)
+    {
+        return FSP_ERR_USB_FAILED;
+    }
+#endif                                 /* BSP_CFG_RTOS == 0 */
+
     rm_block_media_callback_args_t args;
     memset(&args, 0U, sizeof(rm_block_media_callback_args_t));
     args.p_context = p_instance_ctrl->p_cfg->p_context;
@@ -242,6 +308,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Read (rm_block_media_ctrl_t * const p_ctrl,
  * @retval     FSP_ERR_ASSERTION             An input parameter is invalid.
  * @retval     FSP_ERR_NOT_OPEN              Module is not open.
  * @retval     FSP_ERR_NOT_INITIALIZED       Module has not been initialized.
+ * @retval     FSP_ERR_USB_FAILED            The message could not received completed successfully.
  *
  * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
  **********************************************************************************************************************/
@@ -250,6 +317,10 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Write (rm_block_media_ctrl_t * const p_ctrl,
                                     uint32_t const                block_address,
                                     uint32_t const                num_blocks)
 {
+#if BSP_CFG_RTOS == 0
+    uint16_t    data;
+    usb_utr_t * p_mess;
+#endif                                 /* BSP_CFG_RTOS == 0 */
     rm_block_media_usb_instance_ctrl_t * p_instance_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_ctrl;
 
 #if RM_BLOCK_MEDIA_USB_CFG_PARAM_CHECKING_ENABLE
@@ -277,6 +348,42 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Write (rm_block_media_ctrl_t * const p_ctrl,
 
     err = R_USB_HMSC_StorageWriteSector(p_drive, p_src_address, block_address, (uint16_t) num_blocks);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+#if BSP_CFG_RTOS == 0
+
+    /* Wait USB write sequence(WRITE10) */
+    do
+    {
+        /* Check Detach */
+        data = usb_hmsc_get_dev_sts(p_drive);
+        rm_block_media_usb_waitloop();                                           /* Task Schedule */
+        err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+    } while ((err != USB_OK) && (data != USB_FALSE));
+
+    if (err == USB_OK)
+    {
+        /* Complete R_USB_HmscStrgReadSector() */
+        err = p_mess->result;          /* Set result for R_USB_HmscStrgReadSector() */
+        USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
+    }
+    else
+    {
+        /* Device detach */
+        rm_block_media_usb_waitloop();                                           /* Task Schedule */
+        err = USB_TRCV_MSG(USB_HSTRG_MBX, (usb_msg_t **) &p_mess, (uint16_t) 0); /* Receive read complete msg */
+        if (USB_OK == err)
+        {
+            USB_REL_BLK(USB_HSTRG_MPL, (usb_mh_t) p_mess);
+        }
+
+        err = USB_ERROR;
+    }
+
+    if (err != USB_OK)
+    {
+        return FSP_ERR_USB_FAILED;
+    }
+#endif                                 /* BSP_CFG_RTOS == 0 */
 
     rm_block_media_callback_args_t args;
     memset(&args, 0U, sizeof(rm_block_media_callback_args_t));
@@ -465,8 +572,11 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Close (rm_block_media_ctrl_t * const p_ctrl)
 
     usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
 
+#if 2 == BSP_CFG_RTOS
+
     /* Event group delete */
     vEventGroupDelete(p_instance_ctrl->event_group);
+#endif
 
     /* Close the underlying driver. */
     fsp_err_t err = p_usb->p_api->close(p_usb->p_ctrl);
@@ -551,3 +661,27 @@ void rm_block_media_usb_callback (usb_event_info_t * p_usb_event_info, usb_hdl_t
 }
 
 #endif
+
+#if BSP_CFG_RTOS == 0
+
+/******************************************************************************
+ * Function Name   : rm_block_media_usb_waitloop
+ * Description     : wait loop function
+ * Arguments       : none
+ * Return value    : none
+ ******************************************************************************/
+static void rm_block_media_usb_waitloop (void)
+{
+    if (USB_FLGSET == usb_cstd_check_schedule())
+    {
+        usb_hstd_hcd_task((usb_vp_int_t) 0);
+        usb_hstd_mgr_task((usb_vp_int_t) 0);
+
+        // usb_hhub_task((usb_vp_int_t) 0);
+        usb_hmsc_task();               /* HMSC Task */
+    }
+
+    usb_cstd_scheduler();
+}
+
+#endif                                 /* BSP_CFG_RTOS == 0 */

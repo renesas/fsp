@@ -1492,8 +1492,7 @@ static fsp_err_t r_flash_lp_cf_write (flash_lp_instance_ctrl_t * const p_ctrl,
 
 /*******************************************************************************************************************//**
  * Execute a single Write operation on the Low Power Data Flash data.
- * MF3: See Figure 10.15 of MF3 manual SC32_FlashMemory_supplement(MF3)_20170117
- * MF4: See Figure 10.12 of MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105
+ * See Figure 37.21 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
  * @param[in]  psrc_addr       Source address for data to be written.
  * @param[in]  dest_addr       End address (read form) for writing.
@@ -1521,8 +1520,7 @@ static void r_flash_lp_df_write_operation (const uint32_t psrc_addr, uint32_t de
 
 /*******************************************************************************************************************//**
  * Execute a single Write operation on the Low Power Code Flash data.
- * MF3: See Figure 10.14 of MF3 manual SC32_FlashMemory_supplement(MF3)_20170117
- * MF4: See Figure 10.11 of MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105
+ * See Figure 37.19 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
  * @param[in]  psrc_addr         Source address for data to be written.
  * @param[in]  dest_addr         End address (read form) for writing.
@@ -1723,8 +1721,7 @@ static fsp_err_t r_flash_lp_cf_blankcheck (flash_lp_instance_ctrl_t * const p_ct
 
 /*******************************************************************************************************************//**
  * Initiates a flash command.
- * MF3: See Figures 10.18, 10.19, 10.22 and 10.23 of MF3 manual SC32_FlashMemory_supplement(MF3)_20170117
- * MF4: See Figures 10.15, 10.16, 10.19 and 10.20 of MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105
+ * See Figures 37.23, 37.24, 37.26 and 37.27 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
  * @param[in]  start_addr      Start address of the operation.
  * @param[in]  num_bytes       Number of bytes beginning at start_addr.
@@ -1751,8 +1748,7 @@ static void r_flash_lp_process_command (const uint32_t start_addr, uint32_t num_
 
 /*******************************************************************************************************************//**
  * This function switches the peripheral from P/E mode for Code Flash or Data Flash to Read mode.
- * MF3: See Figures 10.12 and 10.13 of MF3 manual SC32_FlashMemory_supplement(MF3)_20170117
- * MF4: See Figures 10.9 and 10.10 of MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105
+ * See Figures 37.17 and 37.18 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
  * @param[in]  p_ctrl                    Pointer to the Flash control block
  * @retval     FSP_SUCCESS               Successfully entered P/E mode.
@@ -1806,8 +1802,7 @@ static fsp_err_t r_flash_lp_pe_mode_exit (flash_lp_instance_ctrl_t * const p_ctr
 
 /*******************************************************************************************************************//**
  * This function resets the Flash sequencer.
- * MF3: See Figure 10.14 of MF3 manual SC32_FlashMemory_supplement(MF3)_20170117
- * MF4: See Figure 10.14 of MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105
+ * See Figure 37.19 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
  * @param[in]  p_ctrl          Pointer to the Flash control block
  **********************************************************************************************************************/
@@ -2045,8 +2040,8 @@ void r_flash_lp_df_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
 
     r_flash_lp_delay_us(FLASH_LP_WAIT_TDSTOP, p_ctrl->system_clock_frequency);
 
-    /* See "Procedure for changing from the read mode to the data flash P/E mode": figure 10.11 in
-     * SC32_FlashMemory_supplement(MF3)_20170117 and figure 10.8 in Peaks_FlashMemory_supplement(MF4)_20181105  */
+    /* See "Procedure for changing from the read mode to the data flash P/E mode": Figure 37.16 in Section 37.13.3
+     * of the RA2L1 manual r01uh0853ej0100-ra2l1 */
 #if BSP_FEATURE_FLASH_LP_VERSION == 3
 
     /* If the device is not in high speed mode enable LVPE mode as per the flash documentation. */
@@ -2079,8 +2074,7 @@ void r_flash_lp_df_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 static void r_flash_lp_write_fpmcr (uint8_t value)
 {
-    /* The procedure for writing to FPMCR is documented in section 10.2.3 of SC32_FlashMemory_supplement(MF3)_20170117
-     * and Peaks_FlashMemory_supplement(MF4)_20181105 */
+    /* The procedure for writing to FPMCR is documented in Section 37.3.4 of the RA2L1 manual r01uh0853ej0100-ra2l1 */
     R_FACI_LP->FPR = FLASH_LP_FPR_UNLOCK;
 
     R_FACI_LP->FPMCR = value;
@@ -2150,8 +2144,7 @@ static fsp_err_t r_flash_lp_access_window_set (flash_lp_instance_ctrl_t * const 
 
 /*******************************************************************************************************************//**
  * Set the id code
- * MF3: See Figure 10.24 of MF3 manual SC32_FlashMemory_supplement(MF3)_20170117
- * MF4: See Figure 10.21 of MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105
+ * See Figure 37.28 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
  * @param      p_ctrl                Pointer to the instance control block
  * @param      p_id_code             Pointer to the code to be written
@@ -2300,8 +2293,7 @@ static fsp_err_t r_flash_lp_set_startup_area_boot (flash_lp_instance_ctrl_t * co
 
 /*******************************************************************************************************************//**
  * Command processing for the extra area.
- * MF3: See Figure 10.24 of MF3 manual SC32_FlashMemory_supplement(MF3)_20170117
- * MF4: See Figure 10.21 of MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105
+ * See Figure 37.28 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
  * @param[in]  start_addr_startup_value  Determines the Starting block for the Code Flash access window.
  * @param[in]  end_addr                  Determines the Ending block for the Code Flash access window.
@@ -2385,8 +2377,7 @@ static void r_flash_lp_extra_operation (const uint32_t    start_addr_startup_val
 /*******************************************************************************************************************//**
  * Wait for the current command to finish processing and clear the FCR register. If MF4 is used clear the processing
  * bit before clearing the rest of FCR.
- * MF3: See Figure 10.24 of MF3 manual SC32_FlashMemory_supplement(MF3)_20170117
- * MF4: See Figure 10.21 of MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105
+ * See Figure 37.28 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
  * @param[in]  timeout         The timeout
  * @retval     FSP_SUCCESS     The command completed successfully.
@@ -2477,8 +2468,8 @@ void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
 
     FLASH_LP_PRV_FENTRYR = FLASH_LP_FENTRYR_CODEFLASH_PE_MODE;
 
-    /* See "Procedure for entering code flash P/E mode": figure 10.10 in SC32_FlashMemory_supplement(MF3)_20170117
-     * and figure 10.7 in Peaks_FlashMemory_supplement(MF4)_20181105. */
+    /* See "Procedure for changing from read mode to code flash P/E mode": See Figure 37.15 in Section 37.13.3 of the
+     * RA2L1 manual r01uh0853ej0100-ra2l1 */
  #if BSP_FEATURE_FLASH_LP_VERSION == 3
     r_flash_lp_write_fpmcr(FLASH_LP_DISCHARGE_1);
 
@@ -2521,8 +2512,7 @@ void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
 /*******************************************************************************************************************//**
  * Wait for the current command to finish processing and clear the FCR register. If MF4 is used clear the processing
  * bit before clearing the rest of FCR.
- * MF3: See Figure 10.14 of MF3 manual SC32_FlashMemory_supplement(MF3)_20170117
- * MF4: See Figures 10.14 and 10.15 of MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105
+ * See Figure 37.19 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
  * @param[in]  timeout         The timeout
  * @retval     FSP_SUCCESS     The command completed successfully.
@@ -2605,8 +2595,8 @@ fsp_err_t r_flash_lp_set_fisr (flash_lp_instance_ctrl_t * const p_ctrl)
 
 #if BSP_FEATURE_FLASH_LP_VERSION == 4
 
-    /* If the flash clock is larger than 32 increment FISR_b.PCKA by 1 for every 2MHZ. (See Section 10.2.6 "Flash
-     * Internal Setting Register" of the MF4 manual Peaks_FlashMemory_supplement(MF4)_20181105) */
+    /* If the flash clock is larger than 32 increment FISR_b.PCKA by 1 for every 2MHZ. (See Section 37.3.7 "Flash
+     * Internal Setting Register" of the RA2L1 manual r01uh0853ej0100-ra2l1 */
     if (p_ctrl->flash_clock_frequency >= FLASH_LP_FISR_INCREASE_PCKA_EVERY_2MHZ)
     {
         R_FACI_LP->FISR_b.PCKA =
@@ -2631,7 +2621,7 @@ fsp_err_t r_flash_lp_set_fisr (flash_lp_instance_ctrl_t * const p_ctrl)
  * @param      src             The source
  * @param[in]  len             The length
  **********************************************************************************************************************/
-__STATIC_INLINE void r_flash_lp_memcpy (uint8_t * const dest, uint8_t * const src, uint32_t len)
+void r_flash_lp_memcpy (uint8_t * const dest, uint8_t * const src, uint32_t len)
 {
     for (uint32_t i = 0; i < len; i++)
     {

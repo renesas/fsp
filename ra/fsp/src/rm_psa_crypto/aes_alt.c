@@ -1413,6 +1413,8 @@ int mbedtls_aes_crypt_ctr( mbedtls_aes_context *ctx,
     AES_VALIDATE_RET( nonce_counter != NULL );
     AES_VALIDATE_RET( input != NULL );
     AES_VALIDATE_RET( output != NULL );
+    FSP_PARAMETER_NOT_USED(nc_off);
+    FSP_PARAMETER_NOT_USED(stream_block);
     return mbedtls_internal_aes_encrypt_decrypt_ctr (ctx, length, nonce_counter, input, output);
 }
 #endif /* MBEDTLS_CIPHER_MODE_CTR */

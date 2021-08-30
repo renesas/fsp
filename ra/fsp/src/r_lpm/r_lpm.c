@@ -53,8 +53,8 @@
 #define LPM_SW_STANDBY_STCONR                (0x0U)
 #define LPM_SW_STANDBY_WAKE_STCONR           (0x3U)
 
-#define LPM_SNZREQCR1_OFFSET                 (0x32ULL)
-#define LPM_WUPEN1_OFFSET                    (0x32ULL)
+#define LPM_SNZREQCR1_OFFSET                 (32ULL)
+#define LPM_WUPEN1_OFFSET                    (32ULL)
 
 #define LPM_OPEN                             (0x524c504d)
 

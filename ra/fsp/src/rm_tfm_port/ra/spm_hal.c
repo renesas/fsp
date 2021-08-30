@@ -35,7 +35,7 @@ enum tfm_plat_err_t tfm_spm_hal_init_isolation_hw(void)
 
 enum tfm_plat_err_t tfm_spm_hal_configure_default_isolation(
                   uint32_t partition_idx,
-                  const struct tfm_spm_partition_platform_data_t *platform_data)
+                  const struct platform_data_t *platform_data)
 {
     bool privileged = tfm_is_partition_privileged(partition_idx);
 #if defined(CONFIG_TFM_ENABLE_MEMORY_PROTECT) && (TFM_LVL != 1)

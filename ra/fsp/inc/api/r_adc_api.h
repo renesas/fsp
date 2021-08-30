@@ -132,6 +132,7 @@ typedef enum e_adc_channel
     ADC_CHANNEL_25          = 25,      ///< ADC channel 25
     ADC_CHANNEL_26          = 26,      ///< ADC channel 26
     ADC_CHANNEL_27          = 27,      ///< ADC channel 27
+    ADC_CHANNEL_28          = 28,      ///< ADC channel 28
     ADC_CHANNEL_DUPLEX_A    = 50,      ///< Data duplexing register A
     ADC_CHANNEL_DUPLEX_B    = 51,      ///< Data duplexing register B
     ADC_CHANNEL_DUPLEX      = -4,      ///< Data duplexing register

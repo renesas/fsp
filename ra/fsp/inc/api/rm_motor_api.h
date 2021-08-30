@@ -56,7 +56,7 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/* Error information */
+/** Error information */
 typedef enum e_rm_motor_error
 {
     MOTOR_ERROR_NONE            = 0x0000,

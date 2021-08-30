@@ -250,7 +250,7 @@ UINT sce_nx_crypto_ecdh_compute_secret (NX_CRYPTO_ECDH * ecdh_ptr,
     {
         err = HW_SCE_ECC_384WrappedScalarMultiplication(&curve_type,
                                                         NULL,
-                                                        ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
+                                                        (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
                                                         pub_key,
                                                         (uint32_t *) share_secret_key_ptr);
     }
@@ -258,7 +258,7 @@ UINT sce_nx_crypto_ecdh_compute_secret (NX_CRYPTO_ECDH * ecdh_ptr,
     {
         err = HW_SCE_ECC_256WrappedScalarMultiplication(&curve_type,
                                                         &cmd,
-                                                        ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
+                                                        (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
                                                         pub_key,
                                                         (uint32_t *) share_secret_key_ptr);
     }
@@ -279,7 +279,7 @@ UINT sce_nx_crypto_ecdh_compute_secret (NX_CRYPTO_ECDH * ecdh_ptr,
 
         err = HW_SCE_ECC_256WrappedScalarMultiplication(&curve_type,
                                                         &cmd,
-                                                        ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
+                                                        (uint32_t *) ecdh_ptr->nx_crypto_ecdh_private_key_buffer,
                                                         (uint32_t *) padded_plain_public_key,
                                                         (uint32_t *) share_secret_key_ptr);
     }

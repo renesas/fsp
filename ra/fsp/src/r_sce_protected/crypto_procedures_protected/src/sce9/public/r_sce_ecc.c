@@ -44,6 +44,9 @@
 #ifndef SCE_HEX_80
  #define SCE_HEX_80                         (0x80)
 #endif
+#ifndef SCE_DEC_64
+ #define SCE_DEC_64                         (64)
+#endif
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -75,6 +78,10 @@ static fsp_err_t set_ecdsa_hash_data(sce_ecdsa_byte_data_t * p_message_hash,
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
+static const SCE_KEY_INDEX_TYPE s_key_index_type[3] =
+{
+    SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH, SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH, SCE_KEY_INDEX_TYPE_HMAC_SHA256_FOR_ECDH
+};
 
 /***********************************************************************************************************************
  * Global variables
@@ -938,15 +945,23 @@ fsp_err_t R_SCE_ECDH_secp256r1_SharedSecretCalculate (sce_ecdh_handle_t         
 }
 
 /*******************************************************************************************************************//**
- * The R_SCE_ECDH_secp256r1_KeyDerivation() function uses the shared secret "Z (shared_secret_index)" calculated by the R_SCE_ECDH_secp256r1_SharedSecretCalculate() function as the key material to derive the wrapped key specified by the third argument, key_type. The key derivation algorithm is one-step key derivation as defined in NIST SP800-56C. Algorithm used for key derivation calculation is specified by the fourth argument, kdf_type.
+ * The R_SCE_ECDH_secp256r1_KeyDerivation() function uses the shared secret "Z (shared_secret_index)" calculated
+ * by the R_SCE_ECDH_secp256r1_SharedSecretCalculate() function as the key material to derive the wrapped key
+ * specified by the third argument, key_type. The key derivation algorithm is one-step key derivation as defined
+ * in NIST SP800-56C. Either SHA-256 or SHA-256 HMAC is specified by the fourth argument, kdf_type.
+ * When SHA-256 HMAC is specified, the wrapped key output by the R_SCE_SHA256HMAC_EncryptedKeyWrap() function
+ * is specified as the seventh argument, salt_wrapped_key.
  * Enter a fixed value for deriving a key shared with the key exchange partner in the fifth argument, other_info.
- * A wrapped key corresponding to key_type is output as the eighth argument, wrapped_key. The correspondences between the types of derived wrapped_key and the functions with which they can be used as listed below.
- *   - AES-GCM-128: R_SCE_AES128GCM_EncryptInit(), R_SCE_AES128GCM_DecryptInit()
+ * A wrapped key corresponding to key_type is output as the eighth argument, wrapped_key. The correspondences
+ * between the types of derived wrapped_key and the functions with which they can be used as listed below.
+ *   - AES-128: All AES-128 Init functions
+ *   - AES-256: All AES-256 Init functions
+ *   - SHA256-HMAC: R_SCE_SHA256HMAC_GenerateInit() function and R_SCE_SHA256HMAC_VerifyInit() function
  *
  * @param[in,out] handle                    ECDH handler (work area)
  * @param[in]     shared_secret_wrapped_key Z wrapped key calculated by R_SCE_ECDH_secp256r1_SharedSecretCalculate
- * @param[in]     key_type                  Derived key type (0: AES-128)
- * @param[in]     kdf_type                  Algorithm used for key derivation calculation (0: SHA-256)
+ * @param[in]     key_type                  Derived key type (0: AES-128, 1: AES-256, 2:SHA256-HMAC)
+ * @param[in]     kdf_type                  Algorithm used for key derivation calculation (0: SHA-256, 1:SHA256-HMAC)
  * @param[in]     other_info                Additional data used for key derivation calculation:
  *                                          AlgorithmID || PartyUInfo || PartyVInfo
  * @param[in]     other_info_length         Data length of other_info (up to 147 byte units)
@@ -961,7 +976,6 @@ fsp_err_t R_SCE_ECDH_secp256r1_SharedSecretCalculate (sce_ecdh_handle_t         
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
- * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -981,8 +995,8 @@ fsp_err_t R_SCE_ECDH_secp256r1_KeyDerivation (sce_ecdh_handle_t          * handl
      * Message length value = AlgorithmID bit length + PartyUInfo bit length + PartyVInfo bit length + 288bit
      * MAX_CNT(word) = 7 + 16n */
 
-    fsp_err_t           error_code = FSP_SUCCESS;
-    st_key_derivation_t indata     =
+    fsp_err_t error_code = FSP_SUCCESS;
+    st_key_derivation_t indata =
     {
         0
     };
@@ -992,23 +1006,25 @@ fsp_err_t R_SCE_ECDH_secp256r1_KeyDerivation (sce_ecdh_handle_t          * handl
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
     }
-
-    handle->flag_call_init          = 0;
-    handle->flag_call_make_public   = 0;
-    handle->flag_call_read_public   = 0;
+    handle->flag_call_init = 0;
+    handle->flag_call_make_public = 0;
+    handle->flag_call_read_public = 0;
     handle->flag_call_shared_secret = 0;
     if (handle->id != g_ecdh256_private_id)
     {
         return FSP_ERR_CRYPTO_SCE_PARAMETER;
     }
-
-    /* SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 9 = 147 */
-    if (((0 < key_type) || (0 < kdf_type)) || ((SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 9) < other_info_length))
+    /* 147 = SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 9 */
+    if (((2 < key_type) || (1 < kdf_type)) || ((SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 9) < other_info_length))
     {
         return FSP_ERR_CRYPTO_SCE_PARAMETER;
     }
 
     message_bit_length = (other_info_length * 8) + SCE_PRV_OTHER_INFO_BYTE_LEN_SUPP;
+    if (0 != kdf_type)
+    {
+        message_bit_length += (SCE_DEC_64 * 8);
+    }
 
     memcpy(indata.paddedmsg, other_info, other_info_length);
     indata.paddedmsg[other_info_length] = SCE_HEX_80; /* stop bit */
@@ -1017,47 +1033,43 @@ fsp_err_t R_SCE_ECDH_secp256r1_KeyDerivation (sce_ecdh_handle_t          * handl
     {
         /* another block unnecessary */
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 4] = (uint8_t) ((message_bit_length >> 24) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 4] = (uint8_t)((message_bit_length >> 24) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 3] = (uint8_t) ((message_bit_length >> 16) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 3] = (uint8_t)((message_bit_length >> 16) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 2] = (uint8_t) ((message_bit_length >> 8) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 2] = (uint8_t)((message_bit_length >> 8) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 1] = (uint8_t) ((message_bit_length) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_2B - 1] = (uint8_t)((message_bit_length) & SCE_HEX_FF);
         indata.max_cnt_byte = SCE_PRV_OTHER_INFO_BYTE_LEN_2B;
     }
     else
     {
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 4] = (uint8_t) ((message_bit_length >> 24) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 4] = (uint8_t)((message_bit_length >> 24) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 3] = (uint8_t) ((message_bit_length >> 16) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 3] = (uint8_t)((message_bit_length >> 16) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 2] = (uint8_t) ((message_bit_length >> 8) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 2] = (uint8_t)((message_bit_length >> 8) & SCE_HEX_FF);
 
         /* Casting uint32_t data to uint8_t data array. */
-        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 1] = (uint8_t) ((message_bit_length) & SCE_HEX_FF);
+        indata.paddedmsg[SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 1] = (uint8_t)((message_bit_length) & SCE_HEX_FF);
         indata.max_cnt_byte = SCE_PRV_OTHER_INFO_BYTE_LEN_3B;
     }
 
     indata.keyindextype = change_endian_long(key_type);
     indata.kdftype      = change_endian_long(kdf_type);
-    FSP_PARAMETER_NOT_USED(&salt_wrapped_key);
 
-    error_code = R_SCE_EcdhKeyDerivationPrivate(
-        /* Casting uint32_t pointer is used for address. */
-        (uint32_t *) &shared_secret_wrapped_key->value,
-        (uint32_t *) indata.paddedmsg,
-        indata.max_cnt_byte >> 2,
-        (uint32_t *) &wrapped_key->value);
+    error_code = R_SCE_EcdhKeyDerivationPrivate(&indata.keyindextype, shared_secret_wrapped_key->value, &indata.kdftype,
+            /* Casting uint32_t pointer is used for address. */
+            (uint32_t*)indata.paddedmsg, indata.max_cnt_byte >> 2, salt_wrapped_key->value, wrapped_key->value);
     if (FSP_SUCCESS == error_code)
     {
-        wrapped_key->type = SCE_KEY_INDEX_TYPE_AES128_GCM_FOR_DLMS_COSEM;
+        wrapped_key->type = s_key_index_type[key_type];
     }
     else
     {

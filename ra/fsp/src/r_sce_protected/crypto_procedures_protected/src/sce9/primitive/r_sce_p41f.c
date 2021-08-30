@@ -90,7 +90,7 @@ fsp_err_t R_SCE_Aes128CmacFinalSub(uint32_t *InData_Cmd, uint32_t *InData_Text, 
     }
     else
     {
-        if ((InData_Cmd[0] == 0x00000000) || (InData_Cmd[0] == 0x00000002))
+        if ((InData_Cmd[0] == 0x00000000U) || (InData_Cmd[0] == 0x00000002U))
         {
             SCE->REG_104H = 0x00000051U;
             SCE->REG_A4H = 0x00400a84U;
@@ -122,7 +122,7 @@ fsp_err_t R_SCE_Aes128CmacFinalSub(uint32_t *InData_Cmd, uint32_t *InData_Text, 
             /* waiting */
         }
         SCE->REG_1CH = 0x00001800U;
-        if ((InData_Cmd[0] == 0x00000000) || (InData_Cmd[0] == 0x00000001))
+        if ((InData_Cmd[0] == 0x00000000U) || (InData_Cmd[0] == 0x00000001U))
         {
             R_SCE_func100(0x6d83a471U, 0x8f1cc5ebU, 0x5e6419c6U, 0xf6625b15U);
             SCE->REG_104H = 0x00000361U;
@@ -292,5 +292,5 @@ fsp_err_t R_SCE_Aes128CmacFinalSub(uint32_t *InData_Cmd, uint32_t *InData_Text, 
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p41f.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p41f_r1.prc
 ***********************************************************************************************************************/

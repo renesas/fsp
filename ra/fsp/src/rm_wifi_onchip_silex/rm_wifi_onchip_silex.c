@@ -26,14 +26,19 @@
 #include <string.h>
 #include "limits.h"
 
-#include "FreeRTOS.h"
-#include "stream_buffer.h"
-#include "semphr.h"
-#include "portmacro.h"
-
 #include "r_sci_uart.h"
 #include "r_ioport.h"
+#include "rm_wifi_onchip_silex_cfg.h"
 #include "rm_wifi_onchip_silex.h"
+
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+ #include "FreeRTOS.h"
+ #include "stream_buffer.h"
+ #include "semphr.h"
+ #include "portmacro.h"
+#else                                  // Azure RTOS
+ #include "tx_api.h"
+#endif
 
 /*! \cond PRIVATE */
 
@@ -41,7 +46,6 @@
  * Externs
  **********************************************************************************************************************/
 
-extern char * g_wifi_onchip_silex_uart_cmd_baud;
 extern const ioport_instance_t g_ioport;
 
 /***********************************************************************************************************************
@@ -114,6 +118,7 @@ typedef enum
 /* Error type defines */
 #define WIFI_ONCHIP_SILEX_ERR_BUSY                         (4)
 #define WIFI_ONCHIP_SILEX_ERR_NO_SUPPORT                   (7)
+#define WIFI_ONCHIP_SILEX_ERR_TIMEOUT                      (-4)
 #define WIFI_ONCHIP_SILEX_ERR_UNKNOWN                      (-3)
 #define WIFI_ONCHIP_SILEX_ERR_COMMS                        (-2)
 #define WIFI_ONCHIP_SILEX_ERR_ERROR                        (-1)
@@ -121,10 +126,23 @@ typedef enum
 #define WIFI_ONCHIP_SILEX_ERR_NO_SUPPORT_CHAR              ('7')
 #define WIFI_ONCHIP_SILEX_ERR_NONE_CHAR                    ('0')
 
+#if (BSP_CFG_RTOS == 1)                // Azure RTOS
+ #define TickType_t                                        unsigned long
+ #define configTICK_RATE_HZ                                TX_TIMER_TICKS_PER_SECOND
+ #define MS_TO_TICKS(xTimeInMs)    ((TickType_t) (((TickType_t) (xTimeInMs) * (TickType_t) configTICK_RATE_HZ * 1ULL) / \
+                                                  (TickType_t) 1000ULL))
+ #define WIFI_ONCHIP_SILEX_TIMEOUT_1MS                     (10)
+ #define WIFI_ONCHIP_SILEX_TIMEOUT_3MS                     (10)
+ #define WIFI_ONCHIP_SILEX_TIMEOUT_5MS                     (10)
+ #define WIFI_ONCHIP_SILEX_TIMEOUT_MIN_TICKS               (2)
+ #define WIFI_ONCHIP_SILEX_TEMPORARY_BUFFER_SIZE           (30)
+#else                                  // FreeRTOS
+ #define WIFI_ONCHIP_SILEX_TIMEOUT_1MS                     (1)
+ #define WIFI_ONCHIP_SILEX_TIMEOUT_3MS                     (3)
+ #define WIFI_ONCHIP_SILEX_TIMEOUT_5MS                     (5)
+#endif
+
 /* Predefined timeout values */
-#define WIFI_ONCHIP_SILEX_TIMEOUT_1MS                      (1)
-#define WIFI_ONCHIP_SILEX_TIMEOUT_3MS                      (3)
-#define WIFI_ONCHIP_SILEX_TIMEOUT_5MS                      (5)
 #define WIFI_ONCHIP_SILEX_TIMEOUT_10MS                     (10)
 #define WIFI_ONCHIP_SILEX_TIMEOUT_25MS                     (25)
 #define WIFI_ONCHIP_SILEX_TIMEOUT_30MS                     (30)
@@ -205,11 +223,16 @@ const uint8_t g_wifi_onchip_silex_socket_status_listen[]    = WIFI_ONCHIP_SILEX_
 const uint8_t g_wifi_onchip_silex_socket_status_connected[] = WIFI_ONCHIP_SILEX_SOCKET_STATUS_TEXT_CONNECTED;
 const uint8_t g_wifi_onchip_silex_return_dummy[]            = "";
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+
 /**
  *  Maximum time in ticks to wait for obtaining a semaphore.
  */
 static const TickType_t wifi_sx_wifi_onchip_silex_sem_block_timeout = pdMS_TO_TICKS(
     WIFI_ONCHIP_SILEX_CFG_SEM_MAX_TIMEOUT);
+#else
+static const uint32_t wifi_sx_wifi_onchip_silex_sem_block_timeout = MS_TO_TICKS(WIFI_ONCHIP_SILEX_CFG_SEM_MAX_TIMEOUT);
+#endif
 
 /* Result code array used for AT command return parsing */
 const uint8_t * const g_wifi_onchip_silex_result_code[][WIFI_ONCHIP_SILEX_MAX_AT_COMMAND_TYPES] =
@@ -249,9 +272,12 @@ const uint8_t * const g_wifi_onchip_silex_socket_status[] =
  * Static Globals
  **********************************************************************************************************************/
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+
 /* Transmit and receive mutexes for UARTs */
 static StaticSemaphore_t g_socket_mutexes[2];
 static StaticSemaphore_t g_uart_tei_mutexes[2];
+#endif
 
 /* Control instance for the Silex wifi module */
 static wifi_onchip_silex_instance_ctrl_t g_rm_wifi_onchip_silex_instance;
@@ -292,10 +318,13 @@ static fsp_err_t rm_wifi_onchip_silex_sntp_service_init(wifi_onchip_silex_instan
 
 #endif
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
 size_t xStreamBufferReceiveAlternate(StreamBufferHandle_t xStreamBuffer,
                                      void               * pvRxData,
                                      size_t               xBufferLengthBytes,
                                      TickType_t           xTicksToWait);
+
+#endif
 
 static fsp_err_t rm_wifi_onchip_silex_send_scan(wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl,
                                                 uint32_t                            serial_ch_id,
@@ -342,7 +371,8 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     for (uint32_t i = 0; i < p_instance_ctrl->num_uarts; i++)
     {
         p_instance_ctrl->uart_instance_objects[i] = (uart_instance_t *) p_cfg->uart_instances[i];
-        p_instance_ctrl->uart_tei_sem[i]          = xSemaphoreCreateBinaryStatic(&g_uart_tei_mutexes[i]);
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+        p_instance_ctrl->uart_tei_sem[i] = xSemaphoreCreateBinaryStatic(&g_uart_tei_mutexes[i]);
         if (NULL == p_instance_ctrl->uart_tei_sem[i])
         {
             rm_wifi_onchip_silex_cleanup_open(p_instance_ctrl);
@@ -350,15 +380,40 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
 
         FSP_ERROR_RETURN(NULL != p_instance_ctrl->uart_tei_sem[i], FSP_ERR_OUT_OF_MEMORY);
         xSemaphoreTake(p_instance_ctrl->uart_tei_sem[i], 0);
+#else
+        uint32_t status = tx_semaphore_create(&p_instance_ctrl->uart_tei_sem[i], "uart tei sem", 1);
+        if (TX_SUCCESS != status)
+        {
+            rm_wifi_onchip_silex_cleanup_open(p_instance_ctrl);
+            FSP_ERROR_RETURN(TX_SUCCESS != status, FSP_ERR_WIFI_FAILED);
+        }
+
+        tx_semaphore_get(&p_instance_ctrl->uart_tei_sem[i], TX_NO_WAIT);
+
+        status = tx_semaphore_create(&p_instance_ctrl->uart_rx_sem[i], "uart rx sem", 1);
+        if (TX_SUCCESS != status)
+        {
+            rm_wifi_onchip_silex_cleanup_open(p_instance_ctrl);
+            FSP_ERROR_RETURN(TX_SUCCESS != status, FSP_ERR_WIFI_FAILED);
+        }
+        tx_semaphore_get(&p_instance_ctrl->uart_rx_sem[i], TX_NO_WAIT);
+#endif
     }
 
     p_instance_ctrl->reset_pin             = p_cfg->reset_pin;
     p_instance_ctrl->num_creatable_sockets = p_cfg->num_sockets;
     p_instance_ctrl->curr_cmd_port         = WIFI_ONCHIP_SILEX_UART_INITIAL_PORT;
     p_instance_ctrl->tx_data_size          = WIFI_ONCHIP_SILEX_MAX_IP_FRAME_SIZE;
+#if (BSP_CFG_RTOS == 1)
+    p_instance_ctrl->p_current_packet_buffer = NULL;
+    p_instance_ctrl->p_next_packet_buffer    = NULL;
+    p_instance_ctrl->packet_buffer_size      = 0;
+#endif
 
     /* Reset the wifi module to a known state */
     rm_wifi_onchip_silex_wifi_module_reset(p_instance_ctrl);
+
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
 
     /* Create the TX/RX mutexes */
     if (p_instance_ctrl->tx_sem != NULL)
@@ -398,8 +453,36 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     }
 
     FSP_ERROR_RETURN(NULL != p_instance_ctrl->socket_byteq_hdl, FSP_ERR_WIFI_FAILED);
+#else
+    uint32_t tx_status;
+    tx_status = tx_mutex_create(&p_instance_ctrl->tx_sem, "tx mut", TX_INHERIT);
+    if (TX_SUCCESS != tx_status)
+    {
+        rm_wifi_onchip_silex_cleanup_open(p_instance_ctrl);
+        FSP_ERROR_RETURN(TX_SUCCESS != tx_status, FSP_ERR_WIFI_FAILED);
+    }
 
+    tx_status = tx_mutex_create(&p_instance_ctrl->rx_sem, "rx mut", TX_INHERIT);
+    if (TX_SUCCESS != tx_status)
+    {
+        rm_wifi_onchip_silex_cleanup_open(p_instance_ctrl);
+        FSP_ERROR_RETURN(TX_SUCCESS != tx_status, FSP_ERR_WIFI_FAILED);
+    }
+
+    tx_status = tx_semaphore_create(&p_instance_ctrl->uart_data_rx_start_sem, "uart rx sem", 1);
+    if (TX_SUCCESS != tx_status)
+    {
+        rm_wifi_onchip_silex_cleanup_open(p_instance_ctrl);
+        FSP_ERROR_RETURN(TX_SUCCESS != tx_status, FSP_ERR_WIFI_FAILED);
+    }
+    tx_semaphore_get(&p_instance_ctrl->uart_data_rx_start_sem, TX_NO_WAIT);
+#endif
+
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
     vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_1SEC));
+#else
+    tx_thread_sleep(MS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_1SEC));
+#endif
 
     /* Create memory copy of uart extended configuration and then copy new configuration values in. */
     memcpy((void *) &uart0_cfg_extended_115200,
@@ -432,7 +515,11 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
 
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
     vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_100MS));
+#else
+    tx_thread_sleep(MS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_100MS));
+#endif
 
     p_instance_ctrl->at_cmd_mode       = 0;
     p_instance_ctrl->curr_socket_index = 0;
@@ -453,26 +540,33 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
 
     /* Create string for wifi modem baud rate change. using currently unused socket RX buffer for temp string. */
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+    uint8_t * p_temp_buff = p_instance_ctrl->sockets[0].socket_recv_buff;
     memset(p_instance_ctrl->sockets[0].socket_recv_buff, 0, sizeof(p_instance_ctrl->sockets[0].socket_recv_buff));
-    strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, "ATB=", 5);
-    strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, g_wifi_onchip_silex_uart_cmd_baud, 10);
-    strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, ",,,,", 5);
+#else                                  // AzureRTOS
+    uint8_t   temp_buff[WIFI_ONCHIP_SILEX_TEMPORARY_BUFFER_SIZE] = {0};
+    uint8_t * p_temp_buff = temp_buff;
+#endif
+
+    strncat((char *) p_temp_buff, "ATB=", 5);
+    strncat((char *) p_temp_buff, g_wifi_onchip_silex_uart_cmd_baud, 10);
+    strncat((char *) p_temp_buff, ",,,,", 5);
 
     if ((uint32_t) (((sci_uart_extended_cfg_t *) p_instance_ctrl->uart_instance_objects[
                          WIFI_ONCHIP_SILEX_UART_INITIAL_PORT]->p_cfg->p_extend)->flow_control_pin) ==
         (uint32_t) WIFI_ONCHIP_SILEX_BSP_PIN_PORT_INVALID)
     {
-        strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, "n\r", 3);
+        strncat((char *) p_temp_buff, "n\r", 3);
     }
     else
     {
-        strncat((char *) p_instance_ctrl->sockets[0].socket_recv_buff, "h\r", 3);
+        strncat((char *) p_temp_buff, "h\r", 3);
     }
 
     /* Send reconfiguration AT command to wifi module */
     err = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
-                                          (char *) p_instance_ctrl->sockets[0].socket_recv_buff,
+                                          (char *) p_temp_buff,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_10MS,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_400MS,
                                           WIFI_ONCHIP_SILEX_RETURN_OK);
@@ -496,7 +590,11 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
 
     /* Delay after close */
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
     vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_100MS));
+#else
+    tx_thread_sleep(MS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_100MS));
+#endif
 
     /* Open first uart port with config values from the configurator */
     p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT];
@@ -510,7 +608,11 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
 
     /* Delay after open */
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
     vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_1SEC));
+#else
+    tx_thread_sleep(MS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_1SEC));
+#endif
 
     /* Flush the uart channel */
     rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
@@ -753,6 +855,9 @@ fsp_err_t rm_wifi_onchip_silex_close ()
     if ((1 == p_instance_ctrl->num_uarts) &&
         (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
     {
+#if (BSP_CFG_RTOS == 1)
+        p_instance_ctrl->sockets[0].socket_status = WIFI_ONCHIP_SILEX_SOCKET_STATUS_CLOSED;
+#endif
         rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                         p_instance_ctrl->curr_cmd_port,
                                         "+++",
@@ -807,6 +912,9 @@ fsp_err_t rm_wifi_onchip_silex_disconnect ()
     if ((1 == p_instance_ctrl->num_uarts) &&
         (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
     {
+#if (BSP_CFG_RTOS == 1)
+        p_instance_ctrl->sockets[0].socket_status = WIFI_ONCHIP_SILEX_SOCKET_STATUS_CLOSED;
+#endif
         rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                         p_instance_ctrl->curr_cmd_port,
                                         "+++",
@@ -875,7 +983,7 @@ fsp_err_t rm_wifi_onchip_silex_socket_connected (fsp_err_t * p_status)
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_INVALID_ARGUMENT No commas are accepted in the SSID or Passphrase.
  **********************************************************************************************************************/
-fsp_err_t rm_wifi_onchip_silex_connect (const char * p_ssid, uint32_t security, const char * p_passphrase)
+fsp_err_t rm_wifi_onchip_silex_connect (const char * p_ssid, WIFISecurity_t security, const char * p_passphrase)
 {
     fsp_err_t ret;
     char    * pstr;
@@ -925,13 +1033,13 @@ fsp_err_t rm_wifi_onchip_silex_connect (const char * p_ssid, uint32_t security, 
     }
 
     /* Connect to an OPEN security AP */
-    if (WIFI_ONCHIP_SILEX_SECURITY_OPEN == security)
+    if (eWiFiSecurityOpen == security)
     {
         strncpy((char *) p_instance_ctrl->cmd_tx_buff, "ATWA=", 6);
         strncat((char *) p_instance_ctrl->cmd_tx_buff, p_ssid, wificonfigMAX_SSID_LEN);
         strncat((char *) p_instance_ctrl->cmd_tx_buff, "\r", 2);
     }
-    else if ((WIFI_ONCHIP_SILEX_SECURITY_WPA == security) || (WIFI_ONCHIP_SILEX_SECURITY_WPA2 == security))
+    else if ((eWiFiSecurityWPA == security) || (eWiFiSecurityWPA2 == security))
     {
         /* Connect to an WPA security AP */
 
@@ -939,7 +1047,7 @@ fsp_err_t rm_wifi_onchip_silex_connect (const char * p_ssid, uint32_t security, 
         strncat((char *) p_instance_ctrl->cmd_tx_buff, p_ssid, wificonfigMAX_SSID_LEN);
         strncat((char *) p_instance_ctrl->cmd_tx_buff, ",", 2);
 
-        if (security == WIFI_ONCHIP_SILEX_SECURITY_WPA)
+        if (security == eWiFiSecurityWPA)
         {
             strncat((char *) p_instance_ctrl->cmd_tx_buff, "1,", 3);
         }
@@ -1021,7 +1129,11 @@ fsp_err_t rm_wifi_onchip_silex_connect (const char * p_ssid, uint32_t security, 
                     break;
                 }
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
                 vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_8SEC));
+#else
+                tx_thread_sleep(MS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_8SEC));
+#endif
             }
         }
     }
@@ -1727,6 +1839,8 @@ fsp_err_t rm_wifi_onchip_silex_socket_create (uint32_t socket_no, uint32_t type,
     if (FSP_SUCCESS == ret)
     {
         p_instance_ctrl->sockets[socket_no].socket_status = WIFI_ONCHIP_SILEX_SOCKET_STATUS_SOCKET;
+
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
         if (p_instance_ctrl->sockets[socket_no].socket_byteq_hdl)
         {
             BaseType_t reset_success = xStreamBufferReset(p_instance_ctrl->sockets[socket_no].socket_byteq_hdl);
@@ -1738,6 +1852,7 @@ fsp_err_t rm_wifi_onchip_silex_socket_create (uint32_t socket_no, uint32_t type,
                 return FSP_ERR_WIFI_FAILED;
             }
         }
+#endif
     }
 
     /* Give back the socketInUse mutex. */
@@ -1916,6 +2031,7 @@ int32_t rm_wifi_onchip_silex_tcp_send (uint32_t socket_no, const uint8_t * p_dat
             return WIFI_ONCHIP_SILEX_ERR_ERROR;
         }
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
         if (pdFALSE ==
             xSemaphoreTake(p_instance_ctrl->uart_tei_sem[p_instance_ctrl->curr_data_port], pdMS_TO_TICKS(timeout_ms)))
         {
@@ -1923,6 +2039,15 @@ int32_t rm_wifi_onchip_silex_tcp_send (uint32_t socket_no, const uint8_t * p_dat
 
             return WIFI_ONCHIP_SILEX_ERR_ERROR;
         }
+
+#else
+        if (tx_semaphore_get(&p_instance_ctrl->uart_tei_sem[p_instance_ctrl->curr_data_port], MS_TO_TICKS(timeout_ms)))
+        {
+            rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+            return WIFI_ONCHIP_SILEX_ERR_ERROR;
+        }
+#endif
 
         sent_count += lenghttmp1;
     }
@@ -1947,6 +2072,7 @@ int32_t rm_wifi_onchip_silex_tcp_send (uint32_t socket_no, const uint8_t * p_dat
  **********************************************************************************************************************/
 int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
 {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
     uint32_t  recvcnt = 0;
     int32_t   ret     = 0;
     fsp_err_t err;
@@ -1954,10 +2080,10 @@ int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uin
 
     wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_silex_instance;
 
-#if (WIFI_ONCHIP_SILEX_CFG_PARAM_CHECKING_ENABLED == 1)
+ #if (WIFI_ONCHIP_SILEX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_data);
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* If socket read has been disabled by shutdown call then return 0 bytes received. */
     if (!(p_instance_ctrl->sockets[socket_no].socket_read_write_flag & WIFI_ONCHIP_SILEX_SOCKET_READ))
@@ -2032,6 +2158,7 @@ int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uin
                     xStreamBufferReceiveAlternate(p_instance_ctrl->sockets[socket_no].socket_byteq_hdl,
                                                   (p_data + recvcnt), num_bytes_left,
                                                   pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_10MS));
+
                 if (xReceivedBytes > 0)
                 {
                     recvcnt += xReceivedBytes;
@@ -2085,6 +2212,7 @@ int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uin
                                                                (p_data + recvcnt),
                                                                num_bytes_left,
                                                                pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_10MS));
+
                 if (xReceivedBytes > 0)
                 {
                     recvcnt += xReceivedBytes;
@@ -2108,6 +2236,14 @@ int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uin
     rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
     return ret;
+#else
+    FSP_PARAMETER_NOT_USED(socket_no);
+    FSP_PARAMETER_NOT_USED(p_data);
+    FSP_PARAMETER_NOT_USED(length);
+    FSP_PARAMETER_NOT_USED(timeout_ms);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -2155,6 +2291,9 @@ fsp_err_t rm_wifi_onchip_silex_socket_disconnect (uint32_t socket_no)
         if ((1 == p_instance_ctrl->num_uarts) &&
             (p_instance_ctrl->sockets[0].socket_status == WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED))
         {
+#if (BSP_CFG_RTOS == 1)
+            p_instance_ctrl->sockets[0].socket_status = WIFI_ONCHIP_SILEX_SOCKET_STATUS_CLOSED;
+#endif
             rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                             p_instance_ctrl->curr_cmd_port,
                                             "+++",
@@ -2183,11 +2322,13 @@ fsp_err_t rm_wifi_onchip_silex_socket_disconnect (uint32_t socket_no)
 
             if (p_instance_ctrl->num_uarts == 2)
             {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
                 BaseType_t reset_success = xStreamBufferReset(p_instance_ctrl->sockets[socket_no].socket_byteq_hdl);
                 if (reset_success != pdPASS)
                 {
                     return FSP_ERR_WIFI_FAILED;
                 }
+#endif
             }
         }
         else
@@ -2302,12 +2443,137 @@ fsp_err_t rm_wifi_onchip_silex_dns_query (const char * p_textstring, uint8_t * p
     return FSP_SUCCESS;
 }
 
+#if (BSP_CFG_RTOS == 1)
+
+/*******************************************************************************************************************//**
+ *  Initialize packet buffers with packet pointers and set the size of the packet.
+ *
+ * @param[in]  p_current_packet_buffer   Starting packet buffer address to read packets into.
+ * @param[in]  p_next_packet_buffer      Packet buffer address to switch to after initial packet is full.
+ * @param[in]  packet_buffer_size        Size to read into each packet.
+ **********************************************************************************************************************/
+void rm_wifi_onchip_silex_initialize_packet_buffers (uint8_t * p_current_packet_buffer,
+                                                     uint8_t * p_next_packet_buffer,
+                                                     uint32_t  packet_buffer_size)
+{
+    g_rm_wifi_onchip_silex_instance.p_current_packet_buffer = p_current_packet_buffer;
+    g_rm_wifi_onchip_silex_instance.p_next_packet_buffer    = p_next_packet_buffer;
+    g_rm_wifi_onchip_silex_instance.packet_buffer_size      = packet_buffer_size;
+}
+
+/*******************************************************************************************************************//**
+ *  Initialize packet buffers with packet pointers and set the size of the packet.
+ *
+ * @param[in]  p_next_packet_buffer         Packet buffer address to switch to after current packet is full.
+ * @param[in]  move_current_packet_buffer   If true, set current packet buffer pointer to next pointer before writing
+ *                                             next buffer pointer.
+ **********************************************************************************************************************/
+void rm_wifi_onchip_silex_set_next_packet_buffer (uint8_t * p_next_packet_buffer, bool move_current_packet_buffer)
+{
+    if (move_current_packet_buffer)
+    {
+        g_rm_wifi_onchip_silex_instance.p_current_packet_buffer = g_rm_wifi_onchip_silex_instance.p_next_packet_buffer;
+    }
+
+    g_rm_wifi_onchip_silex_instance.p_next_packet_buffer = p_next_packet_buffer;
+}
+
+/*******************************************************************************************************************//**
+ *  Change the current socket index.
+ *
+ * @param[in]  socket_no      Socket index number to change to.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ *
+ **********************************************************************************************************************/
+fsp_err_t rm_wifi_onchip_silex_change_socket (uint32_t socket_no)
+{
+    if ((g_rm_wifi_onchip_silex_instance.num_uarts == 1) ||
+        (g_rm_wifi_onchip_silex_instance.curr_socket_index == socket_no))
+    {
+        return FSP_SUCCESS;
+    }
+
+    return rm_wifi_onchip_silex_change_socket_index(&g_rm_wifi_onchip_silex_instance, socket_no);
+}
+
+/*******************************************************************************************************************//**
+ *  Cancel the current read operation over UART. Return the number of bytes received.
+ *
+ * @param[in,out]  bytes_received    Location to store number of bytes recieved.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ *
+ **********************************************************************************************************************/
+fsp_err_t rm_wifi_onchip_silex_stop_tcp_recv (uint32_t * bytes_received)
+{
+    fsp_err_t err;
+    uint32_t  remaining_bytes;
+
+    uart_instance_t * p_uart_instance =
+        g_rm_wifi_onchip_silex_instance.uart_instance_objects[g_rm_wifi_onchip_silex_instance.curr_data_port];
+
+    err = p_uart_instance->p_api->readStop(p_uart_instance->p_ctrl, &remaining_bytes);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    *bytes_received = g_rm_wifi_onchip_silex_instance.packet_buffer_size - remaining_bytes;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ *  Get the recieve start semaphore for the module.
+ *
+ * @param[in]  wait_option              How long to wait for the semaphore, this accepts the
+ *                                      same values as the wait_option for tx_semaphore_get.
+ *
+ * @retval See tx_semaphore_get return values.
+ *
+ **********************************************************************************************************************/
+UINT rm_wifi_onchip_silex_get_rx_start_semaphore (ULONG wait_option)
+{
+    return tx_semaphore_get(&g_rm_wifi_onchip_silex_instance.uart_data_rx_start_sem, wait_option);
+}
+
+/*******************************************************************************************************************//**
+ *  Get the recieve complete (packet filled) semaphore for the module.
+ *
+ * @param[in]  wait_option              How long to wait for the semaphore, this accepts the
+ *                                      same values as the wait_option for tx_semaphore_get.
+ *
+ * @retval See tx_semaphore_get return values.
+ *
+ **********************************************************************************************************************/
+UINT rm_wifi_onchip_silex_get_rx_complete_semaphore (ULONG wait_option)
+{
+    return tx_semaphore_get(&g_rm_wifi_onchip_silex_instance.uart_rx_sem[g_rm_wifi_onchip_silex_instance.
+                                                                         curr_data_port],
+                            wait_option);
+}
+
+/*******************************************************************************************************************//**
+ *  Retrieve the current socket index.
+ *
+ * @retval The current socket index
+ *
+ **********************************************************************************************************************/
+uint32_t rm_wifi_onchip_silex_get_current_socket_index ()
+{
+    uint32_t index = g_rm_wifi_onchip_silex_instance.curr_socket_index;
+
+    return index;
+}
+
+#endif
+
 /***********************************************************************************************************************
  * Private Functions Implementation
  **********************************************************************************************************************/
 
 static void rm_wifi_onchip_silex_cleanup_open (wifi_onchip_silex_instance_ctrl_t * const p_instance_ctrl)
 {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+
     /* Delete the semaphores */
     if (NULL != p_instance_ctrl->tx_sem)
     {
@@ -2340,6 +2606,26 @@ static void rm_wifi_onchip_silex_cleanup_open (wifi_onchip_silex_instance_ctrl_t
         p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_SILEX_UART_SECOND_PORT] = NULL;
     }
 
+    /* Clean up the stream buffers that were allocated */
+    for (int i = 0; i < WIFI_ONCHIP_SILEX_CFG_NUM_CREATEABLE_SOCKETS; i++)
+    {
+        if (p_instance_ctrl->sockets[i].socket_byteq_hdl)
+        {
+            vStreamBufferDelete(p_instance_ctrl->sockets[i].socket_byteq_hdl);
+            p_instance_ctrl->sockets[i].socket_byteq_hdl = NULL;
+        }
+    }
+
+#else
+    tx_semaphore_delete(&p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT]);
+    tx_semaphore_delete(&p_instance_ctrl->uart_tei_sem[WIFI_ONCHIP_SILEX_UART_SECOND_PORT]);
+    tx_semaphore_delete(&p_instance_ctrl->uart_rx_sem[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT]);
+    tx_semaphore_delete(&p_instance_ctrl->uart_rx_sem[WIFI_ONCHIP_SILEX_UART_SECOND_PORT]);
+    tx_semaphore_delete(&p_instance_ctrl->uart_data_rx_start_sem);
+    tx_mutex_delete(&p_instance_ctrl->tx_sem);
+    tx_mutex_delete(&p_instance_ctrl->rx_sem);
+#endif
+
     uart_instance_t * p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT];
     if (SCIU_OPEN == ((sci_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
     {
@@ -2351,25 +2637,23 @@ static void rm_wifi_onchip_silex_cleanup_open (wifi_onchip_silex_instance_ctrl_t
     {
         p_uart->p_api->close(p_uart->p_ctrl);
     }
-
-    /* Clean up the stream buffers that were allocated */
-    for (int i = 0; i < WIFI_ONCHIP_SILEX_CFG_NUM_CREATEABLE_SOCKETS; i++)
-    {
-        if (p_instance_ctrl->sockets[i].socket_byteq_hdl)
-        {
-            vStreamBufferDelete(p_instance_ctrl->sockets[i].socket_byteq_hdl);
-            p_instance_ctrl->sockets[i].socket_byteq_hdl = NULL;
-        }
-    }
 }
 
 static void rm_wifi_onchip_silex_wifi_module_reset (wifi_onchip_silex_instance_ctrl_t * const p_instance_ctrl)
 {
     /* Reset the wifi module. */
     g_ioport.p_api->pinWrite(g_ioport.p_ctrl, p_instance_ctrl->reset_pin, BSP_IO_LEVEL_LOW);
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
     vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_25MS));
+#else
+    tx_thread_sleep(MS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_25MS));
+#endif
     g_ioport.p_api->pinWrite(g_ioport.p_ctrl, p_instance_ctrl->reset_pin, BSP_IO_LEVEL_HIGH);
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
     vTaskDelay(pdMS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_1MS));
+#else
+    tx_thread_sleep(MS_TO_TICKS(WIFI_ONCHIP_SILEX_TIMEOUT_1MS));
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -2441,15 +2725,24 @@ fsp_err_t rm_wifi_onchip_silex_send_basic_take_mutex (wifi_onchip_silex_instance
 {
     if (0 != (mutex_flag & WIFI_ONCHIP_SILEX_MUTEX_TX))
     {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
         if (xSemaphoreTake(p_instance_ctrl->tx_sem,
                            (wifi_sx_wifi_onchip_silex_sem_block_timeout / portTICK_PERIOD_MS)) != pdTRUE)
         {
             return (fsp_err_t) WIFI_ONCHIP_SILEX_ERR_ERROR;
         }
+
+#else
+        if (tx_mutex_get(&p_instance_ctrl->tx_sem, wifi_sx_wifi_onchip_silex_sem_block_timeout))
+        {
+            return (fsp_err_t) WIFI_ONCHIP_SILEX_ERR_ERROR;
+        }
+#endif
     }
 
     if (0 != (mutex_flag & WIFI_ONCHIP_SILEX_MUTEX_RX))
     {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
         if (xSemaphoreTake(p_instance_ctrl->rx_sem,
                            (wifi_sx_wifi_onchip_silex_sem_block_timeout / portTICK_PERIOD_MS)) != pdTRUE)
         {
@@ -2460,6 +2753,18 @@ fsp_err_t rm_wifi_onchip_silex_send_basic_take_mutex (wifi_onchip_silex_instance
 
             return (fsp_err_t) WIFI_ONCHIP_SILEX_ERR_ERROR;
         }
+
+#else
+        if (tx_mutex_get(&p_instance_ctrl->rx_sem, wifi_sx_wifi_onchip_silex_sem_block_timeout))
+        {
+            if (0 != (mutex_flag & WIFI_ONCHIP_SILEX_MUTEX_TX))
+            {
+                tx_mutex_put(&p_instance_ctrl->tx_sem);
+            }
+
+            return (fsp_err_t) WIFI_ONCHIP_SILEX_ERR_ERROR;
+        }
+#endif
     }
 
     return FSP_SUCCESS;
@@ -2476,6 +2781,7 @@ fsp_err_t rm_wifi_onchip_silex_send_basic_take_mutex (wifi_onchip_silex_instance
 void rm_wifi_onchip_silex_send_basic_give_mutex (wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl,
                                                  uint32_t                            mutex_flag)
 {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
     if (0 != (mutex_flag & WIFI_ONCHIP_SILEX_MUTEX_RX))
     {
         xSemaphoreGive(p_instance_ctrl->rx_sem);
@@ -2485,6 +2791,18 @@ void rm_wifi_onchip_silex_send_basic_give_mutex (wifi_onchip_silex_instance_ctrl
     {
         xSemaphoreGive(p_instance_ctrl->tx_sem);
     }
+
+#else
+    if (0 != (mutex_flag & WIFI_ONCHIP_SILEX_MUTEX_RX))
+    {
+        tx_mutex_put(&p_instance_ctrl->rx_sem);
+    }
+
+    if (0 != (mutex_flag & WIFI_ONCHIP_SILEX_MUTEX_TX))
+    {
+        tx_mutex_put(&p_instance_ctrl->tx_sem);
+    }
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -2510,9 +2828,25 @@ fsp_err_t rm_wifi_onchip_silex_send_basic (wifi_onchip_silex_instance_ctrl_t * p
 {
     fsp_err_t err;
     uint32_t  recvcnt = 0;
-    uint8_t   receive_data;
-    uint32_t  last_data_cnt = 0;
-    uint32_t  retry_count;
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+    uint8_t  receive_data;
+    uint32_t last_data_cnt = 0;
+#else
+    ULONG byte_timeout_ticks = MS_TO_TICKS(byte_timeout);
+    ULONG timeout_ticks      = MS_TO_TICKS(timeout_ms);
+
+    /* Make sure timeouts are at least 2 ticks */
+    if (timeout_ticks < WIFI_ONCHIP_SILEX_TIMEOUT_MIN_TICKS)
+    {
+        timeout_ticks = WIFI_ONCHIP_SILEX_TIMEOUT_MIN_TICKS;
+    }
+
+    if (byte_timeout_ticks < WIFI_ONCHIP_SILEX_TIMEOUT_MIN_TICKS)
+    {
+        byte_timeout_ticks = WIFI_ONCHIP_SILEX_TIMEOUT_MIN_TICKS;
+    }
+#endif
+    uint32_t retry_count;
 
 #if (WIFI_ONCHIP_SILEX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_textstring);
@@ -2520,45 +2854,61 @@ fsp_err_t rm_wifi_onchip_silex_send_basic (wifi_onchip_silex_instance_ctrl_t * p
 
     for (retry_count = 0; retry_count < WIFI_ONCHIP_SILEX_CFG_MAX_RETRIES_UART_COMMS; retry_count++)
     {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
         last_data_cnt = 0;
+#else
+        p_instance_ctrl->current_cmd_buffer_index = 0;
+#endif
+
         memset(p_instance_ctrl->last_data, 0, sizeof(p_instance_ctrl->last_data));
+        memset(p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
 
         if (p_textstring != NULL)
         {
             recvcnt = 0;
-
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
             if (uxQueueMessagesWaiting((QueueHandle_t) p_instance_ctrl->uart_tei_sem[serial_ch_id]) !=
                 0)
             {
                 return FSP_ERR_WIFI_FAILED;
             }
+#endif
 
             err = p_instance_ctrl->uart_instance_objects[serial_ch_id]->p_api->write(
                 p_instance_ctrl->uart_instance_objects[serial_ch_id]->p_ctrl,
                 (uint8_t *) &p_textstring[0],
                 strlen(p_textstring));
-
             FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
             FSP_ERROR_RETURN(pdTRUE ==
                              xSemaphoreTake(p_instance_ctrl->uart_tei_sem[serial_ch_id],
                                             (timeout_ms / portTICK_PERIOD_MS)),
                              FSP_ERR_WIFI_FAILED);
+#else
+            FSP_ERROR_RETURN(TX_SUCCESS ==
+                             tx_semaphore_get(&p_instance_ctrl->uart_tei_sem[serial_ch_id], MS_TO_TICKS(timeout_ticks)),
+                             FSP_ERR_WIFI_FAILED);
+#endif
         }
         else
         {
             return FSP_ERR_WIFI_FAILED;
         }
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+
         /* Detect the first transmitted byte from the message */
         size_t xReceivedBytes = xStreamBufferReceiveAlternate(p_instance_ctrl->socket_byteq_hdl,
                                                               &receive_data,
                                                               1,
                                                               pdMS_TO_TICKS(timeout_ms));
+
         if (xReceivedBytes == 1)
         {
             p_instance_ctrl->cmd_rx_buff[recvcnt] = receive_data;
             recvcnt++;
+
             if (last_data_cnt < (WIFI_ONCHIP_SILEX_RETURN_TEXT_LENGTH - 2))
             {
                 p_instance_ctrl->last_data[last_data_cnt] = receive_data;
@@ -2583,6 +2933,7 @@ fsp_err_t rm_wifi_onchip_silex_send_basic (wifi_onchip_silex_instance_ctrl_t * p
                                                            sizeof(p_instance_ctrl->cmd_rx_buff) - recvcnt,
                                                            pdMS_TO_TICKS(byte_timeout));
             xStreamBufferSetTriggerLevel(p_instance_ctrl->socket_byteq_hdl, 1);
+
             if (xReceivedBytes > 0)
             {
                 for (unsigned int i = 0; i < xReceivedBytes; i++)
@@ -2644,6 +2995,88 @@ fsp_err_t rm_wifi_onchip_silex_send_basic (wifi_onchip_silex_instance_ctrl_t * p
                 return (fsp_err_t) WIFI_ONCHIP_SILEX_RETURN_BUSY;
             }
 
+#else                                  // AzureRTOS
+
+        /* Wait for first byte */
+        if (TX_NO_INSTANCE ==
+            tx_semaphore_get(&p_instance_ctrl->uart_rx_sem[p_instance_ctrl->curr_cmd_port], timeout_ms))
+        {
+            continue;
+        }
+
+        recvcnt++;
+
+        for ( ; ; )
+        {
+            /* Wait for the rest of the response */
+            if (TX_SUCCESS ==
+                tx_semaphore_get(&p_instance_ctrl->uart_rx_sem[p_instance_ctrl->curr_cmd_port], byte_timeout))
+            {
+                /* Next byte recieved */
+                recvcnt++;
+            }
+            else
+            {
+                /* Byte timed out */
+                FSP_CRITICAL_SECTION_DEFINE;
+                FSP_CRITICAL_SECTION_ENTER;
+
+                /* Get semaphore again in case operation completed between semaphore timeout and critical section entry */
+                UINT semaphore_err = tx_semaphore_get(&p_instance_ctrl->uart_rx_sem[p_instance_ctrl->curr_cmd_port],
+                                                      TX_NO_WAIT);
+
+                if (TX_NO_INSTANCE == semaphore_err)
+                {
+                    /* No more data at the moment */
+                    uart_instance_t * p_uart_instance =
+                        p_instance_ctrl->uart_instance_objects[p_instance_ctrl->curr_cmd_port];
+
+                    p_uart_instance->p_api->communicationAbort(p_uart_instance->p_ctrl, UART_DIR_RX);
+                }
+                else
+                {
+                    /* Got another byte */
+                    recvcnt++;
+                }
+
+                FSP_CRITICAL_SECTION_EXIT;
+
+                if (TX_NO_INSTANCE == semaphore_err)
+                {
+                    break;
+                }
+            }
+        }
+
+        char * p_response_string =
+            (char *) &p_instance_ctrl->cmd_rx_buff[recvcnt -
+                                                   strlen((const char *) g_wifi_onchip_silex_result_code[expect_code][
+                                                              p_instance_ctrl->at_cmd_mode])];
+
+        /* Response data check */
+        FSP_ERROR_RETURN(recvcnt >=
+                         strlen((const char *) g_wifi_onchip_silex_result_code[expect_code][p_instance_ctrl->at_cmd_mode
+                                ]),
+                         FSP_ERR_WIFI_FAILED);
+
+        if (0 !=
+            strncmp(p_response_string,
+                    (const char *) g_wifi_onchip_silex_result_code[expect_code][p_instance_ctrl->at_cmd_mode],
+                    strlen((const char *) g_wifi_onchip_silex_result_code[expect_code][p_instance_ctrl->at_cmd_mode])))
+        {
+            if (0 ==
+                strncmp(p_response_string,
+                        (const char *) g_wifi_onchip_silex_result_code[WIFI_ONCHIP_SILEX_RETURN_BUSY][p_instance_ctrl->
+                                                                                                      at_cmd_mode],
+                        strlen((const char *) g_wifi_onchip_silex_result_code[WIFI_ONCHIP_SILEX_RETURN_BUSY][
+                                   p_instance_ctrl->at_cmd_mode])))
+            {
+
+                /* Busy */
+                return (fsp_err_t) WIFI_ONCHIP_SILEX_RETURN_BUSY;
+            }
+#endif
+
             FSP_ERROR_RETURN(WIFI_ONCHIP_SILEX_CFG_MAX_RETRIES_UART_COMMS != (retry_count + 1), FSP_ERR_WIFI_FAILED);
         }
         else
@@ -2678,7 +3111,11 @@ static fsp_err_t rm_wifi_onchip_silex_send_scan (wifi_onchip_silex_instance_ctrl
 {
     fsp_err_t err;
     uint32_t  recvcnt = 0;
-    uint8_t   receive_data;
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+    uint8_t receive_data;
+#else
+    p_instance_ctrl->current_cmd_buffer_index = 0;
+#endif
 
     memset(&p_instance_ctrl->cmd_rx_buff, 0, sizeof(p_instance_ctrl->cmd_rx_buff));
 
@@ -2686,11 +3123,13 @@ static fsp_err_t rm_wifi_onchip_silex_send_scan (wifi_onchip_silex_instance_ctrl
     {
         recvcnt = 0;
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
         if (uxQueueMessagesWaiting((QueueHandle_t) p_instance_ctrl->uart_tei_sem[serial_ch_id]) !=
             0)
         {
             return FSP_ERR_WIFI_FAILED;
         }
+#endif
 
         err =
             p_instance_ctrl->uart_instance_objects[serial_ch_id]->p_api->write(p_instance_ctrl->uart_instance_objects[
@@ -2699,17 +3138,25 @@ static fsp_err_t rm_wifi_onchip_silex_send_scan (wifi_onchip_silex_instance_ctrl
                                                                                5);
 
         FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_FAILED);
-
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
         FSP_ERROR_RETURN(pdTRUE ==
                          xSemaphoreTake(p_instance_ctrl->uart_tei_sem[serial_ch_id], (timeout_ms / portTICK_PERIOD_MS)),
                          FSP_ERR_WIFI_FAILED);
+#else
+        FSP_ERROR_RETURN(TX_SUCCESS ==
+                         tx_semaphore_get(&p_instance_ctrl->uart_tei_sem[serial_ch_id], MS_TO_TICKS(timeout_ms)),
+                         FSP_ERR_WIFI_FAILED);
+#endif
     }
+
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
 
     /* Detect the first transmitted byte from the message */
     size_t xReceivedBytes = xStreamBufferReceiveAlternate(p_instance_ctrl->socket_byteq_hdl,
                                                           &receive_data,
                                                           1,
                                                           pdMS_TO_TICKS(timeout_ms));
+
     if (xReceivedBytes == 1)
     {
         p_instance_ctrl->cmd_rx_buff[recvcnt++] = receive_data;
@@ -2750,6 +3197,74 @@ static fsp_err_t rm_wifi_onchip_silex_send_scan (wifi_onchip_silex_instance_ctrl
         return FSP_ERR_WIFI_FAILED;
     }
 
+#else                                  // AzureRTOS
+
+    /* Wait for first byte */
+    if (TX_NO_INSTANCE ==
+        tx_semaphore_get(&p_instance_ctrl->uart_rx_sem[p_instance_ctrl->curr_cmd_port], MS_TO_TICKS(timeout_ms)))
+    {
+        return FSP_ERR_WIFI_FAILED;
+    }
+
+    recvcnt++;
+
+    for ( ; ; )
+    {
+        /* Wait for the rest of the response */
+        if (TX_SUCCESS ==
+            tx_semaphore_get(&p_instance_ctrl->uart_rx_sem[p_instance_ctrl->curr_cmd_port], MS_TO_TICKS(byte_timeout)))
+        {
+            /* Next byte recieved */
+            recvcnt++;
+        }
+        else
+        {
+            /* Byte timed out */
+            FSP_CRITICAL_SECTION_DEFINE;
+            FSP_CRITICAL_SECTION_ENTER;
+
+            /* Get semaphore again in case operation completed between semaphore timeout and critical section entry */
+            UINT semaphore_err = tx_semaphore_get(&p_instance_ctrl->uart_rx_sem[p_instance_ctrl->curr_cmd_port],
+                                                  TX_NO_WAIT);
+
+            if (TX_NO_INSTANCE == semaphore_err)
+            {
+                /* No more data at the moment */
+                uart_instance_t * p_uart_instance =
+                    p_instance_ctrl->uart_instance_objects[p_instance_ctrl->curr_cmd_port];
+
+                p_uart_instance->p_api->communicationAbort(p_uart_instance->p_ctrl, UART_DIR_RX);
+            }
+            else
+            {
+                /* Got another byte */
+                recvcnt++;
+            }
+
+            FSP_CRITICAL_SECTION_EXIT;
+
+            if (TX_NO_INSTANCE == semaphore_err)
+            {
+                break;
+            }
+        }
+    }
+
+    /* Return success if a access point has been returned. */
+    if ((recvcnt >= 4) &&
+        (0 == strncmp((const char *) &p_instance_ctrl->cmd_rx_buff[recvcnt - 4], "\r\n\r\n", 4)))
+    {
+        return FSP_SUCCESS;
+    }
+
+    /* Return success if the last access point has been returned. */
+    if ((recvcnt >= 3) &&
+        (0 == strncmp((const char *) &p_instance_ctrl->cmd_rx_buff[recvcnt - 3], "\r\n0", 3)))
+    {
+        return FSP_ERR_WIFI_SCAN_COMPLETE;
+    }
+#endif
+
     return FSP_SUCCESS;
 }
 
@@ -2770,8 +3285,18 @@ static fsp_err_t rm_wifi_onchip_silex_change_socket_index (wifi_onchip_silex_ins
 
     if (p_instance_ctrl->num_uarts == 2)
     {
-        if (socket_no != p_instance_ctrl->curr_socket_index)                     // Only attempt change if socket number is different than current.
+        if (socket_no != p_instance_ctrl->curr_socket_index) // Only attempt change if socket number is different than current.
         {
+#if (BSP_CFG_RTOS == 1)
+            sci_uart_instance_ctrl_t * p_data_port_uart_ctrl =
+                (sci_uart_instance_ctrl_t *) p_instance_ctrl->uart_instance_objects[p_instance_ctrl->curr_data_port]->
+                p_ctrl;
+
+            /* Set flow control in order to pause data over data port. */
+            R_BSP_PinAccessEnable();
+            R_BSP_PinWrite(p_data_port_uart_ctrl->flow_pin, BSP_IO_LEVEL_HIGH);
+#endif
+
             for (int i = 0; i < WIFI_ONCHIP_SILEX_MAX_SOCKET_INDEX_RETRIES; i++) // Retry to change socket index number max 10 times.
             {
                 sprintf((char *) p_instance_ctrl->cmd_tx_buff, "ATNSOCKINDEX=%d\r", (int) socket_no);
@@ -2803,6 +3328,7 @@ static fsp_err_t rm_wifi_onchip_silex_change_socket_index (wifi_onchip_silex_ins
                             case WIFI_ONCHIP_SILEX_ERR_NONE_CHAR:
                             {
                                 p_instance_ctrl->curr_socket_index = socket_no;
+
                                 ret = FSP_SUCCESS;
                                 break;
                             }
@@ -2814,14 +3340,21 @@ static fsp_err_t rm_wifi_onchip_silex_change_socket_index (wifi_onchip_silex_ins
                             }
                         }
 
-                        if ((int) ret == WIFI_ONCHIP_SILEX_ERR_ERROR)
-                        {
-                            break;
-                        }
-
                         if (ret == WIFI_ONCHIP_SILEX_ERR_BUSY)
                         {
                             continue;
+                        }
+
+#if (BSP_CFG_RTOS == 1)
+
+                        /* Clear flow control in order to resume data over data port. */
+                        R_BSP_PinWrite(p_data_port_uart_ctrl->flow_pin, BSP_IO_LEVEL_LOW);
+                        R_BSP_PinAccessDisable();
+#endif
+
+                        if ((int) ret == WIFI_ONCHIP_SILEX_ERR_ERROR)
+                        {
+                            break;
                         }
 
                         if (FSP_SUCCESS == ret)
@@ -2863,6 +3396,7 @@ static fsp_err_t rm_wifi_onchip_silex_socket_init (wifi_onchip_silex_instance_ct
     {
         for (uint32_t i = 0; i < p_instance_ctrl->num_creatable_sockets; i++)
         {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
             p_instance_ctrl->sockets[i].socket_byteq_hdl =
                 xStreamBufferCreateStatic(sizeof(p_instance_ctrl->sockets[i].socket_recv_buff),
                                           1,
@@ -2870,6 +3404,7 @@ static fsp_err_t rm_wifi_onchip_silex_socket_init (wifi_onchip_silex_instance_ct
                                           &p_instance_ctrl->sockets[i].socket_byteq_struct);
 
             FSP_ERROR_RETURN(NULL != p_instance_ctrl->sockets[i].socket_byteq_hdl, FSP_ERR_WIFI_FAILED);
+#endif
         }
     }
 
@@ -2879,7 +3414,9 @@ static fsp_err_t rm_wifi_onchip_silex_socket_init (wifi_onchip_silex_instance_ct
 
 void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
 {
-    BaseType_t xHigherPriorityTaskWoken                 = pdFALSE; // Initialized to pdFALSE.
+#if (BSP_CFG_RTOS == 2)                            // FreeRTOS
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE; // Initialized to pdFALSE.
+#endif
     wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_silex_instance;
     uint32_t uart_context_index = 0;
 
@@ -2900,6 +3437,7 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
     {
         case UART_EVENT_RX_CHAR:
         {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
             if (uart_context_index == WIFI_ONCHIP_SILEX_UART_INITIAL_PORT)
             {
                 /* Handle event from UART 0 */
@@ -2907,7 +3445,6 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
                     (p_instance_ctrl->num_uarts == 1))
                 {
                     uint8_t data_byte = (uint8_t) p_args->data;
-
                     xStreamBufferSendFromISR(p_instance_ctrl->socket_byteq_hdl, &data_byte, 1,
                                              &xHigherPriorityTaskWoken);
                 }
@@ -2938,12 +3475,90 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
             }
 
             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+#else                                  // AzureRTOS
+            uart_instance_t * p_uart_instance = p_instance_ctrl->uart_instance_objects[uart_context_index];
+
+            /* Check if socket is connected */
+            if ((WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED !=
+                 p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status) ||
+                (uart_context_index == WIFI_ONCHIP_SILEX_UART_SECOND_PORT))
+            {
+                /* Socket isn't connected, data should go to command buffer */
+                p_instance_ctrl->cmd_rx_buff[p_instance_ctrl->current_cmd_buffer_index] = (uint8_t) p_args->data;
+                p_instance_ctrl->current_cmd_buffer_index++;
+                p_uart_instance->p_api->read(p_uart_instance->p_ctrl,
+                                             &p_instance_ctrl->cmd_rx_buff[p_instance_ctrl->current_cmd_buffer_index],
+                                             1);
+
+                /* Notify that reception has started */
+                tx_semaphore_put(&p_instance_ctrl->uart_rx_sem[uart_context_index]);
+            }
+            else
+            {
+                /* If we don't have a packet buffer then don't recieve anything */
+                if (NULL == p_instance_ctrl->p_current_packet_buffer)
+                {
+                    break;
+                }
+
+                /* Socket is connected, data should go to packet buffer */
+                p_uart_instance->p_api->read(p_uart_instance->p_ctrl,
+                                             &p_instance_ctrl->p_current_packet_buffer[1],
+                                             p_instance_ctrl->packet_buffer_size - 1);
+
+                p_instance_ctrl->p_current_packet_buffer[0] = (uint8_t) p_args->data;
+
+                /* Notify that reception has started */
+                tx_semaphore_put(&p_instance_ctrl->uart_data_rx_start_sem);
+            }
+#endif
 
             break;
         }
 
+#if (BSP_CFG_RTOS == 1)                // AzureRTOS
+        case UART_EVENT_RX_COMPLETE:
+        {
+            uart_instance_t * p_uart_instance = p_instance_ctrl->uart_instance_objects[uart_context_index];
+
+            /* Check if socket is open and UART port is the data port */
+            if ((WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED ==
+                 p_instance_ctrl->sockets[p_instance_ctrl->curr_socket_index].socket_status) &&
+                (uart_context_index == WIFI_ONCHIP_SILEX_UART_INITIAL_PORT))
+            {
+                /* Packet buffer has been filled, move to next one */
+                p_instance_ctrl->p_current_packet_buffer = p_instance_ctrl->p_next_packet_buffer;
+
+                /* If we don't have a packet buffer then don't recieve anything */
+                if (NULL == p_instance_ctrl->p_current_packet_buffer)
+                {
+                    break;
+                }
+
+                /* Start recieving next packet */
+                p_uart_instance->p_api->read(p_uart_instance->p_ctrl,
+                                             p_instance_ctrl->p_current_packet_buffer,
+                                             p_instance_ctrl->packet_buffer_size);
+            }
+            else
+            {
+                /* Read next byte to command buffer */
+                p_instance_ctrl->current_cmd_buffer_index++;
+                p_uart_instance->p_api->read(p_uart_instance->p_ctrl,
+                                             &p_instance_ctrl->cmd_rx_buff[p_instance_ctrl->current_cmd_buffer_index],
+                                             1);
+            }
+
+            /* Notify that reception has completed */
+            tx_semaphore_put(&p_instance_ctrl->uart_rx_sem[uart_context_index]);
+
+            break;
+        }
+#endif
+
         case UART_EVENT_TX_DATA_EMPTY:
         {
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
             if ((0 ==
                  uxQueueMessagesWaitingFromISR((QueueHandle_t) p_instance_ctrl->uart_tei_sem[uart_context_index])))
             {
@@ -2951,6 +3566,9 @@ void rm_wifi_onchip_silex_uart_callback (uart_callback_args_t * p_args)
             }
 
             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+#else
+            tx_semaphore_put(&p_instance_ctrl->uart_tei_sem[uart_context_index]);
+#endif
 
             break;
         }
@@ -3144,14 +3762,20 @@ fsp_err_t RM_WIFI_ONCHIP_SILEX_SntpEnableSet (wifi_onchip_silex_sntp_enable_t en
     FSP_ERROR_RETURN(FSP_SUCCESS == rm_wifi_onchip_silex_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
-    snprintf((char *) p_instance_ctrl->sockets[0].socket_recv_buff,
-             sizeof(p_instance_ctrl->sockets[0].socket_recv_buff),
-             "ATNTPCLIENT=%u\r",
-             (unsigned int) enable);
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+    uint8_t * p_temp_buff = p_instance_ctrl->sockets[0].socket_recv_buff;
+    size_t    buff_size   = sizeof(p_instance_ctrl->sockets[0].socket_recv_buff);
+#else                                  // AzureRTOS
+    uint8_t   temp_buff[WIFI_ONCHIP_SILEX_TEMPORARY_BUFFER_SIZE] = {0};
+    uint8_t * p_temp_buff = temp_buff;
+    size_t    buff_size   = sizeof(temp_buff);
+#endif
+
+    snprintf((char *) p_temp_buff, buff_size, "ATNTPCLIENT=%u\r", (unsigned int) enable);
 
     err = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
-                                          (const char *) p_instance_ctrl->sockets[0].socket_recv_buff,
+                                          (const char *) p_temp_buff,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_3MS,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_500MS,
                                           WIFI_ONCHIP_SILEX_RETURN_OK);
@@ -3187,17 +3811,21 @@ fsp_err_t RM_WIFI_ONCHIP_SILEX_SntpServerIpAddressSet (uint8_t * p_ip_address)
     FSP_ERROR_RETURN(FSP_SUCCESS == rm_wifi_onchip_silex_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
                      FSP_ERR_WIFI_FAILED);
 
-    snprintf((char *) p_instance_ctrl->sockets[0].socket_recv_buff,
-             sizeof(p_instance_ctrl->sockets[0].socket_recv_buff),
-             "ATNTPSRVR=%u.%u.%u.%u\r",
-             p_ip_address[0],
-             p_ip_address[1],
-             p_ip_address[2],
-             p_ip_address[3]);
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+    uint8_t * p_temp_buff = p_instance_ctrl->sockets[0].socket_recv_buff;
+    size_t    buff_size   = sizeof(p_instance_ctrl->sockets[0].socket_recv_buff);
+#else                                  // AzureRTOS
+    uint8_t   temp_buff[WIFI_ONCHIP_SILEX_TEMPORARY_BUFFER_SIZE] = {0};
+    uint8_t * p_temp_buff = temp_buff;
+    size_t    buff_size   = sizeof(temp_buff);
+#endif
+
+    snprintf((char *) p_temp_buff, buff_size, "ATNTPSRVR=%u.%u.%u.%u\r", p_ip_address[0], p_ip_address[1],
+             p_ip_address[2], p_ip_address[3]);
 
     err = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
-                                          (const char *) p_instance_ctrl->sockets[0].socket_recv_buff,
+                                          (const char *) p_temp_buff,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_3MS,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_500MS,
                                           WIFI_ONCHIP_SILEX_RETURN_OK);
@@ -3250,17 +3878,21 @@ fsp_err_t RM_WIFI_ONCHIP_SILEX_SntpTimeZoneSet (int32_t                         
         hours = -hours;
     }
 
-    snprintf((char *) p_instance_ctrl->sockets[0].socket_recv_buff,
-             sizeof(p_instance_ctrl->sockets[0].socket_recv_buff),
-             "ATNTPZONE=%d,%u,%u,%u\r",
-             (int) hours,
-             (unsigned int) minutes,
-             (unsigned int) is_positive,
-             (unsigned int) daylightSavingsEnable);
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+    uint8_t * p_temp_buff = p_instance_ctrl->sockets[0].socket_recv_buff;
+    size_t    buff_size   = sizeof(p_instance_ctrl->sockets[0].socket_recv_buff);
+#else                                  // AzureRTOS
+    uint8_t   temp_buff[WIFI_ONCHIP_SILEX_TEMPORARY_BUFFER_SIZE] = {0};
+    uint8_t * p_temp_buff = temp_buff;
+    size_t    buff_size   = sizeof(temp_buff);
+#endif
+
+    snprintf((char *) p_temp_buff, buff_size, "ATNTPZONE=%d,%u,%u,%u\r", (int) hours, (unsigned int) minutes,
+             (unsigned int) is_positive, (unsigned int) daylightSavingsEnable);
 
     err = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
-                                          (const char *) p_instance_ctrl->sockets[0].socket_recv_buff,
+                                          (const char *) p_temp_buff,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_3MS,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_500MS,
                                           WIFI_ONCHIP_SILEX_RETURN_OK);
@@ -3274,6 +3906,8 @@ fsp_err_t RM_WIFI_ONCHIP_SILEX_SntpTimeZoneSet (int32_t                         
  * @} (end addtogroup WIFI_ONCHIP_SILEX)
  **********************************************************************************************************************/
 
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+
 /*! \cond PRIVATE */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -3286,27 +3920,27 @@ fsp_err_t RM_WIFI_ONCHIP_SILEX_SntpTimeZoneSet (int32_t                         
 
 ///////////////////////////////////////////////////////////////////////////////
 
-#define sbFLAGS_IS_MESSAGE_BUFFER          ((uint8_t) 1) /* Set if the stream buffer was created as a message buffer, in which case it holds discrete messages rather than a stream. */
-#define sbBYTES_TO_STORE_MESSAGE_LENGTH    (sizeof(configMESSAGE_BUFFER_LENGTH_TYPE))
+ #define sbFLAGS_IS_MESSAGE_BUFFER          ((uint8_t) 1) /* Set if the stream buffer was created as a message buffer, in which case it holds discrete messages rather than a stream. */
+ #define sbBYTES_TO_STORE_MESSAGE_LENGTH    (sizeof(configMESSAGE_BUFFER_LENGTH_TYPE))
 
 /* Structure that hold state information on the buffer. */
-typedef struct StreamBufferDef_t                         /*lint !e9058 Style convention uses tag. */
+typedef struct StreamBufferDef_t                          /*lint !e9058 Style convention uses tag. */
 {
-    volatile size_t       xTail;                         /* Index to the next item to read within the buffer. */
-    volatile size_t       xHead;                         /* Index to the next item to write within the buffer. */
-    size_t                xLength;                       /* The length of the buffer pointed to by pucBuffer. */
-    size_t                xTriggerLevelBytes;            /* The number of bytes that must be in the stream buffer before a task that is waiting for data is unblocked. */
-    volatile TaskHandle_t xTaskWaitingToReceive;         /* Holds the handle of a task waiting for data, or NULL if no tasks are waiting. */
-    volatile TaskHandle_t xTaskWaitingToSend;            /* Holds the handle of a task waiting to send data to a message buffer that is full. */
-    uint8_t             * pucBuffer;                     /* Points to the buffer itself - that is - the RAM that stores the data passed through the buffer. */
+    volatile size_t       xTail;                          /* Index to the next item to read within the buffer. */
+    volatile size_t       xHead;                          /* Index to the next item to write within the buffer. */
+    size_t                xLength;                        /* The length of the buffer pointed to by pucBuffer. */
+    size_t                xTriggerLevelBytes;             /* The number of bytes that must be in the stream buffer before a task that is waiting for data is unblocked. */
+    volatile TaskHandle_t xTaskWaitingToReceive;          /* Holds the handle of a task waiting for data, or NULL if no tasks are waiting. */
+    volatile TaskHandle_t xTaskWaitingToSend;             /* Holds the handle of a task waiting to send data to a message buffer that is full. */
+    uint8_t             * pucBuffer;                      /* Points to the buffer itself - that is - the RAM that stores the data passed through the buffer. */
     uint8_t               ucFlags;
-#if (configUSE_TRACE_FACILITY == 1)
-    UBaseType_t uxStreamBufferNumber;                    /* Used for tracing purposes. */
-#endif
+ #if (configUSE_TRACE_FACILITY == 1)
+    UBaseType_t uxStreamBufferNumber;                     /* Used for tracing purposes. */
+ #endif
 } StreamBuffer_t;
 
-#ifndef sbRECEIVE_COMPLETED
- #define sbRECEIVE_COMPLETED(pxStreamBuffer)                                                   \
+ #ifndef sbRECEIVE_COMPLETED
+  #define sbRECEIVE_COMPLETED(pxStreamBuffer)                                                  \
     vTaskSuspendAll();                                                                         \
     {                                                                                          \
         if ((pxStreamBuffer)->xTaskWaitingToSend != NULL)                                      \
@@ -3316,7 +3950,7 @@ typedef struct StreamBufferDef_t                         /*lint !e9058 Style con
         }                                                                                      \
     }                                                                                          \
     (void) xTaskResumeAll();
-#endif                                 /* sbRECEIVE_COMPLETED */
+ #endif                                /* sbRECEIVE_COMPLETED */
 
 static size_t prvBytesInBuffer (const StreamBuffer_t * const pxStreamBuffer)
 {
@@ -3570,7 +4204,7 @@ size_t xStreamBufferReceiveAlternate (StreamBufferHandle_t xStreamBuffer,
     return xReceivedLength;
 }
 
-#if defined(__ARMCC_VERSION)
+ #if defined(__ARMCC_VERSION)
 
 /*******************************************************************************************************************//**
  * Default implementation of IotClock_GetTimestring for AC6.
@@ -3585,6 +4219,8 @@ bool IotClock_GetTimestring (char * pBuffer, size_t bufferSize, size_t * pTimest
     return true;
 }
 
-#endif
+ #endif
 
 /*! \endcond */
+
+#endif                                 // FREERTOS

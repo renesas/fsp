@@ -41,7 +41,7 @@ const ARM_DRIVER_VERSION Flash_Driver_Version =
 };
 
 /* Instance structure to use this module. */
-extern const flash_instance_t * gp_mcuboot_flash_instance;
+extern const flash_instance_t * gp_tfm_flash_instance;
 
 /**
  * Data types values
@@ -137,7 +137,7 @@ static int32_t ARM_Flashx_Initialize (ARM_FLASHx_Resources  * ARM_FLASHx_DEV,
     uint32_t flash_size = 0U;
     uint32_t page_size  = 0U;
 
-    ARM_FLASHx_DEV->dev = gp_mcuboot_flash_instance;
+    ARM_FLASHx_DEV->dev = gp_tfm_flash_instance;
 
     ARM_FLASHx_DEV->status->error = DRIVER_STATUS_ERROR;
     ARM_FLASHx_DEV->status->busy  = DRIVER_STATUS_BUSY;

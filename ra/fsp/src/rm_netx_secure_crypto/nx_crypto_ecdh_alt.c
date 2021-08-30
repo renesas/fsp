@@ -119,9 +119,9 @@ NX_CRYPTO_HUGE_NUMBER private_key;
     private_key.nx_crypto_huge_number_data = ecdh_ptr -> nx_crypto_ecdh_private_key_buffer;
     private_key.nx_crypto_huge_buffer_size = sizeof(ecdh_ptr -> nx_crypto_ecdh_private_key_buffer);
     _nx_crypto_huge_number_setup(&private_key, local_private_key_ptr, local_private_key_len);
-#endif
 
     return(NX_CRYPTO_SUCCESS);
+#endif
 }
 
 /**************************************************************************/

@@ -62,8 +62,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "r_usb_cstd_rtos.h"
-
 /* CPU definition for X86 systems without preemptive timer function.
  * This will make USBX uses the controller for the timer. */
 
@@ -78,7 +76,7 @@ typedef long SLONG;
 /*  Generic USBX Project constants follow.  */
 
 #ifndef UX_PERIODIC_RATE
- #define UX_PERIODIC_RATE                       100
+ #define UX_PERIODIC_RATE                       1000
 #endif
 
 #ifndef UX_MAX_CLASS_DRIVER
@@ -118,7 +116,7 @@ typedef long SLONG;
 #endif
 
 #ifndef UX_THREAD_PRIORITY_ENUM
- #define UX_THREAD_PRIORITY_ENUM                MGR_TSK_PRI
+ #define UX_THREAD_PRIORITY_ENUM                20
 #endif
 
 #ifndef UX_THREAD_PRIORITY_CLASS

@@ -94,5 +94,5 @@ void R_SCE_Aes256CmacUpdateSub(uint32_t *InData_Text, uint32_t MAX_CNT)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p44u.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p44u_r1.prc
 ***********************************************************************************************************************/

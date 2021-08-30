@@ -41,6 +41,10 @@
   #include "rm_block_media_api.h"
  #endif                                /* defined(USB_CFG_PMSC_USE) */
 
+ #if defined(USB_CFG_HHID_USE)
+  #include "r_usb_hhid_cfg.h"
+ #endif                                /* defined(USB_CFG_HHID_USE) */
+
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
   #include "ux_host_stack.h"
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
@@ -48,23 +52,27 @@
 /*******************************************************************************
  * Macro definitions
  ******************************************************************************/
- #define VALUE_1000UL                     (1000UL)
- #define UX_FSP_HC_AVAILABLE_BANDWIDTH    (2304UL)
- #define UX_FSP_MAX_BULK_PAYLOAD          (512UL)
- #define UX_FSP_MAX_INTERRUPT_PAYLOAD     (512UL)
- #define UX_FSP_MAX_CONTROL_PAYLOAD       (512UL)
- #define UX_FSP_MAX_ISO_PAYLOAD           (512UL)
+ #define VALUE_1000UL                      (1000UL)
+ #if defined(USB_CFG_HHID_USE)
+  #define UX_FSP_HC_AVAILABLE_BANDWIDTH    (2322UL)
+ #else
+  #define UX_FSP_HC_AVAILABLE_BANDWIDTH    (2304UL)
+ #endif                                /* defined(USB_CFG_HHID_USE) */
+ #define UX_FSP_MAX_BULK_PAYLOAD           (512UL)
+ #define UX_FSP_MAX_INTERRUPT_PAYLOAD      (512UL)
+ #define UX_FSP_MAX_CONTROL_PAYLOAD        (512UL)
+ #define UX_FSP_MAX_ISO_PAYLOAD            (512UL)
 
- #define UX_FSP_MAX_SELF_POWER            (500U / 2)
- #define UX_FSP_MASK_ENDPOINT_TYPE        (3U)
- #define UX_FSP_CONTROL_ENDPOINT          (0U)
- #define UX_FSP_SET_CONFIGURATION         (9U)
- #define UX_FSP_SETUP_REQUEST_TYPE        (0U)
- #define UX_FSP_BULK_ENDPOINT             (2U)
- #define UX_FSP_INTERRUPT_ENDPOINT        (3U)
- #define UX_FSP_ISOCHRONOUS_ENDPOINT      (1U)
+ #define UX_FSP_MAX_SELF_POWER             (500U / 2)
+ #define UX_FSP_MASK_ENDPOINT_TYPE         (3U)
+ #define UX_FSP_CONTROL_ENDPOINT           (0U)
+ #define UX_FSP_SET_CONFIGURATION          (9U)
+ #define UX_FSP_SETUP_REQUEST_TYPE         (0U)
+ #define UX_FSP_BULK_ENDPOINT              (2U)
+ #define UX_FSP_INTERRUPT_ENDPOINT         (3U)
+ #define UX_FSP_ISOCHRONOUS_ENDPOINT       (1U)
 
- #define USB_PERI_USBX_REMOVABLE_MEDIA    (0x80U)
+ #define USB_PERI_USBX_REMOVABLE_MEDIA     (0x80U)
 
 /******************************************************************************
  * Private global variables and functions
@@ -100,6 +108,7 @@ static UINT usb_peri_usbx_media_write(VOID  * storage,
                                       ULONG * media_status);
 static UINT usb_peri_usbx_media_status(VOID * storage, ULONG lun, ULONG media_id, ULONG * media_status);
 static void usb_peri_usbx_pmsc_storage_init(void);
+static void usb_peri_usbx_pmsc_storage_uninit(void);
 
   #endif                               /* defined(USB_CFG_PMSC_USE) */
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
@@ -212,8 +221,8 @@ uint32_t usb_peri_usbx_uninitialize (uint32_t dcd_io)
 {
     UX_SLAVE_DCD * dcd;
 
-  #if defined(R_USBHS_BASE)
-    if ((dcd_io != R_USBHS_BASE) && (dcd_io != R_USB_FS0_BASE))
+  #if defined(R_USB_HS0_BASE)
+    if ((dcd_io != R_USB_HS0_BASE) && (dcd_io != R_USB_FS0_BASE))
   #else
     if (dcd_io != R_USB_FS0_BASE)
   #endif
@@ -226,6 +235,10 @@ uint32_t usb_peri_usbx_uninitialize (uint32_t dcd_io)
     dcd->ux_slave_dcd_status   = (uint32_t) UX_UNUSED;
     dcd->ux_slave_dcd_io       = 0U;
     dcd->ux_slave_dcd_function = UX_NULL;
+
+  #if defined(USB_CFG_PMSC_USE)
+    usb_peri_usbx_pmsc_storage_uninit();
+  #endif                               /* defined(USB_CFG_PMSC_USE) */
 
     return (uint32_t) UX_SUCCESS;
 }                                      /* End of function usb_peri_usbx_uninitialize() */
@@ -498,6 +511,7 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                         {
                             status = (uint32_t) UX_SUCCESS;
                         }
+
   #else                                /* defined(USB_CFG_PMSC_USE) */
                         status = (uint32_t) UX_SUCCESS;
   #endif /* define(USB_CFG_PMSC_USE */
@@ -602,6 +616,7 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
             if (parameter == (void *) UX_DEVICE_REMOTE_WAKEUP)
             {
                 /* This function is called when the device wants to wake up the host.  */
+                usb_peri_usbx_remote_wakeup(module_number);
             }
             else
             {
@@ -770,10 +785,8 @@ static UINT usb_peri_usbx_media_write (VOID  * storage,
     if ((status.initialized == true) && (status.busy == false) && (status.media_inserted == true))
     {
         err_code =
-            gp_block_media_instance->p_api->write(gp_block_media_instance->p_ctrl,
-                                                  (uint8_t * const) data_pointer,
-                                                  (uint32_t const) lba,
-                                                  (uint32_t const) number_blocks);
+            gp_block_media_instance->p_api->write(gp_block_media_instance->p_ctrl, (uint8_t * const) data_pointer,
+                                                  (uint32_t const) lba, (uint32_t const) number_blocks);
         if (err_code == FSP_SUCCESS)
         {
             while (timeout > 0)
@@ -962,6 +975,17 @@ static void usb_peri_usbx_pmsc_storage_init (void)
 }                                      /* End of function usb_peri_usbx_pmsc_storage_init() */
 
 /******************************************************************************
+ * Function Name   : usb_peri_usbx_pmsc_storage_uninit
+ * Description     : Uninitialization processing for USBX PMSC
+ * Argument        : None
+ * Return          : None
+ ******************************************************************************/
+static void usb_peri_usbx_pmsc_storage_uninit (void)
+{
+    ux_device_stack_class_unregister(_ux_system_slave_class_storage_name, ux_device_class_storage_entry);
+}                                      /* End of function usb_peri_usbx_pmsc_storage_uninit() */
+
+/******************************************************************************
  * Function Name   : r_usb_pmsc_block_media_event_callback
  * Description     : Callback for USBX PMSC
  * Argument        : p_args : Pointer to rm_block_media_callback_args_t structure
@@ -1084,6 +1108,7 @@ uint32_t usb_host_usbx_uninitialize (uint32_t hcd_io)
 
     if (UX_SUCCESS != status)
     {
+
         /* Return failure status  */
         return (uint32_t) FSP_ERR_USB_FAILED;
     }
@@ -1235,20 +1260,21 @@ void usb_host_usbx_registration (usb_utr_t * p_utr)
     driver.devresume  = (usb_cb_t) &usb_hstd_dummy_function;         /* Device resume */
 
   #if USB_CFG_HUB == USB_CFG_ENABLE
+
     /* WAIT_LOOP */
-    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)                 /* Loop support CDC device count */
+    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)  /* Loop support CDC device count */
     {
-        usb_hstd_driver_registration(p_utr, &driver);                /* Host CDC class driver registration. */
+        usb_hstd_driver_registration(p_utr, &driver); /* Host CDC class driver registration. */
     }
 
    #if (BSP_CFG_RTOS == 0)
-    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);                   /* Hub Task Priority set */
+    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);    /* Hub Task Priority set */
    #endif /* (BSP_CFG_RTOS == 0) */
-    usb_hhub_registration(p_utr, USB_NULL);                          /* Hub registration. */
-  #else                                                              /* USB_CFG_HUB == USB_CFG_ENABLE */
-    usb_hstd_driver_registration(p_utr, &driver);                    /* Host CDC class driver registration. */
+    usb_hhub_registration(p_utr, USB_NULL);           /* Hub registration. */
+  #else                                               /* USB_CFG_HUB == USB_CFG_ENABLE */
+    usb_hstd_driver_registration(p_utr, &driver);     /* Host CDC class driver registration. */
   #endif /* USB_CFG_HUB == USB_CFG_ENABLE */
-}                                                                    /* End of function usb_host_usbx_registration() */
+}                                                     /* End of function usb_host_usbx_registration() */
 
 /******************************************************************************
  * Function Name    : usb_host_usbx_class_check
@@ -1317,6 +1343,7 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
 
                 g_usb_hmsc_out_pipectr[p_utr->ip][0] = 0;
             }
+
    #else                               /* defined(USB_CFG_HMSC_USE) */
             pipe_no = usb_hstd_make_pipe_reg_info(p_utr->ip,
                                                   USB_DEVICEADDR,
@@ -1327,6 +1354,12 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
             if (USB_NULL != pipe_no)
             {
                 usb_hstd_set_pipe_info(p_utr->ip, pipe_no, &ep_tbl);
+    #if defined(USB_CFG_HHID_USE)
+                if (USB_CFG_HHID_INT_IN == pipe_no)
+                {
+                    break;
+                }
+    #endif
             }
             else
             {
@@ -1485,6 +1518,10 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
 
     pipe = (uint8_t) p_utr->keyword;
 
+  #if defined(USB_CFG_HHID_USE)
+    *g_p_usb_host_actural_length[p_utr->ip][0] = p_utr->read_req_len - p_utr->tranlen;
+  #endif                               /* #if defined(USB_CFG_HHID_USE) */
+
     tx_semaphore_put(&g_usb_host_usbx_sem[p_utr->ip][pipe]);
 }                                      /* End of function usb_pstd_transfer_complete_cb() */
 
@@ -1522,12 +1559,12 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
 
     if (0 != (pipe_reg & USB_DIRFIELD))
     {
-        /* IN */
+        /* OUT */
         *g_p_usb_host_actural_length[p_utr->ip][pipe] = p_utr->read_req_len;
     }
     else
     {
-        /* OUT */
+        /* IN */
         *g_p_usb_host_actural_length[p_utr->ip][pipe] = p_utr->read_req_len - p_utr->tranlen;
     }
 
@@ -1568,6 +1605,11 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
         }
     }
   #endif                               /* #if defined(USB_CFG_HMSC_USE) */
+
+  #if defined(USB_CFG_HHID_USE)
+    transfer_request->ux_transfer_request_completion_code = UX_SUCCESS;
+    transfer_request->ux_transfer_request_completion_function(transfer_request);
+  #endif                               /* defined(USB_CFG_HHID_USE) */
 
     _ux_utility_semaphore_put(&transfer_request->ux_transfer_request_semaphore);
 }                                      /* End of function usb_hstd_transfer_complete_cb() */
@@ -1619,6 +1661,52 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
             {
                 case (uint32_t) UX_FSP_CONTROL_ENDPOINT:
                 {
+  #if defined(USB_CFG_HHID_USE)
+                    if (0x0 == (transfer_request->ux_transfer_request_type & UX_REQUEST_TYPE_CLASS))
+                    {
+                        /* In this "case", only SetConfiguraion or the class request is processed.  */
+                        if (UX_FSP_SET_CONFIGURATION == transfer_request->ux_transfer_request_function)
+                        {
+                            g_usb_host_usbx_request[module_number][0] =
+                                USB_SET_CONFIGURATION | USB_HOST_TO_DEV | USB_STANDARD | USB_DEVICE;
+                            g_usb_host_usbx_request[module_number][1] =
+                                (uint16_t) transfer_request->ux_transfer_request_value; /* Configuration Number */
+                            g_usb_host_usbx_request[module_number][2] = (uint16_t) 0x0000;
+                            g_usb_host_usbx_request[module_number][3] = (uint16_t) 0x0000;
+
+                            g_usb_host_usbx_req_msg[module_number].complete =
+                                (usb_cb_t) &usb_host_usbx_set_configuration_cb;
+                        }
+                        else
+                        {
+                            g_usb_host_usbx_request[module_number][UX_FSP_SETUP_REQUEST_TYPE] =
+                                (uint16_t) ((transfer_request->ux_transfer_request_function << 8) |
+                                            (transfer_request->ux_transfer_request_type));
+                            g_usb_host_usbx_request[module_number][1] =
+                                (uint16_t) transfer_request->ux_transfer_request_value;
+                            g_usb_host_usbx_request[module_number][2] =
+                                (uint16_t) transfer_request->ux_transfer_request_index;
+                            g_usb_host_usbx_request[module_number][3] =
+                                (uint16_t) transfer_request->ux_transfer_request_requested_length;
+                            g_usb_host_usbx_req_msg[module_number].complete =
+                                (usb_cb_t) &usb_host_usbx_class_request_cb;
+                        }
+                    }
+                    else
+                    {
+                        /* Class Request */
+                        g_usb_host_usbx_request[module_number][UX_FSP_SETUP_REQUEST_TYPE] =
+                            (uint16_t) ((transfer_request->ux_transfer_request_function << 8) |
+                                        (transfer_request->ux_transfer_request_type));
+                        g_usb_host_usbx_request[module_number][1] =
+                            (uint16_t) transfer_request->ux_transfer_request_value;
+                        g_usb_host_usbx_request[module_number][2] =
+                            (uint16_t) transfer_request->ux_transfer_request_index;
+                        g_usb_host_usbx_request[module_number][3] =
+                            (uint16_t) transfer_request->ux_transfer_request_requested_length;
+                        g_usb_host_usbx_req_msg[module_number].complete = (usb_cb_t) &usb_host_usbx_class_request_cb;
+                    }
+  #else                                /* #if defined(USB_CFG_HHID_USE) */
                     /* In this "case", only SetConfiguraion or the class request is processed.  */
                     if (UX_FSP_SET_CONFIGURATION == transfer_request->ux_transfer_request_function)
                     {
@@ -1646,6 +1734,7 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
                             (uint16_t) transfer_request->ux_transfer_request_requested_length;
                         g_usb_host_usbx_req_msg[module_number].complete = (usb_cb_t) &usb_host_usbx_class_request_cb;
                     }
+  #endif                               /* #if defined(USB_CFG_HHID_USE) */
 
                     g_usb_host_usbx_request[module_number][4] = USB_DEVICEADDR;
 
@@ -1659,6 +1748,10 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
                     g_usb_host_usbx_req_msg[module_number].segment = USB_TRAN_END;
                     g_usb_host_usbx_req_msg[module_number].ip      = module_number;
                     g_usb_host_usbx_req_msg[module_number].ipp     = usb_hstd_get_usb_ip_adr(module_number);
+                    g_p_usb_host_actural_length[module_number][0]  =
+                        (uint32_t *) &(transfer_request->ux_transfer_request_actual_length);
+                    g_usb_host_usbx_req_msg[module_number].read_req_len =
+                        (uint32_t) transfer_request->ux_transfer_request_requested_length;
 
                     usb_hstd_transfer_start_req(&g_usb_host_usbx_req_msg[module_number]);
 

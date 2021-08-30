@@ -105,7 +105,9 @@ typedef struct st_i2c_slave_cfg
     IRQn_Type txi_irq;                                       ///< Transmit IRQ number
     IRQn_Type tei_irq;                                       ///< Transmit end IRQ number
     IRQn_Type eri_irq;                                       ///< Error IRQ number
-    uint8_t   ipl;                                           ///< Interrupt priority level
+    uint8_t   ipl;                                           ///< Interrupt priority level for RXI, TXI and TER interrupts
+    uint8_t   eri_ipl;                                       ///< Interrupt priority level for ERI interrupt
+    bool      clock_stretching_enable;                       ///< Low Hold SCL during reception for the period between the 9th and the 1st clock cycle
 
     /** Parameters to control software behavior */
     void (* p_callback)(i2c_slave_callback_args_t * p_args); ///< Pointer to callback function

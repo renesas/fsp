@@ -84,6 +84,7 @@
 
 #define BSP_FEATURE_AGT_VALID_CHANNEL_MASK                (0x3F)
 #define BSP_FEATURE_AGT_MAX_CHANNEL_NUM                   (5)
+#define BSP_FEATURE_AGT_HAS_AGTW                          (0U)
 
 #define BSP_FEATURE_BSP_FLASH_CACHE                       (1)
 #define BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM           (0U)

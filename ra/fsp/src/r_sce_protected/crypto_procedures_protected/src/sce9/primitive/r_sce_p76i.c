@@ -100,22 +100,69 @@ fsp_err_t R_SCE_Sha256HmacInitSub(uint32_t *InData_KeyType, uint32_t *InData_Key
         /* waiting */
     }
     SCE->REG_100H = InData_KeyType[0];
-    SCE->REG_ECH = 0x38000c00U;
+    SCE->REG_ECH = 0x38008800U;
+    SCE->REG_ECH = 0x00000001U;
     SCE->REG_E0H = 0x00000080U;
-    SCE->REG_1CH = 0x00260000U;
-    R_SCE_func100(0x6eefd55eU, 0x44ae5e7aU, 0xf99f7456U, 0xac4eb979U);
+    SCE->REG_1CH = 0x00A60000U;
+    R_SCE_func100(0x70dc952bU, 0x54422a49U, 0x86f2fd91U, 0x8699a61aU);
     SCE->REG_1CH = 0x00400000U;
     SCE->REG_1D0H = 0x00000000U;
     if (1U == (SCE->REG_1CH_b.B22))
     {
-        SCE->REG_104H = 0x00000068U;
-        SCE->REG_E0H = 0x800100e0U;
-        /* WAIT_LOOP */
-        while (1U != SCE->REG_104H_b.B31)
+        SCE->REG_ECH = 0x38000c00U;
+        SCE->REG_E0H = 0x00000080U;
+        SCE->REG_1CH = 0x00260000U;
+        R_SCE_func100(0x7d782132U, 0x1532f59bU, 0xc9b6e0d7U, 0x592428adU);
+        SCE->REG_1CH = 0x00400000U;
+        SCE->REG_1D0H = 0x00000000U;
+        if (1U == (SCE->REG_1CH_b.B22))
         {
-            /* waiting */
+            SCE->REG_104H = 0x00000068U;
+            SCE->REG_E0H = 0x800100e0U;
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_104H_b.B31)
+            {
+                /* waiting */
+            }
+            SCE->REG_100H = InData_KeyIndex[0];
+            SCE->REG_104H = 0x00000058U;
+            SCE->REG_E0H = 0x800103a0U;
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_104H_b.B31)
+            {
+                /* waiting */
+            }
+            SCE->REG_100H = change_endian_long(0x00000076U);
+            R_SCE_func101(0x2e28f293U, 0x6199463aU, 0xbd5272ebU, 0x96b497beU);
+            R_SCE_func043();
+            SCE->REG_ECH = 0x0000b4e0U;
+            SCE->REG_ECH = 0x0000001bU;
+            R_SCE_func101(0x9b59b4b5U, 0x3320a5f1U, 0xb939e0d9U, 0xd8223c7aU);
         }
-        SCE->REG_100H = InData_KeyIndex[0];
+        else
+        {
+            SCE->REG_104H = 0x00000068U;
+            SCE->REG_E0H = 0x80010140U;
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_104H_b.B31)
+            {
+                /* waiting */
+            }
+            SCE->REG_100H = InData_KeyIndex[0];
+            SCE->REG_104H = 0x00000058U;
+            SCE->REG_E0H = 0x800103a0U;
+            /* WAIT_LOOP */
+            while (1U != SCE->REG_104H_b.B31)
+            {
+                /* waiting */
+            }
+            SCE->REG_100H = change_endian_long(0x00000076U);
+            R_SCE_func101(0xb4d445cbU, 0xd826d0e0U, 0xfd9c8557U, 0x2c2cf69dU);
+            R_SCE_func068();
+            SCE->REG_ECH = 0x0000b4e0U;
+            SCE->REG_ECH = 0xb6e3697fU;
+            R_SCE_func101(0x13118bc2U, 0x5157aa61U, 0x563d7209U, 0x9afc5692U);
+        }
         SCE->REG_104H = 0x00000058U;
         SCE->REG_E0H = 0x800103a0U;
         /* WAIT_LOOP */
@@ -124,19 +171,7 @@ fsp_err_t R_SCE_Sha256HmacInitSub(uint32_t *InData_KeyType, uint32_t *InData_Key
             /* waiting */
         }
         SCE->REG_100H = change_endian_long(0x00000076U);
-        R_SCE_func101(0xcc358850U, 0x313e70e2U, 0x9a43e6bdU, 0xdb1c2287U);
-        R_SCE_func043();
-        SCE->REG_ECH = 0x0000b4e0U;
-        SCE->REG_ECH = 0x0000001bU;
-        SCE->REG_104H = 0x00000058U;
-        SCE->REG_E0H = 0x800103a0U;
-        /* WAIT_LOOP */
-        while (1U != SCE->REG_104H_b.B31)
-        {
-            /* waiting */
-        }
-        SCE->REG_100H = change_endian_long(0x00000076U);
-        R_SCE_func101(0xe2732c04U, 0x6761b83bU, 0xd5257a4aU, 0x7b0a45e9U);
+        R_SCE_func101(0x51cd5a22U, 0x73e30194U, 0xaf356ffaU, 0x9cc8ee2dU);
         R_SCE_func044();
         SCE->REG_104H = 0x00000762U;
         SCE->REG_D0H = 0x40000100U;
@@ -255,7 +290,7 @@ fsp_err_t R_SCE_Sha256HmacInitSub(uint32_t *InData_KeyType, uint32_t *InData_Key
             /* waiting */
         }
         SCE->REG_100H = change_endian_long(0x00000076U);
-        R_SCE_func101(0x7777897fU, 0x16d5a561U, 0x88af56e4U, 0x366cb80bU);
+        R_SCE_func101(0xb023b717U, 0xe6a42f61U, 0x7bd1ddc0U, 0x6b0f78f1U);
         R_SCE_func059();
         SCE->REG_104H = 0x00000762U;
         SCE->REG_D0H = 0x40000100U;
@@ -347,5 +382,5 @@ fsp_err_t R_SCE_Sha256HmacInitSub(uint32_t *InData_KeyType, uint32_t *InData_Key
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p76i_r2.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p76i_r3.prc
 ***********************************************************************************************************************/

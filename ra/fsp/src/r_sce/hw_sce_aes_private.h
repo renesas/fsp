@@ -304,6 +304,16 @@ extern void HW_SCE_Aes128EncryptDecryptUpdate(const uint32_t * InData_Text,
 
 extern fsp_err_t HW_SCE_Aes128EncryptDecryptFinal(void);
 
+extern fsp_err_t HW_SCE_Aes192EncryptDecryptInit(const uint32_t * InData_Cmd,
+                                                 const uint32_t * InData_KeyIndex,
+                                                 const uint32_t * InData_IV);
+
+extern void HW_SCE_Aes192EncryptDecryptUpdate(const uint32_t * InData_Text,
+                                              uint32_t       * OutData_Text,
+                                              const uint32_t   num_words);
+
+extern fsp_err_t HW_SCE_Aes192EncryptDecryptFinal(void);
+
 extern fsp_err_t HW_SCE_Aes256EncryptDecryptInit(const uint32_t * InData_Cmd,
                                                  const uint32_t * InData_KeyIndex,
                                                  const uint32_t * InData_IV);
@@ -320,5 +330,44 @@ fsp_err_t HW_SCE_Aes256GcmEncryptInitSubGeneral(uint32_t * InData_KeyType,
 fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral(uint32_t * InData_KeyType,
                                                 uint32_t * InData_KeyIndex,
                                                 uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes128EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes128EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes192EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes192EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes256EcbEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes256EcbDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes128CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes128CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes192CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes192CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes256CbcEncryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+fsp_err_t HW_SCE_Aes256CbcDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes128CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                       uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes192CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                       uint32_t * InData_IV);
+
+fsp_err_t HW_SCE_Aes256CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex,
+                                                       uint32_t * InData_IV);
 
 #endif                                 /* HW_SCE_AES_PRIVATE_H */

@@ -29,6 +29,16 @@ FSP_HEADER
  * @{
  **********************************************************************************************************************/
 
+#if BSP_FEATURE_TZ_HAS_TRUSTZONE
+
+/* MSTPCRA is located in R_MSTP for Star devices. */
+ #define R_BSP_MSTPCRA    (R_MSTP->MSTPCRA)
+#else
+
+/* MSTPCRA is located in R_SYSTEM for W1D and Peaks devices. */
+ #define R_BSP_MSTPCRA    (R_SYSTEM->MSTPCRA)
+#endif
+
 /*******************************************************************************************************************//**
  * Cancels the module stop state.
  *
@@ -73,9 +83,9 @@ FSP_HEADER
  #define BSP_MSTP_BIT_FSP_IP_POEG(channel)      (1U << (14U - channel));
 #endif
 
-#define BSP_MSTP_REG_FSP_IP_DMAC(channel)       R_SYSTEM->MSTPCRA
+#define BSP_MSTP_REG_FSP_IP_DMAC(channel)       R_BSP_MSTPCRA
 #define BSP_MSTP_BIT_FSP_IP_DMAC(channel)       (1U << (22U));
-#define BSP_MSTP_REG_FSP_IP_DTC(channel)        R_SYSTEM->MSTPCRA
+#define BSP_MSTP_REG_FSP_IP_DTC(channel)        R_BSP_MSTPCRA
 #define BSP_MSTP_BIT_FSP_IP_DTC(channel)        (1U << (22U));
 #define BSP_MSTP_REG_FSP_IP_CAN(channel)        R_MSTP->MSTPCRB
 #define BSP_MSTP_BIT_FSP_IP_CAN(channel)        (1U << (2U - channel));

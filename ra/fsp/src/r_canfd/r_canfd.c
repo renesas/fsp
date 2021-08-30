@@ -468,7 +468,13 @@ fsp_err_t R_CANFD_Write (can_ctrl_t * const p_api_ctrl, uint32_t buffer, can_fra
     R_CANFD->CFDTM[txmb].FDCTR = p_frame->options & 7U;
 
     /* Copy data to register buffer */
-    memcpy((void *) R_CANFD->CFDTM[txmb].DF, p_frame->data, p_frame->data_length_code);
+    uint32_t  len    = p_frame->data_length_code;
+    uint8_t * p_dest = (uint8_t *) R_CANFD->CFDTM[txmb].DF;
+    uint8_t * p_src  = p_frame->data;
+    while (len--)
+    {
+        *p_dest++ = *p_src++;
+    }
 
     /* Request transmission */
     R_CANFD->CFDTMC[txmb] = 1;
@@ -766,7 +772,13 @@ static void r_canfd_mb_read (uint32_t buffer, can_frame_t * const frame)
     frame->data_length_code = dlc_to_bytes[mb_regs->PTR >> R_CANFD_CFDRM_PTR_RMDLC_Pos];
 
     /* Copy data to frame */
-    memcpy(frame->data, (void *) mb_regs->DF, frame->data_length_code);
+    uint32_t  len    = frame->data_length_code;
+    uint8_t * p_dest = frame->data;
+    uint8_t * p_src  = (uint8_t *) mb_regs->DF;
+    while (len--)
+    {
+        *p_dest++ = *p_src++;
+    }
 
     if (is_mb)
     {

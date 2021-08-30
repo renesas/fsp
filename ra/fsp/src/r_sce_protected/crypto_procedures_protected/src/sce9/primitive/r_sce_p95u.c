@@ -122,5 +122,5 @@ void R_SCE_Aes128CcmEncryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_Te
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p95u.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p95u_r1.prc
 ***********************************************************************************************************************/

@@ -52,7 +52,7 @@
 #define GPT_PRV_GTCCRA                                   (0U)
 #define GPT_PRV_GTCCRB                                   (1U)
 #define GPT_PRV_GTCCRC                                   (2U)
-#define GPT_PRV_GTCCRD                                   (3U)
+#define GPT_PRV_GTCCRE                                   (3U)
 
 /* GPT_CFG_OUTPUT_SUPPORT_ENABLE is set to 2 to enable extra features. */
 #define GPT_PRV_EXTRA_FEATURES_ENABLED                   (2U)
@@ -119,7 +119,8 @@ static void r_gpt_enable_irq(IRQn_Type const irq, uint32_t priority, void * p_co
 
 static void gpt_calculate_duty_cycle(gpt_instance_ctrl_t * const p_instance_ctrl,
                                      uint32_t const              duty_cycle_counts,
-                                     gpt_prv_duty_registers_t  * p_duty_reg);
+                                     gpt_prv_duty_registers_t  * p_duty_reg,
+                                     uint32_t                    pin);
 
 static uint32_t gpt_gtior_calculate(timer_cfg_t const * const p_cfg, gpt_pin_level_t const stop_level);
 
@@ -433,7 +434,7 @@ fsp_err_t R_GPT_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
          * as close to 50% as possible, duty cycle (register) = (period (counts) / 2) - 1. */
         uint32_t duty_cycle_50_percent = (period_counts >> 1) - 1U;
         p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRC] = duty_cycle_50_percent;
-        p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRD] = duty_cycle_50_percent;
+        p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRE] = duty_cycle_50_percent;
     }
 #endif
 
@@ -499,9 +500,14 @@ fsp_err_t R_GPT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
 
     /* Set duty cycle. */
     gpt_prv_duty_registers_t duty_regs = {UINT32_MAX, 0};
-    gpt_calculate_duty_cycle(p_instance_ctrl, duty_cycle_counts, &duty_regs);
+
+    gpt_calculate_duty_cycle(p_instance_ctrl, duty_cycle_counts, &duty_regs, pin);
 
     r_gpt_write_protect_disable(p_instance_ctrl);
+
+    /* Read modify write bitfield access is used to update GTUDDTYC to make sure we don't clobber settings for the
+     * other pin. */
+    uint32_t gtuddtyc = p_instance_ctrl->p_reg->GTUDDTYC;
 
     /* Only update GTCCR if 0% or 100% duty is not requested */
     if (!duty_regs.omdty)
@@ -516,17 +522,28 @@ fsp_err_t R_GPT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
             reg_offset = 4U;
         }
 
-        p_instance_ctrl->p_reg->GTCCR[tmp_pin + reg_offset] = duty_regs.gtccr_buffer;
+        if (0 != (pin & GPT_IO_PIN_GTIOCA_AND_GTIOCB))
+        {
+            p_instance_ctrl->p_reg->GTCCR[reg_offset]     = duty_regs.gtccr_buffer;
+            p_instance_ctrl->p_reg->GTCCR[reg_offset + 1] = duty_regs.gtccr_buffer;
+        }
+        else
+        {
+            p_instance_ctrl->p_reg->GTCCR[tmp_pin + reg_offset] = duty_regs.gtccr_buffer;
+        }
     }
 
-    /* Read modify write bitfield access is used to update GTUDDTYC to make sure we don't clobber settings for the
-     * other pin. */
-    uint32_t gtuddtyc = p_instance_ctrl->p_reg->GTUDDTYC;
     if (GPT_IO_PIN_GTIOCB != tmp_pin)
     {
         /* GTIOCA or both GTIOCA and GTIOCB. */
         gtuddtyc &= ~R_GPT0_GTUDDTYC_OADTY_Msk;
         gtuddtyc |= duty_regs.omdty << R_GPT0_GTUDDTYC_OADTY_Pos;
+    }
+
+    if ((GPT_IO_PIN_GTIOCA_AND_GTIOCB == pin) && duty_regs.omdty)
+    {
+        /* When setting both pins to 0%/100% duty recalculate OBDTY before setting */
+        gpt_calculate_duty_cycle(p_instance_ctrl, duty_cycle_counts, &duty_regs, GPT_IO_PIN_GTIOCB);
     }
 
     if (GPT_IO_PIN_GTIOCA != tmp_pin)
@@ -995,12 +1012,12 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
 
     if (p_cfg->mode >= TIMER_MODE_PWM)
     {
-        gpt_calculate_duty_cycle(p_instance_ctrl, p_cfg->duty_cycle_counts, &duty_regs);
+        gpt_calculate_duty_cycle(p_instance_ctrl, p_cfg->duty_cycle_counts, &duty_regs, GPT_IO_PIN_GTIOCA);
     }
 
     /* Set the compare match and compare match buffer registers based on previously calculated values. */
     p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRC] = duty_regs.gtccr_buffer;
-    p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRD] = duty_regs.gtccr_buffer;
+    p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRE] = duty_regs.gtccr_buffer;
 
     /* If the requested duty cycle is 0% or 100%, set this in the registers. */
     gtuddtyc |= duty_regs.omdty << R_GPT0_GTUDDTYC_OADTY_Pos;
@@ -1044,7 +1061,8 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
         p_instance_ctrl->p_reg->GTDVU = p_pwm_cfg->dead_time_count_up;
 
         /* Set GTDTCR.TDE only if one of the dead time values is non-zero. */
-        uint32_t gtdtcr = ((p_pwm_cfg->dead_time_count_up > 0) || (p_pwm_cfg->dead_time_count_down > 0));
+        uint32_t gtdtcr =
+            ((p_pwm_cfg->dead_time_count_up > 0) || (p_pwm_cfg->dead_time_count_down > 0));
 
  #if GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK
         if ((1U << p_cfg->channel) & GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK)
@@ -1189,7 +1207,8 @@ static void r_gpt_enable_irq (IRQn_Type const irq, uint32_t priority, void * p_c
  **********************************************************************************************************************/
 static void gpt_calculate_duty_cycle (gpt_instance_ctrl_t * const p_instance_ctrl,
                                       uint32_t const              duty_cycle_counts,
-                                      gpt_prv_duty_registers_t  * p_duty_reg)
+                                      gpt_prv_duty_registers_t  * p_duty_reg,
+                                      uint32_t                    pin)
 {
     /* Determine the current period. The actual period is one cycle longer than the register value for saw waves
      * and twice the register value for triangle waves. Reference section 23.2.21 "General PWM Timer Cycle Setting
@@ -1203,14 +1222,43 @@ static void gpt_calculate_duty_cycle (gpt_instance_ctrl_t * const p_instance_ctr
         current_period++;
     }
 
-    /* 0% and 100% duty cycle are supported in OADTY/OBDTY. */
-    if (0U == duty_cycle_counts)
+    bool duty_zero = (0U == duty_cycle_counts);
+    bool duty_high = (duty_cycle_counts >= current_period);
+
+    if (duty_zero || duty_high)
     {
-        p_duty_reg->omdty = GPT_DUTY_CYCLE_MODE_0_PERCENT;
-    }
-    else if (duty_cycle_counts >= current_period)
-    {
-        p_duty_reg->omdty = GPT_DUTY_CYCLE_MODE_100_PERCENT;
+        uint32_t gtior;
+
+        if (!(GPT_IO_PIN_GTIOCB & pin))
+        {
+            gtior = p_instance_ctrl->p_reg->GTIOR_b.GTIOA;
+        }
+        else
+        {
+            gtior = p_instance_ctrl->p_reg->GTIOR_b.GTIOB;
+        }
+
+        bool first_level_low;
+
+        if (p_instance_ctrl->p_cfg->mode >= TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM)
+        {
+            /* In triangle PWM modes use the initial pin level to determine 0%/100% setting. */
+            first_level_low = !(gtior & 0x10);
+        }
+        else
+        {
+            /* In normal PWM mode use the cycle end setting to determine 0%/100% setting */
+            first_level_low = (gtior & 0xC) == 0x4;
+        }
+
+        if ((duty_zero && !first_level_low) || (duty_high && first_level_low))
+        {
+            p_duty_reg->omdty = GPT_DUTY_CYCLE_MODE_0_PERCENT;
+        }
+        else
+        {
+            p_duty_reg->omdty = GPT_DUTY_CYCLE_MODE_100_PERCENT;
+        }
     }
     else
     {

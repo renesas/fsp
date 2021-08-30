@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2018 Arm Limited
- * Copyright (c) 2019-2020, Cypress Semiconductor Corporation. All rights reserved.
+ * Copyright (c) 2018-2020 Arm Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,20 +30,24 @@ REGION_DECLARE(Load$$LR$$, LR_NS_PARTITION, $$Base);
 REGION_DECLARE(Load$$LR$$, LR_NS_IMAGE, $$Base);
 REGION_DECLARE(Load$$LR$$, LR_VENEER, $$Base);
 REGION_DECLARE(Load$$LR$$, LR_VENEER, $$Limit);
+REGION_DECLARE(Load$$LR$$, LR_SECONDARY_PARTITION, $$Base);
 
 const struct memory_region_limits memory_regions = {
-    .non_secure_code_start =
+  .non_secure_code_start =
         (uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_IMAGE, $$Base),
 
-    .non_secure_partition_base =
-        (uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base),
+  .non_secure_partition_base =
+  (uint32_t) &REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base),
 
-    .veneer_base =
-        (uint32_t)&REGION_NAME(Load$$LR$$, LR_VENEER, $$Base),
+  .non_secure_partition_limit =
+  (uint32_t) &REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
+  RM_TFM_PORT_NONSECURE_IMAGE_SIZE - 1,
 
-    .veneer_limit =
-        (uint32_t)&REGION_NAME(Load$$LR$$, LR_VENEER, $$Limit),
+  .veneer_base =
+  (uint32_t) &REGION_NAME(Load$$LR$$, LR_VENEER, $$Base),
 
+  .veneer_limit =
+  (uint32_t) &REGION_NAME(Load$$LR$$, LR_VENEER, $$Limit),
 };
 
 /* To write into AIRCR register, 0x5FA value must be write to the VECTKEY field,

@@ -57,38 +57,44 @@ FSP_HEADER
  * @def BLE_VERSION_MAJOR
  * BLE Module Major Version.
  */
-#define BLE_VERSION_MAJOR        (0x0002)
+#define BLE_VERSION_MAJOR      (0x0002)
 
 /**
  * @def BLE_VERSION_MINOR
  * BLE Module Minor Version.
  */
-#define BLE_VERSION_MINOR        (0x0000)
+#define BLE_VERSION_MINOR      (0x0000)
 
 /**
- * @def BLE_LIB_ALL_FEATS
- * BLE Protocol Stack Library All Features type.
+ * @def BLE_LIB_EXTENDED
+ * BLE Protocol Stack Library Extended type.
  */
-#define BLE_LIB_ALL_FEATS        (0x00)
+#define BLE_LIB_EXTENDED       (0x00)
 
 /**
  * @def BLE_LIB_BALANCE
  * BLE Protocol Stack Library Balance type.
  */
-#define BLE_LIB_BALANCE          (0x01)
+#define BLE_LIB_BALANCE        (0x01)
 
 /**
  * @def BLE_LIB_COMPACT
  * BLE Protocol Stack Library Compacy type.
  */
-#define BLE_LIB_COMPACT          (0x02)
+#define BLE_LIB_COMPACT        (0x02)
+
+/* DEPRECATED @def BLE_LIB_ALL_FEATS
+ * BLE Protocol Stack Library Extend Features type.
+ * This configuration is left for backward compatibility.
+ */
+#define BLE_LIB_ALL_FEATS      (0x00)
 
 /* =============================================== Spec Error Group ID ============================================== */
-#define BLE_ERR_GROUP_HC         (0x1000)
-#define BLE_ERR_GROUP_GAP        (0x2000)
-#define BLE_ERR_GROUP_GATT       (0x3000)
-#define BLE_ERR_GROUP_L2CAP      (0x4000)
-#define BLE_ERR_GROUP_VS         (0x5000)
+#define BLE_ERR_GROUP_HC       (0x1000)
+#define BLE_ERR_GROUP_GAP      (0x2000)
+#define BLE_ERR_GROUP_GATT     (0x3000)
+#define BLE_ERR_GROUP_L2CAP    (0x4000)
+#define BLE_ERR_GROUP_VS       (0x5000)
 
 /******************************************************************************************************************//**
  * @typedef ble_status_t
@@ -4598,10 +4604,10 @@ typedef struct
      *               |        value         |   description                   |
      *               |:-------------------- |:---------------------------------- |
      *               | 0x00                 | Advertising Report.                |
-     *               | 0x01                 |  Extended Advertising Report.   |
+     *               | 0x01                 | Extended Advertising Report.    |
      *               | 0x02                 | Periodic Advertising Report.    |
      *
-     *   If the BLE Protocol Stack library type is "all features",
+     *   If the BLE Protocol Stack library type is "extended",
      *   the adv_rpt_type field in a Legacy Advertising Report event is 0x01.
      */
     uint8_t adv_rpt_type;
@@ -10158,7 +10164,7 @@ uint32_t R_BLE_GetVersion(void);
  * @fn uint32_t R_BLE_GetLibType(void)
  * @brief   Get the type of BLE protocol stack library.
  * @details This function returns the type of BLE protocol stack library.
- * @retval  BLE_LIB_ALL_FEATS(0x00)  All Features
+ * @retval  BLE_LIB_EXTENDED(0x00)   Extended
  * @retval  BLE_LIB_BALANCE(0x01)    Balance
  * @retval  BLE_LIB_COMPACT(0x02)    Compact
  **********************************************************************************************************************/

@@ -55,6 +55,7 @@
 static fsp_err_t prepare_gcm_iv(uint8_t               * initial_vector,
                                 uint32_t                initial_vector_length,
                                 sce_aes_wrapped_key_t * wrapped_key,
+                                uint32_t                wrapped_key_word_size,
                                 uint32_t              * hashed_ivec);
 static void aes_ccm_b_counter_formatter(uint8_t  * nonce,
                                         uint32_t   nonce_len,
@@ -117,6 +118,7 @@ uint32_t        g_aes256ccmdec_private_id;
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
  *
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
  **********************************************************************************************************************/
@@ -229,6 +231,7 @@ fsp_err_t R_SCE_AES128ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -342,6 +345,7 @@ fsp_err_t R_SCE_AES128ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * pla
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -455,6 +459,7 @@ fsp_err_t R_SCE_AES256ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -585,6 +590,7 @@ fsp_err_t R_SCE_AES256ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * pla
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -708,6 +714,7 @@ fsp_err_t R_SCE_AES128CBC_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -831,6 +838,7 @@ fsp_err_t R_SCE_AES128CBC_DecryptFinal (sce_aes_handle_t * handle, uint8_t * pla
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -954,6 +962,7 @@ fsp_err_t R_SCE_AES256CBC_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -1095,8 +1104,7 @@ fsp_err_t R_SCE_AES128GCM_EncryptInit (sce_gcm_handle_t      * handle,
     };
     fsp_err_t ercd = FSP_SUCCESS;
 
-    if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) ||
-        (SCE_KEY_INDEX_TYPE_AES128_GCM_FOR_DLMS_COSEM == wrapped_key->type))
+    if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
         if (0 == initial_vector_length)
         {
@@ -1113,10 +1121,9 @@ fsp_err_t R_SCE_AES128GCM_EncryptInit (sce_gcm_handle_t      * handle,
     g_private_id_counter++;
     g_aes128gcmenc_private_id = g_private_id_counter;
     handle->id                = g_aes128gcmenc_private_id;
-    if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) ||
-        (SCE_KEY_INDEX_TYPE_AES128_GCM_FOR_DLMS_COSEM == wrapped_key->type))
+    if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
-        ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, hashed_ivec);
+        ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, HW_SCE_AES128_KEY_INDEX_WORD_SIZE, hashed_ivec);
         if (FSP_SUCCESS != ercd)
         {
             memset(handle, 0, sizeof(sce_gcm_handle_t));
@@ -1402,8 +1409,7 @@ fsp_err_t R_SCE_AES128GCM_DecryptInit (sce_gcm_handle_t      * handle,
     };
     fsp_err_t ercd = FSP_SUCCESS;
 
-    if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) ||
-        (SCE_KEY_INDEX_TYPE_AES128_GCM_FOR_DLMS_COSEM == wrapped_key->type))
+    if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
         if (0 == initial_vector_length)
         {
@@ -1423,10 +1429,9 @@ fsp_err_t R_SCE_AES128GCM_DecryptInit (sce_gcm_handle_t      * handle,
     g_private_id_counter++;
     g_aes128gcmdec_private_id = g_private_id_counter;
     handle->id                = g_aes128gcmdec_private_id;
-    if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) ||
-        (SCE_KEY_INDEX_TYPE_AES128_GCM_FOR_DLMS_COSEM == wrapped_key->type))
+    if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
-        ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, hashed_ivec);
+        ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, HW_SCE_AES128_KEY_INDEX_WORD_SIZE, hashed_ivec);
         if (FSP_SUCCESS != ercd)
         {
             memset(handle, 0, sizeof(sce_gcm_handle_t));
@@ -1747,7 +1752,7 @@ fsp_err_t R_SCE_AES256GCM_EncryptInit (sce_gcm_handle_t      * handle,
     g_private_id_counter++;
     g_aes256gcmenc_private_id = g_private_id_counter;
     handle->id                = g_aes256gcmenc_private_id;
-    ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, hashed_ivec);
+    ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, HW_SCE_AES256_KEY_INDEX_WORD_SIZE, hashed_ivec);
     if (FSP_SUCCESS != ercd)
     {
         memset(handle, 0, sizeof(sce_gcm_handle_t));
@@ -2044,7 +2049,7 @@ fsp_err_t R_SCE_AES256GCM_DecryptInit (sce_gcm_handle_t      * handle,
     g_aes256gcmdec_private_id = g_private_id_counter;
     handle->id                = g_aes256gcmdec_private_id;
     memcpy(handle->wrapped_key.value, wrapped_key->value, HW_SCE_AES256_KEY_INDEX_WORD_SIZE * 4);
-    ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, hashed_ivec);
+    ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, HW_SCE_AES256_KEY_INDEX_WORD_SIZE, hashed_ivec);
     if (FSP_SUCCESS != ercd)
     {
         memset(handle, 0, sizeof(sce_gcm_handle_t));
@@ -3183,6 +3188,7 @@ fsp_err_t R_SCE_AES256CCM_DecryptFinal (sce_ccm_handle_t * handle,
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -3326,6 +3332,7 @@ fsp_err_t R_SCE_AES128CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -3485,6 +3492,7 @@ fsp_err_t R_SCE_AES128CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -3628,6 +3636,7 @@ fsp_err_t R_SCE_AES256CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
@@ -3789,6 +3798,7 @@ fsp_err_t R_SCE_AES256CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
  * @param[in]     initial_vector        Input initial vector.
  * @param[in]     initial_vector_length Input initial vector byte size.
  * @param[in]     wrapped_key           Wrapped key area.
+ * @param[in]     wrapped_key_word_size Wrapped key word size.
  * @param[in,out] hashed_ivec           Output initialization vector( using length of initial_vector_length as a condition)
  *
  * @retval FSP_SUCCESS                          Normal termination.
@@ -3799,6 +3809,7 @@ fsp_err_t R_SCE_AES256CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
 static fsp_err_t prepare_gcm_iv (uint8_t               * initial_vector,
                                  uint32_t                initial_vector_length,
                                  sce_aes_wrapped_key_t * wrapped_key,
+                                 uint32_t                wrapped_key_word_size,
                                  uint32_t              * hashed_ivec)
 {
     uint32_t hash_subkey[4] =
@@ -3833,22 +3844,34 @@ static fsp_err_t prepare_gcm_iv (uint8_t               * initial_vector,
     /* when iv_len is not 12 (96 bit), add ghash padding */
     else
     {
+        uint32_t indata_keytype = 0; /* For normal */
         uint32_t indata_cmd = 0;
 
         /* generate hash_subkey */
         indata_cmd = change_endian_long(0); /* ECB-Encrypt command */
-        if (SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type)
+        if (HW_SCE_AES128_KEY_INDEX_WORD_SIZE == wrapped_key_word_size)
         {
-            ret = R_SCE_Aes128EncryptDecryptInitSub(&indata_cmd, wrapped_key->value, zero);
-            if (FSP_SUCCESS == ret)
+            if (SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type)
             {
-                R_SCE_Aes128EncryptDecryptUpdateSub(zero, hash_subkey, 4);
-                ret = R_SCE_Aes128EncryptDecryptFinalSub();
+                if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type)
+                {
+                    indata_keytype = change_endian_long(2); /* For ECDH */
+                }
+                ret = R_SCE_Aes128EncryptDecryptInitSub(&indata_keytype, &indata_cmd, wrapped_key->value, zero);
+                if (FSP_SUCCESS == ret)
+                {
+                    R_SCE_Aes128EncryptDecryptUpdateSub(zero, hash_subkey, 4);
+                    ret = R_SCE_Aes128EncryptDecryptFinalSub();
+                }
             }
         }
-        else                           /* if (SCE_KEY_INDEX_TYPE_AES256 == wrapped_key->type) */
+        else    /* if (SCE_KEY_INDEX_TYPE_AES256 == key_index_word_size) */
         {
-            ret = R_SCE_Aes256EncryptDecryptInitSub(&indata_cmd, wrapped_key->value, zero);
+            if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == wrapped_key->type)
+            {
+                indata_keytype = change_endian_long(2); /* For ECDH */
+            }
+            ret = R_SCE_Aes256EncryptDecryptInitSub(&indata_keytype, &indata_cmd, wrapped_key->value, zero);
             if (FSP_SUCCESS == ret)
             {
                 R_SCE_Aes256EncryptDecryptUpdateSub(zero, hash_subkey, 4);

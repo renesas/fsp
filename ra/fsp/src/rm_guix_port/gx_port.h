@@ -48,7 +48,9 @@
 #define GX_PORT_H
 
 /* Determine if the optional GUIX user define file should be used.  */
-#define GX_INCLUDE_USER_DEFINE_FILE
+#ifndef GX_INCLUDE_USER_DEFINE_FILE
+ #define GX_INCLUDE_USER_DEFINE_FILE
+#endif
 #ifdef GX_INCLUDE_USER_DEFINE_FILE
 
 /* Include the user defines in gx_user.h. The defines in this file may

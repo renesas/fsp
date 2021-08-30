@@ -69,8 +69,8 @@ typedef struct st_motor_current_callback_args
     motor_current_event_t event;
 } motor_current_callback_args_t;
 
-/* Structure of interface to speed control */
-/* Output parameters */
+/** Structure of interface to speed control */
+/** Output parameters */
 typedef struct st_motor_current_output
 {
     float f_id;                        ///< D-axis current [A]
@@ -104,6 +104,7 @@ typedef struct st_motor_current_input
     uint8_t u1_flag_pi;                ///< PI output started flag
 } motor_current_input_t;
 
+/** Three-phase input current */
 typedef struct st_motor_current_input_current
 {
     float iu;                          ///< U phase current[A]
@@ -111,12 +112,14 @@ typedef struct st_motor_current_input_current
     float iw;                          ///< W phase current[A]
 } motor_current_input_current_t;
 
+/** Input voltage */
 typedef struct st_motor_current_input_voltage
 {
     float vdc;                         ///< Main line voltage[V]
     float va_max;                      ///< Maximum magnitude of voltage vector[V]
 } motor_current_input_voltage_t;
 
+/** Struct to get motor current */
 typedef struct st_motor_current_get_voltage
 {
     float u_voltage;                   ///< U phase voltage[V]

@@ -27,6 +27,9 @@ extern "C"
  #endif
 
  #include "rm_netx_secure_crypto_cfg.h"
+ #ifndef NX_CRYPTO_STANDALONE_ENABLE
+  #include "nx_secure_user.h"
+ #endif
  #include "common/nx_crypto.h"
 
  #ifdef __cplusplus

@@ -170,6 +170,9 @@ FSP_HEADER
 #define SCE_OEM_KEY_SIZE_ECCP384_PRIVATE_KEY_INST_DATA_WORD         (16)
 #define SCE_OEM_KEY_SIZE_HMAC_SHA256_INST_DATA_WORD                 (12)
 
+/* TLS-HMAC. */
+#define SCE_TLS_HMAC_KEY_INDEX_BYTE_SIZE                 (64U)
+#define SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE                 (16U)
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/

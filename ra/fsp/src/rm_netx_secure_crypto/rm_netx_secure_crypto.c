@@ -30,7 +30,9 @@
 #include "rm_netx_secure_crypto.h"
 #include "rm_netx_secure_crypto_cfg.h"
 #include "hw_sce_trng_private.h"
-#include "hw_sce_ecc_private.h"
+#if (1 == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_ECC_ALT)
+ #include "hw_sce_ecc_private.h"
+#endif
 #include "hw_sce_private.h"
 
 /*******************************************************************************************************************//**

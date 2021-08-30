@@ -129,6 +129,7 @@ typedef struct st_ble_abs_instance_ctrl
     ble_abs_delete_bond_application_callback_t abs_delete_bond_callback;            ///< Delete bond information callback function
     uint32_t connection_timer_handle;                                               ///< Cancel a request for connection timer.
     uint32_t advertising_timer_handle;                                              ///< Advertising timer for legacy advertising
+    uint32_t scan_timer_handle;                                                     ///< Scan interval timer
     abs_advertising_parameter_t advertising_sets[BLE_MAX_NO_OF_ADV_SETS_SUPPORTED]; ///< Advertising set information.
     abs_scan_parameter_t        abs_scan;                                           ///< Scan information.
     st_ble_dev_addr_t           loc_bd_addr;                                        ///< Local device address.

@@ -425,11 +425,11 @@ fsp_err_t RM_VEE_FLASH_RefDataWrite (rm_vee_ctrl_t * const p_api_ctrl, uint8_t c
 }
 
 /*******************************************************************************************************************//**
- * Gets a pointer to the most recent reference data.
+ * Gets a pointer to the most recent record data.
  *
  * Implements @ref rm_vee_api_t::recordPtrGet
  *
- * This function sets the argument pointer to the most recent version of the reference data in flash. Flash cannot be
+ * This function sets the argument pointer to the most recent version of the record data in flash. Flash cannot be
  * accessed for reading and writing at the same time. Therefore, reading the data at p_ref_data must be completed prior
  * to initiating any type of Flash write.
  *
@@ -437,7 +437,7 @@ fsp_err_t RM_VEE_FLASH_RefDataWrite (rm_vee_ctrl_t * const p_api_ctrl, uint8_t c
  * @retval FSP_ERR_NOT_OPEN          The module has not been opened.
  * @retval FSP_ERR_IN_USE            Last API call still executing.
  * @retval FSP_ERR_ASSERTION         p_ref_data is NULL.
- * @retval FSP_ERR_INVALID_ARGUMENT  Reference data not configured.
+ * @retval FSP_ERR_INVALID_ARGUMENT  Record data not configured.
  * @retval FSP_ERR_NOT_FOUND         The record associated with the requested ID could not be found.
  **********************************************************************************************************************/
 fsp_err_t RM_VEE_FLASH_RecordPtrGet (rm_vee_ctrl_t * const p_api_ctrl,

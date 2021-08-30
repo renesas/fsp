@@ -24,10 +24,6 @@
 #include <stdint.h>
 #include "bsp_api.h"
 
-#define SIZE_AES_BLOCK_BITS  (128)
-#define SIZE_AES_BLOCK_BYTES ((SIZE_AES_BLOCK_BITS) / 8)
-#define SIZE_AES_BLOCK_WORDS ((SIZE_AES_BLOCK_BITS) / 32)
-
 typedef enum e_hw_sc324_aes_modes
 {
     SC324_AES_ECB = 0,

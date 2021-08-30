@@ -288,15 +288,17 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
 /** Import key data into a slot. `slot->attr.type` must have been set
  * previously. This function assumes that the slot does not contain
  * any key material yet. On failure, the slot content is unchanged. */
-psa_status_t psa_import_key_into_slot_vendor (psa_key_slot_t * slot,
-                                              const uint8_t  * data,
-                                              size_t           data_length,
-                                              bool             write_to_persistent_memory)
+psa_status_t psa_import_key_into_slot_vendor (psa_key_slot_t       * slot,
+                                              const uint8_t        * data,
+                                              size_t                 data_length,
+                                              mbedtls_svc_key_id_t * key,
+                                              bool                   write_to_persistent_memory)
 {
     psa_status_t status = PSA_ERROR_NOT_SUPPORTED;
     (void) slot;
     (void) data;
     (void) data_length;
+    (void) key;
 #if defined(MBEDTLS_AES_ALT) && ((PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_AES_FORMAT)))
     if (PSA_KEY_TYPE_IS_UNSTRUCTURED(slot->attr.type))
     {
@@ -358,7 +360,7 @@ psa_status_t psa_import_key_into_slot_vendor (psa_key_slot_t * slot,
 
         if (true == write_to_persistent_memory)
         {
-            status = psa_finish_key_creation(slot, NULL);
+            status = psa_finish_key_creation(slot, NULL, key);
         }
     }
 

@@ -42,6 +42,12 @@
  #if defined(USB_CFG_HMSC_USE)
   #include "../../../microsoft/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_storage.h"
  #endif                                /* defined(USB_CFG_HMSC_USE) */
+ #if defined(USB_CFG_HHID_USE)
+  #include "../../../microsoft/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid.h"
+  #include "../../../microsoft/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_keyboard.h"
+  #include "../../../microsoft/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_mouse.h"
+ #endif                                /* defined(USB_CFG_HHID_USE) */
+
 #endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 #if (BSP_CFG_RTOS != 1)
@@ -50,9 +56,11 @@
  #endif                                /* defined(USB_CFG_HCDC_USE) */
 #endif /* #if (BSP_CFG_RTOS != 1) */
 
-#if defined(USB_CFG_HHID_USE)
- #include "r_usb_hhid_api.h"
-#endif                                 /* defined(USB_CFG_HHID_USE) */
+#if (BSP_CFG_RTOS != 1)
+ #if defined(USB_CFG_HHID_USE)
+  #include "r_usb_hhid_api.h"
+ #endif                                /* defined(USB_CFG_HHID_USE) */
+#endif  /* (BSP_CFG_RTOS != 1) */
 
 #if (BSP_CFG_RTOS != 1)
  #if defined(USB_CFG_HMSC_USE)
@@ -596,6 +604,25 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
                 ux_host_stack_hcd_register((UCHAR *) "fsp_usbx_hmsc_fs", usb_host_usbx_initialize, R_USB_FS0_BASE, 0);
             }
   #endif                               /* defined(USB_CFG_HCDC_USE) */
+  #if defined(USB_CFG_HHID_USE)
+            ux_host_stack_class_register(_ux_system_host_class_hid_name, ux_host_class_hid_entry);
+
+            ux_host_class_hid_client_register(
+                _ux_system_host_class_hid_client_keyboard_name,
+                ux_host_class_hid_keyboard_entry);
+            ux_host_class_hid_client_register(
+                _ux_system_host_class_hid_client_mouse_name,
+                ux_host_class_hid_mouse_entry);
+
+            if (USB_IP1 == p_ctrl->module_number)
+            {
+                ux_host_stack_hcd_register((UCHAR *) "fsp_usbx_hhid_hs", usb_host_usbx_initialize, R_USB_HS0_BASE, 0);
+            }
+            else
+            {
+                ux_host_stack_hcd_register((UCHAR *) "fsp_usbx_hhid_fs", usb_host_usbx_initialize, R_USB_FS0_BASE, 0);
+            }
+  #endif                               /* defined(USB_CFG_HHID_USE) */
  #endif                                /* #if (BSP_CFG_RTOS == 0) */
         }
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
@@ -640,10 +667,22 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
             else
             {
   #if (BSP_CFG_RTOS == 1)
-                usb_peri_usbx_initialize(R_USB_FS0_BASE);
+                if (1 == p_ctrl->module_number)
+                {
+                    usb_peri_usbx_initialize(R_USB_HS0_BASE);
+                }
+                else                   /* if (1 == p_ctrl->module_number) */
+                {
+                    usb_peri_usbx_initialize(R_USB_FS0_BASE);
+                }
   #endif
                 (void) hse_utr;
             }
+
+ #else
+  #if (BSP_CFG_RTOS == 1)
+            usb_peri_usbx_initialize(R_USB_FS0_BASE);
+  #endif
  #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
             if (USB_ATTACH == usb_pstd_chk_vbsts(p_ctrl->module_number))
             {
@@ -814,12 +853,40 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
  #if (BSP_CFG_RTOS == 1)
             if (USB_IP1 == p_ctrl->module_number)
             {
+  #if defined(USB_CFG_HCDC_USE)
+                ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_hcdc_hs", R_USB_HS0_BASE, 0);
+  #endif                               /* #if defined(USB_CFG_HCDC_USE) */
+  #if defined(USB_CFG_HMSC_USE)
+                ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_hmsc_hs", R_USB_HS0_BASE, 0);
+  #endif                               /* #if defined(USB_CFG_HMSC_USE) */
+  #if defined(USB_CFG_HHID_USE)
+                ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_hhid_hs", R_USB_HS0_BASE, 0);
+  #endif                               /* #if defined(USB_CFG_HHID_USE) */
                 usb_host_usbx_uninitialize(R_USB_HS0_BASE);
             }
             else
             {
+  #if defined(USB_CFG_HCDC_USE)
+                ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_hcdc_fs", R_USB_FS0_BASE, 0);
+  #endif                               /* #if defined(USB_CFG_HCDC_USE) */
+  #if defined(USB_CFG_HMSC_USE)
+                ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_hmsc_fs", R_USB_FS0_BASE, 0);
+  #endif                               /* #if defined(USB_CFG_HMSC_USE) */
+  #if defined(USB_CFG_HHID_USE)
+                ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_hhid_fs", R_USB_FS0_BASE, 0);
+  #endif                               /* #if defined(USB_CFG_HHID_USE) */
                 usb_host_usbx_uninitialize(R_USB_FS0_BASE);
             }
+
+  #if defined(USB_CFG_HCDC_USE)
+            ux_host_stack_class_unregister(ux_host_class_cdc_acm_entry);
+  #endif                               /* #if defined(USB_CFG_HCDC_USE) */
+  #if defined(USB_CFG_HMSC_USE)
+            ux_host_stack_class_unregister(ux_host_class_storage_entry);
+  #endif                               /* #if defined(USB_CFG_HMSC_USE) */
+  #if defined(USB_CFG_HHID_USE)
+            ux_host_stack_class_unregister(ux_host_class_hid_entry);
+  #endif                               /* #if defined(USB_CFG_HHID_USE) */
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
         }
@@ -829,6 +896,11 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
             usb_pstd_driver_release(); /* Clear the information registered in the structure usb_pcdreg_t. */
             usb_pstd_clr_pipe_table(p_ctrl->module_number);
  #if (BSP_CFG_RTOS == 1)
+            if (USB_TRUE == is_connect)
+            {
+                _ux_device_stack_disconnect();
+            }
+
             if (USB_IP1 == p_ctrl->module_number)
             {
                 usb_peri_usbx_uninitialize(R_USB_HS0_BASE);
@@ -836,11 +908,6 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
             else
             {
                 usb_peri_usbx_uninitialize(R_USB_FS0_BASE);
-            }
-
-            if (USB_TRUE == is_connect)
-            {
-                _ux_device_stack_disconnect();
             }
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
 #endif  /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */

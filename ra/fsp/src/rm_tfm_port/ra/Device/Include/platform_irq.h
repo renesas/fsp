@@ -15,11 +15,12 @@
  */
 
 #ifndef __PLATFORM_IRQ_H__
-#define __PLATFORM_IRQ_H__
-#include "vector_data.h"
-#ifdef __cplusplus
+ #define __PLATFORM_IRQ_H__
+ #include "../../src/bsp/mcu/all/bsp_arm_exceptions.h"
+ #include "vector_data.h"
+ #ifdef __cplusplus
 extern "C" {
-#endif
+ #endif
 
 /* ========================================================================== */
 /* =============         Interrupt Number Definition         ================ */
@@ -32,8 +33,8 @@ extern "C" {
  *
  */
 
-#ifdef __cplusplus
+ #ifdef __cplusplus
 }
-#endif
+ #endif
 
-#endif  /* __PLATFORM_IRQ_H__ */
+#endif                                 /* __PLATFORM_IRQ_H__ */

@@ -308,5 +308,5 @@ fsp_err_t R_SCE_Aes128CcmDecryptFinalSub(uint32_t *InData_Text, uint32_t *InData
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p98f.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p98f_r1.prc
 ***********************************************************************************************************************/

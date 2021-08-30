@@ -85,7 +85,7 @@
 #define IIC_MASTER_FUNCTION_ENABLE_INIT_SETTINGS    (0x77U)
 #define IIC_MASTER_STATUS_REGISTER_2_ERR_MASK       (0x1FU)
 #define IIC_MASTER_BUS_MODE_REGISTER_1_MASK         (0x08U)
-#define IIC_MASTER_BUS_MODE_REGISTER_2_MASK         (0x06U)
+#define IIC_MASTER_BUS_MODE_REGISTER_2_MASK         (0x04U)
 #define IIC_MASTER_SYSDIVCK_ICLK_MASK               (0x0F000000U)
 #define IIC_MASTER_SYSDIVCK_PCLKB_MASK              (0x00000F00U)
 #define IIC_MASTER_PRV_SCL_SDA_NOT_DRIVEN           (0x1FU)
@@ -246,8 +246,6 @@ fsp_err_t R_IIC_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cf
 #endif
 
     p_ctrl->p_reg = (R_IIC0_Type *) ((uint32_t) R_IIC0 + (p_cfg->channel * ((uint32_t) R_IIC1 - (uint32_t) R_IIC0)));
-
-    p_ctrl->timeout_mode = ((iic_master_extended_cfg_t *) p_cfg->p_extend)->timeout_mode;
 
     /* Record the pointer to the configuration structure for later use */
     p_ctrl->p_cfg             = p_cfg;
@@ -710,25 +708,9 @@ static void iic_master_abort_seq_master (iic_master_instance_ctrl_t * const p_ct
             /* Disable channel interrupts */
             p_ctrl->p_reg->ICIER = 0x00;
 
-            /* Do I2C internal reset to clear all the transaction states and release the bus */
-            p_ctrl->p_reg->ICCR1 = (uint8_t) IIC_MASTER_PRV_SCL_SDA_NOT_DRIVEN;
-
-            /* Reset */
-            p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_MASTER_ICCR1_IICRST_BIT_MASK | IIC_MASTER_PRV_SCL_SDA_NOT_DRIVEN);
-
-            /* Clear pending interrupt in ICU and NVIC. It is ok to re-enable interrupts  at NVIC here. */
-            R_BSP_IrqEnable(p_ctrl->p_cfg->eri_irq);
-            R_BSP_IrqEnable(p_ctrl->p_cfg->rxi_irq);
-            R_BSP_IrqEnable(p_ctrl->p_cfg->tei_irq);
-            R_BSP_IrqEnable(p_ctrl->p_cfg->txi_irq);
-
-            /* Release peripheral from internal reset */
-            p_ctrl->p_reg->ICCR1 =
-                (uint8_t) (IIC_MASTER_ICCR1_ICE_BIT_MASK | IIC_MASTER_ICCR1_IICRST_BIT_MASK |
-                           IIC_MASTER_PRV_SCL_SDA_NOT_DRIVEN);
-
-            /* Reset */
-            p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_MASTER_ICCR1_ICE_BIT_MASK | IIC_MASTER_PRV_SCL_SDA_NOT_DRIVEN);
+            /* This helper function would do a full IIC reset
+             * followed by re-initializing the required peripheral registers. */
+            iic_master_open_hw_master(p_ctrl, p_ctrl->p_cfg);
         }
 
         /* Update the transfer descriptor to show no longer in-progress and an error */
@@ -791,8 +773,12 @@ static void iic_master_open_hw_master (iic_master_instance_ctrl_t * const p_ctrl
      * Only Set/Clear TMOS here to select long or short mode.
      * (see Section 36.2.4 'I2C Bus Mode Register 2 (ICMR2)' of the RA6M3 manual R01UH0886EJ0100).
      */
-    p_ctrl->p_reg->ICMR2 = IIC_MASTER_BUS_MODE_REGISTER_2_MASK |
-                           (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT == p_ctrl->timeout_mode);
+    p_ctrl->p_reg->ICMR2 = (uint8_t) (IIC_MASTER_BUS_MODE_REGISTER_2_MASK |
+                                      (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT ==
+                                                 ((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->timeout_mode)
+                                      |
+                                      (uint8_t) (((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->
+                                                 timeout_scl_low << R_IIC0_ICMR2_TMOL_Pos));
 
     /* ICFER Register Settings:
      * 1. Enable timeout function.
@@ -896,8 +882,12 @@ static fsp_err_t iic_master_run_hw_master (iic_master_instance_ctrl_t * const p_
      * Only Set/Clear TMOS here to select long or short mode.
      * (see Section 36.2.4 'I2C Bus Mode Register 2 (ICMR2)' of the RA6M3 manual R01UH0886EJ0100).
      */
-    p_ctrl->p_reg->ICMR2 = IIC_MASTER_BUS_MODE_REGISTER_2_MASK |
-                           (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT == p_ctrl->timeout_mode);
+    p_ctrl->p_reg->ICMR2 = (uint8_t) (IIC_MASTER_BUS_MODE_REGISTER_2_MASK |
+                                      (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT ==
+                                                 ((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->timeout_mode)
+                                      |
+                                      (uint8_t) (((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->
+                                                 timeout_scl_low << R_IIC0_ICMR2_TMOL_Pos));
 
     /* Enable timeout function */
     p_ctrl->p_reg->ICFER_b.TMOE = 1U;
@@ -1207,7 +1197,8 @@ static void iic_master_err_master (iic_master_instance_ctrl_t * p_ctrl)
         p_ctrl->p_reg->ICCR2  = (uint8_t) IIC_MASTER_ICCR2_SP_BIT_MASK; /* It is safe to write 0's to other bits. */
         /* Allow timeouts to be generated on the low value of SCL using either long or short mode */
         p_ctrl->p_reg->ICMR2 = (uint8_t) 0x02U |
-                               (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT == p_ctrl->timeout_mode);
+                               (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT ==
+                                          ((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->timeout_mode);
         p_ctrl->p_reg->ICFER_b.TMOE = 1;
 
         /* This interrupt will be fired again when wither stop condition is sent

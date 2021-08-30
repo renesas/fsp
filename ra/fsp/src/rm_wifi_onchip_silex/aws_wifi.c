@@ -24,21 +24,18 @@
 #include <stdio.h>
 #include <string.h>
 
-/* FreeRTOS includes. */
-#include "FreeRTOS.h"
-
-/* Socket and WiFi interface includes. */
-#include "iot_wifi.h"
-
-/* WiFi configuration includes. */
-#include "aws_wifi_config.h"
-
 #include "rm_wifi_onchip_silex.h"
 
-/* WiFi configuration includes. */
-extern const wifi_onchip_silex_cfg_t g_wifi_onchip_silex_cfg;
+#if (BSP_CFG_RTOS == 2)
 
-static uint32_t prvConvertSecurityFromSilexAT(WIFISecurity_t xSecurity);
+/* FreeRTOS includes. */
+ #include "FreeRTOS.h"
+
+/* Socket and WiFi interface includes. */
+ #include "iot_wifi.h"
+
+/* WiFi configuration includes. */
+ #include "aws_wifi_config.h"
 
 /**
  *  Turns on Wi-Fi.
@@ -114,7 +111,6 @@ WIFIReturnCode_t WIFI_Off (void) {
 WIFIReturnCode_t WIFI_ConnectAP (const WIFINetworkParams_t * const pxNetworkParams) {
     WIFIReturnCode_t xRetVal = eWiFiFailure;
     int32_t          ret     = -1;
-    uint32_t         convert_security;
 
     if ((NULL == pxNetworkParams) || (0 == pxNetworkParams->ucSSIDLength) ||
         (0 == pxNetworkParams->xPassword.xWPA.ucLength))
@@ -143,11 +139,9 @@ WIFIReturnCode_t WIFI_ConnectAP (const WIFINetworkParams_t * const pxNetworkPara
         return eWiFiFailure;
     }
 
-    convert_security = prvConvertSecurityFromSilexAT(pxNetworkParams->xSecurity);
-
     ret =
         (int32_t) rm_wifi_onchip_silex_connect((char *) pxNetworkParams->ucSSID,
-                                               convert_security,
+                                               pxNetworkParams->xSecurity,
                                                pxNetworkParams->xPassword.xWPA.cPassphrase);
     if (!ret)
     {
@@ -425,53 +419,4 @@ BaseType_t WIFI_IsConnected (const WIFINetworkParams_t * pxNetworkParams) {
     return xIsConnected;
 }
 
-static uint32_t prvConvertSecurityFromSilexAT (WIFISecurity_t xSecurity) {
-    uint32_t xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_UNDEFINED;
-
-    switch (xSecurity)
-    {
-        case eWiFiSecurityOpen:
-        {
-            xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_OPEN;
-            break;
-        }
-
-        case eWiFiSecurityWEP:
-        {
-            xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_WEP;
-            break;
-        }
-
-        case eWiFiSecurityWPA:
-        {
-            xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_WPA;
-            break;
-        }
-
-        case eWiFiSecurityWPA2:
-        {
-            xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_WPA2;
-            break;
-        }
-
-        case eWiFiSecurityWPA2_ent:
-        {
-            xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_UNDEFINED;
-            break;
-        }
-
-        case eWiFiSecurityWPA3:
-        {
-            xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_UNDEFINED;
-            break;
-        }
-
-        case eWiFiSecurityNotSupported:
-        {
-            xConvertedSecurityType = WIFI_ONCHIP_SILEX_SECURITY_UNDEFINED;
-            break;
-        }
-    }
-
-    return xConvertedSecurityType;
-}
+#endif

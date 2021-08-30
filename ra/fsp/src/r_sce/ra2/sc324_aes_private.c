@@ -24,6 +24,7 @@
 #include "SC324_private.h"
 #include "sc324_aes_private.h"
 #include "hw_sce_private.h"
+#include "hw_sce_aes_private.h"
 
 __STATIC_INLINE void hw_sc324_aes_kernel_module_enable ()
 {
@@ -204,7 +205,7 @@ fsp_err_t hw_sc324_aes_kernel_process_data (hw_sc324_aes_ctrl_t * p_ctrl,
     // truncate the number of words to process to multiples of 16 bytes (1 block of data)
     if ((0 == num_words) || (0 != (num_words % SIZE_AES_BLOCK_WORDS)))
     {
-        return (uint32_t) FSP_ERR_CRYPTO_INVALID_SIZE;
+        return FSP_ERR_CRYPTO_INVALID_SIZE;
     }
 
     // 1. Enable AES Module (set the AESMOD.module_en to 1)

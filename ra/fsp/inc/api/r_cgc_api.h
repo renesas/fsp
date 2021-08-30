@@ -186,6 +186,7 @@ typedef union u_cgc_divider_cfg
         cgc_sys_clock_div_t iclk_div  : 3; ///< Divider value for ICLK
         uint32_t                      : 1;
         cgc_sys_clock_div_t fclk_div  : 3; ///< Divider value for FCLK
+        uint32_t                      : 1;
     };
 } cgc_divider_cfg_t;
 

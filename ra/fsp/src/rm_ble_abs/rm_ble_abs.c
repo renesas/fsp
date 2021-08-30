@@ -285,6 +285,9 @@
 #define BLE_ABS_TIMER_DEFAULT_TIMEOUT_MS                        (1000)
 #define BLE_ABS_TIMER_METRIC_PREFIX                             (1000)
 
+#define BLE_ABS_SCAN_STATUS_SET_MASK                            (0x00000000)
+#define BLE_ABS_SCAN_STATUS_CLEAR_MASK                          (0xFFFFFFFF)
+
 /***********************************************************************************************************************
  * Local Typedef definitions
  **********************************************************************************************************************/
@@ -297,21 +300,25 @@ static fsp_err_t ble_abs_convert_legacy_advertising_parameter(
     ble_abs_legacy_advertising_parameter_t * p_legacy_advertising_parameter,
     st_ble_gap_adv_param_t                 * p_gap_advertising_parameter);
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
 static fsp_err_t ble_abs_convert_extend_advertising_parameter(
     ble_abs_extend_advertising_parameter_t * advertising_parameter,
     st_ble_gap_adv_param_t                 * p_gap_advertising_parameter);
 
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 static fsp_err_t ble_abs_convert_non_connectable_advertising_parameter(
     ble_abs_non_connectable_advertising_parameter_t * p_non_connectable_advertising_parameter,
     st_ble_gap_adv_param_t                          * p_gap_advertising_parameter,
     uint8_t                                           advertising_handle);
 static fsp_err_t ble_abs_advertising_report_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl,
                                                     st_ble_evt_data_t             * p_event_data);
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
 static fsp_err_t ble_abs_check_scan_phy_parameter(ble_abs_scan_phy_parameter_t * p_scan_phy);
 static fsp_err_t ble_abs_set_scan_parameter(ble_abs_instance_ctrl_t * const p_instance_ctrl,
                                             ble_abs_scan_parameter_t      * p_scan_parameter);
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
 
 static void ble_abs_gap_callback(uint16_t event_type, ble_status_t event_result, st_ble_evt_data_t * p_event_data);
 static void ble_abs_vendor_specific_callback(uint16_t               event_type,
@@ -327,19 +334,37 @@ static void ble_abs_set_advertising_status(ble_abs_instance_ctrl_t * const p_ins
 static void ble_abs_set_advertising_parameter(ble_abs_instance_ctrl_t * const p_instance_ctrl,
                                               void                          * p_advertising_parameter,
                                               uint8_t                         advertising_handle);
-static void ble_abs_cancel_connection_function(void);
 
-#if (BLE_CFG_LIBRARY_TYPE != 0)
-static void ble_abs_advertising_to_function(ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t timer_handle);
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
+static void ble_abs_cancel_connection_function(uint32_t timer_handle);
 
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE != 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+static void ble_abs_advertising_to_function(uint32_t timer_handle);
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
+
 static void ble_abs_set_scan_status(ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t set, uint32_t clear);
 static void ble_abs_update_data_status(ble_abs_instance_ctrl_t * const p_instance_ctrl,
                                        uint32_t                        advertising_status,
                                        uint8_t                       * p_advertising_data,
                                        uint16_t                        advertising_data_len,
                                        uint8_t                         advertising_handle);
-static void ble_abs_connection_indication_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl);
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+static void ble_abs_scan_timeout_handler_caller(uint32_t timer_handle);
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
+
+static void ble_abs_connection_indication_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl, uint8_t role);
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+static void ble_abs_scan_on_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl);
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
+
+static void ble_abs_scan_off_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl);
 static void ble_abs_scan_to_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl);
 static void ble_abs_loc_ver_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl, st_ble_evt_data_t * p_event_data);
 static void ble_abs_advertising_parameter_set_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl,
@@ -363,9 +388,13 @@ static void ble_abs_convert_scan_phy_parameter(ble_abs_instance_ctrl_t * const p
                                                ble_abs_scan_phy_parameter_t  * p_abs_phy,
                                                ble_gap_scan_phy_parameter_t  * p_gap_phy,
                                                ble_gap_scan_on_t             * p_scan_enable);
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
 static void ble_abs_set_connection_parameter(ble_abs_connection_phy_parameter_t * p_abs_connection_parameter,
                                              ble_gap_connection_phy_parameter_t * p_connection_phy_parameter,
                                              ble_gap_connection_parameter_t     * p_connection_parameter);
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
 static void ble_abs_convert_scan_parameter(ble_abs_instance_ctrl_t * const p_instance_ctrl,
                                            st_ble_gap_scan_param_t       * p_scan_parameter,
                                            ble_gap_scan_on_t             * p_scan_enable,
@@ -454,14 +483,19 @@ void r_ble_wake_up_task_from_isr(void * EventGroupHandle);
 /*** platform control functions end ***/
 
 /*** ble timer functions start ***/
-static void      ble_abs_timer_update_remaining_time_ms(ble_abs_instance_ctrl_t * const p_instance_ctrl, bool expired);
+static void ble_abs_timer_update_remaining_time_ms(ble_abs_instance_ctrl_t * const p_instance_ctrl, bool expired);
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) && (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
+static uint32_t ble_abs_timer_has_free_slot(ble_abs_instance_ctrl_t * const p_instance_ctrl);
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
 static uint32_t  ble_abs_timer_alloc_timer(ble_abs_instance_ctrl_t * const p_instance_ctrl);
 static void      ble_abs_timer_free_timer(ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t timer_hdl);
 static void      ble_abs_timer_start_timer(ble_abs_instance_ctrl_t * const p_instance_ctrl);
 static void      ble_abs_timer_stop_timer(ble_abs_instance_ctrl_t * const p_instance_ctrl);
 static void      ble_abs_timer_add_timer(ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t timer_hdl);
 static void      ble_abs_timer_remove_timer(ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t timer_hdl);
-static void      ble_abs_timer_event_cb(ble_abs_instance_ctrl_t * const p_instance_ctrl);
+static void      ble_abs_timer_event_cb();
 void             ble_abs_timer_process_timer_expire(ble_abs_instance_ctrl_t * const p_instance_ctrl);
 static void      ble_abs_timer_init(ble_abs_instance_ctrl_t * const p_instance_ctrl);
 static void      ble_abs_timer_terminate(ble_abs_instance_ctrl_t * const p_instance_ctrl);
@@ -490,22 +524,21 @@ void ble_abs_hw_timer_callback(timer_callback_args_t * callback_args);
 
 /*** ble timer functions end ***/
 
-
 /** BLE ABS on BLE HAL API mapping for BLE ABS interface */
 const ble_abs_api_t g_ble_abs_on_ble =
 {
-    .open                           = RM_BLE_ABS_Open,
-    .close                          = RM_BLE_ABS_Close,
-    .reset                          = RM_BLE_ABS_Reset,
+    .open  = RM_BLE_ABS_Open,
+    .close = RM_BLE_ABS_Close,
+    .reset = RM_BLE_ABS_Reset,
     .startLegacyAdvertising         = RM_BLE_ABS_StartLegacyAdvertising,
     .startExtendedAdvertising       = RM_BLE_ABS_StartExtendedAdvertising,
     .startNonConnectableAdvertising = RM_BLE_ABS_StartNonConnectableAdvertising,
     .startPeriodicAdvertising       = RM_BLE_ABS_StartPeriodicAdvertising,
-    .startScanning                  = RM_BLE_ABS_StartScanning,
-    .createConnection               = RM_BLE_ABS_CreateConnection,
-    .setLocalPrivacy                = RM_BLE_ABS_SetLocalPrivacy,
-    .startAuthentication            = RM_BLE_ABS_StartAuthentication,
-    .deleteBondInformation          = RM_BLE_ABS_DeleteBondInformation,
+    .startScanning         = RM_BLE_ABS_StartScanning,
+    .createConnection      = RM_BLE_ABS_CreateConnection,
+    .setLocalPrivacy       = RM_BLE_ABS_SetLocalPrivacy,
+    .startAuthentication   = RM_BLE_ABS_StartAuthentication,
+    .deleteBondInformation = RM_BLE_ABS_DeleteBondInformation,
 };
 
 static ble_abs_instance_ctrl_t * gp_instance_ctrl;
@@ -574,9 +607,10 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
 
     p_instance_ctrl->abs_scan.scan_status      = 0;
     (*p_instance_ctrl).connection_timer_handle = BLE_TIMER_INVALID_HDL;
-#if (BLE_CFG_LIBRARY_TYPE != 0)
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
     (*p_instance_ctrl).advertising_timer_handle = BLE_TIMER_INVALID_HDL;
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE != 0) */
+    (*p_instance_ctrl).scan_timer_handle        = BLE_TIMER_INVALID_HDL;
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
     (*p_instance_ctrl).set_privacy_status = 0;
 
     /* set pairing parameter */
@@ -592,10 +626,11 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
         {
             if (NULL != p_cfg->p_gatt_server_callback_list[i].gatt_server_callback_function)
             {
-                FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GATTS_RegisterCb(
-                                     p_cfg->p_gatt_server_callback_list[i].gatt_server_callback_function,
-                                     p_cfg->p_gatt_server_callback_list[i].gatt_server_callback_priority
-                                     ),
+                FSP_ERROR_RETURN(BLE_SUCCESS ==
+                                 R_BLE_GATTS_RegisterCb(p_cfg->p_gatt_server_callback_list[i].
+                                                        gatt_server_callback_function,
+                                                        p_cfg->p_gatt_server_callback_list[i].
+                                                        gatt_server_callback_priority),
                                  FSP_ERR_INVALID_ARGUMENT);
             }
             else
@@ -605,7 +640,7 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
         }
     }
 
-#if (BLE_CFG_LIBRARY_TYPE != 2)
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
     if ((0 < p_cfg->gatt_client_callback_list_number) && (NULL != p_cfg->p_gatt_client_callback_list))
     {
         FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GATTC_Init(p_cfg->gatt_client_callback_list_number),
@@ -615,9 +650,11 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
         {
             if (NULL != p_cfg->p_gatt_client_callback_list[i].gatt_client_callback_function)
             {
-                FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GATTC_RegisterCb(
-                                     p_cfg->p_gatt_client_callback_list[i].gatt_client_callback_function,
-                                     p_cfg->p_gatt_client_callback_list[i].gatt_client_callback_priority),
+                FSP_ERROR_RETURN(BLE_SUCCESS ==
+                                 R_BLE_GATTC_RegisterCb(p_cfg->p_gatt_client_callback_list[i].
+                                                        gatt_client_callback_function,
+                                                        p_cfg->p_gatt_client_callback_list[i].
+                                                        gatt_client_callback_priority),
                                  FSP_ERR_INVALID_ARGUMENT);
             }
             else
@@ -626,7 +663,7 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
             }
         }
     }
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE != 2) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
 
     FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_VS_Init(ble_abs_vendor_specific_callback), FSP_ERR_INVALID_ARGUMENT);
 
@@ -686,6 +723,26 @@ fsp_err_t RM_BLE_ABS_Reset (ble_abs_ctrl_t * const p_ctrl, ble_event_cb_t init_c
 #endif
     FSP_ERROR_RETURN(BLE_ABS_OPEN == p_ble_abs_ctrl->open, FSP_ERR_NOT_OPEN);
 
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+    if (BLE_TIMER_INVALID_HDL != p_ble_abs_ctrl->advertising_timer_handle)
+    {
+        ble_abs_timer_delete(p_ble_abs_ctrl, &p_ble_abs_ctrl->advertising_timer_handle);
+        p_ble_abs_ctrl->advertising_timer_handle = BLE_TIMER_INVALID_HDL;
+    }
+
+    if (BLE_TIMER_INVALID_HDL != p_ble_abs_ctrl->scan_timer_handle)
+    {
+        ble_abs_timer_delete(p_ble_abs_ctrl, &p_ble_abs_ctrl->scan_timer_handle);
+        p_ble_abs_ctrl->scan_timer_handle = BLE_TIMER_INVALID_HDL;
+    }
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
+
+    if (BLE_TIMER_INVALID_HDL != p_ble_abs_ctrl->connection_timer_handle)
+    {
+        ble_abs_timer_delete(p_ble_abs_ctrl, &p_ble_abs_ctrl->connection_timer_handle);
+        p_ble_abs_ctrl->connection_timer_handle = BLE_TIMER_INVALID_HDL;
+    }
+
     R_BLE_Close();
 
     R_BLE_GAP_Terminate();
@@ -725,11 +782,11 @@ fsp_err_t RM_BLE_ABS_StartLegacyAdvertising (ble_abs_ctrl_t * const             
     st_ble_gap_adv_param_t    advertising_parameter;
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     uint8_t advertising_handle = BLE_ABS_LEGACY_HDL;
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     uint8_t advertising_handle = BLE_ABS_COMMON_HDL;
-#endif /* (BLE_CFG_LIBRARY_TYPE != 0) */
+#endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     /* Parameter checking */
 #if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
@@ -743,18 +800,18 @@ fsp_err_t RM_BLE_ABS_StartLegacyAdvertising (ble_abs_ctrl_t * const             
                            (BLE_ABS_ADV_STATUS_ADV_FAST_START | BLE_ABS_ADV_STATUS_ADV_SLOW_START)),
                      FSP_ERR_INVALID_STATE);
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     ble_abs_set_advertising_status(p_instance_ctrl,
                                    advertising_handle,
                                    0,
                                    (BLE_ABS_ADV_STATUS_PARAM_FAST | BLE_ABS_ADV_STATUS_PARAM_SLOW));
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     ble_abs_set_advertising_status(p_instance_ctrl,
                                    advertising_handle,
                                    0,
                                    (BLE_ABS_ADV_STATUS_PARAM_FAST | BLE_ABS_ADV_STATUS_PARAM_SLOW |
                                     BLE_ABS_ADV_COMM_LEG | BLE_ABS_ADV_COMM_NON));
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     FSP_ERROR_RETURN(FSP_SUCCESS ==
                      ble_abs_convert_legacy_advertising_parameter((ble_abs_legacy_advertising_parameter_t *)
@@ -790,14 +847,14 @@ fsp_err_t RM_BLE_ABS_StartLegacyAdvertising (ble_abs_ctrl_t * const             
 
     FSP_ERROR_RETURN(FSP_SUCCESS == R_BLE_GAP_SetAdvParam(&advertising_parameter), FSP_ERR_INVALID_ARGUMENT);
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     uint32_t status =
         p_advertising_parameter->fast_advertising_period ? BLE_ABS_ADV_STATUS_PARAM_FAST : BLE_ABS_ADV_STATUS_PARAM_SLOW;
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     uint32_t status =
         p_advertising_parameter->fast_advertising_period ? (BLE_ABS_ADV_STATUS_PARAM_FAST | BLE_ABS_ADV_COMM_LEG) :
         (BLE_ABS_ADV_STATUS_PARAM_SLOW | BLE_ABS_ADV_COMM_LEG);
-#endif /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     ble_abs_set_advertising_status(p_instance_ctrl, advertising_handle, status, 0);
 
     return FSP_SUCCESS;
@@ -823,7 +880,7 @@ fsp_err_t RM_BLE_ABS_StartLegacyAdvertising (ble_abs_ctrl_t * const             
 fsp_err_t RM_BLE_ABS_StartExtendedAdvertising (ble_abs_ctrl_t * const                               p_ctrl,
                                                ble_abs_extend_advertising_parameter_t const * const p_advertising_parameter)
 {
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     st_ble_gap_adv_param_t advertising_parameter;
 
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
@@ -878,9 +935,12 @@ fsp_err_t RM_BLE_ABS_StartExtendedAdvertising (ble_abs_ctrl_t * const           
     ble_abs_set_advertising_status(p_instance_ctrl, BLE_ABS_EXT_HDL, status, 0);
 
     return FSP_SUCCESS;
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_advertising_parameter);
+
     return FSP_ERR_UNSUPPORTED;
-#endif /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 }                                      /* End of function RM_BLE_ABS_StartExtendedAdvertising() */
 
 /*******************************************************************************************************************//**
@@ -906,11 +966,11 @@ fsp_err_t RM_BLE_ABS_StartNonConnectableAdvertising (
 {
     st_ble_gap_adv_param_t advertising_parameter;
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     uint8_t advertising_handle = BLE_ABS_NON_CONN_HDL;
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     uint8_t advertising_handle = BLE_ABS_COMMON_HDL;
-#endif /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
 
@@ -924,19 +984,19 @@ fsp_err_t RM_BLE_ABS_StartNonConnectableAdvertising (
 #endif
 
     /** status check */
-    FSP_ERROR_RETURN(0 == (p_instance_ctrl->advertising_sets[BLE_ABS_EXT_HDL].advertising_status &
-                           (BLE_ABS_ADV_STATUS_ADV_FAST_START | BLE_ABS_ADV_STATUS_ADV_SLOW_START)),
+    FSP_ERROR_RETURN(0 == (p_instance_ctrl->advertising_sets[advertising_handle].advertising_status &
+                           BLE_ABS_ADV_STATUS_ADV_SLOW_START),
                      FSP_ERR_INVALID_STATE);
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     ble_abs_set_advertising_status(p_instance_ctrl, advertising_handle, 0, BLE_ABS_ADV_STATUS_PARAM_SLOW);
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     ble_abs_set_advertising_status(p_instance_ctrl,
                                    advertising_handle,
                                    0,
                                    (BLE_ABS_ADV_STATUS_PARAM_SLOW |
                                     BLE_ABS_ADV_COMM_LEG | BLE_ABS_ADV_COMM_NON));
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     FSP_ERROR_RETURN(FSP_SUCCESS ==
                      ble_abs_convert_non_connectable_advertising_parameter((
@@ -962,14 +1022,14 @@ fsp_err_t RM_BLE_ABS_StartNonConnectableAdvertising (
 
     FSP_ERROR_RETURN(FSP_SUCCESS == R_BLE_GAP_SetAdvParam(&advertising_parameter), FSP_ERR_INVALID_ARGUMENT);
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     ble_abs_set_advertising_status(p_instance_ctrl, advertising_handle, BLE_ABS_ADV_STATUS_PARAM_SLOW, 0);
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     ble_abs_set_advertising_status(p_instance_ctrl,
                                    advertising_handle,
                                    (BLE_ABS_ADV_STATUS_PARAM_SLOW | BLE_ABS_ADV_COMM_NON),
                                    0);
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     return FSP_SUCCESS;
 } /* End of function RM_BLE_ABS_StartNonConnectableAdvertising() */
@@ -990,12 +1050,12 @@ fsp_err_t RM_BLE_ABS_StartNonConnectableAdvertising (
  * @retval FSP_ERR_NOT_OPEN                            Control block not open.
  * @retval FSP_ERR_INVALID_POINTER                     p_advertising_parameter is specified as NULL.
  * @retval FSP_ERR_INVALID_ARGUMENT                    The advertising parameter is out of range.
- * @retval FSP_ERR_UNSUPPORTED                         Subordinate modules do not support this feature.
+ * @retval FSP_ERR_UNSUPPORTED                         This feature is not supported in this configuration.
  **********************************************************************************************************************/
 fsp_err_t RM_BLE_ABS_StartPeriodicAdvertising (ble_abs_ctrl_t * const                                 p_ctrl,
                                                ble_abs_periodic_advertising_parameter_t const * const p_advertising_parameter)
 {
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     st_ble_gap_adv_param_t advertising_parameter;
 
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
@@ -1021,9 +1081,7 @@ fsp_err_t RM_BLE_ABS_StartPeriodicAdvertising (ble_abs_ctrl_t * const           
     FSP_ERROR_RETURN(FSP_SUCCESS ==
                      ble_abs_convert_non_connectable_advertising_parameter((
                                                                                ble_abs_non_connectable_advertising_parameter_t
-                                                                               *) (&
-                                                                                   p_advertising_parameter
-                                                                                   ->
+                                                                               *) (&p_advertising_parameter->
                                                                                    advertising_parameter),
                                                                            &advertising_parameter,
                                                                            BLE_ABS_PERD_HDL),
@@ -1053,9 +1111,12 @@ fsp_err_t RM_BLE_ABS_StartPeriodicAdvertising (ble_abs_ctrl_t * const           
     ble_abs_set_advertising_status(p_instance_ctrl, BLE_ABS_PERD_HDL, BLE_ABS_ADV_STATUS_PARAM_SLOW, 0);
 
     return FSP_SUCCESS;
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_advertising_parameter);
+
     return FSP_ERR_UNSUPPORTED;
-#endif /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 }                                      /* End of function RM_BLE_ABS_StartPeriodicAdvertising() */
 
 /*******************************************************************************************************************//**
@@ -1075,32 +1136,56 @@ fsp_err_t RM_BLE_ABS_StartPeriodicAdvertising (ble_abs_ctrl_t * const           
  * @retval FSP_ERR_NOT_OPEN                            Control block not open.
  * @retval FSP_ERR_INVALID_POINTER                     p_scan_parameter is specified as NULL.
  * @retval FSP_ERR_INVALID_ARGUMENT                    The scan parameter is out of range.
+ * @retval FSP_ERR_IN_USE                              This API is called in scanning.
+ * @retval FSP_ERR_BLE_ABS_NOT_FOUND                   Usable timer slot not found.
+ * @retval FSP_ERR_UNSUPPORTED                         This feature is not supported in this configuration.
  **********************************************************************************************************************/
 fsp_err_t RM_BLE_ABS_StartScanning (ble_abs_ctrl_t * const                 p_ctrl,
                                     ble_abs_scan_parameter_t const * const p_scan_parameter)
 {
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
     st_ble_gap_scan_param_t     gap_scan_parameter;
     st_ble_gap_scan_phy_param_t phy_parameter_1M;
+ #if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     st_ble_gap_scan_phy_param_t phy_parameter_coded;
-    ble_gap_scan_on_t           gap_scan_enable;
+ #endif                                /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+    ble_gap_scan_on_t gap_scan_enable;
+ #if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+    uint32_t timeout;
+
+    timeout = 0U;
+ #endif                                /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
 
     /* Parameter checking */
-#if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
+ #if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
 
     /* Verify the pointers are valid */
     FSP_ASSERT(p_instance_ctrl);
     FSP_ERROR_RETURN(BLE_ABS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(NULL != p_scan_parameter, FSP_ERR_INVALID_POINTER);
-#endif
+ #endif
 
-    gap_scan_parameter.p_phy_param_1M    = p_scan_parameter->p_phy_parameter_1M ? &phy_parameter_1M : NULL;       ///< set scan phy parameter for 1M
+ #if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+
+    /* Status checking */
+    FSP_ERROR_RETURN(BLE_TIMER_INVALID_HDL == p_instance_ctrl->scan_timer_handle, FSP_ERR_IN_USE);
+
+    /* Check timer slot availability */
+    FSP_ERROR_RETURN(FSP_SUCCESS == ble_abs_timer_has_free_slot(p_instance_ctrl), FSP_ERR_BLE_ABS_NOT_FOUND);
+ #endif                                                                                                           /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */                                                                                                           /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
+
+    gap_scan_parameter.p_phy_param_1M = p_scan_parameter->p_phy_parameter_1M ? &phy_parameter_1M : NULL;          ///< set scan phy parameter for 1M
+ #if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     gap_scan_parameter.p_phy_param_coded = p_scan_parameter->p_phy_parameter_coded ? &phy_parameter_coded : NULL; ///< set scan phy parameter for coded
+ #else                                                                                                            /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+    gap_scan_parameter.p_phy_param_coded = NULL;
+ #endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     FSP_ERROR_RETURN(FSP_SUCCESS ==
                      ble_abs_set_scan_parameter(p_instance_ctrl, (ble_abs_scan_parameter_t *) p_scan_parameter),
-                     FSP_ERR_INVALID_ARGUMENT);                                                                   ///< scan parameter check
+                     FSP_ERR_INVALID_ARGUMENT); ///< scan parameter check
 
     ble_abs_convert_scan_parameter(p_instance_ctrl,
                                    &gap_scan_parameter,
@@ -1113,13 +1198,37 @@ fsp_err_t RM_BLE_ABS_StartScanning (ble_abs_ctrl_t * const                 p_ctr
     if (0 == p_scan_parameter->fast_scan_period)
     {
         ble_abs_set_scan_status(p_instance_ctrl, BLE_ABS_SCAN_STATUS_SLOW_START, 0);
+ #if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+        if (0 != p_scan_parameter->slow_scan_period)
+        {
+            timeout = p_scan_parameter->slow_scan_period;
+        }
+ #endif                                /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
     }
     else
     {
         ble_abs_set_scan_status(p_instance_ctrl, BLE_ABS_SCAN_STATUS_FAST_START, 0);
+ #if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+        timeout = p_scan_parameter->fast_scan_period;
+ #endif                                /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
     }
 
+ #if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+    ble_abs_timer_create(p_instance_ctrl,
+                         &p_instance_ctrl->scan_timer_handle,
+                         (timeout * 10),
+                         BLE_TIMER_ONE_SHOT,
+                         ble_abs_scan_timeout_handler_caller);
+    ble_abs_timer_start(p_instance_ctrl, p_instance_ctrl->scan_timer_handle);
+ #endif                                /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
+
     return FSP_SUCCESS;
+#else                                  /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_scan_parameter);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
 }                                      /* End of function RM_BLE_ABS_StartScanning() */
 
 /*******************************************************************************************************************//**
@@ -1192,26 +1301,33 @@ fsp_err_t RM_BLE_ABS_SetLocalPrivacy (ble_abs_ctrl_t * const p_ctrl,
  * @retval FSP_ERR_NOT_OPEN                            Control block not open.
  * @retval FSP_ERR_INVALID_POINTER                     p_connection_parameter is specified as NULL.
  * @retval FSP_ERR_INVALID_ARGUMENT                    The create connection parameter is out of range.
+ * @retval FSP_ERR_IN_USE                              This API is called while creating a link by previous API call.
  * @retval FSP_ERR_BLE_ABS_NOT_FOUND                   Couldn't find a valid timer.
- * @retval FSP_ERR_BLE_ABS_INVALID_OPERATION           Invalid operation for the selected timer.
+ * @retval FSP_ERR_UNSUPPORTED                         This feature is not supported in this configuration.
  **********************************************************************************************************************/
 fsp_err_t RM_BLE_ABS_CreateConnection (ble_abs_ctrl_t * const                       p_ctrl,
                                        ble_abs_connection_parameter_t const * const p_connection_parameter)
 {
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
 
     /* Parameter checking */
-#if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
+ #if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
 
     /* Verify the pointers are valid */
     FSP_ASSERT(p_instance_ctrl);
     FSP_ERROR_RETURN(BLE_ABS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(NULL != p_connection_parameter, FSP_ERR_INVALID_POINTER);
     FSP_ERROR_RETURN(10 >= p_connection_parameter->connection_timeout, FSP_ERR_INVALID_ARGUMENT);
-#endif
+ #endif
+
+    /* Status checking */
+    FSP_ERROR_RETURN(BLE_TIMER_INVALID_HDL == p_instance_ctrl->connection_timer_handle, FSP_ERR_IN_USE);
 
     st_ble_gap_create_conn_param_t connection_parameter;
-    fsp_err_t ret = FSP_SUCCESS;
+    fsp_err_t    ret    = FSP_SUCCESS;
+    ble_status_t retval = BLE_SUCCESS;
+
     connection_parameter.init_filter_policy = p_connection_parameter->filter_parameter;
     connection_parameter.own_addr_type      = BLE_GAP_ADDR_PUBLIC;
 
@@ -1262,19 +1378,21 @@ fsp_err_t RM_BLE_ABS_CreateConnection (ble_abs_ctrl_t * const                   
         connection_phy_coded.scan_window = BLE_ABS_CONN_SC_WINDOW_SLOW;
     }
 
-    /** create timer for cancel */
+    /** create timer for cancel connection */
     if (0 != p_connection_parameter->connection_timeout)
     {
-        ble_abs_timer_create(p_instance_ctrl,
-                             &p_instance_ctrl->connection_timer_handle,
-                             (uint32_t) (p_connection_parameter->connection_timeout *
-                                         BLE_ABS_GAP_EVENT_CONNECTION_TIMEOUT_1000),
-                             BLE_TIMER_ONE_SHOT,
-                             (ble_abs_timer_cb_t) ble_abs_cancel_connection_function);
+        ret = ble_abs_timer_create(p_instance_ctrl,
+                                   &p_instance_ctrl->connection_timer_handle,
+                                   (uint32_t) (p_connection_parameter->connection_timeout *
+                                               BLE_ABS_GAP_EVENT_CONNECTION_TIMEOUT_1000),
+                                   BLE_TIMER_ONE_SHOT,
+                                   ble_abs_cancel_connection_function);
     }
 
-    ble_status_t retval = BLE_SUCCESS;
+    FSP_ERROR_RETURN(FSP_SUCCESS == ret, ret);
+
     retval = R_BLE_GAP_CreateConn(&connection_parameter); ///< create connection
+
     if (0 != p_connection_parameter->connection_timeout)
     {
         if (BLE_SUCCESS == retval)
@@ -1290,6 +1408,12 @@ fsp_err_t RM_BLE_ABS_CreateConnection (ble_abs_ctrl_t * const                   
     FSP_ERROR_RETURN(FSP_SUCCESS == ret, ret);
 
     return FSP_SUCCESS;
+#else                                  /* (BLE_CFG_LIB_TYPE != 2) */
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_connection_parameter);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif                                 /* (BLE_CFG_LIB_TYPE != 2) */
 }                                      /* End of function RM_BLE_ABS_CreateConnection() */
 
 /*******************************************************************************************************************//**
@@ -1429,6 +1553,8 @@ fsp_err_t RM_BLE_ABS_DeleteBondInformation (ble_abs_ctrl_t * const              
  *   static function definitions                *
  ***********************************************/
 
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
+
 /*******************************************************************************************************************//**
  * Set Abstraction API connection parameters to GAP connection parameters.
  **********************************************************************************************************************/
@@ -1449,6 +1575,8 @@ static void ble_abs_set_connection_parameter (ble_abs_connection_phy_parameter_t
         p_connection_phy_parameter->p_conn_param = p_connection_parameter;
     }
 }                                      /* End of function ble_abs_set_connection_parameter() */
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
 
 /*******************************************************************************************************************//**
  * Set pairing parameters.
@@ -1478,26 +1606,34 @@ static fsp_err_t ble_abs_set_pairing_parameter (ble_abs_pairing_parameter_t * p_
     return FSP_SUCCESS;
 }                                      /* End of function ble_abs_set_pairing_parameter() */
 
-#if (BLE_CFG_LIBRARY_TYPE != 0)
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
 
 /*******************************************************************************************************************//**
  * Advertising timer handler for legacy advertising.
  **********************************************************************************************************************/
-static void ble_abs_advertising_to_function (ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t timer_handle)
+static void ble_abs_advertising_to_function (uint32_t timer_handle)
 {
+    FSP_PARAMETER_NOT_USED(timer_handle);
+    ble_abs_instance_ctrl_t * p_instance_ctrl = gp_instance_ctrl;
+
     R_BLE_GAP_StopAdv(BLE_ABS_COMMON_HDL);
     ble_abs_set_advertising_status(p_instance_ctrl, BLE_ABS_COMMON_HDL, BLE_ABS_ADV_COMM_TO, 0);
 }                                      /* End of function ble_abs_advertising_to_function() */
 
-#endif /* (BLE_CFG_LIBRARY_TYPE != 0) */
+#endif /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
 
 /*******************************************************************************************************************//**
  * Cancel a request for connection.
  **********************************************************************************************************************/
-static void ble_abs_cancel_connection_function (void)
+static void ble_abs_cancel_connection_function (uint32_t timer_handle)
 {
+    FSP_PARAMETER_NOT_USED(timer_handle);
     R_BLE_GAP_CancelCreateConn();
 }                                      /* End of function ble_abs_cancel_connection_function() */
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
 
 /*******************************************************************************************************************//**
  * Configure scan response data and start legacy advertising.
@@ -1530,7 +1666,7 @@ static void ble_abs_set_legacy_scan_response_data (ble_abs_instance_ctrl_t * con
 void ble_abs_advertising_parameter_set_handler (ble_abs_instance_ctrl_t * const p_instance_ctrl,
                                                 st_ble_evt_data_t             * p_event_data)
 {
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     st_ble_gap_adv_set_evt_t * p_advertising_set_parameter;
     p_advertising_set_parameter = (st_ble_gap_adv_set_evt_t *) p_event_data->p_param;
 
@@ -1635,7 +1771,9 @@ void ble_abs_advertising_parameter_set_handler (ble_abs_instance_ctrl_t * const 
         }
     }
 
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+    FSP_PARAMETER_NOT_USED(p_event_data);
+
     if (p_instance_ctrl->advertising_sets[BLE_ABS_COMMON_HDL].advertising_status & BLE_ABS_ADV_COMM_LEG)
     {
         if ((p_instance_ctrl->advertising_sets[BLE_ABS_COMMON_HDL].advertising_status &
@@ -1679,7 +1817,7 @@ void ble_abs_advertising_parameter_set_handler (ble_abs_instance_ctrl_t * const 
             }
         }
     }
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 } /* End of function ble_abs_advertising_parameter_set_handler() */
 
 /*******************************************************************************************************************//**
@@ -1693,7 +1831,7 @@ static void ble_abs_advertising_start (ble_abs_instance_ctrl_t * const p_instanc
 
     uint32_t status = 0;
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     uint16_t fast_period = (uint16_t) ((BLE_ABS_LEGACY_HDL == advertising_handle) ?
                                        p_instance_ctrl->advertising_sets[BLE_ABS_LEGACY_HDL].advertising_parameter.
                                        legacy_advertising_parameter.fast_advertising_period :
@@ -1712,7 +1850,7 @@ static void ble_abs_advertising_start (ble_abs_instance_ctrl_t * const p_instanc
                                        non_connectable_advertising_parameter.advertising_duration :
                                        p_instance_ctrl->advertising_sets[BLE_ABS_PERD_HDL].advertising_parameter.
                                        periodic_advertising_parameter.advertising_parameter.advertising_duration);
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     uint16_t fast_period =
         p_instance_ctrl->advertising_sets[BLE_ABS_COMMON_HDL].advertising_parameter.legacy_advertising_parameter.
         fast_advertising_period;
@@ -1724,12 +1862,12 @@ static void ble_abs_advertising_start (ble_abs_instance_ctrl_t * const p_instanc
                     legacy_advertising_parameter.slow_advertising_period :
                     p_instance_ctrl->advertising_sets[BLE_ABS_COMMON_HDL].advertising_parameter.
                     non_connectable_advertising_parameter.advertising_duration);
-    uint32_t to = slow_period;
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+    uint32_t timeout = slow_period;
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     if (0x0000 == fast_period)
     {
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
         if ((BLE_ABS_PERD_HDL == advertising_handle) &&
             (!(p_instance_ctrl->advertising_sets[BLE_ABS_PERD_HDL].advertising_status & BLE_ABS_ADV_STATUS_PERD_START)))
         {
@@ -1737,7 +1875,7 @@ static void ble_abs_advertising_start (ble_abs_instance_ctrl_t * const p_instanc
             status = BLE_ABS_ADV_STATUS_PERD_START;
         }
         else
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
         {
             retval = R_BLE_GAP_StartAdv(advertising_handle, slow_period, 0x0000);
             status = BLE_ABS_ADV_STATUS_ADV_SLOW_START;
@@ -1752,9 +1890,9 @@ static void ble_abs_advertising_start (ble_abs_instance_ctrl_t * const p_instanc
         }
         else
         {
-#if (BLE_CFG_LIBRARY_TYPE != 0)
-            to = fast_period;
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE != 0) */
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+            timeout = fast_period;
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
             retval = R_BLE_GAP_StartAdv(advertising_handle, fast_period, 0x0000);
             status = BLE_ABS_ADV_STATUS_ADV_FAST_START;
         }
@@ -1762,12 +1900,12 @@ static void ble_abs_advertising_start (ble_abs_instance_ctrl_t * const p_instanc
 
     if (BLE_SUCCESS == retval)
     {
-#if (BLE_CFG_LIBRARY_TYPE != 0)
-        if (0 != to)
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+        if (0 != timeout)
         {
             ble_abs_timer_create(p_instance_ctrl,
                                  &p_instance_ctrl->advertising_timer_handle,
-                                 (to * 10),
+                                 (timeout * 10),
                                  BLE_TIMER_ONE_SHOT,
                                  ble_abs_advertising_to_function);
             ble_abs_timer_start(p_instance_ctrl, p_instance_ctrl->advertising_timer_handle);
@@ -1792,7 +1930,7 @@ static void ble_abs_advertising_set_data (ble_abs_instance_ctrl_t * const p_inst
 
     advertising_data.adv_hdl          = advertising_handle;
     advertising_data.zero_length_flag = BLE_GAP_DATA_0_CLEAR;
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     switch (advertising_handle)
     {
         case BLE_ABS_LEGACY_HDL:
@@ -1862,7 +2000,7 @@ static void ble_abs_advertising_set_data (ble_abs_instance_ctrl_t * const p_inst
         }
     }
 
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     if (p_instance_ctrl->advertising_sets[BLE_ABS_COMMON_HDL].advertising_status & BLE_ABS_ADV_COMM_LEG)
     {
         status = (BLE_GAP_ADV_DATA_MODE == data_type) ?
@@ -1897,7 +2035,7 @@ static void ble_abs_advertising_set_data (ble_abs_instance_ctrl_t * const p_inst
             non_connectable_advertising_parameter
             .p_advertising_data;
     }
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     retval = R_BLE_GAP_SetAdvSresData(&advertising_data);
     if (BLE_SUCCESS == retval)
@@ -1911,7 +2049,7 @@ static void ble_abs_advertising_set_data (ble_abs_instance_ctrl_t * const p_inst
  **********************************************************************************************************************/
 static void ble_abs_periodic_parameter_handler (ble_abs_instance_ctrl_t * const p_instance_ctrl)
 {
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     if (p_instance_ctrl->advertising_sets[BLE_ABS_PERD_HDL].advertising_status & BLE_ABS_ADV_STATUS_PERD_PARAM)
     {
         if ((p_instance_ctrl->advertising_sets[BLE_ABS_PERD_HDL].advertising_parameter.periodic_advertising_parameter.
@@ -1936,7 +2074,10 @@ static void ble_abs_periodic_parameter_handler (ble_abs_instance_ctrl_t * const 
             }
         }
     }
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 } /* End of function ble_abs_periodic_parameter_handler() */
 
 /*******************************************************************************************************************//**
@@ -1949,7 +2090,7 @@ static void ble_abs_advertising_data_set_handler (ble_abs_instance_ctrl_t * cons
 
     p_advertising_data_set_parameter = (st_ble_gap_adv_data_evt_t *) p_event_data->p_param;
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     switch (p_advertising_data_set_parameter->adv_hdl)
     {
         case BLE_ABS_LEGACY_HDL:
@@ -1988,7 +2129,7 @@ static void ble_abs_advertising_data_set_handler (ble_abs_instance_ctrl_t * cons
         }
     }
 
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     if (p_instance_ctrl->advertising_sets[BLE_ABS_COMMON_HDL].advertising_status & BLE_ABS_ADV_COMM_LEG)
     {
         if (BLE_GAP_ADV_DATA_MODE == p_advertising_data_set_parameter->data_type)
@@ -2004,7 +2145,7 @@ static void ble_abs_advertising_data_set_handler (ble_abs_instance_ctrl_t * cons
     {
         ble_abs_advertising_start(p_instance_ctrl, BLE_ABS_COMMON_HDL);
     }
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 } /* End of function ble_abs_advertising_data_set_handler() */
 
 /*******************************************************************************************************************//**
@@ -2017,7 +2158,7 @@ static void ble_abs_advertising_off_handler (ble_abs_instance_ctrl_t * const p_i
 
     p_advertising_off_parameter = (st_ble_gap_adv_off_evt_t *) p_event_data->p_param;
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     switch (p_advertising_off_parameter->adv_hdl)
     {
         case BLE_ABS_LEGACY_HDL:
@@ -2113,7 +2254,8 @@ static void ble_abs_advertising_off_handler (ble_abs_instance_ctrl_t * const p_i
         }
     }
 
-#else                                  /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+    ble_abs_timer_delete(p_instance_ctrl, &p_instance_ctrl->advertising_timer_handle);
     if (p_instance_ctrl->advertising_sets[BLE_ABS_COMMON_HDL].advertising_status & BLE_ABS_ADV_COMM_TO)
     {
         p_advertising_off_parameter->reason = 0x02;
@@ -2177,7 +2319,7 @@ static void ble_abs_advertising_off_handler (ble_abs_instance_ctrl_t * const p_i
                                        0,
                                        (BLE_ABS_ADV_STATUS_ADV_SLOW_START | BLE_ABS_ADV_COMM_NON)); ///< slow -> off
     }
-#endif /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 } /* End of function ble_abs_advertising_off_handler() */
 
 /*******************************************************************************************************************//**
@@ -2258,9 +2400,10 @@ static fsp_err_t ble_abs_advertising_report_handler (ble_abs_instance_ctrl_t * c
                 {
                     for (i = 0; i < ad_len; i++)
                     {
-                        if (0 == memcmp(&p_buf[pos + 2U + i],
-                                        p_instance_ctrl->abs_scan.scan_parameter.p_filter_data,
-                                        (uint32_t) p_instance_ctrl->abs_scan.scan_parameter.filter_data_length))
+                        if (0 ==
+                            memcmp(&p_buf[pos + 2U + i],
+                                   p_instance_ctrl->abs_scan.scan_parameter.p_filter_data,
+                                   (uint32_t) p_instance_ctrl->abs_scan.scan_parameter.filter_data_length))
                         {
                             return FSP_SUCCESS;
                         }
@@ -2337,6 +2480,7 @@ static void ble_abs_convert_scan_parameter (ble_abs_instance_ctrl_t * const p_in
                                                p_gap_scan_enable);
         }
 
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
         if (p_instance_ctrl->abs_scan.scan_parameter.p_phy_parameter_coded)
         {
             ble_abs_convert_scan_phy_parameter(p_instance_ctrl,
@@ -2344,6 +2488,7 @@ static void ble_abs_convert_scan_parameter (ble_abs_instance_ctrl_t * const p_in
                                                (ble_gap_scan_phy_parameter_t *) p_gap_scan_parameter->p_phy_param_coded,
                                                p_gap_scan_enable);
         }
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
     }
     else
     {
@@ -2357,6 +2502,7 @@ static void ble_abs_convert_scan_parameter (ble_abs_instance_ctrl_t * const p_in
                 p_instance_ctrl->abs_scan.scan_parameter.p_phy_parameter_1M->slow_scan_window;
         }
 
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
         if (p_instance_ctrl->abs_scan.scan_parameter.p_phy_parameter_coded)
         {
             p_gap_scan_parameter->p_phy_param_coded->scan_type =
@@ -2366,10 +2512,64 @@ static void ble_abs_convert_scan_parameter (ble_abs_instance_ctrl_t * const p_in
             p_gap_scan_parameter->p_phy_param_coded->scan_window =
                 p_instance_ctrl->abs_scan.scan_parameter.p_phy_parameter_coded->slow_scan_window;
         }
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
         p_gap_scan_enable->duration = p_instance_ctrl->abs_scan.scan_parameter.slow_scan_period;
     }
 }                                      /* End of function ble_abs_convert_scan_parameter() */
+
+/***********************************************************************************************************************
+ * Function Name: abs_scan_on_hdlr
+ * Description  : Handler for GAP BLE_GAP_EVENT_SCAN_ON event.
+ * Arguments    : none
+ * Return Value : none
+ **********************************************************************************************************************/
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+static void ble_abs_scan_on_handler (ble_abs_instance_ctrl_t * const p_instance_ctrl)
+{
+    if (p_instance_ctrl->abs_scan.scan_status & BLE_ABS_SCAN_STATUS_SLOW_START)
+    {
+        if (0 != p_instance_ctrl->abs_scan.scan_parameter.slow_scan_period)
+        {
+            ble_abs_timer_create(p_instance_ctrl,
+                                 &p_instance_ctrl->scan_timer_handle,
+                                 (uint32_t) (p_instance_ctrl->abs_scan.scan_parameter.slow_scan_period * 10),
+                                 BLE_TIMER_ONE_SHOT,
+                                 ble_abs_scan_timeout_handler_caller);
+            ble_abs_timer_start(p_instance_ctrl, p_instance_ctrl->scan_timer_handle);
+        }
+    }
+}
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
+
+/***********************************************************************************************************************
+ * Function Name: abs_scan_off_hdlr
+ * Description  : Handler for GAP BLE_GAP_EVENT_SCAN_OFF event.
+ * Arguments    : none
+ * Return Value : none
+ **********************************************************************************************************************/
+static void ble_abs_scan_off_handler (ble_abs_instance_ctrl_t * const p_instance_ctrl)
+{
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+    ble_abs_timer_delete(p_instance_ctrl, &p_instance_ctrl->scan_timer_handle);
+    p_instance_ctrl->scan_timer_handle = BLE_TIMER_INVALID_HDL;
+#else                                  /* BLE_CFG_LIB_TYPE != 0 */
+    ble_abs_set_scan_status(p_instance_ctrl, BLE_ABS_SCAN_STATUS_SET_MASK, BLE_ABS_SCAN_STATUS_CLEAR_MASK);
+#endif /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
+}
+
+/*******************************************************************************************************************//**
+ * Handler for GAP BLE_GAP_EVENT_SCAN_TO event.
+ **********************************************************************************************************************/
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+static void ble_abs_scan_timeout_handler_caller (uint32_t timer_handle)
+{
+    FSP_PARAMETER_NOT_USED(timer_handle);
+    ble_abs_gap_callback(BLE_GAP_EVENT_SCAN_TO, BLE_SUCCESS, NULL);
+}
+
+#endif
 
 /*******************************************************************************************************************//**
  * Handler for GAP BLE_GAP_EVENT_SCAN_TO event.
@@ -2378,8 +2578,16 @@ static void ble_abs_scan_to_handler (ble_abs_instance_ctrl_t * const p_instance_
 {
     st_ble_gap_scan_param_t      scan_parameter;
     ble_gap_scan_phy_parameter_t phy_parameter_1M;
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     ble_gap_scan_phy_parameter_t phy_parameter_coded;
-    ble_gap_scan_on_t            scan_enable;
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+    ble_gap_scan_on_t scan_enable;
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+    R_BLE_GAP_StopScan();
+    ble_abs_timer_delete(p_instance_ctrl, &p_instance_ctrl->scan_timer_handle);
+    p_instance_ctrl->scan_timer_handle = BLE_TIMER_INVALID_HDL;
+#endif                                                                               /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
 
     if (p_instance_ctrl->abs_scan.scan_status & BLE_ABS_SCAN_STATUS_FAST_START)
     {
@@ -2389,11 +2597,13 @@ static void ble_abs_scan_to_handler (ble_abs_instance_ctrl_t * const p_instance_
                                                                                                            phy_parameter_1M)
             :
             NULL;
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
         scan_parameter.p_phy_param_coded =
             p_instance_ctrl->abs_scan.scan_parameter.p_phy_parameter_coded ? (st_ble_gap_scan_phy_param_t *) (&
                                                                                                               phy_parameter_coded)
             :
             NULL;
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
         ble_abs_convert_scan_parameter(p_instance_ctrl, &scan_parameter, &scan_enable, BLE_ABS_SCAN_STATUS_SLOW_START);
 
@@ -2412,20 +2622,25 @@ static void ble_abs_scan_to_handler (ble_abs_instance_ctrl_t * const p_instance_
 /*******************************************************************************************************************//**
  * Handler for GAP BLE_GAP_EVENT_CONN_IND event.
  **********************************************************************************************************************/
-static void ble_abs_connection_indication_handler (ble_abs_instance_ctrl_t * const p_instance_ctrl)
+static void ble_abs_connection_indication_handler (ble_abs_instance_ctrl_t * const p_instance_ctrl, uint8_t role)
 {
-    ble_abs_timer_stop(p_instance_ctrl, p_instance_ctrl->connection_timer_handle);
-    ble_abs_timer_delete(p_instance_ctrl, &p_instance_ctrl->connection_timer_handle);
+    if (BLE_MASTER == role)
+    {
+        ble_abs_timer_delete(p_instance_ctrl, &p_instance_ctrl->connection_timer_handle);
+    }
 
-#if (BLE_CFG_LIBRARY_TYPE != 0)
-    ble_abs_timer_stop(p_instance_ctrl, p_instance_ctrl->advertising_timer_handle);
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+    else
+    {
+        ble_abs_timer_delete(p_instance_ctrl, &p_instance_ctrl->advertising_timer_handle);
 
-    ble_abs_set_advertising_status(p_instance_ctrl,
-                                   BLE_ABS_COMMON_HDL,
-                                   0,
-                                   (BLE_ABS_ADV_STATUS_ADV_SLOW_START | BLE_ABS_ADV_STATUS_ADV_FAST_START |
-                                    BLE_ABS_ADV_COMM_LEG));
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE != 0) */
+        ble_abs_set_advertising_status(p_instance_ctrl,
+                                       BLE_ABS_COMMON_HDL,
+                                       0,
+                                       (BLE_ABS_ADV_STATUS_ADV_SLOW_START | BLE_ABS_ADV_STATUS_ADV_FAST_START |
+                                        BLE_ABS_ADV_COMM_LEG));
+    }
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
 } /* End of function ble_abs_connection_indication_handler() */
 
 /*******************************************************************************************************************//**
@@ -2533,7 +2748,7 @@ static fsp_err_t ble_abs_convert_legacy_advertising_parameter (
  * @retval FSP_SUCCESS                                 Operation succeeded.
  * @retval FSP_ERR_INVALID_ARGUMENT                    The advertising parameter is out of range.
  **********************************************************************************************************************/
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
 static fsp_err_t ble_abs_convert_extend_advertising_parameter (
     ble_abs_extend_advertising_parameter_t * p_extend_advertising_parameter,
     st_ble_gap_adv_param_t                 * p_gap_advertising_parameter)
@@ -2587,7 +2802,7 @@ static fsp_err_t ble_abs_convert_extend_advertising_parameter (
     return FSP_SUCCESS;
 }                                      /* End of function ble_abs_convert_extend_advertising_parameter() */
 
-#endif /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
 /*******************************************************************************************************************//**
  * Convert the non-connectable advertising parameters to GAP advertising parameters.
@@ -2612,17 +2827,17 @@ static fsp_err_t ble_abs_convert_non_connectable_advertising_parameter (
            BLE_BD_ADDR_LEN);
 
     p_gap_advertising_parameter->o_addr_type = p_non_connectable_advertising_parameter->own_bluetooth_address_type;
-#if (BLE_CFG_LIBRARY_TYPE != 0)
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
     p_non_connectable_advertising_parameter->primary_advertising_phy = BLE_ABS_ADVERTISING_PHY_LEGACY;
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE != 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
     FSP_ERROR_RETURN((BLE_GAP_ADV_PHY_1M >= p_non_connectable_advertising_parameter->primary_advertising_phy) ||
                      (BLE_GAP_ADV_PHY_CD == p_non_connectable_advertising_parameter->primary_advertising_phy),
                      FSP_ERR_INVALID_ARGUMENT);
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     FSP_ERROR_RETURN((BLE_ABS_ADVERTISING_PHY_LEGACY != p_non_connectable_advertising_parameter->primary_advertising_phy) ||
                      (BLE_ABS_PERD_HDL != advertising_handle),
                      FSP_ERR_INVALID_ARGUMENT);
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     p_gap_advertising_parameter->adv_phy =
         (uint8_t) ((BLE_ABS_ADVERTISING_PHY_LEGACY ==
@@ -2690,9 +2905,9 @@ static void ble_abs_set_advertising_parameter (ble_abs_instance_ctrl_t * const p
         {
             ble_abs_legacy_advertising_parameter_t * p_abs_legacy;
             p_abs_legacy = (ble_abs_legacy_advertising_parameter_t *) p_advertising_parameter;
-#if (BLE_CFG_LIBRARY_TYPE != 0)
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
             advertising_handle = BLE_ABS_COMMON_HDL;
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
             memcpy(
                 &p_instance_ctrl->advertising_sets[advertising_handle].advertising_parameter.legacy_advertising_parameter,
                 p_abs_legacy,
@@ -2709,7 +2924,7 @@ static void ble_abs_set_advertising_parameter (ble_abs_instance_ctrl_t * const p
             break;
         }
 
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
         case BLE_ABS_EXT_HDL:
         {
             ble_abs_extend_advertising_parameter_t * p_abs_ext;
@@ -2729,15 +2944,15 @@ static void ble_abs_set_advertising_parameter (ble_abs_instance_ctrl_t * const p
 
             break;
         }
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
         case BLE_ABS_NON_CONN_HDL:
         {
             ble_abs_non_connectable_advertising_parameter_t * p_abs_non_conn;
             p_abs_non_conn = (ble_abs_non_connectable_advertising_parameter_t *) p_advertising_parameter;
-#if (BLE_CFG_LIBRARY_TYPE != 0)
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
             advertising_handle = BLE_ABS_COMMON_HDL;
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
             memcpy(
                 &p_instance_ctrl->advertising_sets[advertising_handle].advertising_parameter.non_connectable_advertising_parameter,
                 p_abs_non_conn,
@@ -2756,7 +2971,7 @@ static void ble_abs_set_advertising_parameter (ble_abs_instance_ctrl_t * const p
         }
 
         default:                       /** BLE_ABS_PERD_HDL */
-#if (BLE_CFG_LIBRARY_TYPE == 0)
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
             {
                 ble_abs_periodic_advertising_parameter_t * p_abs_perd;
                 p_abs_perd = (ble_abs_periodic_advertising_parameter_t *) p_advertising_parameter;
@@ -2774,10 +2989,12 @@ static void ble_abs_set_advertising_parameter (ble_abs_instance_ctrl_t * const p
                         &p_instance_ctrl->advertising_sets[advertising_handle].remote_device_address;
                 }
             }
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE == 0) */
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
             break;
     }
 } /* End of function ble_abs_set_advertising_parameter() */
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
 
 /*******************************************************************************************************************//**
  * Check scan phy parameters.
@@ -2812,13 +3029,19 @@ static fsp_err_t ble_abs_set_scan_parameter (ble_abs_instance_ctrl_t * const p_i
                          FSP_ERR_INVALID_ARGUMENT); ///< check abs scan parameters 1M
     }
 
+ #if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     if (p_scan_parameter->p_phy_parameter_coded)
     {
         FSP_ERROR_RETURN(FSP_SUCCESS == ble_abs_check_scan_phy_parameter(p_scan_parameter->p_phy_parameter_coded),
                          FSP_ERR_INVALID_ARGUMENT); ///< check abs scan parameters coded
     }
+ #endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
+ #if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     FSP_ERROR_RETURN(BLE_ABS_CONN_EXT_ADV_DATA_LEN >= p_scan_parameter->filter_data_length, FSP_ERR_INVALID_ARGUMENT);
+ #else                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+    FSP_ERROR_RETURN(BLE_ABS_LEGACY_ADV_DATA_LEN >= p_scan_parameter->filter_data_length, FSP_ERR_INVALID_ARGUMENT);
+ #endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     memcpy(&p_instance_ctrl->abs_scan.scan_parameter, p_scan_parameter, sizeof(ble_abs_scan_parameter_t));
     if (p_scan_parameter->p_phy_parameter_1M)
@@ -2829,6 +3052,7 @@ static fsp_err_t ble_abs_set_scan_parameter (ble_abs_instance_ctrl_t * const p_i
         p_instance_ctrl->abs_scan.scan_parameter.p_phy_parameter_1M = &p_instance_ctrl->abs_scan.scan_phy_parameter_1M;
     }
 
+ #if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
     if (p_scan_parameter->p_phy_parameter_coded)
     {
         memcpy(&p_instance_ctrl->abs_scan.scan_phy_parameter_coded,
@@ -2837,9 +3061,12 @@ static fsp_err_t ble_abs_set_scan_parameter (ble_abs_instance_ctrl_t * const p_i
         p_instance_ctrl->abs_scan.scan_parameter.p_phy_parameter_coded =
             &p_instance_ctrl->abs_scan.scan_phy_parameter_coded;
     }
+ #endif                                /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
 
     return FSP_SUCCESS;
 }                                      /* End of function ble_abs_set_scan_parameter() */
+
+#endif /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
 
 /*******************************************************************************************************************//**
  * Set scan status.
@@ -2974,13 +3201,29 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
 
         case BLE_GAP_EVENT_PERD_ADV_ON:
         {
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
             ble_abs_advertising_start(p_instance_ctrl, BLE_ABS_PERD_HDL);
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
             break;
         }
 
         case BLE_GAP_EVENT_PERD_ADV_OFF:
         {
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
             ble_abs_set_advertising_status(p_instance_ctrl, BLE_ABS_PERD_HDL, 0, BLE_ABS_ADV_STATUS_PERD_START);
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+            break;
+        }
+
+        case BLE_GAP_EVENT_ADV_ON:
+        {
+#if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
+            st_ble_gap_adv_set_evt_t * p_param;
+            p_param = (st_ble_gap_adv_set_evt_t *) p_event_data->p_param;
+            ble_abs_set_advertising_status(p_instance_ctrl, p_param->adv_hdl, 0, BLE_ABS_SCAN_STATUS_CLEAR_MASK);
+#else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+            ble_abs_set_advertising_status(p_instance_ctrl, BLE_ABS_COMMON_HDL, 0, BLE_ABS_SCAN_STATUS_CLEAR_MASK);
+#endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
             break;
         }
 
@@ -2996,9 +3239,34 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
             break;
         }
 
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED)
+        case BLE_GAP_EVENT_SCAN_ON:
+        {
+            ble_abs_scan_on_handler(p_instance_ctrl);
+            break;
+        }
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+
+        case BLE_GAP_EVENT_SCAN_OFF:
+        {
+            ble_abs_scan_off_handler(p_instance_ctrl);
+            break;
+        }
+
         case BLE_GAP_EVENT_CONN_IND:
         {
-            ble_abs_connection_indication_handler(p_instance_ctrl);
+            st_ble_gap_conn_evt_t * p_param = (st_ble_gap_conn_evt_t *) p_event_data->p_param;
+            ble_abs_connection_indication_handler(p_instance_ctrl, p_param->role);
+            break;
+        }
+
+        case BLE_GAP_EVENT_CREATE_CONN_COMP:
+        {
+            if (BLE_SUCCESS != event_result)
+            {
+                ble_abs_timer_delete(p_instance_ctrl, &p_instance_ctrl->connection_timer_handle);
+            }
+
             break;
         }
 
@@ -3180,9 +3448,7 @@ void r_ble_wake_up_task_from_isr (void * EventGroupHandle)
 
     if (event_group_handle != NULL)
     {
-        xEventGroupSetBitsFromISR(event_group_handle,
-                                  (EventBits_t) BLE_EVENT_PATTERN,
-                                  &xHigherPriorityTaskWoken);
+        xEventGroupSetBitsFromISR(event_group_handle, (EventBits_t) BLE_EVENT_PATTERN, &xHigherPriorityTaskWoken);
         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
     }
 }
@@ -4029,14 +4295,53 @@ static void ble_abs_timer_update_remaining_time_ms (ble_abs_instance_ctrl_t * co
                                                            p_instance_ctrl->current_timeout_ms,
                                                            &p_instance_ctrl->elapsed_timeout_ms);
 
+    uint8_t set_event = false;
+
     for (uint32_t i = 0; i < BLE_ABS_CFG_TIMER_NUMBER_OF_SLOT; i++)
     {
         if (BLE_TIMER_STATUS_STARTED == p_instance_ctrl->timer[i].status)
         {
-            p_instance_ctrl->timer[i].remaining_time_ms -= elapsed_time_ms;
+            if (p_instance_ctrl->timer[i].remaining_time_ms > elapsed_time_ms)
+            {
+                p_instance_ctrl->timer[i].remaining_time_ms -= elapsed_time_ms;
+            }
+            else
+            {
+                p_instance_ctrl->timer[i].remaining_time_ms = 0;
+                p_instance_ctrl->timer[i].status            = BLE_TIMER_STATUS_EXPIRED;
+                set_event = true;
+            }
         }
     }
+
+    if (false != set_event)
+    {
+        R_BLE_SetEvent(ble_abs_timer_event_cb);
+    }
 }
+
+#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) && (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
+
+/*******************************************************************************************************************//**
+ * Check if there are free slot
+ *
+ * @retval FSP_SUCCESS                      Free slot is there
+ * @retval FSP_ERR_BLE_ABS_NOT_FOUND        Free slot not found
+ **********************************************************************************************************************/
+static uint32_t ble_abs_timer_has_free_slot (ble_abs_instance_ctrl_t * const p_instance_ctrl)
+{
+    for (uint32_t i = 0; i < BLE_ABS_CFG_TIMER_NUMBER_OF_SLOT; i++)
+    {
+        if (BLE_TIMER_STATUS_FREE == p_instance_ctrl->timer[i].status)
+        {
+            return FSP_SUCCESS;
+        }
+    }
+
+    return FSP_ERR_BLE_ABS_NOT_FOUND;
+}
+
+#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_EXTENDED) */
 
 static uint32_t ble_abs_timer_alloc_timer (ble_abs_instance_ctrl_t * const p_instance_ctrl)
 {
@@ -4104,14 +4409,14 @@ static void ble_abs_timer_remove_timer (ble_abs_instance_ctrl_t * const p_instan
     p_instance_ctrl->timer[timer_hdl].status = BLE_TIMER_STATUS_IDLE;
 }
 
-static void ble_abs_timer_event_cb (ble_abs_instance_ctrl_t * const p_instance_ctrl)
+static void ble_abs_timer_event_cb ()
 {
+    ble_abs_instance_ctrl_t * p_instance_ctrl = gp_instance_ctrl;
+
     for (uint32_t i = 0; i < BLE_ABS_CFG_TIMER_NUMBER_OF_SLOT; i++)
     {
         if (BLE_TIMER_STATUS_EXPIRED == p_instance_ctrl->timer[i].status)
         {
-            p_instance_ctrl->timer[i].cb(i);
-
             if (BLE_TIMER_PERIODIC == p_instance_ctrl->timer[i].type)
             {
                 ble_abs_timer_add_timer(p_instance_ctrl, i);
@@ -4120,6 +4425,8 @@ static void ble_abs_timer_event_cb (ble_abs_instance_ctrl_t * const p_instance_c
             {
                 ble_abs_timer_remove_timer(p_instance_ctrl, i);
             }
+
+            p_instance_ctrl->timer[i].cb(i);
         }
     }
 
@@ -4130,17 +4437,6 @@ static void ble_abs_timer_event_cb (ble_abs_instance_ctrl_t * const p_instance_c
 void ble_abs_timer_process_timer_expire (ble_abs_instance_ctrl_t * const p_instance_ctrl)
 {
     ble_abs_timer_update_remaining_time_ms(p_instance_ctrl, true);
-
-    for (uint32_t i = 0; i < BLE_ABS_CFG_TIMER_NUMBER_OF_SLOT; i++)
-    {
-        if ((BLE_TIMER_STATUS_STARTED == p_instance_ctrl->timer[i].status) &&
-            (0 == p_instance_ctrl->timer[i].remaining_time_ms))
-        {
-            p_instance_ctrl->timer[i].status = BLE_TIMER_STATUS_EXPIRED;
-            ble_abs_timer_event_cb(p_instance_ctrl);
-        }
-    }
-
     ble_abs_timer_start_timer(p_instance_ctrl);
 }
 
@@ -4200,15 +4496,10 @@ static fsp_err_t ble_abs_timer_create (ble_abs_instance_ctrl_t * const p_instanc
  * Delete timer for communication.
  *
  * @retval FSP_SUCCESS                                 Operation succeeded.
- * @retval FSP_ERR_BLE_ABS_INVALID_OPERATION           Invalid operation for the selected timer.
- * @retval FSP_ERR_INVALID_ARGUMENT                    Invalid timer handle.
  **********************************************************************************************************************/
 static fsp_err_t ble_abs_timer_delete (ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t * p_timer_hdl)
 {
-    FSP_ERROR_RETURN((NULL != p_timer_hdl), FSP_ERR_INVALID_ARGUMENT);
-
     uint32_t timer_hdl = *p_timer_hdl;
-    FSP_ERROR_RETURN((BLE_ABS_CFG_TIMER_NUMBER_OF_SLOT > timer_hdl), FSP_ERR_BLE_ABS_INVALID_OPERATION);
 
     *p_timer_hdl = BLE_TIMER_INVALID_HDL;
 
@@ -4230,16 +4521,9 @@ static fsp_err_t ble_abs_timer_delete (ble_abs_instance_ctrl_t * const p_instanc
  * Start timer for communication.
  *
  * @retval FSP_SUCCESS                                 Operation succeeded.
- * @retval FSP_ERR_BLE_ABS_INVALID_OPERATION           Invalid operation for the selected timer.
  **********************************************************************************************************************/
 static fsp_err_t ble_abs_timer_start (ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t timer_hdl)
 {
-    FSP_ERROR_RETURN((timer_hdl < BLE_ABS_CFG_TIMER_NUMBER_OF_SLOT), FSP_ERR_BLE_ABS_INVALID_OPERATION);
-
-    FSP_ERROR_RETURN((BLE_TIMER_STATUS_FREE != p_instance_ctrl->timer[timer_hdl].status) &&
-                     (BLE_TIMER_STATUS_EXPIRED != p_instance_ctrl->timer[timer_hdl].status),
-                     FSP_ERR_BLE_ABS_INVALID_OPERATION);
-
     ble_abs_timer_update_remaining_time_ms(p_instance_ctrl, false);
     ble_abs_timer_stop_timer(p_instance_ctrl);
     ble_abs_timer_add_timer(p_instance_ctrl, timer_hdl);
@@ -4252,12 +4536,9 @@ static fsp_err_t ble_abs_timer_start (ble_abs_instance_ctrl_t * const p_instance
  * Stop timer for communication.
  *
  * @retval FSP_SUCCESS                                 Operation succeeded.
- * @retval FSP_ERR_BLE_ABS_INVALID_OPERATION           Invalid operation for the selected timer.
  **********************************************************************************************************************/
 static fsp_err_t ble_abs_timer_stop (ble_abs_instance_ctrl_t * const p_instance_ctrl, uint32_t timer_hdl)
 {
-    FSP_ERROR_RETURN((timer_hdl < BLE_ABS_CFG_TIMER_NUMBER_OF_SLOT), FSP_ERR_BLE_ABS_INVALID_OPERATION);
-
     ble_abs_timer_update_remaining_time_ms(p_instance_ctrl, false);
     ble_abs_timer_stop_timer(p_instance_ctrl);
     ble_abs_timer_remove_timer(p_instance_ctrl, timer_hdl);
@@ -4314,8 +4595,9 @@ static void ble_abs_stop_hw_timer (timer_instance_t const * p_instance,
 
 void ble_abs_hw_timer_callback (timer_callback_args_t * callback_args)
 {
-    ble_abs_instance_t * p_instance = (ble_abs_instance_t *) callback_args->p_context;
-    ble_abs_timer_process_timer_expire(p_instance->p_ctrl);
+    FSP_PARAMETER_NOT_USED(callback_args);
+    ble_abs_instance_ctrl_t * p_instance_ctrl = gp_instance_ctrl;
+    ble_abs_timer_process_timer_expire(p_instance_ctrl);
 }
 
 static uint32_t ble_abs_get_elapsed_time_ms (timer_instance_t const * p_instance,

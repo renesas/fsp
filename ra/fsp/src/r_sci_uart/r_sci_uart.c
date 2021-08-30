@@ -279,6 +279,7 @@ const uart_api_t g_uart_on_sci =
     .baudSet            = R_SCI_UART_BaudSet,
     .communicationAbort = R_SCI_UART_Abort,
     .callbackSet        = R_SCI_UART_CallbackSet,
+    .readStop           = R_SCI_UART_ReadStop,
 };
 
 /*******************************************************************************************************************//**
@@ -719,26 +720,19 @@ fsp_err_t R_SCI_UART_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const
     FSP_ASSERT((p_ctrl->p_reg->SCR_b.CKE & 0x2) == 0U);
 #endif
 
+    /* Save SCR configurations except transmit interrupts. Resuming transmission after reconfiguring baud settings is
+     * not supported. */
+    uint8_t preserved_scr = p_ctrl->p_reg->SCR & (uint8_t) ~(SCI_SCR_TIE_MASK | SCI_SCR_TEIE_MASK);
+
     /* Disables transmitter and receiver. This terminates any in-progress transmission. */
-    p_ctrl->p_reg->SCR &= (uint8_t) ~(SCI_SCR_TE_MASK | SCI_SCR_TIE_MASK | SCI_SCR_TEIE_MASK |
-                                      SCI_SCR_RE_MASK | SCI_SCR_RIE_MASK);
-    p_ctrl->p_tx_src = NULL;
+    p_ctrl->p_reg->SCR = preserved_scr & (uint8_t) ~(SCI_SCR_TE_MASK | SCI_SCR_RE_MASK | SCI_SCR_RIE_MASK);
+    p_ctrl->p_tx_src   = NULL;
 
     /* Apply new baud rate register settings. */
     r_sci_uart_baud_set(p_ctrl->p_reg, p_baud_setting);
 
-    uint32_t mask_enable = 0;
-#if (SCI_UART_CFG_RX_ENABLE)
-
-    /* Enable receive. */
-    mask_enable |= (SCI_SCR_RE_MASK | SCI_SCR_RIE_MASK);
-#endif
-#if (SCI_UART_CFG_TX_ENABLE)
-
-    /* Enable transmit. */
-    mask_enable |= SCI_SCR_TE_MASK;
-#endif
-    p_ctrl->p_reg->SCR |= (uint8_t) mask_enable;
+    /* Restore all settings except transmit interrupts. */
+    p_ctrl->p_reg->SCR = preserved_scr;
 
     return FSP_SUCCESS;
 }
@@ -873,6 +867,64 @@ fsp_err_t R_SCI_UART_Abort (uart_ctrl_t * const p_api_ctrl, uart_dir_t communica
 #endif
 
     return err;
+}
+
+/*******************************************************************************************************************//**
+ * Provides API to abort ongoing read. Reception is still enabled after abort(). Any characters received after abort()
+ * and before the transfer is reset in the next call to read(), will arrive via the callback function with event
+ * UART_EVENT_RX_CHAR.
+ * Implements @ref uart_api_t::readStop
+ *
+ * @retval  FSP_SUCCESS                  UART transaction aborted successfully.
+ * @retval  FSP_ERR_ASSERTION            Pointer to UART control block is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_UNSUPPORTED          The requested Abort direction is unsupported.
+ *
+ * @return                       See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
+ *                               return codes. This function calls:
+ *                                   * @ref transfer_api_t::disable
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_UART_ReadStop (uart_ctrl_t * const p_api_ctrl, uint32_t * remaining_bytes)
+{
+    sci_uart_instance_ctrl_t * p_ctrl = (sci_uart_instance_ctrl_t *) p_api_ctrl;
+
+#if (SCI_UART_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_ctrl);
+    FSP_ERROR_RETURN(SCI_UART_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+#if (SCI_UART_CFG_RX_ENABLE)
+    *remaining_bytes      = p_ctrl->rx_dest_bytes;
+    p_ctrl->rx_dest_bytes = 0U;
+ #if SCI_UART_CFG_DTC_SUPPORTED
+    if (NULL != p_ctrl->p_cfg->p_transfer_rx)
+    {
+        fsp_err_t err = p_ctrl->p_cfg->p_transfer_rx->p_api->disable(p_ctrl->p_cfg->p_transfer_rx->p_ctrl);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        transfer_properties_t transfer_info;
+        err = p_ctrl->p_cfg->p_transfer_rx->p_api->infoGet(p_ctrl->p_cfg->p_transfer_rx->p_ctrl, &transfer_info);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        *remaining_bytes = transfer_info.transfer_length_remaining;
+    }
+ #endif
+ #if SCI_UART_CFG_FIFO_SUPPORT
+    if (0U != p_ctrl->fifo_depth)
+    {
+        /* Reset the receive fifo */
+        p_ctrl->p_reg->FCR_b.RFRST = 1U;
+
+        /* Wait until RFRST cleared after 1 PCLK according to section 34.2.26 "FIFO Control Register (FCR) in the
+         * RA6M3 manual R01UH0886EJ0100 or the relevant section for the MCU being used.*/
+        FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->FCR_b.RFRST, 0U);
+    }
+ #endif
+#else
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
+
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

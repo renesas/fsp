@@ -52,6 +52,8 @@
 #define AGT_PRV_AGTCMSR_PIN_B_OFFSET            (4U)
 #define AGT_PRV_AGTCMSR_VALID_BITS              (0x77U)
 
+#define AGT_PRV_MIN_CLOCK_FREQ                  (0U)
+
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -68,7 +70,13 @@ static void r_agt_period_register_set(agt_instance_ctrl_t * p_instance_ctrl, uin
 
 static void r_agt_hardware_cfg(agt_instance_ctrl_t * const p_instance_ctrl, timer_cfg_t const * const p_cfg);
 
+#if BSP_FEATURE_AGT_HAS_AGTW
+static uint32_t r_agt_clock_frequency_get(R_AGTW0_Type * p_agt_regs);
+
+#else
 static uint32_t r_agt_clock_frequency_get(R_AGT0_Type * p_agt_regs);
+
+#endif
 
 static fsp_err_t r_agt_common_preamble(agt_instance_ctrl_t * p_instance_ctrl);
 
@@ -147,8 +155,14 @@ fsp_err_t R_AGT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
+#if BSP_FEATURE_AGT_HAS_AGTW
+    uint32_t base_address = (uint32_t) R_AGTW0 + (p_cfg->channel * ((uint32_t) R_AGTW1 - (uint32_t) R_AGTW0));
+    p_instance_ctrl->p_reg = (R_AGTW0_Type *) base_address;
+#else
     uint32_t base_address = (uint32_t) R_AGT0 + (p_cfg->channel * ((uint32_t) R_AGT1 - (uint32_t) R_AGT0));
     p_instance_ctrl->p_reg = (R_AGT0_Type *) base_address;
+#endif
+
     p_instance_ctrl->p_cfg = p_cfg;
 
     /* Power on the AGT channel. */
@@ -215,8 +229,13 @@ fsp_err_t R_AGT_Start (timer_ctrl_t * const p_ctrl)
         /* Verify the timer is started before modifying any other AGT registers. Reference section 25.4.1 "Count
          * Operation Start and Stop Control" in the RA6M3 manual R01UH0886EJ0100. */
         FSP_HARDWARE_REGISTER_WAIT(1U, p_instance_ctrl->p_reg->AGTCR_b.TCSTF);
+ #if BSP_FEATURE_AGT_HAS_AGTW
+        p_instance_ctrl->p_reg->AGTCMA = UINT32_MAX;
+        p_instance_ctrl->p_reg->AGTCMB = UINT32_MAX;
+ #else
         p_instance_ctrl->p_reg->AGTCMA = UINT16_MAX;
         p_instance_ctrl->p_reg->AGTCMB = UINT16_MAX;
+ #endif
     }
 #endif
 
@@ -261,7 +280,11 @@ fsp_err_t R_AGT_Reset (timer_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Reset counter to period minus one. */
+#if BSP_FEATURE_AGT_HAS_AGTW
+    p_instance_ctrl->p_reg->AGT = (uint32_t) (p_instance_ctrl->period - 1U);
+#else
     p_instance_ctrl->p_reg->AGT = (uint16_t) (p_instance_ctrl->period - 1U);
+#endif
 
     return FSP_SUCCESS;
 }
@@ -285,7 +308,11 @@ fsp_err_t R_AGT_Enable (timer_ctrl_t * const p_ctrl)
 #endif
 
     /* Reset counter to period minus one. */
+#if BSP_FEATURE_AGT_HAS_AGTW
+    p_instance_ctrl->p_reg->AGT = (uint32_t) (p_instance_ctrl->period - 1U);
+#else
     p_instance_ctrl->p_reg->AGT = (uint16_t) (p_instance_ctrl->period - 1U);
+#endif
 
     /* Enable captures. */
     p_instance_ctrl->p_reg->AGTCR = AGT_PRV_AGTCR_START_TIMER;
@@ -339,10 +366,12 @@ fsp_err_t R_AGT_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
 {
     agt_instance_ctrl_t * p_instance_ctrl = (agt_instance_ctrl_t *) p_ctrl;
 #if AGT_CFG_PARAM_CHECKING_ENABLE
+ #if !BSP_FEATURE_AGT_HAS_AGTW
 
     /* Validate period parameter. */
     FSP_ASSERT(0U != period_counts);
     FSP_ASSERT(period_counts <= AGT_MAX_PERIOD);
+ #endif
 #endif
 
     fsp_err_t err = r_agt_common_preamble(p_instance_ctrl);
@@ -379,7 +408,10 @@ fsp_err_t R_AGT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
  #if AGT_CFG_PARAM_CHECKING_ENABLE
-    FSP_ERROR_RETURN(duty_cycle_counts < (p_instance_ctrl->period), FSP_ERR_INVALID_ARGUMENT);
+    if (0U != p_instance_ctrl->period)
+    {
+        FSP_ERROR_RETURN(duty_cycle_counts < (p_instance_ctrl->period), FSP_ERR_INVALID_ARGUMENT);
+    }
  #endif
 
     uint32_t temp_duty_cycle_counts         = duty_cycle_counts;
@@ -388,12 +420,17 @@ fsp_err_t R_AGT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
     if (p_extend->agtoab_settings & agtcmsr_agtoab_start_level_bit)
     {
         /* Invert duty cycle if this pin starts high since the high portion is at the beginning of the cycle. */
-        temp_duty_cycle_counts = p_instance_ctrl->period - temp_duty_cycle_counts;
+        temp_duty_cycle_counts = p_instance_ctrl->period - temp_duty_cycle_counts - 1;
     }
 
     /* Set duty cycle. */
+ #if BSP_FEATURE_AGT_HAS_AGTW
+    volatile uint32_t * const p_agtcm = &p_instance_ctrl->p_reg->AGTCMA;
+    p_agtcm[pin] = temp_duty_cycle_counts;
+ #else
     volatile uint16_t * const p_agtcm = &p_instance_ctrl->p_reg->AGTCMA;
     p_agtcm[pin] = (uint16_t) temp_duty_cycle_counts;
+ #endif
 
     return FSP_SUCCESS;
 #else
@@ -433,9 +470,23 @@ fsp_err_t R_AGT_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p_inf
     if (AGT_CLOCK_AGT_UNDERFLOW == p_extend->count_source)
     {
         /* Clock frequency of this channel is the clock frequency divided by the timer period of the source channel. */
+
+#if BSP_FEATURE_AGT_HAS_AGTW
+        uint32_t source_channel_reg = (uint32_t) (p_instance_ctrl->p_reg) -
+                                      ((uint32_t) R_AGTW1 - (uint32_t) R_AGTW0);
+        R_AGTW0_Type * p_source_channel_reg = (R_AGTW0_Type *) source_channel_reg;
+#else
         R_AGT0_Type * p_source_channel_reg = p_instance_ctrl->p_reg - (R_AGT1 - R_AGT0);
-        p_info->clock_frequency = r_agt_clock_frequency_get(p_source_channel_reg) /
-                                  gp_prv_agt_periods[p_instance_ctrl->p_cfg->channel - 1];
+#endif
+        if (0U == gp_prv_agt_periods[p_instance_ctrl->p_cfg->channel - 1])
+        {
+            p_info->clock_frequency = AGT_PRV_MIN_CLOCK_FREQ;
+        }
+        else
+        {
+            p_info->clock_frequency = r_agt_clock_frequency_get(p_source_channel_reg) /
+                                      gp_prv_agt_periods[p_instance_ctrl->p_cfg->channel - 1];
+        }
     }
     else
     {
@@ -601,10 +652,12 @@ static fsp_err_t r_agt_open_param_checking (agt_instance_ctrl_t * p_instance_ctr
         FSP_ERROR_RETURN(p_cfg->cycle_end_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
     }
 
+ #if !BSP_FEATURE_AGT_HAS_AGTW
     FSP_ASSERT(0U != p_cfg->period_counts);
 
     /* Validate period parameter. */
     FSP_ASSERT(p_cfg->period_counts <= AGT_MAX_PERIOD);
+ #endif
 
     /* Validate channel number. */
     FSP_ERROR_RETURN(((1U << p_cfg->channel) & BSP_FEATURE_AGT_VALID_CHANNEL_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
@@ -612,6 +665,13 @@ static fsp_err_t r_agt_open_param_checking (agt_instance_ctrl_t * p_instance_ctr
     /* AGT_CLOCK_AGT_UNDERFLOW is not allowed on even AGT channels. */
     agt_extended_cfg_t const * p_extend = (agt_extended_cfg_t const *) p_cfg->p_extend;
     FSP_ASSERT((AGT_CLOCK_AGT_UNDERFLOW != p_extend->count_source) || (p_cfg->channel & 1U));
+
+ #if BSP_FEATURE_AGT_HAS_AGTW
+
+    /* Return error for MCUs that do not support P402 and P403 as count sources*/
+    FSP_ASSERT(AGT_CLOCK_P402 != p_extend->count_source);
+    FSP_ASSERT(AGT_CLOCK_P403 != p_extend->count_source);
+ #endif
 
     /* Validate divider. */
     if (AGT_CLOCK_PCLKB == p_extend->count_source)
@@ -677,8 +737,10 @@ static void r_agt_hardware_cfg (agt_instance_ctrl_t * const p_instance_ctrl, tim
     uint32_t agtcmsr = 0U;
     uint32_t tedgsel = 0U;
     uint32_t agtioc  = p_extend->agtio_filter;
-    uint32_t mode    = p_extend->measurement_mode & R_AGT0_AGTMR1_TMOD_Msk;
-    uint32_t edge    = 0U;
+
+    uint32_t mode = p_extend->measurement_mode & R_AGT0_AGTMR1_TMOD_Msk;
+
+    uint32_t edge = 0U;
     if (AGT_CLOCK_PCLKB == p_extend->count_source)
     {
         if (TIMER_SOURCE_DIV_1 != p_cfg->source_div)
@@ -693,10 +755,11 @@ static void r_agt_hardware_cfg (agt_instance_ctrl_t * const p_instance_ctrl, tim
     else if (AGT_CLOCK_AGTIO & p_extend->count_source)
     {
         /* If the count source is external, configure the AGT for event counter mode. */
-        mode                             = AGT_PRV_AGTMR1_TMOD_EVENT_COUNTER;
-        count_source_int                 = 0U;
-        edge                            |= (p_extend->trigger_edge & R_AGT0_AGTMR1_TEDGPL_Msk);
-        agtioc                          |= (p_extend->enable_pin & R_AGT0_AGTIOC_TIOGT_Msk);
+        mode             = AGT_PRV_AGTMR1_TMOD_EVENT_COUNTER;
+        count_source_int = 0U;
+
+        edge   |= (p_extend->trigger_edge & R_AGT0_AGTMR1_TEDGPL_Msk);
+        agtioc |= (p_extend->enable_pin & R_AGT0_AGTIOC_TIOGT_Msk);
         p_instance_ctrl->p_reg->AGTISR   = (p_extend->enable_pin & R_AGT0_AGTISR_EEPS_Msk);
         p_instance_ctrl->p_reg->AGTIOSEL = (uint8_t) (p_extend->count_source & (uint8_t) ~AGT_CLOCK_AGTIO);
     }
@@ -724,7 +787,7 @@ static void r_agt_hardware_cfg (agt_instance_ctrl_t * const p_instance_ctrl, tim
     if (TIMER_MODE_PWM == p_instance_ctrl->p_cfg->mode)
     {
         uint32_t inverted_duty_cycle = p_instance_ctrl->p_cfg->period_counts -
-                                       p_instance_ctrl->p_cfg->duty_cycle_counts;
+                                       p_instance_ctrl->p_cfg->duty_cycle_counts - 1;
         uint32_t agtcma = p_instance_ctrl->p_cfg->duty_cycle_counts;
         uint32_t agtcmb = p_instance_ctrl->p_cfg->duty_cycle_counts;
         if (AGT_PIN_CFG_START_LEVEL_HIGH == p_extend->agtoa)
@@ -737,8 +800,13 @@ static void r_agt_hardware_cfg (agt_instance_ctrl_t * const p_instance_ctrl, tim
             agtcmb = inverted_duty_cycle;
         }
 
+ #if BSP_FEATURE_AGT_HAS_AGTW
+        p_instance_ctrl->p_reg->AGTCMA = agtcma;
+        p_instance_ctrl->p_reg->AGTCMB = agtcmb;
+ #else
         p_instance_ctrl->p_reg->AGTCMA = (uint16_t) agtcma;
         p_instance_ctrl->p_reg->AGTCMB = (uint16_t) agtcmb;
+ #endif
     }
 
     /* Configure TEDGSEL bit based on user input. */
@@ -793,14 +861,25 @@ static void r_agt_period_register_set (agt_instance_ctrl_t * p_instance_ctrl, ui
     /* Store the period value so it can be retrieved later. */
     p_instance_ctrl->period = period_counts;
     gp_prv_agt_periods[p_instance_ctrl->p_cfg->channel] = period_counts;
-
+#if BSP_FEATURE_AGT_HAS_AGTW
+    uint32_t period_reg = (period_counts - 1U);
+#else
     uint16_t period_reg = (uint16_t) (period_counts - 1U);
+#endif
 
 #if AGT_CFG_OUTPUT_SUPPORT_ENABLE
+ #if BSP_FEATURE_AGT_HAS_AGTW
+    uint32_t duty_cycle_counts = 0U;
+ #else
     uint16_t duty_cycle_counts = 0U;
+ #endif
     if (TIMER_MODE_PERIODIC == p_instance_ctrl->p_cfg->mode)
     {
+ #if BSP_FEATURE_AGT_HAS_AGTW
+        duty_cycle_counts = (period_counts >> 1);
+ #else
         duty_cycle_counts = (uint16_t) (period_counts >> 1);
+ #endif
     }
     else if (TIMER_MODE_ONE_SHOT == p_instance_ctrl->p_cfg->mode)
     {
@@ -829,7 +908,11 @@ static void r_agt_period_register_set (agt_instance_ctrl_t * p_instance_ctrl, ui
  *
  * @return Source clock frequency of AGT in Hz, divider applied.
  **********************************************************************************************************************/
+#if BSP_FEATURE_AGT_HAS_AGTW
+static uint32_t r_agt_clock_frequency_get (R_AGTW0_Type * p_agt_regs)
+#else
 static uint32_t r_agt_clock_frequency_get (R_AGT0_Type * p_agt_regs)
+#endif
 {
     uint32_t           clock_freq_hz    = 0U;
     uint8_t            count_source_int = p_agt_regs->AGTMR1_b.TCK;
@@ -943,7 +1026,11 @@ void agt_int_isr (void)
              * this interrupt processing completes before the next capture begins. */
             if (AGT_PRV_AGTMR1_TMOD_PULSE_WIDTH == p_instance_ctrl->p_reg->AGTMR1_b.TMOD)
             {
+ #if BSP_FEATURE_AGT_HAS_AGTW
+                p_instance_ctrl->p_reg->AGT = reload_value;
+ #else
                 p_instance_ctrl->p_reg->AGT = (uint16_t) reload_value;
+ #endif
             }
             else
             {

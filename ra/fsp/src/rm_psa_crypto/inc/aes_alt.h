@@ -25,6 +25,12 @@ extern "C"
 
 #if defined(MBEDTLS_AES_ALT) || defined(MBEDTLS_CTR_DRBG_C_ALT)
 
+typedef enum e_sce_mbedtls_cipher_operation_state
+{
+    SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT = 0,
+    SCE_MBEDTLS_CIPHER_OPERATION_STATE_UPDATE
+} sce_mbedtls_cipher_operation_state_t ;
+
     /**
  * \brief The AES context-type definition.
  */
@@ -41,6 +47,7 @@ extern "C"
                                         *             case by generating an extra round key.
                                         *             </li></ul> */
         void *vendor_ctx; /*!< Vendor defined context. */
+        sce_mbedtls_cipher_operation_state_t  state;
     } mbedtls_aes_context;
 #endif
 #if defined(MBEDTLS_AES_ALT)

@@ -27,7 +27,7 @@
 /**************************************************************************/
 #include "rm_netx_secure_crypto.h"
 #include "nx_crypto_cbc.h"
-
+#if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
@@ -78,7 +78,7 @@ UINT i;
         ciphertext[i] = plaintext[i] ^ key[i];
     }
 }
-
+#endif
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */

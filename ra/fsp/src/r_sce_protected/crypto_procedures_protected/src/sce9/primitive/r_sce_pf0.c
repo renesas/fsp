@@ -767,7 +767,7 @@ fsp_err_t R_SCE_EcdsaSignatureGenerateSub(uint32_t *InData_CurveType, uint32_t *
         {
             R_SCE_func101(0x7a838a51U, 0x6cce7ddfU, 0xee2b1e5fU, 0xe71c048fU);
             R_SCE_func300();
-            if (S_RAM[0] == 0x00000001)
+            if (S_RAM[0] == 0x00000001U)
             {
                 break;
             }
@@ -934,7 +934,7 @@ fsp_err_t R_SCE_EcdsaSignatureGenerateSub(uint32_t *InData_CurveType, uint32_t *
             {
                 R_SCE_func101(0x7a4e80f2U, 0xdf244a3cU, 0x932b9183U, 0x12582515U);
                 R_SCE_func300();
-                if (S_RAM[0] == 0x00000001)
+                if (S_RAM[0] == 0x00000001U)
                 {
                     break;
                 }

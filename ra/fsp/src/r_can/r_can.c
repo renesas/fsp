@@ -34,7 +34,12 @@
 #define CAN_TEST_LOOPBACK_EXTERNAL          (5U)
 #define CAN_TEST_LOOPBACK_INTERNAL          (7U)
 #define CAN_MAX_DATA_LENGTH                 (8)
-#define CAN_MAX_NO_MAILBOXES                (32U)
+
+#if CAN_CFG_FIFO_SUPPORT
+ #define CAN_MAX_NO_MAILBOXES               (24U)
+#else
+ #define CAN_MAX_NO_MAILBOXES               (32U)
+#endif
 
 #define CAN_BAUD_RATE_PRESCALER_MIN         (1U)
 #define CAN_BAUD_RATE_PRESCALER_MAX         (1024U)
@@ -61,20 +66,21 @@
 
 #define CAN_CHECK_MODE_MASK                 (0x0700U)
 
+#define CAN_MKIVLR_FIFO_MASK                (0x00FFFFFFU)
+
 #define CAN_CANM_SETTING_MASK               (0x03U)
 #define CAN_PCLKB_RATIO                     (2U) // The ratio between PCLKA or ICLK and PCLKB
 
 #define CAN_TRANSMIT_CLEAR                  (0U)
 #define CAN_TX_RX_INTERRUPTS_ENABLE         (0xFFFFFFFFU)
-#define CAN_TX_RX_INTERRUPTS_DISABLE        (0x00000000U)
+#define CAN_TX_RX_INTERRUPTS_ENABLE_FIFO    (0x00FFFFFFU)
 
 #define CAN_BAUD_RATE_PRESCALER_MASK        (0x3FFU)
 
-#define CAN_TIMESTAMP_PRESCALER_8BITTIME    (0x3U)
+#define CAN_TIMESTAMP_PRESCALER_8BITTIME    (0x3)
 
 /* Error-Warning | Error-Passive | Bus-Off Entry | Bus-Off Recovery | Overrun */
 #define CAN_ERROR_INTERRUPTS_ENABLE         (0x3EU)
-#define CAN_ERROR_INTERRUPTS_DISABLE        (0x00U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -111,19 +117,20 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile can_prv_ns_callback)(can_callbac
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
+static void r_can_mailbox_id_set(can_extended_cfg_t * p_extend, volatile uint32_t * p_reg, can_mailbox_t * p_id_data);
+static void r_can_mailbox_read(can_instance_ctrl_t * p_ctrl, uint32_t mailbox, can_frame_t * p_frame);
 static void r_can_call_callback(can_instance_ctrl_t * p_ctrl, can_callback_args_t * p_args);
 static void r_can_switch_to_operation_mode(can_instance_ctrl_t * p_ctrl, can_operation_mode_t canm_mode_setting);
 static void r_can_mode_transition(can_instance_ctrl_t * p_ctrl,
                                   can_operation_mode_t  operation_mode,
                                   can_test_mode_t       test_mode);
-static void r_can_bsp_irq_cfg_enable(can_instance_ctrl_t * p_ctrl, IRQn_Type const irq);
 
 /***********************************************************************************************************************
  * ISR prototypes
  **********************************************************************************************************************/
 void can_error_isr(void);
-void can_mailbox_rx_isr(void);
-void can_mailbox_tx_isr(void);
+void can_rx_isr(void);
+void can_tx_isr(void);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -169,7 +176,7 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
 {
     can_instance_ctrl_t * p_ctrl = (can_instance_ctrl_t *) p_api_ctrl;
     fsp_err_t             err    = FSP_SUCCESS;
-    uint32_t              i      = 0;
+
 #if CAN_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_cfg);
@@ -189,10 +196,9 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
     /* Check control block isn't already open */
     FSP_ERROR_RETURN(p_ctrl->open != CAN_OPEN, FSP_ERR_ALREADY_OPEN);
 
-    for (i = 0U; i < (p_extend->mailbox_count / CAN_MAILBOX_GROUP_SIZE); i++)
+    for (uint32_t i = 0U; i < (p_extend->mailbox_count / CAN_MAILBOX_GROUP_SIZE); i++)
     {
-        FSP_ERROR_RETURN(((can_extended_cfg_t *) p_cfg->p_extend)->p_mailbox_mask[i] <= CAN_DEFAULT_MASK,
-                         FSP_ERR_CAN_INIT_FAILED);
+        FSP_ERROR_RETURN(p_extend->p_mailbox_mask[i] <= CAN_DEFAULT_MASK, FSP_ERR_CAN_INIT_FAILED);
     }
 
     /* Check the bit timing settings are within range. */
@@ -263,18 +269,11 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
     can_extended_cfg_t * p_extend = (can_extended_cfg_t *) p_cfg->p_extend;
 #endif
 
-    /* Initialize group mask used to mark the groups mask as valid. */
-    uint32_t group_mask = CAN_GROUP_MASK;
-
-    /* Set all masks to disabled. */
-    uint32_t mask_enabled = 0;
-
-    p_ctrl->p_reg = (R_CAN0_Type *) ((uint32_t) R_CAN0 + (p_cfg->channel * ((uint32_t) R_CAN1 - (uint32_t) R_CAN0)));
+    R_CAN0_Type * p_reg =
+        (R_CAN0_Type *) ((uint32_t) R_CAN0 + (p_cfg->channel * ((uint32_t) R_CAN1 - (uint32_t) R_CAN0)));
+    p_ctrl->p_reg = p_reg;
 
     R_BSP_MODULE_START(FSP_IP_CAN, p_cfg->channel);
-
-    /* Get the extended configuration */
-    can_extended_cfg_t const * const extended_cfg = (can_extended_cfg_t *) p_cfg->p_extend;
 
     /* Initialize the control block */
     p_ctrl->p_cfg = p_cfg;
@@ -285,14 +284,14 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
     p_ctrl->p_callback_memory = NULL;
 
     /* Set the clock source to the user configured source. */
-    p_ctrl->clock_source = extended_cfg->clock_source;
+    p_ctrl->clock_source = p_extend->clock_source;
 
     r_can_mode_transition(p_ctrl, CAN_OPERATION_MODE_RESET, CAN_TEST_MODE_DISABLED);
 
     /* Set up control register fields in reset mode as described in the hardware manual.
      * (See Note 1.under Section 37.2.1 'Control Register (CTLR)' of the RA6M3 manual R01UH0886EJ0100)
      *
-     * MBM: Select normal mailbox mode
+     * MBM: Select requested mailbox mode
      * Select ID mode. Standard or extended
      * Select message overwrite or overrun mode
      * TPM: ID priority mode
@@ -300,111 +299,105 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
      * BOM:    Bus Off recovery mode acc. to IEC11898-1
      * Retain awaken state and reset mode
      */
-    p_ctrl->p_reg->CTLR = (uint16_t) ((uint8_t) (CAN_MAILBOX_MODE_NORMAL << R_CAN0_CTLR_MBM_Pos) |
-                                      (uint8_t) (p_extend->global_id_mode << R_CAN0_CTLR_IDFM_Pos) |
-                                      (uint8_t) (p_extend->message_mode << R_CAN0_CTLR_MLM_Pos) |
-                                      (CAN_ID_PRIORITY_TRANSMIT << R_CAN0_CTLR_TPM_Pos) |
-                                      (CAN_TIMESTAMP_PRESCALER_8BITTIME << R_CAN0_CTLR_TSPS_Pos) |
-                                      (CAN_OPERATION_MODE_RESET << R_CAN0_CTLR_CANM_Pos) |
-                                      (CAN_SLEEP_AWAKEN << R_CAN0_CTLR_SLPM_Pos) |
-                                      (CAN_RECOVERY_NORMAL << R_CAN0_CTLR_BOM_Pos));
+    p_reg->CTLR = (uint16_t) ((CAN_CFG_FIFO_SUPPORT << R_CAN0_CTLR_MBM_Pos) |
+                              (p_extend->global_id_mode << R_CAN0_CTLR_IDFM_Pos) |
+                              (p_extend->message_mode << R_CAN0_CTLR_MLM_Pos) |
+                              (CAN_TIMESTAMP_PRESCALER_8BITTIME << R_CAN0_CTLR_TSPS_Pos) |
+                              (CAN_OPERATION_MODE_RESET << R_CAN0_CTLR_CANM_Pos));
 
     /* Set timing bits */
-    p_ctrl->p_reg->BCR =
-        (uint32_t) (((p_cfg->p_bit_timing->baud_rate_prescaler - 1) & CAN_BAUD_RATE_PRESCALER_MASK) <<
-                    R_CAN0_BCR_BRP_Pos) |
-        ((p_cfg->p_bit_timing->time_segment_1 - 1U) << R_CAN0_BCR_TSEG1_Pos) |
-        ((p_cfg->p_bit_timing->time_segment_2 - 1U) << R_CAN0_BCR_TSEG2_Pos) |
-        (uint32_t) ((p_cfg->p_bit_timing->synchronization_jump_width - 1U) << R_CAN0_BCR_SJW_Pos) |
+    can_bit_timing_cfg_t * p_bit_timing = p_cfg->p_bit_timing;
+    p_reg->BCR =
+        (uint32_t) (((p_bit_timing->baud_rate_prescaler - 1) & CAN_BAUD_RATE_PRESCALER_MASK) << R_CAN0_BCR_BRP_Pos) |
+        ((p_bit_timing->time_segment_1 - 1U) << R_CAN0_BCR_TSEG1_Pos) |
+        ((p_bit_timing->time_segment_2 - 1U) << R_CAN0_BCR_TSEG2_Pos) |
+        (uint32_t) ((p_bit_timing->synchronization_jump_width - 1U) << R_CAN0_BCR_SJW_Pos) |
         (uint32_t) (p_ctrl->clock_source << R_CAN0_BCR_CCLKS_Pos);
 
-    /* Enter halt mode */
+    /* Enter Halt mode */
     r_can_mode_transition(p_ctrl, CAN_OPERATION_MODE_HALT, CAN_TEST_MODE_DISABLED);
+
+    /* Set Error Display mode in Halt mode. */
+    p_reg->ECSR = CAN_ACCUMULATED_ERROR_CODE;
 
     /* Configure mailboxes. */
 
-    /* Clear all mailboxes in Halt mode. */
-    memset((void *) p_ctrl->p_reg->MB, 0, sizeof(R_CAN0_MB_Type) * CAN_MAX_NO_MAILBOXES);
+    /* Clear all mailboxes in Halt mode (FIFO mailboxes are cleared automatically). */
+    memset((void *) p_reg->MB, 0, sizeof(R_CAN0_MB_Type) * CAN_MAX_NO_MAILBOXES);
 
-    /* Set Error Display mode in Halt mode. */
-    p_ctrl->p_reg->ECSR = CAN_ACCUMULATED_ERROR_CODE; // Set error display mode
-
-    /* Set the IDs and groups for each mailbox. */
-    for (i = 0U; i < CAN_MAX_NO_MAILBOXES; i++)
+    /* Set the direction and ID (if applicable) for each mailbox. */
+    for (uint32_t i = 0U; i < CAN_MAX_NO_MAILBOXES; i++)
     {
-        if (i >= p_extend->mailbox_count)
+        uint8_t mctl;
+
+        if ((CAN_MAILBOX_RECEIVE == (p_extend->p_mailbox[i].mailbox_type)) && (i < p_extend->mailbox_count))
         {
-            /* Clear NEWDATA, Mailbox not configured for receive */
-            p_ctrl->p_reg->MCTL_TX[i] = 0x00U;
-            continue;
+            r_can_mailbox_id_set(p_extend, &p_reg->MB[i].ID, &p_extend->p_mailbox[i]);
+
+            /* Configure mailbox for receive */
+            mctl = CAN_MAILBOX_RX;
+        }
+        else
+        {
+            /* Clear NEWDATA if set */
+            mctl = 0U;
         }
 
-        if (CAN_MAILBOX_RECEIVE == (p_extend->p_mailbox[i].mailbox_type))
+        /* Configure mailbox for transmit or receive (MCTL_RX and MCTL_TX are the same array) */
+        p_reg->MCTL_RX[i] = mctl;
+    }
+
+    /* Set all masks to disabled. */
+    uint32_t mask_enabled = 0;
+
+    /* Set the masks for each mailbox group and initialize the mask invalid register. */
+    for (uint32_t i = 0; i < p_extend->mailbox_count / CAN_MAILBOX_GROUP_SIZE; i++)
+    {
+        /*  If the user has defined a mask */
+        if (p_extend->p_mailbox_mask[i] < CAN_DEFAULT_MASK)
         {
-            /* The IDE bit is enabled when the CTLR.IDFM[1:0] bits are 10b (mixed ID mode).
-             * When the IDFM[1:0] bits are not 10b, only write 0 to IDE. It reads as 0.
-             */
-            if ((CAN_GLOBAL_ID_MODE_STANDARD == p_extend->global_id_mode) ||
-                ((p_extend->global_id_mode == CAN_GLOBAL_ID_MODE_MIXED) &&
-                 (p_extend->p_mailbox[i].id_mode == CAN_ID_MODE_STANDARD)))
+            uint32_t mask = p_extend->p_mailbox_mask[i];
+
+            /* In Mixed ID mode the Standard ID mask (SID) is the upper 11 bits of the full Extended ID (SID+XID) */
+            if (CAN_GLOBAL_ID_MODE_STANDARD == p_extend->global_id_mode)
             {
-                p_ctrl->p_reg->MB[i].ID = ((uint32_t) (0U << R_CAN0_MB_ID_IDE_Pos) |
-                                           (uint32_t) (p_extend->p_mailbox[i].frame_type << R_CAN0_MB_ID_RTR_Pos) |
-                                           (uint32_t) ((p_extend->p_mailbox[i].mailbox_id & CAN_SID_MASK) <<
-                                                       R_CAN0_MB_ID_SID_Pos));
-            }
-            else
-            {
-                uint32_t ide = ((p_extend->global_id_mode == CAN_GLOBAL_ID_MODE_MIXED) &&
-                                p_extend->p_mailbox[i].id_mode) ? 1U : 0U;
-                p_ctrl->p_reg->MB[i].ID = ((ide << R_CAN0_MB_ID_IDE_Pos) |
-                                           (uint32_t) (p_extend->p_mailbox[i].frame_type << R_CAN0_MB_ID_RTR_Pos) |
-                                           (uint32_t) ((p_extend->p_mailbox[i].mailbox_id & CAN_XID_MASK) <<
-                                                       R_CAN0_MB_ID_EID_Pos));
+                /* Set standard ID mask. Set unused bits low */
+                mask = (mask & CAN_SID_MASK) << R_CAN0_MB_ID_SID_Pos;
             }
 
-            /* Clear NEWDATA, Mailbox configured for receive */
-            p_ctrl->p_reg->MCTL_RX[i] = CAN_MAILBOX_RX;
-        }
+            p_reg->MKR[i] = mask;
 
-        if (CAN_MAILBOX_TRANSMIT == (p_extend->p_mailbox[i].mailbox_type))
-        {
-            /* Clear NEWDATA, Mailbox not configured for receive */
-            p_ctrl->p_reg->MCTL_TX[i] = 0x00U;
-        }
-
-        /* Set the masks for each mailbox group and initialize the mask invalid register. */
-
-        /* Set mask for each group of mailboxes the user is using */
-        if (i < (p_extend->mailbox_count / CAN_MAILBOX_GROUP_SIZE))
-        {
-            /*  If the user has defined a mask */
-            if (extended_cfg->p_mailbox_mask[i] < CAN_DEFAULT_MASK)
-            {
-                /* In Mixed ID mode the Standard ID mask (SID) is the upper 11 bits of the full Extended ID (SID+XID) */
-                if (CAN_GLOBAL_ID_MODE_STANDARD == p_extend->global_id_mode)
-                {
-                    /* Set standard ID mask. Set unused bits high */
-                    p_ctrl->p_reg->MKR[i] = CAN_DEFAULT_MASK &
-                                            ((extended_cfg->p_mailbox_mask[i] & CAN_SID_MASK) << R_CAN0_MB_ID_SID_Pos);
-                }
-                else
-                {
-                    /* Set extended ID mask. Set unused bits high */
-                    p_ctrl->p_reg->MKR[i] = (extended_cfg->p_mailbox_mask[i] & CAN_XID_MASK);
-                }
-
-                /* Enable the mask for this group */
-                mask_enabled |= group_mask;
-            }
-
-            /* Shift the group mask for marking the mailbox masks as enabled */
-            group_mask = group_mask << CAN_MAILBOX_GROUP_SIZE;
+            /* Enable the mask for this group */
+            mask_enabled |= CAN_GROUP_MASK << (i << 2);
         }
     }
 
     /* Set the Mask as invalid for mailboxes that do not use the mask. */
-    p_ctrl->p_reg->MKIVLR = ~(mask_enabled);
+    p_reg->MKIVLR = ~(mask_enabled);
+
+#if CAN_CFG_FIFO_SUPPORT
+
+    /* Get pointer to RX FIFO configuration */
+    can_rx_fifo_cfg_t * p_rx_fifo_cfg = p_extend->p_rx_fifo_cfg;
+
+    /* Set RX FIFO ID and mask registers */
+    r_can_mailbox_id_set(p_extend, &p_reg->FIDCR[0], &p_rx_fifo_cfg->rx_fifo_id1);
+    r_can_mailbox_id_set(p_extend, &p_reg->FIDCR[1], &p_rx_fifo_cfg->rx_fifo_id2);
+
+    uint32_t mask1 = p_rx_fifo_cfg->rx_fifo_mask1;
+    uint32_t mask2 = p_rx_fifo_cfg->rx_fifo_mask2;
+
+    /* In Mixed ID mode the Standard ID mask (SID) is the upper 11 bits of the full Extended ID (SID+XID) */
+    if (CAN_GLOBAL_ID_MODE_STANDARD == p_extend->global_id_mode)
+    {
+        /* Set standard ID mask. Set unused bits low */
+        mask1 = (mask1 & CAN_SID_MASK) << R_CAN0_MB_ID_SID_Pos;
+        mask2 = (mask2 & CAN_SID_MASK) << R_CAN0_MB_ID_SID_Pos;
+    }
+
+    p_reg->MKR[6] = mask1;
+    p_reg->MKR[7] = mask2;
+#endif
 
     /* Go to normal operation. */
     r_can_mode_transition(p_ctrl, CAN_OPERATION_MODE_NORMAL, CAN_TEST_MODE_DISABLED);
@@ -413,17 +406,37 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
 
     /* 'Set the TSRC bit to 1 in CAN operation mode.' - Refer hardware manual (see Section 37.2.1
      * 'Control Register (CTLR)'- 'Note 4' of the RA4M1 manual R01UH0886EJ0100). */
-    p_ctrl->p_reg->CTLR_b.TSRC = CAN_TIMESTAMP_RESET; /* Set Timestamp counter reset command */
-    FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CTLR_b.TSRC, !CAN_TIMESTAMP_RESET);
+    p_reg->CTLR_b.TSRC = CAN_TIMESTAMP_RESET; /* Set Timestamp counter reset command */
+    FSP_HARDWARE_REGISTER_WAIT(p_reg->CTLR_b.TSRC, !CAN_TIMESTAMP_RESET);
 
     /* If successful, Lookup and store IRQ numbers. Enable interrupts. */
-    r_can_bsp_irq_cfg_enable(p_ctrl, p_cfg->error_irq);
-    r_can_bsp_irq_cfg_enable(p_ctrl, p_cfg->rx_irq);
-    r_can_bsp_irq_cfg_enable(p_ctrl, p_cfg->tx_irq);
+    R_BSP_IrqCfgEnable(p_cfg->error_irq, p_cfg->ipl, p_ctrl);
+    R_BSP_IrqCfgEnable(p_cfg->rx_irq, p_cfg->ipl, p_ctrl);
+    R_BSP_IrqCfgEnable(p_cfg->tx_irq, p_cfg->ipl, p_ctrl);
 
     /* Error-Warning | Error-Passive | Bus-Off Entry | Bus-Off Recovery | Overrun */
-    p_ctrl->p_reg->EIER = CAN_ERROR_INTERRUPTS_ENABLE;
-    p_ctrl->p_reg->MIER = CAN_TX_RX_INTERRUPTS_ENABLE; // Enable interrupts for all mailboxes, transmit and receive
+    p_reg->EIER = CAN_ERROR_INTERRUPTS_ENABLE;
+
+#if CAN_CFG_FIFO_SUPPORT
+
+    /* Get pointer to FIFO interrupt config */
+    can_fifo_interrupt_cfg_t const * p_fifo_int_cfg = p_extend->p_fifo_int_cfg;
+
+    /* Enable interrupts */
+    R_BSP_IrqCfgEnable(p_fifo_int_cfg->rx_fifo_irq, p_cfg->ipl, p_ctrl);
+    R_BSP_IrqCfgEnable(p_fifo_int_cfg->tx_fifo_irq, p_cfg->ipl, p_ctrl);
+
+    /* Set FIFO interrupt mode and enable mailbox interrupts */
+    p_reg->MIER = p_fifo_int_cfg->fifo_int_mode | CAN_TX_RX_INTERRUPTS_ENABLE_FIFO;
+
+    /* Set FIFO enable bits */
+    p_reg->TFCR = 1U;
+    p_reg->RFCR = 1U;
+#else
+
+    /* Set interrupt enable bits */
+    p_reg->MIER = CAN_TX_RX_INTERRUPTS_ENABLE;
+#endif
 
     /* If successful, Mark the control block as open */
     p_ctrl->open = CAN_OPEN;
@@ -452,8 +465,25 @@ fsp_err_t R_CAN_Close (can_ctrl_t * const p_api_ctrl)
     R_BSP_IrqDisable(p_ctrl->p_cfg->rx_irq);
     R_BSP_IrqDisable(p_ctrl->p_cfg->tx_irq);
 
-    p_ctrl->p_reg->EIER = CAN_ERROR_INTERRUPTS_DISABLE;
-    p_ctrl->p_reg->MIER = CAN_TX_RX_INTERRUPTS_DISABLE;
+#if CAN_CFG_FIFO_SUPPORT
+    can_extended_cfg_t             * p_extend       = (can_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    can_fifo_interrupt_cfg_t const * p_fifo_int_cfg = p_extend->p_fifo_int_cfg;
+    R_BSP_IrqDisable(p_fifo_int_cfg->rx_fifo_irq);
+    R_BSP_IrqDisable(p_fifo_int_cfg->tx_fifo_irq);
+#endif
+
+    R_CAN0_Type * p_reg = p_ctrl->p_reg;
+
+#if CAN_CFG_FIFO_SUPPORT
+
+    /* Clear FIFO enable bits */
+    p_reg->TFCR = 0U;
+    p_reg->RFCR = 0U;
+#endif
+
+    /* Clear interrupt enable bits */
+    p_reg->EIER = 0U;
+    p_reg->MIER = 0U;
 
     R_BSP_MODULE_STOP(FSP_IP_CAN, p_ctrl->p_cfg->channel);
 
@@ -469,6 +499,7 @@ fsp_err_t R_CAN_Close (can_ctrl_t * const p_api_ctrl)
  * @retval FSP_SUCCESS                      Operation succeeded.
  * @retval FSP_ERR_NOT_OPEN                 Control block not open.
  * @retval FSP_ERR_CAN_TRANSMIT_NOT_READY   Transmit in progress, cannot write data at this time.
+ * @retval FSP_ERR_CAN_TRANSMIT_FIFO_FULL   Transmit FIFO is full.
  * @retval FSP_ERR_CAN_RECEIVE_MAILBOX      Mailbox is setup for receive and cannot send.
  * @retval FSP_ERR_INVALID_ARGUMENT         Data length or frame type invalid.
  * @retval FSP_ERR_ASSERTION                Null pointer presented
@@ -483,56 +514,74 @@ fsp_err_t R_CAN_Write (can_ctrl_t * const p_api_ctrl, uint32_t mailbox, can_fram
     FSP_ERROR_RETURN(p_ctrl->open == CAN_OPEN, FSP_ERR_NOT_OPEN);
 
     can_extended_cfg_t * p_extend = (can_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+ #if CAN_CFG_FIFO_SUPPORT
+    FSP_ERROR_RETURN(mailbox < p_extend->mailbox_count || (mailbox == CAN_MAILBOX_ID_TX_FIFO),
+                     FSP_ERR_INVALID_ARGUMENT);
+ #else
     FSP_ERROR_RETURN(mailbox < p_extend->mailbox_count, FSP_ERR_INVALID_ARGUMENT);
+ #endif
 
-    FSP_ERROR_RETURN(1U != p_ctrl->p_reg->MCTL_TX_b[mailbox].RECREQ, FSP_ERR_CAN_RECEIVE_MAILBOX);
+    R_CAN0_Type * p_reg = p_ctrl->p_reg;
+    FSP_ERROR_RETURN(1U != p_reg->MCTL_TX_b[mailbox].RECREQ, FSP_ERR_CAN_RECEIVE_MAILBOX);
 
     FSP_ERROR_RETURN((p_frame->data_length_code <= CAN_MAX_DATA_LENGTH), FSP_ERR_INVALID_ARGUMENT);
 #else
     can_extended_cfg_t * p_extend = (can_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    R_CAN0_Type        * p_reg    = p_ctrl->p_reg;
 #endif
 
-    uint32_t i;
-    FSP_ERROR_RETURN(0U == p_ctrl->p_reg->MCTL_TX_b[mailbox].TRMREQ, FSP_ERR_CAN_TRANSMIT_NOT_READY);
+#if CAN_CFG_FIFO_SUPPORT
+    if (CAN_MAILBOX_ID_TX_FIFO == mailbox)
+    {
+        /* Check if FIFO is full */
+        FSP_ERROR_RETURN(1U != p_reg->TFCR_b.TFFST, FSP_ERR_CAN_TRANSMIT_FIFO_FULL);
+    }
+    else
+#endif
+    {
+        /* Check if MB is ready */
+        FSP_ERROR_RETURN(0U == p_reg->MCTL_TX_b[mailbox].TRMREQ, FSP_ERR_CAN_TRANSMIT_NOT_READY);
+    }
 
     /* Setup the frame to be transmitted. */
 
-    /* Set the ID based on the ID mode */
-    if ((CAN_GLOBAL_ID_MODE_STANDARD == p_extend->global_id_mode) ||
-        ((p_extend->global_id_mode == CAN_GLOBAL_ID_MODE_MIXED) &&
-         (p_frame->id_mode == CAN_ID_MODE_STANDARD)))
-    {
-        p_ctrl->p_reg->MB[mailbox].ID = ((uint32_t) (0U << R_CAN0_MB_ID_IDE_Pos) |
-                                         (uint32_t) (p_frame->type << R_CAN0_MB_ID_RTR_Pos) |
-                                         (uint32_t) ((p_frame->id & CAN_SID_MASK) << R_CAN0_MB_ID_SID_Pos));
-    }
-    else
-    {
-        uint32_t ide = ((p_extend->global_id_mode == CAN_GLOBAL_ID_MODE_MIXED) && p_frame->id_mode) ? 1U : 0U;
-        p_ctrl->p_reg->MB[mailbox].ID = ((ide << R_CAN0_MB_ID_IDE_Pos) |
-                                         (uint32_t) (p_frame->type << R_CAN0_MB_ID_RTR_Pos) |
-                                         (uint32_t) ((p_frame->id & CAN_XID_MASK) << R_CAN0_MB_ID_EID_Pos));
-    }
+    /* Set the ID register */
+    r_can_mailbox_id_set(p_extend, &p_reg->MB[mailbox].ID, (can_mailbox_t *) p_frame);
 
     /* Put mailbox data length code */
-    p_ctrl->p_reg->MB[mailbox].DL_b.DLC = (p_frame->data_length_code & 0x0FU);
+    p_reg->MB[mailbox].DL_b.DLC = (p_frame->data_length_code & 0x0FU);
 
     /* Put mailbox data. */
-    for (i = 0U; i < p_frame->data_length_code; i++)
+    uint32_t  len    = p_frame->data_length_code;
+    uint8_t * p_dest = (uint8_t *) p_reg->MB[mailbox].D;
+    uint8_t * p_src  = p_frame->data;
+    while (len--)
     {
-        p_ctrl->p_reg->MB[mailbox].D[i] = p_frame->data[i];
+        *p_dest++ = *p_src++;
     }
 
-    /* Transmit the frame */
-    p_ctrl->p_reg->MCTL_TX[mailbox] = CAN_MAILBOX_TX;
+#if CAN_CFG_FIFO_SUPPORT
+    if (CAN_MAILBOX_ID_TX_FIFO == mailbox)
+    {
+        /* Increment the FIFO pointer */
+        p_reg->TFPCR = UINT8_MAX;
+    }
+    else
+#endif
+    {
+        /* Transmit the frame */
+        p_reg->MCTL_TX[mailbox] = CAN_MAILBOX_TX;
+    }
 
     return FSP_SUCCESS;
 }
 
 /***************************************************************************************************************//**
- * @ref can_api_t::read is not supported on CAN.
+ * Read data from a mailbox or FIFO.
  *
- * @retval FSP_ERR_UNSUPPORTED              Function not supported in this implementation.
+ * @note This function is not supported.
+ *
+ * @retval FSP_ERR_UNSUPPORTED              Function not supported.
  *****************************************************************************************************************/
 fsp_err_t R_CAN_Read (can_ctrl_t * const p_api_ctrl, uint32_t mailbox, can_frame_t * const p_frame)
 {
@@ -540,6 +589,7 @@ fsp_err_t R_CAN_Read (can_ctrl_t * const p_api_ctrl, uint32_t mailbox, can_frame
     FSP_PARAMETER_NOT_USED(mailbox);
     FSP_PARAMETER_NOT_USED(p_frame);
 
+    /* Normal mailbox mode is interrupt-driven only. */
     return FSP_ERR_UNSUPPORTED;
 }
 
@@ -589,16 +639,18 @@ fsp_err_t R_CAN_InfoGet (can_ctrl_t * const p_api_ctrl, can_info_t * const p_inf
     FSP_ERROR_RETURN(p_ctrl->open == CAN_OPEN, FSP_ERR_NOT_OPEN);
 #endif
 
-    p_info->status               = (can_status_t) p_ctrl->p_reg->STR;                  // Status register value
-    p_info->error_count_receive  = p_ctrl->p_reg->RECR;                                // Report receive error count
-    p_info->error_count_transmit = p_ctrl->p_reg->TECR;                                // Report transmit error count
-    p_info->error_code           = (can_error_t) p_ctrl->p_reg->ECSR & CAN_ERROR_MASK; // Report error code
+    R_CAN0_Type * p_reg = p_ctrl->p_reg;
+
+    p_info->status               = (can_status_t) p_reg->STR;                  // Status register value
+    p_info->error_count_receive  = p_reg->RECR;                                // Report receive error count
+    p_info->error_count_transmit = p_reg->TECR;                                // Report transmit error count
+    p_info->error_code           = (can_error_t) p_reg->ECSR & CAN_ERROR_MASK; // Report error code
 
     /* Since the error flags were read, we clear them to ensure that we won't read them again
      * Because register is volatile, we clear only the flags that we already read. Preserve the value
      * of EDPM bit. Clear error bits by writing 0 to bits that were found to be 1
      */
-    p_ctrl->p_reg->ECSR = (uint8_t) (p_info->error_code) ^ CAN_ERROR_MASK;
+    p_reg->ECSR = (uint8_t) (p_info->error_code) ^ CAN_ERROR_MASK;
 
     return FSP_SUCCESS;
 }
@@ -660,6 +712,113 @@ fsp_err_t R_CAN_CallbackSet (can_ctrl_t * const          p_api_ctrl,
 /***********************************************************************************************************************
  * Private Functions
  **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ * Sets the ID register for a mailbox or FIFO.
+ *
+ * @param[in]     p_extend     Pointer to CAN extended config
+ * @param[in]     p_reg        Pointer to target ID register
+ * @param[in]     p_id_data    Pointer to ID settings
+ **********************************************************************************************************************/
+static void r_can_mailbox_id_set (can_extended_cfg_t * p_extend, volatile uint32_t * p_reg, can_mailbox_t * p_id_data)
+{
+    can_global_id_mode_t global_mode = p_extend->global_id_mode;
+
+    uint32_t ide = 0U;
+    uint32_t id;
+
+    if ((CAN_GLOBAL_ID_MODE_STANDARD == global_mode) ||
+        ((global_mode == CAN_GLOBAL_ID_MODE_MIXED) && (p_id_data->id_mode == CAN_ID_MODE_STANDARD)))
+    {
+        id = (uint32_t) ((p_id_data->mailbox_id & CAN_SID_MASK) << R_CAN0_MB_ID_SID_Pos);
+    }
+    else
+    {
+        if ((global_mode == CAN_GLOBAL_ID_MODE_MIXED) && (p_id_data->id_mode == CAN_ID_MODE_EXTENDED))
+        {
+            /* The IDE bit is only set when configuring an extended ID mailbox in Mixed ID mode. */
+            ide = R_CAN0_MB_ID_IDE_Msk;
+        }
+
+        id = p_id_data->mailbox_id & CAN_XID_MASK;
+    }
+
+    uint32_t frame_type = (uint32_t) (p_id_data->frame_type << R_CAN0_MB_ID_RTR_Pos);
+
+    *p_reg = (ide | frame_type | id);
+}
+
+/*******************************************************************************************************************//**
+ * Read a mailbox or FIFO.
+ *
+ * @param[in]     p_ctrl       Pointer to CAN control struct
+ * @param[in]     mailbox      CAN mailbox ID
+ * @param[in]     p_frame      Pointer to destination frame
+ **********************************************************************************************************************/
+static inline void r_can_mailbox_read (can_instance_ctrl_t * p_ctrl, uint32_t mailbox, can_frame_t * p_frame)
+{
+    volatile R_CAN0_Type * p_reg = p_ctrl->p_reg;
+
+    /* Get frame ID. */
+    uint32_t mbox_id = p_reg->MB[mailbox].ID;
+
+    /* Get the frame type */
+    p_frame->type = (can_frame_type_t) ((mbox_id & R_CAN0_MB_ID_RTR_Msk) >> R_CAN0_MB_ID_RTR_Pos);
+
+    /* Get the ID mode */
+    can_extended_cfg_t * p_extend = (can_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    p_frame->id_mode = (can_id_mode_t) ((p_extend->global_id_mode | p_reg->MB[mailbox].ID_b.IDE) & 1);
+
+    /* Get the ID based on the mode */
+    if (CAN_ID_MODE_STANDARD == p_frame->id_mode)
+    {
+        p_frame->id = (mbox_id & R_CAN0_MB_ID_SID_Msk) >> R_CAN0_MB_ID_SID_Pos;
+    }
+    else
+    {
+        p_frame->id = mbox_id & (R_CAN0_MB_ID_SID_Msk | R_CAN0_MB_ID_EID_Msk);
+    }
+
+    /* Get the frame data length code */
+    p_frame->data_length_code = p_reg->MB[mailbox].DL_b.DLC;
+
+    /* Refer Note 1 about DLC[3:0] under Section 37.2.6
+     * 'Mailbox Register j (MBj_ID, MBj_DL, MBj_Dm, MBj_TS) (j = 0 to 31; m = 0 to 7)'
+     * of RA6M3 manual R01UH0886EJ010.
+     */
+    if (p_frame->data_length_code > CAN_MAX_DATA_LENGTH)
+    {
+        p_frame->data_length_code = CAN_MAX_DATA_LENGTH;
+    }
+
+    /* Be sure to check data_length_code in calling function */
+    for (uint32_t i = 0U; i < p_frame->data_length_code; i++)
+    {
+        p_frame->data[i] = p_reg->MB[mailbox].D[i]; // Copy receive data to buffer
+    }
+
+#if CAN_CFG_FIFO_SUPPORT
+    if (CAN_MAILBOX_ID_RX_FIFO == mailbox)
+    {
+        /* Increment receive FIFO pointer */
+        p_reg->RFPCR = UINT8_MAX;
+    }
+    else
+#endif
+    {
+        /* Clear rx data flag. Do not modify message-lost flag as this keeps track of
+         * error interrupts to be fired.
+         * This flag will be cleared in the error isr.
+         * Message Lost flag is written as 1 as that has no effect on this bit.
+         * Refer 'Note 1. Write 0 only. Writing 1 has no effect.' under section
+         * '29.2.10 Message Control Register for Receive (MCTL_RXj) (j = 0 to 31)'
+         * or RA6M3 HW manual R01UH0886EJ0100.
+         */
+        p_reg->MCTL_RX[mailbox] = CAN_MAILBOX_RX_MASK_MSGLOST;
+    }
+
+    p_frame->options = 0;
+}
 
 /*******************************************************************************************************************//**
  * Calls user callback.
@@ -734,24 +893,26 @@ void can_error_isr (void)
     can_callback_args_t args    = {0U};
     uint32_t            mailbox = 0U;
 
-    /* Get source of error interrupt. */
-    args.event = (can_event_t) p_ctrl->p_reg->EIFR; // Read Error Interrupt Factor Judge register
+    R_CAN0_Type * p_reg = p_ctrl->p_reg;
 
-    p_ctrl->p_reg->EIFR = 0x00U;                    // Clear Error Interrupt Factor Judge register
+    /* Get source of error interrupt. */
+    args.event = (can_event_t) p_reg->EIFR; // Read Error Interrupt Factor Judge register
+
+    p_reg->EIFR = 0x00U;                    // Clear Error Interrupt Factor Judge register
 
     /* Although NMLST detects both Overwrite and Overrun conditions,
      * in such a scenario this interrupt is fired only when the peripheral is in the overrun mode
      * (Either on its own or manually by setting NVIC_SetPendingIRQ below).
      * The receive_overrun bit may not be checked here.
      */
-    if (p_ctrl->p_reg->STR_b.NMLST)
+    if (p_reg->STR_b.NMLST)
     {
         args.event |= CAN_EVENT_MAILBOX_MESSAGE_LOST;
-        uint8_t saved_msmr = p_ctrl->p_reg->MSMR;          // Save the current MSMR value
-        p_ctrl->p_reg->MSMR = CAN_ERROR_SEARCH;            // search for lowest numbered mailbox with message lost
-        mailbox             = p_ctrl->p_reg->MSSR_b.MBNST; // get mailbox number
-        p_ctrl->p_reg->MSMR = saved_msmr;                  // Restore the previous MSMR value
-        p_ctrl->p_reg->MCTL_RX_b[mailbox].MSGLOST = 0U;    // Clear the error so that NMLST is not set again for an already handled error.
+        uint8_t saved_msmr = p_reg->MSMR;       // Save the current MSMR value
+        p_reg->MSMR = CAN_ERROR_SEARCH;         // search for lowest numbered mailbox with message lost
+        mailbox     = p_reg->MSSR_b.MBNST;      // get mailbox number
+        p_reg->MSMR = saved_msmr;               // Restore the previous MSMR value
+        p_reg->MCTL_RX_b[mailbox].MSGLOST = 0U; // Clear the error so that NMLST is not set again for an already handled error.
     }
 
     args.p_frame   = NULL;
@@ -767,7 +928,7 @@ void can_error_isr (void)
      * if true, fire this interrupt again.
      * Do not re-trigger this interrupt due to message loss in overwrite mode.
      */
-    if (p_ctrl->p_reg->STR_b.NMLST && (CAN_MESSAGE_MODE_OVERWRITE != p_extend->message_mode))
+    if (p_reg->STR_b.NMLST && (CAN_MESSAGE_MODE_OVERWRITE != p_extend->message_mode))
     {
         NVIC_SetPendingIRQ(p_ctrl->p_cfg->error_irq);
     }
@@ -782,7 +943,7 @@ void can_error_isr (void)
  * Saves context if RTOS is used, clears interrupts, calls common receive function
  * and restores context if RTOS is used.
  **********************************************************************************************************************/
-void can_mailbox_rx_isr (void)
+void can_rx_isr (void)
 {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
@@ -793,62 +954,29 @@ void can_mailbox_rx_isr (void)
     can_instance_ctrl_t * p_ctrl = (can_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
     can_callback_args_t args;
-    uint32_t            mailbox    = 0U;
-    uint8_t             saved_msmr = p_ctrl->p_reg->MSMR; // Save the current MSMR value
-    p_ctrl->p_reg->MSMR = CAN_RECEIVE_SEARCH;             // search for lowest numbered &mailbox with message received
-    mailbox             = p_ctrl->p_reg->MSSR_b.MBNST;    // get mailbox number
-    p_ctrl->p_reg->MSMR = saved_msmr;                     // Restore the previous MSMR value
+    uint32_t            mailbox;
 
-    /* Get frame data. */
-    uint32_t i;
-    uint32_t mbox_id = p_ctrl->p_reg->MB[mailbox].ID;
+    R_CAN0_Type * p_reg = p_ctrl->p_reg;
 
-    /* Get the frame type */
-    args.frame.type = (can_frame_type_t) ((mbox_id & R_CAN0_MB_ID_RTR_Msk) >> R_CAN0_MB_ID_RTR_Pos);
-
-    /* Get extended config */
-    can_extended_cfg_t * p_extend = (can_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
-
-    /* Get the ID mode */
-    args.frame.id_mode = (can_id_mode_t) ((p_extend->global_id_mode | p_ctrl->p_reg->MB[mailbox].ID_b.IDE) & 1);
-
-    /* Get the ID based on the mode */
-    if (CAN_ID_MODE_STANDARD == args.frame.id_mode)
+#if CAN_CFG_FIFO_SUPPORT
+    can_extended_cfg_t             * p_extend       = (can_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    can_fifo_interrupt_cfg_t const * p_fifo_int_cfg = p_extend->p_fifo_int_cfg;
+    if (irq == p_fifo_int_cfg->rx_fifo_irq)
     {
-        args.frame.id = (mbox_id & R_CAN0_MB_ID_SID_Msk) >> R_CAN0_MB_ID_SID_Pos;
+        /* Set the mailbox number to 28 (RX FIFO). */
+        mailbox = CAN_MAILBOX_ID_RX_FIFO;
     }
     else
+#endif
     {
-        args.frame.id = mbox_id & (R_CAN0_MB_ID_SID_Msk | R_CAN0_MB_ID_EID_Msk);
+        uint8_t saved_msmr = p_reg->MSMR;  // Save the current MSMR value
+        p_reg->MSMR = CAN_RECEIVE_SEARCH;  // search for lowest numbered &mailbox with message received
+        mailbox     = p_reg->MSSR_b.MBNST; // get mailbox number
+        p_reg->MSMR = saved_msmr;          // Restore the previous MSMR value
     }
 
-    /* Get the frame data length code */
-    args.frame.data_length_code = p_ctrl->p_reg->MB[mailbox].DL_b.DLC;
-
-    /* Refer Note 1 about DLC[3:0] under Section 37.2.6
-     * 'Mailbox Register j (MBj_ID, MBj_DL, MBj_Dm, MBj_TS) (j = 0 to 31; m = 0 to 7)'
-     * of RA6M3 manual R01UH0886EJ010.
-     */
-    if (args.frame.data_length_code > CAN_MAX_DATA_LENGTH)
-    {
-        args.frame.data_length_code = CAN_MAX_DATA_LENGTH;
-    }
-
-    /* Be sure to check data_length_code in calling function */
-    for (i = 0U; i < args.frame.data_length_code; i++)
-    {
-        args.frame.data[i] = p_ctrl->p_reg->MB[mailbox].D[i]; // Copy receive data to buffer
-    }
-
-    /* Clear rx data flag. Do not modify message-lost flag as this keeps track of
-     * error interrupts to be fired.
-     * This flag will be cleared in the error isr.
-     * Message Lost flag is written as 1 as that has no effect on this bit.
-     * Refer 'Note 1. Write 0 only. Writing 1 has no effect.' under section
-     * '29.2.10 Message Control Register for Receive (MCTL_RXj) (j = 0 to 31)'
-     * or RA6M3 HW manual R01UH0886EJ0100.
-     */
-    p_ctrl->p_reg->MCTL_RX[mailbox] = CAN_MAILBOX_RX_MASK_MSGLOST;
+    /* Read frame to args */
+    r_can_mailbox_read(p_ctrl, mailbox, &args.frame);
 
     args.p_frame = &args.frame;
     args.event   = CAN_EVENT_RX_COMPLETE;
@@ -860,10 +988,23 @@ void can_mailbox_rx_isr (void)
     args.p_context = p_ctrl->p_context;
     r_can_call_callback(p_ctrl, &args);
 
-    /* Check for mailboxes with receive data, if true, fire this interrupt again */
-    if ((p_ctrl->p_reg->STR_b.NDST))
+#if CAN_CFG_FIFO_SUPPORT
+    if (irq == p_fifo_int_cfg->rx_fifo_irq)
     {
-        NVIC_SetPendingIRQ(p_ctrl->p_cfg->rx_irq);
+        if (!p_reg->RFCR_b.RFEST)
+        {
+            /* Reset FIFO IRQ if the FIFO is not empty. */
+            NVIC_SetPendingIRQ(irq);
+        }
+    }
+    else
+#endif
+    {
+        if (p_reg->STR_b.NDST)
+        {
+            /* Reset MB IRQ if another MB has requested it. */
+            NVIC_SetPendingIRQ(irq);
+        }
     }
 
     /* Restore context if RTOS is used */
@@ -876,7 +1017,7 @@ void can_mailbox_rx_isr (void)
  * Saves context if RTOS is used, clears interrupts, calls common transmit function
  * and restores context if RTOS is used.
  **********************************************************************************************************************/
-void can_mailbox_tx_isr (void)
+void can_tx_isr (void)
 {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
@@ -886,36 +1027,62 @@ void can_mailbox_tx_isr (void)
     IRQn_Type             irq    = R_FSP_CurrentIrqGet();
     can_instance_ctrl_t * p_ctrl = (can_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    /* Check CAN transmit. */
     can_callback_args_t args;
-    uint32_t            mailbox    = 0U;
-    uint8_t             saved_msmr = p_ctrl->p_reg->MSMR; // Save the current MSMR value
-    p_ctrl->p_reg->MSMR = CAN_TRANSMIT_SEARCH;            // search for lowest numbered &mailbox with message transmitted
-    mailbox             = p_ctrl->p_reg->MSSR_b.MBNST;    // get mailbox number
-    p_ctrl->p_reg->MSMR = saved_msmr;                     // Restore the previous MSMR value
+    args.event = (can_event_t) 0;
 
-    /* Clear SENTDATA.
-     * Do a byte-write to avoid read-modify-write with HW writing another bit in between.
-     * TRMREQ must be set to 0 (or will send again).
-     * Do it twice since bits SENTDATA and TRMREQ cannot be set to 0 simultaneously
-     * Refer Section 29.2.9 'Message Control Register for Transmit (MCTL_TXj) (j = 0 to 31)'
-     * under "SENTDATA flag (Transmission Complete Flag)" of RA6M3 HW manual R01UH0886EJ0100.
-     */
-    p_ctrl->p_reg->MCTL_TX[mailbox] = CAN_TRANSMIT_CLEAR;
-    p_ctrl->p_reg->MCTL_TX[mailbox] = CAN_TRANSMIT_CLEAR; // Clear SENTDATA and TRMREQ.
+    R_CAN0_Type * p_reg = p_ctrl->p_reg;
 
-    /* Save the transmit mailbox number. */
-    args.mailbox = mailbox;
+#if CAN_CFG_FIFO_SUPPORT
+    can_extended_cfg_t             * p_extend       = (can_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    can_fifo_interrupt_cfg_t const * p_fifo_int_cfg = p_extend->p_fifo_int_cfg;
+
+    if (irq == p_fifo_int_cfg->tx_fifo_irq)
+    {
+        /* Set the mailbox number to 24 (TX FIFO). */
+        args.mailbox = CAN_MAILBOX_ID_TX_FIFO;
+
+        if (p_fifo_int_cfg->fifo_int_mode & R_CAN0_MIER_FIFO_MB25_Msk)
+        {
+            /* When MB25 is set the TX FIFO ISR only fires when the last message has been transmitted. */
+            args.event = CAN_EVENT_TX_FIFO_EMPTY;
+        }
+    }
+    else
+#endif
+    {
+        uint8_t saved_msmr = p_reg->MSMR;             // Save the current MSMR value
+        p_reg->MSMR = CAN_TRANSMIT_SEARCH;            // search for lowest numbered &mailbox with message transmitted
+        uint32_t mailbox = p_reg->MSSR_b.MBNST;       // get mailbox number
+        p_reg->MSMR = saved_msmr;                     // Restore the previous MSMR value
+
+        /* Clear SENTDATA.
+         * Do a byte-write to avoid read-modify-write with HW writing another bit in between.
+         * TRMREQ must be set to 0 (or will send again).
+         * Do it twice since bits SENTDATA and TRMREQ cannot be set to 0 simultaneously
+         * Refer Section 29.2.9 'Message Control Register for Transmit (MCTL_TXj) (j = 0 to 31)'
+         * under "SENTDATA flag (Transmission Complete Flag)" of RA6M3 HW manual R01UH0886EJ0100.
+         */
+        p_reg->MCTL_TX[mailbox] = CAN_TRANSMIT_CLEAR;
+        p_reg->MCTL_TX[mailbox] = CAN_TRANSMIT_CLEAR; // Clear SENTDATA and TRMREQ.
+
+        /* Save the transmit mailbox number. */
+        args.mailbox = mailbox;
+    }
 
     /*  Set event argument to transmit complete. */
-    args.event     = CAN_EVENT_TX_COMPLETE;
+    args.event |= CAN_EVENT_TX_COMPLETE;
+
     args.channel   = p_ctrl->p_cfg->channel;
     args.p_context = p_ctrl->p_context;
     args.p_frame   = NULL;
     r_can_call_callback(p_ctrl, &args);
 
     /* Check for other mailboxes with pending transmit complete flags. */
-    if ((p_ctrl->p_reg->STR_b.SDST))
+#if CAN_CFG_FIFO_SUPPORT
+    if ((irq != p_fifo_int_cfg->tx_fifo_irq) && p_reg->STR_b.SDST)
+#else
+    if (p_reg->STR_b.SDST)
+#endif
     {
         NVIC_SetPendingIRQ(p_ctrl->p_cfg->tx_irq);
     }
@@ -930,11 +1097,12 @@ void can_mailbox_tx_isr (void)
  * @param[in]  operation_mode    - destination operation mode
  * @param[in]  test_mode         - destination test mode
  **********************************************************************************************************************/
-
 static void r_can_mode_transition (can_instance_ctrl_t * p_ctrl,
                                    can_operation_mode_t  operation_mode,
                                    can_test_mode_t       test_mode)
 {
+    R_CAN0_Type * p_reg = p_ctrl->p_reg;
+
     if (p_ctrl->test_mode != test_mode)
     {
         /* Switch to halt mode */
@@ -942,7 +1110,7 @@ static void r_can_mode_transition (can_instance_ctrl_t * p_ctrl,
 
         /* 'Write to TCR in CAN halt mode only.' - Refer hardware manual (see Section 37.2.26
          * 'Test Control Register (TCR)' of the RA6M3 manual R01UH0886EJ0100). */
-        p_ctrl->p_reg->TCR = (uint8_t) test_mode; /* Destination test mode */
+        p_reg->TCR = (uint8_t) test_mode; /* Destination test mode */
 
         /* Set current test mode. */
         p_ctrl->test_mode      = test_mode;
@@ -959,8 +1127,8 @@ static void r_can_mode_transition (can_instance_ctrl_t * p_ctrl,
              * Refer hardware manual (see Section 37.3.3
              * 'CAN Sleep Mode' of the RA6M3 manual R01UH0886EJ0100)
              */
-            p_ctrl->p_reg->CTLR_b.SLPM = CAN_SLEEP_SLEEP;
-            FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->STR_b.SLPST, 1U);
+            p_reg->CTLR_b.SLPM = CAN_SLEEP_SLEEP;
+            FSP_HARDWARE_REGISTER_WAIT(p_reg->STR_b.SLPST, 1U);
         }
         else
         {
@@ -979,20 +1147,12 @@ static void r_can_mode_transition (can_instance_ctrl_t * p_ctrl,
  **********************************************************************************************************************/
 static void r_can_switch_to_operation_mode (can_instance_ctrl_t * p_ctrl, can_operation_mode_t canm_mode_setting)
 {
-    p_ctrl->p_reg->CTLR_b.SLPM = CAN_SLEEP_AWAKEN;
-    p_ctrl->p_reg->CTLR_b.CANM = (uint16_t) (canm_mode_setting & CAN_CANM_SETTING_MASK);
+    R_CAN0_Type * p_reg = p_ctrl->p_reg;
+
+    p_reg->CTLR_b.SLPM = CAN_SLEEP_AWAKEN;
+    p_reg->CTLR_b.CANM = (uint16_t) (canm_mode_setting & CAN_CANM_SETTING_MASK);
 
     /* Refer notes under Section '29.2.1 Control Register (CTLR)' of RA6M3 HW manual R01UH0886EJ0100 */
-    FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->STR & CAN_CHECK_MODE_MASK),
+    FSP_HARDWARE_REGISTER_WAIT((p_reg->STR & CAN_CHECK_MODE_MASK),
                                (uint32_t) ((uint8_t) canm_mode_setting << R_CAN0_CTLR_CANM_Pos));
-}
-
-/*******************************************************************************************************************//**
- * Enable CAN interrupt
- * @param[in]  p_ctrl            - pointer to control structure
- * @param[in]  irq               - IRQ number of the interrupt to be enabled
- **********************************************************************************************************************/
-static void r_can_bsp_irq_cfg_enable (can_instance_ctrl_t * p_ctrl, IRQn_Type const irq)
-{
-    R_BSP_IrqCfgEnable(irq, p_ctrl->p_cfg->ipl, p_ctrl);
 }

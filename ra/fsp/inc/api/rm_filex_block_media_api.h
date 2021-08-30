@@ -66,6 +66,7 @@ typedef struct st_rm_filex_block_media_callback_args
     void const           * p_context;  ///< Placeholder for user data.
 } rm_filex_block_media_callback_args_t;
 
+/** Block media configuration structure */
 typedef struct st_rm_filex_block_media_cfg
 {
     rm_block_media_instance_t      * p_lower_lvl_block_media;           ///< Lower level block media pointer
@@ -74,6 +75,7 @@ typedef struct st_rm_filex_block_media_cfg
     void * p_extend;
 } rm_filex_block_media_cfg_t;
 
+/** Block media control structure */
 typedef void rm_filex_block_media_ctrl_t;
 
 /** FileX block media functions implemented at the HAL layer will follow this API. */

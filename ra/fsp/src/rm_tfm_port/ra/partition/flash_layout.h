@@ -79,22 +79,23 @@
  * Note: Further documentation of these definitions can be found in the
  * TF-M PS Integration Guide.
  */
-#define PS_FLASH_DEV_NAME                       Driver_QSPI_FLASH0
+#define TFM_HAL_PS_FLASH_DRIVER                 Driver_QSPI_FLASH0
 
 /* In this target the CMSIS driver requires only the offset from the base
  * address instead of the full memory address.
  */
-#define PS_FLASH_AREA_ADDR                      FLASH_PS_AREA_OFFSET
+/* Base address of dedicated flash area for PS */
+#define TFM_HAL_PS_FLASH_AREA_ADDR              FLASH_PS_AREA_OFFSET
 
-/* Dedicated flash area for PS */
-#define PS_FLASH_AREA_SIZE                      FLASH_PS_AREA_SIZE
+/* Size of dedicated flash area for PS */
+#define TFM_HAL_PS_FLASH_AREA_SIZE    FLASH_PS_AREA_SIZE
 #define PS_SECTOR_SIZE                          QSPI_FLASH_AREA_IMAGE_SECTOR_SIZE
 
 /* Number of PS_SECTOR_SIZE per block */
-#define PS_SECTORS_PER_BLOCK                    (0x1)
+#define TFM_HAL_PS_SECTORS_PER_BLOCK                    (0x1)
 
 /* Specifies the smallest flash programmable unit in bytes */
-#define PS_FLASH_PROGRAM_UNIT                   (0x1)
+#define TFM_HAL_PS_PROGRAM_UNIT                   (0x1)
 
 /* The maximum asset size to be stored in the PS area */
 #define PS_MAX_ASSET_SIZE                       (2048)
@@ -109,21 +110,23 @@
  * have internal flash available.
  */
 #define ITS_FLASH_DEV_NAME                      Driver_DFLASH
+#define TFM_HAL_ITS_FLASH_DRIVER                Driver_DFLASH
 
 /* In this target the CMSIS driver requires only the offset from the base
  * address instead of the full memory address.
  */
-#define ITS_FLASH_AREA_ADDR                     FLASH_ITS_AREA_OFFSET
+/* Base address of dedicated flash area for ITS */
+#define TFM_HAL_ITS_FLASH_AREA_ADDR    FLASH_ITS_AREA_OFFSET
 
-/* Dedicated flash area for ITS */
-#define ITS_FLASH_AREA_SIZE                     FLASH_ITS_AREA_SIZE
+/* Size of dedicated flash area for ITS */
+#define TFM_HAL_ITS_FLASH_AREA_SIZE    FLASH_ITS_AREA_SIZE
 #define ITS_SECTOR_SIZE                         DATA_FLASH_AREA_IMAGE_SECTOR_SIZE
 
 /* Number of ITS_SECTOR_SIZE per block */
-#define ITS_SECTORS_PER_BLOCK                   (CFG_TFM_ITS_SECTORS_PER_BLOCK)
+#define TFM_HAL_ITS_SECTORS_PER_BLOCK                   (CFG_TFM_ITS_SECTORS_PER_BLOCK)
 
 /* Specifies the smallest flash programmable unit in bytes */
-#define ITS_FLASH_PROGRAM_UNIT                  (BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE)
+#define TFM_HAL_ITS_PROGRAM_UNIT                  (BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE)
 
 /* The maximum asset size to be stored in the ITS area */
 #define ITS_MAX_ASSET_SIZE                      (CFG_TFM_ITS_MAX_ASSET_SIZE)

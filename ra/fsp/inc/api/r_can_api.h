@@ -79,6 +79,7 @@ typedef enum e_can_event
     CAN_EVENT_RX_COMPLETE          = 1024, ///< Receive complete event.
     CAN_EVENT_TX_COMPLETE          = 2048, ///< Transmit complete event.
     CAN_EVENT_ERR_GLOBAL           = 4096, ///< Global error has occurred.
+    CAN_EVENT_TX_FIFO_EMPTY        = 8192, ///< Transmit FIFO is empty.
 } can_event_t;
 
 /** CAN Operation modes */
@@ -108,8 +109,8 @@ typedef enum e_can_test_mode
 typedef struct st_can_info
 {
     uint32_t status;                   ///< Useful information from the CAN status register.
-    uint32_t rx_mb_status;             ///< CANFD RX Message Buffer New Data flags.
-    uint32_t rx_fifo_status;           ///< CANFD RX FIFO Empty flags.
+    uint32_t rx_mb_status;             ///< RX Message Buffer New Data flags.
+    uint32_t rx_fifo_status;           ///< RX FIFO Empty flags.
     uint8_t  error_count_transmit;     ///< Transmit error count.
     uint8_t  error_count_receive;      ///< Receive error count.
     uint32_t error_code;               ///< Error code, cleared after reading.
@@ -143,8 +144,8 @@ typedef struct st_can_frame
 {
     uint32_t         id;                           ///< CAN ID.
     can_id_mode_t    id_mode;                      ///< Standard or Extended ID (IDE).
-    uint8_t          data_length_code;             ///< CAN Data Length Code (DLC).
     can_frame_type_t type;                         ///< Frame type (RTR).
+    uint8_t          data_length_code;             ///< CAN Data Length Code (DLC).
     uint32_t         options;                      ///< Implementation-specific options.
     uint8_t          data[CAN_DATA_BUFFER_LENGTH]; ///< CAN data.
 } can_frame_t;

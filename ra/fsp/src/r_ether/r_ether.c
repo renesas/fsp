@@ -149,6 +149,11 @@
  ***********************************************************************************************************************/
 
 /***********************************************************************************************************************
+ * Exported global functions (to be accessed by other files)
+ ***********************************************************************************************************************/
+void ether_eint_isr(void);
+
+/***********************************************************************************************************************
  * Exported global variables (to be accessed by other files)
  ***********************************************************************************************************************/
 
@@ -1674,9 +1679,7 @@ static fsp_err_t ether_do_link (ether_instance_ctrl_t * const p_instance_ctrl, c
                      * Enable PAUSE for full duplex link depending on
                      * the pause resolution results
                      */
-                    ether_pause_resolution(local_pause_bits,
-                                           partner_pause_bits,
-                                           &transmit_pause_set,
+                    ether_pause_resolution(local_pause_bits, partner_pause_bits, &transmit_pause_set,
                                            &receive_pause_set);
 
                     if (ETHER_PAUSE_XMIT_ON == transmit_pause_set)
@@ -1824,17 +1827,6 @@ void ether_eint_isr (void)
     status_ecsr = p_reg_etherc->ECSR;
     status_eesr = p_reg_edmac->EESR;
 
-    /* Callback : Interrupt handler */
-    if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
-    {
-        callback_arg.channel     = p_instance_ctrl->p_ether_cfg->channel;
-        callback_arg.event       = ETHER_EVENT_INTERRUPT;
-        callback_arg.status_ecsr = status_ecsr;
-        callback_arg.status_eesr = status_eesr;
-        callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
-        (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
-    }
-
     /* When the ETHERC status interrupt is generated */
     if (status_eesr & ETHER_EDMAC_INTERRUPT_FACTOR_ECI)
     {
@@ -1876,10 +1868,21 @@ void ether_eint_isr (void)
      */
     p_reg_edmac->EESR = status_eesr;      /* Clear EDMAC status bits */
 
+    /* Callback : Interrupt handler */
+    if (NULL != p_instance_ctrl->p_ether_cfg->p_callback)
+    {
+        callback_arg.channel     = p_instance_ctrl->p_ether_cfg->channel;
+        callback_arg.event       = ETHER_EVENT_INTERRUPT;
+        callback_arg.status_ecsr = status_ecsr;
+        callback_arg.status_eesr = status_eesr;
+        callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
+        (*p_instance_ctrl->p_ether_cfg->p_callback)((void *) &callback_arg);
+    }
+
     /* Clear pending interrupt flag to make sure it doesn't fire again
      * after exiting. */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
-}/* End of function ether_eint_isr() */
+}                                      /* End of function ether_eint_isr() */
 
 /***********************************************************************************************************************
  * Function Name: ether_enable_icu

@@ -58,9 +58,18 @@ FSP_HEADER
 /** Data bit width */
 typedef enum e_spi_bit_width
 {
-    SPI_BIT_WIDTH_8_BITS  = (1),       ///< Data bit width is 8 bits byte
-    SPI_BIT_WIDTH_16_BITS = (2),       ///< Data bit width is 16 bits word
-    SPI_BIT_WIDTH_32_BITS = (4)        ///< Data bit width is 32 bits long word
+    SPI_BIT_WIDTH_8_BITS   = (7),          ///< Data bit width is 8 bits byte
+    SPI_BIT_WIDTH_9_BITS   = (8),          ///< Data bit width is 9 bits word
+    SPI_BIT_WIDTH_10_BITS  = (9),          ///< Data bit width is 10 bits word
+    SPI_BIT_WIDTH_11_BITS  = (10),         ///< Data bit width is 11 bits word
+    SPI_BIT_WIDTH_12_BITS  = (11),         ///< Data bit width is 12 bits word
+    SPI_BIT_WIDTH_13_BITS  = (12),         ///< Data bit width is 13 bits word
+    SPI_BIT_WIDTH_14_BITS  = (13),         ///< Data bit width is 14 bits word
+    SPI_BIT_WIDTH_15_BITS  = (14),         ///< Data bit width is 15 bits word
+    SPI_BIT_WIDTH_16_BITS  = (15),         ///< Data bit width is 16 bits word
+    SPI_BIT_WIDTH_20_BITS  = (0),          ///< Data bit width is 20 bits long word
+    SPI_BIT_WIDTH_24_BITS  = (1),          ///< Data bit width is 24 bits long word
+    SPI_BIT_WIDTH_32_BITS  = (3)           ///< Data bit width is 32 bits long word
 } spi_bit_width_t;
 
 /** Master or slave operating mode */

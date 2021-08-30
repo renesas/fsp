@@ -33,14 +33,14 @@
 #if (BSP_CFG_RTOS != 1)
  #if defined(USB_CFG_HCDC_USE)
   #include "r_usb_hcdc_api.h"
-
  #endif                                /* defined(USB_CFG_HCDC_USE) */
 #endif /* #if (BSP_CFG_RTOS != 1) */
 
-#if defined(USB_CFG_HHID_USE)
- #include "r_usb_hhid_api.h"
-
-#endif                                 /* defined(USB_CFG_HHID_USE) */
+#if (BSP_CFG_RTOS != 1)
+ #if defined(USB_CFG_HHID_USE)
+  #include "r_usb_hhid_api.h"
+ #endif                                /* defined(USB_CFG_HHID_USE) */
+#endif                                 /* #if (BSP_CFG_RTOS != 1) */
 
 #if (BSP_CFG_RTOS != 1)
  #if defined(USB_CFG_HMSC_USE)

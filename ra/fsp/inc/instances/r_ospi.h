@@ -95,6 +95,13 @@ typedef enum e_ospi_cs_pulldown_clocks
     OSPI_COMMAND_CS_PULLDOWN_CLOCKS_5      ///< 4.5 clocks DOPI mode; 5 Clocks all other modes
 } ospi_command_cs_pulldown_clocks_t;
 
+/* OSPI DOPI byte order options */
+typedef enum e_ospi_dopi_byte_order
+{
+    OSPI_DOPI_BYTE_ORDER_0123,         ///< DOPI byte order byte 0, byte 1, byte 2, byte 3
+    OSPI_DOPI_BYTE_ORDER_1032          ///< DOPI byte order byte 1, byte 0, byte 3, byte 2
+} ospi_dopi_byte_order_t;
+
 /* Memory mapped timing */
 typedef struct st_ospi_timing_setting
 {
@@ -128,6 +135,7 @@ typedef struct st_ospi_extended_cfg
     ospi_opi_command_set_t const * p_opi_commands;                          ///< If OPI commands are not used set this to NULL
     uint8_t                        opi_mem_read_dummy_cycles;               ///< Dummy cycles to be inserted for memory mapped reads
     uint8_t                      * p_autocalibration_preamble_pattern_addr; ///< OctaFlash memory address holding the preamble pattern
+    ospi_dopi_byte_order_t         dopi_byte_order;                         ///< Byte order on external bus. Only applicable in DOPI mode.
 #if OSPI_CFG_DMAC_SUPPORT_ENABLE
     transfer_instance_t const * p_lower_lvl_transfer;                       ///< DMA Transfer instance used for data transmission
 #endif

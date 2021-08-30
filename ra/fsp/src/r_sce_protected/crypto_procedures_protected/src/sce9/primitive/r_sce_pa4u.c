@@ -123,5 +123,5 @@ void R_SCE_Aes256CcmDecryptUpdateSub(uint32_t *InData_Text, uint32_t *OutData_Te
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_pa4u.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_pa4u_r1.prc
 ***********************************************************************************************************************/

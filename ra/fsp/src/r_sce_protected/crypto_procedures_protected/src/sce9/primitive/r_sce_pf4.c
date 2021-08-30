@@ -637,7 +637,7 @@ fsp_err_t R_SCE_GenerateEccRandomKeyIndexSub(uint32_t *InData_CurveType, uint32_
         {
             R_SCE_func101(0xc91d7184U, 0x21193a7dU, 0xd6243ba3U, 0xee90d6c5U);
             R_SCE_func300();
-            if (S_RAM[0] == 0x00000001)
+            if (S_RAM[0] == 0x00000001U)
             {
                 break;
             }
@@ -804,7 +804,7 @@ fsp_err_t R_SCE_GenerateEccRandomKeyIndexSub(uint32_t *InData_CurveType, uint32_
             {
                 R_SCE_func101(0x7f728af4U, 0x9ee9c0c1U, 0xb2c2115cU, 0x51d5f5aeU);
                 R_SCE_func300();
-                if (S_RAM[0] == 0x00000001)
+                if (S_RAM[0] == 0x00000001U)
                 {
                     break;
                 }

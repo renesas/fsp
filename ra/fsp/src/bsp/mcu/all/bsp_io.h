@@ -42,6 +42,7 @@ FSP_HEADER
 #define BSP_IO_PWPR_B0WI_OFFSET       (7U)
 #define BSP_IO_PWPR_PFSWE_OFFSET      (6U)
 #define BSP_IO_PFS_PDR_OUTPUT         (4U)
+#define BSP_IO_PRV_PIN_WRITE_MASK     (0xFFFE3FFE)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -309,16 +310,34 @@ __STATIC_INLINE uint32_t R_BSP_PinRead (bsp_io_port_pin_t pin)
 }
 
 /*******************************************************************************************************************//**
- * Set a pin to output and set the output level to the level provided
+ * Set a pin to output and set the output level to the level provided. If PFS protection is enabled, disable PFS
+ * protection using R_BSP_PinAccessEnable() before calling this function.
  *
  * @param[in]  pin      The pin
  * @param[in]  level    The level
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_PinWrite (bsp_io_port_pin_t pin, bsp_io_level_t level)
 {
+    /* Clear PMR, ASEL, ISEL and PODR bits. */
+    uint32_t pfs_bits = R_PFS->PORT[pin >> 8].PIN[pin & BSP_IO_PRV_8BIT_MASK].PmnPFS;
+    pfs_bits &= BSP_IO_PRV_PIN_WRITE_MASK;
+
     /* Set output level and pin direction to output. */
-    uint32_t lvl = (uint32_t) level;
-    R_PFS->PORT[pin >> 8].PIN[pin & BSP_IO_PRV_8BIT_MASK].PmnPFS = BSP_IO_PFS_PDR_OUTPUT | lvl;
+    uint32_t lvl = ((uint32_t) level | pfs_bits);
+    R_PFS->PORT[pin >> 8].PIN[pin & BSP_IO_PRV_8BIT_MASK].PmnPFS = (BSP_IO_PFS_PDR_OUTPUT | lvl);
+}
+
+/*******************************************************************************************************************//**
+ * Configure a pin. If PFS protection is enabled, disable PFS protection using R_BSP_PinAccessEnable() before calling
+ * this function.
+ *
+ * @param[in]  pin      The pin
+ * @param[in]  cfg      Configuration for the pin (PmnPFS register setting)
+ **********************************************************************************************************************/
+__STATIC_INLINE void R_BSP_PinCfg (bsp_io_port_pin_t pin, uint32_t cfg)
+{
+    /* Configure a pin. */
+    R_PFS->PORT[pin >> 8].PIN[pin & BSP_IO_PRV_8BIT_MASK].PmnPFS = cfg;
 }
 
 /*******************************************************************************************************************//**

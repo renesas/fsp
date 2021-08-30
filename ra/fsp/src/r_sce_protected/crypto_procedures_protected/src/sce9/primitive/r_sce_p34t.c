@@ -95,5 +95,5 @@ void R_SCE_Aes256GcmEncryptUpdateTransitionSub(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p34t.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p34t_r1.prc
 ***********************************************************************************************************************/

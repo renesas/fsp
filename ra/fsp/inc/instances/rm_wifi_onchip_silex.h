@@ -38,15 +38,84 @@
 #include "r_uart_api.h"
 #include "r_sci_uart.h"
 
-#include "FreeRTOS.h"
-#include "semphr.h"
-#include "stream_buffer.h"
+#if (BSP_CFG_RTOS == 2)                // FreeRTOS
+ #include "FreeRTOS.h"
+ #include "semphr.h"
+ #include "stream_buffer.h"
+ #include "aws_secure_sockets_config.h"
+ #include "aws_wifi_config.h"
+ #include "iot_wifi.h"
+ #include "rm_wifi_onchip_silex_cfg.h"
+#else                                  // Azure RTOS
+ #include "tx_api.h"
+ #include "rm_wifi_onchip_silex_cfg.h"
 
-#include "iot_wifi.h"
+/**
+ * @brief Max SSID length
+ */
+ #ifndef wificonfigMAX_SSID_LEN
+  #define wificonfigMAX_SSID_LEN          32
+ #endif
 
-#include "rm_wifi_onchip_silex_cfg.h"
-#include "aws_secure_sockets_config.h"
-#include "aws_wifi_config.h"
+/**
+ * @brief Max BSSID length
+ */
+ #ifndef wificonfigMAX_BSSID_LEN
+  #define wificonfigMAX_BSSID_LEN         6
+ #endif
+
+/**
+ * @brief Max passphrase length
+ */
+ #ifndef wificonfigMAX_PASSPHRASE_LEN
+  #define wificonfigMAX_PASSPHRASE_LEN    32
+ #endif
+
+/**
+ * @brief Wi-Fi Security types.
+ *
+ * @ingroup WiFi_datatypes_enums
+ */
+typedef enum
+{
+    eWiFiSecurityOpen = 0,             /**< Open - No Security. */
+    eWiFiSecurityWEP,                  /**< WEP Security. */
+    eWiFiSecurityWPA,                  /**< WPA Security. */
+    eWiFiSecurityWPA2,                 /**< WPA2 Security. */
+    eWiFiSecurityWPA2_ent,             /**< WPA2 Enterprise Security. */
+    eWiFiSecurityWPA3,                 /**< WPA3 Security. */
+    eWiFiSecurityNotSupported          /**< Unknown Security. */
+} WIFISecurity_t;
+
+/**
+ * @brief Wi-Fi scan results.
+ *
+ * Structure to store the Wi-Fi scan results.
+ *
+ * @note The size of char arrays are the MAX lengths + 1 to
+ * account for possible null terminating at the end of the
+ * strings.
+ *
+ * @see WIFI_Scan
+ *
+ * @ingroup WiFi_datatypes_returnstructs
+ */
+typedef struct
+{
+    uint8_t        ucSSID[wificonfigMAX_SSID_LEN];   /**< SSID of the Wi-Fi network (binary array, not C-string). */
+    uint8_t        ucSSIDLength;                     /**< SSID length. */
+    uint8_t        ucBSSID[wificonfigMAX_BSSID_LEN]; /**< BSSID of the Wi-Fi network (binary array, not C-string). */
+    WIFISecurity_t xSecurity;                        /**< Security type of the Wi-Fi network. */
+    int8_t         cRSSI;                            /**< Signal strength of the Wi-Fi network. */
+    uint8_t        ucChannel;                        /**< Channel of the Wi-Fi network. */
+} WIFIScanResult_t;
+
+ #ifndef rm_wifi_onchip_silex_uart_callback
+void rm_wifi_onchip_silex_uart_callback(uart_callback_args_t * p_args);
+
+ #endif
+
+#endif
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -59,16 +128,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
-
-/** Silex ULPGN Wifi security types */
-typedef enum e_sx_ulpgn_security
-{
-    WIFI_ONCHIP_SILEX_SECURITY_OPEN = 0,
-    WIFI_ONCHIP_SILEX_SECURITY_WPA,
-    WIFI_ONCHIP_SILEX_SECURITY_WPA2,
-    WIFI_ONCHIP_SILEX_SECURITY_WEP,
-    WIFI_ONCHIP_SILEX_SECURITY_UNDEFINED,
-} sx_ulpgn_security_t;
 
 /** Silex ULPGN Wifi socket status types */
 typedef enum e_sx_ulpgn_socket_status
@@ -120,54 +179,78 @@ typedef struct st_wifi_onchip_cfg
 /** Silex ULPGN Wifi internal socket instance structure */
 typedef struct
 {
+#if (BSP_CFG_RTOS == 2)                                                              // FreeRTOS
     StreamBufferHandle_t socket_byteq_hdl;                                           ///< Socket stream buffer handle
     StaticStreamBuffer_t socket_byteq_struct;                                        ///< Structure to hold stream buffer info
     uint8_t              socket_recv_buff[WIFI_ONCHIP_SILEX_CFG_MAX_SOCKET_RX_SIZE]; ///< Socket receive buffer used by byte queue
-    uint32_t             socket_status;                                              ///< Current socket status
-    uint32_t             socket_recv_error_count;                                    ///< Socket receive error count
-    uint32_t             socket_create_flag;                                         ///< Flag to determine in socket has been created.
-    uint32_t             socket_read_write_flag;                                     ///< flag to determine if read and/or write channels are active.
+#endif
+    uint32_t socket_status;                                                          ///< Current socket status
+    uint32_t socket_recv_error_count;                                                ///< Socket receive error count
+    uint32_t socket_create_flag;                                                     ///< Flag to determine in socket has been created.
+    uint32_t socket_read_write_flag;                                                 ///< flag to determine if read and/or write channels are active.
 } ulpgn_socket_t;
 
 /** WIFI_ONCHIP_SILEX private control block. DO NOT MODIFY. */
 typedef struct
 {
-    uint32_t open;                                                                           ///< Flag to indicate if wifi instance has been initialized
-    wifi_onchip_silex_cfg_t const * p_wifi_onchip_silex_cfg;                                 ///< Pointer to initial configurations.
-    bsp_io_port_pin_t               reset_pin;                                               ///< Wifi module reset pin
-    uint32_t             num_uarts;                                                          ///< number of UARTS currently used for communication with module
-    uint32_t             tx_data_size;                                                       ///< Size of the data to send
-    uint32_t             num_creatable_sockets;                                              ///< Number of simultaneous sockets supported
-    uint32_t             curr_cmd_port;                                                      ///< Current UART instance index for AT commands
-    uint32_t             curr_data_port;                                                     ///< Current UART instance index for data
-    uint8_t              cmd_rx_queue_buf[WIFI_ONCHIP_SILEX_CFG_CMD_RX_BUF_SIZE];            ///< Command port receive buffer used by byte queue
-    StreamBufferHandle_t socket_byteq_hdl;                                                   ///< Socket stream buffer handle
-    StaticStreamBuffer_t socket_byteq_struct;                                                ///< Structure to hold stream buffer info
-    volatile uint32_t    curr_socket_index;                                                  ///< Currently active socket instance
-    uint8_t              cmd_tx_buff[WIFI_ONCHIP_SILEX_CFG_CMD_TX_BUF_SIZE];                 ///< Command send buffer
-    uint8_t              cmd_rx_buff[WIFI_ONCHIP_SILEX_CFG_CMD_RX_BUF_SIZE];                 ///< Command receive buffer
-    uint32_t             at_cmd_mode;                                                        ///< Current command mode
-    uint8_t              curr_ipaddr[4];                                                     ///< Current IP address of module
-    uint8_t              curr_subnetmask[4];                                                 ///< Current Subnet Mask of module
-    uint8_t              curr_gateway[4];                                                    ///< Current GAteway of module
-    SemaphoreHandle_t    tx_sem;                                                             ///< Transmit binary semaphore handle
-    SemaphoreHandle_t    rx_sem;                                                             ///< Receive binary semaphore handle
-    uint8_t              last_data[WIFI_ONCHIP_SILEX_RETURN_TEXT_LENGTH];                    ///< Tailing buffer used for command parser
-    uart_instance_t    * uart_instance_objects[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS]; ///< UART instance objects
-    SemaphoreHandle_t    uart_tei_sem[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS];          ///< UART transmission end binary semaphore
-    ulpgn_socket_t       sockets[WIFI_ONCHIP_SILEX_CFG_NUM_CREATEABLE_SOCKETS];              ///< Internal socket instances
+    uint32_t open;                                                                ///< Flag to indicate if wifi instance has been initialized
+    wifi_onchip_silex_cfg_t const * p_wifi_onchip_silex_cfg;                      ///< Pointer to initial configurations.
+    bsp_io_port_pin_t               reset_pin;                                    ///< Wifi module reset pin
+    uint32_t num_uarts;                                                           ///< number of UARTS currently used for communication with module
+    uint32_t tx_data_size;                                                        ///< Size of the data to send
+    uint32_t num_creatable_sockets;                                               ///< Number of simultaneous sockets supported
+    uint32_t curr_cmd_port;                                                       ///< Current UART instance index for AT commands
+    uint32_t curr_data_port;                                                      ///< Current UART instance index for data
+
+#if (BSP_CFG_RTOS == 2)
+    uint8_t              cmd_rx_queue_buf[WIFI_ONCHIP_SILEX_CFG_CMD_RX_BUF_SIZE]; ///< Command port receive buffer used by byte queue                                           // FreeRTOS
+    StreamBufferHandle_t socket_byteq_hdl;                                        ///< Socket stream buffer handle
+    StaticStreamBuffer_t socket_byteq_struct;                                     ///< Structure to hold stream buffer info
+#else // Azure RTOS
+    uint8_t * p_current_packet_buffer;
+    uint8_t * p_next_packet_buffer;
+    uint32_t  packet_buffer_size;
+    uint32_t  current_cmd_buffer_index;
+#endif
+    volatile uint32_t curr_socket_index;                                  ///< Currently active socket instance
+    uint8_t           cmd_tx_buff[WIFI_ONCHIP_SILEX_CFG_CMD_TX_BUF_SIZE]; ///< Command send buffer
+    uint8_t           cmd_rx_buff[WIFI_ONCHIP_SILEX_CFG_CMD_RX_BUF_SIZE]; ///< Command receive buffer
+    uint32_t          at_cmd_mode;                                        ///< Current command mode
+    uint8_t           curr_ipaddr[4];                                     ///< Current IP address of module
+    uint8_t           curr_subnetmask[4];                                 ///< Current Subnet Mask of module
+    uint8_t           curr_gateway[4];                                    ///< Current GAteway of module
+#if (BSP_CFG_RTOS == 2)                                                   // FreeRTOS
+    SemaphoreHandle_t tx_sem;                                             ///< Transmit binary semaphore handle
+    SemaphoreHandle_t rx_sem;                                             ///< Receive binary semaphore handle
+#else // Azure RTOS
+    TX_MUTEX tx_sem;
+    TX_MUTEX rx_sem;
+#endif
+    uint8_t           last_data[WIFI_ONCHIP_SILEX_RETURN_TEXT_LENGTH];                    ///< Tailing buffer used for command parser
+    uart_instance_t * uart_instance_objects[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS]; ///< UART instance objects
+#if (BSP_CFG_RTOS == 2)                                                                   // FreeRTOS
+    SemaphoreHandle_t uart_tei_sem[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS];          ///< UART transmission end binary semaphore
+#else // Azure RTOS
+    TX_SEMAPHORE uart_tei_sem[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS];
+    TX_SEMAPHORE uart_rx_sem[WIFI_ONCHIP_SILEX_CFG_MAX_NUMBER_UART_PORTS];
+    TX_SEMAPHORE uart_data_rx_start_sem;
+#endif
+    ulpgn_socket_t sockets[WIFI_ONCHIP_SILEX_CFG_NUM_CREATEABLE_SOCKETS]; ///< Internal socket instances
 } wifi_onchip_silex_instance_ctrl_t;
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup WIFI_ONCHIP_SILEX)
  **********************************************************************************************************************/
 
+extern const wifi_onchip_silex_cfg_t g_wifi_onchip_silex_cfg;
+extern const char * g_wifi_onchip_silex_uart_cmd_baud;
+
 /**********************************************************************************************************************
  * Public Function Prototypes
  **********************************************************************************************************************/
 fsp_err_t rm_wifi_onchip_silex_open(wifi_onchip_silex_cfg_t const * const p_cfg);
 fsp_err_t rm_wifi_onchip_silex_close();
-fsp_err_t rm_wifi_onchip_silex_connect(const char * p_ssid, uint32_t security, const char * p_passphrase);
+fsp_err_t rm_wifi_onchip_silex_connect(const char * p_ssid, WIFISecurity_t security, const char * p_passphrase);
 fsp_err_t rm_wifi_onchip_silex_mac_addr_get(uint8_t * p_macaddr);
 fsp_err_t rm_wifi_onchip_silex_scan(WIFIScanResult_t * p_results, uint32_t maxNetworks);
 fsp_err_t rm_wifi_onchip_silex_ping(uint8_t * p_ip_addr, uint32_t count, uint32_t interval_ms);
@@ -185,6 +268,19 @@ fsp_err_t rm_wifi_onchip_silex_disconnect();
 fsp_err_t rm_wifi_onchip_silex_dns_query(const char * p_textstring, uint8_t * p_ip_addr);
 fsp_err_t rm_wifi_onchip_silex_socket_connected(fsp_err_t * p_status);
 void      rm_wifi_onchip_silex_uart_callback(uart_callback_args_t * p_args);
+
+#if (BSP_CFG_RTOS == 1)
+void rm_wifi_onchip_silex_initialize_packet_buffers(uint8_t * p_current_packet_buffer,
+                                                    uint8_t * p_next_packet_buffer,
+                                                    uint32_t  packet_buffer_size);
+void      rm_wifi_onchip_silex_set_next_packet_buffer(uint8_t * p_next_packet_buffer, bool move_current_packet_buffer);
+fsp_err_t rm_wifi_onchip_silex_change_socket(uint32_t socket_no);
+fsp_err_t rm_wifi_onchip_silex_stop_tcp_recv(uint32_t * bytes_received);
+UINT      rm_wifi_onchip_silex_get_rx_start_semaphore(ULONG wait_option);
+UINT      rm_wifi_onchip_silex_get_rx_complete_semaphore(ULONG wait_option);
+uint32_t  rm_wifi_onchip_silex_get_current_socket_index();
+
+#endif
 
 /*******************************************************************************************************************//**
  * @addtogroup WIFI_ONCHIP_SILEX WIFI_ONCHIP_SILEX

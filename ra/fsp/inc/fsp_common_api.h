@@ -276,6 +276,7 @@ typedef enum e_fsp_err
     FSP_ERR_CAN_RECEIVE_MAILBOX    = 60004,          ///< Mailbox is setup as a receive mailbox.
     FSP_ERR_CAN_TRANSMIT_MAILBOX   = 60005,          ///< Mailbox is setup as a transmit mailbox.
     FSP_ERR_CAN_MESSAGE_LOST       = 60006,          ///< Receive message has been overwritten or overrun.
+    FSP_ERR_CAN_TRANSMIT_FIFO_FULL = 60007,          ///< Transmit FIFO is full.
 
     /* Start of SF_WIFI Specific */
     FSP_ERR_WIFI_CONFIG_FAILED   = 70000,            ///< WiFi module Configuration failed.

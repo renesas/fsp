@@ -261,9 +261,12 @@ fsp_err_t R_SCE_EcdhCalculateSharedSecretIndexPrivate(uint32_t * InData_KeyType,
                                                        uint32_t * InData_PubKeyIndex,
                                                        uint32_t * InData_PrivKeyIndex,
                                                        uint32_t * OutData_KeyIndex);
-fsp_err_t R_SCE_EcdhKeyDerivationPrivate(uint32_t * InData_KeyIndex,
+fsp_err_t R_SCE_EcdhKeyDerivationPrivate(uint32_t * InData_KeyIndexType,
+                                          uint32_t * InData_KeyIndex,
+                                          uint32_t * InData_KDFType,
                                           uint32_t * InData_PaddedMsg,
                                           uint32_t   MAX_CNT,
+                                          uint32_t * InData_SaltKeyIndex,
                                           uint32_t * OutData_KeyIndex);
 
 /* --------------------- SCE control procedure related ---------------------- */
@@ -322,8 +325,9 @@ fsp_err_t R_SCE_GenerateEccP384RandomKeyIndexSub(uint32_t * InData_CurveType,
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT **/
 fsp_err_t R_SCE_GenerateRandomNumberSub(uint32_t * OutData_Text);
 
-/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes128EncryptDecryptInitSub(const uint32_t * InData_Cmd,
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL @retval FSP_ERR_CRYPTO_SCE_FAIL **/
+fsp_err_t R_SCE_Aes128EncryptDecryptInitSub(const uint32_t * InData_KeyType,
+                                             const uint32_t * InData_Cmd,
                                              const uint32_t * InData_KeyIndex,
                                              const uint32_t * InData_IV);
 void R_SCE_Aes128EncryptDecryptUpdateSub(const uint32_t * InData_Text,
@@ -334,8 +338,9 @@ void R_SCE_Aes128EncryptDecryptUpdateSub(const uint32_t * InData_Text,
 fsp_err_t R_SCE_Aes128EncryptDecryptFinalSub(void);
 
 
-/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes256EncryptDecryptInitSub(const uint32_t * InData_Cmd,
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL @retval FSP_ERR_CRYPTO_SCE_FAIL **/
+fsp_err_t R_SCE_Aes256EncryptDecryptInitSub(const uint32_t * InData_KeyType,
+                                             const uint32_t * InData_Cmd,
                                              const uint32_t * InData_KeyIndex,
                                              const uint32_t * InData_IV);
 void R_SCE_Aes256EncryptDecryptUpdateSub(const uint32_t * InData_Text,
@@ -375,8 +380,8 @@ fsp_err_t R_SCE_Aes128GcmDecryptFinalSub(uint32_t * InData_Text,
                                           uint32_t * InData_DataTLen,
                                           uint32_t * OutData_Text);
 
-/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes256GcmEncryptInitSub(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL @retval FSP_ERR_CRYPTO_SCE_FAIL **/
+fsp_err_t R_SCE_Aes256GcmEncryptInitSub(uint32_t * InData_KeyType, uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 void      R_SCE_Aes256GcmEncryptUpdateSub(uint32_t * InData_Text, uint32_t * OutData_Text, uint32_t MAX_CNT);
 
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL **/
@@ -386,8 +391,8 @@ fsp_err_t R_SCE_Aes256GcmEncryptFinalSub(uint32_t * InData_Text,
                                           uint32_t * OutData_Text,
                                           uint32_t * OutData_DataT);
 
-/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes256GcmDecryptInitSub(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL @retval FSP_ERR_CRYPTO_SCE_FAIL **/
+fsp_err_t R_SCE_Aes256GcmDecryptInitSub(uint32_t * InData_KeyType, uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 void      R_SCE_Aes256GcmDecryptUpdateSub(uint32_t * InData_Text, uint32_t * OutData_Text, uint32_t MAX_CNT);
 
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_AUTHENTICATION **/
@@ -408,7 +413,8 @@ void R_SCE_Aes256GcmEncryptUpdateAADSub(uint32_t * InData_DataA, uint32_t MAX_CN
 void R_SCE_Aes256GcmDecryptUpdateAADSub(uint32_t * InData_DataA, uint32_t MAX_CNT);
 
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes128CcmEncryptInitSub(uint32_t * InData_KeyIndex,
+fsp_err_t R_SCE_Aes128CcmEncryptInitSub(uint32_t * InData_KeyType,
+                                         uint32_t * InData_KeyIndex,
                                          uint32_t * InData_IV,
                                          uint32_t * InData_Header,
                                          uint32_t   Header_Len);
@@ -421,7 +427,8 @@ fsp_err_t R_SCE_Aes128CcmEncryptFinalSub(uint32_t * InData_TextLen,
                                           uint32_t * OutData_MAC);
 
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes128CcmDecryptInitSub(uint32_t * InData_KeyIndex,
+fsp_err_t R_SCE_Aes128CcmDecryptInitSub(uint32_t * InData_KeyType,
+                                         uint32_t * InData_KeyIndex,
                                          uint32_t * InData_IV,
                                          uint32_t * InData_Header,
                                          uint32_t   Header_Len);
@@ -435,7 +442,8 @@ fsp_err_t R_SCE_Aes128CcmDecryptFinalSub(uint32_t * InData_Text,
                                           uint32_t * OutData_Text);
 
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes256CcmEncryptInitSub(uint32_t * InData_KeyIndex,
+fsp_err_t R_SCE_Aes256CcmEncryptInitSub(uint32_t * InData_KeyType,
+                                         uint32_t * InData_KeyIndex,
                                          uint32_t * InData_IV,
                                          uint32_t * InData_Header,
                                          uint32_t   Header_Len);
@@ -448,7 +456,8 @@ fsp_err_t R_SCE_Aes256CcmEncryptFinalSub(uint32_t * InData_TextLen,
                                           uint32_t * OutData_MAC);
 
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes256CcmDecryptInitSub(uint32_t * InData_KeyIndex,
+fsp_err_t R_SCE_Aes256CcmDecryptInitSub(uint32_t * InData_KeyType,
+                                         uint32_t * InData_KeyIndex,
                                          uint32_t * InData_IV,
                                          uint32_t * InData_Header,
                                          uint32_t   Header_Len);
@@ -461,8 +470,8 @@ fsp_err_t R_SCE_Aes256CcmDecryptFinalSub(uint32_t * InData_Text,
                                           uint32_t * InData_MACLength,
                                           uint32_t * OutData_Text);
 
-/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes128CmacInitSub(uint32_t * InData_KeyIndex);
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL @retval FSP_ERR_CRYPTO_SCE_FAIL **/
+fsp_err_t R_SCE_Aes128CmacInitSub(uint32_t * InData_KeyType, uint32_t * InData_KeyIndex);
 void      R_SCE_Aes128CmacUpdateSub(uint32_t * InData_Text, uint32_t MAX_CNT);
 
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_AUTHENTICATION **/
@@ -472,8 +481,8 @@ fsp_err_t R_SCE_Aes128CmacFinalSub(uint32_t * InData_Cmd,
                                     uint32_t * InData_DataTLen,
                                     uint32_t * OutData_DataT);
 
-/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_Aes256CmacInitSub(uint32_t * InData_KeyIndex);
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL @retval FSP_ERR_CRYPTO_SCE_FAIL **/
+fsp_err_t R_SCE_Aes256CmacInitSub(uint32_t * InData_KeyType, uint32_t * InData_KeyIndex);
 void      R_SCE_Aes256CmacUpdateSub(uint32_t * InData_Text, uint32_t MAX_CNT);
 
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_AUTHENTICATION **/
@@ -578,10 +587,13 @@ fsp_err_t R_SCE_DlmsCosemCalculateZSub(uint32_t * InData_KeyType,
                                         uint32_t * InData_PrivKeyIndex,
                                         uint32_t * OutData_KeyIndex);
 
-/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
-fsp_err_t R_SCE_DlmsCosemCalculateKekSub(uint32_t * InData_KeyIndex,
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
+fsp_err_t R_SCE_DlmsCosemCalculateKekSub(uint32_t *InData_KeyIndexType,
+                                          uint32_t * InData_KeyIndex,
+                                          uint32_t * InData_KDFType,
                                           uint32_t * InData_PaddedMsg,
                                           uint32_t   MAX_CNT,
+                                          uint32_t * InData_SaltKeyIndex,
                                           uint32_t * OutData_KeyIndex);
 
 void R_SCE_SelfCheck1SubSub(void);

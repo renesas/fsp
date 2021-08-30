@@ -25,8 +25,6 @@
 #include "region_defs.h"
 #include "crypto_keys.h"
 
-#define SHA256_LEN_BYTES    32
-
 const uint8_t tfm_key_derivation_prefix[] = "TFM_DERIVATION_PREFIX";
 
 /**
@@ -61,13 +59,13 @@ enum tfm_plat_err_t tfm_plat_get_huk_derived_key (const uint8_t * label,
     (void) context_size;
     psa_algorithm_t      alg                    = PSA_ALG_SHA_256;
     psa_hash_operation_t operation              = {0};
-    uint8_t              hash[SHA256_LEN_BYTES] = {0};
+    uint8_t              hash[MAX_HUK_BYTES]    = {0};
     size_t               hash_len               = 0;
 
     huk_data_t * p_huk = (huk_data_t *) BOOT_TFM_SHARED_HUK_BASE;
 
     /* Maximum derived-key size supported is 256 bits. */
-    if (key_size > SHA256_LEN_BYTES)
+    if ((key_size > MAX_HUK_BYTES) || (p_huk->key_size > MAX_HUK_BYTES))
     {
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }

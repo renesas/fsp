@@ -1890,12 +1890,29 @@ void usb_peri_detach (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 void usb_peri_suspended (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
+ #if BSP_CFG_RTOS == 1
+    uint8_t i;
+ #endif                                /*  #if BSP_CFG_RTOS == 1 */
 
     FSP_PARAMETER_NOT_USED(data1);
     FSP_PARAMETER_NOT_USED(data2);
 
     ctrl.module_number = ptr->ip;
     usb_set_event(USB_STATUS_SUSPEND, &ctrl);
+
+ #if BSP_CFG_RTOS == 1
+    if (UX_NULL != _ux_system_slave->ux_system_slave_change_function)
+    {
+        _ux_system_slave->ux_system_slave_change_function(UX_DEVICE_SUSPENDED);
+        for (i = USB_MIN_PIPE_NO; i < (USB_MAXPIPE_NUM + 1); i++)
+        {
+            if (USB_TRUE == g_usb_pipe_table[ptr->ip][i].use_flag)
+            {
+                tx_semaphore_put(&g_usb_peri_usbx_sem[i]);
+            }
+        }
+    }
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
 }                                      /* End of function usb_suspended() */
 
 /******************************************************************************
@@ -1923,7 +1940,14 @@ void usb_peri_resume (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
  #endif                                /* (BSP_CFG_RTOS != 0) */
 
     usb_set_event(USB_STATUS_RESUME, &ctrl);
-} /* End of function usb_peri_resume() */
+
+ #if BSP_CFG_RTOS == 1
+    if (UX_NULL != _ux_system_slave->ux_system_slave_change_function)
+    {
+        _ux_system_slave->ux_system_slave_change_function(UX_DEVICE_RESUMED);
+    }
+ #endif
+}                                      /* End of function usb_peri_resume() */
 
 /******************************************************************************
  * Function Name   : usb_peri_interface

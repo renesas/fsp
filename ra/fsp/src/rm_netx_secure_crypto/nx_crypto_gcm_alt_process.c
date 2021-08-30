@@ -28,12 +28,12 @@
  **********************************************************************************************************************/
 
 #include "rm_netx_secure_crypto_cfg.h"
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+#include "rm_netx_secure_crypto.h"
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
  #include "nx_crypto_aes.h"
  #include "hw_sce_private.h"
  #include "hw_sce_ra_private.h"
  #include "hw_sce_aes_private.h"
- #include "rm_netx_secure_crypto.h"
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -196,9 +196,9 @@ UINT sce_nx_crypto_gcm_encrypt_init (NX_CRYPTO_AES * aes_ctx,
  **********************************************************************************************************************/
 UINT sce_nx_crypto_gcm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, UCHAR * output, UINT length)
 {
-    fsp_err_t err              = FSP_SUCCESS;
-    uint32_t  input_length     = length;
-    uint32_t  length_remaining = length % NX_CRYPTO_GCM_BLOCK_SIZE;
+    UINT     err              = NX_CRYPTO_SUCCESS;
+    uint32_t input_length     = length;
+    uint32_t length_remaining = length % NX_CRYPTO_GCM_BLOCK_SIZE;
     input_length -= length_remaining;
 
     /* Handle full/complete block(s) */
@@ -263,7 +263,11 @@ UINT sce_nx_crypto_gcm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, U
                                                       partial_block_input,
                                                       partial_block_output,
                                                       aligned_tag);
-        FSP_ERROR_RETURN((FSP_SUCCESS == err), NX_CRYPTO_NOT_SUCCESSFUL);
+        if (NX_CRYPTO_SUCCESS != err)
+        {
+            return err;
+        }
+
         NX_CRYPTO_MEMCPY(&output[input_length], (uint8_t *) partial_block_output, length_remaining);
         NX_CRYPTO_MEMCPY(tag, (uint8_t *) aligned_tag, NX_CRYPTO_GCM_BLOCK_SIZE);
 
@@ -294,8 +298,12 @@ UINT sce_nx_crypto_gcm_encrypt_calculate (NX_CRYPTO_AES * aes_ctx, UCHAR * bit_s
         uint32_t aligned_tag[RM_NETX_SECURE_CRYPTO_GCM_BLOCK_SIZE_WORDS]      = {0};
         uint32_t aligned_bit_size[RM_NETX_SECURE_CRYPTO_GCM_BLOCK_SIZE_WORDS] = {0};
         NX_CRYPTO_MEMCPY((uint8_t *) aligned_bit_size, bit_size, NX_CRYPTO_GCM_BLOCK_SIZE);
-        fsp_err_t err = sce_nx_crypto_gcm_encrypt_final(aes_ctx, aligned_bit_size, NULL, NULL, aligned_tag);
-        FSP_ERROR_RETURN((FSP_SUCCESS == err), NX_CRYPTO_NOT_SUCCESSFUL);
+        UINT err = sce_nx_crypto_gcm_encrypt_final(aes_ctx, aligned_bit_size, NULL, NULL, aligned_tag);
+        if (NX_CRYPTO_SUCCESS != err)
+        {
+            return err;
+        }
+
         NX_CRYPTO_MEMCPY(tag, (uint8_t *) aligned_tag, icv_len);
     }
 

@@ -49,10 +49,10 @@ typedef enum e_can_status
 {
     CAN_STATUS_NEW_DATA                 = 1,  ///< New Data status flag
     CAN_STATUS_SENT_DATA                = 2,  ///< Sent Data status flag
-    CAN_STATUS_RECEIVE_FIFO             = 4,  ///< Receive FIFO status flag (Not supported)
-    CAN_STATUS_TRANSMIT_FIFO            = 8,  ///< Transmit FIFO status flag (Not supported)
+    CAN_STATUS_RECEIVE_FIFO             = 4,  ///< Receive FIFO status flag
+    CAN_STATUS_TRANSMIT_FIFO            = 8,  ///< Transmit FIFO status flag
     CAN_STATUS_NORMAL_MBOX_MESSAGE_LOST = 16, ///< Normal mailbox message lost status flag
-    CAN_STATUS_FIFO_MBOX_MESSAGE_LOST   = 32, ///< FIFO mailbox message lost status flag (Not Supported)
+    CAN_STATUS_FIFO_MBOX_MESSAGE_LOST   = 32, ///< FIFO mailbox message lost status flag
     CAN_STATUS_TRANSMISSION_ABORT       = 64, ///< Transmission abort status flag
     CAN_STATUS_ERROR         = 128,           ///< Error status flag
     CAN_STATUS_RESET_MODE    = 256,           ///< Reset mode status flag
@@ -73,6 +73,46 @@ typedef enum e_can_error
     CAN_ERROR_BIT_DOMINANT  = 32,      ///< Bit Error (dominant) Error
     CAN_ERROR_ACK_DELIMITER = 64,      ///< ACK Delimiter Error
 } can_error_t;
+
+/** CAN Mailbox IDs (MB + FIFO) */
+typedef enum e_can_mailbox_id
+{
+    CAN_MAILBOX_ID_0  = 0,
+    CAN_MAILBOX_ID_1  = 1,
+    CAN_MAILBOX_ID_2  = 2,
+    CAN_MAILBOX_ID_3  = 3,
+    CAN_MAILBOX_ID_4  = 4,
+    CAN_MAILBOX_ID_5  = 5,
+    CAN_MAILBOX_ID_6  = 6,
+    CAN_MAILBOX_ID_7  = 7,
+    CAN_MAILBOX_ID_8  = 8,
+    CAN_MAILBOX_ID_9  = 9,
+    CAN_MAILBOX_ID_10 = 10,
+    CAN_MAILBOX_ID_11 = 11,
+    CAN_MAILBOX_ID_12 = 12,
+    CAN_MAILBOX_ID_13 = 13,
+    CAN_MAILBOX_ID_14 = 14,
+    CAN_MAILBOX_ID_15 = 15,
+    CAN_MAILBOX_ID_16 = 16,
+    CAN_MAILBOX_ID_17 = 17,
+    CAN_MAILBOX_ID_18 = 18,
+    CAN_MAILBOX_ID_19 = 19,
+    CAN_MAILBOX_ID_20 = 20,
+    CAN_MAILBOX_ID_21 = 21,
+    CAN_MAILBOX_ID_22 = 22,
+    CAN_MAILBOX_ID_23 = 23,
+    CAN_MAILBOX_ID_24 = 24,
+    CAN_MAILBOX_ID_25 = 25,
+    CAN_MAILBOX_ID_26 = 26,
+    CAN_MAILBOX_ID_27 = 27,
+    CAN_MAILBOX_ID_28 = 28,
+    CAN_MAILBOX_ID_29 = 29,
+    CAN_MAILBOX_ID_30 = 30,
+    CAN_MAILBOX_ID_31 = 31,
+
+    CAN_MAILBOX_ID_TX_FIFO = 24,
+    CAN_MAILBOX_ID_RX_FIFO = 28,
+} can_mailbox_number_t;
 
 /** CAN  Mailbox type */
 typedef enum e_can_mailbox_send_receive
@@ -180,14 +220,54 @@ typedef enum e_can_clock_source
     CAN_CLOCK_SOURCE_CANMCLK,          ///< CANMCLK is the source of the CAN Clock
 } can_clock_source_t;
 
+/** CAN FIFO Interrupt Modes */
+typedef enum e_can_fifo_interrupt_mode
+{
+    CAN_FIFO_INTERRUPT_MODE_TX_EVERY_FRAME = R_CAN0_MIER_FIFO_MB24_Msk,
+    CAN_FIFO_INTERRUPT_MODE_RX_EVERY_FRAME = R_CAN0_MIER_FIFO_MB28_Msk,
+    CAN_FIFO_INTERRUPT_MODE_TX_EMPTY       = R_CAN0_MIER_FIFO_MB25_Msk | R_CAN0_MIER_FIFO_MB24_Msk,
+} can_fifo_interrupt_mode_t;
+
 /** CAN Mailbox */
 typedef struct st_can_mailbox
 {
+    /* The first three elements are the same as can_frame_t for optimization purposes. */
     uint32_t                   mailbox_id;   ///< Mailbox ID.
     can_id_mode_t              id_mode;      ///< Standard or Extended ID. Only used in Mixed ID mode.
-    can_mailbox_send_receive_t mailbox_type; ///< Receive or Transmit mailbox type.
     can_frame_type_t           frame_type;   ///< Frame type for receive mailbox.
+    can_mailbox_send_receive_t mailbox_type; ///< Receive or Transmit mailbox type.
 } can_mailbox_t;
+
+/** CAN FIFO interrupt configuration */
+typedef struct st_can_fifo_interrupt_cfg
+{
+    can_fifo_interrupt_mode_t fifo_int_mode; ///< FIFO interrupts mode (RX and TX combined).
+
+    IRQn_Type tx_fifo_irq;                   ///< TX FIFO IRQ.
+    IRQn_Type rx_fifo_irq;                   ///< RX FIFO IRQ.
+} can_fifo_interrupt_cfg_t;
+
+/** CAN RX FIFO configuration */
+typedef struct st_can_rx_fifo_cfg
+{
+    uint32_t      rx_fifo_mask1;       ///< RX FIFO acceptance filter mask 1.
+    uint32_t      rx_fifo_mask2;       ///< RX FIFO acceptance filter mask 1.
+    can_mailbox_t rx_fifo_id1;         ///< RX FIFO acceptance filter ID 1.
+    can_mailbox_t rx_fifo_id2;         ///< RX FIFO acceptance filter ID 2.
+} can_rx_fifo_cfg_t;
+
+/** CAN extended configuration */
+typedef struct st_can_extended_cfg
+{
+    can_clock_source_t               clock_source;   ///< Source of the CAN clock.
+    uint32_t                       * p_mailbox_mask; ///< Mailbox mask, one for every 4 mailboxes.
+    can_mailbox_t                  * p_mailbox;      ///< Pointer to mailboxes.
+    can_global_id_mode_t             global_id_mode; ///< Standard or Extended ID mode.
+    uint32_t                         mailbox_count;  ///< Number of mailboxes.
+    can_message_mode_t               message_mode;   ///< Overwrite message or overrun.
+    can_fifo_interrupt_cfg_t const * p_fifo_int_cfg; ///< Pointer to FIFO interrupt configuration.
+    can_rx_fifo_cfg_t              * p_rx_fifo_cfg;  ///< Pointer to RX FIFO configuration.
+} can_extended_cfg_t;
 
 /* CAN Instance Control Block   */
 typedef struct st_can_instance_ctrl
@@ -201,24 +281,12 @@ typedef struct st_can_instance_ctrl
     can_id_mode_t        id_mode;               // Standard or Extended ID mode.
     uint32_t             mailbox_count;         // Number of mailboxes.
     can_mailbox_t      * p_mailbox;             // Pointer to mailboxes.
-    can_message_mode_t   message_mode;          // Overwrite message or overrun.
     can_clock_source_t   clock_source;          // Clock source. CANMCLK or PCLKB.
 
     void (* p_callback)(can_callback_args_t *); // Pointer to callback
     can_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
     void const          * p_context;            // Pointer to context to be passed into callback function
 } can_instance_ctrl_t;
-
-/* CAN clock configuration and mailbox mask to be pointed to by p_extend. */
-typedef struct st_can_extended_cfg
-{
-    can_clock_source_t   clock_source;   ///< Source of the CAN clock.
-    uint32_t           * p_mailbox_mask; ///< Mailbox mask, one for every 4 mailboxes.
-    can_mailbox_t      * p_mailbox;      ///< Pointer to mailboxes.
-    can_global_id_mode_t global_id_mode; ///< Standard or Extended ID mode.
-    uint32_t             mailbox_count;  ///< Number of mailboxes.
-    can_message_mode_t   message_mode;   ///< Overwrite message or overrun.
-} can_extended_cfg_t;
 
 /**********************************************************************************************************************
  * Exported global variables

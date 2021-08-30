@@ -117,6 +117,7 @@ typedef enum  e_motor_speed_step
     MOTOR_SPEED_STEP_ENABLE            ///< Position control works with step mode
 } motor_speed_step_t;
 
+/** Motor speed and position structure */
 typedef struct st_motor_speed_position_data
 {
     motor_speed_step_t      e_step_mode;               ///< Select step mode

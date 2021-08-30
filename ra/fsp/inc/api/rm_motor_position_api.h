@@ -55,7 +55,7 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/* Position Control Mode */
+/** Position Control Mode */
 typedef enum  e_motor_position_ctrl_mode
 {
     MOTOR_POSITION_CTRL_MODE_CONSTANT = 0,

@@ -175,12 +175,12 @@ BaseType_t xNetworkInterfaceOutput (NetworkBufferDescriptor_t * const pxNetworkB
     {
         /* Call the standard trace macro to log the send event. */
         iptraceNETWORK_INTERFACE_TRANSMIT();
+    }
 
-        /* The Ethernet buffer is therefore no longer needed, and must be freed for re-use. */
-        if (xReleaseAfterSend == pdTRUE)
-        {
-            vReleaseNetworkBufferAndDescriptor(pxNetworkBuffer);
-        }
+    /* The Ethernet buffer is therefore no longer needed, and must be freed for re-use. */
+    if (xReleaseAfterSend == pdTRUE)
+    {
+        vReleaseNetworkBufferAndDescriptor(pxNetworkBuffer);
     }
 
     return xReturn;

@@ -32,8 +32,8 @@
 #include "rm_netx_secure_crypto.h"
 #include "nx_crypto_aes.h"
 #include "nx_crypto_xcbc_mac.h"
-
-#if !defined(NX_CRYPTO_LITTLE_ENDIAN)
+#if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+  #if !defined(NX_CRYPTO_LITTLE_ENDIAN)
 /*
     Encryption table for BIG ENDIAN architecture.
 
@@ -173,7 +173,7 @@ static const ULONG aes_inv_mix_table[256] =
     0xa779b492, 0xa970b999, 0xbb6bae84, 0xb562a38f, 0x9f5d80be, 0x91548db5, 0x834f9aa8, 0x8d4697a3
 };
 
-#else
+  #else
 
 /*
     Encryption table for LITTLE ENDIAN architecture.
@@ -316,7 +316,7 @@ static const ULONG aes_inv_mix_table[256] =
 };
 
 
-#endif
+  #endif
 
 /* S-Box.  Refer to figure 7 on page 16,  AES specification(Pub 197) */
 static const UCHAR sub_bytes_sbox[] =
@@ -363,7 +363,7 @@ static const UCHAR inverse_sub_bytes_sbox[] =
 
 /* Rcon array, used for key expansion.  Refer to Appendix A on page 27,  AES specification(Pub 197) */
 static const UCHAR aes_rcon_array[] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36};
-
+#endif
 /* This array is generated using the nx_crypto_aes_multiply function, as powers of x in the
    AES polynomial field. The array is shifted such that the indexes line up so that x**1 is
    at index 1. The powers of x are cyclical, so the element at index 0 is actually x**255. */
@@ -412,7 +412,7 @@ extern UINT _nx_crypto_library_state;
 /**************************************************************************/
 
 
-
+#if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
@@ -993,7 +993,7 @@ ULONG  val;
     NX_CRYPTO_MEMSET(temp_state, 0, sizeof(temp_state));
 #endif /* NX_SECURE_KEY_CLEAR  */
 }
-
+#endif
 
 /**************************************************************************/
 /*                                                                        */
@@ -1138,7 +1138,7 @@ UINT *buf;
 #endif
 }
 
-
+#if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
 /**************************************************************************/
 /* Key expansion routines                                                 */
 /**************************************************************************/
@@ -1421,7 +1421,7 @@ ULONG key;
 
     return;
 }
-
+#endif
 
 /**************************************************************************/
 /* Decryption routines                                                    */
@@ -2577,7 +2577,7 @@ UINT    status;
             }
 
             message_len = input_length_in_byte - icv_len;
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
             /* SCE9 APIs are different for Encryption and Decryption.
              * Since _nx_crypto_gcm_decrypt_init is mapped to _nx_crypto_gcm_encrypt_init this 
              * new function is created for supporting decryption specific HW acceleration: GHASH and block cipher.
@@ -2669,7 +2669,7 @@ UINT    status;
                 break;
             }
 
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (1U == BSP_FEATURE_CRYPTO_HAS_SCE9)
             /* SCE9 APIs are different for Encryption and Decryption.
              * Since _nx_crypto_gcm_decrypt_init is mapped to _nx_crypto_gcm_encrypt_init this 
              * new function is created for supporting decryption specific HW acceleration: GHASH and block cipher.

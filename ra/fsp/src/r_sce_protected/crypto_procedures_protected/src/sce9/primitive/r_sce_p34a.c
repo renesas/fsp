@@ -92,5 +92,5 @@ void R_SCE_Aes256GcmEncryptUpdateAADSub(uint32_t *InData_DataA, uint32_t MAX_CNT
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p34a.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p34a_r1.prc
 ***********************************************************************************************************************/

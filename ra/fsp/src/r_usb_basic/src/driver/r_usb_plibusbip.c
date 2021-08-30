@@ -1353,7 +1353,9 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
             }
             else
             {
+  #if (BSP_CFG_RTOS != 1)
                 pipe_no = USB_CFG_PHID_INT_OUT;
+  #endif                               /* #if (BSP_CFG_RTOS != 1) */
             }
         }
     }

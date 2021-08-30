@@ -612,7 +612,7 @@ fsp_err_t R_SCE_EcdsaP384SignatureVerificationSub(uint32_t *InData_CurveType, ui
         {
             R_SCE_func101(0x20e787edU, 0xe6c7f710U, 0x6e89a21bU, 0x59255b84U);
             R_SCE_func302();
-            if (S_RAM[0] == 0x00000001)
+            if (S_RAM[0] == 0x00000001U)
             {
                 break;
             }
@@ -1437,7 +1437,7 @@ fsp_err_t R_SCE_EcdsaP384SignatureVerificationSub(uint32_t *InData_CurveType, ui
                 {
                     R_SCE_func101(0x3152de7eU, 0xe2908fc2U, 0x8b64fa9cU, 0x88d51965U);
                     R_SCE_func302();
-                    if (S_RAM[0] == 0x00000001)
+                    if (S_RAM[0] == 0x00000001U)
                     {
                         break;
                     }

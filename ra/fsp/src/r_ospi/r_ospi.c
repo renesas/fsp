@@ -639,11 +639,27 @@ static fsp_err_t r_ospi_spi_protocol_specific_settings (ospi_instance_ctrl_t * p
     if (SPI_FLASH_PROTOCOL_EXTENDED_SPI != spi_protocol)
     {
         ospi_opi_command_set_t const * p_opi_commands = p_cfg_extend->p_opi_commands;
+
+        /* In case of DOPI mode the order of data storage (Macronix IP) is byte1, byte0, byte3, byte2.
+         * Setting MROx and MWOx swaps the byte order between the internal and external bus at the time of read and write respectively.
+         * With MROx = 1 and MWOx = 1, at the time of write,
+         * byte0, byte1, byte2, byte3 will be presented as byte1, byte0, byte3, byte2 on the external bus and
+         * the Macronix flash will store this as byte0, byte1, byte2, byte3.
+         * Similarly, at the time of read,
+         * byte0, byte1, byte2, byte3 from Macronix flash will be presented as byte1, byte0, byte3, byte2 on the external bus and
+         * the internal bus (and CPU) will read this as byte0, byte1, byte2, byte3.
+         * Keeping this setting matches the written and read data as with SPI and SOPI protocol.
+         *
+         * MROx and MWOx setting is ignored for SPI and SOPI modes.
+         * Refer Note 1 below Section "34.2.17 MRWCSR : Memory Map Read/Write Setting Register" of the RA6M4 manual R01UH0890EJ0110
+         */
         R_OSPI->MRWCSR = OSPI_PRV_RMW(R_OSPI->MRWCSR,
                                       ((uint32_t) (((uint32_t) p_cfg->address_bytes + 1U) << R_OSPI_MRWCSR_MRAL0_Pos) |
                                        (uint32_t) (p_opi_commands->command_bytes << R_OSPI_MRWCSR_MRCL0_Pos) |
                                        (uint32_t) (((uint32_t) p_cfg->address_bytes + 1U) << R_OSPI_MRWCSR_MWAL0_Pos) |
-                                       (uint32_t) (p_opi_commands->command_bytes << R_OSPI_MRWCSR_MWCL0_Pos)),
+                                       (uint32_t) (p_opi_commands->command_bytes << R_OSPI_MRWCSR_MWCL0_Pos) |
+                                       (uint32_t) (p_cfg_extend->dopi_byte_order << R_OSPI_MRWCSR_MRO0_Pos) |
+                                       (uint32_t) (p_cfg_extend->dopi_byte_order << R_OSPI_MRWCSR_MWO0_Pos)),
                                       channel);
 
         /* Set MDLR (Memory Map Dummy Length Reg) with Read dummy length setting */

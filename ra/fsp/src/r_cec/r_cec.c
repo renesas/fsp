@@ -184,6 +184,11 @@ fsp_err_t R_CEC_Open (cec_ctrl_t * const p_ctrl, cec_cfg_t const * const p_cfg)
 /***************************************************************************************************************//**
  * Allocate provided CEC Local Address and Initialize the CEC module for operation.
  *
+ * @note After calling R_CEC_Open this function may return FSP_ERR_IN_USE for up to 45 milliseconds.
+ *
+ * Example:
+ * @snippet r_cec_example.c R_CEC_MediaInit
+ *
  * @retval FSP_SUCCESS                 CEC Module Initialized successfully.
  * @retval FSP_ERR_ASSERTION           An input argument is invalid or callback has not been set.
  * @retval FSP_ERR_NOT_OPEN            Control block not open.
@@ -259,14 +264,13 @@ fsp_err_t R_CEC_Close (cec_ctrl_t * const p_ctrl)
  * until transmission is complete.
  *
  * Data Transmission follows the pattern defined be the HDMI CEC Specification:
- *   |---------------------------------------------------------------------------------|
+ *
  *   | Data         | Description                     | Size                           |
  *   |--------------|---------------------------------|--------------------------------|
  *   | Start Bit    | Managed by Hardware, per config | N/A                            |
  *   | Header Block | Source/Destination Identifier   | 1 Byte                         |
  *   | Data Block 1 | Opcode Value (Optional)         | 1 Byte                         |
  *   | Data Block 2 | Operands (Optional)             | Variable (0-14 Bytes Typical)  |
- *   |---------------------------------------------------------------------------------|
  *
  * Example:
  * @snippet r_cec_example.c R_CEC_Write

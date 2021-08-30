@@ -139,15 +139,16 @@ typedef struct st_spi_flash_erase_command
     uint32_t size;                     ///< Size of erase for associated command, set to SPI_FLASH_ERASE_SIZE_CHIP_ERASE for chip erase
 } spi_flash_erase_command_t;
 
+/** Structure to define a direct transfer. */
 typedef struct st_spi_flash_direct_transfer
 {
-    uint32_t address;
-    uint32_t data;
-    uint16_t command;
-    uint8_t  dummy_cycles;
-    uint8_t  command_length;
-    uint8_t  address_length;
-    uint8_t  data_length;
+    uint32_t address;                  ///< Starting address
+    uint32_t data;                     ///< Data
+    uint16_t command;                  ///< Transfer command
+    uint8_t  dummy_cycles;             ///< Number of dummy cycles
+    uint8_t  command_length;           ///< Command length
+    uint8_t  address_length;           ///< Address lengrh
+    uint8_t  data_length;              ///< Data length
 } spi_flash_direct_transfer_t;
 
 /** User configuration structure used by the open function */

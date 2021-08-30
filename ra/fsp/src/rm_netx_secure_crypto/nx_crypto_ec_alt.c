@@ -78,7 +78,7 @@ static NX_CRYPTO_CONST HN_UBASE _nx_crypto_ec_secp192r1_h[] =
     /* h = 01 */
     HN_ULONG_TO_UBASE(0x00000001)
 };
-
+#if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_ECC_ALT)
 /* secp224r1 */
 static NX_CRYPTO_CONST HN_UBASE _nx_crypto_ec_secp224r1_p[] =
 {
@@ -278,7 +278,7 @@ static NX_CRYPTO_CONST HN_UBASE _nx_crypto_ec_secp384r1_h[] =
     /* h = 01 */
     HN_ULONG_TO_UBASE(0x00000001)
 };
-
+#endif
 /* secp521r1 */
 static NX_CRYPTO_CONST HN_UBASE _nx_crypto_ec_secp521r1_p[] =
 {
@@ -372,9 +372,11 @@ static NX_CRYPTO_CONST HN_UBASE _nx_crypto_ec_secp521r1_h[] =
 };
 
 extern NX_CRYPTO_CONST NX_CRYPTO_EC_FIXED_POINTS _nx_crypto_ec_secp192r1_fixed_points;
+#if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_ECC_ALT)
 extern NX_CRYPTO_CONST NX_CRYPTO_EC_FIXED_POINTS _nx_crypto_ec_secp224r1_fixed_points;
 extern NX_CRYPTO_CONST NX_CRYPTO_EC_FIXED_POINTS _nx_crypto_ec_secp256r1_fixed_points;
 extern NX_CRYPTO_CONST NX_CRYPTO_EC_FIXED_POINTS _nx_crypto_ec_secp384r1_fixed_points;
+#endif
 extern NX_CRYPTO_CONST NX_CRYPTO_EC_FIXED_POINTS _nx_crypto_ec_secp521r1_fixed_points;
 
 NX_CRYPTO_CONST NX_CRYPTO_EC                     _nx_crypto_ec_secp192r1 =
@@ -501,6 +503,7 @@ NX_CRYPTO_CONST NX_CRYPTO_EC _nx_crypto_ec_secp224r1 =
     _nx_crypto_ec_fp_projective_multiple,
     _nx_crypto_ec_secp224r1_reduce
 #else
+
     .nx_crypto_ec_add = sce_nx_crypto_ec_fp_affine_add_subtract,
     .nx_crypto_ec_subtract = sce_nx_crypto_ec_fp_affine_add_subtract,
     .nx_crypto_ec_multiple = sce_nx_crypto_ec_fp_projective_multiple,
@@ -3269,7 +3272,7 @@ NX_CRYPTO_KEEP UINT _nx_crypto_ec_key_pair_stream_generate(NX_CRYPTO_EC *curve,
                                                        curve->nx_crypto_ec_bits >> 3U,
                                                        output,
                                                        output_length_in_byte,
-                                                       actual_output_length);
+                                                       (uint32_t *) actual_output_length);
 #else
 UINT status;
 UINT private_key_len;
