@@ -112,7 +112,6 @@ fsp_err_t RM_FREERTOS_PLUS_FAT_Open (rm_freertos_plus_fat_ctrl_t * const      p_
 #endif
 
 #if 2 == BSP_CFG_RTOS
-
     /* The semaphore will be used to protect critical sections in
      * the +FAT disk, and also to avoid concurrent calls to Read()/Write()
      * from different tasks. */
@@ -265,6 +264,7 @@ fsp_err_t RM_FREERTOS_PLUS_FAT_DiskDeinit (rm_freertos_plus_fat_ctrl_t * const p
 #endif
 
     FF_DeleteIOManager(p_disk->pxIOManager);
+    p_disk->pxIOManager            = NULL;
     p_disk->xStatus.bIsInitialised = 0U;
 
     return FSP_SUCCESS;
@@ -278,6 +278,7 @@ fsp_err_t RM_FREERTOS_PLUS_FAT_DiskDeinit (rm_freertos_plus_fat_ctrl_t * const p
  * @retval FSP_SUCCESS           Information stored in p_info.
  * @retval FSP_ERR_ASSERTION     An input parameter was invalid.
  * @retval FSP_ERR_NOT_OPEN      Module not open.
+ * @retval FSP_ERR_NOT_FOUND     The value of p_iomanager is NULL.
  **********************************************************************************************************************/
 fsp_err_t RM_FREERTOS_PLUS_FAT_InfoGet (rm_freertos_plus_fat_ctrl_t * const p_ctrl,
                                         FF_Disk_t * const                   p_disk,
@@ -295,12 +296,18 @@ fsp_err_t RM_FREERTOS_PLUS_FAT_InfoGet (rm_freertos_plus_fat_ctrl_t * const p_ct
 #endif
 
     FF_IOManager_t * p_iomanager = p_disk->pxIOManager;
+
     p_info->type = (rm_freertos_plus_fat_type_t) p_iomanager->xPartition.ucType;
+
+    if (0U == p_disk->xStatus.bIsInitialised)
+    {
+        return FSP_ERR_NOT_FOUND;
+    }
 
     FF_Error_t ff_error;
     FF_GetFreeSize(p_iomanager, &ff_error);
 
-    uint64_t free_sectors = p_iomanager->xPartition.ulFreeClusterCount * p_iomanager->xPartition.ulSectorsPerCluster;
+    uint64_t free_sectors = (p_iomanager->xPartition.ulFreeClusterCount * p_iomanager->xPartition.ulSectorsPerCluster);
     p_info->sector_size         = p_iomanager->usSectorSize;
     p_info->free_sectors        = (uint32_t) free_sectors;
     p_info->sectors_per_cluster = p_iomanager->xPartition.ulSectorsPerCluster;
@@ -363,7 +370,6 @@ int32_t rm_freertos_plus_fat_read (uint8_t * p_data, uint32_t sector, uint32_t n
     rm_freertos_plus_fat_instance_ctrl_t * p_instance_ctrl = (rm_freertos_plus_fat_instance_ctrl_t *) p_disk->pvTag;
 
 #if 2 == BSP_CFG_RTOS
-
     /* Store the handle of the calling task. */
     p_instance_ctrl->current_task = xTaskGetCurrentTaskHandle();
 #else
@@ -409,7 +415,6 @@ int32_t rm_freertos_plus_fat_write (uint8_t * p_data, uint32_t sector, uint32_t 
     rm_freertos_plus_fat_instance_ctrl_t * p_instance_ctrl = (rm_freertos_plus_fat_instance_ctrl_t *) p_disk->pvTag;
 
 #if 2 == BSP_CFG_RTOS
-
     /* Store the handle of the calling task. */
     p_instance_ctrl->current_task = xTaskGetCurrentTaskHandle();
 #else
@@ -466,7 +471,6 @@ void rm_freertos_plus_fat_memory_callback (rm_block_media_callback_args_t * p_ar
         p_instance_ctrl->last_event |= p_args->event;
 
 #if 2 == BSP_CFG_RTOS
-
         /* Notify the task that the transmission is complete. */
         if (NULL != p_instance_ctrl->current_task)
         {
@@ -482,7 +486,6 @@ void rm_freertos_plus_fat_memory_callback (rm_block_media_callback_args_t * p_ar
              * use and may be called portEND_SWITCHING_ISR(). */
             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
         }
-
 #else
         p_instance_ctrl->event_ready = true;
 #endif
@@ -503,7 +506,6 @@ static fsp_err_t rm_freertos_plus_fat_wait_event (rm_freertos_plus_fat_instance_
                                                   uint32_t                               timeout)
 {
 #if (BSP_CFG_RTOS == 2)                // FreeRTOS
-
     /* Wait to be notified that the transmission is complete.  Note the first
      * parameter is pdTRUE, which has the effect of clearing the task's notification
      * value back to 0, making the notification value act like a binary (rather than

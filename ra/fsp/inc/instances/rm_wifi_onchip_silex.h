@@ -48,7 +48,7 @@
  #include "rm_wifi_onchip_silex_cfg.h"
 #else                                  // Azure RTOS
  #include "tx_api.h"
- #include "rm_wifi_onchip_silex_cfg.h"
+ #include "rm_wifi_onchip_silex_cfg_azure.h"
 
 /**
  * @brief Max SSID length
