@@ -17419,14 +17419,14 @@ typedef struct                         /*!< (@ 0x40070000) R_SCI0 Structure     
 
         struct
         {
-            __IOM uint8_t SSE   : 1;   /*!< [0..0] SSn Pin Function Enable                                            */
-            __IOM uint8_t CTSE  : 1;   /*!< [1..1] CTS Enable                                                         */
-            __IOM uint8_t MSS   : 1;   /*!< [2..2] Master Slave Select                                                */
-            uint8_t             : 1;
-            __IOM uint8_t MFF   : 1;   /*!< [4..4] Mode Fault Flag                                                    */
-            uint8_t             : 1;
-            __IOM uint8_t CKPOL : 1;   /*!< [6..6] Clock Polarity Select                                              */
-            __IOM uint8_t CKPH  : 1;   /*!< [7..7] Clock Phase Select                                                 */
+            __IOM uint8_t SSE    : 1;  /*!< [0..0] SSn Pin Function Enable                                            */
+            __IOM uint8_t CTSE   : 1;  /*!< [1..1] CTS Enable                                                         */
+            __IOM uint8_t MSS    : 1;  /*!< [2..2] Master Slave Select                                                */
+            __IOM uint8_t CSTPEN : 1;  /*!< [3..3] CTS external pin Enable                                            */
+            __IOM uint8_t MFF    : 1;  /*!< [4..4] Mode Fault Flag                                                    */
+            uint8_t              : 1;
+            __IOM uint8_t CKPOL  : 1;  /*!< [6..6] Clock Polarity Select                                              */
+            __IOM uint8_t CKPH   : 1;  /*!< [7..7] Clock Phase Select                                                 */
         } SPMR_b;
     };
 
@@ -32629,6 +32629,8 @@ typedef struct                         /*!< (@ 0x400A6000) R_OSPI Structure     
  #define R_SCI0_SPMR_CKPOL_Msk          (0x40UL)   /*!< CKPOL (Bitfield-Mask: 0x01)                           */
  #define R_SCI0_SPMR_MFF_Pos            (4UL)      /*!< MFF (Bit 4)                                           */
  #define R_SCI0_SPMR_MFF_Msk            (0x10UL)   /*!< MFF (Bitfield-Mask: 0x01)                             */
+ #define R_SCI0_SPMR_CSTPEN_Pos         (3UL)      /*!< CSTPEN (Bit 3)                                        */
+ #define R_SCI0_SPMR_CSTPEN_Msk         (0x8UL)    /*!< CSTPEN (Bitfield-Mask: 0x01)                          */
  #define R_SCI0_SPMR_MSS_Pos            (2UL)      /*!< MSS (Bit 2)                                           */
  #define R_SCI0_SPMR_MSS_Msk            (0x4UL)    /*!< MSS (Bitfield-Mask: 0x01)                             */
  #define R_SCI0_SPMR_CTSE_Pos           (1UL)      /*!< CTSE (Bit 1)                                          */

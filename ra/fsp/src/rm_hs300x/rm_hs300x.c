@@ -28,52 +28,80 @@
  **********************************************************************************************************************/
 
 /* Definitions of Open flag */
-#define RM_HS300X_OPEN                           (0x433E4432UL) // Open state
+#define RM_HS300X_OPEN                               (0x433E4432UL) // Open state
 
 /* Definitions of HS300X data size */
 #if RM_HS300X_CFG_DATA_BOTH_HUMIDITY_TEMPERATURE
- #define RM_HS300X_DATA_SIZE                     (4)            // Both humidity and temperature
+ #define RM_HS300X_DATA_SIZE                         (4)            // Both humidity and temperature
 #else
- #define RM_HS300X_DATA_SIZE                     (2)            // Humidity only
+ #define RM_HS300X_DATA_SIZE                         (2)            // Humidity only
 #endif
 
 /* Definitions of Mask Data for A/D data */
-#define RM_HS300X_MASK_HUMIDITY_UPPER_0X3F       (0x3F)
-#define RM_HS300X_MASK_TEMPERATURE_LOWER_0XFC    (0xFC)
-#define RM_HS300X_MASK_STATUS_0XC0               (0xC0)
+#define RM_HS300X_MASK_HUMIDITY_UPPER_0X3F           (0x3F)
+#define RM_HS300X_MASK_TEMPERATURE_LOWER_0XFC        (0xFC)
+#define RM_HS300X_MASK_STATUS_0XC0                   (0xC0)
 
 /* Definitions for Status Bits of A/D Data */
-#define RM_HS300X_DATA_STATUS_VALID              (0x00) // Status-bit: Valid data
+#define RM_HS300X_DATA_STATUS_VALID                  (0x00) // Status-bit: Valid data
 
 /* Definitions for Calculation */
-#define RM_HS300X_CALC_STATIC_VALUE              (16383.0F)
-#define RM_HS300X_CALC_HUMD_VALUE_100            (100.0F)
-#define RM_HS300X_CALC_TEMP_C_VALUE_165          (165.0F)
-#define RM_HS300X_CALC_TEMP_C_VALUE_40           (40.0F)
-#define RM_HS300X_CALC_DECIMAL_VALUE_100         (100.0F)
+#define RM_HS300X_CALC_STATIC_VALUE                  (16383.0F)
+#define RM_HS300X_CALC_HUMD_VALUE_100                (100.0F)
+#define RM_HS300X_CALC_TEMP_C_VALUE_165              (165.0F)
+#define RM_HS300X_CALC_TEMP_C_VALUE_40               (40.0F)
+#define RM_HS300X_CALC_DECIMAL_VALUE_100             (100.0F)
+
+/* Definitions for Programming mode */
+#define RM_HS300X_PROGRAMMING_MODE_ENTER             (0xA0)
+#define RM_HS300X_PROGRAMMING_MODE_EXIT              (0x80)
+#define RM_HS300X_PROGRAMMING_MODE_SUCCESS_STATUS    (0x81)
+#define RM_HS300X_HUMIDITY_RESOLUTION_READ           (0x06)
+#define RM_HS300X_HUMIDITY_RESOLUTION_WRITE          (0x46)
+#define RM_HS300X_TEMPERATURE_RESOLUTION_READ        (0x11)
+#define RM_HS300X_TEMPERATURE_RESOLUTION_WRITE       (0x51)
+#define RM_HS300X_SENSOR_ID_UPPER                    (0x1E)
+#define RM_HS300X_SENSOR_ID_LOWER                    (0x1F)
+#define RM_HS300X_RESOLUTION_CLEAR                   (0xF3)
+
+/* Definitions of Timeout */
+#define RM_HS300X_TIMEOUT                            (1000)
+
+/* Definitions of Wait Time */
+#define RM_HS300X_WAIT_TIME_100                      (100)
+#define RM_HS300X_WAIT_TIME_120                      (120)
 
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
 
 /***********************************************************************************************************************
+ * Global function prototypes
+ **********************************************************************************************************************/
+void rm_hs300x_callback(rm_comms_callback_args_t * p_args);
+
+/***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
+extern fsp_err_t rm_hs300x_delay_us(rm_hs300x_instance_ctrl_t * const p_ctrl, uint32_t const delay_us);
 
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
 rm_hs300x_api_t const g_hs300x_on_hs300x =
 {
-    .open             = RM_HS300X_Open,
-    .close            = RM_HS300X_Close,
-    .measurementStart = RM_HS300X_MeasurementStart,
-    .read             = RM_HS300X_Read,
-    .dataCalculate    = RM_HS300X_DataCalculate,
+    .open                 = RM_HS300X_Open,
+    .close                = RM_HS300X_Close,
+    .measurementStart     = RM_HS300X_MeasurementStart,
+    .read                 = RM_HS300X_Read,
+    .dataCalculate        = RM_HS300X_DataCalculate,
+    .programmingModeEnter = RM_HS300X_ProgrammingModeEnter,
+    .resolutionChange     = RM_HS300X_ResolutionChange,
+    .sensorIdGet          = RM_HS300X_SensorIdGet,
+    .programmingModeExit  = RM_HS300X_ProgrammingModeExit,
 };
 
 /*******************************************************************************************************************//**
@@ -107,18 +135,19 @@ fsp_err_t RM_HS300X_Open (rm_hs300x_ctrl_t * const p_api_ctrl, rm_hs300x_cfg_t c
     FSP_ERROR_RETURN(RM_HS300X_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
 
-    p_ctrl->p_cfg                = p_cfg;
-    p_ctrl->open                 = RM_HS300X_OPEN;
-    p_ctrl->p_comms_i2c_instance = p_cfg->p_instance;
-    p_ctrl->p_context            = p_cfg->p_context;
-    p_ctrl->p_callback           = p_cfg->p_callback;
+    p_ctrl->p_cfg                  = p_cfg;
+    p_ctrl->p_comms_i2c_instance   = p_cfg->p_instance;
+    p_ctrl->p_context              = p_cfg->p_context;
+    p_ctrl->p_callback             = p_cfg->p_callback;
+    p_ctrl->programming_mode.enter = false;
 
     /* Open Communications middleware */
     err = p_ctrl->p_comms_i2c_instance->p_api->open(p_ctrl->p_comms_i2c_instance->p_ctrl,
                                                     p_ctrl->p_comms_i2c_instance->p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-    /* May need to add resolution */
+    /* Set open flag */
+    p_ctrl->open = RM_HS300X_OPEN;
 
     return FSP_SUCCESS;
 }
@@ -259,6 +288,348 @@ fsp_err_t RM_HS300X_DataCalculate (rm_hs300x_ctrl_t * const     p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
+ * @brief This function must be called within 10ms after applying power to the sensor.
+ * Sends the commands to enter the programming mode.
+ * After calling this function, please wait 120us.
+ * Implements @ref rm_hs300x_api_t::programmingModeEnter.
+ *
+ * @retval FSP_SUCCESS              Successfully started.
+ * @retval FSP_ERR_ASSERTION        Null pointer passed as a parameter.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_UNSUPPORTED      Programming mode is not supported.
+ **********************************************************************************************************************/
+fsp_err_t RM_HS300X_ProgrammingModeEnter (rm_hs300x_ctrl_t * const p_api_ctrl)
+{
+    /* The procedure in this function is based on section 6.8 "Accessing the Non-volatile Memory" of the HS300x Datasheet R36DS0010EU0701. */
+
+#if RM_HS300X_CFG_PROGRAMMING_MODE
+    fsp_err_t err = FSP_SUCCESS;
+    rm_hs300x_instance_ctrl_t * p_ctrl = (rm_hs300x_instance_ctrl_t *) p_api_ctrl;
+    uint8_t write_data[3];
+
+ #if RM_HS300X_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(RM_HS300X_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+
+    /* Set the flag */
+    p_ctrl->programming_mode.enter = true;
+
+    /* Write the commands */
+    write_data[0] = RM_HS300X_PROGRAMMING_MODE_ENTER;
+    write_data[1] = 0x00;
+    write_data[2] = 0x00;
+    err           = p_ctrl->p_comms_i2c_instance->p_api->write(p_ctrl->p_comms_i2c_instance->p_ctrl, &write_data[0], 3);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * @brief This function must be called after calling the RM_HS300X_ProgrammingModeEnter function.
+ * Changes the sensor resolution.
+ * This function blocks for 120 us software delay plus 9 bytes on the I2C bus.
+ * After calling this function, 14ms must be waited.
+ * Failure to comply with these times may result in data corruption and introduce errors in sensor measurements.
+ * Implements @ref rm_hs300x_api_t::resolutionChange.
+ *
+ * @retval FSP_SUCCESS              Successfully started.
+ * @retval FSP_ERR_ASSERTION        Null pointer passed as a parameter.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_MODE     Module is not entering the programming mode.
+ * @retval FSP_ERR_ABORTED          Communication is aborted.
+ * @retval FSP_ERR_TIMEOUT          Communication is timeout.
+ * @retval FSP_ERR_UNSUPPORTED      Programming mode is not supported.
+ **********************************************************************************************************************/
+fsp_err_t RM_HS300X_ResolutionChange (rm_hs300x_ctrl_t * const     p_api_ctrl,
+                                      rm_hs300x_data_type_t const  data_type,
+                                      rm_hs300x_resolution_t const resolution)
+{
+    /* The procedure in this function is based on section 6.9 "Setting the Measurement Resolution" of the HS300x Datasheet R36DS0010EU0701. */
+
+#if RM_HS300X_CFG_PROGRAMMING_MODE
+    fsp_err_t err = FSP_SUCCESS;
+    rm_hs300x_instance_ctrl_t * p_ctrl = (rm_hs300x_instance_ctrl_t *) p_api_ctrl;
+    uint8_t  transfer_data[3];
+    uint16_t counter = 0;
+
+ #if RM_HS300X_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(RM_HS300X_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(true == p_ctrl->programming_mode.enter, FSP_ERR_INVALID_MODE);
+ #endif
+
+    /* Set the register address */
+    if (RM_HS300X_HUMIDITY_DATA == data_type)
+    {
+        transfer_data[0] = RM_HS300X_HUMIDITY_RESOLUTION_READ;
+    }
+    else
+    {
+        transfer_data[0] = RM_HS300X_TEMPERATURE_RESOLUTION_READ;
+    }
+
+    transfer_data[1] = 0x00;
+    transfer_data[2] = 0x00;
+
+    /* Set the blocking flag */
+    p_ctrl->programming_mode.blocking = true;
+
+    /* Write the register address */
+    p_ctrl->programming_mode.communication_finished = false;
+    err = p_ctrl->p_comms_i2c_instance->p_api->write(p_ctrl->p_comms_i2c_instance->p_ctrl, &transfer_data[0], 3);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Wait the callback */
+    while (false == p_ctrl->programming_mode.communication_finished)
+    {
+        rm_hs300x_delay_us(p_ctrl, RM_HS300X_WAIT_TIME_100);
+        counter++;
+        FSP_ERROR_RETURN(RM_HS300X_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+    }
+
+    /* Check the error */
+    FSP_ERROR_RETURN(RM_HS300X_EVENT_SUCCESS == p_ctrl->programming_mode.event, FSP_ERR_ABORTED);
+
+    /* Delay 120us */
+    err = rm_hs300x_delay_us(p_ctrl, RM_HS300X_WAIT_TIME_120);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Read the current resolution */
+    p_ctrl->programming_mode.communication_finished = false;
+    err = p_ctrl->p_comms_i2c_instance->p_api->read(p_ctrl->p_comms_i2c_instance->p_ctrl, &transfer_data[0], 3);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Wait the callback */
+    while (false == p_ctrl->programming_mode.communication_finished)
+    {
+        rm_hs300x_delay_us(p_ctrl, RM_HS300X_WAIT_TIME_100);
+        counter++;
+        FSP_ERROR_RETURN(RM_HS300X_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+    }
+
+    /* Check the errors */
+    FSP_ERROR_RETURN(RM_HS300X_EVENT_SUCCESS == p_ctrl->programming_mode.event, FSP_ERR_ABORTED);
+    FSP_ERROR_RETURN(RM_HS300X_PROGRAMMING_MODE_SUCCESS_STATUS == transfer_data[0], FSP_ERR_INVALID_MODE);
+
+    /* Set the register address */
+    if (RM_HS300X_HUMIDITY_DATA == data_type)
+    {
+        transfer_data[0] = RM_HS300X_HUMIDITY_RESOLUTION_WRITE;
+    }
+    else
+    {
+        transfer_data[0] = RM_HS300X_TEMPERATURE_RESOLUTION_WRITE;
+    }
+
+    /* set the next resolution */
+    transfer_data[1] &= RM_HS300X_RESOLUTION_CLEAR; // Clear the current resolution
+    transfer_data[1] |= resolution;                 // Set the new resolution
+
+    /* Clear the blocking flag */
+    p_ctrl->programming_mode.blocking = false;
+
+    /* Write the next resolution */
+    err = p_ctrl->p_comms_i2c_instance->p_api->write(p_ctrl->p_comms_i2c_instance->p_ctrl, &transfer_data[0], 3);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(data_type);
+    FSP_PARAMETER_NOT_USED(resolution);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * @brief This function must be called after calling the RM_HS300X_ProgrammingModeEnter function.
+ * Gets the sensor ID.
+ * This function blocks for 240 us software delay plus 12 bytes on the I2C bus.
+ * Implements @ref rm_hs300x_api_t::sensorIdGet.
+ *
+ * @retval FSP_SUCCESS              Successfully started.
+ * @retval FSP_ERR_ASSERTION        Null pointer passed as a parameter.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_MODE     Module is not entering the programming mode.
+ * @retval FSP_ERR_ABORTED          Communication is aborted.
+ * @retval FSP_ERR_TIMEOUT          Communication is timeout.
+ * @retval FSP_ERR_UNSUPPORTED      Programming mode is not supported.
+ **********************************************************************************************************************/
+fsp_err_t RM_HS300X_SensorIdGet (rm_hs300x_ctrl_t * const p_api_ctrl, uint32_t * const p_sensor_id)
+{
+    /* The procedure in this function is based on section 6.10 "Reading the HS300x ID Number" of the HS300x Datasheet R36DS0010EU0701. */
+
+#if RM_HS300X_CFG_PROGRAMMING_MODE
+    fsp_err_t err = FSP_SUCCESS;
+    rm_hs300x_instance_ctrl_t * p_ctrl = (rm_hs300x_instance_ctrl_t *) p_api_ctrl;
+    uint8_t  transfer_data[3];
+    uint16_t counter = 0;
+
+ #if RM_HS300X_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ASSERT(NULL != p_sensor_id);
+    FSP_ERROR_RETURN(RM_HS300X_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(true == p_ctrl->programming_mode.enter, FSP_ERR_INVALID_MODE);
+ #endif
+
+    /* Set the register address of upper value */
+    transfer_data[0] = RM_HS300X_SENSOR_ID_UPPER;
+    transfer_data[1] = 0x00;
+    transfer_data[2] = 0x00;
+
+    /* Set the blocking flag */
+    p_ctrl->programming_mode.blocking = true;
+
+    /* Write the register address */
+    p_ctrl->programming_mode.communication_finished = false;
+    err = p_ctrl->p_comms_i2c_instance->p_api->write(p_ctrl->p_comms_i2c_instance->p_ctrl, &transfer_data[0], 3);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Wait the callback */
+    while (false == p_ctrl->programming_mode.communication_finished)
+    {
+        rm_hs300x_delay_us(p_ctrl, RM_HS300X_WAIT_TIME_100);
+        counter++;
+        FSP_ERROR_RETURN(RM_HS300X_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+    }
+
+    /* Check the error */
+    FSP_ERROR_RETURN(RM_HS300X_EVENT_SUCCESS == p_ctrl->programming_mode.event, FSP_ERR_ABORTED);
+
+    /* Delay 120us */
+    err = rm_hs300x_delay_us(p_ctrl, RM_HS300X_WAIT_TIME_120);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Read the upper value of the sensor ID */
+    p_ctrl->programming_mode.communication_finished = false;
+    err = p_ctrl->p_comms_i2c_instance->p_api->read(p_ctrl->p_comms_i2c_instance->p_ctrl, &transfer_data[0], 3);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Wait the callback */
+    while (false == p_ctrl->programming_mode.communication_finished)
+    {
+        rm_hs300x_delay_us(p_ctrl, RM_HS300X_WAIT_TIME_100);
+        counter++;
+        FSP_ERROR_RETURN(RM_HS300X_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+    }
+
+    /* Check the errors */
+    FSP_ERROR_RETURN(RM_HS300X_EVENT_SUCCESS == p_ctrl->programming_mode.event, FSP_ERR_ABORTED);
+    FSP_ERROR_RETURN(RM_HS300X_PROGRAMMING_MODE_SUCCESS_STATUS == transfer_data[0], FSP_ERR_INVALID_MODE);
+
+    /* set the upper value of sensor ID */
+    *p_sensor_id = (uint32_t) ((transfer_data[1] << 8) + transfer_data[2]) << 16;
+
+    /* Set the register address of lower value */
+    transfer_data[0] = RM_HS300X_SENSOR_ID_LOWER;
+    transfer_data[1] = 0x00;
+    transfer_data[2] = 0x00;
+
+    /* Write the register address */
+    p_ctrl->programming_mode.communication_finished = false;
+    err = p_ctrl->p_comms_i2c_instance->p_api->write(p_ctrl->p_comms_i2c_instance->p_ctrl, &transfer_data[0], 3);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Wait the callback */
+    while (false == p_ctrl->programming_mode.communication_finished)
+    {
+        rm_hs300x_delay_us(p_ctrl, RM_HS300X_WAIT_TIME_100);
+        counter++;
+        FSP_ERROR_RETURN(RM_HS300X_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+    }
+
+    /* Check the error */
+    FSP_ERROR_RETURN(RM_HS300X_EVENT_SUCCESS == p_ctrl->programming_mode.event, FSP_ERR_ABORTED);
+
+    /* Delay 120us */
+    err = rm_hs300x_delay_us(p_ctrl, RM_HS300X_WAIT_TIME_120);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Read the lower value of the sensor ID */
+    p_ctrl->programming_mode.communication_finished = false;
+    err = p_ctrl->p_comms_i2c_instance->p_api->read(p_ctrl->p_comms_i2c_instance->p_ctrl, &transfer_data[0], 3);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Wait the callback */
+    while (false == p_ctrl->programming_mode.communication_finished)
+    {
+        rm_hs300x_delay_us(p_ctrl, RM_HS300X_WAIT_TIME_100);
+        counter++;
+        FSP_ERROR_RETURN(RM_HS300X_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
+    }
+
+    /* Check the errors */
+    FSP_ERROR_RETURN(RM_HS300X_EVENT_SUCCESS == p_ctrl->programming_mode.event, FSP_ERR_ABORTED);
+    FSP_ERROR_RETURN(RM_HS300X_PROGRAMMING_MODE_SUCCESS_STATUS == transfer_data[0], FSP_ERR_INVALID_MODE);
+
+    /* set the upper value of sensor ID */
+    *p_sensor_id = *p_sensor_id + (uint32_t) ((transfer_data[1] << 8) + transfer_data[2]);
+
+    /* Clear the blocking flag */
+    p_ctrl->programming_mode.blocking = false;
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_sensor_id);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * @brief This function must be called after calling the RM_HS300X_ProgrammingModeEnter function.
+ * This function must be called to return to normal sensor operation and perform measurements.
+ * Sends the commands to exit the programming mode.
+ * Implements @ref rm_hs300x_api_t::programmingModeExit.
+ *
+ * @retval FSP_SUCCESS              Successfully started.
+ * @retval FSP_ERR_ASSERTION        Null pointer passed as a parameter.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ * @retval FSP_ERR_INVALID_MODE     Module is not entering the programming mode.
+ * @retval FSP_ERR_UNSUPPORTED      Programming mode is not supported.
+ **********************************************************************************************************************/
+fsp_err_t RM_HS300X_ProgrammingModeExit (rm_hs300x_ctrl_t * const p_api_ctrl)
+{
+    /* The procedure in this function is based on section 6.8 "Accessing the Non-volatile Memory" of the HS300x Datasheet R36DS0010EU0701. */
+
+#if RM_HS300X_CFG_PROGRAMMING_MODE
+    fsp_err_t err = FSP_SUCCESS;
+    rm_hs300x_instance_ctrl_t * p_ctrl = (rm_hs300x_instance_ctrl_t *) p_api_ctrl;
+    uint8_t write_data[3];
+
+ #if RM_HS300X_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(RM_HS300X_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(true == p_ctrl->programming_mode.enter, FSP_ERR_INVALID_MODE);
+ #endif
+
+    /* Write the commands */
+    write_data[0] = RM_HS300X_PROGRAMMING_MODE_EXIT;
+    write_data[1] = 0x00;
+    write_data[2] = 0x00;
+    err           = p_ctrl->p_comms_i2c_instance->p_api->write(p_ctrl->p_comms_i2c_instance->p_ctrl, &write_data[0], 3);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Clear the flag */
+    p_ctrl->programming_mode.enter = false;
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup HS300X)
  **********************************************************************************************************************/
 
@@ -290,10 +661,21 @@ void rm_hs300x_callback (rm_comms_callback_args_t * p_args)
         }
     }
 
-    if (NULL != p_ctrl->p_callback)
+    if (true == p_ctrl->programming_mode.blocking)
     {
-        /* Call callback function */
-        p_ctrl->p_callback(&hs300x_callback_args);
+        /* Set flag */
+        p_ctrl->programming_mode.communication_finished = true;
+
+        /* Set event */
+        p_ctrl->programming_mode.event = hs300x_callback_args.event;
+    }
+    else
+    {
+        if (NULL != p_ctrl->p_callback)
+        {
+            /* Call callback function */
+            p_ctrl->p_callback(&hs300x_callback_args);
+        }
     }
 }
 

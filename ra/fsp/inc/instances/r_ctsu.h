@@ -254,6 +254,8 @@ typedef struct st_ctsu_diag_info
     uint16_t      suclk_cnt[CTSU_CORRECTION_POINT_NUM];                                         ///< Diagnosis suclk count value
     uint16_t      suclk_count_clk_recv[3];                                                      ///< Diagnosis clock recovery suclk count value
     uint16_t      cfc_cnt[CTSU_CORRCFC_POINT_NUM];                                              ///< Diagnosis cfc count value
+    uint32_t      chaca;                                                                        ///< Diagnosis CHACA
+    uint32_t      chacb;                                                                        ///< Diagnosis CHACB
 } ctsu_diag_info_t;
  #endif
 #endif
@@ -263,6 +265,8 @@ typedef struct st_ctsu_instance_ctrl
 {
     uint32_t                 open;               ///< Whether or not driver is open.
     volatile ctsu_state_t    state;              ///< CTSU run state.
+    ctsu_cap_t               cap;                ///< CTSU Scan Start Trigger Select
+    ctsu_md_t                md;                 ///< CTSU Measurement Mode Select(copy to cfg)
     ctsu_tuning_t            tuning;             ///< CTSU Initial offset tuning status.
     uint16_t                 num_elements;       ///< Number of elements to scan
     uint16_t                 wr_index;           ///< Word index into ctsuwr register array.
@@ -274,12 +278,29 @@ typedef struct st_ctsu_instance_ctrl
     uint8_t                  ctsucr1;            ///< Copy from (atune1 << 3, md << 6) by Open API. CLK, ATUNE0, CSW, and PON is set by HAL driver.
     ctsu_ctsuwr_t          * p_ctsuwr;           ///< CTSUWR write register value. g_ctsu_ctsuwr[] is set by Open API.
     ctsu_self_buf_t        * p_self_raw;         ///< Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API.
+    uint16_t               * p_self_corr;        ///< Pointer to Self correction data. g_ctsu_self_corr[] is set by Open API.
     uint16_t               * p_self_data;        ///< Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API.
     ctsu_mutual_buf_t      * p_mutual_raw;       ///< Pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API.
+    uint16_t               * p_mutual_pri_corr;  ///< Pointer to Mutual primary correction data. g_ctsu_self_corr[] is set by Open API.
+    uint16_t               * p_mutual_snd_corr;  ///< Pointer to Mutual secondary correction data. g_ctsu_self_corr[] is set by Open API.
     uint16_t               * p_mutual_pri_data;  ///< Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API.
     uint16_t               * p_mutual_snd_data;  ///< Pointer to Mutual secondary moving average data. g_ctsu_mutual_snd_data[] is set by Open API.
     ctsu_correction_info_t * p_correction_info;  ///< Pointer to correction info
-
+    ctsu_txvsel_t            txvsel;             ///< CTSU Transmission Power Supply Select
+    ctsu_txvsel2_t           txvsel2;            ///< CTSU Transmission Power Supply Select 2 (CTSU2 Only)
+    uint8_t                  ctsuchac0;          ///< TS00-TS07 enable mask
+    uint8_t                  ctsuchac1;          ///< TS08-TS15 enable mask
+    uint8_t                  ctsuchac2;          ///< TS16-TS23 enable mask
+    uint8_t                  ctsuchac3;          ///< TS24-TS31 enable mask
+    uint8_t                  ctsuchac4;          ///< TS32-TS39 enable mask
+    uint8_t                  ctsuchtrc0;         ///< TS00-TS07 mutual-tx mask
+    uint8_t                  ctsuchtrc1;         ///< TS08-TS15 mutual-tx mask
+    uint8_t                  ctsuchtrc2;         ///< TS16-TS23 mutual-tx mask
+    uint8_t                  ctsuchtrc3;         ///< TS24-TS31 mutual-tx mask
+    uint8_t                  ctsuchtrc4;         ///< TS32-TS39 mutual-tx mask
+    uint16_t                 self_elem_index;    ///< self element index number for Current instance.
+    uint16_t                 mutual_elem_index;  ///< mutual element index number for Current instance.
+    uint16_t                 ctsu_elem_index;    ///< CTSU element index number for Current instance.
 #if (BSP_FEATURE_CTSU_VERSION == 1)
  #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
     ctsu_diag_info_t * p_diag_info;              ///< pointer to diagnosis info
@@ -302,6 +323,7 @@ typedef struct st_ctsu_instance_ctrl
     IRQn_Type          read_irq;                 ///< Copy from config by Open API. CTSU_CTSURD interrupt vector
     IRQn_Type          end_irq;                  ///< Copy from config by Open API. CTSU_CTSUFN interrupt vector
     void (* p_callback)(ctsu_callback_args_t *); ///< Callback provided when a CTSUFN occurs.
+    ctsu_event_t           error_status;         ///< error status variable to send to QE for serial tuning.
     ctsu_callback_args_t * p_callback_memory;    ///< Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
     void const           * p_context;            ///< Placeholder for user data.
 } ctsu_instance_ctrl_t;
@@ -322,6 +344,7 @@ extern const ctsu_api_t g_ctsu_on_ctsu;
 fsp_err_t R_CTSU_Open(ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cfg);
 fsp_err_t R_CTSU_ScanStart(ctsu_ctrl_t * const p_ctrl);
 fsp_err_t R_CTSU_DataGet(ctsu_ctrl_t * const p_ctrl, uint16_t * p_data);
+fsp_err_t R_CTSU_ScanStop(ctsu_ctrl_t * const p_ctrl);
 fsp_err_t R_CTSU_CallbackSet(ctsu_ctrl_t * const          p_api_ctrl,
                              void (                     * p_callback)(ctsu_callback_args_t *),
                              void const * const           p_context,

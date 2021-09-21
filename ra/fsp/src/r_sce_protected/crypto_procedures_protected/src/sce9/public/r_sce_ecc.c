@@ -547,8 +547,6 @@ fsp_err_t R_SCE_ECDSA_secp256r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
                                                  sce_ecdsa_byte_data_t        * message_hash,
                                                  sce_ecc_public_wrapped_key_t * wrapped_key)
 {
-    uint32_t  indata_cmd;
-    uint32_t  curvetype;
     fsp_err_t error_code = FSP_SUCCESS;
     uint32_t  data_buff[SCE_PRV_HASH_WORD_POS_ECDSA_P256 + (HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE / sizeof(uint32_t))] =
     {
@@ -561,12 +559,8 @@ fsp_err_t R_SCE_ECDSA_secp256r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
         return error_code;
     }
 
-    indata_cmd = change_endian_long(SCE_ECC_KEY_LENGTH_256);
-    curvetype  = change_endian_long(SCE_ECC_CURVE_TYPE_NIST);
-    error_code = R_SCE_EcdsaSignatureVerificationSub(
+    error_code = R_SCE_EcdsaNistP256SignatureVerificationSub(
         /* Casting uint32_t pointer is used for address. */
-        &curvetype,
-        &indata_cmd,
         (uint32_t *) &wrapped_key->value,
         (uint32_t *) data_buff,
         (uint32_t *) signature->pdata);

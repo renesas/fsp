@@ -73,6 +73,7 @@ typedef enum e_elc_event_ra6m5
     ELC_EVENT_DMAC6_INT              = (0x026), // DMAC transfer end 6
     ELC_EVENT_DMAC7_INT              = (0x027), // DMAC transfer end 7
     ELC_EVENT_DTC_COMPLETE           = (0x029), // DTC transfer complete
+    ELC_EVENT_DTC_END                = (0x02A), // DTC transfer end
     ELC_EVENT_DMA_TRANSERR           = (0x02B), // DTC transfer error
     ELC_EVENT_ICU_SNOOZE_CANCEL      = (0x02D), // Canceling from Snooze mode
     ELC_EVENT_FCU_FIFERR             = (0x030), // Flash access error interrupt

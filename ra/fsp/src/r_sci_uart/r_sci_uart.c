@@ -298,7 +298,8 @@ const uart_api_t g_uart_on_sci =
  * @retval  FSP_SUCCESS                    Channel opened successfully.
  * @retval  FSP_ERR_ASSERTION              Pointer to UART control block or configuration structure is NULL.
  * @retval  FSP_ERR_IP_CHANNEL_NOT_PRESENT The requested channel does not exist on this MCU.
- * @retval  FSP_ERR_INVALID_ARGUMENT       Flow control is enabled but flow control pin is not defined.
+ * @retval  FSP_ERR_INVALID_ARGUMENT       Flow control is enabled but flow control pin is not defined or selected channel
+ *                                         does not support "Hardware CTS and Hardware RTS" flow control.
  * @retval  FSP_ERR_ALREADY_OPEN           Control block has already been opened or channel is being used by another
  *                                         instance. Call close() then open() to reconfigure.
  *
@@ -328,6 +329,12 @@ fsp_err_t R_SCI_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * co
         FSP_ERROR_RETURN(
             ((sci_uart_extended_cfg_t *) p_cfg->p_extend)->flow_control_pin != SCI_UART_INVALID_16BIT_PARAM,
             FSP_ERR_INVALID_ARGUMENT);
+    }
+
+    if (((sci_uart_extended_cfg_t *) p_cfg->p_extend)->flow_control == SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS)
+    {
+        FSP_ERROR_RETURN((0U != (((1U << (p_cfg->channel)) & BSP_FEATURE_SCI_UART_CSTPEN_CHANNELS))),
+                         FSP_ERR_INVALID_ARGUMENT);
     }
 
     FSP_ASSERT(p_cfg->rxi_irq >= 0);
@@ -1299,8 +1306,17 @@ static void r_sci_uart_config_set (sci_uart_instance_ctrl_t * const p_ctrl, uart
 
     sci_uart_extended_cfg_t * p_extend = (sci_uart_extended_cfg_t *) p_cfg->p_extend;
 
-    /* Configure CTS flow control if CTS/RTS flow control is enabled. */
-    p_ctrl->p_reg->SPMR = ((uint8_t) (p_extend->flow_control << R_SCI0_SPMR_CTSE_Pos) & R_SCI0_SPMR_CTSE_Msk);
+    /* Configure flow control if CTS/RTS flow control is enabled. */
+#if BSP_FEATURE_SCI_UART_CSTPEN_CHANNELS
+    if (p_extend->flow_control == SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS)
+    {
+        p_ctrl->p_reg->SPMR = ((uint8_t) (1U << R_SCI0_SPMR_CSTPEN_Pos) & R_SCI0_SPMR_CSTPEN_Msk);
+    }
+    else
+#endif
+    {
+        p_ctrl->p_reg->SPMR = ((uint8_t) (p_extend->flow_control << R_SCI0_SPMR_CTSE_Pos) & R_SCI0_SPMR_CTSE_Msk);
+    }
 
     uint32_t semr = 0;
 
@@ -1625,7 +1641,7 @@ void sci_uart_txi_isr (void)
  * This interrupt also calls the callback function for RTS pin control if it is registered in R_SCI_UART_Open(). This is
  * special functionality to expand SCI hardware capability and make RTS/CTS hardware flow control possible. If macro
  * 'SCI_UART_CFG_FLOW_CONTROL_SUPPORT' is set, it is called at the beginning in this function to set the RTS pin high,
- * then it is it is called again just before leaving this function to set the RTS pin low.
+ * then it is called again just before leaving this function to set the RTS pin low.
  * @retval    none
  **********************************************************************************************************************/
 void sci_uart_rxi_isr (void)

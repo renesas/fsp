@@ -74,6 +74,22 @@ typedef enum e_rm_hs300x_event
     RM_HS300X_EVENT_ERROR,
 } rm_hs300x_event_t;
 
+/** Data type of HS300X */
+typedef enum e_rm_hs300x_data_type
+{
+    RM_HS300X_HUMIDITY_DATA = 0,
+    RM_HS300X_TEMPERATURE_DATA,
+} rm_hs300x_data_type_t;
+
+/** Resolution type of HS300X */
+typedef enum e_rm_hs300x_resolution
+{
+    RM_HS300X_RESOLUTION_8BIT  = 0x00,
+    RM_HS300X_RESOLUTION_10BIT = 0x04,
+    RM_HS300X_RESOLUTION_12BIT = 0x08,
+    RM_HS300X_RESOLUTION_14BIT = 0x0C,
+} rm_hs300x_resolution_t;
+
 /** HS300X callback parameter definition */
 typedef struct st_rm_hs300x_callback_args
 {
@@ -156,6 +172,42 @@ typedef struct st_rm_hs300x_api
      */
     fsp_err_t (* dataCalculate)(rm_hs300x_ctrl_t * const p_ctrl, rm_hs300x_raw_data_t * const p_raw_data,
                                 rm_hs300x_data_t * const p_hs300x_data);
+
+    /** Enter the programming mode.
+     * @par Implemented as
+     * - @ref RM_HS300X_ProgrammingModeEnter()
+     *
+     * @param[in]  p_ctrl           Pointer to control structure.
+     */
+    fsp_err_t (* programmingModeEnter)(rm_hs300x_ctrl_t * const p_ctrl);
+
+    /** Change the sensor resolution.
+     * @par Implemented as
+     * - @ref RM_HS300X_ResolutionChange()
+     *
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  data_type        Data type of HS300X.
+     * @param[in]  resolution       Resolution type of HS300X.
+     */
+    fsp_err_t (* resolutionChange)(rm_hs300x_ctrl_t * const p_ctrl, rm_hs300x_data_type_t const data_type,
+                                   rm_hs300x_resolution_t const resolution);
+
+    /** Get the sensor ID.
+     * @par Implemented as
+     * - @ref RM_HS300X_SensorIdGet()
+     *
+     * @param[in]  p_ctrl           Pointer to control structure.
+     * @param[in]  p_sensor_id      Pointer to sensor ID of HS300X.
+     */
+    fsp_err_t (* sensorIdGet)(rm_hs300x_ctrl_t * const p_ctrl, uint32_t * const p_sensor_id);
+
+    /** Exit the programming mode.
+     * @par Implemented as
+     * - @ref RM_HS300X_ProgrammingModeExit()
+     *
+     * @param[in]  p_ctrl           Pointer to control structure.
+     */
+    fsp_err_t (* programmingModeExit)(rm_hs300x_ctrl_t * const p_ctrl);
 
     /** Close HS300X.
      * @par Implemented as

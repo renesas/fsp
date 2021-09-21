@@ -559,6 +559,11 @@ fsp_err_t R_SCE_EcdsaSignatureVerificationSub(uint32_t * InData_CurveType,
                                                uint32_t * InData_Signature);
 
 /** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
+fsp_err_t R_SCE_EcdsaNistP256SignatureVerificationSub(uint32_t *InData_KeyIndex,
+                                                       uint32_t *InData_MsgDgst,
+                                                       uint32_t *InData_Signature);
+
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_FAIL @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL **/
 fsp_err_t R_SCE_EcdsaP384SignatureVerificationSub(uint32_t * InData_CurveType,
                                                    uint32_t * InData_KeyIndex,
                                                    uint32_t * InData_MsgDgst,
@@ -632,6 +637,7 @@ void R_SCE_func064(uint32_t ARG1, uint32_t * ARG2);
 void R_SCE_func068(void);
 void R_SCE_func070_r2(uint32_t ARG1);
 void R_SCE_func071_r2(uint32_t ARG1);
+void R_SCE_func073_r2(uint32_t ARG1);
 void R_SCE_func074_r1(void);
 void R_SCE_func075_r1(void);
 void R_SCE_func076(void);

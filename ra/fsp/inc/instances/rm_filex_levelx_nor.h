@@ -79,7 +79,7 @@ typedef struct
 typedef struct st_rm_filex_levelx_nor_instance
 {
     rm_filex_levelx_nor_instance_ctrl_t   * p_ctrl; ///< Pointer to the control structure for this instance
-    rm_filex_levelx_nor_cfg_t const * const p_cfg;  ///< Pointer to the configuration structure for this instance
+    rm_filex_levelx_nor_cfg_t * const p_cfg;  ///< Pointer to the configuration structure for this instance
 } rm_filex_levelx_nor_instance_t;
 
 /**********************************************************************************************************************

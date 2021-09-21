@@ -113,16 +113,22 @@
 /** Define for privacy status     */
 /**********************************/
 /** create irk */
-#define BLE_ABS_PV_STATUS_CREATE_IRK    (0x00000001)
+#define BLE_ABS_PV_STATUS_CREATE_IRK     (0x00000001)
 
 /** add irk to resolving list */
-#define BLE_ABS_PV_STATUS_ADD_RSLV      (0x00000002)
+#define BLE_ABS_PV_STATUS_ADD_RSLV       (0x00000002)
 
 /** set privacy mode */
-#define BLE_ABS_PV_STATUS_SET_MODE      (0x00000004)
+#define BLE_ABS_PV_STATUS_SET_MODE       (0x00000004)
 
 /** enable resolvable private address function */
-#define BLE_ABS_PV_STATUS_EN_RPA        (0x00000008)
+#define BLE_ABS_PV_STATUS_EN_RPA         (0x00000008)
+
+/**  get address **/
+#define BLE_ABS_PV_STATUS_GET_ADDR       (0x00000010)
+
+/**  register the stored irk **/
+#define BLE_ABS_PV_STATUS_REG_STR_IRK    (0x00000020)
 
 /**********************************/
 /** Define for create connection  */
@@ -157,6 +163,8 @@
  #define BLE_SECD_UPD_BN_ADD_OVERWR                             (0x01)
  #define BLE_SECD_UPD_BN_DEL                                    (0x02)
  #define BLE_SECD_UPD_BN_ALL_DEL                                (0x03)
+ #define BLE_SECD_UPD_BN_UPDATE                                 (0x04)
+
  #define BLE_ABS_SECURE_DATA_DELETE_LOCAL_FF                    (0xFF)
  #define BLE_ABS_SECURE_DATA_UPDATE_BOND_NUMBER_FF              (0xFF)
  #define BLE_ABS_SECURE_DATA_REMOTE_BOND_NUMBER_FF              (0xFF)
@@ -285,6 +293,13 @@
 #define BLE_ABS_TIMER_DEFAULT_TIMEOUT_MS                        (1000)
 #define BLE_ABS_TIMER_METRIC_PREFIX                             (1000)
 
+#define BLE_ABS_SCAN_FILTER_MASK                                (0x0F)
+#define BLE_ABS_SCAN_LOCAL_ADDRESS_TYPE_MASK                    (0xF0)
+#define BLE_ABS_CONNECTION_FILTER_MASK                          (0x0F)
+#define BLE_ABS_CONNECTION_LOCAL_ADDRESS_TYPE_MASK              (0xF0)
+#define BLE_ABS_PRIVACY_MODE_MASK                               (0x0F)
+#define BLE_ABS_PRIVACY_ADDRESS_MASK                            (0xF0)
+
 #define BLE_ABS_SCAN_STATUS_SET_MASK                            (0x00000000)
 #define BLE_ABS_SCAN_STATUS_CLEAR_MASK                          (0xFFFFFFFF)
 
@@ -378,7 +393,12 @@ static void ble_abs_conflict_resolving_handler(ble_abs_instance_ctrl_t * const p
                                                st_ble_evt_data_t             * p_event_data);
 static void ble_abs_random_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl,
                                    st_ble_vs_evt_data_t          * p_event_data);
-static void ble_abs_set_irk_to_resolving_list(ble_abs_instance_ctrl_t * const p_instance_ctrl, uint8_t * p_lc_irk);
+
+static void ble_abs_get_address_handler(ble_abs_instance_ctrl_t * const p_instance_ctrl,
+                                        st_ble_vs_evt_data_t          * p_event_data,
+                                        ble_status_t                    event_result);
+
+static void ble_abs_set_irk_to_resolving_list(ble_abs_instance_ctrl_t * const p_instance_ctrl, uint8_t * p_local_irk);
 static void ble_abs_advertising_start(ble_abs_instance_ctrl_t * const p_instance_ctrl, uint8_t advertising_handle);
 static void ble_abs_advertising_set_data(ble_abs_instance_ctrl_t * const p_instance_ctrl,
                                          uint8_t                         advertising_handle,
@@ -405,15 +425,6 @@ static void ble_abs_set_connection_advertising_interval(st_ble_gap_adv_param_t *
                                                         uint16_t                 fast_period);
 
 /*** ble secure data functions start ***/
-
-static fsp_err_t ble_abs_secure_data_writelocinfo(flash_instance_t const * p_instance,
-                                                  ble_device_address_t   * p_lc_id_addr,
-                                                  uint8_t                * p_lc_irk,
-                                                  uint8_t                * p_lc_csrk);
-static fsp_err_t ble_abs_secure_data_readlocinfo(flash_instance_t const * p_instance,
-                                                 ble_device_address_t   * p_lc_id_addr,
-                                                 uint8_t                * p_lc_irk,
-                                                 uint8_t                * p_lc_csrk);
 static void      ble_abs_secure_data_recvremkeys(ble_device_address_t * p_addr, st_ble_gap_key_ex_param_t * p_keys);
 static fsp_err_t ble_abs_secure_data_writeremkeys(flash_instance_t const * p_instance,
                                                   ble_device_address_t   * p_addr,
@@ -422,6 +433,11 @@ static fsp_err_t ble_abs_secure_data_init(flash_instance_t const * p_instance);
 static void      ble_abs_secure_data_delete_remote_keys(st_ble_dev_addr_t * p_addr);
 static void      ble_abs_secure_data_delete_local_keys(st_ble_dev_addr_t * p_addr);
 static void      ble_abs_secure_data_delete_all_keys(st_ble_dev_addr_t * p_addr);
+
+static fsp_err_t ble_abs_secure_data_get_identityinfo(flash_instance_t const         * p_instance,
+                                                      ble_device_address_t           * p_idaddr,
+                                                      st_ble_gap_rslv_list_key_set_t * p_key_set,
+                                                      uint8_t                        * p_num);
 
 #if (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1)
 
@@ -539,6 +555,8 @@ const ble_abs_api_t g_ble_abs_on_ble =
     .setLocalPrivacy       = RM_BLE_ABS_SetLocalPrivacy,
     .startAuthentication   = RM_BLE_ABS_StartAuthentication,
     .deleteBondInformation = RM_BLE_ABS_DeleteBondInformation,
+    .importKeyInformation  = RM_BLE_ABS_ImportKeyInformation,
+    .exportKeyInformation  = RM_BLE_ABS_ExportKeyInformation,
 };
 
 static ble_abs_instance_ctrl_t * gp_instance_ctrl;
@@ -1246,8 +1264,6 @@ fsp_err_t RM_BLE_ABS_StartScanning (ble_abs_ctrl_t * const                 p_ctr
  * @retval FSP_ERR_ASSERTION                           p_instance_ctrl is specified as NULL.
  * @retval FSP_ERR_NOT_OPEN                            Control block not open.
  * @retval FSP_ERR_INVALID_ARGUMENT                    The privacy_mode parameter is out of range.
- * @retval FSP_ERR_BLE_ABS_INVALID_OPERATION           Host stack hasn't been initialized.
- *                                                     configuring the resolving list or privacy mode.
  **********************************************************************************************************************/
 fsp_err_t RM_BLE_ABS_SetLocalPrivacy (ble_abs_ctrl_t * const p_ctrl,
                                       uint8_t const * const  p_lc_irk,
@@ -1256,6 +1272,7 @@ fsp_err_t RM_BLE_ABS_SetLocalPrivacy (ble_abs_ctrl_t * const p_ctrl,
     ble_status_t ble_status = BLE_SUCCESS;
 
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
+    uint8_t address_type = ((privacy_mode & BLE_ABS_PRIVACY_ADDRESS_MASK) >> 4);
 
     /* Parameter checking */
 #if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
@@ -1263,21 +1280,27 @@ fsp_err_t RM_BLE_ABS_SetLocalPrivacy (ble_abs_ctrl_t * const p_ctrl,
     /* Verify the pointers are valid */
     FSP_ASSERT(p_instance_ctrl);
     FSP_ERROR_RETURN(BLE_ABS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(BLE_GAP_DEV_PRIV_MODE >= privacy_mode, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(BLE_GAP_ADDR_RAND >= address_type, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(BLE_GAP_DEV_PRIV_MODE >= (privacy_mode & BLE_ABS_PRIVACY_MODE_MASK), FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    if (NULL == p_lc_irk)
+    if (NULL != p_lc_irk)
     {
-        ble_status = R_BLE_VS_GetRand(BLE_GAP_IRK_SIZE);
-        p_instance_ctrl->set_privacy_status = (BLE_SUCCESS == ble_status) ? BLE_ABS_PV_STATUS_CREATE_IRK : 0;
+        memcpy(p_instance_ctrl->local_irk, p_lc_irk, BLE_GAP_IRK_SIZE);
+        p_instance_ctrl->set_privacy_status = BLE_ABS_PV_STATUS_REG_STR_IRK;
+    }
+
+    ble_status = R_BLE_VS_GetBdAddr(BLE_VS_ADDR_AREA_REG, address_type);
+
+    if (BLE_SUCCESS == ble_status)
+    {
+        p_instance_ctrl->privacy_mode        = (privacy_mode & BLE_ABS_PRIVACY_MODE_MASK);
+        p_instance_ctrl->set_privacy_status |= BLE_ABS_PV_STATUS_GET_ADDR;
     }
     else
     {
-        ble_abs_set_irk_to_resolving_list(p_instance_ctrl, (uint8_t *) p_lc_irk);
-        FSP_ERROR_RETURN(0 != p_instance_ctrl->set_privacy_status, FSP_ERR_BLE_ABS_INVALID_OPERATION);
+        p_instance_ctrl->set_privacy_status = 0;
     }
-
-    p_instance_ctrl->privacy_mode = privacy_mode;
 
     return FSP_SUCCESS;
 }                                      /* End of function RM_BLE_ABS_SetLocalPrivacy() */
@@ -1319,6 +1342,7 @@ fsp_err_t RM_BLE_ABS_CreateConnection (ble_abs_ctrl_t * const                   
     FSP_ERROR_RETURN(BLE_ABS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(NULL != p_connection_parameter, FSP_ERR_INVALID_POINTER);
     FSP_ERROR_RETURN(10 >= p_connection_parameter->connection_timeout, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(NULL != p_connection_parameter->p_device_address, FSP_ERR_INVALID_ARGUMENT);
  #endif
 
     /* Status checking */
@@ -1327,19 +1351,13 @@ fsp_err_t RM_BLE_ABS_CreateConnection (ble_abs_ctrl_t * const                   
     st_ble_gap_create_conn_param_t connection_parameter;
     fsp_err_t    ret    = FSP_SUCCESS;
     ble_status_t retval = BLE_SUCCESS;
+    connection_parameter.init_filter_policy =
+        (p_connection_parameter->filter_parameter & BLE_ABS_CONNECTION_FILTER_MASK);
+    connection_parameter.own_addr_type =
+        (p_connection_parameter->filter_parameter & BLE_ABS_CONNECTION_LOCAL_ADDRESS_TYPE_MASK) >> 4;
 
-    connection_parameter.init_filter_policy = p_connection_parameter->filter_parameter;
-    connection_parameter.own_addr_type      = BLE_GAP_ADDR_PUBLIC;
-
-    if (BLE_GAP_INIT_FILT_USE_ADDR == p_connection_parameter->filter_parameter)
-    {
-        memcpy(connection_parameter.remote_bd_addr, p_connection_parameter->p_device_address->addr, BLE_BD_ADDR_LEN);
-        connection_parameter.remote_bd_addr_type = p_connection_parameter->p_device_address->type;
-    }
-    else
-    {
-        connection_parameter.remote_bd_addr_type = BLE_GAP_ADDR_PUBLIC;
-    }
+    memcpy(connection_parameter.remote_bd_addr, p_connection_parameter->p_device_address->addr, BLE_BD_ADDR_LEN);
+    connection_parameter.remote_bd_addr_type = p_connection_parameter->p_device_address->type;
 
     /** set connection parameters for 1M */
     ble_gap_connection_parameter_t     connection_parameter_1M;    ///< connection parameter for 1M
@@ -1544,6 +1562,175 @@ fsp_err_t RM_BLE_ABS_DeleteBondInformation (ble_abs_ctrl_t * const              
         /* Delete local keys from non volatile area, after R_BLE_GAP_DeleteBondInfo executes. */
         /* It is because R_BLE_GAP_DeleteBondInfo don't call callback function when delete local keys. */
         gap_delete_bond_callback(NULL);
+    }
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Import key information to BLE stack and storage.
+ * Implements @ref ble_abs_api_t::importKeyInformation.
+ *
+ * Example:
+ * @snippet rm_ble_abs_example.c   RM_BLE_ABS_ImportKeyInformation
+ *
+ * @retval FSP_SUCCESS             Operation succeeded.
+ * @retval FSP_ERR_ASSERTION       The parameter p_instance_ctrl is NULL.
+ * @retval FSP_ERR_INVALID_POINTER The parameter p_local_identity_address, p_local_irk or p_local_csrk is NULL.
+ * @retval FSP_ERR_NOT_OPEN        Control block not open.
+ * @retval FSP_ERR_INVALID_HW_CONDITION    Failure to access internal storage.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLE_ABS_ImportKeyInformation (ble_abs_ctrl_t * const p_ctrl,
+                                           ble_device_address_t * p_local_identity_address,
+                                           uint8_t              * p_local_irk,
+                                           uint8_t              * p_local_csrk)
+{
+    ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
+    uint32_t local_temp_data[(BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE + BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + 3) / 4];
+
+#if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN((((NULL != p_local_identity_address) && (NULL != p_local_irk)) || (NULL != p_local_csrk)),
+                     FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN(BLE_ABS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == ble_abs_secure_data_flash_read(p_instance_ctrl->p_cfg->p_flash_instance,
+                                                                   BLE_ABS_SECURE_DATA_BASE_ADDR,
+                                                                   (uint8_t *) local_temp_data,
+                                                                   BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE +
+                                                                   BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE),
+                     FSP_ERR_INVALID_HW_CONDITION);
+
+    if (NULL != p_local_irk)
+    {
+        memcpy((uint8_t *) local_temp_data + BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE, p_local_irk, BLE_GAP_IRK_SIZE);
+        memcpy(
+            (uint8_t *) local_temp_data + BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE + BLE_GAP_CSRK_SIZE,
+            p_local_identity_address,
+            BLE_ABS_SECURE_DATA_BLUETOOTH_DEVICE_ADDRESS_SIZE);
+    }
+
+    if (NULL != p_local_csrk)
+    {
+        memcpy((uint8_t *) local_temp_data + BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE,
+               p_local_csrk,
+               BLE_GAP_CSRK_SIZE);
+    }
+
+    local_temp_data[0] = BLE_ABS_SECURE_DATA_MAGIC_NUMBER;
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == ble_abs_secure_data_flash_write(p_instance_ctrl->p_cfg->p_flash_instance,
+                                                                    BLE_ABS_SECURE_DATA_BASE_ADDR,
+                                                                    (uint8_t *) local_temp_data,
+                                                                    BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE +
+                                                                    BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE),
+                     FSP_ERR_INVALID_HW_CONDITION);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Export key information to BLE stack and storage.
+ * Implements @ref ble_abs_api_t::exportKeyInformation.
+ *
+ * Example:
+ * @snippet rm_ble_abs_example.c   RM_BLE_ABS_ExportKeyInformation
+ *
+ * @retval FSP_SUCCESS             Operation succeeded.
+ * @retval FSP_ERR_ASSERTION       The parameter p_instance_ctrl is NULL.
+ * @retval FSP_ERR_INVALID_POINTER The parameter p_local_identity_address, p_local_irk or p_local_csrk is NULL.
+ * @retval FSP_ERR_NOT_OPEN        Control block not open.
+ * @retval FSP_ERR_BUFFER_EMPTY    Dynamic memory allocation failed.
+ * @retval FSP_ERR_OUT_OF_MEMORY   Failure to access internal storage.
+ * @retval FSP_ERR_NOT_INITIALIZED         Not initialized internal storage.
+ **********************************************************************************************************************/
+fsp_err_t RM_BLE_ABS_ExportKeyInformation (ble_abs_ctrl_t * const p_ctrl,
+                                           ble_device_address_t * p_local_identity_address,
+                                           uint8_t              * p_local_irk,
+                                           uint8_t              * p_local_csrk)
+{
+    fsp_err_t                 retval;
+    uint8_t                 * p_loc_area;
+    uint32_t                  mgc_num;
+    ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
+
+#if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN((((NULL != p_local_identity_address) && (NULL != p_local_irk)) || (NULL != p_local_csrk)),
+                     FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN(BLE_ABS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    p_loc_area = malloc(BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE);
+
+    FSP_ERROR_RETURN(NULL != p_loc_area, FSP_ERR_BUFFER_EMPTY);
+
+    retval = ble_abs_secure_data_flash_read(p_instance_ctrl->p_cfg->p_flash_instance,
+                                            BLE_ABS_SECURE_DATA_ADDR_MGN_DATA,
+                                            p_loc_area,
+                                            BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE +
+                                            BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE);
+    if (FSP_SUCCESS != retval)
+    {
+        free(p_loc_area);
+        p_loc_area = NULL;
+    }
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == retval, retval);
+
+    memcpy(&mgc_num, p_loc_area, BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE);
+    if ((BLE_ABS_SECURE_DATA_MAGIC_NUMBER != mgc_num) && (NULL != p_loc_area))
+    {
+        free(p_loc_area);
+        p_loc_area = NULL;
+    }
+
+    FSP_ERROR_RETURN(BLE_ABS_SECURE_DATA_MAGIC_NUMBER == mgc_num, FSP_ERR_NOT_INITIALIZED);
+
+    if ((NULL != p_local_irk) && (NULL != p_local_identity_address))
+    {
+        if (BLE_ABS_SECURE_DATA_BOND_CHECK_FF ==
+            p_loc_area[BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE + BLE_GAP_CSRK_SIZE +
+                       BLE_BD_ADDR_LEN])
+        {
+            /* invalid IRK and identity address */
+            memset(p_local_irk, 0x00, BLE_GAP_IRK_SIZE);
+            memset(p_local_identity_address, 0x00, BLE_BD_ADDR_LEN + sizeof(uint8_t));
+        }
+        else
+        {
+            memcpy(p_local_irk, &p_loc_area[BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE], BLE_GAP_IRK_SIZE);
+            memcpy(p_local_identity_address,
+                   &p_loc_area[BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE + BLE_GAP_CSRK_SIZE],
+                   BLE_ABS_SECURE_DATA_BLUETOOTH_DEVICE_ADDRESS_SIZE);
+        }
+    }
+
+    if (NULL != p_local_csrk)
+    {
+        uint8_t df_init[BLE_GAP_CSRK_SIZE];
+        memset(df_init, BLE_ABS_SECURE_DATA_DELETE_LOCAL_FF, BLE_GAP_CSRK_SIZE);
+        if (0 ==
+            memcmp(df_init,
+                   &p_loc_area[BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE],
+                   BLE_GAP_CSRK_SIZE))
+        {
+            /* invalid CSRK */
+            memset(p_local_csrk, 0x00, BLE_GAP_CSRK_SIZE);
+        }
+        else
+        {
+            /* valid CSRK */
+            memcpy(p_local_csrk,
+                   &p_loc_area[BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE],
+                   BLE_GAP_CSRK_SIZE);
+        }
+    }
+
+    if (NULL != p_loc_area)
+    {
+        free(p_loc_area);
     }
 
     return FSP_SUCCESS;
@@ -2464,11 +2651,15 @@ static void ble_abs_convert_scan_parameter (ble_abs_instance_ctrl_t * const p_in
                                             ble_gap_scan_on_t             * p_gap_scan_enable,
                                             uint32_t                        status)
 {
-    p_gap_scan_parameter->o_addr_type   = BLE_GAP_ADDR_PUBLIC;
-    p_gap_scan_parameter->filter_policy = p_instance_ctrl->abs_scan.scan_parameter.device_scan_filter_policy;
-    p_gap_scan_enable->proc_type        = BLE_GAP_SC_PROC_OBS;
-    p_gap_scan_enable->period           = 0;
-    p_gap_scan_enable->filter_dups      = p_instance_ctrl->abs_scan.scan_parameter.filter_duplicate;
+    p_gap_scan_parameter->o_addr_type =
+        (p_instance_ctrl->abs_scan.scan_parameter.device_scan_filter_policy & BLE_ABS_SCAN_LOCAL_ADDRESS_TYPE_MASK) >>
+        4;
+    p_gap_scan_parameter->filter_policy = p_instance_ctrl->abs_scan.scan_parameter.device_scan_filter_policy &
+                                          BLE_ABS_SCAN_FILTER_MASK;
+
+    p_gap_scan_enable->proc_type   = BLE_GAP_SC_PROC_OBS;
+    p_gap_scan_enable->period      = 0;
+    p_gap_scan_enable->filter_dups = p_instance_ctrl->abs_scan.scan_parameter.filter_duplicate;
 
     if (BLE_ABS_SCAN_STATUS_FAST_START == status)
     {
@@ -2707,7 +2898,7 @@ static fsp_err_t ble_abs_convert_legacy_advertising_parameter (
     p_gap_advertising_parameter->adv_prop_type = BLE_GAP_LEGACY_PROP_ADV_IND;
     p_gap_advertising_parameter->adv_ch_map    = p_legacy_advertising_parameter->advertising_channel_map;
 
-    FSP_ERROR_RETURN((BLE_GAP_ADDR_RPA_ID_PUBLIC >= p_legacy_advertising_parameter->own_bluetooth_address_type),
+    FSP_ERROR_RETURN((BLE_GAP_ADDR_RPA_ID_RANDOM >= p_legacy_advertising_parameter->own_bluetooth_address_type),
                      FSP_ERR_INVALID_ARGUMENT);
 
     memcpy(p_gap_advertising_parameter->o_addr,
@@ -2756,7 +2947,7 @@ static fsp_err_t ble_abs_convert_extend_advertising_parameter (
     p_gap_advertising_parameter->adv_hdl    = BLE_ABS_EXT_HDL;
     p_gap_advertising_parameter->adv_ch_map = p_extend_advertising_parameter->advertising_channel_map;
 
-    FSP_ERROR_RETURN((BLE_GAP_ADDR_RPA_ID_PUBLIC >= p_extend_advertising_parameter->own_bluetooth_address_type),
+    FSP_ERROR_RETURN((BLE_GAP_ADDR_RPA_ID_RANDOM >= p_extend_advertising_parameter->own_bluetooth_address_type),
                      FSP_ERR_INVALID_ARGUMENT);
 
     memcpy(p_gap_advertising_parameter->o_addr,
@@ -2771,7 +2962,7 @@ static fsp_err_t ble_abs_convert_extend_advertising_parameter (
                p_extend_advertising_parameter->p_peer_address->addr,
                BLE_BD_ADDR_LEN);
         p_gap_advertising_parameter->p_addr_type   = p_extend_advertising_parameter->p_peer_address->type;
-        p_gap_advertising_parameter->adv_prop_type = BLE_GAP_EXT_PROP_ADV_CONN_NOSCAN_DIRECT;
+        p_gap_advertising_parameter->adv_prop_type = BLE_GAP_EXT_PROP_ADV_CONN_NOSCAN_UNDIRECT;
     }
     else
     {
@@ -2819,7 +3010,7 @@ static fsp_err_t ble_abs_convert_non_connectable_advertising_parameter (
     p_gap_advertising_parameter->adv_ch_map = p_non_connectable_advertising_parameter->advertising_channel_map;
 
     FSP_ERROR_RETURN(
-        (BLE_GAP_ADDR_RPA_ID_PUBLIC >= p_non_connectable_advertising_parameter->own_bluetooth_address_type),
+        (BLE_GAP_ADDR_RPA_ID_RANDOM >= p_non_connectable_advertising_parameter->own_bluetooth_address_type),
         FSP_ERR_INVALID_ARGUMENT);
 
     memcpy(p_gap_advertising_parameter->o_addr,
@@ -2854,7 +3045,7 @@ static fsp_err_t ble_abs_convert_non_connectable_advertising_parameter (
         p_gap_advertising_parameter->adv_prop_type =
             (uint16_t) ((BLE_ABS_ADVERTISING_PHY_LEGACY !=
                          p_non_connectable_advertising_parameter->primary_advertising_phy) ?
-                        BLE_GAP_EXT_PROP_ADV_NOCONN_NOSCAN_DIRECT :
+                        BLE_GAP_EXT_PROP_ADV_NOCONN_NOSCAN_UNDIRECT :
                         BLE_GAP_LEGACY_PROP_ADV_NONCONN_IND);
     }
     else
@@ -3082,28 +3273,31 @@ static void ble_abs_set_scan_status (ble_abs_instance_ctrl_t * const p_instance_
  *
  * @retval FSP_SUCCESS                                 Operation succeeded.
  **********************************************************************************************************************/
-static void ble_abs_set_irk_to_resolving_list (ble_abs_instance_ctrl_t * const p_instance_ctrl, uint8_t * p_lc_irk)
+static void ble_abs_set_irk_to_resolving_list (ble_abs_instance_ctrl_t * const p_instance_ctrl, uint8_t * p_local_irk)
 {
     st_ble_gap_rslv_list_key_set_t peer_irk;
     ble_device_address_t           remote_device_address;
     ble_status_t retval = BLE_SUCCESS;
 
-    memset(peer_irk.remote_irk, BLE_ABS_GAP_REMOTE_IRK_AA, BLE_GAP_IRK_SIZE);
+    memset(peer_irk.remote_irk, 0x00, BLE_GAP_IRK_SIZE);
+
     peer_irk.local_irk_type = BLE_GAP_RL_LOC_KEY_REGISTERED;
-    memset(remote_device_address.addr, BLE_ABS_REMOTE_DEVICE_ADDRESS_55, BLE_BD_ADDR_LEN);
+
+    memset(remote_device_address.addr, 0x00, BLE_BD_ADDR_LEN);
     remote_device_address.type = BLE_GAP_ADDR_PUBLIC;
 
-    R_BLE_GAP_SetLocIdInfo(&p_instance_ctrl->loc_bd_addr, p_lc_irk);
+    R_BLE_GAP_SetLocIdInfo(&p_instance_ctrl->loc_bd_addr, p_local_irk);
 
     /** store local id info */
-    ble_abs_secure_data_writelocinfo(p_instance_ctrl->p_cfg->p_flash_instance,
-                                     (ble_device_address_t *) (&p_instance_ctrl->loc_bd_addr),
-                                     p_lc_irk,
-                                     NULL); ///< store local id info
-
+#if (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1)
+    RM_BLE_ABS_ImportKeyInformation(p_instance_ctrl,
+                                    (ble_device_address_t *) (&p_instance_ctrl->loc_bd_addr),
+                                    p_local_irk,
+                                    NULL); ///< store local id info
+#endif  /* BLE_ABS_CFG_ENABLE_SECURE_DATA == 1 */
     retval = R_BLE_GAP_ConfRslvList(BLE_GAP_LIST_ADD_DEV, (st_ble_dev_addr_t *) (&remote_device_address), &peer_irk, 1);
     p_instance_ctrl->set_privacy_status = (BLE_SUCCESS == retval) ? BLE_ABS_PV_STATUS_ADD_RSLV : 0;
-} /* End of function ble_abs_set_irk_to_resolving_list() */
+}                                          /* End of function ble_abs_set_irk_to_resolving_list() */
 
 /*******************************************************************************************************************//**
  * Handler for GAP BLE_GAP_EVENT_RSLV_LIST_CONF_COMP event.
@@ -3122,7 +3316,7 @@ static void ble_abs_conflict_resolving_handler (ble_abs_instance_ctrl_t * const 
         if (BLE_GAP_LIST_ADD_DEV == p_resolving_list_config->op_code)
         {
             ble_device_address_t remote_device_address;
-            memset(remote_device_address.addr, BLE_ABS_REMOTE_DEVICE_ADDRESS_55, BLE_BD_ADDR_LEN);
+            memset(remote_device_address.addr, 0x00, BLE_BD_ADDR_LEN);
             remote_device_address.type = 0x00;
             retval = R_BLE_GAP_SetPrivMode((st_ble_dev_addr_t *) (&remote_device_address),
                                            &p_instance_ctrl->privacy_mode,
@@ -3148,18 +3342,30 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
         case BLE_GAP_EVENT_STACK_ON:
         {
             R_BLE_GAP_GetVerInfo();
-            uint8_t              irk[BLE_GAP_IRK_SIZE];
-            ble_device_address_t identity_address;
-            fsp_err_t            retval;
-
+            uint8_t                         irk[BLE_GAP_IRK_SIZE];
+            ble_device_address_t            identity_address;
+            fsp_err_t                       retval;
+            ble_abs_identity_address_info_t remote_id_info;
             ble_abs_secure_data_init(p_instance_ctrl->p_cfg->p_flash_instance);
-            retval = ble_abs_secure_data_readlocinfo(p_instance_ctrl->p_cfg->p_flash_instance,
+            retval = RM_BLE_ABS_ExportKeyInformation(p_instance_ctrl,
                                                      &identity_address,
                                                      irk,
                                                      NULL);
             if (FSP_SUCCESS == retval)
             {
                 R_BLE_GAP_SetLocIdInfo((st_ble_dev_addr_t *) (&identity_address), irk);
+            }
+
+            retval = ble_abs_secure_data_get_identityinfo(p_instance_ctrl->p_cfg->p_flash_instance,
+                                                          remote_id_info.identity_address,
+                                                          remote_id_info.key_set,
+                                                          &remote_id_info.bond_count);
+
+            if ((retval == FSP_SUCCESS) && (0 != remote_id_info.bond_count))
+            {
+                R_BLE_GAP_ConfWhiteList(BLE_GAP_LIST_ADD_DEV,
+                                        (st_ble_dev_addr_t *) remote_id_info.identity_address,
+                                        remote_id_info.bond_count);
             }
 
             break;
@@ -3217,13 +3423,17 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
 
         case BLE_GAP_EVENT_ADV_ON:
         {
+            if (BLE_SUCCESS != event_result)
+            {
 #if (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED)
-            st_ble_gap_adv_set_evt_t * p_param;
-            p_param = (st_ble_gap_adv_set_evt_t *) p_event_data->p_param;
-            ble_abs_set_advertising_status(p_instance_ctrl, p_param->adv_hdl, 0, BLE_ABS_SCAN_STATUS_CLEAR_MASK);
+                st_ble_gap_adv_set_evt_t * p_param;
+                p_param = (st_ble_gap_adv_set_evt_t *) p_event_data->p_param;
+                ble_abs_set_advertising_status(p_instance_ctrl, p_param->adv_hdl, 0, BLE_ABS_SCAN_STATUS_CLEAR_MASK);
 #else                                  /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
-            ble_abs_set_advertising_status(p_instance_ctrl, BLE_ABS_COMMON_HDL, 0, BLE_ABS_SCAN_STATUS_CLEAR_MASK);
+                ble_abs_set_advertising_status(p_instance_ctrl, BLE_ABS_COMMON_HDL, 0, BLE_ABS_SCAN_STATUS_CLEAR_MASK);
 #endif /* (BLE_CFG_LIBRARY_TYPE == BLE_LIB_EXTENDED) */
+            }
+
             break;
         }
 
@@ -3299,6 +3509,22 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
         case BLE_GAP_EVENT_RPA_EN_COMP:
         {
             p_instance_ctrl->set_privacy_status = 0;
+
+            /* Get remote device Identity address and IRK from Data Flash */
+            ble_abs_secure_data_get_identityinfo(p_instance_ctrl->p_cfg->p_flash_instance,
+                                                 p_instance_ctrl->identity_address_info.identity_address,
+                                                 p_instance_ctrl->identity_address_info.key_set,
+                                                 &p_instance_ctrl->identity_address_info.bond_count);
+
+            /* register remote address & irk */
+            R_BLE_GAP_ConfRslvList(BLE_GAP_LIST_ADD_DEV,
+                                   (st_ble_dev_addr_t *) p_instance_ctrl->identity_address_info.identity_address,
+                                   p_instance_ctrl->identity_address_info.key_set,
+                                   p_instance_ctrl->identity_address_info.bond_count);
+            R_BLE_GAP_SetPrivMode((st_ble_dev_addr_t *) p_instance_ctrl->identity_address_info.identity_address,
+                                  &p_instance_ctrl->privacy_mode,
+                                  p_instance_ctrl->identity_address_info.bond_count);
+
             break;
         }
 
@@ -3381,9 +3607,41 @@ static void ble_abs_random_handler (ble_abs_instance_ctrl_t * const p_instance_c
     {
         st_ble_vs_get_rand_comp_evt_t * p_random_parameter;
         p_random_parameter = (st_ble_vs_get_rand_comp_evt_t *) p_event_data->p_param;
+        memcpy(p_instance_ctrl->local_irk, p_random_parameter->p_rand, BLE_GAP_IRK_SIZE);
         ble_abs_set_irk_to_resolving_list(p_instance_ctrl, p_random_parameter->p_rand);
     }
 }                                      /* End of function ble_abs_random_handler() */
+
+/*******************************************************************************************************************//**
+ * Handler for Vendor Specific BLE_VS_EVENT_GET_ADDR_COMP event.
+ **********************************************************************************************************************/
+static void ble_abs_get_address_handler (ble_abs_instance_ctrl_t * const p_instance_ctrl,
+                                         st_ble_vs_evt_data_t          * p_event_data,
+                                         ble_status_t                    event_result)
+{
+    st_ble_vs_get_bd_addr_comp_evt_t * p_get_addr;
+    ble_status_t retval;
+
+    if ((BLE_SUCCESS == event_result) &&
+        (BLE_ABS_PV_STATUS_GET_ADDR == (BLE_ABS_PV_STATUS_GET_ADDR & p_instance_ctrl->set_privacy_status)))
+    {
+        /* get local device address to static variable. */
+        p_get_addr = (st_ble_vs_get_bd_addr_comp_evt_t *) p_event_data->p_param;
+        p_instance_ctrl->loc_bd_addr = p_get_addr->addr;
+
+        /* register the address as identity address and set resolving list.*/
+        if (BLE_ABS_PV_STATUS_REG_STR_IRK == (BLE_ABS_PV_STATUS_REG_STR_IRK & p_instance_ctrl->set_privacy_status))
+        {
+            ble_abs_set_irk_to_resolving_list(p_instance_ctrl, p_instance_ctrl->local_irk);
+        }
+        else
+        {
+            /* generate 128 bit random value for local IRK. */
+            retval = R_BLE_VS_GetRand(BLE_GAP_IRK_SIZE);
+            p_instance_ctrl->set_privacy_status = (BLE_SUCCESS == retval) ? BLE_ABS_PV_STATUS_CREATE_IRK : 0;
+        }
+    }
+}                                      /* End of function ble_abs_get_address_handler() */
 
 /*******************************************************************************************************************//**
  * Vendor Specific Event handler.
@@ -3399,6 +3657,12 @@ static void ble_abs_vendor_specific_callback (uint16_t               event_type,
         case BLE_VS_EVENT_GET_RAND:
         {
             ble_abs_random_handler(p_instance_ctrl, p_event_data);
+            break;
+        }
+
+        case BLE_VS_EVENT_GET_ADDR_COMP:
+        {
+            ble_abs_get_address_handler(p_instance_ctrl, p_event_data, event_result);
             break;
         }
 
@@ -3460,124 +3724,6 @@ void r_ble_wake_up_task_from_isr (void * EventGroupHandle)
 #if (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1)
 
 /*******************************************************************************************************************//**
- * Write Local device Identity Address, IRK and/or CSRK in DataFlash.
- *
- * @retval FSP_SUCCESS                                 Operation succeeded.
- * @retval FSP_ERR_INVALID_POINTER                     IRK(p_lc_id_addr or p_lc_irk) or CSRK(p_lc_csrk)
- *                                                     is specified and as NULL.
- * @retval FSP_ERR_BLE_ABS_INVALID_OPERATION           Write to DataFlash is failed.
- **********************************************************************************************************************/
-static fsp_err_t ble_abs_secure_data_writelocinfo (flash_instance_t const * p_instance,
-                                                   ble_device_address_t   * p_lc_id_addr,
-                                                   uint8_t                * p_lc_irk,
-                                                   uint8_t                * p_lc_csrk)
-{
-    uint32_t local_tmp_data[(BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE + BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + 3) / 4];
-
-    FSP_ASSERT(p_lc_id_addr);
-    FSP_ASSERT(p_lc_irk);
-    FSP_ASSERT(p_lc_csrk);
-
-    FSP_ERROR_RETURN(FSP_SUCCESS == ble_abs_secure_data_flash_read(p_instance,
-                                                                   BLE_ABS_SECURE_DATA_BASE_ADDR,
-                                                                   (uint8_t *) local_tmp_data,
-                                                                   BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE +
-                                                                   BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE),
-                     FSP_ERR_BLE_ABS_INVALID_OPERATION);
-
-    if (NULL != p_lc_irk)
-    {
-        memcpy((uint8_t *) local_tmp_data + BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE, p_lc_irk, BLE_GAP_IRK_SIZE);
-        memcpy(
-            (uint8_t *) local_tmp_data + BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE + BLE_GAP_CSRK_SIZE,
-            p_lc_id_addr,
-            BLE_ABS_SECURE_DATA_BLUETOOTH_DEVICE_ADDRESS_SIZE);
-    }
-
-    if (NULL != p_lc_csrk)
-    {
-        memcpy((uint8_t *) local_tmp_data + BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE,
-               p_lc_csrk,
-               BLE_GAP_CSRK_SIZE);
-    }
-
-    local_tmp_data[0] = BLE_ABS_SECURE_DATA_MAGIC_NUMBER;
-
-    FSP_ERROR_RETURN(FSP_SUCCESS == ble_abs_secure_data_flash_write(p_instance,
-                                                                    BLE_ABS_SECURE_DATA_BASE_ADDR,
-                                                                    (uint8_t *) local_tmp_data,
-                                                                    BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE +
-                                                                    BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE),
-                     FSP_ERR_BLE_ABS_INVALID_OPERATION);
-
-    return FSP_SUCCESS;
-}                                      /* End of function ble_abs_secure_data_writelocinfo() */
-
-/*******************************************************************************************************************//**
- * Read Local device Identity Address and IRK and/or CSRK in DataFlash.
- *
- * @retval FSP_SUCCESS                                 Operation succeeded.
- * @retval FSP_ERR_INVALID_POINTER                     IRK(p_lc_id_addr or p_lc_irk) or CSRK(p_lc_csrk)
- *                                                     is specified and as NULL.
- * @retval FSP_ERR_BLE_ABS_INVALID_OPERATION           Read to DataFlash is failed.
- * @retval FSP_ERR_BLE_ABS_NOT_FOUND                           IRK and Identity Address not found.
- **********************************************************************************************************************/
-static fsp_err_t ble_abs_secure_data_readlocinfo (flash_instance_t const * p_instance,
-                                                  ble_device_address_t   * p_lc_id_addr,
-                                                  uint8_t                * p_lc_irk,
-                                                  uint8_t                * p_lc_csrk)
-{
-    fsp_err_t retval;
-    uint8_t * p_loc_area;
-    uint32_t  mgc_num;
-
-    p_loc_area = malloc(BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE);
-    FSP_ERROR_RETURN(NULL != p_loc_area, FSP_ERR_BLE_ABS_NOT_FOUND);
-
-    retval = ble_abs_secure_data_flash_read(p_instance,
-                                            BLE_ABS_SECURE_DATA_ADDR_MGN_DATA,
-                                            p_loc_area,
-                                            BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE +
-                                            BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE);
-    if (FSP_SUCCESS != retval)
-    {
-        free(p_loc_area);
-        p_loc_area = NULL;
-    }
-
-    FSP_ERROR_RETURN(FSP_SUCCESS == retval, FSP_ERR_BLE_ABS_INVALID_OPERATION);
-
-    memcpy(&mgc_num, p_loc_area, BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE);
-    if ((BLE_ABS_SECURE_DATA_MAGIC_NUMBER != mgc_num) && (NULL != p_loc_area))
-    {
-        free(p_loc_area);
-        p_loc_area = NULL;
-    }
-
-    FSP_ERROR_RETURN(BLE_ABS_SECURE_DATA_MAGIC_NUMBER == mgc_num, FSP_ERR_BLE_ABS_NOT_FOUND);
-
-    if ((NULL != p_lc_irk) && (NULL != p_lc_id_addr))
-    {
-        memcpy(p_lc_irk, &p_loc_area[BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE], BLE_GAP_IRK_SIZE);
-        memcpy(p_lc_id_addr,
-               &p_loc_area[BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE + BLE_GAP_CSRK_SIZE],
-               BLE_ABS_SECURE_DATA_BLUETOOTH_DEVICE_ADDRESS_SIZE);
-    }
-
-    if (NULL != p_lc_csrk)
-    {
-        memcpy(p_lc_csrk, &p_loc_area[BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE + BLE_GAP_IRK_SIZE], BLE_GAP_CSRK_SIZE);
-    }
-
-    if (NULL != p_loc_area)
-    {
-        free(p_loc_area);
-    }
-
-    return FSP_SUCCESS;
-}                                      /* End of function ble_abs_secure_data_readlocinfo() */
-
-/*******************************************************************************************************************//**
  * Receive remote keys for write in DataFlash.
  **********************************************************************************************************************/
 static void ble_abs_secure_data_recvremkeys (ble_device_address_t * p_addr, st_ble_gap_key_ex_param_t * p_keys)
@@ -3610,7 +3756,7 @@ static fsp_err_t ble_abs_secure_data_writeremkeys (flash_instance_t const * p_in
     int32_t   entry;
     int32_t   op_code = BLE_SECD_UPD_BN_ADD;
     uint32_t  start_addr;
-    uint8_t   bond_num;
+    uint8_t   bond_num = 0;
     uint8_t * p_sec_data;
 
     FSP_ASSERT(p_addr);
@@ -3640,6 +3786,10 @@ static fsp_err_t ble_abs_secure_data_writeremkeys (flash_instance_t const * p_in
 
             op_code = BLE_SECD_UPD_BN_ADD_OVERWR;                          ///< found the entry for overwrite
         }
+    }
+    else
+    {
+        op_code = BLE_SECD_UPD_BN_UPDATE; ///< found the entry for update
     }
 
     start_addr = BLE_ABS_SECURE_DATA_ADDR_REM_START + (uint32_t) entry * BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE;
@@ -3793,6 +3943,7 @@ static fsp_err_t ble_abs_secure_data_update_bond_num (flash_instance_t const * p
     {
         case BLE_SECD_UPD_BN_ADD:
         case BLE_SECD_UPD_BN_ADD_OVERWR:
+        case BLE_SECD_UPD_BN_UPDATE:
         {
             /* update bond_num */
             if (BLE_ABS_SECURE_DATA_UPDATE_BOND_NUMBER_FF == bond_num)
@@ -3808,7 +3959,10 @@ static fsp_err_t ble_abs_secure_data_update_bond_num (flash_instance_t const * p
             }
             else
             {
-                bond_num++;
+                if (BLE_SECD_UPD_BN_UPDATE != op_code)
+                {
+                    bond_num++;
+                }
             }
 
             p_sec_data[BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE] = bond_num;
@@ -4087,42 +4241,68 @@ static void ble_abs_secure_data_delete_all_keys (st_ble_dev_addr_t * p_addr) {
     ble_abs_secure_data_delete_local_keys(NULL);
 }
 
+/*******************************************************************************************************************//**
+ * Get bonding information from DataFlash.
+ *
+ * @retval FSP_SUCCESS                                 Operation succeeded.
+ * @retval FSP_ERR_INVALID_POINTER                     Parameter is NULL.
+ * @retval FSP_ERR_BLE_ABS_NOT_FOUND                   Security data area in DataFlash is not initialized.
+ **********************************************************************************************************************/
+static fsp_err_t ble_abs_secure_data_get_identityinfo (flash_instance_t const         * p_instance,
+                                                       ble_device_address_t           * p_idaddr,
+                                                       st_ble_gap_rslv_list_key_set_t * p_key_set,
+                                                       uint8_t                        * p_num)
+{
+    uint8_t                 in_bond_num = 0;
+    fsp_err_t               retval      = FSP_SUCCESS;
+    uint8_t               * p_sec_data;
+    st_ble_gap_bond_info_t  bond_info[BLE_ABS_CFG_NUMBER_BONDING];
+    st_ble_gap_key_dist_t * key_info;
+    uint32_t                i;
+
+    FSP_ERROR_RETURN((NULL != p_idaddr), FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN((NULL != p_key_set), FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN((NULL != p_num), FSP_ERR_INVALID_POINTER);
+
+    /** Read bonding information from DataFlash. */
+    retval = ble_abs_secure_data_read_bond_info(p_instance, &in_bond_num, &p_sec_data, bond_info);
+
+    if ((FSP_SUCCESS != retval) && (FSP_ERR_BLE_ABS_NOT_FOUND != retval))
+    {
+        return retval;
+    }
+
+    *p_num = 0;
+
+    /** No bonding information is written in DataFlash. */
+    if (0 == in_bond_num)
+    {
+        return FSP_SUCCESS;
+    }
+
+    for (i = 0; i < in_bond_num; i++)
+    {
+        key_info = bond_info[i].p_keys->p_keys_info;
+        if (0 != (BLE_GAP_KEY_DIST_IDKEY & bond_info[i].p_keys->keys))
+        {
+            /* set identity address */
+            memcpy(p_idaddr[*p_num].addr, &key_info->id_addr_info[1], BLE_BD_ADDR_LEN);
+            p_idaddr[*p_num].type = key_info->id_addr_info[0];
+
+            /* set IRK */
+            memcpy(p_key_set[*p_num].remote_irk, key_info->id_info, BLE_GAP_IRK_SIZE);
+            p_key_set[*p_num].local_irk_type = BLE_GAP_RL_LOC_KEY_REGISTERED;
+            (*p_num)++;
+        }
+    }
+
+    /** bonding info buffer release */
+    ble_abs_secure_data_release_bond_info_buf(p_sec_data);
+
+    return retval;
+}
+
 #else                                  /* (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1) */
-
-/*******************************************************************************************************************//**
- * Write Local device Identity Address, IRK and/or CSRK in DataFlash.
- * @retval FSP_ERR_UNSUPPORTED                                 This feature is not supported in this configuration.
- **********************************************************************************************************************/
-static fsp_err_t ble_abs_secure_data_writelocinfo (flash_instance_t const * p_instance,
-                                                   ble_device_address_t   * p_lc_id_addr,
-                                                   uint8_t                * p_lc_irk,
-                                                   uint8_t                * p_lc_csrk)
-{
-    (void) p_instance;
-    (void) p_lc_id_addr;
-    (void) p_lc_irk;
-    (void) p_lc_csrk;
-
-    return FSP_ERR_UNSUPPORTED;
-}
-
-/*******************************************************************************************************************//**
- * Read Local device Identity Address and IRK and/or CSRK in DataFlash.
- * @retval FSP_ERR_UNSUPPORTED                                 This feature is not supported in this configuration.
- **********************************************************************************************************************/
-static fsp_err_t ble_abs_secure_data_readlocinfo (flash_instance_t const * p_instance,
-                                                  ble_device_address_t   * p_lc_id_addr,
-                                                  uint8_t                * p_lc_irk,
-                                                  uint8_t                * p_lc_csrk)
-{
-    (void) p_instance;
-    (void) p_lc_id_addr;
-    (void) p_lc_irk;
-    (void) p_lc_csrk;
-
-    return FSP_ERR_UNSUPPORTED;
-}
-
 static void ble_abs_secure_data_recvremkeys (ble_device_address_t * p_addr, st_ble_gap_key_ex_param_t * p_keys)
 {
     (void) p_addr;
@@ -4167,12 +4347,30 @@ static void ble_abs_secure_data_delete_all_keys (st_ble_dev_addr_t * p_addr) {
     (void) p_addr;
 }
 
+/*******************************************************************************************************************//**
+ * Get bonding information from DataFlash.
+ *
+ * @retval FSP_ERR_UNSUPPORTED                         This function is not supported on this configuration.
+ **********************************************************************************************************************/
+static fsp_err_t ble_abs_secure_data_get_identityinfo (flash_instance_t const         * p_instance,
+                                                       ble_device_address_t           * p_idaddr,
+                                                       st_ble_gap_rslv_list_key_set_t * p_key_set,
+                                                       uint8_t                        * p_num)
+{
+    (void) p_instance;
+    (void) p_idaddr;
+    (void) p_key_set;
+    (void) p_num;
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
 #endif                                 /* (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1) */
 
 /**************************************************************************************//**
  * Read the value of the specified data flash
  * @retval FSP_SUCCESS                                 Operation succeeded.
- * @retval FSP_ERR_INVALID_ARGUMENT                    parameter is invalid.
+ * @retval FSP_ERR_OUT_OF_MEMORY                       Parameter is invalid.
  *****************************************************************************************/
 static fsp_err_t ble_abs_secure_data_flash_read (flash_instance_t const * p_instance,
                                                  uint32_t                 addr,
@@ -4194,7 +4392,7 @@ static fsp_err_t ble_abs_secure_data_flash_read (flash_instance_t const * p_inst
         if (((addr) < info.data_flash.p_block_array->block_section_st_addr) ||
             ((addr + len) >= info.data_flash.p_block_array->block_section_end_addr))
         {
-            err = FSP_ERR_INVALID_ARGUMENT;
+            err = FSP_ERR_OUT_OF_MEMORY;
         }
     }
 

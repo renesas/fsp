@@ -275,6 +275,7 @@
 #define BSP_FEATURE_SCI_CLOCK                             (FSP_PRIV_CLOCK_PCLKA)
 #define BSP_FEATURE_SCI_UART_FIFO_CHANNELS                (0x31FU)
 #define BSP_FEATURE_SCI_UART_FIFO_DEPTH                   (16U)
+#define BSP_FEATURE_SCI_UART_CSTPEN_CHANNELS              (0x0U)
 
 #define BSP_FEATURE_SDHI_HAS_CARD_DETECTION               (0) // Feature not available on this MCU
 #define BSP_FEATURE_SDHI_SUPPORTS_8_BIT_MMC               (0) // Feature not available on this MCU

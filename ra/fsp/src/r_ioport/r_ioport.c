@@ -440,10 +440,10 @@ fsp_err_t R_IOPORT_PortDirectionSet (ioport_ctrl_t * const p_ctrl,
                                      ioport_size_t         direction_values,
                                      ioport_size_t         mask)
 {
-    ioport_size_t orig_value;
-    ioport_size_t set_bits;
-    ioport_size_t clr_bits;
-    ioport_size_t write_value;
+    uint32_t orig_value;
+    uint32_t set_bits;
+    uint32_t clr_bits;
+    uint32_t write_value;
 
 #if (1 == IOPORT_CFG_PARAM_CHECKING_ENABLE)
     ioport_instance_ctrl_t * p_instance_ctrl = (ioport_instance_ctrl_t *) p_ctrl;
@@ -458,23 +458,23 @@ fsp_err_t R_IOPORT_PortDirectionSet (ioport_ctrl_t * const p_ctrl,
     R_PORT0_Type * p_ioport_regs = IOPORT_PRV_PORT_ADDRESS((port >> IOPORT_PRV_PORT_OFFSET) & IOPORT_PRV_8BIT_MASK);
 
     /* Read current value of PCNTR1 register for the specified port */
-    orig_value = p_ioport_regs->PCNTR1 & IOPORT_PRV_16BIT_MASK;
+    orig_value = p_ioport_regs->PCNTR1;
 
     /* High bits */
     set_bits = direction_values & mask;
 
     /*  Low bits */
     /* Cast to ensure size */
-    clr_bits = (ioport_size_t) ((~direction_values) & mask);
+    clr_bits = (uint32_t) ((~direction_values) & mask);
 
     /* New value to write to port direction register */
     write_value  = orig_value;
     write_value |= set_bits;
 
-    /* Cast to ensure size */
-    write_value &= (ioport_size_t) (~clr_bits);
+    /* Clear bits as needed */
+    write_value &= ~clr_bits;
 
-    p_ioport_regs->PCNTR1 = write_value & IOPORT_PRV_16BIT_MASK;
+    p_ioport_regs->PCNTR1 = write_value;
 
     return FSP_SUCCESS;
 }

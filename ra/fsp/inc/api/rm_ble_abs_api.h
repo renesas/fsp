@@ -627,7 +627,16 @@ typedef struct st_ble_abs_scan_parameter
     uint16_t filter_data_length;
 
     /**
-     *  @brief Scan Filter Policy. Select one of the following.
+     *  @brief Scan Filter Policy. Select one of the following.\n
+     *    - Address type setting (Field [7:4])
+     *    |  macro                           |   description                                                                                           |
+     *    |:---------------------------------|:------------------------------------------------------------------------------------------------------- |
+     *    | BLE_GAP_ADDR_PUBLIC(0x00)        | Use Public Address.                                                                                     |
+     *    | BLE_GAP_ADDR_RAND(0x01)          | Use Random Address.                                                                                     |
+     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02) | If the IRK of local device has been registered in Resolving list, use RPA. If not, use Public Address.  |
+     *    | BLE_GAP_ADDR_RPA_ID_RANDOM(0x03) | If the IRK of local device has been registered in Resolving list, use RPA. If not, use Random Address.  |
+     *
+     *    - White list setting (Field [3:0])
      *    |  macro                                            |   description                                                                                                                                                                                                                                                                                                                                                                                                               |
      *    |:--------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
      *    | BLE_GAP_SCAN_ALLOW_ADV_ALL(0x00)                  | Accept all advertising and scan response PDUs except directed advertising PDUs not addressed to local device.                                                                                                                                                                                                                                                                                                               |
@@ -715,12 +724,21 @@ typedef struct st_ble_abs_connection_parameter
 
     /**
      *  @brief Address of the device to be connected. \n
-     *  If the filter field is @ref BLE_GAP_INIT_FILT_USE_WLST(0x01), this parameter is ignored.
+     *  If the filter field is @ref BLE_GAP_INIT_FILT_USE_WLST(0x01), this parameter is ignored and please fill p_device_address.addr with 0x00.
      */
     ble_device_address_t * p_device_address;
 
     /**
      *  @brief The filter field specifies whether the White List is used or not, when connecting with a remote device.\n
+     *    - Address type setting (Field [7:4])
+     *    |  macro                           |   description                                                                                           |
+     *    |:---------------------------------|:------------------------------------------------------------------------------------------------------- |
+     *    | BLE_GAP_ADDR_PUBLIC(0x00)        | Use Public Address.                                                                                     |
+     *    | BLE_GAP_ADDR_RAND(0x01)          | Use Random Address.                                                                                     |
+     *    | BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02) | If the IRK of local device has been registered in Resolving list, use RPA. If not, use Public Address.  |
+     *    | BLE_GAP_ADDR_RPA_ID_RANDOM(0x03) | If the IRK of local device has been registered in Resolving list, use RPA. If not, use Random Address.  |
+     *
+     *    - White list setting (Field [3:0])
      *    |  macro                           |   description                                                                                                                      |
      *    |:---------------------------------|:---------------------------------------------------------------------------------------------------------------------------------- |
      *    | BLE_GAP_INIT_FILT_USE_ADDR(0x00) | White List is not used. \n The remote device to be connected is specified by the p_addr field is used.                             |
@@ -880,6 +898,28 @@ typedef struct st_ble_abs_api
      */
     fsp_err_t (* deleteBondInformation)(ble_abs_ctrl_t * const                             p_ctrl,
                                         ble_abs_bond_information_parameter_t const * const p_bond_information_parameter);
+
+    /** Import local identity address, keys information to local storage.
+     * @par Implemented as
+     * - RM_BLE_ABS_ImportKeyInformation()
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_local_identity_address Pointer to local identiry address.
+     * @param[in]  uint8_t  p_local_irk Pointer to local IRK
+     * @param[in]  uint8_t  p_local_csrk    Pointer to local CSRK
+     */
+    fsp_err_t (* importKeyInformation)(ble_abs_ctrl_t * const p_ctrl, ble_device_address_t * p_local_identity_address,
+                                       uint8_t * p_local_irk, uint8_t * p_local_csrk);
+
+    /** Export local identity address, keys information from local storage.
+     * @par Implemented as
+     * - RM_BLE_ABS_ExportKeyInformation()
+     * @param[in]   p_ctrl       Pointer to control structure.
+     * @param[out]  p_local_identity_address Pointer to local identiry address.
+     * @param[out]  uint8_t  p_local_irk Pointer to local IRK
+     * @param[out]  uint8_t  p_local_csrk    Pointer to local CSRK
+     */
+    fsp_err_t (* exportKeyInformation)(ble_abs_ctrl_t * const p_ctrl, ble_device_address_t * p_local_identity_address,
+                                       uint8_t * p_local_irk, uint8_t * p_local_csrk);
 } ble_abs_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

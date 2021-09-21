@@ -486,6 +486,12 @@ uint16_t usb_hstd_get_string_desc(usb_utr_t * ptr, uint16_t addr, uint16_t strin
 uint16_t usb_hstd_set_feature(usb_utr_t * ptr, uint16_t addr, uint16_t epnum);
 uint16_t usb_hstd_get_config_desc(usb_utr_t * ptr, uint16_t addr, uint16_t length);
 
+  #if ((BSP_CFG_RTOS == 1) && defined(USB_CFG_HHID_USE))
+void usb_hid_set_protocol(usb_utr_t * ptr, uint16_t addr, uint16_t setaddr);
+void usb_hid_get_string_desc(usb_utr_t * ptr, uint16_t addr, uint16_t string);
+
+  #endif
+
  #else                                 /* #if (BSP_CFG_RTOS != 0) */
 uint16_t usb_hstd_get_string_desc(usb_utr_t * ptr, uint16_t addr, uint16_t string, usb_cb_t complete);
 uint16_t usb_hstd_set_feature(usb_utr_t * ptr, uint16_t addr, uint16_t epnum, usb_cb_t complete);

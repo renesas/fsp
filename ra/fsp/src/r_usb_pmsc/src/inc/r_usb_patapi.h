@@ -29,9 +29,6 @@
  * Macro definitions
  ***********************************************************************************************************************/
 
-/* Storage sector size */
-#define USB_ATAPI_BLOCK_UNIT      (0x0200UL)
-
 /* Operation when responding with a short packet to a command */
 
 /*  0: Respond to 0x00 with CSW with setting PIPE to STALL

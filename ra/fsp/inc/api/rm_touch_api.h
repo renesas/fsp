@@ -125,6 +125,15 @@ typedef struct st_touch_cfg
     void const            * p_extend;        ///< Pointer to extended configuration by instance of interface.
 } touch_cfg_t;
 
+/** Configuration of each touch sensitivity information */
+typedef struct st_touch_sensitivity_info
+{
+    uint16_t * p_touch_sensitivity_ratio; ///< Pointer to sensitivity ratio array.
+    uint16_t   old_threshold_ratio;       ///< Old threshold ratio.
+    uint16_t   new_threshold_ratio;       ///< New threshold ratio.
+    uint8_t    new_hysteresis_ratio;      ///< New hysteresis ratio.
+} touch_sensitivity_info_t;
+
 /** Functions implemented at the HAL layer will follow this API. */
 typedef struct st_touch_api
 {
@@ -156,6 +165,14 @@ typedef struct st_touch_api
      */
     fsp_err_t (* dataGet)(touch_ctrl_t * const p_ctrl, uint64_t * p_button_status, uint16_t * p_slider_position,
                           uint16_t * p_wheel_position);
+
+    /** ScanStop.
+     * @par Implemented as
+     * - @ref RM_TOUCH_ScanStop()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     */
+    fsp_err_t (* scanStop)(ctsu_ctrl_t * const p_ctrl);
 
     /** pad data get.
      * @par Implemented as
@@ -189,6 +206,33 @@ typedef struct st_touch_api
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(touch_ctrl_t * const p_ctrl);
+
+    /** Sensitivity ratio get.
+     * @par Implemented as
+     * - @ref RM_TOUCH_SensitivityRatioGet()
+     *
+     * @param[in]      p_ctrl       Pointer to control structure.
+     * @param[in,out]  p_touch_sensitivity_info    Pointer to touch sensitivity structure.
+     */
+    fsp_err_t (* sensitivityRatioGet)(touch_ctrl_t * const p_ctrl, touch_sensitivity_info_t * p_touch_sensitivity_info);
+
+    /** Threshold adjust.
+     * @par Implemented as
+     * - @ref RM_TOUCH_ThresholdAdjust()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  p_touch_sensitivity_info    Pointer to touch sensitivity structure.
+     */
+    fsp_err_t (* thresholdAdjust)(touch_ctrl_t * const p_ctrl, touch_sensitivity_info_t * p_touch_sensitivity_info);
+
+    /** Drift control.
+     * @par Implemented as
+     * - @ref RM_TOUCH_DriftControl()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     * @param[in]  input_drift_freq    Drift frequency value.
+     */
+    fsp_err_t (* driftControl)(touch_ctrl_t * const p_ctrl, uint16_t input_drift_freq);
 } touch_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

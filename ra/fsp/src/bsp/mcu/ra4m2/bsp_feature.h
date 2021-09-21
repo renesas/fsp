@@ -275,6 +275,7 @@
 #define BSP_FEATURE_SCI_CLOCK                             (FSP_PRIV_CLOCK_PCLKA)
 #define BSP_FEATURE_SCI_UART_FIFO_CHANNELS                (0x219U)
 #define BSP_FEATURE_SCI_UART_FIFO_DEPTH                   (16U)
+#define BSP_FEATURE_SCI_UART_CSTPEN_CHANNELS              (0x0219U) // Channel 0, channel 3, Channel 4, channel 9 have CSTPEN feature
 
 #define BSP_FEATURE_SDHI_HAS_CARD_DETECTION               (1U)
 #define BSP_FEATURE_SDHI_SUPPORTS_8_BIT_MMC               (1U)

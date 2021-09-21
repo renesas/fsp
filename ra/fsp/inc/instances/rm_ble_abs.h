@@ -119,6 +119,18 @@ typedef struct st_ble_abs_timer
     ble_abs_timer_cb_t cb;
 } ble_abs_timer_t;
 
+typedef struct st_ble_abs_identity_address_info
+{
+    /* identity address */
+    ble_device_address_t identity_address[BLE_ABS_CFG_NUMBER_BONDING + 1];
+
+    /* local & remote IRK set */
+    st_ble_gap_rslv_list_key_set_t key_set[BLE_ABS_CFG_NUMBER_BONDING + 1];
+
+    /* the number of identity info stored in Data Flash */
+    uint8_t bond_count;
+} ble_abs_identity_address_info_t;
+
 /** BLE ABS private control block. DO NOT MODIFY. Initialization occurs when RM_BLE_ABS_Open() is called. */
 typedef struct st_ble_abs_instance_ctrl
 {
@@ -133,14 +145,16 @@ typedef struct st_ble_abs_instance_ctrl
     abs_advertising_parameter_t advertising_sets[BLE_MAX_NO_OF_ADV_SETS_SUPPORTED]; ///< Advertising set information.
     abs_scan_parameter_t        abs_scan;                                           ///< Scan information.
     st_ble_dev_addr_t           loc_bd_addr;                                        ///< Local device address.
-    uint8_t         privacy_mode;                                                   ///< Privacy mode.
-    uint32_t        set_privacy_status;                                             ///< Local privacy status.
-    ble_abs_timer_t timer[BLE_ABS_CFG_TIMER_NUMBER_OF_SLOT];
+    uint8_t                         privacy_mode;                                   ///< Privacy mode.
+    uint32_t                        set_privacy_status;                             ///< Local privacy status.
+    ble_abs_timer_t                 timer[BLE_ABS_CFG_TIMER_NUMBER_OF_SLOT];
+    uint8_t                         local_irk[BLE_GAP_IRK_SIZE];
+    ble_abs_identity_address_info_t identity_address_info;
 
-    uint32_t current_timeout_ms;                                                    ///< Current timeout.
-    uint32_t elapsed_timeout_ms;                                                    ///< Elapsed timeout.
+    uint32_t current_timeout_ms;       ///< Current timeout.
+    uint32_t elapsed_timeout_ms;       ///< Elapsed timeout.
 
-    ble_abs_cfg_t const * p_cfg;                                                    ///< Pointer to the BLE ABS configuration block.
+    ble_abs_cfg_t const * p_cfg;       ///< Pointer to the BLE ABS configuration block.
 } ble_abs_instance_ctrl_t;
 
 /******************************************************************************************************************//**
@@ -248,6 +262,16 @@ fsp_err_t RM_BLE_ABS_StartAuthentication(ble_abs_ctrl_t * const p_ctrl, uint16_t
 
 fsp_err_t RM_BLE_ABS_DeleteBondInformation(ble_abs_ctrl_t * const                             p_ctrl,
                                            ble_abs_bond_information_parameter_t const * const p_bond_information_parameter);
+
+fsp_err_t RM_BLE_ABS_ImportKeyInformation(ble_abs_ctrl_t * const p_ctrl,
+                                          ble_device_address_t * p_local_identity_address,
+                                          uint8_t              * p_local_irk,
+                                          uint8_t              * p_local_csrk);
+
+fsp_err_t RM_BLE_ABS_ExportKeyInformation(ble_abs_ctrl_t * const p_ctrl,
+                                          ble_device_address_t * p_local_identity_address,
+                                          uint8_t              * p_local_irk,
+                                          uint8_t              * p_local_csrk);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

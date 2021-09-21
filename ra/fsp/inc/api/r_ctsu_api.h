@@ -232,6 +232,14 @@ typedef struct st_ctsu_api
      */
     fsp_err_t (* dataGet)(ctsu_ctrl_t * const p_ctrl, uint16_t * p_data);
 
+    /** ScanStop.
+     * @par Implemented as
+     * - @ref R_CTSU_ScanStop()
+     *
+     * @param[in]  p_ctrl       Pointer to control structure.
+     */
+    fsp_err_t (* scanStop)(ctsu_ctrl_t * const p_ctrl);
+
     /** Diagnosis.
      * @par Implemented as
      * - @ref R_CTSU_Diagnosis()
