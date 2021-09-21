@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.2.1</span>
+   &#160;<span id="projectnumber">Release v3.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -178,6 +178,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint16_t *p_data)</td></tr>
 <tr class="memdesc:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled, The first several calls are used to tuning for the sensors. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">ctsu_api_t::dataGet</a>.  <a href="#ga1cff42feeaa3d73216b73c313fb9a5fe">More...</a><br /></td></tr>
 <tr class="separator:ga1cff42feeaa3d73216b73c313fb9a5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac88d0518c996cb44643a82818b961485"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#gac88d0518c996cb44643a82818b961485">R_CTSU_ScanStop</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:gac88d0518c996cb44643a82818b961485"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function scan stops the sensor as scanning by the CTSU. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#ac21a98eaa673d72b7da701ba90093f59">ctsu_api_t::scanStop</a>.  <a href="#gac88d0518c996cb44643a82818b961485">More...</a><br /></td></tr>
+<tr class="separator:gac88d0518c996cb44643a82818b961485"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c966546f3774ce2228739a5ffc0ac19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga3c966546f3774ce2228739a5ffc0ac19">R_CTSU_CallbackSet</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:ga3c966546f3774ce2228739a5ffc0ac19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga45103e8db4a16dfabf3a516ab2da9f26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a> (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
@@ -195,10 +198,19 @@ Overview</h1>
 <h2><a class="anchor" id="r-ctsu-features"></a>
 Features</h2>
 <p><a class="anchor" id="um_ctsu_mutual"></a><a class="anchor" id="um_ctsu_multi_method"></a></p><ul>
-<li>Supports both Self-capacitance multi scan mode and Mutual-capacitance full scan mode</li>
+<li>Supports multiple scan modes<ul>
+<li>Self-capacitance multi scan mode (CTSU2 support active shield)</li>
+<li>Mutual-capacitance full scan mode</li>
+<li>Mutual-capacitance parallel scan mode (CTSU2)</li>
+<li>Current Measurement mode (CTSU2)</li>
+<li>Diagnosis scan mode</li>
+</ul>
+</li>
 <li>Scans may be started by software or an external trigger</li>
 <li>Returns measured capacitance data on scan completion</li>
-<li>Optional DTC support</li>
+<li>Support DTC transfer of scanned data</li>
+<li>Supports TrustZone</li>
+<li>Corrects accuracy for temperature drift (CTSU2)</li>
 </ul>
 <h1><a class="anchor" id="r-ctsu-configuration"></a>
 Configuration</h1>
@@ -251,68 +263,120 @@ Pin Configuration</h2>
 <p>The TSCAP pin is used for an internal low-pass filter and must be connected to an external decoupling capacitor.</p>
 <h1><a class="anchor" id="r-ctsu-usage_notes"></a>
 Usage Notes</h1>
-<h2>CTSU</h2>
-<h3>Sensor ICO correction</h3>
-<p>In order to improve the measurement accuracy, the correction coefficient is generated at the first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>. Therefore, the first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a> process takes about 40ms.</p>
-<h3>Initial offset tuning</h3>
-<p>CTSU has a current offset mechanism to cancel the parasitic capacitance. This module automatically adjusts to be within the dynamic range of the Sensor ICO, taking into account the amount of current that changes with touch. This adjustment uses normal measurement prosess and requires several <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a> and <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>. <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a> returns FSP_ERR_CTSU_INCOMPLETE_TUNING if it is being adjusted. The member "so" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__element__cfg__t">ctsu_element_cfg_t</a> is used as the starting point for adjustment, so if this value is appropriate, it can be completed quickly. Normally, this value uses the value adjusted by QE for Capacitive Touch.</p>
-<h3>Scan trigger</h3>
-<p>Scanning of sensors may begin by either a software trigger or an external event initiated by the Event Link Controller (ELC). This trigger can be set with the member "cap" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Typically, a software trigger is used. Common usage is to have a periodic timer initiate scans. For software triggers, a periodic timer such as the CMT is configured whose interval is large enough to allow for all sensors to be scanned and data to be updated. Software triggers are issued by calling <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a>. Using an external trigger is processed almost identically to using software triggers. Call <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525">R_CTSU_ScanStart</a> before starting the timer to set the measurement and prepare for external trigger measurement. After that, when the timer is started, the measurement start trigger is applied.</p>
-<h3>Self-capacitance multi scan mode</h3>
-<p>In self-capacitance mode each TS pin is assigned to one touch button. Electrodes of multiple TS pins can be physically aligned to create slider or wheel interfaces.</p>
-<ul>
-<li>Scan Order<ul>
-<li>The hardware scans the specified pins in ascending order.</li>
-<li>For example, if pins TS05, TS08, TS02, TS03, and TS06 are specified in your application, the hardware will scan them in the order TS02, TS03, TS05, TS06, TS08.</li>
-</ul>
-</li>
-<li>Element<ul>
-<li>An element refers to the index of a pin within the scan order. Using the previous example, TS05 is element 2.</li>
-</ul>
-</li>
-<li>Scan Time<ul>
-<li>Scanning is handled directly by the CTSU peripheral and does not utilize any main processor time.</li>
-<li>It takes approximately 500us to scan a single sensor.</li>
-<li>If DTC is not used additional overhead is required for the main processor to transfer data to/from registers when each sensor is scanned.</li>
-</ul>
-</li>
-</ul>
-<p>Set CTSU_MODE_SELF_MULTI_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Also, add the number of terminals used for this measurement to CTSU_CFG_NUM_SELF_ELEMENTS. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
-<h3>Mutual-capacitance full scan mode</h3>
-<p>In mutual-capacitance mode each TS pin acts as either a 'row' or 'column' in an array of sensors. As a result, this mode uses fewer pins when more than five sensors are configured. Mutual-capacitance mode is ideal for applications where many touch sensors are required, like keypads, button matrices and pads.</p>
-<p>As an example, consider a standard phone keypad comprised of a matrix of four rows and three columns.</p>
+<p>The CTSU module is a CTSU driver for the Touch module. The CTSU module assumes the access from the Touch middleware layer, and it is also accessible from an user application.<br />
+ CTSU and CTSU2 are functionally different, so CTSU and CTSU2 are described in this application note as below.<br />
+ Common description for CTSU and CTSU2 -&gt; CTSU<br />
+ Description only for CTSU -&gt; CTSU1<br />
+ Description only for CTSU2 -&gt; CTSU2<br />
+ Without mention, it means the common description for CTSU and CTSU2.</p>
+<h2>Functions</h2>
+<p>The CTSU module supports the following functions.</p>
+<h3>Measurements and Obtaining Data</h3>
+<p>Measurements can be started by a software trigger or by an external event triggered by the Event Link Controller (ELC).<br />
+ As the measurement process is carried out by the CTSU2 peripheral, it does not use up main processor processing time.<br />
+ The CTSU module processes INTCTSUWR and INTCTSURD if generated during a measurement. The data transfer controller (DTC) can also be used for these processes.<br />
+ When the measurement complete interrupt (INTCTSUFN) process is complete, the application is notified in a callback function. Make sure you obtain the measurement results before the next measurement is started as internal processes are also executed when a measurement is completed.<br />
+ Start the measurement with API function <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a>.<br />
+ Obtain the measurement results with API function <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>.</p>
+<h3>Sensor ICO Correction function</h3>
+<p>The CTSU2 peripheral has a built-in correction circuit to handle the potential microvariations related to the manufacturing process of the sensor ICO MCU.<br />
+ The module temporarily transitions to the correction process during initialization after power is turned on. In the correction process, the correction circuit is used to generate a correction coefficient (factor) to ensure accurate sensor measurement values.<br />
+ When temperature correction is enabled, an external resistor connected to a TS terminal is used to periodically update the correction coefficient. By using an external resistor that is not dependent on temperature, you can even correct the temperature drift of the sensor ICO.</p>
+<h3>Initial Offset Adjustment</h3>
+<p>The CTSU2 peripheral was designed with a built-in offset current circuit in consideration of the amount of change in current due to touch. The offset current circuit cancels enough of the parasitic capacitance for it to fit within the sensor ICO dynamic range.<br />
+ This module automatically adjusts the offset current setting. As the adjustment uses the normal measurement process, <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> must be repeated several times after startup. Because the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__element__cfg__t">ctsu_element_cfg_t</a> member “so” is the starting point for adjustments, you can set the appropriate value for “so” in order to reduce the number of times the two functions must be run to complete the adjustment. Normally, the value used for “so” is a value adjusted by QE for Capacitive Touch.<br />
+ For CTSU2, this feature can be turned off in the config.</p>
+<h3>Random Pulse Frequency Measurement (CTSU1)</h3>
+<p>The CTSU1 peripheral measures at one drive frequency.<br />
+ The drive frequency determines the amperage to the electrode and generally uses the value tuned with QE for Capacitive Touch.<br />
+ The drive frequency is calculated as below.<br />
+ It is determined by PCLK frequency input to CTSU, CTSU Count Source Select bit(CTSUCLK), and CTSU Sensor Drive pulse Division Control bit(CTSUSDPA). For example, If it is set PCLK =32MHz, CTSUCLK = PLCK/2, and CTSUSDPA = 1/16, then drive frequency is 0.5MHz. CTSUSDPA can change for each TS port.</p>
 <div class="image">
-<object type="image/svg+xml" data="r_ctsu_mutual_button.svg">r_ctsu_mutual_button.svg</object>
+<img src="r_ctsu_Drive_Frequency_Settings.png" alt="r_ctsu_Drive_Frequency_Settings.png"/>
 <div class="caption">
-Mutual Button Image</div></div>
-<p>)</p>
-<p>In mutual capacitance mode only 7 pins are necessary to scan 12 buttons. In self mode, 12 pins would be required.</p>
-<ul>
-<li>Scan Order<ul>
-<li>The hardware scans the matrix by iterating over the TX pins first and the RX pins second.</li>
-<li>For example, if pins TS10, TS11, and TS03 are specified as RX sensors and pins TS02, TS07, and TS04 are specified as TX sensors, the hardware will scan them in the following sensor-pair order:<br />
- TS03-TS02, TS03-TS04, TS03-TS07, TS10-TS02, TS10-TS04, TS10-TS07, TS11-TS02, TS11-TS04, TS11-TS07</li>
-</ul>
-</li>
-<li>Element<ul>
-<li>An element refers to the index of a sensor-pair within the scan order. Using the previous example, TS10-TS07 is element 5.</li>
-</ul>
-</li>
-<li>Scan Time<ul>
-<li>Because mutual-capacitance scans two patterns for one element it takes twice as long as self-capacitance (1ms vs 0.5ms per element).</li>
-</ul>
-</li>
-</ul>
-<p>Set CTSU_MODE_MUTUAL_FULL_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Also, add the number of matrix used for this measurement to CTSU_CFG_NUM_MUTUAL_ELEMENTS. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
-<h2>CTSU2 (RA2L1)</h2>
-<p>CTSU2 is a peripheral that improves CTSU. For CTSU2, this module supports the following in addition to the features described in the CTSU chapter.</p>
-<h3>Improved accuracy with more accurate ICO correction</h3>
-<p>The internal circuit of CTSU2 is used to create a correction coefficient with higher accuracy than CTSU. This correction coefficient is created by the first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a> like CTSU, but it takes about 100ms. For Mutual-capacitance parallel scan mode, create a correction factor for the CFC circuit. This is also created with the first <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682">R_CTSU_Open</a>. It takes about 40ms.</p>
-<h3>Improved noise immunity by multi-frequency measurement</h3>
-<p>CTSU2 can measure up to 4 different drive frequencies to avoid sync noise. This module sets the number of frequencies with CTSU_CFG_NUM_SUMULTI. The recommended value is 3. The three frequencies are set according to CTSU_CFG_SUMULTI0, CTSU_CFG_SUMULTI1 and CTSU_CFG_SUMULTI2. 0x3F is the center. QE will automatically output the recommended value. From the three results obtained, make a noise removal judgment to determine the measured value. By setting judge_multifreq_disable in <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> to true, it is possible to get three results without making a majority vote and use your own noise filter. Prepare three times as many buffers for the data to be acquired by <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe">R_CTSU_DataGet</a>.</p>
-<h3>Mutual-capacitance parallel scan mode</h3>
-<p>This mode provides fast measurement time by parallel scanning the RX lines with a CFC circuit. Operation is otherwise identical to normal CTSU mutual scanning.</p>
-<ul>
+Drive Frequency Settings</div></div>
+<p> The actual drive pulse is phase-shifted and frequency-spread with respect to the clock based on the drive frequency as a measure against external environmental noise. This module is fixed at initialization and sets the following.<br />
+ CTSUSOFF = 0,CTSUSSMOD = 0,CTSUSSCNT = 3</p>
+<h3>Multi-frequency Measurements (CTSU2)</h3>
+<p>The CTSU2 peripheral can measure in one of four drive frequencies to avoid synchronous noise.<br />
+ With the default settings, the module takes measurements at three different frequencies. After standardizing the results obtained at the three frequencies in accordance with the first frequency reference value, the measured value is determined based on majority in a process referred to as “normalization.” <br />
+ When this normalization is turned off in the config settings, the user can use the results of these three frequencies as noise filters. However, the three frequencies cannot be tied with the Touch module.</p>
+<div class="image">
+<img src="r_ctsu_Multi-Frequency_Mesurements.png" alt="r_ctsu_Multi-Frequency_Mesurements.png"/>
+<div class="caption">
+Multi-frequency Measurements</div></div>
+<p> Drive frequency is determined based on the config settings. The module sets registers according to the config settings, and sets the three drive frequencies.<br />
+ Drive frequency is calculated in the following equation:<br />
+ (PCLKB frequency / CLK / STCLK) x SUMULTIn / 2 / SDPA : n = 0, 1, 2<br />
+ The figure below shows the settings for generating a 2MHz drive frequency when the PCLKB frequency is 32 MHz. SDPA can be set for each touch interface configuration.</p>
+<div class="image">
+<img src="r_ctsu_Drive_Frequency_Settings_ctsu2.png" alt="r_ctsu_Drive_Frequency_Settings_ctsu2.png"/>
+<div class="caption">
+Drive Frequency Settings</div></div>
+ <h3>Shield Function(CTSU2)</h3>
+<p>The CTSU2 peripheral has a built-in function that outputs a shield signal in phase with the drive pulse from the shield terminal and the non-measurement terminal in order to shield against external influences while suppressing any increase in parasitic capacitance. This function can only be used during self-capacitance measurements.<br />
+ This module allows the user to set a shield for each touch interface configuration. <br />
+ For example, for the electrode configuration shown in , the members of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> should be set as follows. Other members have been omitted for the example. <br />
+ .txvsel = CTSU_TXVSEL_INTERNAL_POWER,<br />
+ .txvsel2 = CTSU_TXVSEL_MODE,<br />
+ .md = CTSU_MODE_SELF_MULTI_SCAN,<br />
+ .posel = CTSU_POSEL_SAME_PULSE,<br />
+ .ctsuchac0 = 0x0F,<br />
+ .ctsuchtrc0 = 0x08,</p>
+<div class="image">
+<img src="r_ctsu_Shield_Electrode_Structure.png" alt="r_ctsu_Shield_Electrode_Structure.png"/>
+<div class="caption">
+Example of Shield Electrode Structure</div></div>
+ <h3>Measurement Error Message</h3>
+<p>When the CTSU2 peripheral detects an abnormal measurement, it sets the status register bit to 1.<br />
+ In the measurement complete interrupt process, the module reads ICOMP1, ICOMP0, and SENSOVF of the status register and notifies the results in the callback function. The status register is reset after the contents are read. For more details on abnormal measurements, refer to “member event” in the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> callback function argument.</p>
+<h3>Moving Average</h3>
+<p>This function calculates the moving average of the measured results. <br />
+ Set the number of times the moving average should be calculated in the config settings.</p>
+<h3>Diagnosis Function</h3>
+<p>The CTSU peripheral has a built-in function that diagnoses its own inner circuit. This diagnosis function provides the API for diagnosing the inner circuit.<br />
+ The diagnostic requirements are different for CTSU1 and CTSU2 providing 5 types of diagnosis for CTSU1 and 9 types for CTSU2.<br />
+ The diagnosis function is executed by calling the API function. This is executed independently from the other measurements and does not affect them. <br />
+ To enable the diagnosis function, set CTSU_CFG_DIAG_SUPPORT_ENABLE to 1.<br />
+ For CTSU1, a 27pF condenser should be connected externally.<br />
+ For CTSU2, use <a class="el" href="group___a_d_c.html">Analog to Digital Converter (r_adc)</a>.</p>
+<h2>Measurement Mode</h2>
+<p>This module supports all three modes offered by the CTSU2 peripheral: self-capacitance, mutual capacitance, and current measurement modes. The temperature correction mode is also offered as a mode for updating the correction coefficient.</p>
+<h3>Self-capacitance Mode</h3>
+<p>The self-capacitance mode is used to measure the capacitance of each terminal (TS).<br />
+ The CTSU2 peripheral measures the terminals in ascending order according to the TS numbers, then stores the data. For example, even if you want to use TS5, TS8, TS2, TS3 and TS6 in your application in that order, they will still be measured and stored in the order of TS2, TS3, TS5, TS6, and TS8. Therefore, you will need to reference buffer indexes [2], [4], [0], [1], and [3].<br />
+</p>
+<p>[CTSU1]<br />
+ In default settings, the measurement period for each TS is wait-time plus approximately 526us.</p>
+<div class="image">
+<img src="r_ctsu_Self_capacitance_Measurement_Period.png" alt="r_ctsu_Self_capacitance_Measurement_Period.png"/>
+<div class="caption">
+Self-capacitance Measurement Period (CTSU1)</div></div>
+<p> [CTSU2]<br />
+ In default settings, the measurement period for each TS is approximately 576us.<br />
+</p>
+<div class="image">
+<img src="r_ctsu_Self_capacitance_Measurement_Period_ctsu2.png" alt="r_ctsu_Self_capacitance_Measurement_Period_ctsu2.png"/>
+<div class="caption">
+Self-capacitance Measurement Period (CTSU2)</div></div>
+ <h3>Mutual Capacitance Mode</h3>
+<p>The mutual capacitance mode is used to measure the capacitance generated between the receive TS (Rx) and transmit TS (Tx), and therefore requires at least two terminals.<br />
+ The CTSU2 peripheral measures all specified combinations of Rx and Tx. For example, when Rx is TS1 and TS3, and Tx is TS2, TS7 and TS4, the combinations are measured in the following order and the data is stored.<br />
+ TS3-TS2, TS3-TS4, TS3-TS7, TS10-TS2, TS10-TS4, TS10-TS7<br />
+ To measure the mutual capacitance generated between electrodes, the CTSU2 peripheral performs the measurement process on the same electrode twice. <br />
+ The mutual capacitance is obtained by inverting the phase relationship of the pulse output and switched capacitor in the primary and secondary measurements, and calculating the difference between the two measurements. This module does not calculate the difference, but outputs the secondary measured result.<br />
+ [CTSU1]<br />
+ In default settings, the measurement period for each TS is twice of wait-time plus approximately 526us.<br />
+ [CTSU2]<br />
+ In default settings, the measurement period for each TS is approximately 1152us.<br />
+</p>
+<div class="image">
+<img src="r_ctsu_Mutual_capacitance_Measurement_Period.png" alt="r_ctsu_Mutual_capacitance_Measurement_Period.png"/>
+<div class="caption">
+Mutual-capacitance Measurement Period</div></div>
+ <h3>Mutual-capacitance parallel scan mode(CTSU2)</h3>
+<p>This mode provides fast measurement time by parallel scanning the RX lines with a CFC circuit. Operation is otherwise identical to normal CTSU mutual scanning.<br />
+</p><ul>
 <li>Scan Order<ul>
 <li>The hardware scans all RX pins simultaneously for each TX pin.</li>
 <li>For example, if sensors TS10, TS11, and TS03 are specified as RX sensors, and sensors TS02, TS07, and TS04 are specified as TX sensors, the hardware will scan them in the following sensor-pair order:<br />
@@ -324,25 +388,40 @@ Mutual Button Image</div></div>
 </ul>
 </li>
 <li>Scan Time<ul>
-<li>Because the RX lines are scanned in parallel, CFC mutual-capacitance scan is the same amount of times faster than a basic mutual matrix scan as the number of RX lines. In other words, on a matrix with N receive lines, CFC mutual scanning is N times faster than basic mutual scanning.</li>
+<li>Because the RX lines are scanned in parallel, CFC mutual-capacitance scan is the same amount of times faster than a basic mutual matrix scan as the number of RX lines. In other words, on a matrix with N receive lines, CFC mutual scanning is N times faster than basic mutual scanning. Set CTSU_MODE_MUTUAL_CFC_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>.<br />
+ Also, add the number of matrix used for this measurement to CTSU_CFG_NUM_MUTUAL_ELEMENTS. In addition, set the number of CTSU_CFG_NUM_CFC and CTSU_CFG_NUM_CFC_TX.<br />
+ For details, refer to the configuration and sample application output by QE for Capacitive Touch.</li>
 </ul>
 </li>
 </ul>
-<p>Set CTSU_MODE_MUTUAL_CFC_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Also, add the number of matrix used for this measurement to CTSU_CFG_NUM_MUTUAL_ELEMENTS. In addition, set the number of CTSU_CFG_NUM_CFC and CTSU_CFG_NUM_CFC_TX. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
-<h3>Current scan mode</h3>
-<p>CTSU2 can measure the current input to the TS terminal. This module supports this feature. Set CTSU_MODE_CURRENT_SCAN to "md" of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a>. Also, add the number of terminals used for this measurement to CTSU_CFG_NUM_SELF_ELEMENTS. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
-<h3>Active shield</h3>
-<p>CTSU2 can drive a shield signal on a single TS pin. This module can set the shield for each instance. Set the members of <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> as shown in the example below. Other configurations omitted </p><div class="fragment"><div class="line">.txvsel     = CTSU_TXVSEL_INTERNAL_POWER,</div><div class="line">.txvsel2    = CTSU_TXVSEL_MODE,</div><div class="line">.md         = CTSU_MODE_SELF_MULTI_SCAN,</div><div class="line">.posel      = CTSU_POSEL_SAME_PULSE,</div><div class="line">.ctsuchac0  = 0x0F,</div><div class="line">.ctsuchtrc0 = 0x08,</div></div><!-- fragment --> <div class="image">
-<object type="image/svg+xml" data="r_ctsu_shield.svg">r_ctsu_shield.svg</object>
+<h3>Current Measurement Mode(CTSU2)</h3>
+<p>The current measurement mode is used to measure the minute current input to the TS terminal. The order of measurement and data storage is the same as that of the self-capacitance mode. As this does not involve the switched capacitor operation, the measurement is only performed once. The measurement period for one TS under default settings is approximately 256us. The current measurement mode requires a longer stable wait time than the other modes, so the SST is set to 63.</p>
+<div class="image">
+<img src="r_ctsu_Current_Measurement_Period.png" alt="r_ctsu_Current_Measurement_Period.png"/>
 <div class="caption">
-Shield pin Image</div></div>
- <dl class="section note"><dt>Note</dt><dd>This feature is only available in self-capacitance mode.</dd></dl>
-<h2>Temperature Correction</h2>
-<p>The internal circuit of CTSU2 and r_adc can be used to compensate for temperature drift. This keeps the measured value constant even if the temperature changes. An instance for temperature correction is required to operate this function, and it is also necessary to measure this instance on a regular basis. For details, refer to the configuration and sample application output by QE for Capacitive Touch.</p>
+Current Measurement Period</div></div>
+ <h3>Temperature Correction Mode(CTSU2)</h3>
+<p>The temperature correction mode is used to periodically update the correction coefficient using an external resistor connected to a TS terminal. This involves three processes as described below. Also refer to the timing chart in Figure of Temperature Correction Measurement Timing Chart.<br />
+</p><ol type="1">
+<li>Measure the correction circuit. One set comprises twelve measurements. <br />
+</li>
+<li>Measure the current when TSCAP voltage is applied to the external resistor to create a correction coefficient based on an external resistor that does not depend on temperature. Execute the next measurement after the previous measurement set is completed (as described in step 1).</li>
+<li>Flow offset current to the external resistor and measure the voltage with the ADC. This will adjust the RTRIM register and handle the temperature drift of the internal reference resistor. In the config settings, set the number of times step 2 should be executed before carrying out this measurement.</li>
+</ol>
+<div class="image">
+<img src="r_ctsu_Temperature_Correction_Measurement_Period.png" alt="r_ctsu_Temperature_Correction_Measurement_Period.png"/>
+<div class="caption">
+Temperature Correction Measurement Timing Chart</div></div>
+ <h3>Diagnosis Mode</h3>
+<p>The diagnosis mode is a mode in which various internal measurement values are scanned by using this diagnosis function <a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26" title="Diagnosis the CTSU peripheral. Implements ctsu_api_t::diagnosis. ">R_CTSU_Diagnosis()</a>.</p>
+<h2>Measurement Timing</h2>
+<p>Measurements are initiated by a software trigger or an external event which is triggered by the Event Link Controller (ELC).<br />
+ The most common method is using a timer to carry out periodic measurements. Make sure to set the timer interval to allow the measurement and internal value update processes to complete before the next measurement period. The measurement period differs according to touch interface configuration and measurement mode.<br />
+ The execution timing of software triggers and external triggers differ slightly. <br />
+ Since a software trigger sets the start flag after setting the touch interface configuration with <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a>, there is a slight delay after the timer event occurrence. However, as the delay is much smaller than the measurement period, a software trigger is recommended for most instances as it is easy to set. <br />
+ An external trigger is recommended for applications in which this slight delay is not acceptable or that require low-power consumption operations. When using an external trigger with multiple touch interface configurations, use <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> to set another touch interface configuration after one measurement is completed.</p>
 <h2>TrustZone Support</h2>
 <p>In r_ctsu and rm_touch module, Non-Secure Callable Guard Functions are only generated from QE for Capacitive Touch. QE can be used for tuning in secure or flat project, but not in non-secure project. If you want to use in non-secure project, copy the output file from secure or flat project. Refer to QE Help for more information.</p>
-<h2>Diagnosis Support</h2>
-<p>Diagnose the functions inside the chip. It can be implemented by adding an API function <a class="el" href="group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26">R_CTSU_Diagnosis</a>.</p>
 <h1><a class="anchor" id="r-ctsu-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -571,6 +650,14 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 volatile <a class="el" href="group___c_t_s_u.html#ga9be3b4466784415a4193f9584362c2ce">ctsu_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#aee16466f6ce29f3141a0413c1f30cfa8">state</a></td></tr>
 <tr class="memdesc:aee16466f6ce29f3141a0413c1f30cfa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU run state. <br /></td></tr>
 <tr class="separator:aee16466f6ce29f3141a0413c1f30cfa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d0bb3177ec0e2650163c3c37160da7b"><td class="memItemLeft" align="right" valign="top"><a id="a7d0bb3177ec0e2650163c3c37160da7b"></a>
+<a class="el" href="group___c_t_s_u___a_p_i.html#ga63a1fbd0c7d4ac971d07d40f7f92dfad">ctsu_cap_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a7d0bb3177ec0e2650163c3c37160da7b">cap</a></td></tr>
+<tr class="memdesc:a7d0bb3177ec0e2650163c3c37160da7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU Scan Start Trigger Select. <br /></td></tr>
+<tr class="separator:a7d0bb3177ec0e2650163c3c37160da7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f6ced83cd472d23e2912f32d555f538"><td class="memItemLeft" align="right" valign="top"><a id="a3f6ced83cd472d23e2912f32d555f538"></a>
+<a class="el" href="group___c_t_s_u___a_p_i.html#ga3bb35bd3c3041f0a80dceac7c1590d06">ctsu_md_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a3f6ced83cd472d23e2912f32d555f538">md</a></td></tr>
+<tr class="memdesc:a3f6ced83cd472d23e2912f32d555f538"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU Measurement Mode Select(copy to cfg) <br /></td></tr>
+<tr class="separator:a3f6ced83cd472d23e2912f32d555f538"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a200d61ec88212741eda11efdf320dcf2"><td class="memItemLeft" align="right" valign="top"><a id="a200d61ec88212741eda11efdf320dcf2"></a>
 <a class="el" href="group___c_t_s_u.html#gae3fb0beb148069bb590287ed34771117">ctsu_tuning_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a200d61ec88212741eda11efdf320dcf2">tuning</a></td></tr>
 <tr class="memdesc:a200d61ec88212741eda11efdf320dcf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU Initial offset tuning status. <br /></td></tr>
@@ -615,6 +702,10 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <a class="el" href="group___c_t_s_u.html#structctsu__self__buf__t">ctsu_self_buf_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ab5911fb602e5ca9a55b2e3eb30ec3676">p_self_raw</a></td></tr>
 <tr class="memdesc:ab5911fb602e5ca9a55b2e3eb30ec3676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Self raw data. g_ctsu_self_raw[] is set by Open API. <br /></td></tr>
 <tr class="separator:ab5911fb602e5ca9a55b2e3eb30ec3676"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad73d7040b3e53d964cfff2b45645830f"><td class="memItemLeft" align="right" valign="top"><a id="ad73d7040b3e53d964cfff2b45645830f"></a>
+uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ad73d7040b3e53d964cfff2b45645830f">p_self_corr</a></td></tr>
+<tr class="memdesc:ad73d7040b3e53d964cfff2b45645830f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Self correction data. g_ctsu_self_corr[] is set by Open API. <br /></td></tr>
+<tr class="separator:ad73d7040b3e53d964cfff2b45645830f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d9d2ea0f565cf340e5735b1c86309fe"><td class="memItemLeft" align="right" valign="top"><a id="a7d9d2ea0f565cf340e5735b1c86309fe"></a>
 uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a7d9d2ea0f565cf340e5735b1c86309fe">p_self_data</a></td></tr>
 <tr class="memdesc:a7d9d2ea0f565cf340e5735b1c86309fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Self moving average data. g_ctsu_self_data[] is set by Open API. <br /></td></tr>
@@ -623,6 +714,14 @@ uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 <a class="el" href="group___c_t_s_u.html#structctsu__mutual__buf__t">ctsu_mutual_buf_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a9f26ec90784dcf867d1fc63f5a0de0ff">p_mutual_raw</a></td></tr>
 <tr class="memdesc:a9f26ec90784dcf867d1fc63f5a0de0ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual raw data. g_ctsu_mutual_raw[] is set by Open API. <br /></td></tr>
 <tr class="separator:a9f26ec90784dcf867d1fc63f5a0de0ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcb8ffd54dae5cba1a29a00352ccc5ae"><td class="memItemLeft" align="right" valign="top"><a id="afcb8ffd54dae5cba1a29a00352ccc5ae"></a>
+uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#afcb8ffd54dae5cba1a29a00352ccc5ae">p_mutual_pri_corr</a></td></tr>
+<tr class="memdesc:afcb8ffd54dae5cba1a29a00352ccc5ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual primary correction data. g_ctsu_self_corr[] is set by Open API. <br /></td></tr>
+<tr class="separator:afcb8ffd54dae5cba1a29a00352ccc5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe2dec9c9c789594d001129914f9eec4"><td class="memItemLeft" align="right" valign="top"><a id="abe2dec9c9c789594d001129914f9eec4"></a>
+uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#abe2dec9c9c789594d001129914f9eec4">p_mutual_snd_corr</a></td></tr>
+<tr class="memdesc:abe2dec9c9c789594d001129914f9eec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual secondary correction data. g_ctsu_self_corr[] is set by Open API. <br /></td></tr>
+<tr class="separator:abe2dec9c9c789594d001129914f9eec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0664d7b0f274da19339d9de7b4c161d1"><td class="memItemLeft" align="right" valign="top"><a id="a0664d7b0f274da19339d9de7b4c161d1"></a>
 uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a0664d7b0f274da19339d9de7b4c161d1">p_mutual_pri_data</a></td></tr>
 <tr class="memdesc:a0664d7b0f274da19339d9de7b4c161d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Mutual primary moving average data. g_ctsu_mutual_pri_data[] is set by Open API. <br /></td></tr>
@@ -635,6 +734,66 @@ uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 <a class="el" href="group___c_t_s_u.html#structctsu__correction__info__t">ctsu_correction_info_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ae291493dd7e994e95df48d4dbc2162af">p_correction_info</a></td></tr>
 <tr class="memdesc:ae291493dd7e994e95df48d4dbc2162af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to correction info. <br /></td></tr>
 <tr class="separator:ae291493dd7e994e95df48d4dbc2162af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a765f9f63a90651b81ef4e040174d6524"><td class="memItemLeft" align="right" valign="top"><a id="a765f9f63a90651b81ef4e040174d6524"></a>
+<a class="el" href="group___c_t_s_u___a_p_i.html#gaeab653b25bda70d84f951b2b683be1f3">ctsu_txvsel_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a765f9f63a90651b81ef4e040174d6524">txvsel</a></td></tr>
+<tr class="memdesc:a765f9f63a90651b81ef4e040174d6524"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU Transmission Power Supply Select. <br /></td></tr>
+<tr class="separator:a765f9f63a90651b81ef4e040174d6524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bdcf0132ae02d8766945124ec684d51"><td class="memItemLeft" align="right" valign="top"><a id="a6bdcf0132ae02d8766945124ec684d51"></a>
+<a class="el" href="group___c_t_s_u___a_p_i.html#ga45fc452df9c8843a08fd3d6028869589">ctsu_txvsel2_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a6bdcf0132ae02d8766945124ec684d51">txvsel2</a></td></tr>
+<tr class="memdesc:a6bdcf0132ae02d8766945124ec684d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU Transmission Power Supply Select 2 (CTSU2 Only) <br /></td></tr>
+<tr class="separator:a6bdcf0132ae02d8766945124ec684d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bf87f8171b60105a0b83bf96cca8e88"><td class="memItemLeft" align="right" valign="top"><a id="a8bf87f8171b60105a0b83bf96cca8e88"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a8bf87f8171b60105a0b83bf96cca8e88">ctsuchac0</a></td></tr>
+<tr class="memdesc:a8bf87f8171b60105a0b83bf96cca8e88"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS00-TS07 enable mask. <br /></td></tr>
+<tr class="separator:a8bf87f8171b60105a0b83bf96cca8e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46593770d2cdf8e60a897b29948003d7"><td class="memItemLeft" align="right" valign="top"><a id="a46593770d2cdf8e60a897b29948003d7"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a46593770d2cdf8e60a897b29948003d7">ctsuchac1</a></td></tr>
+<tr class="memdesc:a46593770d2cdf8e60a897b29948003d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS08-TS15 enable mask. <br /></td></tr>
+<tr class="separator:a46593770d2cdf8e60a897b29948003d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ceed5d626de1856b1ab03f9922fbb43"><td class="memItemLeft" align="right" valign="top"><a id="a8ceed5d626de1856b1ab03f9922fbb43"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a8ceed5d626de1856b1ab03f9922fbb43">ctsuchac2</a></td></tr>
+<tr class="memdesc:a8ceed5d626de1856b1ab03f9922fbb43"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS16-TS23 enable mask. <br /></td></tr>
+<tr class="separator:a8ceed5d626de1856b1ab03f9922fbb43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a398a5c185b148c524fbe262a376ea407"><td class="memItemLeft" align="right" valign="top"><a id="a398a5c185b148c524fbe262a376ea407"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a398a5c185b148c524fbe262a376ea407">ctsuchac3</a></td></tr>
+<tr class="memdesc:a398a5c185b148c524fbe262a376ea407"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS24-TS31 enable mask. <br /></td></tr>
+<tr class="separator:a398a5c185b148c524fbe262a376ea407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5cd003eb417279858d83ce2a7bb49a"><td class="memItemLeft" align="right" valign="top"><a id="aae5cd003eb417279858d83ce2a7bb49a"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#aae5cd003eb417279858d83ce2a7bb49a">ctsuchac4</a></td></tr>
+<tr class="memdesc:aae5cd003eb417279858d83ce2a7bb49a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS32-TS39 enable mask. <br /></td></tr>
+<tr class="separator:aae5cd003eb417279858d83ce2a7bb49a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75d5921c5d2fdc2e1f79e454e4bbbcca"><td class="memItemLeft" align="right" valign="top"><a id="a75d5921c5d2fdc2e1f79e454e4bbbcca"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a75d5921c5d2fdc2e1f79e454e4bbbcca">ctsuchtrc0</a></td></tr>
+<tr class="memdesc:a75d5921c5d2fdc2e1f79e454e4bbbcca"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS00-TS07 mutual-tx mask. <br /></td></tr>
+<tr class="separator:a75d5921c5d2fdc2e1f79e454e4bbbcca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c863a9abfe9b16f77e82d40551d3aad"><td class="memItemLeft" align="right" valign="top"><a id="a0c863a9abfe9b16f77e82d40551d3aad"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a0c863a9abfe9b16f77e82d40551d3aad">ctsuchtrc1</a></td></tr>
+<tr class="memdesc:a0c863a9abfe9b16f77e82d40551d3aad"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS08-TS15 mutual-tx mask. <br /></td></tr>
+<tr class="separator:a0c863a9abfe9b16f77e82d40551d3aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a795d748497ebde08d6016241ee45bef1"><td class="memItemLeft" align="right" valign="top"><a id="a795d748497ebde08d6016241ee45bef1"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a795d748497ebde08d6016241ee45bef1">ctsuchtrc2</a></td></tr>
+<tr class="memdesc:a795d748497ebde08d6016241ee45bef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS16-TS23 mutual-tx mask. <br /></td></tr>
+<tr class="separator:a795d748497ebde08d6016241ee45bef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0116e443faacf66ecf90a11c965f993"><td class="memItemLeft" align="right" valign="top"><a id="ae0116e443faacf66ecf90a11c965f993"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ae0116e443faacf66ecf90a11c965f993">ctsuchtrc3</a></td></tr>
+<tr class="memdesc:ae0116e443faacf66ecf90a11c965f993"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS24-TS31 mutual-tx mask. <br /></td></tr>
+<tr class="separator:ae0116e443faacf66ecf90a11c965f993"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af172abd0b31fa569830a3865f6853828"><td class="memItemLeft" align="right" valign="top"><a id="af172abd0b31fa569830a3865f6853828"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#af172abd0b31fa569830a3865f6853828">ctsuchtrc4</a></td></tr>
+<tr class="memdesc:af172abd0b31fa569830a3865f6853828"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS32-TS39 mutual-tx mask. <br /></td></tr>
+<tr class="separator:af172abd0b31fa569830a3865f6853828"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c5618040797bc7f6b553122113748ab"><td class="memItemLeft" align="right" valign="top"><a id="a6c5618040797bc7f6b553122113748ab"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a6c5618040797bc7f6b553122113748ab">self_elem_index</a></td></tr>
+<tr class="memdesc:a6c5618040797bc7f6b553122113748ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">self element index number for Current instance. <br /></td></tr>
+<tr class="separator:a6c5618040797bc7f6b553122113748ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc7409d810c8ac53b0182c1314207b21"><td class="memItemLeft" align="right" valign="top"><a id="adc7409d810c8ac53b0182c1314207b21"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#adc7409d810c8ac53b0182c1314207b21">mutual_elem_index</a></td></tr>
+<tr class="memdesc:adc7409d810c8ac53b0182c1314207b21"><td class="mdescLeft">&#160;</td><td class="mdescRight">mutual element index number for Current instance. <br /></td></tr>
+<tr class="separator:adc7409d810c8ac53b0182c1314207b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bd8b32a8bc2496d2605463945a87169"><td class="memItemLeft" align="right" valign="top"><a id="a0bd8b32a8bc2496d2605463945a87169"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a0bd8b32a8bc2496d2605463945a87169">ctsu_elem_index</a></td></tr>
+<tr class="memdesc:a0bd8b32a8bc2496d2605463945a87169"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU element index number for Current instance. <br /></td></tr>
+<tr class="separator:a0bd8b32a8bc2496d2605463945a87169"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a538262fc400f4a0095f2cd60ebb710a6"><td class="memItemLeft" align="right" valign="top"><a id="a538262fc400f4a0095f2cd60ebb710a6"></a>
 <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a538262fc400f4a0095f2cd60ebb710a6">p_ctsu_cfg</a></td></tr>
 <tr class="memdesc:a538262fc400f4a0095f2cd60ebb710a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
@@ -655,6 +814,10 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a0c65e56730176fb25ab76ddb33b772ee">p_callback</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *)</td></tr>
 <tr class="memdesc:a0c65e56730176fb25ab76ddb33b772ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a CTSUFN occurs. <br /></td></tr>
 <tr class="separator:a0c65e56730176fb25ab76ddb33b772ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8feceb5a0f8f20795459c94d0c18bd5"><td class="memItemLeft" align="right" valign="top"><a id="aa8feceb5a0f8f20795459c94d0c18bd5"></a>
+<a class="el" href="group___c_t_s_u___a_p_i.html#gaf6b0abb6cb3e6996d8435268d5e7c9cf">ctsu_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#aa8feceb5a0f8f20795459c94d0c18bd5">error_status</a></td></tr>
+<tr class="memdesc:aa8feceb5a0f8f20795459c94d0c18bd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">error status variable to send to QE for serial tuning. <br /></td></tr>
+<tr class="separator:aa8feceb5a0f8f20795459c94d0c18bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a042150cc9f3c41639dcd6bb989e6ba1e"><td class="memItemLeft" align="right" valign="top"><a id="a042150cc9f3c41639dcd6bb989e6ba1e"></a>
 <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a042150cc9f3c41639dcd6bb989e6ba1e">p_callback_memory</a></td></tr>
 <tr class="memdesc:a042150cc9f3c41639dcd6bb989e6ba1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory. <br /></td></tr>
@@ -878,6 +1041,34 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
+<a id="gac88d0518c996cb44643a82818b961485"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac88d0518c996cb44643a82818b961485">&#9670;&nbsp;</a></span>R_CTSU_ScanStop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_CTSU_ScanStop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function scan stops the sensor as scanning by the CTSU. Implements <a class="el" href="group___c_t_s_u___a_p_i.html#ac21a98eaa673d72b7da701ba90093f59">ctsu_api_t::scanStop</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>CTSU successfully scan stop. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga3c966546f3774ce2228739a5ffc0ac19"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3c966546f3774ce2228739a5ffc0ac19">&#9670;&nbsp;</a></span>R_CTSU_CallbackSet()</h2>
 
@@ -1005,7 +1196,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

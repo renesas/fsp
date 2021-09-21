@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.2.1</span>
+   &#160;<span id="projectnumber">Release v3.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -201,6 +201,10 @@ Typedefs</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:gad56a7deec64851bc4919a7367823eecd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#gad56a7deec64851bc4919a7367823eecd">rm_hs300x_event_t</a> </td></tr>
 <tr class="separator:gad56a7deec64851bc4919a7367823eecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaab827d822b03dfceb75bb3071a4fad1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#gaaab827d822b03dfceb75bb3071a4fad1">rm_hs300x_data_type_t</a> </td></tr>
+<tr class="separator:gaaab827d822b03dfceb75bb3071a4fad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga655f98816c2ac07b37b6b81ad8981c02"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga655f98816c2ac07b37b6b81ad8981c02">rm_hs300x_resolution_t</a> </td></tr>
+<tr class="separator:ga655f98816c2ac07b37b6b81ad8981c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structrm__hs300x__callback__args__t" id="structrm__hs300x__callback__args__t"></a>
@@ -349,6 +353,14 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <tr class="separator:a1e0d9168e53864f3fc70cf99077f6210"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b8c3e526c2265e4bebf5aaf2b1a29fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#a1b8c3e526c2265e4bebf5aaf2b1a29fc">dataCalculate</a> )(<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#structrm__hs300x__raw__data__t">rm_hs300x_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#structrm__hs300x__data__t">rm_hs300x_data_t</a> *const p_hs300x_data)</td></tr>
 <tr class="separator:a1b8c3e526c2265e4bebf5aaf2b1a29fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a103e89eaa5092238a9c039914b0eb629"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#a103e89eaa5092238a9c039914b0eb629">programmingModeEnter</a> )(<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a103e89eaa5092238a9c039914b0eb629"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a069acb3e5dd3bc2445f053a7dae626bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#a069acb3e5dd3bc2445f053a7dae626bf">resolutionChange</a> )(<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#gaaab827d822b03dfceb75bb3071a4fad1">rm_hs300x_data_type_t</a> const data_type, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga655f98816c2ac07b37b6b81ad8981c02">rm_hs300x_resolution_t</a> const resolution)</td></tr>
+<tr class="separator:a069acb3e5dd3bc2445f053a7dae626bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88c8aa8e31fa829fb91cbae763baa284"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#a88c8aa8e31fa829fb91cbae763baa284">sensorIdGet</a> )(<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl, uint32_t *const p_sensor_id)</td></tr>
+<tr class="separator:a88c8aa8e31fa829fb91cbae763baa284"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1812c8a229f28823abb6dc167dd1f94f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#a1812c8a229f28823abb6dc167dd1f94f">programmingModeExit</a> )(<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a1812c8a229f28823abb6dc167dd1f94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b1439ba4f4605e2194d7c4dfc0ce1f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#a6b1439ba4f4605e2194d7c4dfc0ce1f8">close</a> )(<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a6b1439ba4f4605e2194d7c4dfc0ce1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -447,6 +459,105 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_hs300x_data</td><td>Pointer to HS300X data structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a103e89eaa5092238a9c039914b0eb629"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a103e89eaa5092238a9c039914b0eb629">&#9670;&nbsp;</a></span>programmingModeEnter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_hs300x_api_t::programmingModeEnter) (<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enter the programming mode. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___h_s300_x.html#gaad0bf1f3d2428b136553060792c65632">RM_HS300X_ProgrammingModeEnter()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a069acb3e5dd3bc2445f053a7dae626bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a069acb3e5dd3bc2445f053a7dae626bf">&#9670;&nbsp;</a></span>resolutionChange</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_hs300x_api_t::resolutionChange) (<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#gaaab827d822b03dfceb75bb3071a4fad1">rm_hs300x_data_type_t</a> const data_type, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga655f98816c2ac07b37b6b81ad8981c02">rm_hs300x_resolution_t</a> const resolution)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Change the sensor resolution. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___h_s300_x.html#gabc4a07b3c9843357f322c6b9dc8e8abe">RM_HS300X_ResolutionChange()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_type</td><td>Data type of HS300X. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">resolution</td><td>Resolution type of HS300X. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a88c8aa8e31fa829fb91cbae763baa284"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88c8aa8e31fa829fb91cbae763baa284">&#9670;&nbsp;</a></span>sensorIdGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_hs300x_api_t::sensorIdGet) (<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl, uint32_t *const p_sensor_id)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the sensor ID. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___h_s300_x.html#ga3360174eadfe24421084be0881b7c4f6">RM_HS300X_SensorIdGet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_sensor_id</td><td>Pointer to sensor ID of HS300X. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1812c8a229f28823abb6dc167dd1f94f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1812c8a229f28823abb6dc167dd1f94f">&#9670;&nbsp;</a></span>programmingModeExit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_hs300x_api_t::programmingModeExit) (<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Exit the programming mode. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___h_s300_x.html#gaa5596bf0a35a1e1c15aa214abdbcb653">RM_HS300X_ProgrammingModeExit()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -554,13 +665,43 @@ p_api</td>
 
 </div>
 </div>
+<a id="gaaab827d822b03dfceb75bb3071a4fad1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaab827d822b03dfceb75bb3071a4fad1">&#9670;&nbsp;</a></span>rm_hs300x_data_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___h_s300_x___a_p_i.html#gaaab827d822b03dfceb75bb3071a4fad1">rm_hs300x_data_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Data type of HS300X </p>
+
+</div>
+</div>
+<a id="ga655f98816c2ac07b37b6b81ad8981c02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga655f98816c2ac07b37b6b81ad8981c02">&#9670;&nbsp;</a></span>rm_hs300x_resolution_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga655f98816c2ac07b37b6b81ad8981c02">rm_hs300x_resolution_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resolution type of HS300X </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

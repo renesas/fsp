@@ -24,7 +24,8 @@ var group___s_c_i___u_a_r_t =
     [ "sci_uart_flow_control_t", "group___s_c_i___u_a_r_t.html#gab4823b86315f1b32fe6f2c0d56c2b139", [
       [ "SCI_UART_FLOW_CONTROL_RTS", "group___s_c_i___u_a_r_t.html#ggab4823b86315f1b32fe6f2c0d56c2b139aedebe19eeaa24e3cd423da139b8a9fb2", null ],
       [ "SCI_UART_FLOW_CONTROL_CTS", "group___s_c_i___u_a_r_t.html#ggab4823b86315f1b32fe6f2c0d56c2b139acc27e82fb5fac9e2b83db7e9f890d15c", null ],
-      [ "SCI_UART_FLOW_CONTROL_CTSRTS", "group___s_c_i___u_a_r_t.html#ggab4823b86315f1b32fe6f2c0d56c2b139a76f2641dddc66691f83619bf48af11c1", null ]
+      [ "SCI_UART_FLOW_CONTROL_CTSRTS", "group___s_c_i___u_a_r_t.html#ggab4823b86315f1b32fe6f2c0d56c2b139a76f2641dddc66691f83619bf48af11c1", null ],
+      [ "SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS", "group___s_c_i___u_a_r_t.html#ggab4823b86315f1b32fe6f2c0d56c2b139ab611c5c6f9c65e43361e920f03d4a696", null ]
     ] ],
     [ "sci_uart_rx_fifo_trigger_t", "group___s_c_i___u_a_r_t.html#gadf7235ba7fd675f3416ef98c55b810f6", [
       [ "SCI_UART_RX_FIFO_TRIGGER_1", "group___s_c_i___u_a_r_t.html#ggadf7235ba7fd675f3416ef98c55b810f6acbf7b549f4da64e02ba6a63e7fb96f43", null ],

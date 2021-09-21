@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.2.1</span>
+   &#160;<span id="projectnumber">Release v3.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -187,6 +187,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structtouch__pad__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structtouch__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t">touch_cfg_t</a></td></tr>
 <tr class="separator:structtouch__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structtouch__sensitivity__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__sensitivity__info__t">touch_sensitivity_info_t</a></td></tr>
+<tr class="separator:structtouch__sensitivity__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structtouch__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__api__t">touch_api_t</a></td></tr>
 <tr class="separator:structtouch__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structtouch__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__instance__t">touch_instance_t</a></td></tr>
@@ -499,6 +501,48 @@ Pointer to extended configuration by instance of interface. </td></tr>
 
 </div>
 </div>
+<a name="structtouch__sensitivity__info__t" id="structtouch__sensitivity__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtouch__sensitivity__info__t">&#9670;&nbsp;</a></span>touch_sensitivity_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct touch_sensitivity_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of each touch sensitivity information </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae203c4e005705ac772a6f4dfcf89f3ab"></a>uint16_t *</td>
+<td class="fieldname">
+p_touch_sensitivity_ratio</td>
+<td class="fielddoc">
+Pointer to sensitivity ratio array. </td></tr>
+<tr><td class="fieldtype">
+<a id="a48e9414590bbea053d398cb463731e36"></a>uint16_t</td>
+<td class="fieldname">
+old_threshold_ratio</td>
+<td class="fielddoc">
+Old threshold ratio. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1c7eb001375ed21c8830473011319f40"></a>uint16_t</td>
+<td class="fieldname">
+new_threshold_ratio</td>
+<td class="fielddoc">
+New threshold ratio. </td></tr>
+<tr><td class="fieldtype">
+<a id="a428f2406d03b5145e58c6e20441281cd"></a>uint8_t</td>
+<td class="fieldname">
+new_hysteresis_ratio</td>
+<td class="fielddoc">
+New hysteresis ratio. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structtouch__api__t" id="structtouch__api__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structtouch__api__t">&#9670;&nbsp;</a></span>touch_api_t</h2>
 
@@ -519,12 +563,20 @@ Pointer to extended configuration by instance of interface. </td></tr>
 <tr class="separator:a8064118d8b22b24a63cd18fc8db9c072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a275464ffc43790ae8a787e7f2f3544d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#a275464ffc43790ae8a787e7f2f3544d0">dataGet</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, uint64_t *p_button_status, uint16_t *p_slider_position, uint16_t *p_wheel_position)</td></tr>
 <tr class="separator:a275464ffc43790ae8a787e7f2f3544d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade680c82b506312e6d81580424f61d14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#ade680c82b506312e6d81580424f61d14">scanStop</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ade680c82b506312e6d81580424f61d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b3e8ea61183b1546611b46c2f6200e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3">padDataGet</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, uint16_t *p_pad_rx_coordinate, uint16_t *p_pad_tx_coordinate, uint8_t *p_pad_num_touch)</td></tr>
 <tr class="separator:a6b3e8ea61183b1546611b46c2f6200e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1390fd43ac6b2e08cab0fc26b4a5360"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#ad1390fd43ac6b2e08cab0fc26b4a5360">callbackSet</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___t_o_u_c_h___a_p_i.html#ga7cf9cee405c6ee7d3a1b88b18e70db72">touch_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:ad1390fd43ac6b2e08cab0fc26b4a5360"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad36949e5d56501bb67dd06a47b4049c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0">close</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ad36949e5d56501bb67dd06a47b4049c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57dde5098486678e08ee43e053788f99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#a57dde5098486678e08ee43e053788f99">sensitivityRatioGet</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__sensitivity__info__t">touch_sensitivity_info_t</a> *p_touch_sensitivity_info)</td></tr>
+<tr class="separator:a57dde5098486678e08ee43e053788f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a376608281395fb8733761e54e1682c03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#a376608281395fb8733761e54e1682c03">thresholdAdjust</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__sensitivity__info__t">touch_sensitivity_info_t</a> *p_touch_sensitivity_info)</td></tr>
+<tr class="separator:a376608281395fb8733761e54e1682c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a704e6a7fc1d35f09c7d95503ae404f57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h___a_p_i.html#a704e6a7fc1d35f09c7d95503ae404f57">driftControl</a> )(<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, uint16_t input_drift_freq)</td></tr>
+<tr class="separator:a704e6a7fc1d35f09c7d95503ae404f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a229c13bc7250c5977054d981680e41ad"></a>
@@ -603,6 +655,30 @@ Pointer to extended configuration by instance of interface. </td></tr>
 
 </div>
 </div>
+<a id="ade680c82b506312e6d81580424f61d14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade680c82b506312e6d81580424f61d14">&#9670;&nbsp;</a></span>scanStop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  touch_api_t::scanStop) (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ScanStop. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___t_o_u_c_h.html#ga6f542117daebc83e6b81412660c15673">RM_TOUCH_ScanStop()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a6b3e8ea61183b1546611b46c2f6200e3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6b3e8ea61183b1546611b46c2f6200e3">&#9670;&nbsp;</a></span>padDataGet</h2>
 
@@ -675,6 +751,81 @@ Pointer to extended configuration by instance of interface. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a57dde5098486678e08ee43e053788f99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57dde5098486678e08ee43e053788f99">&#9670;&nbsp;</a></span>sensitivityRatioGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  touch_api_t::sensitivityRatioGet) (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__sensitivity__info__t">touch_sensitivity_info_t</a> *p_touch_sensitivity_info)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sensitivity ratio get. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___t_o_u_c_h.html#ga6fd2d2e83cdb935ae921b3a9191f8dbe">RM_TOUCH_SensitivityRatioGet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_touch_sensitivity_info</td><td>Pointer to touch sensitivity structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a376608281395fb8733761e54e1682c03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a376608281395fb8733761e54e1682c03">&#9670;&nbsp;</a></span>thresholdAdjust</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  touch_api_t::thresholdAdjust) (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__sensitivity__info__t">touch_sensitivity_info_t</a> *p_touch_sensitivity_info)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Threshold adjust. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___t_o_u_c_h.html#ga0671201fe00bee74d2801c13ba9c5b68">RM_TOUCH_ThresholdAdjust()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_touch_sensitivity_info</td><td>Pointer to touch sensitivity structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a704e6a7fc1d35f09c7d95503ae404f57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a704e6a7fc1d35f09c7d95503ae404f57">&#9670;&nbsp;</a></span>driftControl</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  touch_api_t::driftControl) (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, uint16_t input_drift_freq)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Drift control. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___t_o_u_c_h.html#ga38994c1e8d1e874cdd34f79c0fa0b87b">RM_TOUCH_DriftControl()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_drift_freq</td><td>Drift frequency value. </td></tr>
   </table>
   </dd>
 </dl>
@@ -760,7 +911,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

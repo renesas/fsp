@@ -2,6 +2,8 @@ var searchData=
 [
   ['nanoseconds',['nanoseconds',['../group___p_t_p___a_p_i.html#a1b51aaa1cc5d99d8721c53e96d611ec9',1,'ptp_time_t']]],
   ['negation_5fdelay',['negation_delay',['../group___l_v_d___a_p_i.html#a4ee0cbde3ba8457e75b8475161a29704',1,'lvd_cfg_t']]],
+  ['new_5fhysteresis_5fratio',['new_hysteresis_ratio',['../group___t_o_u_c_h___a_p_i.html#a428f2406d03b5145e58c6e20441281cd',1,'touch_sensitivity_info_t']]],
+  ['new_5fthreshold_5fratio',['new_threshold_ratio',['../group___t_o_u_c_h___a_p_i.html#a1c7eb001375ed21c8830473011319f40',1,'touch_sensitivity_info_t']]],
   ['next',['next',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a19f157546e7ca16e3c974fc14c0c7f2b',1,'st_ble_gatts_db_attr_cfg_t']]],
   ['next_5faccess_5fdelay',['next_access_delay',['../group___s_p_i.html#a60d68331597e3bce4f172ae22945aa26',1,'spi_extended_cfg_t']]],
   ['nmi_5fhandler',['NMI_Handler',['../group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc',1,'NMI_Handler(void):&#160;bsp_group_irq.c'],['../group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc',1,'NMI_Handler(void):&#160;bsp_group_irq.c']]],

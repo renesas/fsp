@@ -52,5 +52,7 @@ var group___b_l_e___a_b_s =
     [ "RM_BLE_ABS_CreateConnection", "group___b_l_e___a_b_s.html#ga4628e9d39df688687e6307505deb9f05", null ],
     [ "RM_BLE_ABS_SetLocalPrivacy", "group___b_l_e___a_b_s.html#ga82519ff5215e8c59717f8843a9868e15", null ],
     [ "RM_BLE_ABS_StartAuthentication", "group___b_l_e___a_b_s.html#ga6a9bbe44610417982b5a1d44fba3f238", null ],
-    [ "RM_BLE_ABS_DeleteBondInformation", "group___b_l_e___a_b_s.html#ga022825a039b69fbf25070f5c84032128", null ]
+    [ "RM_BLE_ABS_DeleteBondInformation", "group___b_l_e___a_b_s.html#ga022825a039b69fbf25070f5c84032128", null ],
+    [ "RM_BLE_ABS_ImportKeyInformation", "group___b_l_e___a_b_s.html#ga592296038e88209d10ba6b71be32ab5c", null ],
+    [ "RM_BLE_ABS_ExportKeyInformation", "group___b_l_e___a_b_s.html#ga3386d2c70d4f15ec3942ba196eed7446", null ]
 ];

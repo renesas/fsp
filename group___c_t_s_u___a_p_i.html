@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.2.1</span>
+   &#160;<span id="projectnumber">Release v3.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -453,6 +453,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a1df87278ab5d47fdd093994f53de96a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadcc6930b4e9d0ad86b6f607e86c28f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5">dataGet</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint16_t *p_data)</td></tr>
 <tr class="separator:aadcc6930b4e9d0ad86b6f607e86c28f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac21a98eaa673d72b7da701ba90093f59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#ac21a98eaa673d72b7da701ba90093f59">scanStop</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ac21a98eaa673d72b7da701ba90093f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42a81fef42f2bf61bde59cba4796cc0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e">diagnosis</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a42a81fef42f2bf61bde59cba4796cc0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adda480537f35733dbed856a30b89be50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#adda480537f35733dbed856a30b89be50">callbackSet</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const p_callback_memory)</td></tr>
@@ -529,6 +531,30 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_data</td><td>Pointer to get data array. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac21a98eaa673d72b7da701ba90093f59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac21a98eaa673d72b7da701ba90093f59">&#9670;&nbsp;</a></span>scanStop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ctsu_api_t::scanStop) (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ScanStop. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___c_t_s_u.html#gac88d0518c996cb44643a82818b961485">R_CTSU_ScanStop()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -912,7 +938,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

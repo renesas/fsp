@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.2.1</span>
+   &#160;<span id="projectnumber">Release v3.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -1283,7 +1283,22 @@ If the filter_data_length parameter is 0, the filtering is not done. </td></tr>
 <td class="fieldname">
 device_scan_filter_policy</td>
 <td class="fielddoc">
-Scan Filter Policy. Select one of the following. </p><table class="doxtable">
+Scan Filter Policy. Select one of the following.<br />
+. <ul>
+<li>Address type setting (Field [7:4]) <table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaf6e63e384a70bf085ad012ef48c38281">BLE_GAP_ADDR_PUBLIC(0x00)</a> </td><td align="left">Use Public Address. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga9e780870a7451000b7a0d78c767b1499">BLE_GAP_ADDR_RAND(0x01)</a> </td><td align="left">Use Random Address. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">If the IRK of local device has been registered in Resolving list, use RPA. If not, use Public Address. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga50ae4657d7dc5ff04c1e38a7e38671ba" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_RANDOM(0x03)</a> </td><td align="left">If the IRK of local device has been registered in Resolving list, use RPA. If not, use Random Address. </td></tr>
+</table>
+</li>
+<li>White list setting (Field [3:0]) <table class="doxtable">
 <tr>
 <th align="left">macro </th><th align="left">description  </th></tr>
 <tr>
@@ -1295,12 +1310,14 @@ Scan Filter Policy. Select one of the following. </p><table class="doxtable">
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga06eb39bdfa05367800882f1377397792" title="Accept all advertising and scan response PDUs except directed advertising PDUs whose the target addre...">BLE_GAP_SCAN_ALLOW_ADV_EXCEPT_DIRECTED(0x02)</a> </td><td align="left">Accept all advertising and scan response PDUs except directed advertising PDUs whose the target address is identity address but doesn't address local device. However directed advertising PDUs whose the target address is the local resolvable private address are accepted. </td></tr>
 <tr>
 <td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaffc095c73712cb64849cba8d83f4ee3d" title="Accept all advertising and scan response PDUs.  The following are excluded. ">BLE_GAP_SCAN_ALLOW_ADV_EXCEPT_DIRECTED_WLST(0x03)</a> </td><td align="left">Accept all advertising and scan response PDUs. The following are excluded. <br />
-</td></tr>
-</table>
-<ul>
+ <ul>
 <li>Advertising and scan response PDUs where the advertiser's identity address is not in the White List. <br />
  </li>
-<li>Directed advertising PDUs whose the target address is identity address but doesn't address local device. However directed advertising PDUs whose the target address is the local resolvable private address are accepted. | </li>
+<li>Directed advertising PDUs whose the target address is identity address but doesn't address local device. However directed advertising PDUs whose the target address is the local resolvable private address are accepted. </li>
+</ul>
+</td></tr>
+</table>
+</li>
 </ul>
 </td></tr>
 <tr><td class="fieldtype">
@@ -1428,14 +1445,28 @@ The p_connection_phy_parameter_coded is specified as NULL, a connection request 
 p_device_address</td>
 <td class="fielddoc">
 Address of the device to be connected. <br />
-If the filter field is <a class="el" href="group___g_a_p___a_p_i.html#ga54e2578f269da0d8866444d8d0799cef">BLE_GAP_INIT_FILT_USE_WLST(0x01)</a>, this parameter is ignored. </td></tr>
+If the filter field is <a class="el" href="group___g_a_p___a_p_i.html#ga54e2578f269da0d8866444d8d0799cef">BLE_GAP_INIT_FILT_USE_WLST(0x01)</a>, this parameter is ignored and please fill p_device_address.addr with 0x00. </td></tr>
 <tr><td class="fieldtype">
 <a id="a7373c1032f3d68c27b26f65eaf657de2"></a>uint8_t</td>
 <td class="fieldname">
 filter_parameter</td>
 <td class="fielddoc">
 The filter field specifies whether the White List is used or not, when connecting with a remote device.<br />
-</p><table class="doxtable">
+. <ul>
+<li>Address type setting (Field [7:4]) <table class="doxtable">
+<tr>
+<th align="left">macro </th><th align="left">description  </th></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#gaf6e63e384a70bf085ad012ef48c38281">BLE_GAP_ADDR_PUBLIC(0x00)</a> </td><td align="left">Use Public Address. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga9e780870a7451000b7a0d78c767b1499">BLE_GAP_ADDR_RAND(0x01)</a> </td><td align="left">Use Random Address. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_PUBLIC(0x02)</a> </td><td align="left">If the IRK of local device has been registered in Resolving list, use RPA. If not, use Public Address. </td></tr>
+<tr>
+<td align="left"><a class="el" href="group___g_a_p___a_p_i.html#ga50ae4657d7dc5ff04c1e38a7e38671ba" title="Resolvable Private Address. ">BLE_GAP_ADDR_RPA_ID_RANDOM(0x03)</a> </td><td align="left">If the IRK of local device has been registered in Resolving list, use RPA. If not, use Random Address. </td></tr>
+</table>
+</li>
+<li>White list setting (Field [3:0]) <table class="doxtable">
 <tr>
 <th align="left">macro </th><th align="left">description  </th></tr>
 <tr>
@@ -1446,6 +1477,8 @@ The filter field specifies whether the White List is used or not, when connectin
  The remote device registered in White List is connected with local device. <br />
  The p_addr field is ignored. </td></tr>
 </table>
+</li>
+</ul>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="acf8c8ad5befb71c824b8ceece1854c39"></a>uint8_t</td>
@@ -1591,6 +1624,10 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a65ce1d52c18d6261fa6122c50d42438f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a982369d158ac921397f35cf13e993ecb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a982369d158ac921397f35cf13e993ecb">deleteBondInformation</a> )(<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, ble_abs_bond_information_parameter_t const *const p_bond_information_parameter)</td></tr>
 <tr class="separator:a982369d158ac921397f35cf13e993ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada6390f5d0baae5ab6d69bccc36c332a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ada6390f5d0baae5ab6d69bccc36c332a">importKeyInformation</a> )(<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__device__address__t">ble_device_address_t</a> *p_local_identity_address, uint8_t *p_local_irk, uint8_t *p_local_csrk)</td></tr>
+<tr class="separator:ada6390f5d0baae5ab6d69bccc36c332a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67fa42505ec55671611fc272283dcd65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e___a_b_s___a_p_i.html#a67fa42505ec55671611fc272283dcd65">exportKeyInformation</a> )(<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__device__address__t">ble_device_address_t</a> *p_local_identity_address, uint8_t *p_local_irk, uint8_t *p_local_csrk)</td></tr>
+<tr class="separator:a67fa42505ec55671611fc272283dcd65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a84d7676435519fb9b324c484e4ce8b24"></a>
@@ -1893,6 +1930,60 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
+<a id="ada6390f5d0baae5ab6d69bccc36c332a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada6390f5d0baae5ab6d69bccc36c332a">&#9670;&nbsp;</a></span>importKeyInformation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ble_abs_api_t::importKeyInformation) (<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__device__address__t">ble_device_address_t</a> *p_local_identity_address, uint8_t *p_local_irk, uint8_t *p_local_csrk)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Import local identity address, keys information to local storage. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___b_l_e___a_b_s.html#ga592296038e88209d10ba6b71be32ab5c">RM_BLE_ABS_ImportKeyInformation()</a> </li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_local_identity_address</td><td>Pointer to local identiry address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">uint8_t</td><td>p_local_irk Pointer to local IRK </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">uint8_t</td><td>p_local_csrk Pointer to local CSRK </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a67fa42505ec55671611fc272283dcd65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67fa42505ec55671611fc272283dcd65">&#9670;&nbsp;</a></span>exportKeyInformation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ble_abs_api_t::exportKeyInformation) (<a class="el" href="group___b_l_e___a_b_s___a_p_i.html#ga933069f10ed98538549bc7a4298a3923">ble_abs_ctrl_t</a> *const p_ctrl, <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__device__address__t">ble_device_address_t</a> *p_local_identity_address, uint8_t *p_local_irk, uint8_t *p_local_csrk)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Export local identity address, keys information from local storage. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___b_l_e___a_b_s.html#ga3386d2c70d4f15ec3942ba196eed7446">RM_BLE_ABS_ExportKeyInformation()</a> </li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_local_identity_address</td><td>Pointer to local identiry address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">uint8_t</td><td>p_local_irk Pointer to local IRK </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">uint8_t</td><td>p_local_csrk Pointer to local CSRK </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -2119,7 +2210,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

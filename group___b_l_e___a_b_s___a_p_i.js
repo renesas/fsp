@@ -163,7 +163,9 @@ var group___b_l_e___a_b_s___a_p_i =
       [ "createConnection", "group___b_l_e___a_b_s___a_p_i.html#a68ac3bccdd07538ecd6de9ee4eecd60a", null ],
       [ "setLocalPrivacy", "group___b_l_e___a_b_s___a_p_i.html#a6f9928d4535222963b96d5a88ca04986", null ],
       [ "startAuthentication", "group___b_l_e___a_b_s___a_p_i.html#a65ce1d52c18d6261fa6122c50d42438f", null ],
-      [ "deleteBondInformation", "group___b_l_e___a_b_s___a_p_i.html#a982369d158ac921397f35cf13e993ecb", null ]
+      [ "deleteBondInformation", "group___b_l_e___a_b_s___a_p_i.html#a982369d158ac921397f35cf13e993ecb", null ],
+      [ "importKeyInformation", "group___b_l_e___a_b_s___a_p_i.html#ada6390f5d0baae5ab6d69bccc36c332a", null ],
+      [ "exportKeyInformation", "group___b_l_e___a_b_s___a_p_i.html#a67fa42505ec55671611fc272283dcd65", null ]
     ] ],
     [ "ble_abs_instance_t", "group___b_l_e___a_b_s___a_p_i.html#structble__abs__instance__t", [
       [ "p_ctrl", "group___b_l_e___a_b_s___a_p_i.html#abea1433d38189ab5b3168178e645bc7e", null ],

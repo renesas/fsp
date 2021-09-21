@@ -245,9 +245,9 @@ var NAVTREEINDEX1 =
 "group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#structaudio__playback__callback__args__t":[3,2,47,0],
 "group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#structaudio__playback__cfg__t":[3,2,47,1],
 "group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html#structaudio__playback__instance__t":[3,2,47,3],
-"group___a_w_s___h_t_t_p_s.html":[3,1,102],
-"group___a_w_s___m_q_t_t.html":[3,1,103],
+"group___a_w_s___h_t_t_p_s.html":[3,1,103],
+"group___a_w_s___m_q_t_t.html":[3,1,104],
 "group___a_w_s___p_k_c_s11___p_a_l.html":[3,1,64],
 "group___a_w_s___p_k_c_s11___p_a_l___l_i_t_t_l_e_f_s.html":[3,1,65],
-"group___a_w_s___s_e_c_u_r_e___s_o_c_k_e_t_s.html":[3,1,105]
+"group___a_w_s___s_e_c_u_r_e___s_o_c_k_e_t_s.html":[3,1,106]
 };

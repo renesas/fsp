@@ -40,6 +40,7 @@ var group___t_o_u_c_h =
       [ "binfo", "group___t_o_u_c_h.html#a6de5b5906a2eb2bf98ea1446b183318c", null ],
       [ "sinfo", "group___t_o_u_c_h.html#a7e235611f808982b1d092adc3f074cdb", null ],
       [ "winfo", "group___t_o_u_c_h.html#a14b3b61451692ffd4513d3bf8654c898", null ],
+      [ "serial_tuning_enable", "group___t_o_u_c_h.html#ab9f4c382d2955349297dcba204c05940", null ],
       [ "pinfo", "group___t_o_u_c_h.html#a475ddefbfaefb1625070f4989594041e", null ],
       [ "p_touch_cfg", "group___t_o_u_c_h.html#a375f7cc4a3dea84f06a892f95fc1da34", null ],
       [ "p_ctsu_instance", "group___t_o_u_c_h.html#a0e9be579ea8c2bdfa9deec70b7a4bcbf", null ]
@@ -48,6 +49,10 @@ var group___t_o_u_c_h =
     [ "RM_TOUCH_ScanStart", "group___t_o_u_c_h.html#gad399083eda1add2a5f1e133df1089b82", null ],
     [ "RM_TOUCH_DataGet", "group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1", null ],
     [ "RM_TOUCH_PadDataGet", "group___t_o_u_c_h.html#ga4dcf4a1abe539e74de7c1c7b8387df5f", null ],
+    [ "RM_TOUCH_ScanStop", "group___t_o_u_c_h.html#ga6f542117daebc83e6b81412660c15673", null ],
     [ "RM_TOUCH_CallbackSet", "group___t_o_u_c_h.html#ga9222f933707c72e3f4c097d14e66072e", null ],
-    [ "RM_TOUCH_Close", "group___t_o_u_c_h.html#ga0dd11aec558632e59df46765cfb546c5", null ]
+    [ "RM_TOUCH_Close", "group___t_o_u_c_h.html#ga0dd11aec558632e59df46765cfb546c5", null ],
+    [ "RM_TOUCH_SensitivityRatioGet", "group___t_o_u_c_h.html#ga6fd2d2e83cdb935ae921b3a9191f8dbe", null ],
+    [ "RM_TOUCH_ThresholdAdjust", "group___t_o_u_c_h.html#ga0671201fe00bee74d2801c13ba9c5b68", null ],
+    [ "RM_TOUCH_DriftControl", "group___t_o_u_c_h.html#ga38994c1e8d1e874cdd34f79c0fa0b87b", null ]
 ];

@@ -53,6 +53,7 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "Communicatons Middleware Interface", "group___r_m___c_o_m_m_s___a_p_i.html", "group___r_m___c_o_m_m_s___a_p_i" ],
     [ "FileX Block Media Port Interface", "group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a___a_p_i.html", "group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a___a_p_i" ],
     [ "FreeRTOS+FAT Port Interface", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html", "group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i" ],
+    [ "FSXXXX Middleware Interface", "group___r_m___f_s_x_x_x_x___a_p_i.html", "group___r_m___f_s_x_x_x_x___a_p_i" ],
     [ "HS300X Middleware Interface", "group___r_m___h_s300_x___a_p_i.html", "group___r_m___h_s300_x___a_p_i" ],
     [ "LittleFS Interface", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html", "group___r_m___l_i_t_t_l_e_f_s___a_p_i" ],
     [ "Motor angle Interface", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html", "group___m_o_t_o_r___a_n_g_l_e___a_p_i" ],

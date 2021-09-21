@@ -20,6 +20,10 @@ var group___r_m___h_s300_x___a_p_i =
       [ "measurementStart", "group___r_m___h_s300_x___a_p_i.html#a5fb2270412b0a4972ba9e3b37daf33ab", null ],
       [ "read", "group___r_m___h_s300_x___a_p_i.html#a1e0d9168e53864f3fc70cf99077f6210", null ],
       [ "dataCalculate", "group___r_m___h_s300_x___a_p_i.html#a1b8c3e526c2265e4bebf5aaf2b1a29fc", null ],
+      [ "programmingModeEnter", "group___r_m___h_s300_x___a_p_i.html#a103e89eaa5092238a9c039914b0eb629", null ],
+      [ "resolutionChange", "group___r_m___h_s300_x___a_p_i.html#a069acb3e5dd3bc2445f053a7dae626bf", null ],
+      [ "sensorIdGet", "group___r_m___h_s300_x___a_p_i.html#a88c8aa8e31fa829fb91cbae763baa284", null ],
+      [ "programmingModeExit", "group___r_m___h_s300_x___a_p_i.html#a1812c8a229f28823abb6dc167dd1f94f", null ],
       [ "close", "group___r_m___h_s300_x___a_p_i.html#a6b1439ba4f4605e2194d7c4dfc0ce1f8", null ]
     ] ],
     [ "rm_hs300x_instance_t", "group___r_m___h_s300_x___a_p_i.html#structrm__hs300x__instance__t", [
@@ -28,5 +32,7 @@ var group___r_m___h_s300_x___a_p_i =
       [ "p_api", "group___r_m___h_s300_x___a_p_i.html#a42be32706089d71251045106dfeb9e82", null ]
     ] ],
     [ "rm_hs300x_ctrl_t", "group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7", null ],
-    [ "rm_hs300x_event_t", "group___r_m___h_s300_x___a_p_i.html#gad56a7deec64851bc4919a7367823eecd", null ]
+    [ "rm_hs300x_event_t", "group___r_m___h_s300_x___a_p_i.html#gad56a7deec64851bc4919a7367823eecd", null ],
+    [ "rm_hs300x_data_type_t", "group___r_m___h_s300_x___a_p_i.html#gaaab827d822b03dfceb75bb3071a4fad1", null ],
+    [ "rm_hs300x_resolution_t", "group___r_m___h_s300_x___a_p_i.html#ga655f98816c2ac07b37b6b81ad8981c02", null ]
 ];

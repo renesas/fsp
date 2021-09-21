@@ -79,6 +79,7 @@ var group___r_e_n_e_s_a_s___m_o_d_u_l_e_s =
     [ "FreeRTOS Plus TCP (rm_freertos_plus_tcp)", "group___f_r_e_e_r_t_o_s___p_l_u_s___t_c_p.html", null ],
     [ "FreeRTOS Port (rm_freertos_port)", "group___r_m___f_r_e_e_r_t_o_s___p_o_r_t.html", null ],
     [ "RTOS Context Management (rm_tz_context)", "group___r_m___t_z___c_o_n_t_e_x_t.html", null ],
+    [ "FS2012 Sensor Middleware (rm_fs2012)", "group___r_m___f_s2012.html", "group___r_m___f_s2012" ],
     [ "Azure RTOS GUIX Port (rm_guix_port)", "group___r_m___g_u_i_x___p_o_r_t.html", "group___r_m___g_u_i_x___p_o_r_t" ],
     [ "HS300X Sensor Middleware (rm_hs300x)", "group___r_m___h_s300_x.html", "group___r_m___h_s300_x" ],
     [ "Azure RTOS LevelX NOR SPI Driver (rm_levelx_nor_spi)", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i" ],

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.2.1</span>
+   &#160;<span id="projectnumber">Release v3.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -183,9 +183,18 @@ Functions</h2></td></tr>
 <tr class="memitem:gac41a24eae1e4f6ebdb80c2eae32cec63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#gac41a24eae1e4f6ebdb80c2eae32cec63">RM_HS300X_DataCalculate</a> (<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#structrm__hs300x__raw__data__t">rm_hs300x_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#structrm__hs300x__data__t">rm_hs300x_data_t</a> *const p_hs300x_data)</td></tr>
 <tr class="memdesc:gac41a24eae1e4f6ebdb80c2eae32cec63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates humidity [RH] and temperature [Celsius] from ADC data. Implements <a class="el" href="group___r_m___h_s300_x___a_p_i.html#a1b8c3e526c2265e4bebf5aaf2b1a29fc">rm_hs300x_api_t::dataCalculate</a>.  <a href="#gac41a24eae1e4f6ebdb80c2eae32cec63">More...</a><br /></td></tr>
 <tr class="separator:gac41a24eae1e4f6ebdb80c2eae32cec63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafb7687105b1cd4414085384e42ba1e89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#gafb7687105b1cd4414085384e42ba1e89">rm_hs300x_callback</a> (<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__callback__args__t">rm_comms_callback_args_t</a> *p_args)</td></tr>
-<tr class="memdesc:gafb7687105b1cd4414085384e42ba1e89"><td class="mdescLeft">&#160;</td><td class="mdescRight">HS300X callback function called in the I2C Communications Middleware callback function.  <a href="#gafb7687105b1cd4414085384e42ba1e89">More...</a><br /></td></tr>
-<tr class="separator:gafb7687105b1cd4414085384e42ba1e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad0bf1f3d2428b136553060792c65632"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#gaad0bf1f3d2428b136553060792c65632">RM_HS300X_ProgrammingModeEnter</a> (<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="memdesc:gaad0bf1f3d2428b136553060792c65632"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function must be called within 10ms after applying power to the sensor. Sends the commands to enter the programming mode. After calling this function, please wait 120us. Implements <a class="el" href="group___r_m___h_s300_x___a_p_i.html#a103e89eaa5092238a9c039914b0eb629">rm_hs300x_api_t::programmingModeEnter</a>.  <a href="#gaad0bf1f3d2428b136553060792c65632">More...</a><br /></td></tr>
+<tr class="separator:gaad0bf1f3d2428b136553060792c65632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc4a07b3c9843357f322c6b9dc8e8abe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#gabc4a07b3c9843357f322c6b9dc8e8abe">RM_HS300X_ResolutionChange</a> (<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#gaaab827d822b03dfceb75bb3071a4fad1">rm_hs300x_data_type_t</a> const data_type, <a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga655f98816c2ac07b37b6b81ad8981c02">rm_hs300x_resolution_t</a> const resolution)</td></tr>
+<tr class="memdesc:gabc4a07b3c9843357f322c6b9dc8e8abe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function must be called after calling the RM_HS300X_ProgrammingModeEnter function. Changes the sensor resolution. This function blocks for 120 us software delay plus 9 bytes on the I2C bus. After calling this function, 14ms must be waited. Failure to comply with these times may result in data corruption and introduce errors in sensor measurements. Implements <a class="el" href="group___r_m___h_s300_x___a_p_i.html#a069acb3e5dd3bc2445f053a7dae626bf">rm_hs300x_api_t::resolutionChange</a>.  <a href="#gabc4a07b3c9843357f322c6b9dc8e8abe">More...</a><br /></td></tr>
+<tr class="separator:gabc4a07b3c9843357f322c6b9dc8e8abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3360174eadfe24421084be0881b7c4f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#ga3360174eadfe24421084be0881b7c4f6">RM_HS300X_SensorIdGet</a> (<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_api_ctrl, uint32_t *const p_sensor_id)</td></tr>
+<tr class="memdesc:ga3360174eadfe24421084be0881b7c4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function must be called after calling the RM_HS300X_ProgrammingModeEnter function. Gets the sensor ID. This function blocks for 240 us software delay plus 12 bytes on the I2C bus. Implements <a class="el" href="group___r_m___h_s300_x___a_p_i.html#a88c8aa8e31fa829fb91cbae763baa284">rm_hs300x_api_t::sensorIdGet</a>.  <a href="#ga3360174eadfe24421084be0881b7c4f6">More...</a><br /></td></tr>
+<tr class="separator:ga3360174eadfe24421084be0881b7c4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5596bf0a35a1e1c15aa214abdbcb653"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#gaa5596bf0a35a1e1c15aa214abdbcb653">RM_HS300X_ProgrammingModeExit</a> (<a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="memdesc:gaa5596bf0a35a1e1c15aa214abdbcb653"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function must be called after calling the RM_HS300X_ProgrammingModeEnter function. This function must be called to return to normal sensor operation and perform measurements. Sends the commands to exit the programming mode. Implements <a class="el" href="group___r_m___h_s300_x___a_p_i.html#a1812c8a229f28823abb6dc167dd1f94f">rm_hs300x_api_t::programmingModeExit</a>.  <a href="#gaa5596bf0a35a1e1c15aa214abdbcb653">More...</a><br /></td></tr>
+<tr class="separator:gaa5596bf0a35a1e1c15aa214abdbcb653"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Middleware to implement the HS300X sensor interface. This module implements the <a class="el" href="group___r_m___h_s300_x___a_p_i.html">HS300X Middleware Interface</a>. </p>
@@ -196,7 +205,9 @@ Features</h2>
 <p>The HS300X sensor interface implementation has the following key features:</p><ul>
 <li>Starting a measurement at any time<a class="anchor" id="um_rm_hs300x_measurementstart"></a></li>
 <li>Getting ADC data from the sensor<a class="anchor" id="um_rm_hs300x_read"></a></li>
-<li>Calculating humidity and temperature value from getting ADC data<a class="anchor" id="um_rm_hs300x_datacalculate"></a> </li>
+<li>Calculating humidity and temperature value from getting ADC data<a class="anchor" id="um_rm_hs300x_datacalculate"></a></li>
+<li>Changing the sensor resolution</li>
+<li>Getting the sensor ID</li>
 </ul>
 <h1><a class="anchor" id="rm-hs300x-configuration"></a>
 Configuration</h1>
@@ -223,6 +234,14 @@ Both humidity and temperature</li>
 Humidity only</li>
 </ul>
 </td><td>Both humidity and temperature </td><td>Select Getting humidity only and both humidity and temperature. </td></tr>
+<tr>
+<td>Programming Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+ON</li>
+<li>
+OFF</li>
+</ul>
+</td><td>OFF </td><td>If selected the programming mode can be entered. </td></tr>
 </table>
  <h2>Configurations for Middleware &gt; Sensor &gt; HS300X on rm_hs300x</h2>
 This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Sensor &gt; HS300X on rm_hs300x.<br />
@@ -242,17 +261,62 @@ Pin Configuration</h2>
 Usage Notes</h1>
 <p><a href="https://www.renesas.com/jp/ja/document/dst/hs300x-datasheet">HS300x datasheet is here. </a> <br />
 If ADC data is valid and calculating humidity and temperature is finished, it is needed to start a measurement again. If ADC data is invalid, it is needed to read ADC data from HS300x again.</p>
+<p>If changing the sensor resolution and getting the sensor ID, RM_HS300X_ProgrammingModeEnter function must be called within 10ms after applying power to the sensor. Entering the programming mode takes 120us. Thresore, after calling RM_HS300X_ProgrammingModeEnter function, please wait 120us. After calling RM_HS300X_ResolutionChange function, 14ms must be waited because failure to comply with these times may result in data corruption and introduce errors in sensor measurements.</p>
 <h1><a class="anchor" id="rm-hs300x-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of HS300X sensor implementation in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_hs300x_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>            err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___r_m___h_s300_x___a_p_i.html#structrm__hs300x__raw__data__t">rm_hs300x_raw_data_t</a> hs300x_raw_data;</div><div class="line">    <a class="code" href="group___r_m___h_s300_x___a_p_i.html#structrm__hs300x__data__t">rm_hs300x_data_t</a>     hs300x_data;</div><div class="line">    uint8_t              calcualted_flag = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the I2C bus if it is not already open. */</span></div><div class="line">    rm_comms_i2c_bus_extended_cfg_t * p_extend =</div><div class="line">        (rm_comms_i2c_bus_extended_cfg_t *) g_hs300x_cfg.p_instance-&gt;p_cfg-&gt;p_extend;</div><div class="line">    <a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> * p_driver_instance = (<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> *) p_extend-&gt;p_driver_instance;</div><div class="line">    p_driver_instance-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a3258c94576c0bc4a69095906a314386d">p_api</a>-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a6a35b07fde984333fdce6859dfd56e64">open</a>(p_driver_instance-&gt;p_ctrl, p_driver_instance-&gt;p_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___h_s300_x.html#ga09a980a63a6863d373370361f8f607da">RM_HS300X_Open</a>(&amp;g_hs300x_ctrl, &amp;g_hs300x_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        g_flag = 0;</div><div class="line"></div><div class="line">        <span class="comment">/* Start Measurement */</span></div><div class="line">        <a class="code" href="group___r_m___h_s300_x.html#ga6b1687477a1eceb91a00b77bf34b31c3">RM_HS300X_MeasurementStart</a>(&amp;g_hs300x_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Wait 4 seconds. See table 4 on the page 6 of the datasheet. */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(4, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d">BSP_DELAY_UNITS_SECONDS</a>);</div><div class="line"></div><div class="line">        <span class="keywordflow">do</span></div><div class="line">        {</div><div class="line">            g_flag = 0;</div><div class="line"></div><div class="line">            <span class="comment">/* Read ADC Data from HS300X */</span></div><div class="line">            <a class="code" href="group___r_m___h_s300_x.html#gaa3d8795e62cc694a4b93382a713ed452">RM_HS300X_Read</a>(&amp;g_hs300x_ctrl, &amp;hs300x_raw_data);</div><div class="line">            <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Wait callback */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="comment">/* Calcualte Humidity and Temperatuere values from ADC data */</span></div><div class="line">            err = <a class="code" href="group___r_m___h_s300_x.html#gac41a24eae1e4f6ebdb80c2eae32cec63">RM_HS300X_DataCalculate</a>(&amp;g_hs300x_ctrl, &amp;hs300x_raw_data, &amp;hs300x_data);</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                calcualted_flag = 1;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a47bedb95f9926c8f1330bcf7846a548e">FSP_ERR_SENSOR_INVALID_DATA</a> == err)</div><div class="line">            {</div><div class="line">                calcualted_flag = 0;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span></div><div class="line">            {</div><div class="line">                handle_error(err);</div><div class="line">            }</div><div class="line">        } <span class="keywordflow">while</span> (0 == calcualted_flag);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_hs300x_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>            err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___r_m___h_s300_x___a_p_i.html#structrm__hs300x__raw__data__t">rm_hs300x_raw_data_t</a> hs300x_raw_data;</div><div class="line">    <a class="code" href="group___r_m___h_s300_x___a_p_i.html#structrm__hs300x__data__t">rm_hs300x_data_t</a>     hs300x_data;</div><div class="line">    uint8_t              calculated_flag = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the I2C bus if it is not already open. */</span></div><div class="line">    rm_comms_i2c_bus_extended_cfg_t * p_extend =</div><div class="line">        (rm_comms_i2c_bus_extended_cfg_t *) g_hs300x_cfg.p_instance-&gt;p_cfg-&gt;p_extend;</div><div class="line">    <a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> * p_driver_instance = (<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> *) p_extend-&gt;p_driver_instance;</div><div class="line">    p_driver_instance-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a3258c94576c0bc4a69095906a314386d">p_api</a>-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a6a35b07fde984333fdce6859dfd56e64">open</a>(p_driver_instance-&gt;p_ctrl, p_driver_instance-&gt;p_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___h_s300_x.html#ga09a980a63a6863d373370361f8f607da">RM_HS300X_Open</a>(&amp;g_hs300x_ctrl, &amp;g_hs300x_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"><span class="preprocessor">#if RM_HS300X_CFG_PROGRAMMING_MODE</span></div><div class="line">    uint32_t sensor_id;</div><div class="line"></div><div class="line">    g_flag = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Enter the programming mode. This must be called within 10ms after applying power. */</span></div><div class="line">    <a class="code" href="group___r_m___h_s300_x.html#gaad0bf1f3d2428b136553060792c65632">RM_HS300X_ProgrammingModeEnter</a>(&amp;g_hs300x_ctrl);</div><div class="line">    <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait callback */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Delay 120us. Entering the programming mode takes 120us. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(120, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Get the sensor ID */</span></div><div class="line">    <a class="code" href="group___r_m___h_s300_x.html#ga3360174eadfe24421084be0881b7c4f6">RM_HS300X_SensorIdGet</a>(&amp;g_hs300x_ctrl, &amp;sensor_id);</div><div class="line"></div><div class="line">    g_flag = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Change the humidity resolution */</span></div><div class="line">    <a class="code" href="group___r_m___h_s300_x.html#gabc4a07b3c9843357f322c6b9dc8e8abe">RM_HS300X_ResolutionChange</a>(&amp;g_hs300x_ctrl, RM_HS300X_HUMIDITY_DATA, RM_HS300X_RESOLUTION_8BIT);</div><div class="line">    <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait callback */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Delay 14ms. Failure to comply with these times may result in data corruption and introduce errors in sensor measurements. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(14, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    g_flag = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Change the temperature resolution */</span></div><div class="line">    <a class="code" href="group___r_m___h_s300_x.html#gabc4a07b3c9843357f322c6b9dc8e8abe">RM_HS300X_ResolutionChange</a>(&amp;g_hs300x_ctrl, RM_HS300X_TEMPERATURE_DATA, RM_HS300X_RESOLUTION_8BIT);</div><div class="line">    <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait callback */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Delay 14ms. Failure to comply with these times may result in data corruption and introduce errors in sensor measurements. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(14, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    g_flag = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Exit the programming mode */</span></div><div class="line">    <a class="code" href="group___r_m___h_s300_x.html#gaa5596bf0a35a1e1c15aa214abdbcb653">RM_HS300X_ProgrammingModeExit</a>(&amp;g_hs300x_ctrl);</div><div class="line">    <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait callback */</span></div><div class="line">    }</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        g_flag = 0;</div><div class="line"></div><div class="line">        <span class="comment">/* Start Measurement */</span></div><div class="line">        <a class="code" href="group___r_m___h_s300_x.html#ga6b1687477a1eceb91a00b77bf34b31c3">RM_HS300X_MeasurementStart</a>(&amp;g_hs300x_ctrl);</div><div class="line">        <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">do</span></div><div class="line">        {</div><div class="line">            g_flag = 0;</div><div class="line"></div><div class="line">            <span class="comment">/* Read ADC Data from HS300X */</span></div><div class="line">            <a class="code" href="group___r_m___h_s300_x.html#gaa3d8795e62cc694a4b93382a713ed452">RM_HS300X_Read</a>(&amp;g_hs300x_ctrl, &amp;hs300x_raw_data);</div><div class="line">            <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Wait callback */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="comment">/* Calculate Humidity and Temperatuere values from ADC data */</span></div><div class="line">            err = <a class="code" href="group___r_m___h_s300_x.html#gac41a24eae1e4f6ebdb80c2eae32cec63">RM_HS300X_DataCalculate</a>(&amp;g_hs300x_ctrl, &amp;hs300x_raw_data, &amp;hs300x_data);</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                calculated_flag = 1;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a47bedb95f9926c8f1330bcf7846a548e">FSP_ERR_SENSOR_INVALID_DATA</a> == err)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Stale data */</span></div><div class="line">                calculated_flag = 0;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span></div><div class="line">            {</div><div class="line">                handle_error(err);</div><div class="line">            }</div><div class="line">        } <span class="keywordflow">while</span> (0 == calculated_flag);</div><div class="line"></div><div class="line">        <span class="comment">/* Wait 4 seconds. See table 4 on the page 6 of the datasheet. */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(4, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d">BSP_DELAY_UNITS_SECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structrm__hs300x__programmnig__mode__params__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#structrm__hs300x__programmnig__mode__params__t">rm_hs300x_programmnig_mode_params_t</a></td></tr>
+<tr class="separator:structrm__hs300x__programmnig__mode__params__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__hs300x__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#structrm__hs300x__instance__ctrl__t">rm_hs300x_instance_ctrl_t</a></td></tr>
 <tr class="separator:structrm__hs300x__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrm__hs300x__programmnig__mode__params__t" id="structrm__hs300x__programmnig__mode__params__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__hs300x__programmnig__mode__params__t">&#9670;&nbsp;</a></span>rm_hs300x_programmnig_mode_params_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_hs300x_programmnig_mode_params_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>HS300X programming mode process block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a61d14cc82dc42f81c05cf010858ef146"></a>volatile bool</td>
+<td class="fieldname">
+enter</td>
+<td class="fielddoc">
+Enter flag. </td></tr>
+<tr><td class="fieldtype">
+<a id="a77ac61db4e87b179e4c59aa1f152ce02"></a>volatile bool</td>
+<td class="fieldname">
+blocking</td>
+<td class="fielddoc">
+Blocking flag. </td></tr>
+<tr><td class="fieldtype">
+<a id="a74a8a836f1fe14defcd836a93734b887"></a>volatile bool</td>
+<td class="fieldname">
+communication_finished</td>
+<td class="fielddoc">
+Communication flag for blocking. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4b4fc8fbfadc717fb4842f0db0ffff8b"></a>volatile <a class="el" href="group___r_m___h_s300_x___a_p_i.html#gad56a7deec64851bc4919a7367823eecd">rm_hs300x_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Callback event. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structrm__hs300x__instance__ctrl__t" id="structrm__hs300x__instance__ctrl__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structrm__hs300x__instance__ctrl__t">&#9670;&nbsp;</a></span>rm_hs300x_instance_ctrl_t</h2>
 
@@ -283,6 +347,10 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#a36436afd1ed74c2bbf34eab8e5af34bc">p_context</a></td></tr>
 <tr class="memdesc:a36436afd1ed74c2bbf34eab8e5af34bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
 <tr class="separator:a36436afd1ed74c2bbf34eab8e5af34bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25114349d2d5b03b5062ef4c4af8bde9"><td class="memItemLeft" align="right" valign="top"><a id="a25114349d2d5b03b5062ef4c4af8bde9"></a>
+<a class="el" href="group___r_m___h_s300_x.html#structrm__hs300x__programmnig__mode__params__t">rm_hs300x_programmnig_mode_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___h_s300_x.html#a25114349d2d5b03b5062ef4c4af8bde9">programming_mode</a></td></tr>
+<tr class="memdesc:a25114349d2d5b03b5062ef4c4af8bde9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Programming mode flag. <br /></td></tr>
+<tr class="separator:a25114349d2d5b03b5062ef4c4af8bde9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -465,24 +533,152 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="gafb7687105b1cd4414085384e42ba1e89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafb7687105b1cd4414085384e42ba1e89">&#9670;&nbsp;</a></span>rm_hs300x_callback()</h2>
+<a id="gaad0bf1f3d2428b136553060792c65632"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad0bf1f3d2428b136553060792c65632">&#9670;&nbsp;</a></span>RM_HS300X_ProgrammingModeEnter()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm_hs300x_callback </td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_HS300X_ProgrammingModeEnter </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__callback__args__t">rm_comms_callback_args_t</a> *&#160;</td>
-          <td class="paramname"><em>p_args</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>HS300X callback function called in the I2C Communications Middleware callback function. </p>
-<p>(end addtogroup HS300X) </p>
+<p>This function must be called within 10ms after applying power to the sensor. Sends the commands to enter the programming mode. After calling this function, please wait 120us. Implements <a class="el" href="group___r_m___h_s300_x___a_p_i.html#a103e89eaa5092238a9c039914b0eb629">rm_hs300x_api_t::programmingModeEnter</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Programming mode is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gabc4a07b3c9843357f322c6b9dc8e8abe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabc4a07b3c9843357f322c6b9dc8e8abe">&#9670;&nbsp;</a></span>RM_HS300X_ResolutionChange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_HS300X_ResolutionChange </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#gaaab827d822b03dfceb75bb3071a4fad1">rm_hs300x_data_type_t</a> const&#160;</td>
+          <td class="paramname"><em>data_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga655f98816c2ac07b37b6b81ad8981c02">rm_hs300x_resolution_t</a> const&#160;</td>
+          <td class="paramname"><em>resolution</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function must be called after calling the RM_HS300X_ProgrammingModeEnter function. Changes the sensor resolution. This function blocks for 120 us software delay plus 9 bytes on the I2C bus. After calling this function, 14ms must be waited. Failure to comply with these times may result in data corruption and introduce errors in sensor measurements. Implements <a class="el" href="group___r_m___h_s300_x___a_p_i.html#a069acb3e5dd3bc2445f053a7dae626bf">rm_hs300x_api_t::resolutionChange</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Module is not entering the programming mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Communication is aborted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Communication is timeout. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Programming mode is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3360174eadfe24421084be0881b7c4f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3360174eadfe24421084be0881b7c4f6">&#9670;&nbsp;</a></span>RM_HS300X_SensorIdGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_HS300X_SensorIdGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_sensor_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function must be called after calling the RM_HS300X_ProgrammingModeEnter function. Gets the sensor ID. This function blocks for 240 us software delay plus 12 bytes on the I2C bus. Implements <a class="el" href="group___r_m___h_s300_x___a_p_i.html#a88c8aa8e31fa829fb91cbae763baa284">rm_hs300x_api_t::sensorIdGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Module is not entering the programming mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Communication is aborted. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Communication is timeout. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Programming mode is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa5596bf0a35a1e1c15aa214abdbcb653"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa5596bf0a35a1e1c15aa214abdbcb653">&#9670;&nbsp;</a></span>RM_HS300X_ProgrammingModeExit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_HS300X_ProgrammingModeExit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___h_s300_x___a_p_i.html#ga8004126f1557c3e3740fbb64b7d86fa7">rm_hs300x_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function must be called after calling the RM_HS300X_ProgrammingModeEnter function. This function must be called to return to normal sensor operation and perform measurements. Sends the commands to exit the programming mode. Implements <a class="el" href="group___r_m___h_s300_x___a_p_i.html#a1812c8a229f28823abb6dc167dd1f94f">rm_hs300x_api_t::programmingModeExit</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Module is not entering the programming mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Programming mode is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -492,7 +688,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

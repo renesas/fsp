@@ -43,13 +43,23 @@ var group___t_o_u_c_h___a_p_i =
       [ "p_context", "group___t_o_u_c_h___a_p_i.html#a6009a627f9ad02ff149252e40221ba04", null ],
       [ "p_extend", "group___t_o_u_c_h___a_p_i.html#a1f3837c539e0aa61d4c5599548b64028", null ]
     ] ],
+    [ "touch_sensitivity_info_t", "group___t_o_u_c_h___a_p_i.html#structtouch__sensitivity__info__t", [
+      [ "p_touch_sensitivity_ratio", "group___t_o_u_c_h___a_p_i.html#ae203c4e005705ac772a6f4dfcf89f3ab", null ],
+      [ "old_threshold_ratio", "group___t_o_u_c_h___a_p_i.html#a48e9414590bbea053d398cb463731e36", null ],
+      [ "new_threshold_ratio", "group___t_o_u_c_h___a_p_i.html#a1c7eb001375ed21c8830473011319f40", null ],
+      [ "new_hysteresis_ratio", "group___t_o_u_c_h___a_p_i.html#a428f2406d03b5145e58c6e20441281cd", null ]
+    ] ],
     [ "touch_api_t", "group___t_o_u_c_h___a_p_i.html#structtouch__api__t", [
       [ "open", "group___t_o_u_c_h___a_p_i.html#a229c13bc7250c5977054d981680e41ad", null ],
       [ "scanStart", "group___t_o_u_c_h___a_p_i.html#a8064118d8b22b24a63cd18fc8db9c072", null ],
       [ "dataGet", "group___t_o_u_c_h___a_p_i.html#a275464ffc43790ae8a787e7f2f3544d0", null ],
+      [ "scanStop", "group___t_o_u_c_h___a_p_i.html#ade680c82b506312e6d81580424f61d14", null ],
       [ "padDataGet", "group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3", null ],
       [ "callbackSet", "group___t_o_u_c_h___a_p_i.html#ad1390fd43ac6b2e08cab0fc26b4a5360", null ],
-      [ "close", "group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0", null ]
+      [ "close", "group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0", null ],
+      [ "sensitivityRatioGet", "group___t_o_u_c_h___a_p_i.html#a57dde5098486678e08ee43e053788f99", null ],
+      [ "thresholdAdjust", "group___t_o_u_c_h___a_p_i.html#a376608281395fb8733761e54e1682c03", null ],
+      [ "driftControl", "group___t_o_u_c_h___a_p_i.html#a704e6a7fc1d35f09c7d95503ae404f57", null ]
     ] ],
     [ "touch_instance_t", "group___t_o_u_c_h___a_p_i.html#structtouch__instance__t", [
       [ "p_ctrl", "group___t_o_u_c_h___a_p_i.html#a6061528bc8f1880b0ed52e05a63b0c68", null ],

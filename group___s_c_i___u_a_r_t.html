@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.2.1</span>
+   &#160;<span id="projectnumber">Release v3.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -304,15 +304,7 @@ Enabled</li>
 <br />
 NOTE: The baud calculation does not show an error in the tool if this percent error was not achieved. The calculated percent error is recorded in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
 <tr>
-<td>Flow Control &gt; CTS/RTS Selection</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Hardware CTS</li>
-<li>
-Hardware RTS</li>
-<li>
-Hardware CTS and Software RTS</li>
-</ul>
-</td><td>Hardware RTS </td><td>Select CTS or RTS for the CTSn/RTSn pin of SCI channel n. The SCI hardware supports either the CTS or the RTS control signal on this pin but not both. </td></tr>
+<td>Flow Control &gt; CTS/RTS Selection</td><td>MCU Specific Options</td><td></td><td>Select either CTS or RTS function on the CTSn_RTSn pin of SCI channel n or select CTS function on CTSn pin and RTS function on CTSn_RTSn pin of SCI channel n (Available on selected MCUs and channels). </td></tr>
 <tr>
 <td>Flow Control &gt; Software RTS Port</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin port for the MCU. </td></tr>
 <tr>
@@ -378,6 +370,8 @@ Clock Configuration</h2>
 <tr>
 <td>RA2L1</td><td>PCLKB</td></tr>
 <tr>
+<td>RA4E1</td><td>PCLKA</td></tr>
+<tr>
 <td>RA4M1</td><td>PCLKA</td></tr>
 <tr>
 <td>RA4M2</td><td>PCLKA</td></tr>
@@ -385,6 +379,8 @@ Clock Configuration</h2>
 <td>RA4M3</td><td>PCLKA</td></tr>
 <tr>
 <td>RA4W1</td><td>PCLKA</td></tr>
+<tr>
+<td>RA6E1</td><td>PCLKA</td></tr>
 <tr>
 <td>RA6M1</td><td>PCLKA</td></tr>
 <tr>
@@ -402,11 +398,12 @@ Clock Configuration</h2>
 <p>The clock source for the baud-rate clock generator can be selected from the internal clock, the external clock times 8 or the external clock times 16. The external clock is supplied to the SCK pin.<a class="anchor" id="um_sci_uart_clock_configuration"></a> </p>
 <h2><a class="anchor" id="r-sci-uart-pin-configuration"></a>
 Pin Configuration</h2>
-<p>This module uses TXD and RXD to communicate to external devices. CTS or RTS can be controlled by the hardware. If both are desired a GPIO pin can be used for RTS. When the internal clock is the source for the baud-rate generator the SCK pin can be used to output a clock with the same frequency as the bit rate.<a class="anchor" id="um_sci_uart_baud_clock_output"></a> </p>
+<p>This module uses TXD and RXD to communicate to external devices. CTS or RTS or both (CTS and RTS) can be controlled by the hardware. Some MCUs support hardware flow control for both CTS and RTS on some channels. Some MCUs and channels support hardware flow control for either CTS or RTS but not both. If both are desired a GPIO pin can be used for RTS. When the internal clock is the source for the baud-rate generator the SCK pin can be used to output a clock with the same frequency as the bit rate.<a class="anchor" id="um_sci_uart_baud_clock_output"></a> </p>
 <h1><a class="anchor" id="r-sci-uart-usage_notes"></a>
 Usage Notes</h1>
 <ul>
-<li>When configured for CTS and RTS the configured flow control pin will be used for RTS. The pin will be set high inside of the receive ISR while data is being read. It will be set low when all data is read.</li>
+<li>When configured for Hardware CTS and Software RTS the configured flow control pin will be used for RTS. The pin will be set high inside of the receive ISR while data is being read. It will be set low when all data is read.</li>
+<li>When configured for Hardware CTS and Hardware RTS the CSTn_RTSn pin will be used for RTS function and the CTSn pin will be used for CTS function on channel n.</li>
 </ul>
 <h2><a class="anchor" id="r-sci-uart-limitations"></a>
 Limitations</h2>
@@ -605,6 +602,8 @@ CTS/RTS function of the SSn pin. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab4823b86315f1b32fe6f2c0d56c2b139a76f2641dddc66691f83619bf48af11c1"></a>SCI_UART_FLOW_CONTROL_CTSRTS&#160;</td><td class="fielddoc"><p>Use SCI pin for CTS, external pin for RTS. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggab4823b86315f1b32fe6f2c0d56c2b139ab611c5c6f9c65e43361e920f03d4a696"></a>SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS&#160;</td><td class="fielddoc"><p>Use CTSn_RTSn pin for RTS and CTSn pin for CTS. Available only for some channels on selected MCUs. See hardware manual for channel specific options. </p>
+</td></tr>
 </table>
 
 </div>
@@ -704,7 +703,7 @@ CTS/RTS function of the SSn pin. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to UART control block or configuration structure is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The requested channel does not exist on this MCU. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Flow control is enabled but flow control pin is not defined. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Flow control is enabled but flow control pin is not defined or selected channel does not support "Hardware CTS and Hardware RTS" flow control. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened or channel is being used by another instance. Call close() then open() to reconfigure.</td></tr>
   </table>
   </dd>
@@ -1118,7 +1117,7 @@ CTS/RTS function of the SSn pin. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.2.1 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
