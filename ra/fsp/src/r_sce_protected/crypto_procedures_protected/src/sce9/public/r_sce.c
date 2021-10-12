@@ -111,129 +111,141 @@ extern uint32_t g_ecdh256_private_id;
 
 const sce_api_t g_sce_protected_on_sce =
 {
-    .open                                  = R_SCE_Open,
-    .close                                 = R_SCE_Close,
-    .softwareReset                         = R_SCE_SoftwareReset,
-    .randomNumberGenerate                  = R_SCE_RandomNumberGenerate,
-    .AES128_WrappedKeyGenerate             = R_SCE_AES128_WrappedKeyGenerate,
-    .AES256_WrappedKeyGenerate             = R_SCE_AES256_WrappedKeyGenerate,
-    .AES128_EncryptedKeyWrap               = R_SCE_AES128_EncryptedKeyWrap,
-    .AES256_EncryptedKeyWrap               = R_SCE_AES256_EncryptedKeyWrap,
-    .AES128ECB_EncryptInit                 = R_SCE_AES128ECB_EncryptInit,
-    .AES128ECB_EncryptUpdate               = R_SCE_AES128ECB_EncryptUpdate,
-    .AES128ECB_EncryptFinal                = R_SCE_AES128ECB_EncryptFinal,
-    .AES128ECB_DecryptInit                 = R_SCE_AES128ECB_DecryptInit,
-    .AES128ECB_DecryptUpdate               = R_SCE_AES128ECB_DecryptUpdate,
-    .AES128ECB_DecryptFinal                = R_SCE_AES128ECB_DecryptFinal,
-    .AES256ECB_EncryptInit                 = R_SCE_AES256ECB_EncryptInit,
-    .AES256ECB_EncryptUpdate               = R_SCE_AES256ECB_EncryptUpdate,
-    .AES256ECB_EncryptFinal                = R_SCE_AES256ECB_EncryptFinal,
-    .AES256ECB_DecryptInit                 = R_SCE_AES256ECB_DecryptInit,
-    .AES256ECB_DecryptUpdate               = R_SCE_AES256ECB_DecryptUpdate,
-    .AES256ECB_DecryptFinal                = R_SCE_AES256ECB_DecryptFinal,
-    .AES128CBC_EncryptInit                 = R_SCE_AES128CBC_EncryptInit,
-    .AES128CBC_EncryptUpdate               = R_SCE_AES128CBC_EncryptUpdate,
-    .AES128CBC_EncryptFinal                = R_SCE_AES128CBC_EncryptFinal,
-    .AES128CBC_DecryptInit                 = R_SCE_AES128CBC_DecryptInit,
-    .AES128CBC_DecryptUpdate               = R_SCE_AES128CBC_DecryptUpdate,
-    .AES128CBC_DecryptFinal                = R_SCE_AES128CBC_DecryptFinal,
-    .AES256CBC_EncryptInit                 = R_SCE_AES256CBC_EncryptInit,
-    .AES256CBC_EncryptUpdate               = R_SCE_AES256CBC_EncryptUpdate,
-    .AES256CBC_EncryptFinal                = R_SCE_AES256CBC_EncryptFinal,
-    .AES256CBC_DecryptInit                 = R_SCE_AES256CBC_DecryptInit,
-    .AES256CBC_DecryptUpdate               = R_SCE_AES256CBC_DecryptUpdate,
-    .AES256CBC_DecryptFinal                = R_SCE_AES256CBC_DecryptFinal,
-    .AES128GCM_EncryptInit                 = R_SCE_AES128GCM_EncryptInit,
-    .AES128GCM_EncryptUpdate               = R_SCE_AES128GCM_EncryptUpdate,
-    .AES128GCM_EncryptFinal                = R_SCE_AES128GCM_EncryptFinal,
-    .AES128GCM_DecryptInit                 = R_SCE_AES128GCM_DecryptInit,
-    .AES128GCM_DecryptUpdate               = R_SCE_AES128GCM_DecryptUpdate,
-    .AES128GCM_DecryptFinal                = R_SCE_AES128GCM_DecryptFinal,
-    .AES256GCM_EncryptInit                 = R_SCE_AES256GCM_EncryptInit,
-    .AES256GCM_EncryptUpdate               = R_SCE_AES256GCM_EncryptUpdate,
-    .AES256GCM_EncryptFinal                = R_SCE_AES256GCM_EncryptFinal,
-    .AES256GCM_DecryptInit                 = R_SCE_AES256GCM_DecryptInit,
-    .AES256GCM_DecryptUpdate               = R_SCE_AES256GCM_DecryptUpdate,
-    .AES256GCM_DecryptFinal                = R_SCE_AES256GCM_DecryptFinal,
-    .AES128CCM_EncryptInit                 = R_SCE_AES128CCM_EncryptInit,
-    .AES128CCM_EncryptUpdate               = R_SCE_AES128CCM_EncryptUpdate,
-    .AES128CCM_EncryptFinal                = R_SCE_AES128CCM_EncryptFinal,
-    .AES128CCM_DecryptInit                 = R_SCE_AES128CCM_DecryptInit,
-    .AES128CCM_DecryptUpdate               = R_SCE_AES128CCM_DecryptUpdate,
-    .AES128CCM_DecryptFinal                = R_SCE_AES128CCM_DecryptFinal,
-    .AES256CCM_EncryptInit                 = R_SCE_AES256CCM_EncryptInit,
-    .AES256CCM_EncryptUpdate               = R_SCE_AES256CCM_EncryptUpdate,
-    .AES256CCM_EncryptFinal                = R_SCE_AES256CCM_EncryptFinal,
-    .AES256CCM_DecryptInit                 = R_SCE_AES256CCM_DecryptInit,
-    .AES256CCM_DecryptUpdate               = R_SCE_AES256CCM_DecryptUpdate,
-    .AES256CCM_DecryptFinal                = R_SCE_AES256CCM_DecryptFinal,
-    .AES128CMAC_GenerateInit               = R_SCE_AES128CMAC_GenerateInit,
-    .AES128CMAC_GenerateUpdate             = R_SCE_AES128CMAC_GenerateUpdate,
-    .AES128CMAC_GenerateFinal              = R_SCE_AES128CMAC_GenerateFinal,
-    .AES128CMAC_VerifyInit                 = R_SCE_AES128CMAC_VerifyInit,
-    .AES128CMAC_VerifyUpdate               = R_SCE_AES128CMAC_VerifyUpdate,
-    .AES128CMAC_VerifyFinal                = R_SCE_AES128CMAC_VerifyFinal,
-    .AES256CMAC_GenerateInit               = R_SCE_AES256CMAC_GenerateInit,
-    .AES256CMAC_GenerateUpdate             = R_SCE_AES256CMAC_GenerateUpdate,
-    .AES256CMAC_GenerateFinal              = R_SCE_AES256CMAC_GenerateFinal,
-    .AES256CMAC_VerifyInit                 = R_SCE_AES256CMAC_VerifyInit,
-    .AES256CMAC_VerifyUpdate               = R_SCE_AES256CMAC_VerifyUpdate,
-    .AES256CMAC_VerifyFinal                = R_SCE_AES256CMAC_VerifyFinal,
-    .SHA256_Init                           = R_SCE_SHA256_Init,
-    .SHA256_Update                         = R_SCE_SHA256_Update,
-    .SHA256_Final                          = R_SCE_SHA256_Final,
-    .RSA1024_WrappedKeyPairGenerate        = R_SCE_RSA1024_WrappedKeyPairGenerate,
-    .RSA2048_WrappedKeyPairGenerate        = R_SCE_RSA2048_WrappedKeyPairGenerate,
-    .RSA1024_EncryptedPublicKeyWrap        = R_SCE_RSA1024_EncryptedPublicKeyWrap,
-    .RSA1024_EncryptedPrivateKeyWrap       = R_SCE_RSA1024_EncryptedPrivateKeyWrap,
-    .RSA2048_EncryptedPublicKeyWrap        = R_SCE_RSA2048_EncryptedPublicKeyWrap,
-    .RSA2048_EncryptedPrivateKeyWrap       = R_SCE_RSA2048_EncryptedPrivateKeyWrap,
-    .RSA3072_EncryptedPublicKeyWrap        = R_SCE_RSA3072_EncryptedPublicKeyWrap,
-    .RSA4096_EncryptedPublicKeyWrap        = R_SCE_RSA4096_EncryptedPublicKeyWrap,
-    .RSASSA_PKCS1024_SignatureGenerate     = R_SCE_RSASSA_PKCS1024_SignatureGenerate,
-    .RSASSA_PKCS2048_SignatureGenerate     = R_SCE_RSASSA_PKCS2048_SignatureGenerate,
-    .RSASSA_PKCS1024_SignatureVerify       = R_SCE_RSASSA_PKCS1024_SignatureVerify,
-    .RSASSA_PKCS2048_SignatureVerify       = R_SCE_RSASSA_PKCS2048_SignatureVerify,
-    .RSASSA_PKCS3072_SignatureVerify       = R_SCE_RSASSA_PKCS3072_SignatureVerify,
-    .RSASSA_PKCS4096_SignatureVerify       = R_SCE_RSASSA_PKCS4096_SignatureVerify,
-    .RSAES_PKCS1024_Encrypt                = R_SCE_RSAES_PKCS1024_Encrypt,
-    .RSAES_PKCS2048_Encrypt                = R_SCE_RSAES_PKCS2048_Encrypt,
-    .RSAES_PKCS3072_Encrypt                = R_SCE_RSAES_PKCS3072_Encrypt,
-    .RSAES_PKCS4096_Encrypt                = R_SCE_RSAES_PKCS4096_Encrypt,
-    .RSAES_PKCS1024_Decrypt                = R_SCE_RSAES_PKCS1024_Decrypt,
-    .RSAES_PKCS2048_Decrypt                = R_SCE_RSAES_PKCS2048_Decrypt,
-    .SHA256HMAC_EncryptedKeyWrap           = R_SCE_SHA256HMAC_EncryptedKeyWrap,
-    .SHA256HMAC_GenerateInit               = R_SCE_SHA256HMAC_GenerateInit,
-    .SHA256HMAC_GenerateUpdate             = R_SCE_SHA256HMAC_GenerateUpdate,
-    .SHA256HMAC_GenerateFinal              = R_SCE_SHA256HMAC_GenerateFinal,
-    .SHA256HMAC_VerifyInit                 = R_SCE_SHA256HMAC_VerifyInit,
-    .SHA256HMAC_VerifyUpdate               = R_SCE_SHA256HMAC_VerifyUpdate,
-    .SHA256HMAC_VerifyFinal                = R_SCE_SHA256HMAC_VerifyFinal,
-    .ECC_secp192r1_WrappedKeyPairGenerate  = R_SCE_ECC_secp192r1_WrappedKeyPairGenerate,
-    .ECC_secp224r1_WrappedKeyPairGenerate  = R_SCE_ECC_secp224r1_WrappedKeyPairGenerate,
-    .ECC_secp256r1_WrappedKeyPairGenerate  = R_SCE_ECC_secp256r1_WrappedKeyPairGenerate,
-    .ECC_secp384r1_WrappedKeyPairGenerate  = R_SCE_ECC_secp384r1_WrappedKeyPairGenerate,
-    .ECC_secp192r1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp192r1_EncryptedPublicKeyWrap,
-    .ECC_secp224r1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp224r1_EncryptedPublicKeyWrap,
-    .ECC_secp256r1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap,
-    .ECC_secp384r1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap,
-    .ECC_secp192r1_EncryptedPrivateKeyWrap = R_SCE_ECC_secp192r1_EncryptedPrivateKeyWrap,
-    .ECC_secp224r1_EncryptedPrivateKeyWrap = R_SCE_ECC_secp224r1_EncryptedPrivateKeyWrap,
-    .ECC_secp256r1_EncryptedPrivateKeyWrap = R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap,
-    .ECC_secp384r1_EncryptedPrivateKeyWrap = R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap,
-    .ECDSA_secp192r1_SignatureGenerate     = R_SCE_ECDSA_secp192r1_SignatureGenerate,
-    .ECDSA_secp224r1_SignatureGenerate     = R_SCE_ECDSA_secp224r1_SignatureGenerate,
-    .ECDSA_secp256r1_SignatureGenerate     = R_SCE_ECDSA_secp256r1_SignatureGenerate,
-    .ECDSA_secp384r1_SignatureGenerate     = R_SCE_ECDSA_secp384r1_SignatureGenerate,
-    .ECDSA_secp192r1_SignatureVerify       = R_SCE_ECDSA_secp192r1_SignatureVerify,
-    .ECDSA_secp224r1_SignatureVerify       = R_SCE_ECDSA_secp224r1_SignatureVerify,
-    .ECDSA_secp256r1_SignatureVerify       = R_SCE_ECDSA_secp256r1_SignatureVerify,
-    .ECDSA_secp384r1_SignatureVerify       = R_SCE_ECDSA_secp384r1_SignatureVerify,
-    .ECDH_secp256r1_Init                   = R_SCE_ECDH_secp256r1_Init,
-    .ECDH_secp256r1_PublicKeySign          = R_SCE_ECDH_secp256r1_PublicKeySign,
-    .ECDH_secp256r1_PublicKeyVerify        = R_SCE_ECDH_secp256r1_PublicKeyVerify,
-    .ECDH_secp256r1_SharedSecretCalculate  = R_SCE_ECDH_secp256r1_SharedSecretCalculate,
-    .ECDH_secp256r1_KeyDerivation          = R_SCE_ECDH_secp256r1_KeyDerivation
+    .open                                              = R_SCE_Open,
+    .close                                             = R_SCE_Close,
+    .softwareReset                                     = R_SCE_SoftwareReset,
+    .randomNumberGenerate                              = R_SCE_RandomNumberGenerate,
+    .AES128_WrappedKeyGenerate                         = R_SCE_AES128_WrappedKeyGenerate,
+    .AES256_WrappedKeyGenerate                         = R_SCE_AES256_WrappedKeyGenerate,
+    .AES128_EncryptedKeyWrap                           = R_SCE_AES128_EncryptedKeyWrap,
+    .AES256_EncryptedKeyWrap                           = R_SCE_AES256_EncryptedKeyWrap,
+    .AES128ECB_EncryptInit                             = R_SCE_AES128ECB_EncryptInit,
+    .AES128ECB_EncryptUpdate                           = R_SCE_AES128ECB_EncryptUpdate,
+    .AES128ECB_EncryptFinal                            = R_SCE_AES128ECB_EncryptFinal,
+    .AES128ECB_DecryptInit                             = R_SCE_AES128ECB_DecryptInit,
+    .AES128ECB_DecryptUpdate                           = R_SCE_AES128ECB_DecryptUpdate,
+    .AES128ECB_DecryptFinal                            = R_SCE_AES128ECB_DecryptFinal,
+    .AES256ECB_EncryptInit                             = R_SCE_AES256ECB_EncryptInit,
+    .AES256ECB_EncryptUpdate                           = R_SCE_AES256ECB_EncryptUpdate,
+    .AES256ECB_EncryptFinal                            = R_SCE_AES256ECB_EncryptFinal,
+    .AES256ECB_DecryptInit                             = R_SCE_AES256ECB_DecryptInit,
+    .AES256ECB_DecryptUpdate                           = R_SCE_AES256ECB_DecryptUpdate,
+    .AES256ECB_DecryptFinal                            = R_SCE_AES256ECB_DecryptFinal,
+    .AES128CBC_EncryptInit                             = R_SCE_AES128CBC_EncryptInit,
+    .AES128CBC_EncryptUpdate                           = R_SCE_AES128CBC_EncryptUpdate,
+    .AES128CBC_EncryptFinal                            = R_SCE_AES128CBC_EncryptFinal,
+    .AES128CBC_DecryptInit                             = R_SCE_AES128CBC_DecryptInit,
+    .AES128CBC_DecryptUpdate                           = R_SCE_AES128CBC_DecryptUpdate,
+    .AES128CBC_DecryptFinal                            = R_SCE_AES128CBC_DecryptFinal,
+    .AES256CBC_EncryptInit                             = R_SCE_AES256CBC_EncryptInit,
+    .AES256CBC_EncryptUpdate                           = R_SCE_AES256CBC_EncryptUpdate,
+    .AES256CBC_EncryptFinal                            = R_SCE_AES256CBC_EncryptFinal,
+    .AES256CBC_DecryptInit                             = R_SCE_AES256CBC_DecryptInit,
+    .AES256CBC_DecryptUpdate                           = R_SCE_AES256CBC_DecryptUpdate,
+    .AES256CBC_DecryptFinal                            = R_SCE_AES256CBC_DecryptFinal,
+    .AES128GCM_EncryptInit                             = R_SCE_AES128GCM_EncryptInit,
+    .AES128GCM_EncryptUpdate                           = R_SCE_AES128GCM_EncryptUpdate,
+    .AES128GCM_EncryptFinal                            = R_SCE_AES128GCM_EncryptFinal,
+    .AES128GCM_DecryptInit                             = R_SCE_AES128GCM_DecryptInit,
+    .AES128GCM_DecryptUpdate                           = R_SCE_AES128GCM_DecryptUpdate,
+    .AES128GCM_DecryptFinal                            = R_SCE_AES128GCM_DecryptFinal,
+    .AES256GCM_EncryptInit                             = R_SCE_AES256GCM_EncryptInit,
+    .AES256GCM_EncryptUpdate                           = R_SCE_AES256GCM_EncryptUpdate,
+    .AES256GCM_EncryptFinal                            = R_SCE_AES256GCM_EncryptFinal,
+    .AES256GCM_DecryptInit                             = R_SCE_AES256GCM_DecryptInit,
+    .AES256GCM_DecryptUpdate                           = R_SCE_AES256GCM_DecryptUpdate,
+    .AES256GCM_DecryptFinal                            = R_SCE_AES256GCM_DecryptFinal,
+    .AES128CCM_EncryptInit                             = R_SCE_AES128CCM_EncryptInit,
+    .AES128CCM_EncryptUpdate                           = R_SCE_AES128CCM_EncryptUpdate,
+    .AES128CCM_EncryptFinal                            = R_SCE_AES128CCM_EncryptFinal,
+    .AES128CCM_DecryptInit                             = R_SCE_AES128CCM_DecryptInit,
+    .AES128CCM_DecryptUpdate                           = R_SCE_AES128CCM_DecryptUpdate,
+    .AES128CCM_DecryptFinal                            = R_SCE_AES128CCM_DecryptFinal,
+    .AES256CCM_EncryptInit                             = R_SCE_AES256CCM_EncryptInit,
+    .AES256CCM_EncryptUpdate                           = R_SCE_AES256CCM_EncryptUpdate,
+    .AES256CCM_EncryptFinal                            = R_SCE_AES256CCM_EncryptFinal,
+    .AES256CCM_DecryptInit                             = R_SCE_AES256CCM_DecryptInit,
+    .AES256CCM_DecryptUpdate                           = R_SCE_AES256CCM_DecryptUpdate,
+    .AES256CCM_DecryptFinal                            = R_SCE_AES256CCM_DecryptFinal,
+    .AES128CMAC_GenerateInit                           = R_SCE_AES128CMAC_GenerateInit,
+    .AES128CMAC_GenerateUpdate                         = R_SCE_AES128CMAC_GenerateUpdate,
+    .AES128CMAC_GenerateFinal                          = R_SCE_AES128CMAC_GenerateFinal,
+    .AES128CMAC_VerifyInit                             = R_SCE_AES128CMAC_VerifyInit,
+    .AES128CMAC_VerifyUpdate                           = R_SCE_AES128CMAC_VerifyUpdate,
+    .AES128CMAC_VerifyFinal                            = R_SCE_AES128CMAC_VerifyFinal,
+    .AES256CMAC_GenerateInit                           = R_SCE_AES256CMAC_GenerateInit,
+    .AES256CMAC_GenerateUpdate                         = R_SCE_AES256CMAC_GenerateUpdate,
+    .AES256CMAC_GenerateFinal                          = R_SCE_AES256CMAC_GenerateFinal,
+    .AES256CMAC_VerifyInit                             = R_SCE_AES256CMAC_VerifyInit,
+    .AES256CMAC_VerifyUpdate                           = R_SCE_AES256CMAC_VerifyUpdate,
+    .AES256CMAC_VerifyFinal                            = R_SCE_AES256CMAC_VerifyFinal,
+    .SHA256_Init                                       = R_SCE_SHA256_Init,
+    .SHA256_Update                                     = R_SCE_SHA256_Update,
+    .SHA256_Final                                      = R_SCE_SHA256_Final,
+    .RSA1024_WrappedKeyPairGenerate                    = R_SCE_RSA1024_WrappedKeyPairGenerate,
+    .RSA2048_WrappedKeyPairGenerate                    = R_SCE_RSA2048_WrappedKeyPairGenerate,
+    .RSA1024_EncryptedPublicKeyWrap                    = R_SCE_RSA1024_EncryptedPublicKeyWrap,
+    .RSA1024_EncryptedPrivateKeyWrap                   = R_SCE_RSA1024_EncryptedPrivateKeyWrap,
+    .RSA2048_EncryptedPublicKeyWrap                    = R_SCE_RSA2048_EncryptedPublicKeyWrap,
+    .RSA2048_EncryptedPrivateKeyWrap                   = R_SCE_RSA2048_EncryptedPrivateKeyWrap,
+    .RSA3072_EncryptedPublicKeyWrap                    = R_SCE_RSA3072_EncryptedPublicKeyWrap,
+    .RSA4096_EncryptedPublicKeyWrap                    = R_SCE_RSA4096_EncryptedPublicKeyWrap,
+    .RSASSA_PKCS1024_SignatureGenerate                 = R_SCE_RSASSA_PKCS1024_SignatureGenerate,
+    .RSASSA_PKCS2048_SignatureGenerate                 = R_SCE_RSASSA_PKCS2048_SignatureGenerate,
+    .RSASSA_PKCS1024_SignatureVerify                   = R_SCE_RSASSA_PKCS1024_SignatureVerify,
+    .RSASSA_PKCS2048_SignatureVerify                   = R_SCE_RSASSA_PKCS2048_SignatureVerify,
+    .RSASSA_PKCS3072_SignatureVerify                   = R_SCE_RSASSA_PKCS3072_SignatureVerify,
+    .RSASSA_PKCS4096_SignatureVerify                   = R_SCE_RSASSA_PKCS4096_SignatureVerify,
+    .RSAES_PKCS1024_Encrypt                            = R_SCE_RSAES_PKCS1024_Encrypt,
+    .RSAES_PKCS2048_Encrypt                            = R_SCE_RSAES_PKCS2048_Encrypt,
+    .RSAES_PKCS3072_Encrypt                            = R_SCE_RSAES_PKCS3072_Encrypt,
+    .RSAES_PKCS4096_Encrypt                            = R_SCE_RSAES_PKCS4096_Encrypt,
+    .RSAES_PKCS1024_Decrypt                            = R_SCE_RSAES_PKCS1024_Decrypt,
+    .RSAES_PKCS2048_Decrypt                            = R_SCE_RSAES_PKCS2048_Decrypt,
+    .SHA256HMAC_EncryptedKeyWrap                       = R_SCE_SHA256HMAC_EncryptedKeyWrap,
+    .SHA256HMAC_GenerateInit                           = R_SCE_SHA256HMAC_GenerateInit,
+    .SHA256HMAC_GenerateUpdate                         = R_SCE_SHA256HMAC_GenerateUpdate,
+    .SHA256HMAC_GenerateFinal                          = R_SCE_SHA256HMAC_GenerateFinal,
+    .SHA256HMAC_VerifyInit                             = R_SCE_SHA256HMAC_VerifyInit,
+    .SHA256HMAC_VerifyUpdate                           = R_SCE_SHA256HMAC_VerifyUpdate,
+    .SHA256HMAC_VerifyFinal                            = R_SCE_SHA256HMAC_VerifyFinal,
+    .ECC_secp192r1_WrappedKeyPairGenerate              = R_SCE_ECC_secp192r1_WrappedKeyPairGenerate,
+    .ECC_secp224r1_WrappedKeyPairGenerate              = R_SCE_ECC_secp224r1_WrappedKeyPairGenerate,
+    .ECC_secp256r1_WrappedKeyPairGenerate              = R_SCE_ECC_secp256r1_WrappedKeyPairGenerate,
+    .ECC_secp384r1_WrappedKeyPairGenerate              = R_SCE_ECC_secp384r1_WrappedKeyPairGenerate,
+    .ECC_secp192r1_EncryptedPublicKeyWrap              = R_SCE_ECC_secp192r1_EncryptedPublicKeyWrap,
+    .ECC_secp224r1_EncryptedPublicKeyWrap              = R_SCE_ECC_secp224r1_EncryptedPublicKeyWrap,
+    .ECC_secp256r1_EncryptedPublicKeyWrap              = R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap,
+    .ECC_secp384r1_EncryptedPublicKeyWrap              = R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap,
+    .ECC_secp192r1_EncryptedPrivateKeyWrap             = R_SCE_ECC_secp192r1_EncryptedPrivateKeyWrap,
+    .ECC_secp224r1_EncryptedPrivateKeyWrap             = R_SCE_ECC_secp224r1_EncryptedPrivateKeyWrap,
+    .ECC_secp256r1_EncryptedPrivateKeyWrap             = R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap,
+    .ECC_secp384r1_EncryptedPrivateKeyWrap             = R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap,
+    .ECDSA_secp192r1_SignatureGenerate                 = R_SCE_ECDSA_secp192r1_SignatureGenerate,
+    .ECDSA_secp224r1_SignatureGenerate                 = R_SCE_ECDSA_secp224r1_SignatureGenerate,
+    .ECDSA_secp256r1_SignatureGenerate                 = R_SCE_ECDSA_secp256r1_SignatureGenerate,
+    .ECDSA_secp384r1_SignatureGenerate                 = R_SCE_ECDSA_secp384r1_SignatureGenerate,
+    .ECDSA_secp192r1_SignatureVerify                   = R_SCE_ECDSA_secp192r1_SignatureVerify,
+    .ECDSA_secp224r1_SignatureVerify                   = R_SCE_ECDSA_secp224r1_SignatureVerify,
+    .ECDSA_secp256r1_SignatureVerify                   = R_SCE_ECDSA_secp256r1_SignatureVerify,
+    .ECDSA_secp384r1_SignatureVerify                   = R_SCE_ECDSA_secp384r1_SignatureVerify,
+    .ECDH_secp256r1_Init                               = R_SCE_ECDH_secp256r1_Init,
+    .ECDH_secp256r1_PublicKeySign                      = R_SCE_ECDH_secp256r1_PublicKeySign,
+    .ECDH_secp256r1_PublicKeyVerify                    = R_SCE_ECDH_secp256r1_PublicKeyVerify,
+    .ECDH_secp256r1_SharedSecretCalculate              = R_SCE_ECDH_secp256r1_SharedSecretCalculate,
+    .ECDH_secp256r1_KeyDerivation                      = R_SCE_ECDH_secp256r1_KeyDerivation,
+    .ECDH_secp256r1_PublicKeyReadWithoutSignature      = R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature,
+    .TLS_RootCertificateRSA2048PublicKeyInstall        = R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall,
+    .TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate = R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate,
+    .TLS_RootCertificateVerify                         = R_SCE_TLS_RootCertificateVerify,
+    .TLS_CertificateVerify                             = R_SCE_TLS_CertificateVerify,
+    .TLS_PreMasterSecretGenerateForRSA2048             = R_SCE_TLS_PreMasterSecretGenerateForRSA2048,
+    .TLS_MasterSecretGenerate                          = R_SCE_TLS_MasterSecretGenerate,
+    .TLS_PreMasterSecretEncryptWithRSA2048             = R_SCE_TLS_PreMasterSecretEncryptWithRSA2048,
+    .TLS_SessionKeyGenerate                            = R_SCE_TLS_SessionKeyGenerate,
+    .TLS_VerifyDataGenerate                            = R_SCE_TLS_VerifyDataGenerate,
+    .TLS_ServerKeyExchangeVerify                       = R_SCE_TLS_ServerKeyExchangeVerify,
+    .TLS_PreMasterSecretGenerateForECC_secp256r1       = R_SCE_TLS_PreMasterSecretGenerateForECC_secp256r1
 };
 
 /*******************************************************************************************************************//**
@@ -592,8 +604,8 @@ fsp_err_t R_SCE_SHA256HMAC_EncryptedKeyWrap (uint8_t                    * initia
  * This API outputs a wrapped key pair for a 1024-bit RSA public key and private key pair. These keys are generated
  * from a random value produced internally by the SCE. Consequently, there is no need to input a user key.
  * Dead copying of data can be prevented by encrypting the data using the wrapped key output by this API.
- * A public wrapped key is generated by wrapped_pair_key->public, and a private wrapped key is generated by
- * wrapped_pair_key->private. As the public key exponent, only 0x00010001 is generated.
+ * A public wrapped key is generated by wrapped_pair_key->pub_key, and a private wrapped key is generated by
+ * wrapped_pair_key->priv_key. As the public key exponent, only 0x00010001 is generated.
  *
  * @param [in,out] wrapped_pair_key User key index for RSA 1024-bit public key and private key pair
  *
@@ -610,17 +622,17 @@ fsp_err_t R_SCE_RSA1024_WrappedKeyPairGenerate (sce_rsa1024_wrapped_pair_key_t *
     fsp_err_t error_code = FSP_SUCCESS;
     error_code = R_SCE_GenerateRsa1024RandomKeyIndexSub(SCE_RSA_RETRY_COUNT_FOR_RSA_KEY_GENERATION,
                                        /* Casting uint32_t pointer is used for address. */
-                                                         (uint32_t *) &wrapped_pair_key->public.value,
-                                                         (uint32_t *) &wrapped_pair_key->private.value);
+                                                         (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                         (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_RSA1024_PUBLIC;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_RSA1024_PRIVATE;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_RSA1024_PUBLIC;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_RSA1024_PRIVATE;
     }
     else
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_INVALID;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
     return error_code;
@@ -630,8 +642,8 @@ fsp_err_t R_SCE_RSA1024_WrappedKeyPairGenerate (sce_rsa1024_wrapped_pair_key_t *
  * This API outputs a wrapped key pair for a 2048-bit RSA public key and private key pair. These keys are generated
  * from a random value produced internally by the SCE. Consequently, there is no need to input a user key.
  * Dead copying of data can be prevented by encrypting the data using the wrapped key output by this API.
- * A public wrapped key is generated by wrapped_pair_key->public, and a private wrapped key is generated by
- * wrapped_pair_key->private. As the public key exponent, only 0x00010001 is generated.
+ * A public wrapped key is generated by wrapped_pair_key->pub_key, and a private wrapped key is generated by
+ * wrapped_pair_key->priv_key. As the public key exponent, only 0x00010001 is generated.
  *
  * @param [in,out] wrapped_pair_key User key index for RSA 2048-bit public key and private key pair
  *
@@ -648,17 +660,17 @@ fsp_err_t R_SCE_RSA2048_WrappedKeyPairGenerate (sce_rsa2048_wrapped_pair_key_t *
     fsp_err_t error_code = FSP_SUCCESS;
     error_code = R_SCE_GenerateRsa2048RandomKeyIndexSub(SCE_RSA_RETRY_COUNT_FOR_RSA_KEY_GENERATION,
                                        /* Casting uint32_t pointer is used for address. */
-                                                         (uint32_t *) &wrapped_pair_key->public.value,
-                                                         (uint32_t *) &wrapped_pair_key->private.value);
+                                                         (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                         (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_RSA2048_PUBLIC;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_RSA2048_PRIVATE;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_RSA2048_PUBLIC;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_RSA2048_PRIVATE;
     }
     else
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_INVALID;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
     return error_code;
@@ -938,8 +950,8 @@ fsp_err_t R_SCE_RSA4096_EncryptedPublicKeyWrap (uint8_t                         
  * This is an API for outputting a wrapped key pair for secp192r1 public key and private key pair. These keys are generated
  * from a random number value internally within the SCE.
  * There is therefore no need to input user keys. It is possible to prevent dead copying of data by using the
- * wrapped key output by this API to encrypt the data. The public key index is generated in wrapped_pair_key->public,
- * and the private key index is generated in wrapped_pair_key->private.
+ * wrapped key output by this API to encrypt the data. The public key index is generated in wrapped_pair_key->pub_key,
+ * and the private key index is generated in wrapped_pair_key->priv_key.
  *
  * @param[in,out] wrapped_pair_key Wrapped pair key for secp192r1 public key and private key pair
  *
@@ -962,17 +974,17 @@ fsp_err_t R_SCE_ECC_secp192r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
     error_code = R_SCE_GenerateEccRandomKeyIndexSub(&curvetype,
                                        /* Casting uint32_t pointer is used for address. */
                                                      &indata_cmd,
-                                                     (uint32_t *) &wrapped_pair_key->public.value,
-                                                     (uint32_t *) &wrapped_pair_key->private.value);
+                                                     (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                     (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_ECC_P192_PUBLIC;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_ECC_P192_PRIVATE;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_ECC_P192_PUBLIC;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_ECC_P192_PRIVATE;
     }
     else
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_INVALID;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
     return error_code;
@@ -982,8 +994,8 @@ fsp_err_t R_SCE_ECC_secp192r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  * This is an API for outputting a wrapped key pair for secp224r1 public key and private key pair. These keys are generated
  * from a random number value internally within the SCE.
  * There is therefore no need to input user keys. It is possible to prevent dead copying of data by using the
- * wrapped key output by this API to encrypt the data. The public key index is generated in wrapped_pair_key->public,
- * and the private key index is generated in wrapped_pair_key->private.
+ * wrapped key output by this API to encrypt the data. The public key index is generated in wrapped_pair_key->pub_key,
+ * and the private key index is generated in wrapped_pair_key->priv_key.
  *
  * @param[in,out] wrapped_pair_key Wrapped pair key for secp224r1 public key and private key pair
  *
@@ -1006,17 +1018,17 @@ fsp_err_t R_SCE_ECC_secp224r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
     error_code = R_SCE_GenerateEccRandomKeyIndexSub(&curvetype,
                                        /* Casting uint32_t pointer is used for address. */
                                                      &indata_cmd,
-                                                     (uint32_t *) &wrapped_pair_key->public.value,
-                                                     (uint32_t *) &wrapped_pair_key->private.value);
+                                                     (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                     (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_ECC_P224_PUBLIC;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_ECC_P224_PRIVATE;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_ECC_P224_PUBLIC;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_ECC_P224_PRIVATE;
     }
     else
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_INVALID;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
     return error_code;
@@ -1026,8 +1038,8 @@ fsp_err_t R_SCE_ECC_secp224r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  * This is an API for outputting a wrapped key pair for secp256r1 public key and private key pair. These keys are generated
  * from a random number value internally within the SCE.
  * There is therefore no need to input user keys. It is possible to prevent dead copying of data by using the
- * wrapped key output by this API to encrypt the data. The public key index is generated in wrapped_pair_key->public,
- * and the private key index is generated in wrapped_pair_key->private.
+ * wrapped key output by this API to encrypt the data. The public key index is generated in wrapped_pair_key->pub_key,
+ * and the private key index is generated in wrapped_pair_key->priv_key.
  *
  * @param[in,out] wrapped_pair_key Wrapped pair key for secp256r1 public key and private key pair
  *
@@ -1050,17 +1062,17 @@ fsp_err_t R_SCE_ECC_secp256r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
     error_code = R_SCE_GenerateEccRandomKeyIndexSub(&curvetype,
                                        /* Casting uint32_t pointer is used for address. */
                                                      &indata_cmd,
-                                                     (uint32_t *) &wrapped_pair_key->public.value,
-                                                     (uint32_t *) &wrapped_pair_key->private.value);
+                                                     (uint32_t *) &wrapped_pair_key->pub_key.value,
+                                                     (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_ECC_P256_PRIVATE;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_ECC_P256_PRIVATE;
     }
     else
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_INVALID;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
     return error_code;
@@ -1070,8 +1082,8 @@ fsp_err_t R_SCE_ECC_secp256r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
  * This is an API for outputting a wrapped key pair for secp384r1 public key and private key pair. These keys are generated
  * from a random number value internally within the SCE.
  * There is therefore no need to input user keys. It is possible to prevent dead copying of data by using the
- * wrapped key output by this API to encrypt the data. The public key index is generated in wrapped_pair_key->public,
- * and the private key index is generated in wrapped_pair_key->private.
+ * wrapped key output by this API to encrypt the data. The public key index is generated in wrapped_pair_key->pub_key,
+ * and the private key index is generated in wrapped_pair_key->priv_key.
  *
  * @param[in,out] wrapped_pair_key Wrapped pair key for secp384r1 public key and private key pair
  *
@@ -1092,17 +1104,17 @@ fsp_err_t R_SCE_ECC_secp384r1_WrappedKeyPairGenerate (sce_ecc_wrapped_pair_key_t
     error_code = R_SCE_GenerateEccP384RandomKeyIndexSub(
         /* Casting uint32_t pointer is used for address. */
         &curvetype,
-        (uint32_t *) &wrapped_pair_key->public.value,
-        (uint32_t *) &wrapped_pair_key->private.value);
+        (uint32_t *) &wrapped_pair_key->pub_key.value,
+        (uint32_t *) &wrapped_pair_key->priv_key.value);
     if (FSP_SUCCESS == error_code)
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_ECC_P384_PUBLIC;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_ECC_P384_PRIVATE;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_ECC_P384_PUBLIC;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_ECC_P384_PRIVATE;
     }
     else
     {
-        wrapped_pair_key->public.type  = SCE_KEY_INDEX_TYPE_INVALID;
-        wrapped_pair_key->private.type = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->pub_key.type  = SCE_KEY_INDEX_TYPE_INVALID;
+        wrapped_pair_key->priv_key.type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
     return error_code;
@@ -1465,6 +1477,67 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (uint8_t                  
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * Generate TLS RSA Public key index data
+ *
+ * @param[in]     encrypted_provisioning_key the provisioning key includes encrypted CBC/CBC-MAC key for user key
+ * @param[in]     initial_vector             the initial_vector for user key CBC encrypt
+ * @param[in]     encrypted_key              the user key encrypted with AES128-ECB mode
+ * @param[out]    wrapped_key                the user Key Generation Information (141 words) of RSA2048 bit
+ * 
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+ *                                              by the processing routine was in use by another processing routine.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall(uint8_t *encrypted_provisioning_key, uint8_t *initial_vector,
+        uint8_t *encrypted_key, sce_tls_ca_certification_public_wrapped_key_t *wrapped_key)
+{
+    fsp_err_t     error_code = FSP_SUCCESS;
+    uint32_t install_key_ring_index = SCE_INSTALL_KEY_RING_INDEX;
+    error_code = R_SCE_GenerateTlsRsaInstallDataSub(&install_key_ring_index,
+        /* Casting uint32_t pointer is used for address. */
+        (uint32_t*)encrypted_provisioning_key, (uint32_t*)initial_vector, (uint32_t*)encrypted_key, wrapped_key->value);
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_TLS_CA_CERTIFICATION_PUBLIC_KEY;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * Generate TLS ECC key pair
+ *
+ * @param[in] tls_p256_ecc_wrapped_key    P256 ECC key index for TLS
+ * @param[in] ephemeral_ecdh_public_key ephemeral ECDH public key
+ *
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+ *                                              by the processing routine was in use by another processing routine.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate(sce_tls_p256_ecc_wrapped_key_t *tls_p256_ecc_wrapped_key,
+        uint8_t *ephemeral_ecdh_public_key)
+{
+    fsp_err_t     error_code = FSP_SUCCESS;
+    error_code = R_SCE_GenerateTlsP256EccKeyIndexSub(tls_p256_ecc_wrapped_key->value,
+        /* Casting uint32_t pointer is used for address. */
+        (uint32_t*)ephemeral_ecdh_public_key);
+    if (FSP_SUCCESS == error_code)
+    {
+        tls_p256_ecc_wrapped_key->type = SCE_KEY_INDEX_TYPE_TLS_P256_ECC_KEY;
+    }
+    else
+    {
+        tls_p256_ecc_wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
     return error_code;
 }
 

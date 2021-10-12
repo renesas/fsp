@@ -27,8 +27,12 @@
 #define RM_BLE_ABS_H
 
 #include "bsp_api.h"
-
-#include "rm_ble_abs_cfg.h"
+#include "r_ble_cfg.h"
+#ifndef BLE_CFG_RYZ012_DEVICE
+ #include "rm_ble_abs_cfg.h"
+#else
+ #include "rm_ble_abs_spp_cfg.h"
+#endif
 #include "rm_ble_abs_api.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */

@@ -322,7 +322,7 @@
  #define R_GPT_POEG1_BASE              0x40042100
  #define R_GPT_POEG2_BASE              0x40042200
  #define R_GPT_POEG3_BASE              0x40042300
- #define R_I3C_BASE                    0x40083000
+ #define R_I3C0_BASE                   0x40083000
  #define R_ICU_BASE                    0x40006000
  #define R_IIC0_BASE                   0x40053000
  #define R_IIC1_BASE                   0x40053100
@@ -466,7 +466,7 @@
  #define R_GPT_POEG1              ((R_GPT_POEG0_Type *) R_GPT_POEG1_BASE)
  #define R_GPT_POEG2              ((R_GPT_POEG0_Type *) R_GPT_POEG2_BASE)
  #define R_GPT_POEG3              ((R_GPT_POEG0_Type *) R_GPT_POEG3_BASE)
- #define R_I3C                    ((R_I3C_Type *) R_I3C_BASE)
+ #define R_I3C0                   ((R_I3C0_Type *) R_I3C0_BASE)
  #define R_ICU                    ((R_ICU_Type *) R_ICU_BASE)
  #define R_IIC0                   ((R_IIC0_Type *) R_IIC0_BASE)
  #define R_IIC1                   ((R_IIC0_Type *) R_IIC1_BASE)

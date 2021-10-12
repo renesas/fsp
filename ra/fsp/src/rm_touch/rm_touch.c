@@ -3741,7 +3741,7 @@ void touch_tuning_open (touch_instance_ctrl_t * const p_instance_ctrl)
              ((p_ctsu_instance_ctrl->self_elem_index - p_ctsu_instance_ctrl->num_elements) * CTSU_CFG_NUM_SUMULTI));
         p_ctsu_instance_ctrl->p_self_data =
             (p_ctsu_instance_ctrl->p_self_data -
-             ((p_ctsu_instance_ctrl->self_elem_index - p_ctsu_instance_ctrl->num_elements) * CTSU_CFG_NUM_SUMULTI));
+             ((p_ctsu_instance_ctrl->self_elem_index - p_ctsu_instance_ctrl->num_elements)));
         p_ctsu_instance_ctrl->p_self_corr =
             (p_ctsu_instance_ctrl->p_self_corr -
              ((p_ctsu_instance_ctrl->self_elem_index - p_ctsu_instance_ctrl->num_elements) * CTSU_CFG_NUM_SUMULTI));
@@ -3763,10 +3763,10 @@ void touch_tuning_open (touch_instance_ctrl_t * const p_instance_ctrl)
              ((p_ctsu_instance_ctrl->mutual_elem_index - p_ctsu_instance_ctrl->num_elements) * CTSU_CFG_NUM_SUMULTI));
         p_ctsu_instance_ctrl->p_mutual_pri_data =
             (p_ctsu_instance_ctrl->p_mutual_pri_data -
-             ((p_ctsu_instance_ctrl->mutual_elem_index - p_ctsu_instance_ctrl->num_elements) * CTSU_CFG_NUM_SUMULTI));
+             ((p_ctsu_instance_ctrl->mutual_elem_index - p_ctsu_instance_ctrl->num_elements)));
         p_ctsu_instance_ctrl->p_mutual_snd_data =
             (p_ctsu_instance_ctrl->p_mutual_snd_data -
-             ((p_ctsu_instance_ctrl->mutual_elem_index - p_ctsu_instance_ctrl->num_elements) * CTSU_CFG_NUM_SUMULTI));
+             ((p_ctsu_instance_ctrl->mutual_elem_index - p_ctsu_instance_ctrl->num_elements)));
     }
   #endif
     p_ctsu_instance_ctrl->p_tuning_count =

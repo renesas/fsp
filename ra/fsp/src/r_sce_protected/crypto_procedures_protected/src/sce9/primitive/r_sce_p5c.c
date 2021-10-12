@@ -91,6 +91,22 @@ fsp_err_t R_SCE_DlmsCosemCalculateZSub(uint32_t *InData_KeyType, uint32_t *InDat
     SCE->REG_100H = S_RAM[20+0 + 2];
     SCE->REG_100H = S_RAM[20+0 + 3];
     SCE->REG_104H = 0x00000068U;
+    SCE->REG_E0H = 0x80010340U;
+    /* WAIT_LOOP */
+    while (1U != SCE->REG_104H_b.B31)
+    {
+        /* waiting */
+    }
+    SCE->REG_100H = InData_KeyType[0];
+    SCE->REG_ECH = 0x30003340U;
+    SCE->REG_ECH = 0x00040020U;
+    SCE->REG_ECH = 0x0000b7c0U;
+    SCE->REG_ECH = 0x75614788U;
+    SCE->REG_ECH = 0x00000060U;
+    SCE->REG_ECH = 0x0000b7c0U;
+    SCE->REG_ECH = 0x01771788U;
+    SCE->REG_ECH = 0x00000080U;
+    SCE->REG_104H = 0x00000068U;
     SCE->REG_E0H = 0x80010140U;
     /* WAIT_LOOP */
     while (1U != SCE->REG_104H_b.B31)
@@ -106,10 +122,9 @@ fsp_err_t R_SCE_DlmsCosemCalculateZSub(uint32_t *InData_KeyType, uint32_t *InDat
         /* waiting */
     }
     SCE->REG_100H = change_endian_long(0x0000005cU);
-    R_SCE_func101(0x4490bf24U, 0x8d1080f0U, 0x50c28193U, 0x346b919bU);
+    R_SCE_func101(0xa1e573d7U, 0x39ff347dU, 0x5d2d5606U, 0x9bce0f82U);
     R_SCE_func068();
-    SCE->REG_ECH = 0x0000b4e0U;
-    SCE->REG_ECH = 0x75614788U;
+    SCE->REG_ECH = 0x000034feU;
     SCE->REG_104H = 0x00000058U;
     SCE->REG_E0H = 0x800103a0U;
     /* WAIT_LOOP */
@@ -118,7 +133,7 @@ fsp_err_t R_SCE_DlmsCosemCalculateZSub(uint32_t *InData_KeyType, uint32_t *InDat
         /* waiting */
     }
     SCE->REG_100H = change_endian_long(0x0000005cU);
-    R_SCE_func101(0xb326d508U, 0x079edb2dU, 0xb1b24815U, 0x7714aa56U);
+    R_SCE_func101(0x4ca26984U, 0xfebf0385U, 0xa0acd658U, 0xb6d98282U);
     R_SCE_func044();
     SCE->REG_28H = 0x00870001U;
     SCE->REG_104H = 0x00000f62U;
@@ -193,18 +208,10 @@ fsp_err_t R_SCE_DlmsCosemCalculateZSub(uint32_t *InData_KeyType, uint32_t *InDat
             /* waiting */
         }
         SCE->REG_100H = InData_PrivKeyIndex[0];
-        SCE->REG_104H = 0x00000068U;
-        SCE->REG_E0H = 0x80010340U;
-        /* WAIT_LOOP */
-        while (1U != SCE->REG_104H_b.B31)
-        {
-            /* waiting */
-        }
-        SCE->REG_100H = InData_KeyType[0];
         SCE->REG_ECH = 0x38000f5aU;
         SCE->REG_E0H = 0x00000080U;
         SCE->REG_1CH = 0x00260000U;
-        R_SCE_func100(0xf5fa7011U, 0x25e9ae01U, 0xfce22cdfU, 0xc3673827U);
+        R_SCE_func100(0x6f5379e8U, 0xb6f69173U, 0xae6260ebU, 0x9025e97cU);
         SCE->REG_1CH = 0x00400000U;
         SCE->REG_1D0H = 0x00000000U;
         if (1U == (SCE->REG_1CH_b.B22))
@@ -218,7 +225,7 @@ fsp_err_t R_SCE_DlmsCosemCalculateZSub(uint32_t *InData_KeyType, uint32_t *InDat
                 /* waiting */
             }
             SCE->REG_100H = change_endian_long(0x00000020U);
-            R_SCE_func101(0x250389bbU, 0x1a955295U, 0x07c6331bU, 0xd4a9faa5U);
+            R_SCE_func101(0x0fdb49f8U, 0xba97bfdfU, 0xb0aa2ea8U, 0x39536c16U);
             R_SCE_func068();
             SCE->REG_ECH = 0x0000b4e0U;
             SCE->REG_ECH = 0x6ff334f0U;
@@ -245,7 +252,7 @@ fsp_err_t R_SCE_DlmsCosemCalculateZSub(uint32_t *InData_KeyType, uint32_t *InDat
                 /* waiting */
             }
             SCE->REG_100H = change_endian_long(0x0000005cU);
-            R_SCE_func101(0x55d55c1bU, 0xf949d542U, 0xba83d60eU, 0xd97705b4U);
+            R_SCE_func101(0x7c32d651U, 0x114b30d7U, 0x37f84c24U, 0x7f1d673cU);
             R_SCE_func043();
             R_SCE_func022();
             SCE->REG_ECH = 0x000034feU;
@@ -814,5 +821,5 @@ fsp_err_t R_SCE_DlmsCosemCalculateZSub(uint32_t *InData_KeyType, uint32_t *InDat
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p5c_r3.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p5c_r4.prc
 ***********************************************************************************************************************/

@@ -50,8 +50,8 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /* For AES operation. */
-#define HW_SCE_AES128_KEY_INDEX_WORD_SIZE                         (12U)
-#define HW_SCE_AES256_KEY_INDEX_WORD_SIZE                         (16U)
+#define HW_SCE_AES128_KEY_INDEX_WORD_SIZE                         (9U)
+#define HW_SCE_AES256_KEY_INDEX_WORD_SIZE                         (13U)
 #define HW_SCE_AES128_KEY_WORD_SIZE                               (4U)
 #define HW_SCE_AES256_KEY_WORD_SIZE                               (8U)
 #define HW_SCE_AES128_KEY_BYTE_SIZE                               (16U)
@@ -68,8 +68,9 @@ FSP_HEADER
 #define HW_SCE_SHA384_HASH_LENGTH_BYTE_SIZE                       (48U)
 
 /* For HMAC operation. */
-#define HW_SCE_HMAC_KEY_INDEX_BYTE_SIZE                           (32U)
-#define HW_SCE_HMAC_KEY_INDEX_WORD_SIZE                           (8U)
+#define HW_SCE_HMAC_KEY_INDEX_BYTE_SIZE                           (52U)
+#define HW_SCE_HMAC_KEY_INDEX_WORD_SIZE                           (13U)
+#define HW_SCE_HMAC_SHA256_KEY_BYTE_SIZE                          (32U)
 
 /* For RSA operation. */
 #define HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE                    (128U)
@@ -93,13 +94,9 @@ FSP_HEADER
 #define HW_SCE_RSA_2048_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE    (1U)
 #define HW_SCE_RSA_2048_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE    (132U)
 #define HW_SCE_RSA_3072_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE     (1U)
-#define HW_SCE_RSA_3072_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE     (19U)
-#define HW_SCE_RSA_3072_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE    (1U)
-#define HW_SCE_RSA_3072_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE    (132U)
+#define HW_SCE_RSA_3072_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE     (4U)
 #define HW_SCE_RSA_4096_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE     (1U)
-#define HW_SCE_RSA_4096_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE     (19U)
-#define HW_SCE_RSA_4096_PRIVATE_KEY_MANAGEMENT_INFO1_WORD_SIZE    (1U)
-#define HW_SCE_RSA_4096_PRIVATE_KEY_MANAGEMENT_INFO2_WORD_SIZE    (132U)
+#define HW_SCE_RSA_4096_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE     (4U)
 #define HW_SCE_RSA_KEY_GENERATION_DUMMY_BYTE_SIZE                 (12U)
 #define HW_SCE_RSA1024_NE_KEY_BYTE_SIZE                           (144U)
 #define HW_SCE_RSA1024_ND_KEY_BYTE_SIZE                           (256U)
@@ -113,14 +110,14 @@ FSP_HEADER
 #define HW_SCE_RSA1024_ND_KEY_INDEX_WORD_SIZE                     (101U)
 #define HW_SCE_RSA2048_NE_KEY_INDEX_WORD_SIZE                     (137U)
 #define HW_SCE_RSA2048_ND_KEY_INDEX_WORD_SIZE                     (197U)
-#define HW_SCE_RSA3072_NE_KEY_INDEX_WORD_SIZE                     (137U)
+#define HW_SCE_RSA3072_NE_KEY_INDEX_WORD_SIZE                     (105U)
 #define HW_SCE_RSA3072_ND_KEY_INDEX_WORD_SIZE                     (197U)
 #define HW_SCE_RSA4096_NE_KEY_INDEX_WORD_SIZE                     (137U)
-#define HW_SCE_RSA4096_ND_KEY_INDEX_WORD_SIZE                     (197U)
-#define HW_SCE_RSA1024_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE          (76U)
-#define HW_SCE_RSA1024_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE         (104U)
-#define HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE          (140U)
-#define HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE         (200U)
+#define HW_SCE_RSA4096_ND_KEY_INDEX_WORD_SIZE                     (261U)
+#define HW_SCE_RSA1024_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE          (73U)
+#define HW_SCE_RSA1024_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE         (101U)
+#define HW_SCE_RSA2048_RANDOM_PUBLIC_KEY_INDEX_WORD_SIZE          (137U)
+#define HW_SCE_RSA2048_RANDOM_PRIVATE_KEY_INDEX_WORD_SIZE         (197U)
 
 #define HW_SCE_RSA_RSAES_PKCS_MIN_KEY_N_BYTE_SIZE    (11U)
 #define HW_SCE_RSA_1024_DATA_BYTE_SIZE               (128U)
@@ -133,16 +130,15 @@ FSP_HEADER
 
 /* For ECC operation. */
 #define HW_SCE_ECC_KEY_LENGTH_BYTE_SIZE                             (112U)
-#define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO_WORD_SIZE             (4U)
-#define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO_WORD_SIZE            (20U)
+#define HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO_WORD_SIZE             (1U)
+#define HW_SCE_ECC_PRIVATE_KEY_MANAGEMENT_INFO_WORD_SIZE            (17U)
 #define HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE                             (64U)
 #define HW_SCE_ECC_P384_PUBLIC_KEY_BYTE_SIZE                        (96U)
 #define HW_SCE_ECC_PRIVATE_KEY_BYTE_SIZE                            (32U)
 #define HW_SCE_ECC_P384_PRIVATE_KEY_BYTE_SIZE                       (48U)
 #define HW_SCE_ECDSA_DATA_BYTE_SIZE                                 (64U)
 #define HW_SCE_ECDSA_P384_DATA_BYTE_SIZE                            (96U)
-#define HW_SCE_SHARED_SECRET_KEY_INDEX_WORD_SIZE                    (16U)
-#define HW_SCE_ALGORITHM_ID_ENCODED_DATA_BYTE_SIZE                  (7U)
+#define HW_SCE_SHARED_SECRET_KEY_INDEX_WORD_SIZE                    (13U)
 
 /* Key update. */
 #define HW_SCE_UPDATE_KEY_RING_INDEX_WORD_SIZE                      (16U)
@@ -170,9 +166,40 @@ FSP_HEADER
 #define SCE_OEM_KEY_SIZE_ECCP384_PRIVATE_KEY_INST_DATA_WORD         (16)
 #define SCE_OEM_KEY_SIZE_HMAC_SHA256_INST_DATA_WORD                 (12)
 
+/* For TLS. */
+#define SCE_TLS_RSA_NE_KEY_BYTE_SIZE                     (272U)
+#define SCE_TLS_RSA_NE_KEY_INDEX_WORD_SIZE               (140U)
+#define SCE_TLS_ROOT_PUBLIC_KEY_WORD_SIZE                (140U)
+#define SCE_TLS_P256_ECC_KEY_WORD_SIZE                   (16U)
+#define SCE_TLS_EPHEMERAL_ECDH_PUBLIC_KEY_WORD_SIZE      (16U)
+#define SCE_TLS_MASTER_SECRET_WORD_SIZE                  (20U)
+#define SCE_TLS_GENERATE_MAC_KEY_WORD_SIZE               (16U)
+#define SCE_TLS_GENERATE_AES128_CRYPTO_KEY_WORD_SIZE     (12U)
+#define SCE_TLS_GENERATE_AES256_CRYPTO_KEY_WORD_SIZE     (16U)
+#define SCE_TLS_GENERATE_VERIFY_DATA_BYTE_SIZE           (12U)
+#define SCE_TLS_RSA_WITH_AES_128_CBC_SHA                 (0U)
+#define SCE_TLS_RSA_WITH_AES_256_CBC_SHA                 (1U)
+#define SCE_TLS_RSA_WITH_AES_128_CBC_SHA256              (2U)
+#define SCE_TLS_RSA_WITH_AES_256_CBC_SHA256              (3U)
+#define SCE_TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256      (4U)
+#define SCE_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256        (5U)
+#define SCE_TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256      (6U)
+#define SCE_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256        (7U)
+#define SCE_TLS_GENERATE_CLIENT_VERIFY                   (0U)
+#define SCE_TLS_GENERATE_SERVER_VERIFY                   (1U)
+#define SCE_TLS_PUBLIC_KEY_TYPE_RSA2048                  (0U)
+#define SCE_TLS_PUBLIC_KEY_TYPE_ECDSA_P256               (2U)
+
 /* TLS-HMAC. */
 #define SCE_TLS_HMAC_KEY_INDEX_BYTE_SIZE                 (64U)
 #define SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE                 (16U)
+
+/* TLS-AES. */
+#define SCE_TLS_AES128_KEY_INDEX_WORD_SIZE               (12U)
+#define SCE_TLS_AES256_KEY_INDEX_WORD_SIZE               (16U)
+
+#define SCE_INSTALL_KEY_RING_INDEX (0) /* 0-15 */
+
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -210,7 +237,7 @@ typedef struct sce_aes_wrapped_key
     uint32_t type;                                     ///< key type
 
     /* AES128, AES256 are supported */
-    uint32_t value[HW_SCE_AES256_KEY_INDEX_WORD_SIZE]; ///< wrapped key value   
+    uint32_t value[SCE_TLS_AES256_KEY_INDEX_WORD_SIZE]; ///< wrapped key value   
 } sce_aes_wrapped_key_t;
 
 /** HMAC-SHA wrapped key data structure. DO NOT MODIFY. */
@@ -219,7 +246,7 @@ typedef struct sce_hmac_sha_wrapped_key
     uint32_t type;                                   ///< key type
 
     /* HMAC-SHA256 is supported */
-    uint32_t value[HW_SCE_HMAC_KEY_INDEX_WORD_SIZE]; ///< wrapped key value   
+    uint32_t value[SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE]; ///< wrapped key value   
 } sce_hmac_sha_wrapped_key_t;
 
 /** RSA 1024bit public wrapped key data structure. DO NOT MODIFY. */
@@ -305,15 +332,15 @@ typedef struct sce_rsa4096_public_wrapped_key
 /** RSA 1024bit wrapped key pair structure. DO NOT MODIFY. */
 typedef struct sce_rsa1024_wrapped_pair_key
 {
-    sce_rsa1024_private_wrapped_key_t private; ///< RSA 1024-bit private wrapped key
-    sce_rsa1024_public_wrapped_key_t public;   ///< RSA 1024-bit public wrapped key
+    sce_rsa1024_private_wrapped_key_t priv_key; ///< RSA 1024-bit private wrapped key
+    sce_rsa1024_public_wrapped_key_t pub_key;   ///< RSA 1024-bit public wrapped key
 } sce_rsa1024_wrapped_pair_key_t;
 
 /** RSA 2048bit wrapped key pair structure. DO NOT MODIFY. */
 typedef struct sce_rsa2048_wrapped_pair_key
 {
-    sce_rsa2048_private_wrapped_key_t private; ///< RSA 2048-bit private wrapped key
-    sce_rsa2048_public_wrapped_key_t public;   ///< RSA 2048-bit public wrapped key
+    sce_rsa2048_private_wrapped_key_t priv_key; ///< RSA 2048-bit private wrapped key
+    sce_rsa2048_public_wrapped_key_t pub_key;   ///< RSA 2048-bit public wrapped key
 } sce_rsa2048_wrapped_pair_key_t;
 
 /** ECC P-192/224/256 public wrapped key data structure */
@@ -337,16 +364,30 @@ typedef struct sce_ecc_private_wrapped_key
 /** ECC P-192/224/256 wrapped key pair structure */
 typedef struct sce_ecc_wrapped_pair_key
 {
-    sce_ecc_private_wrapped_key_t private; ///< ECC private wrapped key
-    sce_ecc_public_wrapped_key_t public;   ///< ECC public wrapped key
+    sce_ecc_private_wrapped_key_t priv_key; ///< ECC private wrapped key
+    sce_ecc_public_wrapped_key_t pub_key;   ///< ECC public wrapped key
 } sce_ecc_wrapped_pair_key_t;
 
 /** ECDH wrapped key data structure */
-typedef struct sce_ecdh_wrapped_key_t
+typedef struct sce_ecdh_wrapped_key
 {
     uint32_t type;                                            ///< key type
     uint32_t value[HW_SCE_SHARED_SECRET_KEY_INDEX_WORD_SIZE]; ///< wrapped key value   
 } sce_ecdh_wrapped_key_t;
+
+/* TLS CA certification public key index data structure */
+typedef struct sce_tls_ca_certification_public_wrapped_key
+{
+    uint32_t type;
+    uint32_t value[SCE_TLS_ROOT_PUBLIC_KEY_WORD_SIZE];
+} sce_tls_ca_certification_public_wrapped_key_t;
+
+/* TLS P-256 ECC key index data structure */
+typedef struct sce_tls_p256_ecc_wrapped_key
+{
+    uint32_t type;
+    uint32_t value[SCE_TLS_P256_ECC_KEY_WORD_SIZE];
+} sce_tls_p256_ecc_wrapped_key_t;
 
 /** Update key ring index data structure. DO NOT MODIFY. */
 typedef struct sce_key_update_key
@@ -1828,6 +1869,19 @@ typedef struct st_sce_api
                                                  uint8_t * public_key_data, sce_ecdsa_byte_data_t * signature,
                                                  sce_ecc_public_wrapped_key_t * wrapped_key);
 
+    /** Output the key index of QeU without signature verification.
+     * @par Implemented as
+     * - @ref R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature()
+     *
+     * @param[in,out] handle                 ECDH handler (work area)
+     * @param[in]     public_key_data        secp256r1 public key (512-bit). When key_id is used:
+     *                                       key_id (8-bit) || public key (512-bit)
+     * @param[in,out] wrapped_key            wrapped key of ecc_public_wrapped_key
+     */
+    fsp_err_t (* ECDH_secp256r1_PublicKeyReadWithoutSignature)(sce_ecdh_handle_t            * handle,
+                                                               uint8_t                      * public_key_data,
+                                                               sce_ecc_public_wrapped_key_t * wrapped_key);
+
     /** secp256r1 ECDH shared secret calculation.
      * @par Implemented as
      * - @ref R_SCE_ECDH_secp256r1_SharedSecretCalculate()
@@ -1861,6 +1915,246 @@ typedef struct st_sce_api
                                                uint32_t other_info_length,
                                                sce_hmac_sha_wrapped_key_t * salt_wrapped_key,
                                                sce_aes_wrapped_key_t * wrapped_key);
+
+    /** Generate TLS RSA Public key index data
+     * @par Implemented as
+     * - @ref R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall()
+     *
+     * @param[in] encrypted_provisioning_key the provisioning key includes encrypted CBC/CBC-MAC key for user key
+     * @param[in] initial_vector             the initial_vector for user key CBC encrypt
+     * @param[in] encrypted_key              the user key encrypted with AES128-ECB mode
+     * @param[out] wrapped_key            the user Key Generation Information (141 words) of RSA2048 bit
+     * 
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     */
+    fsp_err_t (* TLS_RootCertificateRSA2048PublicKeyInstall)(uint8_t * encrypted_provisioning_key,
+                                                             uint8_t * initial_vector,
+                                                             uint8_t * encrypted_key,
+                                                             sce_tls_ca_certification_public_wrapped_key_t * wrapped_key);
+
+    /** Generate TLS ECC key pair
+     * @par Implemented as
+     * - @ref R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate()
+     *
+     * @param[in] tls_p256_ecc_wrapped_key    P256 ECC key index for TLS
+     * @param[in] ephemeral_ecdh_public_key ephemeral ECDH public key
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     */
+    fsp_err_t (* TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate)(sce_tls_p256_ecc_wrapped_key_t * tls_p256_ecc_wrapped_key,
+                                                                    uint8_t                        * ephemeral_ecdh_public_key);
+
+    /** Verify root CA certificate.
+     * @par Implemented as
+     * - @ref R_SCE_TLS_RootCertificateVerify()
+     *
+     * @param[in]  public_key_type              key type
+     * @param[in]  certificate                  certificates.
+     * @param[in]  certificate_length           byte size of certificates.
+     * @param[in]  public_key_n_start_position  start position of public key n.
+     * @param[in]  public_key_n_end_position    end position of public key n.
+     * @param[in]  public_key_e_start_position  start position of public key e.
+     * @param[in]  public_key_e_end_position    end position of public key e.
+     * @param[in]  signature                    signature for certificates.
+     * @param[out] encrypted_root_public_key    public key for RSA 2048bit.
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     *
+     */
+    fsp_err_t (* TLS_RootCertificateVerify)(uint32_t public_key_type,
+                                            uint8_t *certificate,
+                                            uint32_t certificate_length,
+                                            uint32_t public_key_n_start_position,
+                                            uint32_t public_key_n_end_position,
+                                            uint32_t public_key_e_start_position,
+                                            uint32_t public_key_e_end_position,
+                                            uint8_t *signature,
+                                            uint32_t *encrypted_root_public_key);
+
+    /** Verify server certificate and intermediate certificate.
+     * @par Implemented as
+     * - @ref R_SCE_TLS_CertificateVerify()
+     *
+     * @param[in]  public_key_type             key type
+     * @param[in]  input_public_key            public key.
+     * @param[in]  certificate                 certificates.
+     * @param[in]  certificate_length          byte size of certificates.
+     * @param[in]  signature                   signature for certificates.
+     * @param[in]  public_key_n_start_position start position of public key n.
+     * @param[in]  public_key_n_end_position   end position of public key n.
+     * @param[in]  public_key_e_start_position start position of public key e.
+     * @param[in]  public_key_e_end_position   end position of public key e.
+     * @param[out] encrypted_output_public_key public key for RSA 2048bit.
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     */
+    fsp_err_t (* TLS_CertificateVerify)(uint32_t public_key_type,
+                                    uint32_t *encrypted_input_public_key,
+                                    uint8_t *certificate,
+                                    uint32_t certificate_length,
+                                    uint8_t *signature,
+                                    uint32_t public_key_n_start_position,
+                                    uint32_t public_key_n_end_position,
+                                    uint32_t public_key_e_start_position,
+                                    uint32_t public_key_e_end_position,
+                                    uint32_t *encrypted_output_public_key);
+
+    /** Generate encrypted pre-master secret.
+     * @par Implemented as
+     * - @ref R_SCE_TLS_PreMasterSecretGenerateForRSA2048()
+     *
+     * @param[out]    sce_pre_master_secret pre-master secret value for SCE.
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     */
+    fsp_err_t (* TLS_PreMasterSecretGenerateForRSA2048)(uint32_t *sce_pre_master_secret);
+
+    /** Generate encrypted master secret.
+     * @par Implemented as
+     * - @ref R_SCE_TLS_MasterSecretGenerate()
+     *
+     * @param[in]     select_cipher_suite    cipher suite type
+     * @param[in]     sce_pre_master_secret  pre-master secret value for SCE.
+     * @param[in]     client_random          random value reported ClientHello.
+     * @param[in]     server_random          random value reported ServerHello.
+     * @param[out]    sce_master_secret      master secret value for SCE.
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     */
+    fsp_err_t (* TLS_MasterSecretGenerate)(uint32_t select_cipher_suite,
+                                       uint32_t *sce_pre_master_secret,
+                                       uint8_t *client_random,
+                                       uint8_t *server_random,
+                                       uint32_t *sce_master_secret);
+
+    /** Output the result encrypted pre-master secret with RSA 2048bit
+     * @par Implemented as
+     * - @ref R_SCE_TLS_PreMasterSecretEncryptWithRSA2048()
+     *
+     * @param[in]     encrypted_public_key        public key data.
+     * @param[in]     sce_pre_master_secret       pre-master secret value.
+     * @param[out]    encrypted_pre_master_secret the value encrypted pre-master secret.
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     */
+    fsp_err_t (* TLS_PreMasterSecretEncryptWithRSA2048)(uint32_t *encrypted_public_key,
+                                                    uint32_t *sce_pre_master_secret,
+                                                    uint8_t *encrypted_pre_master_secret);
+
+    /** Output various key information.
+     * @par Implemented as
+     * - @ref R_SCE_TLS_SessionKeyGenerate()
+     *
+     * @param[in]     select_cipher_suite       Key suite information number.
+     * @param[in]     sce_master_secret         master secret value.
+     * @param[in]     client_random             random value reported ClientHello.
+     * @param[in]     server_random             random value reported ServerHello.
+     * @param[in]     nonce_explicit            nonce value
+     * @param[out]    client_mac_wrapped_key    the mac key during communication from client to server.
+     * @param[out]    server_mac_wrapped_key    the mac key during communication from server to client.
+     * @param[out]    client_crypto_wrapped_key the crypto key during communication from client to server.
+     * @param[out]    server_crypto_wrapped_key the crypto key during communication from server to client.
+     * @param[in]     client_initial_vector     not use.
+     * @param[in]     server_initial_vector     not use.
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     */
+    fsp_err_t (* TLS_SessionKeyGenerate)(uint32_t select_cipher_suite,
+                                     uint32_t *sce_master_secret,
+                                     uint8_t *client_random,
+                                     uint8_t *server_random,
+                                     uint8_t* nonce_explicit,
+                                     sce_hmac_sha_wrapped_key_t *client_mac_wrapped_key,
+                                     sce_hmac_sha_wrapped_key_t *server_mac_wrapped_key,
+                                     sce_aes_wrapped_key_t *client_crypto_wrapped_key,
+                                     sce_aes_wrapped_key_t *server_crypto_wrapped_key,
+                                     uint8_t *client_initial_vector,
+                                     uint8_t *server_initial_vector);
+
+    /** Generate verify data.
+     * @par Implemented as
+     * - @ref R_SCE_TLS_VerifyDataGenerate()
+     *
+     * @param[in]     select_verify_data Select Client/Server data.
+     * @param[in]     sce_master_secret  master secret data.
+     * @param[in]     hand_shake_hash    TLS hand shake message SHA256 HASH value.
+     * @param[out]    verify_data        verify data.
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     */
+    fsp_err_t (* TLS_VerifyDataGenerate)(uint32_t select_verify_data,
+                                     uint32_t *sce_master_secret,
+                                     uint8_t *hand_shake_hash,
+                                     uint8_t *verify_data);
+
+    /** Retrives ECDH public key.
+     * @par Implemented as
+     * - @ref R_SCE_TLS_ServerKeyExchangeVerify()
+     *
+     * @param[in]     public_key_type                     key type
+     * @param[in]     client_random                       random value reported ClientHello.
+     * @param[in]     server_random                       random value reported ServerHello.
+     * @param[in]     server_ephemeral_ecdh_public_key    Ephemeral ECDH public key from Server.
+     * @param[in]     server_key_exchange_sigunature      Server Key Exchange sigunature.
+     * @param[in]     encrypted_public_key                encrypted public key.
+     * @param[out]    encrypted_ephemeral_ecdh_public_key encrypted Ephemeral ECDH public key.
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     */
+    fsp_err_t (* TLS_ServerKeyExchangeVerify)(uint32_t public_key_type,
+                                          uint8_t *client_random,
+                                          uint8_t *server_random,
+                                          uint8_t *server_ephemeral_ecdh_public_key,
+                                          uint8_t *server_key_exchange_signature,
+                                          uint32_t *encrypted_public_key,
+                                          uint32_t *encrypted_ephemeral_ecdh_public_key);
+
+    /** Generate encrypted pre-master secret.
+     * @par Implemented as
+     * - @ref R_SCE_TLS_PreMasterSecretGenerateForECC_secp256r1()
+     *
+     * @param[in]     encrypted_public_key     encrypted public key
+     * @param[in]     tls_p256_ecc_wrapped_key P-256 ECC key index.
+     * @param[out]    sce_pre_master_secret    encrypted pre-master secret value for SCE.
+     *
+     * @retval FSP_SUCCESS                          Normal termination
+     * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
+     *                                              by the processing routine was in use by another processing routine.
+     * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+     */
+    fsp_err_t (* TLS_PreMasterSecretGenerateForECC_secp256r1)(uint32_t *encrypted_public_key,
+                                                          sce_tls_p256_ecc_wrapped_key_t *tls_p256_ecc_wrapped_key,
+                                                          uint32_t *sce_pre_master_secret);
+
 } sce_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

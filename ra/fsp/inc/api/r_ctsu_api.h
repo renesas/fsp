@@ -143,6 +143,14 @@ typedef enum e_ctsu_ssdiv
     CTSU_SSDIV_0000                    ///< 0.00 <= Base clock frequency (MHz) < 0.27
 } ctsu_ssdiv_t;
 
+/** CTSU select data type for slect data get */
+typedef enum e_ctsu_specific_data_type
+{
+    CTSU_SPECIFIC_RAW_DATA,
+    CTSU_SPECIFIC_CORRECTION_DATA,
+    CTSU_SPECIFIC_SELECTED_FREQ,
+} ctsu_specific_data_type_t;
+
 /** Callback function parameter data */
 typedef struct st_ctsu_callback_args
 {
@@ -191,7 +199,6 @@ typedef struct st_ctsu_cfg
     uint8_t                    num_tx;                  ///< Number of transmit terminals
     uint16_t                   num_moving_average;      ///< Number of moving average for measurement data
     bool tunning_enable;                                ///< Initial offset tuning flag
-    bool judge_multifreq_disable;                       ///< Disable to judge multi frequency
     void (* p_callback)(ctsu_callback_args_t * p_args); ///< Callback provided when CTSUFN ISR occurs.
     transfer_instance_t const * p_transfer_tx;          ///< DTC instance for transmit at CTSUWR. Set to NULL if unused.
     transfer_instance_t const * p_transfer_rx;          ///< DTC instance for receive at CTSURD. Set to NULL if unused.
@@ -268,6 +275,26 @@ typedef struct st_ctsu_api
      * @param[in]  p_ctrl       Pointer to control structure.
      */
     fsp_err_t (* close)(ctsu_ctrl_t * const p_ctrl);
+
+    /** Specific Data get.
+     * @par Implemented as
+     * - @ref R_CTSU_SpecificDataGet()
+     *
+     * @param[in]  p_ctrl              Pointer to control structure.
+     * @param[out] p_specific_data     Pointer to get specific data array.
+     * @param[in]  specific_data_type  Specific data type
+     */
+    fsp_err_t (* specificDataGet)(ctsu_ctrl_t * const p_ctrl, uint16_t * p_specific_data,
+                                  ctsu_specific_data_type_t specific_data_type);
+
+    /** Data Insert.
+     * @par Implemented as
+     * - @ref R_CTSU_DataInsert()
+     *
+     * @param[in]  p_ctrl              Pointer to control structure.
+     * @param[in]  p_insert_data       Pointer to insert data.
+     */
+    fsp_err_t (* dataInsert)(ctsu_ctrl_t * const p_ctrl, uint16_t * p_insert_data);
 } ctsu_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

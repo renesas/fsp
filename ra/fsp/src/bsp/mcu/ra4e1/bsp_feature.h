@@ -229,6 +229,10 @@
 #define BSP_FEATURE_IIC_FAST_MODE_PLUS                    (1U << 0U)
 #define BSP_FEATURE_IIC_VALID_CHANNEL_MASK                (0x01)
 
+#define BSP_FEATURE_I3C_NUM_CHANNELS                      (0U) // Feature not available on this MCU
+#define BSP_FEATURE_I3C_MAX_DEV_COUNT                     (0U) // Feature not available on this MCU
+#define BSP_FEATURE_I3C_NTDTBP0_DEPTH                     (0U) // Feature not available on this MCU
+
 #define BSP_FEATURE_IOPORT_ELC_PORTS                      (4)
 #define BSP_FEATURE_IOPORT_HAS_ETHERNET                   (0U)
 
@@ -277,17 +281,17 @@
 #define BSP_FEATURE_SCI_UART_FIFO_DEPTH                   (16U)
 #define BSP_FEATURE_SCI_UART_CSTPEN_CHANNELS              (0x0219U) // Channel 0, channel 3, Channel 4, channel 9 have CSTPEN feature
 
-#define BSP_FEATURE_SDHI_HAS_CARD_DETECTION               (0U)   // Feature not available on this MCU
-#define BSP_FEATURE_SDHI_SUPPORTS_8_BIT_MMC               (0U)   // Feature not available on this MCU
-#define BSP_FEATURE_SDHI_VALID_CHANNEL_MASK               (0U)   // Feature not available on this MCU
+#define BSP_FEATURE_SDHI_HAS_CARD_DETECTION               (0U)      // Feature not available on this MCU
+#define BSP_FEATURE_SDHI_SUPPORTS_8_BIT_MMC               (0U)      // Feature not available on this MCU
+#define BSP_FEATURE_SDHI_VALID_CHANNEL_MASK               (0U)      // Feature not available on this MCU
 #define BSP_FEATURE_SDHI_CLOCK                            (FSP_PRIV_CLOCK_PCLKB)
-#define BSP_FEATURE_SDHI_MIN_CLOCK_DIVISION_SHIFT         (0U)   // Feature not available on this MCU
+#define BSP_FEATURE_SDHI_MIN_CLOCK_DIVISION_SHIFT         (0U)      // Feature not available on this MCU
 
-#define BSP_FEATURE_SDRAM_START_ADDRESS                   (0x0U) // Feature not available on this MCU
+#define BSP_FEATURE_SDRAM_START_ADDRESS                   (0x0U)    // Feature not available on this MCU
 
-#define BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE                (0)    // Feature not available on this MCU
-#define BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN           (0)    // Feature not available on this MCU
-#define BSP_FEATURE_SLCDC_MAX_NUM_SEG                     (0)    // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE                (0)       // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN           (0)       // Feature not available on this MCU
+#define BSP_FEATURE_SLCDC_MAX_NUM_SEG                     (0)       // Feature not available on this MCU
 
 #define BSP_FEATURE_SPI_CLK                               (FSP_PRIV_CLOCK_PCLKA)
 #define BSP_FEATURE_SPI_HAS_SPCR3                         (1U)

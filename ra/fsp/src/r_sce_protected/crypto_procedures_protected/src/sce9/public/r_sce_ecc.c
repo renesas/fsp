@@ -648,7 +648,7 @@ fsp_err_t R_SCE_ECDSA_secp384r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
  * conforming to the DLMS/COSEM standard for smart meters.
  *
  * @param[in,out] handle     ECDH handler (work area)
- * @param[in]     key_type   Key exchange type (0: ECDHE, 1: ECDH)
+ * @param[in]     key_type   Key exchange type (0: ECDHE, 1: ECDH, 2:ECDH(AES-GCM-128 with IV))
  * @param[in]     use_key_id 0: key_id not used, 1: key_id used
  *
  * @retval FSP_SUCCESS                  Normal end
@@ -870,6 +870,82 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyVerify (sce_ecdh_handle_t            * h
 }
 
 /*******************************************************************************************************************//**
+ * The R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature() function reads the secp256r1 public key of the other
+ * ECDH key exchange party and outputs the public wrapped key to the third argument.
+ * The first argument, handle, is used as an argument in the subsequent function
+ * R_SCE_ECDH_secp256r1_SharedSecretCalculate().
+ * R_SCE_ECDH_secp256r1_SharedSecretCalculate() uses wrapped_key as input to calculate Z.
+ * This API does not verify signature of public_key_data, please protect this data by upper layer software.
+ *
+ * @param[in,out] handle                 ECDH handler (work area)
+ * @param[in]     public_key_data        secp256r1 public key (512-bit). When key_id is used:
+ *                                       key_id (8-bit) || public key (512-bit)
+ * @param[in,out] wrapped_key            wrapped key of public_key_data
+ *
+ * @retval FSP_SUCCESS                          Normal end
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                              by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
+ * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ * @note Please note that this is slightly contrary to the protected mode policy as it omits signature verification.
+**********************************************************************************************************************/
+fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature(sce_ecdh_handle_t            * handle,
+                                                             uint8_t                      * public_key_data,
+                                                             sce_ecc_public_wrapped_key_t * wrapped_key)
+{
+    st_read_public_key_t indata =
+    {
+        0
+    };
+    fsp_err_t error_code = FSP_SUCCESS;
+
+    if ((0 == handle->flag_call_init) || (1 == handle->flag_call_read_public))
+    {
+        return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
+    }
+    if (handle->id != g_ecdh256_private_id)
+    {
+        return FSP_ERR_CRYPTO_SCE_PARAMETER;
+    }
+
+    handle->flag_call_read_public = 1;
+
+    if (1 == handle->flag_use_key_id)
+    {
+        indata.cmd = change_endian_long(1);
+        memcpy(indata.bytedata, public_key_data, 1 + HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE);  /* key_id || QeU copy */
+        indata.bytedata[1 + HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE] = SCE_HEX_80;    /* stop bit */
+        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 2] = 0x02;
+        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 1] = 0x08;   /* message length is 520bit */
+    }
+    else
+    {
+        indata.cmd = change_endian_long(0);
+        memcpy(indata.bytedata, public_key_data, HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE);  /* QeU copy */
+        indata.bytedata[HW_SCE_ECC_PUBLIC_KEY_BYTE_SIZE] = SCE_HEX_80;    /* stop bit */
+        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 2] = 0x02;
+        indata.bytedata[SCE_PRV_INDATA_BYTEDATA_LEN - 1] = 0x00;   /* message length is 512bit */
+    }
+
+    error_code = R_SCE_EcdhReadPublicKeyWithoutSignaturePrivate(&indata.cmd,
+                                                                                   /* Casting uint32_t pointer is used for address. */
+                                                                 (uint32_t*)indata.bytedata,
+                                                                 (uint32_t*)&wrapped_key->value);
+    if (FSP_SUCCESS == error_code)
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_ECC_P256_PUBLIC;
+    }
+    else
+    {
+        wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
  * The R_SCE_ECDH_secp256r1_SharedSecretCalculate() function uses the ECDH key exchange algorithm to output the
  * wrapped key of the shared secret Z derived from the public key of the other key exchange party and your own private
  * key.
@@ -928,7 +1004,14 @@ fsp_err_t R_SCE_ECDH_secp256r1_SharedSecretCalculate (sce_ecdh_handle_t         
                                                               (uint32_t *) &shared_secret_wrapped_key->value);
     if (FSP_SUCCESS == error_code)
     {
-        shared_secret_wrapped_key->type = SCE_KEY_INDEX_TYPE_ECDH_SHARED_SECRET;
+        if (3 == handle->key_type)
+        {
+            shared_secret_wrapped_key->type = SCE_KEY_INDEX_TYPE_AES128_GCM_WITH_IV;
+        }
+        else
+        {
+            shared_secret_wrapped_key->type = SCE_KEY_INDEX_TYPE_ECDH_SHARED_SECRET;
+        }
     }
     else
     {
@@ -954,7 +1037,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_SharedSecretCalculate (sce_ecdh_handle_t         
  *
  * @param[in,out] handle                    ECDH handler (work area)
  * @param[in]     shared_secret_wrapped_key Z wrapped key calculated by R_SCE_ECDH_secp256r1_SharedSecretCalculate
- * @param[in]     key_type                  Derived key type (0: AES-128, 1: AES-256, 2:SHA256-HMAC)
+ * @param[in]     key_type                  Derived key type (0: AES-128, 1: AES-256, 2:SHA256-HMAC, 3: AES-GCM-128 with IV)
  * @param[in]     kdf_type                  Algorithm used for key derivation calculation (0: SHA-256, 1:SHA256-HMAC)
  * @param[in]     other_info                Additional data used for key derivation calculation:
  *                                          AlgorithmID || PartyUInfo || PartyVInfo
@@ -971,6 +1054,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_SharedSecretCalculate (sce_ecdh_handle_t         
  *                                              by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
  * @note The pre-run state is SCE Enabled State.
@@ -1008,6 +1092,23 @@ fsp_err_t R_SCE_ECDH_secp256r1_KeyDerivation (sce_ecdh_handle_t          * handl
     {
         return FSP_ERR_CRYPTO_SCE_PARAMETER;
     }
+
+     if (3 == key_type)
+    {
+        if (2 == handle->key_type)
+        {
+            memcpy(wrapped_key->value, shared_secret_wrapped_key->value, sizeof(wrapped_key->value));
+            wrapped_key->type = SCE_KEY_INDEX_TYPE_AES128_GCM_WITH_IV;
+        }
+        else
+        {
+            wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+            error_code = FSP_ERR_CRYPTO_SCE_FAIL;
+        }
+        memset(handle, 0, sizeof(sce_ecdh_handle_t));
+        return error_code;
+    }
+
     /* 147 = SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 9 */
     if (((2 < key_type) || (1 < kdf_type)) || ((SCE_PRV_OTHER_INFO_BYTE_LEN_3B - 9) < other_info_length))
     {

@@ -779,6 +779,7 @@ usb_er_t usb_pstd_set_submitutr (usb_utr_t * utrmsg)
         {
             usb_cstd_pipe_msg_clear(utrmsg, pipenum);
         }
+
  #else                                 /* (BSP_CFG_RTOS != 0) */
         /* Transfer stop */
         usb_pstd_forced_termination(pipenum, (uint16_t) USB_DATA_ERR, utrmsg);
@@ -1346,6 +1347,7 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
     {
         return USB_ERROR;
     }
+
    #elif (BSP_CFG_RTOS == 2)           /* BSP_CFG_RTOS == 0 */
     ptr->msghead = (usb_mh_t) USB_NULL;
     ptr->msginfo = USB_MSG_PCD_SUBMITUTR;
@@ -1777,6 +1779,9 @@ void usb_peri_devdefault (usb_utr_t * ptr, uint16_t mode, uint16_t data2)
  #endif
 }                                      /* End of function usb_peri_devdefault() */
 
+ #define NUM_OF_INTERFACE    (8U)
+uint8_t g_usb_paud_iso_pipe[NUM_OF_INTERFACE];
+
 /******************************************************************************
  * Function Name   : usb_peri_pipe_info
  * Description     : Pipe Information check and EP Table Set
@@ -1791,6 +1796,9 @@ uint16_t usb_peri_pipe_info (uint8_t * table, uint16_t speed, uint16_t length, u
     uint16_t retval = USB_ERROR;
     uint8_t  pipe_no;
     uint8_t  class_info = 0;
+ #ifdef  USB_CFG_PAUD_USE
+    uint8_t interface_num = 0;
+ #endif                                // USB_CFG_PAUD_USE
 
     FSP_PARAMETER_NOT_USED(speed);
 
@@ -1803,6 +1811,9 @@ uint16_t usb_peri_pipe_info (uint8_t * table, uint16_t speed, uint16_t length, u
         if (USB_DT_INTERFACE == table[ofdsc + USB_EP_B_DESCRIPTORTYPE])
         {
             class_info = table[ofdsc + USB_IF_B_INTERFACECLASS];
+ #ifdef  USB_CFG_PAUD_USE
+            interface_num = table[ofdsc + USB_IF_B_INTERFACENUMBER];
+ #endif                                // USB_CFG_PAUD_USE
         }
 
         /* Endpoint Descriptor */
@@ -1813,6 +1824,9 @@ uint16_t usb_peri_pipe_info (uint8_t * table, uint16_t speed, uint16_t length, u
             if (USB_NULL != pipe_no)
             {
                 retval = USB_OK;
+ #ifdef  USB_CFG_PAUD_USE
+                g_usb_paud_iso_pipe[interface_num] = pipe_no;
+ #endif                                // USB_CFG_PAUD_USE
             }
         }
 

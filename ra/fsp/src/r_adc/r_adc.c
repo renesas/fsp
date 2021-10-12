@@ -136,6 +136,9 @@ static void r_adc_scan_cfg(adc_instance_ctrl_t * const     p_instance_ctrl,
 static void    r_adc_sensor_sample_state_calculation(uint32_t * const p_sample_states);
 void           adc_scan_end_b_isr(void);
 void           adc_scan_end_isr(void);
+void           adc_window_compare_isr(void);
+static void    r_adc_irq_enable(IRQn_Type irq, uint8_t ipl, void * p_context);
+static void    r_adc_irq_disable(IRQn_Type irq);
 static int32_t r_adc_lowest_channel_get(uint32_t adc_mask);
 static void    r_adc_scan_end_common_isr(adc_event_t event);
 
@@ -223,14 +226,19 @@ fsp_err_t R_ADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     /* Verify this unit has not already been initialized   */
     FSP_ERROR_RETURN(ADC_OPEN != p_instance_ctrl->opened, FSP_ERR_ALREADY_OPEN);
 
-    /* If a callback is used, then make sure the scan end interrupt is enabled */
+    /* If a callback is used, then make sure an interrupt is enabled */
+    adc_extended_cfg_t const * p_extend = (adc_extended_cfg_t const *) p_cfg->p_extend;
     if (NULL != p_cfg->p_callback)
     {
-        FSP_ERROR_RETURN(p_cfg->scan_end_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
+        FSP_ERROR_RETURN((p_cfg->scan_end_irq >= 0) || (p_extend->window_a_irq >= 0) || (p_extend->window_b_irq >= 0),
+                         FSP_ERR_IRQ_BSP_DISABLED);
 
         /* Group B interrupts are never required since group B can be configured in continuous scan mode when group A
          * has priority over group B. */
     }
+
+#else
+    adc_extended_cfg_t const * p_extend = (adc_extended_cfg_t const *) p_cfg->p_extend;
 #endif
 
     /* Save configurations. */
@@ -246,16 +254,11 @@ fsp_err_t R_ADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     /* Initialize the hardware based on the configuration. */
     r_adc_open_sub(p_instance_ctrl, p_cfg);
 
-    /* Set the interrupt priorities. */
-    if (p_instance_ctrl->p_cfg->scan_end_irq >= 0)
-    {
-        R_BSP_IrqCfgEnable(p_instance_ctrl->p_cfg->scan_end_irq, p_cfg->scan_end_ipl, p_instance_ctrl);
-    }
-
-    if (p_instance_ctrl->p_cfg->scan_end_b_irq >= 0)
-    {
-        R_BSP_IrqCfgEnable(p_instance_ctrl->p_cfg->scan_end_b_irq, p_cfg->scan_end_b_ipl, p_instance_ctrl);
-    }
+    /* Enable interrupts */
+    r_adc_irq_enable(p_cfg->scan_end_irq, p_cfg->scan_end_ipl, p_instance_ctrl);
+    r_adc_irq_enable(p_cfg->scan_end_b_irq, p_cfg->scan_end_b_ipl, p_instance_ctrl);
+    r_adc_irq_enable(p_extend->window_a_irq, p_extend->window_a_ipl, p_instance_ctrl);
+    r_adc_irq_enable(p_extend->window_b_irq, p_extend->window_b_ipl, p_instance_ctrl);
 
     /* Invalid scan mask (initialized for later). */
     p_instance_ctrl->scan_mask = 0U;
@@ -677,17 +680,11 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
     p_instance_ctrl->opened = 0U;
 
     /* Disable interrupts. */
-    if (p_instance_ctrl->p_cfg->scan_end_irq >= 0)
-    {
-        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->scan_end_irq);
-        R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->scan_end_irq, NULL);
-    }
-
-    if (p_instance_ctrl->p_cfg->scan_end_b_irq >= 0)
-    {
-        R_BSP_IrqDisable(p_instance_ctrl->p_cfg->scan_end_b_irq);
-        R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->scan_end_b_irq, NULL);
-    }
+    adc_extended_cfg_t * p_extend = (adc_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    r_adc_irq_disable(p_instance_ctrl->p_cfg->scan_end_irq);
+    r_adc_irq_disable(p_instance_ctrl->p_cfg->scan_end_b_irq);
+    r_adc_irq_disable(p_extend->window_a_irq);
+    r_adc_irq_disable(p_extend->window_b_irq);
 
     /* Disable triggers. */
     p_instance_ctrl->p_reg->ADSTRGR = 0U;
@@ -976,6 +973,42 @@ static fsp_err_t r_adc_scan_cfg_check_sample_hold (adc_instance_ctrl_t * const  
         }
     }
  #endif
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Enforces constraints on Window Compare function usage per section 47.3.5.3 "Constraints on the compare function" in
+ * the RA6M3 User's Manual (R01UH0886EJ0100)
+ *
+ * @param[in]  p_window_cfg            Pointer to window compare configuration
+ *
+ * @retval FSP_SUCCESS                 No configuration errors detected
+ * @retval FSP_ERR_ASSERTION           An input argument is invalid.
+ **********************************************************************************************************************/
+static fsp_err_t r_adc_scan_cfg_check_window_compare (adc_window_cfg_t const * const p_window_cfg)
+{
+    if (p_window_cfg)
+    {
+        uint32_t compare_cfg = p_window_cfg->compare_cfg;
+        if (0U != compare_cfg)
+        {
+            if ((compare_cfg & R_ADC0_ADCMPCR_CMPAE_Msk) && (compare_cfg & R_ADC0_ADCMPCR_CMPBE_Msk))
+            {
+                /* Ensure channels selected for Window A do not conflict with Window B */
+                uint32_t compare_b_ch = p_window_cfg->compare_b_channel;
+                compare_b_ch -= compare_b_ch > 31 ? 4 : 0;
+                FSP_ASSERT(!(p_window_cfg->compare_mask & (uint32_t) (1 << compare_b_ch)));
+            }
+
+            if (compare_cfg & R_ADC0_ADCMPCR_WCMPE_Msk)
+            {
+                /* Ensure lower reference values are less than or equal to the high reference values */
+                FSP_ASSERT((p_window_cfg->compare_ref_low <= p_window_cfg->compare_ref_high) &&
+                           (p_window_cfg->compare_b_ref_low <= p_window_cfg->compare_b_ref_high));
+            }
+        }
+    }
 
     return FSP_SUCCESS;
 }
@@ -1371,6 +1404,10 @@ static fsp_err_t r_adc_scan_cfg_check (adc_instance_ctrl_t * const     p_instanc
 
     /* Check sample and hold settings. */
     err = r_adc_scan_cfg_check_sample_hold(p_instance_ctrl, p_channel_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Check window compare settings. */
+    err = r_adc_scan_cfg_check_window_compare(p_channel_cfg->p_window_cfg);
 
     return err;
 }
@@ -1423,6 +1460,49 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
     p_instance_ctrl->p_reg->ADSHCR = (uint16_t) adshcr;
 #endif
 
+    /* Get window compare configuration */
+    adc_window_cfg_t * p_window_cfg = p_channel_cfg->p_window_cfg;
+
+    uint16_t adcmpcr = 0;
+
+    if (p_window_cfg)
+    {
+        /* Save window compare config */
+        adcmpcr = (uint16_t) p_window_cfg->compare_cfg;
+
+        if (p_window_cfg->compare_cfg & R_ADC0_ADCMPCR_CMPAE_Msk)
+        {
+            /* Set Window A boundary values */
+            p_instance_ctrl->p_reg->ADCMPCR  = p_window_cfg->compare_cfg & UINT16_MAX;
+            p_instance_ctrl->p_reg->ADCMPDR0 = p_window_cfg->compare_ref_low;
+            p_instance_ctrl->p_reg->ADCMPDR1 = p_window_cfg->compare_ref_high;
+
+            /* Set Window A channel mask */
+            p_instance_ctrl->p_reg->ADCMPANSR[0] = p_window_cfg->compare_mask & UINT16_MAX;
+            p_instance_ctrl->p_reg->ADCMPANSR[1] = (uint16_t) ((p_window_cfg->compare_mask << 4) >> 16);
+            p_instance_ctrl->p_reg->ADCMPANSER   = (uint8_t) (p_window_cfg->compare_mask >> 28);
+
+            /* Set Window A channel inequality mode mask */
+            p_instance_ctrl->p_reg->ADCMPLR[0] = p_window_cfg->compare_mode_mask & UINT16_MAX;
+            p_instance_ctrl->p_reg->ADCMPLR[1] = (uint16_t) ((p_window_cfg->compare_mode_mask << 4) >> 16);
+            p_instance_ctrl->p_reg->ADCMPLER   = (uint8_t) (p_window_cfg->compare_mode_mask >> 28);
+        }
+
+        if (p_window_cfg->compare_cfg & R_ADC0_ADCMPCR_CMPBE_Msk)
+        {
+            /* Set Window B channel and mode */
+            p_instance_ctrl->p_reg->ADCMPBNSR = (uint8_t) ((adc_window_b_mode_t) p_window_cfg->compare_b_channel |
+                                                           p_window_cfg->compare_b_mode);
+
+            /* Set Window B boundary values */
+            p_instance_ctrl->p_reg->ADWINLLB = p_window_cfg->compare_b_ref_low;
+            p_instance_ctrl->p_reg->ADWINULB = p_window_cfg->compare_b_ref_high;
+        }
+    }
+
+    /* Set window compare config */
+    p_instance_ctrl->p_reg->ADCMPCR = adcmpcr;
+
     /* Set group A priority action (not interrupt priority!)
      * This will also start the Group B scans if configured for ADC_GROUP_A_GROUP_B_CONTINUOUS_SCAN.
      */
@@ -1436,6 +1516,35 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
 
         p_instance_ctrl->p_reg->ADCSR      = (uint16_t) adcsr;
         p_instance_ctrl->scan_start_adcsr |= (uint16_t) adcsr;
+    }
+}
+
+/*******************************************************************************************************************//**
+ * Disables and clears context for the requested IRQ.
+ *
+ * @param[in]  irq        IRQ to enable
+ * @param[in]  ipl        Interrupt priority
+ * @param[in]  p_context  Pointer to interrupt context
+ **********************************************************************************************************************/
+static void r_adc_irq_enable (IRQn_Type irq, uint8_t ipl, void * p_context)
+{
+    if (irq >= 0)
+    {
+        R_BSP_IrqCfgEnable(irq, ipl, p_context);
+    }
+}
+
+/*******************************************************************************************************************//**
+ * Disables and clears context for the requested IRQ.
+ *
+ * @param[in]  irq  IRQ to disable
+ **********************************************************************************************************************/
+static void r_adc_irq_disable (IRQn_Type irq)
+{
+    if (irq >= 0)
+    {
+        R_BSP_IrqDisable(irq);
+        R_FSP_IsrContextSet(irq, NULL);
     }
 }
 
@@ -1462,6 +1571,61 @@ static int32_t r_adc_lowest_channel_get (uint32_t adc_mask)
 }
 
 /*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_ctrl     Pointer to ADC instance control block
+ * @param[in]     p_args     Pointer to arguments on stack
+ **********************************************************************************************************************/
+static void r_adc_call_callback (adc_instance_ctrl_t * p_ctrl, adc_callback_args_t * p_args)
+{
+    adc_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    adc_callback_args_t * p_args_memory = p_ctrl->p_callback_memory;
+    if (NULL == p_args_memory)
+    {
+        /* Use provided args struct on stack */
+        p_args_memory = p_args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args_memory;
+
+        /* Copy the stacked args to callback memory */
+        *p_args_memory = *p_args;
+    }
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (!cmse_is_nsfptr(p_ctrl->p_callback))
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args_memory);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        adc_prv_ns_callback p_callback = (adc_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args_memory);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args_memory);
+#endif
+
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
+    }
+}
+
+/*******************************************************************************************************************//**
  * Clears interrupt flag and calls a callback to notify application of the event.
  *
  * @param[in]  event                   Event that triggered the ISR
@@ -1472,32 +1636,18 @@ static void r_adc_scan_end_common_isr (adc_event_t event)
     FSP_CONTEXT_SAVE;
 
     adc_instance_ctrl_t * p_instance_ctrl = (adc_instance_ctrl_t *) R_FSP_IsrContextGet(R_FSP_CurrentIrqGet());
-    adc_callback_args_t   args;
-
-    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
-     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
-    adc_callback_args_t * p_args = p_instance_ctrl->p_callback_memory;
-    if (NULL == p_args)
-    {
-        /* Store on stack */
-        p_args = &args;
-    }
-    else
-    {
-        /* Save current arguments on the stack in case this is a nested interrupt. */
-        args = *p_args;
-    }
 
     /* Clear the BSP IRQ Flag     */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
 
-    p_args->event = event;
+    adc_callback_args_t args;
+    args.event = event;
 #if BSP_FEATURE_ADC_CALIBRATION_REG_AVAILABLE
 
     /* Store the correct event into the callback argument */
     if (ADC_ADICR_CALIBRATION_INTERRUPT_DISABLED != p_instance_ctrl->p_reg->ADICR)
     {
-        p_args->event = ADC_EVENT_CALIBRATION_COMPLETE;
+        args.event = ADC_EVENT_CALIBRATION_COMPLETE;
 
         /* Restore the interrupt source to disable interrupts after calibration is done. */
         p_instance_ctrl->p_reg->ADICR = 0U;
@@ -1505,43 +1655,18 @@ static void r_adc_scan_end_common_isr (adc_event_t event)
 #endif
 
     /* Store the unit number into the callback argument */
-    p_args->unit = p_instance_ctrl->p_cfg->unit;
+    args.unit = p_instance_ctrl->p_cfg->unit;
 
     /* Initialize the channel to 0.  It is not used in this implementation. */
-    p_args->channel = ADC_CHANNEL_0;
+    args.channel = ADC_CHANNEL_0;
 
     /* Populate the context field. */
-    p_args->p_context = p_instance_ctrl->p_context;
+    args.p_context = p_instance_ctrl->p_context;
 
     /* If a callback was provided, call it with the argument */
     if (NULL != p_instance_ctrl->p_callback)
     {
-#if BSP_TZ_SECURE_BUILD
-
-        /* p_callback can point to a secure function or a non-secure function. */
-        if (!cmse_is_nsfptr(p_instance_ctrl->p_callback))
-        {
-            /* If p_callback is secure, then the project does not need to change security state. */
-            p_instance_ctrl->p_callback(p_args);
-        }
-        else
-        {
-            /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
-            adc_prv_ns_callback p_callback = (adc_prv_ns_callback) (p_instance_ctrl->p_callback);
-            p_callback(p_args);
-        }
-
-#else
-
-        /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
-        p_instance_ctrl->p_callback(p_args);
-#endif
-    }
-
-    if (NULL != p_instance_ctrl->p_callback_memory)
-    {
-        /* Restore callback memory in case this is a nested interrupt. */
-        *p_instance_ctrl->p_callback_memory = args;
+        r_adc_call_callback(p_instance_ctrl, &args);
     }
 
     /* Restore context if RTOS is used */
@@ -1562,4 +1687,89 @@ void adc_scan_end_isr (void)
 void adc_scan_end_b_isr (void)
 {
     r_adc_scan_end_common_isr(ADC_EVENT_SCAN_COMPLETE_GROUP_B);
+}
+
+/*******************************************************************************************************************//**
+ * This function implements the interrupt handler for window compare events.
+ **********************************************************************************************************************/
+void adc_window_compare_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE;
+
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
+
+    adc_instance_ctrl_t * p_instance_ctrl = (adc_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+    adc_extended_cfg_t  * p_extend        = (adc_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+    adc_callback_args_t args;
+    args.event = (irq == p_extend->window_a_irq) ? ADC_EVENT_WINDOW_COMPARE_A : ADC_EVENT_WINDOW_COMPARE_B;
+
+    /* Store the unit number into the callback argument */
+    args.unit = p_instance_ctrl->p_cfg->unit;
+
+    if (ADC_EVENT_WINDOW_COMPARE_A == args.event)
+    {
+        args.channel = (adc_channel_t) 0;
+
+        R_ADC0_Type * p_reg = p_instance_ctrl->p_reg;
+
+        /* Get all Window A status registers */
+        uint16_t adcmpsr0 = p_reg->ADCMPSR[0];
+        uint16_t adcmpsr1 = p_reg->ADCMPSR[1];
+        uint8_t  adcmpser = p_reg->ADCMPSER;
+
+        /* Get the lowest channel that meets Window A criteria */
+        uint32_t lowest_channel = __CLZ(__RBIT(adcmpsr0 + (uint32_t) (adcmpsr1 << 16) + (uint32_t) (adcmpser << 28)));
+
+        /* Clear the status flag corresponding to the lowest channel */
+        if (lowest_channel < 16)
+        {
+            p_reg->ADCMPSR[0] = (uint16_t) (adcmpsr0 & ~(1 << (lowest_channel & 0xF)));
+        }
+        else if (lowest_channel < 28)
+        {
+            p_reg->ADCMPSR[1] = (uint16_t) (adcmpsr1 & ~(1 << (lowest_channel & 0xF)));
+        }
+        else
+        {
+            p_reg->ADCMPSER = (uint8_t) (adcmpser & ~(1 << (lowest_channel & 0x3)));
+        }
+
+        args.channel = (adc_channel_t) lowest_channel;
+
+        if (args.channel > 28)
+        {
+            /* Adjust sensor channels to align with the adc_channel_t enumeration */
+            args.channel = (adc_channel_t) (ADC_CHANNEL_TEMPERATURE + (args.channel - 28));
+        }
+    }
+    else
+    {
+        /* Get channel selected for Window B */
+        args.channel = (adc_channel_t) p_instance_ctrl->p_reg->ADCMPBNSR_b.CMPCHB;
+
+        if (args.channel > 31)
+        {
+            /* Adjust sensor channels to align with the adc_channel_t enumeration */
+            args.channel = (adc_channel_t) (ADC_CHANNEL_TEMPERATURE + (args.channel & 0xF));
+        }
+
+        /* Clear IRQ */
+        p_instance_ctrl->p_reg->ADCMPBSR_b.CMPSTB = 0;
+    }
+
+    /* Populate the context field. */
+    args.p_context = p_instance_ctrl->p_context;
+
+    /* If a callback was provided, call it with the argument */
+    if (NULL != p_instance_ctrl->p_callback)
+    {
+        r_adc_call_callback(p_instance_ctrl, &args);
+    }
+
+    R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE;
 }

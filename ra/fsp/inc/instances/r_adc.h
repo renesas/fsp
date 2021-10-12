@@ -175,6 +175,59 @@ typedef enum e_adc_sample_state_reg
     ADC_SAMPLE_STATE_CHANNEL_16_TO_31 = -3, ///< Sample state register channel 16 to 31
 } adc_sample_state_reg_t;
 
+/** ADC comparison settings */
+typedef enum e_adc_compare_cfg
+{
+    ADC_COMPARE_CFG_EVENT_OUTPUT_OR  = 0,
+    ADC_COMPARE_CFG_EVENT_OUTPUT_XOR = 1,
+    ADC_COMPARE_CFG_EVENT_OUTPUT_AND = 2,
+    ADC_COMPARE_CFG_A_ENABLE         = R_ADC0_ADCMPCR_CMPAE_Msk | R_ADC0_ADCMPCR_CMPAIE_Msk,
+    ADC_COMPARE_CFG_B_ENABLE         = R_ADC0_ADCMPCR_CMPBE_Msk | R_ADC0_ADCMPCR_CMPBIE_Msk,
+    ADC_COMPARE_CFG_WINDOW_ENABLE    = R_ADC0_ADCMPCR_WCMPE_Msk,
+} adc_compare_cfg_t;
+
+/** ADC Window B channel */
+typedef enum e_adc_window_b_channel
+{
+    ADC_WINDOW_B_CHANNEL_0 = 0,
+    ADC_WINDOW_B_CHANNEL_1,
+    ADC_WINDOW_B_CHANNEL_2,
+    ADC_WINDOW_B_CHANNEL_3,
+    ADC_WINDOW_B_CHANNEL_4,
+    ADC_WINDOW_B_CHANNEL_5,
+    ADC_WINDOW_B_CHANNEL_6,
+    ADC_WINDOW_B_CHANNEL_7,
+    ADC_WINDOW_B_CHANNEL_8,
+    ADC_WINDOW_B_CHANNEL_9,
+    ADC_WINDOW_B_CHANNEL_10,
+    ADC_WINDOW_B_CHANNEL_11,
+    ADC_WINDOW_B_CHANNEL_12,
+    ADC_WINDOW_B_CHANNEL_13,
+    ADC_WINDOW_B_CHANNEL_14,
+    ADC_WINDOW_B_CHANNEL_15,
+    ADC_WINDOW_B_CHANNEL_16,
+    ADC_WINDOW_B_CHANNEL_17,
+    ADC_WINDOW_B_CHANNEL_18,
+    ADC_WINDOW_B_CHANNEL_19,
+    ADC_WINDOW_B_CHANNEL_20,
+    ADC_WINDOW_B_CHANNEL_21,
+    ADC_WINDOW_B_CHANNEL_22,
+    ADC_WINDOW_B_CHANNEL_23,
+    ADC_WINDOW_B_CHANNEL_24,
+    ADC_WINDOW_B_CHANNEL_25,
+    ADC_WINDOW_B_CHANNEL_26,
+    ADC_WINDOW_B_CHANNEL_27,
+    ADC_WINDOW_B_CHANNEL_TEMPERATURE = 32,
+    ADC_WINDOW_B_CHANNEL_VOLT        = 33,
+} adc_window_b_channel_t;
+
+/** ADC Window B comparison mode */
+typedef enum e_adc_window_b_mode
+{
+    ADC_WINDOW_B_MODE_LESS_THAN_OR_OUTSIDE   = 0,
+    ADC_WINDOW_B_MODE_GREATER_THAN_OR_INSIDE = R_ADC0_ADCMPBNSR_CMPLB_Msk,
+} adc_window_b_mode_t;
+
 /** ADC action for group A interrupts group B scan.
  * This enumeration is used to specify the priority between Group A and B in group mode.  */
 typedef enum e_adc_group_a
@@ -200,6 +253,20 @@ typedef struct st_adc_sample_state
     uint8_t                num_states; ///< Number of sampling states for conversion. Ch16-20/21 use the same value.
 } adc_sample_state_t;
 
+/** ADC Window Compare configuration */
+typedef struct st_adc_window_cfg
+{
+    uint32_t               compare_mask;       ///< Channel mask to compare with Window A
+    uint32_t               compare_mode_mask;  ///< Per-channel condition mask for Window A
+    adc_compare_cfg_t      compare_cfg;        ///< Window Compare configuration
+    uint16_t               compare_ref_low;    ///< Window A lower reference value
+    uint16_t               compare_ref_high;   ///< Window A upper reference value
+    uint16_t               compare_b_ref_low;  ///< Window B lower reference value
+    uint16_t               compare_b_ref_high; ///< Window A upper reference value
+    adc_window_b_channel_t compare_b_channel;  ///< Window B channel
+    adc_window_b_mode_t    compare_b_mode;     ///< Window B condition setting
+} adc_window_cfg_t;
+
 /** Extended configuration structure for ADC. */
 typedef struct st_adc_extended_cfg
 {
@@ -209,17 +276,22 @@ typedef struct st_adc_extended_cfg
     adc_double_trigger_t double_trigger_mode; ///< Double-trigger mode setting
     adc_vref_control_t   adc_vref_control;    ///< VREFADC output voltage control
     uint8_t              enable_adbuf;        ///< Enable ADC Ring Buffer, Valid only to use along with DMAC transfer
+    IRQn_Type            window_a_irq;        ///< IRQ number for Window Compare A interrupts
+    IRQn_Type            window_b_irq;        ///< IRQ number for Window Compare B interrupts
+    uint8_t              window_a_ipl;        ///< Priority for Window Compare A interrupts
+    uint8_t              window_b_ipl;        ///< Priority for Window Compare B interrupts
 } adc_extended_cfg_t;
 
 /** ADC channel(s) configuration       */
 typedef struct st_adc_channel_cfg
 {
-    uint32_t      scan_mask;           ///< Channels/bits: bit 0 is ch0; bit 15 is ch15.
-    uint32_t      scan_mask_group_b;   ///< Valid for group modes.
-    uint32_t      add_mask;            ///< Valid if add enabled in Open().
-    adc_group_a_t priority_group_a;    ///< Valid for group modes.
-    uint8_t       sample_hold_mask;    ///< Channels/bits 0-2.
-    uint8_t       sample_hold_states;  ///< Number of states to be used for sample and hold. Affects channels 0-2.
+    uint32_t           scan_mask;          ///< Channels/bits: bit 0 is ch0; bit 15 is ch15.
+    uint32_t           scan_mask_group_b;  ///< Valid for group modes.
+    uint32_t           add_mask;           ///< Valid if add enabled in Open().
+    adc_window_cfg_t * p_window_cfg;       ///< Pointer to Window Compare configuration
+    adc_group_a_t      priority_group_a;   ///< Valid for group modes.
+    uint8_t            sample_hold_mask;   ///< Channels/bits 0-2.
+    uint8_t            sample_hold_states; ///< Number of states to be used for sample and hold. Affects channels 0-2.
 } adc_channel_cfg_t;
 
 /* Sample and hold Channel mask. Sample and hold is only available for channel 0,1,2*/

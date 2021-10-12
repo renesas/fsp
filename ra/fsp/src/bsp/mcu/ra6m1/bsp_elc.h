@@ -71,6 +71,7 @@ typedef enum e_elc_event_ra6m1
     ELC_EVENT_DMAC6_INT                 = (38),  // DMAC transfer end 6
     ELC_EVENT_DMAC7_INT                 = (39),  // DMAC transfer end 7
     ELC_EVENT_DTC_COMPLETE              = (41),  // DTC last transfer
+    ELC_EVENT_DTC_END                   = (42),  // DTC transfer end
     ELC_EVENT_ICU_SNOOZE_CANCEL         = (45),  // Canceling from Snooze mode
     ELC_EVENT_FCU_FIFERR                = (48),  // Flash access error interrupt
     ELC_EVENT_FCU_FRDYI                 = (49),  // Flash ready interrupt

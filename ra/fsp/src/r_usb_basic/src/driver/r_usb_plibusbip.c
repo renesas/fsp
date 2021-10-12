@@ -43,6 +43,11 @@
  #include "r_usb_phid_cfg.h"
 #endif                                 /* defined(USB_CFG_PHID_USE) */
 
+#if (BSP_CFG_RTOS == 1)
+ #if defined(USB_CFG_PAUD_USE)
+  #include "r_usb_paud_cfg.h"
+ #endif                                /* defined(USB_CFG_PAUD_USE) */
+#endif /* #if (BSP_CFG_RTOS != 1) */
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
  #include "../hw/inc/r_usb_dmac.h"
 #endif                                 /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
@@ -239,6 +244,7 @@ void usb_pstd_send_start (uint16_t pipe)
         }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
+
         /* D0FIFO DMA */
         case USB_D0USE:
 
@@ -503,6 +509,7 @@ void usb_pstd_receive_start (uint16_t pipe)
         }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
+
         /* D0FIFO DMA */
         case USB_D0USE:
 
@@ -719,6 +726,7 @@ void usb_pstd_data_end (uint16_t pipe, uint16_t status, usb_utr_t * p_utr)
         }
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
+
         /* D0FIFO DMA */
         case USB_D0USE:
         {
@@ -1110,6 +1118,31 @@ uint8_t usb_pstd_set_pipe_table (uint8_t * descriptor, usb_utr_t * p_utr, uint8_
             break;
         }
 
+        case USB_EP_ISO:
+        {
+            /* Set pipe configuration table */
+            if (USB_EP_IN == (descriptor[USB_EP_B_ENDPOINTADDRESS] & USB_EP_DIRMASK))
+            {
+                /* IN(send) */
+                pipe_no  = usb_pstd_get_pipe_no(USB_EP_ISO, USB_PIPE_DIR_IN, p_utr, class_info);
+                pipe_cfg = (uint16_t) (USB_TYPFIELD_ISO | USB_CFG_DBLB | USB_DIR_P_IN);
+            }
+            else
+            {
+                /* OUT(receive) */
+                pipe_no  = usb_pstd_get_pipe_no(USB_EP_ISO, USB_PIPE_DIR_OUT, p_utr, class_info);
+                pipe_cfg = (uint16_t) (USB_TYPFIELD_ISO | USB_CFG_DBLB | USB_SHTNAKFIELD | USB_DIR_P_OUT);
+            }
+
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+            if (USB_CFG_IP1 == p_utr->ip)
+            {
+                pipe_cfg |= (uint16_t) (USB_CFG_CNTMD);
+            }
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+            break;
+        }
+
         default:
         {
             return USB_NULL;           /* Error */
@@ -1378,6 +1411,23 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
     }
  #endif                                /* defined(USB_CFG_PMSC_USE) */
 
+ #if defined(USB_CFG_PAUD_USE)
+    if (USB_IFCLS_AUD == class_info)
+    {
+        if (USB_EP_ISO == type)
+        {
+            if (USB_PIPE_DIR_IN == dir)
+            {
+                pipe_no = USB_CFG_PAUD_ISO_IN;
+            }
+            else
+            {
+                pipe_no = USB_CFG_PAUD_ISO_OUT;
+            }
+        }
+    }
+ #endif                                /* defined(USB_CFG_PAUD_USE) */
+
  #if defined(USB_CFG_PVND_USE)
     if (USB_IFCLS_VEN == class_info)
     {
@@ -1423,6 +1473,7 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
                     }
                 }
   #else
+
                 /* Check Free pipe */
                 if (USB_FALSE == g_usb_pipe_table[p_utr->ip][pipe].use_flag)
                 {
@@ -1542,6 +1593,21 @@ uint16_t usb_pstd_get_pipe_buf_value (uint16_t pipe_no)
             break;
         }
   #endif                               /* defined(USB_CFG_PVND_USE) */
+
+  #if defined(USB_CFG_PAUD_USE)
+        case USB_CFG_PAUD_ISO_IN:
+        {
+            pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(8u));
+            break;
+        }
+
+        case USB_CFG_PAUD_ISO_OUT:
+        {
+            pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(72u));
+            break;
+        }
+  #endif                               /* defined(USB_CFG_PAUD_USE) */
+
         default:
         {
             /* Error */

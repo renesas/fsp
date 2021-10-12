@@ -99,6 +99,8 @@ typedef enum e_adc_event
     ADC_EVENT_SCAN_COMPLETE_GROUP_B,   ///< Group B scan complete
     ADC_EVENT_CALIBRATION_COMPLETE,    ///< Calibration complete
     ADC_EVENT_CONVERSION_COMPLETE,     ///< Conversion complete
+    ADC_EVENT_WINDOW_COMPARE_A,        ///< Window A comparison condition met
+    ADC_EVENT_WINDOW_COMPARE_B,        ///< Window B comparison condition met
 } adc_event_t;
 
 /** ADC channels */

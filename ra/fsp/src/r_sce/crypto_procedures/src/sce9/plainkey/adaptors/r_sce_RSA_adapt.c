@@ -185,13 +185,13 @@ fsp_err_t HW_SCE_HRK_RSA_2048KeyGenerate (uint32_t   num_tries,
 
     err =
         HW_SCE_GenerateRsa2048RandomKeyIndexSub(num_tries,
-                                                (uint32_t *) &key_pair_index.public.value,
-                                                (uint32_t *) &key_pair_index.private.value);
+                                                (uint32_t *) &key_pair_index.pub_key.value,
+                                                (uint32_t *) &key_pair_index.priv_key.value);
 
     if (FSP_SUCCESS == err)
     {
-        memcpy(OutData_KeyIndex, &key_pair_index.private.value, sizeof(key_pair_index.private.value));
-        memcpy(OutData_N, &key_pair_index.public.value.key_n, sizeof(key_pair_index.public.value.key_n));
+        memcpy(OutData_KeyIndex, &key_pair_index.priv_key.value, sizeof(key_pair_index.priv_key.value));
+        memcpy(OutData_N, &key_pair_index.pub_key.value.key_n, sizeof(key_pair_index.pub_key.value.key_n));
         memcpy(OutData_DomainParam, dummy_P_Q, sizeof(dummy_P_Q));
     }
 

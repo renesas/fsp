@@ -560,29 +560,29 @@ typedef struct sce_rsa4096_private_key_index
 /* RSA 1024bit key index pair structure */
 typedef struct sce_rsa1024_key_pair_index
 {
-    sce_rsa1024_private_key_index_t    private;
-    sce_rsa1024_public_key_index_t     public;
+    sce_rsa1024_private_key_index_t    priv_key;
+    sce_rsa1024_public_key_index_t     pub_key;
 } sce_rsa1024_key_pair_index_t;
 
 /* RSA 2048bit key index pair structure */
 typedef struct sce_rsa2048_key_pair_index
 {
-    sce_rsa2048_private_key_index_t    private;
-    sce_rsa2048_public_key_index_t     public;
+    sce_rsa2048_private_key_index_t    priv_key;
+    sce_rsa2048_public_key_index_t     pub_key;
 } sce_rsa2048_key_pair_index_t;
 
 /* RSA 3072bit key index pair structure */
 typedef struct sce_rsa3072_key_pair_index
 {
-    sce_rsa3072_private_key_index_t    private;
-    sce_rsa3072_public_key_index_t     public;
+    sce_rsa3072_private_key_index_t    priv_key;
+    sce_rsa3072_public_key_index_t     pub_key;
 } sce_rsa3072_key_pair_index_t;
 
 /* RSA 4096bit key index pair structure */
 typedef struct sce_rsa4096_key_pair_index
 {
-    sce_rsa4096_private_key_index_t    private;
-    sce_rsa4096_public_key_index_t     public;
+    sce_rsa4096_private_key_index_t    priv_key;
+    sce_rsa4096_public_key_index_t     pub_key;
 } sce_rsa4096_key_pair_index_t;
 
 /* ECC P-192/224/256 public key index data structure */
@@ -607,8 +607,8 @@ typedef struct sce_ecc_private_key_index
 /* ECC P-192/224/256 key index pair structure */
 typedef struct sce_ecc_key_pair_index
 {
-    sce_ecc_private_key_index_t    private;
-    sce_ecc_public_key_index_t     public;
+    sce_ecc_private_key_index_t    priv_key;
+    sce_ecc_public_key_index_t     pub_key;
 } sce_ecc_key_pair_index_t;
 
 /* ECDH key index data structure */

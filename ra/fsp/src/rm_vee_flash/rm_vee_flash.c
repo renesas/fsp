@@ -58,7 +58,9 @@
  #define RM_VEE_FLASH_DF_BLOCK_SIZE          (BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE)
 #endif
 
-#define RM_VEE_FLASH_DF_WRITE_SIZE           (4)
+#define RM_VEE_FLASH_DF_WRITE_MASK           (RM_VEE_FLASH_DF_WRITE_SIZE - 1U)
+
+#define RM_VEE_ADDRESS_ALIGN(x)    ((x + RM_VEE_FLASH_DF_WRITE_MASK) & (~RM_VEE_FLASH_DF_WRITE_MASK))
 
 #define RM_VEE_FLASH_REC_DATA_MAX_SIZE       (p_ctrl->segment_size -                                           \
                                               (sizeof(rm_vee_seg_hdr_t) + (p_ctrl->p_cfg->ref_data_size * 2) + \
@@ -84,6 +86,7 @@ typedef enum e_rm_vee_flash_prv_states
     RM_VEE_FLASH_PRV_STATES_READY,
     RM_VEE_FLASH_PRV_STATES_WRITE_REC_HDR,
     RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA,
+    RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA_TAIL,
     RM_VEE_FLASH_PRV_STATES_WRITE_REC_END,
     RM_VEE_FLASH_PRV_STATES_WRITE_REC_REFRESH,
     RM_VEE_FLASH_PRV_STATES_WRITE_NEW_REFDATA,
@@ -341,7 +344,6 @@ fsp_err_t RM_VEE_FLASH_RecordWrite (rm_vee_ctrl_t * const p_api_ctrl,
 
     FSP_ERROR_RETURN(rec_id <= p_ctrl->p_cfg->record_max_id, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0 != num_bytes, FSP_ERR_INVALID_ARGUMENT);
-    FSP_ERROR_RETURN((num_bytes % RM_VEE_FLASH_DF_WRITE_SIZE) == 0, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(RM_VEE_FLASH_REC_DATA_MAX_SIZE >= num_bytes, FSP_ERR_INVALID_ARGUMENT);
 
     FSP_ASSERT(NULL != p_rec_data);
@@ -854,19 +856,16 @@ static fsp_err_t rm_vee_inspect_segments (rm_vee_flash_instance_ctrl_t * const p
         else
         {
             /* If header is not blank, see if has valid header */
-            p_current_segment =
-                (rm_vee_seg_hdr_t *) addr;
+            p_current_segment = (rm_vee_seg_hdr_t *) addr;
 
-            if (RM_VEE_FLASH_VALID_CODE == p_current_segment
-                ->valid_code)
+            if (RM_VEE_FLASH_VALID_CODE == p_current_segment->valid_code)
             {
                 /* If another active segment was already found, erase the older segment */
                 if (p_ctrl->active_seg_addr != 0)
                 {
                     p_active_segment = (rm_vee_seg_hdr_t *) p_ctrl->active_seg_addr;
 
-                    if (p_current_segment
-                        ->refresh_cnt > p_active_segment->refresh_cnt)
+                    if (p_current_segment->refresh_cnt > p_active_segment->refresh_cnt)
                     {
                         /* Current segment is newer, erase older */
                         err =
@@ -877,8 +876,7 @@ static fsp_err_t rm_vee_inspect_segments (rm_vee_flash_instance_ctrl_t * const p
                     else
                     {
                         /* Else current segment is older */
-                        err =
-                            rm_vee_blocking_erase(p_ctrl, addr, (p_ctrl->segment_size / RM_VEE_FLASH_DF_BLOCK_SIZE));
+                        err = rm_vee_blocking_erase(p_ctrl, addr, (p_ctrl->segment_size / RM_VEE_FLASH_DF_BLOCK_SIZE));
                     }
                 }
                 else
@@ -911,11 +909,10 @@ static fsp_err_t rm_vee_inspect_segments (rm_vee_flash_instance_ctrl_t * const p
         {
             p_ctrl->seg_hdr.refresh_cnt = 0;
             p_ctrl->seg_hdr.valid_code  = RM_VEE_FLASH_VALID_CODE;
-            err =
-                rm_vee_blocking_write(p_ctrl,
-                                      (uint32_t) &p_ctrl->seg_hdr,
-                                      RM_VEE_FLASH_LOGICAL_END_ADDRESS - p_ctrl->segment_size,
-                                      sizeof(rm_vee_seg_hdr_t));
+            err = rm_vee_blocking_write(p_ctrl,
+                                        (uint32_t) &p_ctrl->seg_hdr,
+                                        RM_VEE_FLASH_LOGICAL_END_ADDRESS - p_ctrl->segment_size,
+                                        sizeof(rm_vee_seg_hdr_t));
         }
     }
 
@@ -943,8 +940,7 @@ static fsp_err_t rm_vee_blocking_erase_segment (rm_vee_flash_instance_ctrl_t * c
     /* Erase segment only if reference data not present */
     if (false == contains_refdata)
     {
-        err =
-            rm_vee_blocking_erase(p_ctrl, seg_addr, (p_ctrl->segment_size / RM_VEE_FLASH_DF_BLOCK_SIZE));
+        err = rm_vee_blocking_erase(p_ctrl, seg_addr, (p_ctrl->segment_size / RM_VEE_FLASH_DF_BLOCK_SIZE));
     }
     else
     {
@@ -1009,13 +1005,13 @@ static fsp_err_t rm_vee_load_record_table (rm_vee_flash_instance_ctrl_t * const 
             }
         }
 
-        /* Get trailer for current record */
+        /* Get header for current record */
         p_hdr = (rm_vee_rec_hdr_t *) addr;
 
         /* Variable length records */
         if (RM_VEE_FLASH_REC_DATA_MAX_SIZE >= p_hdr->length)
         {
-            p_end = (rm_vee_rec_end_t *) (addr + sizeof(rm_vee_rec_hdr_t) + p_hdr->length);
+            p_end = (rm_vee_rec_end_t *) RM_VEE_ADDRESS_ALIGN(addr + sizeof(rm_vee_rec_hdr_t) + p_hdr->length);
         }
         else
         {
@@ -1311,7 +1307,7 @@ static fsp_err_t rm_vee_internal_write_rec (rm_vee_flash_instance_ctrl_t * const
     fsp_err_t err;
 
     /* Check if space available */
-    if ((p_ctrl->next_write_addr + RM_VEE_FLASH_REC_OVERHEAD + num_bytes) <= p_ctrl->ref_hdr_addr)
+    if (RM_VEE_ADDRESS_ALIGN(p_ctrl->next_write_addr + RM_VEE_FLASH_REC_OVERHEAD + num_bytes) <= p_ctrl->ref_hdr_addr)
     {
         /* Got space. Save values needed at interrupt level. Though the header is only written when variable length
          * records are configured, its contents are still used for fixed length records too.
@@ -1590,19 +1586,72 @@ void rm_vee_flash_callback (flash_callback_args_t * p_args)
                 /* Record header write complete (variable length records only) */
                 p_ctrl->next_write_addr += sizeof(rm_vee_rec_hdr_t);
 
-                /* Write record data */
+                uint32_t src    = (uint32_t) p_ctrl->p_rec_data;
+                uint32_t length = p_ctrl->rec_hdr.length;
+
                 p_ctrl->state = RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA;
-                err           = p_ctrl->p_flash->p_api->write(p_ctrl->p_flash->p_ctrl,
-                                                              (uint32_t) p_ctrl->p_rec_data,
-                                                              p_ctrl->next_write_addr,
-                                                              p_ctrl->rec_hdr.length);
+
+                /* If the record can be written in one write set the next state to write end. */
+                if (0 == (p_ctrl->rec_hdr.length % RM_VEE_FLASH_DF_WRITE_SIZE))
+                {
+                    p_ctrl->state = RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA;
+                }
+                else if (RM_VEE_FLASH_DF_WRITE_SIZE > p_ctrl->rec_hdr.length)
+                {
+                    /* The record is smaller than the DF write size and needs to be buffered before write. */
+                    memset(&p_ctrl->data_buffer[0], 0, RM_VEE_FLASH_DF_WRITE_SIZE);
+                    memcpy(&p_ctrl->data_buffer[0],
+                           p_ctrl->p_rec_data,
+                           p_ctrl->rec_hdr.length & RM_VEE_FLASH_DF_WRITE_MASK);
+                    p_ctrl->state = RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA;
+                    src           = (uint32_t) &p_ctrl->data_buffer[0];
+                    length        = RM_VEE_FLASH_DF_WRITE_SIZE;
+                }
+                else
+                {
+                    /* The end of the record must be written seperately. */
+                    length        = length & (~RM_VEE_FLASH_DF_WRITE_MASK);
+                    p_ctrl->state = RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA_TAIL;
+                }
+
+                /* Write record data */
+                err = p_ctrl->p_flash->p_api->write(p_ctrl->p_flash->p_ctrl, src, p_ctrl->next_write_addr, length);
+                break;
+            }
+
+            case RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA_TAIL:
+            {
+                uint32_t written = p_ctrl->rec_hdr.length & (~RM_VEE_FLASH_DF_WRITE_MASK);
+
+                p_ctrl->state = RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA;
+
+                /* Buffer the last few bytes of the record and pad with zeros */
+                memset(&p_ctrl->data_buffer[0], 0, RM_VEE_FLASH_DF_WRITE_SIZE);
+                memcpy(&p_ctrl->data_buffer[0],
+                       p_ctrl->p_rec_data + written,
+                       p_ctrl->rec_hdr.length & RM_VEE_FLASH_DF_WRITE_MASK);
+
+                p_ctrl->next_write_addr += written;
+
+                /* Write record data */
+                err = p_ctrl->p_flash->p_api->write(p_ctrl->p_flash->p_ctrl,
+                                                    (uint32_t) &p_ctrl->data_buffer[0],
+                                                    p_ctrl->next_write_addr,
+                                                    RM_VEE_FLASH_DF_WRITE_SIZE);
                 break;
             }
 
             case RM_VEE_FLASH_PRV_STATES_WRITE_REC_DATA:
             {
                 /* Record data write complete */
-                p_ctrl->next_write_addr += p_ctrl->rec_hdr.length;
+                if (0 != (p_ctrl->rec_hdr.length % RM_VEE_FLASH_DF_WRITE_SIZE))
+                {
+                    p_ctrl->next_write_addr += RM_VEE_FLASH_DF_WRITE_SIZE;
+                }
+                else
+                {
+                    p_ctrl->next_write_addr += p_ctrl->rec_hdr.length;
+                }
 
                 /* Write record trailer */
                 p_ctrl->state = RM_VEE_FLASH_PRV_STATES_WRITE_REC_END;
@@ -1883,7 +1932,7 @@ static fsp_err_t rm_vee_init_record_xfer (rm_vee_flash_instance_ctrl_t * const p
     /* Get complete record size (number of bytes to transfer) */
     rm_vee_rec_hdr_t * p_hdr = (rm_vee_rec_hdr_t *) p_ctrl->refresh_xfer_src_addr;
 
-    p_ctrl->refresh_xfer_bytes_left = p_hdr->length + RM_VEE_FLASH_REC_OVERHEAD;
+    p_ctrl->refresh_xfer_bytes_left = RM_VEE_ADDRESS_ALIGN(p_hdr->length + RM_VEE_FLASH_REC_OVERHEAD);
 
     /* Save offset of record's new location */
     p_ctrl->p_cfg->rec_offset[id] = (uint16_t) (p_ctrl->next_write_addr - p_ctrl->active_seg_addr);

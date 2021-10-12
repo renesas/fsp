@@ -148,6 +148,7 @@ uint32_t  usb_peri_usbx_initialize(uint32_t dcd_io);
 uint32_t  usb_peri_usbx_uninitialize(uint32_t dcd_io);
 uint32_t  usb_peri_usbx_remote_wakeup(uint8_t module_number);
 fsp_err_t usb_peri_usbx_pmsc_media_initialize(void const * p_context);
+void      usb_peri_usbx_set_control_length(usb_setup_t * p_req);
 
 bool                g_usb_peri_usbx_is_detach[USB_MAX_PIPE_NO + 1];
 extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
@@ -374,6 +375,21 @@ uint32_t usb_peri_usbx_initialize_complete (void)
     return UX_SUCCESS;
 }                                      /* End of function usb_peri_usbx_initialize_complete() */
 
+  #if defined(USB_CFG_PAUD_USE)
+
+/******************************************************************************
+ * Function Name   : usb_peri_usbx_set_control_length
+ * Description     :
+ * Argument        : usb_setup_t  *p_req        : Pointer to usb_utr_t structure
+ * Return          : none
+ ******************************************************************************/
+void usb_peri_usbx_set_control_length (usb_setup_t * p_req)
+{
+    *g_p_usb_actural_length[USB_PIPE0] = p_req->request_length;
+}                                      /* End of function usb_peri_usbx_set_control_length() */
+
+  #endif /* #if defined(USB_CFG_PAUD_USE) */
+
 /******************************************************************************
  * Function Name   : usb_peri_usbx_transfer_complete_cb
  * Description     : CallBack Function called when the data transfer completion
@@ -464,6 +480,16 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
             else
             {
                 pipe = USB_PIPE0;
+  #if defined(USB_CFG_PAUD_USE)
+                if ((transfer_request->ux_slave_transfer_request_setup[0] & UX_ENDPOINT_DIRECTION) == UX_ENDPOINT_IN)
+                {
+                    transfer_request->ux_slave_transfer_request_phase = UX_TRANSFER_PHASE_DATA_OUT;
+                }
+                else
+                {
+                    transfer_request->ux_slave_transfer_request_phase = UX_TRANSFER_PHASE_DATA_IN;
+                }
+  #endif                                                                         /* #if defined(USB_CFG_PAUD_USE) */
             }
 
             size = transfer_request->ux_slave_transfer_request_requested_length; /* Save Read Request Length */
@@ -620,6 +646,15 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
             }
             else
             {
+  #if defined(USB_CFG_PAUD_USE)
+                if (parameter == (void *) UX_DEVICE_CONFIGURED)
+                {
+                    if (UX_NULL != _ux_system_slave->ux_system_slave_change_function)
+                    {
+                        _ux_system_slave->ux_system_slave_change_function(UX_DEVICE_CONFIGURED);
+                    }
+                }
+  #endif                               /* #if defined(USB_CFG_PAUD_USE) */
                 status = (uint32_t) UX_SUCCESS;
             }
 
@@ -1706,6 +1741,7 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
                             (uint16_t) transfer_request->ux_transfer_request_requested_length;
                         g_usb_host_usbx_req_msg[module_number].complete = (usb_cb_t) &usb_host_usbx_class_request_cb;
                     }
+
   #else                                /* #if defined(USB_CFG_HHID_USE) */
                     /* In this "case", only SetConfiguraion or the class request is processed.  */
                     if (UX_FSP_SET_CONFIGURATION == transfer_request->ux_transfer_request_function)

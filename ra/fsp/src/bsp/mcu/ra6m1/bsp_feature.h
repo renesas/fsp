@@ -230,6 +230,10 @@
 #define BSP_FEATURE_IIC_FAST_MODE_PLUS                    (1U << 0U)
 #define BSP_FEATURE_IIC_VALID_CHANNEL_MASK                (0x07)
 
+#define BSP_FEATURE_I3C_NUM_CHANNELS                      (0U) // Feature not available on this MCU
+#define BSP_FEATURE_I3C_MAX_DEV_COUNT                     (0U) // Feature not available on this MCU
+#define BSP_FEATURE_I3C_NTDTBP0_DEPTH                     (0U) // Feature not available on this MCU
+
 #define BSP_FEATURE_IOPORT_ELC_PORTS                      (4)
 #define BSP_FEATURE_IOPORT_HAS_ETHERNET                   (0U)
 

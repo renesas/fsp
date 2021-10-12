@@ -301,6 +301,10 @@ typedef struct st_ctsu_instance_ctrl
     uint16_t                 self_elem_index;    ///< self element index number for Current instance.
     uint16_t                 mutual_elem_index;  ///< mutual element index number for Current instance.
     uint16_t                 ctsu_elem_index;    ///< CTSU element index number for Current instance.
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+    uint8_t * p_selected_freq_self;              ///< Frequency selected by self-capacity
+    uint8_t * p_selected_freq_mutual;            ///< Frequency selected by mutual-capacity
+#endif
 #if (BSP_FEATURE_CTSU_VERSION == 1)
  #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
     ctsu_diag_info_t * p_diag_info;              ///< pointer to diagnosis info
@@ -351,6 +355,10 @@ fsp_err_t R_CTSU_CallbackSet(ctsu_ctrl_t * const          p_api_ctrl,
                              ctsu_callback_args_t * const p_callback_memory);
 fsp_err_t R_CTSU_Diagnosis(ctsu_ctrl_t * const p_ctrl);
 fsp_err_t R_CTSU_Close(ctsu_ctrl_t * const p_ctrl);
+fsp_err_t R_CTSU_SpecificDataGet(ctsu_ctrl_t * const       p_ctrl,
+                                 uint16_t                * p_specific_data,
+                                 ctsu_specific_data_type_t specific_data_type);
+fsp_err_t R_CTSU_DataInsert(ctsu_ctrl_t * const p_ctrl, uint16_t * p_insert_data);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

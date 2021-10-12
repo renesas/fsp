@@ -21,10 +21,11 @@
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
-#include "rm_wifi_onchip_silex.h"
-#include "rm_wifi_onchip_silex_cfg.h"
+#include "bsp_api.h"
 
 #if (BSP_CFG_RTOS == 2)
+ #include "rm_wifi_onchip_silex.h"
+
  #include <string.h>
  #include "FreeRTOS.h"
  #include "list.h"

@@ -257,7 +257,10 @@ fsp_err_t RM_AUDIO_PLAYBACK_PWM_Play (audio_playback_ctrl_t * const p_api_ctrl,
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_buffer);
 
-    /* Length restriction is based on DMAC/DTC limitation */
+    /* Data length should be greater than zero. */
+    FSP_ASSERT(length > 0U);
+
+    /* Length restriction is based on DMAC/DTC limitation. */
     FSP_ASSERT(length < AUDIO_PLAYBACK_PRV_MAX_LENGTH);
     FSP_ERROR_RETURN(AUDIO_PWM_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif

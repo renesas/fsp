@@ -486,8 +486,7 @@ fsp_err_t R_FLASH_LP_Write (flash_ctrl_t * const p_api_ctrl,
  #endif
 
         /* Write the data */
-        err =
-            r_flash_lp_cf_write(p_ctrl, src_address, flash_address, num_bytes);
+        err = r_flash_lp_cf_write(p_ctrl, src_address, flash_address, num_bytes);
     }
     else
 #endif
@@ -495,8 +494,7 @@ fsp_err_t R_FLASH_LP_Write (flash_ctrl_t * const p_api_ctrl,
 #if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
 
         /* Write the data */
-        err =
-            r_flash_lp_df_write(p_ctrl, src_address, flash_address, num_bytes);
+        err = r_flash_lp_df_write(p_ctrl, src_address, flash_address, num_bytes);
 #endif
     }
 

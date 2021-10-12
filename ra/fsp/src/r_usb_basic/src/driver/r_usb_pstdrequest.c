@@ -45,11 +45,22 @@
 /******************************************************************************
  * Macro definitions
  ******************************************************************************/
-#define STRING_BUFFER_LEN    (256)
-#define VALUE_FFH            (0xFF)
-#define FSP_SETUP_REQUEST    (1)
-#define FSP_SETUP_VALUE      (2)
-#define FSP_SETUP_LENGTH     (6)
+#define STRING_BUFFER_LEN          (256)
+#define VALUE_FFH                  (0xFF)
+#define FSP_SETUP_REQUEST          (1)
+#define FSP_SETUP_VALUE            (2)
+#define FSP_SETUP_LENGTH           (6)
+#if defined(USB_CFG_PAUD_USE)
+ #define FSP_SETUP_REQUEST_TYPE    (0)
+ #define FSP_SETUP_INDEX_L         (4)
+ #define FSP_SETUP_INDEX_H         (5)
+#endif                                 /* #if defined(USB_CFG_PAUD_USE) */
+
+/******************************************************************************
+ * Exported global variables (to be accessed by other files)
+ ******************************************************************************/
+extern void usb_peri_usbx_set_control_length(usb_setup_t * p_req);
+
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /******************************************************************************
@@ -511,7 +522,6 @@ static void usb_pstd_get_status1 (usb_utr_t * p_utr)
                     /* Control read start */
                     usb_pstd_ctrl_read((uint32_t) 2, tbl, p_utr);
                 }
-
                 /* EP1 to max */
                 else if (ep <= USB_MAX_EP_NO)
                 {
@@ -689,6 +699,11 @@ static void usb_pstd_get_descriptor1 (usb_utr_t * p_utr)
                         /* Other than Land ID */
                         len              = (uint16_t) (*(p_table + 3));
                         g_usbx_string[0] = (uint8_t) ((len * 2) + 2);
+                        if (g_usbx_string[0] > g_usb_pstd_req_length)
+                        {
+                            len = (uint16_t) ((g_usb_pstd_req_length - 2) / 2);
+                        }
+
                         for (i = 0; i < len; i++)
                         {
                             g_usbx_string[2 + (i * 2)] = *(p_table + i + 4);
@@ -1006,7 +1021,6 @@ static void usb_pstd_clr_feature3 (usb_utr_t * p_utr)
                         /* Set pipe PID_BUF */
                         usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
                     }
-
                     /* EP1 to max */
                     else if (ep <= USB_MAX_EP_NO)
                     {
@@ -1213,7 +1227,6 @@ static void usb_pstd_set_feature3 (usb_utr_t * p_utr)
                         /* Set pipe PID_BUF */
                         usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
                     }
-
                     /* EP1 to max */
                     else if (ep <= USB_MAX_EP_NO)
                     {
@@ -1470,6 +1483,12 @@ static void usb_pstd_set_interface0 (usb_utr_t * p_utr)
  * End of function usb_pstd_set_interface0
  ******************************************************************************/
 
+ #define NUM_OF_INTERFACE    (8U)
+extern uint8_t g_usb_paud_iso_pipe[NUM_OF_INTERFACE];
+ #if (BSP_CFG_RTOS == 1)
+extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
+
 /******************************************************************************
  * Function Name   : usb_pstd_set_interface3
  * Description     : Analyze a Set Interface command and request the process for
@@ -1480,6 +1499,11 @@ static void usb_pstd_set_interface0 (usb_utr_t * p_utr)
  ******************************************************************************/
 static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
 {
+ #ifdef  USB_CFG_PAUD_USE
+    uint16_t current_alt_value;
+    uint8_t  pipe;
+ #endif                                // USB_CFG_PAUD_USE
+
     /* Configured ? */
     if ((USB_TRUE == usb_pstd_chk_configured(p_utr)) &&
         (USB_INTERFACE == (g_usb_pstd_req_type & USB_BMREQUESTTYPERECIP)))
@@ -1488,13 +1512,32 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
         {
             if (g_usb_pstd_req_value <= usb_pstd_get_alternate_num(g_usb_pstd_req_index))
             {
+ #ifdef  USB_CFG_PAUD_USE
+                current_alt_value = g_usb_pstd_alt_num[g_usb_pstd_req_index];
+ #endif                                // USB_CFG_PAUD_USE
                 g_usb_pstd_alt_num[g_usb_pstd_req_index] = (uint16_t) (g_usb_pstd_req_value & USB_ALT_SET);
                 usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
                 usb_pstd_clr_eptbl_index();
 
                 /* Search endpoint setting */
                 usb_pstd_set_eptbl_index(g_usb_pstd_req_index, g_usb_pstd_alt_num[g_usb_pstd_req_index]);
+ #ifndef USB_CFG_PAUD_USE
                 usb_pstd_set_pipe_reg(p_utr);
+ #endif /* USB_CFG_PAUD_USE */
+ #if BSP_CFG_RTOS == 1
+  #ifdef  USB_CFG_PAUD_USE
+                if (0 == (g_usb_pstd_req_value & USB_ALT_SET))
+                {
+                    if (current_alt_value == 1)
+                    {
+                        /* Alternate Setting 1 --> 0 */
+                        pipe = g_usb_paud_iso_pipe[g_usb_pstd_req_index]; // g_usb_pstd_req_index: Interface Number
+                        tx_semaphore_put(&g_usb_peri_usbx_sem[pipe]);
+                    }
+                }
+  #endif                                                                  // USB_CFG_PAUD_USE
+                _ux_device_stack_alternate_setting_set((ULONG) g_usb_pstd_req_index, (ULONG) g_usb_pstd_req_value);
+ #endif
             }
             else
             {
@@ -1585,7 +1628,15 @@ static void usb_peri_class_request_usbx (usb_setup_t * p_req)
                 *(uint16_t *) (transfer_request->ux_slave_transfer_request_setup +
                                FSP_SETUP_VALUE) = p_req->request_value;
                 *(uint16_t *) (transfer_request->ux_slave_transfer_request_setup +
-                               FSP_SETUP_LENGTH)               = p_req->request_length;
+                               FSP_SETUP_LENGTH) = p_req->request_length;
+  #if defined(USB_CFG_PAUD_USE)
+                *(transfer_request->ux_slave_transfer_request_setup +
+                  FSP_SETUP_REQUEST_TYPE) = (uint8_t) (p_req->request_type & VALUE_FFH);
+                *(transfer_request->ux_slave_transfer_request_setup +
+                  FSP_SETUP_INDEX_L) = (uint8_t) (p_req->request_index & VALUE_FFH);
+                *(transfer_request->ux_slave_transfer_request_setup +
+                  FSP_SETUP_INDEX_H) = (uint8_t) (p_req->request_index >> 8);
+  #endif                               /* #if defined(USB_CFG_PAUD_USE) */
                 class_command.ux_slave_class_command_class_ptr = class;
                 status = class->ux_slave_class_entry_function(&class_command);
                 if (status == UX_SUCCESS)
@@ -1735,6 +1786,7 @@ void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
         /* Out Data */
         usb_peri_class_reqeust_usbx_get_data(req, p_utr);
     }
+
  #else                                 /* (BSP_CFG_RTOS == 1) */
   #if defined(USB_CFG_PMSC_USE)
     usb_instance_ctrl_t ctrl;
@@ -1762,6 +1814,7 @@ void usb_peri_class_request_rwds (usb_setup_t * req, usb_utr_t * p_utr)
         /* Set Stall */
         usb_pstd_set_stall_pipe0(p_utr); /* Req Error */
     }
+
   #else /* defined(USB_CFG_PMSC_USE) */
     usb_instance_ctrl_t ctrl;
 
@@ -1843,8 +1896,10 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
     {
         usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
     }
+
  #else /* defined(USB_CFG_PMSC_USE) */
   #if (BSP_CFG_RTOS != 1)
+
     /* Is a request receive target Interface? */
     usb_instance_ctrl_t ctrl;
     ctrl.setup         = *req;         /* Save setup data. */
@@ -1874,6 +1929,7 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
 void usb_peri_class_request_rss (usb_setup_t * req, usb_utr_t * p_utr)
 {
  #if defined(USB_CFG_PMSC_USE)
+
     /* Is a request receive target Interface? */
     usb_instance_ctrl_t ctrl;
 
@@ -1957,6 +2013,9 @@ void usb_peri_class_request_wss (usb_setup_t * req, usb_utr_t * p_utr)
 
     usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr);
  #if (BSP_CFG_RTOS == 1)
+  #if defined(USB_CFG_PAUD_USE)
+    usb_peri_usbx_set_control_length(req);
+  #endif                               /* #if defined(USB_CFG_PAUD_USE) */
     usb_peri_class_request_usbx(req);
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
 }                                      /* End of function usb_peri_class_request_wss */

@@ -40,6 +40,12 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
+/* On MCUs with single byte data flash writes this can be lowered to 2. However, data
+ *  returned via RM_VEE_FLASH_RecordPtrGet will not be guaranteed to be 32 bit aligned. */
+#ifndef RM_VEE_FLASH_DF_WRITE_SIZE
+ #define RM_VEE_FLASH_DF_WRITE_SIZE    (4)
+#endif
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -112,6 +118,7 @@ typedef struct st_rm_vee_flash_instance_ctrl
     uint32_t                 refresh_xfer_bytes_left;
     flash_instance_t const * p_flash;
     uint32_t                 segment_size;
+    uint8_t                  data_buffer[RM_VEE_FLASH_DF_WRITE_SIZE];
 
     void (* p_callback)(rm_vee_callback_args_t *); // Pointer to callback
     rm_vee_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory

@@ -57,6 +57,7 @@ typedef enum e_elc_event_ra2e1
     ELC_EVENT_ICU_IRQ6               = (0x07), // External pin interrupt 6
     ELC_EVENT_ICU_IRQ7               = (0x08), // External pin interrupt 7
     ELC_EVENT_DTC_COMPLETE           = (0x09), // DTC last transfer
+    ELC_EVENT_DTC_END                = (0x0A), // DTC transfer end
     ELC_EVENT_ICU_SNOOZE_CANCEL      = (0x0B), // Canceling from Snooze mode
     ELC_EVENT_FCU_FRDYI              = (0x0C), // Flash ready interrupt
     ELC_EVENT_LVD_LVD1               = (0x0D), // Voltage monitor 1 interrupt

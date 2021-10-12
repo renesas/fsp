@@ -1310,7 +1310,7 @@ static void r_sci_uart_config_set (sci_uart_instance_ctrl_t * const p_ctrl, uart
 #if BSP_FEATURE_SCI_UART_CSTPEN_CHANNELS
     if (p_extend->flow_control == SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS)
     {
-        p_ctrl->p_reg->SPMR = ((uint8_t) (1U << R_SCI0_SPMR_CSTPEN_Pos) & R_SCI0_SPMR_CSTPEN_Msk);
+        p_ctrl->p_reg->SPMR = R_SCI0_SPMR_CSTPEN_Msk | R_SCI0_SPMR_CTSE_Msk;
     }
     else
 #endif

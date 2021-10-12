@@ -622,9 +622,13 @@ fsp_err_t R_SCE_Aes128GcmEncryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyI
     {
         indata_cmd = change_endian_long(0); /* GCM-Encrypt command */
     }
-    else                                    /* if (SCE_KEY_INDEX_TYPE_AES128_GCM_FOR_DLMS_COSEM == InData_KeyIndex->type) */
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_TLS == InData_KeyIndex->type)
     {
-        indata_cmd = change_endian_long(2); /* GCM-Encrypt for DLMS/COSEM */
+        indata_cmd = change_endian_long(1); /* For TLS */
+    }
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_cmd = change_endian_long(2); /* For ECDH */
     }
 
     return R_SCE_Aes128GcmEncryptInitSub(&indata_cmd, InData_KeyIndex->value, InData_IV);
@@ -694,21 +698,24 @@ fsp_err_t R_SCE_Aes128GcmEncryptFinalPrivate (uint32_t * InData_Text,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_Aes128GcmDecryptInitPrivate (sce_aes_wrapped_key_t * InData_KeyIndex, uint32_t * InData_IV)
 {
-    uint32_t indata_cmd = 0;
+    uint32_t indata_cmd = 0; /* For normal */
 
     if (SCE_KEY_INDEX_TYPE_AES128 == InData_KeyIndex->type)
     {
         indata_cmd = change_endian_long(0); /* GCM-Encrypt command */
     }
-    else if (SCE_KEY_INDEX_TYPE_AES128_GCM_FOR_DLMS_COSEM == InData_KeyIndex->type)
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_TLS == InData_KeyIndex->type)
     {
-        indata_cmd = change_endian_long(2); /* GCM-Encrypt for DLMS/COSEM */
+        indata_cmd = change_endian_long(1); /* For TLS */
     }
-    else                                    /* if (SCE_KEY_INDEX_TYPE_AES128_GCM_WITH_IV == InData_KeyIndex->type) */
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_KeyIndex->type)
+    {
+        indata_cmd = change_endian_long(2); /* For ECDH */
+    }
+    if (SCE_KEY_INDEX_TYPE_AES128_GCM_WITH_IV == InData_KeyIndex->type)
     {
         indata_cmd = change_endian_long(3);
     }
-
     return R_SCE_Aes128GcmDecryptInitSub(&indata_cmd, InData_KeyIndex->value, InData_IV);
 }
 
@@ -1864,6 +1871,23 @@ fsp_err_t R_SCE_EcdhReadPublicKeyPrivate (uint32_t * InData_Cmd,
                                                        InData_data,
                                                        InData_Signature,
                                                        OutData_KeyIndex);
+}
+
+/*******************************************************************************************************************//**
+ * Output the key index of QeU without signature verification.
+ *
+ * @param InData_Cmd       key_id use or not
+ * @param InData_data      API function argument "public_key_data" plus "stop bit" and "message length"
+ * @param OutData_KeyIndex public key index for API function argument "public_key_data"
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_EcdhReadPublicKeyWithoutSignaturePrivate (uint32_t * InData_Cmd,
+                                                           uint32_t * InData_data,
+                                                           uint32_t * OutData_KeyIndex)
+{
+    return R_SCE_EcdhP256QeuOutputSub(InData_Cmd, InData_data, OutData_KeyIndex);
 }
 
 /*******************************************************************************************************************//**

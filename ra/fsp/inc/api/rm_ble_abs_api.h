@@ -42,8 +42,13 @@
 /* Register definitions, common services and error codes. */
 #include "bsp_api.h"
 #include "r_ble_api.h"
-#include "r_flash_api.h"
-#include "r_timer_api.h"
+#ifndef BLE_CFG_RYZ012_DEVICE
+ #include "r_flash_api.h"
+ #include "r_timer_api.h"
+#else
+ #include "r_uart_api.h"
+ #include "r_sci_uart.h"
+#endif
 
 #include "fsp_common_api.h"
 
@@ -780,10 +785,12 @@ typedef struct st_ble_abs_cfg
     ble_abs_gatt_client_callback_set_t * p_gatt_client_callback_list;       ///< GATT Client callback set.
     uint8_t gatt_client_callback_list_number;                               ///< The number of GATT Client callback functions.
     ble_abs_pairing_parameter_t * p_pairing_parameter;                      ///< Pairing parameters.
-
+#ifndef BLE_CFG_RYZ012_DEVICE
     flash_instance_t const * p_flash_instance;                              ///< Pointer to flash instance.
     timer_instance_t const * p_timer_instance;                              ///< Pointer to timer instance.
-
+#else
+    const uart_instance_t * p_uart_instance;                                ///< SCI UART instance
+#endif
     void (* p_callback)(ble_abs_callback_args_t * p_args);                  ///< Callback provided when a BLE ISR occurs.
     void const * p_context;                                                 ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                                  ///< Placeholder for user extension.

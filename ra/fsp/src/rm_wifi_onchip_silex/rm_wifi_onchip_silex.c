@@ -28,7 +28,6 @@
 
 #include "r_sci_uart.h"
 #include "r_ioport.h"
-#include "rm_wifi_onchip_silex_cfg.h"
 #include "rm_wifi_onchip_silex.h"
 
 #if (BSP_CFG_RTOS == 2)                // FreeRTOS

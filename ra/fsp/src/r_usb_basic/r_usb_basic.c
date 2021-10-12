@@ -381,6 +381,7 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
         case USB_CLASS_INTERNAL_PHID:
         case USB_CLASS_INTERNAL_PVND:
         case USB_CLASS_INTERNAL_PMSC:
+        case USB_CLASS_INTERNAL_PAUD:
         {
             FSP_ERROR_RETURN(USB_MODE_PERI == p_cfg->usb_mode, FSP_ERR_USB_PARAMETER)
 
@@ -607,12 +608,10 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
   #if defined(USB_CFG_HHID_USE)
             ux_host_stack_class_register(_ux_system_host_class_hid_name, ux_host_class_hid_entry);
 
-            ux_host_class_hid_client_register(
-                _ux_system_host_class_hid_client_keyboard_name,
-                ux_host_class_hid_keyboard_entry);
-            ux_host_class_hid_client_register(
-                _ux_system_host_class_hid_client_mouse_name,
-                ux_host_class_hid_mouse_entry);
+            ux_host_class_hid_client_register(_ux_system_host_class_hid_client_keyboard_name,
+                                              ux_host_class_hid_keyboard_entry);
+            ux_host_class_hid_client_register(_ux_system_host_class_hid_client_mouse_name,
+                                              ux_host_class_hid_mouse_entry);
 
             if (USB_IP1 == p_ctrl->module_number)
             {
@@ -726,6 +725,10 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 #if defined(USB_CFG_PMSC_USE)
             g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PMSC);
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
+
+#if defined(USB_CFG_PAUD_USE)
+            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PAUD);
+#endif                                 /* defined(USB_CFG_PAUD_USE) */
 
 #if defined(USB_CFG_PVND_USE)
             g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PVND);
@@ -2579,7 +2582,7 @@ fsp_err_t R_USB_HostControlTransfer (usb_ctrl_t * const p_api_ctrl,
     p_ctrl->setup.request_index  = p_setup->request_index;
     p_ctrl->setup.request_length = p_setup->request_length;
 
-    if ((p_ctrl->setup.request_type & USB_HOST_TO_DEV) == USB_HOST_TO_DEV)
+    if ((p_ctrl->setup.request_type & USB_DEV_TO_HOST) == USB_DEV_TO_HOST)
     {
         err = usb_ctrl_read(p_ctrl, p_buf, p_ctrl->setup.request_length);  /* Request Control transfer */
     }

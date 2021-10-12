@@ -530,6 +530,9 @@ fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyVerify(sce_ecdh_handle_t            * ha
                                                uint8_t                      * public_key_data,
                                                sce_ecdsa_byte_data_t        * signature,
                                                sce_ecc_public_wrapped_key_t * wrapped_key);
+fsp_err_t R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature(sce_ecdh_handle_t            * handle,
+                                                             uint8_t                      * public_key_data,
+                                                             sce_ecc_public_wrapped_key_t * wrapped_key);
 fsp_err_t R_SCE_ECDH_secp256r1_SharedSecretCalculate(sce_ecdh_handle_t             * handle,
                                                      sce_ecc_public_wrapped_key_t  * ecc_public_wrapped_key,
                                                      sce_ecc_private_wrapped_key_t * ecc_private_wrapped_key,
@@ -542,6 +545,36 @@ fsp_err_t R_SCE_ECDH_secp256r1_KeyDerivation(sce_ecdh_handle_t          * handle
                                              uint32_t                     other_info_length,
                                              sce_hmac_sha_wrapped_key_t * salt_wrapped_key,
                                              sce_aes_wrapped_key_t      * wrapped_key);
+
+fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall(uint8_t *encrypted_provisioning_key, uint8_t *initial_vector,
+        uint8_t *encrypted_key, sce_tls_ca_certification_public_wrapped_key_t *wrapped_key);
+fsp_err_t R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate(sce_tls_p256_ecc_wrapped_key_t *tls_p256_ecc_wrapped_key,
+        uint8_t *ephemeral_ecdh_public_key);
+fsp_err_t R_SCE_TLS_RootCertificateVerify(uint32_t public_key_type, uint8_t *certificate,
+        uint32_t certificate_length, uint32_t public_key_n_start_position, uint32_t public_key_n_end_position,
+        uint32_t public_key_e_start_position, uint32_t public_key_e_end_position, uint8_t *signature,
+        uint32_t *encrypted_root_public_key);
+fsp_err_t R_SCE_TLS_CertificateVerify(uint32_t public_key_type, uint32_t *encrypted_input_public_key,
+        uint8_t *certificate, uint32_t certificate_length, uint8_t *signature, uint32_t public_key_n_start_position,
+        uint32_t public_key_n_end_position, uint32_t public_key_e_start_position, uint32_t public_key_e_end_position,
+        uint32_t *encrypted_output_public_key);
+fsp_err_t R_SCE_TLS_PreMasterSecretEncryptWithRSA2048(uint32_t *encrypted_public_key,
+        uint32_t *sce_pre_master_secret, uint8_t *encrypted_pre_master_secret);
+fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForRSA2048(uint32_t *sce_pre_master_secret);
+fsp_err_t R_SCE_TLS_MasterSecretGenerate (uint32_t select_cipher_suite, uint32_t *sce_pre_master_secret,
+        uint8_t *client_random, uint8_t *server_random, uint32_t *sce_master_secret);
+fsp_err_t R_SCE_TLS_SessionKeyGenerate(uint32_t select_cipher_suite, uint32_t *sce_master_secret,
+        uint8_t *client_random, uint8_t *server_random, uint8_t* nonce_explicit,
+        sce_hmac_sha_wrapped_key_t *client_mac_wrapped_key, sce_hmac_sha_wrapped_key_t *server_mac_wrapped_key,
+        sce_aes_wrapped_key_t *client_crypto_wrapped_key, sce_aes_wrapped_key_t *server_crypto_wrapped_key,
+        uint8_t *client_initial_vector, uint8_t *server_initial_vector);
+fsp_err_t R_SCE_TLS_VerifyDataGenerate(uint32_t select_verify_data, uint32_t *sce_master_secret,
+        uint8_t *hand_shake_hash, uint8_t *verify_data);
+fsp_err_t R_SCE_TLS_ServerKeyExchangeVerify(uint32_t public_key_type, uint8_t *client_random,
+        uint8_t *server_random, uint8_t *server_ephemeral_ecdh_public_key, uint8_t *server_key_exchange_signature,
+        uint32_t *encrypted_public_key, uint32_t *encrypted_ephemeral_ecdh_public_key);
+fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForECC_secp256r1(uint32_t *encrypted_public_key,
+    sce_tls_p256_ecc_wrapped_key_t *tls_p256_ecc_wrapped_key, uint32_t *sce_pre_master_secret);
 
 uint32_t SCE_USER_SHA_384_FUNCTION(uint8_t * message, uint8_t * digest, uint32_t message_length);
 

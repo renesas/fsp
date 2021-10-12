@@ -466,29 +466,12 @@ fsp_err_t R_SCE_AES256ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256ECB_DecryptInit (sce_aes_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
-    fsp_err_t error_code   = FSP_SUCCESS;
-    fsp_err_t return_value = FSP_SUCCESS;
-
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
     g_aes256ecbdec_private_id = g_private_id_counter;
     handle->id                = g_aes256ecbdec_private_id;
-    error_code                = R_SCE_Aes256EcbDecryptInitPrivate(wrapped_key);
-    if (FSP_SUCCESS == error_code)
-    {
-        return_value = FSP_SUCCESS;
-    }
-    else if (FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT == error_code)
-    {
-        return_value = FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT;
-    }
-    else
-    {
-        return_value = FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
-    }
-
-    return return_value;
+    return R_SCE_Aes256EcbDecryptInitPrivate(wrapped_key);
 }
 
 /*******************************************************************************************************************//**
@@ -1113,7 +1096,10 @@ fsp_err_t R_SCE_AES128GCM_EncryptInit (sce_gcm_handle_t      * handle,
     }
     else
     {
-        return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
+        if (SCE_KEY_INDEX_TYPE_AES128_FOR_TLS != wrapped_key->type)
+        {
+            return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
+        }
     }
 
     memset(handle, 0, sizeof(sce_gcm_handle_t));
@@ -1418,7 +1404,8 @@ fsp_err_t R_SCE_AES128GCM_DecryptInit (sce_gcm_handle_t      * handle,
     }
     else
     {
-        if (SCE_KEY_INDEX_TYPE_AES128_GCM_WITH_IV != wrapped_key->type)
+        if ((SCE_KEY_INDEX_TYPE_AES128_FOR_TLS != wrapped_key->type)
+        && (SCE_KEY_INDEX_TYPE_AES128_GCM_WITH_IV != wrapped_key->type))
         {
             return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
         }
