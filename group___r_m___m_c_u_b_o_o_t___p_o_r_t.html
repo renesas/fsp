@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.3.0</span>
+   &#160;<span id="projectnumber">Release v3.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -248,6 +248,8 @@ RSA 3072</li>
 <tr>
 <td>Signing Options &gt; Custom</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
 <tr>
+<td>Signing Options &gt; Python</td><td>Manual Entry</td><td>python </td><td>Name of the python command to use. Default is python, but can be updated to python3 for Linux or an absolute path if needed. </td></tr>
+<tr>
 <td>Debugging &gt; Log Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Off</li>
@@ -315,13 +317,29 @@ Usage Notes</h1>
 </ol>
 <p>To convert a TrustZone image, follow the steps above for both the Secure project and the Non-Secure project.</p>
 <p>MCUboot application images must also be signed to work with MCUboot. At a minimum, this involves adding a SHA and MCUboot specific constant data called boot magic in the image trailer.</p>
-<p>A template to get started with signing based on the properties specified in the MCUboot stack is output in a comment at the top of ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h.</p>
-<p>Signing can be done on the command line after building or as a post-build step in e2 studio. To sign the image as a post-build step:</p>
+<p>Signing can be done on the as a post-build step in e2 studio. To sign the image as a post-build step:</p>
 <ol type="1">
-<li>Update the paths as documented in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h.</li>
-<li>Join the two commands (arm-none-eabi-objcopy and python) with ' &amp; ' on Windows or ' ; ' on Linux.</li>
-<li>Copy the single line command to Project &gt; Properties, C/C++ Build &gt; Settings, Build Steps (tab), Post-build steps, Command(s).</li>
-<li>The signed image is output next to the application &lt;project&gt;.elf file with a default name of &lt;project&gt;_signed.bin.</li>
+<li>If Linux is used to develop the application image, change the MCUboot property <code>Signing &gt; Python</code> to <code>python3</code>.</li>
+<li>Build the bootloader project to generate the *.bld file. Make sure to build the bootloader project on the same computer as the application image to ensure the path to the signing script is correct.</li>
+<li>Define environment variables in the Properties of the application image project in e2 studio.<ol type="a">
+<li>Right click the application image project, and select <b>Properties</b>.</li>
+<li>Select <b>C/C++ Build &gt; Environment</b> on the left.</li>
+<li>Click <b>Add...</b></li>
+<li>Define the following environment variables one at a time:<ul>
+<li>MCUBOOT_IMAGE_VERSION: Set to the version of the application image.</li>
+<li>MCUBOOT_IMAGE_SIGNING_KEY: Set the path to the key used for signing. If signing is not required, do not set this variable. If example keys are used, set MCUBOOT_IMAGE_SIGNING_KEY as follows (replace &lt;boot_project&gt; with the bootloader project path):<ul>
+<li>ECC: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-ec-p256.pem</li>
+<li>RSA 2K: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-rsa-2048.pem</li>
+<li>RSA 3K: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-rsa-3072.pem</li>
+</ul>
+</li>
+<li>MCUBOOT_APP_BIN_CONVERTER: Optional. Set to path to objcopy, arm-none-eabi-objcopy, fromelf, or ielftool. Not required if one of these tools is on the path.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>Build the project.</li>
+<li>The signed image is output next to the application &lt;project&gt;.elf file with the name &lt;project&gt;bin.signed.</li>
 </ol>
 <h2>Getting Started: Download and Debug</h2>
 <p>For projects that do not use TrustZone, debug the MCUboot project using the default configuration. Before running, load the signed image to the address specified in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h. This can be done with the Load Ancillary File button when debugging in e2 studio. Upgrade images can be loaded to the upgrade image slots using the same method.</p>
@@ -377,7 +395,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

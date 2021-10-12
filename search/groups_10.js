@@ -2,6 +2,7 @@ var searchData=
 [
   ['ra2a1',['RA2A1',['../group___b_s_p___m_c_u___r_a2_a1.html',1,'']]],
   ['ra2e1',['RA2E1',['../group___b_s_p___m_c_u___r_a2_e1.html',1,'']]],
+  ['ra2e2',['RA2E2',['../group___b_s_p___m_c_u___r_a2_e2.html',1,'']]],
   ['ra2l1',['RA2L1',['../group___b_s_p___m_c_u___r_a2_l1.html',1,'']]],
   ['ra4e1',['RA4E1',['../group___b_s_p___m_c_u___r_a4_e1.html',1,'']]],
   ['ra4m1',['RA4M1',['../group___b_s_p___m_c_u___r_a4_m1.html',1,'']]],

@@ -7,11 +7,11 @@ var group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i =
     ] ],
     [ "sce_aes_wrapped_key_t", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__aes__wrapped__key__t", [
       [ "type", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#aa7527c99a570dc567ad5517616a0f24c", null ],
-      [ "value", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a7b4d174dc94f9735d0f69977f7e31fdf", null ]
+      [ "value", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#af799092a7d21b59243071cdc1f5d835b", null ]
     ] ],
     [ "sce_hmac_sha_wrapped_key_t", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__hmac__sha__wrapped__key__t", [
       [ "type", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a5b45dbe63bcae3178cad9d2c50744548", null ],
-      [ "value", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a327de4c7397a3c002323cddcc562daff", null ]
+      [ "value", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a11e0298884678e3951df1d2f2b0e411a", null ]
     ] ],
     [ "sce_rsa1024_public_wrapped_key_t", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__rsa1024__public__wrapped__key__t", [
       [ "type", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a9a4d8a07d1636be090068557fa80c5d2", null ]
@@ -32,12 +32,12 @@ var group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "type", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a1ca1c341e039f57d9fc774eff0cd0530", null ]
     ] ],
     [ "sce_rsa1024_wrapped_pair_key_t", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__rsa1024__wrapped__pair__key__t", [
-      [ "private", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#ad86957b2557d23abc159f5c0eea41e03", null ],
-      [ "public", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a6ddc33a68b9bd73b632062bd093a7350", null ]
+      [ "priv_key", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a8e5dfc2b9dc2db68f2ff27e84ec99153", null ],
+      [ "pub_key", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a40d50416428e1b750d477c98000694e8", null ]
     ] ],
     [ "sce_rsa2048_wrapped_pair_key_t", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__rsa2048__wrapped__pair__key__t", [
-      [ "private", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a1f623ee23fcba9f8a3bf3489f7ed6b40", null ],
-      [ "public", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#ac5771bec67f08397511efd24c170370e", null ]
+      [ "priv_key", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a2a0fd14433a3fe0267dccbf840f64b60", null ],
+      [ "pub_key", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a47309d37ab0683cb9303cff246272917", null ]
     ] ],
     [ "sce_ecc_public_wrapped_key_t", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__ecc__public__wrapped__key__t", [
       [ "type", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a9b86abb901bf8a6ca708a370f47f6dbd", null ]
@@ -47,8 +47,8 @@ var group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "value", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a9892ce7d4aab782334fda2aeb78b07f4", null ]
     ] ],
     [ "sce_ecc_wrapped_pair_key_t", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__ecc__wrapped__pair__key__t", [
-      [ "private", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#aed856a7fbb38472fac4565da2c671c7d", null ],
-      [ "public", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a24f906c630a97ce83f0a9e5c9cc8b2e2", null ]
+      [ "priv_key", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a0d6e19b7e0fbf5cefec3514d4608472f", null ],
+      [ "pub_key", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a65f7b65b8beed037fa6f1feb6464d515", null ]
     ] ],
     [ "sce_ecdh_wrapped_key_t", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__ecdh__wrapped__key__t", [
       [ "type", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#adfd2d2aaa8474a51d10b6ab355263380", null ],
@@ -248,8 +248,20 @@ var group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "ECDH_secp256r1_Init", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a9f96b419c8dad4d004a3950805cdc5f7", null ],
       [ "ECDH_secp256r1_PublicKeySign", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#ae5984016d0f85fc238a56ee41c3bf13e", null ],
       [ "ECDH_secp256r1_PublicKeyVerify", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a5add33f36494cf492a6cb1f83918ae20", null ],
+      [ "ECDH_secp256r1_PublicKeyReadWithoutSignature", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#aa08d76ace3bb4ac614de25d856ab935c", null ],
       [ "ECDH_secp256r1_SharedSecretCalculate", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#af968dc7e50dacc3158f3fb248bfdfe3a", null ],
-      [ "ECDH_secp256r1_KeyDerivation", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#acb894ec4ca2b18f50ec4372ec93be8db", null ]
+      [ "ECDH_secp256r1_KeyDerivation", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#acb894ec4ca2b18f50ec4372ec93be8db", null ],
+      [ "TLS_RootCertificateRSA2048PublicKeyInstall", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a71442204fb9e202158121b51a1c22c8c", null ],
+      [ "TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#ab2e3cd9c23174f7459be35074b2fb3b7", null ],
+      [ "TLS_RootCertificateVerify", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a89352d5f71ce761c12e229185b508244", null ],
+      [ "TLS_CertificateVerify", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a21cd1ef34da5490af11fb46939081926", null ],
+      [ "TLS_PreMasterSecretGenerateForRSA2048", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a81ce7f3a619e68d7f9c6ede42ff486db", null ],
+      [ "TLS_MasterSecretGenerate", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#ae0ddd8244eec175846e255005b0c5419", null ],
+      [ "TLS_PreMasterSecretEncryptWithRSA2048", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#aca776a1b7ec5063a44b5a6f9f66fa926", null ],
+      [ "TLS_SessionKeyGenerate", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#ac4c93c038cbe3e5c34a690010647502b", null ],
+      [ "TLS_VerifyDataGenerate", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a1aa3ab9256f21dcf928461899bea8e32", null ],
+      [ "TLS_ServerKeyExchangeVerify", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#aa9ed4a931e02db087c68730ae517efc7", null ],
+      [ "TLS_PreMasterSecretGenerateForECC_secp256r1", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#ad123f083dd17c811c8e3426ce552e8a4", null ]
     ] ],
     [ "sce_instance_t", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__instance__t", [
       [ "p_ctrl", "group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a3f75c2b31a413331cbe59b01adef57b4", null ],

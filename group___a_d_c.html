@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.3.0</span>
+   &#160;<span id="projectnumber">Release v3.4.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -228,10 +228,11 @@ Features</h2>
 <li>Supports reading converted data<a class="anchor" id="um_adc_reading_conversion_data"></a></li>
 <li>Sample and hold support</li>
 <li>Double-trigger support</li>
+<li>Hardware comparator with interrupt and event output</li>
 </ul>
 <h1><a class="anchor" id="r-adc-configuration"></a>
 Configuration</h1>
-<p><a class="anchor" id="um_adc_configure_conversion_data_resolution"></a><a class="anchor" id="um_adc_configure_conversion_data_alignment"></a><a class="anchor" id="um_adc_automatically_clearing_conversion_results"></a><a class="anchor" id="um_adc_hardware_support_for_automatically_adding_converted_data"></a><a class="anchor" id="um_adc_hardware_support_for_automatically_averaging_sampled_data"></a><a class="anchor" id="um_adc_configure_single_scan_mode"></a><a class="anchor" id="um_adc_configure_software_trigger"></a><a class="anchor" id="um_adc_configure_the_hardware_trigger"></a><a class="anchor" id="um_adc_configure_continuous_mode"></a><a class="anchor" id="um_adc_configure_channels_for_group_mode"></a><a class="anchor" id="um_adc_configure_group_scan_mode"></a><a class="anchor" id="um_adc_configuring_sample_and_hold"></a><a class="anchor" id="um_adc_configuring_double_trigger"></a><a class="anchor" id="um_adc_reference_voltage_control"></a> <h2>Build Time Configurations for r_adc</h2>
+<p><a class="anchor" id="um_adc_configure_conversion_data_resolution"></a><a class="anchor" id="um_adc_configure_conversion_data_alignment"></a><a class="anchor" id="um_adc_automatically_clearing_conversion_results"></a><a class="anchor" id="um_adc_hardware_support_for_automatically_adding_converted_data"></a><a class="anchor" id="um_adc_hardware_support_for_automatically_averaging_sampled_data"></a><a class="anchor" id="um_adc_configure_single_scan_mode"></a><a class="anchor" id="um_adc_configure_software_trigger"></a><a class="anchor" id="um_adc_configure_the_hardware_trigger"></a><a class="anchor" id="um_adc_configure_continuous_mode"></a><a class="anchor" id="um_adc_configure_channels_for_group_mode"></a><a class="anchor" id="um_adc_configure_group_scan_mode"></a><a class="anchor" id="um_adc_configure_window_compare"></a><a class="anchor" id="um_adc_configuring_sample_and_hold"></a><a class="anchor" id="um_adc_configuring_double_trigger"></a><a class="anchor" id="um_adc_reference_voltage_control"></a> <h2>Build Time Configurations for r_adc</h2>
 The following build time configurations are defined in fsp_cfg/r_adc_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
@@ -305,6 +306,62 @@ Channel 2</li>
 <tr>
 <td>Input &gt; Sample and Hold &gt; Sample Hold States (Applies only to channels 0, 1, 2)</td><td>Must be a valid non-negative integer with configurable value 4 to 255</td><td>24 </td><td>Specifies the updated sample-and-hold count for the channel dedicated sample-and-hold circuit </td></tr>
 <tr>
+<td>Input &gt; Window Compare &gt; Window A &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable comparison with Window A. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window A &gt; Channels to compare (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>Select channels to be compared to Window A. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window A &gt; Channel comparison mode (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>Checking a box sets the comparison mode for that channel to Greater Than or Inside Window depending on whether Window Mode is disabled or enabled (respectively). If left unchecked the comparison mode will likewise be Less Than or Outside Window (respectively). </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window A &gt; Lower Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the lower comparison value. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window A &gt; Upper Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the upper comparison value. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window B &gt; Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable comparison with Window B. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window B &gt; Channel to compare (channel availability varies by MCU and unit)</td><td>Refer to the RA Configuration tool for available options.</td><td>Channel 0 </td><td>Select a channel to be compared to Window B. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window B &gt; Comparison mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Less Than or Outside Window</li>
+<li>
+Greater Than or Inside Window</li>
+</ul>
+</td><td>module.driver.adc.compare.window_b.mode </td><td>Select the comparison mode for Window B. For each option, the first condition applies when Window Mode is disabled and the second option applies when Window Mode is enabled. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window B &gt; Lower Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the lower comparison value. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window B &gt; Upper Reference</td><td>Must be a positive 16-bit integer.</td><td>0 </td><td>Set the upper comparison value. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Window Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>When disabled, ADC values will be compared only with the lower reference on each comparator. When enabled, both the lower and upper reference values will be used to create a comparison window. </td></tr>
+<tr>
+<td>Input &gt; Window Compare &gt; Event Output</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+OR</li>
+<li>
+XOR</li>
+<li>
+AND</li>
+</ul>
+</td><td>OR </td><td>Select how comparison results should be composited for event output. </td></tr>
+<tr>
 <td>Input &gt; Channel Scan Mask (channel availability varies by MCU)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>In Normal mode of operation, this bitmask field specifies the channels that are enabled in that ADC unit. In group mode, this field specifies which channels belong to group A. </td></tr>
 <tr>
 <td>Input &gt; Group B Scan Mask (channel availability varies by MCU)</td><td>Refer to the RA Configuration tool for available options.</td><td></td><td>In group mode, this field specifies which channels belong to group B. </td></tr>
@@ -337,6 +394,10 @@ Group A can interrupt Group B; Group B scan restarts immediately and scans conti
 <tr>
 <td>Interrupts &gt; Scan End Group B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select group B scan end interrupt priority. </td></tr>
 <tr>
+<td>Interrupts &gt; Window Compare A Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select Window Compare A interrupt priority. </td></tr>
+<tr>
+<td>Interrupts &gt; Window Compare B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select Window Compare B interrupt priority. </td></tr>
+<tr>
 <td>Extra &gt; ADC Ring Buffer</td><td>MCU Specific Options</td><td></td><td>ADC Ring Buffer to be used only with DMAC transfers, keep this property disabled for normal ADC operations. When enabled, ADC converted data is stored in ADBUF registers in place of ADDR registers. The read API will not read from this location for normal ADC operations. </td></tr>
 </table>
 </p>
@@ -351,6 +412,8 @@ Clock Configuration</h2>
 <td>RA2A1</td><td>PCLKD</td></tr>
 <tr>
 <td>RA2E1</td><td>PCLKD</td></tr>
+<tr>
+<td>RA2E2</td><td>PCLKD</td></tr>
 <tr>
 <td>RA2L1</td><td>PCLKD</td></tr>
 <tr>
@@ -412,6 +475,19 @@ ADC Operational Modes</h2>
 <p>When extended double-triggering is enabled both ADC input events are routed to Group A. The interrupt is still thrown after every two scans regardless of the triggering event(s). While the first and second scan are saved to the selected ADC data register and the ADC duplexing register as before, scans associated with event A and B are additionally copied into duplexing register A and B, respectively (<a class="el" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aadc3763b403f4b9ab667602137a9de57">ADC_CHANNEL_DUPLEX_A</a> and <a class="el" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814aa66d57680818caebf7be4d68f8c505be">ADC_CHANNEL_DUPLEX_B</a>).</p>
 <h3>When Interrupts Are Not Enabled</h3>
 <p>If interrupts are not enabled, the R_ADC_StatusGet API can be used to poll the ADC to determine when the scan has completed. The read API function is used to access the converted ADC result. This applies to both normal scans and calibration scans for MCUs that support calibration.</p>
+<h2>Window Compare Function</h2>
+<p>The ADC contains comparators that allow scan data to be compared to user-provided reference values. When a value meets the configured condition an interrupt and/or an ELC event can be produced.</p>
+<p>Each unit has two configurable comparison units, Window A and Window B. Window A allows for configuring multiple simultaneous channels to compare while Window B only allows one channel at a time.</p>
+<p>The window compare function can be configured both through the RA Configuration tool and at runtime by providing a pointer to an <a class="el" href="group___a_d_c.html#structadc__window__cfg__t">adc_window_cfg_t</a> struct to <a class="el" href="group___a_d_c.html#a01eb9675c5cef9993c5a9e85dbadb4b0">adc_channel_cfg_t::p_window_cfg</a> when calling <a class="el" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg</a>. The available comparison modes are shown below:</p>
+<table class="doxtable">
+<tr>
+<th>Window setting </th><th>Channel mode 0 </th><th>Channel mode 1  </th></tr>
+<tr>
+<td>Disabled </td><td>Scan &lt; Low Ref </td><td>Scan &gt; Low Ref </td></tr>
+<tr>
+<td>Enabled </td><td>(Scan &lt; Low Ref) OR (Scan &gt; High Ref) </td><td>Low Ref &lt; Scan &lt; High Ref </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>The window setting applies to all channels configured on a unit.</dd></dl>
 <h2>Sample-State Count Setting</h2>
 <p>The application program can modify the setting of the sample-state count for analog channels by calling the <a class="el" href="group___a_d_c.html#gaf0701bf45818dee071cb12e979017bce">R_ADC_SampleStateCountSet()</a> API function. The application program only needs to modify the sample-state count settings from their default values to increase the sampling time. This can be either because the impedance of the input signal is too high to secure sufficient sampling time under the default setting or if the ADCLK is too slow. To modify the sample-state count for a given channel, set the channel number and the number of states when calling the <a class="el" href="group___a_d_c.html#gaf0701bf45818dee071cb12e979017bce">R_ADC_SampleStateCountSet()</a> API function. Valid sample state counts are 7-255.</p>
 <dl class="section note"><dt>Note</dt><dd>Although the hardware supports a minimum number of sample states of 5, some MCUs require 7 states, so the minimum is set to 7. At the lowest supported ADC conversion clock rate (1 MHz), these extra states will lead to, at worst case, a 2 microsecond increase in conversion time. At 60 MHz the extra states will add 33.4 ns to the conversion time.</dd></dl>
@@ -440,6 +516,16 @@ ADC Operational Modes</h2>
 <p>Calibration is required to use the ADC16 peripheral. When using this driver on an MCU that has ADC16, call <a class="el" href="group___a_d_c.html#gafb2e4cd66d5bd276d05eb5fa104a2037">R_ADC_Calibrate()</a> after open, and prior to any other function.</p>
 <h3>Range of ADC16 Results</h3>
 <p>The range of the ADC16 is from 0 (lowest) to 0x7FFF (highest) when used in single-ended mode. This driver only supports single ended mode.</p>
+<h2>Limitations</h2>
+<p>Developers should be aware of the following limitations when using the ADC:</p>
+<ul>
+<li>When using the Window Compare function:<ul>
+<li>Only Single Scan mode may be configured when match or mismatch ELC events are used.</li>
+<li>When one compare window is configured to check the temperature sensor or voltage reference the other window cannot be used.</li>
+<li>Both windows cannot reference the same channel.</li>
+</ul>
+</li>
+</ul>
 <h1><a class="anchor" id="r-adc-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -450,11 +536,15 @@ Examples</h1>
 <p>This example demonstrates reading data from a double-trigger scan. A flag is used to wait for a callback event. Two scans must occur before the callback is called. These results are read via <a class="el" href="group___a_d_c.html#gad6bfc8395b53a96ee89f266fc940e2da">R_ADC_Read</a> using the selected channel enum value as well as <a class="el" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a2602b0a06ce1ce485d0812de6f6f4091">ADC_CHANNEL_DUPLEX</a>.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> scan_complete_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> adc_callback (<a class="code" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line"></div><div class="line">    scan_complete_flag = <span class="keyword">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> adc_double_trigger_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the module. */</span></div><div class="line">    err = <a class="code" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open</a>(&amp;g_adc0_ctrl, &amp;g_adc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable double-trigger channel. */</span></div><div class="line">    err = <a class="code" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg</a>(&amp;g_adc0_ctrl, &amp;g_adc0_channel_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable scan triggering from ELC events. */</span></div><div class="line">    (void) <a class="code" href="group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2">R_ADC_ScanStart</a>(&amp;g_adc0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for conversion to complete. Two scans must be triggered before a callback occurs. */</span></div><div class="line">    scan_complete_flag = <span class="keyword">false</span>;</div><div class="line">    <span class="keywordflow">while</span> (!scan_complete_flag)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for callback to set flag. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Read converted data from both scans. */</span></div><div class="line">    uint16_t channel1_conversion_result_0;</div><div class="line">    uint16_t channel1_conversion_result_1;</div><div class="line">    err = <a class="code" href="group___a_d_c.html#gad6bfc8395b53a96ee89f266fc940e2da">R_ADC_Read</a>(&amp;g_adc0_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492">ADC_CHANNEL_1</a>, &amp;channel1_conversion_result_0);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___a_d_c.html#gad6bfc8395b53a96ee89f266fc940e2da">R_ADC_Read</a>(&amp;g_adc0_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a2602b0a06ce1ce485d0812de6f6f4091">ADC_CHANNEL_DUPLEX</a>, &amp;channel1_conversion_result_1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>ADC-DMAC Repeat-Block Transfer Example</h2>
 <p>This example demonstrates writing multiple data from DAC peripheral to ADC channels and storing the data in memory through DMAC using Repeat-Block Transfer mode. It creates single block to multiple ring buffer type of transfer topology. Ping-Pong mechanism is used to read the data from memory in between the transfers. This example is valid only for MCUs that have ADBUF.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor"> #define ADC_DMAC_EXAMPLE_DATA_LOW                  (0U)</span></div><div class="line"><span class="preprocessor"> #define ADC_DMAC_EXAMPLE_DATA_HIGH                 (0x000FU)</span></div><div class="line"><span class="preprocessor"> #define ADC_DMAC_EXAMPLE_DELAY_1000_MS             (1000U)</span></div><div class="line"></div><div class="line"><span class="preprocessor"> #define ADC_DMAC_EXAMPLE_NUM_PING_PONG_BUFFERS     (2)</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> uint16_t g_adc_dmac_example_buffer[ADC_DMAC_EXAMPLE_NUM_PING_PONG_BUFFERS][</div><div class="line">    ADC_DMAC_EXAMPLE_ADC_CHANNELS_PER_BLOCK][ADC_DMAC_EXAMPLE_SAMPLES_PER_CHANNEL]; <span class="comment">// Destination buffer for DMAC transfers</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint16_t g_adc_dmac_example_ping_pong_index = 0U;</div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">void</span>   * gp_read_data;</div><div class="line"></div><div class="line"><span class="comment">/* DMAC callback */</span></div><div class="line"><span class="keywordtype">void</span> adc_dmac_callback (<a class="code" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    (void) p_args;</div><div class="line"></div><div class="line">    <span class="comment">/* Store the pointer to the last buffer that was written</span></div><div class="line"><span class="comment">     * An array of data for the first enabled channel is at &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][0][0],</span></div><div class="line"><span class="comment">     * an array of data for the next channel is at &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][1][0], etc.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    gp_read_data = &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][0][0];</div><div class="line"></div><div class="line">    <span class="comment">/* Select the other ping-pong buffer which is free for writing */</span></div><div class="line">    g_adc_dmac_example_ping_pong_index = !g_adc_dmac_example_ping_pong_index;</div><div class="line"></div><div class="line">    <span class="comment">/* Reset the destination pointer and DMAC peripheral */</span></div><div class="line">    <a class="code" href="group___d_m_a_c.html#gaac8f15eacf61325ad50ca0778cfc7ffd">R_DMAC_Reset</a>(&amp;g_transfer0_ctrl,</div><div class="line">                 NULL,</div><div class="line">                 (<span class="keywordtype">void</span> *) &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][0][0],</div><div class="line">                 ADC_DMAC_EXAMPLE_SAMPLES_PER_CHANNEL);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(gp_read_data);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> adc_dmac_repeat_block_transfer_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open ADC Module and configure the channels */</span></div><div class="line">    <span class="comment">/* Enable the ADBUF property from configurations */</span></div><div class="line">    err = <a class="code" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open</a>(&amp;g_adc0_ctrl, &amp;g_adc0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg</a>(&amp;g_adc0_ctrl, &amp;g_adc0_channel_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Open DMAC channel for repeat-block transfer with following configurations</span></div><div class="line"><span class="comment">     * (1) Destination address as &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][0][0]</span></div><div class="line"><span class="comment">     * (2) Enable end of transfer interrupt</span></div><div class="line"><span class="comment">     * (3) Configure source address mode as incremented and destination address mode as offset addition,</span></div><div class="line"><span class="comment">     *     fixed to address of ADBUF register by configurator with ADC-DMAC module</span></div><div class="line"><span class="comment">     * (4) Configure source buffer size as total size of source buffer - Refer RA6M4 Hardware Manual R01UH0890EJ0110,</span></div><div class="line"><span class="comment">     *     section 16.2.15 for source buffer size limitations</span></div><div class="line"><span class="comment">     * (5) Configure transfer mode as Repeat-Block mode</span></div><div class="line"><span class="comment">     * (6) Refer RA6M4 Hardware Manual R01UH0890EJ0110,</span></div><div class="line"><span class="comment">     *     section 16.2.16 for total number of blocks which decides destination buffer size</span></div><div class="line"><span class="comment">     * (7) Number of blocks is determined by the samples per channel property for ADC-DMAC module</span></div><div class="line"><span class="comment">     * (8) Size of block is determined using the enabled ADC channels in the configurator when using ADC-DMAC-module</span></div><div class="line"><span class="comment">     * (9) Configure DMAC activation source as A/D scan end interrupt</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#ga448a013ad5b91097e45833313d5df354">R_DMAC_Open</a>(&amp;g_transfer0_ctrl, &amp;g_transfer0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#gaf72221183919d50cbd8ee1ca528aa20b">R_DMAC_Enable</a>(&amp;g_transfer0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    uint16_t     count = ADC_DMAC_EXAMPLE_DATA_LOW;</div><div class="line">    <a class="code" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> adc_status;</div><div class="line"></div><div class="line">    <span class="comment">/* Trigger the ADC scan for &quot;count&quot; times, this can be replaced by triggering the ADC using a timer */</span></div><div class="line">    <span class="keywordflow">while</span> (count &lt;= (uint16_t) ADC_DMAC_EXAMPLE_DATA_HIGH)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Scan the data with ADC channels*/</span></div><div class="line">        err = <a class="code" href="group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2">R_ADC_ScanStart</a>(&amp;g_adc0_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="comment">/* Wait for conversion to complete */</span></div><div class="line">        uint16_t timeout = UINT16_MAX;</div><div class="line">        adc_status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a> = <a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a>;</div><div class="line">        <span class="keywordflow">while</span> ((<a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a> == adc_status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a>) &amp;&amp; (timeout &gt; 0U))</div><div class="line">        {</div><div class="line">            timeout--;</div><div class="line">            <a class="code" href="group___a_d_c.html#ga676b1c7f1ccceda288cbb2ad79a14ff2">R_ADC_StatusGet</a>(&amp;g_adc0_ctrl, &amp;adc_status);</div><div class="line">        }</div><div class="line"></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(ADC_DMAC_EXAMPLE_DELAY_1000_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">        count++;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor"> #define ADC_DMAC_EXAMPLE_DATA_LOW                  (0U)</span></div><div class="line"><span class="preprocessor"> #define ADC_DMAC_EXAMPLE_DATA_HIGH                 (0x000FU)</span></div><div class="line"><span class="preprocessor"> #define ADC_DMAC_EXAMPLE_DELAY_1000_MS             (1000U)</span></div><div class="line"></div><div class="line"><span class="preprocessor"> #define ADC_DMAC_EXAMPLE_NUM_PING_PONG_BUFFERS     (2)</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> uint16_t g_adc_dmac_example_buffer[ADC_DMAC_EXAMPLE_NUM_PING_PONG_BUFFERS][</div><div class="line">    ADC_DMAC_EXAMPLE_ADC_CHANNELS_PER_BLOCK][ADC_DMAC_EXAMPLE_SAMPLES_PER_CHANNEL]; <span class="comment">// Destination buffer for DMAC transfers</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> uint16_t g_adc_dmac_example_ping_pong_index = 0U;</div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">void</span>   * gp_read_data;</div><div class="line"></div><div class="line"><span class="comment">/* DMAC callback */</span></div><div class="line"><span class="keywordtype">void</span> adc_dmac_callback (<a class="code" href="group___d_m_a_c.html#structdmac__callback__args__t">dmac_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    (void) p_args;</div><div class="line"></div><div class="line">    <span class="comment">/* Store the pointer to the last buffer that was written</span></div><div class="line"><span class="comment">     * An array of data for the first enabled channel is at &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][0][0],</span></div><div class="line"><span class="comment">     * an array of data for the next channel is at &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][1][0], etc.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    gp_read_data = &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][0][0];</div><div class="line"></div><div class="line">    <span class="comment">/* Select the other ping-pong buffer which is free for writing */</span></div><div class="line">    g_adc_dmac_example_ping_pong_index = !g_adc_dmac_example_ping_pong_index;</div><div class="line"></div><div class="line">    <span class="comment">/* Reset the destination pointer and DMAC peripheral */</span></div><div class="line">    <a class="code" href="group___d_m_a_c.html#gaac8f15eacf61325ad50ca0778cfc7ffd">R_DMAC_Reset</a>(&amp;g_transfer0_ctrl,</div><div class="line">                 NULL,</div><div class="line">                 (<span class="keywordtype">void</span> *) &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][0][0],</div><div class="line">                 ADC_DMAC_EXAMPLE_SAMPLES_PER_CHANNEL);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(gp_read_data);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> adc_dmac_repeat_block_transfer_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open ADC Module and configure the channels */</span></div><div class="line">    <span class="comment">/* Enable the ADBUF property from configurations */</span></div><div class="line">    err = <a class="code" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open</a>(&amp;g_adc0_ctrl, &amp;g_adc0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg</a>(&amp;g_adc0_ctrl, &amp;g_adc0_channel_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Open DMAC channel for repeat-block transfer with following configurations</span></div><div class="line"><span class="comment">     * (1) Destination address as &amp;g_adc_dmac_example_buffer[g_adc_dmac_example_ping_pong_index][0][0]</span></div><div class="line"><span class="comment">     * (2) Enable end of transfer interrupt</span></div><div class="line"><span class="comment">     * (3) Configure source address mode as incremented and destination address mode as offset addition,</span></div><div class="line"><span class="comment">     *     fixed to address of ADBUF register by configurator with ADC-DMAC module</span></div><div class="line"><span class="comment">     * (4) Configure source buffer size as total size of source buffer - Refer RA6M4 Hardware Manual R01UH0890EJ0110,</span></div><div class="line"><span class="comment">     *     section 16.2.15 for source buffer size limitations</span></div><div class="line"><span class="comment">     * (5) Configure transfer mode as Repeat-Block mode</span></div><div class="line"><span class="comment">     * (6) Refer RA6M4 Hardware Manual R01UH0890EJ0110,</span></div><div class="line"><span class="comment">     *     section 16.2.16 for total number of blocks which decides destination buffer size</span></div><div class="line"><span class="comment">     * (7) Number of blocks is determined by the samples per channel property for ADC-DMAC module</span></div><div class="line"><span class="comment">     * (8) Size of block is determined using the enabled ADC channels in the configurator when using ADC-DMAC-module</span></div><div class="line"><span class="comment">     * (9) Configure DMAC activation source as A/D scan end interrupt</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#ga448a013ad5b91097e45833313d5df354">R_DMAC_Open</a>(&amp;g_transfer0_ctrl, &amp;g_transfer0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___d_m_a_c.html#gaf72221183919d50cbd8ee1ca528aa20b">R_DMAC_Enable</a>(&amp;g_transfer0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    uint16_t     count = ADC_DMAC_EXAMPLE_DATA_LOW;</div><div class="line">    <a class="code" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> adc_status;</div><div class="line"></div><div class="line">    <span class="comment">/* Trigger the ADC scan for &quot;count&quot; times, this can be replaced by triggering the ADC using a timer */</span></div><div class="line">    <span class="keywordflow">while</span> (count &lt;= (uint16_t) ADC_DMAC_EXAMPLE_DATA_HIGH)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Scan the data with ADC channels*/</span></div><div class="line">        err = <a class="code" href="group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2">R_ADC_ScanStart</a>(&amp;g_adc0_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="comment">/* Wait for conversion to complete */</span></div><div class="line">        uint16_t timeout = UINT16_MAX;</div><div class="line">        adc_status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a> = <a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a>;</div><div class="line">        <span class="keywordflow">while</span> ((<a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a> == adc_status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a>) &amp;&amp; (timeout &gt; 0U))</div><div class="line">        {</div><div class="line">            timeout--;</div><div class="line">            <a class="code" href="group___a_d_c.html#ga676b1c7f1ccceda288cbb2ad79a14ff2">R_ADC_StatusGet</a>(&amp;g_adc0_ctrl, &amp;adc_status);</div><div class="line">        }</div><div class="line"></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(ADC_DMAC_EXAMPLE_DELAY_1000_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">        count++;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Window Compare Example</h2>
+<p>This example shows how to configure the window compare function at runtime as well as how to handle events and obtain comparison results through a callback.</p>
+<div class="fragment"><div class="line"></div><div class="line"><a class="code" href="group___a_d_c.html#structadc__window__cfg__t">adc_window_cfg_t</a> g_adc0_window_cfg =</div><div class="line">{</div><div class="line">    <span class="comment">/* Enable Window A and Window B; enable Window mode */</span></div><div class="line">    .<a class="code" href="group___a_d_c.html#a6aad2860ef31d707f9184f8849ae3cbc">compare_cfg</a>        =</div><div class="line">        (<a class="code" href="group___a_d_c.html#ga5d55db8f35fe6d81d9ed2189e6915259">adc_compare_cfg_t</a>) (ADC_COMPARE_CFG_A_ENABLE | ADC_COMPARE_CFG_B_ENABLE | ADC_COMPARE_CFG_WINDOW_ENABLE),</div><div class="line"></div><div class="line">    <span class="comment">/* Compare scan values from Channels 0 and 1 */</span></div><div class="line">    .compare_mask       = <a class="code" href="group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaac501dac2fb65d1f922a6177d149b56bd">ADC_MASK_CHANNEL_0</a> | <a class="code" href="group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaaee05b1448c74da666ef0ed4bf1bbfb8e">ADC_MASK_CHANNEL_1</a>,</div><div class="line"></div><div class="line">    <span class="comment">/* Set Channel 1 condition to be inside the window instead of outside */</span></div><div class="line">    .compare_mode_mask  = <a class="code" href="group___a_d_c.html#ggada437c4b88ed24eb8b9c94c0b45d76eaaee05b1448c74da666ef0ed4bf1bbfb8e">ADC_MASK_CHANNEL_1</a>,</div><div class="line"></div><div class="line">    <span class="comment">/* Set reference voltage levels for Window A */</span></div><div class="line">    .compare_ref_low  = ADC_SCAN_MAX / 3,</div><div class="line">    .compare_ref_high = ADC_SCAN_MAX * 2 / 3,</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Window B to compare Channel 2 (inside window) */</span></div><div class="line">    .compare_b_channel = ADC_WINDOW_B_CHANNEL_2,</div><div class="line">    .compare_b_mode    = ADC_WINDOW_B_MODE_GREATER_THAN_OR_INSIDE,</div><div class="line"></div><div class="line">    <span class="comment">/* Set reference voltage levels for Window B */</span></div><div class="line">    .compare_b_ref_low  = ADC_SCAN_MAX / 4,</div><div class="line">    .compare_b_ref_high = ADC_SCAN_MAX * 3 / 4,</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> adc0_callback (<a class="code" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a0194955f4f59f8d6952adc058539632b">ADC_EVENT_WINDOW_COMPARE_A</a> == p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a7b1ea18a97eee3565ef6cfb084222453">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Get channel that met the comparison criteria */</span></div><div class="line">        <a class="code" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> channel = p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a1e9351a3cb3ab91b4953b29cac73f5cc">channel</a>;</div><div class="line"></div><div class="line">        <span class="comment">/* Process event here */</span></div><div class="line">        <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(channel);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847ab32572630797968579adeed03f19bcd3">ADC_EVENT_WINDOW_COMPARE_B</a> == p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a7b1ea18a97eee3565ef6cfb084222453">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Process Window B events here */</span></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* ... */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> adc_window_compare_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the ADC module */</span></div><div class="line">    err = <a class="code" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open</a>(&amp;g_adc0_ctrl, &amp;g_adc0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the window compare configuration in the channel config */</span></div><div class="line">    g_adc0_channel_runtime_cfg.p_window_cfg = &amp;g_adc0_window_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* The window compare function is configured as part of the scan configuration */</span></div><div class="line">    err = <a class="code" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg</a>(&amp;g_adc0_ctrl, &amp;g_adc0_channel_runtime_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Main program loop - scan the ADC every second */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Start a scan */</span></div><div class="line">        err = <a class="code" href="group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2">R_ADC_ScanStart</a>(&amp;g_adc0_ctrl);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay; any compare events will be handled by the callback */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d">BSP_DELAY_UNITS_SECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structadc__sample__state__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#structadc__sample__state__t">adc_sample_state_t</a></td></tr>
 <tr class="separator:structadc__sample__state__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structadc__window__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#structadc__window__cfg__t">adc_window_cfg_t</a></td></tr>
+<tr class="separator:structadc__window__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structadc__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#structadc__extended__cfg__t">adc_extended_cfg_t</a></td></tr>
 <tr class="separator:structadc__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structadc__channel__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#structadc__channel__cfg__t">adc_channel_cfg_t</a></td></tr>
@@ -474,6 +564,12 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga03d10a44658a1383520ca2d9c3928eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2817e17c728f9a2b041b54fd92244c3b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#ga2817e17c728f9a2b041b54fd92244c3b">adc_sample_state_reg_t</a> </td></tr>
 <tr class="separator:ga2817e17c728f9a2b041b54fd92244c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d55db8f35fe6d81d9ed2189e6915259"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#ga5d55db8f35fe6d81d9ed2189e6915259">adc_compare_cfg_t</a> </td></tr>
+<tr class="separator:ga5d55db8f35fe6d81d9ed2189e6915259"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6b1491f26c341e3a6507881969bdad3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#gaf6b1491f26c341e3a6507881969bdad3">adc_window_b_channel_t</a> </td></tr>
+<tr class="separator:gaf6b1491f26c341e3a6507881969bdad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d0c470ca46c2801d243c06f03916e67"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#ga0d0c470ca46c2801d243c06f03916e67">adc_window_b_mode_t</a> </td></tr>
+<tr class="separator:ga0d0c470ca46c2801d243c06f03916e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga79014196d08d86b161b77892bf26b100"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#ga79014196d08d86b161b77892bf26b100">adc_group_a_t</a> </td></tr>
 <tr class="separator:ga79014196d08d86b161b77892bf26b100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga802c536966b5905a58039e347c5dbbc5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c.html#ga802c536966b5905a58039e347c5dbbc5">adc_double_trigger_t</a> </td></tr>
@@ -506,6 +602,78 @@ Sample state register ID. </td></tr>
 num_states</td>
 <td class="fielddoc">
 Number of sampling states for conversion. Ch16-20/21 use the same value. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structadc__window__cfg__t" id="structadc__window__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structadc__window__cfg__t">&#9670;&nbsp;</a></span>adc_window_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct adc_window_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>ADC Window Compare configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acfa5530e9234fa2fec1e228553d472fd"></a>uint32_t</td>
+<td class="fieldname">
+compare_mask</td>
+<td class="fielddoc">
+Channel mask to compare with Window A. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2d52bc98af8b83031ba2367b701a579d"></a>uint32_t</td>
+<td class="fieldname">
+compare_mode_mask</td>
+<td class="fielddoc">
+Per-channel condition mask for Window A. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6aad2860ef31d707f9184f8849ae3cbc"></a><a class="el" href="group___a_d_c.html#ga5d55db8f35fe6d81d9ed2189e6915259">adc_compare_cfg_t</a></td>
+<td class="fieldname">
+compare_cfg</td>
+<td class="fielddoc">
+Window Compare configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1f3cd6ebb8bb738590ddcddbddff5099"></a>uint16_t</td>
+<td class="fieldname">
+compare_ref_low</td>
+<td class="fielddoc">
+Window A lower reference value. </td></tr>
+<tr><td class="fieldtype">
+<a id="a38044325d92f31dfc0643bb04b67e67c"></a>uint16_t</td>
+<td class="fieldname">
+compare_ref_high</td>
+<td class="fielddoc">
+Window A upper reference value. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0b47f297e60558660503e363217088f6"></a>uint16_t</td>
+<td class="fieldname">
+compare_b_ref_low</td>
+<td class="fielddoc">
+Window B lower reference value. </td></tr>
+<tr><td class="fieldtype">
+<a id="af1882c3161187dd3b952b87b2f818c7b"></a>uint16_t</td>
+<td class="fieldname">
+compare_b_ref_high</td>
+<td class="fielddoc">
+Window A upper reference value. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4cfe8de660042d6b772da2a7d7fee359"></a><a class="el" href="group___a_d_c.html#gaf6b1491f26c341e3a6507881969bdad3">adc_window_b_channel_t</a></td>
+<td class="fieldname">
+compare_b_channel</td>
+<td class="fielddoc">
+Window B channel. </td></tr>
+<tr><td class="fieldtype">
+<a id="a31ee514e76f00d45fcd35fe1f852e10e"></a><a class="el" href="group___a_d_c.html#ga0d0c470ca46c2801d243c06f03916e67">adc_window_b_mode_t</a></td>
+<td class="fieldname">
+compare_b_mode</td>
+<td class="fielddoc">
+Window B condition setting. </td></tr>
 </table>
 
 </div>
@@ -560,6 +728,30 @@ VREFADC output voltage control. </td></tr>
 enable_adbuf</td>
 <td class="fielddoc">
 Enable ADC Ring Buffer, Valid only to use along with DMAC transfer. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9cdf0d84793db3e109d6795475bd5b22"></a>IRQn_Type</td>
+<td class="fieldname">
+window_a_irq</td>
+<td class="fielddoc">
+IRQ number for Window Compare A interrupts. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab95bd65fa66c0d6eca6514523e1fe910"></a>IRQn_Type</td>
+<td class="fieldname">
+window_b_irq</td>
+<td class="fielddoc">
+IRQ number for Window Compare B interrupts. </td></tr>
+<tr><td class="fieldtype">
+<a id="af4d38f88e8e629e1bec67a46f65e62dc"></a>uint8_t</td>
+<td class="fieldname">
+window_a_ipl</td>
+<td class="fielddoc">
+Priority for Window Compare A interrupts. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9bbaed92b2e497b9f054b9c72f3967e3"></a>uint8_t</td>
+<td class="fieldname">
+window_b_ipl</td>
+<td class="fielddoc">
+Priority for Window Compare B interrupts. </td></tr>
 </table>
 
 </div>
@@ -596,6 +788,12 @@ Valid for group modes. </td></tr>
 add_mask</td>
 <td class="fielddoc">
 Valid if add enabled in Open(). </td></tr>
+<tr><td class="fieldtype">
+<a id="a01eb9675c5cef9993c5a9e85dbadb4b0"></a><a class="el" href="group___a_d_c.html#structadc__window__cfg__t">adc_window_cfg_t</a> *</td>
+<td class="fieldname">
+p_window_cfg</td>
+<td class="fielddoc">
+Pointer to Window Compare configuration. </td></tr>
 <tr><td class="fieldtype">
 <a id="aef59542e008313144646bd057d840c8a"></a><a class="el" href="group___a_d_c.html#ga79014196d08d86b161b77892bf26b100">adc_group_a_t</a></td>
 <td class="fieldname">
@@ -855,6 +1053,51 @@ Number of states to be used for sample and hold. Affects channels 0-2. </td></tr
 <tr><td class="fieldname"><a id="gga2817e17c728f9a2b041b54fd92244c3ba9cde1e159dda5cb81609d861a69ecea5"></a>ADC_SAMPLE_STATE_CHANNEL_16_TO_31&#160;</td><td class="fielddoc"><p>Sample state register channel 16 to 31. </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<a id="ga5d55db8f35fe6d81d9ed2189e6915259"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5d55db8f35fe6d81d9ed2189e6915259">&#9670;&nbsp;</a></span>adc_compare_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_d_c.html#ga5d55db8f35fe6d81d9ed2189e6915259">adc_compare_cfg_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ADC comparison settings </p>
+
+</div>
+</div>
+<a id="gaf6b1491f26c341e3a6507881969bdad3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf6b1491f26c341e3a6507881969bdad3">&#9670;&nbsp;</a></span>adc_window_b_channel_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_d_c.html#gaf6b1491f26c341e3a6507881969bdad3">adc_window_b_channel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ADC Window B channel </p>
+
+</div>
+</div>
+<a id="ga0d0c470ca46c2801d243c06f03916e67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0d0c470ca46c2801d243c06f03916e67">&#9670;&nbsp;</a></span>adc_window_b_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_d_c.html#ga0d0c470ca46c2801d243c06f03916e67">adc_window_b_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ADC Window B comparison mode </p>
 
 </div>
 </div>
@@ -1417,7 +1660,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.3.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

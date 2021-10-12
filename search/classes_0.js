@@ -12,6 +12,7 @@ var searchData=
   ['adc_5finstance_5ft',['adc_instance_t',['../group___a_d_c___a_p_i.html#structadc__instance__t',1,'']]],
   ['adc_5fsample_5fstate_5ft',['adc_sample_state_t',['../group___a_d_c.html#structadc__sample__state__t',1,'']]],
   ['adc_5fstatus_5ft',['adc_status_t',['../group___a_d_c___a_p_i.html#structadc__status__t',1,'']]],
+  ['adc_5fwindow_5fcfg_5ft',['adc_window_cfg_t',['../group___a_d_c.html#structadc__window__cfg__t',1,'']]],
   ['adpcm_5fdecoder_5fapi_5ft',['adpcm_decoder_api_t',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r___a_p_i.html#structadpcm__decoder__api__t',1,'']]],
   ['adpcm_5fdecoder_5fcfg_5ft',['adpcm_decoder_cfg_t',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r___a_p_i.html#structadpcm__decoder__cfg__t',1,'']]],
   ['adpcm_5fdecoder_5finstance_5fctrl_5ft',['adpcm_decoder_instance_ctrl_t',['../group___r_m___a_d_p_c_m___d_e_c_o_d_e_r.html#structadpcm__decoder__instance__ctrl__t',1,'']]],

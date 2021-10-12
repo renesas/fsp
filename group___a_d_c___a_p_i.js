@@ -80,7 +80,9 @@ var group___a_d_c___a_p_i =
       [ "ADC_EVENT_SCAN_COMPLETE", "group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a32297df4b82ea56a5536bb03fe907e64", null ],
       [ "ADC_EVENT_SCAN_COMPLETE_GROUP_B", "group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a8f67ee666423bc068d379ae85da36252", null ],
       [ "ADC_EVENT_CALIBRATION_COMPLETE", "group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847ae8d9c9c99ceb10f095bb4449fd2706b1", null ],
-      [ "ADC_EVENT_CONVERSION_COMPLETE", "group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847aa3091bf90a88f96ed9b5a6ab499680bb", null ]
+      [ "ADC_EVENT_CONVERSION_COMPLETE", "group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847aa3091bf90a88f96ed9b5a6ab499680bb", null ],
+      [ "ADC_EVENT_WINDOW_COMPARE_A", "group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a0194955f4f59f8d6952adc058539632b", null ],
+      [ "ADC_EVENT_WINDOW_COMPARE_B", "group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847ab32572630797968579adeed03f19bcd3", null ]
     ] ],
     [ "adc_channel_t", "group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814", [
       [ "ADC_CHANNEL_0", "group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104", null ],

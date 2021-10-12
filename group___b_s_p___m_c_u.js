@@ -2,6 +2,7 @@ var group___b_s_p___m_c_u =
 [
     [ "RA2A1", "group___b_s_p___m_c_u___r_a2_a1.html", "group___b_s_p___m_c_u___r_a2_a1" ],
     [ "RA2E1", "group___b_s_p___m_c_u___r_a2_e1.html", "group___b_s_p___m_c_u___r_a2_e1" ],
+    [ "RA2E2", "group___b_s_p___m_c_u___r_a2_e2.html", "group___b_s_p___m_c_u___r_a2_e2" ],
     [ "RA2L1", "group___b_s_p___m_c_u___r_a2_l1.html", "group___b_s_p___m_c_u___r_a2_l1" ],
     [ "RA4E1", "group___b_s_p___m_c_u___r_a4_e1.html", "group___b_s_p___m_c_u___r_a4_e1" ],
     [ "RA4M1", "group___b_s_p___m_c_u___r_a4_m1.html", "group___b_s_p___m_c_u___r_a4_m1" ],

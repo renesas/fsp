@@ -4,18 +4,34 @@ var group___a_d_c =
       [ "reg_id", "group___a_d_c.html#a369eb3d0d52d0b68bcd36f3b0dbdeaef", null ],
       [ "num_states", "group___a_d_c.html#aedbb76489ecc68110ccf3ede6f02fce9", null ]
     ] ],
+    [ "adc_window_cfg_t", "group___a_d_c.html#structadc__window__cfg__t", [
+      [ "compare_mask", "group___a_d_c.html#acfa5530e9234fa2fec1e228553d472fd", null ],
+      [ "compare_mode_mask", "group___a_d_c.html#a2d52bc98af8b83031ba2367b701a579d", null ],
+      [ "compare_cfg", "group___a_d_c.html#a6aad2860ef31d707f9184f8849ae3cbc", null ],
+      [ "compare_ref_low", "group___a_d_c.html#a1f3cd6ebb8bb738590ddcddbddff5099", null ],
+      [ "compare_ref_high", "group___a_d_c.html#a38044325d92f31dfc0643bb04b67e67c", null ],
+      [ "compare_b_ref_low", "group___a_d_c.html#a0b47f297e60558660503e363217088f6", null ],
+      [ "compare_b_ref_high", "group___a_d_c.html#af1882c3161187dd3b952b87b2f818c7b", null ],
+      [ "compare_b_channel", "group___a_d_c.html#a4cfe8de660042d6b772da2a7d7fee359", null ],
+      [ "compare_b_mode", "group___a_d_c.html#a31ee514e76f00d45fcd35fe1f852e10e", null ]
+    ] ],
     [ "adc_extended_cfg_t", "group___a_d_c.html#structadc__extended__cfg__t", [
       [ "add_average_count", "group___a_d_c.html#a44fb36e649b135f9803548a488f6684d", null ],
       [ "clearing", "group___a_d_c.html#a3ea48b1c97df4f5169bdfe5af3911396", null ],
       [ "trigger_group_b", "group___a_d_c.html#ae8c077fe7cbf5c28f605ed84f68dca9b", null ],
       [ "double_trigger_mode", "group___a_d_c.html#ad2be3785d3a8153d8ec71123583450b9", null ],
       [ "adc_vref_control", "group___a_d_c.html#a4bc9f429e6477b2f8f526f670325030c", null ],
-      [ "enable_adbuf", "group___a_d_c.html#a4f9198f9cd87c8abaaec94946fda33bc", null ]
+      [ "enable_adbuf", "group___a_d_c.html#a4f9198f9cd87c8abaaec94946fda33bc", null ],
+      [ "window_a_irq", "group___a_d_c.html#a9cdf0d84793db3e109d6795475bd5b22", null ],
+      [ "window_b_irq", "group___a_d_c.html#ab95bd65fa66c0d6eca6514523e1fe910", null ],
+      [ "window_a_ipl", "group___a_d_c.html#af4d38f88e8e629e1bec67a46f65e62dc", null ],
+      [ "window_b_ipl", "group___a_d_c.html#a9bbaed92b2e497b9f054b9c72f3967e3", null ]
     ] ],
     [ "adc_channel_cfg_t", "group___a_d_c.html#structadc__channel__cfg__t", [
       [ "scan_mask", "group___a_d_c.html#a706f698d4cd3a57b1e04503c143003dc", null ],
       [ "scan_mask_group_b", "group___a_d_c.html#aa1cf641bc6b225b233baa1c11ee7d4b5", null ],
       [ "add_mask", "group___a_d_c.html#a81489e3b2a0f142e6e902065e82dfe81", null ],
+      [ "p_window_cfg", "group___a_d_c.html#a01eb9675c5cef9993c5a9e85dbadb4b0", null ],
       [ "priority_group_a", "group___a_d_c.html#aef59542e008313144646bd057d840c8a", null ],
       [ "sample_hold_mask", "group___a_d_c.html#a2963c15f5fd0b6c358926e22f67eb740", null ],
       [ "sample_hold_states", "group___a_d_c.html#a91b488601bfb54ef0cf793c2ea44a001", null ]
@@ -101,6 +117,9 @@ var group___a_d_c =
       [ "ADC_SAMPLE_STATE_CHANNEL_15", "group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3baf4b29f4c28457a25bbdecf62cf038df3", null ],
       [ "ADC_SAMPLE_STATE_CHANNEL_16_TO_31", "group___a_d_c.html#gga2817e17c728f9a2b041b54fd92244c3ba9cde1e159dda5cb81609d861a69ecea5", null ]
     ] ],
+    [ "adc_compare_cfg_t", "group___a_d_c.html#ga5d55db8f35fe6d81d9ed2189e6915259", null ],
+    [ "adc_window_b_channel_t", "group___a_d_c.html#gaf6b1491f26c341e3a6507881969bdad3", null ],
+    [ "adc_window_b_mode_t", "group___a_d_c.html#ga0d0c470ca46c2801d243c06f03916e67", null ],
     [ "adc_group_a_t", "group___a_d_c.html#ga79014196d08d86b161b77892bf26b100", [
       [ "ADC_GROUP_A_PRIORITY_OFF", "group___a_d_c.html#gga79014196d08d86b161b77892bf26b100a356a40c69cc74ea30a461d7dd3e4d55e", null ],
       [ "ADC_GROUP_A_GROUP_B_WAIT_FOR_TRIGGER", "group___a_d_c.html#gga79014196d08d86b161b77892bf26b100aad6bf6c403c26b6891f27a40d65359c9", null ],

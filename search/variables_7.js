@@ -13,6 +13,8 @@ var searchData=
   ['horizontal_5fsubsample',['horizontal_subsample',['../group___j_p_e_g.html#aed09b4b05354237a464ed4a869dcca2b',1,'jpeg_instance_ctrl_t']]],
   ['horizontalstrideset',['horizontalStrideSet',['../group___j_p_e_g___a_p_i.html#a24f29f17b8f5ef47caac087acb198e16',1,'jpeg_api_t']]],
   ['hostcontroltransfer',['hostControlTransfer',['../group___u_s_b___a_p_i.html#aa6abce0db3b9a1afbf93a02c02e84b7e',1,'usb_api_t']]],
+  ['hot_5fjoin_5facknowledge',['hot_join_acknowledge',['../group___i3_c.html#ad133fd358ad1427198b13d2703f820e6',1,'i3c_ibi_control_t']]],
+  ['hotjoin_5frequest_5fenable',['hotjoin_request_enable',['../group___i3_c.html#a42a5cb59593c6099f17c9e58f64e3d5a',1,'i3c_slave_command_response_info_t']]],
   ['hour_5fmatch',['hour_match',['../group___r_t_c___a_p_i.html#a99fb3242d7bb1eb482cb436a49c1b18d',1,'rtc_alarm_time_t']]],
   ['hsipl',['hsipl',['../group___u_s_b___a_p_i.html#ab0a258c964328a3036b9b19cc97839d8',1,'usb_cfg_t']]],
   ['hsipl_5fd0',['hsipl_d0',['../group___u_s_b___a_p_i.html#a9b764125bd9610aba9ad3aad78285476',1,'usb_cfg_t']]],

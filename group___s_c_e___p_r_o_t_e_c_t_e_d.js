@@ -122,6 +122,18 @@ var group___s_c_e___p_r_o_t_e_c_t_e_d =
     [ "R_SCE_ECDH_secp256r1_Init", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#gac31218405b3b12d595afd12970d310a3", null ],
     [ "R_SCE_ECDH_secp256r1_PublicKeySign", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga4611df7b0e582b74488ecf8e0c7c8cb4", null ],
     [ "R_SCE_ECDH_secp256r1_PublicKeyVerify", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#gaa6d73b09880214b794ee58714aa7dd3b", null ],
+    [ "R_SCE_ECDH_secp256r1_PublicKeyReadWithoutSignature", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga83351ce9c2c9b4684e4f01a3147c119c", null ],
     [ "R_SCE_ECDH_secp256r1_SharedSecretCalculate", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#gae1ab5a37c3f036adb9e56d3b532fedff", null ],
-    [ "R_SCE_ECDH_secp256r1_KeyDerivation", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga7101906e05fb7267603e82bad169d592", null ]
+    [ "R_SCE_ECDH_secp256r1_KeyDerivation", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga7101906e05fb7267603e82bad169d592", null ],
+    [ "R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga29300b6a98b9e12edf1e8e7d43b20c0e", null ],
+    [ "R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga7ca63a53e8dc49c53d58b38ca6d9d6d5", null ],
+    [ "R_SCE_TLS_RootCertificateVerify", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga7eb679a241aeba1ae9baab2ed5630804", null ],
+    [ "R_SCE_TLS_CertificateVerify", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#gaf8f992ac5981e61c0e6835bf9e311839", null ],
+    [ "R_SCE_TLS_PreMasterSecretEncryptWithRSA2048", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#gaf8a18165840892ec48047e60a293a884", null ],
+    [ "R_SCE_TLS_PreMasterSecretGenerateForRSA2048", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#gae53b81758e4ff60c8e7e7b2efa80d841", null ],
+    [ "R_SCE_TLS_MasterSecretGenerate", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#gae1cefa721f6c5e41a55990f1532e24b7", null ],
+    [ "R_SCE_TLS_SessionKeyGenerate", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga6697169cdb168d8f657a434fb7e7cee4", null ],
+    [ "R_SCE_TLS_VerifyDataGenerate", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#gaedcd5170a5638e1a75bfd956768eaf6c", null ],
+    [ "R_SCE_TLS_ServerKeyExchangeVerify", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga8cffc8647c54f6c5e2bddd93c261a549", null ],
+    [ "R_SCE_TLS_PreMasterSecretGenerateForECC_secp256r1", "group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga84b4a725b5025d446ea5241d922f72e4", null ]
 ];

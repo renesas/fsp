@@ -20,6 +20,7 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "I2C Master Interface", "group___i2_c___m_a_s_t_e_r___a_p_i.html", "group___i2_c___m_a_s_t_e_r___a_p_i" ],
     [ "I2C Slave Interface", "group___i2_c___s_l_a_v_e___a_p_i.html", "group___i2_c___s_l_a_v_e___a_p_i" ],
     [ "I2S Interface", "group___i2_s___a_p_i.html", "group___i2_s___a_p_i" ],
+    [ "I3C Interface", "group___i3_c___a_p_i.html", "group___i3_c___a_p_i" ],
     [ "I/O Port Interface", "group___i_o_p_o_r_t___a_p_i.html", "group___i_o_p_o_r_t___a_p_i" ],
     [ "JPEG Codec Interface", "group___j_p_e_g___a_p_i.html", "group___j_p_e_g___a_p_i" ],
     [ "Key Matrix Interface", "group___k_e_y_m_a_t_r_i_x___a_p_i.html", "group___k_e_y_m_a_t_r_i_x___a_p_i" ],

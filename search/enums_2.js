@@ -58,6 +58,7 @@ var searchData=
   ['ctsu_5fmd_5ft',['ctsu_md_t',['../group___c_t_s_u___a_p_i.html#ga3bb35bd3c3041f0a80dceac7c1590d06',1,'r_ctsu_api.h']]],
   ['ctsu_5fposel_5ft',['ctsu_posel_t',['../group___c_t_s_u___a_p_i.html#ga6246d9e85e33b347a40542a07b42395a',1,'r_ctsu_api.h']]],
   ['ctsu_5frange_5ft',['ctsu_range_t',['../group___c_t_s_u.html#ga07d91c963664201accc65a9d45fb817a',1,'r_ctsu.h']]],
+  ['ctsu_5fspecific_5fdata_5ftype_5ft',['ctsu_specific_data_type_t',['../group___c_t_s_u___a_p_i.html#ga1fe870ee0162807f8f9387749ba4e0a6',1,'r_ctsu_api.h']]],
   ['ctsu_5fssdiv_5ft',['ctsu_ssdiv_t',['../group___c_t_s_u___a_p_i.html#ga74b99e6e66ad00d20683a57978cb6780',1,'r_ctsu_api.h']]],
   ['ctsu_5fstate_5ft',['ctsu_state_t',['../group___c_t_s_u.html#ga9be3b4466784415a4193f9584362c2ce',1,'r_ctsu.h']]],
   ['ctsu_5ftuning_5ft',['ctsu_tuning_t',['../group___c_t_s_u.html#gae3fb0beb148069bb590287ed34771117',1,'r_ctsu.h']]],

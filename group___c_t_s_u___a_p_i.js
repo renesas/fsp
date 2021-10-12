@@ -33,7 +33,6 @@ var group___c_t_s_u___a_p_i =
       [ "num_tx", "group___c_t_s_u___a_p_i.html#a542052c1596c2006262e4b2bfb977244", null ],
       [ "num_moving_average", "group___c_t_s_u___a_p_i.html#abfff39da3a865d91b1d6e25e9d6b2933", null ],
       [ "tunning_enable", "group___c_t_s_u___a_p_i.html#a30d5daff3a3330673a7e3b8d306ec16c", null ],
-      [ "judge_multifreq_disable", "group___c_t_s_u___a_p_i.html#aee8acd294a80af31b96cfd442521eacc", null ],
       [ "p_callback", "group___c_t_s_u___a_p_i.html#a156c5159fbd59f5e29d12d7625f855ee", null ],
       [ "p_transfer_tx", "group___c_t_s_u___a_p_i.html#ac42f999742f1228975263f7b6b1b6d7e", null ],
       [ "p_transfer_rx", "group___c_t_s_u___a_p_i.html#afeb071da4ade7c5148db18ae14e6316c", null ],
@@ -51,7 +50,9 @@ var group___c_t_s_u___a_p_i =
       [ "scanStop", "group___c_t_s_u___a_p_i.html#ac21a98eaa673d72b7da701ba90093f59", null ],
       [ "diagnosis", "group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e", null ],
       [ "callbackSet", "group___c_t_s_u___a_p_i.html#adda480537f35733dbed856a30b89be50", null ],
-      [ "close", "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395", null ]
+      [ "close", "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395", null ],
+      [ "specificDataGet", "group___c_t_s_u___a_p_i.html#adf2f74b741c739e9e21b1ce544292872", null ],
+      [ "dataInsert", "group___c_t_s_u___a_p_i.html#a84dfd5dd2ab6b16465cc5c06953c6a9f", null ]
     ] ],
     [ "ctsu_instance_t", "group___c_t_s_u___a_p_i.html#structctsu__instance__t", [
       [ "p_ctrl", "group___c_t_s_u___a_p_i.html#a869c53c171f70f95ed85cbf7109914fc", null ],
@@ -118,5 +119,6 @@ var group___c_t_s_u___a_p_i =
       [ "CTSU_SSDIV_0290", "group___c_t_s_u___a_p_i.html#gga74b99e6e66ad00d20683a57978cb6780ab0aeea5aee8f9d5b59d791c2bc387e50", null ],
       [ "CTSU_SSDIV_0270", "group___c_t_s_u___a_p_i.html#gga74b99e6e66ad00d20683a57978cb6780a9831a253eb77e7ada180e47d7921dfab", null ],
       [ "CTSU_SSDIV_0000", "group___c_t_s_u___a_p_i.html#gga74b99e6e66ad00d20683a57978cb6780a7e17e816f38d9ed200a369fe4778b670", null ]
-    ] ]
+    ] ],
+    [ "ctsu_specific_data_type_t", "group___c_t_s_u___a_p_i.html#ga1fe870ee0162807f8f9387749ba4e0a6", null ]
 ];
