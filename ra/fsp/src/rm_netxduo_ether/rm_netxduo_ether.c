@@ -522,6 +522,9 @@ void rm_netxduo_ether_receive_packet (rm_netxduo_ether_instance_t * p_netxduo_et
 #endif
                         )
                     {
+                        /* Update length. */
+                        p_nx_buffers[index]->nx_packet_length = length;                        
+
                         /* Move the append ptr to the new end of data. */
                         p_nx_buffers[index]->nx_packet_append_ptr = p_nx_buffers[index]->nx_packet_prepend_ptr +
                                                                     p_nx_buffers[index]->nx_packet_length;
