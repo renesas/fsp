@@ -63,6 +63,7 @@ const doc_api_t g_doc_on_doc =
     .open        = R_DOC_Open,
     .close       = R_DOC_Close,
     .statusGet   = R_DOC_StatusGet,
+    .read        = R_DOC_Read,
     .write       = R_DOC_Write,
     .callbackSet = R_DOC_CallbackSet,
 };
@@ -113,11 +114,29 @@ fsp_err_t R_DOC_Open (doc_ctrl_t * const p_api_ctrl, doc_cfg_t const * const p_c
     /* Power on the DOC module. */
     R_BSP_MODULE_START(FSP_IP_DOC, 0);
 
+#if BSP_FEATURE_DOC_VERSION == 1
+
     /* Clear the hardware status flag and Configure the DOC using DOCR register. */
     R_DOC->DOCR = (uint8_t) (R_DOC_DOCR_DOPCFCL_Msk | p_cfg->event);
 
     /* write initial data for comparison/ addition/subtraction to DODSR register */
-    R_DOC->DODSR = p_ctrl->p_cfg->doc_data;
+    R_DOC->DODSR = (uint16_t) (p_ctrl->p_cfg->doc_data & UINT16_MAX);
+#else
+
+    /* Configure the DOC using DOCR register. */
+    uint32_t docr = R_DOC_B_DOCR_OMS_Msk & p_cfg->event;
+    docr         |= (uint32_t) (p_cfg->event << (R_DOC_B_DOCR_DCSEL_Pos - 2U)) & R_DOC_B_DOCR_DCSEL_Msk;
+    docr         |= (uint32_t) (p_cfg->bit_width << R_DOC_B_DOCR_DOBW_Pos) & R_DOC_B_DOCR_DOBW_Msk;
+    docr         |= R_DOC_B_DOCR_DOPCIE_Msk;
+    R_DOC_B->DOCR = (uint8_t) docr & UINT8_MAX;
+
+    /* Clear the hardware status flag. */
+    R_DOC_B->DOSCR = 1;
+
+    /* write initial data for comparison/ addition/subtraction to DODSR0/DODSR1 registers. */
+    R_DOC_B->DODSR0 = p_ctrl->p_cfg->doc_data;
+    R_DOC_B->DODSR1 = p_ctrl->p_cfg->doc_data_extra;
+#endif
 
     /* Set valid interrupt contexts and user provided priority. Enable the interrupt at the NVIC  */
     R_BSP_IrqCfgEnable(p_ctrl->p_cfg->irq, p_cfg->ipl, p_ctrl);
@@ -163,10 +182,7 @@ fsp_err_t R_DOC_Close (doc_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Returns the result of addition/subtraction.
- *
- * Example:
- * @snippet r_doc_example.c R_DOC_StatusGet
+ * DEPRECATED - Returns the result of addition/subtraction.
  *
  * @retval FSP_SUCCESS          Status successfully read.
  * @retval FSP_ERR_NOT_OPEN     Driver not open.
@@ -186,8 +202,46 @@ fsp_err_t R_DOC_StatusGet (doc_ctrl_t * const p_api_ctrl, doc_status_t * const p
     FSP_ERROR_RETURN(DOC_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    /*Read the result of addition or subtraction operation from the register and store in the user supplied location */
+    /* Read the result of addition or subtraction operation from the register and store in the user supplied location */
+#if BSP_FEATURE_DOC_VERSION == 1
     p_status->result = R_DOC->DODSR;
+#else
+    p_status->result_32 = R_DOC_B->DODSR0;
+#endif
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Returns the result of addition/subtraction.
+ *
+ * Example:
+ * @snippet r_doc_example.c R_DOC_Read
+ *
+ * @retval FSP_SUCCESS          Status successfully read.
+ * @retval FSP_ERR_NOT_OPEN     Driver not open.
+ * @retval FSP_ERR_ASSERTION    One or more pointers point to NULL.
+ *
+ **********************************************************************************************************************/
+fsp_err_t R_DOC_Read (doc_ctrl_t * const p_api_ctrl, uint32_t * p_result)
+{
+    doc_instance_ctrl_t * p_ctrl = (doc_instance_ctrl_t *) p_api_ctrl;
+
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+
+    /* Validate the parameters and check if the module is intialized */
+#if DOC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ASSERT(NULL != p_result);
+    FSP_ERROR_RETURN(DOC_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Read the result of addition or subtraction operation from the register and store in the user supplied location */
+#if BSP_FEATURE_DOC_VERSION == 1
+    *p_result = R_DOC->DODSR;
+#else
+    *p_result = R_DOC_B->DODSR0;
+#endif
 
     return FSP_SUCCESS;
 }
@@ -203,7 +257,7 @@ fsp_err_t R_DOC_StatusGet (doc_ctrl_t * const p_api_ctrl, doc_status_t * const p
  * @retval FSP_ERR_ASSERTION    One or more pointers point to NULL.
  *
  **********************************************************************************************************************/
-fsp_err_t R_DOC_Write (doc_ctrl_t * const p_api_ctrl, uint16_t data)
+fsp_err_t R_DOC_Write (doc_ctrl_t * const p_api_ctrl, uint32_t data)
 {
     doc_instance_ctrl_t * p_ctrl = (doc_instance_ctrl_t *) p_api_ctrl;
 
@@ -216,7 +270,11 @@ fsp_err_t R_DOC_Write (doc_ctrl_t * const p_api_ctrl, uint16_t data)
 #endif
 
     /* Writes the user supplied data to the DODIR register for data operation in Comparison, Addition and subtraction modes */
-    R_DOC->DODIR = data;
+#if BSP_FEATURE_DOC_VERSION == 1
+    R_DOC->DODIR = (uint16_t) (data & UINT16_MAX);
+#else
+    R_DOC_B->DODIR = data;
+#endif
 
     return FSP_SUCCESS;
 }
@@ -345,7 +403,11 @@ void doc_int_isr (void)
     }
 
     /* clear DOPCF flag */
+#if BSP_FEATURE_DOC_VERSION == 1
     R_DOC->DOCR = (uint8_t) (R_DOC_DOCR_DOPCFCL_Msk | (p_ctrl->p_cfg->event));
+#else
+    R_DOC_B->DOSCR = 1;
+#endif
 
     /* Clear the IR flag in the ICU */
     R_BSP_IrqStatusClear(irq);

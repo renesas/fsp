@@ -69,7 +69,6 @@ typedef struct st_iic_slave_instance_ctrl
     uint32_t      transaction_count;             // Tracks the actual number of transactions
     volatile bool notify_request;                // Track whether the master request is notified to the application
     volatile iic_slave_transfer_dir_t direction; // Holds the direction of the data byte transfer
-    volatile bool slave_busy;                    // Tracks if the slave is busy performing a transaction
     volatile bool do_dummy_read;                 // Tracks whether a dummy read is issued on the first RX
     volatile bool start_interrupt_enabled;       // Tracks whether the start interrupt is enabled
     volatile bool transaction_completed;         // Tracks whether previous transaction restarted

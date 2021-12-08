@@ -130,18 +130,19 @@ static uint16_t rm_motor_sensorless_statemachine_event(motor_sensorless_instance
  **********************************************************************************************************************/
 const motor_api_t g_motor_on_sensorless =
 {
-    .open        = RM_MOTOR_SENSORLESS_Open,
-    .close       = RM_MOTOR_SENSORLESS_Close,
-    .run         = RM_MOTOR_SENSORLESS_Run,
-    .stop        = RM_MOTOR_SENSORLESS_Stop,
-    .reset       = RM_MOTOR_SENSORLESS_Reset,
-    .errorSet    = RM_MOTOR_SENSORLESS_ErrorSet,
-    .speedSet    = RM_MOTOR_SENSORLESS_SpeedSet,
-    .statusGet   = RM_MOTOR_SENSORLESS_StatusGet,
-    .angleGet    = RM_MOTOR_SENSORLESS_AngleGet,
-    .speedGet    = RM_MOTOR_SENSORLESS_SpeedGet,
-    .errorCheck  = RM_MOTOR_SENSORLESS_ErrorCheck,
-    .positionSet = RM_MOTOR_SENSORLESS_PositionSet,
+    .open            = RM_MOTOR_SENSORLESS_Open,
+    .close           = RM_MOTOR_SENSORLESS_Close,
+    .run             = RM_MOTOR_SENSORLESS_Run,
+    .stop            = RM_MOTOR_SENSORLESS_Stop,
+    .reset           = RM_MOTOR_SENSORLESS_Reset,
+    .errorSet        = RM_MOTOR_SENSORLESS_ErrorSet,
+    .speedSet        = RM_MOTOR_SENSORLESS_SpeedSet,
+    .statusGet       = RM_MOTOR_SENSORLESS_StatusGet,
+    .angleGet        = RM_MOTOR_SENSORLESS_AngleGet,
+    .speedGet        = RM_MOTOR_SENSORLESS_SpeedGet,
+    .errorCheck      = RM_MOTOR_SENSORLESS_ErrorCheck,
+    .positionSet     = RM_MOTOR_SENSORLESS_PositionSet,
+    .waitStopFlagGet = RM_MOTOR_SENSORLESS_WaitStopFlagGet,
 };
 
 /*******************************************************************************************************************//**
@@ -611,6 +612,24 @@ fsp_err_t RM_MOTOR_SENSORLESS_PositionSet (motor_ctrl_t * const                 
 {
     FSP_PARAMETER_NOT_USED(p_ctrl);
     FSP_PARAMETER_NOT_USED(p_position);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Get wait stop flag. Implements @ref motor_api_t::waitStopFlagGet.
+ *
+ * Example:
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ *
+ * @note
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_SENSORLESS_WaitStopFlagGet (motor_ctrl_t * const p_ctrl, motor_wait_stop_flag_t * const p_flag)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_flag);
 
     return FSP_ERR_UNSUPPORTED;
 }

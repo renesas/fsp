@@ -74,11 +74,27 @@
  *              at all. In this case the requested delay is too small (nanoseconds) to be carried out by the loop itself, and the
  *              overhead associated with executing the code to just get to this point has certainly satisfied the requested delay.
  *
- *
  * @note This function calls bsp_cpu_clock_get() which ultimately calls R_CGC_SystemClockFreqGet() and therefore requires
  *       that the BSP has already initialized the CGC (which it does as part of the Sysinit).
  *       Care should be taken to ensure this remains the case if in the future this function were to be called as part
  *       of the BSP initialization.
+ *
+ * @note This function will delay for **at least** the specified duration. Due to overhead in calculating the correct number
+ *       of loops to delay, very small delay values (generally 1-5 microseconds) may be significantly longer than specified.
+ *       Approximate overhead for this function is as follows:
+ *           - CM4: 20-50 cycles
+ *           - CM33: 10-60 cycles
+ *           - CM23: 75-200 cycles
+ *
+ * @note If more accurate microsecond timing must be performed in software it is recommended to use
+ *       bsp_prv_software_delay_loop() directly. In this case, use BSP_DELAY_LOOP_CYCLES or BSP_DELAY_LOOPS_CALCULATE()
+ *       to convert a calculated delay cycle count to a number of software delay loops.
+ *
+ * @note Delays may be longer than expected when compiler optimization is turned off.
+ *
+ * @warning The delay will be longer than specified on CM23 devices when the core clock is greater than 32 MHz. Setting
+ *          BSP_DELAY_LOOP_CYCLES to 6 will improve accuracy at 48 MHz but will result in shorter than expected delays
+ *          at lower speeds.
  **********************************************************************************************************************/
 
 void R_BSP_SoftwareDelay (uint32_t delay, bsp_delay_units_t units)

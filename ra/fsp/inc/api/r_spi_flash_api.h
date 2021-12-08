@@ -164,7 +164,7 @@ typedef struct st_spi_flash_cfg
     spi_flash_data_lines_t            page_program_address_lines;
     uint8_t                           write_status_bit;          ///< Which bit determines write status
     uint8_t                           write_enable_bit;          ///< Which bit determines write status
-    uint32_t                          page_size_bytes;           ///< Page size in bytes (maximum number of bytes for page program)
+    uint32_t                          page_size_bytes;           ///< Page size in bytes (maximum number of bytes for page program). Used to specify single continuous write size (bytes) in case of OSPI RAM.
     uint8_t                           page_program_command;      ///< Page program command
     uint8_t                           write_enable_command;      ///< Command to enable write or erase, typically 0x06
     uint8_t                           status_command;            ///< Command to read the write status
@@ -234,6 +234,7 @@ typedef struct st_spi_flash_api
     /** Direct Read/Write raw data to the SPI flash.
      * @par Implemented as
      * - @ref R_OSPI_DirectTransfer()
+     * - @ref R_QSPI_DirectTransfer()
      *
      * @param[in] p_ctrl               Pointer to a driver handle
      * @param[in] p_data               Pointer to command, address and data values and lengths
@@ -314,6 +315,15 @@ typedef struct st_spi_flash_api
      * @param[in] bank                 The bank number
      **/
     fsp_err_t (* bankSet)(spi_flash_ctrl_t * p_ctrl, uint32_t bank);
+
+    /** AutoCalibrate the SPI flash driver module. Expected to be used when auto-calibrating OSPI RAM device.
+     * @par Implemented as
+     * - @ref R_OSPI_AutoCalibrate()
+     * - @ref R_QSPI_AutoCalibrate()
+     *
+     * @param[in] p_ctrl               Pointer to a driver handle
+     **/
+    fsp_err_t (* autoCalibrate)(spi_flash_ctrl_t * p_ctrl);
 
     /** Close the SPI flash driver module.
      * @par Implemented as

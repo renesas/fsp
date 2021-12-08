@@ -572,9 +572,10 @@ fsp_err_t R_SCE_TlsGenerateMasterSecretSub(uint32_t *InData_Sel_CipherSuite, uin
             SCE->REG_100H = change_endian_long(0x00000031U);
             R_SCE_func101(0x089a1575U, 0xf103978eU, 0x238910caU, 0x335dacd5U);
             R_SCE_func044();
-            R_SCE_func100(0xc2e87e2eU, 0xbb278c5eU, 0xd4c33820U, 0x445fe1aeU);
+            R_SCE_func100(0x57721ee9U, 0xb6fae5aaU, 0x0eea3d29U, 0x4e4713d6U);
             SCE->REG_D0H = 0x40000200U;
             SCE->REG_C4H = 0x02e087b7U;
+            SCE->REG_ECH = 0x00000821U;
             SCE->REG_E0H = 0x818c0001U;
             SCE->REG_00H = 0x00002833U;
             /* WAIT_LOOP */
@@ -611,7 +612,7 @@ fsp_err_t R_SCE_TlsGenerateMasterSecretSub(uint32_t *InData_Sel_CipherSuite, uin
             OutData_MasterSecret[13] = SCE->REG_100H;
             OutData_MasterSecret[14] = SCE->REG_100H;
             OutData_MasterSecret[15] = SCE->REG_100H;
-            R_SCE_func100(0x9d26a255U, 0xbc803bceU, 0x8fed618aU, 0x05c81a53U);
+            R_SCE_func100(0x3f81dce8U, 0xe87679adU, 0x5e6fd517U, 0x62abf1f8U);
             SCE->REG_104H = 0x00000052U;
             SCE->REG_C4H = 0x00000c84U;
             /* WAIT_LOOP */
@@ -639,7 +640,7 @@ fsp_err_t R_SCE_TlsGenerateMasterSecretSub(uint32_t *InData_Sel_CipherSuite, uin
             OutData_MasterSecret[17] = SCE->REG_100H;
             OutData_MasterSecret[18] = SCE->REG_100H;
             OutData_MasterSecret[19] = SCE->REG_100H;
-            R_SCE_func100(0x3669c924U, 0xb231df95U, 0x2ba719c3U, 0x775eaee1U);
+            R_SCE_func100(0x49800391U, 0x598cfbd0U, 0xba5fc2c3U, 0x2c894fb8U);
             SCE->REG_104H = 0x00000052U;
             SCE->REG_C4H = 0x01000c84U;
             /* WAIT_LOOP */
@@ -658,7 +659,7 @@ fsp_err_t R_SCE_TlsGenerateMasterSecretSub(uint32_t *InData_Sel_CipherSuite, uin
             OutData_MasterSecret[1] = SCE->REG_100H;
             OutData_MasterSecret[2] = SCE->REG_100H;
             OutData_MasterSecret[3] = SCE->REG_100H;
-            R_SCE_func102(0x91218c31U, 0x340ca26bU, 0xad3db2b2U, 0xf084c683U);
+            R_SCE_func102(0x4e33abb3U, 0x20035c03U, 0xc225e7d4U, 0xbeeeb324U);
             SCE->REG_1B8H = 0x00000040U;
             /* WAIT_LOOP */
             while (0U != SCE->REG_18H_b.B12)
@@ -671,5 +672,5 @@ fsp_err_t R_SCE_TlsGenerateMasterSecretSub(uint32_t *InData_Sel_CipherSuite, uin
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_pe4_r2.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_pe4_r3.prc
 ***********************************************************************************************************************/

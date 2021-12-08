@@ -53,6 +53,8 @@
 #define GPT_PRV_GTCCRB                                   (1U)
 #define GPT_PRV_GTCCRC                                   (2U)
 #define GPT_PRV_GTCCRE                                   (3U)
+#define GPT_PRV_GTCCRD                                   (4U)
+#define GPT_PRV_GTCCRF                                   (5U)
 
 /* GPT_CFG_OUTPUT_SUPPORT_ENABLE is set to 2 to enable extra features. */
 #define GPT_PRV_EXTRA_FEATURES_ENABLED                   (2U)
@@ -109,8 +111,9 @@ static void gpt_hardware_events_disable(gpt_instance_ctrl_t * p_instance_ctrl);
 
 static void r_gpt_disable_irq(IRQn_Type irq);
 
-static inline void r_gpt_write_protect_enable(gpt_instance_ctrl_t * const p_instance_ctrl);
-static inline void r_gpt_write_protect_disable(gpt_instance_ctrl_t * const p_instance_ctrl);
+static inline void r_gpt_write_protect_enable(gpt_instance_ctrl_t * const p_instance_ctrl,
+                                              uint32_t                    write_protect_setting);
+static inline uint32_t r_gpt_write_protect_disable(gpt_instance_ctrl_t * const p_instance_ctrl);
 
 /* Noinline attribute added to reduce code size for CM23 GCC build. */
 static void r_gpt_enable_irq(IRQn_Type const irq, uint32_t priority, void * p_context) __attribute__((noinline));
@@ -188,6 +191,7 @@ const timer_api_t g_timer_on_gpt =
  *                                        NULL, but ISR is not enabled.  ISR must be enabled to use one-shot mode or
  *                                        callback.
  * @retval FSP_ERR_INVALID_MODE           Triangle wave PWM is only supported if GPT_CFG_OUTPUT_SUPPORT_ENABLE is 2.
+ *                                        Selected channel does not support external count sources.
  * @retval FSP_ERR_IP_CHANNEL_NOT_PRESENT The channel requested in the p_cfg parameter is not available on this device.
  **********************************************************************************************************************/
 fsp_err_t R_GPT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_cfg)
@@ -197,10 +201,21 @@ fsp_err_t R_GPT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_extend);
     FSP_ASSERT(NULL != p_instance_ctrl);
-    FSP_ASSERT(0U == (p_cfg->source_div % 2U));
+
+ #if (2U == BSP_FEATURE_GPT_CLOCK_DIVIDER_STEP_SIZE)
+  #if (BSP_FEATURE_GPT_CLOCK_DIVIDER_VALUE_7_9_VALID)
+    FSP_ASSERT(p_cfg->source_div <= 10U);
+  #else
+    FSP_ASSERT((p_cfg->source_div != 7U) && (p_cfg->source_div != 9U) && (p_cfg->source_div <= 10));
+  #endif
+ #else
+    FSP_ASSERT((0U == (p_cfg->source_div % 2U)) && (p_cfg->source_div <= 10));
+ #endif
+
  #if GPT_PRV_EXTRA_FEATURES_ENABLED != GPT_CFG_OUTPUT_SUPPORT_ENABLE
     FSP_ERROR_RETURN(p_cfg->mode <= TIMER_MODE_PWM, FSP_ERR_INVALID_MODE);
  #endif
+
     FSP_ERROR_RETURN(GPT_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
 
@@ -214,10 +229,14 @@ fsp_err_t R_GPT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
         FSP_ERROR_RETURN(p_cfg->cycle_end_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
     }
 
+    gpt_extended_cfg_t * p_extend = (gpt_extended_cfg_t *) p_cfg->p_extend;
+    FSP_ERROR_RETURN((!p_extend->count_up_source && !p_extend->count_down_source) ||
+                     (BSP_FEATURE_GPT_EVENT_COUNT_CHANNEL_MASK & p_instance_ctrl->channel_mask),
+                     FSP_ERR_INVALID_MODE);
+
  #if GPT_PRV_EXTRA_FEATURES_ENABLED == GPT_CFG_OUTPUT_SUPPORT_ENABLE
 
     /* Callback is required if underflow interrupt is enabled. */
-    gpt_extended_cfg_t           * p_extend  = (gpt_extended_cfg_t *) p_cfg->p_extend;
     gpt_extended_pwm_cfg_t const * p_pwm_cfg = p_extend->p_pwm_cfg;
     if (NULL != p_pwm_cfg)
     {
@@ -340,7 +359,7 @@ fsp_err_t R_GPT_Enable (timer_ctrl_t * const p_ctrl)
     gtpsr |= p_extend->stop_source;
     gtcsr |= p_extend->clear_source;
 
-    r_gpt_write_protect_disable(p_instance_ctrl);
+    uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
 
     /* Set the count sources. Ensure stop and clear sources are set before start source, and capture sources are set
      * after start source. */
@@ -350,7 +369,7 @@ fsp_err_t R_GPT_Enable (timer_ctrl_t * const p_ctrl)
     p_instance_ctrl->p_reg->GTICASR = p_extend->capture_a_source;
     p_instance_ctrl->p_reg->GTICBSR = p_extend->capture_b_source;
 
-    r_gpt_write_protect_enable(p_instance_ctrl);
+    r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
 
     return FSP_SUCCESS;
 }
@@ -375,11 +394,11 @@ fsp_err_t R_GPT_Disable (timer_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    r_gpt_write_protect_disable(p_instance_ctrl);
+    uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
 
     gpt_hardware_events_disable(p_instance_ctrl);
 
-    r_gpt_write_protect_enable(p_instance_ctrl);
+    r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
 
     return FSP_SUCCESS;
 }
@@ -408,7 +427,7 @@ fsp_err_t R_GPT_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
     FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    r_gpt_write_protect_disable(p_instance_ctrl);
+    uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
 
     /* Update period buffer register. The actual period is one cycle longer than the register value for saw waves
      * and twice the register value for triangle waves. Reference section 23.2.21 "General PWM Timer Cycle Setting
@@ -450,7 +469,7 @@ fsp_err_t R_GPT_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
         p_instance_ctrl->p_reg->GTCLR = p_instance_ctrl->channel_mask;
     }
 
-    r_gpt_write_protect_enable(p_instance_ctrl);
+    r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
 
     return FSP_SUCCESS;
 }
@@ -503,7 +522,7 @@ fsp_err_t R_GPT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
 
     gpt_calculate_duty_cycle(p_instance_ctrl, duty_cycle_counts, &duty_regs, pin);
 
-    r_gpt_write_protect_disable(p_instance_ctrl);
+    uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
 
     /* Read modify write bitfield access is used to update GTUDDTYC to make sure we don't clobber settings for the
      * other pin. */
@@ -555,7 +574,7 @@ fsp_err_t R_GPT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
 
     p_instance_ctrl->p_reg->GTUDDTYC = gtuddtyc;
 
-    r_gpt_write_protect_enable(p_instance_ctrl);
+    r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
 
     return FSP_SUCCESS;
 #else
@@ -655,12 +674,12 @@ fsp_err_t R_GPT_CounterSet (timer_ctrl_t * const p_ctrl, uint32_t counter)
     FSP_ERROR_RETURN(0U == p_instance_ctrl->p_reg->GTCR_b.CST, FSP_ERR_IN_USE);
 #endif
 
-    r_gpt_write_protect_disable(p_instance_ctrl);
+    uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
 
     /* Set counter value */
     p_instance_ctrl->p_reg->GTCNT = counter;
 
-    r_gpt_write_protect_enable(p_instance_ctrl);
+    r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
 
     return FSP_SUCCESS;
 }
@@ -680,7 +699,7 @@ fsp_err_t R_GPT_OutputEnable (timer_ctrl_t * const p_ctrl, gpt_io_pin_t pin)
     FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    r_gpt_write_protect_disable(p_instance_ctrl);
+    uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
 
     uint32_t gtior = p_instance_ctrl->p_reg->GTIOR;
     if (GPT_IO_PIN_GTIOCB != pin)
@@ -697,7 +716,7 @@ fsp_err_t R_GPT_OutputEnable (timer_ctrl_t * const p_ctrl, gpt_io_pin_t pin)
 
     p_instance_ctrl->p_reg->GTIOR = gtior;
 
-    r_gpt_write_protect_enable(p_instance_ctrl);
+    r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
 
     return FSP_SUCCESS;
 }
@@ -717,7 +736,7 @@ fsp_err_t R_GPT_OutputDisable (timer_ctrl_t * const p_ctrl, gpt_io_pin_t pin)
     FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    r_gpt_write_protect_disable(p_instance_ctrl);
+    uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
 
     uint32_t gtior = p_instance_ctrl->p_reg->GTIOR;
     if (GPT_IO_PIN_GTIOCB != pin)
@@ -734,7 +753,7 @@ fsp_err_t R_GPT_OutputDisable (timer_ctrl_t * const p_ctrl, gpt_io_pin_t pin)
 
     p_instance_ctrl->p_reg->GTIOR = gtior;
 
-    r_gpt_write_protect_enable(p_instance_ctrl);
+    r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
 
     return FSP_SUCCESS;
 }
@@ -756,15 +775,159 @@ fsp_err_t R_GPT_AdcTriggerSet (timer_ctrl_t * const    p_ctrl,
     FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    r_gpt_write_protect_disable(p_instance_ctrl);
+    uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
 
     /* Set A/D converter start request compare match value. */
     volatile uint32_t * p_gtadtr = &p_instance_ctrl->p_reg->GTADTRA;
     p_gtadtr[which_compare_match] = compare_match_value;
 
-    r_gpt_write_protect_enable(p_instance_ctrl);
+    r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Set the Output Delay setting for the PWM output pin.
+ *
+ * @retval FSP_SUCCESS                 The output delay was set.
+ * @retval FSP_ERR_ASSERTION           An input parameter was invalid.
+ * @retval FSP_ERR_NOT_OPEN            The instance is not opened.
+ * @retval FSP_ERR_INVALID_CHANNEL     The channel does not support this feature.
+ * @retval FSP_ERR_NOT_INITIALIZED     The PWM Output Delay Circuit has not been initialized.
+ * @retval FSP_ERR_INVALID_STATE       The PWM Output Delay setting cannot be updated in the current state.
+ * @retval FSP_ERR_UNSUPPORTED         This feature is not supported on this MCU.
+ **********************************************************************************************************************/
+fsp_err_t R_GPT_PwmOutputDelaySet (timer_ctrl_t * const           p_ctrl,
+                                   gpt_pwm_output_delay_edge_t    edge,
+                                   gpt_pwm_output_delay_setting_t delay_setting,
+                                   uint32_t const                 pin)
+{
+#if 0U != BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK && GPT_CFG_OUTPUT_SUPPORT_ENABLE
+    gpt_instance_ctrl_t * p_instance_ctrl = (gpt_instance_ctrl_t *) p_ctrl;
+
+ #if GPT_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(0U != (BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask),
+                     FSP_ERR_INVALID_CHANNEL);
+    FSP_ERROR_RETURN(0U != (R_GPT_ODC->GTDLYCR1 & R_GPT_ODC_GTDLYCR1_DLLEN_Msk), FSP_ERR_NOT_INITIALIZED);
+
+    if (TIMER_MODE_PWM == p_instance_ctrl->p_cfg->mode)
+    {
+        /* In Saw-wave mode, do not change the settings for the delay while the compare-match value is greater than or
+         * equal to GTPR - 2. */
+        uint32_t gtpr          = p_instance_ctrl->p_reg->GTPR;
+        uint32_t compare_match = p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRC + pin];
+        FSP_ERROR_RETURN(gtpr - 2 > compare_match, FSP_ERR_INVALID_STATE);
+    }
+    else
+    {
+        uint32_t compare_match;
+        if (TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3 == p_instance_ctrl->p_cfg->mode)
+        {
+            /* In TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3, the trough compare match value is set in
+             * GTCCRD, and GTCCRF. */
+            compare_match = p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRD + pin];
+        }
+        else
+        {
+            /* In TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM and TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM, the trough compare match value is
+             * set in GTCCRC, and GTCCRE. */
+            compare_match = p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRC + pin];
+        }
+
+        timer_direction_t count_direction = (timer_direction_t) p_instance_ctrl->p_reg->GTST_b.TUCF;
+
+        /* In Triangle-wave mode, do not change the settings for the delay while the counter if going down and the compare-match
+         * value is less than or equal to 2. */
+        FSP_ERROR_RETURN(TIMER_DIRECTION_DOWN != count_direction || 2 < compare_match, FSP_ERR_INVALID_STATE);
+    }
+ #endif
+
+    FSP_CRITICAL_SECTION_DEFINE;
+
+    if (GPT_PWM_OUTPUT_DELAY_SETTING_BYPASS == delay_setting)
+    {
+        /* Enter a critical section in order to ensure that multiple GPT channels don't access the common
+         * register simultaneously. */
+        FSP_CRITICAL_SECTION_ENTER;
+
+ #if GPT_CFG_WRITE_PROTECT_ENABLE
+
+        /* GTDLYCR2 is protected by R_GPT::GTWP. */
+        uint32_t wp = R_GPT0->GTWP;
+        R_GPT0->GTWP = GPT_PRV_GTWP_RESET_VALUE;
+        R_GPT0->GTWP;
+ #endif
+
+        /* Enable the Delay Generation Circuit bypass. */
+        R_GPT_ODC->GTDLYCR2 &= (uint16_t) (~p_instance_ctrl->channel_mask & UINT16_MAX);
+
+ #if GPT_CFG_WRITE_PROTECT_ENABLE
+
+        /* Restore the previous value of GTWP. */
+        R_GPT0->GTWP = wp | GPT_PRV_GTWP_RESET_VALUE;
+ #endif
+
+        FSP_CRITICAL_SECTION_EXIT;
+    }
+    else
+    {
+        /* Calculate the offset for the register than needs to be set. */
+        uint32_t channel_offset = sizeof(uint32_t) * p_instance_ctrl->p_cfg->channel;
+        uint32_t pin_offset     =
+            (uint32_t) ((uint32_t) &R_GPT_ODC->GTDLYR[0].B - (uint32_t) &R_GPT_ODC->GTDLYR[0].A) * pin;
+        uint32_t edge_offset =
+            (uint32_t) ((uint32_t) &R_GPT_ODC->GTDLYF[0].A - (uint32_t) &R_GPT_ODC->GTDLYR[0].A) * edge;
+        uint16_t * p_gtdlyfnx =
+            (uint16_t *) ((uint32_t) &R_GPT_ODC->GTDLYR[0].A + channel_offset + pin_offset + edge_offset);
+
+        /* Unprotect the delay setting register. */
+        uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
+
+        /* Write the delay setting to the register. */
+        *p_gtdlyfnx = (uint16_t) delay_setting;
+
+        /* Restore the previous value of GTWP. */
+        r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
+
+        /* Check if the channel has already been enabled. */
+        if (0U == (R_GPT_ODC->GTDLYCR2 & p_instance_ctrl->channel_mask))
+        {
+            /* Enter a critical section in order to ensure that multiple GPT channels don't access the common
+             * register simultaneously. */
+            FSP_CRITICAL_SECTION_ENTER;
+
+ #if GPT_CFG_WRITE_PROTECT_ENABLE
+
+            /* GTDLYCR2 is protected by R_GPT::GTWP. */
+            wp           = R_GPT0->GTWP;
+            R_GPT0->GTWP = GPT_PRV_GTWP_RESET_VALUE;
+            R_GPT0->GTWP;
+ #endif
+
+            /* Disable the Delay Generation Circuit bypass. */
+            R_GPT_ODC->GTDLYCR2 |= (uint16_t) p_instance_ctrl->channel_mask;
+
+ #if GPT_CFG_WRITE_PROTECT_ENABLE
+
+            /* Restore the previous value of GTWP. */
+            R_GPT0->GTWP = wp | GPT_PRV_GTWP_RESET_VALUE;
+ #endif
+
+            FSP_CRITICAL_SECTION_EXIT;
+        }
+    }
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(edge);
+    FSP_PARAMETER_NOT_USED(delay_setting);
+    FSP_PARAMETER_NOT_USED(pin);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -834,19 +997,6 @@ fsp_err_t R_GPT_Close (timer_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    /* Clear open flag. */
-    p_instance_ctrl->open = 0U;
-
-    r_gpt_write_protect_disable(p_instance_ctrl);
-
-    /* Stop counter. */
-    p_instance_ctrl->p_reg->GTSTP = p_instance_ctrl->channel_mask;
-
-    /* Disable output. */
-    p_instance_ctrl->p_reg->GTIOR = 0U;
-
-    r_gpt_write_protect_enable(p_instance_ctrl);
-
     /* Disable interrupts. */
     gpt_extended_cfg_t * p_extend = (gpt_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
     r_gpt_disable_irq(p_instance_ctrl->p_cfg->cycle_end_irq);
@@ -860,7 +1010,113 @@ fsp_err_t R_GPT_Close (timer_ctrl_t * const p_ctrl)
     }
 #endif
 
+    /* Clear open flag. */
+    p_instance_ctrl->open = 0U;
+
+    uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
+
+    /* Stop counter. */
+    p_instance_ctrl->p_reg->GTSTP = p_instance_ctrl->channel_mask;
+
+    /* Disable output. */
+    p_instance_ctrl->p_reg->GTIOR = 0U;
+
+    r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
+
     return err;
+}
+
+/*******************************************************************************************************************//**
+ * Initialize the PWM Delay Generation Circuit (PDG).
+ * This function must be called before calling @ref R_GPT_PwmOutputDelaySet.
+ *
+ * @note This function will delay for 20 microseconds.
+ *
+ * @retval FSP_SUCCESS                 Initialization sequence completed successfully.
+ * @retval FSP_ERR_INVALID_STATE       The source clock frequnecy is out of the required range for the PDG.
+ * @retval FSP_ERR_UNSUPPORTED         This feature is not supported.
+ **********************************************************************************************************************/
+fsp_err_t R_GPT_PwmOutputDelayInitialize ()
+{
+#if 0U != BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK && GPT_CFG_OUTPUT_SUPPORT_ENABLE
+ #if BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN > 0 || GPT_CFG_PARAM_CHECKING_ENABLE
+  #if BSP_FEATURE_BSP_HAS_GPT_CLOCK && BSP_CFG_GPT_CLOCK_BYPASS == 0
+
+    /* Calculate the GPTCK Divider. */
+    uint32_t divider = R_SYSTEM->GPTCKDIVCR;
+
+    if (0U == divider)
+    {
+        divider = 1U;
+    }
+    else
+    {
+        divider *= 2U;
+    }
+
+    /* Calculate the GPTCK Frequency. */
+    uint32_t gpt_frequency = R_BSP_SourceClockHzGet((fsp_priv_source_clock_t) R_SYSTEM->GPTCKCR_b.GPTCKSEL) / divider;
+  #else
+
+    /* Calculate the PCLKD Frequency. */
+    uint32_t gpt_frequency = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKD);
+  #endif
+ #endif
+
+ #if GPT_CFG_PARAM_CHECKING_ENABLE
+    FSP_ERROR_RETURN(BSP_FEATURE_GPT_ODC_FREQ_MAX >= gpt_frequency, FSP_ERR_INVALID_STATE);
+    FSP_ERROR_RETURN(BSP_FEATURE_GPT_ODC_FREQ_MIN <= gpt_frequency, FSP_ERR_INVALID_STATE);
+ #endif
+
+    uint32_t gtdlycr1 = R_GPT_ODC_GTDLYCR1_DLYRST_Msk;
+
+ #if BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN > 0
+    if (BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN >= gpt_frequency)
+    {
+        gtdlycr1 |= R_GPT_ODC_GTDLYCR1_FRANGE_Msk;
+    }
+ #endif
+
+ #if BSP_FEATURE_BSP_HAS_GPT_CLOCK && GPT_CFG_GPTCLK_BYPASS
+
+    /* Bypass the GPTCLK. GPT instances will use PCLKD as the GPT Core clock. */
+    R_GPT_GTCLK->GTCLKCR = 1U;
+ #endif
+
+    /* Cancel the module-stop state for the PDG. */
+    R_BSP_MODULE_START(FSP_IP_GPT, 0);
+
+ #if GPT_CFG_WRITE_PROTECT_ENABLE
+
+    /* Disable write protection for GPT registers if they are protected. */
+    R_GPT0->GTWP = GPT_PRV_GTWP_RESET_VALUE;
+    R_GPT0->GTWP;
+ #endif
+
+    /* Reset the PWM Delay Generation Circuit. */
+    R_GPT_ODC->GTDLYCR1 = (uint16_t) gtdlycr1;
+    R_GPT_ODC->GTDLYCR2 = 0;
+
+    /* Enable the DLL. */
+    R_GPT_ODC->GTDLYCR1 = (uint16_t) (gtdlycr1 | R_GPT_ODC_GTDLYCR1_DLLEN_Msk);
+
+    /* Wait for the DLL to be enabled. */
+    R_BSP_SoftwareDelay(20, BSP_DELAY_UNITS_MICROSECONDS);
+
+    /* Release the PWM Delay Generation Circuit from reset. */
+    R_GPT_ODC->GTDLYCR1 &= (uint16_t) ~R_GPT_ODC_GTDLYCR1_DLYRST_Msk;
+
+ #if GPT_CFG_WRITE_PROTECT_ENABLE
+
+    /* Re-enable write protection for GPT registers. */
+    R_GPT0->GTWP = GPT_PRV_GTWP_WRITE_PROTECT;
+ #endif
+
+    return FSP_SUCCESS;
+#else
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /** @} (end addtogroup GPT) */
@@ -873,13 +1129,16 @@ fsp_err_t R_GPT_Close (timer_ctrl_t * const p_ctrl)
  * Enables write protection.
  *
  * @param[in]  p_instance_ctrl         Instance control block.
+ * @param[in]  write_protect_setting   The value of GTWP prior to being cleared.
  **********************************************************************************************************************/
-static inline void r_gpt_write_protect_enable (gpt_instance_ctrl_t * const p_instance_ctrl)
+static inline void r_gpt_write_protect_enable (gpt_instance_ctrl_t * const p_instance_ctrl,
+                                               uint32_t                    write_protect_setting)
 {
 #if GPT_CFG_WRITE_PROTECT_ENABLE
-    p_instance_ctrl->p_reg->GTWP = GPT_PRV_GTWP_WRITE_PROTECT;
+    p_instance_ctrl->p_reg->GTWP = write_protect_setting;
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+    FSP_PARAMETER_NOT_USED(write_protect_setting);
 #endif
 }
 
@@ -888,12 +1147,17 @@ static inline void r_gpt_write_protect_enable (gpt_instance_ctrl_t * const p_ins
  *
  * @param[in]  p_instance_ctrl         Instance control block.
  **********************************************************************************************************************/
-static inline void r_gpt_write_protect_disable (gpt_instance_ctrl_t * const p_instance_ctrl)
+static inline uint32_t r_gpt_write_protect_disable (gpt_instance_ctrl_t * const p_instance_ctrl)
 {
 #if GPT_CFG_WRITE_PROTECT_ENABLE
+    uint32_t write_protect_setting = p_instance_ctrl->p_reg->GTWP;
     p_instance_ctrl->p_reg->GTWP = GPT_PRV_GTWP_RESET_VALUE;
+
+    return write_protect_setting;
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+
+    return 0U;
 #endif
 }
 
@@ -939,9 +1203,42 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     /* Save pointer to extended configuration structure. */
     gpt_extended_cfg_t * p_extend = (gpt_extended_cfg_t *) p_cfg->p_extend;
 
+#if BSP_FEATURE_BSP_HAS_GPT_CLOCK && GPT_CFG_GPTCLK_BYPASS
+
+    /* Bypass the GPTCLK. GPT instances will use PCLKD as the GPT Core clock. */
+    R_GPT_GTCLK->GTCLKCR = 1U;
+#endif
+
     /* Power on GPT before setting any hardware registers. Make sure the counter is stopped before setting mode
      * register, PCLK divisor register, and counter register. */
     R_BSP_MODULE_START(FSP_IP_GPT, p_cfg->channel);
+
+#if GPT_CFG_OUTPUT_SUPPORT_ENABLE
+    if (0U != (BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask))
+    {
+        /* Enter a critical section in order to ensure that multiple GPT channels don't access the common
+         * register simultaneously. */
+        FSP_CRITICAL_SECTION_DEFINE;
+        FSP_CRITICAL_SECTION_ENTER;
+
+ #if GPT_CFG_WRITE_PROTECT_ENABLE
+
+        /* Disable write protection for GPT registers if they are protected. */
+        uint32_t wp = R_GPT0->GTWP;
+        R_GPT0->GTWP = GPT_PRV_GTWP_RESET_VALUE;
+        R_GPT0->GTWP;
+ #endif
+
+        /* Enable the Delay Generation Circuit bypass. */
+        R_GPT_ODC->GTDLYCR2 &= (uint16_t) (~p_instance_ctrl->channel_mask & UINT16_MAX);
+
+ #if GPT_CFG_WRITE_PROTECT_ENABLE
+        R_GPT0->GTWP = wp | GPT_PRV_GTWP_RESET_VALUE;
+ #endif
+
+        FSP_CRITICAL_SECTION_EXIT;
+    }
+#endif
 
     /* Initialize all registers that may affect operation of this driver to reset values.  Skip these since they
      * affect all channels, and are initialized in GTCR and GTCNT: GTSTR, GTSTP, GTCLR. GTCR is set immediately after
@@ -1135,7 +1432,7 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     p_instance_ctrl->p_reg->GTUDDTYC = gtuddtyc | 3U;
     p_instance_ctrl->p_reg->GTUDDTYC = gtuddtyc | 1U;
 
-    r_gpt_write_protect_enable(p_instance_ctrl);
+    r_gpt_write_protect_enable(p_instance_ctrl, GPT_PRV_GTWP_WRITE_PROTECT);
 
     /* Enable CPU interrupts if callback is not null.  Also enable interrupts for one shot mode.
      *  @note The GPT hardware does not support one-shot mode natively. To support one-shot mode, the timer will be
@@ -1461,7 +1758,7 @@ void gpt_counter_overflow_isr (void)
     /* If one-shot mode is selected, stop the timer since period has expired. */
     if (TIMER_MODE_ONE_SHOT == p_instance_ctrl->p_cfg->mode)
     {
-        r_gpt_write_protect_disable(p_instance_ctrl);
+        uint32_t wp = r_gpt_write_protect_disable(p_instance_ctrl);
 
         p_instance_ctrl->p_reg->GTSTP = p_instance_ctrl->channel_mask;
 
@@ -1470,7 +1767,7 @@ void gpt_counter_overflow_isr (void)
         p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRA] = 0;
         p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRB] = 0;
 
-        r_gpt_write_protect_enable(p_instance_ctrl);
+        r_gpt_write_protect_enable(p_instance_ctrl, wp | GPT_PRV_GTWP_RESET_VALUE);
 
         /* Clear pending interrupt to make sure it doesn't fire again if another overflow has already occurred. */
         R_BSP_IrqClearPending(irq);

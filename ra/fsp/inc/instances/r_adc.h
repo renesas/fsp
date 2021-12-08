@@ -307,7 +307,8 @@ typedef struct
     R_ADC0_Type     * p_reg;                    // Base register for this unit
     adc_cfg_t const * p_cfg;
     uint32_t          opened;                   // Boolean to verify that the Unit has been initialized
-    uint32_t          scan_mask;                // Scan mask used for Normal scan.
+    uint32_t          initialized;              // Initialized status of ADC
+    uint32_t          scan_mask;                // Scan mask used for Normal scan
     uint16_t          scan_start_adcsr;
 
     void (* p_callback)(adc_callback_args_t *); // Pointer to callback that is called when an adc_event_t occurs.
@@ -334,6 +335,7 @@ fsp_err_t R_ADC_Open(adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg);
 fsp_err_t R_ADC_ScanCfg(adc_ctrl_t * p_ctrl, void const * const p_channel_cfg);
 fsp_err_t R_ADC_InfoGet(adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info);
 fsp_err_t R_ADC_ScanStart(adc_ctrl_t * p_ctrl);
+fsp_err_t R_ADC_ScanGroupStart(adc_ctrl_t * p_ctrl, adc_group_mask_t group_id);
 fsp_err_t R_ADC_ScanStop(adc_ctrl_t * p_ctrl);
 fsp_err_t R_ADC_StatusGet(adc_ctrl_t * p_ctrl, adc_status_t * p_status);
 fsp_err_t R_ADC_Read(adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_t * const p_data);
@@ -341,7 +343,7 @@ fsp_err_t R_ADC_Read32(adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint32_t
 fsp_err_t R_ADC_SampleStateCountSet(adc_ctrl_t * p_ctrl, adc_sample_state_t * p_sample);
 fsp_err_t R_ADC_Close(adc_ctrl_t * p_ctrl);
 fsp_err_t R_ADC_OffsetSet(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, int32_t offset);
-fsp_err_t R_ADC_Calibrate(adc_ctrl_t * const p_ctrl, void * const p_extend);
+fsp_err_t R_ADC_Calibrate(adc_ctrl_t * const p_ctrl, void const * p_extend);
 fsp_err_t R_ADC_CallbackSet(adc_ctrl_t * const          p_api_ctrl,
                             void (                    * p_callback)(adc_callback_args_t *),
                             void const * const          p_context,

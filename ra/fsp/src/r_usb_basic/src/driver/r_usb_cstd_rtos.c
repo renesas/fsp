@@ -72,9 +72,7 @@ static rtos_task_id_t g_mgr_tsk_hdl;
 static rtos_task_id_t g_hub_tsk_hdl;
   #endif                               /* USB_CFG_HUB == USB_CFG_ENABLE */
  #endif                                /* ( (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST ) */
-
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-
 static rtos_task_id_t g_pcd_tsk_hdl;
  #endif                                /* ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
@@ -174,19 +172,21 @@ static uint8_t g_usb_mgr_stack[MGR_STACK_SIZE];
    #if USB_CFG_HUB == USB_CFG_ENABLE
 static uint8_t g_usb_hub_stack[HUB_STACK_SIZE];
    #endif                              /* #if USB_CFG_HUB == USB_CFG_ENABLE */
-  #else /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+  #endif /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 static uint8_t g_usb_pcd_stack[PCD_STACK_SIZE];
-  #endif                               /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+  #endif                               /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
   #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 static uint8_t g_rtos_usb_hcd_mbx[(TX_1_ULONG) *(QUEUE_SIZE)];
 static uint8_t g_rtos_usb_mgr_mbx[(TX_1_ULONG) *(QUEUE_SIZE)];
 static uint8_t g_rtos_usb_hub_mbx[(TX_1_ULONG) *(QUEUE_SIZE)];
 static uint8_t g_rtos_usb_cls_mbx[(TX_1_ULONG) *(QUEUE_SIZE)];
-  #else                                /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+  #endif                               /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 static uint8_t g_rtos_usb_pcd_mbx[(TX_1_ULONG) *(QUEUE_SIZE)];
-  #endif /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+  #endif                               /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
   #if defined(USB_CFG_HMSC_USE)
 static uint8_t g_rtos_usb_hmsc_mbx[(TX_1_ULONG) *(QUEUE_SIZE)];
@@ -697,13 +697,19 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
     }
 }
  #elif (BSP_CFG_RTOS == 1)             /* Azure RTOS */
-    uint32_t ret;
-
+    uint32_t ret = TX_SUCCESS;
+  #if (USB_NUM_USBIP == 2)
+    if ((g_usb_usbmode[0] == 0) || (g_usb_usbmode[1] == 0))
+    {
+  #endif                               /* (USB_NUM_USBIP == 2) */
     ret = tx_block_pool_create(&g_usb_block_pool_hdl,
                                "USB_MEM_BLOCK",
                                sizeof(usb_utr_t),
                                (void *) &g_usb_rtos_fixed_memblk[0],
                                (uint32_t) ((sizeof(usb_utr_t) + sizeof(void *)) * NUM_OF_BLOCK));
+  #if (USB_NUM_USBIP == 2)
+}
+  #endif                               /* (USB_NUM_USBIP == 2) */
     if (TX_SUCCESS != ret)
     {
         err = UsbRtos_Err_Init_Mpl;
@@ -933,6 +939,11 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
     }
 
+  #if (USB_NUM_USBIP == 2)
+    if ((g_usb_usbmode[0] == 0) || (g_usb_usbmode[1] == 0))
+    {
+  #endif                               /* (USB_NUM_USBIP == 2) */
+
     /* WAIT_LOOP */
     for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
     {
@@ -970,6 +981,10 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
             }
         }
     }
+
+  #if (USB_NUM_USBIP == 2)
+}
+  #endif                               /* (USB_NUM_USBIP == 2) */
 
  #endif                                /* BSP_CFG_RTOS */
 
@@ -1152,6 +1167,11 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
  #elif (BSP_CFG_RTOS == 1)             /* Azure RTOS */
     uint32_t ret;
 
+  #if (USB_NUM_USBIP == 2)
+    if ((g_usb_usbmode[0] == 0) || (g_usb_usbmode[1] == 0))
+    {
+  #endif                               /* (USB_NUM_USBIP == 2) */
+
     ret = tx_block_pool_delete(&g_usb_block_pool_hdl);
     if (TX_SUCCESS != ret)
     {
@@ -1159,6 +1179,10 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
 
         return err;
     }
+
+  #if (USB_NUM_USBIP == 2)
+}
+  #endif                               /* (USB_NUM_USBIP == 2) */
 
     if (USB_MODE_HOST == g_usb_usbmode[module_number])
     {
@@ -1315,6 +1339,10 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
     }
 
+  #if (USB_NUM_USBIP == 2)
+    if ((g_usb_usbmode[0] == 0) || (g_usb_usbmode[1] == 0))
+    {
+  #endif                               /* (USB_NUM_USBIP == 2) */
     /* WAIT_LOOP */
     for (ip_loop = 0; ip_loop < USB_NUM_USBIP; ip_loop++)
     {
@@ -1343,6 +1371,10 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
             }
         }
     }
+
+  #if (USB_NUM_USBIP == 2)
+}
+  #endif                               /* (USB_NUM_USBIP == 2) */
 
  #endif                                /* BSP_CFG_RTOS */
 

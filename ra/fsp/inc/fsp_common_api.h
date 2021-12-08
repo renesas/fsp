@@ -108,6 +108,7 @@ typedef enum e_fsp_err
     FSP_ERR_NOT_FOUND             = 34,                     ///< The requested item could not be found
     FSP_ERR_NO_CALLBACK_MEMORY    = 35,                     ///< Non-secure callback memory not provided for non-secure callback
     FSP_ERR_BUFFER_EMPTY          = 36,                     ///< No data available in buffer
+    FSP_ERR_INVALID_DATA          = 37,                     ///< Accuracy of data is not guaranteed
 
     /* Start of RTOS only error codes */
     FSP_ERR_INTERNAL     = 100,                             ///< Internal error
@@ -279,12 +280,13 @@ typedef enum e_fsp_err
     FSP_ERR_CAN_TRANSMIT_FIFO_FULL = 60007,          ///< Transmit FIFO is full.
 
     /* Start of SF_WIFI Specific */
-    FSP_ERR_WIFI_CONFIG_FAILED   = 70000,            ///< WiFi module Configuration failed.
-    FSP_ERR_WIFI_INIT_FAILED     = 70001,            ///< WiFi module initialization failed.
-    FSP_ERR_WIFI_TRANSMIT_FAILED = 70002,            ///< Transmission failed
-    FSP_ERR_WIFI_INVALID_MODE    = 70003,            ///< API called when provisioned in client mode
-    FSP_ERR_WIFI_FAILED          = 70004,            ///< WiFi Failed.
-    FSP_ERR_WIFI_SCAN_COMPLETE   = 70005,            ///< Wifi scan has completed.
+    FSP_ERR_WIFI_CONFIG_FAILED    = 70000,           ///< WiFi module Configuration failed.
+    FSP_ERR_WIFI_INIT_FAILED      = 70001,           ///< WiFi module initialization failed.
+    FSP_ERR_WIFI_TRANSMIT_FAILED  = 70002,           ///< Transmission failed
+    FSP_ERR_WIFI_INVALID_MODE     = 70003,           ///< API called when provisioned in client mode
+    FSP_ERR_WIFI_FAILED           = 70004,           ///< WiFi Failed.
+    FSP_ERR_WIFI_SCAN_COMPLETE    = 70005,           ///< Wifi scan has completed.
+    FSP_ERR_WIFI_AP_NOT_CONNECTED = 70006,           ///< WiFi module is not connected to access point
 
     /* Start of SF_CELLULAR Specific */
     FSP_ERR_CELLULAR_CONFIG_FAILED       = 80000,    ///< Cellular module Configuration failed.

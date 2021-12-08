@@ -33,6 +33,9 @@
  *
  * Implemented by:
  * - @ref IIC_MASTER
+ * - @ref SCI_I2C
+ * - @ref IIC_B_MASTER
+ * - @ref SCI_B_I2C
  *
  * @{
  **********************************************************************************************************************/
@@ -130,6 +133,9 @@ typedef struct st_i2c_master_api
     /** Opens the I2C Master driver and initializes the hardware.
      * @par Implemented as
      * - @ref R_IIC_MASTER_Open()
+     * - @ref R_SCI_I2C_Open()
+     * - @ref R_IIC_B_MASTER_Open()
+     * - @ref R_SCI_B_I2C_Open()
      *
      * @param[in] p_ctrl    Pointer to control block. Must be declared by user. Elements are set here.
      * @param[in] p_cfg     Pointer to configuration structure.
@@ -138,7 +144,10 @@ typedef struct st_i2c_master_api
 
     /** Performs a read operation on an I2C Master device.
      * @par Implemented as
+     * - @ref R_SCI_I2C_Read()
      * - @ref R_IIC_MASTER_Read()
+     * - @ref R_IIC_B_MASTER_Read()
+     * - @ref R_SCI_B_I2C_Read()
      *
      * @param[in] p_ctrl    Pointer to control block set in i2c_api_master_t::open call.
      * @param[in] p_dest    Pointer to the location to store read data.
@@ -151,6 +160,9 @@ typedef struct st_i2c_master_api
     /** Performs a write operation on an I2C Master device.
      * @par Implemented as
      * - @ref R_IIC_MASTER_Write()
+     * - @ref R_SCI_I2C_Write()
+     * - @ref R_IIC_B_MASTER_Write()
+     * - @ref R_SCI_B_I2C_Write()
      *
      * @param[in] p_ctrl    Pointer to control block set in i2c_api_master_t::open call.
      * @param[in] p_src     Pointer to the location to get write data from.
@@ -163,6 +175,9 @@ typedef struct st_i2c_master_api
     /** Performs a reset of the peripheral.
      * @par Implemented as
      * - @ref R_IIC_MASTER_Abort()
+     * - @ref R_SCI_I2C_Abort()
+     * - @ref R_IIC_B_MASTER_Abort()
+     * - @ref R_SCI_B_I2C_Abort()
      *
      * @param[in] p_ctrl    Pointer to control block set in i2c_api_master_t::open call.
      */
@@ -171,6 +186,9 @@ typedef struct st_i2c_master_api
     /** Sets address of the slave device without reconfiguring the bus.
      * @par Implemented as
      * - @ref R_IIC_MASTER_SlaveAddressSet()
+     * - @ref R_SCI_I2C_SlaveAddressSet()
+     * - @ref R_IIC_B_MASTER_SlaveAddressSet()
+     * - @ref R_SCI_B_I2C_SlaveAddressSet()
      *
      * @param[in] p_ctrl            Pointer to control block set in i2c_api_master_t::open call.
      * @param[in] slave_address     Address of the slave device.
@@ -183,6 +201,9 @@ typedef struct st_i2c_master_api
      * Specify callback function and optional context pointer and working memory pointer.
      * @par Implemented as
      * - @ref R_IIC_MASTER_CallbackSet()
+     * - @ref R_SCI_I2C_CallbackSet()
+     * - @ref R_IIC_B_MASTER_CallbackSet()
+     * - @ref R_SCI_B_I2C_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the IIC Master control block.
      * @param[in]   p_callback               Callback function
@@ -196,6 +217,9 @@ typedef struct st_i2c_master_api
     /** Gets the status of the configured I2C device.
      * @par Implemented as
      * - @ref R_IIC_MASTER_StatusGet()
+     * - @ref R_SCI_I2C_StatusGet()
+     * - @ref R_IIC_B_MASTER_StatusGet()
+     * - @ref R_SCI_B_I2C_StatusGet()
      *
      * @param[in]   p_ctrl             Pointer to the IIC Master control block.
      * @param[out]  p_status           Pointer to store current status.
@@ -205,6 +229,9 @@ typedef struct st_i2c_master_api
     /** Closes the driver and releases the I2C Master device.
      * @par Implemented as
      * - @ref R_IIC_MASTER_Close()
+     * - @ref R_SCI_I2C_Close()
+     * - @ref R_IIC_B_MASTER_Close()
+     * - @ref R_SCI_B_I2C_Close()
      *
      * @param[in] p_ctrl    Pointer to control block set in i2c_api_master_t::open call.
      */

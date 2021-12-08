@@ -58,18 +58,35 @@ FSP_HEADER
 /** Data bit width */
 typedef enum e_spi_bit_width
 {
-    SPI_BIT_WIDTH_8_BITS   = (7),          ///< Data bit width is 8 bits byte
-    SPI_BIT_WIDTH_9_BITS   = (8),          ///< Data bit width is 9 bits word
-    SPI_BIT_WIDTH_10_BITS  = (9),          ///< Data bit width is 10 bits word
-    SPI_BIT_WIDTH_11_BITS  = (10),         ///< Data bit width is 11 bits word
-    SPI_BIT_WIDTH_12_BITS  = (11),         ///< Data bit width is 12 bits word
-    SPI_BIT_WIDTH_13_BITS  = (12),         ///< Data bit width is 13 bits word
-    SPI_BIT_WIDTH_14_BITS  = (13),         ///< Data bit width is 14 bits word
-    SPI_BIT_WIDTH_15_BITS  = (14),         ///< Data bit width is 15 bits word
-    SPI_BIT_WIDTH_16_BITS  = (15),         ///< Data bit width is 16 bits word
-    SPI_BIT_WIDTH_20_BITS  = (0),          ///< Data bit width is 20 bits long word
-    SPI_BIT_WIDTH_24_BITS  = (1),          ///< Data bit width is 24 bits long word
-    SPI_BIT_WIDTH_32_BITS  = (3)           ///< Data bit width is 32 bits long word
+    SPI_BIT_WIDTH_4_BITS  = (3),       ///< Data bit width is 4 bits (byte)
+    SPI_BIT_WIDTH_5_BITS  = (4),       ///< Data bit width is 5 bits (byte)
+    SPI_BIT_WIDTH_6_BITS  = (5),       ///< Data bit width is 6 bits (byte)
+    SPI_BIT_WIDTH_7_BITS  = (6),       ///< Data bit width is 7 bits (byte)
+    SPI_BIT_WIDTH_8_BITS  = (7),       ///< Data bit width is 8 bits (byte)
+    SPI_BIT_WIDTH_9_BITS  = (8),       ///< Data bit width is 9 bits (word)
+    SPI_BIT_WIDTH_10_BITS = (9),       ///< Data bit width is 10 bits (word)
+    SPI_BIT_WIDTH_11_BITS = (10),      ///< Data bit width is 11 bits (word)
+    SPI_BIT_WIDTH_12_BITS = (11),      ///< Data bit width is 12 bits (word)
+    SPI_BIT_WIDTH_13_BITS = (12),      ///< Data bit width is 13 bits (word)
+    SPI_BIT_WIDTH_14_BITS = (13),      ///< Data bit width is 14 bits (word)
+    SPI_BIT_WIDTH_15_BITS = (14),      ///< Data bit width is 15 bits (word)
+    SPI_BIT_WIDTH_16_BITS = (15),      ///< Data bit width is 16 bits (word)
+    SPI_BIT_WIDTH_17_BITS = (16),      ///< Data bit width is 17 bits (word)
+    SPI_BIT_WIDTH_18_BITS = (17),      ///< Data bit width is 18 bits (word)
+    SPI_BIT_WIDTH_19_BITS = (18),      ///< Data bit width is 19 bits (word)
+    SPI_BIT_WIDTH_20_BITS = (19),      ///< Data bit width is 20 bits (longword)
+    SPI_BIT_WIDTH_21_BITS = (20),      ///< Data bit width is 21 bits (word)
+    SPI_BIT_WIDTH_22_BITS = (21),      ///< Data bit width is 22 bits (word)
+    SPI_BIT_WIDTH_23_BITS = (22),      ///< Data bit width is 23 bits (longword)
+    SPI_BIT_WIDTH_24_BITS = (23),      ///< Data bit width is 24 bits (longword)
+    SPI_BIT_WIDTH_25_BITS = (25),      ///< Data bit width is 25 bits (longword)
+    SPI_BIT_WIDTH_26_BITS = (25),      ///< Data bit width is 26 bits (word)
+    SPI_BIT_WIDTH_27_BITS = (26),      ///< Data bit width is 27 bits (word)
+    SPI_BIT_WIDTH_28_BITS = (27),      ///< Data bit width is 28 bits (word)
+    SPI_BIT_WIDTH_29_BITS = (28),      ///< Data bit width is 29 bits (word)
+    SPI_BIT_WIDTH_30_BITS = (29),      ///< Data bit width is 30 bits (longword)
+    SPI_BIT_WIDTH_31_BITS = (30),      ///< Data bit width is 31 bits (longword)
+    SPI_BIT_WIDTH_32_BITS = (31)       ///< Data bit width is 32 bits (longword)
 } spi_bit_width_t;
 
 /** Master or slave operating mode */
@@ -166,8 +183,9 @@ typedef struct st_spi_cfg
 
 /** SPI control block.  Allocate an instance specific control block to pass into the SPI API calls.
  * @par Implemented as
- * - sci_spi_instance_ctrl_t
  * - spi_instance_ctrl_t
+ * - spi_b_instance_ctrl_t
+ * - sci_spi_instance_ctrl_t
  */
 typedef void spi_ctrl_t;
 
@@ -177,6 +195,7 @@ typedef struct st_spi_api
     /** Initialize a channel for SPI communication mode.
      * @par Implemented as
      * - @ref R_SPI_Open()
+     * - @ref R_SPI_B_Open()
      * - @ref R_SCI_SPI_Open()
      *
      * @param[in, out] p_ctrl Pointer to user-provided storage for the control block.
@@ -187,6 +206,7 @@ typedef struct st_spi_api
     /** Receive data from a SPI device.
      * @par Implemented as
      * - @ref R_SPI_Read()
+     * - @ref R_SPI_B_Read()
      * - @ref R_SCI_SPI_Read()
      *
      * @param[in]  p_ctrl    Pointer to the control block for the channel.
@@ -203,6 +223,7 @@ typedef struct st_spi_api
     /** Transmit data to a SPI device.
      * @par Implemented as
      * - @ref R_SPI_Write()
+     * - @ref R_SPI_B_Write()
      * - @ref R_SCI_SPI_Write()
      *
      * @param[in]  p_ctrl    Pointer to the control block for the channel.
@@ -218,6 +239,7 @@ typedef struct st_spi_api
     /** Simultaneously transmit data to a SPI device while receiving data from a SPI device (full duplex).
      * @par Implemented as
      * - @ref R_SPI_WriteRead()
+     * - @ref R_SPI_B_WriteRead()
      * - @ref R_SCI_SPI_WriteRead()
      *
      * @param[in]  p_ctrl    Pointer to the control block for the channel.
@@ -235,7 +257,9 @@ typedef struct st_spi_api
     /**
      * Specify callback function and optional context pointer and working memory pointer.
      * @par Implemented as
-     * - R_SCI_SPI_CallbackSet()
+     * - @ref R_SPI_CallbackSet()
+     * - @ref R_SPI_B_CallbackSet()
+     * - @ref R_SCI_SPI_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the SPI control block.
      * @param[in]   p_callback               Callback function
@@ -249,6 +273,7 @@ typedef struct st_spi_api
     /** Remove power to the SPI channel designated by the handle and disable the associated interrupts.
      * @par Implemented as
      * - @ref R_SPI_Close()
+     * - @ref R_SPI_B_Close()
      * - @ref R_SCI_SPI_Close()
      *
      * @param[in]  p_ctrl  Pointer to the control block for the channel.

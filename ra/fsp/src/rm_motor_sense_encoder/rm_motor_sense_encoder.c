@@ -312,8 +312,12 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_Reset (motor_angle_ctrl_t * const p_ctrl)
     MOTOR_SENSE_ENCODER_ERROR_RETURN(MOTOR_SENSE_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+    motor_sense_encoder_extended_cfg_t const * p_extend = p_instance_ctrl->p_cfg->p_extend;
+    gpt_extended_cfg_t * p_gpt_exntend = (gpt_extended_cfg_t *) p_extend->p_input_capture_instance->p_cfg->p_extend;
+
     rm_motor_sense_encoder_reset(&(p_instance_ctrl->st_encoder_parameter));
     rm_motor_sense_encoder_highspeed_reset(&(p_instance_ctrl->st_encoder_highspeed));
+    R_BSP_IrqEnable(p_gpt_exntend->capture_a_irq);
 
     rm_motor_sense_encoder_reset_count(p_instance_ctrl);
 
@@ -935,7 +939,7 @@ void rm_motor_sense_encoder_interrupt (timer_callback_args_t * p_args)
             /* divide angle[rad] by time[s] to calculate speed[rad/s] */
             /* time[s] = pulse_width[count] / (GPT Frequency[Hz]) = pulse_width[count]/(PWM Frequency[Hz]) */
             f4_temp0 = st_encoder->st_encoder_parameter.f4_encoder_angle_difference *
-                       (float) MOTOR_SENSE_ENCODER_AVERAGE * (float) SystemCoreClock;
+                       (float) MOTOR_SENSE_ENCODER_AVERAGE * (float) temp_info.clock_frequency;
             f4_temp_speed_rad_avg = f4_temp0 / (float) st_encoder->st_encoder_parameter.s4_encoder_pulse_width_sum;
 
             /* Get speed direction from encoder position change */
@@ -1029,7 +1033,7 @@ static void rm_motor_sense_encoder_highspeed_init (motor_sense_encoder_highspeed
                      (p_extended_cfg->encoder_config.f_carrier_frequency * MOTOR_SENSE_ENCODER_CALCULATE_KHz));
 
     f_temp = (f_ctrl_period * p_extended_cfg->encoder_config.f_occupancy_time -
-              p_extended_cfg->encoder_config.f_process_time) / p_extended_cfg->encoder_config.f_process_time;
+              p_extended_cfg->encoder_config.f_carrier_time) / p_extended_cfg->encoder_config.f_process_time;
     f_temp = (f_temp * MOTOR_SENSE_ENCODER_CALCULATE_60) / (f_ctrl_period * p_extended_cfg->encoder_config.u2_cpr);
 
     f_rpm_rad = (float) p_extended_cfg->st_motor_params.u2_mtr_pp *
@@ -1097,14 +1101,20 @@ static void rm_motor_sense_encoder_angle_adjust_excite (motor_sense_encoder_inst
     {
         p_ctrl->st_encoder_parameter.u2_encoder_angle_adj_count++;
 
-        if (p_ctrl->st_encoder_parameter.u2_encoder_angle_adj_count >=
+        if (p_ctrl->st_encoder_parameter.u2_encoder_angle_adj_count >
+            p_ctrl->st_encoder_parameter.u2_encoder_angle_adj_time)
+        {
+            /* Reset angle adjust counter */
+            p_ctrl->st_encoder_parameter.u2_encoder_angle_adj_count = 0U;
+        }
+
+        if (p_ctrl->st_encoder_parameter.u2_encoder_angle_adj_count ==
             p_ctrl->st_encoder_parameter.u2_encoder_angle_adj_time)
         {
             /* Angle adjusted to 90 degree */
-            if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_90_DEGREE == p_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
+            if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_90_DEGREE ==
+                p_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
             {
-                /* Reset angle adjust counter */
-                p_ctrl->st_encoder_parameter.u2_encoder_angle_adj_count  = 0;
                 p_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status = MOTOR_SENSE_ENCODER_ANGLE_ADJUST_0_DEGREE;
             }
             /* Angle adjusted to 0 degree */
@@ -1143,7 +1153,7 @@ static void rm_motor_sense_encoder_calculate_count_difference (motor_sense_encod
     p_input_capture->p_api->statusGet(p_input_capture->p_ctrl, &temp_status);
     u2_temp = (unsigned short) (temp_status.counter);
 
-    s2_encd_delta_tcnt = (int16_t) (st_ehighspeed->u2_encoder_highspeed_pre_phase_count - u2_temp);
+    s2_encd_delta_tcnt = (int16_t) -(st_ehighspeed->u2_encoder_highspeed_pre_phase_count - u2_temp);
     st_ehighspeed->s4_encoder_highspeed_angle_count    += (int32_t) s2_encd_delta_tcnt;
     st_ehighspeed->u2_encoder_highspeed_pre_phase_count = u2_temp;
 }                                      /* End of function rm_motor_sense_encoder_calculate_count_difference */

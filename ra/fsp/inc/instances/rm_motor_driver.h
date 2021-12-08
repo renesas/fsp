@@ -31,6 +31,7 @@
  **********************************************************************************************************************/
 #include "bsp_api.h"
 
+#include "rm_motor_driver_cfg.h"
 #include "rm_motor_driver_api.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
@@ -43,9 +44,25 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+
+/* Modulation type selection */
+typedef enum  e_motor_driver_modulation_method
+{
+    MOTOR_DRIVER_MODULATION_METHOD_SPWM,  ///< Sinusoidal pulse-width-modulation
+    MOTOR_DRIVER_MODULATION_METHOD_SVPWM, ///< Space vector pulse-width-modulation
+} motor_driver_modulation_method_t;
+
+/* For 1shunt phase detection */
+typedef enum  e_motor_driver_phase
+{
+    MOTOR_DRIVER_PHASE_U_PHASE = 1,
+    MOTOR_DRIVER_PHASE_V_PHASE,
+    MOTOR_DRIVER_PHASE_W_PHASE,
+} motor_driver_phase_t;
+
 typedef struct st_motor_driver_modulation
 {
-    float   f4_vdc;                    ///< Main Line Voltage (Vdc) [V]
+    float   f4_vdc;                    ///< Main line voltage (Vdc) [V]
     float   f4_1_div_vdc;              ///< 1/Vdc (Inverse Vdc for calculation)
     float   f4_voltage_error_ratio;    ///< The voltage error ratio (VoltageError/Vdc)
     float   f4_max_duty;               ///< Maximum duty cycle
@@ -56,17 +73,24 @@ typedef struct st_motor_driver_modulation
 
 typedef struct st_motor_driverextended_cfg
 {
-    uint16_t u2_pwm_timer_freq;        ///< PWM Timer Frequency [MHz]
-    uint16_t u2_pwm_carrier_freq;      ///< PWM Carrier Frequency [kHz]
-    uint16_t u2_deadtime;              ///< PWM Deadtime [usec]
+    uint16_t u2_pwm_timer_freq;                         ///< PWM timer frequency [MHz]
+    uint16_t u2_pwm_carrier_freq;                       ///< PWM carrier frequency [kHz]
+    uint16_t u2_deadtime;                               ///< PWM deadtime [usec]
 
-    float f_current_range;             ///< A/D Current measure range (max current) [A]
-    float f_vdc_range;                 ///< A/D Main Line Voltage measure range (max voltage) [V]
-    float f_ad_resolution;             ///< A/D Resolution */
-    float f_ad_current_offset;         ///< A/D Offset (Center value) */
-    float f_ad_voltage_conversion;     ///< A/D Conversion level */
+    float f_current_range;                              ///< A/D current measure range (max current) [A]
+    float f_vdc_range;                                  ///< A/D main line voltage measure range (max voltage) [V]
+    float f_ad_resolution;                              ///< A/D resolution
+    float f_ad_current_offset;                          ///< A/D offset (Center value)
+    float f_ad_voltage_conversion;                      ///< A/D conversion level
 
-    uint16_t u2_offset_calc_count;     ///< Calculation counts for current offset
+    uint16_t u2_offset_calc_count;                      ///< Calculation counts for current offset
+
+    motor_driver_modulation_method_t modulation_method; ///< Modulation method
+
+    /* For 1shunt */
+    float   f_ad_current_adjust;                        ///< Adjustment value for 1shunt A/D current
+    int32_t s4_difference_minimum;                      ///< Minimum difference of PWM duty
+    int32_t s4_adjust_adc_delay;                        ///< Adjustment delay for A/D conversion
 
     motor_driver_modulation_t mod_param;
 } motor_driver_extended_cfg_t;
@@ -75,29 +99,39 @@ typedef struct st_motor_driver_instance_ctrl
 {
     uint32_t open;
 
-    uint16_t u2_carrier_base;          ///< PWM Carrier Base Counts
+    uint16_t u2_carrier_base;          ///< PWM carrier base counts
     uint16_t u2_deadtime_count;        ///< Deadtime counts
 
     float f_iu_ad;                     ///< U phase current [A]
+    float f_iv_ad;                     ///< V phase current [A]
     float f_iw_ad;                     ///< W phase current [A]
-    float f_vdc_ad;                    ///< Main Line Voltage [V]
-    float f_refu;                      ///< Calculated U Phase output Voltage [V]
-    float f_refv;                      ///< Calculated V Phase output Voltage [V]
-    float f_refw;                      ///< Calculated W Phase output Voltage [V]
+    float f_vdc_ad;                    ///< Main line voltage [V]
+    float f_refu;                      ///< Calculated U Phase output voltage [V]
+    float f_refv;                      ///< Calculated V Phase output voltage [V]
+    float f_refw;                      ///< Calculated W Phase output voltage [V]
 
     /* for current offset calculation */
     uint8_t  u1_flag_offset_calc;      ///< The flag represents that the offset measurement is finished
     uint16_t u2_offset_calc_times;     ///< Calculation times for current offset
     float    f_offset_iu;              ///< U phase current offset value [A]
+    float    f_offset_iv;              ///< V phase current offset value [A]
     float    f_offset_iw;              ///< W phase current offset value [A]
     float    f_sum_iu_ad;              ///< U phase current summation value to calculate offset [A]
+    float    f_sum_iv_ad;              ///< V phase current summation value to calculate offset [A]
     float    f_sum_iw_ad;              ///< W phase current summation value to calculate offset [A]
+
+    /* for 1shunt current calculation */
+    motor_driver_phase_t min_phase;    ///< Minimum phase information to calculate 1shunt current
+    motor_driver_phase_t mid_phase;    ///< Middle phase information to calculate 1shunt current
 
     motor_driver_modulation_t  st_modulation;
     motor_driver_cfg_t const * p_cfg;
 
     /* For ADC callback */
-    adc_callback_args_t adc_callback_args; ///< For call ADC callbackSet function
+    adc_callback_args_t adc_callback_args;     ///< For call ADC callbackSet function
+
+    /* For GPT(Timer) callback */
+    timer_callback_args_t timer_callback_args; ///< For call GPT(Timer) callbackSet function
 } motor_driver_instance_ctrl_t;
 
 /**********************************************************************************************************************

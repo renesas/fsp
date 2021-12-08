@@ -259,6 +259,57 @@ typedef enum e_ioport_port_pin_t
     IOPORT_PORT_11_PIN_13 = 0x0B0D,    ///< IO port 11 pin 13
     IOPORT_PORT_11_PIN_14 = 0x0B0E,    ///< IO port 11 pin 14
     IOPORT_PORT_11_PIN_15 = 0x0B0F,    ///< IO port 11 pin 15
+
+    IOPORT_PORT_12_PIN_00 = 0x0C00,    ///< IO port 12 pin 0
+    IOPORT_PORT_12_PIN_01 = 0x0C01,    ///< IO port 12 pin 1
+    IOPORT_PORT_12_PIN_02 = 0x0C02,    ///< IO port 12 pin 2
+    IOPORT_PORT_12_PIN_03 = 0x0C03,    ///< IO port 12 pin 3
+    IOPORT_PORT_12_PIN_04 = 0x0C04,    ///< IO port 12 pin 4
+    IOPORT_PORT_12_PIN_05 = 0x0C05,    ///< IO port 12 pin 5
+    IOPORT_PORT_12_PIN_06 = 0x0C06,    ///< IO port 12 pin 6
+    IOPORT_PORT_12_PIN_07 = 0x0C07,    ///< IO port 12 pin 7
+    IOPORT_PORT_12_PIN_08 = 0x0C08,    ///< IO port 12 pin 8
+    IOPORT_PORT_12_PIN_09 = 0x0C09,    ///< IO port 12 pin 9
+    IOPORT_PORT_12_PIN_10 = 0x0C0A,    ///< IO port 12 pin 10
+    IOPORT_PORT_12_PIN_11 = 0x0C0B,    ///< IO port 12 pin 11
+    IOPORT_PORT_12_PIN_12 = 0x0C0C,    ///< IO port 12 pin 12
+    IOPORT_PORT_12_PIN_13 = 0x0C0D,    ///< IO port 12 pin 13
+    IOPORT_PORT_12_PIN_14 = 0x0C0E,    ///< IO port 12 pin 14
+    IOPORT_PORT_12_PIN_15 = 0x0C0F,    ///< IO port 12 pin 15
+
+    IOPORT_PORT_13_PIN_00 = 0x0D00,    ///< IO port 13 pin 0
+    IOPORT_PORT_13_PIN_01 = 0x0D01,    ///< IO port 13 pin 1
+    IOPORT_PORT_13_PIN_02 = 0x0D02,    ///< IO port 13 pin 2
+    IOPORT_PORT_13_PIN_03 = 0x0D03,    ///< IO port 13 pin 3
+    IOPORT_PORT_13_PIN_04 = 0x0D04,    ///< IO port 13 pin 4
+    IOPORT_PORT_13_PIN_05 = 0x0D05,    ///< IO port 13 pin 5
+    IOPORT_PORT_13_PIN_06 = 0x0D06,    ///< IO port 13 pin 6
+    IOPORT_PORT_13_PIN_07 = 0x0D07,    ///< IO port 13 pin 7
+    IOPORT_PORT_13_PIN_08 = 0x0D08,    ///< IO port 13 pin 8
+    IOPORT_PORT_13_PIN_09 = 0x0D09,    ///< IO port 13 pin 9
+    IOPORT_PORT_13_PIN_10 = 0x0D0A,    ///< IO port 13 pin 10
+    IOPORT_PORT_13_PIN_11 = 0x0D0B,    ///< IO port 13 pin 11
+    IOPORT_PORT_13_PIN_12 = 0x0D0C,    ///< IO port 13 pin 12
+    IOPORT_PORT_13_PIN_13 = 0x0D0D,    ///< IO port 13 pin 13
+    IOPORT_PORT_13_PIN_14 = 0x0D0E,    ///< IO port 13 pin 14
+    IOPORT_PORT_13_PIN_15 = 0x0D0F,    ///< IO port 13 pin 15
+
+    IOPORT_PORT_14_PIN_00 = 0x0E00,    ///< IO port 14 pin 0
+    IOPORT_PORT_14_PIN_01 = 0x0E01,    ///< IO port 14 pin 1
+    IOPORT_PORT_14_PIN_02 = 0x0E02,    ///< IO port 14 pin 2
+    IOPORT_PORT_14_PIN_03 = 0x0E03,    ///< IO port 14 pin 3
+    IOPORT_PORT_14_PIN_04 = 0x0E04,    ///< IO port 14 pin 4
+    IOPORT_PORT_14_PIN_05 = 0x0E05,    ///< IO port 14 pin 5
+    IOPORT_PORT_14_PIN_06 = 0x0E06,    ///< IO port 14 pin 6
+    IOPORT_PORT_14_PIN_07 = 0x0E07,    ///< IO port 14 pin 7
+    IOPORT_PORT_14_PIN_08 = 0x0E08,    ///< IO port 14 pin 8
+    IOPORT_PORT_14_PIN_09 = 0x0E09,    ///< IO port 14 pin 9
+    IOPORT_PORT_14_PIN_10 = 0x0E0A,    ///< IO port 14 pin 10
+    IOPORT_PORT_14_PIN_11 = 0x0E0B,    ///< IO port 14 pin 11
+    IOPORT_PORT_14_PIN_12 = 0x0E0C,    ///< IO port 14 pin 12
+    IOPORT_PORT_14_PIN_13 = 0x0E0D,    ///< IO port 14 pin 13
+    IOPORT_PORT_14_PIN_14 = 0x0E0E,    ///< IO port 14 pin 14
+    IOPORT_PORT_14_PIN_15 = 0x0E0F,    ///< IO port 14 pin 15
 } ioport_port_pin_t;
 
 /**********************************************************************************************************************

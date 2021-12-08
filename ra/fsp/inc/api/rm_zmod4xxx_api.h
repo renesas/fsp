@@ -42,20 +42,18 @@
 
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)
  #include "platform.h"
- #include "r_comms_i2c_if.h"
-#elif defined(__CCRL__) || defined(__ICCRL__) || defined(__RL78__)
+#elif defined(__CCRL__) || defined(__ICCRL78__) || defined(__RL78__)
  #include "r_cg_macrodriver.h"
  #include <stddef.h>
 #else
  #include "bsp_api.h"
- #include "r_timer_api.h"
  #include "r_external_irq_api.h"
 #endif
 
 #include "rm_comms_api.h"
 
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)
-#elif defined(__CCRL__) || defined(__ICCRL__) || defined(__RL78__)
+#elif defined(__CCRL__) || defined(__ICCRL78__) || defined(__RL78__)
 #else
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
@@ -156,11 +154,10 @@ typedef struct st_rm_zmod4xxx_oaq_2nd_data
 typedef struct st_rm_zmod4xxx_cfg
 {
     rm_comms_instance_t const * p_comms_instance;                    ///< Pointer to Communications Middleware instance.
-    void const                * p_timer_instance;                    ///< Pointer to Timer driver instance.
     void const                * p_irq_instance;                      ///< Pointer to IRQ instance.
-    void const                * p_zmod4xxx_device;                   ///< Pointer to ZMOD4XXX device structure.
-    void const                * p_zmod4xxx_handle;                   ///< Pointer to ZMOD4XXX library handler.
-    void const                * p_zmod4xxx_results;                  ///< Pointer to ZMOD4XXX library results.
+    void const                * p_zmod4xxx_device;                   ///< [DEPRECATED] This will be removed in FSP v4.0.0. Please use rm_zmod4xxx_lib_extended_cfg_t in rm_zmod4xxx.h
+    void const                * p_zmod4xxx_handle;                   ///< [DEPRECATED] This will be removed in FSP v4.0.0. Please use rm_zmod4xxx_lib_extended_cfg_t in rm_zmod4xxx.h
+    void const                * p_zmod4xxx_results;                  ///< [DEPRECATED] This will be removed in FSP v4.0.0. Please use rm_zmod4xxx_lib_extended_cfg_t in rm_zmod4xxx.h
     void const                * p_context;                           ///< Pointer to the user-provided context.
     void const                * p_extend;                            ///< Pointer to extended configuration by instance of interface.
     void (* p_comms_callback)(rm_zmod4xxx_callback_args_t * p_args); ///< I2C Communications callback
@@ -321,7 +318,7 @@ typedef struct st_rm_zmod4xxx_instance
  *********************************************************************************************************************/
 
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)
-#elif defined(__CCRL__) || defined(__ICCRL__) || defined(__RL78__)
+#elif defined(__CCRL__) || defined(__ICCRL78__) || defined(__RL78__)
 #else
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */

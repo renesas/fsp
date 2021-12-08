@@ -29,6 +29,7 @@
  * Implemented by:
  * - @ref MOTOR_SENSORLESS
  * - @ref MOTOR_ENCODER
+ * - @ref MOTOR_120_DEGREE
  *
  * @{
  **********************************************************************************************************************/
@@ -72,6 +73,33 @@ typedef enum e_rm_motor_error
     MOTOR_ERROR_UNKNOWN         = 0xFFFF,
 } motor_error_t;
 
+/** Events that can trigger a callback function */
+typedef enum e_motor_callback_event
+{
+    MOTOR_CALLBACK_EVENT_SPEED_FORWARD = 1, ///< Event forward speed control
+    MOTOR_CALLBACK_EVENT_SPEED_BACKWARD,    ///< Event backward speed control
+    MOTOR_CALLBACK_EVENT_CURRENT_FORWARD,   ///< Event forward current control
+    MOTOR_CALLBACK_EVENT_CURRENT_BACKWARD,  ///< Event backward current control
+    MOTOR_CALLBACK_EVENT_ADC_FORWARD,       ///< Event before motor 120 driver process
+    MOTOR_CALLBACK_EVENT_ADC_BACKWARD,      ///< Event after motor 120 driver process
+    MOTOR_CALLBACK_EVENT_CYCLE_FORWARD,     ///< Before cyclic process of speed control
+    MOTOR_CALLBACK_EVENT_CYCLE_BACKWARD,    ///< After cyclic process of speed control
+} motor_callback_event_t;
+
+/** Flag for waiting for motor stop */
+typedef enum  e_motor_wait_stop_flag
+{
+    MOTOR_WAIT_STOP_FLAG_CLEAR = 0,    ///< Wait stop flag clear
+    MOTOR_WAIT_STOP_FLAG_SET   = 1,    ///< Wait stop flag set
+} motor_wait_stop_flag_t;
+
+/** callback function parameter data */
+typedef struct st_rm_motor_callback_args
+{
+    void const           * p_context;  ///< Placeholder for user data.
+    motor_callback_event_t event;
+} motor_callback_args_t;
+
 /** Motor Control block.  Allocate an instance specific control block to pass into the API calls.
  * @par Implemented as
  * - motor_instance_ctrl_t
@@ -85,8 +113,9 @@ typedef struct st_motor_cfg
     motor_current_instance_t const * p_motor_current_instance; ///< Current Instance
 
     /** Placeholder for user data.  Passed to the user callback in motor_callback_args_t. */
+    void (* p_callback)(motor_callback_args_t * p_args);
     void const * p_context;
-    void const * p_extend;                                     ///< Placeholder for user extension.
+    void const * p_extend;             ///< Placeholder for user extension.
 } motor_cfg_t;
 
 /** Functions implemented at the HAL layer will follow this API. */
@@ -96,6 +125,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Open()
      * - @ref RM_MOTOR_ENCODER_Open()
+     * - @ref RM_MOTOR_120_DEGREE_Open()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_cfg        Pointer to configuration structure.
@@ -106,6 +136,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Close()
      * - @ref RM_MOTOR_ENCODER_Close()
+     * - @ref RM_MOTOR_120_DEGREE_Close()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -115,6 +146,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Run()
      * - @ref RM_MOTOR_ENCODER_Run()
+     * - @ref RM_MOTOR_120_DEGREE_Run()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -124,6 +156,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Stop()
      * - @ref RM_MOTOR_ENCODER_Stop()
+     * - @ref RM_MOTOR_120_DEGREE_Stop()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -133,6 +166,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_Reset()
      * - @ref RM_MOTOR_ENCODER_Reset()
+     * - @ref RM_MOTOR_120_DEGREE_Reset()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      */
@@ -142,6 +176,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_ErrorSet()
      * - @ref RM_MOTOR_ENCODER_ErrorSet()
+     * - @ref RM_MOTOR_120_DEGREE_ErrorSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  error        Happend error code
@@ -152,6 +187,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_SpeedSet()
      * - @ref RM_MOTOR_ENCODER_SpeedSet()
+     * - @ref RM_MOTOR_120_DEGREE_SpeedSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  speed_rpm    Required rotation speed [rpm]
@@ -162,6 +198,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_PositionSet()
      * - @ref RM_MOTOR_ENCODER_PositionSet()
+     * - @ref RM_MOTOR_120_DEGREE_PositionSet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[in]  p_position   Pointer to set required data
@@ -172,6 +209,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_StatusGet()
      * - @ref RM_MOTOR_ENCODER_StatusGet()
+     * - @ref RM_MOTOR_120_DEGREE_StatusGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_status     Pointer to get the motor control status
@@ -182,6 +220,7 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_AngleGet()
      * - @ref RM_MOTOR_ENCODER_AngleGet()
+     * - @ref RM_MOTOR_120_DEGREE_AngleGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_angle_rad  Pointer to get the rotor angle [rad]
@@ -192,16 +231,29 @@ typedef struct st_motor_api
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_SpeedGet()
      * - @ref RM_MOTOR_ENCODER_SpeedGet()
+     * - @ref RM_MOTOR_120_DEGREE_SpeedGet()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_speed_rpm  Pointer to get the rotation speed [rpm]
      */
     fsp_err_t (* speedGet)(motor_ctrl_t * const p_ctrl, float * const p_speed_rpm);
 
+    /** Get wait stop flag.
+     * @par Implemented as
+     * - @ref RM_MOTOR_SENSORLESS_WaitStopFlagGet()
+     * - @ref RM_MOTOR_ENCODER_WaitStopFlagGet()
+     * - @ref RM_MOTOR_120_DEGREE_WaitStopFlagGet()
+     *
+     * @param[in]  p_ctrl              Pointer to control structure.
+     * @param[out] p_flag              Pointer to wait stop flag
+     */
+    fsp_err_t (* waitStopFlagGet)(motor_ctrl_t * const p_ctrl, motor_wait_stop_flag_t * const p_flag);
+
     /** Check the error occurrence
      * @par Implemented as
      * - @ref RM_MOTOR_SENSORLESS_ErrorCheck()
      * - @ref RM_MOTOR_ENCODER_ErrorCheck()
+     * - @ref RM_MOTOR_120_DEGREE_ErrorCheck()
      *
      * @param[in]  p_ctrl       Pointer to control structure.
      * @param[out] p_error      Pointer to get occured error

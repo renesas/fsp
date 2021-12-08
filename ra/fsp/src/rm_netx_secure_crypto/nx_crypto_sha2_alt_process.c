@@ -40,14 +40,6 @@
 /* Use the padding array from the _alt file */
 extern const UCHAR _nx_crypto_sha256_padding[64];
 
-/***********************************************************************************************************************
- * Private function prototypes
- **********************************************************************************************************************/
-
-static UINT sce_nx_crypto_sha256_initialize(NX_CRYPTO_SHA256 * context, UINT algorithm);
-static UINT sce_nx_crypto_sha256_update(NX_CRYPTO_SHA256 * context, UCHAR * input_ptr, UINT input_length);
-static UINT sce_nx_crypto_sha256_digest_calculate(NX_CRYPTO_SHA256 * context, UCHAR * digest, UINT algorithm);
-
 /*******************************************************************************************************************//**
  * @addtogroup RM_NETX_SECURE_CRYPTO
  * @{
@@ -58,7 +50,7 @@ static UINT sce_nx_crypto_sha256_digest_calculate(NX_CRYPTO_SHA256 * context, UC
  **********************************************************************************************************************/
 
 /* Set up initial value based on SHA224 or SHA256. */
-static UINT sce_nx_crypto_sha256_initialize (NX_CRYPTO_SHA256 * context, UINT algorithm)
+UINT sce_nx_crypto_sha256_initialize (NX_CRYPTO_SHA256 * context, UINT algorithm)
 {
     /* Determine if the context is non-null.  */
     if (context == NX_CRYPTO_NULL)
@@ -101,7 +93,7 @@ static UINT sce_nx_crypto_sha256_initialize (NX_CRYPTO_SHA256 * context, UINT al
 }
 
 /* Compute SHA calculation on 64 byte blocks and handle partial blocks. */
-static UINT sce_nx_crypto_sha256_update (NX_CRYPTO_SHA256 * context, UCHAR * input_ptr, UINT input_length)
+UINT sce_nx_crypto_sha256_update (NX_CRYPTO_SHA256 * context, UCHAR * input_ptr, UINT input_length)
 {
     ULONG     current_bytes;
     ULONG     needed_fill_bytes;
@@ -231,81 +223,6 @@ UINT sce_nx_crypto_sha256_digest_calculate (NX_CRYPTO_SHA256 * context, UCHAR * 
  #endif                                /* NX_SECURE_KEY_CLEAR  */
 
     /* Return successful completion.  */
-    return NX_CRYPTO_SUCCESS;
-}
-
-/***********************************************************************************************************************
- * AES CBC Encryption
- * @retval NX_CRYPTO_SUCCESS              AES encryption using SCE was successful.
- * @retval NX_CRYPTO_NOT_SUCCESSFUL       AES encryption using SCE failed.
- **********************************************************************************************************************/
-UINT sce_nx_crypto_method_sha256_operation (UINT                             op,
-                                            struct NX_CRYPTO_METHOD_STRUCT * method,
-                                            UCHAR                          * input,
-                                            ULONG                            input_length_in_byte,
-                                            UCHAR                          * output,
-                                            ULONG                            output_length_in_byte,
-                                            VOID                           * crypto_metadata)
-{
-    switch (op)
-    {
-        case NX_CRYPTO_HASH_INITIALIZE:
-        {
-            sce_nx_crypto_sha256_initialize((NX_CRYPTO_SHA256 *) crypto_metadata, method->nx_crypto_algorithm);
-            break;
-        }
-
-        case NX_CRYPTO_HASH_UPDATE:
-        {
-            sce_nx_crypto_sha256_update((NX_CRYPTO_SHA256 *) crypto_metadata, input, input_length_in_byte);
-            break;
-        }
-
-        case NX_CRYPTO_HASH_CALCULATE:
-        {
-            if ((method->nx_crypto_algorithm == NX_CRYPTO_AUTHENTICATION_HMAC_SHA2_256) ||
-                (method->nx_crypto_algorithm == NX_CRYPTO_HASH_SHA256))
-            {
-                if (output_length_in_byte < 32)
-                {
-                    return NX_CRYPTO_INVALID_BUFFER_SIZE;
-                }
-            }
-            else if (output_length_in_byte < 28)
-            {
-                return NX_CRYPTO_INVALID_BUFFER_SIZE;
-            }
-
-            sce_nx_crypto_sha256_digest_calculate((NX_CRYPTO_SHA256 *) crypto_metadata,
-                                                  output,
-                                                  method->nx_crypto_algorithm);
-            break;
-        }
-
-        default:
-        {
-            if ((method->nx_crypto_algorithm == NX_CRYPTO_AUTHENTICATION_HMAC_SHA2_256) ||
-                (method->nx_crypto_algorithm == NX_CRYPTO_HASH_SHA256))
-            {
-                if (output_length_in_byte < 32)
-                {
-                    return NX_CRYPTO_INVALID_BUFFER_SIZE;
-                }
-            }
-            else if (output_length_in_byte < 28)
-            {
-                return NX_CRYPTO_INVALID_BUFFER_SIZE;
-            }
-
-            sce_nx_crypto_sha256_initialize((NX_CRYPTO_SHA256 *) crypto_metadata, method->nx_crypto_algorithm);
-            sce_nx_crypto_sha256_update((NX_CRYPTO_SHA256 *) crypto_metadata, input, input_length_in_byte);
-            sce_nx_crypto_sha256_digest_calculate((NX_CRYPTO_SHA256 *) crypto_metadata,
-                                                  output,
-                                                  method->nx_crypto_algorithm);
-            break;
-        }
-    }
-
     return NX_CRYPTO_SUCCESS;
 }
 

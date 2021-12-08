@@ -132,18 +132,19 @@ static uint32_t rm_motor_encoder_statemachine_event(motor_encoder_instance_ctrl_
  **********************************************************************************************************************/
 const motor_api_t g_motor_on_encoder =
 {
-    .open        = RM_MOTOR_ENCODER_Open,
-    .close       = RM_MOTOR_ENCODER_Close,
-    .run         = RM_MOTOR_ENCODER_Run,
-    .stop        = RM_MOTOR_ENCODER_Stop,
-    .reset       = RM_MOTOR_ENCODER_Reset,
-    .errorSet    = RM_MOTOR_ENCODER_ErrorSet,
-    .speedSet    = RM_MOTOR_ENCODER_SpeedSet,
-    .positionSet = RM_MOTOR_ENCODER_PositionSet,
-    .statusGet   = RM_MOTOR_ENCODER_StatusGet,
-    .angleGet    = RM_MOTOR_ENCODER_AngleGet,
-    .speedGet    = RM_MOTOR_ENCODER_SpeedGet,
-    .errorCheck  = RM_MOTOR_ENCODER_ErrorCheck,
+    .open            = RM_MOTOR_ENCODER_Open,
+    .close           = RM_MOTOR_ENCODER_Close,
+    .run             = RM_MOTOR_ENCODER_Run,
+    .stop            = RM_MOTOR_ENCODER_Stop,
+    .reset           = RM_MOTOR_ENCODER_Reset,
+    .errorSet        = RM_MOTOR_ENCODER_ErrorSet,
+    .speedSet        = RM_MOTOR_ENCODER_SpeedSet,
+    .positionSet     = RM_MOTOR_ENCODER_PositionSet,
+    .statusGet       = RM_MOTOR_ENCODER_StatusGet,
+    .angleGet        = RM_MOTOR_ENCODER_AngleGet,
+    .speedGet        = RM_MOTOR_ENCODER_SpeedGet,
+    .errorCheck      = RM_MOTOR_ENCODER_ErrorCheck,
+    .waitStopFlagGet = RM_MOTOR_ENCODER_WaitStopFlagGet,
 };
 
 /*******************************************************************************************************************//**
@@ -629,6 +630,24 @@ fsp_err_t RM_MOTOR_ENCODER_ErrorCheck (motor_ctrl_t * const p_ctrl, uint16_t * c
     }
 
     return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Get wait stop flag. Implements @ref motor_api_t::waitStopFlagGet.
+ *
+ * Example:
+ *
+ * @retval FSP_ERR_UNSUPPORTED      Unsupported.
+ *
+ * @note
+ *
+ **********************************************************************************************************************/
+fsp_err_t RM_MOTOR_ENCODER_WaitStopFlagGet (motor_ctrl_t * const p_ctrl, motor_wait_stop_flag_t * const p_flag)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_flag);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**

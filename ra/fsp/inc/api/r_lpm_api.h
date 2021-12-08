@@ -116,21 +116,25 @@ typedef uint16_t lpm_snooze_end_bits_t;
 /** Snooze cancel control */
 typedef enum e_lpm_snooze_cancel
 {
-    LPM_SNOOZE_CANCEL_SOURCE_NONE        = ELC_EVENT_NONE,                  ///< No snooze cancel source
-    LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPM  = ELC_EVENT_ADC0_COMPARE_MATCH,    ///< ADC Channel 0 window compare match
-    LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPUM = ELC_EVENT_ADC0_COMPARE_MISMATCH, ///< ADC Channel 0 window compare mismatch
-#if BSP_FEATURE_ADC_VALID_UNIT_MASK & (1U << 1)                             // If ADC has unit 1
-    LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPM  = ELC_EVENT_ADC1_COMPARE_MATCH,    ///< ADC Channel 1 window compare match
-    LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPUM = ELC_EVENT_ADC1_COMPARE_MISMATCH, ///< ADC Channel 1 window compare mismatch
+    LPM_SNOOZE_CANCEL_SOURCE_NONE       = ELC_EVENT_NONE,                     ///< No snooze cancel source
+    LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPM = ELC_EVENT_ADC0_COMPARE_MATCH,       ///< ADC Channel 0 window compare match
+#if (2U != BSP_FEATURE_ELC_VERSION)
+    LPM_SNOOZE_CANCEL_SOURCE_ADC0_WCMPUM = ELC_EVENT_ADC0_COMPARE_MISMATCH,   ///< ADC Channel 0 window compare mismatch
 #endif
-#if BSP_FEATURE_SCI_CHANNELS & (1U << 0)                                    // If SCI has channel 0
-    LPM_SNOOZE_CANCEL_SOURCE_SCI0_AM         = ELC_EVENT_SCI0_AM,           ///< SCI0 address match event
-    LPM_SNOOZE_CANCEL_SOURCE_SCI0_RXI_OR_ERI = ELC_EVENT_SCI0_RXI_OR_ERI,   ///< SCI0 receive error
+#if BSP_FEATURE_ADC_VALID_UNIT_MASK & (1U << 1)                               // If ADC has unit 1
+    LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPM = ELC_EVENT_ADC1_COMPARE_MATCH,       ///< ADC Channel 1 window compare match
+ #if (2U != BSP_FEATURE_ELC_VERSION)
+    LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPUM = ELC_EVENT_ADC1_COMPARE_MISMATCH,   ///< ADC Channel 1 window compare mismatch
+ #endif
 #endif
-    LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE = ELC_EVENT_DTC_COMPLETE,         ///< DTC transfer completion
-    LPM_SNOOZE_CANCEL_SOURCE_DOC_DOPCI    = ELC_EVENT_DOC_INT,              ///< Data operation circuit interrupt
+#if (BSP_FEATURE_SCI_CHANNELS & (1U << 0)) && (2U != BSP_FEATURE_ELC_VERSION) // If SCI has channel 0
+    LPM_SNOOZE_CANCEL_SOURCE_SCI0_AM         = ELC_EVENT_SCI0_AM,             ///< SCI0 address match event
+    LPM_SNOOZE_CANCEL_SOURCE_SCI0_RXI_OR_ERI = ELC_EVENT_SCI0_RXI_OR_ERI,     ///< SCI0 receive error
+#endif
+    LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE = ELC_EVENT_DTC_COMPLETE,           ///< DTC transfer completion
+    LPM_SNOOZE_CANCEL_SOURCE_DOC_DOPCI    = ELC_EVENT_DOC_INT,                ///< Data operation circuit interrupt
 #if BSP_FEATURE_CTSU_VERSION
-    LPM_SNOOZE_CANCEL_SOURCE_CTSU_CTSUFN = ELC_EVENT_CTSU_END,              ///< CTSU measurement end interrupt
+    LPM_SNOOZE_CANCEL_SOURCE_CTSU_CTSUFN = ELC_EVENT_CTSU_END,                ///< CTSU measurement end interrupt
 #endif
 } lpm_snooze_cancel_t;
 

@@ -59,6 +59,7 @@
 #define R_BLE_SPP_EVENT_SET_MAC_ID         (0x0725)
 #define R_BLE_SPP_EVENT_SEND_NOTIFY        (0x071C)
 #define R_BLE_SPP_EVENT_SEND_INDICATION    (0x0726)
+#define R_BLE_SPP_EVENT_SET_TX_POWER       (0x0705)
 
 #define BLE_SPP_COMMAND(command, reply_event)                           \
     {                                                                   \
@@ -462,6 +463,27 @@ ble_status_t R_BLE_GATTC_RegisterCb (ble_gattc_app_cb_t cb, uint8_t priority)
     return BLE_SUCCESS;
 }
 
+ble_status_t R_BLE_VS_SetTxPower (uint16_t conn_hdl, uint8_t tx_power)
+{
+    BLE_PARAMETER_NOT_USED(conn_hdl);
+    ble_status_t status;
+
+    if (R_BLE_SPP_GAP_SetTxPower(tx_power) == R_BLE_SPP_SUCCESS)
+    {
+        status = r_ble_spp_api_check_return_valid(R_BLE_SPP_EVENT_SET_TX_POWER);
+        if (status)
+        {
+            return BLE_ERR_INVALID_PTR;
+        }
+    }
+    else
+    {
+        return BLE_ERR_INVALID_OPERATION;
+    }
+
+    return BLE_SUCCESS;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Functions not implemented
 ///////////////////////////////////////////////////////////////////////////////
@@ -821,6 +843,7 @@ static void r_ble_spp_api_mw_callback (r_ble_spp_payload_t * p_payload)
         case R_BLE_SPP_EVENT_GET_ATTR:
         case R_BLE_SPP_EVENT_SET_ATTR:
         case R_BLE_SPP_EVENT_SET_ADV_PARAM:
+        case R_BLE_SPP_EVENT_SET_TX_POWER:
         {
             g_current_spp_payload = *p_payload;
 

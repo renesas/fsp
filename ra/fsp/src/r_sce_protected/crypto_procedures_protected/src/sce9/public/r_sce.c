@@ -260,6 +260,9 @@ const sce_api_t g_sce_protected_on_sce =
 /*******************************************************************************************************************//**
  * Enables use of SCE functionality.
  *
+ * @param[in] p_ctrl Pointer to control structure.
+ * @param[in] p_cfg Pointer to pin configuration structure.
+ *
  * @retval FSP_SUCCESS                          Normal termination
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              The error-detection self-test failed to terminate normally.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
@@ -346,6 +349,8 @@ fsp_err_t R_SCE_Open (sce_ctrl_t * const p_ctrl, sce_cfg_t const * const p_cfg)
 
 /*******************************************************************************************************************//**
  * Stops supply of power to the SCE.
+ *
+ * @param[in] p_ctrl Pointer to control structure.
  *
  * @retval FSP_SUCCESS              Normal termination
  *
@@ -1492,6 +1497,9 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (uint8_t                  
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+ * 
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall(uint8_t *encrypted_provisioning_key, uint8_t *initial_vector,
         uint8_t *encrypted_key, sce_tls_ca_certification_public_wrapped_key_t *wrapped_key)
@@ -1503,6 +1511,7 @@ fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall(uint8_t *encrypted_pr
         (uint32_t*)encrypted_provisioning_key, (uint32_t*)initial_vector, (uint32_t*)encrypted_key, wrapped_key->value);
     if (FSP_SUCCESS == error_code)
     {
+        memcpy(S_INST, wrapped_key->value, sizeof(wrapped_key->value));
         wrapped_key->type = SCE_KEY_INDEX_TYPE_TLS_CA_CERTIFICATION_PUBLIC_KEY;
     }
     else
@@ -1522,6 +1531,9 @@ fsp_err_t R_SCE_TLS_RootCertificateRSA2048PublicKeyInstall(uint8_t *encrypted_pr
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate(sce_tls_p256_ecc_wrapped_key_t *tls_p256_ecc_wrapped_key,
         uint8_t *ephemeral_ecdh_public_key)

@@ -54,6 +54,14 @@ typedef enum  e_motor_current_control_type
     MOTOR_CURRENT_CONTROL_TYPE_ENCODER    = 1
 } motor_current_control_type_t;
 
+/** Selection of shunt type */
+typedef enum e_motor_current_shunt_type
+{
+    MOTOR_CURRENT_SHUNT_TYPE_1_SHUNT = 1, ///< Only use U phase current
+    MOTOR_CURRENT_SHUNT_TYPE_2_SHUNT,     ///< Use U and W phase current
+    MOTOR_CURRENT_SHUNT_TYPE_3_SHUNT      ///< Use all phase current
+} motor_current_shunt_type_t;
+
 typedef enum  e_motor_current_voltage_compensation_select
 {
     MOTOR_CURRENT_VOLTAGE_COMPENSATION_SELECT_DISABLE = 0,
@@ -107,6 +115,8 @@ typedef struct st_motor_current_voltage_compensation
 typedef struct st_motor_current_extended_cfg
 {
     motor_current_control_type_t u1_control_type;                            ///< Control type
+
+    motor_current_shunt_type_t shunt;                                        ///< Shunt type
 
     float f_comp_v[MOTOR_CURRENT_VOLTAGE_COMPENSATION_TABLE_ARRAY_SIZE];     ///< Voltage error compensation table of voltage
     float f_comp_i[MOTOR_CURRENT_VOLTAGE_COMPENSATION_TABLE_ARRAY_SIZE];     ///< Voltage error compensation table of current

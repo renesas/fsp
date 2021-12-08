@@ -117,6 +117,10 @@ static void usb_hstd_clr_stall_result(usb_utr_t * ptr, uint16_t data1, uint16_t 
 
  #endif                                /* (BSP_CFG_RTOS == 0) */
 
+ #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+extern const uint16_t USB_CFG_TPL_TABLE[];
+ #endif /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
  ******************************************************************************/
@@ -182,6 +186,10 @@ const uint16_t g_usb_apl_devicetpl[] =
  #if (BSP_CFG_RTOS != 0)
 usb_hdl_t g_usb_hstd_sus_res_task_id[USB_NUM_USBIP];
  #endif                                /* #if (BSP_CFG_RTOS != 0) */
+
+ #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+extern usb_compliance_cb_t * g_usb_compliance_callback[USB_NUM_USBIP];
+ #endif /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
 /******************************************************************************
  * Renesas USB Host Driver functions
@@ -860,10 +868,10 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
         {
             USB_PRINTF0("***SIGN\n");
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
-            disp_param.status = USB_CT_SETUP_ERR;
+            disp_param.status = USB_COMPLIANCETEST_SETUP_ERR;
             disp_param.pid    = USB_NULL;
             disp_param.vid    = USB_NULL;
-            usb_compliance_disp((void *) &disp_param);
+            (*g_usb_compliance_callback[ptr->ip])((void *) &disp_param);
  #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
             /* Ignore count */
             g_usb_hstd_ignore_cnt[ptr->ip][USB_PIPE0]++;
@@ -964,10 +972,10 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
             if (USB_RESPONCE_COUNTER_VALUE == g_usb_hstd_response_counter[ptr->ip])
             {
                 hw_usb_clear_enb_sofe(ptr);
-                disp_param.status = USB_CT_NORES;
+                disp_param.status = USB_COMPLIANCETEST_NORES;
                 disp_param.pid    = USB_NULL;
                 disp_param.vid    = USB_NULL;
-                usb_compliance_disp((void *) &disp_param);
+                (*g_usb_compliance_callback[ptr->ip])((void *) &disp_param);
                 usb_hstd_ctrl_end(ptr, (uint16_t) USB_DATA_STOP);
             }
  #else                                 /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
@@ -2295,7 +2303,7 @@ void usb_hstd_dummy_function (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 void usb_hstd_suspend_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
-    usb_cfg_t         * p_cfg;
+    usb_cfg_t         * p_cfg = NULL;
 
     (void) data1;
     (void) data2;
@@ -2312,15 +2320,15 @@ void usb_hstd_suspend_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 
     if (ptr->ip)
     {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
-        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
- #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME) */
     }
     else
     {
+ #if defined(VECTOR_NUMBER_USBFS_INT)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+ #endif                                /* #if defined(VECTOR_NUMBER_USBFS_INT) */
     }
 
     ctrl.p_context = (void *) p_cfg->p_context;
@@ -2343,7 +2351,7 @@ void usb_hstd_suspend_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 void usb_hstd_resume_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
-    usb_cfg_t         * p_cfg;
+    usb_cfg_t         * p_cfg = NULL;
 
     (void) data1;
     (void) data2;
@@ -2360,15 +2368,15 @@ void usb_hstd_resume_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 
     if (ptr->ip)
     {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
- #else                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
-        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
- #endif  /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME) */
     }
     else
     {
+ #if defined(VECTOR_NUMBER_USBFS_INT)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+ #endif                                /* #if defined(VECTOR_NUMBER_USBFS_INT) */
     }
 
     ctrl.p_context = (void *) p_cfg->p_context;
@@ -2796,7 +2804,11 @@ void usb_hvnd_registration (usb_utr_t * ptr)
     driver.ifclass = (uint16_t) USB_IFCLS_VEN;
 
     /* Target peripheral list */
+  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+    driver.p_tpl = (uint16_t *) USB_CFG_TPL_TABLE;
+  #else                                /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
     driver.p_tpl = (uint16_t *) &g_usb_apl_devicetpl;
+  #endif /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
     /* Driver init */
     driver.classinit = &usb_hstd_dummy_function;

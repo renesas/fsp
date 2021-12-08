@@ -77,6 +77,10 @@ uint8_t * g_p_usb_hhid_config_table[USB_NUM_USBIP];                  /* Configur
 uint8_t * g_p_usb_hhid_device_table[USB_NUM_USBIP];                  /* Device Descriptor Table */
 uint8_t * g_p_usb_hhid_interface_table[USB_NUM_USBIP];               /* Interface Descriptor Table */
 
+#if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+extern const uint16_t USB_CFG_TPL_TABLE[];
+#endif  /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+
 /******************************************************************************
  * Renesas Abstracted USB Driver functions
  ******************************************************************************/
@@ -157,7 +161,9 @@ static void usb_hhid_enumeration (usb_utr_t * mess)
         case USB_HHID_ENUM_STR_DT0_REQ:
         {
             /* Get String descriptor */
-            usb_hhid_get_string_desc(mess, g_usb_hhid_devaddr[mess->ip], (uint16_t) 0,
+            usb_hhid_get_string_desc(mess,
+                                     g_usb_hhid_devaddr[mess->ip],
+                                     (uint16_t) 0,
                                      (usb_cb_t) &usb_hhid_check_result);
 
             /* String Descriptor #0 Receive wait */
@@ -193,7 +199,6 @@ static void usb_hhid_enumeration (usb_utr_t * mess)
             if ((usb_er_t) USB_CTRL_END == mess->status)
             {
  #ifdef USB_DEBUGPRINT_PP
-
                 /* String descriptor iProduct Address set */
                 table = (uint8_t *) &g_usb_hhid_string_data[mess->ip];
 
@@ -763,8 +768,12 @@ void usb_hhid_registration (usb_utr_t * ptr)
     uint8_t i;
 #endif                                                          /* USB_CFG_HUB == USB_CFG_ENABLE */
 
-    driver.ifclass    = (uint16_t) USB_IFCLS_HID;               /* Interface class : HID */
-    driver.p_tpl      = (uint16_t *) &g_usb_hhid_devicetpl;     /* Target peripheral list */
+    driver.ifclass = (uint16_t) USB_IFCLS_HID;                  /* Interface class : HID */
+#if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+    driver.p_tpl = (uint16_t *) USB_CFG_TPL_TABLE;
+#else /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+    driver.p_tpl = (uint16_t *) &g_usb_hhid_devicetpl;          /* Target peripheral list */
+#endif /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
     driver.classinit  = (usb_cb_t) &usb_hstd_dummy_function;    /* Driver init */
     driver.classcheck = (usb_cb_check_t) &usb_hhid_class_check; /* Driver check */
     driver.devconfig  = (usb_cb_t) &usb_hid_configured;         /* Device configuered */
@@ -773,19 +782,18 @@ void usb_hhid_registration (usb_utr_t * ptr)
     driver.devresume  = (usb_cb_t) &usb_hid_resume_complete;    /* Device resume */
 
 #if USB_CFG_HUB == USB_CFG_ENABLE
-
     /* WAIT_LOOP */
-    for (i = 0; i < USB_MAX_DEVICE; i++)                   /* Loop support HID device count */
+    for (i = 0; i < USB_MAX_DEVICE; i++)                        /* Loop support HID device count */
     {
-        usb_hstd_driver_registration(ptr, &driver);        /* Host HID class driver registration. */
+        usb_hstd_driver_registration(ptr, &driver);             /* Host HID class driver registration. */
     }
 
  #if (BSP_CFG_RTOS == 0)
-    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);         /* Hub Task Priority set */
+    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);              /* Hub Task Priority set */
  #endif /* (BSP_CFG_RTOS == 0) */
-    usb_hhub_registration(ptr, (usb_hcdreg_t *) USB_NULL); /* Hub registration. */
-#else                                                      /* USB_CFG_HUB == USB_CFG_ENABLE */
-    usb_hstd_driver_registration(ptr, &driver);            /* Host HID class driver registration. */
+    usb_hhub_registration(ptr, (usb_hcdreg_t *) USB_NULL);      /* Hub registration. */
+#else                                                           /* USB_CFG_HUB == USB_CFG_ENABLE */
+    usb_hstd_driver_registration(ptr, &driver);                 /* Host HID class driver registration. */
 #endif  /* USB_CFG_HUB == USB_CFG_ENABLE */
 }
 
@@ -878,7 +886,6 @@ void usb_hhid_set_pipe_registration (usb_utr_t * ptr, uint16_t devadr)
  ******************************************************************************/
 uint8_t usb_hhid_get_hid_protocol (uint16_t ipno, uint16_t devadr)
 {
-
     /* table[7]:Interface Descriptor-bInterfaceProtocol */
     return (uint8_t) g_usb_hhid_protocol[ipno][devadr];
 }
@@ -923,7 +930,6 @@ void usb_hhid_class_check (usb_utr_t * ptr, uint16_t ** table)
     *table[3] = USB_OK;
 
 #if (BSP_CFG_RTOS)
-
     /* Get String Descriptors */
     iproduct = g_p_usb_hhid_device_table[ptr->ip][USB_DEV_I_PRODUCT];
     retval   = usb_hhid_get_string_info(ptr, g_usb_hhid_devaddr[ptr->ip], iproduct);
@@ -934,7 +940,6 @@ void usb_hhid_class_check (usb_utr_t * ptr, uint16_t ** table)
 
         return;
     }
-
 #else                                  /* (BSP_CFG_RTOS) */
     /* Get mem block from pool. */
     if (USB_PGET_BLK(USB_HHID_MPL, &p_blf) == USB_OK)

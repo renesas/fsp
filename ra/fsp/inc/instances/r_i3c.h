@@ -105,7 +105,7 @@ typedef struct s_i3c_clock_stalling
     uint32_t transition_phase_enable       : 1; ///< Enable Clock Stalling during the transition bit in read transfers.
     uint32_t parity_phase_enable           : 1; ///< Enable Clock Stalling during the parity bit period in write transfers.
     uint32_t ack_phase_enable              : 1; ///< Enable Clock Stalling during the ACK/NACK phase.
-    uint16_t clock_stalling_time;               ///< The ammount of time to stall the clock in I3C source clock ticks.
+    uint16_t clock_stalling_time;               ///< The amount of time to stall the clock in I3C source clock ticks.
 } i3c_clock_stalling_t;
 
 /** Bitrate settings for configuring the SCL clock frequency. */

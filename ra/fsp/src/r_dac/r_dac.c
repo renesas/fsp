@@ -40,6 +40,7 @@
 #define DAC_DAASWCR_DAASW0_MASK                      (0x40)
 #define DAC_DAASWCR_DAASW1_MASK                      (0x80)
 #define DAC_ADC_UNIT_1                               (0x01)
+#define DAC_MAX_CHANNELS_PER_UNIT                    (2U)
 
 /* Conversion time with Output Amplifier. See hardware manual (see Table 60.44
  *'D/A conversion characteristics' of the RA6M3 manual R01UH0886EJ0100). */
@@ -112,8 +113,17 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
     }
 #endif
 
+#if (BSP_FEATURE_DAC_MAX_CHANNELS > 2U)
+    uint8_t unit = p_cfg->channel / DAC_MAX_CHANNELS_PER_UNIT;
+    p_ctrl->p_reg = (R_DAC_Type *) ((uint32_t) R_DAC0 + (unit * ((uint32_t) R_DAC1 - (uint32_t) R_DAC0)));
+#else
+    p_ctrl->p_reg = R_DAC;
+#endif
+
+    p_ctrl->channel_index = p_cfg->channel % DAC_MAX_CHANNELS_PER_UNIT;
+
     /* Power on the DAC device. */
-    R_BSP_MODULE_START(FSP_IP_DAC, p_cfg->channel);
+    R_BSP_MODULE_START(FSP_IP_DAC, p_cfg->channel / DAC_MAX_CHANNELS_PER_UNIT);
 
     /* Added this to a separate block to avoid redeclaration of
      * critical section variable under module start macro. */
@@ -122,7 +132,7 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
         FSP_CRITICAL_SECTION_ENTER;
 
         /* Stop the channel. */
-        (0U == p_cfg->channel) ? (R_DAC->DACR_b.DAOE0 = 0U) : (R_DAC->DACR_b.DAOE1 = 0U);
+        (0U == p_ctrl->channel_index) ? (p_ctrl->p_reg->DACR_b.DAOE0 = 0U) : (p_ctrl->p_reg->DACR_b.DAOE1 = 0U);
 
         FSP_CRITICAL_SECTION_EXIT;
     }
@@ -130,16 +140,17 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
     dac_extended_cfg_t * p_extend = (dac_extended_cfg_t *) p_cfg->p_extend;
 
     /* Configure data format: left or right justified. */
-    R_DAC->DADPR = (uint8_t) ((uint8_t) p_extend->data_format << (uint8_t) DAC_DADPR_REG_DPSEL_BIT_POS);
+    p_ctrl->p_reg->DADPR = (uint8_t) ((uint8_t) p_extend->data_format << (uint8_t) DAC_DADPR_REG_DPSEL_BIT_POS);
 
-#if BSP_FEATURE_ADC_UNIT_1_CHANNELS
+#if BSP_FEATURE_DAC_HAS_DA_AD_SYNCHRONIZE
+ #if BSP_FEATURE_ADC_UNIT_1_CHANNELS
 
     /* DA/AD Synchronization. Described in hardware manual (see Section 48.2.7
      * 'D/A A/D Synchronous Unit Select Register (DAADUSR)' and Section 48.2.4
      * 'D/A A/D Synchronous Start Control Register (DAADSCR)'of the RA6M3 manual R01UH0886EJ0100). */
 
     /* D/A A/D Synchronous Unit Select Register: Select ADC Unit 1 for synchronization with this DAC channel */
-    if ((0U == R_DAC->DAADSCR) && (p_cfg->ad_da_synchronized))
+    if ((0U == p_ctrl->p_reg->DAADSCR) && (p_cfg->ad_da_synchronized))
     {
         /* For correctly writing to this register:
          * 1. ADC (unit 1) module stop bit must be cleared.
@@ -153,28 +164,33 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
          */
         R_BSP_MODULE_START(FSP_IP_ADC, (uint16_t) DAC_ADC_UNIT_1);
 
-        R_DAC->DAADUSR = (uint8_t) DAC_DAADUSR_REG_MASK;
+        p_ctrl->p_reg->DAADUSR = (uint8_t) DAC_DAADUSR_REG_MASK;
 
         /* Configure D/A-A/D Synchronous Start Control Register(DAADSCR). */
-        R_DAC->DAADSCR = (uint8_t) (1U << (uint8_t) DAC_DAADSCR_REG_DAADST_BIT_POS);
+        p_ctrl->p_reg->DAADSCR = (uint8_t) (1U << (uint8_t) DAC_DAADSCR_REG_DAADST_BIT_POS);
     }
-#else
+ #else
 
     /* Configure D/A-A/D Synchronous Start Control Register(DAADSCR). */
-    R_DAC->DAADSCR = (uint8_t) (p_cfg->ad_da_synchronized << (uint8_t) DAC_DAADSCR_REG_DAADST_BIT_POS);
+    p_ctrl->p_reg->DAADSCR = (uint8_t) (p_cfg->ad_da_synchronized << (uint8_t) DAC_DAADSCR_REG_DAADST_BIT_POS);
+ #endif
 #endif
 
 #if BSP_FEATURE_DAC_HAS_OUTPUT_AMPLIFIER
     p_ctrl->output_amplifier_enabled = p_extend->output_amplifier_enabled;
 #endif
 
+#if BSP_FEATURE_DAC_HAS_INTERNAL_OUTPUT
+    p_ctrl->internal_output_enabled = p_extend->internal_output_enabled;
+#endif
+
     /* Set the reference voltage. */
 #if BSP_FEATURE_DAC_HAS_DAVREFCR
-    R_DAC->DAVREFCR = (uint8_t) DAC_VREF_AVCC0_AVSS0;
+    p_ctrl->p_reg->DAVREFCR = (uint8_t) DAC_VREF_AVCC0_AVSS0;
 #endif
 
 #if (1U == BSP_FEATURE_DAC_HAS_CHARGEPUMP)
-    R_DAC->DAPC = (uint8_t) p_extend->enable_charge_pump;
+    p_ctrl->p_reg->DAPC = (uint8_t) p_extend->enable_charge_pump;
 #endif
 
     /* Initialize the channel state information. */
@@ -205,7 +221,7 @@ fsp_err_t R_DAC_Write (dac_ctrl_t * p_api_ctrl, uint16_t value)
 #endif
 
     /* Write the value to D/A converter. */
-    R_DAC->DADR[p_ctrl->channel] = value;
+    p_ctrl->p_reg->DADR[p_ctrl->channel_index] = value;
 
     return FSP_SUCCESS;
 }
@@ -233,7 +249,8 @@ fsp_err_t R_DAC_Start (dac_ctrl_t * p_api_ctrl)
     /* Check if the channel is not already started */
     bool channel_started = false;
 
-    channel_started = ((0U == p_ctrl->channel) ? ((bool) R_DAC->DACR_b.DAOE0) : (bool) (R_DAC->DACR_b.DAOE1));
+    channel_started =
+        ((0U == p_ctrl->channel_index) ? ((bool) p_ctrl->p_reg->DACR_b.DAOE0) : (bool) (p_ctrl->p_reg->DACR_b.DAOE1));
 
     FSP_ERROR_RETURN(!channel_started, FSP_ERR_IN_USE);
 #endif
@@ -245,27 +262,27 @@ fsp_err_t R_DAC_Start (dac_ctrl_t * p_api_ctrl)
     if (p_ctrl->output_amplifier_enabled)
     {
         /* Store value intended to be amplified during DAC output */
-        uint16_t value = R_DAC->DADR[p_ctrl->channel];
+        uint16_t value = p_ctrl->p_reg->DADR[p_ctrl->channel_index];
 
         /* Clear the D/A Data Register for the requested channel. */
-        R_DAC->DADR[p_ctrl->channel] = 0x00U;
+        p_ctrl->p_reg->DADR[p_ctrl->channel_index] = 0x00U;
 
         FSP_CRITICAL_SECTION_DEFINE;
         FSP_CRITICAL_SECTION_ENTER;
 
-        if (0U == p_ctrl->channel)
+        if (0U == p_ctrl->channel_index)
         {
-            R_DAC->DACR_b.DAOE0     = 0U; /* Disable channel 0 */
-            R_DAC->DAASWCR_b.DAASW0 = 1U; /* Enable D/A Amplifier Stabilization Wait for channel 0 */
-            R_DAC->DAAMPCR_b.DAAMP0 = 1U; /* Enable amplifier control for channel 0 */
-            R_DAC->DACR_b.DAOE0     = 1U; /* Enable channel 0 to start D/A conversion of 0x00 */
+            p_ctrl->p_reg->DACR_b.DAOE0     = 0U; /* Disable channel 0 */
+            p_ctrl->p_reg->DAASWCR_b.DAASW0 = 1U; /* Enable D/A Amplifier Stabilization Wait for channel 0 */
+            p_ctrl->p_reg->DAAMPCR_b.DAAMP0 = 1U; /* Enable amplifier control for channel 0 */
+            p_ctrl->p_reg->DACR_b.DAOE0     = 1U; /* Enable channel 0 to start D/A conversion of 0x00 */
         }
         else
         {
-            R_DAC->DACR_b.DAOE1     = 0U; /* Disable channel 1 */
-            R_DAC->DAASWCR_b.DAASW1 = 1U; /* Enable D/A Amplifier Stabilization Wait for channel 1 */
-            R_DAC->DAAMPCR_b.DAAMP1 = 1U; /* Enable amplifier control for channel 1 */
-            R_DAC->DACR_b.DAOE1     = 1U; /* Enable channel 1 to start D/A conversion of 0x00 */
+            p_ctrl->p_reg->DACR_b.DAOE1     = 0U; /* Disable channel 1 */
+            p_ctrl->p_reg->DAASWCR_b.DAASW1 = 1U; /* Enable D/A Amplifier Stabilization Wait for channel 1 */
+            p_ctrl->p_reg->DAAMPCR_b.DAAMP1 = 1U; /* Enable amplifier control for channel 1 */
+            p_ctrl->p_reg->DACR_b.DAOE1     = 1U; /* Enable channel 1 to start D/A conversion of 0x00 */
         }
 
         FSP_CRITICAL_SECTION_EXIT;
@@ -276,12 +293,13 @@ fsp_err_t R_DAC_Start (dac_ctrl_t * p_api_ctrl)
         FSP_CRITICAL_SECTION_ENTER;
 
         /* Disable D/A Amplifier Stabilization Wait for channel 0 or 1 */
-        (0U == p_ctrl->channel) ? (R_DAC->DAASWCR_b.DAASW0 = 0U) : (R_DAC->DAASWCR_b.DAASW1 = 0U);
+        (0U ==
+         p_ctrl->channel_index) ? (p_ctrl->p_reg->DAASWCR_b.DAASW0 = 0U) : (p_ctrl->p_reg->DAASWCR_b.DAASW1 = 0U);
 
         FSP_CRITICAL_SECTION_EXIT;
 
         /* Revert value intended to be amplified during DAC output. */
-        R_DAC->DADR[p_ctrl->channel] = value;
+        p_ctrl->p_reg->DADR[p_ctrl->channel_index] = value;
     }
     else
 #endif
@@ -289,8 +307,26 @@ fsp_err_t R_DAC_Start (dac_ctrl_t * p_api_ctrl)
         FSP_CRITICAL_SECTION_DEFINE;
         FSP_CRITICAL_SECTION_ENTER;
 
-        /* Start the channel */
-        (0U == p_ctrl->channel) ? (R_DAC->DACR_b.DAOE0 = 1U) : (R_DAC->DACR_b.DAOE1 = 1U);
+        if (0U == p_ctrl->channel_index)
+        {
+#if BSP_FEATURE_DAC_HAS_INTERNAL_OUTPUT
+            p_ctrl->p_reg->DACR_b.DAOE0     = 0U;                              /* Disable channel 0 */
+            p_ctrl->p_reg->DAASWCR_b.DAASW0 = p_ctrl->internal_output_enabled; /* Disable channel 0 internal output. */
+#endif
+
+            /* Enable channel 0 to start D/A conversion of 0x00 */
+            p_ctrl->p_reg->DACR_b.DAOE0 = 1U;
+        }
+        else
+        {
+#if BSP_FEATURE_DAC_HAS_INTERNAL_OUTPUT
+            p_ctrl->p_reg->DACR_b.DAOE1     = 0U;                              /* Disable channel 1 */
+            p_ctrl->p_reg->DAASWCR_b.DAASW1 = p_ctrl->internal_output_enabled; /* Disable channel 1 internal output. */
+#endif
+
+            /* Enable channel 1 to start D/A conversion of 0x00 */
+            p_ctrl->p_reg->DACR_b.DAOE1 = 1U;
+        }
 
         FSP_CRITICAL_SECTION_EXIT;
     }
@@ -322,7 +358,7 @@ fsp_err_t R_DAC_Stop (dac_ctrl_t * p_api_ctrl)
     FSP_CRITICAL_SECTION_ENTER;
 
     /* Stop the channel */
-    (0U == p_ctrl->channel) ? (R_DAC->DACR_b.DAOE0 = 0U) : (R_DAC->DACR_b.DAOE1 = 0U);
+    (0U == p_ctrl->channel_index) ? (p_ctrl->p_reg->DACR_b.DAOE0 = 0U) : (p_ctrl->p_reg->DACR_b.DAOE1 = 0U);
 
     FSP_CRITICAL_SECTION_EXIT;
 
@@ -357,15 +393,15 @@ fsp_err_t R_DAC_Close (dac_ctrl_t * p_api_ctrl)
 
     /* Stop the channel, clear the amplifier stabilization wait bit and
      * clear the output amplifier control register for the associated channel. */
-    if (0U == p_ctrl->channel)
+    if (0U == p_ctrl->channel_index)
     {
-        R_DAC->DACR_b.DAOE0     = 0U;  /* Disable channel 0 */
-        R_DAC->DAAMPCR_b.DAAMP0 = 0U;  /* Disable amplifier control for channel 0 */
+        p_ctrl->p_reg->DACR_b.DAOE0     = 0U; /* Disable channel 0 */
+        p_ctrl->p_reg->DAAMPCR_b.DAAMP0 = 0U; /* Disable amplifier control for channel 0 */
     }
     else
     {
-        R_DAC->DACR_b.DAOE1     = 0U;  /* Disable channel 1 */
-        R_DAC->DAAMPCR_b.DAAMP1 = 0U;  /* Disable amplifier control for channel 1 */
+        p_ctrl->p_reg->DACR_b.DAOE1     = 0U; /* Disable channel 1 */
+        p_ctrl->p_reg->DAAMPCR_b.DAAMP1 = 0U; /* Disable amplifier control for channel 1 */
     }
 
     FSP_CRITICAL_SECTION_EXIT;

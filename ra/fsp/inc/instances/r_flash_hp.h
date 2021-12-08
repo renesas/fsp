@@ -47,8 +47,8 @@ FSP_HEADER
  #if defined(__ICCARM__)
   #pragma section=".code_in_ram"
  #endif
- #if defined(__ARMCC_VERSION)
-  #define PLACE_IN_RAM_SECTION    BSP_PLACE_IN_SECTION(".code_in_ram") __attribute__((noinline))
+ #if defined(__ARMCC_VERSION) || defined(__GNUC__)
+  #define PLACE_IN_RAM_SECTION    __attribute__((noinline)) BSP_PLACE_IN_SECTION(".code_in_ram")
  #else
   #define PLACE_IN_RAM_SECTION    BSP_PLACE_IN_SECTION(".code_in_ram")
  #endif

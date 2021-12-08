@@ -50,7 +50,9 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define CTSU_COUNT_MAX    (0xFFFF)
+#define CTSU_COUNT_MAX                      (0xFFFF)
+
+#define CTSU_TARGET_VALUE_CONFIG_SUPPORT    (1)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -118,7 +120,7 @@ typedef enum e_ctsu_posel
 {
     CTSU_POSEL_LOW_GPIO,               ///< Output low through GPIO
     CTSU_POSEL_HI_Z,                   ///< Hi-Z
-    CTSU_POSEL_LOW,                    ///< Output low through the power setting by the TXVSEL[1:0] bits
+    CTSU_POSEL_LOW,                    ///< Setting prohibited
     CTSU_POSEL_SAME_PULSE              ///< Same phase pulse output as transmission channel through the power setting by the TXVSEL[1:0] bits
 } ctsu_posel_t;
 
@@ -208,6 +210,8 @@ typedef struct st_ctsu_cfg
     IRQn_Type    end_irq;                               ///< CTSU_CTSUFN interrupt vector
     void const * p_context;                             ///< User defined context passed into callback function.
     void const * p_extend;                              ///< Pointer to extended configuration by instance of interface.
+    uint16_t     tuning_self_target_value;              ///< Target self value for initial offset tuning
+    uint16_t     tuning_mutual_target_value;            ///< Target mutual value for initial offset tuning
 } ctsu_cfg_t;
 
 /** Functions implemented at the HAL layer will follow this API. */

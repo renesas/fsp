@@ -41,7 +41,7 @@
  **********************************************************************************************************************/
 
 /** This array holds callback functions. */
-static bsp_grp_irq_cb_t g_bsp_group_irq_sources[BSP_GRP_IRQ_TOTAL_ITEMS] = {0};
+bsp_grp_irq_cb_t g_bsp_group_irq_sources[BSP_GRP_IRQ_TOTAL_ITEMS] BSP_SECTION_EARLY_INIT;
 
 void        NMI_Handler(void);
 static void bsp_group_irq_call(bsp_grp_irq_t irq);

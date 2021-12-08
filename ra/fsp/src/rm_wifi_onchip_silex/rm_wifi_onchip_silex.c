@@ -551,15 +551,17 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     strncat((char *) p_temp_buff, g_wifi_onchip_silex_uart_cmd_baud, 10);
     strncat((char *) p_temp_buff, ",,,,", 5);
 
-    if ((uint32_t) (((sci_uart_extended_cfg_t *) p_instance_ctrl->uart_instance_objects[
-                         WIFI_ONCHIP_SILEX_UART_INITIAL_PORT]->p_cfg->p_extend)->flow_control_pin) ==
-        (uint32_t) WIFI_ONCHIP_SILEX_BSP_PIN_PORT_INVALID)
+    sci_uart_extended_cfg_t * ext_cfg = (sci_uart_extended_cfg_t *)p_instance_ctrl->uart_instance_objects[ 
+        WIFI_ONCHIP_SILEX_UART_INITIAL_PORT]->p_cfg->p_extend;
+
+    if (((uint32_t)ext_cfg->flow_control_pin != (uint32_t)WIFI_ONCHIP_SILEX_BSP_PIN_PORT_INVALID) || 
+        (ext_cfg->flow_control == SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS))
     {
-        strncat((char *) p_temp_buff, "n\r", 3);
+        strncat((char *) p_temp_buff, "h\r", 3);
     }
     else
     {
-        strncat((char *) p_temp_buff, "h\r", 3);
+        strncat((char *) p_temp_buff, "n\r", 3);
     }
 
     /* Send reconfiguration AT command to wifi module */
@@ -931,6 +933,8 @@ fsp_err_t rm_wifi_onchip_silex_disconnect ()
                                     WIFI_ONCHIP_SILEX_RETURN_OK);
 
     memset(p_instance_ctrl->curr_ipaddr, 0, 4);
+    memset(p_instance_ctrl->curr_subnetmask, 0, 4);
+    memset(p_instance_ctrl->curr_gateway, 0, 4);
 
     rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
 
@@ -965,6 +969,43 @@ fsp_err_t rm_wifi_onchip_silex_socket_connected (fsp_err_t * p_status)
     {
         *p_status = FSP_ERR_WIFI_FAILED;
     }
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ *  Return the network information for the connection to the access point.
+ *
+ * @param[out]  p_ip_addr           Pointer to integer holding the IP address.
+ * @param[out]  p_subnet_mask       Pointer to integer holding the subnet mask.
+ * @param[out]  p_gateway           Pointer to integer holding the gateway.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_ASSERTION        A parameter pointer is NULL.
+ * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
+ * @retval FSP_ERR_WIFI_AP_NOT_CONNECTED      No connection to access point has happened.
+ **********************************************************************************************************************/
+fsp_err_t rm_wifi_onchip_silex_network_info_get (uint32_t * p_ip_addr, uint32_t * p_subnet_mask, uint32_t * p_gateway)
+{
+    wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_silex_instance;
+
+#if (WIFI_ONCHIP_SILEX_CFG_PARAM_CHECKING_ENABLED == 1)
+    FSP_ASSERT(NULL != p_ip_addr);
+    FSP_ASSERT(NULL != p_subnet_mask);
+    FSP_ASSERT(NULL != p_gateway);
+    FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Make sure IP address has been assigned */
+    uint32_t ip = *((uint32_t *) p_instance_ctrl->curr_ipaddr);
+    if (!ip)
+    {
+        return FSP_ERR_WIFI_AP_NOT_CONNECTED;
+    }
+
+    *p_ip_addr     = ip;
+    *p_subnet_mask = *((uint32_t *) p_instance_ctrl->curr_subnetmask);
+    *p_gateway     = *((uint32_t *) p_instance_ctrl->curr_gateway);
 
     return FSP_SUCCESS;
 }
@@ -1267,7 +1308,6 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
     uint32_t  idx = 0;
     uint8_t * bssid;
     uint32_t  mutex_flag;
-    char      string_build[24];
 
     wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_silex_instance;
 
@@ -1317,18 +1357,13 @@ fsp_err_t rm_wifi_onchip_silex_scan (WIFIScanResult_t * p_results, uint32_t maxN
             break;
         }
 
-        /* SSID */
-        memset(string_build, 0, sizeof(string_build));
-
-        /* Build sscanf string */
-        snprintf(string_build, sizeof(string_build), "ssid = %%%us", wificonfigMAX_SSID_LEN);
-
-        // NOLINTNEXTLINE(cert-err34-c) Disable warning about the use of sscanf
-        err = sscanf(ptr, string_build, p_results[idx].ucSSID);
-        if (1 != err)
+        /* Copy SSID from scan info buffer */
+        ptr += 7;
+        int idx_ssid = 0;
+        while ((*ptr != '\r') && (idx_ssid < (wificonfigMAX_SSID_LEN - 1)))
         {
-            ret = FSP_ERR_WIFI_FAILED;
-            break;
+            p_results[idx].ucSSID[idx_ssid++] = (uint8_t) *ptr;
+            ptr++;
         }
 
         /* Advance string pointer to next section of scan info */

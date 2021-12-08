@@ -19,19 +19,19 @@
  **********************************************************************************************************************/
 
 /**
- * @file    iaq_1st_gen.h
+ * @file    iaq_2nd_gen.h
  * @author  Ronald Schreiber
- * @version 2.1.2
+ * @version 2.2.0
  * @brief   This file contains the data structure definitions and
- *          the function definitions for the 1st generation IAQ algorithm.
- * @details The library contains an algorithm to calculate IAQ, TVOC, eCO2
- *          and EtOH from ZMOD4410 measurements.
+ *          the function definitions for the 2nd generation IAQ algorithm.
+ * @details The library contains an algorithm to calculate an EtOH, TVOC and
+ *          IAQ index from ZMOD4410 measurements.
  *          The implementation is made to allow more than one sensor.
  *
  */
 
-#ifndef IAQ_1ST_GEN_H_
- #define IAQ_1ST_GEN_H_
+#ifndef IAQ_2ND_GEN_H_
+ #define IAQ_2ND_GEN_H_
 
  #ifdef __cplusplus
 extern "C" {
@@ -39,86 +39,69 @@ extern "C" {
 
  #include <stdint.h>
  #include <math.h>
- #include "zmod4xxx_types.h"
+ #include "../zmod4xxx_types.h"
+
+/** \addtogroup RetCodes Return codes of the algorithm functions.
+ *  @{
+ */
+ #define IAQ_2ND_GEN_OK               (0) /**< everything okay */
+ #define IAQ_2ND_GEN_STABILIZATION    (1) /**< sensor in stabilization */
+/** @}*/
 
 /**
- * @brief Variables that describe the library version
+ * @brief Variables that describe the sensor or the algorithm state.
  */
 typedef struct
 {
-    uint8_t major;
-    uint8_t minor;
-    uint8_t patch;
-} algorithm_version;
-
-/**
- * @brief Return codes of the algorithm functions.
- */
- #define IAQ_1ST_GEN_OK               (0)   /**< everything okay */
- #define IAQ_1ST_GEN_STABILIZATION    (1)   /**< sensor in stabilization */
- #define IAQ_1ST_GEN_WRONG_DEVICE     (-32) /**< wrong sensor type */
- #define IAQ_1ST_GEN_NOT_TRIMMED      (-33) /**< missing device trimming */
-
-/**
- * @brief Variables that describe the sensor and the algorithm state.
- * @note  For internal use only! Do not change values here!
- */
-typedef struct
-{
-    float    sample_period;
-    float    eco2_filter_coeff_bm1;
-    float    sd_d1m_hp;
-    uint16_t sd_relaxationtimer;
-    float    sd_lp_state;
-    float    rcda;
-    uint8_t  sample_number;
-    float    prev_conc_tvoc_filt[4];
-    float    non_corr_con_tvoc;
-    float    one_by_alpha;
-    float    a_10ppm;
-    float    etoh;
-    float    tvoc;
-    float    eco2;
-    float    iaq;
-} iaq_1st_gen_handle_t;
+    float log_rcda[9];                 /**< log10 of CDA resistances. */
+    uint8_t
+            stabilization_sample;      /**< Number of remaining stabilization samples. */
+    uint8_t need_filter_init;
+    float   tvoc_smooth;
+    float   tvoc_deltafilter;
+    float   acchw;
+    float   accow;
+    float   etoh;
+    float   tvoc;
+    float   eco2;
+    float   iaq;
+} iaq_2nd_gen_handle_t;
 
 /**
  * @brief Variables that receive the algorithm outputs.
  */
 typedef struct
 {
-    float rmox;                        /**< MOx resistance. */
-    float rcda;                        /**< CDA resistance. */
+    float rmox[13];                    /**< MOx resistance. */
+    float log_rcda;                    /**< log10 of CDA resistance. */
     float iaq;                         /**< IAQ index. */
     float tvoc;                        /**< TVOC concentration (mg/m^3). */
     float etoh;                        /**< EtOH concentration (ppm). */
     float eco2;                        /**< eCO2 concentration (ppm). */
-} iaq_1st_gen_results_t;
-
-/**
- * @brief   Initializes the IAQ algorithm.
- * @param   [in] handle Pointer to algorithm state variable.
- * @param   [in] dev Pointer to the device.
- * @param   [in]  sample_period Time between samples.
- * @return  error code.
- */
-int8_t init_iaq_1st_gen(iaq_1st_gen_handle_t * handle, zmod4xxx_dev_t * dev, const float sample_period);
+} iaq_2nd_gen_results_t;
 
 /**
  * @brief   calculates IAQ results from present sample.
  * @param   [in] handle Pointer to algorithm state variable.
  * @param   [in] dev Pointer to the device.
- * @param   [in] sensor_results Array of 2 bytes with the values from the sensor results table. See example code for the right table entry.
- * @param   [out] results Pointer to store the algorithm results.
+ * @param   [in] sensor_results_table Array of 32 bytes with the values from the sensor results table.
+ * @param   [out] results Pointer for storing the algorithm results.
  * @return  error code.
  */
-int8_t calc_iaq_1st_gen(iaq_1st_gen_handle_t  * handle,
+int8_t calc_iaq_2nd_gen(iaq_2nd_gen_handle_t  * handle,
                         zmod4xxx_dev_t        * dev,
-                        const uint8_t         * sensor_results,
-                        iaq_1st_gen_results_t * results);
+                        const uint8_t         * sensor_results_table,
+                        iaq_2nd_gen_results_t * results);
+
+/**
+ * @brief   Initializes the IAQ algorithm.
+ * @param   [out] handle Pointer to algorithm state variable.
+ * @return  error code.
+ */
+int8_t init_iaq_2nd_gen(iaq_2nd_gen_handle_t * handle);
 
  #ifdef __cplusplus
 }
  #endif
 
-#endif                                 /* IAQ_1ST_GEN_H_ */
+#endif                                 /* IAQ_2ND_GEN_H_ */

@@ -19,19 +19,19 @@
  **********************************************************************************************************************/
 
 /**
- * @file    iaq_2nd_gen.h
+ * @file    sulfur_odor.h
  * @author  Ronald Schreiber
  * @version 2.1.2
  * @brief   This file contains the data structure definitions and
- *          the function definitions for the 2nd generation IAQ algorithm.
- * @details The library contains an algorithm to calculate an EtOH, TVOC and
- *          IAQ index from ZMOD4410 measurements.
+ *          the function definitions for the sulfor odor algorithm.
+ * @details The library contains an algorithm to calculate and rate a
+ *          sulfur odor.
  *          The implementation is made to allow more than one sensor.
  *
  */
 
-#ifndef IAQ_2ND_GEN_H_
- #define IAQ_2ND_GEN_H_
+#ifndef SULFUR_ODOR_H_
+ #define SULFUR_ODOR_H_
 
  #ifdef __cplusplus
 extern "C" {
@@ -39,77 +39,74 @@ extern "C" {
 
  #include <stdint.h>
  #include <math.h>
- #include "zmod4xxx_types.h"
+ #include "../zmod4xxx_types.h"
 
 /**
- * @brief Variables that describe the library version
+ * @brief Return codes of the sulfur odor algorithm functions
  */
-typedef struct
+ #define SULFUR_ODOR_OK              (0)   /**< everything okay */
+ #define SULFUR_ODOR_WARMUP          (1)   /**< sensor in stabilization */
+ #define SULFUR_ODOR_WRONG_DEVICE    (-32) /**< wrong sensor type */
+
+/**
+ * @brief Number of MOX and CDA resistances to store
+ */
+ #define SULFUR_ODOR_N_RMOX          (9)
+
+/**
+ * @brief Odor classifications.
+ */
+typedef enum
 {
-    uint8_t major;
-    uint8_t minor;
-    uint8_t patch;
-} algorithm_version;
-
-/**
- * @brief Return codes of the algorithm functions.
- */
- #define IAQ_2ND_GEN_OK               (0) /**< everything okay */
- #define IAQ_2ND_GEN_STABILIZATION    (1) /**< sensor in stabilization */
+    SULFUR_ODOR_ACCEPTABLE = 0,
+    SULFUR_ODOR_SULFUR     = 1,
+} sulfur_odor_classification_t;
 
 /**
  * @brief Variables that describe the sensor or the algorithm state.
+ * This is for internal use only! Do not change values here!
  */
 typedef struct
 {
-    float log_rcda[9];                 /**< log10 of CDA resistances. */
-    uint8_t
-        stabilization_sample;          /**< Number of samples still needed for stabilization. */
-    uint8_t
-          sample_number;               /**< Sample number after stabilization. Stops counting at 255. */
-    float prev_conc_tvoc_filt[4];
-    float non_corr_con_tvoc;
-    float etoh;
-    float tvoc;
-    float eco2;
-    float iaq;
-} iaq_2nd_gen_handle_t;
+    uint8_t stabilization_counter;
+    uint8_t class_buffer;
+    float   log_rcda[SULFUR_ODOR_N_RMOX];
+    sulfur_odor_classification_t odor;
+} sulfur_odor_handle_t;
 
 /**
  * @brief Variables that receive the algorithm outputs.
  */
 typedef struct
 {
-    float rmox[13];                    /**< MOx resistance. */
-    float log_rcda;                    /**< log10 of CDA resistance. */
-    float iaq;                         /**< IAQ index. */
-    float tvoc;                        /**< TVOC concentration (mg/m^3). */
-    float etoh;                        /**< EtOH concentration (ppm). */
-    float eco2;                        /**< eCO2 concentration (ppm). */
-} iaq_2nd_gen_results_t;
+    float rmox[SULFUR_ODOR_N_RMOX];    /**< MOx resistance (ohm). */
+    float intensity;                   /**< odor intensity rating ranges from 0.0 to 5.0 */
+    sulfur_odor_classification_t odor; /**< odor classification */
+} sulfur_odor_results_t;
 
 /**
- * @brief   calculates IAQ results from present sample.
+ * @brief   Initializes the algorithm.
+ * @param   [out] handle Pointer to algorithm state variable.
+ * @param   [in]  dev Pointer to device.
+ * @return  error code.
+ */
+int8_t init_sulfur_odor(sulfur_odor_handle_t * handle, zmod4xxx_dev_t * dev);
+
+/**
+ * @brief   calculates results from present sample.
  * @param   [in] handle Pointer to algorithm state variable.
  * @param   [in] dev Pointer to the device.
- * @param   [in] sensor_results_table Array of 32 bytes with the values from the sensor results table.
+ * @param   [in] sensor_results_table pointer to array of 32 bytes with the values from the sensor results table.
  * @param   [out] results Pointer for storing the algorithm results.
  * @return  error code.
  */
-int8_t calc_iaq_2nd_gen(iaq_2nd_gen_handle_t  * handle,
+int8_t calc_sulfur_odor(sulfur_odor_handle_t  * handle,
                         zmod4xxx_dev_t        * dev,
                         const uint8_t         * sensor_results_table,
-                        iaq_2nd_gen_results_t * results);
-
-/**
- * @brief   Initializes the IAQ algorithm.
- * @param   [out] handle Pointer to algorithm state variable.
- * @return  error code.
- */
-int8_t init_iaq_2nd_gen(iaq_2nd_gen_handle_t * handle);
+                        sulfur_odor_results_t * results);
 
  #ifdef __cplusplus
 }
  #endif
 
-#endif                                 /* IAQ_2ND_GEN_H_ */
+#endif                                 /* SULFUR_ODOR_H_ */

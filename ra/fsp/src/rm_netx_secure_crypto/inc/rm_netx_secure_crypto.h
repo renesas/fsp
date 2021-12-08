@@ -110,13 +110,9 @@ uint32_t rm_netx_secure_crypto_sce_init(void);
 
 /* HASH */
 /* NX Crypto acceleration function declarations for HASH */
-UINT sce_nx_crypto_method_sha256_operation(UINT                             op,
-                                           struct NX_CRYPTO_METHOD_STRUCT * method,
-                                           UCHAR                          * input,
-                                           ULONG                            input_length_in_byte,
-                                           UCHAR                          * output,
-                                           ULONG                            output_length_in_byte,
-                                           VOID                           * crypto_metadata);
+UINT sce_nx_crypto_sha256_initialize(NX_CRYPTO_SHA256 * context, UINT algorithm);
+UINT sce_nx_crypto_sha256_update(NX_CRYPTO_SHA256 * context, UCHAR * input_ptr, UINT input_length);
+UINT sce_nx_crypto_sha256_digest_calculate(NX_CRYPTO_SHA256 * context, UCHAR * digest, UINT algorithm);
 
 /* AES */
 #define SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS    (9)
@@ -134,6 +130,11 @@ UINT sce_nx_crypto_cbc_decrypt(VOID          * crypto_metadata,
                                UINT            length);
 UINT sce_nx_crypto_cbc_encrypt(VOID          * crypto_metadata,
                                NX_CRYPTO_CBC * cbc_metadata,
+                               UCHAR         * input,
+                               UCHAR         * output,
+                               UINT            length);
+UINT sce_nx_crypto_ctr_encrypt(VOID          * crypto_metadata,
+                               NX_CRYPTO_CTR * ctr_metadata,
                                UCHAR         * input,
                                UCHAR         * output,
                                UINT            length);

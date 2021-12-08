@@ -43,10 +43,7 @@
  **********************************************************************************************************************/
 
 /** Used for holding reference counters for protection bits. */
-static volatile uint16_t g_protect_counters[] =
-{
-    0U, 0U, 0U, 0U
-};
+volatile uint16_t g_protect_counters[4] BSP_SECTION_EARLY_INIT;
 
 /** Masks for setting or clearing the PRCR register. Use -1 for size because PWPR in MPC is used differently. */
 static const uint16_t g_prcr_masks[] =

@@ -394,6 +394,7 @@ static flash_regions_t g_flash_data_region =
  * @retval     FSP_ERR_FCLK              FCLK must be a minimum of 4 MHz for Flash operations.
  * @retval     FSP_ERR_ALREADY_OPEN      Flash Open() has already been called.
  * @retval     FSP_ERR_TIMEOUT           Failed to exit P/E mode after configuring flash.
+ * @retval     FSP_ERR_INVALID_STATE     The system is not running from the required clock.
  **********************************************************************************************************************/
 fsp_err_t R_FLASH_LP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * const p_cfg)
 {
@@ -408,6 +409,11 @@ fsp_err_t R_FLASH_LP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * 
 
     /* If open return error. */
     FSP_ERROR_RETURN((FLASH_HP_OPEN != p_ctrl->opened), FSP_ERR_ALREADY_OPEN);
+ #if BSP_FEATURE_FLASH_LP_VERSION == 4
+
+    /* MF4 devices must be running from HOCO in order to program and erase flash. */
+    FSP_ERROR_RETURN(BSP_CLOCKS_SOURCE_CLOCK_HOCO == R_SYSTEM->SCKSCR_b.CKSEL, FSP_ERR_INVALID_STATE);
+ #endif
 
     /* Background operations for data flash are enabled but the flash interrupt is disabled. */
     if (p_cfg->data_flash_bgo)

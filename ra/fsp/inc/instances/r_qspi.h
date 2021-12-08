@@ -148,6 +148,10 @@ fsp_err_t R_QSPI_Write(spi_flash_ctrl_t    * p_ctrl,
 fsp_err_t R_QSPI_Erase(spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_address, uint32_t byte_count);
 fsp_err_t R_QSPI_StatusGet(spi_flash_ctrl_t * p_ctrl, spi_flash_status_t * const p_status);
 fsp_err_t R_QSPI_BankSet(spi_flash_ctrl_t * p_ctrl, uint32_t bank);
+fsp_err_t R_QSPI_DirectTransfer(spi_flash_ctrl_t                  * p_ctrl,
+                                spi_flash_direct_transfer_t * const p_transfer,
+                                spi_flash_direct_transfer_dir_t     direction);
+fsp_err_t R_QSPI_AutoCalibrate(spi_flash_ctrl_t * p_ctrl);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

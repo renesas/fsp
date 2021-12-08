@@ -1072,7 +1072,9 @@ UINT *buf;
         return(NX_CRYPTO_INVALID_PARAMETER);
     }
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
+#ifndef NX_CRYPTO_ENABLE_UNALIGNED_ACCESS
     NX_CRYPTO_PARAMETER_NOT_USED(aes_state);
+#endif
     NX_CRYPTO_PARAMETER_NOT_USED(w);
     return(sce_nx_crypto_aes_encrypt(aes_ptr, input, output, length));
 #else

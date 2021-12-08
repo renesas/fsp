@@ -321,18 +321,8 @@ static void _SetLUTEntry (LCD_COLOR Color, uint8_t Pos)
 
 #if (EMWIN_LCD_NUM_FRAMEBUFFERS == 2)
 
-/*********************************************************************
- *
- *       _SwitchBuffersOnVSYNC
- */
-static void _SwitchBuffersOnVSYNC (int32_t Index)
+static void vsync_wait ()
 {
-    //
-    // Swap buffer
-    //
-    R_GLCDC_BufferChange(_g_display_emwin->p_ctrl, (uint8_t *) pp_buffer_address[Index], (display_frame_layer_t) 0);
-    GUI_MULTIBUF_ConfirmEx(0, Index);  // Tell emWin that buffer is used
-
  #if EMWIN_LCD_VSYNC_WAIT
   #if EMWIN_CFG_RTOS == 2              // FreeRTOS
     //
@@ -352,6 +342,33 @@ static void _SwitchBuffersOnVSYNC (int32_t Index)
     }
   #endif
  #endif
+}
+
+/*********************************************************************
+ *
+ *       _SwitchBuffersOnVSYNC
+ */
+static void _SwitchBuffersOnVSYNC (int32_t Index)
+{
+    //
+    // Swap buffer
+    //
+    fsp_err_t err;
+    do
+    {
+        err =
+            R_GLCDC_BufferChange(_g_display_emwin->p_ctrl,
+                                 (uint8_t *) pp_buffer_address[Index],
+                                 (display_frame_layer_t) 0);
+        if (err)
+        {
+            vsync_wait();
+        }
+    } while (FSP_ERR_INVALID_UPDATE_TIMING == err);
+
+    GUI_MULTIBUF_ConfirmEx(0, Index);  // Tell emWin that buffer is used
+
+    vsync_wait();
 }
 
 #endif
@@ -1246,6 +1263,11 @@ void LCD_X_Config (void)
     // Initialize graphics HW
     //
     _GraphicsHWInit();
+
+    //
+    // Set framebuffer pointer
+    //
+    _fb_emwin = EMWIN_LCD_FRAMEBUFFER_PTR;
 
     //
     // Set graphics HW deinit callback for GUI_Exit

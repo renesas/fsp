@@ -44,12 +44,15 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-
-#define ELC_PERIPHERAL_NUM    (23U)
+#ifndef ELC_PERIPHERAL_NUM
+ #define ELC_PERIPHERAL_NUM    (23U)
+#endif
 
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+
+#ifndef BSP_OVERRIDE_ELC_PERIPHERAL_T
 
 /** Possible peripherals to be linked to event signals (not all available on all MCUs) */
 typedef enum e_elc_peripheral
@@ -77,6 +80,8 @@ typedef enum e_elc_peripheral
     ELC_PERIPHERAL_DA8_1   = (20),
     ELC_PERIPHERAL_SDADC0  = (22),
 } elc_peripheral_t;
+
+#endif
 
 /** ELC control block.  Allocate an instance specific control block to pass into the ELC API calls.
  * @par Implemented as

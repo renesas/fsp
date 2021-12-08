@@ -170,18 +170,19 @@ static const uint32_t g_adc_valid_channels[] =
 /** ADC Implementation of ADC. */
 const adc_api_t g_adc_on_adc =
 {
-    .open          = R_ADC_Open,
-    .scanCfg       = R_ADC_ScanCfg,
-    .infoGet       = R_ADC_InfoGet,
-    .scanStart     = R_ADC_ScanStart,
-    .scanStop      = R_ADC_ScanStop,
-    .scanStatusGet = R_ADC_StatusGet,
-    .read          = R_ADC_Read,
-    .read32        = R_ADC_Read32,
-    .close         = R_ADC_Close,
-    .calibrate     = R_ADC_Calibrate,
-    .offsetSet     = R_ADC_OffsetSet,
-    .callbackSet   = R_ADC_CallbackSet,
+    .open           = R_ADC_Open,
+    .scanCfg        = R_ADC_ScanCfg,
+    .infoGet        = R_ADC_InfoGet,
+    .scanStart      = R_ADC_ScanStart,
+    .scanGroupStart = R_ADC_ScanGroupStart,
+    .scanStop       = R_ADC_ScanStop,
+    .scanStatusGet  = R_ADC_StatusGet,
+    .read           = R_ADC_Read,
+    .read32         = R_ADC_Read32,
+    .close          = R_ADC_Close,
+    .calibrate      = R_ADC_Calibrate,
+    .offsetSet      = R_ADC_OffsetSet,
+    .callbackSet    = R_ADC_CallbackSet,
 };
 
 /*******************************************************************************************************************//**
@@ -369,6 +370,7 @@ fsp_err_t R_ADC_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
  * @retval FSP_SUCCESS                 Scan started (software trigger) or hardware triggers enabled.
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
+ * @retval FSP_ERR_NOT_INITIALIZED     Unit is not initialized.
  * @retval FSP_ERR_IN_USE              Another scan is still in progress (software trigger).
  **********************************************************************************************************************/
 fsp_err_t R_ADC_ScanStart (adc_ctrl_t * p_ctrl)
@@ -381,6 +383,7 @@ fsp_err_t R_ADC_ScanStart (adc_ctrl_t * p_ctrl)
     /* Verify the pointers are valid */
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
     if (ADC_GROUP_A_GROUP_B_CONTINUOUS_SCAN != p_instance_ctrl->p_reg->ADGSPCR)
     {
         FSP_ERROR_RETURN(0U == p_instance_ctrl->p_reg->ADCSR_b.ADST, FSP_ERR_IN_USE);
@@ -394,6 +397,20 @@ fsp_err_t R_ADC_ScanStart (adc_ctrl_t * p_ctrl)
 }
 
 /*******************************************************************************************************************//**
+ * @ref adc_api_t::scanStart is not supported on the ADCH. Use scanStart instead.
+ *
+ * @retval FSP_ERR_UNSUPPORTED         Function not supported in this implementation.
+ **********************************************************************************************************************/
+fsp_err_t R_ADC_ScanGroupStart (adc_ctrl_t * p_ctrl, adc_group_mask_t group_id)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(group_id);
+
+    /* Return the unsupported error. */
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * Stops the software scan or disables the unit from being triggered by the hardware trigger (ELC or external) based on
  * what type of trigger the unit was configured for in the R_ADC_Open function. Stopping a hardware triggered scan via
  * this function does not abort an ongoing scan, but prevents the next scan from occurring. Stopping a software
@@ -402,6 +419,7 @@ fsp_err_t R_ADC_ScanStart (adc_ctrl_t * p_ctrl)
  * @retval FSP_SUCCESS                 Scan stopped (software trigger) or hardware triggers disabled.
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
+ * @retval FSP_ERR_NOT_INITIALIZED     Unit is not initialized.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_ScanStop (adc_ctrl_t * p_ctrl)
 {
@@ -413,6 +431,7 @@ fsp_err_t R_ADC_ScanStop (adc_ctrl_t * p_ctrl)
     /* Verify the pointers are valid */
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
 #endif
 
     /* Disable hardware trigger or stop software scan depending on mode. */
@@ -452,6 +471,7 @@ fsp_err_t R_ADC_StatusGet (adc_ctrl_t * p_ctrl, adc_status_t * p_status)
  * @retval FSP_SUCCESS                 Data read into provided p_data.
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
+ * @retval FSP_ERR_NOT_INITIALIZED     Unit is not initialized.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_t * const p_data)
 {
@@ -464,6 +484,7 @@ fsp_err_t R_ADC_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_t 
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_data);
     FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
 
     /* Verify that the channel is valid for this MCU */
     if ((reg_id >= ADC_CHANNEL_0) && ((uint32_t) reg_id <= 31U))
@@ -496,6 +517,7 @@ fsp_err_t R_ADC_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_t 
  * @retval FSP_SUCCESS                 Data read into provided p_data.
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
+ * @retval FSP_ERR_NOT_INITIALIZED     Unit is not initialized.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_Read32 (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint32_t * const p_data)
 {
@@ -531,6 +553,7 @@ fsp_err_t R_ADC_Read32 (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint32_
  *
  * @retval FSP_SUCCESS                 Sample state count updated.
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
+ * @retval FSP_ERR_NOT_INITIALIZED     Unit is not initialized.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_SampleStateCountSet (adc_ctrl_t * p_ctrl, adc_sample_state_t * p_sample)
@@ -545,6 +568,7 @@ fsp_err_t R_ADC_SampleStateCountSet (adc_ctrl_t * p_ctrl, adc_sample_state_t * p
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_sample);
     FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->opened, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(ADC_OPEN == p_instance_ctrl->initialized, FSP_ERR_NOT_INITIALIZED);
 
     /* Verify arguments are legal */
     err = r_adc_sample_state_cfg_check(p_instance_ctrl, p_sample);
@@ -677,7 +701,8 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
 #endif
 
     /* Mark driver as closed   */
-    p_instance_ctrl->opened = 0U;
+    p_instance_ctrl->opened      = 0U;
+    p_instance_ctrl->initialized = 0U;
 
     /* Disable interrupts. */
     adc_extended_cfg_t * p_extend = (adc_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
@@ -736,7 +761,7 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
  * @retval FSP_ERR_ASSERTION               An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN                Unit is not open.
  **********************************************************************************************************************/
-fsp_err_t R_ADC_Calibrate (adc_ctrl_t * const p_ctrl, void * const p_extend)
+fsp_err_t R_ADC_Calibrate (adc_ctrl_t * const p_ctrl, void const * p_extend)
 {
     FSP_PARAMETER_NOT_USED(p_extend);
 
@@ -1479,12 +1504,12 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
 
             /* Set Window A channel mask */
             p_instance_ctrl->p_reg->ADCMPANSR[0] = p_window_cfg->compare_mask & UINT16_MAX;
-            p_instance_ctrl->p_reg->ADCMPANSR[1] = (uint16_t) ((p_window_cfg->compare_mask << 4) >> 16);
+            p_instance_ctrl->p_reg->ADCMPANSR[1] = (uint16_t) ((p_window_cfg->compare_mask << 4) >> 20);
             p_instance_ctrl->p_reg->ADCMPANSER   = (uint8_t) (p_window_cfg->compare_mask >> 28);
 
             /* Set Window A channel inequality mode mask */
             p_instance_ctrl->p_reg->ADCMPLR[0] = p_window_cfg->compare_mode_mask & UINT16_MAX;
-            p_instance_ctrl->p_reg->ADCMPLR[1] = (uint16_t) ((p_window_cfg->compare_mode_mask << 4) >> 16);
+            p_instance_ctrl->p_reg->ADCMPLR[1] = (uint16_t) ((p_window_cfg->compare_mode_mask << 4) >> 20);
             p_instance_ctrl->p_reg->ADCMPLER   = (uint8_t) (p_window_cfg->compare_mode_mask >> 28);
         }
 
@@ -1517,6 +1542,8 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
         p_instance_ctrl->p_reg->ADCSR      = (uint16_t) adcsr;
         p_instance_ctrl->scan_start_adcsr |= (uint16_t) adcsr;
     }
+
+    p_instance_ctrl->initialized = ADC_OPEN;
 }
 
 /*******************************************************************************************************************//**

@@ -169,7 +169,7 @@ FSP_HEADER
 /* For TLS. */
 #define SCE_TLS_RSA_NE_KEY_BYTE_SIZE                     (272U)
 #define SCE_TLS_RSA_NE_KEY_INDEX_WORD_SIZE               (140U)
-#define SCE_TLS_ROOT_PUBLIC_KEY_WORD_SIZE                (140U)
+#define SCE_TLS_ROOT_PUBLIC_KEY_WORD_SIZE                (137U)
 #define SCE_TLS_P256_ECC_KEY_WORD_SIZE                   (16U)
 #define SCE_TLS_EPHEMERAL_ECDH_PUBLIC_KEY_WORD_SIZE      (16U)
 #define SCE_TLS_MASTER_SECRET_WORD_SIZE                  (20U)

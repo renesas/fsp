@@ -284,6 +284,7 @@ static void ctsu_moving_average(uint16_t * p_average, uint16_t new_data, uint16_
 void        ctsu_write_isr(void);
 void        ctsu_read_isr(void);
 void        ctsu_end_isr(void);
+void        ctsu_end_interrupt(ctsu_instance_ctrl_t * const p_instance_ctrl);
 static void ctsu_correction_process(ctsu_instance_ctrl_t * const p_instance_ctrl);
 static void ctsu_correction_measurement(ctsu_instance_ctrl_t * const p_instance_ctrl, uint16_t * data);
 static void ctsu_correction_calc(uint16_t * correction_data, uint16_t raw_data, ctsu_correction_calc_t * p_calc);
@@ -759,6 +760,8 @@ fsp_err_t R_CTSU_Open (ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cf
     R_BSP_IrqCfgEnable(p_cfg->read_irq, CTSU_CFG_INT_PRIORITY_LEVEL, p_instance_ctrl);
     R_BSP_IrqCfgEnable(p_cfg->end_irq, CTSU_CFG_INT_PRIORITY_LEVEL, p_instance_ctrl);
 
+    p_instance_ctrl->interrupt_reverse_flag = 0;
+
     if (p_instance_ctrl->num_elements == g_ctsu_element_index)
     {
         /* TSCAP discharge process */
@@ -980,6 +983,17 @@ fsp_err_t R_CTSU_Open (ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cf
     p_instance_ctrl->p_context         = p_cfg->p_context;
     p_instance_ctrl->p_callback_memory = NULL;
 
+    p_instance_ctrl->serial_tuning_enable     = 0;
+    p_instance_ctrl->serial_tuning_mutual_cnt = 0;
+
+#if defined(CTSU_CFG_TARGET_VALUE_QE_SUPPORT)
+    p_instance_ctrl->tuning_self_target_value   = p_cfg->tuning_self_target_value;
+    p_instance_ctrl->tuning_mutual_target_value = p_cfg->tuning_mutual_target_value;
+#else
+    p_instance_ctrl->tuning_self_target_value   = CTSU_TUNING_VALUE_SELF;
+    p_instance_ctrl->tuning_mutual_target_value = CTSU_TUNING_VALUE_MUTUAL;
+#endif
+
     /* Mark driver as open */
     p_instance_ctrl->open = CTSU_OPEN;
 
@@ -1122,29 +1136,29 @@ fsp_err_t R_CTSU_ScanStart (ctsu_ctrl_t * const p_ctrl)
  #endif
 
         /* Write Channel setting */
-        R_CTSU->CTSUCHAC[0] = p_instance_ctrl->p_ctsu_cfg->ctsuchac0;
-        R_CTSU->CTSUCHAC[1] = p_instance_ctrl->p_ctsu_cfg->ctsuchac1;
+        R_CTSU->CTSUCHAC[0] = p_instance_ctrl->ctsuchac0;
+        R_CTSU->CTSUCHAC[1] = p_instance_ctrl->ctsuchac1;
  #if (BSP_FEATURE_CTSU_CTSUCHAC_REGISTER_COUNT >= 3)
-        R_CTSU->CTSUCHAC[2] = p_instance_ctrl->p_ctsu_cfg->ctsuchac2;
+        R_CTSU->CTSUCHAC[2] = p_instance_ctrl->ctsuchac2;
  #endif
  #if (BSP_FEATURE_CTSU_CTSUCHAC_REGISTER_COUNT >= 4)
-        R_CTSU->CTSUCHAC[3] = p_instance_ctrl->p_ctsu_cfg->ctsuchac3;
+        R_CTSU->CTSUCHAC[3] = p_instance_ctrl->ctsuchac3;
  #endif
  #if (BSP_FEATURE_CTSU_CTSUCHAC_REGISTER_COUNT >= 5)
-        R_CTSU->CTSUCHAC[4] = p_instance_ctrl->p_ctsu_cfg->ctsuchac4;
+        R_CTSU->CTSUCHAC[4] = p_instance_ctrl->ctsuchac4;
  #endif
 
  #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
-        R_CTSU->CTSUCHTRC[0] = p_instance_ctrl->p_ctsu_cfg->ctsuchtrc0;
-        R_CTSU->CTSUCHTRC[1] = p_instance_ctrl->p_ctsu_cfg->ctsuchtrc1;
+        R_CTSU->CTSUCHTRC[0] = p_instance_ctrl->ctsuchtrc0;
+        R_CTSU->CTSUCHTRC[1] = p_instance_ctrl->ctsuchtrc1;
   #if (BSP_FEATURE_CTSU_CTSUCHTRC_REGISTER_COUNT >= 3)
-        R_CTSU->CTSUCHTRC[2] = p_instance_ctrl->p_ctsu_cfg->ctsuchtrc2;
+        R_CTSU->CTSUCHTRC[2] = p_instance_ctrl->ctsuchtrc2;
   #endif
   #if (BSP_FEATURE_CTSU_CTSUCHTRC_REGISTER_COUNT >= 4)
-        R_CTSU->CTSUCHTRC[3] = p_instance_ctrl->p_ctsu_cfg->ctsuchtrc3;
+        R_CTSU->CTSUCHTRC[3] = p_instance_ctrl->ctsuchtrc3;
   #endif
   #if (BSP_FEATURE_CTSU_CTSUCHTRC_REGISTER_COUNT >= 5)
-        R_CTSU->CTSUCHTRC[4] = p_instance_ctrl->p_ctsu_cfg->ctsuchtrc4;
+        R_CTSU->CTSUCHTRC[4] = p_instance_ctrl->ctsuchtrc4;
   #endif
  #endif
     }
@@ -1469,6 +1483,8 @@ fsp_err_t R_CTSU_SpecificDataGet (ctsu_ctrl_t * const       p_ctrl,
 #if (BSP_FEATURE_CTSU_VERSION == 2)
     uint32_t                ctsuso;
     ctsu_correction_multi_t multi;
+    uint32_t                snum;
+    int32_t                 offset_unit;
 #endif
     ctsu_instance_ctrl_t * p_instance_ctrl = (ctsu_instance_ctrl_t *) p_ctrl;
 
@@ -1543,7 +1559,11 @@ fsp_err_t R_CTSU_SpecificDataGet (ctsu_ctrl_t * const       p_ctrl,
                 {
                     ctsuso =
                         (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI) + i].ctsuso & CTSU_TUNING_MAX);
-                    multi.offset[i] = (ctsuso * (uint32_t) (CTSU_CORRECTION_OFFSET_UNIT >> (p_instance_ctrl->range)));
+                    snum = (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI)].ctsuso >> 10) &
+                           CTSU_SNUM_MAX;
+                    offset_unit =
+                        (int32_t) ((CTSU_CORRECTION_OFFSET_UNIT * (snum + 1)) / (CTSU_SNUM_RECOMMEND + 1));
+                    multi.offset[i] = (ctsuso * (uint32_t) (offset_unit >> (p_instance_ctrl->range)));
 
                     multi.pri[i] = *(p_instance_ctrl->p_self_corr + (element_id * CTSU_CFG_NUM_SUMULTI) + i);
                     multi.snd[i] = 0;
@@ -1571,7 +1591,11 @@ fsp_err_t R_CTSU_SpecificDataGet (ctsu_ctrl_t * const       p_ctrl,
                 {
                     ctsuso =
                         (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI) + i].ctsuso & CTSU_TUNING_MAX);
-                    multi.offset[i] = (ctsuso * (uint32_t) (CTSU_CORRECTION_OFFSET_UNIT >> (p_instance_ctrl->range)));
+                    snum = (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI)].ctsuso >> 10) &
+                           CTSU_SNUM_MAX;
+                    offset_unit =
+                        (int32_t) ((CTSU_CORRECTION_OFFSET_UNIT * (snum + 1)) / (CTSU_SNUM_RECOMMEND + 1));
+                    multi.offset[i] = (ctsuso * (uint32_t) (offset_unit >> (p_instance_ctrl->range)));
 
                     multi.pri[i] = *(p_instance_ctrl->p_mutual_pri_corr + (element_id * CTSU_CFG_NUM_SUMULTI) + i);
                     multi.snd[i] = *(p_instance_ctrl->p_mutual_snd_corr + (element_id * CTSU_CFG_NUM_SUMULTI) + i);
@@ -2026,25 +2050,18 @@ void ctsu_initial_offset_tuning (ctsu_instance_ctrl_t * const p_instance_ctrl)
     int32_t  diff          = 0;
     uint32_t complete_flag = 0;
     uint32_t num_complete  = 0;
+    uint16_t target_val;
 #if (BSP_FEATURE_CTSU_VERSION == 1)
-    uint16_t ctsuso;
+    uint16_t               ctsuso;
+    ctsu_correction_calc_t calc;
 #endif
 #if (BSP_FEATURE_CTSU_VERSION == 2)
     uint16_t i;
     uint16_t element_top;
     uint16_t corr_data[CTSU_CFG_NUM_SUMULTI];
-    uint16_t target_val;
     int32_t  ctsuso;
     uint32_t snum;
-
-    if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
-    {
-        target_val = (CTSU_TUNING_VALUE_SELF / 2);
-    }
-    else
-    {
-        target_val = (CTSU_TUNING_VALUE_MUTUAL / 2);
-    }
+    int32_t  offset_unit;
 #endif
 
     /* element_id through each element for control block */
@@ -2053,16 +2070,30 @@ void ctsu_initial_offset_tuning (ctsu_instance_ctrl_t * const p_instance_ctrl)
         if (CTSU_TUNING_OT_COUNT != *(p_instance_ctrl->p_tuning_count + element_id))
         {
 #if (BSP_FEATURE_CTSU_VERSION == 1)
+            if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
+            {
+                target_val = (p_instance_ctrl->tuning_self_target_value);
+            }
+            else
+            {
+                target_val = (p_instance_ctrl->tuning_mutual_target_value);
+            }
+
+            calc.snum  = (p_instance_ctrl->p_ctsuwr[element_id].ctsuso0 >> 10) & CTSU_SNUM_MAX;
+            calc.sdpa  = (p_instance_ctrl->p_ctsuwr[element_id].ctsuso1 >> 8) & CTSU_SDPA_MAX;
+            target_val = (uint16_t) (target_val *
+                                     (uint32_t) ((calc.snum + 1) * (calc.sdpa + 1)) /
+                                     g_ctsu_correction_info.ctsu_clock);
  #if (CTSU_CFG_NUM_SELF_ELEMENTS != 0)
             if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
             {
-                diff = *(p_instance_ctrl->p_self_data + element_id) - CTSU_TUNING_VALUE_SELF;
+                diff = *(p_instance_ctrl->p_self_data + element_id) - target_val;
             }
  #endif
  #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
             if (CTSU_MODE_MUTUAL_FULL_SCAN == p_instance_ctrl->md)
             {
-                diff = *(p_instance_ctrl->p_mutual_pri_data + element_id) - CTSU_TUNING_VALUE_MUTUAL;
+                diff = *(p_instance_ctrl->p_mutual_pri_data + element_id) - target_val;
             }
  #endif
             ctsuso = (p_instance_ctrl->p_ctsuwr[element_id].ctsuso0 & CTSU_TUNING_MAX);
@@ -2128,6 +2159,15 @@ void ctsu_initial_offset_tuning (ctsu_instance_ctrl_t * const p_instance_ctrl)
             {
                 if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
                 {
+                    target_val = (p_instance_ctrl->tuning_self_target_value / 2);
+                }
+                else
+                {
+                    target_val = (p_instance_ctrl->tuning_mutual_target_value / 2);
+                }
+
+                if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)
+                {
                     corr_data[i] = p_instance_ctrl->p_self_corr[element_top + i];
                 }
                 else
@@ -2137,11 +2177,12 @@ void ctsu_initial_offset_tuning (ctsu_instance_ctrl_t * const p_instance_ctrl)
 
                 snum = (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI)].ctsuso >> 10) &
                        CTSU_SNUM_MAX;
-                corr_data[i] = (uint16_t) (((uint32_t) corr_data[i] * (CTSU_SNUM_RECOMMEND + 1)) / (snum + 1));
+                target_val  = (uint16_t) (((uint32_t) target_val * (snum + 1)) / (CTSU_SNUM_RECOMMEND + 1));
+                offset_unit = (int32_t) ((CTSU_CORRECTION_OFFSET_UNIT * (snum + 1)) / (CTSU_SNUM_RECOMMEND + 1));
 
                 /* Calculate CTSUSO equivalent difference between current value and target value */
                 diff = (int32_t) ((int32_t) corr_data[i] - (int32_t) target_val) /
-                       (CTSU_CORRECTION_OFFSET_UNIT >> p_instance_ctrl->range);
+                       (offset_unit >> p_instance_ctrl->range);
 
                 ctsuso  = (int32_t) (p_instance_ctrl->p_ctsuwr[element_top + i].ctsuso & CTSU_TUNING_MAX);
                 ctsuso += diff;
@@ -2249,6 +2290,7 @@ void ctsu_write_isr (void)
  #if (BSP_FEATURE_CTSU_VERSION == 2)
   #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
         R_CTSU->CTSUSO = g_ctsu_diag_info.ctsuwr.ctsuso;
+        p_instance_ctrl->wr_index++;
   #endif
  #endif
  #if (BSP_FEATURE_CTSU_VERSION == 1)
@@ -2325,16 +2367,34 @@ void ctsu_read_isr (void)
   #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
         if (CTSU_MODE_MUTUAL_FULL_SCAN == p_instance_ctrl->md)
         {
-            if (1 == R_CTSU->CTSUST_b.CTSUPS)
+            if (false == p_instance_ctrl->serial_tuning_enable)
             {
-                (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->pri_sen = R_CTSU->CTSUSC;
-                (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->pri_ref = R_CTSU->CTSURC;
+                if (1 == R_CTSU->CTSUST_b.CTSUPS)
+                {
+                    (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->pri_sen = R_CTSU->CTSUSC;
+                    (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->pri_ref = R_CTSU->CTSURC;
+                }
+                else
+                {
+                    (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->snd_sen = R_CTSU->CTSUSC;
+                    (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->snd_ref = R_CTSU->CTSURC;
+                    p_instance_ctrl->rd_index++;
+                }
             }
             else
             {
-                (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->snd_sen = R_CTSU->CTSUSC;
-                (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->snd_ref = R_CTSU->CTSURC;
-                p_instance_ctrl->rd_index++;
+                p_instance_ctrl->serial_tuning_mutual_cnt++;
+                if (p_instance_ctrl->serial_tuning_mutual_cnt % 2)
+                {
+                    (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->pri_sen = R_CTSU->CTSUSC;
+                    (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->pri_ref = R_CTSU->CTSURC;
+                }
+                else
+                {
+                    (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->snd_sen = R_CTSU->CTSUSC;
+                    (p_instance_ctrl->p_mutual_raw + p_instance_ctrl->rd_index)->snd_ref = R_CTSU->CTSURC;
+                    p_instance_ctrl->rd_index++;
+                }
             }
         }
   #endif
@@ -2409,6 +2469,12 @@ void ctsu_read_isr (void)
   #endif
     }
  #endif
+    if (1 == p_instance_ctrl->interrupt_reverse_flag)
+    {
+        p_instance_ctrl->interrupt_reverse_flag = 0;
+
+        ctsu_end_interrupt(p_instance_ctrl);
+    }
 #endif
 }
 
@@ -2420,7 +2486,88 @@ void ctsu_end_isr (void)
 {
     IRQn_Type              irq             = R_FSP_CurrentIrqGet();
     ctsu_instance_ctrl_t * p_instance_ctrl = (ctsu_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
-    ctsu_callback_args_t   args;
+    uint16_t               rd_index;
+
+    /** Clear the BSP IRQ Flag     */
+    R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+
+    /* In CTSU1 and CTSU2 self-capacity and current measurement mode and diagnostic mode, */
+    /* rd_index has the same value as wr_index.                                           */
+    rd_index = p_instance_ctrl->rd_index;
+
+#if (BSP_FEATURE_CTSU_VERSION == 1)
+    if (CTSU_MODE_MUTUAL_FULL_SCAN == p_instance_ctrl->md)
+    {
+        if (true == p_instance_ctrl->serial_tuning_enable)
+        {
+            if (0 == ((p_instance_ctrl->ctsucr1 >> 7) & 0x01))
+            {
+                rd_index = (uint16_t) (p_instance_ctrl->rd_index * 2);
+            }
+        }
+    }
+#endif
+
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+ #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
+    if (CTSU_MODE_MUTUAL_FULL_SCAN == p_instance_ctrl->md)
+    {
+        if (true == p_instance_ctrl->serial_tuning_enable)
+        {
+            if (0 == ((p_instance_ctrl->ctsucr1 >> 7) & 0x01))
+            {
+                rd_index = p_instance_ctrl->rd_index;
+            }
+            else
+            {
+                rd_index = p_instance_ctrl->rd_index / 2;
+            }
+        }
+        else
+        {
+            /* In the mutual capacity of CTSU2, the value of rd_index is twice the value of wr_index. */
+            rd_index = p_instance_ctrl->rd_index / 2;
+        }
+    }
+
+  #if (CTSU_CFG_NUM_CFC != 0)
+    if (CTSU_MODE_MUTUAL_CFC_SCAN == p_instance_ctrl->md)
+    {
+        if (true == p_instance_ctrl->serial_tuning_enable)
+        {
+            if (0 == ((p_instance_ctrl->ctsucr1 >> 7) & 0x01))
+            {
+                rd_index = p_instance_ctrl->rd_index;
+            }
+            else
+            {
+                rd_index = (uint16_t) (p_instance_ctrl->rd_index / (p_instance_ctrl->p_ctsu_cfg->num_rx * 2));
+            }
+        }
+        else
+        {
+            /* In the CFC mutual capacity of CTSU2, rd_index is twice the number of RX terminals in each wr_index. */
+            rd_index = (uint16_t) (p_instance_ctrl->rd_index / (p_instance_ctrl->p_ctsu_cfg->num_rx * 2));
+        }
+    }
+  #endif
+ #endif
+#endif
+
+    /* Countermeasure for the problem that RD interrupt and FN interrupt are reversed. */
+    if (rd_index != p_instance_ctrl->wr_index)
+    {
+        p_instance_ctrl->interrupt_reverse_flag = 1;
+
+        return;
+    }
+
+    ctsu_end_interrupt(p_instance_ctrl);
+}
+
+void ctsu_end_interrupt (ctsu_instance_ctrl_t * const p_instance_ctrl)
+{
+    ctsu_callback_args_t args;
 
     /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
      * stored in non-secure memory so they can be accessed by a non-secure callback function. */
@@ -2435,9 +2582,6 @@ void ctsu_end_isr (void)
         /* Save current arguments on the stack in case this is a nested interrupt. */
         args = *p_args;
     }
-
-    /** Clear the BSP IRQ Flag     */
-    R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
 
 #if (BSP_FEATURE_CTSU_VERSION == 1)
  #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
@@ -2557,6 +2701,9 @@ void ctsu_end_isr (void)
     /* reset indexes */
     p_instance_ctrl->wr_index = 0;
     p_instance_ctrl->rd_index = 0;
+#if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
+    p_instance_ctrl->serial_tuning_mutual_cnt = 0;
+#endif
 }
 
 /***********************************************************************************************************************
@@ -3384,6 +3531,8 @@ void ctsu_correction_exec (ctsu_instance_ctrl_t * const p_instance_ctrl)
 #if (BSP_FEATURE_CTSU_VERSION == 2)
     uint16_t                i;
     uint32_t                ctsuso;
+    uint32_t                snum;
+    int32_t                 offset_unit;
     ctsu_correction_multi_t multi;
  #if (CTSU_CFG_NUM_SELF_ELEMENTS != 0)
     uint16_t * p_self_data;
@@ -3402,6 +3551,11 @@ void ctsu_correction_exec (ctsu_instance_ctrl_t * const p_instance_ctrl)
     uint16_t offset = 0;
     uint16_t cfc_id = 0;
     uint16_t num_rx = 0;
+
+    /* By inspection, calc.cfc is only used when calc.md == CTSU_MODE_MUTUAL_CFC_SCAN. It is initialized in this case.
+     * However, GCC expects calc.cfc to be initialized before calling ctsu_correction_calc regardless of calc.md to
+     * avoid the warning -Werror=maybe-uninitialized. */
+    calc.cfc = 0;
 
     /* Create CFC-Rx table in ascending order at this instance */
     for (ts_id = 0; ts_id < CTSU_CORRCFC_TS_MAX; ts_id++)
@@ -3430,7 +3584,11 @@ void ctsu_correction_exec (ctsu_instance_ctrl_t * const p_instance_ctrl)
         {
             ctsuso =
                 (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI) + i].ctsuso & CTSU_TUNING_MAX);
-            multi.offset[i] = (ctsuso * (uint32_t) (CTSU_CORRECTION_OFFSET_UNIT >> calc.range));
+            snum = (p_instance_ctrl->p_ctsuwr[(element_id * CTSU_CFG_NUM_SUMULTI)].ctsuso >> 10) &
+                   CTSU_SNUM_MAX;
+            offset_unit = ((int32_t) (CTSU_CORRECTION_OFFSET_UNIT * (snum + 1))) /
+                          ((int32_t) (CTSU_SNUM_RECOMMEND + 1));
+            multi.offset[i] = (ctsuso * (uint32_t) (offset_unit >> calc.range));
         }
 
         if (CTSU_MODE_SELF_MULTI_SCAN == p_instance_ctrl->md)

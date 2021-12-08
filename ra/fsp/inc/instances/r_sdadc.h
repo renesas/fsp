@@ -231,12 +231,13 @@ fsp_err_t R_SDADC_Open(adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg);
 fsp_err_t R_SDADC_ScanCfg(adc_ctrl_t * p_ctrl, void const * const p_extend);
 fsp_err_t R_SDADC_InfoGet(adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info);
 fsp_err_t R_SDADC_ScanStart(adc_ctrl_t * p_ctrl);
+fsp_err_t R_SDADC_ScanGroupStart(adc_ctrl_t * p_ctrl, adc_group_mask_t group_id);
 fsp_err_t R_SDADC_ScanStop(adc_ctrl_t * p_ctrl);
 fsp_err_t R_SDADC_StatusGet(adc_ctrl_t * p_ctrl, adc_status_t * p_status);
 fsp_err_t R_SDADC_Read(adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_t * const p_data);
 fsp_err_t R_SDADC_Read32(adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint32_t * const p_data);
 fsp_err_t R_SDADC_OffsetSet(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_id, int32_t const offset);
-fsp_err_t R_SDADC_Calibrate(adc_ctrl_t * const p_ctrl, void * const p_extend);
+fsp_err_t R_SDADC_Calibrate(adc_ctrl_t * const p_ctrl, void const * p_extend);
 fsp_err_t R_SDADC_Close(adc_ctrl_t * p_ctrl);
 
 /*******************************************************************************************************************//**

@@ -255,6 +255,7 @@ fsp_err_t rm_wifi_onchip_silex_mac_addr_get(uint8_t * p_macaddr);
 fsp_err_t rm_wifi_onchip_silex_scan(WIFIScanResult_t * p_results, uint32_t maxNetworks);
 fsp_err_t rm_wifi_onchip_silex_ping(uint8_t * p_ip_addr, uint32_t count, uint32_t interval_ms);
 fsp_err_t rm_wifi_onchip_silex_ip_addr_get(uint32_t * p_ip_addr);
+fsp_err_t rm_wifi_onchip_silex_network_info_get(uint32_t * p_ip_addr, uint32_t * p_subnet_mask, uint32_t * p_gateway);
 fsp_err_t rm_wifi_onchip_silex_avail_socket_get(uint32_t * p_socket_id);
 fsp_err_t rm_wifi_onchip_silex_socket_status_get(uint32_t socket_no, uint32_t * p_socket_status);
 fsp_err_t rm_wifi_onchip_silex_socket_create(uint32_t socket_no, uint32_t type, uint32_t ipversion);

@@ -65,6 +65,10 @@ uint8_t * g_p_usb_hcdc_interface_table[USB_NUM_USBIP];
 uint16_t  g_usb_hcdc_speed[USB_NUM_USBIP];
 uint16_t  g_usb_hcdc_devaddr[USB_NUM_USBIP];
 
+#if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+extern const uint16_t USB_CFG_TPL_TABLE[];
+#endif                                 /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+
 /******************************************************************************
  * Renesas USB Host CDC Driver functions
  ******************************************************************************/
@@ -566,15 +570,19 @@ void usb_hcdc_registration (usb_utr_t * ptr)
     usb_hcdreg_t driver;
 #if USB_CFG_HUB == USB_CFG_ENABLE
     uint8_t i;
-#endif                                                          /* USB_CFG_HUB == USB_CFG_ENABLE */
+#endif                                         /* USB_CFG_HUB == USB_CFG_ENABLE */
 
     /* Driver registration */
 #if USB_CFG_HCDC_IFCLS == USB_CFG_CDC
-    driver.ifclass = (uint16_t) USB_IFCLS_CDC;                  /* CDC Communications Interface */
-#else                                                           /* USB_CFG_HCDC_IFCLS == USB_CFG_CDC */
-    driver.ifclass = (uint16_t) USB_IFCLS_VEN;                  /* CDC Communications Interface */
+    driver.ifclass = (uint16_t) USB_IFCLS_CDC; /* CDC Communications Interface */
+#else                                          /* USB_CFG_HCDC_IFCLS == USB_CFG_CDC */
+    driver.ifclass = (uint16_t) USB_IFCLS_VEN; /* CDC Communications Interface */
 #endif  /* USB_CFG_HCDC_IFCLS == USB_CFG_CDC */
-    driver.p_tpl      = (uint16_t *) &g_usb_hcdc_device_tpl;    /* Target peripheral list */
+#if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+    driver.p_tpl = (uint16_t *) USB_CFG_TPL_TABLE;
+#else /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+    driver.p_tpl = (uint16_t *) &g_usb_hcdc_device_tpl;         /* Target peripheral list */
+#endif /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
     driver.classinit  = (usb_cb_t) &usb_hcdc_init;              /* Driver init */
     driver.classcheck = (usb_cb_check_t) &usb_hcdc_class_check; /* Driver check */
     driver.devconfig  = (usb_cb_t) &usb_hcdc_configured;        /* Device configuered */
@@ -583,19 +591,18 @@ void usb_hcdc_registration (usb_utr_t * ptr)
     driver.devresume  = (usb_cb_t) &usb_hstd_dummy_function;    /* Device resume */
 
 #if USB_CFG_HUB == USB_CFG_ENABLE
-
     /* WAIT_LOOP */
-    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++) /* Loop support CDC device count */
+    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)            /* Loop support CDC device count */
     {
-        usb_hstd_driver_registration(ptr, &driver);  /* Host CDC class driver registration. */
+        usb_hstd_driver_registration(ptr, &driver);             /* Host CDC class driver registration. */
     }
 
  #if (BSP_CFG_RTOS == 0)
-    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);   /* Hub Task Priority set */
+    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);              /* Hub Task Priority set */
  #endif /* (BSP_CFG_RTOS == 0) */
-    usb_hhub_registration(ptr, USB_NULL);            /* Hub registration. */
-#else                                                /* USB_CFG_HUB == USB_CFG_ENABLE */
-    usb_hstd_driver_registration(ptr, &driver);      /* Host CDC class driver registration. */
+    usb_hhub_registration(ptr, USB_NULL);                       /* Hub registration. */
+#else                                                           /* USB_CFG_HUB == USB_CFG_ENABLE */
+    usb_hstd_driver_registration(ptr, &driver);                 /* Host CDC class driver registration. */
 #endif  /* USB_CFG_HUB == USB_CFG_ENABLE */
 }
 
@@ -662,7 +669,6 @@ void usb_hcdc_class_check (usb_utr_t * ptr, uint16_t ** table)
     *table[3] = USB_OK;                                             /* Set class check done  */
 
 #if (BSP_CFG_RTOS == 2)
-
     /* Get String Descriptors */
     iproduct = g_p_usb_hcdc_device_table[ptr->ip][USB_DEV_I_PRODUCT];
     retval   = usb_hcdc_get_string_info(ptr, g_usb_hcdc_devaddr[ptr->ip], iproduct);

@@ -119,6 +119,10 @@ uint32_t g_usb_hmsc_cmd_data_length[USB_NUM_USBIP];
 extern SemaphoreHandle_t SemaphoreHandleRead;
  #endif                                /*BSP_CFG_RTOS == 2 */
 
+ #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+extern const uint16_t USB_CFG_TPL_TABLE[];
+ #endif /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
  ******************************************************************************/
@@ -706,11 +710,15 @@ uint16_t usb_hmsc_data_in (usb_utr_t * ptr, uint16_t side, uint8_t * const buff,
  #else                                 /* (BSP_CFG_RTOS == 2) */
     usb_utr_t mess;
 
-    mess.ip                      = ptr->ip;
-    mess.ipp                     = ptr->ipp;
-    mess.keyword                 = side;
-    mess.result                  = USB_DATA_NONE;
-    mess.tranlen                 = 0;
+    mess.ip      = ptr->ip;
+    mess.ipp     = ptr->ipp;
+    mess.keyword = side;
+    mess.result  = USB_DATA_NONE;
+    mess.tranlen = 0;
+  #if (USB_CFG_DMA == USB_CFG_ENABLE)
+    mess.p_transfer_rx = ptr->p_transfer_rx;
+    mess.p_transfer_tx = ptr->p_transfer_tx;
+  #endif                               /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
     pusb_hmsc_buff[ptr->ip]      = buff;
     usb_hmsc_trans_size[ptr->ip] = size;
     usb_shmsc_process[ptr->ip]   = USB_MSG_HMSC_DATA_IN;
@@ -749,11 +757,15 @@ uint16_t usb_hmsc_data_out (usb_utr_t * ptr, uint16_t side, uint8_t const * cons
  #else                                 /* (BSP_CFG_RTOS == 2) */
     usb_utr_t mess;
 
-    mess.ip                      = ptr->ip;
-    mess.ipp                     = ptr->ipp;
-    mess.keyword                 = side;
-    mess.result                  = USB_DATA_NONE;
-    mess.tranlen                 = 0;
+    mess.ip      = ptr->ip;
+    mess.ipp     = ptr->ipp;
+    mess.keyword = side;
+    mess.result  = USB_DATA_NONE;
+    mess.tranlen = 0;
+  #if (USB_CFG_DMA == USB_CFG_ENABLE)
+    mess.p_transfer_rx = ptr->p_transfer_rx;
+    mess.p_transfer_tx = ptr->p_transfer_tx;
+  #endif                               /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
     pusb_hmsc_buff[ptr->ip]      = buff;
     usb_hmsc_trans_size[ptr->ip] = size;
     usb_shmsc_process[ptr->ip]   = USB_MSG_HMSC_DATA_OUT;
@@ -1235,12 +1247,8 @@ static void usb_hmsc_specified_path (usb_utr_t * mess)
     /* Get mem pool blk */
     if (USB_OK == USB_PGET_BLK(USB_HMSC_MPL, &pblf))
     {
+        *pblf         = *mess;
         pblf->msginfo = usb_shmsc_process[mess->ip];
-        pblf->keyword = mess->keyword;
-        pblf->result  = mess->result;
-        pblf->ip      = mess->ip;
-        pblf->ipp     = mess->ipp;
-        pblf->tranlen = mess->tranlen;
 
         /* Send message */
         err = USB_SND_MSG(USB_HMSC_MBX, (usb_msg_t *) pblf);
@@ -1556,6 +1564,7 @@ static uint16_t usb_hmsc_send_cbw (usb_utr_t * ptr, uint16_t side)
 
     return USB_HMSC_CBW_ERR;
  #else                                 /* (BSP_CFG_RTOS == 2) */
+
     return USB_HMSC_OK;
  #endif /* (BSP_CFG_RTOS == 2) */
 }
@@ -1735,6 +1744,7 @@ static uint16_t usb_hmsc_get_data (usb_utr_t * ptr, uint16_t side, uint8_t * buf
 
     return USB_HMSC_DAT_RD_ERR;
  #else                                 /* (BSP_CFG_RTOS == 2) */
+
     return USB_HMSC_OK;
  #endif /* (BSP_CFG_RTOS == 2) */
 }
@@ -1913,6 +1923,7 @@ static uint16_t usb_hmsc_send_data (usb_utr_t * ptr, uint16_t side, uint8_t * bu
 
     return USB_HMSC_DAT_WR_ERR;
  #else                                 /* (BSP_CFG_RTOS == 2) */
+
     return USB_HMSC_OK;
  #endif /* (BSP_CFG_RTOS == 2) */
 }
@@ -2153,6 +2164,7 @@ static uint16_t usb_hmsc_get_csw (usb_utr_t * ptr, uint16_t side)
 
     return USB_HMSC_CSW_ERR;
  #else                                 /* (BSP_CFG_RTOS == 2) */
+
     return USB_HMSC_OK;
  #endif /* (BSP_CFG_RTOS == 2) */
 }
@@ -2300,7 +2312,6 @@ static usb_er_t usb_hmsc_clear_stall (usb_utr_t * ptr, uint16_t pipe, usb_cb_t c
         /* SQCLR */
         usb_hstd_change_device_state(ptr, usb_hstd_dummy_function, USB_DO_CLR_SQTGL, (uint16_t) USB_PIPE0);
     }
-
  #else
     err = usb_hstd_change_device_state(ptr, complete, USB_DO_CLR_STALL, pipe);
  #endif                                /* (BSP_CFG_RTOS == 2) */
@@ -2423,11 +2434,12 @@ uint16_t usb_hmsc_pipe_info (usb_utr_t * ptr, uint8_t * table, uint16_t side, ui
     if (USB_DT_INTERFACE != table[1])                    /* Check Descriptor */
     {
         USB_PRINTF0("### Not Interface pdescriptor.\n"); /* Configuration Descriptor */
+
         return USB_ERROR;
     }
 
-    ofdsc = table[0];                                    /* Check Endpoint Descriptor */
-    g_usb_hmsc_out_pipe[ip][side] = USB_NOPORT;          /* Pipe initial */
+    ofdsc = table[0];                           /* Check Endpoint Descriptor */
+    g_usb_hmsc_out_pipe[ip][side] = USB_NOPORT; /* Pipe initial */
     g_usb_hmsc_in_pipe[ip][side]  = USB_NOPORT;
 
     /* WAIT_LOOP */
@@ -2537,20 +2549,20 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
     uint16_t            que_cnt;
     usb_instance_ctrl_t ctrl;
     uint16_t            ipno_devaddr;
-    usb_cfg_t         * p_cfg;
+    usb_cfg_t         * p_cfg = NULL;
     (void) data2;
 
     if (ptr->ip)
     {
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
-  #else
-        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
-  #endif
+  #endif                               /* #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME) */
     }
     else
     {
+  #if defined(VECTOR_NUMBER_USBFS_INT)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+  #endif                               /* #if defined(VECTOR_NUMBER_USBFS_INT) */
     }
 
     /* Clear pipe table. */
@@ -2600,20 +2612,20 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
     usb_instance_ctrl_t ctrl;
     uint16_t            side;
     uint16_t            ipno_devaddr;
-    usb_cfg_t         * p_cfg;
+    usb_cfg_t         * p_cfg = NULL;
     (void) data2;
 
     if (ptr->ip)
     {
-  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+  #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
-  #else
-        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
-  #endif
+  #endif                               /* #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME) */
     }
     else
     {
+  #if defined(VECTOR_NUMBER_USBFS_INT)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+  #endif                               /* #if defined(VECTOR_NUMBER_USBFS_INT) */
     }
 
     ipno_devaddr = addr;
@@ -2653,20 +2665,20 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
 void usb_hmsc_drive_complete (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
-    usb_cfg_t         * p_cfg;
+    usb_cfg_t         * p_cfg = NULL;
     (void) data2;
 
     if (ptr->ip)
     {
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
- #else
-        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
- #endif
+ #endif                                /* #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME) */
     }
     else
     {
+ #if defined(VECTOR_NUMBER_USBFS_INT)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+ #endif                                /* #if defined(VECTOR_NUMBER_USBFS_INT) */
     }
 
  #if (BSP_CFG_RTOS == 0)
@@ -2735,20 +2747,23 @@ void usb_hmsc_registration (usb_utr_t * ptr)
     usb_hcdreg_t driver;
  #if USB_CFG_HUB == USB_CFG_ENABLE
     uint8_t i;
- #endif                                                     /* USB_CFG_HUB == USB_CFG_ENABLE */
+ #endif                                                    /* USB_CFG_HUB == USB_CFG_ENABLE */
 
     /* Driver registration */
-    driver.ifclass    = (uint16_t) USB_IFCLS_MAS;           /* Use Interface class for MSC. */
-    driver.p_tpl      = (uint16_t *) &g_usb_hmsc_devicetpl; /* Target peripheral list. */
-    driver.classinit  = &usb_hmsc_classinit;                /* Driver init. */
-    driver.classcheck = &usb_hmsc_class_check;              /* Driver check. */
-    driver.devconfig  = &usb_hmsc_configured;               /* Callback when device is configured. */
-    driver.devdetach  = &usb_hmsc_detach;                   /* Callback when device is detached. */
-    driver.devsuspend = &usb_hstd_dummy_function;           /* Callback when device is suspended. */
-    driver.devresume  = &usb_hstd_dummy_function;           /* Callback when device is resumed. */
+    driver.ifclass = (uint16_t) USB_IFCLS_MAS;             /* Use Interface class for MSC. */
+ #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+    driver.p_tpl = (uint16_t *) USB_CFG_TPL_TABLE;
+ #else /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+    driver.p_tpl = (uint16_t *) &g_usb_hmsc_devicetpl;     /* Target peripheral list. */
+ #endif /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+    driver.classinit  = &usb_hmsc_classinit;               /* Driver init. */
+    driver.classcheck = &usb_hmsc_class_check;             /* Driver check. */
+    driver.devconfig  = &usb_hmsc_configured;              /* Callback when device is configured. */
+    driver.devdetach  = &usb_hmsc_detach;                  /* Callback when device is detached. */
+    driver.devsuspend = &usb_hstd_dummy_function;          /* Callback when device is suspended. */
+    driver.devresume  = &usb_hstd_dummy_function;          /* Callback when device is resumed. */
 
  #if USB_CFG_HUB == USB_CFG_ENABLE
-
     /* WAIT_LOOP */
     for (i = 0; i < USB_MAXSTRAGE; i++)                    /* Loop support HID device count */
     {
@@ -2823,7 +2838,6 @@ void usb_hmsc_message_retry (uint16_t id, usb_utr_t * mess)
             /* error */
         }
     }
-
   #else                                /* (USB_UT_MODE == 0) */
     FSP_PARAMETER_NOT_USED(id);
     FSP_PARAMETER_NOT_USED(*mess);
@@ -3145,7 +3159,6 @@ void usb_hmsc_class_check (usb_utr_t * ptr, uint16_t ** table)
     *table[3] = USB_OK;
 
  #if (BSP_CFG_RTOS == 2)
-
     /* Check Interface Descriptor (device-class) */
     if (USB_IFCLS_MAS != g_p_usb_hmsc_interface_table[ptr->ip][USB_IF_B_INTERFACECLASS])
     {
@@ -3212,7 +3225,6 @@ void usb_hmsc_class_check (usb_utr_t * ptr, uint16_t ** table)
 
         return;
     }
-
  #else                                 /* (BSP_CFG_RTOS == 2) */
     /* Get mem pool blk */
     if (USB_PGET_BLK(USB_HMSC_MPL, &pblf) == USB_OK)
@@ -3527,7 +3539,6 @@ usb_er_t usb_hmsc_get_max_unit (usb_utr_t * ptr, uint16_t addr, uint8_t * buff, 
     g_usb_hmsc_class_control[ptr->ip].ipp       = ptr->ipp;
 
  #if (BSP_CFG_RTOS == 2)
-
     /* WAIT_LOOP */
     while (1)
     {

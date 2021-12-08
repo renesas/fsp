@@ -158,61 +158,70 @@
 #define TOUCH_RATIO_CALC(a)    ((uint16_t) (a / 100))
 
 #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
- #if (BSP_FEATURE_CTSU_VERSION == 2)
-  #define TOUCH_TUNING_CH_REG_MAX_NUM                  (32)
-  #define TOUCH_TUNING_KEY_MAX_NUM                     (CTSU_CFG_NUM_SELF_ELEMENTS + CTSU_CFG_NUM_MUTUAL_ELEMENTS * 2)
+ #define TOUCH_TUNING_CH_REG_MAX_NUM                   (32)
+ #define TOUCH_TUNING_KEY_MAX_NUM                      (CTSU_CFG_NUM_SELF_ELEMENTS + CTSU_CFG_NUM_MUTUAL_ELEMENTS * 2)
 
-  #define TOUCH_UART_TSCHAC_MASK                       (0xFF)
-  #define TOUCH_UART_TSCHTRC_MASK                      (0xFF)
+ #define TOUCH_UART_TSCHAC_MASK                        (0xFF)
+ #define TOUCH_UART_TSCHTRC_MASK                       (0xFF)
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+  #define TOUCH_TUNING_PCLKB_FREQ_MHZ                  (1000000)
+  #define TOUCH_TUNING_PCLKB_FREQ_32MHZ                (32000000)
+  #define TOUCH_TUNING_PCLKB_FREQ_64MHZ                (64000000)
+ #endif
 
 /* UART Receive Buffer Size */
-  #define TOUCH_TUNING_TRANSMIT_BUF_SIZE               (0xC)
+ #define TOUCH_TUNING_TRANSMIT_BUF_SIZE                (0xC)
 
 /* Control byte */
-  #define TOUCH_TUNING_HEADER                          (0x55)
-  #define TOUCH_TUNING_FOOTER                          (0x0A)
+ #define TOUCH_TUNING_HEADER                           (0x55)
+ #define TOUCH_TUNING_FOOTER                           (0x0A)
 
 /* Command ID */
-  #define TOUCH_TUNING_COMMAND_START                   (0x21)
-  #define TOUCH_TUNING_COMMAND_STOP                    (0x22)
-  #define TOUCH_TUNING_COMMAND_VARIABLE_WRITE          (0x23)
-  #define TOUCH_TUNING_COMMAND_VARIABLE_READ           (0x24)
-  #define TOUCH_TUNING_COMMAND_ADDRESS_WRITE           (0x25)
-  #define TOUCH_TUNING_COMMAND_ADDRESS_READ            (0x26)
-  #define TOUCH_TUNING_COMMAND_PHASE_RUN               (0x27)
-  #define TOUCH_TUNING_COMMAND_VERSION                 (0x28)
+ #define TOUCH_TUNING_COMMAND_START                    (0x21)
+ #define TOUCH_TUNING_COMMAND_STOP                     (0x22)
+ #define TOUCH_TUNING_COMMAND_VARIABLE_WRITE           (0x23)
+ #define TOUCH_TUNING_COMMAND_VARIABLE_READ            (0x24)
+ #define TOUCH_TUNING_COMMAND_ADDRESS_WRITE            (0x25)
+ #define TOUCH_TUNING_COMMAND_ADDRESS_READ             (0x26)
+ #define TOUCH_TUNING_COMMAND_PHASE_RUN                (0x27)
+ #define TOUCH_TUNING_COMMAND_VERSION                  (0x28)
 
-  #define TOUCH_TUNING_COMMAND_TOP_NUM                 (0x2)
+ #define TOUCH_TUNING_COMMAND_TOP_NUM                  (0x2)
 
 /* Response ID */
-  #define TOUCH_TUNING_RESPONSE_BIT                    (0x60)
-  #define TOUCH_TUNING_RESPONSE_ERROR_BIT              (0xA0)
+ #define TOUCH_TUNING_RESPONSE_BIT                     (0x60)
+ #define TOUCH_TUNING_RESPONSE_ERROR_BIT               (0xA0)
 
 /*variable command ID */
-  #define TOUCH_TUNIG_VARIABLE_MCU_GROUP               (0x1)
-  #define TOUCH_TUNIG_VARIABLE_PCLKB_FREQUENCY         (0x2)
-  #define TOUCH_TUNIG_VARIABLE_TUNING_MODE             (0x3)
-  #define TOUCH_TUNIG_VARIABLE_CTSU_STATE              (0x4)
-  #define TOUCH_TUNIG_VARIABLE_CTSU_SCAN_MODE          (0x5)
-  #define TOUCH_TUNIG_VARIABLE_TS_CHAC_MASK_BOTTOM     (0x6)
-  #define TOUCH_TUNIG_VARIABLE_TS_CHAC_MASK_TOP        (0x7)
-  #define TOUCH_TUNIG_VARIABLE_TS_CHTRC_MASK_BOTTOM    (0x8)
-  #define TOUCH_TUNIG_VARIABLE_TS_CHTRC_MASK_TOP       (0x9)
-  #define TOUCH_TUNIG_VARIABLE_QE_TXVSEL               (0xA)
-  #define TOUCH_TUNIG_VARIABLE_QE_ATUNE                (0xB)
-  #define TOUCH_TUNIG_VARIABLE_QE_POSEL                (0xC)
-  #define TOUCH_TUNIG_VARIABLE_ERR_EVENT               (0xD)
-  #define TOUCH_TUNIG_VARIABLE_CTSU_ICO_DATA_PRI       (0xE)
-  #define TOUCH_TUNIG_VARIABLE_CTSU_ICO_DATA_SND       (0xF)
-  #define TOUCH_TUNIG_VARIABLE_CTSU_MUTUAL_DATA        (0x10)
-  #define TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SO         (0x11)
-  #define TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SNUM       (0x12)
-  #define TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SDPA       (0x13)
+ #define TOUCH_TUNING_VARIABLE_MCU_GROUP               (0x1)
+ #define TOUCH_TUNING_VARIABLE_PCLKB_FREQUENCY         (0x2)
+ #define TOUCH_TUNING_VARIABLE_TUNING_MODE             (0x3)
+ #define TOUCH_TUNING_VARIABLE_CTSU_STATE              (0x4)
+ #define TOUCH_TUNING_VARIABLE_CTSU_SCAN_MODE          (0x5)
+ #define TOUCH_TUNING_VARIABLE_TS_CHAC_MASK_BOTTOM     (0x6)
+ #define TOUCH_TUNING_VARIABLE_TS_CHAC_MASK_TOP        (0x7)
+ #define TOUCH_TUNING_VARIABLE_TS_CHTRC_MASK_BOTTOM    (0x8)
+ #define TOUCH_TUNING_VARIABLE_TS_CHTRC_MASK_TOP       (0x9)
+ #define TOUCH_TUNING_VARIABLE_QE_TXVSEL               (0xA)
+ #define TOUCH_TUNING_VARIABLE_QE_ATUNE                (0xB)
+ #define TOUCH_TUNING_VARIABLE_QE_POSEL                (0xC)
+ #define TOUCH_TUNING_VARIABLE_ERR_EVENT               (0xD)
+ #define TOUCH_TUNING_VARIABLE_CTSU_ICO_DATA_PRI       (0xE)
+ #define TOUCH_TUNING_VARIABLE_CTSU_ICO_DATA_SND       (0xF)
+ #define TOUCH_TUNING_VARIABLE_CTSU_MUTUAL_DATA        (0x10)
+ #define TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SO         (0x11)
+ #define TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SNUM       (0x12)
+ #define TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SDPA       (0x13)
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+  #define TOUCH_TUNING_VARIABLE_CTSU_WRITE_SSC         (0x14)
+  #define TOUCH_TUNING_VARIABLE_CTSU_WRITE_SO0         (0x15)
+  #define TOUCH_TUNING_VARIABLE_CTSU_WRITE_SO1         (0x16)
  #endif
+ #define TOUCH_TUNING_VARIABLE_SELF_TARGET_VALUE       (0x17)
+ #define TOUCH_TUNING_VARIABLE_MUTUAL_TARGET_VALUE     (0x18)
 #endif
 
-#if ((TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)) || (TOUCH_CFG_UART_TUNING_SUPPORT == 1) && \
-    (BSP_FEATURE_CTSU_VERSION == 2))
+#if ((TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)) || (TOUCH_CFG_UART_TUNING_SUPPORT == 1))
 
 /* Register mask and bit-shift */
  #if (BSP_FEATURE_CTSU_VERSION == 2)
@@ -232,6 +241,16 @@
 
  #define TOUCH_TUNING_COMMAND_BUF_NUM     (0x2)
  #define TOUCH_TUNING_RECIEVE_BUF_SIZE    (0xF)
+ #define TOUCH_TUNING_ICOG_100            (0)                     // ICOG = 100%
+ #define TOUCH_TUNING_ICOG_66             (1)                     // ICOG = 66%
+ #define TOUCH_TUNING_RICOA_RECOMMEND     (0xFF)                  // ICO input current
+ #if (BSP_CFG_MCU_PART_SERIES == 2) || (BSP_CFG_MCU_PART_SERIES == 4)
+  #define TOUCH_TUNING_ICOG_RECOMMEND     (TOUCH_TUNING_ICOG_66)  // Recommended setting value
+ #endif
+ #if (BSP_CFG_MCU_PART_SERIES == 6)
+  #define TOUCH_TUNING_ICOG_RECOMMEND     (TOUCH_TUNING_ICOG_100) // Recommended setting value
+ #endif
+
 #endif
 
 /***********************************************************************************************************************
@@ -275,14 +294,12 @@ static void touch_pad_decode(touch_pad_info_t * p_pinfo, uint8_t num_x, uint8_t 
 
 #endif
 
-#if ((TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)) || (TOUCH_CFG_UART_TUNING_SUPPORT == 1) && \
-    (BSP_FEATURE_CTSU_VERSION == 2))
+#if ((TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)) || (TOUCH_CFG_UART_TUNING_SUPPORT == 1))
 void touch_uart_callback(uart_callback_args_t * p_args);
 
 #endif
 
 #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
- #if (BSP_FEATURE_CTSU_VERSION == 2)
 void touch_serial_tuning(touch_instance_ctrl_t * const p_instance_ctrl);
 
 void touch_tuning_uart_connect(void);
@@ -306,6 +323,9 @@ void touch_tuning_get8(uint8_t * p_val, uint16_t index);
 void touch_tuning_send32(uint32_t value, uint16_t index);
 void touch_tuning_send16(uint16_t value, uint16_t index);
 void touch_tuning_send8(uint8_t value, uint16_t index);
+
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+void touch_tuning_pclkb_get(volatile uint32_t * pclkb_frequency);
 
  #endif
 #endif
@@ -349,53 +369,66 @@ static uint16_t g_touch_pad_buf[CTSU_CFG_NUM_CFC * CTSU_CFG_NUM_CFC_TX * 2];
 static uint8_t  g_touch_base_set_falg = 0;
 #endif
 #if TOUCH_CFG_MONITOR_ENABLE
-static uint8_t  g_touch_monitor_buf[TOUCH_MONITOR_BUFFER_SIZE];
+ #if ((TOUCH_CFG_UART_MONITOR_SUPPORT == 1) || (TOUCH_CFG_UART_TUNING_SUPPORT == 1))
+static uint8_t g_touch_monitor_buf[TOUCH_MONITOR_BUFFER_SIZE];
+ #else
+static volatile uint8_t g_touch_monitor_buf[TOUCH_MONITOR_BUFFER_SIZE];
+ #endif
 static uint8_t  g_touch_monitor_id;
 static uint16_t g_touch_monitor_size[TOUCH_MONITOR_BLOCK_MAX];
  #if (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)
 static touch_instance_ctrl_t * gp_touch_ctrl_list[TOUCH_UART_INSTANCE_MAX];
 
 /* Detect method number */
-uint32_t g_touch_uart_open_bitmap;
+static uint32_t g_touch_uart_open_bitmap;
 
 /* Monitoring method number */
-uint8_t g_touch_uart_monitor_num;
+static uint8_t g_touch_uart_monitor_num;
  #endif
 #endif
 
 #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
- #if (BSP_FEATURE_CTSU_VERSION == 2)
 
 /* QE send Data */
-volatile uint32_t             g_touch_tuning_pclkb_frequency;
-volatile uint8_t              g_touch_tuning_mcu_group;
-volatile touch_tuning_state_t g_touch_tuning_state;
-volatile touch_tuning_mode_t  g_touch_tuning_mode;
-volatile touch_tuning_scan_t  g_touch_tuning_scan_mode;
-touch_tuning_ts_msk_t         g_touch_tuning_ts_chac_mask;
-touch_tuning_ts_msk_t         g_touch_tuning_ts_chtrc_mask;
-volatile ctsu_event_t         g_touch_tuning_err_event;
-volatile ctsu_atune12_t       g_touch_tuning_qe_atune;
-volatile ctsu_posel_t         g_touch_tuning_qe_posel;
-volatile uint8_t              g_touch_tuning_qe_txvsel;
-volatile uint8_t              g_touch_tuning_phase_run;
+static volatile uint32_t             g_touch_tuning_pclkb_frequency;
+static volatile uint8_t              g_touch_tuning_mcu_group;
+static volatile touch_tuning_state_t g_touch_tuning_state;
+static volatile touch_tuning_mode_t  g_touch_tuning_mode;
+static volatile touch_tuning_scan_t  g_touch_tuning_scan_mode;
+static touch_tuning_ts_msk_t         g_touch_tuning_ts_chac_mask;
+static touch_tuning_ts_msk_t         g_touch_tuning_ts_chtrc_mask;
+static volatile ctsu_event_t         g_touch_tuning_err_event;
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
+static volatile ctsu_atune12_t g_touch_tuning_qe_atune;
+ #endif
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+static volatile ctsu_atune1_t g_touch_tuning_qe_atune;
+ #endif
+static volatile ctsu_posel_t g_touch_tuning_qe_posel;
+static volatile uint8_t      g_touch_tuning_qe_txvsel;
+static volatile uint8_t      g_touch_tuning_phase_run;
+static uint16_t              g_touch_tuning_self_target_value;
+static uint16_t              g_touch_tuning_mutual_target_value;
 
-volatile touch_tuning_mode_t g_touch_tuning_mode_save;
+static volatile touch_tuning_mode_t g_touch_tuning_mode_save;
 
 /* interrupt datas (QE get this data) */
-uint16_t g_touch_tuning_ico_data[TOUCH_TUNING_KEY_MAX_NUM];
-  #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
-uint16_t g_touch_tuning_mutual_data[CTSU_CFG_NUM_MUTUAL_ELEMENTS];
-  #endif
-ctsu_element_cfg_t g_touch_tuning_element_cfgs[TOUCH_TUNING_KEY_MAX_NUM];
-ctsu_md_t          g_touch_tuning_md;
+static uint16_t g_touch_tuning_ico_data[TOUCH_TUNING_KEY_MAX_NUM];
+ #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
+static uint16_t g_touch_tuning_mutual_data[CTSU_CFG_NUM_MUTUAL_ELEMENTS];
+ #endif
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
+static ctsu_element_cfg_t g_touch_tuning_element_cfgs[TOUCH_TUNING_KEY_MAX_NUM];
+ #endif
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+static ctsu_ctsuwr_t g_touch_tuning_ctsu_write[TOUCH_TUNING_KEY_MAX_NUM];
+ #endif
+static ctsu_md_t g_touch_tuning_md;
 
 static uint8_t g_touch_tuning_tx_buf[TOUCH_TUNING_TRANSMIT_BUF_SIZE];
- #endif
 #endif
 
-#if ((TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)) || (TOUCH_CFG_UART_TUNING_SUPPORT == 1) && \
-    (BSP_FEATURE_CTSU_VERSION == 2))
+#if ((TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)) || (TOUCH_CFG_UART_TUNING_SUPPORT == 1))
 
 /* data transmit flag */
 volatile uint8_t g_touch_uart_transmit_flag;
@@ -668,13 +701,11 @@ fsp_err_t RM_TOUCH_Open (touch_ctrl_t * const p_ctrl, touch_cfg_t const * const 
 #endif
 
 #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
- #if (BSP_FEATURE_CTSU_VERSION == 2)
     if ((NULL == gp_touch_uart_instance) && (NULL != p_cfg->p_uart_instance))
     {
         gp_touch_uart_instance = (uart_instance_t *) p_cfg->p_uart_instance;
     }
     touch_tuning_uart_connect();
- #endif
 #endif
 
     gp_touch_isr_context = p_instance_ctrl;
@@ -702,6 +733,7 @@ fsp_err_t RM_TOUCH_ScanStart (touch_ctrl_t * const p_ctrl)
 {
     fsp_err_t               err             = FSP_SUCCESS;
     touch_instance_ctrl_t * p_instance_ctrl = (touch_instance_ctrl_t *) p_ctrl;
+    gp_touch_isr_context = p_instance_ctrl;
 
 #if (TOUCH_CFG_PARAM_CHECKING_ENABLE == 1)
     FSP_ASSERT(p_instance_ctrl);
@@ -784,12 +816,10 @@ fsp_err_t RM_TOUCH_DataGet (touch_ctrl_t * const p_ctrl,
 #endif
 
 #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
- #if (BSP_FEATURE_CTSU_VERSION == 2)
     if (true == p_instance_ctrl->serial_tuning_enable)
     {
         touch_serial_tuning(p_instance_ctrl);
     }
- #endif
 #endif
 
     /* get results from previous scan */
@@ -1361,9 +1391,7 @@ fsp_err_t RM_TOUCH_Close (touch_ctrl_t * const p_ctrl)
     touch_instance_ctrl_t * p_instance_ctrl = (touch_instance_ctrl_t *) p_ctrl;
     fsp_err_t               err             = FSP_SUCCESS;
 #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
- #if (BSP_FEATURE_CTSU_VERSION == 2)
     uint8_t num = 0;
- #endif
 #endif
 
     FSP_ASSERT(p_instance_ctrl);
@@ -1398,25 +1426,23 @@ fsp_err_t RM_TOUCH_Close (touch_ctrl_t * const p_ctrl)
 #endif
 
 #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
- #if (BSP_FEATURE_CTSU_VERSION == 2)
     if (0 != g_touch_uart_rx_num)
     {
-  #if (TOUCH_CFG_NUM_BUTTONS != 0)
+ #if (TOUCH_CFG_NUM_BUTTONS != 0)
         num = g_touch_button_index;
-  #endif
-  #if (TOUCH_CFG_NUM_SLIDERS != 0)
+ #endif
+ #if (TOUCH_CFG_NUM_SLIDERS != 0)
         num = (uint8_t) (num + g_touch_slider_index);
-  #endif
-  #if (TOUCH_CFG_NUM_WHEELS != 0)
+ #endif
+ #if (TOUCH_CFG_NUM_WHEELS != 0)
         num = (uint8_t) (num + g_touch_wheel_index);
-  #endif
+ #endif
         if (0 == num)
         {
             p_instance_ctrl->p_touch_cfg->p_uart_instance->p_api->close(gp_touch_uart_instance->p_ctrl);
             g_touch_uart_rx_num = 0;
         }
     }
- #endif
 #endif
 
     return err;
@@ -2264,8 +2290,7 @@ void touch_pad_decode (touch_pad_info_t * p_pinfo, uint8_t num_x, uint8_t num_y,
 
 #endif
 
-#if ((TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)) || ((TOUCH_CFG_UART_TUNING_SUPPORT == 1) && \
-    (BSP_FEATURE_CTSU_VERSION == 2)))
+#if ((TOUCH_CFG_MONITOR_ENABLE && (TOUCH_CFG_UART_MONITOR_SUPPORT == 1)) || TOUCH_CFG_UART_TUNING_SUPPORT == 1)
 
 /***********************************************************************************************************************
  * Function Name: user_uart_qe_callback
@@ -2298,14 +2323,12 @@ void touch_uart_callback (uart_callback_args_t * p_args)
  #endif
 
  #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
-  #if (BSP_FEATURE_CTSU_VERSION == 2)
     touch_instance_ctrl_t * p_instance_ctrl = gp_touch_isr_context;
     uint16_t                element_id;
     uint8_t               * port_adress_8;
     uint16_t              * port_adress_16;
     uint32_t              * port_adress_32;
     uint8_t                 write_byte;
-  #endif
  #endif
 
     if (NULL == gp_touch_uart_instance)
@@ -2342,7 +2365,6 @@ void touch_uart_callback (uart_callback_args_t * p_args)
             }
  #endif
  #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
-  #if (BSP_FEATURE_CTSU_VERSION == 2)
             case TOUCH_TUNING_COMMAND_TOP_NUM:
             {
                 g_touch_uart_rx_num = TOUCH_TUNING_RECIEVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM;
@@ -2351,7 +2373,6 @@ void touch_uart_callback (uart_callback_args_t * p_args)
                                                     g_touch_uart_rx_num);
                 break;
             }
-  #endif
  #endif
             default:
             {
@@ -2656,7 +2677,6 @@ void touch_uart_callback (uart_callback_args_t * p_args)
  #endif
 
  #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
-  #if (BSP_FEATURE_CTSU_VERSION == 2)
     if ((g_touch_uart_rx_num == (TOUCH_TUNING_RECIEVE_BUF_SIZE - TOUCH_TUNING_COMMAND_BUF_NUM)) &&
         (p_args->event == UART_EVENT_RX_COMPLETE))
     {
@@ -2700,7 +2720,9 @@ void touch_uart_callback (uart_callback_args_t * p_args)
             g_touch_tuning_tx_buf[2]              = 0x6;
             g_touch_tuning_tx_buf[3]              = 0x0;
             p_instance_ctrl->serial_tuning_enable = true;
-
+            ctsu_instance_ctrl_t * p_ctsu_instance_ctrl =
+                (ctsu_instance_ctrl_t *) p_instance_ctrl->p_ctsu_instance->p_ctrl;
+            p_ctsu_instance_ctrl->serial_tuning_enable = true;
             g_touch_tuning_mode = TOUCH_TUNING_MODE_START;
         }
         else if (g_touch_uart_rx_buf[1] == TOUCH_TUNING_COMMAND_STOP)
@@ -2710,6 +2732,9 @@ void touch_uart_callback (uart_callback_args_t * p_args)
             g_touch_tuning_tx_buf[3] = 0x0;
 
             p_instance_ctrl->serial_tuning_enable = false;
+            ctsu_instance_ctrl_t * p_ctsu_instance_ctrl =
+                (ctsu_instance_ctrl_t *) p_instance_ctrl->p_ctsu_instance->p_ctrl;
+            p_ctsu_instance_ctrl->serial_tuning_enable = false;
             g_touch_tuning_mode = TOUCH_TUNING_MODE_FINISH;
         }
         else if (g_touch_uart_rx_buf[1] == TOUCH_TUNING_COMMAND_VARIABLE_WRITE)
@@ -2720,85 +2745,85 @@ void touch_uart_callback (uart_callback_args_t * p_args)
 
             switch (g_touch_uart_rx_buf[5]) /* data type */
             {
-                case TOUCH_TUNIG_VARIABLE_MCU_GROUP:
+                case TOUCH_TUNING_VARIABLE_MCU_GROUP:
                 {
                     touch_tuning_get8((uint8_t *) &g_touch_tuning_mcu_group, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_PCLKB_FREQUENCY:
+                case TOUCH_TUNING_VARIABLE_PCLKB_FREQUENCY:
                 {
                     touch_tuning_get32((uint32_t *) &g_touch_tuning_pclkb_frequency, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TUNING_MODE:
+                case TOUCH_TUNING_VARIABLE_TUNING_MODE:
                 {
                     touch_tuning_get8((uint8_t *) &g_touch_tuning_mode, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_CTSU_STATE:
+                case TOUCH_TUNING_VARIABLE_CTSU_STATE:
                 {
                     touch_tuning_get8((uint8_t *) &g_touch_tuning_state, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_CTSU_SCAN_MODE:
+                case TOUCH_TUNING_VARIABLE_CTSU_SCAN_MODE:
                 {
                     touch_tuning_get8((uint8_t *) &g_touch_tuning_scan_mode, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TS_CHAC_MASK_BOTTOM:
+                case TOUCH_TUNING_VARIABLE_TS_CHAC_MASK_BOTTOM:
                 {
                     touch_tuning_get32(&g_touch_tuning_ts_chac_mask.mska, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TS_CHAC_MASK_TOP:
+                case TOUCH_TUNING_VARIABLE_TS_CHAC_MASK_TOP:
                 {
                     touch_tuning_get32(&g_touch_tuning_ts_chac_mask.mskb, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TS_CHTRC_MASK_BOTTOM:
+                case TOUCH_TUNING_VARIABLE_TS_CHTRC_MASK_BOTTOM:
                 {
                     touch_tuning_get32(&g_touch_tuning_ts_chtrc_mask.mska, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TS_CHTRC_MASK_TOP:
+                case TOUCH_TUNING_VARIABLE_TS_CHTRC_MASK_TOP:
                 {
                     touch_tuning_get32(&g_touch_tuning_ts_chtrc_mask.mskb, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_QE_TXVSEL:
+                case TOUCH_TUNING_VARIABLE_QE_TXVSEL:
                 {
                     touch_tuning_get8((uint8_t *) &g_touch_tuning_qe_txvsel, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_QE_ATUNE:
+                case TOUCH_TUNING_VARIABLE_QE_ATUNE:
                 {
                     touch_tuning_get8((uint8_t *) &g_touch_tuning_qe_atune, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_QE_POSEL:
+                case TOUCH_TUNING_VARIABLE_QE_POSEL:
                 {
                     touch_tuning_get8((uint8_t *) &g_touch_tuning_qe_posel, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_ERR_EVENT:
+                case TOUCH_TUNING_VARIABLE_ERR_EVENT:
                 {
                     touch_tuning_get8((uint8_t *) &g_touch_tuning_err_event, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_CTSU_ICO_DATA_PRI:
+                case TOUCH_TUNING_VARIABLE_CTSU_ICO_DATA_PRI:
                 {
                     element_id = g_touch_uart_rx_buf[6];
                     if (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode_save)
@@ -2815,10 +2840,13 @@ void touch_uart_callback (uart_callback_args_t * p_args)
                         {
                             touch_tuning_get16(&g_touch_tuning_ico_data[element_id * 2], 7);
                         }
+
+  #if (BSP_FEATURE_CTSU_VERSION == 2)
                         else if (TOUCH_TUNING_SCAN_MUTUAL_CFC == g_touch_tuning_scan_mode)
                         {
                             touch_tuning_get16(&g_touch_tuning_ico_data[element_id * 2], 7);
                         }
+  #endif
                         else
                         {
                         }
@@ -2827,40 +2855,76 @@ void touch_uart_callback (uart_callback_args_t * p_args)
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_CTSU_ICO_DATA_SND:
+                case TOUCH_TUNING_VARIABLE_CTSU_ICO_DATA_SND:
                 {
                     element_id = g_touch_uart_rx_buf[6];
                     touch_tuning_get16(&g_touch_tuning_ico_data[element_id * 2 + 1], 7);
                     break;
                 }
 
-   #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
-                case TOUCH_TUNIG_VARIABLE_CTSU_MUTUAL_DATA:
+  #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
+                case TOUCH_TUNING_VARIABLE_CTSU_MUTUAL_DATA:
                 {
                     element_id = g_touch_uart_rx_buf[6];
                     touch_tuning_get16(&g_touch_tuning_mutual_data[element_id], 7);
                     break;
                 }
-   #endif
+  #endif
 
-                case TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SO:
+  #if (BSP_FEATURE_CTSU_VERSION == 2)
+                case TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SO:
                 {
                     element_id = g_touch_uart_rx_buf[6];
                     touch_tuning_get16(&g_touch_tuning_element_cfgs[element_id].so, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SNUM:
+                case TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SNUM:
                 {
                     element_id = g_touch_uart_rx_buf[6];
                     touch_tuning_get8(&g_touch_tuning_element_cfgs[element_id].snum, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SDPA:
+                case TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SDPA:
                 {
                     element_id = g_touch_uart_rx_buf[6];
                     touch_tuning_get8(&g_touch_tuning_element_cfgs[element_id].sdpa, 7);
+                    break;
+                }
+  #endif
+
+  #if (BSP_FEATURE_CTSU_VERSION == 1)
+                case TOUCH_TUNING_VARIABLE_CTSU_WRITE_SSC:
+                {
+                    element_id = g_touch_uart_rx_buf[6];
+                    touch_tuning_get16(&g_touch_tuning_ctsu_write[element_id].ctsussc, 7);
+                    break;
+                }
+
+                case TOUCH_TUNING_VARIABLE_CTSU_WRITE_SO0:
+                {
+                    element_id = g_touch_uart_rx_buf[6];
+                    touch_tuning_get16(&g_touch_tuning_ctsu_write[element_id].ctsuso0, 7);
+                    break;
+                }
+
+                case TOUCH_TUNING_VARIABLE_CTSU_WRITE_SO1:
+                {
+                    element_id = g_touch_uart_rx_buf[6];
+                    touch_tuning_get16(&g_touch_tuning_ctsu_write[element_id].ctsuso1, 7);
+                    break;
+                }
+  #endif
+                case TOUCH_TUNING_VARIABLE_SELF_TARGET_VALUE:
+                {
+                    touch_tuning_get16(&g_touch_tuning_self_target_value, 7);
+                    break;
+                }
+
+                case TOUCH_TUNING_VARIABLE_MUTUAL_TARGET_VALUE:
+                {
+                    touch_tuning_get16(&g_touch_tuning_mutual_target_value, 7);
                     break;
                 }
 
@@ -2882,100 +2946,100 @@ void touch_uart_callback (uart_callback_args_t * p_args)
 
             switch (g_touch_uart_rx_buf[5]) /* data type */
             {
-                case TOUCH_TUNIG_VARIABLE_MCU_GROUP:
+                case TOUCH_TUNING_VARIABLE_MCU_GROUP:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send8(g_touch_tuning_mcu_group, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_PCLKB_FREQUENCY:
+                case TOUCH_TUNING_VARIABLE_PCLKB_FREQUENCY:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send32(g_touch_tuning_pclkb_frequency, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TUNING_MODE:
+                case TOUCH_TUNING_VARIABLE_TUNING_MODE:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send8((uint8_t) g_touch_tuning_mode, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_CTSU_STATE:
+                case TOUCH_TUNING_VARIABLE_CTSU_STATE:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send8((uint8_t) g_touch_tuning_state, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_CTSU_SCAN_MODE:
+                case TOUCH_TUNING_VARIABLE_CTSU_SCAN_MODE:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send8((uint8_t) g_touch_tuning_scan_mode, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TS_CHAC_MASK_BOTTOM:
+                case TOUCH_TUNING_VARIABLE_TS_CHAC_MASK_BOTTOM:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send32(g_touch_tuning_ts_chac_mask.mska, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TS_CHAC_MASK_TOP:
+                case TOUCH_TUNING_VARIABLE_TS_CHAC_MASK_TOP:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send32(g_touch_tuning_ts_chac_mask.mskb, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TS_CHTRC_MASK_BOTTOM:
+                case TOUCH_TUNING_VARIABLE_TS_CHTRC_MASK_BOTTOM:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
-                    touch_tuning_send32(g_touch_tuning_ts_chac_mask.mskb, 7);
+                    touch_tuning_send32(g_touch_tuning_ts_chtrc_mask.mska, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_TS_CHTRC_MASK_TOP:
+                case TOUCH_TUNING_VARIABLE_TS_CHTRC_MASK_TOP:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send32(g_touch_tuning_ts_chtrc_mask.mskb, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_QE_TXVSEL:
+                case TOUCH_TUNING_VARIABLE_QE_TXVSEL:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send8(g_touch_tuning_qe_txvsel, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_QE_ATUNE:
+                case TOUCH_TUNING_VARIABLE_QE_ATUNE:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send8((uint8_t) g_touch_tuning_qe_atune, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_QE_POSEL:
+                case TOUCH_TUNING_VARIABLE_QE_POSEL:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send8((uint8_t) g_touch_tuning_qe_posel, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_ERR_EVENT:
+                case TOUCH_TUNING_VARIABLE_ERR_EVENT:
                 {
                     g_touch_tuning_tx_buf[6] = 0;
                     touch_tuning_send8((uint8_t) g_touch_tuning_err_event, 7);
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_CTSU_ICO_DATA_PRI:
+                case TOUCH_TUNING_VARIABLE_CTSU_ICO_DATA_PRI:
                 {
-                    g_touch_tuning_tx_buf[5] = TOUCH_TUNIG_VARIABLE_CTSU_ICO_DATA_PRI;
+                    g_touch_tuning_tx_buf[5] = TOUCH_TUNING_VARIABLE_CTSU_ICO_DATA_PRI;
                     element_id               = g_touch_uart_rx_buf[6];
                     if (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode_save)
                     {
@@ -2994,11 +3058,14 @@ void touch_uart_callback (uart_callback_args_t * p_args)
                             g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
                             touch_tuning_send16(g_touch_tuning_ico_data[element_id * 2], 7);
                         }
+
+  #if (BSP_FEATURE_CTSU_VERSION == 2)
                         else if (TOUCH_TUNING_SCAN_MUTUAL_CFC == g_touch_tuning_scan_mode)
                         {
                             g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
                             touch_tuning_send16(g_touch_tuning_ico_data[element_id * 2], 7);
                         }
+  #endif
                         else
                         {
                         }
@@ -3007,7 +3074,7 @@ void touch_uart_callback (uart_callback_args_t * p_args)
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_CTSU_ICO_DATA_SND:
+                case TOUCH_TUNING_VARIABLE_CTSU_ICO_DATA_SND:
                 {
                     element_id               = g_touch_uart_rx_buf[6];
                     g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
@@ -3015,17 +3082,18 @@ void touch_uart_callback (uart_callback_args_t * p_args)
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_CTSU_MUTUAL_DATA:
+                case TOUCH_TUNING_VARIABLE_CTSU_MUTUAL_DATA:
                 {
                     element_id               = g_touch_uart_rx_buf[6];
                     g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
-   #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
+  #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
                     touch_tuning_send32(g_touch_tuning_mutual_data[element_id], 7);
-   #endif
+  #endif
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SO:
+  #if (BSP_FEATURE_CTSU_VERSION == 2)
+                case TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SO:
                 {
                     element_id               = g_touch_uart_rx_buf[6];
                     g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
@@ -3033,7 +3101,7 @@ void touch_uart_callback (uart_callback_args_t * p_args)
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SNUM:
+                case TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SNUM:
                 {
                     element_id               = g_touch_uart_rx_buf[6];
                     g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
@@ -3041,13 +3109,54 @@ void touch_uart_callback (uart_callback_args_t * p_args)
                     break;
                 }
 
-                case TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SDPA:
+                case TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SDPA:
                 {
-                    g_touch_tuning_tx_buf[5] = TOUCH_TUNIG_VARIABLE_ELEMENT_CFGS_SDPA;
+                    g_touch_tuning_tx_buf[5] = TOUCH_TUNING_VARIABLE_ELEMENT_CFGS_SDPA;
                     element_id               = g_touch_uart_rx_buf[6];
 
                     g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
                     touch_tuning_send8(g_touch_tuning_element_cfgs[element_id].sdpa, 7);
+                    break;
+                }
+  #endif
+  #if (BSP_FEATURE_CTSU_VERSION == 1)
+                case TOUCH_TUNING_VARIABLE_CTSU_WRITE_SSC:
+                {
+                    element_id               = g_touch_uart_rx_buf[6];
+                    g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
+                    touch_tuning_send16(g_touch_tuning_ctsu_write[element_id].ctsussc, 7);
+                    break;
+                }
+
+                case TOUCH_TUNING_VARIABLE_CTSU_WRITE_SO0:
+                {
+                    element_id               = g_touch_uart_rx_buf[6];
+                    g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
+                    touch_tuning_send16(g_touch_tuning_ctsu_write[element_id].ctsuso0, 7);
+                    break;
+                }
+
+                case TOUCH_TUNING_VARIABLE_CTSU_WRITE_SO1:
+                {
+                    element_id               = g_touch_uart_rx_buf[6];
+                    g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
+                    touch_tuning_send16(g_touch_tuning_ctsu_write[element_id].ctsuso1, 7);
+                    break;
+                }
+  #endif
+                case TOUCH_TUNING_VARIABLE_SELF_TARGET_VALUE:
+                {
+                    element_id               = g_touch_uart_rx_buf[6];
+                    g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
+                    touch_tuning_send16(g_touch_tuning_self_target_value, 7);
+                    break;
+                }
+
+                case TOUCH_TUNING_VARIABLE_MUTUAL_TARGET_VALUE:
+                {
+                    element_id               = g_touch_uart_rx_buf[6];
+                    g_touch_tuning_tx_buf[6] = (uint8_t) element_id;
+                    touch_tuning_send16(g_touch_tuning_mutual_target_value, 7);
                     break;
                 }
 
@@ -3155,7 +3264,6 @@ void touch_uart_callback (uart_callback_args_t * p_args)
 
         return;
     }
-  #endif
  #endif
 
     /* End user code. Do not edit comment generated here */
@@ -3164,7 +3272,6 @@ void touch_uart_callback (uart_callback_args_t * p_args)
 #endif
 
 #if (TOUCH_CFG_UART_TUNING_SUPPORT == 1)
- #if (BSP_FEATURE_CTSU_VERSION == 2)
 void touch_serial_tuning (touch_instance_ctrl_t * const p_instance_ctrl)
 {
     /* init tuning state */
@@ -3193,6 +3300,9 @@ void touch_serial_tuning (touch_instance_ctrl_t * const p_instance_ctrl)
                         if (1 == g_touch_tuning_phase_run)
                         {
                             g_touch_tuning_mode_save = g_touch_tuning_mode;
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+                            touch_tuning_pclkb_get(&g_touch_tuning_pclkb_frequency);
+ #endif
                             g_touch_tuning_phase_run = 0;
                             g_touch_tuning_state     = TOUCH_TUNING_STATE_COMPLETE;
                         }
@@ -3392,10 +3502,22 @@ void touch_serial_tuning (touch_instance_ctrl_t * const p_instance_ctrl)
 void touch_tuning_qe_get_value (touch_instance_ctrl_t * const p_instance_ctrl)
 {
     uint16_t               i;
+    uint16_t               num_elements;
     ctsu_instance_ctrl_t * p_ctsu_instance_ctrl = (ctsu_instance_ctrl_t *) p_instance_ctrl->p_ctsu_instance->p_ctrl;
 
-    for (i = 0; i < p_ctsu_instance_ctrl->num_elements; i++)
+    num_elements = p_ctsu_instance_ctrl->num_elements;
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+    if ((TOUCH_TUNING_SCAN_MUTUAL == g_touch_tuning_scan_mode) &&
+        (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode))
     {
+        num_elements = (uint16_t) (num_elements * 2);
+    }
+ #endif
+
+    for (i = 0; i < num_elements; i++)
+    {
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
+
         /* CTSU measurement condition data setting */
         g_touch_tuning_element_cfgs[i].so =
             p_ctsu_instance_ctrl->p_ctsuwr[i * CTSU_CFG_NUM_SUMULTI].ctsuso & TOUCH_UART_CTSUSO_MASK;
@@ -3404,6 +3526,12 @@ void touch_tuning_qe_get_value (touch_instance_ctrl_t * const p_instance_ctrl)
         g_touch_tuning_element_cfgs[i].sdpa =
             (uint8_t) ((p_ctsu_instance_ctrl->p_ctsuwr[i * CTSU_CFG_NUM_SUMULTI].ctsuso >> 24) &
                        TOUCH_UART_CTSUSDPA_MASK);
+ #endif
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+        g_touch_tuning_ctsu_write[i].ctsussc = p_ctsu_instance_ctrl->p_ctsuwr[i].ctsussc;
+        g_touch_tuning_ctsu_write[i].ctsuso0 = p_ctsu_instance_ctrl->p_ctsuwr[i].ctsuso0;
+        g_touch_tuning_ctsu_write[i].ctsuso1 = p_ctsu_instance_ctrl->p_ctsuwr[i].ctsuso1;
+ #endif
     }
 }
 
@@ -3436,24 +3564,62 @@ void touch_tuning_initialize (touch_instance_ctrl_t * const p_instance_ctrl)
  ***********************************************************************************************************************/
 void touch_tuning_qe_get_cfg (touch_instance_ctrl_t * const p_instance_ctrl)
 {
-    uint16_t               i;
-    uint8_t                loop;
+    uint16_t i;
+    uint16_t num_elements;
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
+    uint8_t loop;
+ #endif
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+    uint16_t ctsu_sdpa;
+ #endif
     ctsu_instance_ctrl_t * p_ctsu_instance_ctrl = (ctsu_instance_ctrl_t *) p_instance_ctrl->p_ctsu_instance->p_ctrl;
 
-    p_ctsu_instance_ctrl->txvsel  = (ctsu_txvsel_t) (g_touch_tuning_qe_txvsel & 0x01);
+    p_ctsu_instance_ctrl->txvsel = (ctsu_txvsel_t) (g_touch_tuning_qe_txvsel & 0x01);
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
     p_ctsu_instance_ctrl->txvsel2 = (ctsu_txvsel2_t) ((g_touch_tuning_qe_txvsel >> 1) & 0x01);
+ #endif
+    num_elements = p_ctsu_instance_ctrl->num_elements;
 
-    for (i = 0; i < p_ctsu_instance_ctrl->num_elements; i++)
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+    if ((TOUCH_TUNING_SCAN_MUTUAL == g_touch_tuning_scan_mode) &&
+        (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode))
+    {
+        num_elements = (uint16_t) (num_elements * 2);
+    }
+ #endif
+
+    for (i = 0; i < num_elements; i++)
     {
         if (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode)
         {
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
             g_touch_tuning_element_cfgs[i].snum = 0x07;
             g_touch_tuning_element_cfgs[i].sdpa = 0x1F;
             g_touch_tuning_element_cfgs[i].so   = 0x00;
+ #endif
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+
+            /* Get SDPA value */
+            touch_tuning_pclkb_get(&g_touch_tuning_pclkb_frequency);
+            ctsu_sdpa = (uint16_t) ((g_touch_tuning_pclkb_frequency / TOUCH_TUNING_PCLKB_FREQ_MHZ) - 1);
+
+            /* CTSU measurement condition data setting */
+            g_touch_tuning_ctsu_write[i].ctsussc = CTSU_SSDIV_0500 << 8;
+            g_touch_tuning_ctsu_write[i].ctsuso0 = 0x0000;
+            g_touch_tuning_ctsu_write[i].ctsuso1 =
+                (uint16_t) ((TOUCH_TUNING_ICOG_RECOMMEND << 13) | (ctsu_sdpa << 8) | TOUCH_TUNING_RICOA_RECOMMEND);
+ #endif
         }
         else if (TOUCH_TUNING_MODE_MEASURE_PHASE2 == g_touch_tuning_mode)
         {
             *(p_ctsu_instance_ctrl->p_tuning_count + i) = 0;
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+            *(p_ctsu_instance_ctrl->p_tuning_diff + i) = 0;
+ #endif
+ #if defined(CTSU_CFG_TARGET_VALUE_QE_SUPPORT)
+            p_ctsu_instance_ctrl->tuning_self_target_value   = g_touch_tuning_self_target_value;
+            p_ctsu_instance_ctrl->tuning_mutual_target_value = g_touch_tuning_mutual_target_value;
+ #endif
         }
         else if (TOUCH_TUNING_MODE_MEASURE_PHASE3 == g_touch_tuning_mode)
         {
@@ -3462,6 +3628,7 @@ void touch_tuning_qe_get_cfg (touch_instance_ctrl_t * const p_instance_ctrl)
         {
         }
 
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
         for (loop = 0; loop < CTSU_CFG_NUM_SUMULTI; loop++)
         {
             p_ctsu_instance_ctrl->p_ctsuwr[i * CTSU_CFG_NUM_SUMULTI + loop].ctsuso =
@@ -3469,6 +3636,12 @@ void touch_tuning_qe_get_cfg (touch_instance_ctrl_t * const p_instance_ctrl)
                 ((uint32_t) g_touch_tuning_element_cfgs[i].snum << 10) |
                 ((uint32_t) g_touch_tuning_element_cfgs[i].so);
         }
+ #endif
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+        p_ctsu_instance_ctrl->p_ctsuwr[i].ctsussc = g_touch_tuning_ctsu_write[i].ctsussc;
+        p_ctsu_instance_ctrl->p_ctsuwr[i].ctsuso0 = g_touch_tuning_ctsu_write[i].ctsuso0;
+        p_ctsu_instance_ctrl->p_ctsuwr[i].ctsuso1 = g_touch_tuning_ctsu_write[i].ctsuso1 | TOUCH_TUNING_RICOA_RECOMMEND;
+ #endif
     }
 
     /* Moving average reset */
@@ -3497,16 +3670,32 @@ void touch_tuning_scan_mode_select (touch_instance_ctrl_t * const p_instance_ctr
     {
         g_touch_tuning_md        = CTSU_MODE_SELF_MULTI_SCAN;
         p_ctsu_instance_ctrl->md = CTSU_MODE_SELF_MULTI_SCAN;
+
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+        if (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode)
+        {
+            g_touch_tuning_qe_atune = CTSU_ATUNE1_HIGH;
+        }
+        else
+        {
+            g_touch_tuning_qe_atune = CTSU_ATUNE1_NORMAL;
+        }
+ #endif
     }
     else if (TOUCH_TUNING_SCAN_MUTUAL == g_touch_tuning_scan_mode)
     {
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+        g_touch_tuning_qe_atune = CTSU_ATUNE1_HIGH;
+ #endif
         if (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode)
         {
             g_touch_tuning_md        = CTSU_MODE_SELF_MULTI_SCAN;
             p_ctsu_instance_ctrl->md = CTSU_MODE_MUTUAL_FULL_SCAN;
-            R_CTSU->CTSUCRA_b.CSW    = 1;
-            R_CTSU->CTSUCRA_b.PON    = 1;
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
+            R_CTSU->CTSUCRA_b.CSW = 1;
+            R_CTSU->CTSUCRA_b.PON = 1;
             R_BSP_SoftwareDelay(30, BSP_DELAY_UNITS_MICROSECONDS);
+ #endif
         }
         else
         {
@@ -3514,7 +3703,9 @@ void touch_tuning_scan_mode_select (touch_instance_ctrl_t * const p_instance_ctr
             p_ctsu_instance_ctrl->md = CTSU_MODE_MUTUAL_FULL_SCAN;
         }
     }
-    else                               /*CFC */
+
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
+    else                               /* CFC */
     {
         if (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode)
         {
@@ -3527,12 +3718,23 @@ void touch_tuning_scan_mode_select (touch_instance_ctrl_t * const p_instance_ctr
             p_ctsu_instance_ctrl->md = CTSU_MODE_MUTUAL_CFC_SCAN;
         }
     }
+ #else
+    else
+    {
+    }
+ #endif
 
-    /* atune register */
     if (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode)
     {
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
         g_touch_tuning_qe_atune = CTSU_ATUNE12_80UA;
+ #endif
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+        g_touch_tuning_qe_atune = CTSU_ATUNE1_HIGH;
+ #endif
     }
+
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
 
     /* CFCON register */
     if ((TOUCH_TUNING_SCAN_MUTUAL_CFC == g_touch_tuning_scan_mode) &&
@@ -3555,6 +3757,7 @@ void touch_tuning_scan_mode_select (touch_instance_ctrl_t * const p_instance_ctr
         R_CTSU->CTSUCALIB_b.CFCRDMD = 0;
         R_CTSU->CTSUCRA_b.CFCON     = 0;
     }
+ #endif
 }
 
 void touch_tuning_scan_register_setting (touch_instance_ctrl_t * const p_instance_ctrl)
@@ -3564,10 +3767,13 @@ void touch_tuning_scan_register_setting (touch_instance_ctrl_t * const p_instanc
     p_ctsu_instance_ctrl->ctsucr1  = (uint8_t) ((g_touch_tuning_qe_atune & 0x01) << 3);
     p_ctsu_instance_ctrl->ctsucr1 |= (uint8_t) (g_touch_tuning_md << 6);
 
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
     p_ctsu_instance_ctrl->ctsucr2  = (uint8_t) (g_touch_tuning_qe_atune & 0x02);
     p_ctsu_instance_ctrl->ctsucr2 |= (uint8_t) ((g_touch_tuning_md & 0x04) >> 2);
     p_ctsu_instance_ctrl->ctsucr2 |= (uint8_t) (g_touch_tuning_qe_posel << 4);
+ #endif
 
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
     if (CTSU_ATUNE12_80UA == g_touch_tuning_qe_atune)
     {
         p_ctsu_instance_ctrl->range = CTSU_RANGE_80UA;
@@ -3587,6 +3793,7 @@ void touch_tuning_scan_register_setting (touch_instance_ctrl_t * const p_instanc
     else
     {
     }
+ #endif
 }
 
 /***********************************************************************************************************************
@@ -3613,6 +3820,13 @@ void touch_tuning_ts_setup (touch_instance_ctrl_t * const p_instance_ctrl)
             g_touch_tuning_ts_chtrc_mask.mska = 0;
             g_touch_tuning_ts_chtrc_mask.mskb = 0;
         }
+        else
+        {
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+            g_touch_tuning_ts_chtrc_mask.mska = 0;
+            g_touch_tuning_ts_chtrc_mask.mskb = 0;
+ #endif
+        }
 
         /* Excludes active shield from CHAC & CHACB */
         element_maska = g_touch_tuning_ts_chac_mask.mska - g_touch_tuning_ts_chtrc_mask.mska;
@@ -3629,6 +3843,17 @@ void touch_tuning_ts_setup (touch_instance_ctrl_t * const p_instance_ctrl)
             /* Get the number of measurable elements */
             touch_tuning_count_element(g_touch_tuning_ts_chac_mask.mska, &p_ctsu_instance_ctrl->num_elements);
             touch_tuning_count_element(g_touch_tuning_ts_chac_mask.mskb, &p_ctsu_instance_ctrl->num_elements);
+
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+            if (0 == p_ctsu_instance_ctrl->num_elements % 2)
+            {
+                p_ctsu_instance_ctrl->num_elements = p_ctsu_instance_ctrl->num_elements / 2;
+            }
+            else
+            {
+                p_ctsu_instance_ctrl->num_elements = (uint16_t) (p_ctsu_instance_ctrl->num_elements / 2 + 1);
+            }
+ #endif
 
             g_touch_tuning_ts_chtrc_mask.mska = 0;
             g_touch_tuning_ts_chtrc_mask.mskb = 0;
@@ -3651,6 +3876,8 @@ void touch_tuning_ts_setup (touch_instance_ctrl_t * const p_instance_ctrl)
             p_ctsu_instance_ctrl->num_elements = (uint16_t) (rx_element * tx_element);
         }
     }
+
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
     else if (TOUCH_TUNING_SCAN_MUTUAL_CFC == g_touch_tuning_scan_mode)
     {
         if (TOUCH_TUNING_MODE_MEASURE_PHASE1 == g_touch_tuning_mode)
@@ -3683,6 +3910,7 @@ void touch_tuning_ts_setup (touch_instance_ctrl_t * const p_instance_ctrl)
             p_ctsu_instance_ctrl->num_elements = (uint16_t) (rx_element * tx_element);
         }
     }
+ #endif
     else
     {
     }
@@ -3733,7 +3961,7 @@ void touch_tuning_uart_connect (void)
 void touch_tuning_open (touch_instance_ctrl_t * const p_instance_ctrl)
 {
     ctsu_instance_ctrl_t * p_ctsu_instance_ctrl = (ctsu_instance_ctrl_t *) p_instance_ctrl->p_ctsu_instance->p_ctrl;
-  #if (CTSU_CFG_NUM_SELF_ELEMENTS != 0)
+ #if (CTSU_CFG_NUM_SELF_ELEMENTS != 0)
     if (p_ctsu_instance_ctrl->md == CTSU_MODE_SELF_MULTI_SCAN)
     {
         p_ctsu_instance_ctrl->p_self_raw =
@@ -3746,9 +3974,9 @@ void touch_tuning_open (touch_instance_ctrl_t * const p_instance_ctrl)
             (p_ctsu_instance_ctrl->p_self_corr -
              ((p_ctsu_instance_ctrl->self_elem_index - p_ctsu_instance_ctrl->num_elements) * CTSU_CFG_NUM_SUMULTI));
     }
-  #endif
+ #endif
 
-  #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
+ #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
     if (p_ctsu_instance_ctrl->md == CTSU_MODE_MUTUAL_FULL_SCAN)
     {
         p_ctsu_instance_ctrl->p_mutual_raw =
@@ -3768,7 +3996,7 @@ void touch_tuning_open (touch_instance_ctrl_t * const p_instance_ctrl)
             (p_ctsu_instance_ctrl->p_mutual_snd_data -
              ((p_ctsu_instance_ctrl->mutual_elem_index - p_ctsu_instance_ctrl->num_elements)));
     }
-  #endif
+ #endif
     p_ctsu_instance_ctrl->p_tuning_count =
         (p_ctsu_instance_ctrl->p_tuning_count -
          (p_ctsu_instance_ctrl->ctsu_elem_index - p_ctsu_instance_ctrl->num_elements));
@@ -3809,10 +4037,13 @@ void touch_tuning_dataget (touch_instance_ctrl_t * const p_instance_ctrl)
                     g_touch_tuning_ico_data[i * 2]     = p_ctsu_instance_ctrl->p_mutual_pri_corr[i];
                     g_touch_tuning_ico_data[i * 2 + 1] = p_ctsu_instance_ctrl->p_mutual_snd_corr[i];
                 }
+
+ #if (BSP_FEATURE_CTSU_VERSION == 2)
                 else if (TOUCH_TUNING_SCAN_MUTUAL_CFC == g_touch_tuning_scan_mode)
                 {
                     g_touch_tuning_ico_data[i] = p_ctsu_instance_ctrl->p_mutual_raw[i];
                 }
+ #endif
                 else
                 {
                 }
@@ -3832,7 +4063,7 @@ void touch_tuning_dataget (touch_instance_ctrl_t * const p_instance_ctrl)
         }
         else if (TOUCH_TUNING_MODE_MEASURE_PHASE3 == g_touch_tuning_mode)
         {
-  #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
+ #if (CTSU_CFG_NUM_MUTUAL_ELEMENTS != 0)
             if (TOUCH_TUNING_SCAN_MUTUAL == g_touch_tuning_scan_mode)
             {
                 for (i = 0; i < CTSU_CFG_NUM_MUTUAL_ELEMENTS; i++)
@@ -3841,6 +4072,8 @@ void touch_tuning_dataget (touch_instance_ctrl_t * const p_instance_ctrl)
                         (uint16_t) (g_touch_tuning_ico_data[i * 2 + 1] - g_touch_tuning_ico_data[i * 2]);
                 }
             }
+
+  #if (BSP_FEATURE_CTSU_VERSION == 2)
             else if (TOUCH_TUNING_SCAN_MUTUAL_CFC == g_touch_tuning_scan_mode)
             {
                 for (i = 0; i < CTSU_CFG_NUM_MUTUAL_ELEMENTS; i++)
@@ -3849,10 +4082,11 @@ void touch_tuning_dataget (touch_instance_ctrl_t * const p_instance_ctrl)
                         (uint16_t) (g_touch_tuning_ico_data[i * 2 + 1] - g_touch_tuning_ico_data[i * 2]);
                 }
             }
+  #endif
             else
             {
             }
-  #endif
+ #endif
         }
         else
         {
@@ -3914,5 +4148,22 @@ void touch_tuning_send8 (uint8_t value, uint16_t index)
     g_touch_tuning_tx_buf[index + 3] = 0;
 }
 
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
+void touch_tuning_pclkb_get (volatile uint32_t * pclkb_frequency)
+{
+    if (TOUCH_TUNING_PCLKB_FREQ_32MHZ >= *pclkb_frequency)
+    {
+    }
+    else if ((TOUCH_TUNING_PCLKB_FREQ_32MHZ < *pclkb_frequency) && (TOUCH_TUNING_PCLKB_FREQ_64MHZ >= *pclkb_frequency))
+    {
+        *pclkb_frequency = (uint32_t) (*pclkb_frequency / 2);
+    }
+    else
+    {
+        *pclkb_frequency = (uint32_t) (*pclkb_frequency / 4);
+    }
+}
+
  #endif
+
 #endif

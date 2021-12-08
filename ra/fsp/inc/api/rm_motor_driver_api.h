@@ -64,6 +64,14 @@ typedef enum e_motor_driver_event
     MOTOR_DRIVER_EVENT_BACKWARD,       ///< Event after Motor Driver Process (after PWM duty setting)
 } motor_driver_event_t;
 
+/** Selection of shunt type */
+typedef enum e_motor_driver_shunt_type
+{
+    MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT = 1, ///< Only use U phase current
+    MOTOR_DRIVER_SHUNT_TYPE_2_SHUNT,     ///< Use U and W phase current
+    MOTOR_DRIVER_SHUNT_TYPE_3_SHUNT      ///< Use all phase current
+} motor_driver_shunt_type_t;
+
 /** Callback function parameter data */
 typedef struct st_motor_driver_callback_args
 {
@@ -75,6 +83,7 @@ typedef struct st_motor_driver_callback_args
 typedef struct st_motor_driver_current_get
 {
     float iu;                          ///< U phase current [A]
+    float iv;                          ///< V phase current [A]
     float iw;                          ///< W phase current [A]
     float vdc;                         ///< Main Line Voltage [V]
     float va_max;                      ///< maximum magnitude of voltage vector
@@ -92,8 +101,14 @@ typedef struct st_motor_driver_cfg
     /* ADC Module */
     adc_instance_t const * p_adc_instance;
     adc_channel_t          iu_ad_ch;   ///< A/D Channel for U Phase Current
+    adc_channel_t          iv_ad_ch;   ///< A/D Channel for V Phase Current
     adc_channel_t          iw_ad_ch;   ///< A/D Channel for W Phase Current
     adc_channel_t          vdc_ad_ch;  ///< A/D Channel for Main Line Voltage
+
+    adc_instance_t const * p_adc2_instance;
+
+    /* Shunt Type */
+    motor_driver_shunt_type_t shunt;   ///< Selection of shunt type
 
     /* PWM Output Module (GPT THREE PHASE) */
     three_phase_instance_t const * p_three_phase_instance;

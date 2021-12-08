@@ -78,6 +78,9 @@
 #define BSP_FEATURE_ADC_VALID_UNIT_MASK                   (1U)
 #define BSP_FEATURE_ADC_HAS_ADBUF                         (0U)
 
+#define BSP_FEATURE_ADC_B_TSN_CALIBRATION32_MASK          (0U)
+#define BSP_FEATURE_ADC_B_TSN_SLOPE                       (0U)
+
 #define BSP_FEATURE_AGT_VALID_CHANNEL_MASK                (0x03)
 #define BSP_FEATURE_AGT_MAX_CHANNEL_NUM                   (1)
 #define BSP_FEATURE_AGT_HAS_AGTW                          (0U)
@@ -86,6 +89,7 @@
 #define BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM           (1U)
 #define BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER             (0)
 #define BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE             (0)
+#define BSP_FEATURE_BSP_HAS_GPT_CLOCK                     (0)
 #define BSP_FEATURE_BSP_HAS_OCTASPI_CLOCK                 (0U)
 #define BSP_FEATURE_BSP_HAS_CANFD_CLOCK                   (0) // Feature not available on this MCU
 #define BSP_FEATURE_BSP_HAS_SCE5                          (1)
@@ -123,6 +127,7 @@
 #define BSP_FEATURE_CAN_NUM_CHANNELS                      (1U)
 
 #define BSP_FEATURE_CANFD_NUM_CHANNELS                    (0U) // Feature not available on this MCU
+#define BSP_FEATURE_CANFD_LITE                            (0U)
 
 #define BSP_FEATURE_CGC_HAS_BCLK                          (0U) // This MCU does not have a BCLK
 #define BSP_FEATURE_CGC_HAS_FCLK                          (1U)
@@ -137,6 +142,7 @@
 #define BSP_FEATURE_CGC_HAS_PCLKD                         (1U)
 #define BSP_FEATURE_CGC_HAS_PLL                           (1U)
 #define BSP_FEATURE_CGC_HAS_PLL2                          (0U) // On the RA6M4 there is another PLL that can be used as a clock source for USB and OCTASPI.
+#define BSP_FEATURE_CGC_HAS_SOSC                          (1U)
 #define BSP_FEATURE_CGC_HAS_SRAMPRCR2                     (0U) // On the RA6M4 there is another register to enable write access for SRAMWTSC.
 #define BSP_FEATURE_CGC_HAS_SRAMWTSC                      (0U)
 #define BSP_FEATURE_CGC_HOCOSF_BEFORE_OPCCR               (1U)
@@ -177,8 +183,12 @@
 
 #define BSP_FEATURE_DAC_HAS_CHARGEPUMP                    (0U)
 #define BSP_FEATURE_DAC_HAS_DAVREFCR                      (1U)
+#define BSP_FEATURE_DAC_HAS_DA_AD_SYNCHRONIZE             (1U)
 #define BSP_FEATURE_DAC_HAS_OUTPUT_AMPLIFIER              (0U)
+#define BSP_FEATURE_DAC_HAS_INTERNAL_OUTPUT               (0U)
 #define BSP_FEATURE_DAC_MAX_CHANNELS                      (1U)
+
+#define BSP_FEATURE_DOC_VERSION                           (1U)
 
 #define BSP_FEATURE_DMAC_MAX_CHANNEL                      (4U)
 #define BSP_FEATURE_DMAC_HAS_REPEAT_BLOCK_MODE            (0U)
@@ -186,6 +196,7 @@
 #define BSP_FEATURE_DWT_CYCCNT                            (1U)          // RA4M1 has Data Watchpoint Cycle Count Register
 
 #define BSP_FEATURE_ELC_PERIPHERAL_MASK                   (0x0007D3FFU) // Positions of event link set registers (ELSRs) available on this MCU
+#define BSP_FEATURE_ELC_VERSION                           (1U)
 
 #define BSP_FEATURE_ETHER_FIFO_DEPTH                      (0)           // Feature not available on this MCU
 #define BSP_FEATURE_ETHER_MAX_CHANNELS                    (0)           // Feature not available on this MCU
@@ -217,6 +228,14 @@
 
 #define BSP_FEATURE_GPT_32BIT_CHANNEL_MASK                (0x3)
 #define BSP_FEATURE_GPT_VALID_CHANNEL_MASK                (0xFF)
+#define BSP_FEATURE_GPT_EVENT_COUNT_CHANNEL_MASK          (BSP_FEATURE_GPT_VALID_CHANNEL_MASK)
+#define BSP_FEATURE_GPT_HAS_GTCLKCR                       (0U)
+#define BSP_FEATURE_GPT_ODC_VALID_CHANNEL_MASK            (0U) // Feature not available on this MCU
+#define BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN               (0U) // Feature not available on this MCU
+#define BSP_FEATURE_GPT_ODC_FREQ_MAX                      (0U) // Feature not available on this MCU
+#define BSP_FEATURE_GPT_ODC_FREQ_MIN                      (0U) // Feature not available on this MCU
+#define BSP_FEATURE_GPT_CLOCK_DIVIDER_STEP_SIZE           (4U)
+#define BSP_FEATURE_GPT_CLOCK_DIVIDER_VALUE_7_9_VALID     (0U)
 
 #define BSP_FEATURE_ICU_HAS_WUPEN1                        (0U)
 #define BSP_FEATURE_ICU_IRQ_CHANNELS_MASK                 (0xDFFFU)
@@ -225,12 +244,15 @@
 
 #define BSP_FEATURE_IIC_FAST_MODE_PLUS                    (0U)
 #define BSP_FEATURE_IIC_VALID_CHANNEL_MASK                (0x07)
+#define BSP_FEATURE_IIC_VERSION                           (1U)
+#define BSP_FEATURE_BSP_HAS_IIC_CLOCK                     (0U)
+#define BSP_FEATURE_IIC_BUS_FREE_TIME_MULTIPLIER          (0U)
 
 #define BSP_FEATURE_I3C_NUM_CHANNELS                      (0U) // Feature not available on this MCU
 #define BSP_FEATURE_I3C_MAX_DEV_COUNT                     (0U) // Feature not available on this MCU
 #define BSP_FEATURE_I3C_NTDTBP0_DEPTH                     (0U) // Feature not available on this MCU
 
-#define BSP_FEATURE_IOPORT_ELC_PORTS                      (4)
+#define BSP_FEATURE_IOPORT_ELC_PORTS                      (0x001EU)
 #define BSP_FEATURE_IOPORT_HAS_ETHERNET                   (0U)
 
 #define BSP_FEATURE_LPM_CHANGE_MSTP_ARRAY                 (0) // Feature not available on this MCU
@@ -254,6 +276,8 @@
 #define BSP_FEATURE_LVD_MONITOR_2_LOW_THRESHOLD           (LVD_THRESHOLD_MONITOR_2_LEVEL_3_84V) // 3.84V
 #define BSP_FEATURE_LVD_STABILIZATION_TIME_US             (300U)                                // Time in microseconds required for LVD to stabilize
 
+#define BSP_FEATURE_IOPORT_VERSION                        (1U)
+
 #define BSP_FEATURE_OPAMP_BASE_ADDRESS                    (1U)
 #define BSP_FEATURE_OPAMP_HAS_MIDDLE_SPEED                (0U)
 #define BSP_FEATURE_OPAMP_HAS_SWITCHES                    (0U)
@@ -271,6 +295,7 @@
 
 #define BSP_FEATURE_QSPI_DEVICE_START_ADDRESS             (0x0U)
 
+#define BSP_FEATURE_SCI_VERSION                           (1U)
 #define BSP_FEATURE_SCI_ADDRESS_MATCH_CHANNELS            (BSP_FEATURE_SCI_CHANNELS)
 #define BSP_FEATURE_SCI_CHANNELS                          (0x207U)
 #define BSP_FEATURE_SCI_CLOCK                             (FSP_PRIV_CLOCK_PCLKA)
@@ -299,6 +324,8 @@
 
 #define BSP_FEATURE_SSI_FIFO_NUM_STAGES                   (8U)
 #define BSP_FEATURE_SSI_VALID_CHANNEL_MASK                (1U)
+
+#define BSP_FEATURE_TFU_SPPORTED                          (0U) // Trigonometric Function Unit (TFU) not available on this MCU
 
 #define BSP_FEATURE_TRNG_HAS_MODULE_STOP                  (0U)
 

@@ -102,7 +102,8 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 /**  Configuration set Command offset*/
 #define FLASH_HP_FCU_CONFIG_SET_ID_BYTE               (0x0000A150U)
 #if !(defined(BSP_MCU_GROUP_RA6M4) || defined(BSP_MCU_GROUP_RA4M3) || defined(BSP_MCU_GROUP_RA4M2) || \
-    defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA4E1) || defined(BSP_MCU_GROUP_RA6E1))
+    defined(BSP_MCU_GROUP_RA6M5) || defined(BSP_MCU_GROUP_RA4E1) || defined(BSP_MCU_GROUP_RA6E1) ||   \
+    defined(BSP_MCU_GROUP_RA6T2))
  #define FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP       (0x0000A160U)
 #else
  #define FLASH_HP_FCU_CONFIG_SET_DUAL_MODE            (0x0100A110U)

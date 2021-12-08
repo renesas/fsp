@@ -75,6 +75,25 @@ struct flash_area
      */
     uint32_t fa_size;
 };
+static inline uint8_t flash_area_get_id (const struct flash_area * fa)
+{
+    return fa->fa_id;
+}
+
+static inline uint8_t flash_area_get_device_id (const struct flash_area * fa)
+{
+    return fa->fa_device_id;
+}
+
+static inline uint32_t flash_area_get_off (const struct flash_area * fa)
+{
+    return fa->fa_off;
+}
+
+static inline uint32_t flash_area_get_size (const struct flash_area * fa)
+{
+    return fa->fa_size;
+}
 
 /**
  * @brief Structure describing a sector within a flash area.
@@ -96,11 +115,33 @@ struct flash_sector
     uint32_t fs_size;
 };
 
-/*
- * Start using flash area.
- */
-int flash_area_open(uint8_t id, const struct flash_area ** area);
+static inline uint32_t flash_sector_get_off (const struct flash_sector * fs)
+{
+    return fs->fs_off;
+}
 
+static inline uint32_t flash_sector_get_size (const struct flash_sector * fs)
+{
+    return fs->fs_size;
+}
+
+struct flash_map_entry
+{
+    uint32_t          magic;
+    struct flash_area area;
+    unsigned int      ref_count;
+};
+
+/*
+ * Retrieve a memory-mapped flash device's base address.
+ * On success, the address will be stored in the value pointed to by
+ * ret.
+ * Returns 0 on success, or an error code on failure.
+ */
+int flash_device_base(uint8_t fd_id, uintptr_t * ret);
+
+/*< Opens the area for use. id is one of the `fa_id`s */
+int  flash_area_open(uint8_t id, const struct flash_area ** area);
 void flash_area_close(const struct flash_area * area);
 
 /*
@@ -113,7 +154,7 @@ int flash_area_erase(const struct flash_area * area, uint32_t off, uint32_t len)
 /*
  * Alignment restriction for flash writes.
  */
-uint8_t flash_area_align(const struct flash_area * area);
+uint32_t flash_area_align(const struct flash_area * area);
 
 /*
  * What is value is read from erased flash bytes.
@@ -147,7 +188,7 @@ int flash_on_chip_cleanup(void);
 /*
  * Flush on chip flash buffer.
  */
-int flash_on_chip_flush(void);
+int flash_on_chip_flush(const struct flash_area * area);
 
  #ifdef __cplusplus
 }

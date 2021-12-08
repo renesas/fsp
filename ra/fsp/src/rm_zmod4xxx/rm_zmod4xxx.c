@@ -22,7 +22,6 @@
  * Includes   <System Includes> , "Project Includes"
  *********************************************************************************************************************/
 #include "rm_zmod4xxx.h"
-#include "rm_zmod4xxx_lib_specific_configuration.h"
 #include "zmod4xxx_types.h"
 
 /**********************************************************************************************************************
@@ -80,23 +79,6 @@
 #define RM_ZMOD4XXX_1E3                                (1e3)
 #define RM_ZMOD4XXX_100F                               (100.0F)
 
-#if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 4)
-
-/* Definitions of Odor Parameter */
- #define RM_ZMOD4XXX_ODOR_PARAM_ALPHA                  (0.8F)
- #define RM_ZMOD4XXX_ODOR_PARAM_STOP_DELAY             (60)
- #define RM_ZMOD4XXX_ODOR_PARAM_THRESHOLD              (1.3F)
- #define RM_ZMOD4XXX_ODOR_PARAM_TAU                    (1800)
- #define RM_ZMOD4XXX_ODOR_PARAM_STAB_SAMPLES           (15)
-#endif
-
-#if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 7)
-
-/* Definitions of OAQ 2nd gen Parameter */
- #define RM_ZMOD4XXX_DEFAULT_HUMIDITY       (50.0F)
- #define RM_ZMOD4XXX_DEFAULT_TEMPERATURE    (20.0F)
-#endif
-
 /**********************************************************************************************************************
  * Local Typedef definitions
  *********************************************************************************************************************/
@@ -124,24 +106,20 @@ rm_zmod4xxx_api_t const g_zmod4xxx_on_zmod4xxx =
 /**********************************************************************************************************************
  * Exported global functions
  *********************************************************************************************************************/
-extern fsp_err_t rm_zmod4xxx_timer_open(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
-extern fsp_err_t rm_zmod4xxx_timer_close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
-extern fsp_err_t rm_zmod4xxx_timer_start(rm_zmod4xxx_ctrl_t * const p_api_ctrl, uint32_t const delay_ms);
-extern fsp_err_t rm_zmod4xxx_timer_stop(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
+extern fsp_err_t rm_zmod4xxx_delay_ms(rm_zmod4xxx_ctrl_t * const p_ctrl, uint32_t const delay_ms);
 extern fsp_err_t rm_zmod4xxx_irq_open(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 extern fsp_err_t rm_zmod4xxx_irq_close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
+void             rm_zmod4xxx_comms_i2c_callback(rm_comms_callback_args_t * p_args);
 
 /**********************************************************************************************************************
  * Private (static) variables and functions
  *********************************************************************************************************************/
-uint8_t g_zmod4xxx_prod_data[RM_ZMOD4XXX_PROD_DATA_LEN];
 
 static fsp_err_t rm_zmod4xxx_i2c_read(rm_zmod4xxx_instance_ctrl_t * const p_ctrl,
                                       rm_comms_write_read_params_t const  params);
 static fsp_err_t rm_zmod4xxx_i2c_write(rm_zmod4xxx_instance_ctrl_t * const p_ctrl,
                                        uint8_t * const                     p_src,
                                        uint32_t const                      bytes);
-static fsp_err_t rm_zmod4xxx_delay_ms(rm_zmod4xxx_instance_ctrl_t * const p_ctrl, uint32_t const delay_ms);
 static fsp_err_t rm_zmod4xxx_read_status(rm_zmod4xxx_instance_ctrl_t * const p_ctrl, uint8_t * status);
 static fsp_err_t rm_zmod4xxx_read_sensor_info(rm_zmod4xxx_instance_ctrl_t * const p_ctrl);
 static fsp_err_t rm_zmod4xxx_calc_factor(zmod4xxx_conf * conf, uint8_t * hsp, uint8_t * config);
@@ -151,12 +129,6 @@ static fsp_err_t rm_zmod4xxx_start_measurement(rm_zmod4xxx_instance_ctrl_t * con
 static fsp_err_t rm_zmod4xxx_read_adc_result(rm_zmod4xxx_instance_ctrl_t * const p_ctrl, uint8_t * adc_result);
 static fsp_err_t rm_zmod4xxx_stop_measurement(rm_zmod4xxx_instance_ctrl_t * const p_ctrl);
 static fsp_err_t rm_zmod4xxx_configuration(rm_zmod4xxx_instance_ctrl_t * const p_ctrl);
-static fsp_err_t rm_zmod4xxx_init_library(rm_zmod4xxx_instance_ctrl_t * const p_ctrl);
-
-#if ((RM_ZMOD4XXX_CFG_OPERATION_MODE == 4) || (RM_ZMOD4XXX_CFG_OPERATION_MODE == 6))
-static fsp_err_t rm_zmod4xxx_calc_rmox(rm_zmod4xxx_instance_ctrl_t * const p_ctrl, uint8_t * adc_result, float * rmox);
-
-#endif
 
 /*******************************************************************************************************************//**
  * @addtogroup RM_ZMOD4XXX
@@ -182,30 +154,38 @@ static fsp_err_t rm_zmod4xxx_calc_rmox(rm_zmod4xxx_instance_ctrl_t * const p_ctr
 fsp_err_t RM_ZMOD4XXX_Open (rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_cfg_t const * const p_cfg)
 {
     fsp_err_t err = FSP_SUCCESS;
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
 
 #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_comms_instance);
-    FSP_ASSERT(NULL != p_cfg->p_timer_instance);
-    FSP_ASSERT(NULL != p_cfg->p_zmod4xxx_device);
-    FSP_ASSERT(NULL != p_cfg->p_zmod4xxx_handle);
-    FSP_ASSERT(NULL != p_cfg->p_zmod4xxx_results);
+    FSP_ASSERT(NULL != p_cfg->p_zmod4xxx_device);  // This will be removed in FSP v4.0.0.
+    FSP_ASSERT(NULL != p_cfg->p_zmod4xxx_handle);  // This will be removed in FSP v4.0.0.
+    FSP_ASSERT(NULL != p_cfg->p_zmod4xxx_results); // This will be removed in FSP v4.0.0.
+    FSP_ASSERT(NULL != p_cfg->p_extend);
     FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
 
     p_ctrl->p_cfg = p_cfg;
+    p_lib         = (rm_zmod4xxx_lib_extended_cfg_t *) p_cfg->p_extend;
+
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_lib->p_api);
+    FSP_ASSERT(NULL != p_lib->p_data_set);
+    FSP_ASSERT(NULL != p_lib->p_product_data);
+    FSP_ASSERT(NULL != p_lib->p_device);
+    FSP_ASSERT(NULL != p_lib->p_handle);
+    FSP_ASSERT(NULL != p_lib->p_results);
+#endif
 
     /* Set instances */
     p_ctrl->p_comms_i2c_instance = p_cfg->p_comms_instance;
-    p_ctrl->p_timer_instance     = p_cfg->p_timer_instance;
     p_ctrl->p_irq_instance       = p_cfg->p_irq_instance;
 
     /* Set ZMOD4XXX library specific */
-    p_ctrl->p_zmod4xxx_device  = (void *) p_cfg->p_zmod4xxx_device;
-    p_ctrl->p_zmod4xxx_handle  = (void *) p_cfg->p_zmod4xxx_handle;
-    p_ctrl->p_zmod4xxx_results = (void *) p_cfg->p_zmod4xxx_results;
+    p_ctrl->p_zmod4xxx_lib = p_lib;
 
     /* Set parameters */
     p_ctrl->p_context        = p_cfg->p_context;
@@ -214,20 +194,9 @@ fsp_err_t RM_ZMOD4XXX_Open (rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_c
     p_ctrl->status.flag      = false;
     p_ctrl->event            = RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE;
 
-#if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 7)
-
-    /* Set default temperature and humidity */
-    p_ctrl->temperature = RM_ZMOD4XXX_DEFAULT_TEMPERATURE;
-    p_ctrl->humidity    = RM_ZMOD4XXX_DEFAULT_HUMIDITY;
-#endif
-
     /* Open Communications middleware */
     err = p_ctrl->p_comms_i2c_instance->p_api->open(p_ctrl->p_comms_i2c_instance->p_ctrl,
                                                     p_ctrl->p_comms_i2c_instance->p_cfg);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Open timer */
-    err = rm_zmod4xxx_timer_open(p_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Open IRQ */
@@ -242,7 +211,7 @@ fsp_err_t RM_ZMOD4XXX_Open (rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_c
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Initialize Library */
-    err = rm_zmod4xxx_init_library(p_ctrl);
+    err = p_lib->p_api->open(p_ctrl, p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Check if everything is okay */
@@ -269,9 +238,6 @@ fsp_err_t RM_ZMOD4XXX_Close (rm_zmod4xxx_ctrl_t * const p_api_ctrl)
 
     /* Close Communications Middleware */
     p_ctrl->p_comms_i2c_instance->p_api->close(p_ctrl->p_comms_i2c_instance->p_ctrl);
-
-    /* Close timer */
-    rm_zmod4xxx_timer_close(p_ctrl);
 
     /* Close IRQ */
     if (NULL != p_ctrl->p_irq_instance)
@@ -419,52 +385,30 @@ fsp_err_t RM_ZMOD4XXX_Read (rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_r
  * @retval FSP_SUCCESS                            Successfully results are read.
  * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
  * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
- * @retval FSP_ERR_SENSOR_IN_STABILIZATION        Module is stabilizing.
- * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
  **********************************************************************************************************************/
 fsp_err_t RM_ZMOD4XXX_Iaq1stGenDataCalculate (rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                               rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                               rm_zmod4xxx_iaq_1st_data_t * const p_zmod4xxx_data)
 {
-#if ((RM_ZMOD4XXX_CFG_OPERATION_MODE == 1) || (RM_ZMOD4XXX_CFG_OPERATION_MODE == 2))
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
 
- #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_raw_data);
     FSP_ASSERT(NULL != p_zmod4xxx_data);
     FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
- #endif
+#endif
 
-    iaq_1st_gen_handle_t  * p_handle  = (iaq_1st_gen_handle_t *) p_ctrl->p_zmod4xxx_handle;
-    iaq_1st_gen_results_t * p_results = (iaq_1st_gen_results_t *) p_ctrl->p_zmod4xxx_results;
-    zmod4xxx_dev_t        * p_device  = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    int8_t lib_err = 0;
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
 
-    /* Calculate IAQ 1st Gen. data form ADC data */
-    lib_err = calc_iaq_1st_gen(p_handle,
-                               p_device,
-                               &p_raw_data->adc_data[0],
-                               p_results);
-    FSP_ERROR_RETURN(0 <= lib_err, FSP_ERR_ASSERTION);
-
-    /* Set Data */
-    p_zmod4xxx_data->rmox = p_results->rmox;
-    p_zmod4xxx_data->rcda = p_results->rcda;
-    p_zmod4xxx_data->iaq  = p_results->iaq;
-    p_zmod4xxx_data->tvoc = p_results->tvoc;
-    p_zmod4xxx_data->etoh = p_results->etoh;
-    p_zmod4xxx_data->eco2 = p_results->eco2;
-    FSP_ERROR_RETURN(IAQ_1ST_GEN_STABILIZATION != lib_err, FSP_ERR_SENSOR_IN_STABILIZATION);
+    /* Calculate IAQ 1st Gen. data */
+    err = p_lib->p_api->iaq1stGenDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
-#else
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(p_raw_data);
-    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
-
-    return FSP_ERR_UNSUPPORTED;
-#endif
 }
 
 /*******************************************************************************************************************//**
@@ -475,57 +419,30 @@ fsp_err_t RM_ZMOD4XXX_Iaq1stGenDataCalculate (rm_zmod4xxx_ctrl_t * const        
  * @retval FSP_SUCCESS                            Successfully results are read.
  * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
  * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
- * @retval FSP_ERR_SENSOR_IN_STABILIZATION        Module is stabilizing.
- * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
  **********************************************************************************************************************/
 fsp_err_t RM_ZMOD4XXX_Iaq2ndGenDataCalculate (rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                               rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                               rm_zmod4xxx_iaq_2nd_data_t * const p_zmod4xxx_data)
 {
-#if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 3)
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
 
- #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_raw_data);
     FSP_ASSERT(NULL != p_zmod4xxx_data);
     FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
- #endif
+#endif
 
-    iaq_2nd_gen_handle_t  * p_handle  = (iaq_2nd_gen_handle_t *) p_ctrl->p_zmod4xxx_handle;
-    iaq_2nd_gen_results_t * p_results = (iaq_2nd_gen_results_t *) p_ctrl->p_zmod4xxx_results;
-    zmod4xxx_dev_t        * p_device  = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    uint16_t                i;
-    int8_t lib_err = 0;
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
 
-    /* Calculate IAQ 2nd Gen. data form ADC data */
-    lib_err = calc_iaq_2nd_gen(p_handle,
-                               p_device,
-                               &p_raw_data->adc_data[0],
-                               p_results);
-    FSP_ERROR_RETURN(0 <= lib_err, FSP_ERR_ASSERTION);
-
-    /* Set Data */
-    for (i = 0; i < 13; i++)
-    {
-        p_zmod4xxx_data->rmox[i] = p_results->rmox[i];
-    }
-
-    p_zmod4xxx_data->log_rcda = p_results->log_rcda;
-    p_zmod4xxx_data->iaq      = p_results->iaq;
-    p_zmod4xxx_data->tvoc     = p_results->tvoc;
-    p_zmod4xxx_data->etoh     = p_results->etoh;
-    p_zmod4xxx_data->eco2     = p_results->eco2;
-    FSP_ERROR_RETURN(IAQ_2ND_GEN_STABILIZATION != lib_err, FSP_ERR_SENSOR_IN_STABILIZATION);
+    /* Calculate IAQ 2nd Gen. data */
+    err = p_lib->p_api->iaq2ndGenDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
-#else
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(p_raw_data);
-    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
-
-    return FSP_ERR_UNSUPPORTED;
-#endif
 }
 
 /*******************************************************************************************************************//**
@@ -536,54 +453,30 @@ fsp_err_t RM_ZMOD4XXX_Iaq2ndGenDataCalculate (rm_zmod4xxx_ctrl_t * const        
  * @retval FSP_SUCCESS                            Successfully results are read.
  * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
  * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
- * @retval FSP_ERR_SENSOR_IN_STABILIZATION        Module is stabilizing.
- * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
  **********************************************************************************************************************/
 fsp_err_t RM_ZMOD4XXX_OdorDataCalculate (rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
                                          rm_zmod4xxx_raw_data_t * const  p_raw_data,
                                          rm_zmod4xxx_odor_data_t * const p_zmod4xxx_data)
 {
-#if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 4)
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
 
- #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_raw_data);
     FSP_ASSERT(NULL != p_zmod4xxx_data);
     FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
- #endif
+#endif
 
-    float            rmox      = 0.0F;
-    odor_params    * p_handle  = (odor_params *) p_ctrl->p_zmod4xxx_handle;
-    odor_results_t * p_results = (odor_results_t *) p_ctrl->p_zmod4xxx_results;
-    int8_t           lib_err   = 0;
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
 
-    /* Calculate Odor data form ADC data */
-    rm_zmod4xxx_calc_rmox(p_ctrl, &p_raw_data->adc_data[0], &rmox);
-    lib_err = calc_odor(rmox, p_handle, p_results);
-    FSP_ERROR_RETURN(0 <= lib_err, FSP_ERR_ASSERTION);
-
-    /* Set Data */
-    p_zmod4xxx_data->odor = p_results->conc_ratio;
-    if (ON == p_results->cs_state)
-    {
-        p_zmod4xxx_data->control_signal = true;
-    }
-    else
-    {
-        p_zmod4xxx_data->control_signal = false;
-    }
-
-    FSP_ERROR_RETURN(ODOR_STABILIZATION != lib_err, FSP_ERR_SENSOR_IN_STABILIZATION);
+    /* Calculate Odor data */
+    err = p_lib->p_api->odorDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
-#else
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(p_raw_data);
-    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
-
-    return FSP_ERR_UNSUPPORTED;
-#endif
 }
 
 /*******************************************************************************************************************//**
@@ -594,62 +487,30 @@ fsp_err_t RM_ZMOD4XXX_OdorDataCalculate (rm_zmod4xxx_ctrl_t * const      p_api_c
  * @retval FSP_SUCCESS                            Successfully results are read.
  * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
  * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
- * @retval FSP_ERR_SENSOR_IN_STABILIZATION        Module is stabilizing.
- * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
  **********************************************************************************************************************/
 fsp_err_t RM_ZMOD4XXX_SulfurOdorDataCalculate (rm_zmod4xxx_ctrl_t * const             p_api_ctrl,
                                                rm_zmod4xxx_raw_data_t * const         p_raw_data,
                                                rm_zmod4xxx_sulfur_odor_data_t * const p_zmod4xxx_data)
 {
-#if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 5)
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
 
- #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_raw_data);
     FSP_ASSERT(NULL != p_zmod4xxx_data);
     FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
- #endif
+#endif
 
-    sulfur_odor_handle_t  * p_handle  = (sulfur_odor_handle_t *) p_ctrl->p_zmod4xxx_handle;
-    sulfur_odor_results_t * p_results = (sulfur_odor_results_t *) p_ctrl->p_zmod4xxx_results;
-    zmod4xxx_dev_t        * p_device  = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    uint16_t                i;
-    int8_t lib_err = 0;
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
 
-    /* Calculate Sulfur odor data form ADC data */
-    lib_err = calc_sulfur_odor(p_handle,
-                               p_device,
-                               &p_raw_data->adc_data[0],
-                               p_results);
-    FSP_ERROR_RETURN(0 <= lib_err, FSP_ERR_ASSERTION);
-
-    /* Set Data */
-    for (i = 0; i < 9; i++)
-    {
-        p_zmod4xxx_data->rmox[i] = p_results->rmox[i];
-    }
-
-    p_zmod4xxx_data->intensity = p_results->intensity;
-    if (SULFUR_ODOR_ACCEPTABLE == p_results->odor)
-    {
-        p_zmod4xxx_data->odor = RM_ZMOD4XXX_SULFUR_ODOR_ACCEPTABLE;
-    }
-    else
-    {
-        p_zmod4xxx_data->odor = RM_ZMOD4XXX_SULFUR_ODOR_UNACCEPTABLE;
-    }
-
-    FSP_ERROR_RETURN(SULFUR_ODOR_WARMUP != lib_err, FSP_ERR_SENSOR_IN_STABILIZATION);
+    /* Calculate Sulfur Odor data */
+    err = p_lib->p_api->sulfurOdorDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
-#else
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(p_raw_data);
-    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
-
-    return FSP_ERR_UNSUPPORTED;
-#endif
 }
 
 /*******************************************************************************************************************//**
@@ -660,46 +521,30 @@ fsp_err_t RM_ZMOD4XXX_SulfurOdorDataCalculate (rm_zmod4xxx_ctrl_t * const       
  * @retval FSP_SUCCESS                            Successfully results are read.
  * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
  * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
- * @retval FSP_ERR_SENSOR_IN_STABILIZATION        Module is stabilizing.
- * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
  **********************************************************************************************************************/
 fsp_err_t RM_ZMOD4XXX_Oaq1stGenDataCalculate (rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                               rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                               rm_zmod4xxx_oaq_1st_data_t * const p_zmod4xxx_data)
 {
-#if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 6)
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
 
- #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_raw_data);
     FSP_ASSERT(NULL != p_zmod4xxx_data);
     FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
- #endif
+#endif
 
-    oaq_base_handle_t * p_handle = (oaq_base_handle_t *) p_ctrl->p_zmod4xxx_handle;
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
 
-    /* Calculate OAQ 1st Gen. data form ADC data */
-    rm_zmod4xxx_calc_rmox(p_ctrl, &p_raw_data->adc_data[0], p_zmod4xxx_data->rmox);
-
-    /* Calculation of results */
-    p_zmod4xxx_data->aiq = calc_oaq_1st_gen(p_handle,
-                                            p_zmod4xxx_data->rmox,
-                                            RCDA_STRATEGY_ADJ,
-                                            GAS_DETECTION_STRATEGY_AUTO,
-                                            (float) D_RISING_M1,
-                                            (float) D_FALLING_M1,
-                                            (float) D_CLASS_M1);
-    FSP_ERROR_RETURN(0 == p_handle->stabilization_sample, FSP_ERR_SENSOR_IN_STABILIZATION);
+    /* Calculate OAQ 1st Gen. data */
+    err = p_lib->p_api->oaq1stGenDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
-#else
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(p_raw_data);
-    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
-
-    return FSP_ERR_UNSUPPORTED;
-#endif
 }
 
 /*******************************************************************************************************************//**
@@ -710,57 +555,30 @@ fsp_err_t RM_ZMOD4XXX_Oaq1stGenDataCalculate (rm_zmod4xxx_ctrl_t * const        
  * @retval FSP_SUCCESS                            Successfully results are read.
  * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
  * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
- * @retval FSP_ERR_SENSOR_IN_STABILIZATION        Module is stabilizing.
- * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
  **********************************************************************************************************************/
 fsp_err_t RM_ZMOD4XXX_Oaq2ndGenDataCalculate (rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                               rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                               rm_zmod4xxx_oaq_2nd_data_t * const p_zmod4xxx_data)
 {
-#if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 7)
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
 
- #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_raw_data);
     FSP_ASSERT(NULL != p_zmod4xxx_data);
     FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
- #endif
+#endif
 
-    oaq_2nd_gen_handle_t  * p_handle  = (oaq_2nd_gen_handle_t *) p_ctrl->p_zmod4xxx_handle;
-    oaq_2nd_gen_results_t * p_results = (oaq_2nd_gen_results_t *) p_ctrl->p_zmod4xxx_results;
-    zmod4xxx_dev_t        * p_device  = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    uint16_t                i;
-    int8_t lib_err = 0;
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
 
-    /* Calculate OAQ 1st Gen. data form ADC data */
-    lib_err = calc_oaq_2nd_gen(p_handle,
-                               p_device,
-                               &p_raw_data->adc_data[0],
-                               p_ctrl->humidity,
-                               p_ctrl->temperature,
-                               p_results);
-    FSP_ERROR_RETURN(0 <= lib_err, FSP_ERR_ASSERTION);
-
-    /* Set Data */
-    for (i = 0; i < 8; i++)
-    {
-        p_zmod4xxx_data->rmox[i] = p_results->rmox[i];
-    }
-
-    p_zmod4xxx_data->ozone_concentration = p_results->O3_conc_ppb;
-    p_zmod4xxx_data->fast_aqi            = p_results->FAST_AQI;
-    p_zmod4xxx_data->epa_aqi             = p_results->EPA_AQI;
-    FSP_ERROR_RETURN(OAQ_2ND_GEN_STABILIZATION != lib_err, FSP_ERR_SENSOR_IN_STABILIZATION);
+    /* Calculate OAQ 2nd Gen. data */
+    err = p_lib->p_api->oaq2ndGenDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
-#else
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(p_raw_data);
-    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
-
-    return FSP_ERR_UNSUPPORTED;
-#endif
 }
 
 /*******************************************************************************************************************//**
@@ -776,15 +594,19 @@ fsp_err_t RM_ZMOD4XXX_TemperatureAndHumiditySet (rm_zmod4xxx_ctrl_t * const p_ap
                                                  float                      temperature,
                                                  float                      humidity)
 {
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
 
 #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    p_ctrl->temperature = temperature;
-    p_ctrl->humidity    = humidity;
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
+
+    p_lib->temperature = temperature;
+    p_lib->humidity    = humidity;
 
     return FSP_SUCCESS;
 }
@@ -798,13 +620,11 @@ fsp_err_t RM_ZMOD4XXX_TemperatureAndHumiditySet (rm_zmod4xxx_ctrl_t * const p_ap
  **********************************************************************************************************************/
 void rm_zmod4xxx_comms_i2c_callback (rm_comms_callback_args_t * p_args)
 {
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_args->p_context;
-    rm_zmod4xxx_callback_args_t   zmod4xxx_callback_args;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_args->p_context;
+    rm_zmod4xxx_callback_args_t      zmod4xxx_callback_args;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib             = p_ctrl->p_zmod4xxx_lib;
+    zmod4xxx_dev_t                 * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_lib->p_device;
     uint8_t status;
-
-#if ((RM_ZMOD4XXX_CFG_OPERATION_MODE == 1) || (RM_ZMOD4XXX_CFG_OPERATION_MODE == 4))
-    zmod4xxx_dev_t * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-#endif
 
     /* Set context */
     zmod4xxx_callback_args.p_context = p_ctrl->p_context;
@@ -838,34 +658,37 @@ void rm_zmod4xxx_comms_i2c_callback (rm_comms_callback_args_t * p_args)
     {
         if ((true == p_ctrl->status.flag) && (RM_ZMOD4XXX_EVENT_SUCCESS == zmod4xxx_callback_args.event))
         {
-#if ((RM_ZMOD4XXX_CFG_OPERATION_MODE == 1) || (RM_ZMOD4XXX_CFG_OPERATION_MODE == 4))
-            status = (p_ctrl->status.value & RM_ZMOD4XXX_STATUS_LAST_SEQ_STEP_MASK);
-            if (((p_zmod4xxx_device->meas_conf->s.len / 2) - 1) != status)
+            if ((RM_ZMOD4410_LIB_TYPE_IAQ_1ST_GEN_CONTINUOUS == p_lib->lib_type) ||
+                (RM_ZMOD4410_LIB_TYPE_ODOR == p_lib->lib_type))
             {
-                /* Set event */
-                zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE;
+                status = (p_ctrl->status.value & RM_ZMOD4XXX_STATUS_LAST_SEQ_STEP_MASK);
+                if (((p_zmod4xxx_device->meas_conf->s.len / 2) - 1) != status)
+                {
+                    /* Set event */
+                    zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE;
+                }
+                else
+                {
+                    /* Set event */
+                    zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE;
+                    p_ctrl->event                = RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE;
+                }
             }
             else
             {
-                /* Set event */
-                zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE;
-                p_ctrl->event                = RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE;
+                status = p_ctrl->status.value & RM_ZMOD4XXX_STATUS_SEQUENCER_RUNNING_MASK;
+                if (0 != status)
+                {
+                    /* Set event */
+                    zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE;
+                }
+                else
+                {
+                    /* Set event */
+                    zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE;
+                    p_ctrl->event                = RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE;
+                }
             }
-
-#else
-            status = p_ctrl->status.value & RM_ZMOD4XXX_STATUS_SEQUENCER_RUNNING_MASK;
-            if (0 != status)
-            {
-                /* Set event */
-                zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE;
-            }
-            else
-            {
-                /* Set event */
-                zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE;
-                p_ctrl->event                = RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE;
-            }
-#endif
 
             /* Clear flag */
             p_ctrl->status.flag = false;
@@ -917,7 +740,6 @@ static fsp_err_t rm_zmod4xxx_i2c_read (rm_zmod4xxx_instance_ctrl_t * const p_ctr
         {
             rm_zmod4xxx_delay_ms(p_ctrl, 1);
             counter++;
-            rm_zmod4xxx_timer_stop(p_ctrl);
             FSP_ERROR_RETURN(RM_ZMOD4XXX_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
         }
 
@@ -959,36 +781,11 @@ static fsp_err_t rm_zmod4xxx_i2c_write (rm_zmod4xxx_instance_ctrl_t * const p_ct
         {
             rm_zmod4xxx_delay_ms(p_ctrl, 1);
             counter++;
-            rm_zmod4xxx_timer_stop(p_ctrl);
             FSP_ERROR_RETURN(RM_ZMOD4XXX_TIMEOUT >= counter, FSP_ERR_TIMEOUT);
         }
 
         /* Check callback event */
         FSP_ERROR_RETURN(RM_ZMOD4XXX_EVENT_SUCCESS == p_ctrl->init_process_params.event, FSP_ERR_ABORTED);
-    }
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
- * @brief Delay some milliseconds.
- *
- * @retval FSP_SUCCESS              successfully configured.
- **********************************************************************************************************************/
-static fsp_err_t rm_zmod4xxx_delay_ms (rm_zmod4xxx_instance_ctrl_t * const p_ctrl, uint32_t const delay_ms)
-{
-    fsp_err_t err = FSP_SUCCESS;
-
-    /* Start timer */
-    err = rm_zmod4xxx_timer_start(p_ctrl, delay_ms);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    if (RM_ZMOD4XXX_OPEN != p_ctrl->open)
-    {
-        /* Wait timer callback */
-        while (0 < p_ctrl->init_process_params.delay_ms)
-        {
-        }
     }
 
     return FSP_SUCCESS;
@@ -1028,9 +825,10 @@ static fsp_err_t rm_zmod4xxx_read_status (rm_zmod4xxx_instance_ctrl_t * const p_
  **********************************************************************************************************************/
 static fsp_err_t rm_zmod4xxx_read_sensor_info (rm_zmod4xxx_instance_ctrl_t * const p_ctrl)
 {
-    fsp_err_t                    err               = FSP_SUCCESS;
-    zmod4xxx_dev_t             * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    rm_comms_write_read_params_t write_read_params;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib             = p_ctrl->p_zmod4xxx_lib;
+    zmod4xxx_dev_t                 * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_lib->p_device;
+    rm_comms_write_read_params_t     write_read_params;
 
     uint8_t  status;
     uint16_t product_id;
@@ -1128,14 +926,15 @@ static fsp_err_t rm_zmod4xxx_calc_factor (zmod4xxx_conf * const conf, uint8_t * 
  **********************************************************************************************************************/
 static fsp_err_t rm_zmod4xxx_init_sensor (rm_zmod4xxx_instance_ctrl_t * const p_ctrl)
 {
-    fsp_err_t                    err                          = FSP_SUCCESS;
-    zmod4xxx_dev_t             * p_zmod4xxx_device            = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    uint8_t                      hsp[RM_ZMOD4XXX_HSP_MAX * 2] = {0};
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib             = p_ctrl->p_zmod4xxx_lib;
+    zmod4xxx_dev_t                 * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_lib->p_device;
+    uint8_t hsp[RM_ZMOD4XXX_HSP_MAX * 2]               = {0};
     rm_comms_write_read_params_t write_read_params;
-    uint8_t                      i;
-    uint8_t                      bytes;
-    uint8_t                    * p_src_tmp;
-    uint8_t                      status;
+    uint8_t   i;
+    uint8_t   bytes;
+    uint8_t * p_src_tmp;
+    uint8_t   status;
 
     /* Read address 0xB7 */
     p_ctrl->register_address     = RM_ZMOD4XXX_B7;
@@ -1262,12 +1061,13 @@ static fsp_err_t rm_zmod4xxx_init_sensor (rm_zmod4xxx_instance_ctrl_t * const p_
  **********************************************************************************************************************/
 static fsp_err_t rm_zmod4xxx_init_measurement (rm_zmod4xxx_instance_ctrl_t * const p_ctrl)
 {
-    fsp_err_t        err                          = FSP_SUCCESS;
-    zmod4xxx_dev_t * p_zmod4xxx_device            = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    uint8_t          hsp[RM_ZMOD4XXX_HSP_MAX * 2] = {0};
-    uint8_t          i;
-    uint8_t          bytes;
-    uint8_t        * p_src_tmp;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib             = p_ctrl->p_zmod4xxx_lib;
+    zmod4xxx_dev_t                 * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_lib->p_device;
+    uint8_t   hsp[RM_ZMOD4XXX_HSP_MAX * 2]             = {0};
+    uint8_t   i;
+    uint8_t   bytes;
+    uint8_t * p_src_tmp;
 
     /* Calculate the factor */
     err = rm_zmod4xxx_calc_factor(p_zmod4xxx_device->meas_conf, hsp, p_zmod4xxx_device->config);
@@ -1337,8 +1137,9 @@ static fsp_err_t rm_zmod4xxx_init_measurement (rm_zmod4xxx_instance_ctrl_t * con
  **********************************************************************************************************************/
 static fsp_err_t rm_zmod4xxx_start_measurement (rm_zmod4xxx_instance_ctrl_t * const p_ctrl)
 {
-    fsp_err_t        err               = FSP_SUCCESS;
-    zmod4xxx_dev_t * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib             = p_ctrl->p_zmod4xxx_lib;
+    zmod4xxx_dev_t                 * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_lib->p_device;
 
     /* Write the start signal */
     p_ctrl->buf[0] = RM_ZMOD4XXX_ADDR_CMD;
@@ -1378,9 +1179,10 @@ static fsp_err_t rm_zmod4xxx_stop_measurement (rm_zmod4xxx_instance_ctrl_t * con
  **********************************************************************************************************************/
 static fsp_err_t rm_zmod4xxx_read_adc_result (rm_zmod4xxx_instance_ctrl_t * const p_ctrl, uint8_t * const adc_result)
 {
-    fsp_err_t                    err               = FSP_SUCCESS;
-    zmod4xxx_dev_t             * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    rm_comms_write_read_params_t write_read_params;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib             = p_ctrl->p_zmod4xxx_lib;
+    zmod4xxx_dev_t                 * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_lib->p_device;
+    rm_comms_write_read_params_t     write_read_params;
 
     /* Read R data */
     p_ctrl->register_address     = p_zmod4xxx_device->meas_conf->r.addr;
@@ -1394,52 +1196,6 @@ static fsp_err_t rm_zmod4xxx_read_adc_result (rm_zmod4xxx_instance_ctrl_t * cons
     return FSP_SUCCESS;
 }
 
-#if ((RM_ZMOD4XXX_CFG_OPERATION_MODE == 4) || (RM_ZMOD4XXX_CFG_OPERATION_MODE == 6))
-
-/*******************************************************************************************************************//**
- * @brief Calculate mox resistance.
- *
- * @retval FSP_SUCCESS              successfully configured.
- **********************************************************************************************************************/
-static fsp_err_t rm_zmod4xxx_calc_rmox (rm_zmod4xxx_instance_ctrl_t * const p_ctrl, uint8_t * adc_result, float * rmox)
-{
-    zmod4xxx_dev_t * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    uint8_t          i;
-    uint16_t         adc_value  = 0;
-    float          * p          = rmox;
-    float            rmox_local = 0;
-
-    i = 0;
-    while (i < p_zmod4xxx_device->meas_conf->r.len)
-    {
-        adc_value = (uint16_t) ((((uint16_t) adc_result[i]) << 8) | adc_result[i + 1]);
-        if (0.0 > (adc_value - p_zmod4xxx_device->mox_lr))
-        {
-            *p = (float) RM_ZMOD4XXX_1E_3;
-            p++;
-        }
-        else if (0.0 >= (p_zmod4xxx_device->mox_er - adc_value))
-        {
-            *p = (float) RM_ZMOD4XXX_10E9;
-            p++;
-        }
-        else
-        {
-            rmox_local = (float) p_zmod4xxx_device->config[0] * (float) RM_ZMOD4XXX_1E3 *
-                         (float) (adc_value - p_zmod4xxx_device->mox_lr) /
-                         (float) (p_zmod4xxx_device->mox_er - adc_value);
-            *p = rmox_local;
-            p++;
-        }
-
-        i = (uint8_t) (i + 2);
-    }
-
-    return FSP_SUCCESS;
-}
-
-#endif
-
 /*******************************************************************************************************************//**
  * @brief Initialization processes of the ZMOD4XXX.
  *
@@ -1450,14 +1206,23 @@ static fsp_err_t rm_zmod4xxx_calc_rmox (rm_zmod4xxx_instance_ctrl_t * const p_ct
  **********************************************************************************************************************/
 static fsp_err_t rm_zmod4xxx_configuration (rm_zmod4xxx_instance_ctrl_t * const p_ctrl)
 {
-    fsp_err_t        err               = FSP_SUCCESS;
-    zmod4xxx_dev_t * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib             = p_ctrl->p_zmod4xxx_lib;
+    zmod4xxx_dev_t                 * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_lib->p_device;
+    zmod4xxx_conf * p_data_set = (zmod4xxx_conf *) p_lib->p_data_set;
 
     /* Set ZMOD4XXX specific configurations */
-    p_zmod4xxx_device->prod_data = g_zmod4xxx_prod_data;
-    p_zmod4xxx_device->init_conf = &gs_zmod4xxx_sensor_type[0];
-    p_zmod4xxx_device->meas_conf = &gs_zmod4xxx_sensor_type[1];
-    p_zmod4xxx_device->pid       = RM_ZMOD4XXX_PID;
+    p_zmod4xxx_device->prod_data = (uint8_t *) p_lib->p_product_data;
+    p_zmod4xxx_device->pid       = p_lib->product_id;
+    p_zmod4xxx_device->init_conf = &p_data_set[0];
+    if (RM_ZMOD4410_LIB_TYPE_IAQ_1ST_GEN_LOW_POWER != p_lib->lib_type)
+    {
+        p_zmod4xxx_device->meas_conf = &p_data_set[1];
+    }
+    else
+    {
+        p_zmod4xxx_device->meas_conf = &p_data_set[2];
+    }
 
     /* Read sensor information */
     err = rm_zmod4xxx_read_sensor_info(p_ctrl);
@@ -1470,49 +1235,6 @@ static fsp_err_t rm_zmod4xxx_configuration (rm_zmod4xxx_instance_ctrl_t * const 
     /* Initialize the sensor for corresponding measurement */
     err = rm_zmod4xxx_init_measurement(p_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
- * @brief Initialize the library of the ZMOD4XXX.
- *
- * @retval FSP_SUCCESS              successfully configured.
- * @retval FSP_ERR_ASSERTION        Error in library.
- **********************************************************************************************************************/
-static fsp_err_t rm_zmod4xxx_init_library (rm_zmod4xxx_instance_ctrl_t * const p_ctrl)
-{
-    int8_t lib_err = 0;
-
-#if ((RM_ZMOD4XXX_CFG_OPERATION_MODE == 1) || (RM_ZMOD4XXX_CFG_OPERATION_MODE == 2))
-    iaq_1st_gen_handle_t * p_handle          = (iaq_1st_gen_handle_t *) p_ctrl->p_zmod4xxx_handle;
-    zmod4xxx_dev_t       * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    lib_err = init_iaq_1st_gen(p_handle, p_zmod4xxx_device, RM_ZMOD4XXX_SAMPLE_PERIOD);
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 3)
-    iaq_2nd_gen_handle_t * p_handle = (iaq_2nd_gen_handle_t *) p_ctrl->p_zmod4xxx_handle;
-    lib_err = init_iaq_2nd_gen(p_handle);
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 5)
-    sulfur_odor_handle_t * p_handle          = (sulfur_odor_handle_t *) p_ctrl->p_zmod4xxx_handle;
-    zmod4xxx_dev_t       * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    lib_err = init_sulfur_odor(p_handle, p_zmod4xxx_device);
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 4)
-    odor_params * p_handle = (odor_params *) p_ctrl->p_zmod4xxx_handle;
-    p_handle->alpha                 = RM_ZMOD4XXX_ODOR_PARAM_ALPHA;
-    p_handle->stop_delay            = RM_ZMOD4XXX_ODOR_PARAM_STOP_DELAY;
-    p_handle->threshold             = RM_ZMOD4XXX_ODOR_PARAM_THRESHOLD;
-    p_handle->tau                   = RM_ZMOD4XXX_ODOR_PARAM_TAU;
-    p_handle->stabilization_samples = RM_ZMOD4XXX_ODOR_PARAM_STAB_SAMPLES;
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 6)
-    oaq_base_handle_t * p_handle          = (oaq_base_handle_t *) p_ctrl->p_zmod4xxx_handle;
-    zmod4xxx_dev_t    * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    init_oaq_1st_gen(p_handle, p_zmod4xxx_device->prod_data, STABILIZATION_SAMPLES);
-#elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 7)
-    oaq_2nd_gen_handle_t * p_handle          = (oaq_2nd_gen_handle_t *) p_ctrl->p_zmod4xxx_handle;
-    zmod4xxx_dev_t       * p_zmod4xxx_device = (zmod4xxx_dev_t *) p_ctrl->p_zmod4xxx_device;
-    lib_err = init_oaq_2nd_gen(p_handle, p_zmod4xxx_device);
-#else
-#endif
-    FSP_ERROR_RETURN(0 == lib_err, FSP_ERR_ASSERTION);
 
     return FSP_SUCCESS;
 }

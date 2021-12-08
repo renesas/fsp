@@ -187,6 +187,10 @@ extern const transfer_instance_t * g_p_usbx_transfer_tx;
 extern const transfer_instance_t * g_p_usbx_transfer_rx;
  #endif                                /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
 
+ #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+extern const uint16_t USB_CFG_TPL_TABLE[];
+ #endif /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /******************************************************************************
@@ -537,7 +541,6 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                         {
                             status = (uint32_t) UX_SUCCESS;
                         }
-
   #else                                /* defined(USB_CFG_PMSC_USE) */
                         status = (uint32_t) UX_SUCCESS;
   #endif /* define(USB_CFG_PMSC_USE */
@@ -592,6 +595,35 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
 
         case (uint32_t) UX_DCD_TRANSFER_ABORT:
         {
+  #if defined(USB_CFG_PCDC_USE)
+            CHAR         * name;
+            ULONG          current_value;
+            TX_THREAD    * first_suspended;
+            ULONG          suspended_count;
+            TX_SEMAPHORE * next_semaphore;
+
+            transfer_request = (UX_SLAVE_TRANSFER *) parameter;
+            endpoint         = transfer_request->ux_slave_transfer_request_endpoint;
+            endpoint_index   = endpoint->ux_slave_endpoint_descriptor.bEndpointAddress;
+            if (0 != endpoint_index)
+            {
+                pipe = usb_pstd_epadr2pipe((uint16_t) endpoint_index, &tran_data);
+            }
+
+            tx_semaphore_info_get(&g_usb_peri_usbx_sem[pipe],
+                                  &name,
+                                  &current_value,
+                                  &first_suspended,
+                                  &suspended_count,
+                                  &next_semaphore);
+
+            if (suspended_count == 1)
+            {
+                _ux_utility_thread_suspend(first_suspended);
+                tx_semaphore_put(&g_usb_peri_usbx_sem[pipe]);
+            }
+  #endif                               /* #if defined(USB_CFG_PCDC_USE) */
+
             break;
         }
 
@@ -820,8 +852,10 @@ static UINT usb_peri_usbx_media_write (VOID  * storage,
     if ((status.initialized == true) && (status.busy == false) && (status.media_inserted == true))
     {
         err_code =
-            gp_block_media_instance->p_api->write(gp_block_media_instance->p_ctrl, (uint8_t * const) data_pointer,
-                                                  (uint32_t const) lba, (uint32_t const) number_blocks);
+            gp_block_media_instance->p_api->write(gp_block_media_instance->p_ctrl,
+                                                  (uint8_t * const) data_pointer,
+                                                  (uint32_t const) lba,
+                                                  (uint32_t const) number_blocks);
         if (err_code == FSP_SUCCESS)
         {
             while (timeout > 0)
@@ -975,7 +1009,7 @@ static void usb_peri_usbx_pmsc_storage_init (void)
 {
     g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_number_lun = 1;
     g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_last_lba =
-        g_media_total_sector;
+        (g_media_total_sector - 1);
     g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_block_length =
         g_media_sector_size_bytes;
     g_usb_peri_usbx_pmsc_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_type =
@@ -1143,7 +1177,6 @@ uint32_t usb_host_usbx_uninitialize (uint32_t hcd_io)
 
     if (UX_SUCCESS != status)
     {
-
         /* Return failure status  */
         return (uint32_t) FSP_ERR_USB_FAILED;
     }
@@ -1278,14 +1311,18 @@ void usb_host_usbx_registration (usb_utr_t * p_utr)
   #endif /* defined(USB_CFG_HCDC_USE) */
 
   #if defined(USB_CFG_HHID_USE)
-    driver.ifclass = (uint16_t) USB_IFCLS_HID;                       /* Interface class : HID */
+    driver.ifclass = (uint16_t) USB_IFCLS_HID; /* Interface class : HID */
   #endif /* defined(USB_CFG_HCDC_USE) */
 
   #if defined(USB_CFG_HMSC_USE)
-    driver.ifclass = (uint16_t) USB_IFCLS_MAS;                       /* Interface class : HID */
+    driver.ifclass = (uint16_t) USB_IFCLS_MAS; /* Interface class : HID */
   #endif /* defined(USB_CFG_HCDC_USE) */
 
-    driver.p_tpl      = (uint16_t *) &g_usb_host_usbx_device_tpl;    /* Target peripheral list */
+  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
+    driver.p_tpl = (uint16_t *) USB_CFG_TPL_TABLE;
+  #else                                                              /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
+    driver.p_tpl = (uint16_t *) &g_usb_host_usbx_device_tpl;         /* Target peripheral list */
+  #endif /* #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
     driver.classinit  = (usb_cb_t) &usb_host_usbx_init;              /* Driver init */
     driver.classcheck = (usb_cb_check_t) &usb_host_usbx_class_check; /* Driver check */
     driver.devconfig  = (usb_cb_t) &usb_host_usbx_configured;        /* Device configuered */
@@ -1295,21 +1332,20 @@ void usb_host_usbx_registration (usb_utr_t * p_utr)
     driver.devresume  = (usb_cb_t) &usb_hstd_dummy_function;         /* Device resume */
 
   #if USB_CFG_HUB == USB_CFG_ENABLE
-
     /* WAIT_LOOP */
-    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)  /* Loop support CDC device count */
+    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)                 /* Loop support CDC device count */
     {
-        usb_hstd_driver_registration(p_utr, &driver); /* Host CDC class driver registration. */
+        usb_hstd_driver_registration(p_utr, &driver);                /* Host CDC class driver registration. */
     }
 
    #if (BSP_CFG_RTOS == 0)
-    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);    /* Hub Task Priority set */
+    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);                   /* Hub Task Priority set */
    #endif /* (BSP_CFG_RTOS == 0) */
-    usb_hhub_registration(p_utr, USB_NULL);           /* Hub registration. */
-  #else                                               /* USB_CFG_HUB == USB_CFG_ENABLE */
-    usb_hstd_driver_registration(p_utr, &driver);     /* Host CDC class driver registration. */
+    usb_hhub_registration(p_utr, USB_NULL);                          /* Hub registration. */
+  #else                                                              /* USB_CFG_HUB == USB_CFG_ENABLE */
+    usb_hstd_driver_registration(p_utr, &driver);                    /* Host CDC class driver registration. */
   #endif /* USB_CFG_HUB == USB_CFG_ENABLE */
-}                                                     /* End of function usb_host_usbx_registration() */
+}                                                                    /* End of function usb_host_usbx_registration() */
 
 /******************************************************************************
  * Function Name    : usb_host_usbx_class_check
@@ -1378,7 +1414,6 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
 
                 g_usb_hmsc_out_pipectr[p_utr->ip][0] = 0;
             }
-
    #else                               /* defined(USB_CFG_HMSC_USE) */
             pipe_no = usb_hstd_make_pipe_reg_info(p_utr->ip,
                                                   USB_DEVICEADDR,
@@ -1741,7 +1776,6 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
                             (uint16_t) transfer_request->ux_transfer_request_requested_length;
                         g_usb_host_usbx_req_msg[module_number].complete = (usb_cb_t) &usb_host_usbx_class_request_cb;
                     }
-
   #else                                /* #if defined(USB_CFG_HHID_USE) */
                     /* In this "case", only SetConfiguraion or the class request is processed.  */
                     if (UX_FSP_SET_CONFIGURATION == transfer_request->ux_transfer_request_function)

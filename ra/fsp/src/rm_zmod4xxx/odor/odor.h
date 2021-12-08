@@ -32,20 +32,11 @@
 
  #include <math.h>
  #include <stdint.h>
+ #include "../zmod4xxx_types.h"
 
  #ifdef __cplusplus
 extern "C" {
  #endif
-
-/**
- * @brief Variables that describe the library version
- */
-typedef struct
-{
-    uint8_t major;
-    uint8_t minor;
-    uint8_t patch;
-} algorithm_version;
 
 /**
  * @brief Status of the sensor.

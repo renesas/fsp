@@ -417,6 +417,9 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
         }
     }
 
+    ble_status = R_BLE_VS_SetTxPower(0, BLE_ABS_CFG_TRANSMIT_POWER_INDEX);
+    FSP_ERROR_RETURN(BLE_SUCCESS == ble_status, FSP_ERR_INVALID_MODE);
+
     p_instance_ctrl->open = BLE_ABS_OPEN;
 
     return FSP_SUCCESS;

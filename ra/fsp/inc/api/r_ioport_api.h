@@ -104,11 +104,20 @@ typedef enum e_ioport_peripheral
     /** Pin will function as a CTSU peripheral pin */
     IOPORT_PERIPHERAL_CTSU = (0x0CUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
+    /** Pin will function as a CMPHS peripheral pin */
+    IOPORT_PERIPHERAL_ACMPHS = (0x0CUL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
     /** Pin will function as a segment LCD peripheral pin */
     IOPORT_PERIPHERAL_LCDC = (0x0DUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
+    /** Pin will function as an SCI peripheral DEn pin */
+    IOPORT_PERIPHERAL_DE_SCI1_3_5_7_9 = (0x0DUL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
     /** Pin will function as a DALI peripheral pin */
     IOPORT_PERIPHERAL_DALI = (0x0EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
+    /** Pin will function as an SCI DEn peripheral pin */
+    IOPORT_PERIPHERAL_DE_SCI0_2_4_6_8 = (0x0EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
     /** Pin will function as a CAN peripheral pin */
     IOPORT_PERIPHERAL_CAN = (0x10UL << IOPORT_PRV_PFS_PSEL_OFFSET),
@@ -125,11 +134,20 @@ typedef enum e_ioport_peripheral
     /** Pin will function as a USB high speed peripheral pin */
     IOPORT_PERIPHERAL_USB_HS = (0x14UL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
+    /** Pin will function as a GPT peripheral pin */
+    IOPORT_PERIPHERAL_GPT2 = (0x14UL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
     /** Pin will function as an SD/MMC peripheral pin */
     IOPORT_PERIPHERAL_SDHI_MMC = (0x15UL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
+    /** Pin will function as a GPT peripheral pin */
+    IOPORT_PERIPHERAL_GPT3 = (0x15UL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
     /** Pin will function as an Ethernet MMI peripheral pin */
     IOPORT_PERIPHERAL_ETHER_MII = (0x16UL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
+    /** Pin will function as a GPT peripheral pin */
+    IOPORT_PERIPHERAL_GPT4 = (0x16UL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
     /** Pin will function as an Ethernet RMMI peripheral pin */
     IOPORT_PERIPHERAL_ETHER_RMII = (0x17UL << IOPORT_PRV_PFS_PSEL_OFFSET),
@@ -140,6 +158,9 @@ typedef enum e_ioport_peripheral
     /** Pin will function as a graphics LCD peripheral pin */
     IOPORT_PERIPHERAL_LCD_GRAPHICS = (0x19UL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
+    /** Pin will function as a CAC peripheral pin */
+    IOPORT_PERIPHERAL_CAC = (0x19UL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
     /** Pin will function as a debug trace peripheral pin */
     IOPORT_PERIPHERAL_TRACE = (0x1AUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 
@@ -148,9 +169,15 @@ typedef enum e_ioport_peripheral
 
     /** Pin will function as a CEC peripheral pin */
     IOPORT_PERIPHERAL_CEC = (0x1DUL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
+    /** Pin will function as a PGAOUT peripheral pin */
+    IOPORT_PERIPHERAL_PGAOUT0 = (0x1DUL << IOPORT_PRV_PFS_PSEL_OFFSET),
+
+    /** Pin will function as a PGAOUT peripheral pin */
+    IOPORT_PERIPHERAL_PGAOUT1 = (0x1EUL << IOPORT_PRV_PFS_PSEL_OFFSET),
 } ioport_peripheral_t;
 
-/** Superset of Ethernet channels. */
+/* DEPRECATED Superset of Ethernet channels. */
 typedef enum e_ioport_eth_ch
 {
     IOPORT_ETHERNET_CHANNEL_0 = 0x10,  ///< Used to select Ethernet channel 0
@@ -158,7 +185,7 @@ typedef enum e_ioport_eth_ch
     IOPORT_ETHERNET_CHANNEL_END        ///< Marks end of enum - used by parameter checking
 } ioport_ethernet_channel_t;
 
-/** Superset of Ethernet PHY modes. */
+/* DEPRECATED Superset of Ethernet PHY modes. */
 typedef enum e_ioport_eth_mode
 {
     IOPORT_ETHERNET_MODE_RMII = 0x00,  ///< Ethernet PHY mode set to MII
@@ -267,7 +294,7 @@ typedef struct st_ioport_api
      */
     fsp_err_t (* pinEventOutputWrite)(ioport_ctrl_t * const p_ctrl, bsp_io_port_pin_t pin, bsp_io_level_t pin_value);
 
-    /** Configure the PHY mode of the Ethernet channels.
+    /* DEPRECATED Configure the PHY mode of the Ethernet channels.
      * @par Implemented as
      * - @ref R_IOPORT_EthernetModeCfg()
      * @param[in]  channel              Channel configuration will be set for.

@@ -99,9 +99,17 @@ typedef enum e_adc_event
     ADC_EVENT_SCAN_COMPLETE_GROUP_B,   ///< Group B scan complete
     ADC_EVENT_CALIBRATION_COMPLETE,    ///< Calibration complete
     ADC_EVENT_CONVERSION_COMPLETE,     ///< Conversion complete
+    ADC_EVENT_CALIBRATION_REQUEST,     ///< Calibration requested
+    ADC_EVENT_CONVERSION_ERROR,        ///< Scan error
+    ADC_EVENT_OVERFLOW,                ///< Overflow occurred
+    ADC_EVENT_LIMIT_CLIP,              ///< Limiter clipping occurred
+    ADC_EVENT_FIFO_READ_REQUEST,       ///< FIFO read requested
+    ADC_EVENT_FIFO_OVERFLOW,           ///< FIFO overflow occurred
     ADC_EVENT_WINDOW_COMPARE_A,        ///< Window A comparison condition met
     ADC_EVENT_WINDOW_COMPARE_B,        ///< Window B comparison condition met
 } adc_event_t;
+
+#ifndef BSP_OVERRIDE_ADC_CHANNEL_T
 
 /** ADC channels */
 typedef enum e_adc_channel
@@ -142,6 +150,36 @@ typedef enum e_adc_channel
     ADC_CHANNEL_VOLT        = -2,      ///< Internal reference voltage
 } adc_channel_t;
 
+#endif
+
+typedef enum e_adc_group_id
+{
+    ADC_GROUP_ID_0 = 0,                ///< Group ID 0
+    ADC_GROUP_ID_1 = 1,                ///< Group ID 1
+    ADC_GROUP_ID_2 = 2,                ///< Group ID 2
+    ADC_GROUP_ID_3 = 3,                ///< Group ID 3
+    ADC_GROUP_ID_4 = 4,                ///< Group ID 4
+    ADC_GROUP_ID_5 = 5,                ///< Group ID 5
+    ADC_GROUP_ID_6 = 6,                ///< Group ID 6
+    ADC_GROUP_ID_7 = 7,                ///< Group ID 7
+    ADC_GROUP_ID_8 = 8,                ///< Group ID 8
+} adc_group_id_t;
+
+typedef enum e_adc_group_mask
+{
+    ADC_GROUP_MASK_NONE = 0x000,       ///< Group Mask Unknown or None
+    ADC_GROUP_MASK_0    = 0x001,       ///< Group Mask 0
+    ADC_GROUP_MASK_1    = 0x002,       ///< Group Mask 1
+    ADC_GROUP_MASK_2    = 0x004,       ///< Group Mask 2
+    ADC_GROUP_MASK_3    = 0x008,       ///< Group Mask 3
+    ADC_GROUP_MASK_4    = 0x010,       ///< Group Mask 4
+    ADC_GROUP_MASK_5    = 0x020,       ///< Group Mask 5
+    ADC_GROUP_MASK_6    = 0x040,       ///< Group Mask 6
+    ADC_GROUP_MASK_7    = 0x080,       ///< Group Mask 7
+    ADC_GROUP_MASK_8    = 0x100,       ///< Group Mask 8
+    ADC_GROUP_MASK_ALL  = 0x1FF,       ///< All Groups
+} adc_group_mask_t;
+
 /** ADC states. */
 typedef enum e_adc_state
 {
@@ -158,17 +196,20 @@ typedef struct st_adc_status
 /** ADC callback arguments definitions  */
 typedef struct st_adc_callback_args
 {
-    uint16_t      unit;                ///< ADC device in use
-    adc_event_t   event;               ///< ADC callback event
-    void const  * p_context;           ///< Placeholder for user data
-    adc_channel_t channel;             ///< Channel of conversion result.  Only valid for ADC_EVENT_CONVERSION_COMPLETE
+    uint16_t         unit;             ///< ADC device in use
+    adc_event_t      event;            ///< ADC callback event
+    void const     * p_context;        ///< Placeholder for user data
+    adc_channel_t    channel;          ///< Channel of conversion result. Only valid for r_adc ADC_EVENT_CONVERSION_COMPLETE
+    uint64_t         channel_mask;     ///< Channel mask for conversion result. Only valid for r_adc_b
+    adc_group_mask_t group_mask;       ///< Group Mask
 } adc_callback_args_t;
 
 /** ADC Information Structure for Transfer Interface */
 typedef struct st_adc_info
 {
-    __I uint16_t   * p_address;           ///< The address to start reading the data from
-    uint32_t         length;              ///< The total number of transfers to read
+    __I void * p_address;                 ///< The address to start reading the data from
+    uint32_t   length;                    ///< The total number of transfers to read
+
     transfer_size_t  transfer_size;       ///< The size of each transfer
     elc_peripheral_t elc_peripheral;      ///< Name of the peripheral in the ELC list
     elc_event_t      elc_event;           ///< Name of the ELC event for the peripheral
@@ -204,6 +245,7 @@ typedef struct st_adc_api
      * and configurations common to all channels and sensors.
      * @par Implemented as
      * - @ref R_ADC_Open()
+     * - @ref R_ADC_B_Open()
      * - @ref R_SDADC_Open()
      *
      * @pre Configure peripheral clocks, ADC pins and IRQs prior to calling this function.
@@ -217,6 +259,7 @@ typedef struct st_adc_api
      * See implementation for details.
      * @par Implemented as
      * - @ref R_ADC_ScanCfg()
+     * - @ref R_ADC_B_ScanCfg()
      * - @ref R_SDADC_ScanCfg()
      *
      * @param[in]  p_ctrl     Pointer to control handle structure
@@ -233,6 +276,15 @@ typedef struct st_adc_api
      */
     fsp_err_t (* scanStart)(adc_ctrl_t * const p_ctrl);
 
+    /** Start the scan group (in case of a software trigger), or enable the hardware trigger.
+     * @par Implemented as
+     * - @ref R_ADC_B_ScanGroupStart()
+     *
+     * @param[in]  p_ctrl     Pointer to control handle structure
+     * @param[in]  group_mask Mask of groups to start
+     */
+    fsp_err_t (* scanGroupStart)(adc_ctrl_t * p_ctrl, adc_group_mask_t group_mask);
+
     /** Stop the ADC scan (in case of a software trigger), or disable the hardware trigger.
      * @par Implemented as
      * - @ref R_ADC_ScanStop()
@@ -245,6 +297,7 @@ typedef struct st_adc_api
     /** Check scan status.
      * @par Implemented as
      * - @ref R_ADC_StatusGet()
+     * - @ref R_ADC_B_StatusGet()
      * - @ref R_SDADC_StatusGet()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
@@ -255,6 +308,7 @@ typedef struct st_adc_api
     /** Read ADC conversion result.
      * @par Implemented as
      * - @ref R_ADC_Read()
+     * - @ref R_ADC_B_Read()
      * - @ref R_SDADC_Read()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
@@ -265,6 +319,8 @@ typedef struct st_adc_api
 
     /** Read ADC conversion result into a 32-bit word.
      * @par Implemented as
+     * - @ref R_ADC_Read32()
+     * - @ref R_ADC_B_Read32()
      * - @ref R_SDADC_Read32()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
@@ -276,12 +332,14 @@ typedef struct st_adc_api
     /** Calibrate ADC or associated PGA (programmable gain amplifier).  The driver may require implementation specific
      * arguments to the p_extend input. Not supported for all implementations. See implementation for details.
      * @par Implemented as
+     * - @ref R_ADC_Calibrate()
+     * - @ref R_ADC_B_Calibrate()
      * - @ref R_SDADC_Calibrate()
      *
      * @param[in]  p_ctrl    Pointer to control handle structure
      * @param[in]  p_extend  Pointer to implementation specific arguments
      */
-    fsp_err_t (* calibrate)(adc_ctrl_t * const p_ctrl, void * const p_extend);
+    fsp_err_t (* calibrate)(adc_ctrl_t * const p_ctrl, void const * p_extend);
 
     /** Set offset for input PGA configured for differential input. Not supported for all implementations.
      *  See implementation for details.
@@ -298,6 +356,7 @@ typedef struct st_adc_api
      * Specify callback function and optional context pointer and working memory pointer.
      * @par Implemented as
      * - @ref R_ADC_CallbackSet()
+     * - @ref R_ADC_B_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the ADC control block.
      * @param[in]   p_callback               Callback function
@@ -312,6 +371,7 @@ typedef struct st_adc_api
      * specified A/D unit.
      * @par Implemented as
      * - @ref R_ADC_Close()
+     * - @ref R_ADC_B_Close()
      * - @ref R_SDADC_Close()
      *
      * @param[in]  p_ctrl   Pointer to control handle structure
@@ -323,6 +383,7 @@ typedef struct st_adc_api
      * Return the temperature sensor calibration and slope data.
      * @par Implemented as
      * - @ref R_ADC_InfoGet()
+     * - @ref R_ADC_B_InfoGet()
      * - @ref R_SDADC_InfoGet()
      *
      * @param[in]   p_ctrl       Pointer to control handle structure
@@ -346,5 +407,4 @@ typedef struct st_adc_instance
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
-
 #endif

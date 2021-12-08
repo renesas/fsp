@@ -60,7 +60,7 @@ typedef struct st_bsp_leds
 typedef enum e_bsp_led
 {
     BSP_LED_LED1 = 0,
-    BSP_LED_LED2 = 0
+    BSP_LED_LED2 = 1
 } bsp_led_t;
 
 /***********************************************************************************************************************

@@ -134,6 +134,8 @@ fsp_err_t RM_MOTOR_ENCODER_SpeedGet(motor_ctrl_t * const p_ctrl, float * const p
 
 fsp_err_t RM_MOTOR_ENCODER_ErrorCheck(motor_ctrl_t * const p_ctrl, uint16_t * const p_error);
 
+fsp_err_t RM_MOTOR_ENCODER_WaitStopFlagGet(motor_ctrl_t * const p_ctrl, motor_wait_stop_flag_t * const p_flag);
+
 /*******************************************************************************************************************//**
  * @} (end addtogroup MOTOR_ENCODER)
  **********************************************************************************************************************/

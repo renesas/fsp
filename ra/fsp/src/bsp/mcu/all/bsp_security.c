@@ -266,19 +266,23 @@ void R_BSP_SecurityInit (void)
     R_PSCU->MSSAR = BSP_TZ_CFG_MSSAR;
 
     /* Initialize Type 2 SARs. */
-    R_CPSCU->CSAR      = BSP_TZ_CFG_CSAR;      /* Cache Security Attribution. */
-    R_SYSTEM->RSTSAR   = BSP_TZ_CFG_RSTSAR;    /* RSTSRn Security Attribution. */
-    R_SYSTEM->LVDSAR   = BSP_TZ_CFG_LVDSAR;    /* LVD Security Attribution. */
-    R_SYSTEM->CGFSAR   = BSP_TZ_CFG_CGFSAR;    /* CGC Security Attribution. */
-    R_SYSTEM->LPMSAR   = BSP_TZ_CFG_LPMSAR;    /* LPM Security Attribution. */
-    R_SYSTEM->DPFSAR   = BSP_TZ_CFG_DPFSAR;    /* Deep Standby Interrupt Factor Security Attribution. */
-    R_SYSTEM->BBFSAR   = BSP_TZ_CFG_BBFSAR;    /* Battery Backup Security Attribution. */
-    R_CPSCU->ICUSARA   = BSP_TZ_CFG_ICUSARA;   /* External IRQ Security Attribution. */
-    R_CPSCU->ICUSARB   = BSP_TZ_CFG_ICUSARB;   /* NMI Security Attribution. */
-    R_CPSCU->ICUSARC   = BSP_TZ_CFG_ICUSARC;   /* DMAC Channel Security Attribution. */
-    R_CPSCU->ICUSARD   = BSP_TZ_CFG_ICUSARD;   /* SELSR0 Security Attribution. */
-    R_CPSCU->ICUSARE   = BSP_TZ_CFG_ICUSARE;   /* WUPEN0 Security Attribution. */
-    R_CPSCU->ICUSARF   = BSP_TZ_CFG_ICUSARF;   /* WUPEN1 Security Attribution. */
+    R_CPSCU->CSAR    = BSP_TZ_CFG_CSAR;        /* Cache Security Attribution. */
+    R_SYSTEM->RSTSAR = BSP_TZ_CFG_RSTSAR;      /* RSTSRn Security Attribution. */
+    R_SYSTEM->LVDSAR = BSP_TZ_CFG_LVDSAR;      /* LVD Security Attribution. */
+    R_SYSTEM->CGFSAR = BSP_TZ_CFG_CGFSAR;      /* CGC Security Attribution. */
+    R_SYSTEM->LPMSAR = BSP_TZ_CFG_LPMSAR;      /* LPM Security Attribution. */
+    R_SYSTEM->DPFSAR = BSP_TZ_CFG_DPFSAR;      /* Deep Standby Interrupt Factor Security Attribution. */
+  #ifdef BSP_TZ_CFG_BBFSAR
+    R_SYSTEM->BBFSAR = BSP_TZ_CFG_BBFSAR;      /* Battery Backup Security Attribution. */
+  #endif
+    R_CPSCU->ICUSARA = BSP_TZ_CFG_ICUSARA;     /* External IRQ Security Attribution. */
+    R_CPSCU->ICUSARB = BSP_TZ_CFG_ICUSARB;     /* NMI Security Attribution. */
+    R_CPSCU->ICUSARC = BSP_TZ_CFG_ICUSARC;     /* DMAC Channel Security Attribution. */
+    R_CPSCU->ICUSARD = BSP_TZ_CFG_ICUSARD;     /* SELSR0 Security Attribution. */
+    R_CPSCU->ICUSARE = BSP_TZ_CFG_ICUSARE;     /* WUPEN0 Security Attribution. */
+  #ifdef BSP_TZ_CFG_ICUSARF
+    R_CPSCU->ICUSARF = BSP_TZ_CFG_ICUSARF;     /* WUPEN1 Security Attribution. */
+  #endif
     R_FCACHE->FSAR     = BSP_TZ_CFG_FSAR;      /* FLWT and FCKMHZ Security Attribution. */
     R_CPSCU->SRAMSAR   = BSP_TZ_CFG_SRAMSAR;   /* SRAM Security Attribution. */
     R_CPSCU->STBRAMSAR = BSP_TZ_CFG_STBRAMSAR; /* Standby RAM Security Attribution. */

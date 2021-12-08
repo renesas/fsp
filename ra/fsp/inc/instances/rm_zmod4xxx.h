@@ -29,17 +29,16 @@
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
-#include "bsp_api.h"
 #include "rm_zmod4xxx_api.h"
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)
-#elif defined(__CCRL__) || defined(__ICCRL__) || defined(__RL78__)
+#elif defined(__CCRL__) || defined(__ICCRL78__) || defined(__RL78__)
 #else
- #include "rm_zmod4xxx_lib_cfg.h"
+ #include "rm_zmod4xxx_lib_cfg.h"      // This will be removed in FSP v4.0.0.
  #include "rm_zmod4xxx_cfg.h"
 #endif
 
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)
-#elif defined(__CCRL__) || defined(__ICCRL__) || defined(__RL78__)
+#elif defined(__CCRL__) || defined(__ICCRL78__) || defined(__RL78__)
 #else
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
@@ -53,7 +52,7 @@ FSP_HEADER
 /* Definitions of Buffer Size */
 #define RM_ZMOD4XXX_MAX_I2C_BUF_SIZE        (64) // Maximum I2C buffer size
 
-/* Definitions of delay time */
+/* Definitions of delay time. These will be removed in FSP v4.0.0. */
 #if (RM_ZMOD4XXX_CFG_OPERATION_MODE == 1)
  #define RM_ZMOD4XXX_ALG_REQ_DELAY_IN_MS    (0)
 #elif (RM_ZMOD4XXX_CFG_OPERATION_MODE == 2)
@@ -76,6 +75,18 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+/** ZMOD4XXX Library type */
+typedef enum e_rm_zmod4xxx_lib_type
+{
+    RM_ZMOD4410_LIB_TYPE_IAQ_1ST_GEN_CONTINUOUS = 1,
+    RM_ZMOD4410_LIB_TYPE_IAQ_1ST_GEN_LOW_POWER,
+    RM_ZMOD4410_LIB_TYPE_IAQ_2ND_GEN,
+    RM_ZMOD4410_LIB_TYPE_ODOR,
+    RM_ZMOD4410_LIB_TYPE_SULFUR_ODOR,
+    RM_ZMOD4510_LIB_TYPE_OAQ_1ST_GEN,
+    RM_ZMOD4510_LIB_TYPE_OAQ_2ND_GEN,
+} rm_zmod4xxx_lib_type_t;
+
 /** ZMOD4XXX initialization process block */
 typedef struct st_rm_zmod4xxx_init_process_params
 {
@@ -91,6 +102,22 @@ typedef struct st_rm_zmod4xxx_status_params
     volatile bool flag;
 } rm_zmod4xxx_status_params_t;
 
+/* ZMOD4XXX lib configuration */
+typedef struct st_rm_zmod4xxx_lib_extended_cfg
+{
+    rm_zmod4xxx_lib_type_t const lib_type;    ///< Library type.
+    float const               sample_period;  ///< Time between samples.
+    uint16_t const            product_id;     ///< ZMOD4XXX product ID.
+    rm_zmod4xxx_api_t const * p_api;          ///< Pointer to APIs.
+    void const              * p_data_set;     ///< Pointer to ZMOD4XXX sensor data set.
+    uint8_t const           * p_product_data; ///< Pointer to ZMOD4XXX product data
+    void const              * p_device;       ///< Pointer to ZMOD4XXX device structure.
+    void const              * p_handle;       ///< Pointer to ZMOD4XXX library handler.
+    void const              * p_results;      ///< Pointer to ZMOD4XXX library results.
+    float temperature;                        ///< Temperature for OAQ 2nd
+    float humidity;                           ///< Humidity for OAQ 2nd
+} rm_zmod4xxx_lib_extended_cfg_t;
+
 /** ZMOD4XXX control block */
 typedef struct st_rm_zmod4xxx_instance_ctrl
 {
@@ -102,13 +129,8 @@ typedef struct st_rm_zmod4xxx_instance_ctrl
     rm_zmod4xxx_init_process_params_t init_process_params;           ///< For the initialization process.
     rm_zmod4xxx_cfg_t const         * p_cfg;                         ///< Pointer of configuration block
     rm_comms_instance_t const       * p_comms_i2c_instance;          ///< Pointer of I2C Communications Middleware instance structure
-    void const * p_timer_instance;                                   ///< Pointer to Timer driver instance.
+    rm_zmod4xxx_lib_extended_cfg_t  * p_zmod4xxx_lib;                ///< Pointer of ZMOD4XXX Lib extended configuration
     void const * p_irq_instance;                                     ///< Pointer to IRQ instance.
-    void       * p_zmod4xxx_device;                                  ///< Pointer to ZMOD4XXX device structure.
-    void       * p_zmod4xxx_handle;                                  ///< Pointer to ZMOD4XXX library handler.
-    void       * p_zmod4xxx_results;                                 ///< Pointer to ZMOD4XXX library results.
-    float        temperature;                                        ///< Temperature for OAQ 2nd
-    float        humidity;                                           ///< Humidity for OAQ 2nd
     void const * p_context;                                          ///< Pointer to the user-provided context
 
     /* Pointer to callback and optional working memory */
@@ -155,13 +177,10 @@ fsp_err_t RM_ZMOD4XXX_Oaq2ndGenDataCalculate(rm_zmod4xxx_ctrl_t * const         
                                              rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                              rm_zmod4xxx_oaq_2nd_data_t * const p_zmod4xxx_data);
 fsp_err_t RM_ZMOD4XXX_Close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
-void      rm_zmod4xxx_comms_i2c_callback(rm_comms_callback_args_t * p_args);
 
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)
-#elif defined(__CCRL__) || defined(__ICCRL__) || defined(__RL78__)
+#elif defined(__CCRL__) || defined(__ICCRL78__) || defined(__RL78__)
 #else
-void rm_zmod4xxx_timer_callback(timer_callback_args_t * p_args);
-void rm_zmod4xxx_irq_callback(external_irq_callback_args_t * p_args);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_FOOTER

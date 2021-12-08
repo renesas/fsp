@@ -48,12 +48,19 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/* OSPI Flash device chip select */
+/* OSPI Memory device chip select */
 typedef enum e_ospi_device_number
 {
     OSPI_DEVICE_NUMBER_0,              ///< Device connected to Chip-Select 0
     OSPI_DEVICE_NUMBER_1,              ///< Device connected to Chip-Select 1
 } ospi_device_number_t;
+
+/* OSPI Memory device type select */
+typedef enum e_ospi_device_type
+{
+    OSPI_DEVICE_FLASH = 0,             ///< Device Memory type OctaFlash
+    OSPI_DEVICE_RAM,                   ///< Device Memory type OctaRAM
+} ospi_device_type_t;
 
 /* OSPI command to command interval in single continuous read/write mode
  * Unit: OCTACLK
@@ -126,7 +133,10 @@ typedef struct st_ospi_extended_cfg
 {
     ospi_device_number_t           channel;                                 ///< Device number to be used for memory device
     uint32_t                       memory_size;                             ///< Size of memory device
+    ospi_device_type_t             memory_type;                             ///< Type of memory device
     uint8_t                        data_latch_delay_clocks;                 ///< Specify delay between OM_DQS and OM_DQS Strobe. Set to 0 to auto-callibrate. Typical value is 0x80.
+    uint8_t                        om_dqs_enable_counter_dopi;              ///< OM_DQS enable counter; Setting for DOPI mode (OctaRAM or OctaFlash based on memory_type).
+    uint8_t                        om_dqs_enable_counter_sopi;              ///< OM_DQS enable counter; Setting for SOPI mode (OctaFlash Only).
     uint8_t                        single_continuous_mode_read_idle_time;   ///< Mode idle time duration in PCLKA
     uint8_t                        single_continuous_mode_write_idle_time;  ///< Mode idle time duration in PCLKA
     ospi_timing_setting_t const  * p_mem_mapped_read_timing_settings;       ///< Memory mapped read mode settings
@@ -134,8 +144,10 @@ typedef struct st_ospi_extended_cfg
     ospi_timing_setting_t const  * p_timing_settings;                       ///< Memory mapped write mode settings
     ospi_opi_command_set_t const * p_opi_commands;                          ///< If OPI commands are not used set this to NULL
     uint8_t                        opi_mem_read_dummy_cycles;               ///< Dummy cycles to be inserted for memory mapped reads
+    uint8_t                        opi_mem_write_dummy_cycles;              ///< Dummy cycles to be inserted for memory mapped writes
     uint8_t                      * p_autocalibration_preamble_pattern_addr; ///< OctaFlash memory address holding the preamble pattern
     ospi_dopi_byte_order_t         dopi_byte_order;                         ///< Byte order on external bus. Only applicable in DOPI mode.
+    uint16_t                       ram_chip_select_max_period_setting;      ///< Indicates the maximum period that OM_CS0/OM_CS1 are Low in single continuous write/read of OctaRAM.
 #if OSPI_CFG_DMAC_SUPPORT_ENABLE
     transfer_instance_t const * p_lower_lvl_transfer;                       ///< DMA Transfer instance used for data transmission
 #endif
@@ -180,6 +192,7 @@ fsp_err_t R_OSPI_Write(spi_flash_ctrl_t    * p_ctrl,
 fsp_err_t R_OSPI_Erase(spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_address, uint32_t byte_count);
 fsp_err_t R_OSPI_StatusGet(spi_flash_ctrl_t * p_ctrl, spi_flash_status_t * const p_status);
 fsp_err_t R_OSPI_BankSet(spi_flash_ctrl_t * p_ctrl, uint32_t bank);
+fsp_err_t R_OSPI_AutoCalibrate(spi_flash_ctrl_t * p_ctrl);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

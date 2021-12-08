@@ -33,6 +33,7 @@
  *
  * Implemented by:
  * - @ref IIC_SLAVE
+ * - @ref IIC_B_SLAVE
  *
  * @{
  **********************************************************************************************************************/
@@ -129,6 +130,7 @@ typedef struct st_i2c_slave_api
     /** Opens the I2C Slave driver and initializes the hardware.
      * @par Implemented as
      * - @ref R_IIC_SLAVE_Open()
+     * - @ref R_IIC_B_SLAVE_Open()
      *
      * @param[in] p_ctrl    Pointer to control block. Must be declared by user. Elements are set here.
      * @param[in] p_cfg     Pointer to configuration structure.
@@ -138,6 +140,7 @@ typedef struct st_i2c_slave_api
     /** Performs a read operation on an I2C Slave device.
      * @par Implemented as
      * - @ref R_IIC_SLAVE_Read()
+     * - @ref R_IIC_B_SLAVE_Read()
      *
      * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      * @param[in] p_dest    Pointer to the location to store read data.
@@ -148,6 +151,7 @@ typedef struct st_i2c_slave_api
     /** Performs a write operation on an I2C Slave device.
      * @par Implemented as
      * - @ref R_IIC_SLAVE_Write()
+     * - @ref R_IIC_B_SLAVE_Write()
      *
      * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      * @param[in] p_src     Pointer to the location to get write data from.
@@ -159,6 +163,7 @@ typedef struct st_i2c_slave_api
      * Specify callback function and optional context pointer and working memory pointer.
      * @par Implemented as
      * - @ref R_IIC_SLAVE_CallbackSet()
+     * - @ref R_IIC_B_SLAVE_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the IIC Slave control block.
      * @param[in]   p_callback               Callback function
@@ -172,6 +177,7 @@ typedef struct st_i2c_slave_api
     /** Closes the driver and releases the I2C Slave device.
      * @par Implemented as
      * - @ref R_IIC_SLAVE_Close()
+     * - @ref R_IIC_B_SLAVE_Close()
      *
      * @param[in] p_ctrl    Pointer to control block set in @ref i2c_slave_api_t::open call.
      */

@@ -708,26 +708,32 @@ static void r_spi_bit_width_config (spi_instance_ctrl_t * p_ctrl)
     uint32_t spdcr  = p_ctrl->p_regs->SPDCR;
     uint32_t spcmd0 = p_ctrl->p_regs->SPCMD[0];
 
-    if (0U == ((uint8_t) (p_ctrl->bit_width) >> 2U)) /* Bit Widths of 20, 24 or 32 bits */
+    if (SPI_BIT_WIDTH_16_BITS < p_ctrl->bit_width) /* Bit Widths of 20, 24 or 32 bits */
     {
         /* Configure Word access to data register. */
         spdcr &= ~R_SPI0_SPDCR_SPBYT_Msk;
         spdcr |= R_SPI0_SPDCR_SPLW_Msk;
     }
-    else if (1U == ((uint8_t) (p_ctrl->bit_width) >> 2U))  /* Bit Width of 8 bits*/
+    else if (SPI_BIT_WIDTH_8_BITS >= p_ctrl->bit_width) /* Bit Width of 8 bits*/
     {
         /* Set SPBYT so 8bit transfer works with the DTC/DMAC. */
         spdcr |= R_SPI0_SPDCR_SPBYT_Msk;
     }
-    else                           /* Bit Widths of 9, 10, 11, 12, 13, 14, 15 or 16 bits */
+    else                               /* Bit Widths of 9, 10, 11, 12, 13, 14, 15 or 16 bits */
     {
         /* Configure Half-Word access to data register. */
         spdcr &= ~(R_SPI0_SPDCR_SPBYT_Msk | R_SPI0_SPDCR_SPLW_Msk);
     }
 
     /* Configure data length based on the selected bit width . */
+    uint32_t bit_width = p_ctrl->bit_width;
+    if (bit_width > SPI_BIT_WIDTH_16_BITS)
+    {
+        bit_width = ((bit_width + 1) >> 2) - 5;
+    }
+
     spcmd0 &= ~R_SPI0_SPCMD0_SPB_Msk;
-    spcmd0 |= (uint32_t)(p_ctrl->bit_width) << R_SPI0_SPCMD0_SPB_Pos;
+    spcmd0 |= bit_width << R_SPI0_SPCMD0_SPB_Pos;
 
     p_ctrl->p_regs->SPDCR    = (uint8_t) spdcr;
     p_ctrl->p_regs->SPCMD[0] = (uint16_t) spcmd0;
@@ -814,6 +820,11 @@ static fsp_err_t r_spi_write_read_common (spi_ctrl_t * const    p_api_ctrl,
     {
         FSP_ASSERT(length <= SPI_DTC_MAX_TRANSFER);
     }
+
+    /* Reject bit width settings not compatible with R_SPI */
+    FSP_ASSERT(!((bit_width < SPI_BIT_WIDTH_8_BITS) ||
+                 ((bit_width > SPI_BIT_WIDTH_16_BITS) && ((bit_width + 1) & 0x3)) ||
+                 (bit_width == SPI_BIT_WIDTH_28_BITS)));
 #endif
 
     FSP_ERROR_RETURN(0 == (p_ctrl->p_regs->SPCR & R_SPI0_SPCR_SPE_Msk), FSP_ERR_IN_USE);
@@ -832,17 +843,17 @@ static fsp_err_t r_spi_write_read_common (spi_ctrl_t * const    p_api_ctrl,
         p_ctrl->rx_count = length;
 
         /* Configure the receive DMA instance. */
-        if(0U == (uint8_t) bit_width >> 2U)
+        if (SPI_BIT_WIDTH_16_BITS < p_ctrl->bit_width)
         {
-            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->size  = TRANSFER_SIZE_4_BYTE;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->size = TRANSFER_SIZE_4_BYTE;
         }
-        else if (1U == (uint8_t) bit_width >> 2U)
+        else if (SPI_BIT_WIDTH_8_BITS >= p_ctrl->bit_width)
         {
-            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->size  = TRANSFER_SIZE_1_BYTE;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->size = TRANSFER_SIZE_1_BYTE;
         }
         else
         {
-            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->size  = TRANSFER_SIZE_2_BYTE;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->size = TRANSFER_SIZE_2_BYTE;
         }
 
         p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->dest_addr_mode = TRANSFER_ADDR_MODE_INCREMENTED;
@@ -868,17 +879,17 @@ static fsp_err_t r_spi_write_read_common (spi_ctrl_t * const    p_api_ctrl,
         p_ctrl->tx_count = length;
 
         /* Configure the transmit DMA instance. */
-        if(0U == (uint8_t) bit_width >> 2U)
+        if (SPI_BIT_WIDTH_16_BITS < p_ctrl->bit_width)
         {
-            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->size  = TRANSFER_SIZE_4_BYTE;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->size = TRANSFER_SIZE_4_BYTE;
         }
-        else if (1U == (uint8_t) bit_width >> 2U)
+        else if (SPI_BIT_WIDTH_8_BITS >= p_ctrl->bit_width)
         {
-            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->size  = TRANSFER_SIZE_1_BYTE;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->size = TRANSFER_SIZE_1_BYTE;
         }
         else
         {
-            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->size  = TRANSFER_SIZE_2_BYTE;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->size = TRANSFER_SIZE_2_BYTE;
         }
 
         p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->src_addr_mode = TRANSFER_ADDR_MODE_INCREMENTED;
@@ -927,16 +938,15 @@ static void r_spi_receive (spi_instance_ctrl_t * p_ctrl)
     }
     else
     {
-        if (0U == ((uint8_t) (p_ctrl->bit_width) >> 2U)) /* Bit Widths of 20, 24 or 32 bits */
+        if (SPI_BIT_WIDTH_16_BITS < p_ctrl->bit_width)      /* Bit Widths of 20, 24 or 32 bits */
         {
             ((uint32_t *) (p_ctrl->p_rx_data))[rx_count] = p_ctrl->p_regs->SPDR;
         }
-        else if (1U == ((uint8_t) (p_ctrl->bit_width) >> 2U))  /* Bit Width of 8 bits*/
+        else if (SPI_BIT_WIDTH_8_BITS >= p_ctrl->bit_width) /* Bit Width of 8 bits*/
         {
             ((uint8_t *) (p_ctrl->p_rx_data))[rx_count] = p_ctrl->p_regs->SPDR_BY;
-
         }
-        else                           /* Bit Widths of 9, 10, 11, 12, 13, 14, 15 or 16 bits */
+        else                                                /* Bit Widths of 9, 10, 11, 12, 13, 14, 15 or 16 bits */
         {
             ((uint16_t *) (p_ctrl->p_rx_data))[rx_count] = p_ctrl->p_regs->SPDR_HA;
         }
@@ -967,16 +977,15 @@ static void r_spi_transmit (spi_instance_ctrl_t * p_ctrl)
     }
     else
     {
-        if (0U == ((uint8_t) (p_ctrl->bit_width) >> 2U)) /* Bit Widths of 20, 24 or 32 bits */
+        if (SPI_BIT_WIDTH_16_BITS < p_ctrl->bit_width)      /* Bit Widths of 20, 24 or 32 bits */
         {
             p_ctrl->p_regs->SPDR = ((uint32_t *) p_ctrl->p_tx_data)[tx_count];
-
         }
-        else if (1U == ((uint8_t) (p_ctrl->bit_width) >> 2U))  /* Bit Width of 8 bits*/
+        else if (SPI_BIT_WIDTH_8_BITS >= p_ctrl->bit_width) /* Bit Width of 8 bits*/
         {
             p_ctrl->p_regs->SPDR_BY = ((uint8_t *) p_ctrl->p_tx_data)[tx_count];
         }
-        else                           /* Bit Widths of 9, 10, 11, 12, 13, 14, 15 or 16 bits */
+        else                                                /* Bit Widths of 9, 10, 11, 12, 13, 14, 15 or 16 bits */
         {
             p_ctrl->p_regs->SPDR_HA = ((uint16_t *) p_ctrl->p_tx_data)[tx_count];
         }

@@ -34,12 +34,10 @@
 /**********************************************************************************************************************
  * Exported global variables
  *********************************************************************************************************************/
-fsp_err_t rm_zmod4xxx_timer_open(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
-fsp_err_t rm_zmod4xxx_timer_close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
-fsp_err_t rm_zmod4xxx_timer_start(rm_zmod4xxx_ctrl_t * const p_api_ctrl, uint32_t const delay_ms);
-fsp_err_t rm_zmod4xxx_timer_stop(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
+fsp_err_t rm_zmod4xxx_delay_ms(rm_zmod4xxx_ctrl_t * const p_ctrl, uint32_t const delay_ms);
 fsp_err_t rm_zmod4xxx_irq_open(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 fsp_err_t rm_zmod4xxx_irq_close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
+void      rm_zmod4xxx_irq_callback(external_irq_callback_args_t * p_args);
 
 /**********************************************************************************************************************
  * Private (static) variables and functions
@@ -50,105 +48,18 @@ fsp_err_t rm_zmod4xxx_irq_close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
  **********************************************************************************************************************/
 
 /*******************************************************************************************************************//**
- * @brief Open timer driver and set callback function.
+ * @brief Delay some milliseconds.
  *
  * @retval FSP_SUCCESS              successfully configured.
  **********************************************************************************************************************/
-fsp_err_t rm_zmod4xxx_timer_open (rm_zmod4xxx_ctrl_t * const p_api_ctrl)
+fsp_err_t rm_zmod4xxx_delay_ms (rm_zmod4xxx_ctrl_t * const p_ctrl, uint32_t const delay_ms)
 {
-    fsp_err_t err = FSP_SUCCESS;
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl           = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
-    timer_instance_t            * p_timer_instance = (timer_instance_t *) p_ctrl->p_timer_instance;
+    FSP_PARAMETER_NOT_USED(p_ctrl);
 
-    /* Open timer driver */
-    err = p_timer_instance->p_api->open(p_timer_instance->p_ctrl,
-                                        p_timer_instance->p_cfg);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Set callback */
-    err = p_timer_instance->p_api->callbackSet(p_timer_instance->p_ctrl,
-                                               rm_zmod4xxx_timer_callback,
-                                               p_ctrl,
-                                               NULL);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    /* Software delay */
+    R_BSP_SoftwareDelay(delay_ms, BSP_DELAY_UNITS_MILLISECONDS);
 
     return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
- * @brief Close timer driver.
- *
- * @retval FSP_SUCCESS              successfully configured.
- **********************************************************************************************************************/
-fsp_err_t rm_zmod4xxx_timer_close (rm_zmod4xxx_ctrl_t * const p_api_ctrl)
-{
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl           = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
-    timer_instance_t            * p_timer_instance = (timer_instance_t *) p_ctrl->p_timer_instance;
-
-    /* Close timer driver */
-    p_timer_instance->p_api->close(p_timer_instance->p_ctrl);
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
- * @brief Start timer count.
- *
- * @retval FSP_SUCCESS              successfully configured.
- **********************************************************************************************************************/
-fsp_err_t rm_zmod4xxx_timer_start (rm_zmod4xxx_ctrl_t * const p_api_ctrl, uint32_t const delay_ms)
-{
-    fsp_err_t err = FSP_SUCCESS;
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl           = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
-    timer_instance_t            * p_timer_instance = (timer_instance_t *) p_ctrl->p_timer_instance;
-
-    /* Set delay times */
-    p_ctrl->init_process_params.delay_ms = delay_ms;
-
-    /* Reset timer driver */
-    err = p_timer_instance->p_api->reset(p_timer_instance->p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Start timer driver */
-    err = p_timer_instance->p_api->start(p_timer_instance->p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
- * @brief Stop timer count.
- *
- * @retval FSP_SUCCESS              successfully configured.
- **********************************************************************************************************************/
-fsp_err_t rm_zmod4xxx_timer_stop (rm_zmod4xxx_ctrl_t * const p_api_ctrl)
-{
-    fsp_err_t err = FSP_SUCCESS;
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl           = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
-    timer_instance_t            * p_timer_instance = (timer_instance_t *) p_ctrl->p_timer_instance;
-
-    /* Stop timer driver */
-    err = p_timer_instance->p_api->stop(p_timer_instance->p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    return FSP_SUCCESS;
-}
-
-void rm_zmod4xxx_timer_callback (timer_callback_args_t * p_args)
-{
-    rm_zmod4xxx_instance_ctrl_t * p_ctrl           = (rm_zmod4xxx_instance_ctrl_t *) p_args->p_context;
-    timer_instance_t            * p_timer_instance = (timer_instance_t *) p_ctrl->p_timer_instance;
-
-    if (0 < p_ctrl->init_process_params.delay_ms)
-    {
-        /* Decrement */
-        p_ctrl->init_process_params.delay_ms--;
-    }
-    else
-    {
-        /* Stop timer driver */
-        p_timer_instance->p_api->stop(p_timer_instance->p_ctrl);
-    }
 }
 
 /*******************************************************************************************************************//**

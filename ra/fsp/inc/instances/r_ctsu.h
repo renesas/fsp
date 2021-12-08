@@ -312,24 +312,29 @@ typedef struct st_ctsu_instance_ctrl
 #endif
 
 #if (BSP_FEATURE_CTSU_VERSION == 2)
-    ctsu_range_t range;                          ///< According to atune12. (20uA : 0, 40uA : 1, 80uA : 2, 160uA : 3)
-    uint8_t      ctsucr2;                        ///< Copy from (posel, atune1, md) by Open API. FCMODE and SDPSEL and LOAD is set by HAL driver.
+    ctsu_range_t range;                            ///< According to atune12. (20uA : 0, 40uA : 1, 80uA : 2, 160uA : 3)
+    uint8_t      ctsucr2;                          ///< Copy from (posel, atune1, md) by Open API. FCMODE and SDPSEL and LOAD is set by HAL driver.
  #if (CTSU_CFG_NUM_CFC != 0)
-    uint64_t              cfc_rx_bitmap;         ///< Bitmap of CFC receive terminal.
-    ctsu_corrcfc_info_t * p_corrcfc_info;        ///< pointer to CFC correction info
+    uint64_t              cfc_rx_bitmap;           ///< Bitmap of CFC receive terminal.
+    ctsu_corrcfc_info_t * p_corrcfc_info;          ///< pointer to CFC correction info
  #endif
  #if (CTSU_CFG_DIAG_SUPPORT_ENABLE == 1)
-    ctsu_diag_info_t * p_diag_info;              ///< pointer to diagnosis info
+    ctsu_diag_info_t * p_diag_info;                ///< pointer to diagnosis info
  #endif
 #endif
-    ctsu_cfg_t const * p_ctsu_cfg;               ///< Pointer to initial configurations.
-    IRQn_Type          write_irq;                ///< Copy from config by Open API. CTSU_CTSUWR interrupt vector
-    IRQn_Type          read_irq;                 ///< Copy from config by Open API. CTSU_CTSURD interrupt vector
-    IRQn_Type          end_irq;                  ///< Copy from config by Open API. CTSU_CTSUFN interrupt vector
-    void (* p_callback)(ctsu_callback_args_t *); ///< Callback provided when a CTSUFN occurs.
-    ctsu_event_t           error_status;         ///< error status variable to send to QE for serial tuning.
-    ctsu_callback_args_t * p_callback_memory;    ///< Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
-    void const           * p_context;            ///< Placeholder for user data.
+    ctsu_cfg_t const * p_ctsu_cfg;                 ///< Pointer to initial configurations.
+    IRQn_Type          write_irq;                  ///< Copy from config by Open API. CTSU_CTSUWR interrupt vector
+    IRQn_Type          read_irq;                   ///< Copy from config by Open API. CTSU_CTSURD interrupt vector
+    IRQn_Type          end_irq;                    ///< Copy from config by Open API. CTSU_CTSUFN interrupt vector
+    void (* p_callback)(ctsu_callback_args_t *);   ///< Callback provided when a CTSUFN occurs.
+    uint8_t                interrupt_reverse_flag; ///< Flag in which read interrupt and end interrupt are reversed
+    ctsu_event_t           error_status;           ///< error status variable to send to QE for serial tuning.
+    ctsu_callback_args_t * p_callback_memory;      ///< Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
+    void const           * p_context;              ///< Placeholder for user data.
+    bool     serial_tuning_enable;                 ///< Flag of serial tuning status.
+    uint16_t serial_tuning_mutual_cnt;             ///< Word index into ctsuwr register array.
+    uint16_t tuning_self_target_value;             ///< Target self value for initial offset tuning
+    uint16_t tuning_mutual_target_value;           ///< Target mutual value for initial offset tuning
 } ctsu_instance_ctrl_t;
 
 /**********************************************************************************************************************

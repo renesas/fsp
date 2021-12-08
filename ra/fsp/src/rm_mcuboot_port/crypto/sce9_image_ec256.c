@@ -32,6 +32,7 @@
 #ifdef MCUBOOT_SIGN_EC256
 
  #if defined MCUBOOT_USE_USER_DEFINED_CRYPTO_STACK
+  #include "mbedtls/build_info.h"
   #include "bootutil/sign_key.h"
 
   #include "mbedtls/oid.h"

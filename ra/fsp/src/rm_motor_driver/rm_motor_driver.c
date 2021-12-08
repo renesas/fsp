@@ -24,36 +24,37 @@
 #include <math.h>
 #include <stdint.h>
 #include "rm_motor_driver.h"
-#include "bsp_api.h"
-#include "bsp_cfg.h"
+#include "r_gpt.h"
+
+#if (MOTOR_DRIVER_CFG_ADC_B_SUPPORTED == 1)
+ #include "r_adc_b.h"
+#endif
 
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_DRIVER_OPEN                (0X4D445241L)
+#define     MOTOR_DRIVER_OPEN             (0X4D445241L)
 
-#define     MOTOR_DRIVER_FLG_CLR             (0)     /* For flag clear */
-#define     MOTOR_DRIVER_FLG_SET             (1)     /* For flag set */
+#define     MOTOR_DRIVER_FLG_CLR          (0)     /* For flag clear */
+#define     MOTOR_DRIVER_FLG_SET          (1)     /* For flag set */
 
-#define     MOTOR_DRIVER_MULTIPLE_2          (2.0F)  /* x2 */
-#define     MOTOR_DRIVER_DEV_HALF            (0.5F)  /* 1/2 */
+#define     MOTOR_DRIVER_KHZ_TRANS        (1000U) /* x1000 */
 
-#define     MOTOR_DRIVER_KHZ_TRANS           (1000U) /* x1000 */
+#define     MOTOR_DRIVER_DEF_HALF         (0.5F)
+#define     MOTOR_DRIVER_MULTIPLE_TWO     (2.0F)
 
-#define     MOTOR_DRIVER_DEF_HALF            (0.5F)
-#define     MOTOR_DRIVER_MULTIPLE_TWO        (2.0F)
+#define     MOTOR_DRIVER_ADC_DATA_MASK    (0x00000FFF)
 
 /* Select SVPWM as default method when MOD_METHOD is undefined */
-#define     MOTOR_DRIVER_DEFAULT_MAX_DUTY    (1.0F)   /* Default maximum duty cycle */
-#define     MOTOR_DRIVER_METHOD_SPWM         (0)      /* Sinusoidal pulse-width-modulation */
-#define     MOTOR_DRIVER_METHOD_SVPWM        (1)      /* Space vector pulse-width-modulation */
-#define     MOTOR_DRIVER_SATFLAG_BITU        (1 << 0) /* Saturation flag bit for U phase */
-#define     MOTOR_DRIVER_SATFLAG_BITV        (1 << 1) /* Saturation flag bit for V phase */
-#define     MOTOR_DRIVER_SATFLAG_BITW        (1 << 2) /* Saturation flag bit for W phase */
+#define     MOTOR_DRIVER_METHOD_SPWM      (0)      /* Sinusoidal pulse-width-modulation */
+#define     MOTOR_DRIVER_METHOD_SVPWM     (1)      /* Space vector pulse-width-modulation */
+#define     MOTOR_DRIVER_SATFLAG_BITU     (1 << 0) /* Saturation flag bit for U phase */
+#define     MOTOR_DRIVER_SATFLAG_BITV     (1 << 1) /* Saturation flag bit for V phase */
+#define     MOTOR_DRIVER_SATFLAG_BITW     (1 << 2) /* Saturation flag bit for W phase */
 
 #ifndef MOTOR_DRIVER_METHOD
- #define MOTOR_DRIVER_METHOD                 (MOTOR_DRIVER_METHOD_SVPWM)
+ #define MOTOR_DRIVER_METHOD              (MOTOR_DRIVER_METHOD_SPWM)
 #endif
 
 /*
@@ -61,11 +62,10 @@
  *   SVPWM :  Vdc * (MOD_VDC_TO_VAMAX_MULT) * (Max duty - Min duty) * (MOD_SVPWM_MULT)
  *   SPWM  :  Vdc * (MOD_VDC_TO_VAMAX_MULT) * (Max duty - Min duty)
  */
-#define MOTOR_DRIVER_VDC_TO_VAMAX_MULT       (0.6124F) /* The basic coefficient used to convert Vdc to Vamax */
-#define MOTOR_DRIVER_SVPWM_MULT              (1.155F)  /* The usable voltage is multiplied by sqrt(4/3) when using SVPWM */
+#define MOTOR_DRIVER_VDC_TO_VAMAX_MULT    (0.6124F) /* The basic coefficient used to convert Vdc to Vamax */
+#define MOTOR_DRIVER_SVPWM_MULT           (1.155F)  /* The usable voltage is multiplied by sqrt(4/3) when using SVPWM */
 
 #ifndef MOTOR_DRIVER_ERROR_RETURN
-
  #define    MOTOR_DRIVER_ERROR_RETURN(a, err)    FSP_ERROR_RETURN((a), (err))
 #endif
 
@@ -77,6 +77,7 @@
  * Private function prototypes
  **********************************************************************************************************************/
 void rm_motor_driver_cyclic(adc_callback_args_t * p_args);
+void rm_motor_driver_1shunt_cyclic(timer_callback_args_t * p_args);
 
 static void rm_motor_driver_reset(motor_driver_instance_ctrl_t * p_ctrl);
 static void rm_motor_driver_set_uvw_duty(motor_driver_instance_ctrl_t * p_ctrl,
@@ -84,10 +85,14 @@ static void rm_motor_driver_set_uvw_duty(motor_driver_instance_ctrl_t * p_ctrl,
                                          float                          f_duty_v,
                                          float                          f_duty_w);
 static void rm_motor_driver_current_get(motor_driver_instance_ctrl_t * p_ctrl);
+static void rm_motor_driver_1shunt_current_get(motor_driver_instance_ctrl_t * p_ctrl);
 static void rm_motor_driver_modulation(motor_driver_instance_ctrl_t * p_ctrl);
+static void rm_motor_driver_1shunt_modulation(motor_driver_instance_ctrl_t * p_ctrl);
 
 /* Modulation functions */
-static void  rm_motor_driver_mod_run(motor_driver_modulation_t * p_mod, const float * p_f4_v_in, float * p_f4_duty_out);
+static void rm_motor_driver_mod_run(motor_driver_instance_ctrl_t * p_ctrl,
+                                    const float                  * p_f4_v_in,
+                                    float                        * p_f4_duty_out);
 static void  rm_motor_driver_mod_set_max_duty(motor_driver_modulation_t * p_mod, float f4_max_duty);
 static void  rm_motor_driver_mod_set_min_duty(motor_driver_modulation_t * p_mod, float f4_min_duty);
 static float rm_motor_driver_mod_get_vamax(motor_driver_modulation_t * p_mod);
@@ -148,7 +153,7 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
 
     p_instance_ctrl->u2_carrier_base =
         (uint16_t) (p_extended_cfg->u2_pwm_timer_freq * MOTOR_DRIVER_KHZ_TRANS /
-                    p_extended_cfg->u2_pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_2);
+                    p_extended_cfg->u2_pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_TWO);
     p_instance_ctrl->u2_deadtime_count =
         (uint16_t) (p_extended_cfg->u2_deadtime * p_extended_cfg->u2_pwm_timer_freq);
 
@@ -158,28 +163,60 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
     rm_motor_driver_mod_set_max_duty(&(p_instance_ctrl->st_modulation), p_extended_cfg->mod_param.f4_max_duty);
     rm_motor_driver_mod_set_min_duty(&(p_instance_ctrl->st_modulation), p_extended_cfg->mod_param.f4_min_duty);
 
-    /* Start ADC module */
-    if (p_cfg->p_adc_instance != NULL)
-    {
-        p_cfg->p_adc_instance->p_api->open(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_cfg);
-        p_cfg->p_adc_instance->p_api->scanCfg(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_channel_cfg);
-        p_cfg->p_adc_instance->p_api->callbackSet(p_cfg->p_adc_instance->p_ctrl,
-                                                  rm_motor_driver_cyclic,
-                                                  p_instance_ctrl,
-                                                  &(p_instance_ctrl->adc_callback_args));
-        p_cfg->p_adc_instance->p_api->scanStart(p_cfg->p_adc_instance->p_ctrl);
-    }
-
-    /* Start GPT Three Phase Module */
+    /* Start GPT three phase module */
     if (p_cfg->p_three_phase_instance != NULL)
     {
         p_cfg->p_three_phase_instance->p_api->open(p_cfg->p_three_phase_instance->p_ctrl,
                                                    p_cfg->p_three_phase_instance->p_cfg);
-        rm_motor_driver_set_uvw_duty(p_instance_ctrl,
-                                     p_instance_ctrl->st_modulation.f4_neutral_duty,
-                                     p_instance_ctrl->st_modulation.f4_neutral_duty,
-                                     p_instance_ctrl->st_modulation.f4_neutral_duty);
+
+        if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT == p_cfg->shunt)
+        {
+            p_cfg->p_three_phase_instance->p_cfg->p_timer_instance[0]->p_api->callbackSet(
+                p_cfg->p_three_phase_instance->p_cfg->p_timer_instance[0]->p_ctrl,
+                rm_motor_driver_1shunt_cyclic,
+                p_instance_ctrl,
+                &(p_instance_ctrl->timer_callback_args));
+        }
+        else
+        {
+            rm_motor_driver_set_uvw_duty(p_instance_ctrl,
+                                         p_instance_ctrl->st_modulation.f4_neutral_duty,
+                                         p_instance_ctrl->st_modulation.f4_neutral_duty,
+                                         p_instance_ctrl->st_modulation.f4_neutral_duty);
+        }
+
         p_cfg->p_three_phase_instance->p_api->start(p_cfg->p_three_phase_instance->p_ctrl);
+    }
+
+    /* Start ADC module */
+    /* For 1shunt, Vdc is need to read by ADC module #1. */
+    if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT == p_cfg->shunt)
+    {
+        if (p_cfg->p_adc2_instance != NULL)
+        {
+            p_cfg->p_adc2_instance->p_api->open(p_cfg->p_adc2_instance->p_ctrl, p_cfg->p_adc2_instance->p_cfg);
+            p_cfg->p_adc2_instance->p_api->scanCfg(p_cfg->p_adc2_instance->p_ctrl,
+                                                   p_cfg->p_adc2_instance->p_channel_cfg);
+        }
+    }
+
+    if (p_cfg->p_adc_instance != NULL)
+    {
+        p_cfg->p_adc_instance->p_api->open(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_cfg);
+        p_cfg->p_adc_instance->p_api->scanCfg(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_channel_cfg);
+        p_cfg->p_adc_instance->p_api->calibrate(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_cfg->p_extend);
+
+        if (p_cfg->shunt != MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT)
+        {
+            p_cfg->p_adc_instance->p_api->callbackSet(p_cfg->p_adc_instance->p_ctrl,
+                                                      rm_motor_driver_cyclic,
+                                                      p_instance_ctrl,
+                                                      &(p_instance_ctrl->adc_callback_args));
+        }
+
+        p_cfg->p_adc_instance->p_api->calibrate(p_cfg->p_adc_instance->p_ctrl,
+                                                (void *) p_cfg->p_adc_instance->p_cfg->p_extend);
+        p_cfg->p_adc_instance->p_api->scanStart(p_cfg->p_adc_instance->p_ctrl);
     }
 
     /* Mark driver as open */
@@ -208,13 +245,21 @@ fsp_err_t RM_MOTOR_DRIVER_Close (motor_driver_ctrl_t * const p_ctrl)
 
     rm_motor_driver_reset(p_instance_ctrl);
 
-    /* Close ADC Module */
+    /* Close ADC module */
     if (p_cfg->p_adc_instance != NULL)
     {
         p_cfg->p_adc_instance->p_api->close(p_cfg->p_adc_instance->p_ctrl);
     }
 
-    /* Close GPT Three Phase Module */
+    if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT == p_cfg->shunt)
+    {
+        if (p_cfg->p_adc2_instance != NULL)
+        {
+            p_cfg->p_adc2_instance->p_api->close(p_cfg->p_adc2_instance->p_ctrl);
+        }
+    }
+
+    /* Close GPT three phase module */
     if (p_cfg->p_three_phase_instance != NULL)
     {
         p_cfg->p_three_phase_instance->p_api->close(p_cfg->p_three_phase_instance->p_ctrl);
@@ -299,8 +344,19 @@ fsp_err_t RM_MOTOR_DRIVER_CurrentGet (motor_driver_ctrl_t * const        p_ctrl,
     MOTOR_DRIVER_ERROR_RETURN(p_current_get != NULL, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    p_current_get->iu     = p_instance_ctrl->f_iu_ad - p_instance_ctrl->f_offset_iu;
-    p_current_get->iw     = p_instance_ctrl->f_iw_ad - p_instance_ctrl->f_offset_iw;
+    if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT != p_instance_ctrl->p_cfg->shunt)
+    {
+        p_current_get->iu = p_instance_ctrl->f_iu_ad - p_instance_ctrl->f_offset_iu;
+        p_current_get->iv = p_instance_ctrl->f_iv_ad - p_instance_ctrl->f_offset_iv;
+        p_current_get->iw = p_instance_ctrl->f_iw_ad - p_instance_ctrl->f_offset_iw;
+    }
+    else
+    {
+        p_current_get->iu = p_instance_ctrl->f_iu_ad;
+        p_current_get->iv = p_instance_ctrl->f_iv_ad;
+        p_current_get->iw = p_instance_ctrl->f_iw_ad;
+    }
+
     p_current_get->vdc    = p_instance_ctrl->f_vdc_ad;
     p_current_get->va_max = rm_motor_driver_mod_get_vamax(&(p_instance_ctrl->st_modulation));
 
@@ -330,18 +386,41 @@ fsp_err_t RM_MOTOR_DRIVER_FlagCurrentOffsetGet (motor_driver_ctrl_t * const p_ct
     motor_driver_extended_cfg_t * p_extended_cfg =
         (motor_driver_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
-    /* Measure Current A/D Offset */
+    /* Measure current A/D offset */
     if (MOTOR_DRIVER_FLG_CLR == p_instance_ctrl->u1_flag_offset_calc)
     {
-        /* Output Neautral PWM */
-        rm_motor_driver_set_uvw_duty(p_instance_ctrl,
-                                     p_instance_ctrl->st_modulation.f4_neutral_duty,
-                                     p_instance_ctrl->st_modulation.f4_neutral_duty,
-                                     p_instance_ctrl->st_modulation.f4_neutral_duty);
-
-        u2_temp_offset_count = p_extended_cfg->u2_offset_calc_count;
-        if (MOTOR_DRIVER_FLG_CLR == p_instance_ctrl->u1_flag_offset_calc)
+        /* 2 or 3 shunt */
+        if (MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT != p_instance_ctrl->p_cfg->shunt)
         {
+            /* Output neautral PWM */
+            rm_motor_driver_set_uvw_duty(p_instance_ctrl,
+                                         p_instance_ctrl->st_modulation.f4_neutral_duty,
+                                         p_instance_ctrl->st_modulation.f4_neutral_duty,
+                                         p_instance_ctrl->st_modulation.f4_neutral_duty);
+
+            u2_temp_offset_count = p_extended_cfg->u2_offset_calc_count;
+            if (MOTOR_DRIVER_FLG_CLR == p_instance_ctrl->u1_flag_offset_calc)
+            {
+                if (p_instance_ctrl->u2_offset_calc_times < u2_temp_offset_count)
+                {
+                    p_instance_ctrl->f_sum_iu_ad += p_instance_ctrl->f_iu_ad;
+                    p_instance_ctrl->f_sum_iv_ad += p_instance_ctrl->f_iv_ad;
+                    p_instance_ctrl->f_sum_iw_ad += p_instance_ctrl->f_iw_ad;
+                    p_instance_ctrl->u2_offset_calc_times++;
+                }
+                else
+                {
+                    p_instance_ctrl->f_offset_iu         = p_instance_ctrl->f_sum_iu_ad / u2_temp_offset_count;
+                    p_instance_ctrl->f_offset_iv         = p_instance_ctrl->f_sum_iv_ad / u2_temp_offset_count;
+                    p_instance_ctrl->f_offset_iw         = p_instance_ctrl->f_sum_iw_ad / u2_temp_offset_count;
+                    p_instance_ctrl->u1_flag_offset_calc = MOTOR_DRIVER_FLG_SET;
+                }
+            }
+        }
+        /* 1 shunt */
+        else
+        {
+            u2_temp_offset_count = p_extended_cfg->u2_offset_calc_count;
             if (p_instance_ctrl->u2_offset_calc_times < u2_temp_offset_count)
             {
                 p_instance_ctrl->f_sum_iu_ad += p_instance_ctrl->f_iu_ad;
@@ -350,10 +429,8 @@ fsp_err_t RM_MOTOR_DRIVER_FlagCurrentOffsetGet (motor_driver_ctrl_t * const p_ct
             }
             else
             {
-                p_instance_ctrl->f_offset_iu = p_instance_ctrl->f_sum_iu_ad /
-                                               u2_temp_offset_count;
-                p_instance_ctrl->f_offset_iw = p_instance_ctrl->f_sum_iw_ad /
-                                               u2_temp_offset_count;
+                p_instance_ctrl->f_offset_iu         = p_instance_ctrl->f_sum_iu_ad / u2_temp_offset_count;
+                p_instance_ctrl->f_offset_iw         = p_instance_ctrl->f_sum_iw_ad / u2_temp_offset_count;
                 p_instance_ctrl->u1_flag_offset_calc = MOTOR_DRIVER_FLG_SET;
             }
         }
@@ -383,6 +460,7 @@ fsp_err_t RM_MOTOR_DRIVER_CurrentOffsetRestart (motor_driver_ctrl_t * const p_ct
     p_instance_ctrl->u1_flag_offset_calc  = MOTOR_DRIVER_FLG_CLR;
     p_instance_ctrl->u2_offset_calc_times = 0U;
     p_instance_ctrl->f_sum_iu_ad          = 0.0F;
+    p_instance_ctrl->f_sum_iv_ad          = 0.0F;
     p_instance_ctrl->f_sum_iw_ad          = 0.0F;
 
     return FSP_SUCCESS;
@@ -411,7 +489,7 @@ fsp_err_t RM_MOTOR_DRIVER_ParameterUpdate (motor_driver_ctrl_t * const p_ctrl, m
 
     p_instance_ctrl->u2_carrier_base =
         (uint16_t) (p_extended_cfg->u2_pwm_timer_freq * MOTOR_DRIVER_KHZ_TRANS /
-                    p_extended_cfg->u2_pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_2);
+                    p_extended_cfg->u2_pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_TWO);
     p_instance_ctrl->u2_deadtime_count =
         (uint16_t) (p_extended_cfg->u2_deadtime * p_extended_cfg->u2_pwm_timer_freq);
 
@@ -439,6 +517,7 @@ fsp_err_t RM_MOTOR_DRIVER_ParameterUpdate (motor_driver_ctrl_t * const p_ctrl, m
 static void rm_motor_driver_reset (motor_driver_instance_ctrl_t * p_ctrl)
 {
     p_ctrl->f_iu_ad  = 0.0F;
+    p_ctrl->f_iv_ad  = 0.0F;
     p_ctrl->f_iw_ad  = 0.0F;
     p_ctrl->f_vdc_ad = 0.0F;
     p_ctrl->f_refu   = 0.0F;
@@ -448,8 +527,10 @@ static void rm_motor_driver_reset (motor_driver_instance_ctrl_t * p_ctrl)
     p_ctrl->u1_flag_offset_calc  = MOTOR_DRIVER_FLG_CLR;
     p_ctrl->u2_offset_calc_times = 0U;
     p_ctrl->f_offset_iu          = 0.0F;
+    p_ctrl->f_offset_iv          = 0.0F;
     p_ctrl->f_offset_iw          = 0.0F;
     p_ctrl->f_sum_iu_ad          = 0.0F;
+    p_ctrl->f_sum_iv_ad          = 0.0F;
     p_ctrl->f_sum_iw_ad          = 0.0F;
 
     p_ctrl->st_modulation.u1_sat_flag = 0U;
@@ -477,9 +558,9 @@ static void rm_motor_driver_set_uvw_duty (motor_driver_instance_ctrl_t * p_ctrl,
     uint16_t                 u2_temp_base  = p_ctrl->u2_carrier_base;
     uint16_t                 u2_temp_deadt = p_ctrl->u2_deadtime_count;
 
-    u2_count_u = (uint16_t) ((u2_temp_base * (1.0F - f_duty_u)) + (u2_temp_deadt * MOTOR_DRIVER_DEV_HALF));
-    u2_count_v = (uint16_t) ((u2_temp_base * (1.0F - f_duty_v)) + (u2_temp_deadt * MOTOR_DRIVER_DEV_HALF));
-    u2_count_w = (uint16_t) ((u2_temp_base * (1.0F - f_duty_w)) + (u2_temp_deadt * MOTOR_DRIVER_DEV_HALF));
+    u2_count_u = (uint16_t) ((u2_temp_base * (1.0F - f_duty_u)) + (u2_temp_deadt * MOTOR_DRIVER_DEF_HALF));
+    u2_count_v = (uint16_t) ((u2_temp_base * (1.0F - f_duty_v)) + (u2_temp_deadt * MOTOR_DRIVER_DEF_HALF));
+    u2_count_w = (uint16_t) ((u2_temp_base * (1.0F - f_duty_w)) + (u2_temp_deadt * MOTOR_DRIVER_DEF_HALF));
 
     temp_duty.duty[0] = (uint32_t) u2_count_u;
     temp_duty.duty[1] = (uint32_t) u2_count_v;
@@ -498,8 +579,8 @@ static void rm_motor_driver_set_uvw_duty (motor_driver_instance_ctrl_t * p_ctrl,
  **********************************************************************************************************************/
 static void rm_motor_driver_current_get (motor_driver_instance_ctrl_t * p_ctrl)
 {
-    uint16_t u2_addata[3]                      = {0U};
-    float    f_addata[2]                       = {0.0F};
+    uint16_t u2_addata[4]                      = {0U};
+    float    f_addata[3]                       = {0.0F};
     motor_driver_cfg_t const    * p_cfg        = p_ctrl->p_cfg;
     motor_driver_extended_cfg_t * p_extend_cfg = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
 
@@ -507,21 +588,171 @@ static void rm_motor_driver_current_get (motor_driver_instance_ctrl_t * p_ctrl)
     if (p_cfg->p_adc_instance != NULL)
     {
         p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->iu_ad_ch, &u2_addata[0]);
-        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->iw_ad_ch, &u2_addata[1]);
-        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[2]);
+        if (MOTOR_DRIVER_SHUNT_TYPE_3_SHUNT == p_cfg->shunt)
+        {
+            p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->iv_ad_ch, &u2_addata[1]);
+        }
+        else
+        {
+            u2_addata[1] = 0U;
+        }
+
+        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->iw_ad_ch, &u2_addata[2]);
+        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[3]);
     }
 
     f_addata[0] = (float) u2_addata[0];
     f_addata[1] = (float) u2_addata[1];
+    f_addata[2] = (float) u2_addata[2];
     f_addata[0] = f_addata[0] - p_extend_cfg->f_ad_current_offset;
     f_addata[1] = f_addata[1] - p_extend_cfg->f_ad_current_offset;
+    f_addata[2] = f_addata[2] - p_extend_cfg->f_ad_current_offset;
 
     p_ctrl->f_iu_ad = -(f_addata[0]) * (p_extend_cfg->f_current_range / p_extend_cfg->f_ad_resolution);
-    p_ctrl->f_iw_ad = -(f_addata[1]) * (p_extend_cfg->f_current_range / p_extend_cfg->f_ad_resolution);
+    p_ctrl->f_iv_ad = -(f_addata[1]) * (p_extend_cfg->f_current_range / p_extend_cfg->f_ad_resolution);
+    p_ctrl->f_iw_ad = -(f_addata[2]) * (p_extend_cfg->f_current_range / p_extend_cfg->f_ad_resolution);
 
-    p_ctrl->f_vdc_ad = (float) u2_addata[2] * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
+    p_ctrl->f_vdc_ad = (float) u2_addata[3] * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
                        p_extend_cfg->f_ad_voltage_conversion;
 }                                      /* End of function rm_motor_driver_current_get */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_driver_1shunt_current_get
+ * Description   : Get Iu/Iw & Vdc process for 1shunt
+ * Arguments     : p_ctrl - The pointer to the motor driver module instance
+ * Return Value  : None
+ **********************************************************************************************************************/
+static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p_ctrl)
+{
+    uint16_t u2_addata                         = 0U;
+    float    f_Iac_ad[2]                       = {0.0F};
+    float    f_addata[3]                       = {0.0F};
+    float    f_Iac_ad2                         = 0.0F;
+    uint16_t u2_Iac_raw0                       = 0U;
+    uint16_t u2_Iac_raw1                       = 0U;
+    motor_driver_cfg_t const    * p_cfg        = p_ctrl->p_cfg;
+    motor_driver_extended_cfg_t * p_extend_cfg = (motor_driver_extended_cfg_t *) p_cfg->p_extend;
+
+#if (MOTOR_DRIVER_CFG_ADC_B_SUPPORTED == 0)
+
+    /* Not using ADC_B module */
+    /* Read A/D converted data */
+    if (p_cfg->p_adc2_instance != NULL)
+    {
+        p_cfg->p_adc2_instance->p_api->scanStart(p_cfg->p_adc2_instance->p_ctrl);
+
+        while ((R_ADC1->ADCSR_b.ADST) == 1)
+        {
+            /* wait A/D conversion finish */
+        }
+
+        p_cfg->p_adc2_instance->p_api->read(p_cfg->p_adc2_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata);
+
+        /* Get double buffer data */
+        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_A, &u2_Iac_raw0);
+        p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_B, &u2_Iac_raw1);
+    }
+
+#else
+    adc_b_fifo_read_t temp_fifo;
+
+    /* Using ADC_B module */
+    /* Get Vdc */
+    p_cfg->p_adc_instance->p_api->read(p_cfg->p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata);
+
+    /* Get FIFO data */
+    R_ADC_B_FifoRead(p_cfg->p_adc_instance->p_ctrl, ADC_GROUP_MASK_0, &temp_fifo);
+    temp_fifo.fifo_data[0].data &= MOTOR_DRIVER_ADC_DATA_MASK;
+    u2_Iac_raw0                  = (uint16_t) temp_fifo.fifo_data[0].data;
+    temp_fifo.fifo_data[1].data &= MOTOR_DRIVER_ADC_DATA_MASK;
+    u2_Iac_raw1                  = (uint16_t) temp_fifo.fifo_data[1].data;
+#endif
+
+    /* Get main line voltage */
+    p_ctrl->f_vdc_ad = (float) u2_addata * (p_extend_cfg->f_vdc_range / p_extend_cfg->f_ad_resolution) *
+                       p_extend_cfg->f_ad_voltage_conversion;
+
+    /* Translate double buffer A/D data to 3 phase currents */
+    f_Iac_ad[0] = (float) (u2_Iac_raw0 - (uint16_t) p_ctrl->f_offset_iu);
+    f_Iac_ad[1] = (float) (u2_Iac_raw1 - (uint16_t) p_ctrl->f_offset_iw) - p_extend_cfg->f_ad_current_adjust;
+
+    f_Iac_ad[0] = (f_Iac_ad[0]) * (p_extend_cfg->f_current_range / p_extend_cfg->f_ad_resolution);
+    f_Iac_ad[1] = -(f_Iac_ad[1]) * (p_extend_cfg->f_current_range / p_extend_cfg->f_ad_resolution);
+
+    f_Iac_ad2 = -(f_Iac_ad[0] + f_Iac_ad[1]);
+
+    switch (p_ctrl->min_phase)
+    {
+        case MOTOR_DRIVER_PHASE_U_PHASE:
+        {
+            f_addata[0] = f_Iac_ad[0];
+            if (MOTOR_DRIVER_PHASE_V_PHASE == p_ctrl->mid_phase)
+            {
+                f_addata[2] = f_Iac_ad[1];
+                f_addata[1] = f_Iac_ad2;
+            }
+            else
+            {
+                f_addata[1] = f_Iac_ad[1];
+                f_addata[2] = f_Iac_ad2;
+            }
+
+            break;
+        }
+
+        case MOTOR_DRIVER_PHASE_V_PHASE:
+        {
+            f_addata[1] = f_Iac_ad[0];
+            if (MOTOR_DRIVER_PHASE_W_PHASE == p_ctrl->mid_phase)
+            {
+                f_addata[0] = f_Iac_ad[1];
+                f_addata[2] = f_Iac_ad2;
+            }
+            else
+            {
+                f_addata[2] = f_Iac_ad[1];
+                f_addata[0] = f_Iac_ad2;
+            }
+
+            break;
+        }
+
+        case MOTOR_DRIVER_PHASE_W_PHASE:
+        {
+            f_addata[2] = f_Iac_ad[0];
+            if (MOTOR_DRIVER_PHASE_U_PHASE == p_ctrl->mid_phase)
+            {
+                f_addata[1] = f_Iac_ad[1];
+                f_addata[0] = f_Iac_ad2;
+            }
+            else
+            {
+                f_addata[0] = f_Iac_ad[1];
+                f_addata[1] = f_Iac_ad2;
+            }
+
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
+
+    if (MOTOR_DRIVER_FLG_SET == p_ctrl->u1_flag_offset_calc)
+    {
+        p_ctrl->f_iu_ad = f_addata[0];
+        p_ctrl->f_iv_ad = f_addata[1];
+        p_ctrl->f_iw_ad = f_addata[2];
+    }
+    else
+    /* Offset measurement with ADC raw data */
+    {
+        p_ctrl->f_iu_ad = (float) u2_Iac_raw0;
+        p_ctrl->f_iw_ad = (float) u2_Iac_raw1;
+    }
+}                                      /* End of function rm_motor_driver_1shunt_current_get */
 
 /***********************************************************************************************************************
  * Function Name : rm_motor_driver_modulation
@@ -540,10 +771,252 @@ static void rm_motor_driver_modulation (motor_driver_instance_ctrl_t * p_ctrl)
     f_v_in[1] = p_ctrl->f_refv;
     f_v_in[2] = p_ctrl->f_refw;
 
-    rm_motor_driver_mod_run(&(p_ctrl->st_modulation), &(f_v_in[0]), &(f_mod_out[0]));
+    rm_motor_driver_mod_run(p_ctrl, &(f_v_in[0]), &(f_mod_out[0]));
 
     rm_motor_driver_set_uvw_duty(p_ctrl, f_mod_out[0], f_mod_out[1], f_mod_out[2]);
 }                                      /* End of function rm_motor_driver_modulation */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_driver_1shunt_modulation
+ * Description   : Perform PWM modulation for 1shunt
+ * Arguments     : p_ctrl - The pointer to the motor driver module instance
+ * Return Value  : None
+ **********************************************************************************************************************/
+static void rm_motor_driver_1shunt_modulation (motor_driver_instance_ctrl_t * p_ctrl)
+{
+    float   f_v_in[3]      = {0.0F};
+    float   f_mod_out[3]   = {0.0F};
+    int32_t s4_ref_max1    = 0;
+    int32_t s4_ref_max2    = 0;
+    int32_t s4_ref_mid1    = 0;
+    int32_t s4_ref_mid2    = 0;
+    int32_t s4_ref_temp    = 0;
+    int32_t s4_raw_InvPeak = 0;
+    int32_t s4_ref_max     = 0;
+    int32_t s4_ref_mid     = 0;
+    int32_t s4_ref_min     = 0;
+    int32_t s4_AD1_trigger = 10;
+    int32_t s4_AD2_trigger = 10;
+    int32_t s4_mu_ref1     = 0;
+    int32_t s4_mu_ref2     = 0;
+    int32_t s4_mv_ref1     = 0;
+    int32_t s4_mv_ref2     = 0;
+    int32_t s4_mw_ref1     = 0;
+    int32_t s4_mw_ref2     = 0;
+
+    three_phase_duty_cycle_t temp_duty;
+
+    motor_driver_phase_t max_phase;
+    motor_driver_phase_t temp_phase;
+    uint16_t             u2_temp_base  = p_ctrl->u2_carrier_base;
+    uint16_t             u2_temp_deadt = p_ctrl->u2_deadtime_count;
+
+    motor_driver_extended_cfg_t  * p_extended_cfg = (motor_driver_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    three_phase_instance_t const * p_three_phase  = p_ctrl->p_cfg->p_three_phase_instance;
+    timer_instance_t const       * timer_u        = p_three_phase->p_cfg->p_timer_instance[0];
+    timer_info_t temp_info;
+
+    if (p_three_phase != NULL)
+    {
+        timer_u->p_api->infoGet(timer_u->p_ctrl, &temp_info);
+        s4_raw_InvPeak = (int32_t) temp_info.period_counts;
+
+        p_ctrl->st_modulation.f4_vdc       = p_ctrl->f_vdc_ad;
+        p_ctrl->st_modulation.f4_1_div_vdc = 1.0F / p_ctrl->f_vdc_ad;
+        f_v_in[0] = p_ctrl->f_refu;
+        f_v_in[1] = p_ctrl->f_refv;
+        f_v_in[2] = p_ctrl->f_refw;
+
+        rm_motor_driver_mod_run(p_ctrl, &(f_v_in[0]), &(f_mod_out[0]));
+
+        s4_ref_max = (uint16_t) ((u2_temp_base * (1.0F - f_mod_out[0])) + (u2_temp_deadt * MOTOR_DRIVER_DEF_HALF));
+        s4_ref_mid = (uint16_t) ((u2_temp_base * (1.0F - f_mod_out[1])) + (u2_temp_deadt * MOTOR_DRIVER_DEF_HALF));
+        s4_ref_min = (uint16_t) ((u2_temp_base * (1.0F - f_mod_out[2])) + (u2_temp_deadt * MOTOR_DRIVER_DEF_HALF));
+
+        max_phase         = MOTOR_DRIVER_PHASE_U_PHASE;
+        p_ctrl->mid_phase = MOTOR_DRIVER_PHASE_V_PHASE;
+        p_ctrl->min_phase = MOTOR_DRIVER_PHASE_W_PHASE;
+
+        /* Judge the phase value */
+        if (s4_ref_max < s4_ref_mid)
+        {
+            s4_ref_temp       = s4_ref_max;
+            s4_ref_max        = s4_ref_mid;
+            s4_ref_mid        = s4_ref_temp;
+            temp_phase        = max_phase;
+            max_phase         = p_ctrl->mid_phase;
+            p_ctrl->mid_phase = temp_phase;
+        }
+
+        if (s4_ref_max < s4_ref_min)
+        {
+            s4_ref_temp       = s4_ref_max;
+            s4_ref_max        = s4_ref_min;
+            s4_ref_min        = s4_ref_temp;
+            temp_phase        = max_phase;
+            max_phase         = p_ctrl->min_phase;
+            p_ctrl->min_phase = temp_phase;
+        }
+
+        if (s4_ref_mid < s4_ref_min)
+        {
+            s4_ref_temp       = s4_ref_mid;
+            s4_ref_mid        = s4_ref_min;
+            s4_ref_min        = s4_ref_temp;
+            temp_phase        = p_ctrl->mid_phase;
+            p_ctrl->mid_phase = p_ctrl->min_phase;
+            p_ctrl->min_phase = temp_phase;
+        }
+
+        /* Adjust middle PWM timing */
+        if ((s4_ref_mid - s4_ref_min) < p_extended_cfg->s4_difference_minimum)
+        {
+            s4_ref_mid1 = s4_ref_min + p_extended_cfg->s4_difference_minimum;
+            if (s4_ref_mid1 > (s4_raw_InvPeak - 1))
+            {
+                s4_ref_mid1 = s4_raw_InvPeak - 1;
+            }
+
+            s4_ref_mid2 = s4_ref_mid - (s4_ref_mid1 - s4_ref_mid);
+        }
+        else
+        {
+            s4_ref_mid1 = s4_ref_mid;
+            s4_ref_mid2 = s4_ref_mid;
+        }
+
+        /* Adjust maximum PWM timing */
+        if ((s4_ref_max - s4_ref_mid1) < p_extended_cfg->s4_difference_minimum)
+        {
+            s4_ref_max1 = s4_ref_mid1 + p_extended_cfg->s4_difference_minimum;
+            if (s4_ref_max1 > (s4_raw_InvPeak - 1))
+            {
+                s4_ref_max1 = s4_raw_InvPeak - 1;
+            }
+
+            s4_ref_max2 = s4_ref_max - (s4_ref_max1 - s4_ref_max);
+        }
+        else
+        {
+            s4_ref_max1 = s4_ref_max;
+            s4_ref_max2 = s4_ref_max;
+        }
+
+        /* Shift limit */
+        if (s4_ref_mid2 < 1)
+        {
+            s4_ref_mid2 = 1;
+        }
+
+        if (s4_ref_max2 < 1)
+        {
+            s4_ref_max2 = 1;
+        }
+
+        /* Set A/D trigger timing */
+        s4_AD1_trigger = s4_ref_mid1 - (p_extended_cfg->s4_difference_minimum - p_extended_cfg->s4_adjust_adc_delay);
+        s4_AD2_trigger = s4_ref_max1 - (p_extended_cfg->s4_difference_minimum - p_extended_cfg->s4_adjust_adc_delay);
+
+        switch (p_ctrl->min_phase)
+        {
+            case MOTOR_DRIVER_PHASE_U_PHASE:
+            {
+                s4_mu_ref1 = s4_ref_min;
+                s4_mu_ref2 = s4_ref_min;
+                break;
+            }
+
+            case MOTOR_DRIVER_PHASE_V_PHASE:
+            {
+                s4_mv_ref1 = s4_ref_min;
+                s4_mv_ref2 = s4_ref_min;
+                break;
+            }
+
+            case MOTOR_DRIVER_PHASE_W_PHASE:
+            {
+                s4_mw_ref1 = s4_ref_min;
+                s4_mw_ref2 = s4_ref_min;
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+
+        switch (p_ctrl->mid_phase)
+        {
+            case MOTOR_DRIVER_PHASE_U_PHASE:
+            {
+                s4_mu_ref1 = s4_ref_mid1;
+                s4_mu_ref2 = s4_ref_mid2;
+                break;
+            }
+
+            case MOTOR_DRIVER_PHASE_V_PHASE:
+            {
+                s4_mv_ref1 = s4_ref_mid1;
+                s4_mv_ref2 = s4_ref_mid2;
+                break;
+            }
+
+            case MOTOR_DRIVER_PHASE_W_PHASE:
+            {
+                s4_mw_ref1 = s4_ref_mid1;
+                s4_mw_ref2 = s4_ref_mid2;
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+
+        switch (max_phase)
+        {
+            case MOTOR_DRIVER_PHASE_U_PHASE:
+            {
+                s4_mu_ref1 = s4_ref_max1;
+                s4_mu_ref2 = s4_ref_max2;
+                break;
+            }
+
+            case MOTOR_DRIVER_PHASE_V_PHASE:
+            {
+                s4_mv_ref1 = s4_ref_max1;
+                s4_mv_ref2 = s4_ref_max2;
+                break;
+            }
+
+            case MOTOR_DRIVER_PHASE_W_PHASE:
+            {
+                s4_mw_ref1 = s4_ref_max1;
+                s4_mw_ref2 = s4_ref_max2;
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+
+        temp_duty.duty[0]        = (uint32_t) s4_mu_ref1;
+        temp_duty.duty[1]        = (uint32_t) s4_mv_ref1;
+        temp_duty.duty[2]        = (uint32_t) s4_mw_ref1;
+        temp_duty.duty_buffer[0] = (uint32_t) s4_mu_ref2;
+        temp_duty.duty_buffer[1] = (uint32_t) s4_mv_ref2;
+        temp_duty.duty_buffer[2] = (uint32_t) s4_mw_ref2;
+
+        p_three_phase->p_api->dutyCycleSet(p_three_phase->p_ctrl, &temp_duty);
+
+        R_GPT_AdcTriggerSet(timer_u->p_ctrl, GPT_ADC_COMPARE_MATCH_ADC_A, (uint32_t) s4_AD1_trigger);
+        R_GPT_AdcTriggerSet(timer_u->p_ctrl, GPT_ADC_COMPARE_MATCH_ADC_B, (uint32_t) s4_AD2_trigger);
+    }
+}                                      /* End of function rm_motor_driver_1shunt_modulation */
 
 /***********************************************************************************************************************
  * Function Name: rm_motor_driver_mod_svpwm
@@ -553,7 +1026,7 @@ static void rm_motor_driver_modulation (motor_driver_instance_ctrl_t * p_ctrl)
  *                p_f4_v_out -
  *                    Where to store output data, in an array [Vu,Vv,Vw]
  * Return Value : None
- ***********************************************************************************************************************/
+ **********************************************************************************************************************/
 static void rm_motor_driver_mod_svpwm (const float * p_f4_v_in, float * p_f4_v_out)
 {
     float f4_v_max;
@@ -599,7 +1072,7 @@ static void rm_motor_driver_mod_svpwm (const float * p_f4_v_in, float * p_f4_v_o
  *                p_f4_duty -
  *                    Pointer to the input and output duty cycle array, array length = 3
  * Return Value : None
- ***********************************************************************************************************************/
+ **********************************************************************************************************************/
 static inline void rm_motor_driver_mod_limit (motor_driver_modulation_t * p_mod, float * p_f4_duty)
 {
     float f4_min_duty = p_mod->f4_min_duty;
@@ -675,36 +1148,37 @@ static inline void rm_motor_driver_mod_limit (motor_driver_modulation_t * p_mod,
 /***********************************************************************************************************************
  * Function Name: rm_motor_driver_mod_run
  * Description  : Calculates duty cycle from input 3-phase voltage (bipolar)
- * Arguments    : p_mod -
- *                    Pointer to the modulation data structure
+ * Arguments    : p_ctrl -
+ *                    Pointer to the motor driver module valuables
  *              : p_f4_v_in -
  *                    Pointer to the 3-phase input voltage
  *              : p_f4_duty_out -
  *                    Where to store the 3-phase output duty cycle
  * Return Value : None
- ***********************************************************************************************************************/
-static void rm_motor_driver_mod_run (motor_driver_modulation_t * p_mod, const float * p_f4_v_in, float * p_f4_duty_out)
+ **********************************************************************************************************************/
+static void rm_motor_driver_mod_run (motor_driver_instance_ctrl_t * p_ctrl,
+                                     const float                  * p_f4_v_in,
+                                     float                        * p_f4_duty_out)
 {
     float f4_v_out[3];
+    motor_driver_extended_cfg_t * p_extended_cfg = (motor_driver_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-    if ((0 == p_mod) || (0 == p_f4_duty_out))
+    if (MOTOR_DRIVER_MODULATION_METHOD_SVPWM == p_extended_cfg->modulation_method)
     {
-        return;
+        rm_motor_driver_mod_svpwm(p_f4_v_in, f4_v_out);
+    }
+    else
+    {
+        f4_v_out[0] = p_f4_v_in[0];
+        f4_v_out[1] = p_f4_v_in[1];
+        f4_v_out[2] = p_f4_v_in[2];
     }
 
-#if (MOTOR_DRIVER_METHOD == MOTOR_DRIVER_METHOD_SVPWM)
-    rm_motor_driver_mod_svpwm(p_f4_v_in, f4_v_out);
-#else
-    f4_v_out[0] = p_f4_v_in[0];
-    f4_v_out[1] = p_f4_v_in[1];
-    f4_v_out[2] = p_f4_v_in[2];
-#endif
+    p_f4_duty_out[0] = (f4_v_out[0] * p_ctrl->st_modulation.f4_1_div_vdc) + p_ctrl->st_modulation.f4_neutral_duty;
+    p_f4_duty_out[1] = (f4_v_out[1] * p_ctrl->st_modulation.f4_1_div_vdc) + p_ctrl->st_modulation.f4_neutral_duty;
+    p_f4_duty_out[2] = (f4_v_out[2] * p_ctrl->st_modulation.f4_1_div_vdc) + p_ctrl->st_modulation.f4_neutral_duty;
 
-    p_f4_duty_out[0] = (f4_v_out[0] * p_mod->f4_1_div_vdc) + p_mod->f4_neutral_duty;
-    p_f4_duty_out[1] = (f4_v_out[1] * p_mod->f4_1_div_vdc) + p_mod->f4_neutral_duty;
-    p_f4_duty_out[2] = (f4_v_out[2] * p_mod->f4_1_div_vdc) + p_mod->f4_neutral_duty;
-
-    rm_motor_driver_mod_limit(p_mod, p_f4_duty_out);
+    rm_motor_driver_mod_limit(&(p_ctrl->st_modulation), p_f4_duty_out);
 }                                      /* End of function rm_motor_driver_mod_run() */
 
 /***********************************************************************************************************************
@@ -715,7 +1189,7 @@ static void rm_motor_driver_mod_run (motor_driver_modulation_t * p_mod, const fl
  *                f4_max_duty -
  *                    Maximum duty cycle to set
  * Return Value : None
- ***********************************************************************************************************************/
+ **********************************************************************************************************************/
 static void rm_motor_driver_mod_set_max_duty (motor_driver_modulation_t * p_mod, float f4_max_duty)
 {
     if ((0 != p_mod) && ((f4_max_duty > 0.0F) && (f4_max_duty <= 1.0F)))
@@ -733,7 +1207,7 @@ static void rm_motor_driver_mod_set_max_duty (motor_driver_modulation_t * p_mod,
  *                f4_max_duty -
  *                    Minimum duty cycle to set
  * Return Value : None
- ***********************************************************************************************************************/
+ **********************************************************************************************************************/
 static void rm_motor_driver_mod_set_min_duty (motor_driver_modulation_t * p_mod, float f4_min_duty)
 {
     if ((0 != p_mod) && (f4_min_duty > 0.0F))
@@ -749,7 +1223,7 @@ static void rm_motor_driver_mod_set_min_duty (motor_driver_modulation_t * p_mod,
  * Arguments    : p_mod -
  *                    Pointer to the modulation data structure
  * Return Value : Voltage multiplier
- ***********************************************************************************************************************/
+ **********************************************************************************************************************/
 static float rm_motor_driver_mod_get_voltage_multiplier (motor_driver_modulation_t * p_mod)
 {
     float f4_usable_duty_cycle;
@@ -770,7 +1244,7 @@ static float rm_motor_driver_mod_get_voltage_multiplier (motor_driver_modulation
  * Arguments    : p_mod -
  *                    The pointer to the modulation data structure
  * Return Value : The maximum magnitude of voltage vector
- ***********************************************************************************************************************/
+ **********************************************************************************************************************/
 static float rm_motor_driver_mod_get_vamax (motor_driver_modulation_t * p_mod)
 {
     return (MOTOR_DRIVER_VDC_TO_VAMAX_MULT * p_mod->f4_vdc) * rm_motor_driver_mod_get_voltage_multiplier(p_mod);
@@ -787,36 +1261,97 @@ void rm_motor_driver_cyclic (adc_callback_args_t * p_args)
     motor_driver_instance_ctrl_t * p_instance = (motor_driver_instance_ctrl_t *) p_args->p_context;
     motor_driver_callback_args_t   temp_args_t;
 
-    /* Get A/D converted data (Phase Current & Main Line Voltage) */
+    /* Get A/D converted data (Phase current & main line voltage) */
     rm_motor_driver_current_get(p_instance);
 
-    /* Invoke the callback function if it is set. */
-    if (NULL != p_instance->p_cfg->p_callback)
+    if (MOTOR_DRIVER_OPEN == p_instance->open)
     {
-        temp_args_t.event     = MOTOR_DRIVER_EVENT_FORWARD;
-        temp_args_t.p_context = p_instance->p_cfg->p_context;
-        (p_instance->p_cfg->p_callback)(&temp_args_t);
-    }
+        /* Invoke the callback function if it is set. */
+        if (NULL != p_instance->p_cfg->p_callback)
+        {
+            temp_args_t.event     = MOTOR_DRIVER_EVENT_FORWARD;
+            temp_args_t.p_context = p_instance->p_cfg->p_context;
+            (p_instance->p_cfg->p_callback)(&temp_args_t);
+        }
 
-    /* Perform Current Control Process (if set) */
-    if (NULL != p_instance->p_cfg->p_callback)
-    {
-        temp_args_t.event     = MOTOR_DRIVER_EVENT_CURRENT;
-        temp_args_t.p_context = p_instance->p_cfg->p_context;
-        (p_instance->p_cfg->p_callback)(&temp_args_t);
-    }
+        /* Perform current control process (if set) */
+        if (NULL != p_instance->p_cfg->p_callback)
+        {
+            temp_args_t.event     = MOTOR_DRIVER_EVENT_CURRENT;
+            temp_args_t.p_context = p_instance->p_cfg->p_context;
+            (p_instance->p_cfg->p_callback)(&temp_args_t);
+        }
 
-    /* PWM Modulation */
-    if (MOTOR_DRIVER_FLG_SET == p_instance->u1_flag_offset_calc)
-    {
-        rm_motor_driver_modulation(p_instance);
-    }
+        /* PWM modulation */
+        if (MOTOR_DRIVER_FLG_SET == p_instance->u1_flag_offset_calc)
+        {
+            rm_motor_driver_modulation(p_instance);
+        }
 
-    /* Invoke the callback function if it is set. */
-    if (NULL != p_instance->p_cfg->p_callback)
-    {
-        temp_args_t.event     = MOTOR_DRIVER_EVENT_BACKWARD;
-        temp_args_t.p_context = p_instance->p_cfg->p_context;
-        (p_instance->p_cfg->p_callback)(&temp_args_t);
+        /* Invoke the callback function if it is set. */
+        if (NULL != p_instance->p_cfg->p_callback)
+        {
+            temp_args_t.event     = MOTOR_DRIVER_EVENT_BACKWARD;
+            temp_args_t.p_context = p_instance->p_cfg->p_context;
+            (p_instance->p_cfg->p_callback)(&temp_args_t);
+        }
     }
-}
+}                                      /* End of function rm_motor_driver_cyclic */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_driver_1shunt_cyclic
+ * Description   : Cyclic process for driver accsess (Call at GPT underflow interrupt)
+ * Arguments     : p_args - The pointer to arguments of timer intterupt callback
+ * Return Value  : None
+ **********************************************************************************************************************/
+void rm_motor_driver_1shunt_cyclic (timer_callback_args_t * p_args)
+{
+    motor_driver_instance_ctrl_t * p_instance = (motor_driver_instance_ctrl_t *) p_args->p_context;
+    motor_driver_callback_args_t   temp_args_t;
+
+    if (MOTOR_DRIVER_OPEN == p_instance->open)
+    {
+        if (TIMER_EVENT_CYCLE_END == p_args->event)
+        {
+            /* Get A/D converted data (Phase current & main line voltage) */
+            rm_motor_driver_1shunt_current_get(p_instance);
+
+            /* Invoke the callback function if it is set. */
+            if (NULL != p_instance->p_cfg->p_callback)
+            {
+                temp_args_t.event     = MOTOR_DRIVER_EVENT_FORWARD;
+                temp_args_t.p_context = p_instance->p_cfg->p_context;
+                (p_instance->p_cfg->p_callback)(&temp_args_t);
+            }
+
+            /* Perform current control process (if set) */
+            if (NULL != p_instance->p_cfg->p_callback)
+            {
+                temp_args_t.event     = MOTOR_DRIVER_EVENT_CURRENT;
+                temp_args_t.p_context = p_instance->p_cfg->p_context;
+                (p_instance->p_cfg->p_callback)(&temp_args_t);
+            }
+
+            /* PWM modulation */
+            if (MOTOR_DRIVER_FLG_SET == p_instance->u1_flag_offset_calc)
+            {
+                rm_motor_driver_1shunt_modulation(p_instance);
+            }
+            else
+            {
+                p_instance->f_refu = 0.0F;
+                p_instance->f_refv = 0.0F;
+                p_instance->f_refw = 0.0F;
+                rm_motor_driver_1shunt_modulation(p_instance);
+            }
+
+            /* Invoke the callback function if it is set. */
+            if (NULL != p_instance->p_cfg->p_callback)
+            {
+                temp_args_t.event     = MOTOR_DRIVER_EVENT_BACKWARD;
+                temp_args_t.p_context = p_instance->p_cfg->p_context;
+                (p_instance->p_cfg->p_callback)(&temp_args_t);
+            }
+        }
+    }
+}                                      /* End of function rm_motor_driver_1shunt_cyclic */

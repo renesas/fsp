@@ -100,6 +100,9 @@ const UCHAR   _nx_crypto_sha256_padding[64] = {0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT  _nx_crypto_sha256_initialize(NX_CRYPTO_SHA256 *context, UINT algorithm )
 {
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT)
+    return (sce_nx_crypto_sha256_initialize(context, algorithm));
+#else
     /* Determine if the context is non-null.  */
     if (context == NX_CRYPTO_NULL)
     {
@@ -140,6 +143,7 @@ NX_CRYPTO_KEEP UINT  _nx_crypto_sha256_initialize(NX_CRYPTO_SHA256 *context, UIN
 
     /* Return success.  */
     return(NX_CRYPTO_SUCCESS);
+#endif
 }
 
 
@@ -191,6 +195,9 @@ NX_CRYPTO_KEEP UINT  _nx_crypto_sha256_initialize(NX_CRYPTO_SHA256 *context, UIN
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT _nx_crypto_sha256_update(NX_CRYPTO_SHA256 *context, UCHAR *input_ptr, UINT input_length)
 {
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT)
+    return(sce_nx_crypto_sha256_update(context, input_ptr, input_length));
+#else
 ULONG current_bytes;
 ULONG needed_fill_bytes;
 
@@ -269,6 +276,7 @@ ULONG needed_fill_bytes;
 
     /* Return success.  */
     return(NX_CRYPTO_SUCCESS);
+#endif
 }
 
 
@@ -318,6 +326,9 @@ ULONG needed_fill_bytes;
 /**************************************************************************/
 NX_CRYPTO_KEEP UINT _nx_crypto_sha256_digest_calculate(NX_CRYPTO_SHA256 *context, UCHAR *digest, UINT algorithm)
 {
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT)
+    return (sce_nx_crypto_sha256_digest_calculate (context, digest, algorithm));
+#else
 UCHAR bit_count_string[8];
 ULONG current_byte_count;
 ULONG padding_bytes;
@@ -389,6 +400,7 @@ ULONG padding_bytes;
 
     /* Return successful completion.  */
     return(NX_CRYPTO_SUCCESS);
+#endif
 }
 
 
@@ -747,10 +759,7 @@ NX_CRYPTO_SHA256 *ctx;
         /* Incorrect method. */
         return(NX_CRYPTO_NOT_SUCCESSFUL);
     }
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT)
-        NX_CRYPTO_PARAMETER_NOT_USED(ctx);
-        return(sce_nx_crypto_method_sha256_operation(op, method, input, input_length_in_byte, output, output_length_in_byte, crypto_metadata));
-#else
+
     switch (op)
     {
     case NX_CRYPTO_HASH_INITIALIZE:
@@ -791,6 +800,5 @@ NX_CRYPTO_SHA256 *ctx;
     }
 
     return NX_CRYPTO_SUCCESS;
-#endif
 }
 

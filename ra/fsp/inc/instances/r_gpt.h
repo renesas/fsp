@@ -277,6 +277,51 @@ typedef enum e_gpt_interrupt_skip_adc
     GPT_INTERRUPT_SKIP_ADC_A_AND_B = 5U, ///< Skip ADC A and B events
 } gpt_interrupt_skip_adc_t;
 
+/** Delay setting for the PWM Delay Generation Circuit (PDG). */
+typedef enum e_gpt_pwm_output_delay_setting
+{
+    GPT_PWM_OUTPUT_DELAY_SETTING_0_32,   ///< Delay is not applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_1_32,   ///< Delay of 1 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_2_32,   ///< Delay of 2 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_3_32,   ///< Delay of 3 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_4_32,   ///< Delay of 4 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_5_32,   ///< Delay of 5 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_6_32,   ///< Delay of 6 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_7_32,   ///< Delay of 7 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_8_32,   ///< Delay of 8 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_9_32,   ///< Delay of 9 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_10_32,  ///< Delay of 10 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_11_32,  ///< Delay of 11 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_12_32,  ///< Delay of 12 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_13_32,  ///< Delay of 13 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_14_32,  ///< Delay of 14 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_15_32,  ///< Delay of 15 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_16_32,  ///< Delay of 16 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_17_32,  ///< Delay of 17 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_18_32,  ///< Delay of 18 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_19_32,  ///< Delay of 19 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_20_32,  ///< Delay of 20 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_21_32,  ///< Delay of 21 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_22_32,  ///< Delay of 22 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_23_32,  ///< Delay of 23 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_24_32,  ///< Delay of 24 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_25_32,  ///< Delay of 25 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_26_32,  ///< Delay of 26 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_27_32,  ///< Delay of 27 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_28_32,  ///< Delay of 28 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_29_32,  ///< Delay of 29 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_30_32,  ///< Delay of 30 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_31_32,  ///< Delay of 31 / 32 GTCLK period applied.
+    GPT_PWM_OUTPUT_DELAY_SETTING_BYPASS, ///< Bypass the PWM Output Delay Circuit.
+} gpt_pwm_output_delay_setting_t;
+
+/** Select which PWM Output Delay setting to apply. */
+typedef enum e_gpt_pwm_output_delay_edge
+{
+    GPT_PWM_OUTPUT_DELAY_EDGE_RISING,  ///< Configure the PWM Output Delay setting for rising edge.
+    GPT_PWM_OUTPUT_DELAY_EDGE_FALLING, ///< Configure the PWM Output Delay setting for falling edge.
+} gpt_pwm_output_delay_edge_t;
+
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref timer_api_t::open is called. */
 typedef struct st_gpt_instance_ctrl
 {
@@ -372,11 +417,16 @@ fsp_err_t R_GPT_OutputDisable(timer_ctrl_t * const p_ctrl, gpt_io_pin_t pin);
 fsp_err_t R_GPT_AdcTriggerSet(timer_ctrl_t * const    p_ctrl,
                               gpt_adc_compare_match_t which_compare_match,
                               uint32_t                compare_match_value);
+fsp_err_t R_GPT_PwmOutputDelaySet(timer_ctrl_t * const           p_ctrl,
+                                  gpt_pwm_output_delay_edge_t    edge,
+                                  gpt_pwm_output_delay_setting_t delay_setting,
+                                  uint32_t const                 pin);
 fsp_err_t R_GPT_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
                             void (                      * p_callback)(timer_callback_args_t *),
                             void const * const            p_context,
                             timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_GPT_Close(timer_ctrl_t * const p_ctrl);
+fsp_err_t R_GPT_PwmOutputDelayInitialize();
 
 /*******************************************************************************************************************//**
  * @} (end defgroup GPT)

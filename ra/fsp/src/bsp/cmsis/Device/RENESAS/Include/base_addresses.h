@@ -11,6 +11,10 @@
  * @{
  */
 
+ #define R_ACMPHS0_BASE         0x400F4000
+ #define R_ACMPHS1_BASE         0x400F4100
+ #define R_ACMPHS2_BASE         0x400F4200
+ #define R_ACMPHS3_BASE         0x400F4300
  #define R_MPU_BASE             0x40000000
  #define R_TZF_BASE             0x40000E00
  #define R_SRAM_BASE            0x40002000
@@ -33,13 +37,13 @@
  #define R_SYSC_BASE            0x4001E000
  #define R_TSN_CAL_BASE         0x407FB17C
  #define R_TSN_CTRL_BASE        0x400F3000
- #define R_PFS_BASE             0x40080800
  #define R_ELC_BASE             0x40082000
  #define R_TC_BASE              0x40083000
  #define R_IWDT_BASE            0x40083200
  #define R_WDT_BASE             0x40083400
  #define R_CAC_BASE             0x40083600
  #define R_MSTP_BASE            0x40084000
+ #define R_KINT_BASE            0x40085000
  #define R_POEG_BASE            0x4008A000
  #define R_USB_FS0_BASE         0x40090000
  #define R_USB_HS0_BASE         0x40111000
@@ -61,6 +65,8 @@
  #define R_AGT3_BASE            0x400E8300
  #define R_AGT4_BASE            0x400E8400
  #define R_AGT5_BASE            0x400E8500
+ #define R_AGTW0_BASE           0x400E8000
+ #define R_AGTW1_BASE           0x400E8100
  #define R_TSN_CTRL_BASE        0x400F3000
  #define R_CRC_BASE             0x40108000
  #define R_DOC_BASE             0x40109000
@@ -78,6 +84,8 @@
  #define R_SCI9_BASE            0x40118900
  #define R_SPI0_BASE            0x4011A000
  #define R_SPI1_BASE            0x4011A100
+ #define R_SPI_B0_BASE          0x4011A000
+ #define R_SPI_B1_BASE          0x4011A100
  #define R_GPT320_BASE          0x40169000
  #define R_GPT321_BASE          0x40169100
  #define R_GPT322_BASE          0x40169200
@@ -89,36 +97,61 @@
  #define R_GPT168_BASE          0x40169800
  #define R_GPT169_BASE          0x40169900
  #define R_GPT_OPS_BASE         0x40169A00
+ #define R_GPT_ODC_BASE         0x4016A000
+ #define R_GPT_GTCLK_BASE       0x40169B00
  #define R_ADC120_BASE          0x40170000
  #define R_ADC121_BASE          0x40170200
- #define R_DAC12_BASE           0x40171000
+
+/* Not included in SVD */
+ #if (BSP_FEATURE_DAC_MAX_CHANNELS > 2U)
+  #define R_DAC120_BASE         0x40172000
+  #define R_DAC121_BASE         0x40172100
+ #else
+  #define R_DAC12_BASE          0x40171000
+ #endif
  #define R_FLAD_BASE            0x407FC000
  #define R_FACI_HP_CMD_BASE     0x407E0000
  #define R_FACI_HP_BASE         0x407FE000
  #define R_QSPI_BASE            0x64000000
+ #define R_TFU_BASE             0x40021000
 
 /* Not included in SVD */
- #define R_PORT0_BASE           0x40080000
- #define R_PORT1_BASE           0x40080020
- #define R_PORT2_BASE           0x40080040
- #define R_PORT3_BASE           0x40080060
- #define R_PORT4_BASE           0x40080080
- #define R_PORT5_BASE           0x400800A0
- #define R_PORT6_BASE           0x400800C0
- #define R_PORT7_BASE           0x400800E0
- #define R_PORT8_BASE           0x40080100
- #define R_PORT9_BASE           0x40080120
- #define R_PORT10_BASE          0x40080140
- #define R_PORT11_BASE          0x40080160
- #define R_PFS_BASE             0x40080800
- #define R_PMISC_BASE           0x40080D00 // does not exist but FSP will not build without this
-
+ #if (2U == BSP_FEATURE_IOPORT_VERSION)
+  #define R_PORT0_BASE          0x4001F000
+  #define R_PORT1_BASE          0x4001F020
+  #define R_PORT2_BASE          0x4001F040
+  #define R_PORT10_BASE         0x4001F140
+  #define R_PORT11_BASE         0x4001F160
+  #define R_PORT12_BASE         0x4001F180
+  #define R_PORT13_BASE         0x4001F1A0
+  #define R_PORT14_BASE         0x4001F1C0
+  #define R_PFS_BASE            0x4001F800
+  #define R_PMISC_BASE          0x4001FD00
+ #else
+  #define R_PORT0_BASE          0x40080000
+  #define R_PORT1_BASE          0x40080020
+  #define R_PORT2_BASE          0x40080040
+  #define R_PORT3_BASE          0x40080060
+  #define R_PORT4_BASE          0x40080080
+  #define R_PORT5_BASE          0x400800A0
+  #define R_PORT6_BASE          0x400800C0
+  #define R_PORT7_BASE          0x400800E0
+  #define R_PORT8_BASE          0x40080100
+  #define R_PORT9_BASE          0x40080120
+  #define R_PORT10_BASE         0x40080140
+  #define R_PORT11_BASE         0x40080160
+  #define R_PFS_BASE            0x40080800
+  #define R_PMISC_BASE          0x40080D00 // does not exist but FSP will not build without this
+ #endif
  #define R_GPT_POEG0_BASE       0x4008A000
  #define R_GPT_POEG1_BASE       0x4008A100
  #define R_GPT_POEG2_BASE       0x4008A200
  #define R_GPT_POEG3_BASE       0x4008A300
 
  #define R_RTC_BASE             0x40083000
+
+ #define R_I3C0_BASE            0x4011F000
+ #define R_I3C1_BASE            0x4011F400
 
 /** @} */ /* End of group Device_Peripheral_peripheralAddr */
 
@@ -131,9 +164,15 @@
  */
 
 // #define R_MPU ((R_MPU_Type *) R_MPU_BASE)
+ #define R_ACMPHS0         ((R_ACMPHS0_Type *) R_ACMPHS0_BASE)
+ #define R_ACMPHS1         ((R_ACMPHS0_Type *) R_ACMPHS1_BASE)
+ #define R_ACMPHS2         ((R_ACMPHS0_Type *) R_ACMPHS2_BASE)
+ #define R_ACMPHS3         ((R_ACMPHS0_Type *) R_ACMPHS3_BASE)
+ #define R_ACMPHS4         ((R_ACMPHS0_Type *) R_ACMPHS4_BASE)
+ #define R_ACMPHS5         ((R_ACMPHS0_Type *) R_ACMPHS5_BASE)
  #define R_TZF             ((R_TZF_Type *) R_TZF_BASE)
  #define R_SRAM            ((R_SRAM_Type *) R_SRAM_BASE)
- #define R_BUS             ((R_BUS_Type *) R_BUS_BASE)
+ #define R_BUS             ((R_BUS_B_Type *) R_BUS_BASE)
  #define R_DMAC0           ((R_DMAC0_Type *) R_DMAC0_BASE)
  #define R_DMAC1           ((R_DMAC0_Type *) R_DMAC1_BASE)
  #define R_DMAC2           ((R_DMAC0_Type *) R_DMAC2_BASE)
@@ -156,6 +195,7 @@
  #define R_ELC             ((R_ELC_Type *) R_ELC_BASE)
  #define R_TC              ((R_TC_Type *) R_TC_BASE)
  #define R_IWDT            ((R_IWDT_Type *) R_IWDT_BASE)
+ #define R_KINT            ((R_KINT_Type *) R_KINT_BASE)
  #define R_WDT             ((R_WDT_Type *) R_WDT_BASE)
  #define R_CAC             ((R_CAC_Type *) R_CAC_BASE)
  #define R_MSTP            ((R_MSTP_Type *) R_MSTP_BASE)
@@ -171,32 +211,62 @@
  #define R_CAN0            ((R_CAN0_Type *) R_CAN0_BASE)
  #define R_CAN1            ((R_CAN0_Type *) R_CAN1_BASE)
  #define R_CEC             ((R_CEC_Type *) R_CEC_BASE)
- #define R_CANFD           ((R_CANFD_Type *) R_CANFD_BASE)
+ #if BSP_FEATURE_CANFD_LITE
+  #define R_CANFD          ((R_CANFDL_Type *) R_CANFD_BASE)
+ #else
+  #define R_CANFD          ((R_CANFD_Type *) R_CANFD_BASE)
+ #endif
  #define R_CTSU            ((R_CTSU_Type *) R_CTSU_BASE)
  #define R_PSCU            ((R_PSCU_Type *) R_PSCU_BASE)
- #define R_AGT0            ((R_AGT0_Type *) R_AGT0_BASE)
- #define R_AGT1            ((R_AGT0_Type *) R_AGT1_BASE)
- #define R_AGT2            ((R_AGT0_Type *) R_AGT2_BASE)
- #define R_AGT3            ((R_AGT0_Type *) R_AGT3_BASE)
- #define R_AGT4            ((R_AGT0_Type *) R_AGT4_BASE)
- #define R_AGT5            ((R_AGT0_Type *) R_AGT5_BASE)
+ #if BSP_FEATURE_AGT_HAS_AGTW
+  #define R_AGT0           ((R_AGTW0_Type *) R_AGT0_BASE)
+  #define R_AGT1           ((R_AGTW0_Type *) R_AGT1_BASE)
+  #define R_AGT2           ((R_AGTW0_Type *) R_AGT2_BASE)
+  #define R_AGT3           ((R_AGTW0_Type *) R_AGT3_BASE)
+  #define R_AGT4           ((R_AGTW0_Type *) R_AGT4_BASE)
+  #define R_AGT5           ((R_AGTW0_Type *) R_AGT5_BASE)
+ #else
+  #define R_AGT0           ((R_AGT0_Type *) R_AGT0_BASE)
+  #define R_AGT1           ((R_AGT0_Type *) R_AGT1_BASE)
+  #define R_AGT2           ((R_AGT0_Type *) R_AGT2_BASE)
+  #define R_AGT3           ((R_AGT0_Type *) R_AGT3_BASE)
+  #define R_AGT4           ((R_AGT0_Type *) R_AGT4_BASE)
+  #define R_AGT5           ((R_AGT0_Type *) R_AGT5_BASE)
+ #endif
+ #define R_AGTW0           ((R_AGTW0_Type *) R_AGTW0_BASE)
+ #define R_AGTW1           ((R_AGTW0_Type *) R_AGTW1_BASE)
  #define R_TSN_CTRL        ((R_TSN_CTRL_Type *) R_TSN_CTRL_BASE)
  #define R_CRC             ((R_CRC_Type *) R_CRC_BASE)
- #define R_DOC             ((R_DOC_Type *) R_DOC_BASE)
+ #if (2U == BSP_FEATURE_DOC_VERSION)
+  #define R_DOC_B          ((R_DOC_B_Type *) R_DOC_BASE)
+ #else
+  #define R_DOC            ((R_DOC_Type *) R_DOC_BASE)
+ #endif
  #define R_ETHERC_EDMAC    ((R_ETHERC_EDMAC_Type *) R_ETHERC_EDMAC_BASE)
  #define R_ETHERC0         ((R_ETHERC0_Type *) R_ETHERC0_BASE)
- #define R_SCI0            ((R_SCI0_Type *) R_SCI0_BASE)
- #define R_SCI1            ((R_SCI0_Type *) R_SCI1_BASE)
- #define R_SCI2            ((R_SCI0_Type *) R_SCI2_BASE)
- #define R_SCI3            ((R_SCI0_Type *) R_SCI3_BASE)
- #define R_SCI4            ((R_SCI0_Type *) R_SCI4_BASE)
- #define R_SCI5            ((R_SCI0_Type *) R_SCI5_BASE)
- #define R_SCI6            ((R_SCI0_Type *) R_SCI6_BASE)
- #define R_SCI7            ((R_SCI0_Type *) R_SCI7_BASE)
- #define R_SCI8            ((R_SCI0_Type *) R_SCI8_BASE)
- #define R_SCI9            ((R_SCI0_Type *) R_SCI9_BASE)
+ #if (2U == BSP_FEATURE_SCI_VERSION)
+  #define R_SCI0           ((R_SCI_B0_Type *) R_SCI0_BASE)
+  #define R_SCI1           ((R_SCI_B0_Type *) R_SCI1_BASE)
+  #define R_SCI2           ((R_SCI_B0_Type *) R_SCI2_BASE)
+  #define R_SCI3           ((R_SCI_B0_Type *) R_SCI3_BASE)
+  #define R_SCI4           ((R_SCI_B0_Type *) R_SCI4_BASE)
+  #define R_SCI9           ((R_SCI_B0_Type *) R_SCI9_BASE)
+ #else
+  #define R_SCI0           ((R_SCI0_Type *) R_SCI0_BASE)
+  #define R_SCI1           ((R_SCI0_Type *) R_SCI1_BASE)
+  #define R_SCI2           ((R_SCI0_Type *) R_SCI2_BASE)
+  #define R_SCI3           ((R_SCI0_Type *) R_SCI3_BASE)
+  #define R_SCI4           ((R_SCI0_Type *) R_SCI4_BASE)
+  #define R_SCI5           ((R_SCI0_Type *) R_SCI5_BASE)
+  #define R_SCI6           ((R_SCI0_Type *) R_SCI6_BASE)
+  #define R_SCI7           ((R_SCI0_Type *) R_SCI7_BASE)
+  #define R_SCI8           ((R_SCI0_Type *) R_SCI8_BASE)
+  #define R_SCI9           ((R_SCI0_Type *) R_SCI9_BASE)
+ #endif
  #define R_SPI0            ((R_SPI0_Type *) R_SPI0_BASE)
  #define R_SPI1            ((R_SPI0_Type *) R_SPI1_BASE)
+ #define R_SPI_B0          ((R_SPI_B0_Type *) R_SPI_B0_BASE)
+ #define R_SPI_B1          ((R_SPI_B0_Type *) R_SPI_B1_BASE)
  #define R_GPT0            ((R_GPT0_Type *) R_GPT320_BASE)
  #define R_GPT1            ((R_GPT0_Type *) R_GPT321_BASE)
  #define R_GPT2            ((R_GPT0_Type *) R_GPT322_BASE)
@@ -207,14 +277,25 @@
  #define R_GPT7            ((R_GPT0_Type *) R_GPT167_BASE)
  #define R_GPT8            ((R_GPT0_Type *) R_GPT168_BASE)
  #define R_GPT9            ((R_GPT0_Type *) R_GPT169_BASE)
+ #define R_GPT_ODC         ((R_GPT_ODC_Type *) R_GPT_ODC_BASE)
  #define R_GPT_OPS         ((R_GPT_OPS_Type *) R_GPT_OPS_BASE)
+ #define R_GPT_GTCLK       ((R_GPT_GTCLK_Type *) R_GPT_GTCLK_BASE)
  #define R_ADC0            ((R_ADC0_Type *) R_ADC120_BASE)
  #define R_ADC1            ((R_ADC0_Type *) R_ADC121_BASE)
- #define R_DAC             ((R_DAC_Type *) R_DAC12_BASE)
+ #define R_ADC_B           ((R_ADC_B0_Type *) R_ADC120_BASE)
+ #if (BSP_FEATURE_DAC_MAX_CHANNELS > 2U)
+  #define R_DAC0           ((R_DAC_Type *) R_DAC120_BASE)
+  #define R_DAC1           ((R_DAC_Type *) R_DAC121_BASE)
+ #else
+  #define R_DAC            ((R_DAC_Type *) R_DAC12_BASE)
+ #endif
  #define R_FLAD            ((R_FLAD_Type *) R_FLAD_BASE)
  #define R_FACI_HP_CMD     ((R_FACI_HP_CMD_Type *) R_FACI_HP_CMD_BASE)
  #define R_FACI_HP         ((R_FACI_HP_Type *) R_FACI_HP_BASE)
  #define R_QSPI            ((R_QSPI_Type *) R_QSPI_BASE)
+ #define R_TFU             ((R_TFU_Type *) R_TFU_BASE)
+ #define R_I3C0            ((R_I3C0_Type *) R_I3C0_BASE)
+ #define R_I3C1            ((R_I3C0_Type *) R_I3C1_BASE)
 
 /* Not in SVD. */
 
@@ -229,7 +310,12 @@
  #define R_PORT8           ((R_PORT0_Type *) R_PORT8_BASE)
  #define R_PORT9           ((R_PORT0_Type *) R_PORT9_BASE)
  #define R_PORT10          ((R_PORT0_Type *) R_PORT10_BASE)
- #define R_PORT11          ((R_PORT0_Type *) R_PORT11_BASE)
+ #if (2U == BSP_FEATURE_IOPORT_VERSION)
+  #define R_PORT11         ((R_PORT0_Type *) R_PORT11_BASE)
+  #define R_PORT12         ((R_PORT0_Type *) R_PORT12_BASE)
+  #define R_PORT13         ((R_PORT0_Type *) R_PORT13_BASE)
+  #define R_PORT14         ((R_PORT0_Type *) R_PORT14_BASE)
+ #endif
  #define R_PFS             ((R_PFS_Type *) R_PFS_BASE)
  #define R_PMISC           ((R_PMISC_Type *) R_PMISC_BASE)
 
@@ -411,7 +497,7 @@
  #define R_CAN0                   ((R_CAN0_Type *) R_CAN0_BASE)
  #define R_CAN1                   ((R_CAN0_Type *) R_CAN1_BASE)
  #define R_CRC                    ((R_CRC_Type *) R_CRC_BASE)
- #if (BSP_FEATURE_CTSU_VERSION == 2)
+ #if (2U == BSP_FEATURE_CTSU_VERSION)
   #define R_CTSU                  ((R_CTSU2_Type *) R_CTSU2_BASE)
  #else
   #define R_CTSU                  ((R_CTSU_Type *) R_CTSU_BASE)
@@ -480,7 +566,7 @@
  #define R_MPU_SMPU               ((R_MPU_SMPU_Type *) R_MPU_SMPU_BASE)
  #define R_MPU_SPMON              ((R_MPU_SPMON_Type *) R_MPU_SPMON_BASE)
  #define R_MSTP                   ((R_MSTP_Type *) R_MSTP_BASE)
- #if (BSP_FEATURE_OPAMP_BASE_ADDRESS == 2U)
+ #if (2U == BSP_FEATURE_OPAMP_BASE_ADDRESS)
   #define R_OPAMP                 ((R_OPAMP_Type *) R_OPAMP2_BASE)
  #else
   #define R_OPAMP                 ((R_OPAMP_Type *) R_OPAMP_BASE)

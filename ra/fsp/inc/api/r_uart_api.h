@@ -34,6 +34,7 @@
  *
  * Implemented by:
  * - @ref SCI_UART
+ * - @ref SCI_B_UART
  *
  * @{
  **********************************************************************************************************************/
@@ -76,9 +77,9 @@ typedef enum e_sf_event
 /** UART Data bit length definition */
 typedef enum e_uart_data_bits
 {
-    UART_DATA_BITS_8,                  ///< Data bits 8-bit
-    UART_DATA_BITS_7,                  ///< Data bits 7-bit
-    UART_DATA_BITS_9                   ///< Data bits 9-bit
+    UART_DATA_BITS_9 = 0U,             ///< Data bits 9-bit
+    UART_DATA_BITS_8 = 2U,             ///< Data bits 8-bit
+    UART_DATA_BITS_7 = 3U,             ///< Data bits 7-bit
 } uart_data_bits_t;
 
 /** UART Parity definition */
@@ -171,6 +172,7 @@ typedef struct st_uart_api
     /** Open  UART device.
      * @par Implemented as
      * - @ref R_SCI_UART_Open()
+     * - @ref R_SCI_B_UART_Open()
      *
      * @param[in,out]  p_ctrl     Pointer to the UART control block. Must be declared by user. Value set here.
      * @param[in]      uart_cfg_t Pointer to UART configuration structure. All elements of this structure must be set by
@@ -184,6 +186,7 @@ typedef struct st_uart_api
      * The maximum transfer size is reported by infoGet().
      * @par Implemented as
      * - @ref R_SCI_UART_Read()
+     * - @ref R_SCI_B_UART_Read()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block for the channel.
      * @param[in]   p_dest     Destination address to read data from.
@@ -197,6 +200,7 @@ typedef struct st_uart_api
      * The maximum transfer size is reported by infoGet().
      * @par Implemented as
      * - @ref R_SCI_UART_Write()
+     * - @ref R_SCI_B_UART_Write()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.
      * @param[in]   p_src      Source address  to write data to.
@@ -210,6 +214,7 @@ typedef struct st_uart_api
      *
      * @par Implemented as
      * - @ref R_SCI_UART_BaudSet()
+     * - @ref R_SCI_B_UART_BaudSet()
      *
      * @param[in]   p_ctrl          Pointer to the UART control block.
      * @param[in]   p_baudrate_info Pointer to module specific information for configuring baud rate.
@@ -219,6 +224,7 @@ typedef struct st_uart_api
     /** Get the driver specific information.
      * @par Implemented as
      * - @ref R_SCI_UART_InfoGet()
+     * - @ref R_SCI_B_UART_InfoGet()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.
      * @param[in]   baudrate   Baud rate in bps.
@@ -229,6 +235,7 @@ typedef struct st_uart_api
      * Abort ongoing transfer.
      * @par Implemented as
      * - @ref R_SCI_UART_Abort()
+     * - @ref R_SCI_B_UART_Abort()
      *
      * @param[in]   p_ctrl                   Pointer to the UART control block.
      * @param[in]   communication_to_abort   Type of abort request.
@@ -239,6 +246,7 @@ typedef struct st_uart_api
      * Specify callback function and optional context pointer and working memory pointer.
      * @par Implemented as
      * - R_SCI_Uart_CallbackSet()
+     * - R_SCI_B_Uart_CallbackSet()
      *
      * @param[in]   p_ctrl                   Pointer to the UART control block.
      * @param[in]   p_callback               Callback function
@@ -252,6 +260,7 @@ typedef struct st_uart_api
     /** Close UART device.
      * @par Implemented as
      * - @ref R_SCI_UART_Close()
+     * - @ref R_SCI_B_UART_Close()
      *
      * @param[in]   p_ctrl     Pointer to the UART control block.
      */
@@ -260,6 +269,7 @@ typedef struct st_uart_api
     /** Stop ongoing read and return the number of bytes remaining in the read.
      * @par Implemented as
      * - @ref R_SCI_UART_ReadStop()
+     * - @ref R_SCI_B_UART_ReadStop()
      *
      * @param[in]   p_ctrl                  Pointer to the UART control block.
      * @param[in,out]   remaining_bytes     Pointer to location to store remaining bytes for read.

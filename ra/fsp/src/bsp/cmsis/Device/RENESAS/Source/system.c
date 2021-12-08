@@ -67,7 +67,7 @@
  **********************************************************************************************************************/
 
 /** System Clock Frequency (Core Clock) */
-uint32_t SystemCoreClock = 0U;
+uint32_t SystemCoreClock BSP_SECTION_EARLY_INIT;
 
 #if defined(__ARMCC_VERSION)
 extern uint32_t Image$$BSS$$ZI$$Base;
@@ -135,6 +135,11 @@ void R_BSP_WarmStart(bsp_warm_start_event_t event) __attribute__((weak));
 
 #endif
 
+#if BSP_CFG_EARLY_INIT
+static void bsp_init_uninitialized_vars(void);
+
+#endif
+
 /*******************************************************************************************************************//**
  * Initialize the MCU and the runtime environment.
  **********************************************************************************************************************/
@@ -183,6 +188,16 @@ void SystemInit (void)
     /* Lock VBTCR1 register. */
     R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_LOCK;
  #endif
+#endif
+
+#if BSP_FEATURE_TFU_SUPPORTED
+    R_BSP_MODULE_START(FSP_IP_TFU, 0U);
+#endif
+
+#if BSP_CFG_EARLY_INIT
+
+    /* Initialize uninitialized BSP variables early for use in R_BSP_WarmStart. */
+    bsp_init_uninitialized_vars();
 #endif
 
     /* Call pre clock initialization hook. */
@@ -406,6 +421,36 @@ static void bsp_reset_trng_circuit (void)
     /* Reapply register protection for low power modes (per RA2A1 User's Manual (R01UH0888EJ0100) Figure 11.13 "Example
      * of initial setting flow for an unused circuit") */
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
+}
+
+#endif
+
+#if BSP_CFG_EARLY_INIT
+
+/*******************************************************************************************************************//**
+ * Initialize BSP variables not handled by C runtime startup.
+ **********************************************************************************************************************/
+static void bsp_init_uninitialized_vars (void)
+{
+    g_protect_pfswe_counter = 0;
+
+    extern volatile uint16_t g_protect_counters[];
+    for (uint32_t i = 0; i < 4; i++)
+    {
+        g_protect_counters[i] = 0;
+    }
+
+    extern bsp_grp_irq_cb_t g_bsp_group_irq_sources[];
+    for (uint32_t i = 0; i < 16; i++)
+    {
+        g_bsp_group_irq_sources[i] = 0;
+    }
+
+ #if BSP_CFG_EARLY_INIT
+
+    /* Set SystemCoreClock to MOCO */
+    SystemCoreClock = BSP_MOCO_HZ;
+ #endif
 }
 
 #endif

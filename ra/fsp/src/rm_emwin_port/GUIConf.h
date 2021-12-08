@@ -25,6 +25,10 @@
 
 #include "rm_emwin_port_cfg.h"
 
+#define EMWIN_SUFFIX    __attribute__((aligned(8)))
+
+void APPW_X_FS_Init(void);
+
 #endif                                 /* Avoid multiple inclusion */
 
 /*************************** End of file ****************************/

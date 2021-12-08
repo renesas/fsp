@@ -37,16 +37,7 @@ extern "C" {
 
  #include <stdint.h>
  #include <math.h>
-
-/**
- * @brief Variables that describe the library version
- */
-typedef struct
-{
-    uint8_t major;
-    uint8_t minor;
-    uint8_t patch;
-} algorithm_version;
+ #include "../zmod4xxx_types.h"
 
 /**
  * @brief Handles of the Rcda.

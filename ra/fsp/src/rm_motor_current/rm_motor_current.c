@@ -624,8 +624,12 @@ void rm_motor_current_cyclic (motor_driver_callback_args_t * p_args)
     float f_ref[3] = {0.0F};
     motor_driver_current_get_t temp_drv_crnt_get;
 
-    motor_current_instance_t      * p_instance        = (motor_current_instance_t *) p_args->p_context;
-    motor_current_instance_ctrl_t * p_instance_ctrl   = (motor_current_instance_ctrl_t *) p_instance->p_ctrl;
+    motor_current_instance_t      * p_instance      = (motor_current_instance_t *) p_args->p_context;
+    motor_current_instance_ctrl_t * p_instance_ctrl = (motor_current_instance_ctrl_t *) p_instance->p_ctrl;
+
+    motor_current_extended_cfg_t * p_extended_cfg =
+        (motor_current_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
     motor_driver_instance_t const * p_driver_instance = p_instance_ctrl->p_driver_instance;
 
     motor_current_callback_args_t temp_args_t;
@@ -659,7 +663,14 @@ void rm_motor_current_cyclic (motor_driver_callback_args_t * p_args)
             f_vdc_ad = temp_drv_crnt_get.vdc;
             p_instance_ctrl->f_va_max = temp_drv_crnt_get.va_max;
 
-            f_iv_ad = -(f_iu_ad + f_iw_ad);
+            if (MOTOR_CURRENT_SHUNT_TYPE_2_SHUNT == p_extended_cfg->shunt)
+            {
+                f_iv_ad = -(f_iu_ad + f_iw_ad);
+            }
+            else
+            {
+                f_iv_ad = temp_drv_crnt_get.iv;
+            }
 
             /* Active Current Control */
             if (MOTOR_CURRENT_FLG_SET == p_instance_ctrl->u1_active)
@@ -693,10 +704,6 @@ void rm_motor_current_cyclic (motor_driver_callback_args_t * p_args)
 
                     /* Angle & speed process */
                     motor_current_angle_cyclic(p_instance);
-
-                    p_instance->p_api->speedPhaseSet(p_instance_ctrl,
-                                                     p_instance_ctrl->f_speed_rad,
-                                                     p_instance_ctrl->f_rotor_angle);
 
                     /* Current control */
                     p_instance->p_api->currentReferenceSet(p_instance_ctrl,

@@ -178,6 +178,8 @@ i2c_slave_api_t const g_i2c_slave_on_iic =
  * @retval  FSP_SUCCESS                       I2C slave device opened successfully.
  * @retval  FSP_ERR_ALREADY_OPEN              Module is already open.
  * @retval  FSP_ERR_IP_CHANNEL_NOT_PRESENT    Channel is not available on this MCU.
+ * @retval  FSP_ERR_INVALID_ARGUMENT          Error interrupt priority is lower than
+ *                                            Transmit, Receive and Transmit End interrupt priority
  * @retval  FSP_ERR_ASSERTION                 Parameter check failure due to one or more reasons below:
  *                                            1. p_api_ctrl or p_cfg is NULL.
  *                                            2. extended parameter is NULL.
@@ -201,6 +203,7 @@ fsp_err_t R_IIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_t
     FSP_ERROR_RETURN(BSP_FEATURE_IIC_VALID_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     FSP_ERROR_RETURN(IIC_SLAVE_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
+    FSP_ERROR_RETURN(p_cfg->eri_ipl <= p_cfg->ipl, FSP_ERR_INVALID_ARGUMENT);
 
     /* If rate is configured as Fast mode plus, check whether the channel supports it */
     if (I2C_SLAVE_RATE_FASTPLUS == p_cfg->rate)
@@ -850,9 +853,6 @@ static void iic_rxi_slave (iic_slave_instance_ctrl_t * p_ctrl)
              * with a read more event in callback */
             else if (p_ctrl->total == p_ctrl->loaded)
             {
-                /* Reset the status indication flag. This allows the API invocation to be successful with in callback */
-                p_ctrl->slave_busy = false;
-
                 iic_slave_callback_request(p_ctrl, I2C_SLAVE_EVENT_RX_MORE_REQUEST);
 #if IIC_SLAVE_CFG_PARAM_CHECKING_ENABLE
                 if (IIC_SLAVE_TRANSFER_DIR_MASTER_WRITE_SLAVE_READ != p_ctrl->direction)

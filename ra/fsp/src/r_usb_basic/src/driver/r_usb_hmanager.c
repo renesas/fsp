@@ -128,8 +128,9 @@ void (* g_usb_hstd_enumaration_process[8])(usb_utr_t *, uint16_t, uint16_t) =
  #endif                                /* #if ((BSP_CFG_RTOS == 1) && defined(USB_CFG_HHID_USE)) */
 
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
-uint16_t         g_usb_disp_param_set[USB_NUM_USBIP];
-usb_compliance_t g_usb_disp_param[USB_NUM_USBIP];
+uint16_t                     g_usb_disp_param_set[USB_NUM_USBIP];
+usb_compliance_t             g_usb_disp_param[USB_NUM_USBIP];
+extern usb_compliance_cb_t * g_usb_compliance_callback[USB_NUM_USBIP];
  #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
  #if (BSP_CFG_RTOS == 1)
@@ -349,7 +350,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
   #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
                     if (USB_ON == g_usb_disp_param_set[ptr->ip])
                     {
-                        usb_compliance_disp((void *) &g_usb_disp_param[ptr->ip]);
+                        (*g_usb_compliance_callback[ptr->ip])((void *) &g_usb_disp_param[ptr->ip]);
                     }
   #endif                               /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
                     break;
@@ -708,7 +709,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
   #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
                     if (USB_ON == g_usb_disp_param_set[ptr->ip])
                     {
-                        usb_compliance_disp((void *) &g_usb_disp_param[ptr->ip]);
+                        (*g_usb_compliance_callback[ptr->ip])((void *) &g_usb_disp_param[ptr->ip]);
                     }
   #endif                               /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
@@ -1053,7 +1054,7 @@ static uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * drive
                 {
                     id_check = USB_OK;
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
-                    g_usb_disp_param[ptr->ip].status = USB_CT_TPL;
+                    g_usb_disp_param[ptr->ip].status = USB_COMPLIANCETEST_TPL;
                     g_usb_disp_param[ptr->ip].pid    = product_id;
                     g_usb_disp_param[ptr->ip].vid    = vendor_id;
                     g_usb_disp_param_set[ptr->ip]    = USB_ON;
@@ -1074,14 +1075,14 @@ static uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * drive
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
         if (USB_IFCLS_HUB == descriptor_table[4])
         {
-            g_usb_disp_param[ptr->ip].status = USB_CT_HUB;
+            g_usb_disp_param[ptr->ip].status = USB_COMPLIANCETEST_HUB;
             g_usb_disp_param[ptr->ip].pid    = product_id;
             g_usb_disp_param[ptr->ip].vid    = vendor_id;
             g_usb_disp_param_set[ptr->ip]    = USB_ON;
         }
         else
         {
-            g_usb_disp_param[ptr->ip].status = USB_CT_NOTTPL;
+            g_usb_disp_param[ptr->ip].status = USB_COMPLIANCETEST_NOTTPL;
             g_usb_disp_param[ptr->ip].pid    = product_id;
             g_usb_disp_param[ptr->ip].vid    = vendor_id;
             g_usb_disp_param_set[ptr->ip]    = USB_ON;
@@ -2724,10 +2725,10 @@ void usb_hstd_mgr_task (void * stacd)
                     case USB_DETACH:
                     {
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
-                        disp_param.status = USB_CT_DETACH;
+                        disp_param.status = USB_COMPLIANCETEST_DETACH;
                         disp_param.pid    = USB_NULL;
                         disp_param.vid    = USB_NULL;
-                        usb_compliance_disp((void *) &disp_param);
+                        (*g_usb_compliance_callback[ptr->ip])((void *) &disp_param);
  #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
                         g_usb_hstd_mgr_mode[ptr->ip]     = USB_DETACHED;
                         g_usb_hstd_device_speed[ptr->ip] = USB_NOCONNECT;
@@ -2785,10 +2786,10 @@ void usb_hstd_mgr_task (void * stacd)
                     case USB_ATTACHF:
                     {
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
-                        disp_param.status = USB_CT_ATTACH;
+                        disp_param.status = USB_COMPLIANCETEST_ATTACH;
                         disp_param.pid    = USB_NULL;
                         disp_param.vid    = USB_NULL;
-                        usb_compliance_disp((void *) &disp_param);
+                        (*g_usb_compliance_callback[ptr->ip])((void *) &disp_param);
  #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
                         if (USB_DETACHED == g_usb_hstd_mgr_mode[ptr->ip])

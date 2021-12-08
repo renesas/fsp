@@ -71,6 +71,9 @@
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_RootCertificateVerify(uint32_t public_key_type, uint8_t *certificate,
         uint32_t certificate_length, uint32_t public_key_n_start_position, uint32_t public_key_n_end_position,
@@ -126,6 +129,9 @@ fsp_err_t R_SCE_TLS_RootCertificateVerify(uint32_t public_key_type, uint8_t *cer
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_CertificateVerify(uint32_t public_key_type, uint32_t *encrypted_input_public_key,
         uint8_t *certificate, uint32_t certificate_length, uint8_t *signature, uint32_t public_key_n_start_position,
@@ -171,6 +177,9 @@ fsp_err_t R_SCE_TLS_CertificateVerify(uint32_t public_key_type, uint32_t *encryp
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForRSA2048(uint32_t *sce_pre_master_secret)
 {
@@ -190,6 +199,9 @@ fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForRSA2048(uint32_t *sce_pre_master_s
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_MasterSecretGenerate (uint32_t select_cipher_suite, uint32_t *sce_pre_master_secret,
@@ -216,6 +228,9 @@ fsp_err_t R_SCE_TLS_MasterSecretGenerate (uint32_t select_cipher_suite, uint32_t
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_PreMasterSecretEncryptWithRSA2048(uint32_t *encrypted_public_key,
@@ -245,6 +260,9 @@ fsp_err_t R_SCE_TLS_PreMasterSecretEncryptWithRSA2048(uint32_t *encrypted_public
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_SessionKeyGenerate(uint32_t select_cipher_suite, uint32_t *sce_master_secret,
@@ -342,6 +360,9 @@ fsp_err_t R_SCE_TLS_SessionKeyGenerate(uint32_t select_cipher_suite, uint32_t *s
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
+ *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_VerifyDataGenerate(uint32_t select_verify_data, uint32_t *sce_master_secret,
         uint8_t *hand_shake_hash, uint8_t *verify_data)
@@ -373,6 +394,9 @@ fsp_err_t R_SCE_TLS_VerifyDataGenerate(uint32_t select_verify_data, uint32_t *sc
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_ServerKeyExchangeVerify(uint32_t public_key_type, uint8_t *client_random,
@@ -408,6 +432,9 @@ fsp_err_t R_SCE_TLS_ServerKeyExchangeVerify(uint32_t public_key_type, uint8_t *c
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
+ *
+ * @note The pre-run state is SCE Enabled State.
+ *       After the function runs the state transitions to SCE Enabled State.
  *
  **********************************************************************************************************************/
 fsp_err_t R_SCE_TLS_PreMasterSecretGenerateForECC_secp256r1(uint32_t *encrypted_public_key,

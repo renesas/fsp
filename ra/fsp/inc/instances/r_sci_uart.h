@@ -54,7 +54,7 @@ typedef enum e_sci_clk_src
 } sci_clk_src_t;
 
 /** UART flow control mode definition */
-typedef enum e_flow_control
+typedef enum e_sci_uart_flow_control
 {
     SCI_UART_FLOW_CONTROL_RTS             = 0U, ///< Use SCI pin for RTS
     SCI_UART_FLOW_CONTROL_CTS             = 1U, ///< Use SCI pin for CTS

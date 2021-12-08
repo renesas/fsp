@@ -74,13 +74,26 @@ FSP_HEADER
  #define BSP_MSTP_REG_FSP_IP_POEG(channel)      R_MSTP->MSTPCRD
  #define BSP_MSTP_BIT_FSP_IP_POEG(channel)      (1U << (14U));
 #else
- #define BSP_MSTP_REG_FSP_IP_GPT(channel)       R_MSTP->MSTPCRE
- #define BSP_MSTP_BIT_FSP_IP_GPT(channel)       (1U << (31 - channel));
- #define BSP_MSTP_REG_FSP_IP_AGT(channel)       *((3U >= channel) ? &R_MSTP->MSTPCRD : &R_MSTP->MSTPCRE)
- #define BSP_MSTP_BIT_FSP_IP_AGT(channel)       ((3U >= \
+ #if (2U == BSP_FEATURE_ELC_VERSION)
+  #define BSP_MSTP_REG_FSP_IP_GPT(channel)      R_MSTP->MSTPCRE
+  #define BSP_MSTP_BIT_FSP_IP_GPT(channel)      (1U << 31);
+  #define BSP_MSTP_REG_FSP_IP_AGT(channel)      R_MSTP->MSTPCRD
+  #define BSP_MSTP_BIT_FSP_IP_AGT(channel)      (1U << (3U - channel));
+  #define BSP_MSTP_REG_FSP_IP_KEY(channel)      R_MSTP->MSTPCRE
+  #define BSP_MSTP_BIT_FSP_IP_KEY(channel)      (1U << 4U);
+  #define BSP_MSTP_REG_FSP_IP_POEG(channel)     R_MSTP->MSTPCRD
+  #define BSP_MSTP_BIT_FSP_IP_POEG(channel)     (1U << (14U - channel));
+ #else
+  #define BSP_MSTP_REG_FSP_IP_GPT(channel)      R_MSTP->MSTPCRE
+  #define BSP_MSTP_BIT_FSP_IP_GPT(channel)      (1U << (31 - channel));
+  #define BSP_MSTP_REG_FSP_IP_AGT(channel)      *((3U >= channel) ? &R_MSTP->MSTPCRD : &R_MSTP->MSTPCRE)
+  #define BSP_MSTP_BIT_FSP_IP_AGT(channel)      ((3U >= \
                                                   channel) ? (1U << (3U - channel)) : (1U << (15U - (channel - 4U))));
- #define BSP_MSTP_REG_FSP_IP_POEG(channel)      R_MSTP->MSTPCRD
- #define BSP_MSTP_BIT_FSP_IP_POEG(channel)      (1U << (14U - channel));
+  #define BSP_MSTP_REG_FSP_IP_KEY(channel)      R_MSTP->MSTPCRE
+  #define BSP_MSTP_BIT_FSP_IP_KEY(channel)      (1U << (4U - channel));
+  #define BSP_MSTP_REG_FSP_IP_POEG(channel)     R_MSTP->MSTPCRD
+  #define BSP_MSTP_BIT_FSP_IP_POEG(channel)     (1U << (14U - channel));
+ #endif
 #endif
 
 #define BSP_MSTP_REG_FSP_IP_DMAC(channel)       R_BSP_MSTPCRA
@@ -137,6 +150,10 @@ FSP_HEADER
 #define BSP_MSTP_BIT_FSP_IP_DOC(channel)        (1U << (13U - channel));
 #define BSP_MSTP_REG_FSP_IP_ELC(channel)        R_MSTP->MSTPCRC
 #define BSP_MSTP_BIT_FSP_IP_ELC(channel)        (1U << (14U - channel));
+#define BSP_MSTP_REG_FSP_IP_TFU(channel)        R_MSTP->MSTPCRC
+#define BSP_MSTP_BIT_FSP_IP_TFU(channel)        (1U << (20U - channel));
+#define BSP_MSTP_REG_FSP_IP_IIRFA(channel)      R_MSTP->MSTPCRC
+#define BSP_MSTP_BIT_FSP_IP_IIRFA(channel)      (1U << (21U - channel));
 #define BSP_MSTP_REG_FSP_IP_CANFD(channel)      R_MSTP->MSTPCRC
 #define BSP_MSTP_BIT_FSP_IP_CANFD(channel)      (1U << (27U));
 #define BSP_MSTP_REG_FSP_IP_TRNG(channel)       R_MSTP->MSTPCRC
@@ -149,10 +166,15 @@ FSP_HEADER
 #define BSP_MSTP_BIT_FSP_IP_ADC(channel)        (1U << (16U - channel));
 #define BSP_MSTP_REG_FSP_IP_SDADC(channel)      R_MSTP->MSTPCRD
 #define BSP_MSTP_BIT_FSP_IP_SDADC(channel)      (1U << (17U - channel));
-#define BSP_MSTP_REG_FSP_IP_DAC8(channel)       R_MSTP->MSTPCRD
-#define BSP_MSTP_BIT_FSP_IP_DAC8(channel)       (1U << (19U));
-#define BSP_MSTP_REG_FSP_IP_DAC(channel)        R_MSTP->MSTPCRD
-#define BSP_MSTP_BIT_FSP_IP_DAC(channel)        (1U << (20U));
+#if (BSP_FEATURE_DAC_MAX_CHANNELS > 2U)
+ #define BSP_MSTP_REG_FSP_IP_DAC(channel)       R_MSTP->MSTPCRD
+ #define BSP_MSTP_BIT_FSP_IP_DAC(channel)       (1U << (20U - channel));
+#else
+ #define BSP_MSTP_REG_FSP_IP_DAC8(channel)      R_MSTP->MSTPCRD
+ #define BSP_MSTP_BIT_FSP_IP_DAC8(channel)      (1U << (19U));
+ #define BSP_MSTP_REG_FSP_IP_DAC(channel)       R_MSTP->MSTPCRD
+ #define BSP_MSTP_BIT_FSP_IP_DAC(channel)       (1U << (20U));
+#endif
 #define BSP_MSTP_REG_FSP_IP_TSN(channel)        R_MSTP->MSTPCRD
 #define BSP_MSTP_BIT_FSP_IP_TSN(channel)        (1U << (22U - channel));
 #define BSP_MSTP_REG_FSP_IP_ACMPHS(channel)     R_MSTP->MSTPCRD

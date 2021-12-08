@@ -104,6 +104,7 @@ const spi_flash_api_t g_qspi_on_spi_flash =
     .open           = R_QSPI_Open,
     .directWrite    = R_QSPI_DirectWrite,
     .directRead     = R_QSPI_DirectRead,
+    .directTransfer = R_QSPI_DirectTransfer,
     .spiProtocolSet = R_QSPI_SpiProtocolSet,
     .write          = R_QSPI_Write,
     .erase          = R_QSPI_Erase,
@@ -111,6 +112,7 @@ const spi_flash_api_t g_qspi_on_spi_flash =
     .xipEnter       = R_QSPI_XipEnter,
     .xipExit        = R_QSPI_XipExit,
     .bankSet        = R_QSPI_BankSet,
+    .autoCalibrate  = R_QSPI_AutoCalibrate,
     .close          = R_QSPI_Close,
 };
 
@@ -256,6 +258,24 @@ fsp_err_t R_QSPI_DirectRead (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_dest, 
     r_qspi_direct_read_sub(p_dest, bytes);
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Read/Write raw data directly with the OctaFlash/OctaRAM device. Unsupported by QSPI.
+ *
+ * Implements @ref spi_flash_api_t::directTransfer.
+ *
+ * @retval FSP_ERR_UNSUPPORTED         API not supported by QSPI.
+ **********************************************************************************************************************/
+fsp_err_t R_QSPI_DirectTransfer (spi_flash_ctrl_t                  * p_ctrl,
+                                 spi_flash_direct_transfer_t * const p_transfer,
+                                 spi_flash_direct_transfer_dir_t     direction)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_transfer);
+    FSP_PARAMETER_NOT_USED(direction);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**
@@ -571,6 +591,19 @@ fsp_err_t R_QSPI_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol_t
     R_QSPI->SFMSPC_b.SFMSPI = (uint32_t) spi_protocol & 3U;
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Auto-calibrate the OctaRAM device using the preamble pattern. Unsupported by QSPI.
+ * Implements @ref spi_flash_api_t::autoCalibrate.
+ *
+ * @retval FSP_ERR_UNSUPPORTED         API not supported by QSPI
+ **********************************************************************************************************************/
+fsp_err_t R_QSPI_AutoCalibrate (spi_flash_ctrl_t * p_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**

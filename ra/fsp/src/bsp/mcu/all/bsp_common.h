@@ -190,6 +190,13 @@ FSP_HEADER
  #define FSP_PRIV_TZ_USE_SECURE_REGS            (0)
 #endif
 
+/* Put certain BSP variables in uninitialized RAM when initializing BSP early. */
+#if BSP_CFG_EARLY_INIT
+ #define BSP_SECTION_EARLY_INIT                 BSP_PLACE_IN_SECTION(BSP_SECTION_NOINIT)
+#else
+ #define BSP_SECTION_EARLY_INIT
+#endif
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -214,6 +221,18 @@ typedef enum e_fsp_priv_clock
     FSP_PRIV_CLOCK_FCLK  = 28,
 } fsp_priv_clock_t;
 
+/* Private enum used in R_FSP_SciSpiClockHzGe.  Maps clock name to base bit in SCISPICKCR. */
+typedef enum e_fsp_priv_source_clock
+{
+    FSP_PRIV_CLOCK_HOCO     = 0,       ///< The high speed on chip oscillator
+    FSP_PRIV_CLOCK_MOCO     = 1,       ///< The middle speed on chip oscillator
+    FSP_PRIV_CLOCK_LOCO     = 2,       ///< The low speed on chip oscillator
+    FSP_PRIV_CLOCK_MAIN_OSC = 3,       ///< The main oscillator
+    FSP_PRIV_CLOCK_SUBCLOCK = 4,       ///< The subclock oscillator
+    FSP_PRIV_CLOCK_PLL      = 5,       ///< The PLL oscillator
+    FSP_PRIV_CLOCK_PLL2     = 6,       ///< The PLL2 oscillator
+} fsp_priv_source_clock_t;
+
 typedef struct st_bsp_unique_id
 {
     union
@@ -226,6 +245,7 @@ typedef struct st_bsp_unique_id
 /***********************************************************************************************************************
  * Exported global variables
  **********************************************************************************************************************/
+uint32_t R_BSP_SourceClockHzGet(fsp_priv_source_clock_t clock);
 
 /***********************************************************************************************************************
  * Global variables (defined in other files)
@@ -261,6 +281,24 @@ __STATIC_INLINE uint32_t R_FSP_SystemClockHzGet (fsp_priv_clock_t clock)
 
     return (SystemCoreClock << iclk_div) >> clock_div;
 }
+
+#if BSP_FEATURE_BSP_HAS_SCISPI_CLOCK
+
+/*******************************************************************************************************************//**
+ * Gets the frequency of a SCI/SPI clock.
+ *
+ * @return     Frequency of requested clock in Hertz.
+ **********************************************************************************************************************/
+__STATIC_INLINE uint32_t R_FSP_SciSpiClockHzGet (void)
+{
+    uint32_t                scispidivcr = R_SYSTEM->SCISPICKDIVCR;
+    uint32_t                clock_div   = (scispidivcr & FSP_PRIV_SCKDIVCR_DIV_MASK);
+    fsp_priv_source_clock_t scispicksel = (fsp_priv_source_clock_t) R_SYSTEM->SCISPICKCR_b.SCISPICKSEL;
+
+    return R_BSP_SourceClockHzGet(scispicksel) >> clock_div;
+}
+
+#endif
 
 /*******************************************************************************************************************//**
  * Get unique ID for this device.

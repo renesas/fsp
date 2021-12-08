@@ -90,10 +90,11 @@ typedef enum e_canfd_error
 /** CANFD Transmit Message Buffer (TX MB) */
 typedef enum e_canfd_tx_mb
 {
-    CANFD_TX_MB_0  = 0,
-    CANFD_TX_MB_1  = 1,
-    CANFD_TX_MB_2  = 2,
-    CANFD_TX_MB_3  = 3,
+    CANFD_TX_MB_0 = 0,
+    CANFD_TX_MB_1 = 1,
+    CANFD_TX_MB_2 = 2,
+    CANFD_TX_MB_3 = 3,
+#if !BSP_FEATURE_CANFD_LITE
     CANFD_TX_MB_4  = 4,
     CANFD_TX_MB_5  = 5,
     CANFD_TX_MB_6  = 6,
@@ -106,6 +107,7 @@ typedef enum e_canfd_tx_mb
     CANFD_TX_MB_37 = 37,
     CANFD_TX_MB_38 = 38,
     CANFD_TX_MB_39 = 39,
+#endif
 } canfd_tx_mb_t;
 
 /** CANFD Receive Buffer (MB + FIFO) */
@@ -145,12 +147,14 @@ typedef enum e_canfd_rx_buffer
     CANFD_RX_BUFFER_MB_31  = 31,
     CANFD_RX_BUFFER_FIFO_0 = 32,
     CANFD_RX_BUFFER_FIFO_1 = 33,
+#if !BSP_FEATURE_CANFD_LITE
     CANFD_RX_BUFFER_FIFO_2 = 34,
     CANFD_RX_BUFFER_FIFO_3 = 35,
     CANFD_RX_BUFFER_FIFO_4 = 36,
     CANFD_RX_BUFFER_FIFO_5 = 37,
     CANFD_RX_BUFFER_FIFO_6 = 38,
     CANFD_RX_BUFFER_FIFO_7 = 39,
+#endif
 } canfd_rx_buffer_t;
 
 /** CANFD Receive Message Buffer (RX MB) */
@@ -196,12 +200,14 @@ typedef enum e_canfd_rx_fifo
 {
     CANFD_RX_FIFO_0 = (1U),
     CANFD_RX_FIFO_1 = (1U << 1),
+#if !BSP_FEATURE_CANFD_LITE
     CANFD_RX_FIFO_2 = (1U << 2),
     CANFD_RX_FIFO_3 = (1U << 3),
     CANFD_RX_FIFO_4 = (1U << 4),
     CANFD_RX_FIFO_5 = (1U << 5),
     CANFD_RX_FIFO_6 = (1U << 6),
     CANFD_RX_FIFO_7 = (1U << 7),
+#endif
 } canfd_rx_fifo_t;
 
 /** CANFD AFL Minimum DLC settings */
@@ -299,7 +305,11 @@ typedef struct st_canfd_global_cfg
 {
     uint32_t global_interrupts;        ///< Global control options (CFDGCTR register setting)
     uint32_t global_config;            ///< Global configuration options (CFDGCFG register setting)
+#if !BSP_FEATURE_CANFD_LITE
     uint32_t rx_fifo_config[8];        ///< RX FIFO configuration (CFDRFCCn register settings)
+#else
+    uint32_t rx_fifo_config[2];        ///< RX FIFO configuration (CFDRFCCn register settings)
+#endif
     uint32_t rx_mb_config;             ///< Number and size of RX Message Buffers (CFDRMNB register setting)
     uint8_t  global_err_ipl;           ///< Global Error interrupt priority
     uint8_t  rx_fifo_ipl;              ///< RX FIFO interrupt priority

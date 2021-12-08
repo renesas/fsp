@@ -154,6 +154,8 @@ fsp_err_t RM_MOTOR_SENSORLESS_ErrorCheck(motor_ctrl_t * const p_ctrl, uint16_t *
 fsp_err_t RM_MOTOR_SENSORLESS_PositionSet(motor_ctrl_t * const                      p_ctrl,
                                           motor_speed_position_data_t const * const p_position);
 
+fsp_err_t RM_MOTOR_SENSORLESS_WaitStopFlagGet(motor_ctrl_t * const p_ctrl, motor_wait_stop_flag_t * const p_flag);
+
 /*******************************************************************************************************************//**
  * @} (end addtogroup MOTOR_SENSORLESS)
  **********************************************************************************************************************/

@@ -58,4 +58,10 @@ void GUI_X_Config (void)
     GUI_SetDefaultFont(GUI_FONT_6X8);
 }
 
+/* Unused weak definition for AppWizard-required function. */
+__attribute__((weak)) void APPW_X_FS_Init (void)
+{
+    /* Function not used. */
+}
+
 /*************************** End of file ****************************/

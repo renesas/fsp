@@ -117,17 +117,18 @@ void sdadc_caliend_isr(void);
 /** SDADC Implementation of ADC interface. */
 const adc_api_t g_adc_on_sdadc =
 {
-    .open          = R_SDADC_Open,
-    .scanCfg       = R_SDADC_ScanCfg,
-    .infoGet       = R_SDADC_InfoGet,
-    .scanStart     = R_SDADC_ScanStart,
-    .scanStop      = R_SDADC_ScanStop,
-    .scanStatusGet = R_SDADC_StatusGet,
-    .offsetSet     = R_SDADC_OffsetSet,
-    .read          = R_SDADC_Read,
-    .read32        = R_SDADC_Read32,
-    .calibrate     = R_SDADC_Calibrate,
-    .close         = R_SDADC_Close,
+    .open           = R_SDADC_Open,
+    .scanCfg        = R_SDADC_ScanCfg,
+    .infoGet        = R_SDADC_InfoGet,
+    .scanStart      = R_SDADC_ScanStart,
+    .scanGroupStart = R_SDADC_ScanGroupStart,
+    .scanStop       = R_SDADC_ScanStop,
+    .scanStatusGet  = R_SDADC_StatusGet,
+    .offsetSet      = R_SDADC_OffsetSet,
+    .read           = R_SDADC_Read,
+    .read32         = R_SDADC_Read32,
+    .calibrate      = R_SDADC_Calibrate,
+    .close          = R_SDADC_Close,
 };
 
 /*******************************************************************************************************************//**
@@ -408,6 +409,20 @@ fsp_err_t R_SDADC_ScanStart (adc_ctrl_t * p_ctrl)
 }
 
 /*******************************************************************************************************************//**
+ * @ref adc_api_t::scanStart is not supported on the SDADC. Use scanStart instead.
+ *
+ * @retval FSP_ERR_UNSUPPORTED         Function not supported in this implementation.
+ **********************************************************************************************************************/
+fsp_err_t R_SDADC_ScanGroupStart (adc_ctrl_t * p_ctrl, adc_group_mask_t group_id)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(group_id);
+
+    /* Return the unsupported error. */
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * If the SDADC is configured for hardware triggers, disables hardware triggers.  Otherwise, stops any in-progress scan
  * started by software. Implements @ref adc_api_t::scanStop().
  *
@@ -626,7 +641,7 @@ fsp_err_t R_SDADC_OffsetSet (adc_ctrl_t * const p_ctrl, adc_channel_t const reg_
  * @retval  FSP_ERR_IN_USE             A conversion or calibration is in progress.
  * @retval  FSP_ERR_NOT_OPEN           Instance control block is not open.
  **********************************************************************************************************************/
-fsp_err_t R_SDADC_Calibrate (adc_ctrl_t * const p_ctrl, void * const p_extend)
+fsp_err_t R_SDADC_Calibrate (adc_ctrl_t * const p_ctrl, void const * p_extend)
 {
     sdadc_instance_ctrl_t  * p_instance_ctrl = (sdadc_instance_ctrl_t *) p_ctrl;
     sdadc_calibrate_args_t * p_calibrate     = (sdadc_calibrate_args_t *) p_extend;

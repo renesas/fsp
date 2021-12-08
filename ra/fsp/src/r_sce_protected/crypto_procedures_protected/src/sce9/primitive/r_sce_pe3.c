@@ -208,9 +208,11 @@ fsp_err_t R_SCE_TlsGeneratePreMasterSecretSub(uint32_t *OutData_PreMasterSecret)
     SCE->REG_100H = change_endian_long(0x000000e3U);
     R_SCE_func101(0x330a8f2bU, 0x7da8d6c6U, 0xa258f5cfU, 0x3b3f78c9U);
     R_SCE_func044();
-    R_SCE_func100(0xe1cea9c0U, 0xc32816abU, 0xd7454bd9U, 0x088bd2cbU);
+    R_SCE_func100(0xd7bf3fd4U, 0x9fd30b57U, 0x97867224U, 0xfc437c46U);
     SCE->REG_D0H = 0x40000200U;
     SCE->REG_C4H = 0x02e087b7U;
+    SCE->REG_ECH = 0x0000b420U;
+    SCE->REG_ECH = 0x00000070U;
     SCE->REG_E0H = 0x818c0001U;
     SCE->REG_00H = 0x00002833U;
     /* WAIT_LOOP */
@@ -247,7 +249,7 @@ fsp_err_t R_SCE_TlsGeneratePreMasterSecretSub(uint32_t *OutData_PreMasterSecret)
     OutData_PreMasterSecret[13] = SCE->REG_100H;
     OutData_PreMasterSecret[14] = SCE->REG_100H;
     OutData_PreMasterSecret[15] = SCE->REG_100H;
-    R_SCE_func100(0x5ff27458U, 0xf93334d2U, 0x2073a213U, 0x818a2970U);
+    R_SCE_func100(0xf0b143e2U, 0x21b3f041U, 0xf361845fU, 0x47796392U);
     SCE->REG_104H = 0x00000052U;
     SCE->REG_C4H = 0x00000c84U;
     /* WAIT_LOOP */
@@ -275,7 +277,7 @@ fsp_err_t R_SCE_TlsGeneratePreMasterSecretSub(uint32_t *OutData_PreMasterSecret)
     OutData_PreMasterSecret[17] = SCE->REG_100H;
     OutData_PreMasterSecret[18] = SCE->REG_100H;
     OutData_PreMasterSecret[19] = SCE->REG_100H;
-    R_SCE_func100(0x9f9ca111U, 0xfe024f2eU, 0x2d73212cU, 0xf5e1356fU);
+    R_SCE_func100(0x42f7380cU, 0x3a2937c7U, 0xd0d22060U, 0x505c1df5U);
     SCE->REG_104H = 0x00000052U;
     SCE->REG_C4H = 0x01000c84U;
     /* WAIT_LOOP */
@@ -294,7 +296,7 @@ fsp_err_t R_SCE_TlsGeneratePreMasterSecretSub(uint32_t *OutData_PreMasterSecret)
     OutData_PreMasterSecret[1] = SCE->REG_100H;
     OutData_PreMasterSecret[2] = SCE->REG_100H;
     OutData_PreMasterSecret[3] = SCE->REG_100H;
-    R_SCE_func102(0x579c5fd2U, 0x17db3ad4U, 0x14fa1e59U, 0x8834e9a0U);
+    R_SCE_func102(0x843f5e60U, 0x8b89b89cU, 0xad49c1cbU, 0x07db4a0fU);
     SCE->REG_1BCH = 0x00000040U;
     /* WAIT_LOOP */
     while (0U != SCE->REG_18H_b.B12)
@@ -305,5 +307,5 @@ fsp_err_t R_SCE_TlsGeneratePreMasterSecretSub(uint32_t *OutData_PreMasterSecret)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_pe3_r1.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_pe3_r2.prc
 ***********************************************************************************************************************/

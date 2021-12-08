@@ -1714,7 +1714,7 @@ fsp_err_t R_SCE_Sha256HmacGenerateInitPrivate (sce_hmac_sha_handle_t      * hand
                                                 sce_hmac_sha_wrapped_key_t * InData_KeyIndex)
 {
     uint32_t indata_keytype = 0;
-    uint32_t key_length     = SCE_TLS_HMAC_KEY_INDEX_WORD_SIZE;
+    uint32_t key_length     = HW_SCE_HMAC_KEY_INDEX_WORD_SIZE;
 
     FSP_PARAMETER_NOT_USED(handle);
 

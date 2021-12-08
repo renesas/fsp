@@ -60,17 +60,32 @@ FSP_HEADER
 /** DOC status */
 typedef struct e_doc_status
 {
-    uint16_t result;
+    union
+    {
+        uint16_t result;               ///< Result of a 16-bit operation.
+        uint32_t result_32;            ///< Result of a 32-bit operation.
+    };
 } doc_status_t;
 
 /** Event that can trigger a callback function. */
 typedef enum e_doc_event
 {
-    DOC_EVENT_COMPARISON_MISMATCH = 0x00, ///< Comparison of data has resulted in a mismatch.
-    DOC_EVENT_ADDITION            = 0x01, ///< Addition of data has resulted in a value greater than H'FFFF.
-    DOC_EVENT_SUBTRACTION         = 0x02, ///< Subtraction of data has resulted in a value less than H'0000.
-    DOC_EVENT_COMPARISON_MATCH    = 0x04, ///< Comparison of data has resulted in a match.
+    DOC_EVENT_COMPARISON_MISMATCH       = 0x00, ///< The data is not equal to the reference data setting.
+    DOC_EVENT_ADDITION                  = 0x01, ///< Addition resulted in a value greater than the max for the configured bit width.
+    DOC_EVENT_SUBTRACTION               = 0x02, ///< Subtraction resulted in a value less than 0.
+    DOC_EVENT_COMPARISON_MATCH          = 0x04, ///< The data is equal to the reference data settting.
+    DOC_EVENT_COMPARISON_LOWER          = 0x08, ///< The data is less than the reference data setting.
+    DOC_EVENT_COMPARISON_UPPER          = 0x0C, ///< The data is greater than the reference data setting.
+    DOC_EVENT_COMPARISON_INSIDE_WINDOW  = 0x10, ///< The data is between the two reference data settings.
+    DOC_EVENT_COMPARISON_OUTSIDE_WINDOW = 0x14, ///< The data is outside the two reference data setttings.
 } doc_event_t;
+
+/** The bit width used during operations. */
+typedef enum e_doc_bit_width
+{
+    DOC_BIT_WIDTH_16,                  ///< Operations are 16-bit.
+    DOC_BIT_WIDTH_32                   ///< Operations are 32-bit.
+} doc_bit_width_t;
 
 /** Callback function parameter data. */
 typedef struct st_doc_callback_args
@@ -88,10 +103,25 @@ typedef void doc_ctrl_t;
 /** User configuration structure, used in the open function. */
 typedef struct st_doc_cfg
 {
-    doc_event_t event;                 ///< Select enumerated value from @ref doc_event_t.
-    uint16_t    doc_data;              ///< Initial/reference value for DODSR register.
-    uint8_t     ipl;                   ///< DOC interrupt priority
-    IRQn_Type   irq;                   ///< NVIC interrupt number assigned to this instance
+    doc_event_t     event;             ///< Select enumerated value from @ref doc_event_t.
+    doc_bit_width_t bit_width;         ///< The bit width of operations.
+
+    /**
+     * Initial/Reference data for addition, subtraction, and comparison operations.
+     * - In Addition and Subtraction mode, this value sets the initial value of the operations.
+     * - In Comparison match, mismatch, lower, and upper modes, this value is compared with data that is written.
+     * - In Comparison inside window and outside window modes, this value is used as the lower bound for comparisons.
+     */
+    uint32_t doc_data;
+
+    /**
+     * Additional reference data for use in Window Comparison operations.
+     * - In Comparison inside window and outside window modes, this value is used as the upper bound for comparisons.
+     */
+    uint32_t doc_data_extra;
+
+    uint8_t   ipl;                     ///< DOC interrupt priority
+    IRQn_Type irq;                     ///< NVIC interrupt number assigned to this instance
 
     /** Callback provided when a DOC ISR occurs. */
     void (* p_callback)(doc_callback_args_t * p_args);
@@ -118,7 +148,7 @@ typedef struct st_doc_api
      */
     fsp_err_t (* close)(doc_ctrl_t * const p_ctrl);
 
-    /** Gets the result of addition/subtraction and stores it in the provided pointer p_data.
+    /** DEPRECATED - Gets the result of addition/subtraction operations and stores it in the provided pointer p_status.
      * @par Implemented as
      * - @ref R_DOC_StatusGet()
      * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
@@ -127,6 +157,15 @@ typedef struct st_doc_api
      */
     fsp_err_t (* statusGet)(doc_ctrl_t * const p_ctrl, doc_status_t * p_status);
 
+    /** Gets the result of addition/subtraction operations and stores it in the provided pointer p_result.
+     * @par Implemented as
+     * - @ref R_DOC_Read()
+     *
+     * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
+     * @param[in]   p_result    The result of the DOC operation.
+     */
+    fsp_err_t (* read)(doc_ctrl_t * const p_ctrl, uint32_t * p_result);
+
     /** Write to the DODIR register.
      * @par Implemented as
      * - @ref R_DOC_Write()
@@ -134,7 +173,7 @@ typedef struct st_doc_api
      * @param[in]   p_ctrl      Control block set in @ref doc_api_t::open call.
      * @param[in]   data        data to be written to DOC DODIR register.
      */
-    fsp_err_t (* write)(doc_ctrl_t * const p_ctrl, uint16_t data);
+    fsp_err_t (* write)(doc_ctrl_t * const p_ctrl, uint32_t data);
 
     /**
      * Specify callback function and optional context pointer and working memory pointer.

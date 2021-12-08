@@ -155,7 +155,9 @@
                                                  BSP_PRV_STARTUP_SCKDIVCR_FCLK_BITS)
 
 /* The number of clocks is used to size the g_clock_freq array. */
-#if BSP_PRV_PLL_SUPPORTED
+#if BSP_PRV_PLL2_SUPPORTED
+ #define BSP_PRV_NUM_CLOCKS                     ((uint8_t) BSP_CLOCKS_SOURCE_CLOCK_PLL2 + 1U)
+#elif BSP_PRV_PLL_SUPPORTED
  #define BSP_PRV_NUM_CLOCKS                     ((uint8_t) BSP_CLOCKS_SOURCE_CLOCK_PLL + 1U)
 #else
  #define BSP_PRV_NUM_CLOCKS                     ((uint8_t) BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK + 1U)
@@ -198,10 +200,144 @@
                                             (BSP_PRV_PL2SRCSEL << R_SYSTEM_PLL2CCR_PL2SRCSEL_Pos))
 #endif
 
+/* All clocks with configurable source except PLL and CLKOUT can use PLL. */
+#if (BSP_CFG_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL)
+ #define BSP_PRV_PLL_USED                  (1)
+ #define BSP_PRV_STABILIZE_PLL             (1)
+#elif defined(BSP_CFG_UCK_SOURCE) && BSP_FEATURE_BSP_HAS_USB_CLOCK_REQ && \
+    (BSP_CFG_UCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL)
+ #define BSP_PRV_PLL_USED                  (1)
+#elif defined(BSP_CFG_SCISPICLK_SOURCE) && (BSP_CFG_SCISPICLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL)
+ #define BSP_PRV_PLL_USED                  (1)
+#elif defined(BSP_CFG_CANFDCLK_SOURCE) && (BSP_CFG_CANFDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL)
+ #define BSP_PRV_PLL_USED                  (1)
+#elif defined(BSP_CFG_GPTCLK_SOURCE) && (BSP_CFG_GPTCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL)
+ #define BSP_PRV_PLL_USED                  (1)
+#elif defined(BSP_CFG_IICCLK_SOURCE) && (BSP_CFG_IICCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL)
+ #define BSP_PRV_PLL_USED                  (1)
+#elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL)
+ #define BSP_PRV_PLL_USED                  (1)
+#else
+ #define BSP_PRV_PLL_USED                  (0)
+#endif
+
+/* All clocks with configurable source except the main clock, PLL, and CLKOUT can use PLL2. */
+#if defined(BSP_CFG_UCK_SOURCE) && BSP_FEATURE_BSP_HAS_USB_CLOCK_REQ && \
+    (BSP_CFG_UCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL2)
+ #define BSP_PRV_PLL2_USED                 (1)
+#elif defined(BSP_CFG_SCISPICLK_SOURCE) && (BSP_CFG_SCISPICLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL2)
+ #define BSP_PRV_PLL2_USED                 (1)
+#elif defined(BSP_CFG_CANFDCLK_SOURCE) && (BSP_CFG_CANFDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL2)
+ #define BSP_PRV_PLL2_USED                 (1)
+#elif defined(BSP_CFG_GPTCLK_SOURCE) && (BSP_CFG_GPTCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL2)
+ #define BSP_PRV_PLL2_USED                 (1)
+#elif defined(BSP_CFG_IICCLK_SOURCE) && (BSP_CFG_IICCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL2)
+ #define BSP_PRV_PLL2_USED                 (1)
+#elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_PLL2)
+ #define BSP_PRV_PLL2_USED                 (1)
+#else
+ #define BSP_PRV_PLL2_USED                 (0)
+#endif
+
+/* All clocks with configurable source except UCK, CANFD can use the main oscillator. */
+#if (BSP_CFG_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
+ #define BSP_PRV_MAIN_OSC_USED             (1)
+ #define BSP_PRV_STABILIZE_MAIN_OSC        (1)
+#elif defined(BSP_CFG_PLL_SOURCE) && (BSP_CFG_PLL_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC) && BSP_PRV_PLL_USED
+ #define BSP_PRV_MAIN_OSC_USED             (1)
+ #define BSP_PRV_STABILIZE_MAIN_OSC        (1)
+#elif defined(BSP_CFG_PLL2_SOURCE) && (BSP_CFG_PLL2_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC) && BSP_PRV_PLL2_USED
+ #define BSP_PRV_MAIN_OSC_USED             (1)
+ #define BSP_PRV_STABILIZE_MAIN_OSC        (1)
+#elif defined(BSP_CFG_CLKOUT_SOURCE) && (BSP_CFG_CLKOUT_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
+ #define BSP_PRV_MAIN_OSC_USED             (1)
+#elif defined(BSP_CFG_SCISPICLK_SOURCE) && (BSP_CFG_SCISPICLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
+ #define BSP_PRV_MAIN_OSC_USED             (1)
+#elif defined(BSP_CFG_CANFDCLK_SOURCE) && (BSP_CFG_CANFDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
+ #define BSP_PRV_MAIN_OSC_USED             (1)
+#elif defined(BSP_CFG_GPTCLK_SOURCE) && (BSP_CFG_GPTCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
+ #define BSP_PRV_MAIN_OSC_USED             (1)
+#elif defined(BSP_CFG_IICCLK_SOURCE) && (BSP_CFG_IICCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
+ #define BSP_PRV_MAIN_OSC_USED             (1)
+#elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
+ #define BSP_PRV_MAIN_OSC_USED             (1)
+#else
+ #define BSP_PRV_MAIN_OSC_USED             (0)
+#endif
+
+/* All clocks with configurable source can use HOCO. */
+#if (BSP_CFG_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
+ #define BSP_PRV_HOCO_USED                 (1)
+ #define BSP_PRV_STABILIZE_HOCO            (1)
+#elif defined(BSP_CFG_PLL_SOURCE) && (BSP_CFG_PLL_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO) && BSP_PRV_PLL_USED
+ #define BSP_PRV_HOCO_USED                 (1)
+ #define BSP_PRV_STABILIZE_HOCO            (1)
+#elif defined(BSP_CFG_PLL2_SOURCE) && (BSP_CFG_PLL2_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO) && BSP_PRV_PLL2_USED
+ #define BSP_PRV_HOCO_USED                 (1)
+ #define BSP_PRV_STABILIZE_HOCO            (1)
+#elif defined(BSP_CFG_UCK_SOURCE) && BSP_FEATURE_BSP_HAS_USB_CLOCK_REQ && \
+    (BSP_CFG_UCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
+ #define BSP_PRV_HOCO_USED                 (1)
+#elif defined(BSP_CFG_CLKOUT_SOURCE) && (BSP_CFG_CLKOUT_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
+ #define BSP_PRV_HOCO_USED                 (1)
+#elif defined(BSP_CFG_SCISPICLK_SOURCE) && (BSP_CFG_SCISPICLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
+ #define BSP_PRV_HOCO_USED                 (1)
+#elif defined(BSP_CFG_CANFDCLK_SOURCE) && (BSP_CFG_CANFDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
+ #define BSP_PRV_HOCO_USED                 (1)
+#elif defined(BSP_CFG_GPTCLK_SOURCE) && (BSP_CFG_GPTCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
+ #define BSP_PRV_HOCO_USED                 (1)
+#elif defined(BSP_CFG_IICCLK_SOURCE) && (BSP_CFG_IICCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
+ #define BSP_PRV_HOCO_USED                 (1)
+#elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO)
+ #define BSP_PRV_HOCO_USED                 (1)
+#else
+ #define BSP_PRV_HOCO_USED                 (0)
+#endif
+
+/* All clocks with configurable source except UCK, CANFD, and PLL can use MOCO. */
+#if (BSP_CFG_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
+ #define BSP_PRV_MOCO_USED                 (1)
+ #define BSP_PRV_STABILIZE_MOCO            (1)
+#elif defined(BSP_CFG_CLKOUT_SOURCE) && (BSP_CFG_CLKOUT_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
+ #define BSP_PRV_MOCO_USED                 (1)
+#elif defined(BSP_CFG_SCISPICLK_SOURCE) && (BSP_CFG_SCISPICLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
+ #define BSP_PRV_MOCO_USED                 (1)
+#elif defined(BSP_CFG_CANFDCLK_SOURCE) && (BSP_CFG_CANFDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
+ #define BSP_PRV_MOCO_USED                 (1)
+#elif defined(BSP_CFG_GPTCLK_SOURCE) && (BSP_CFG_GPTCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
+ #define BSP_PRV_MOCO_USED                 (1)
+#elif defined(BSP_CFG_IICCLK_SOURCE) && (BSP_CFG_IICCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
+ #define BSP_PRV_MOCO_USED                 (1)
+#elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
+ #define BSP_PRV_MOCO_USED                 (1)
+#else
+ #define BSP_PRV_MOCO_USED                 (0)
+#endif
+
+/* All clocks with configurable source except UCK, CANFD, and PLL can use LOCO. */
+#if (BSP_CFG_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
+ #define BSP_PRV_LOCO_USED                 (1)
+ #define BSP_PRV_STABILIZE_LOCO            (1)
+#elif defined(BSP_CFG_CLKOUT_SOURCE) && (BSP_CFG_CLKOUT_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
+ #define BSP_PRV_LOCO_USED                 (1)
+#elif defined(BSP_CFG_SCISPICLK_SOURCE) && (BSP_CFG_SCISPICLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
+ #define BSP_PRV_LOCO_USED                 (1)
+#elif defined(BSP_CFG_CANFDCLK_SOURCE) && (BSP_CFG_CANFDCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
+ #define BSP_PRV_LOCO_USED                 (1)
+#elif defined(BSP_CFG_GPTCLK_SOURCE) && (BSP_CFG_GPTCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
+ #define BSP_PRV_LOCO_USED                 (1)
+#elif defined(BSP_CFG_IICCLK_SOURCE) && (BSP_CFG_IICCLK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
+ #define BSP_PRV_LOCO_USED                 (1)
+#elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
+ #define BSP_PRV_LOCO_USED                 (1)
+#else
+ #define BSP_PRV_LOCO_USED                 (0)
+#endif
+
 /* Determine the optimal operating speed mode to apply after clock configuration based on the startup clock
  * frequency. */
 #if BSP_STARTUP_ICLK_HZ <= BSP_FEATURE_CGC_LOW_SPEED_MAX_FREQ_HZ && \
-    BSP_CLOCKS_SOURCE_CLOCK_PLL != BSP_CFG_CLOCK_SOURCE
+    !BSP_PRV_PLL_USED && !BSP_PRV_PLL2_USED
  #define BSP_PRV_STARTUP_OPERATING_MODE    (BSP_PRV_OPERATING_MODE_LOW_SPEED)
 #elif BSP_STARTUP_ICLK_HZ <= BSP_FEATURE_CGC_MIDDLE_SPEED_MAX_FREQ_HZ
  #define BSP_PRV_STARTUP_OPERATING_MODE    (BSP_PRV_OPERATING_MODE_MIDDLE_SPEED)
@@ -732,6 +868,28 @@ static void bsp_clock_freq_var_init (void)
     R_BSP_ClockUpdateCallbackSet(g_bsp_clock_update_callback, &g_callback_memory);
 #endif
 
+    /* Update PLL Clock Frequency based on BSP Configuration. */
+#if BSP_PRV_PLL_SUPPORTED && BSP_CLOCKS_SOURCE_CLOCK_PLL != BSP_CFG_CLOCK_SOURCE && BSP_PRV_PLL_USED
+ #if (1U == BSP_FEATURE_CGC_PLLCCR_TYPE)
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_PLL] = ((g_clock_freq[BSP_CFG_PLL_SOURCE] * (BSP_CFG_PLL_MUL + 1U)) >> 1U) /
+                                                (BSP_CFG_PLL_DIV + 1U);
+ #else
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_PLL] = ((g_clock_freq[BSP_CFG_PLL_SOURCE] * (BSP_CFG_PLL_MUL + 1U)) >> 1U) >>
+                                                BSP_CFG_PLL_DIV;
+ #endif
+#endif
+
+    /* Update PLL2 Clock Frequency based on BSP Configuration. */
+#if BSP_PRV_PLL2_SUPPORTED && BSP_PRV_PLL2_USED
+ #if (1U == BSP_FEATURE_CGC_PLLCCR_TYPE)
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_PLL2] = ((g_clock_freq[BSP_CFG_PLL2_SOURCE] * (BSP_CFG_PLL2_MUL + 1U)) >> 1U) /
+                                                 (BSP_CFG_PLL2_DIV + 1U);
+ #else
+    g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_PLL2] =
+        ((g_clock_freq[BSP_CFG_PLL2_SOURCE] * (BSP_CFG_PLL2_MUL + 1U)) >> 1U) >> BSP_CFG_PLL2_DIV;
+ #endif
+#endif
+
     /* The SystemCoreClock needs to be updated before calling R_BSP_SoftwareDelay. */
     SystemCoreClockUpdate();
 }
@@ -792,7 +950,8 @@ void bsp_clock_init (void)
  #endif
 #endif
 
-#if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
+#if BSP_FEATURE_CGC_HAS_SOSC
+ #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
 
     /* If the board has a subclock, set the subclock drive and start the subclock if the subclock is stopped.  If the
      * subclock is running, the subclock drive is assumed to be set appropriately. */
@@ -801,15 +960,16 @@ void bsp_clock_init (void)
         /* Configure the subclock drive if the subclock is not already running. */
         R_SYSTEM->SOMCR  = ((BSP_CLOCK_CFG_SUBCLOCK_DRIVE << BSP_FEATURE_CGC_SODRV_SHIFT) & BSP_FEATURE_CGC_SODRV_MASK);
         R_SYSTEM->SOSCCR = 0U;
- #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
+  #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
 
         /* If the subclock is the system clock source OR if FLL is used, wait for stabilization. */
         R_BSP_SoftwareDelay(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS, BSP_DELAY_UNITS_MILLISECONDS);
- #endif
+  #endif
     }
 
-#else
+ #else
     R_SYSTEM->SOSCCR = 1U;
+ #endif
 #endif
 
 #if BSP_FEATURE_CGC_HAS_HOCOWTCR
@@ -846,7 +1006,7 @@ void bsp_clock_init (void)
     /* MCUs that support low voltage mode start up in low voltage mode. */
     bsp_prv_operating_mode_opccr_set(BSP_PRV_OPERATING_MODE_HIGH_SPEED);
 
-  #if BSP_CLOCKS_SOURCE_CLOCK_HOCO != BSP_CFG_CLOCK_SOURCE && BSP_CLOCKS_SOURCE_CLOCK_HOCO != BSP_CFG_PLL_SOURCE
+  #if !BSP_PRV_HOCO_USED
 
     /* HOCO must be running during startup in low voltage mode. If HOCO is not used, turn it off after exiting low
      * voltage mode. */
@@ -867,17 +1027,77 @@ void bsp_clock_init (void)
     R_SYSTEM->FLLCR1 = 1U;
 #endif
 
-    /* If the PLL is the desired source clock, ensure the source clock is running and stable and the power mode
-     * allows PLL operation. */
-#if BSP_PRV_PLL_SUPPORTED
- #if BSP_CLOCKS_SOURCE_CLOCK_PLL == BSP_CFG_CLOCK_SOURCE
-
-    /* Start PLL source clock. */
-  #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL_SOURCE
+    /* Start all clocks used by other clocks first. */
+#if BSP_PRV_HOCO_USED
     R_SYSTEM->HOCOCR = 0U;
-  #else
-    R_SYSTEM->MOSCCR = 0U;
+
+ #if BSP_PRV_HOCO_USE_FLL && (BSP_CLOCKS_SOURCE_CLOCK_HOCO != BSP_CFG_PLL_SOURCE)
+
+    /* If FLL is enabled, wait for the FLL stabilization delay (1.8 ms) */
+    R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
+ #endif
+
+ #if BSP_PRV_STABILIZE_HOCO
+
+    /* Wait for HOCO to stabilize. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.HOCOSF, 1U);
+ #endif
+#endif
+#if BSP_PRV_MOCO_USED
+ #if BSP_CFG_SOFT_RESET_SUPPORTED
+
+    /* If the MOCO is not running, start it and wait for it to stabilize using a software delay. */
+    if (0U != R_SYSTEM->MOCOCR)
+    {
+        R_SYSTEM->MOCOCR = 0U;
+  #if BSP_PRV_STABILIZE_MOCO
+        R_BSP_SoftwareDelay(BSP_FEATURE_CGC_MOCO_STABILIZATION_MAX_US, BSP_DELAY_UNITS_MICROSECONDS);
   #endif
+    }
+ #endif
+#endif
+#if BSP_PRV_LOCO_USED
+ #if BSP_CFG_SOFT_RESET_SUPPORTED
+
+    /* If the LOCO is not running, start it and wait for it to stabilize using a software delay. */
+    if (0U != R_SYSTEM->LOCOCR)
+    {
+        R_SYSTEM->LOCOCR = 0U;
+  #if BSP_PRV_STABILIZE_LOCO
+        R_BSP_SoftwareDelay(BSP_FEATURE_CGC_LOCO_STABILIZATION_MAX_US, BSP_DELAY_UNITS_MICROSECONDS);
+  #endif
+    }
+
+ #else
+    R_SYSTEM->LOCOCR = 0U;
+  #if BSP_PRV_STABILIZE_LOCO
+    R_BSP_SoftwareDelay(BSP_FEATURE_CGC_LOCO_STABILIZATION_MAX_US, BSP_DELAY_UNITS_MICROSECONDS);
+  #endif
+ #endif
+#endif
+#if BSP_PRV_MAIN_OSC_USED
+    R_SYSTEM->MOSCCR = 0U;
+
+ #if BSP_PRV_STABILIZE_MAIN_OSC
+
+    /* Wait for main oscillator to stabilize. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.MOSCSF, 1U);
+ #endif
+#endif
+
+    /* Start clocks that require other clocks. At this point, all dependent clocks are running and stable if needed. */
+
+#if BSP_PRV_STARTUP_OPERATING_MODE != BSP_PRV_OPERATING_MODE_LOW_SPEED
+ #if BSP_FEATURE_CGC_HAS_PLL2 && BSP_CFG_PLL2_SOURCE != BSP_CLOCKS_CLOCK_DISABLED
+    R_SYSTEM->PLL2CCR = BSP_PRV_PLL2CCR;
+
+    /* Start PLL2. */
+    R_SYSTEM->PLL2CR = 0U;
+ #endif                                /* BSP_FEATURE_CGC_HAS_PLL2 && BSP_CFG_PLL2_ENABLE */
+#endif
+
+#if BSP_PRV_PLL_SUPPORTED && BSP_PRV_PLL_USED
+ #if BSP_CLOCKS_SOURCE_CLOCK_PLL == BSP_CFG_CLOCK_SOURCE
 
     /* Configure the PLL registers. */
   #if 1U == BSP_FEATURE_CGC_PLLCCR_TYPE
@@ -895,74 +1115,15 @@ void bsp_clock_init (void)
      * while setting PLLCCR. */
     bsp_prv_software_delay_loop(BSP_DELAY_LOOPS_CALCULATE(BSP_PRV_MAX_HOCO_CYCLES_PER_US));
   #endif
-
-    /* Verify PLL source is stable before starting PLL. */
-  #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL_SOURCE
-   #if BSP_PRV_HOCO_USE_FLL
-
-    /* If FLL is enabled, wait for the FLL stabilization delay (1.8 ms) */
-    R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
-   #endif
-
-    /* Wait for HOCO to stabilize. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.HOCOSF, 1U);
-  #else
-
-    /* Wait for main oscillator to stabilize. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.MOSCSF, 1U);
-  #endif
- #endif
-#endif
-
-    /* Start source clock. */
-#if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_CLOCK_SOURCE
-    R_SYSTEM->HOCOCR = 0U;
-
- #if BSP_PRV_HOCO_USE_FLL && (BSP_CLOCKS_SOURCE_CLOCK_HOCO != BSP_CFG_PLL_SOURCE)
-
-    /* If FLL is enabled, wait for the FLL stabilization delay (1.8 ms) */
-    R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
  #endif
 
-    /* Wait for HOCO to stabilize. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.HOCOSF, 1U);
-#elif BSP_CLOCKS_SOURCE_CLOCK_MOCO == BSP_CFG_CLOCK_SOURCE
- #if BSP_CFG_SOFT_RESET_SUPPORTED
-
-    /* If the MOCO is not running, start it and wait for it to stabilize using a software delay. */
-    if (0U != R_SYSTEM->MOCOCR)
-    {
-        R_SYSTEM->MOCOCR = 0U;
-        R_BSP_SoftwareDelay(BSP_FEATURE_CGC_MOCO_STABILIZATION_MAX_US, BSP_DELAY_UNITS_MICROSECONDS);
-    }
- #endif
-#elif BSP_CLOCKS_SOURCE_CLOCK_LOCO == BSP_CFG_CLOCK_SOURCE
- #if BSP_CFG_SOFT_RESET_SUPPORTED
-
-    /* If the LOCO is not running, start it and wait for it to stabilize using a software delay. */
-    if (0U != R_SYSTEM->LOCOCR)
-    {
-        R_SYSTEM->LOCOCR = 0U;
-        R_BSP_SoftwareDelay(BSP_FEATURE_CGC_LOCO_STABILIZATION_MAX_US, BSP_DELAY_UNITS_MICROSECONDS);
-    }
-
- #else
-    R_SYSTEM->LOCOCR = 0U;
-    R_BSP_SoftwareDelay(BSP_FEATURE_CGC_LOCO_STABILIZATION_MAX_US, BSP_DELAY_UNITS_MICROSECONDS);
- #endif
-#elif BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == BSP_CFG_CLOCK_SOURCE
-    R_SYSTEM->MOSCCR = 0U;
-
-    /* Wait for main oscillator to stabilize. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.MOSCSF, 1U);
-#elif BSP_CLOCKS_SOURCE_CLOCK_PLL == BSP_CFG_CLOCK_SOURCE
     R_SYSTEM->PLLCR = 0U;
+
+ #if BSP_PRV_STABILIZE_PLL
 
     /* Wait for PLL to stabilize. */
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLLSF, 1U);
-#else
-
-    /* Do nothing. Subclock is already started and stabilized if it is populated and selected as system clock. */
+ #endif
 #endif
 
     /* Set source clock and dividers. */
@@ -984,6 +1145,15 @@ void bsp_clock_init (void)
 
         /* Wait for PLL to stabilize. */
         FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLLSF, 0U);
+
+    #if BSP_FEATURE_CGC_HAS_PLL2
+
+        /* If the MCU has a PLL2, ensure PLL2 is stopped and stable before entering low speed mode. */
+        R_SYSTEM->PLL2CR = 1U;
+
+        /* Wait for PLL to stabilize. */
+        FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLL2SF, 0U);
+    #endif
     }
    #endif
   #endif
@@ -1028,36 +1198,6 @@ void bsp_clock_init (void)
 #endif
 
 #if BSP_PRV_STARTUP_OPERATING_MODE != BSP_PRV_OPERATING_MODE_LOW_SPEED
- #if BSP_FEATURE_CGC_HAS_PLL2 && BSP_CFG_PLL2_SOURCE != BSP_CLOCKS_CLOCK_DISABLED
-
-    /* Start PLL2 source clock. */
-  #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL2_SOURCE && (BSP_CLOCKS_SOURCE_CLOCK_HOCO != BSP_CFG_PLL_SOURCE) && \
-    (BSP_CLOCKS_SOURCE_CLOCK_HOCO != BSP_CFG_CLOCK_SOURCE)
-    R_SYSTEM->HOCOCR = 0U;
-
-   #if BSP_PRV_HOCO_USE_FLL
-
-    /* If FLL is enabled, wait for the FLL stabilization delay (1.8 ms) */
-    R_BSP_SoftwareDelay(BSP_PRV_FLL_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
-   #endif
-
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.HOCOSF, 1U);
-  #elif BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == BSP_CFG_PLL2_SOURCE && \
-    (BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC != BSP_CFG_PLL_SOURCE) &&    \
-    (BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC != BSP_CFG_CLOCK_SOURCE)
-    R_SYSTEM->MOSCCR = 0U;
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.MOSCSF, 1U);
-  #endif                               /* BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL2_SOURCE */
-
-    R_SYSTEM->PLL2CCR = BSP_PRV_PLL2CCR;
-
-    /* Start PLL2. */
-    R_SYSTEM->PLL2CR = 0U;
-
-    /* Wait for PLL2 to stabilize. */
-    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSCSF_b.PLL2SF, 1U);
- #endif                                /* BSP_FEATURE_CGC_HAS_PLL2 && BSP_CFG_PLL2_ENABLE */
-
  #if BSP_CFG_UCK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED
 
     /* If the USB clock has a divider setting in SCKDIVCR2. */
@@ -1139,6 +1279,69 @@ void bsp_clock_init (void)
 
     /* Wait for the CANFD clock to start. */
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->CANFDCKCR_b.CANFDCKSRDY, 0U);
+#endif
+
+    /* Set the SCISPI clock if it exists on the MCU */
+#if BSP_FEATURE_BSP_HAS_SCISPI_CLOCK && (BSP_CFG_SCISPICLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)
+
+    /* Request to stop the SCISPI clock. */
+    R_SYSTEM->SCISPICKCR_b.SCISPICKSREQ = 1;
+
+    /* Wait for the SCISPI clock to stop. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->SCISPICKCR_b.SCISPICKSRDY, 1U);
+
+    /* Select the SCISPI clock divisor and source. */
+    R_SYSTEM->SCISPICKDIVCR = BSP_CFG_SCISPICLK_DIV;
+    R_SYSTEM->SCISPICKCR    = BSP_CFG_SCISPICLK_SOURCE | R_SYSTEM_SCISPICKCR_SCISPICKSREQ_Msk |
+                              R_SYSTEM_SCISPICKCR_SCISPICKSRDY_Msk;
+
+    /* Request to start the SCISPI clock. */
+    R_SYSTEM->SCISPICKCR_b.SCISPICKSREQ = 0;
+
+    /* Wait for the SCISPI clock to start. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->SCISPICKCR_b.SCISPICKSRDY, 0U);
+#endif
+
+    /* Set the GPT clock if it exists on the MCU */
+#if BSP_FEATURE_BSP_HAS_GPT_CLOCK && (BSP_CFG_GPTCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)
+
+    /* Request to stop the GPT clock. */
+    R_SYSTEM->GPTCKCR_b.GPTCKSREQ = 1;
+
+    /* Wait for the GPT clock to stop. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->GPTCKCR_b.GPTCKSRDY, 1U);
+
+    /* Select the GPT clock divisor and source. */
+    R_SYSTEM->GPTCKDIVCR = BSP_CFG_GPTCLK_DIV;
+    R_SYSTEM->GPTCKCR    = BSP_CFG_GPTCLK_SOURCE | R_SYSTEM_GPTCKCR_GPTCKSREQ_Msk |
+                           R_SYSTEM_GPTCKCR_GPTCKSRDY_Msk;
+
+    /* Request to start the GPT clock. */
+    R_SYSTEM->GPTCKCR_b.GPTCKSREQ = 0;
+
+    /* Wait for the GPT clock to start. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->GPTCKCR_b.GPTCKSRDY, 0U);
+#endif
+
+    /* Set the IIC clock if it exists on the MCU */
+#if BSP_FEATURE_BSP_HAS_IIC_CLOCK && (BSP_CFG_IICCLK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)
+
+    /* Request to stop the IIC clock. */
+    R_SYSTEM->IICCKCR_b.IICCKSREQ = 1;
+
+    /* Wait for the IIC clock to stop. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->IICCKCR_b.IICCKSRDY, 1U);
+
+    /* Select the IIC clock divisor and source. */
+    R_SYSTEM->IICCKDIVCR = BSP_CFG_IICCLK_DIV;
+    R_SYSTEM->IICCKCR    = BSP_CFG_IICCLK_SOURCE | R_SYSTEM_IICCKCR_IICCKSREQ_Msk |
+                           R_SYSTEM_IICCKCR_IICCKSRDY_Msk;
+
+    /* Request to start the IIC clock. */
+    R_SYSTEM->IICCKCR_b.IICCKSREQ = 0;
+
+    /* Wait for the IIC clock to start. */
+    FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->IICCKCR_b.IICCKSRDY, 0U);
 #endif
 
     /* Lock CGC and LPM protection registers. */
@@ -1345,6 +1548,19 @@ void R_BSP_OctaclkUpdate (bsp_octaclk_settings_t * p_octaclk_setting)
 #else
     FSP_PARAMETER_NOT_USED(p_octaclk_setting);
 #endif
+}
+
+/*******************************************************************************************************************//**
+ * Gets the frequency of a source clock.
+ * @param[in]   clock   Pointer to Octaclk setting structure which provides information regarding
+ *                                  Octaclk source and divider settings to be applied.
+ * @return     Frequency of requested clock in Hertz.
+ **********************************************************************************************************************/
+uint32_t R_BSP_SourceClockHzGet (fsp_priv_source_clock_t clock)
+{
+    uint32_t source_clock = g_clock_freq[clock];
+
+    return source_clock;
 }
 
 /** @} (end addtogroup BSP_MCU_PRV) */

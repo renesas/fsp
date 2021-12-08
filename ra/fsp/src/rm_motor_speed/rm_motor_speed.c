@@ -344,11 +344,8 @@ fsp_err_t RM_MOTOR_SPEED_Reset (motor_speed_ctrl_t * const p_ctrl)
     {
         p_instance_ctrl->p_position_instance->p_api->reset(p_instance_ctrl->p_position_instance->p_ctrl);
 
-        if (MOTOR_SPEED_LOOP_MODE_SPEED == p_instance_ctrl->st_position_data.e_loop_mode)
-        {
-            p_instance_ctrl->p_position_instance->p_api->controlModeSet(p_instance_ctrl->p_position_instance->p_ctrl,
-                                                                        MOTOR_POSITION_CTRL_MODE_CONSTANT);
-        }
+        p_instance_ctrl->p_position_instance->p_api->controlModeSet(p_instance_ctrl->p_position_instance->p_ctrl,
+                                                                    MOTOR_POSITION_CTRL_MODE_CONSTANT);
     }
 #endif
 

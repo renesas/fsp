@@ -228,15 +228,24 @@ fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
     /* Wait for ongoing operating mode transition (OPCMTSF, SOPCMTSF) */
     r_lpm_wait_for_operating_mode_flags();
 
-    fsp_err_t err = r_lpm_low_power_enter(p_ctrl);
-
-#if BSP_FEATURE_LPM_HAS_DEEP_STANDBY
-    if (FSP_ERR_INVALID_MODE == err)
+    /* Must enable writing to Low Power Mode register prior to entering Low Power Mode. */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
+#if LPM_CFG_STANDBY_LIMIT
+    if (LPM_MODE_SLEEP != p_ctrl->p_cfg->low_power_mode)
     {
-        R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
-        R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
+        R_SYSTEM->SBYCR |= (1U << R_SYSTEM_SBYCR_SSBY_Pos);
     }
 #endif
+
+    fsp_err_t err = r_lpm_low_power_enter(p_ctrl);
+
+#if LPM_CFG_STANDBY_LIMIT
+    if (LPM_MODE_SLEEP != p_ctrl->p_cfg->low_power_mode)
+    {
+        R_SYSTEM->SBYCR &= (uint16_t) (~(1U << R_SYSTEM_SBYCR_SSBY_Pos));
+    }
+#endif
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
 
     return err;
 }
@@ -485,7 +494,12 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
 #endif
     }
 
+#if LPM_CFG_STANDBY_LIMIT
+    R_SYSTEM->SBYCR = (uint16_t) (sbycr & ~(1U << R_SYSTEM_SBYCR_SSBY_Pos));
+#else
     R_SYSTEM->SBYCR = (uint16_t) sbycr;
+#endif
+
     R_SYSTEM->SNZCR = (uint8_t) snzcr;
 
 #if BSP_FEATURE_LPM_HAS_DEEP_STANDBY
@@ -578,8 +592,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
             FSP_ERROR_RETURN(FSP_SUCCESS == r_lpm_check_clocks(clock_source), FSP_ERR_INVALID_MODE);
         }
 
-        /* Enable writing to CGC and Low Power Mode registers. */
-        R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
+        /* Enable writing to CGC register. */
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
 #else
 
@@ -595,10 +608,6 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         /* Save HOCOWTCR_b.HSTS */
         saved_hocowtcr = R_SYSTEM->HOCOWTCR_b.HSTS;
  #endif
-
-        /* Enable writing to CGC and Low Power Mode registers. */
-        R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
-        R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
 
         if (0U == R_SYSTEM->DPSBYCR_b.DPSBY)
         {
@@ -617,6 +626,9 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
                 new_hocowtcr = LPM_SW_STANDBY_HOCOWTCR_HSTS;
  #endif
             }
+
+            /* Enable writing to CGC register. */
+            R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
 
  #if BSP_FEATURE_LPM_HAS_STCONR == 1
 
@@ -639,6 +651,9 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         }
         else
         {
+            /* Enable writing to CGC register. */
+            R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
+
             /* Execute pre-wfi deep standby tasks */
             /* Clear the DOCDF flag to 0 before entering Deep Software Standby mode. */
             R_SYSTEM->SYOCDCR_b.DOCDF = 0U;
@@ -686,12 +701,6 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 
     if (LPM_MODE_STANDBY_SNOOZE == p_instance_ctrl->p_cfg->low_power_mode)
     {
-#if !BSP_FEATURE_LPM_HAS_DEEP_STANDBY
-
-        /* Enable writing to CGC and Low Power Mode registers. */
-        R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
-#endif
-
         /* Enable Snooze mode (SNZCR.SNZE = 1) immediately before entering to Software Standby mode.
          * See Section 11.8.2 "Canceling Snooze Mode" in the RA6M3 manual  R01UM0004EU0110 */
         R_SYSTEM->SNZCR_b.SNZE = 1;
@@ -727,8 +736,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         R_SYSTEM->HOCOWTCR_b.HSTS = R_SYSTEM_HOCOWTCR_HSTS_Msk & (saved_hocowtcr << R_SYSTEM_HOCOWTCR_HSTS_Pos);
   #endif
 
-        /* Disable writing to CGC and Low Power Mode registers. */
-        R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
+        /* Disable writing to CGC register. */
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
 
   #if BSP_FEATURE_BSP_POWER_CHANGE_MSTP_REQUIRED
@@ -742,13 +750,6 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
             R_BSP_PowerModeSet(power_mode);
         }
  #endif
-    }
-
-#else
-    if (LPM_MODE_STANDBY_SNOOZE == p_instance_ctrl->p_cfg->low_power_mode)
-    {
-        /* Disable writing to CGC and Low Power Mode registers. */
-        R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
     }
 #endif
 

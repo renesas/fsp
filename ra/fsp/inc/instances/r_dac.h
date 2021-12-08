@@ -48,9 +48,12 @@ FSP_HEADER
 /** DAC instance control block. */
 typedef struct st_dac_instance_ctrl
 {
-    uint8_t  channel;                  // DAC channel number
-    uint32_t channel_opened;           // DAC Driver ID
-    bool     output_amplifier_enabled; // DAC Output amplifier (on selected MCUs) enabled/disabled.
+    uint8_t      channel;                  // DAC channel number
+    uint8_t      channel_index;            // Channel index to access bits
+    uint32_t     channel_opened;           // DAC Driver ID
+    bool         output_amplifier_enabled; // DAC Output amplifier (on selected MCUs) enabled/disabled.
+    bool         internal_output_enabled;  // Output provided to internal modules (on selected MCUs) enabled/disabled.
+    R_DAC_Type * p_reg;                    // Base register for this channel
 } dac_instance_ctrl_t;
 
 /** DAC extended configuration */
@@ -58,6 +61,7 @@ typedef struct st_dac_extended_cfg
 {
     bool              enable_charge_pump;       ///< Enable DAC charge pump available on selected MCUs.
     bool              output_amplifier_enabled; ///< Output amplifier enable available on selected MCUs.
+    bool              internal_output_enabled;  ///< Internal output enable available on selected MCUs.
     dac_data_format_t data_format;              ///< Data format
 } dac_extended_cfg_t;
 

@@ -305,8 +305,8 @@ typedef enum e_usb_address
  * @par Implemented as
  * - usb_instance_ctrl_t
  */
-typedef void    usb_ctrl_t;
-typedef void (* usb_compliance_cb_t)(void *);
+typedef void usb_ctrl_t;
+typedef void (usb_compliance_cb_t)(void *);
 
 typedef struct st_usb_descriptor
 {
@@ -384,7 +384,7 @@ typedef struct st_usb_cfg
     uint8_t                     module_number;      ///< USB module number (USB_IP0/USB_IP1)
     usb_class_t                 type;               ///< USB device class etc
     usb_descriptor_t          * p_usb_reg;          ///< Pointer to the usb_decriptor_t structure area
-    usb_compliance_cb_t         usb_complience_cb;
+    usb_compliance_cb_t       * usb_complience_cb;
     IRQn_Type                   irq;                ///< USBI dedicated interrupt number storage variable.
     IRQn_Type                   irq_r;              ///< USBR dedicated interrupt number storage variable.
     IRQn_Type                   irq_d0;             ///< FS D0FIFO dedicated interrupt number storage variable.

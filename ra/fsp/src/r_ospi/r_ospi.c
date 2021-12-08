@@ -44,6 +44,10 @@
 #define OSPI_PRV_DIRECT_ADDR_AND_DATA_MASK           (7U)
 #define OSPI_PRV_PAGE_SIZE_BYTES                     (256U)
 
+#ifndef OSPI_MAX_WRITE_ENABLE_LOOPS
+ #define OSPI_MAX_WRITE_ENABLE_LOOPS                 (5)
+#endif
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -55,10 +59,10 @@ static fsp_err_t r_ospi_automatic_calibration_seq(ospi_instance_ctrl_t * p_insta
 static bool      r_ospi_status_sub(ospi_instance_ctrl_t * p_instance_ctrl, uint8_t bit_pos);
 static fsp_err_t r_ospi_spi_protocol_specific_settings(ospi_instance_ctrl_t * p_instance_ctrl,
                                                        spi_flash_protocol_t   spi_protocol);
-static void r_ospi_wen(ospi_instance_ctrl_t * p_instance_ctrl);
-static void r_ospi_direct_transfer(ospi_instance_ctrl_t              * p_instance_ctrl,
-                                   spi_flash_direct_transfer_t * const p_transfer,
-                                   spi_flash_direct_transfer_dir_t     direction);
+static fsp_err_t r_ospi_wen(ospi_instance_ctrl_t * p_instance_ctrl);
+static void      r_ospi_direct_transfer(ospi_instance_ctrl_t              * p_instance_ctrl,
+                                        spi_flash_direct_transfer_t * const p_transfer,
+                                        spi_flash_direct_transfer_dir_t     direction);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -86,6 +90,7 @@ const spi_flash_api_t g_ospi_on_spi_flash =
     .xipEnter       = R_OSPI_XipEnter,
     .xipExit        = R_OSPI_XipExit,
     .bankSet        = R_OSPI_BankSet,
+    .autoCalibrate  = R_OSPI_AutoCalibrate,
     .close          = R_OSPI_Close,
 };
 
@@ -105,6 +110,7 @@ const spi_flash_api_t g_ospi_on_spi_flash =
  * @retval FSP_ERR_ASSERTION        The parameter p_ctrl or p_cfg is NULL.
  * @retval FSP_ERR_ALREADY_OPEN     Driver has already been opened with the same p_ctrl.
  * @retval FSP_ERR_CALIBRATE_FAILED Failed to perform auto-calibrate.
+ * @retval FSP_ERR_INVALID_ARGUMENT Attempting to open the driver with an invalid SPI protocol for OctaRAM.
  **********************************************************************************************************************/
 fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const p_cfg)
 {
@@ -115,6 +121,10 @@ fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const 
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_extend);
     FSP_ERROR_RETURN(OSPI_PRV_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
+    if (((ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->memory_type == OSPI_DEVICE_RAM)
+    {
+        FSP_ERROR_RETURN(SPI_FLASH_PROTOCOL_DOPI == p_cfg->spi_protocol, FSP_ERR_INVALID_ARGUMENT);
+    }
 #endif
 
     /* Enable clock to the OSPI block */
@@ -127,21 +137,25 @@ fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const 
     p_instance_ctrl->channel      = p_cfg_extend->channel;
 
 #if OSPI_CFG_DMAC_SUPPORT_ENABLE
-    transfer_instance_t const * p_transfer = p_cfg_extend->p_lower_lvl_transfer;
-
+    if (p_cfg_extend->memory_type == OSPI_DEVICE_FLASH)
+    {
+        transfer_instance_t const * p_transfer = p_cfg_extend->p_lower_lvl_transfer;
  #if OSPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_transfer);
+        FSP_ASSERT(NULL != p_transfer);
  #endif
 
-    /* Initialize transfer instance */
-    p_transfer->p_api->open(p_transfer->p_ctrl, p_transfer->p_cfg);
+        /* Initialize transfer instance */
+        p_transfer->p_api->open(p_transfer->p_ctrl, p_transfer->p_cfg);
+    }
 #endif
 
     /* Perform OSPI initial setup as described in hardware manual (see Section 34.3.6.1
      * 'Initial Settings' of the RA6M4 manual R01UH0890EJ0100). */
 
-    /* Set the device type as OctaFlash and storage capacity */
-    R_OSPI->DSR[p_instance_ctrl->channel] = p_cfg_extend->memory_size & R_OSPI_DSR_DVSZ_Msk;
+    /* Set the device type as OctaFlash or OctaRAM and its corresponding storage capacity */
+    R_OSPI->DSR[p_instance_ctrl->channel] = (p_cfg_extend->memory_size & R_OSPI_DSR_DVSZ_Msk) |
+                                            ((uint32_t) (p_cfg_extend->memory_type << R_OSPI_DSR_DVTYP_Pos) &
+                                             R_OSPI_DSR_DVTYP_Msk);
 
     /* DCSTR and DRCSTR values are designed to not change at the time of changing the SPI protocol.
      * Minimum latencies are same for SPI and SOPI.
@@ -181,6 +195,13 @@ fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * p_ctrl, spi_flash_cfg_t const * const 
     FSP_HARDWARE_REGISTER_WAIT(R_OSPI->DWSCTSR,
                                OSPI_PRV_SHIFT(p_instance_ctrl->p_cfg->page_size_bytes << R_OSPI_DWSCTSR_CTSN0_Pos,
     p_instance_ctrl->channel));
+
+    /* OctaRAM specific, Ignored by OctaFlash. */
+    R_OSPI->DCSMXR =
+        OSPI_PRV_RMW_MASKED(R_OSPI->DCSMXR,
+                            R_OSPI_DCSMXR_CTWMX0_Msk,
+                            ((uint32_t) (p_cfg_extend->ram_chip_select_max_period_setting << R_OSPI_DCSMXR_CTWMX0_Pos)),
+                            p_instance_ctrl->channel);
 
     /* Setup SPI protocol specific registers */
     fsp_err_t ret = r_ospi_spi_protocol_specific_settings(p_instance_ctrl, p_cfg->spi_protocol);
@@ -229,7 +250,7 @@ fsp_err_t R_OSPI_DirectRead (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_dest, 
 }
 
 /*******************************************************************************************************************//**
- * Read/Write raw data directly with the OctaFlash.
+ * Read/Write raw data directly with the OctaFlash/OctaRAM device.
  *
  * Implements @ref spi_flash_api_t::directTransfer.
  *
@@ -264,6 +285,7 @@ fsp_err_t R_OSPI_DirectTransfer (spi_flash_ctrl_t                  * p_ctrl,
  * @retval FSP_SUCCESS                 The flash was programmed successfully.
  * @retval FSP_ERR_ASSERTION           A required pointer is NULL.
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
+ * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
  **********************************************************************************************************************/
 fsp_err_t R_OSPI_XipEnter (spi_flash_ctrl_t * p_ctrl)
 {
@@ -271,6 +293,10 @@ fsp_err_t R_OSPI_XipEnter (spi_flash_ctrl_t * p_ctrl)
 #if OSPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    if (((ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->memory_type == OSPI_DEVICE_RAM)
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
 #endif
 
     /* Single continuous read mode (CTR0/1) is enabled. Other values are set during Open */
@@ -291,6 +317,7 @@ fsp_err_t R_OSPI_XipEnter (spi_flash_ctrl_t * p_ctrl)
  * @retval FSP_SUCCESS                 The flash was programmed successfully.
  * @retval FSP_ERR_ASSERTION           A required pointer is NULL.
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
+ * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
  **********************************************************************************************************************/
 fsp_err_t R_OSPI_XipExit (spi_flash_ctrl_t * p_ctrl)
 {
@@ -298,6 +325,10 @@ fsp_err_t R_OSPI_XipExit (spi_flash_ctrl_t * p_ctrl)
 #if OSPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    if (((ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->memory_type == OSPI_DEVICE_RAM)
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
 #endif
 
     /* Single continuous read mode (CTR0/1) is disabled. Other values are set during Open */
@@ -319,6 +350,8 @@ fsp_err_t R_OSPI_XipExit (spi_flash_ctrl_t * p_ctrl)
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
  * @retval FSP_ERR_DEVICE_BUSY         Another Write/Erase transaction is in progress.
  * @retval FSP_ERR_INVALID_SIZE        Write operation crosses page-boundary.
+ * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
+ * @retval FSP_ERR_WRITE_FAILED        The write enable bit was not set.
  **********************************************************************************************************************/
 fsp_err_t R_OSPI_Write (spi_flash_ctrl_t    * p_ctrl,
                         uint8_t const * const p_src,
@@ -337,49 +370,57 @@ fsp_err_t R_OSPI_Write (spi_flash_ctrl_t    * p_ctrl,
     uint32_t page_size   = p_instance_ctrl->p_cfg->page_size_bytes;
     uint32_t page_offset = (uint32_t) p_dest & (page_size - 1);
     FSP_ERROR_RETURN((page_size - page_offset) >= byte_count, FSP_ERR_INVALID_SIZE);
+    if (((ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->memory_type == OSPI_DEVICE_RAM)
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
 #endif
 
     FSP_ERROR_RETURN(false == r_ospi_status_sub(p_instance_ctrl, p_instance_ctrl->p_cfg->write_status_bit),
                      FSP_ERR_DEVICE_BUSY);
 
-    r_ospi_wen(p_instance_ctrl);
+    fsp_err_t err = r_ospi_wen(p_instance_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if OSPI_CFG_DMAC_SUPPORT_ENABLE
-
-    /* Setup and start DMAC transfer. */
-    ospi_extended_cfg_t       * p_cfg_extend = (ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    transfer_instance_t const * p_transfer   = p_cfg_extend->p_lower_lvl_transfer;
-
-    /* Enable Octa-SPI DMA Bufferable Write */
-    dmac_extended_cfg_t const * p_dmac_extend = p_transfer->p_cfg->p_extend;
-    R_DMAC0_Type              * p_dma_reg     = R_DMAC0 + (sizeof(R_DMAC0_Type) * p_dmac_extend->channel);
-    p_dma_reg->DMBWR = R_DMAC0_DMBWR_BWE_Msk;
-
-    /* Update the block-mode transfer settings */
-    p_transfer->p_cfg->p_info->p_src      = p_src;
-    p_transfer->p_cfg->p_info->p_dest     = p_dest;
-    p_transfer->p_cfg->p_info->num_blocks = 1U;
-    p_transfer->p_cfg->p_info->length     = (uint16_t) byte_count;
-    fsp_err_t err = p_transfer->p_api->reconfigure(p_transfer->p_ctrl, p_transfer->p_cfg->p_info);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Start DMA */
-    err = p_transfer->p_api->softwareStart(p_transfer->p_ctrl, TRANSFER_START_MODE_SINGLE);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Wait for DMAC to complete to maintain deterministic processing and backward compatability */
-    transfer_properties_t transfer_properties = {0U};
-    err = p_transfer->p_api->infoGet(p_transfer->p_ctrl, &transfer_properties);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    while (FSP_SUCCESS == err && transfer_properties.block_count_remaining > 0)
+    if (((ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->memory_type == OSPI_DEVICE_FLASH)
     {
+        /* Setup and start DMAC transfer. */
+        ospi_extended_cfg_t       * p_cfg_extend = (ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+        transfer_instance_t const * p_transfer   = p_cfg_extend->p_lower_lvl_transfer;
+
+        /* Enable Octa-SPI DMA Bufferable Write */
+        dmac_extended_cfg_t const * p_dmac_extend = p_transfer->p_cfg->p_extend;
+        R_DMAC0_Type              * p_dma_reg     = R_DMAC0 + (sizeof(R_DMAC0_Type) * p_dmac_extend->channel);
+        p_dma_reg->DMBWR = R_DMAC0_DMBWR_BWE_Msk;
+
+        /* Update the block-mode transfer settings */
+        p_transfer->p_cfg->p_info->p_src      = p_src;
+        p_transfer->p_cfg->p_info->p_dest     = p_dest;
+        p_transfer->p_cfg->p_info->num_blocks = 1U;
+        p_transfer->p_cfg->p_info->length     = (uint16_t) byte_count;
+        err = p_transfer->p_api->reconfigure(p_transfer->p_ctrl, p_transfer->p_cfg->p_info);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        /* Start DMA */
+        err = p_transfer->p_api->softwareStart(p_transfer->p_ctrl, TRANSFER_START_MODE_SINGLE);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        /* Wait for DMAC to complete to maintain deterministic processing and backward compatability */
+        transfer_properties_t transfer_properties = {0U};
         err = p_transfer->p_api->infoGet(p_transfer->p_ctrl, &transfer_properties);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+        while (FSP_SUCCESS == err && transfer_properties.block_count_remaining > 0)
+        {
+            err = p_transfer->p_api->infoGet(p_transfer->p_ctrl, &transfer_properties);
+            FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        }
+
+        /* Disable Octa-SPI DMA Bufferable Write */
+        p_dma_reg->DMBWR = 0U;
     }
 
-    /* Disable Octa-SPI DMA Bufferable Write */
-    p_dma_reg->DMBWR = 0U;
 #else
     uint32_t i = 0;
 
@@ -440,6 +481,8 @@ fsp_err_t R_OSPI_Write (spi_flash_ctrl_t    * p_ctrl,
  *                                     size defined in spi_flash_cfg_t, or byte_count is set to 0.
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
  * @retval FSP_ERR_DEVICE_BUSY         The device is busy.
+ * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
+ * @retval FSP_ERR_WRITE_FAILED        The write enable bit was not set.
  **********************************************************************************************************************/
 fsp_err_t R_OSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_address, uint32_t byte_count)
 {
@@ -450,6 +493,10 @@ fsp_err_t R_OSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_addr
     FSP_ASSERT(NULL != p_device_address);
     FSP_ASSERT(0 != byte_count);
     FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    if (((ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->memory_type == OSPI_DEVICE_RAM)
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
 #endif
     spi_flash_cfg_t const * p_cfg             = p_instance_ctrl->p_cfg;
     uint16_t                erase_command     = 0;
@@ -479,7 +526,9 @@ fsp_err_t R_OSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_addr
 #if OSPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(0U != erase_command);
 #endif
-    r_ospi_wen(p_instance_ctrl);
+
+    fsp_err_t err = r_ospi_wen(p_instance_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     spi_flash_direct_transfer_t direct_command = {0};
     direct_command.command        = erase_command;
@@ -505,6 +554,7 @@ fsp_err_t R_OSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_addr
  * @retval FSP_SUCCESS                 The write status is in p_status.
  * @retval FSP_ERR_ASSERTION           p_instance_ctrl or p_status is NULL.
  * @retval FSP_ERR_NOT_OPEN            Driver is not opened.
+ * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaRAM.
  **********************************************************************************************************************/
 fsp_err_t R_OSPI_StatusGet (spi_flash_ctrl_t * p_ctrl, spi_flash_status_t * const p_status)
 {
@@ -514,6 +564,10 @@ fsp_err_t R_OSPI_StatusGet (spi_flash_ctrl_t * p_ctrl, spi_flash_status_t * cons
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_status);
     FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    if (((ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->memory_type == OSPI_DEVICE_RAM)
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
 #endif
 
     /* Read device status. */
@@ -548,6 +602,7 @@ fsp_err_t R_OSPI_BankSet (spi_flash_ctrl_t * p_ctrl, uint32_t bank)
  * @retval FSP_ERR_ASSERTION          A required pointer is NULL.
  * @retval FSP_ERR_NOT_OPEN           Driver is not opened.
  * @retval FSP_ERR_CALIBRATE_FAILED   Failed to perform auto-calibrate.
+ * @retval FSP_ERR_INVALID_ARGUMENT   Attempting to set an invalid SPI protocol for OctaRAM.
  **********************************************************************************************************************/
 fsp_err_t R_OSPI_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol_t spi_protocol)
 {
@@ -556,11 +611,45 @@ fsp_err_t R_OSPI_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol_t
 #if OSPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    ospi_extended_cfg_t * p_cfg_extend = (ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    if (p_cfg_extend->memory_type == OSPI_DEVICE_RAM)
+    {
+        FSP_ERROR_RETURN(SPI_FLASH_PROTOCOL_DOPI == spi_protocol, FSP_ERR_INVALID_ARGUMENT);
+    }
 #endif
     p_instance_ctrl->spi_protocol = spi_protocol;
 
     /* Update the SPI protocol and its associated registers. */
     return r_ospi_spi_protocol_specific_settings(p_instance_ctrl, spi_protocol);
+}
+
+/*******************************************************************************************************************//**
+ * Auto-calibrate the OctaRAM device using the preamble pattern.
+ * @note The preamble pattern must be written to the configured address before calling this API.
+ * Implements @ref spi_flash_api_t::autoCalibrate.
+ *
+ * @retval FSP_SUCCESS                SPI protocol updated on MCU peripheral.
+ * @retval FSP_ERR_ASSERTION          A required pointer is NULL.
+ * @retval FSP_ERR_NOT_OPEN           Driver is not opened.
+ * @retval FSP_ERR_CALIBRATE_FAILED   Failed to perform auto-calibrate.
+ * @retval FSP_ERR_UNSUPPORTED         API not supported by OSPI - OctaFlash.
+ **********************************************************************************************************************/
+fsp_err_t R_OSPI_AutoCalibrate (spi_flash_ctrl_t * p_ctrl)
+{
+    ospi_instance_ctrl_t * p_instance_ctrl = (ospi_instance_ctrl_t *) p_ctrl;
+
+#if OSPI_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ERROR_RETURN(OSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    ospi_extended_cfg_t * p_cfg_extend = (ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    if (p_cfg_extend->memory_type == OSPI_DEVICE_FLASH)
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
+#endif
+
+    /* Update the SPI protocol and its associated registers. */
+    return r_ospi_automatic_calibration_seq(p_instance_ctrl);
 }
 
 /*******************************************************************************************************************//**
@@ -586,8 +675,10 @@ fsp_err_t R_OSPI_Close (spi_flash_ctrl_t * p_ctrl)
     /* Initialize transfer instance */
     ospi_extended_cfg_t       * p_cfg_extend = (ospi_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
     transfer_instance_t const * p_transfer   = p_cfg_extend->p_lower_lvl_transfer;
-
-    p_transfer->p_api->close(p_transfer->p_ctrl);
+    if (p_cfg_extend->memory_type == OSPI_DEVICE_FLASH)
+    {
+        p_transfer->p_api->close(p_transfer->p_ctrl);
+    }
 #endif
 
     p_instance_ctrl->open = 0U;
@@ -662,10 +753,11 @@ static fsp_err_t r_ospi_spi_protocol_specific_settings (ospi_instance_ctrl_t * p
                                        (uint32_t) (p_cfg_extend->dopi_byte_order << R_OSPI_MRWCSR_MWO0_Pos)),
                                       channel);
 
-        /* Set MDLR (Memory Map Dummy Length Reg) with Read dummy length setting */
+        /* Set MDLR (Memory Map Dummy Length Reg) with Read and Write dummy length setting */
         R_OSPI->MDLR =
             OSPI_PRV_RMW(R_OSPI->MDLR,
-                         ((uint32_t) (p_cfg_extend->opi_mem_read_dummy_cycles << R_OSPI_MDLR_DV0RDL_Pos)),
+                         ((uint32_t) (p_cfg_extend->opi_mem_read_dummy_cycles << R_OSPI_MDLR_DV0RDL_Pos) |
+                          (uint32_t) (p_cfg_extend->opi_mem_write_dummy_cycles << R_OSPI_MDLR_DV0WDL_Pos)),
                          channel);
 
         /* Specifies the read and write commands for Device */
@@ -673,20 +765,32 @@ static fsp_err_t r_ospi_spi_protocol_specific_settings (ospi_instance_ctrl_t * p
                                             p_opi_commands->read_command : p_opi_commands->dual_read_command);
         R_OSPI->MRWCR[channel] = (uint32_t) p_opi_commands->page_program_command << R_OSPI_MRWCR_DMWCMD0_Pos |
                                  read_command;
-
-        /* Perform auto-calibration to appropriately update MDTR DVnDEL field */
-        if (0 == p_cfg_extend->data_latch_delay_clocks)
+        uint32_t mdtr = R_OSPI->MDTR;
+        if (p_cfg_extend->memory_type == OSPI_DEVICE_FLASH)
         {
-            ret = r_ospi_automatic_calibration_seq(p_instance_ctrl);
+            mdtr &= ~R_OSPI_MDTR_DQSEDOPI_Msk;
+            mdtr |= (uint32_t) (p_cfg_extend->om_dqs_enable_counter_dopi << R_OSPI_MDTR_DQSEDOPI_Pos);
+            mdtr &= ~R_OSPI_MDTR_DQSESOPI_Msk;
+            mdtr |= (uint32_t) (p_cfg_extend->om_dqs_enable_counter_sopi << R_OSPI_MDTR_DQSESOPI_Pos);
         }
         else
         {
-            /* The OctalFlash is pre-calibrated with the existing clock settings. Do not auto-calibrate. */
-            R_OSPI->MDTR =
-                OSPI_PRV_RMW_MASKED(R_OSPI->MDTR,
-                                    R_OSPI_MDTR_DV0DEL_Msk,
-                                    ((uint32_t) (p_cfg_extend->data_latch_delay_clocks << R_OSPI_MDTR_DV0DEL_Pos)),
-                                    channel);
+            mdtr &= ~R_OSPI_MDTR_DQSERAM_Msk;
+            mdtr |= (uint32_t) (p_cfg_extend->om_dqs_enable_counter_dopi << R_OSPI_MDTR_DQSERAM_Pos);
+        }
+
+        /* If data_latch_delay_clocks is non-zero the DVnDEL bitfield is appropriately populated and auto-calibration is skipped. */
+        mdtr = OSPI_PRV_RMW_MASKED(mdtr,
+                                   R_OSPI_MDTR_DV0DEL_Msk,
+                                   (uint32_t) p_cfg_extend->data_latch_delay_clocks,
+                                   channel);
+
+        R_OSPI->MDTR = mdtr;
+
+        /* Perform auto-calibration to appropriately update MDTR DVnDEL field */
+        if ((0 == p_cfg_extend->data_latch_delay_clocks) && (p_cfg_extend->memory_type == OSPI_DEVICE_FLASH))
+        {
+            ret = r_ospi_automatic_calibration_seq(p_instance_ctrl);
         }
     }
     else
@@ -753,8 +857,11 @@ static bool r_ospi_status_sub (ospi_instance_ctrl_t * p_instance_ctrl, uint8_t b
  * Send Write enable command to the OctaFlash
  *
  * @param[in]   p_instance_ctrl    Pointer to OSPI specific control structure
+ *
+ * @retval FSP_SUCCESS                 The write enable bit is set.
+ * @retval FSP_ERR_WRITE_FAILED        The write enable bit was not set.
  **********************************************************************************************************************/
-static void r_ospi_wen (ospi_instance_ctrl_t * p_instance_ctrl)
+static fsp_err_t r_ospi_wen (ospi_instance_ctrl_t * p_instance_ctrl)
 {
     spi_flash_direct_transfer_t direct_command = {0};
     spi_flash_cfg_t const     * p_cfg          = p_instance_ctrl->p_cfg;
@@ -771,6 +878,26 @@ static void r_ospi_wen (ospi_instance_ctrl_t * p_instance_ctrl)
     }
 
     r_ospi_direct_transfer(p_instance_ctrl, &direct_command, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);
+
+    /* In case write enable is not checked, assume write is enabled. */
+    bool write_enabled = true;
+
+#if OSPI_MAX_WRITE_ENABLE_LOOPS > 0U
+
+    /* Verify write is enabled. */
+    for (uint32_t i = 0U; i < OSPI_MAX_WRITE_ENABLE_LOOPS; i++)
+    {
+        write_enabled = r_ospi_status_sub(p_instance_ctrl, p_instance_ctrl->p_cfg->write_enable_bit);
+        if (write_enabled)
+        {
+            break;
+        }
+    }
+#endif
+
+    FSP_ERROR_RETURN(write_enabled, FSP_ERR_WRITE_FAILED);
+
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -795,11 +922,11 @@ static fsp_err_t r_ospi_automatic_calibration_seq (ospi_instance_ctrl_t * p_inst
     R_OSPI->CDSR = cdsr | (uint32_t) ((1U << (R_OSPI_CDSR_ACMEME0_Pos + channel))) |
                    (uint32_t) (1U << R_OSPI_CDSR_ACMODE_Pos);
 
-    /* Using default values for DQSSOPI nad DQSDOPI counter */
+    /* Using configured values for DQSSOPI nad DQSDOPI counter */
     /* MDTR.DVnDEL: Typical value(VCC=3.3, 25 degree C, typical sample) is around 0x80 */
     while (0 == (R_OSPI->ACSR & (uint32_t) (R_OSPI_ACSR_ACSR0_Msk << (channel * R_OSPI_ACSR_ACSR1_Pos))))
     {
-        /* TODO: Add timeout */
+        /* Worst case delay is set by default ACTR value */
     }
 
     /* Disable automatic calibration */
@@ -819,7 +946,7 @@ static fsp_err_t r_ospi_automatic_calibration_seq (ospi_instance_ctrl_t * p_inst
 }
 
 /*******************************************************************************************************************//**
- * Performs direct data transfer with the OctaFlash
+ * Performs direct data transfer with the OctaFlash/OctaRAM device
  *
  * @param[in]   p_instance_ctrl    Pointer to OSPI specific control structure
  * @param[in]   p_transfer             Pointer to transfer parameters
@@ -836,9 +963,10 @@ static void r_ospi_direct_transfer (ospi_instance_ctrl_t              * p_instan
                    (uint32_t) (p_transfer->address_length << R_OSPI_DCSR_ADLEN_Pos) |
                    (uint32_t) (p_transfer->dummy_cycles << R_OSPI_DCSR_DMLEN_Pos) |
 
-                   /* Right shifted to match enum to register value */
-                   (uint32_t) ((p_instance_ctrl->spi_protocol >> 2U) << R_OSPI_DCSR_DOPI_Pos) |
+                   /* OctaFlash: DOPI = 0, SOPI = 1; OctaRAM: DOPI = 0. */
+                   (uint32_t) (((uint8_t) (p_instance_ctrl->spi_protocol & 2U) >> 1U) << R_OSPI_DCSR_DOPI_Pos) |
                    (uint32_t) (p_instance_ctrl->channel << R_OSPI_DCSR_ACDV_Pos) |
+                   (uint32_t) (1U << R_OSPI_DCSR_DAOR_Pos) |
                    (uint32_t) (p_transfer->data_length << R_OSPI_DCSR_DALEN_Pos);
     if (SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE == direction)
     {

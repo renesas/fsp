@@ -270,7 +270,7 @@ fsp_err_t R_USB_HMSC_StorageReadSector (uint16_t        drive_number,
     uint32_t    trans_byte;
     usb_utr_t   ptr;
     uint16_t    err_code;
-    usb_cfg_t * p_cfg;
+    usb_cfg_t * p_cfg = NULL;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(buff)
@@ -291,15 +291,15 @@ fsp_err_t R_USB_HMSC_StorageReadSector (uint16_t        drive_number,
 
     if (ptr.ip)
     {
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+#if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
-#else
-        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
-#endif
+#endif                                 /* #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME) */
     }
     else
     {
+#if defined(VECTOR_NUMBER_USBFS_INT)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+#endif                                 /* #if defined(VECTOR_NUMBER_USBFS_INT) */
     }
 
     ptr.p_transfer_rx = p_cfg->p_transfer_rx;
@@ -345,7 +345,7 @@ fsp_err_t R_USB_HMSC_StorageWriteSector (uint16_t              drive_number,
     uint32_t    trans_byte;
     usb_utr_t   ptr;
     uint16_t    err_code;
-    usb_cfg_t * p_cfg;
+    usb_cfg_t * p_cfg = NULL;
 
 #if USB_CFG_PARAM_CHECKING_ENABLE == BSP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(buff)
@@ -366,15 +366,15 @@ fsp_err_t R_USB_HMSC_StorageWriteSector (uint16_t              drive_number,
 
     if (ptr.ip)
     {
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+#if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBHS_USB_INT_RESUME);
-#else
-        p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
-#endif
+#endif                                 /* #if defined(VECTOR_NUMBER_USBHS_USB_INT_RESUME) */
     }
     else
     {
+#if defined(VECTOR_NUMBER_USBFS_INT)
         p_cfg = (usb_cfg_t *) R_FSP_IsrContextGet((IRQn_Type) VECTOR_NUMBER_USBFS_INT);
+#endif                                 /* #if defined(VECTOR_NUMBER_USBFS_INT) */
     }
 
     ptr.p_transfer_rx = p_cfg->p_transfer_rx;

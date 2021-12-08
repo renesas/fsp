@@ -32,6 +32,16 @@
 #include <stdio.h>
 
 /**
+ * @brief Variables that describe the library version
+ */
+typedef struct
+{
+    uint8_t major;
+    uint8_t minor;
+    uint8_t patch;
+} algorithm_version;
+
+/**
  * @brief error_codes Error codes
  */
 typedef enum

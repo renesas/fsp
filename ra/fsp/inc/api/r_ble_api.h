@@ -27,7 +27,9 @@
  * The BLE interface for the Bluetooth Low Energy (BLE) peripheral provides Bluetooth Low Energy functionality.
  *
  * The Bluetooth Low Energy interface can be implemented by:
- * - @ref BLE
+ * - @ref BLE_EXTENDED
+ * - @ref BLE_BALANCE
+ * - @ref BLE_COMPACT
  *
  * @{
  **********************************************************************************************************************/
@@ -257,7 +259,7 @@ enum RBLE_STATUS_enum
 /* =================================================== GAP Macro ==================================================== */
 
 /** @addtogroup GAP_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -1231,7 +1233,7 @@ enum RBLE_STATUS_enum
 /* =================================================== GATT Macro =================================================== */
 
 /** @addtogroup GATT_SERVER_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -1783,7 +1785,7 @@ typedef enum
 /*@}*/
 
 /** @addtogroup GATT_CLIENT_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -2610,7 +2612,7 @@ typedef enum
 /* ================================================== L2CAP Macro =================================================== */
 
 /** @addtogroup L2CAP_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -2663,7 +2665,7 @@ typedef enum
 /* ============================================= Vendor Specific Macro ============================================== */
 
 /** @addtogroup VS_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -2853,7 +2855,7 @@ typedef enum
 /* ============================================== GAP Type Definitions ============================================== */
 
 /** @addtogroup GAP_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -5726,7 +5728,7 @@ typedef struct
 /* ================================================= GAP Event Code ================================================= */
 
 /** @addtogroup GAP_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -7561,7 +7563,7 @@ typedef enum
 /* ========================================== GATT Server Type Definitions ========================================== */
 
 /** @addtogroup GATT_SERVER_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -8323,7 +8325,7 @@ typedef void (* ble_gatts_app_cb_t)(uint16_t event_type, ble_status_t event_resu
 /* ========================================== GATT Client Type Definitions ========================================== */
 
 /** @addtogroup GATT_CLIENT_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -8892,7 +8894,7 @@ typedef void (* ble_gattc_app_cb_t)(uint16_t event_type, ble_status_t event_resu
 /* ============================================= L2CAP Type Definitions ============================================= */
 
 /** @addtogroup L2CAP_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -9150,7 +9152,7 @@ typedef void (* ble_l2cap_cf_app_cb_t)(uint16_t event_type, ble_status_t event_r
 /* ================================================ L2CAP Event Code ================================================ */
 
 /** @addtogroup L2CAP_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -9408,7 +9410,7 @@ typedef enum
 /* ======================================== Vendor Specific Type Definitions ======================================== */
 
 /** @addtogroup VS_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -9695,7 +9697,7 @@ typedef void (* ble_vs_app_cb_t)(uint16_t event_type, ble_status_t event_result,
 /* =========================================== Vendor Specific Event Code =========================================== */
 
 /** @addtogroup VS_API
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -10087,7 +10089,7 @@ typedef void (* ble_app_init_cb_t)(uint8_t param);
 /* ============================================ Event Callback Definition =========================================== */
 
 /******************************************************************************************************************//**
- * @ingroup BLE
+ * @ingroup BLE_API
  * @typedef ble_event_cb_t
  * @brief   ble_event_cb_t is the callback function type for R_BLE_SetEvent().
  * @param[in] void
@@ -10097,7 +10099,7 @@ typedef void (* ble_event_cb_t)(void);
 
 /* ============================================== MAIN API Declarations ============================================== */
 
-/** @addtogroup BLE
+/** @addtogroup BLE_API
  *  @{
  */
 
@@ -10175,7 +10177,7 @@ uint32_t R_BLE_GetLibType(void);
 /* ============================================== GAP API Declarations ============================================== */
 
 /** @defgroup GAP_API GAP
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -11385,7 +11387,7 @@ ble_status_t R_BLE_GAP_ReplyLtkReq(uint16_t conn_hdl, uint16_t ediv, uint8_t * p
 /* ========================================== GATT Common API Declarations ========================================== */
 
 /** @defgroup GATT_COMMON_API GATT_COMMON
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -11409,7 +11411,7 @@ ble_status_t R_BLE_GATT_GetMtu(uint16_t conn_hdl, uint16_t * p_mtu);
 /* ========================================== GATT Server API Declarations ========================================== */
 
 /** @defgroup GATT_SERVER_API GATT_SERVER
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -11710,7 +11712,7 @@ ble_status_t R_BLE_GATTS_SetPrepareQueue(st_ble_gatt_pre_queue_t * p_pre_queues,
 /* ========================================== GATT Client API Declarations ========================================== */
 
 /** @defgroup GATT_CLIENT_API GATT_CLIENT
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -12163,7 +12165,7 @@ ble_status_t R_BLE_GATTC_ExecWrite(uint16_t conn_hdl, uint8_t exe_flag);
 /* ============================================= L2CAP API Declarations ============================================= */
 
 /** @defgroup L2CAP_API L2CAP
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
@@ -12311,7 +12313,7 @@ ble_status_t R_BLE_L2CAP_SendCfData(uint16_t conn_hdl, uint16_t lcid, uint16_t d
 /* ======================================== Vendor Specific API Declarations ======================================== */
 
 /** @defgroup VS_API VS
- *  @ingroup BLE
+ *  @ingroup BLE_API
  *  @{
  */
 
