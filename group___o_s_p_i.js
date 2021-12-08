@@ -5,6 +5,10 @@ var group___o_s_p_i =
       [ "OSPI_DEVICE_NUMBER_0", "group___o_s_p_i.html#gga0dd809af09334f30599a1d6290c497b1a9ba21a26be1d4607323e2c5a4d88b696", null ],
       [ "OSPI_DEVICE_NUMBER_1", "group___o_s_p_i.html#gga0dd809af09334f30599a1d6290c497b1a4f999cfe7d7d3deff619c1b066651c0c", null ]
     ] ],
+    [ "ospi_device_type_t", "group___o_s_p_i.html#ga6cb57e3f0a0546067b8963f585e43dd6", [
+      [ "OSPI_DEVICE_FLASH", "group___o_s_p_i.html#gga6cb57e3f0a0546067b8963f585e43dd6a00a9da52876fad155fdadb605cf65005", null ],
+      [ "OSPI_DEVICE_RAM", "group___o_s_p_i.html#gga6cb57e3f0a0546067b8963f585e43dd6a965fa5409ad4e75afc19476f49978bc9", null ]
+    ] ],
     [ "ospi_command_cs_pullup_clocks_t", "group___o_s_p_i.html#ga0c0370d42bd59554b52b17675637a84e", [
       [ "OSPI_COMMAND_CS_PULLUP_CLOCKS_2", "group___o_s_p_i.html#gga0c0370d42bd59554b52b17675637a84ea66824975b2524960859f39ce172c63a5", null ],
       [ "OSPI_COMMAND_CS_PULLUP_CLOCKS_3", "group___o_s_p_i.html#gga0c0370d42bd59554b52b17675637a84ea20e3577c395bd6682566bade1ba3fd9f", null ],
@@ -35,5 +39,6 @@ var group___o_s_p_i =
     [ "R_OSPI_Write", "group___o_s_p_i.html#gaf58c5c42d8c2e0b5f1d690fc30e923a4", null ],
     [ "R_OSPI_Erase", "group___o_s_p_i.html#gab6b1ae4fbb819789a75de733edad9ecb", null ],
     [ "R_OSPI_StatusGet", "group___o_s_p_i.html#ga42589667f192024298c01bb2c41496e2", null ],
-    [ "R_OSPI_BankSet", "group___o_s_p_i.html#ga6495853f86b39d1f524d5df3df6c455b", null ]
+    [ "R_OSPI_BankSet", "group___o_s_p_i.html#ga6495853f86b39d1f524d5df3df6c455b", null ],
+    [ "R_OSPI_AutoCalibrate", "group___o_s_p_i.html#ga5ec63f4c7e754a3442ca228934febc80", null ]
 ];

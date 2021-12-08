@@ -27,6 +27,15 @@ var searchData=
   ['sce_5frsa3072_5fpublic_5fwrapped_5fkey_5ft',['sce_rsa3072_public_wrapped_key_t',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__rsa3072__public__wrapped__key__t',1,'']]],
   ['sce_5frsa4096_5fpublic_5fwrapped_5fkey_5ft',['sce_rsa4096_public_wrapped_key_t',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__rsa4096__public__wrapped__key__t',1,'']]],
   ['sce_5fsha_5fmd5_5fhandle_5ft',['sce_sha_md5_handle_t',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__sha__md5__handle__t',1,'']]],
+  ['sci_5fb_5fbaud_5fsetting_5ft',['sci_b_baud_setting_t',['../group___s_c_i___b___u_a_r_t.html#structsci__b__baud__setting__t',1,'']]],
+  ['sci_5fb_5fi2c_5fclock_5fsettings_5ft',['sci_b_i2c_clock_settings_t',['../group___s_c_i___b___i2_c.html#structsci__b__i2c__clock__settings__t',1,'']]],
+  ['sci_5fb_5fi2c_5fextended_5fcfg_5ft',['sci_b_i2c_extended_cfg_t',['../group___s_c_i___b___i2_c.html#structsci__b__i2c__extended__cfg__t',1,'']]],
+  ['sci_5fb_5fi2c_5finstance_5fctrl_5ft',['sci_b_i2c_instance_ctrl_t',['../group___s_c_i___b___i2_c.html#structsci__b__i2c__instance__ctrl__t',1,'']]],
+  ['sci_5fb_5fspi_5fdiv_5fsetting_5ft',['sci_b_spi_div_setting_t',['../group___s_c_i___b___s_p_i.html#structsci__b__spi__div__setting__t',1,'']]],
+  ['sci_5fb_5fspi_5fextended_5fcfg_5ft',['sci_b_spi_extended_cfg_t',['../structsci__b__spi__extended__cfg__t.html',1,'']]],
+  ['sci_5fb_5fspi_5finstance_5fctrl_5ft',['sci_b_spi_instance_ctrl_t',['../structsci__b__spi__instance__ctrl__t.html',1,'']]],
+  ['sci_5fb_5fuart_5fextended_5fcfg_5ft',['sci_b_uart_extended_cfg_t',['../group___s_c_i___b___u_a_r_t.html#structsci__b__uart__extended__cfg__t',1,'']]],
+  ['sci_5fb_5fuart_5finstance_5fctrl_5ft',['sci_b_uart_instance_ctrl_t',['../group___s_c_i___b___u_a_r_t.html#structsci__b__uart__instance__ctrl__t',1,'']]],
   ['sci_5fi2c_5fclock_5fsettings_5ft',['sci_i2c_clock_settings_t',['../group___s_c_i___i2_c.html#structsci__i2c__clock__settings__t',1,'']]],
   ['sci_5fi2c_5fextended_5fcfg_5ft',['sci_i2c_extended_cfg_t',['../group___s_c_i___i2_c.html#structsci__i2c__extended__cfg__t',1,'']]],
   ['sci_5fi2c_5finstance_5fctrl_5ft',['sci_i2c_instance_ctrl_t',['../group___s_c_i___i2_c.html#structsci__i2c__instance__ctrl__t',1,'']]],
@@ -53,6 +62,8 @@ var searchData=
   ['slcdc_5finstance_5fctrl_5ft',['slcdc_instance_ctrl_t',['../group___s_l_c_d_c.html#structslcdc__instance__ctrl__t',1,'']]],
   ['slcdc_5finstance_5ft',['slcdc_instance_t',['../group___s_l_c_d_c___a_p_i.html#structslcdc__instance__t',1,'']]],
   ['spi_5fapi_5ft',['spi_api_t',['../group___s_p_i___a_p_i.html#structspi__api__t',1,'']]],
+  ['spi_5fb_5fextended_5fcfg_5ft',['spi_b_extended_cfg_t',['../group___s_p_i___b.html#structspi__b__extended__cfg__t',1,'']]],
+  ['spi_5fb_5finstance_5fctrl_5ft',['spi_b_instance_ctrl_t',['../group___s_p_i___b.html#structspi__b__instance__ctrl__t',1,'']]],
   ['spi_5fcallback_5fargs_5ft',['spi_callback_args_t',['../group___s_p_i___a_p_i.html#structspi__callback__args__t',1,'']]],
   ['spi_5fcfg_5ft',['spi_cfg_t',['../group___s_p_i___a_p_i.html#structspi__cfg__t',1,'']]],
   ['spi_5fextended_5fcfg_5ft',['spi_extended_cfg_t',['../group___s_p_i.html#structspi__extended__cfg__t',1,'']]],
@@ -200,7 +211,5 @@ var searchData=
   ['st_5fble_5fvs_5fset_5ftx_5fpwr_5fcomp_5fevt_5ft',['st_ble_vs_set_tx_pwr_comp_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__set__tx__pwr__comp__evt__t',1,'']]],
   ['st_5fble_5fvs_5ftest_5fend_5fevt_5ft',['st_ble_vs_test_end_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__test__end__evt__t',1,'']]],
   ['st_5fble_5fvs_5ftx_5fflow_5fchg_5fevt_5ft',['st_ble_vs_tx_flow_chg_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__tx__flow__chg__evt__t',1,'']]],
-  ['st_5fble_5fvs_5ftx_5ftest_5fparam_5ft',['st_ble_vs_tx_test_param_t',['../group___v_s___a_p_i.html#structst__ble__vs__tx__test__param__t',1,'']]],
-  ['sulfur_5fodor_5fhandle_5ft',['sulfur_odor_handle_t',['../structsulfur__odor__handle__t.html',1,'']]],
-  ['sulfur_5fodor_5fresults_5ft',['sulfur_odor_results_t',['../structsulfur__odor__results__t.html',1,'']]]
+  ['st_5fble_5fvs_5ftx_5ftest_5fparam_5ft',['st_ble_vs_tx_test_param_t',['../group___v_s___a_p_i.html#structst__ble__vs__tx__test__param__t',1,'']]]
 ];

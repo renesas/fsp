@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -172,7 +172,7 @@ $(document).ready(function(){initNavTree('group___s_p_i___f_l_a_s_h___a_p_i.html
 Summary</h1>
 <p>The SPI flash API provides an interface that configures, writes, and erases sectors in SPI flash devices.</p>
 <p>Implemented by:</p><ul>
-<li><a class="el" href="group___o_s_p_i.html">Octa Serial Peripheral Interface Flash (r_ospi)</a></li>
+<li><a class="el" href="group___o_s_p_i.html">Octa Serial Peripheral Interface for Flash and RAM devices (r_ospi)</a></li>
 <li><a class="el" href="group___q_s_p_i.html">Quad Serial Peripheral Interface Flash (r_qspi)</a> </li>
 </ul>
 <table class="memberdecls">
@@ -364,7 +364,7 @@ Which bit determines write status. </td></tr>
 <td class="fieldname">
 page_size_bytes</td>
 <td class="fielddoc">
-Page size in bytes (maximum number of bytes for page program) </td></tr>
+Page size in bytes (maximum number of bytes for page program). Used to specify single continuous write size (bytes) in case of OSPI RAM. </td></tr>
 <tr><td class="fieldtype">
 <a id="ad630dd9c52ab12c077c5b27485b46017"></a>uint8_t</td>
 <td class="fieldname">
@@ -484,6 +484,8 @@ write_in_progress</td>
 <tr class="separator:a3a7c2aae058a733f879ae294c63ce2c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14581133205383b71df54a65439c0dcf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a14581133205383b71df54a65439c0dcf">bankSet</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint32_t bank)</td></tr>
 <tr class="separator:a14581133205383b71df54a65439c0dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad04434e2c049da61d3389355d5961f31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ad04434e2c049da61d3389355d5961f31">autoCalibrate</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ad04434e2c049da61d3389355d5961f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16810f14e3fff6ed04f36eca44353785"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a16810f14e3fff6ed04f36eca44353785">close</a> )(<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
 <tr class="separator:a16810f14e3fff6ed04f36eca44353785"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -582,6 +584,7 @@ write_in_progress</td>
 </div><div class="memdoc">
 <p>Direct Read/Write raw data to the SPI flash. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___o_s_p_i.html#gaa20b1ceba816c6f2f5ef3406cf898a63">R_OSPI_DirectTransfer()</a></li>
+<li><a class="el" href="group___q_s_p_i.html#gaf3439f15e60af9cf55e15e8016b67875">R_QSPI_DirectTransfer()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -772,6 +775,31 @@ write_in_progress</td>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bank</td><td>The bank number </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad04434e2c049da61d3389355d5961f31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad04434e2c049da61d3389355d5961f31">&#9670;&nbsp;</a></span>autoCalibrate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  spi_flash_api_t::autoCalibrate) (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>AutoCalibrate the SPI flash driver module. Expected to be used when auto-calibrating OSPI RAM device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___o_s_p_i.html#ga5ec63f4c7e754a3442ca228934febc80">R_OSPI_AutoCalibrate()</a></li>
+<li><a class="el" href="group___q_s_p_i.html#ga3f163c6c0a41fae3a196d3bf2eeb0907">R_QSPI_AutoCalibrate()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle </td></tr>
   </table>
   </dd>
 </dl>
@@ -1033,7 +1061,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

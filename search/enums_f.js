@@ -15,6 +15,7 @@ var searchData=
   ['rm_5flevelx_5fnor_5fspi_5fevent_5ft',['rm_levelx_nor_spi_event_t',['../group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#ga676216a9403ce51b4b46f14c4d669500',1,'rm_levelx_nor_spi.h']]],
   ['rm_5fvee_5fstate_5ft',['rm_vee_state_t',['../group___r_m___v_e_e___a_p_i.html#gac7515f6fffdfcee3069dd80f584fb64c',1,'rm_vee_api.h']]],
   ['rm_5fzmod4xxx_5fevent_5ft',['rm_zmod4xxx_event_t',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#gadd54ca8592a0f7cb81913d2250e89060',1,'rm_zmod4xxx_api.h']]],
+  ['rm_5fzmod4xxx_5flib_5ftype_5ft',['rm_zmod4xxx_lib_type_t',['../group___r_m___z_m_o_d4_x_x_x.html#gacebf611dd2d5d0b091db57023ea373b6',1,'rm_zmod4xxx.h']]],
   ['rm_5fzmod4xxx_5fsulfur_5fodor_5ft',['rm_zmod4xxx_sulfur_odor_t',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga47f50ad1a54e470fb44b443351c39beb',1,'rm_zmod4xxx_api.h']]],
   ['rtc_5fclock_5fsource_5ft',['rtc_clock_source_t',['../group___r_t_c___a_p_i.html#gad8eef26a825fa4a0c5a417f8be08ccc6',1,'r_rtc_api.h']]],
   ['rtc_5ferror_5fadjustment_5fmode_5ft',['rtc_error_adjustment_mode_t',['../group___r_t_c___a_p_i.html#ga4cbfe07cf288ae153c30b4fef99163e7',1,'r_rtc_api.h']]],

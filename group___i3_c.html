@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -283,8 +283,8 @@ Disabled</li>
 </ul>
 </td><td>Enabled </td><td>If only master mode is required, disable slave support to decrease code size. </td></tr>
 </table>
- <h2>Configurations for Driver &gt; Connectivity &gt; I3C Driver on r_i3c</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; I3C Driver on r_i3c.<br />
+ <h2>Configurations for Connectivity &gt; I3C (r_i3c)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; I3C (r_i3c).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -345,7 +345,7 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable clock stalling during the ACK phase of a transfer. </td></tr>
 <tr>
-<td>Bitrate Settings &gt; Clock Stalling &gt; Time (us)</td><td>Manual Entry</td><td>0 </td><td>The ammount of time to stall the clock during the Address Assignment Phase, Transistion Phase, Parity Phase, and ACK Phase. </td></tr>
+<td>Bitrate Settings &gt; Clock Stalling &gt; Time (us)</td><td>Must be greater than or equal to 0.</td><td>0 </td><td>The amount of time to stall the clock during the Address Assignment Phase, Transition Phase, Parity Phase, and ACK Phase. </td></tr>
 <tr>
 <td>Master Mode &gt; ACK Hot-Join Requests</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -493,11 +493,11 @@ Slave</li>
 </ul>
 </td><td>Slave </td><td>The role that the I3C instance will take on the I3C bus. </td></tr>
 <tr>
-<td>Bus Free Condition Detection Time (ns)</td><td>Must be an value greater than 0.</td><td>38.4 </td><td>The minimum period occurring after a STOP and before a START. </td></tr>
+<td>Bus Free Condition Detection Time (ns)</td><td>Must be greater than or equal to 38.4 nanoseconds.</td><td>38.4 </td><td>The minimum period occurring after a STOP and before a START. </td></tr>
 <tr>
-<td>Bus Available Condition Detection Time (us)</td><td>Must be an value greater than 0.</td><td>1 </td><td>The minimum period occurring after the Bus Free Condition when Slaves can initiate IBI requests. </td></tr>
+<td>Bus Available Condition Detection Time (us)</td><td>Must be greater than or equal to 1 microsecond.</td><td>1 </td><td>The minimum period occurring after the Bus Free Condition when Slaves can initiate IBI requests. </td></tr>
 <tr>
-<td>Bus Idle Condition Detection Time (us)</td><td>Must be greater than 1000 microseconds.</td><td>1000 </td><td>The minimum period occurring after the Bus Available Condition when Slaves can initiate Hot-Join requests. </td></tr>
+<td>Bus Idle Condition Detection Time (us)</td><td>Must be greater than or equal to 1000 microseconds.</td><td>1000 </td><td>The minimum period occurring after the Bus Available Condition when Slaves can initiate Hot-Join requests. </td></tr>
 <tr>
 <td>Timeout Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -723,7 +723,7 @@ Enable Clock Stalling during the ACK/NACK phase. </td></tr>
 <td class="fieldname">
 clock_stalling_time</td>
 <td class="fielddoc">
-The ammount of time to stall the clock in I3C source clock ticks. </td></tr>
+The amount of time to stall the clock in I3C source clock ticks. </td></tr>
 </table>
 
 </div>
@@ -1816,7 +1816,7 @@ Error and Event Interrupt Priority. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

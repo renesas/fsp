@@ -57,6 +57,8 @@ var group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s =
     [ "FSXXXX Middleware Interface", "group___r_m___f_s_x_x_x_x___a_p_i.html", "group___r_m___f_s_x_x_x_x___a_p_i" ],
     [ "HS300X Middleware Interface", "group___r_m___h_s300_x___a_p_i.html", "group___r_m___h_s300_x___a_p_i" ],
     [ "LittleFS Interface", "group___r_m___l_i_t_t_l_e_f_s___a_p_i.html", "group___r_m___l_i_t_t_l_e_f_s___a_p_i" ],
+    [ "Interface", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html", "group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i" ],
+    [ "Interface", "group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html", "group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i" ],
     [ "Motor angle Interface", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html", "group___m_o_t_o_r___a_n_g_l_e___a_p_i" ],
     [ "Motor Interface", "group___m_o_t_o_r___a_p_i.html", "group___m_o_t_o_r___a_p_i" ],
     [ "Motor current Interface", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i" ],

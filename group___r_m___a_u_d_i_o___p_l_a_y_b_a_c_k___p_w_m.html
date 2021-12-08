@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -212,8 +212,8 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Select if DMAC will be used. </td></tr>
 </table>
- <h2>Configurations for Middleware &gt; Audio &gt; Audio Playback PWM driver on rm_audio_playback_pwm</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Audio &gt; Audio Playback PWM driver on rm_audio_playback_pwm.<br />
+ <h2>Configurations for Audio &gt; Audio Playback PWM (rm_audio_playback_pwm)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Audio &gt; Audio Playback PWM (rm_audio_playback_pwm).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -251,7 +251,7 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="rm-audio-playback-pwm-usage_notes"></a>
 Usage Notes</h1>
 <h2>DMAC/DTC Integration</h2>
-<p>DMAC/DTC is used as a lower level transfer instance with this module and is operated in Normal mode to transfer 16 bit or 32 bit data from the audio stream buffer to the PWM peripheral AGT or GPT respectively. Destination address for transfer instance needs to be the Duty Cycle setting register GTCCR for GPT as PWM driver or AGTMA/AGTCMB in case of AGT as PWM driver. Select 'Transfer Size' as 2 Bytes when AGT is used for PWM generation otherwise select 'Transfer Size' as 4 Bytes if GPT is used for PWM generation.</p>
+<p>DMAC/DTC is used as a lower level transfer instance with this module and is operated in Normal mode to transfer 16 bit or 32 bit data from the audio stream buffer to the PWM peripheral AGT or GPT respectively. Destination address for transfer instance needs to be the Duty Cycle setting register GTCCR for GPT as PWM driver or AGTMA/AGTCMB in case of AGT as PWM driver. The Audio Playback with PWM module internally configures 'Transfer Size' as 2 Bytes if AGT is used for PWM generation, otherwise it configures 'Transfer Size" as 4 Bytes if GPT is used for PWM generation.</p>
 <h1><a class="anchor" id="rm-audio-playback-pwm-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -521,7 +521,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -1,5 +1,10 @@
 var group___m_o_t_o_r___c_u_r_r_e_n_t =
 [
+    [ "motor_current_shunt_type_t", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaef437374be3e3458b7914eab38c634b5", [
+      [ "MOTOR_CURRENT_SHUNT_TYPE_1_SHUNT", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#ggaef437374be3e3458b7914eab38c634b5ad89a48f8f28febad656b5fe715b0ce9f", null ],
+      [ "MOTOR_CURRENT_SHUNT_TYPE_2_SHUNT", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#ggaef437374be3e3458b7914eab38c634b5af4e3d8cbc613d9de64b40684f8037f2f", null ],
+      [ "MOTOR_CURRENT_SHUNT_TYPE_3_SHUNT", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#ggaef437374be3e3458b7914eab38c634b5a90cbc2279405e9bda077a22ad44be9b3", null ]
+    ] ],
     [ "RM_MOTOR_CURRENT_Open", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#gae8afb945610e1a9acd649aa5063f2467", null ],
     [ "RM_MOTOR_CURRENT_Close", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga4f8ad8982c83a28f97f20b17667a936b", null ],
     [ "RM_MOTOR_CURRENT_Reset", "group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaf8d837f905e8b3f65bc7fb43f7870e8d", null ],

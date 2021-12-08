@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -256,8 +256,8 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If enabled, all operations will be handled from the RX (receive) interrupt. This setting only provides a performance boost when DTC is not used. In addition, Transmit Only mode is not supported when this configuration is enabled. </td></tr>
 </table>
- <h2>Configurations for Driver &gt; Connectivity &gt; SPI Driver on r_spi</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; SPI Driver on r_spi. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+ <h2>Configurations for Connectivity &gt; SPI (r_spi)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; SPI (r_spi). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -384,63 +384,63 @@ Enable</li>
 <tr>
 <td>Clock Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-SPI_DELAY_COUNT_1</li>
+1 Clock</li>
 <li>
-SPI_DELAY_COUNT_2</li>
+2 Clocks</li>
 <li>
-SPI_DELAY_COUNT_3</li>
+3 Clocks</li>
 <li>
-SPI_DELAY_COUNT_4</li>
+4 Clocks</li>
 <li>
-SPI_DELAY_COUNT_5</li>
+5 Clocks</li>
 <li>
-SPI_DELAY_COUNT_6</li>
+6 Clocks</li>
 <li>
-SPI_DELAY_COUNT_7</li>
+7 Clocks</li>
 <li>
-SPI_DELAY_COUNT_8</li>
+8 Clocks</li>
 </ul>
-</td><td>SPI_DELAY_COUNT_1 </td><td>Configure the number of SPI clock cycles before each data frame. </td></tr>
+</td><td>1 Clock </td><td>Configure the number of SPI clock cycles before each data frame. </td></tr>
 <tr>
 <td>SSL Negation Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-SPI_DELAY_COUNT_1</li>
+1 Clock</li>
 <li>
-SPI_DELAY_COUNT_2</li>
+2 Clocks</li>
 <li>
-SPI_DELAY_COUNT_3</li>
+3 Clocks</li>
 <li>
-SPI_DELAY_COUNT_4</li>
+4 Clocks</li>
 <li>
-SPI_DELAY_COUNT_5</li>
+5 Clocks</li>
 <li>
-SPI_DELAY_COUNT_6</li>
+6 Clocks</li>
 <li>
-SPI_DELAY_COUNT_7</li>
+7 Clocks</li>
 <li>
-SPI_DELAY_COUNT_8</li>
+8 Clocks</li>
 </ul>
-</td><td>SPI_DELAY_COUNT_1 </td><td>Configure the number of SPI clock cycles after each data frame. </td></tr>
+</td><td>1 Clock </td><td>Configure the number of SPI clock cycles after each data frame. </td></tr>
 <tr>
 <td>Next Access Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-SPI_DELAY_COUNT_1</li>
+1 Clock</li>
 <li>
-SPI_DELAY_COUNT_2</li>
+2 Clocks</li>
 <li>
-SPI_DELAY_COUNT_3</li>
+3 Clocks</li>
 <li>
-SPI_DELAY_COUNT_4</li>
+4 Clocks</li>
 <li>
-SPI_DELAY_COUNT_5</li>
+5 Clocks</li>
 <li>
-SPI_DELAY_COUNT_6</li>
+6 Clocks</li>
 <li>
-SPI_DELAY_COUNT_7</li>
+7 Clocks</li>
 <li>
-SPI_DELAY_COUNT_8</li>
+8 Clocks</li>
 </ul>
-</td><td>SPI_DELAY_COUNT_1 </td><td>Configure the number of SPI clock cycles between each data frame. </td></tr>
+</td><td>1 Clock </td><td>Configure the number of SPI clock cycles between each data frame. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-spi-clock-configuration"></a>
@@ -481,6 +481,8 @@ Clock Configuration</h2>
 <td>RA6M5</td><td>PCLKA</td></tr>
 <tr>
 <td>RA6T1</td><td>PCLKA</td></tr>
+<tr>
+<td>RA6T2</td><td>PCLKA</td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-spi-pin-configuration"></a>
@@ -1253,7 +1255,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

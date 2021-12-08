@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -398,8 +398,18 @@ FS Address</li>
 HS Address</li>
 </ul>
 </td><td>DMA Disabled </td><td>Set this to match the speed mode when DMA is enabled. Otherwise, set to 'DMA Disabled'. </td></tr>
+<tr>
+<td>USB Compliance Test mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Display the information required to take the compliance test.  </td></tr>
+<tr>
+<td>USB TPL table name</td><td>Enter the TPL table name.</td><td>NULL </td><td>Enter the name of the TPL Table.  </td></tr>
 </table>
- <h2>Configurations for Middleware &gt; USB &gt; USB Driver on r_usb_basic</h2>
+ <h2>Configurations for Connectivity &gt; USB (r_usb_basic)</h2>
 <table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -536,6 +546,28 @@ Limitations</h2>
 <li>In USB host mode, this USB driver does not support the composite device.</li>
 <li>The user can not specify DMA transfer to USB IP0 and IP1 modules at the same time when using USB multi-port feature. USB multi-port function: Simultaneous operation feature of USB Host and Peripheral.</li>
 </ul>
+<h2><a class="anchor" id="r-usb_basic-compliancetest"></a>
+Compliance Test</h2>
+<p>Please set as follows to the following items in RA configuration (r_usb_basic) when doing the compliance test.</p>
+<p>1.USB Compliance Test mode Set "Enabled" in this item.</p>
+<div class="image">
+<img src="compliance_enable.png" alt="compliance_enable.png"/>
+<div class="caption">
+Compliance Test Setting</div></div>
+<p>2.USB TPL table name. Set the start address of TPL(Target Peripheral List) defined in the application program.</p>
+<div class="image">
+<img src="tpl_start_address.png" alt="tpl_start_address.png"/>
+<div class="caption">
+TPL Start Address Setting</div></div>
+<p> Please refer to the following about how to define for TPL.<br />
+ The following example is when two devices are set in TPL.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> uint16_t usb_tpl_table[] =</div><div class="line">{</div><div class="line">    2,                <span class="comment">/* Number of tpl */</span></div><div class="line">    0,                <span class="comment">/* Reserved */</span></div><div class="line">    0x0123, 0x4567,   <span class="comment">/* Vendor ID, Product ID (1st device) */</span></div><div class="line">    0x89ab, 0xcdef    <span class="comment">/* Vendor ID, Product ID (2nd device) */</span></div><div class="line">};</div></div><!-- fragment --><p>3.USB Compliance Callback Set the start address of the callback function defined in the application program.</p>
+<div class="image">
+<img src="compliance_callback.png" alt="compliance_callback.png"/>
+<div class="caption">
+Compliance Callback Setting</div></div>
+<p> The user needs to create this callback function by referring to the following.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> usb_compliance_disp (<span class="keywordtype">void</span> * param)</div><div class="line">{</div><div class="line">    usb_compliance_t     *disp_data;</div><div class="line">    uint8_t             print_data[32];</div><div class="line"></div><div class="line">    disp_data = (usb_compliance_t*)param;</div><div class="line"></div><div class="line">    <span class="keywordflow">switch</span>(disp_data-&gt;status)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302abf6fb86e88281a4c9d441b6c923b3111">USB_COMPLIANCETEST_ATTACH</a>:            <span class="comment">/* Device Attach Detection */</span></div><div class="line">            display(<span class="stringliteral">&quot;\nATTACH \n&quot;</span>);</div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302af5e68b2dca0d8369a411723260a3a306">USB_COMPLIANCETEST_DETACH</a>:            <span class="comment">/* Device Detach Detection */</span></div><div class="line">            display(<span class="stringliteral">&quot;\nDETACH \n&quot;</span>);</div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302af2aa5006fcd9d18549d28cad9e735794">USB_COMPLIANCETEST_TPL</a>:               <span class="comment">/* TPL device connect */</span></div><div class="line">            display(<span class="stringliteral">&quot;\nTPL PID:%04x VID:%04x \n&quot;</span>,disp_data-&gt;pid, disp_data-&gt;vid);</div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302ac3f55ab9add455009a2d2bcc987ef209">USB_COMPLIANCETEST_NOTTPL</a>:            <span class="comment">/* Not TPL device connect */</span></div><div class="line">            display(<span class="stringliteral">&quot;\nNOTPL PID:%04x VID:%04x \n&quot;</span>,disp_data-&gt;pid, disp_data-&gt;vid);</div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302a48e08241727b6babb37a9a6ea9fc4f8c">USB_COMPLIANCETEST_HUB</a>:               <span class="comment">/* USB Hub connect */</span></div><div class="line">            display(<span class="stringliteral">&quot;\nHub    \n&quot;</span>);</div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302a6f7dd243303d816f65ab5f83e3857b8a">USB_COMPLIANCETEST_OVRC</a>:              <span class="comment">/* over current */</span></div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302a6efe30ef900a8492f5f0a1e02a7beb34">USB_COMPLIANCETEST_NORES</a>:             <span class="comment">/* Responce Time out for Control Read Transfer */</span></div><div class="line">            display(<span class="stringliteral">&quot;\nNOTRESP \n&quot;</span>);</div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302a26cbdc184b4aec0124d1b6b7fd23eb1c">USB_COMPLIANCETEST_SETUP_ERR</a>:         <span class="comment">/* Setup Transaction Error */</span></div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">}   <span class="comment">/* End of function usb_compliance_disp() */</span></div></div><!-- fragment --><p>Please replace the display function described in the example with the display function created by the customer.</p>
 <h2><a class="anchor" id="r-usb_basic-trustzone"></a>
 TrustZone</h2>
 <p>The USB driver for FreeRTOS cannot be allocated in Secure region.</p>
@@ -1874,7 +1906,7 @@ Do not call this API in the interrupt function. </dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

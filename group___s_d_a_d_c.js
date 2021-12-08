@@ -83,11 +83,12 @@ var group___s_d_a_d_c =
     [ "R_SDADC_ScanCfg", "group___s_d_a_d_c.html#ga0a7002fc86458bbd74ac178bbaaaff68", null ],
     [ "R_SDADC_InfoGet", "group___s_d_a_d_c.html#ga4f0d9f978b33d4bf19d6522ea3701032", null ],
     [ "R_SDADC_ScanStart", "group___s_d_a_d_c.html#ga21a9d4b48c9a260b4515572e3f6cacdd", null ],
+    [ "R_SDADC_ScanGroupStart", "group___s_d_a_d_c.html#ga62382aeba24d64d3ba7e6eb1c8a1b187", null ],
     [ "R_SDADC_ScanStop", "group___s_d_a_d_c.html#ga35cdadbf61f92ee76fbbc3c5584b850b", null ],
     [ "R_SDADC_StatusGet", "group___s_d_a_d_c.html#gaebb38f07bd7922342597c2d453957433", null ],
     [ "R_SDADC_Read", "group___s_d_a_d_c.html#gaf6af5f96116f06d57982fb1cdc8d416b", null ],
     [ "R_SDADC_Read32", "group___s_d_a_d_c.html#ga77dc084a35379f65d2e2084e9a9c5806", null ],
     [ "R_SDADC_OffsetSet", "group___s_d_a_d_c.html#gaf89d5f194cf841e12f1db6f869a4cf18", null ],
-    [ "R_SDADC_Calibrate", "group___s_d_a_d_c.html#gab365571e4e0d3ab6ae46acd4fb558a5b", null ],
+    [ "R_SDADC_Calibrate", "group___s_d_a_d_c.html#ga9c8c90f3182823e0b8a76fab5612d181", null ],
     [ "R_SDADC_Close", "group___s_d_a_d_c.html#gacd3903592611777a4bdd0bf0e6488da8", null ]
 ];

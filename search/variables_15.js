@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['v_5fpattern',['v_pattern',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#aa69969a331c0c8382bb092fdbf85d034',1,'motor_120_control_hall_instance_ctrl_t::v_pattern()'],['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#a8559b44d164df03406b68090fd77b927',1,'motor_120_control_sensorless_instance_ctrl_t::v_pattern()']]],
   ['v_5fvoltage',['v_voltage',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a03e1390d905a7006e53d205981a4ccf9',1,'motor_current_get_voltage_t']]],
   ['va_5fmax',['va_max',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a1b415bcb42d7afeb6b6e03994c733636',1,'motor_current_input_voltage_t::va_max()'],['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#af4ebbd3916982bd0dca8e8f06180f67c',1,'motor_driver_current_get_t::va_max()']]],
   ['value',['value',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae91f5312a35b923fe19e07ee8ddf825e',1,'st_ble_gatt_hdl_value_pair_t::value()'],['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a447fa81bdfd0c7b850baf6f2db32c79e',1,'st_ble_gatts_db_params_t::value()'],['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#af799092a7d21b59243071cdc1f5d835b',1,'sce_aes_wrapped_key_t::value()'],['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a11e0298884678e3951df1d2f2b0e411a',1,'sce_hmac_sha_wrapped_key_t::value()'],['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a9892ce7d4aab782334fda2aeb78b07f4',1,'sce_ecc_private_wrapped_key_t::value()'],['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a16ca5f7c3dd5a23a98c5b6b1c939f2f8',1,'sce_ecdh_wrapped_key_t::value()'],['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#aba90bbed7e272fe9ac145b8f8570490f',1,'sce_key_update_key_t::value()']]],
@@ -10,15 +11,17 @@ var searchData=
   ['vbusset',['vbusSet',['../group___u_s_b___a_p_i.html#a1d8e182b1dd986e7fed13f7c09ca3943',1,'usb_api_t']]],
   ['vd',['vd',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a9b39071d195ba340bbdfcc765fe6c09f',1,'motor_angle_voltage_reference_t']]],
   ['vd_5freference',['vd_reference',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a6295f645f9ab6c44a4cd14674a040f7c',1,'motor_current_get_voltage_t']]],
-  ['vdc',['vdc',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ad1ee4dac5fa7e55c3f4c1221dc8ff2ef',1,'motor_current_input_voltage_t::vdc()'],['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ad66eff75b060e8a80ba6f8548f1571c3',1,'motor_driver_current_get_t::vdc()']]],
-  ['vdc_5fad_5fch',['vdc_ad_ch',['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a3c2d8489abd82d925de29953782cbf31',1,'motor_driver_cfg_t']]],
+  ['vdc',['vdc',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#a00a22a38cdd5c2fd2177e5e908ff0cc8',1,'motor_120_driver_current_status_t::vdc()'],['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ad1ee4dac5fa7e55c3f4c1221dc8ff2ef',1,'motor_current_input_voltage_t::vdc()'],['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ad66eff75b060e8a80ba6f8548f1571c3',1,'motor_driver_current_get_t::vdc()']]],
+  ['vdc_5fad_5fch',['vdc_ad_ch',['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a3c2d8489abd82d925de29953782cbf31',1,'motor_driver_cfg_t::vdc_ad_ch()'],['../group___m_o_t_o_r__120___d_r_i_v_e_r.html#ac03fd85fdd29d47e44b32a2e402a6f39',1,'motor_120_driver_extended_cfg_t::vdc_ad_ch()']]],
   ['vendor_5fspecific_5fcallback',['vendor_specific_callback',['../group___b_l_e___a_b_s___a_p_i.html#ad670941e6901b4d1bb2887396aae1382',1,'ble_abs_cfg_t']]],
   ['vendor_5fstatus',['vendor_status',['../group___i3_c___a_p_i.html#a0148d668a40c53ea6aeba6b14050593e',1,'i3c_device_status_t']]],
   ['version',['version',['../group___g_a_p___a_p_i.html#a383ff637f62580e7903466c10e3c4e28',1,'st_ble_gap_dev_info_evt_t::version()'],['../group___p_t_p___a_p_i.html#a5d9dd652591f35448cc1fbb93eeb7698',1,'ptp_message_header_t::version()']]],
   ['version_5fid',['version_id',['../group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#a3d5dd6d84edfe02a1eb1f1f1ac2f3054',1,'fsp_pack_version_t']]],
   ['vertical_5fresolution',['vertical_resolution',['../group___j_p_e_g___a_p_i.html#a46d7f920adfd6dc7144b8672decf7b79',1,'jpeg_encode_image_size_t::vertical_resolution()'],['../group___j_p_e_g___a_p_i.html#a4bb89951df35729ace4d87e235ba0363',1,'jpeg_cfg_t::vertical_resolution()'],['../group___j_p_e_g.html#a9f90954e1af2ed22f8d84e75525ac88f',1,'jpeg_instance_ctrl_t::vertical_resolution()']]],
+  ['virtual_5fchannel_5fcount',['virtual_channel_count',['../group___a_d_c___b.html#a327edbb6e3606009121a398d4721af87',1,'adc_b_group_cfg_t']]],
   ['voltage_5fslope',['voltage_slope',['../group___l_v_d___a_p_i.html#ad2d96d7a62eb0134be6dc53f8a2f1e01',1,'lvd_cfg_t']]],
   ['voltage_5fthreshold',['voltage_threshold',['../group___l_v_d___a_p_i.html#a59db118b30b6c4dff84729b0541b7e76',1,'lvd_cfg_t']]],
+  ['voltagerefget',['voltageRefGet',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#a49fd48f1955064c2d399ea79d79222f7',1,'motor_120_control_api_t']]],
   ['vq',['vq',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ab30923ba51b00c341d90804b24aaebf6',1,'motor_angle_voltage_reference_t']]],
   ['vq_5freference',['vq_reference',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ab4357a5fbd041bf5f2ef68e35aa93f3f',1,'motor_current_get_voltage_t']]],
   ['vref_5fselect',['vref_select',['../group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a38601210035ff385feaf6569868f8196',1,'comparator_cfg_t']]],
@@ -26,5 +29,11 @@ var searchData=
   ['vref_5fvoltage',['vref_voltage',['../group___s_d_a_d_c.html#ae674430c29c18997b4af8e474cd101de',1,'sdadc_extended_cfg_t']]],
   ['vsize',['vsize',['../group___d_i_s_p_l_a_y___a_p_i.html#a495b88e9ec5e91a1cdc862905e9a3642',1,'display_input_cfg_t']]],
   ['vsync_5fpolarity',['vsync_polarity',['../group___p_d_c___a_p_i.html#afe61e54523432347dcd6e227c8a8f8a1',1,'pdc_cfg_t']]],
-  ['vtiming',['vtiming',['../group___d_i_s_p_l_a_y___a_p_i.html#a47644dc992d3c7870e8ae1f3b6ba8124',1,'display_output_cfg_t']]]
+  ['vtiming',['vtiming',['../group___d_i_s_p_l_a_y___a_p_i.html#a47644dc992d3c7870e8ae1f3b6ba8124',1,'display_output_cfg_t']]],
+  ['vu',['vu',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#adf6a070361fbe3312df3c5e9b48e8e80',1,'motor_120_driver_current_status_t']]],
+  ['vu_5fad_5fch',['vu_ad_ch',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html#a1aade0e82d588f9c26b8b92626b05e6b',1,'motor_120_driver_extended_cfg_t']]],
+  ['vv',['vv',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#a47f436bb3af4b28164ba451c800230a9',1,'motor_120_driver_current_status_t']]],
+  ['vv_5fad_5fch',['vv_ad_ch',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html#ad7b54231a06f707377e5e31a19462cbe',1,'motor_120_driver_extended_cfg_t']]],
+  ['vw',['vw',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#a67bf210f84c0ea73daa6d0d7f13ef1ae',1,'motor_120_driver_current_status_t']]],
+  ['vw_5fad_5fch',['vw_ad_ch',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html#a7c5bf7a2e69f7cbaa6d581d540dd1602',1,'motor_120_driver_extended_cfg_t']]]
 ];

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -440,10 +440,10 @@ Functions</h2></td></tr>
 <tr class="separator:ga84b4a725b5025d446ea5241d922f72e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Driver for the Secure Crypto Engine (SCE) on RA MCUs. </p>
+<p>Driver for the Secure Crypto Engine (SCE9) on RA MCUs. </p>
 <h1><a class="anchor" id="r-sce-protected-overview"></a>
 Overview</h1>
-<p>This module provides SCE functions.</p>
+<p>This module provides SCE functions in protected mode. </p><dl class="section note"><dt>Note</dt><dd><b>For a detailed description of the different SCE9 operating modes, refer to Application Note R11AN0498.</b></dd></dl>
 <h2>HW Overview</h2>
 <table class="doxtable">
 <tr>
@@ -597,6 +597,13 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Enables use of SCE functionality.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to pin configuration structure.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
@@ -627,6 +634,12 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Stops supply of power to the SCE.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination</td></tr>
@@ -7741,10 +7754,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -7785,10 +7799,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -7878,10 +7893,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -7978,10 +7994,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -8029,10 +8046,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -8061,10 +8079,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -8126,10 +8145,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -8233,10 +8253,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -8291,10 +8312,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -8370,10 +8392,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -8421,10 +8444,11 @@ Please note that this is slightly contrary to the protected mode policy as it om
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
 </div>
@@ -8434,7 +8458,7 @@ Please note that this is slightly contrary to the protected mode policy as it om
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

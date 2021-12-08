@@ -47,6 +47,7 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "xipEnter", "group___s_p_i___f_l_a_s_h___a_p_i.html#ab5c6cc5c82e73038ddcef82a906b966f", null ],
       [ "xipExit", "group___s_p_i___f_l_a_s_h___a_p_i.html#a3a7c2aae058a733f879ae294c63ce2c6", null ],
       [ "bankSet", "group___s_p_i___f_l_a_s_h___a_p_i.html#a14581133205383b71df54a65439c0dcf", null ],
+      [ "autoCalibrate", "group___s_p_i___f_l_a_s_h___a_p_i.html#ad04434e2c049da61d3389355d5961f31", null ],
       [ "close", "group___s_p_i___f_l_a_s_h___a_p_i.html#a16810f14e3fff6ed04f36eca44353785", null ]
     ] ],
     [ "spi_flash_instance_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__instance__t", [

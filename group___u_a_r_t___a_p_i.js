@@ -57,9 +57,9 @@ var group___u_a_r_t___a_p_i =
       [ "UART_EVENT_TX_DATA_EMPTY", "group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da03e2fd44218712f18f3cceb0a0ad7442", null ]
     ] ],
     [ "uart_data_bits_t", "group___u_a_r_t___a_p_i.html#gadc68b8fd9ded3990f84129df23fee798", [
+      [ "UART_DATA_BITS_9", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a57a012c58e476a76ed8f54db28d94810", null ],
       [ "UART_DATA_BITS_8", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db", null ],
-      [ "UART_DATA_BITS_7", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a317e473e32315f1632829d176fbfd545", null ],
-      [ "UART_DATA_BITS_9", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a57a012c58e476a76ed8f54db28d94810", null ]
+      [ "UART_DATA_BITS_7", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a317e473e32315f1632829d176fbfd545", null ]
     ] ],
     [ "uart_parity_t", "group___u_a_r_t___a_p_i.html#ga6bcc37e31dd40c204b4ac6f6189e8878", [
       [ "UART_PARITY_OFF", "group___u_a_r_t___a_p_i.html#gga6bcc37e31dd40c204b4ac6f6189e8878acdbc0c60cf74e4febad92afc44b88641", null ],

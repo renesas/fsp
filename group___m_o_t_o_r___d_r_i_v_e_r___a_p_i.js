@@ -6,14 +6,17 @@ var group___m_o_t_o_r___d_r_i_v_e_r___a_p_i =
     ] ],
     [ "motor_driver_current_get_t", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#structmotor__driver__current__get__t", [
       [ "iu", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#aa85b8ed64920d0f4fa3ce2c0bad90104", null ],
+      [ "iv", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a3b681cc05fb028adc0e12fe8377307dc", null ],
       [ "iw", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a53f8e750b6459fe25a29baa881b0b40d", null ],
       [ "vdc", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ad66eff75b060e8a80ba6f8548f1571c3", null ],
       [ "va_max", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#af4ebbd3916982bd0dca8e8f06180f67c", null ]
     ] ],
     [ "motor_driver_cfg_t", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#structmotor__driver__cfg__t", [
       [ "iu_ad_ch", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#acbd91077977d624511a004820b58b791", null ],
+      [ "iv_ad_ch", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a3c64ea3a14904073d27342ac9a691a44", null ],
       [ "iw_ad_ch", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#af4b44c99460328adf454d2e85892e18d", null ],
       [ "vdc_ad_ch", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a3c2d8489abd82d925de29953782cbf31", null ],
+      [ "shunt", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a52fa6889c19ec5ff6b914a5245eb7d92", null ],
       [ "p_context", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#abe65d17f971544891695da263564cca0", null ]
     ] ],
     [ "motor_driver_api_t", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#structmotor__driver__api__t", [
@@ -36,5 +39,10 @@ var group___m_o_t_o_r___d_r_i_v_e_r___a_p_i =
       [ "MOTOR_DRIVER_EVENT_FORWARD", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ggaa32b49ecc4b3d6dbcfced0e942b17ae1ae8d6cca33ef2d6fc2b69b38b1e0bf219", null ],
       [ "MOTOR_DRIVER_EVENT_CURRENT", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ggaa32b49ecc4b3d6dbcfced0e942b17ae1abf35122854395b839fbacb6b76eebf77", null ],
       [ "MOTOR_DRIVER_EVENT_BACKWARD", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ggaa32b49ecc4b3d6dbcfced0e942b17ae1a6d541c33edd62f2174b02e158be943c8", null ]
+    ] ],
+    [ "motor_driver_shunt_type_t", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ga1d873392177838ea119e3a4fd0020d0a", [
+      [ "MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#gga1d873392177838ea119e3a4fd0020d0aa83ae177e5b2507ca1a793ed821010481", null ],
+      [ "MOTOR_DRIVER_SHUNT_TYPE_2_SHUNT", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#gga1d873392177838ea119e3a4fd0020d0aa2331b8424af0228a5acc6e469103d5fd", null ],
+      [ "MOTOR_DRIVER_SHUNT_TYPE_3_SHUNT", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#gga1d873392177838ea119e3a4fd0020d0aae48d2c30dd52b3a8dbf103eb892870e9", null ]
     ] ]
 ];

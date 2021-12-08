@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -191,22 +191,22 @@ Overview</h1>
 <p>The CANFD module can be used to communicate over CAN networks, optionally using Flexible Data (CAN-FD) to accelerate the data phase. A variety of message filtering and buffer options are available.</p>
 <h2><a class="anchor" id="r-canfd-features"></a>
 Features</h2>
+<h3>Common Features</h3>
 <ul>
 <li>Compatibility<ul>
 <li>Send and receive CAN 2.0 and CAN-FD frames on the same channel</li>
-<li>Bitrate up to 1 Mbps with FD data phase speeds up to 8 Mbps</li>
-<li>Supports both ISO 11898-1 and Bosch V1.0 CAN-FD specifications</li>
+<li>Bitrate up to 1 Mbps with FD data phase speeds up to 5-8 Mbps</li>
+<li>Supports both ISO 11898-1</li>
 </ul>
 </li>
 <li>Buffers<ul>
 <li>32 global receive Message Buffers (RX MBs)</li>
-<li>8 global receive FIFOs (RX FIFOs)</li>
-<li>16 transmit Message Buffers (TX MBs) per channel</li>
+<li>2-8 global receive FIFOs (RX FIFOs)</li>
+<li>4-16 transmit Message Buffers (TX MBs) per channel</li>
 </ul>
 </li>
 <li>Filtering<ul>
-<li>Up to 128 filter rules across both channels</li>
-<li>Each rule can be individually configured to filter based on:<ul>
+<li>Each filter rule can be individually configured to accept messages based on:<ul>
 <li>ID</li>
 <li>Standard or Extended ID (IDE bit)</li>
 <li>Data or Remote Frame (RTR bit)</li>
@@ -244,7 +244,38 @@ Features</h2>
 </ul>
 </li>
 </ul>
-<p><a class="anchor" id="um_can_api_baudrate_settings"></a><a class="anchor" id="um_can_api_callback_set"></a><a class="anchor" id="um_can_api_data_frames"></a><a class="anchor" id="um_can_api_data_length"></a><a class="anchor" id="um_can_api_error_count"></a><a class="anchor" id="um_can_api_extended_ids"></a><a class="anchor" id="um_can_api_id_masking"></a><a class="anchor" id="um_can_api_multiple_channels"></a><a class="anchor" id="um_can_api_operation_modes"></a><a class="anchor" id="um_can_api_remote_frames"></a><a class="anchor" id="um_can_api_test_mode_listen"></a><a class="anchor" id="um_can_api_tx_busy"></a><a class="anchor" id="um_can_api_type_masking"></a> <a class="anchor" id="um_canfd_afl"></a><a class="anchor" id="um_canfd_error_fd_eri"></a><a class="anchor" id="um_canfd_error_fd_payload_overflow"></a><a class="anchor" id="um_canfd_fd_brs"></a><a class="anchor" id="um_canfd_fd_dlc"></a><a class="anchor" id="um_canfd_fifo_manual_read"></a><a class="anchor" id="um_canfd_fifo_status"></a><a class="anchor" id="um_canfd_fifo_threshold"></a><a class="anchor" id="um_canfd_mb_read"></a><a class="anchor" id="um_canfd_mb_status"></a><a class="anchor" id="um_canfd_tx_mb"></a><a class="anchor" id="um_canfd_internal_bus"></a><a class="anchor" id="um_canfd_error_message_lost"></a><a class="anchor" id="um_canfd_dlc_check"></a></p>
+<h3>Per-MCU Specifications</h3>
+<table class="doxtable">
+<tr>
+<th></th><th>RA6M5 </th><th>RA6T2  </th></tr>
+<tr>
+<td>Channels </td><td>2 </td><td>1 </td></tr>
+<tr>
+<td>Max nominal bitrate </td><td>1 Mbps </td><td>1 Mbps </td></tr>
+<tr>
+<td>Max data bitrate </td><td>8 Mbps </td><td>5 Mbps </td></tr>
+<tr>
+<td>Filter rules </td><td>128 </td><td>32 </td></tr>
+<tr>
+<td>TX message buffers </td><td>16/ch </td><td>4 </td></tr>
+<tr>
+<td>RX message buffers </td><td>32 </td><td>32 </td></tr>
+<tr>
+<td>RX FIFOs </td><td>8 </td><td>2 </td></tr>
+<tr>
+<td>RX Buffer RAM </td><td>4864 bytes </td><td>1216 bytes </td></tr>
+<tr>
+<td>Standards </td><td>ISO or Bosch </td><td>ISO </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>Each message buffer comprises 12 header bytes plus data length (8-64 bytes). The above buffer RAM values therefore correspond to the following capacities: <table class="doxtable">
+<tr>
+<th></th><th>RA6M5 </th><th>RA6T2  </th></tr>
+<tr>
+<td>Max 64-byte storage </td><td>64 messages </td><td>16 messages </td></tr>
+<tr>
+<td>Max 8-byte storage </td><td>243 messages </td><td>60 messages </td></tr>
+</table>
+<a class="anchor" id="um_can_api_baudrate_settings"></a><a class="anchor" id="um_can_api_callback_set"></a><a class="anchor" id="um_can_api_data_frames"></a><a class="anchor" id="um_can_api_data_length"></a><a class="anchor" id="um_can_api_error_count"></a><a class="anchor" id="um_can_api_extended_ids"></a><a class="anchor" id="um_can_api_id_masking"></a><a class="anchor" id="um_can_api_multiple_channels"></a><a class="anchor" id="um_can_api_operation_modes"></a><a class="anchor" id="um_can_api_remote_frames"></a><a class="anchor" id="um_can_api_test_mode_listen"></a><a class="anchor" id="um_can_api_tx_busy"></a><a class="anchor" id="um_can_api_type_masking"></a> <a class="anchor" id="um_canfd_afl"></a><a class="anchor" id="um_canfd_error_fd_eri"></a><a class="anchor" id="um_canfd_error_fd_payload_overflow"></a><a class="anchor" id="um_canfd_fd_brs"></a><a class="anchor" id="um_canfd_fd_dlc"></a><a class="anchor" id="um_canfd_fifo_manual_read"></a><a class="anchor" id="um_canfd_fifo_status"></a><a class="anchor" id="um_canfd_fifo_threshold"></a><a class="anchor" id="um_canfd_mb_read"></a><a class="anchor" id="um_canfd_mb_status"></a><a class="anchor" id="um_canfd_tx_mb"></a><a class="anchor" id="um_canfd_internal_bus"></a><a class="anchor" id="um_canfd_error_message_lost"></a><a class="anchor" id="um_canfd_dlc_check"></a></dd></dl>
 <h1><a class="anchor" id="r-canfd-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_canfd</h2>
@@ -271,15 +302,9 @@ Channel 0</li>
 <li>
 Channel 1</li>
 </ul>
-</td><td>Channel 1 </td><td>Specify which channel callback should be called to handle global errors. When starting the driver this channel must be opened first. </td></tr>
+</td><td>Channel 0 </td><td>Specify which channel callback should be called to handle global errors. When starting the driver this channel must be opened first. </td></tr>
 <tr>
-<td>Flexible Data (FD) &gt; FD Frame Format</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-ISO 11898-1</li>
-<li>
-Bosch CAN FD Specification V1.0</li>
-</ul>
-</td><td>ISO 11898-1 </td><td>Select whether to use the FD frame standard provided by ISO or Bosch. </td></tr>
+<td>Flexible Data (FD) &gt; FD Frame Format</td><td>MCU Specific Options</td><td></td><td>Select whether to use the FD frame standard provided by ISO or Bosch. </td></tr>
 <tr>
 <td>Flexible Data (FD) &gt; Protocol Exceptions</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -451,9 +476,9 @@ Disabled</li>
 <tr>
 <td>Reception &gt; FIFOs &gt; Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>This priority level will apply to all FIFO interrupts globally. </td></tr>
 <tr>
-<td>Reception &gt; Acceptance Filtering &gt; Channel 0 Rule Count</td><td>The number of AFL rules must be an integer between 0 and 128.</td><td>64 </td><td>Number of acceptance filter list rules dedicated to Channel 0. </td></tr>
+<td>Reception &gt; Acceptance Filtering &gt; Channel 0 Rule Count</td><td>The number of AFL rules must be an integer between 0 and 128.</td><td>32 </td><td>Number of acceptance filter list rules dedicated to Channel 0. </td></tr>
 <tr>
-<td>Reception &gt; Acceptance Filtering &gt; Channel 1 Rule Count</td><td>The number of AFL rules must be an integer between 0 and 128.</td><td>64 </td><td>Number of acceptance filter list rules dedicated to Channel 1. </td></tr>
+<td>Reception &gt; Acceptance Filtering &gt; Channel 1 Rule Count</td><td>The number of AFL rules must be an integer between 0 and 128.</td><td>0 </td><td>Number of acceptance filter list rules dedicated to Channel 1. </td></tr>
 <tr>
 <td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -483,8 +508,8 @@ Enabled w/truncate</li>
 </ul>
 </td><td>config.driver.canfd.dlc_check.disabled </td><td>When enabled received messages will be rejected if their DLC field is less than the value configured in the associated AFL rule. If 'Enabled w/truncate' is selected and a message passes the DLC check the DLC field is set to the value in the associated AFL rule and any excess data is discarded. </td></tr>
 </table>
- <h2>Configurations for Driver &gt; Connectivity &gt; CANFD Driver on r_canfd</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; CANFD Driver on r_canfd. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+ <h2>Configurations for Connectivity &gt; CAN FD (r_canfd)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; CAN FD (r_canfd). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -495,7 +520,7 @@ This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connec
 <tr>
 <td>Bitrate &gt; Automatic &gt; Nominal Rate (bps)</td><td>Must be a valid integer with a maximum of 1MHz.</td><td>500000 </td><td>Specify nominal bitrate in bits per second. </td></tr>
 <tr>
-<td>Bitrate &gt; Automatic &gt; Data Rate (bps)</td><td>Must be a valid integer with a maximum of 8MHz.</td><td>2000000 </td><td>Specify data bitrate in bits per second. </td></tr>
+<td>Bitrate &gt; Automatic &gt; Data Rate (bps)</td><td>Must be a valid integer greater than 0.</td><td>2000000 </td><td>Specify data bitrate in bits per second. </td></tr>
 <tr>
 <td>Bitrate &gt; Automatic &gt; Sample Point (%)</td><td>Must be a valid integer between 60 and 99.</td><td>75 </td><td>Specify desired sample point. </td></tr>
 <tr>
@@ -509,7 +534,7 @@ This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connec
 <tr>
 <td>Bitrate &gt; Manual &gt; Data &gt; Prescaler (divisor)</td><td>Value must be a non-negative integer between 1 and 1024.</td><td>1 </td><td>Specify clock divisor for data bitrate. </td></tr>
 <tr>
-<td>Bitrate &gt; Manual &gt; Data &gt; Time Segment 1 (Tq)</td><td>Value must be a non-negative integer between 2 and 256.</td><td>2 </td><td>Select the Time Segment 1 value. Check module usage notes for how to calculate this value. </td></tr>
+<td>Bitrate &gt; Manual &gt; Data &gt; Time Segment 1 (Tq)</td><td>Value must be a non-negative integer between 2 and 256.</td><td>5 </td><td>Select the Time Segment 1 value. Check module usage notes for how to calculate this value. </td></tr>
 <tr>
 <td>Bitrate &gt; Manual &gt; Data &gt; Time Segment 2 (Tq)</td><td>Value must be a non-negative integer between 2 and 128.</td><td>2 </td><td>Select the Time Segment 2 value. Check module usage notes for how to calculate this value. </td></tr>
 <tr>
@@ -535,7 +560,7 @@ Disable</li>
 <tr>
 <td>Interrupts &gt; Channel Interrupt Priority Level</td><td>MCU Specific Options</td><td></td><td>Channel Error/Transmit interrupt priority. </td></tr>
 <tr>
-<td>Transmit Interrupts</td><td>Refer to the RA Configuration tool for available options.</td><td>0ULL </td><td>Select which TX Message Buffers should trigger an interrupt when transmission is complete. </td></tr>
+<td>Transmit Interrupts</td><td>MCU Specific Options</td><td></td><td>Select which TX Message Buffers should trigger an interrupt when transmission is complete. </td></tr>
 <tr>
 <td>Channel Error Interrupts</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -562,7 +587,7 @@ Clock Configuration</h2>
 <tr>
 <th>Element </th><th>Min </th><th>Max (Nominal) </th><th>Max (Data)  </th></tr>
 <tr>
-<td>Bitrate </td><td>- </td><td>1 Mbps </td><td>8 Mbps </td></tr>
+<td>Bitrate </td><td>- </td><td>1 Mbps </td><td>5-8 Mbps* </td></tr>
 <tr>
 <td>Time Segment 1 </td><td>2 Tq </td><td>256 Tq </td><td>32 Tq </td></tr>
 <tr>
@@ -572,6 +597,9 @@ Clock Configuration</h2>
 <tr>
 <td>Prescalar </td><td>1 </td><td>1024 </td><td>256 </td></tr>
 </table>
+<ul>
+<li>RA6M5 supports up to 8 Mbps; RA6T2 supports up to 5 Mbps.</li>
+</ul>
 <p>Use the <b>Clocks</b> tab of the RA Configuration editor to configure the CANFD clock source/divisor as well as to set the frequency of PLL or PLL2. To change the clock frequency at run-time, use the CGC Interface. Refer to the CGC module guide for more information on configuring clocks.</p>
 <h2><a class="anchor" id="r-canfd-pin-configuration"></a>
 Pin Configuration</h2>
@@ -588,10 +616,10 @@ Buffers</h2>
 <p>RX MBs are for reception only and may only hold one message at a time. 32 total RX MBs are available and are shared across all channels.</p>
 <p>No interrupts are provided for RX MBs. Use <a class="el" href="group___c_a_n_f_d.html#ga16ff5e9e44e32191944292aea98ab4cb">R_CANFD_InfoGet</a> and <a class="el" href="group___c_a_n_f_d.html#gaa79e3baad3f67bc4a3d1741dea29a3ae">R_CANFD_Read</a> to poll and read them, respectively.</p>
 <h3>RX FIFOs</h3>
-<p>RX FIFOs provide interrupt-driven queue functionality for receiving messages. 8 RX FIFOs are available, shared across all channels. All FIFOs have the following capabilities:</p>
+<p>RX FIFOs provide interrupt-driven queue functionality for receiving messages and are shared across all channels. All FIFOs have the following capabilities:</p>
 <ul>
 <li>Up to 64 byte payloads</li>
-<li>Up to 128 message capacity</li>
+<li>Up to 48 (RA6T2) or 128 (RA6M5) message capacity</li>
 <li>Interrupt events:<ul>
 <li>On every received frame OR when filled to a specified fraction of its capacity</li>
 <li>When a message is overwritten (message received on full FIFO)</li>
@@ -603,7 +631,7 @@ Buffers</h2>
 RX Buffer Pool</h3>
 <p>The CANFD peripheral has a limited amount of buffer pool RAM available for allocating RX MBs and FIFO stages. The RA Configuration editor will provide a warning when the limit is exceeded.</p>
 <p>The number of bytes used by RX MBs and individual FIFOs can be calculated as follows:</p>
-<div class="fragment"><div class="line">Total RX MB bytes used = (number of RX MBs enabled) * (RX MB payload size + 12 bytes)</div><div class="line"></div><div class="line">RX FIFO bytes used = (number of FIFO stages) * (FIFO payload size + 12 bytes)</div></div><!-- fragment --><h2><a class="anchor" id="r-canfd-afl"></a>
+<div class="fragment"><div class="line">Total RX MB bytes used = (number of RX MBs enabled) * (RX MB payload size + 12 header bytes)</div><div class="line"></div><div class="line">RX FIFO bytes used = (number of FIFO stages) * (FIFO payload size + 12 header bytes)</div></div><!-- fragment --><h2><a class="anchor" id="r-canfd-afl"></a>
 Message Filtering (Acceptance Filter List)</h2>
 <p>To filter messages to the desired message buffer or FIFO the CANFD peripheral uses an Acceptance Filter List (AFL). Each entry in the AFL provides a rule to check a message against along with destination and other filtering information. When a message is received the CANFD peripheral internally checks against every configured AFL rule for the channel. If a match is found the message is transferred to the destination(s) specified in the rule. The default template with one entry is shown below:</p>
 <div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group___c_a_n_f_d.html#structcanfd__afl__entry__t">canfd_afl_entry_t</a> p_canfd0_afl[CANFD_CFG_AFL_CH0_RULE_NUM] =</div><div class="line">{</div><div class="line">    {</div><div class="line">        .id =</div><div class="line">        {</div><div class="line">            <span class="comment">/* Specify the ID, ID type and frame type to accept. */</span></div><div class="line">            .id         = 0x00000000,</div><div class="line">            .frame_type = <a class="code" href="group___c_a_n___a_p_i.html#ggad3ffe1ae0429fcd1053a969d96c47610a1da44b52c2731b02cf02ca55eec08899">CAN_FRAME_TYPE_DATA</a>,</div><div class="line">            .id_mode    = <a class="code" href="group___c_a_n___a_p_i.html#ggabc98e244722dcea05b5ce91bdb4c70c8abc5a87ed8edf218a6b44e4cceb48c0cb">CAN_ID_MODE_EXTENDED</a>,</div><div class="line">        },</div><div class="line"></div><div class="line">        .mask =</div><div class="line">        {</div><div class="line">            <span class="comment">/* These values mask which ID/mode bits to compare when filtering messages. */</span></div><div class="line">            .mask_id         = 0x1FFFFFFF,</div><div class="line">            .mask_frame_type = 1,</div><div class="line">            .mask_id_mode    = 1,</div><div class="line">        },</div><div class="line"></div><div class="line">        .destination =</div><div class="line">        {</div><div class="line">            <span class="comment">/* If DLC checking is enabled any messages shorter than the below setting will be rejected. */</span></div><div class="line">            .minimum_dlc = CANFD_MINIMUM_DLC_0,</div><div class="line"></div><div class="line">            <span class="comment">/* Optionally specify a Receive Message Buffer (RX MB) to store accepted frames. RX MBs do not have an</span></div><div class="line"><span class="comment">             * interrupt or overwrite protection and must be checked with R_CANFD_InfoGet and R_CANFD_Read. */</span></div><div class="line">            .rx_buffer   = CANFD_RX_MB_NONE,</div><div class="line"></div><div class="line">            <span class="comment">/* Specify which FIFO(s) to send filtered messages to. Multiple FIFOs can be OR&#39;d together. */</span></div><div class="line">            .fifo_select_flags = CANFD_RX_FIFO_0,</div><div class="line">        }</div><div class="line">    }</div><div class="line">};</div></div><!-- fragment --><p>AFL templates can be easily added to a project using the Developer Assistance feature in e2 studio. Once the CANFD module is added to a project, drag and drop the elements circled below to build a filter list:</p>
@@ -617,7 +645,7 @@ Flexible Data (FD)</h2>
 <p>Flexible Data is an extension of the CAN protocol allowing for messages up to 64 bytes and higher data bitrates, among other features. The CANFD driver supports the following:</p>
 <ul>
 <li>Sending and receiving FD messages</li>
-<li>Bitrate switching for data phase (up to 8 MHz)</li>
+<li>Bitrate switching for data phase</li>
 <li>Manual and automatic setting of the error state (ESI) bit</li>
 </ul>
 <p>To specify one or more of these options when transmitting set <a class="el" href="group___c_a_n___a_p_i.html#a27833816de50e1ad5b16b42856653ad8">can_frame_t::options</a> with combined values from <a class="el" href="group___c_a_n_f_d.html#ga6c4d104c3a9cce6b74a05035f0af6d87">canfd_frame_options_t</a>. Received messages will automatically have this field filled, if applicable.</p>
@@ -642,12 +670,12 @@ FD Payload Overflow</h2>
 <p>When an FD message is received with a DLC larger than the destination buffer an FD Payload Overflow interrupt is thrown (if configured). When Payload Overflow is set to "Truncate" the message will still be accepted but only data up to the buffer capacity will be preserved. The DLC value is unchanged in this case; any data beyond this value in the <a class="el" href="group___c_a_n___a_p_i.html#ad70086e98bfe0871e3f73d1f253138db">can_frame_t::data</a> array should not be used.</p>
 <h2>Test Modes</h2>
 <p>The CANFD peripheral provides three basic test modes: Listen Only, Internal Loopback and External Loopback. Use <a class="el" href="group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890">R_CANFD_ModeTransition</a> to switch to a test mode.</p>
-<p>An additional "Internal Bus" test mode is available that allows connecting both CANFD channels together on an internal bus, effectively creating an internal CAN network. See the <a class="el" href="group___c_a_n_f_d.html#r-canfd-examples-internal-bus">Internal Bus</a> example below for details.</p>
+<p>On some MCUs an additional "Internal Bus" test mode is available that allows connecting both CANFD channels together on an internal bus, effectively creating an internal CAN network. See the <a class="el" href="group___c_a_n_f_d.html#r-canfd-examples-internal-bus">Internal Bus</a> example below for details.</p>
 <h2><a class="anchor" id="r-canfd-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using CANFD:</p>
 <ul>
-<li>RX Message Buffers do not have an associated interrupt. To use them in an application one of the following is recommended:<ul>
+<li>On RA6M5, RX Message Buffers do not have an associated interrupt. To use them in an application one of the following is recommended:<ul>
 <li>Use <a class="el" href="group___c_a_n_f_d.html#ga16ff5e9e44e32191944292aea98ab4cb">R_CANFD_InfoGet</a> to determine if any RX MBs have received data, then use <a class="el" href="group___c_a_n_f_d.html#gaa79e3baad3f67bc4a3d1741dea29a3ae">R_CANFD_Read</a> to obtain it</li>
 <li>Select an RX FIFO as an additional destination for the relevant filter rules and configure the FIFO interrupt/callback as desired</li>
 </ul>
@@ -664,14 +692,14 @@ AFL Example</h2>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <a class="code" href="group___c_a_n_f_d.html#structcanfd__afl__entry__t">canfd_afl_entry_t</a> p_canfd0_afl[CANFD_CFG_AFL_CH1_RULE_NUM] =</div><div class="line">{</div><div class="line">    <span class="comment">/* Store all data frames with at least 4 bytes from Standard IDs 0x40-0x4F in RX FIFO 0 and RX FIFO 1 */</span></div><div class="line">    {</div><div class="line">        .id =</div><div class="line">        {</div><div class="line">            .id         = 0x40,</div><div class="line">            .frame_type = <a class="code" href="group___c_a_n___a_p_i.html#ggad3ffe1ae0429fcd1053a969d96c47610a1da44b52c2731b02cf02ca55eec08899">CAN_FRAME_TYPE_DATA</a>,</div><div class="line">            .id_mode    = <a class="code" href="group___c_a_n___a_p_i.html#ggabc98e244722dcea05b5ce91bdb4c70c8a5d29b837d94d14fb99868c2d0a5220b0">CAN_ID_MODE_STANDARD</a></div><div class="line">        },</div><div class="line"></div><div class="line">        .mask =</div><div class="line">        {</div><div class="line">            .mask_id         = 0x7F0,</div><div class="line">            .mask_frame_type = 1,</div><div class="line">            .mask_id_mode    = 1</div><div class="line">        },</div><div class="line"></div><div class="line">        .destination =</div><div class="line">        {</div><div class="line">            .minimum_dlc       = CANFD_MINIMUM_DLC_4,</div><div class="line">            .rx_buffer         = CANFD_RX_MB_NONE,</div><div class="line">            .fifo_select_flags = (<a class="code" href="group___c_a_n_f_d.html#ga0d7e38baf7141e9bad96675f5169e44b">canfd_rx_fifo_t</a>) (CANFD_RX_FIFO_0 | CANFD_RX_FIFO_1)</div><div class="line">        }</div><div class="line">    },</div><div class="line"></div><div class="line">    <span class="comment">/* Store all frames from Extended ID 0x1100 in RX FIFO 2 and RX MB 0 */</span></div><div class="line">    {</div><div class="line">        .id =</div><div class="line">        {</div><div class="line">            .id         = 0x1100,</div><div class="line">            .frame_type = <a class="code" href="group___c_a_n___a_p_i.html#ggad3ffe1ae0429fcd1053a969d96c47610a1da44b52c2731b02cf02ca55eec08899">CAN_FRAME_TYPE_DATA</a>, <span class="comment">// This setting is ignored by the mask</span></div><div class="line">            .id_mode    = <a class="code" href="group___c_a_n___a_p_i.html#ggabc98e244722dcea05b5ce91bdb4c70c8abc5a87ed8edf218a6b44e4cceb48c0cb">CAN_ID_MODE_EXTENDED</a></div><div class="line">        },</div><div class="line"></div><div class="line">        .mask =</div><div class="line">        {</div><div class="line">            .mask_id         = 0x1FFFFFFF,</div><div class="line">            .mask_frame_type = 0,</div><div class="line">            .mask_id_mode    = 1</div><div class="line">        },</div><div class="line"></div><div class="line">        .destination =</div><div class="line">        {</div><div class="line">            .minimum_dlc       = CANFD_MINIMUM_DLC_0,</div><div class="line">            .rx_buffer         = CANFD_RX_MB_0,</div><div class="line">            .fifo_select_flags = CANFD_RX_FIFO_2</div><div class="line">        }</div><div class="line">    }</div><div class="line">};</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="r-canfd-examples-basic"></a>
 Basic Example</h2>
 <p>This is a basic example of minimal use of the CANFD module in an application.</p>
-<dl class="section note"><dt>Note</dt><dd>It is recommended to use RX FIFOs for reception as there are no interrupts for RX message buffers.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>On RA6M5 it is recommended to use RX FIFOs for reception as there are no interrupts for RX message buffers.</dd></dl>
 <div class="fragment"><div class="line"><span class="preprocessor">#define CAN_EXAMPLE_ID    (0x20)</span></div><div class="line"></div><div class="line"><a class="code" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a> g_can_tx_frame;</div><div class="line"><a class="code" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a> g_can_rx_frame;</div><div class="line"></div><div class="line"><span class="keyword">volatile</span> <a class="code" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a> g_err_status = (<a class="code" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a>) 0;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> canfd_callback (<a class="code" href="group___c_a_n___a_p_i.html#structcan__callback__args__t">can_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___c_a_n___a_p_i.html#a48fa3cf4c8c7e608c25ac8b907450096">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbaa0bc5e15cee037a1d102b517ef63e161">CAN_EVENT_RX_COMPLETE</a>:    <span class="comment">/* Receive complete event. */</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Read received frame */</span></div><div class="line">            memcpy(&amp;g_can_rx_frame, p_args-&gt;p_frame, <span class="keyword">sizeof</span>(<a class="code" href="group___c_a_n___a_p_i.html#structcan__frame__t">can_frame_t</a>));</div><div class="line"></div><div class="line">            <span class="comment">/* Handle event */</span></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbac169b4940b7cb76562efd7439fc76949">CAN_EVENT_TX_COMPLETE</a>:    <span class="comment">/* Transmit complete event. */</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle event */</span></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dba8adaa142ed94841f5f282232ce414333">CAN_EVENT_ERR_GLOBAL</a>:                        <span class="comment">/* Global error. */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_a_n___a_p_i.html#ggacc2e5bc68e8b707c069ca27f521695dbab16a5328b930c53524aecbc4d580bb24">CAN_EVENT_ERR_CHANNEL</a>:                       <span class="comment">/* Channel error. */</span></div><div class="line">        {</div><div class="line">            <span class="comment">/* Get error status */</span></div><div class="line">            g_err_status = (<a class="code" href="group___c_a_n_f_d.html#ga1598f08872dd960675f060c7e8c35cf4">canfd_error_t</a>) p_args-&gt;<a class="code" href="group___c_a_n___a_p_i.html#a39e131d3f8e8d6d8a14e9f248c1ac1e1">error</a>; <span class="comment">/* Check error code with canfd_error_t. */</span></div><div class="line"></div><div class="line">            <span class="comment">/* Handle event */</span></div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> canfd_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the CAN module */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga664d1e07613b250a3084681a613334be">R_CANFD_Open</a>(&amp;g_canfd0_ctrl, &amp;g_canfd0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Setup frame to write to CAN ID 0x20 */</span></div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a49d4261f37f08f5a11cc3fc12c56cdc3">id</a>               = CAN_EXAMPLE_ID;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a4144eba26f77850571fca0498bec60ef">id_mode</a>          = <a class="code" href="group___c_a_n___a_p_i.html#ggabc98e244722dcea05b5ce91bdb4c70c8a5d29b837d94d14fb99868c2d0a5220b0">CAN_ID_MODE_STANDARD</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a79046fddb934fd7ea0d0cc70b8d7f26d">type</a>             = <a class="code" href="group___c_a_n___a_p_i.html#ggad3ffe1ae0429fcd1053a969d96c47610a1da44b52c2731b02cf02ca55eec08899">CAN_FRAME_TYPE_DATA</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#af58b9f3fe19ed69e0a635cd271c68404">data_length_code</a> = 8;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a27833816de50e1ad5b16b42856653ad8">options</a>          = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Write some data to the transmit frame */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; 8; i++)</div><div class="line">    {</div><div class="line">        g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#ad70086e98bfe0871e3f73d1f253138db">data</a>[i] = (uint8_t) i;</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Send data on the bus */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga9a43dfa148767d10e12b22cb317111a9">R_CANFD_Write</a>(&amp;g_canfd0_ctrl, CANFD_TX_MB_0, &amp;g_can_tx_frame);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a transmit callback event */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="r-canfd-examples-fd"></a>
 Flexible Data</h2>
 <p>This example demonstrates sending an FD message with bitrate switching over external loopback. The CTX and CRX pins must be connected when using external loopback, though if a CAN tranciever is onboard a 120 Ohm resistor should be connected across CANH and CANL instead.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define CAN_EXAMPLE_64_BYTES    64</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> canfd_fd_loopback_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga664d1e07613b250a3084681a613334be">R_CANFD_Open</a>(&amp;g_canfd0_ctrl, &amp;g_canfd0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Switch to external loopback mode */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890">R_CANFD_ModeTransition</a>(&amp;g_canfd0_ctrl, <a class="code" href="group___c_a_n___a_p_i.html#ggac29bd7d00b06d7457ae786471c296ba7abde5d9e8f5711b6fe8374671c96e6f72">CAN_OPERATION_MODE_NORMAL</a>, <a class="code" href="group___c_a_n___a_p_i.html#gga93f2b2c53f782b0c21beeb1339a108b7a892393a146c929398882d92a7c9303eb">CAN_TEST_MODE_LOOPBACK_EXTERNAL</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Configure a frame to write 64 bytes with bitrate switching (BRS) enabled */</span></div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a49d4261f37f08f5a11cc3fc12c56cdc3">id</a>               = CAN_EXAMPLE_ID;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a4144eba26f77850571fca0498bec60ef">id_mode</a>          = <a class="code" href="group___c_a_n___a_p_i.html#ggabc98e244722dcea05b5ce91bdb4c70c8a5d29b837d94d14fb99868c2d0a5220b0">CAN_ID_MODE_STANDARD</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a79046fddb934fd7ea0d0cc70b8d7f26d">type</a>             = <a class="code" href="group___c_a_n___a_p_i.html#ggad3ffe1ae0429fcd1053a969d96c47610a1da44b52c2731b02cf02ca55eec08899">CAN_FRAME_TYPE_DATA</a>;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#af58b9f3fe19ed69e0a635cd271c68404">data_length_code</a> = CAN_EXAMPLE_64_BYTES;</div><div class="line">    g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#a27833816de50e1ad5b16b42856653ad8">options</a>          = <a class="code" href="group___c_a_n_f_d.html#gga6c4d104c3a9cce6b74a05035f0af6d87a46bb2a869fc5c7b63b16bc822d4ec712">CANFD_FRAME_OPTION_FD</a> | <a class="code" href="group___c_a_n_f_d.html#gga6c4d104c3a9cce6b74a05035f0af6d87a4a5ce70c8fb9ab5d9e320a79dd59aebf">CANFD_FRAME_OPTION_BRS</a>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write some data to the transmit frame */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; CAN_DATA_BUFFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_can_tx_frame.<a class="code" href="group___c_a_n___a_p_i.html#ad70086e98bfe0871e3f73d1f253138db">data</a>[i] = (uint8_t) i;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Send data on the bus */</span></div><div class="line">    err = <a class="code" href="group___c_a_n_f_d.html#ga9a43dfa148767d10e12b22cb317111a9">R_CANFD_Write</a>(&amp;g_canfd0_ctrl, CANFD_TX_MB_0, &amp;g_can_tx_frame);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a transmit and/or receive callback event */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="r-canfd-examples-internal-bus"></a>
 Internal Bus</h2>
 <p>In this example two CANFD channels are connected to the Internal Bus test mode. API error checking has been omitted for clarity.</p>
-<dl class="section note"><dt>Note</dt><dd>Use of Global Modes for any other purpose is not recommended without consulting the device User's Manual.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Internal Bus mode is only available on MCUs with more than one CANFD channel. In addition, use of Global Modes for any other purpose is not recommended without consulting the device User's Manual.</dd></dl>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -1322,7 +1350,7 @@ Global configuration (global error callback channel only) </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -195,8 +195,6 @@ Functions</h2></td></tr>
 <tr class="separator:gab84c08b8ac66d18c5636ebc772133e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga31825f3f0295317e5b446d74f791cd68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t.html#ga31825f3f0295317e5b446d74f791cd68">R_IOPORT_PortWrite</a> (<a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gafc061c58bb812cb2a8f25222353634cd">ioport_ctrl_t</a> *const p_ctrl, <a class="el" href="group___b_s_p___i_o.html#ga33a147902fb258f531c0bae40166f46e">bsp_io_port_t</a> port, <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gaf5da96a68757260a2cb370fec69f0836">ioport_size_t</a> value, <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gaf5da96a68757260a2cb370fec69f0836">ioport_size_t</a> mask)</td></tr>
 <tr class="separator:ga31825f3f0295317e5b446d74f791cd68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga383b2f8df036fceeb7c5344c5654d2c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t.html#ga383b2f8df036fceeb7c5344c5654d2c3">R_IOPORT_EthernetModeCfg</a> (<a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gafc061c58bb812cb2a8f25222353634cd">ioport_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gaf6a78fbc73b4e8acef86a12c21df2da0">ioport_ethernet_channel_t</a> channel, <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gacaee6fc466858446638e79354043bb78">ioport_ethernet_mode_t</a> mode)</td></tr>
-<tr class="separator:ga383b2f8df036fceeb7c5344c5654d2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the I/O Ports peripheral on RA MCUs. This module implements the <a class="el" href="group___i_o_p_o_r_t___a_p_i.html">I/O Port Interface</a>. </p>
@@ -241,8 +239,8 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Driver &gt; System &gt; I/O Port Driver on r_ioport</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; System &gt; I/O Port Driver on r_ioport.<br />
+ <h2>Configurations for System &gt; I/O Port (r_ioport)</h2>
+This module can be added to the Stacks tab via New Stack &gt; System &gt; I/O Port (r_ioport).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -256,6 +254,14 @@ This module can be added to the Stacks tab via New Stack &gt; Driver &gt; System
 <td>Port 3 ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORT3 </td></tr>
 <tr>
 <td>Port 4 ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORT4 </td></tr>
+<tr>
+<td>Port B ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORTB </td></tr>
+<tr>
+<td>Port C ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORTC </td></tr>
+<tr>
+<td>Port D ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORTD </td></tr>
+<tr>
+<td>Port E ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC source that will trigger PORTE </td></tr>
 <tr>
 <td>Pin Configuration Name</td><td>Name must be a valid C symbol</td><td>g_bsp_pin_cfg </td><td>Name for pin configuration structure </td></tr>
 </table>
@@ -704,6 +710,102 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eaf2c2853fdeb78ab7d9dff9152b3f86fc"></a>IOPORT_PORT_11_PIN_14&#160;</td><td class="fielddoc"><p>IO port 11 pin 14. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eab79e003321d0900f656cbabdb67f840c"></a>IOPORT_PORT_11_PIN_15&#160;</td><td class="fielddoc"><p>IO port 11 pin 15. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea52513b77dbaf4f5b8960a87a81a06e79"></a>IOPORT_PORT_12_PIN_00&#160;</td><td class="fielddoc"><p>IO port 12 pin 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eaecc9e48293365e0dd2b321efb6f5d39a"></a>IOPORT_PORT_12_PIN_01&#160;</td><td class="fielddoc"><p>IO port 12 pin 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea626ca955ac8c0b02e9a00f69e3d5988f"></a>IOPORT_PORT_12_PIN_02&#160;</td><td class="fielddoc"><p>IO port 12 pin 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea9a98e043e283f340c1be04d58cb2c048"></a>IOPORT_PORT_12_PIN_03&#160;</td><td class="fielddoc"><p>IO port 12 pin 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea5dc286dab9e8de97d13bd85bb54e617e"></a>IOPORT_PORT_12_PIN_04&#160;</td><td class="fielddoc"><p>IO port 12 pin 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eab9abb9b93964f83404fb42b234e41149"></a>IOPORT_PORT_12_PIN_05&#160;</td><td class="fielddoc"><p>IO port 12 pin 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ead10b3ba4750e35fb64f0fe6600baea12"></a>IOPORT_PORT_12_PIN_06&#160;</td><td class="fielddoc"><p>IO port 12 pin 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ead9624f67d418c0a328db406d7349a792"></a>IOPORT_PORT_12_PIN_07&#160;</td><td class="fielddoc"><p>IO port 12 pin 7. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eafb71792d92b83dc158d80d49f62bfa81"></a>IOPORT_PORT_12_PIN_08&#160;</td><td class="fielddoc"><p>IO port 12 pin 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea6032a452ad5a170c69727efa63196fc0"></a>IOPORT_PORT_12_PIN_09&#160;</td><td class="fielddoc"><p>IO port 12 pin 9. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eafca7f0f0b9941f0ee9c0c58ceb20d8f0"></a>IOPORT_PORT_12_PIN_10&#160;</td><td class="fielddoc"><p>IO port 12 pin 10. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eaba5ae4abe1714e978edc7c75bae8048c"></a>IOPORT_PORT_12_PIN_11&#160;</td><td class="fielddoc"><p>IO port 12 pin 11. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eabd01a2b6ad11f75e5de73adc873eac53"></a>IOPORT_PORT_12_PIN_12&#160;</td><td class="fielddoc"><p>IO port 12 pin 12. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea1f5a7b6a7437dd8879e7ce623d538b0b"></a>IOPORT_PORT_12_PIN_13&#160;</td><td class="fielddoc"><p>IO port 12 pin 13. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea2b5468d84e3936dde9800748019476d3"></a>IOPORT_PORT_12_PIN_14&#160;</td><td class="fielddoc"><p>IO port 12 pin 14. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eaa9e28d3a3d78e4004256a4928483089b"></a>IOPORT_PORT_12_PIN_15&#160;</td><td class="fielddoc"><p>IO port 12 pin 15. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea5b0b18f88c4783b6bc28b3e7b51e4c03"></a>IOPORT_PORT_13_PIN_00&#160;</td><td class="fielddoc"><p>IO port 13 pin 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea99dff2c1a30315ab757bcc4dd902ff78"></a>IOPORT_PORT_13_PIN_01&#160;</td><td class="fielddoc"><p>IO port 13 pin 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea8f5be37feb4892e7259c405b9e80cfc8"></a>IOPORT_PORT_13_PIN_02&#160;</td><td class="fielddoc"><p>IO port 13 pin 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ead1841baebaef632becaa5aef5bdb394f"></a>IOPORT_PORT_13_PIN_03&#160;</td><td class="fielddoc"><p>IO port 13 pin 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ead520f2432795472895eadc1b1a61c70c"></a>IOPORT_PORT_13_PIN_04&#160;</td><td class="fielddoc"><p>IO port 13 pin 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eafe170d2cd7bc3335dae2d962b066da04"></a>IOPORT_PORT_13_PIN_05&#160;</td><td class="fielddoc"><p>IO port 13 pin 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea86d764b774dff72040f89eed36643c62"></a>IOPORT_PORT_13_PIN_06&#160;</td><td class="fielddoc"><p>IO port 13 pin 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea9dc91a15bf6dd4b8984cc1fdc80eaf3f"></a>IOPORT_PORT_13_PIN_07&#160;</td><td class="fielddoc"><p>IO port 13 pin 7. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea522f99d6ccfc5b0bca6deb23ac9c807c"></a>IOPORT_PORT_13_PIN_08&#160;</td><td class="fielddoc"><p>IO port 13 pin 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eac0357037102e16ab2c41597df7e0403d"></a>IOPORT_PORT_13_PIN_09&#160;</td><td class="fielddoc"><p>IO port 13 pin 9. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea3b4de3a6ee8c245b2b8c8ca7a192df65"></a>IOPORT_PORT_13_PIN_10&#160;</td><td class="fielddoc"><p>IO port 13 pin 10. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eaf96e353c458dd62990182f3ec946ec6d"></a>IOPORT_PORT_13_PIN_11&#160;</td><td class="fielddoc"><p>IO port 13 pin 11. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eaab87f20ed02c2f1408af661ea4ae35f9"></a>IOPORT_PORT_13_PIN_12&#160;</td><td class="fielddoc"><p>IO port 13 pin 12. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea9e0aff7633df427d01c41a533434a411"></a>IOPORT_PORT_13_PIN_13&#160;</td><td class="fielddoc"><p>IO port 13 pin 13. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea78452c32df6a77e0e57a9a25c62223a0"></a>IOPORT_PORT_13_PIN_14&#160;</td><td class="fielddoc"><p>IO port 13 pin 14. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eaaed0302bad02dbfb4502430f0063f642"></a>IOPORT_PORT_13_PIN_15&#160;</td><td class="fielddoc"><p>IO port 13 pin 15. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eafe21679da09abea718bb09af6174304e"></a>IOPORT_PORT_14_PIN_00&#160;</td><td class="fielddoc"><p>IO port 14 pin 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea2857769c0ab24657b2319590a25ec47a"></a>IOPORT_PORT_14_PIN_01&#160;</td><td class="fielddoc"><p>IO port 14 pin 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea502dab7c03b5b417fc4515e5000f140e"></a>IOPORT_PORT_14_PIN_02&#160;</td><td class="fielddoc"><p>IO port 14 pin 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea4f18a89ef60f739ca6aa2236e419c331"></a>IOPORT_PORT_14_PIN_03&#160;</td><td class="fielddoc"><p>IO port 14 pin 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea4a28cc0284f05b99ef451e5393666262"></a>IOPORT_PORT_14_PIN_04&#160;</td><td class="fielddoc"><p>IO port 14 pin 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eacc8c161522ad1d1caa2d16a22b53fbb0"></a>IOPORT_PORT_14_PIN_05&#160;</td><td class="fielddoc"><p>IO port 14 pin 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eaed3fc98dce265190567a315ddd9172ad"></a>IOPORT_PORT_14_PIN_06&#160;</td><td class="fielddoc"><p>IO port 14 pin 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea22a48797491293d3a08e5cca7a33194d"></a>IOPORT_PORT_14_PIN_07&#160;</td><td class="fielddoc"><p>IO port 14 pin 7. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea6e565c54e2eb488fa5e625d78229f4a7"></a>IOPORT_PORT_14_PIN_08&#160;</td><td class="fielddoc"><p>IO port 14 pin 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea4a180e629c651f4b52f3794945b626a0"></a>IOPORT_PORT_14_PIN_09&#160;</td><td class="fielddoc"><p>IO port 14 pin 9. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840eab96baac793cd5b5344e79a3e1a1f6377"></a>IOPORT_PORT_14_PIN_10&#160;</td><td class="fielddoc"><p>IO port 14 pin 10. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea0c97a2e0cdda1d3c8f64078cbba60c39"></a>IOPORT_PORT_14_PIN_11&#160;</td><td class="fielddoc"><p>IO port 14 pin 11. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea611a431d5e1aa73315b6e16d2ef7399c"></a>IOPORT_PORT_14_PIN_12&#160;</td><td class="fielddoc"><p>IO port 14 pin 12. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea20b9ba9f6700f1eefa0a97c2ece510e7"></a>IOPORT_PORT_14_PIN_13&#160;</td><td class="fielddoc"><p>IO port 14 pin 13. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea1d63c0f13f99715869f9f2d4e4fd002c"></a>IOPORT_PORT_14_PIN_14&#160;</td><td class="fielddoc"><p>IO port 14 pin 14. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3a0a7f66458384069f25931ecb83840ea7843246a9239f3a9beae498e29c91b1c"></a>IOPORT_PORT_14_PIN_15&#160;</td><td class="fielddoc"><p>IO port 14 pin 15. </p>
 </td></tr>
 </table>
 
@@ -1287,59 +1389,13 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
-<a id="ga383b2f8df036fceeb7c5344c5654d2c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga383b2f8df036fceeb7c5344c5654d2c3">&#9670;&nbsp;</a></span>R_IOPORT_EthernetModeCfg()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_IOPORT_EthernetModeCfg </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gafc061c58bb812cb2a8f25222353634cd">ioport_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gaf6a78fbc73b4e8acef86a12c21df2da0">ioport_ethernet_channel_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group___i_o_p_o_r_t___a_p_i.html#gacaee6fc466858446638e79354043bb78">ioport_ethernet_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Configures Ethernet channel PHY mode. Implements <a class="el" href="group___i_o_p_o_r_t___a_p_i.html#aebcf56ec700ec3e402c0ab437bc82d45">ioport_api_t::pinEthernetModeCfg</a>.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Ethernet PHY mode set </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Channel or mode not valid </td></tr>
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Ethernet configuration not supported on this device. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The module has not been opened </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL pointer</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>This function is not re-entrant. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

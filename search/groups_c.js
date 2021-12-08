@@ -1,6 +1,10 @@
 var searchData=
 [
   ['mcu_20board_20support_20package',['MCU Board Support Package',['../group___b_s_p___m_c_u.html',1,'']]],
+  ['motor_20120_20control_20hall_20_28motor_5f120_5fcontrol_5fhall_29',['Motor 120 Control Hall (motor_120_control_hall)',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html',1,'']]],
+  ['motor_20120_20control_20sensorless_20_28motor_5f120_5fcontrol_5fsensorless_29',['Motor 120 Control Sensorless (motor_120_control_sensorless)',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html',1,'']]],
+  ['motor_20120_20degree_20_28rm_5fmotor_5f120_5fdegree_29',['Motor 120 Degree (rm_motor_120_degree)',['../group___m_o_t_o_r__120___d_e_g_r_e_e.html',1,'']]],
+  ['motor_20120_20degree_20driver_20_28rm_5fmotor_5f120_5fdriver_29',['Motor 120 degree driver (rm_motor_120_driver)',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html',1,'']]],
   ['motor_20angle_20interface',['Motor angle Interface',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html',1,'']]],
   ['motor_20interface',['Motor Interface',['../group___m_o_t_o_r___a_p_i.html',1,'']]],
   ['motor_20current_20_28rm_5fmotor_5fcurrent_29',['Motor Current (rm_motor_current)',['../group___m_o_t_o_r___c_u_r_r_e_n_t.html',1,'']]],

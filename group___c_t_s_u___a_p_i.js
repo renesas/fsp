@@ -41,7 +41,9 @@ var group___c_t_s_u___a_p_i =
       [ "read_irq", "group___c_t_s_u___a_p_i.html#a4f81a30050a0161004f2c82b94de3e48", null ],
       [ "end_irq", "group___c_t_s_u___a_p_i.html#adfdb692d8d85db036f69dd700d5c65c1", null ],
       [ "p_context", "group___c_t_s_u___a_p_i.html#ab481d8aeac9d6abd4fe4e551cf0d3adb", null ],
-      [ "p_extend", "group___c_t_s_u___a_p_i.html#ac7449580617af95b04736b986fa00a35", null ]
+      [ "p_extend", "group___c_t_s_u___a_p_i.html#ac7449580617af95b04736b986fa00a35", null ],
+      [ "tuning_self_target_value", "group___c_t_s_u___a_p_i.html#a836ea53db692e0e454ee7c5110d97c57", null ],
+      [ "tuning_mutual_target_value", "group___c_t_s_u___a_p_i.html#a10bc37159fc5adae72cae6b34fb69882", null ]
     ] ],
     [ "ctsu_api_t", "group___c_t_s_u___a_p_i.html#structctsu__api__t", [
       [ "open", "group___c_t_s_u___a_p_i.html#ae8f2c7b3cc9e33f0f790f76655d3d723", null ],

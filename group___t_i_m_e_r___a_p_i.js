@@ -83,6 +83,7 @@ var group___t_i_m_e_r___a_p_i =
       [ "TIMER_SOURCE_DIV_64", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada1cc7525fed9c5374c3a530e17453e670", null ],
       [ "TIMER_SOURCE_DIV_128", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada8828520a3958955a4e2835785787c801", null ],
       [ "TIMER_SOURCE_DIV_256", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada6680e947eb6455f9d0ee007645ea707d", null ],
+      [ "TIMER_SOURCE_DIV_512", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5ada2bcc6bb5346907da7e45b74449588132", null ],
       [ "TIMER_SOURCE_DIV_1024", "group___t_i_m_e_r___a_p_i.html#gga820b425b44d7b551afd1797ecca7a5adaee99148dc7c32f0764c7cb3b3e45ca30", null ]
     ] ]
 ];

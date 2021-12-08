@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -238,7 +238,7 @@ Features</h2>
 </ul>
 </li>
 <li>Random number generation <a class="anchor" id="um_psa_random_number_generation"></a><a class="anchor" id="um_RNG_hardware_acceleration"></a></li>
-<li>Persistent Key Storage <a class="anchor" id="um_AES_persistent_key"></a><a class="anchor" id="um_RSA_persistent_key"></a></li>
+<li>Persistent Key Storage <a class="anchor" id="um_AES_persistent_key"></a><a class="anchor" id="um_RSA_persistent_key"></a> </li>
 </ul>
 <h1><a class="anchor" id="rm-psa-crypto-configuration"></a>
 Configuration</h1>
@@ -2158,11 +2158,13 @@ Memory Usage</h2>
 <li>Only little endian mode is supported.</li>
 </ul>
 <h2>SCE9 Usage</h2>
-<p>The crypto capabilities on the SCE9 are different resulting in the below usage limitations with mbedCrypto:</p><ul>
+<p>The SCE9 is used in Compatibility Mode for mbedCrypto acceleration. The crypto capabilities in this mode on the SCE9 are different which results in the below usage limitations with mbedCrypto:</p>
+<ul>
 <li>The module includes <b>both</b> wrapped and plaintext keys code irrespective of whether the application requires it.</li>
 <li>Plaintext key generation is not supported for RSA and ECC; only wrapped keys can be generated.</li>
 <li>If ECDH is used, only wrapped key will be generated on SCE9 and will not return an error even if the user context is somehow set for plain key. This may be relevant only if the psa_key_agreement() function with plaintext key on SCE9 is attempted.</li>
 </ul>
+<dl class="section note"><dt>Note</dt><dd><b>For a detailed description of the different SCE9 operating modes, refer to Application Note R11AN0498.</b></dd></dl>
 <h2>Using PSA Crypto with TrustZone</h2>
 <p>Unlike FSP drivers, PSA Crypto cannot be configured as Non-secure callable in the RA Configurator for a secure project. The reason for this is that in order to achieve the security objective of controlling access to protected keys, both the PSA Crypto code as well as the keys must be placed in the secure region. Since the PSA Crypto API requires access to the keys directly during initialization and later via a key handle, allowing non-secure code to use the API by making it Non-secure callable will require the keys to be stored in non-secure memory.</p>
 <p>This section will provide a short explanation of how to add PSA Crypto to a secure project and have it usable by the non-secure project without exposing the keys. In this example the secure project will contain an RSA private key and the non-secure project is expected to be able to perform sign and verify operations using that key.</p>
@@ -2175,17 +2177,11 @@ PSA Crypto Non-secure callable example</div></div>
 <li>During secure project boot-up, psa_crypto_init() is called.</li>
 <li>The RSA private key is programmed into secure flash either at the factory or by calling psa_generate_key() in persistent mode. Note that the data-flash area used by the LittleFS will have to be in the secure region if the key is generated as a persistent.</li>
 <li>psa_import_key()/psa_open_key() are called with the resultant handle held in secure RAM.</li>
-<li>The Non-secure callable section contains the following <b>user-defined</b> functions<ul>
-<li>verify_with_my_rsa_key(input_signature, input_hash, verification_result)<ul>
+<li>The Non-secure callable section contains the following <b>user-defined</b> functions</li>
+<li>verify_with_my_rsa_key(input_signature, input_hash, verification_result)</li>
 <li>The implementation of this function in secure region will call psa_verify_hash() and return the result via verification_result.</li>
-</ul>
-</li>
-<li>sign_with_my_rsa_key(input_hash, output_signature)<ul>
+<li>sign_with_my_rsa_key(input_hash, output_signature)</li>
 <li>The implementation of this function in secure region will call psa_sign_hash() and return the signature via output_signature.</li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 </li>
 <li><p class="startli">Non-secure project</p><ul>
@@ -2315,7 +2311,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

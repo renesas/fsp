@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -353,17 +353,29 @@ Usage Notes</h1>
 <p>In Swap Mode operation, if the upgrade image is signed with the &ndash;pad option, MCUboot will install that image as a temporary update where if nothing else is done, a reboot will cause MCUboot to revert to the image version that was swapped out during the upgrade. In order for the updated image to prevent this reversion and make the update permanent, the boot_set_confirmed() must be called from the application.</p>
 <p>To avail this capability in the application image, from the Stacks tab, add New &gt; Bootloader &gt; MCUboot Image Utilities (Swap Mode). Resolve any constraint errors and edit configurations as desired.</p>
 <p>In src/hal_entry.c, drag in Developer Assistance &gt; HAL/Common &gt; MCUboot Image Utilities &gt; Quick Setup &gt; Confirm Primary Image. Add a call to boot_set_confirmed() in the application and confirm the image in the primary slot.</p>
+<h2>External Memory Support</h2>
+<p>QSPI support for secondary image storage can be enabled in the configurator. The booloader expectes the QSPI memory to be pre-configured by user code in the bootloader for read/write operation. The bootloader code operates under the assumption that the user has configured the QSPI in Extended-SPI mode and that <a class="el" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open()</a> has been called prior to invoking boot_go();. For an example on how to initialize the QSPI device, refer to the QSPI module. The QSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation.</p>
 <h2>MCUboot Memory Map</h2>
-<p>For single image projects, the default memory map looks like:</p>
+<p>For single image projects with no external memory support, the default memory map looks like:</p>
 <div class="image">
 <object type="image/svg+xml" data="rm_mcuboot_port_map.svg">rm_mcuboot_port_map.svg</object>
 <div class="caption">
 MCUboot Memory Map</div></div>
-<p> For projects with 2 separately updateable images (used for TrustZone applications where the Secure and Non-Secure images can be updated separately), the default memory map looks like:</p>
+<p> For projects with 2 separately updateable images (used for TrustZone applications where the Secure and Non-Secure images can be updated separately), the default memory map with no external memory support looks like:</p>
 <div class="image">
 <object type="image/svg+xml" data="rm_mcuboot_port_map_tz.svg">rm_mcuboot_port_map_tz.svg</object>
 <div class="caption">
 MCUboot Memory Map (TrustZone)</div></div>
+<p> For single image projects with QSPI, the default memory map looks like:</p>
+<div class="image">
+<img src="rm_mcuboot_port_map_qspi.png" alt="rm_mcuboot_port_map_qspi.png"/>
+<div class="caption">
+MCUboot Memory Map with QSPI</div></div>
+<p> For projects with 2 separately updateable images (used for TrustZone applications where the Secure and Non-Secure images can be updated separately), the default memory map with QSPI support looks like:</p>
+<div class="image">
+<img src="rm_mcuboot_port_map_tz_qspi.png" alt="rm_mcuboot_port_map_tz_qspi.png"/>
+<div class="caption">
+MCUboot Memory Map (TrustZone) with QSPI</div></div>
  <h2>MCUboot Crypto Stack Options</h2>
 <p>The following crypto stacks can be used with MCUboot in FSP:</p><ol type="1">
 <li>MbedTLS, which is hardware accelerated on all RA devices. On the RA2 which has an AES engine only, ECC/RSA/SHA operations are in software.</li>
@@ -395,7 +407,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

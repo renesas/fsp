@@ -1,7 +1,30 @@
 var searchData=
 [
+  ['motor_5f120_5fconduction_5ftype_5ft',['motor_120_conduction_type_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#ga15a80fc551e9f07716ec0efe9b6f2bc4',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fcontrol_5fevent_5ft',['motor_120_control_event_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#ga869099437823fd39174d55a1e31896ec',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fcontrol_5fpattern_5ferror_5fflag_5ft',['motor_120_control_pattern_error_flag_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#gaf2a58c85b575e6c31b41e5f8ce4b9086',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fcontrol_5frotation_5fdirection_5ft',['motor_120_control_rotation_direction_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#gafc077224ba51772b66cf83c04b26e4e6',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fcontrol_5frun_5fmode_5ft',['motor_120_control_run_mode_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#gae9aa2821a9ad2835b08f752b68b59d94',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fcontrol_5fsensorless_5fdraw_5fin_5fposition_5ft',['motor_120_control_sensorless_draw_in_position_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#ga7f7292c8a9b623625446e8078e573f36',1,'rm_motor_120_control_sensorless.h']]],
+  ['motor_5f120_5fcontrol_5fsensorless_5fpattern_5fchange_5fflag_5ft',['motor_120_control_sensorless_pattern_change_flag_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#ga9fcd23aa0457c801bfcca3d13e66eec7',1,'rm_motor_120_control_sensorless.h']]],
+  ['motor_5f120_5fcontrol_5fspeed_5fref_5ft',['motor_120_control_speed_ref_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#gaf1606bc39306a170782d03c31477916d',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fcontrol_5fstatus_5ft',['motor_120_control_status_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#gaf7837c6e19a34e9f9fdfe4e4e2356b26',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fcontrol_5ftimeout_5ferror_5fflag_5ft',['motor_120_control_timeout_error_flag_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#gafccd31b01ddfc5cbc56e4b4d900877ab',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fcontrol_5fvoltage_5fref_5ft',['motor_120_control_voltage_ref_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#ga561215de6a5a2e75503bd87f352f8fe3',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fcontrol_5fwait_5fstop_5fflag_5ft',['motor_120_control_wait_stop_flag_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#ga0678c6cc565b763f4600017f149fa60d',1,'rm_motor_120_control_api.h']]],
+  ['motor_5f120_5fdegree_5fctrl_5fevent_5ft',['motor_120_degree_ctrl_event_t',['../group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga92e8ef59af79c74204831e6a2c4984a0',1,'rm_motor_120_degree.h']]],
+  ['motor_5f120_5fdegree_5fctrl_5fstatus_5ft',['motor_120_degree_ctrl_status_t',['../group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga872210dae5986139c7d29372a19899fe',1,'rm_motor_120_degree.h']]],
+  ['motor_5f120_5fdriver_5fevent_5ft',['motor_120_driver_event_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#gae20b0c2189e6dda2744a6cd0a865967d',1,'rm_motor_120_driver_api.h']]],
+  ['motor_5f120_5fdriver_5fflag_5foffset_5fcalc_5ft',['motor_120_driver_flag_offset_calc_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#ga18bf4d5dcbd044fe0397a85d75f912f5',1,'rm_motor_120_driver_api.h']]],
+  ['motor_5f120_5fdriver_5fphase_5fpattern_5ft',['motor_120_driver_phase_pattern_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#ga7610e17dd97dc54daca092d9a0e81b2c',1,'rm_motor_120_driver_api.h']]],
+  ['motor_5f120_5fdriver_5fstatus_5ft',['motor_120_driver_status_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html#gaa5786aa10befc7f92d49fdd3622ad7a3',1,'rm_motor_120_driver.h']]],
+  ['motor_5f120_5fdriver_5ftype_5ft',['motor_120_driver_type_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html#ga39484001d8f61c852cca3a3ac1447589',1,'rm_motor_120_driver.h']]],
+  ['motor_5fcallback_5fevent_5ft',['motor_callback_event_t',['../group___m_o_t_o_r___a_p_i.html#ga77fae675142bf911c9275a73e748a49f',1,'rm_motor_api.h']]],
   ['motor_5fcurrent_5fevent_5ft',['motor_current_event_t',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ga61947996472596dce35b2304c12535d6',1,'rm_motor_current_api.h']]],
+  ['motor_5fcurrent_5fshunt_5ftype_5ft',['motor_current_shunt_type_t',['../group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaef437374be3e3458b7914eab38c634b5',1,'rm_motor_current.h']]],
   ['motor_5fdriver_5fevent_5ft',['motor_driver_event_t',['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#gaa32b49ecc4b3d6dbcfced0e942b17ae1',1,'rm_motor_driver_api.h']]],
+  ['motor_5fdriver_5fmodulation_5fmethod_5ft',['motor_driver_modulation_method_t',['../group___m_o_t_o_r___d_r_i_v_e_r.html#ga838f55612e0a7eaa8ecb9f8c836b943d',1,'rm_motor_driver.h']]],
+  ['motor_5fdriver_5fshunt_5ftype_5ft',['motor_driver_shunt_type_t',['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ga1d873392177838ea119e3a4fd0020d0a',1,'rm_motor_driver_api.h']]],
   ['motor_5fencoder_5fcallback_5fevent_5ft',['motor_encoder_callback_event_t',['../group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3b065368ba50cddebd05d19827444a80',1,'rm_motor_encoder.h']]],
   ['motor_5fencoder_5fctrl_5fevent_5ft',['motor_encoder_ctrl_event_t',['../group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga0feb7dece163f5af5cccd8f307f630dc',1,'rm_motor_encoder.h']]],
   ['motor_5fencoder_5fctrl_5ft',['motor_encoder_ctrl_t',['../group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga8482f9db6908b2be9cf7950493511c77',1,'rm_motor_encoder.h']]],
@@ -20,5 +43,6 @@ var searchData=
   ['motor_5fspeed_5floop_5fmode_5ft',['motor_speed_loop_mode_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#ga355ffb36e0cddc08159352d8727d462f',1,'rm_motor_speed_api.h']]],
   ['motor_5fspeed_5fobserver_5fswitch_5ft',['motor_speed_observer_switch_t',['../group___m_o_t_o_r___s_p_e_e_d.html#gab71db61d94f8e0e39bd0a113d7732c7c',1,'rm_motor_speed.h']]],
   ['motor_5fspeed_5fopenloop_5fdamping_5ft',['motor_speed_openloop_damping_t',['../group___m_o_t_o_r___s_p_e_e_d.html#ga34ad035595f726d4cce1c81478afd6c6',1,'rm_motor_speed.h']]],
-  ['motor_5fspeed_5fstep_5ft',['motor_speed_step_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#gaf50bebe25b4c3e57b458d0a247da4003',1,'rm_motor_speed_api.h']]]
+  ['motor_5fspeed_5fstep_5ft',['motor_speed_step_t',['../group___m_o_t_o_r___s_p_e_e_d___a_p_i.html#gaf50bebe25b4c3e57b458d0a247da4003',1,'rm_motor_speed_api.h']]],
+  ['motor_5fwait_5fstop_5fflag_5ft',['motor_wait_stop_flag_t',['../group___m_o_t_o_r___a_p_i.html#ga164300ede2cb4269d8b16f991b4d995e',1,'rm_motor_api.h']]]
 ];

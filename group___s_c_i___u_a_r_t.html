@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -250,8 +250,8 @@ Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable RS232 and RS485 flow control support using a user provided pin. </td></tr>
 </table>
- <h2>Configurations for Driver &gt; Connectivity &gt; UART Driver on r_sci_uart</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; UART Driver on r_sci_uart. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+ <h2>Configurations for Connectivity &gt; UART (r_sci_uart)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; UART (r_sci_uart). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -395,6 +395,8 @@ Clock Configuration</h2>
 <td>RA6M5</td><td>PCLKA</td></tr>
 <tr>
 <td>RA6T1</td><td>PCLKA</td></tr>
+<tr>
+<td>RA6T2</td><td>PCLKA</td></tr>
 </table>
 </p>
 <p>The clock source for the baud-rate clock generator can be selected from the internal clock, the external clock times 8 or the external clock times 16. The external clock is supplied to the SCK pin.<a class="anchor" id="um_sci_uart_clock_configuration"></a> </p>
@@ -406,13 +408,18 @@ Usage Notes</h1>
 <ul>
 <li>When configured for Hardware CTS and Software RTS the configured flow control pin will be used for RTS. The pin will be set high inside of the receive ISR while data is being read. It will be set low when all data is read.</li>
 <li>When configured for Hardware CTS and Hardware RTS the CSTn_RTSn pin will be used for RTS function and the CTSn pin will be used for CTS function on channel n.</li>
-<li>The driver will follow correct hardware flow control function when CTSn_RTSn pin is connected to CTSn pin when "Hardware CTS and Hardware RTS" flow control is selected. The data will still be transferred when CTSn_RTSn and CTSn are disconnected as the CTSn pin is internally pulled low on the hardware when CTSn pin is configured as a peripheral pin for SCI module. Do not configure CTSn pin if the hardware flow control is not desired.</li>
+<li>The driver will follow correct hardware flow control function when CTSn_RTSn pin is connected to CTSn pin when "Hardware CTS and Hardware RTS" flow control is selected. The data will still be transferred when CTSn_RTSn and CTSn are disconnected as the CTSn pin is internally pulled low on the hardware when CTSn pin is configured as a peripheral pin for SCI module. Do not configure CTSn pin if the hardware flow control is not desired. </li>
 </ul>
 <h2><a class="anchor" id="r-sci-uart-limitations"></a>
 Limitations</h2>
 <ul>
-<li>Transfer size must be less than or equal to 64K bytes if DTC interface is used for transfer. <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">uart_api_t::infoGet</a> API can be used to get the max transfer size allowed.</li>
 <li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
+</ul>
+<h2><a class="anchor" id="r-sci-uart-dtc"></a>
+DTC Limitations</h2>
+<ul>
+<li>DTC support is available for reception, but labeled as [Not recommended]. This is because the UART bytes are received asynchronously. Bytes can be received between calls to <a class="el" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read()</a>. The logic required to combine bytes received through <a class="el" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read()</a> (UART_EVENT_RX_COMPLETE) and bytes received between calls (UART_EVENT_RX_CHAR) is complex. Reception length may also be unknown, and the driver will not issue an interrupt unless the entire DTC buffer is filled.</li>
+<li>Transfer size must be less than or equal to 64K bytes if DTC interface is used for transfer. <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">uart_api_t::infoGet</a> API can be used to get the max transfer size allowed.</li>
 <li>When using 9-bit reception with DTC, clear the upper 7 bits of data before processing the read data. The upper 7 bits contain status flags that are part of the register used to read data in 9-bit mode.</li>
 </ul>
 <h1><a class="anchor" id="r-sci-uart-examples"></a>
@@ -473,7 +480,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a550e6f3ab6691fe60b57e9834d7cb6fb"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
+<a id="a82c68098cecc8b450cc8a273315a3cf8"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1120,7 +1127,7 @@ CTS/RTS function of the SSn pin. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

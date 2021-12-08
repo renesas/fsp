@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -191,18 +191,21 @@ Usage Notes</h1>
 <h2>Connecting to a Wireless Network</h2>
 <p>NetX Duo does not support connecting to a wireless network directly and instead the driver functions should be called directly to establish a connection.</p>
 <ul>
-<li>rm_wifi_onchip_silex_open should be called to initialize the WiFi module driver.</li>
-<li>rm_wifi_onchip_silex_scan should be used to scan for access points.</li>
-<li>rm_wifi_onchip_silex_connect should be used before opening a NetX IP instance in order to connect it to a network.</li>
+<li>rm_wifi_onchip_silex_open() should be called to initialize the WiFi module driver.</li>
+<li>rm_wifi_onchip_silex_scan() should be used to scan for access points.</li>
+<li>rm_wifi_onchip_silex_connect() should be used before opening a NetX IP instance in order to connect it to a network.</li>
+<li>rm_wifi_onchip_silex_network_info_get() should be used after an access point connection has been established to get DHCP acquired IP address, subnet mask, and gateway.</li>
 </ul>
 <h2>Unsupported NetX Duo Features</h2>
-<p>TCP client sockets are the sole feature supported by both the hardware TCP/IP feature in NetX Duo and the WiFi driver as well, so any protocol that doesn't run over TCP will be unsupported.</p>
+<p>TCP client sockets are the sole feature supported by both the hardware TCP/IP feature in NetX Duo and the WiFi driver as well. Any protocol that does not utilize a TCP client socket will be unsupported.</p>
 <ul>
+<li>TCP server mode is not currently supported.</li>
 <li>DNS is not supported. The user can preform a DNS lookup by calling rm_wifi_onchip_silex_dns_query.</li>
 <li>ICMP is not supported. The user can perform a ping by calling rm_wifi_onchip_silex_ping.</li>
 <li>ARP is not supported. This should be handled directly by the WiFi module.</li>
 <li>UDP is not supported. The WiFi module driver does not support UDP sockets.</li>
 <li>SNTP is not supported. See the public APIs for communication with time servers <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html">Wifi Middleware (rm_wifi_onchip_silex)</a>.</li>
+<li>Static address assignment is not currently supported by the rm_wifi_onchip_silex driver. You must use DHCP.</li>
 </ul>
 <h1><a class="anchor" id="rm-netxduo-wifi-examples"></a>
 Examples</h1>
@@ -216,7 +219,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

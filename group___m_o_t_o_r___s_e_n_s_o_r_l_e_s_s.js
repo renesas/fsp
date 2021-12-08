@@ -20,5 +20,6 @@ var group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s =
     [ "RM_MOTOR_SENSORLESS_AngleGet", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga84c1eb58db8f6cbad123ca3413aa7b2a", null ],
     [ "RM_MOTOR_SENSORLESS_SpeedGet", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga737b83c18e18f49488b90bdb71b0eef9", null ],
     [ "RM_MOTOR_SENSORLESS_ErrorCheck", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga526e1f2e08b5b8ec13ec92e4481e10af", null ],
-    [ "RM_MOTOR_SENSORLESS_PositionSet", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga36f325fde67d3386cebab2bfa20137b9", null ]
+    [ "RM_MOTOR_SENSORLESS_PositionSet", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga36f325fde67d3386cebab2bfa20137b9", null ],
+    [ "RM_MOTOR_SENSORLESS_WaitStopFlagGet", "group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga29ca45eae3dd41fd2b8b539abb56e410", null ]
 ];

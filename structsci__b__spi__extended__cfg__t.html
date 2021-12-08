@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: odor_results_t Struct Reference</title>
+<title>RA Flexible Software Package Documentation: sci_b_spi_extended_cfg_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -76,7 +76,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('structodor__results__t.html','');});
+$(document).ready(function(){initNavTree('structsci__b__spi__extended__cfg__t.html','');});
 </script>
 
 <script src="search/mark.min.js"></script>
@@ -161,57 +161,37 @@ $(document).ready(function(){initNavTree('structodor__results__t.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">odor_results_t Struct Reference</div>  </div>
+<div class="title">sci_b_spi_extended_cfg_t Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>odor results.  
- <a href="structodor__results__t.html#details">More...</a></p>
-
-<p><code>#include &lt;odor.h&gt;</code></p>
+<p><code>#include &lt;r_sci_b_spi.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a689810746f75cd51b433446270973114"><td class="memItemLeft" align="right" valign="top">control_signal_state_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structodor__results__t.html#a689810746f75cd51b433446270973114">cs_state</a></td></tr>
-<tr class="separator:a689810746f75cd51b433446270973114"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83d8849b6ca91aeaff1d497d9ec08503"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structodor__results__t.html#a83d8849b6ca91aeaff1d497d9ec08503">conc_ratio</a></td></tr>
-<tr class="separator:a83d8849b6ca91aeaff1d497d9ec08503"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee19365b0782ff1cf9d529ce8c7e7356"><td class="memItemLeft" align="right" valign="top">sci_b_spi_clock_source_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsci__b__spi__extended__cfg__t.html#aee19365b0782ff1cf9d529ce8c7e7356">clock_source</a></td></tr>
+<tr class="separator:aee19365b0782ff1cf9d529ce8c7e7356"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>odor results. </p>
+<div class="textblock"><p>SCI SPI extended configuration </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a689810746f75cd51b433446270973114"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a689810746f75cd51b433446270973114">&#9670;&nbsp;</a></span>cs_state</h2>
+<a id="aee19365b0782ff1cf9d529ce8c7e7356"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee19365b0782ff1cf9d529ce8c7e7356">&#9670;&nbsp;</a></span>clock_source</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">control_signal_state_t odor_results_t::cs_state</td>
+          <td class="memname">sci_b_spi_clock_source_t sci_b_spi_extended_cfg_t::clock_source</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Control signal input. </p>
-
-</div>
-</div>
-<a id="a83d8849b6ca91aeaff1d497d9ec08503"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83d8849b6ca91aeaff1d497d9ec08503">&#9670;&nbsp;</a></span>conc_ratio</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">float odor_results_t::conc_ratio</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Concentration ratio. </p>
+<p>Clock source to generate SCK can either be selected as PCLK or SCISPICLK. </p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>odor.h</li>
+<li>r_sci_b_spi.h</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -219,8 +199,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="structodor__results__t.html">odor_results_t</a></li>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+    <li class="navelem"><a class="el" href="structsci__b__spi__extended__cfg__t.html">sci_b_spi_extended_cfg_t</a></li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

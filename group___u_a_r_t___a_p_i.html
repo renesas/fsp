@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -179,7 +179,8 @@ Summary</h1>
 <li>CTS/RTS hardware flow control support (with an associated IOPORT pin)</li>
 </ul>
 <p>Implemented by:</p><ul>
-<li><a class="el" href="group___s_c_i___u_a_r_t.html">Serial Communications Interface (SCI) UART (r_sci_uart)</a> </li>
+<li><a class="el" href="group___s_c_i___u_a_r_t.html">Serial Communications Interface (SCI) UART (r_sci_uart)</a></li>
+<li><a class="el" href="group___s_c_i___b___u_a_r_t.html">Serial Communications Interface (SCI) UART (r_sci_b_uart)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -449,6 +450,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Open UART device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a></li>
+<li><a class="el" href="group___s_c_i___b___u_a_r_t.html#ga60643fd4c7b00970ad9d295302498f13">R_SCI_B_UART_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -474,6 +476,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Read from UART device. The read buffer is used until the read is complete. When a transfer is complete, the callback is called with event UART_EVENT_RX_COMPLETE. Bytes received outside an active transfer are received in the callback function with event UART_EVENT_RX_CHAR. The maximum transfer size is reported by <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">infoGet()</a>. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read()</a></li>
+<li><a class="el" href="group___s_c_i___b___u_a_r_t.html#gaa0e296b71701a2d0045add3c75d2fdd7">R_SCI_B_UART_Read()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -500,6 +503,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Write to UART device. The write buffer is used until write is complete. Do not overwrite write buffer contents until the write is finished. When the write is complete (all bytes are fully transmitted on the wire), the callback called with event UART_EVENT_TX_COMPLETE. The maximum transfer size is reported by <a class="el" href="group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50">infoGet()</a>. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___s_c_i___u_a_r_t.html#ga8916449e6e6de86681c04d1931645e7c">R_SCI_UART_Write()</a></li>
+<li><a class="el" href="group___s_c_i___b___u_a_r_t.html#gad8456e403e88d52e1e858b62e19a2d0b">R_SCI_B_UART_Write()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -527,6 +531,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <p>Change baud rate. </p><dl class="section warning"><dt>Warning</dt><dd>Calling this API aborts any in-progress transmission and disables reception until the new baud settings have been applied.</dd></dl>
 <dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___s_c_i___u_a_r_t.html#ga3b3a6c761a66c6cbcca3c72a451b3371">R_SCI_UART_BaudSet()</a></li>
+<li><a class="el" href="group___s_c_i___b___u_a_r_t.html#gad9ae4780db497c17ae0c1677573f0320">R_SCI_B_UART_BaudSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -552,6 +557,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Get the driver specific information. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___s_c_i___u_a_r_t.html#ga00f07c25ed95b9e1de217f34c42b9d38">R_SCI_UART_InfoGet()</a></li>
+<li><a class="el" href="group___s_c_i___b___u_a_r_t.html#gafe20c9d0e52f1186c60033a5a1910119">R_SCI_B_UART_InfoGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -577,6 +583,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Abort ongoing transfer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___s_c_i___u_a_r_t.html#ga816beee7f9f27113cd2d792c54c6af53">R_SCI_UART_Abort()</a></li>
+<li><a class="el" href="group___s_c_i___b___u_a_r_t.html#ga4c327408aaf082057bae8c89127e396c">R_SCI_B_UART_Abort()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -602,6 +609,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li>R_SCI_Uart_CallbackSet()</li>
+<li>R_SCI_B_Uart_CallbackSet()</li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -629,6 +637,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Close UART device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___s_c_i___u_a_r_t.html#ga49e8b74b71d1901a209a94ed4c220d4d">R_SCI_UART_Close()</a></li>
+<li><a class="el" href="group___s_c_i___b___u_a_r_t.html#ga91e1364f8fd7b00073ccdb72a1bd34e9">R_SCI_B_UART_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -653,6 +662,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Stop ongoing read and return the number of bytes remaining in the read. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___s_c_i___u_a_r_t.html#gae084836f4ee37c2730f7a8b332d58325">R_SCI_UART_ReadStop()</a></li>
+<li><a class="el" href="group___s_c_i___b___u_a_r_t.html#ga60ee90741cf1240c127d75acf9df50ed">R_SCI_B_UART_ReadStop()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -770,11 +780,11 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>UART Data bit length definition </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db"></a>UART_DATA_BITS_8&#160;</td><td class="fielddoc"><p>Data bits 8-bit. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadc68b8fd9ded3990f84129df23fee798a57a012c58e476a76ed8f54db28d94810"></a>UART_DATA_BITS_9&#160;</td><td class="fielddoc"><p>Data bits 9-bit. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db"></a>UART_DATA_BITS_8&#160;</td><td class="fielddoc"><p>Data bits 8-bit. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadc68b8fd9ded3990f84129df23fee798a317e473e32315f1632829d176fbfd545"></a>UART_DATA_BITS_7&#160;</td><td class="fielddoc"><p>Data bits 7-bit. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggadc68b8fd9ded3990f84129df23fee798a57a012c58e476a76ed8f54db28d94810"></a>UART_DATA_BITS_9&#160;</td><td class="fielddoc"><p>Data bits 9-bit. </p>
 </td></tr>
 </table>
 
@@ -853,7 +863,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

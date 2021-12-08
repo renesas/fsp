@@ -16,6 +16,7 @@ var group___b_s_p___m_c_u =
     [ "RA6M4", "group___b_s_p___m_c_u___r_a6_m4.html", null ],
     [ "RA6M5", "group___b_s_p___m_c_u___r_a6_m5.html", null ],
     [ "RA6T1", "group___b_s_p___m_c_u___r_a6_t1.html", "group___b_s_p___m_c_u___r_a6_t1" ],
+    [ "RA6T2", "group___b_s_p___m_c_u___r_a6_t2.html", "group___b_s_p___m_c_u___r_a6_t2" ],
     [ "BSP_IRQ_DISABLED", "group___b_s_p___m_c_u.html#gae685ec20bc3579295878f1586478b54c", null ],
     [ "FSP_LOG_PRINT", "group___b_s_p___m_c_u.html#ga0f428b0e243466083b74ab49b25bea8c", null ],
     [ "FSP_RETURN", "group___b_s_p___m_c_u.html#ga8c791e904efc648fb8b69b56d7dd37ba", null ],
@@ -93,7 +94,10 @@ var group___b_s_p___m_c_u =
       [ "FSP_IP_DAC8", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a06230bf415328965e43426efed64f1e1", null ],
       [ "FSP_IP_USBHS", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a40e3e5c071f08ce93fabf8adad8c548e", null ],
       [ "FSP_IP_OSPI", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a9bbcf1f4070b401d62dcaa2f96ca881a", null ],
-      [ "FSP_IP_CEC", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a52f816456b7c8037eb65624f0a6bc582", null ]
+      [ "FSP_IP_CEC", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a52f816456b7c8037eb65624f0a6bc582", null ],
+      [ "FSP_IP_TFU", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a2917a7f54d529aa51f139699e1bfbbbd", null ],
+      [ "FSP_IP_IIRFA", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950a230959daed2216cc6922061cfd733eae", null ],
+      [ "FSP_IP_CANFD", "group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950aacbead3e070986a6c40c32d2485d5c4e", null ]
     ] ],
     [ "fsp_signal_t", "group___b_s_p___m_c_u.html#ga0f8db6472715cfd8203eb499b26904e8", [
       [ "FSP_SIGNAL_ADC_COMPARE_MATCH", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a01eff7ed733107ef531ba6ad52a1c7c3", null ],
@@ -197,6 +201,10 @@ var group___b_s_p___m_c_u =
       [ "FSP_SIGNAL_IOPORT_EVENT_2", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a6327e3eb0dc19ab5de4102b4f5f5120b", null ],
       [ "FSP_SIGNAL_IOPORT_EVENT_3", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a81f609a8552e4f09d721bcee73d130ff", null ],
       [ "FSP_SIGNAL_IOPORT_EVENT_4", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a43ef1fe635edbfdf506bc7d3a242b45d", null ],
+      [ "FSP_SIGNAL_IOPORT_EVENT_B", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8aeca421d1cea133aa8f1f6a94bc8802d8", null ],
+      [ "FSP_SIGNAL_IOPORT_EVENT_C", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8aaf4c282783843dff5aca17f9c7a6fd6e", null ],
+      [ "FSP_SIGNAL_IOPORT_EVENT_D", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a636dbd23ad445613e6e8379aa2a99c8d", null ],
+      [ "FSP_SIGNAL_IOPORT_EVENT_E", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a16c16b3e9a62fa1f0ba1abe32412adb5", null ],
       [ "FSP_SIGNAL_IWDT_UNDERFLOW", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a10d618ae6eea20204490b71c420fdf36", null ],
       [ "FSP_SIGNAL_JPEG_JDTI", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8ace97341e2fcdc26f817b9ed1cfbb7aa3", null ],
       [ "FSP_SIGNAL_JPEG_JEDI", "group___b_s_p___m_c_u.html#gga0f8db6472715cfd8203eb499b26904e8a2d8b89f68675b0c4a1c36b56550b13c7", null ],
@@ -260,6 +268,15 @@ var group___b_s_p___m_c_u =
       [ "BSP_WARM_START_POST_CLOCK", "group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4a0ac1a271ef413302af1558941563f3e7", null ],
       [ "BSP_WARM_START_POST_C", "group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811", null ]
     ] ],
+    [ "fsp_priv_source_clock_t", "group___b_s_p___m_c_u.html#gaf256033060ec55ab7b466ae3205f5bcf", [
+      [ "FSP_PRIV_CLOCK_HOCO", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa719f5a59af1723f4fcda97556574afdb", null ],
+      [ "FSP_PRIV_CLOCK_MOCO", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa1939ee441779e60854d7e71ea545ecb2", null ],
+      [ "FSP_PRIV_CLOCK_LOCO", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfab9a2f9beb13a5be4a160272674b04c62", null ],
+      [ "FSP_PRIV_CLOCK_MAIN_OSC", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfae715b64327dbff054f07227d777ffdfd", null ],
+      [ "FSP_PRIV_CLOCK_SUBCLOCK", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa73b2edfae619ea9d82a83373106f605a", null ],
+      [ "FSP_PRIV_CLOCK_PLL", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfa69a5605fb0bad6890a2058b511810756", null ],
+      [ "FSP_PRIV_CLOCK_PLL2", "group___b_s_p___m_c_u.html#ggaf256033060ec55ab7b466ae3205f5bcfac2aa168bf9f9bf0477f8800ee8efa622", null ]
+    ] ],
     [ "bsp_delay_units_t", "group___b_s_p___m_c_u.html#gafd98e2a6f080d6a52a3ef72e3d731b2b", [
       [ "BSP_DELAY_UNITS_SECONDS", "group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2bacc709da08ef4acc99bf6e2e84946be5d", null ],
       [ "BSP_DELAY_UNITS_MILLISECONDS", "group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913", null ],
@@ -293,6 +310,7 @@ var group___b_s_p___m_c_u =
     [ "NMI_Handler", "group___b_s_p___m_c_u.html#ga6ad7a5e3ee69cb6db6a6b9111ba898bc", null ],
     [ "SystemInit", "group___b_s_p___m_c_u.html#ga93f514700ccf00d08dbdcff7f1224eb2", null ],
     [ "R_BSP_WarmStart", "group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7", null ],
+    [ "R_BSP_SourceClockHzGet", "group___b_s_p___m_c_u.html#ga7467da77df89bb6594dcd0dd09f1d017", null ],
     [ "R_FSP_CurrentIrqGet", "group___b_s_p___m_c_u.html#ga50cae0c65c54074c32d30eb4108d9a09", null ],
     [ "R_FSP_SystemClockHzGet", "group___b_s_p___m_c_u.html#gaac289335b731d0bdb5cb8e6d243898ef", null ],
     [ "R_BSP_UniqueIdGet", "group___b_s_p___m_c_u.html#gadee5f5e0c5fa723426f73d7d5a07f9b2", null ],
@@ -302,5 +320,11 @@ var group___b_s_p___m_c_u =
     [ "R_BSP_GroupIrqWrite", "group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba", null ],
     [ "R_BSP_RegisterProtectEnable", "group___b_s_p___m_c_u.html#ga6a9c6b74983237446de75a9d9b65e752", null ],
     [ "R_BSP_RegisterProtectDisable", "group___b_s_p___m_c_u.html#ga1bb35164e7e044bd1878a4ce015199c3", null ],
-    [ "SystemCoreClock", "group___b_s_p___m_c_u.html#gaa3cd3e43291e81e795d642b79b6088e6", null ]
+    [ "__sinf", "group___b_s_p___m_c_u.html#ga73859f9b8df6981b869024d0b9a86bdb", null ],
+    [ "__cosf", "group___b_s_p___m_c_u.html#ga64ff048b8398edee6c87652cce7553fd", null ],
+    [ "__sincosf", "group___b_s_p___m_c_u.html#ga2fdd7030166ab85ca5bd585be0fba4f8", null ],
+    [ "__atan2f", "group___b_s_p___m_c_u.html#ga47132d9b15462b6fa520d6612e49a7c2", null ],
+    [ "__hypotf", "group___b_s_p___m_c_u.html#gacfd4a6d1bfb10481a6bf97427b88b665", null ],
+    [ "__atan2hypotf", "group___b_s_p___m_c_u.html#ga24bdcc94ec3b4abfc959e3e375f99b37", null ],
+    [ "BSP_SECTION_EARLY_INIT", "group___b_s_p___m_c_u.html#ga4244c3a2d457987d4a9ab21738c8c617", null ]
 ];

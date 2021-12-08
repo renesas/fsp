@@ -31,5 +31,6 @@ var group___m_o_t_o_r___e_n_c_o_d_e_r =
     [ "RM_MOTOR_ENCODER_StatusGet", "group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga33da9fde0aadb4e8f565b96ff1c9b547", null ],
     [ "RM_MOTOR_ENCODER_AngleGet", "group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga27fbe507dce70c440d1e65904364c2e0", null ],
     [ "RM_MOTOR_ENCODER_SpeedGet", "group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3c85184d654dd4e3dabbfc5d6b031b23", null ],
-    [ "RM_MOTOR_ENCODER_ErrorCheck", "group___m_o_t_o_r___e_n_c_o_d_e_r.html#gaceff5b6babf7eddc59469185a1c8e756", null ]
+    [ "RM_MOTOR_ENCODER_ErrorCheck", "group___m_o_t_o_r___e_n_c_o_d_e_r.html#gaceff5b6babf7eddc59469185a1c8e756", null ],
+    [ "RM_MOTOR_ENCODER_WaitStopFlagGet", "group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3e122409d2716c81f3acadd9bef82b9c", null ]
 ];

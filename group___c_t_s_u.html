@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -247,8 +247,8 @@ Disabled</li>
 <tr>
 <td>Interrupt priority level</td><td>MCU Specific Options</td><td></td><td>Priority level of all CTSU interrupt (CSTU_WR,CTSU_RD,CTSU_FN)  </td></tr>
 </table>
- <h2>Configurations for Driver &gt; CapTouch &gt; CTSU Driver on r_ctsu</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; CapTouch &gt; CTSU Driver on r_ctsu. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+ <h2>Configurations for CapTouch &gt; CTSU (r_ctsu)</h2>
+This module can be added to the Stacks tab via New Stack &gt; CapTouch &gt; CTSU (r_ctsu). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -291,7 +291,54 @@ Usage Notes</h1>
 <h3>Initial Offset Adjustment</h3>
 <p>The CTSU2 peripheral was designed with a built-in offset current circuit in consideration of the amount of change in current due to touch. The offset current circuit cancels enough of the parasitic capacitance for it to fit within the sensor ICO dynamic range.<br />
  This module automatically adjusts the offset current setting. As the adjustment uses the normal measurement process, <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> must be repeated several times after startup. Because the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__element__cfg__t">ctsu_element_cfg_t</a> member “so” is the starting point for adjustments, you can set the appropriate value for “so” in order to reduce the number of times the two functions must be run to complete the adjustment. Normally, the value used for “so” is a value adjusted by QE for Capacitive Touch.<br />
- For CTSU2, this feature can be turned off in the config.</p>
+</p>
+<table class="doxtable">
+<tr>
+<th>Mode</th><th>Default target value  </th></tr>
+<tr>
+<td>Self-capacitance</td><td>15360 (37.5%) </td></tr>
+<tr>
+<td>Self-capacitance using active shield</td><td>6144 (15%) </td></tr>
+<tr>
+<td>Mutual-capacitance</td><td>10240 (20%) </td></tr>
+</table>
+<p>The percentage is for the CCO's input limit. 100% is the measured value 40960.<br />
+ The default target value is based on 526us(CTSU1) or 256us(CTSU2).<br />
+ When the measurement time is changed, the target value is adjusted by the ratio with the base time.<br />
+</p>
+<p>Example of target value in combination of CTSUSNUM and CTSUSDPA.<br />
+ CTSU1 (CTSU clock = 32MHz, Self-capacitance mode)</p>
+<table class="doxtable">
+<tr>
+<th>Target value</th><th>CTSUSNUM</th><th>CTSUSDPA</th><th>Measurement time  </th></tr>
+<tr>
+<td>15360</td><td>0x3</td><td>0x7</td><td>526usec </td></tr>
+<tr>
+<td>30720</td><td>0x7</td><td>0x7</td><td>1052usec </td></tr>
+<tr>
+<td>30720</td><td>0x3</td><td>0xF</td><td>1052usec </td></tr>
+<tr>
+<td>7680</td><td>0x1</td><td>0x7</td><td>263usec </td></tr>
+<tr>
+<td>7680</td><td>0x3</td><td>0x3</td><td>263usec </td></tr>
+</table>
+<p>The measurement time changes depending on the combination of CTSUSNUM and CTSUSDPA.<br />
+ In the above table, CTSUPRRTIO is the recommended value of 3, and CSTUPRMODE is the recommended value of 2.<br />
+ When changing CTSUPRRATIO and CTSUPRMODE from the recommended values, follow the Hardware Manual for the measurement time.</p>
+<p>CTSU2 (Self-capacitance mode)</p>
+<table class="doxtable">
+<tr>
+<th>Target value</th><th>Target value (multi frequency)</th><th>CTSUSNUM</th><th>Measurement time  </th></tr>
+<tr>
+<td>7680</td><td>15360 (128us + 128us)</td><td>0x7</td><td>128usec </td></tr>
+<tr>
+<td>15360</td><td>30720 (256us + 256us) </td><td>0xF</td><td>256usec </td></tr>
+<tr>
+<td>3840</td><td>7680 (64us + 64us)</td><td>0x3</td><td>64usec </td></tr>
+</table>
+<p>The measurement time changes depending on CTSUSNUM.<br />
+ If STCLK cannot be set to 0.5MHz, it will not support the table above.<br />
+ When setting STCLK to other than 0.5MHz because the CTSU clock is not an integer, follow the hardware manual for the measurement time.</p>
 <h3>Random Pulse Frequency Measurement (CTSU1)</h3>
 <p>The CTSU1 peripheral measures at one drive frequency.<br />
  The drive frequency determines the amperage to the electrode and generally uses the value tuned with QE for Capacitive Touch.<br />
@@ -348,7 +395,7 @@ Example of Shield Electrode Structure</div></div>
  For CTSU1, a 27pF condenser should be connected externally.<br />
  For CTSU2, use <a class="el" href="group___a_d_c.html">Analog to Digital Converter (r_adc)</a>.</p>
 <h2>Measurement Mode</h2>
-<p>This module supports all three modes offered by the CTSU2 peripheral: self-capacitance, mutual capacitance, and current measurement modes. The temperature correction mode is also offered as a mode for updating the correction coefficient.</p>
+<p>This module supports all three modes offered by the CTSU2 peripheral: self-capacitance, mutual-capacitance, and current measurement modes. The temperature correction mode is also offered as a mode for updating the correction coefficient.</p>
 <h3>Self-capacitance Mode</h3>
 <p>The self-capacitance mode is used to measure the capacitance of each terminal (TS).<br />
  The CTSU2 peripheral measures the terminals in ascending order according to the TS numbers, then stores the data. For example, even if you want to use TS5, TS8, TS2, TS3 and TS6 in your application in that order, they will still be measured and stored in the order of TS2, TS3, TS5, TS6, and TS8. Therefore, you will need to reference buffer indexes [2], [4], [0], [1], and [3].<br />
@@ -366,12 +413,12 @@ Self-capacitance Measurement Period (CTSU1)</div></div>
 <img src="r_ctsu_Self_capacitance_Measurement_Period_ctsu2.png" alt="r_ctsu_Self_capacitance_Measurement_Period_ctsu2.png"/>
 <div class="caption">
 Self-capacitance Measurement Period (CTSU2)</div></div>
- <h3>Mutual Capacitance Mode</h3>
-<p>The mutual capacitance mode is used to measure the capacitance generated between the receive TS (Rx) and transmit TS (Tx), and therefore requires at least two terminals.<br />
+ <h3>Mutual-Capacitance Mode</h3>
+<p>The mutual-capacitance mode is used to measure the capacitance generated between the receive TS (Rx) and transmit TS (Tx), and therefore requires at least two terminals.<br />
  The CTSU2 peripheral measures all specified combinations of Rx and Tx. For example, when Rx is TS1 and TS3, and Tx is TS2, TS7 and TS4, the combinations are measured in the following order and the data is stored.<br />
  TS3-TS2, TS3-TS4, TS3-TS7, TS10-TS2, TS10-TS4, TS10-TS7<br />
- To measure the mutual capacitance generated between electrodes, the CTSU2 peripheral performs the measurement process on the same electrode twice. <br />
- The mutual capacitance is obtained by inverting the phase relationship of the pulse output and switched capacitor in the primary and secondary measurements, and calculating the difference between the two measurements. This module does not calculate the difference, but outputs the secondary measured result.<br />
+ To measure the mutual-capacitance generated between electrodes, the CTSU2 peripheral performs the measurement process on the same electrode twice. <br />
+ The mutual-capacitance is obtained by inverting the phase relationship of the pulse output and switched capacitor in the primary and secondary measurements, and calculating the difference between the two measurements. This module does not calculate the difference, but outputs the secondary measured result.<br />
  [CTSU1]<br />
  In default settings, the measurement period for each TS is twice of wait-time plus approximately 526us.<br />
  [CTSU2]<br />
@@ -850,6 +897,10 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a0c65e56730176fb25ab76ddb33b772ee">p_callback</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *)</td></tr>
 <tr class="memdesc:a0c65e56730176fb25ab76ddb33b772ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a CTSUFN occurs. <br /></td></tr>
 <tr class="separator:a0c65e56730176fb25ab76ddb33b772ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16f6a8656c90a6efeb22d35da9f07952"><td class="memItemLeft" align="right" valign="top"><a id="a16f6a8656c90a6efeb22d35da9f07952"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a16f6a8656c90a6efeb22d35da9f07952">interrupt_reverse_flag</a></td></tr>
+<tr class="memdesc:a16f6a8656c90a6efeb22d35da9f07952"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag in which read interrupt and end interrupt are reversed. <br /></td></tr>
+<tr class="separator:a16f6a8656c90a6efeb22d35da9f07952"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8feceb5a0f8f20795459c94d0c18bd5"><td class="memItemLeft" align="right" valign="top"><a id="aa8feceb5a0f8f20795459c94d0c18bd5"></a>
 <a class="el" href="group___c_t_s_u___a_p_i.html#gaf6b0abb6cb3e6996d8435268d5e7c9cf">ctsu_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#aa8feceb5a0f8f20795459c94d0c18bd5">error_status</a></td></tr>
 <tr class="memdesc:aa8feceb5a0f8f20795459c94d0c18bd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">error status variable to send to QE for serial tuning. <br /></td></tr>
@@ -862,6 +913,22 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#ac3493d9a66a667f943638459c3ba5392">p_context</a></td></tr>
 <tr class="memdesc:ac3493d9a66a667f943638459c3ba5392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. <br /></td></tr>
 <tr class="separator:ac3493d9a66a667f943638459c3ba5392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9630297d507bbd5d4f7ed56588d560ac"><td class="memItemLeft" align="right" valign="top"><a id="a9630297d507bbd5d4f7ed56588d560ac"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a9630297d507bbd5d4f7ed56588d560ac">serial_tuning_enable</a></td></tr>
+<tr class="memdesc:a9630297d507bbd5d4f7ed56588d560ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag of serial tuning status. <br /></td></tr>
+<tr class="separator:a9630297d507bbd5d4f7ed56588d560ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af566fb688739a5c442320bbb50ddf86a"><td class="memItemLeft" align="right" valign="top"><a id="af566fb688739a5c442320bbb50ddf86a"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#af566fb688739a5c442320bbb50ddf86a">serial_tuning_mutual_cnt</a></td></tr>
+<tr class="memdesc:af566fb688739a5c442320bbb50ddf86a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Word index into ctsuwr register array. <br /></td></tr>
+<tr class="separator:af566fb688739a5c442320bbb50ddf86a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd86e4b99d5cd0930a61d55cac6780a0"><td class="memItemLeft" align="right" valign="top"><a id="afd86e4b99d5cd0930a61d55cac6780a0"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#afd86e4b99d5cd0930a61d55cac6780a0">tuning_self_target_value</a></td></tr>
+<tr class="memdesc:afd86e4b99d5cd0930a61d55cac6780a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target self value for initial offset tuning. <br /></td></tr>
+<tr class="separator:afd86e4b99d5cd0930a61d55cac6780a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80b867400f41d3ae2908d179cde0ac61"><td class="memItemLeft" align="right" valign="top"><a id="a80b867400f41d3ae2908d179cde0ac61"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u.html#a80b867400f41d3ae2908d179cde0ac61">tuning_mutual_target_value</a></td></tr>
+<tr class="memdesc:a80b867400f41d3ae2908d179cde0ac61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target mutual value for initial offset tuning. <br /></td></tr>
+<tr class="separator:a80b867400f41d3ae2908d179cde0ac61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -1323,7 +1390,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -2,6 +2,7 @@ var searchData=
 [
   ['analog_20to_20digital_20converter_20_28r_5fadc_29',['Analog to Digital Converter (r_adc)',['../group___a_d_c.html',1,'']]],
   ['adc_20interface',['ADC Interface',['../group___a_d_c___a_p_i.html',1,'']]],
+  ['analog_20to_20digital_20converter_20_28r_5fadc_5fb_29',['Analog to Digital Converter (r_adc_b)',['../group___a_d_c___b.html',1,'']]],
   ['asynchronous_20general_20purpose_20timer_20_28r_5fagt_29',['Asynchronous General Purpose Timer (r_agt)',['../group___a_g_t.html',1,'']]],
   ['audio_20playback_20interface',['AUDIO PLAYBACK Interface',['../group___a_u_d_i_o___p_l_a_y_b_a_c_k___a_p_i.html',1,'']]],
   ['aws_20https',['AWS HTTPS',['../group___a_w_s___h_t_t_p_s.html',1,'']]],

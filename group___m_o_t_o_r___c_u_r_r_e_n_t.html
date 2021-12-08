@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -159,7 +159,8 @@ $(document).ready(function(){initNavTree('group___m_o_t_o_r___c_u_r_r_e_n_t.html
 </div>
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Motor Current (rm_motor_current)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
 </div><!--header-->
@@ -236,8 +237,8 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Middleware &gt; Motor &gt; Motor Current Controller on rm_motor_current</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Motor &gt; Motor Current Controller on rm_motor_current.<br />
+ <h2>Configurations for Motor &gt; Motor Current Controller (rm_motor_current)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor Current Controller (rm_motor_current).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -252,11 +253,21 @@ Encoder</li>
 </ul>
 </td><td>Sensorless </td><td>Select sensor type </td></tr>
 <tr>
-<td>General &gt; Current control decimation</td><td>Manual Entry</td><td>0 </td><td>Decimation of current control. </td></tr>
+<td>General &gt; Shunt type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 shunt</li>
+<li>
+2 shunt</li>
+<li>
+3 shunt</li>
+</ul>
+</td><td>2 shunt </td><td>Select shunt type </td></tr>
 <tr>
-<td>General &gt; PWM carrier frequency (kHz)</td><td>Manual Entry</td><td>20.0F </td><td>PWM carrier frequency. </td></tr>
+<td>General &gt; Current control decimation</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Decimation of current control. </td></tr>
 <tr>
-<td>General &gt; Input voltage</td><td>Manual Entry</td><td>24.0F </td><td>Input voltage for limitation of current PI control. </td></tr>
+<td>General &gt; PWM carrier frequency (kHz)</td><td>Must be a valid non-negative value.</td><td>20.0F </td><td>PWM carrier frequency. </td></tr>
+<tr>
+<td>General &gt; Input voltage (V)</td><td>Must be a valid non-negative value.</td><td>24.0F </td><td>Input voltage for limitation of current PI control. </td></tr>
 <tr>
 <td>General &gt; Sample delay compensation</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -274,43 +285,43 @@ Enable</li>
 </ul>
 </td><td>Enable </td><td>Select enable/disable voltage error compensation. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 1</td><td>Manual Entry</td><td>0.672F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 1</td><td>Must be a valid non-negative value.</td><td>0.672F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 2</td><td>Manual Entry</td><td>0.945F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 2</td><td>Must be a valid non-negative value.</td><td>0.945F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 3</td><td>Manual Entry</td><td>1.054F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 3</td><td>Must be a valid non-negative value.</td><td>1.054F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 4</td><td>Manual Entry</td><td>1.109F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 4</td><td>Must be a valid non-negative value.</td><td>1.109F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of voltage 5</td><td>Manual Entry</td><td>1.192F </td><td>Voltage error compensation table of voltage. </td></tr>
+<td>General &gt; Voltage error compensation table of voltage 5</td><td>Must be a valid non-negative value.</td><td>1.192F </td><td>Voltage error compensation table of voltage. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 1</td><td>Manual Entry</td><td>0.013F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 1</td><td>Must be a valid non-negative value.</td><td>0.013F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 2</td><td>Manual Entry</td><td>0.049F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 2</td><td>Must be a valid non-negative value.</td><td>0.049F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 3</td><td>Manual Entry</td><td>0.080F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 3</td><td>Must be a valid non-negative value.</td><td>0.080F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 4</td><td>Manual Entry</td><td>0.184F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 4</td><td>Must be a valid non-negative value.</td><td>0.184F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
-<td>General &gt; Voltage error compensation table of current 5</td><td>Manual Entry</td><td>0.751F </td><td>Voltage error compensation table of current. </td></tr>
+<td>General &gt; Voltage error compensation table of current 5</td><td>Must be a valid non-negative value.</td><td>0.751F </td><td>Voltage error compensation table of current. </td></tr>
 <tr>
 <td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
 <tr>
-<td>Design Parameter &gt; Current PI loop omega</td><td>Manual Entry</td><td>300.0F </td><td>Current PI loop omega </td></tr>
+<td>Design Parameter &gt; Current PI loop omega (Hz)</td><td>Must be a valid non-negative value.</td><td>300.0F </td><td>Current PI loop omega </td></tr>
 <tr>
-<td>Design Parameter &gt; Current PI loop zeta</td><td>Manual Entry</td><td>1.0F </td><td>Current PI loop zeta </td></tr>
+<td>Design Parameter &gt; Current PI loop zeta</td><td>Must be a valid non-negative value.</td><td>1.0F </td><td>Current PI loop zeta </td></tr>
 <tr>
-<td>Motor Parameter &gt; Pole pairs</td><td>Manual Entry</td><td>2 </td><td>Pole pairs </td></tr>
+<td>Motor Parameter &gt; Pole pairs</td><td>Must be a valid non-negative value.</td><td>2 </td><td>Pole pairs </td></tr>
 <tr>
-<td>Motor Parameter &gt; Resistance (ohm)</td><td>Manual Entry</td><td>8.5F </td><td>Resistance </td></tr>
+<td>Motor Parameter &gt; Resistance (ohm)</td><td>Must be a valid non-negative value.</td><td>8.5F </td><td>Resistance </td></tr>
 <tr>
-<td>Motor Parameter &gt; Inductance of d-axis (H)</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of d-axis </td></tr>
+<td>Motor Parameter &gt; Inductance of d-axis (H)</td><td>Must be a valid non-negative value.</td><td>0.0045F </td><td>Inductance of d-axis </td></tr>
 <tr>
-<td>Motor Parameter &gt; Inductance of q-axis (H)</td><td>Manual Entry</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
+<td>Motor Parameter &gt; Inductance of q-axis (H)</td><td>Must be a valid non-negative value.</td><td>0.0045F </td><td>Inductance of q-axis </td></tr>
 <tr>
-<td>Motor Parameter &gt; Permanent magnetic flux (Wb)</td><td>Manual Entry</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
+<td>Motor Parameter &gt; Permanent magnetic flux (Wb)</td><td>Must be a valid non-negative value.</td><td>0.02159F </td><td>Permanent magnetic flux </td></tr>
 <tr>
-<td>Motor Parameter &gt; Rotor inertia (kgm^2)</td><td>Manual Entry</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
+<td>Motor Parameter &gt; Rotor inertia (kgm^2)</td><td>Must be a valid non-negative value.</td><td>0.0000028F </td><td>Rotor inertia </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-motor_current-clock-configuration"></a>
@@ -331,7 +342,37 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the Motor Current in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> motor_current_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__input__current__t">motor_current_input_current_t</a> temp_input_current;</div><div class="line">    <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__input__voltage__t">motor_current_input_voltage_t</a> temp_input_voltage;</div><div class="line">    <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__get__voltage__t">motor_current_get_voltage_t</a>   temp_get_voltage;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gae8afb945610e1a9acd649aa5063f2467">RM_MOTOR_CURRENT_Open</a>(g_test_motor_current.p_ctrl, g_test_motor_current.p_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Basically run this module at A/D conversion finish interrupt.</span></div><div class="line"><span class="comment">     * This implementation is an example. */</span></div><div class="line"></div><div class="line">    <span class="comment">// while (true)</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Set current reference before get phase voltage */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga7d8d1096627100e83a3a15816dd7aec8">RM_MOTOR_CURRENT_CurrentReferenceSet</a>(g_test_motor_current.p_ctrl, 1.0F, 1.0F);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Set speed and phase data before get phase voltage */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gab118cba8bd337f696b4b86e0093784f6">RM_MOTOR_CURRENT_SpeedPhaseSet</a>(g_test_motor_current.p_ctrl, 104.72F, 1.0F);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        temp_input_current.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a805c45529230e57c59637664c9f77997">iu</a>     = 1.0F;</div><div class="line">        temp_input_current.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a222db4378be8c64f54ba2bd41318173d">iv</a>     = 1.0F;</div><div class="line">        temp_input_current.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a725cc1dddd61f27ec3836c40d18c0976">iw</a>     = 1.0F;</div><div class="line">        temp_input_voltage.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ad1ee4dac5fa7e55c3f4c1221dc8ff2ef">vdc</a>    = 24.0F;</div><div class="line">        temp_input_voltage.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a1b415bcb42d7afeb6b6e03994c733636">va_max</a> = 24.0F;</div><div class="line"></div><div class="line">        <span class="comment">/* Set electric current and voltage before get phase voltage */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga5d1ec6a1febc72c7a1ffb7105ba5701b">RM_MOTOR_CURRENT_CurrentSet</a>(g_test_motor_current.p_ctrl, temp_input_current, temp_input_voltage);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Activate the process. */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga9434c2979c78d4e75fb540cea5e3ffbb">RM_MOTOR_CURRENT_Run</a>(g_test_motor_current.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get d/q-axis current*/</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga89cc6bce8ed53d1216ca2c6d8c882bea">RM_MOTOR_CURRENT_CurrentGet</a>(g_test_motor_current.p_ctrl, &amp;f_get_id, &amp;f_get_iq);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get the flag of PI control */</span></div><div class="line">        (void) RM_MOTOR_CURRENT_PhaseVolageGet(g_test_motor_current.p_ctrl, &amp;temp_get_voltage);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get Output Parameter */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaa4264f3fac4a8f014d6b6815643ddbda">RM_MOTOR_CURRENT_ParameterGet</a>(g_test_motor_current.p_ctrl, &amp;test_output);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gafba5f225ac4f28d7224d71969ab4c4c4">RM_MOTOR_CURRENT_ParameterUpdate</a>(g_test_motor_current.p_ctrl, g_test_motor_current.p_cfg);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Reset the process. */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaf8d837f905e8b3f65bc7fb43f7870e8d">RM_MOTOR_CURRENT_Reset</a>(g_test_motor_current.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the module. */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga4f8ad8982c83a28f97f20b17667a936b">RM_MOTOR_CURRENT_Close</a>(g_test_motor_current.p_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> motor_current_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__input__current__t">motor_current_input_current_t</a> temp_input_current;</div><div class="line">    <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__input__voltage__t">motor_current_input_voltage_t</a> temp_input_voltage;</div><div class="line">    <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#structmotor__current__get__voltage__t">motor_current_get_voltage_t</a>   temp_get_voltage;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gae8afb945610e1a9acd649aa5063f2467">RM_MOTOR_CURRENT_Open</a>(g_test_motor_current.p_ctrl, g_test_motor_current.p_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Basically run this module at A/D conversion finish interrupt.</span></div><div class="line"><span class="comment">     * This implementation is an example. */</span></div><div class="line"></div><div class="line">    <span class="comment">// while (true)</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Set current reference before get phase voltage */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga7d8d1096627100e83a3a15816dd7aec8">RM_MOTOR_CURRENT_CurrentReferenceSet</a>(g_test_motor_current.p_ctrl, 1.0F, 1.0F);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Set speed and phase data before get phase voltage */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gab118cba8bd337f696b4b86e0093784f6">RM_MOTOR_CURRENT_SpeedPhaseSet</a>(g_test_motor_current.p_ctrl, 104.72F, 1.0F);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        temp_input_current.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a805c45529230e57c59637664c9f77997">iu</a>     = 1.0F;</div><div class="line">        temp_input_current.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a222db4378be8c64f54ba2bd41318173d">iv</a>     = 1.0F;</div><div class="line">        temp_input_current.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a725cc1dddd61f27ec3836c40d18c0976">iw</a>     = 1.0F;</div><div class="line">        temp_input_voltage.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ad1ee4dac5fa7e55c3f4c1221dc8ff2ef">vdc</a>    = 24.0F;</div><div class="line">        temp_input_voltage.<a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a1b415bcb42d7afeb6b6e03994c733636">va_max</a> = 24.0F;</div><div class="line"></div><div class="line">        <span class="comment">/* Set electric current and voltage before get phase voltage */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga5d1ec6a1febc72c7a1ffb7105ba5701b">RM_MOTOR_CURRENT_CurrentSet</a>(g_test_motor_current.p_ctrl, temp_input_current, temp_input_voltage);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Activate the process. */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga9434c2979c78d4e75fb540cea5e3ffbb">RM_MOTOR_CURRENT_Run</a>(g_test_motor_current.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get d/q-axis current*/</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga89cc6bce8ed53d1216ca2c6d8c882bea">RM_MOTOR_CURRENT_CurrentGet</a>(g_test_motor_current.p_ctrl, &amp;f_get_id, &amp;f_get_iq);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get the flag of PI control */</span></div><div class="line">        (void) RM_MOTOR_CURRENT_PhaseVolageGet(g_test_motor_current.p_ctrl, &amp;temp_get_voltage);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get Output Parameter */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaa4264f3fac4a8f014d6b6815643ddbda">RM_MOTOR_CURRENT_ParameterGet</a>(g_test_motor_current.p_ctrl, &amp;test_output);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gafba5f225ac4f28d7224d71969ab4c4c4">RM_MOTOR_CURRENT_ParameterUpdate</a>(g_test_motor_current.p_ctrl, g_test_motor_current.p_cfg);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Reset the process. */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaf8d837f905e8b3f65bc7fb43f7870e8d">RM_MOTOR_CURRENT_Reset</a>(g_test_motor_current.p_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the module. */</span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#ga4f8ad8982c83a28f97f20b17667a936b">RM_MOTOR_CURRENT_Close</a>(g_test_motor_current.p_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaef437374be3e3458b7914eab38c634b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaef437374be3e3458b7914eab38c634b5">motor_current_shunt_type_t</a> </td></tr>
+<tr class="separator:gaef437374be3e3458b7914eab38c634b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gaef437374be3e3458b7914eab38c634b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaef437374be3e3458b7914eab38c634b5">&#9670;&nbsp;</a></span>motor_current_shunt_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___c_u_r_r_e_n_t.html#gaef437374be3e3458b7914eab38c634b5">motor_current_shunt_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Selection of shunt type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaef437374be3e3458b7914eab38c634b5ad89a48f8f28febad656b5fe715b0ce9f"></a>MOTOR_CURRENT_SHUNT_TYPE_1_SHUNT&#160;</td><td class="fielddoc"><p>Only use U phase current. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef437374be3e3458b7914eab38c634b5af4e3d8cbc613d9de64b40684f8037f2f"></a>MOTOR_CURRENT_SHUNT_TYPE_2_SHUNT&#160;</td><td class="fielddoc"><p>Use U and W phase current. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaef437374be3e3458b7914eab38c634b5a90cbc2279405e9bda077a22ad44be9b3"></a>MOTOR_CURRENT_SHUNT_TYPE_3_SHUNT&#160;</td><td class="fielddoc"><p>Use all phase current. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="gae8afb945610e1a9acd649aa5063f2467"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gae8afb945610e1a9acd649aa5063f2467">&#9670;&nbsp;</a></span>RM_MOTOR_CURRENT_Open()</h2>
 
@@ -813,7 +854,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

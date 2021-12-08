@@ -39,7 +39,6 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
     ] ],
     [ "rm_zmod4xxx_cfg_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t", [
       [ "p_comms_instance", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8cce7b013ebccc3b0b0aed0e9436e922", null ],
-      [ "p_timer_instance", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a1c13e8ee7d69d06570f8e071a7304696", null ],
       [ "p_irq_instance", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a692f0a4eaad2c9e8e8cdbb0a2e792dd9", null ],
       [ "p_zmod4xxx_device", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6f8f729eb4708424f4b3ce970dc36f9e", null ],
       [ "p_zmod4xxx_handle", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ac02d53dedacac7f55fa14decc4f1873f", null ],

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: iaq_2nd_gen_handle_t Struct Reference</title>
+<title>RA Flexible Software Package Documentation: rm_motor_120_degree Directory Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -76,7 +76,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('structiaq__2nd__gen__handle__t.html','');});
+$(document).ready(function(){initNavTree('dir_45b489b8bce472f07f73dbc5651bafd4.html','');});
 </script>
 
 <script src="search/mark.min.js"></script>
@@ -158,86 +158,18 @@ $(document).ready(function(){initNavTree('structiaq__2nd__gen__handle__t.html','
     <div id="searchResults"></div>
 </div>
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">iaq_2nd_gen_handle_t Struct Reference</div>  </div>
+<div class="title">rm_motor_120_degree Directory Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Variables that describe the sensor or the algorithm state.  
- <a href="structiaq__2nd__gen__handle__t.html#details">More...</a></p>
-
-<p><code>#include &lt;iaq_2nd_gen.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a4d8680e56e4855ca1c76b681db8dd845"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structiaq__2nd__gen__handle__t.html#a4d8680e56e4855ca1c76b681db8dd845">log_rcda</a> [9]</td></tr>
-<tr class="separator:a4d8680e56e4855ca1c76b681db8dd845"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adee482c83d3aef0c70c1a83137c02c88"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structiaq__2nd__gen__handle__t.html#adee482c83d3aef0c70c1a83137c02c88">stabilization_sample</a></td></tr>
-<tr class="separator:adee482c83d3aef0c70c1a83137c02c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a855523a9549119d1f65969483829b65d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structiaq__2nd__gen__handle__t.html#a855523a9549119d1f65969483829b65d">sample_number</a></td></tr>
-<tr class="separator:a855523a9549119d1f65969483829b65d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Variables that describe the sensor or the algorithm state. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a id="a4d8680e56e4855ca1c76b681db8dd845"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d8680e56e4855ca1c76b681db8dd845">&#9670;&nbsp;</a></span>log_rcda</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">float iaq_2nd_gen_handle_t::log_rcda[9]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>log10 of CDA resistances. </p>
-
-</div>
-</div>
-<a id="adee482c83d3aef0c70c1a83137c02c88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adee482c83d3aef0c70c1a83137c02c88">&#9670;&nbsp;</a></span>stabilization_sample</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t iaq_2nd_gen_handle_t::stabilization_sample</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Number of samples still needed for stabilization. </p>
-
-</div>
-</div>
-<a id="a855523a9549119d1f65969483829b65d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a855523a9549119d1f65969483829b65d">&#9670;&nbsp;</a></span>sample_number</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t iaq_2nd_gen_handle_t::sample_number</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sample number after stabilization. Stops counting at 255. </p>
-
-</div>
-</div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li>iaq_2nd_gen.h</li>
-</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="structiaq__2nd__gen__handle__t.html">iaq_2nd_gen_handle_t</a></li>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+    <li class="navelem"><a class="el" href="dir_b18d2d13694890cc5ac49a5be67e3b2d.html">ra</a></li><li class="navelem"><a class="el" href="dir_d71e6481d15bd93e41670a57fe245af4.html">fsp</a></li><li class="navelem"><a class="el" href="dir_cc90537d9d9120754144c336f41d5945.html">src</a></li><li class="navelem"><a class="el" href="dir_45b489b8bce472f07f73dbc5651bafd4.html">rm_motor_120_degree</a></li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

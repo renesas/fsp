@@ -15,17 +15,13 @@ var group___r_m___z_m_o_d4_x_x_x =
       [ "init_process_params", "group___r_m___z_m_o_d4_x_x_x.html#a6f86201d4a114d5714f700501338e5f7", null ],
       [ "p_cfg", "group___r_m___z_m_o_d4_x_x_x.html#a55df2cbb3cdc4bbeb75db1dba936d2b1", null ],
       [ "p_comms_i2c_instance", "group___r_m___z_m_o_d4_x_x_x.html#afc82544a966e7f146ceee4ef404b7582", null ],
-      [ "p_timer_instance", "group___r_m___z_m_o_d4_x_x_x.html#acc7dbfa47040852286278e90196fac61", null ],
+      [ "p_zmod4xxx_lib", "group___r_m___z_m_o_d4_x_x_x.html#a68cd23f22e6e0fea3b8d8869ea3954f5", null ],
       [ "p_irq_instance", "group___r_m___z_m_o_d4_x_x_x.html#a993f572e2bc8acef02a151b7e1a38808", null ],
-      [ "p_zmod4xxx_device", "group___r_m___z_m_o_d4_x_x_x.html#a9bd183527db0ef0aaa5b194874229c5d", null ],
-      [ "p_zmod4xxx_handle", "group___r_m___z_m_o_d4_x_x_x.html#a979bd7eacfb1b1ffe3eff1797935584e", null ],
-      [ "p_zmod4xxx_results", "group___r_m___z_m_o_d4_x_x_x.html#a08b22b5e1d1afed5ae242a8abe5b3632", null ],
-      [ "temperature", "group___r_m___z_m_o_d4_x_x_x.html#a5606329e7ff0e1b3479c30995f923915", null ],
-      [ "humidity", "group___r_m___z_m_o_d4_x_x_x.html#acc0fd9dc724ac58683c06e570bc00ccd", null ],
       [ "p_context", "group___r_m___z_m_o_d4_x_x_x.html#a6151d069461571549ecbf52193ab8624", null ],
       [ "p_comms_callback", "group___r_m___z_m_o_d4_x_x_x.html#a57301a9ef64a2317881cdc7d89783fb5", null ],
       [ "p_irq_callback", "group___r_m___z_m_o_d4_x_x_x.html#a0438d7a16c46e81db655c9627a2e3fac", null ]
     ] ],
+    [ "rm_zmod4xxx_lib_type_t", "group___r_m___z_m_o_d4_x_x_x.html#gacebf611dd2d5d0b091db57023ea373b6", null ],
     [ "RM_ZMOD4XXX_Open", "group___r_m___z_m_o_d4_x_x_x.html#ga2d4f33091a3b32dc0bda323c24a4eb15", null ],
     [ "RM_ZMOD4XXX_MeasurementStart", "group___r_m___z_m_o_d4_x_x_x.html#ga21bde6c18d166c38790d044a3325d7b9", null ],
     [ "RM_ZMOD4XXX_MeasurementStop", "group___r_m___z_m_o_d4_x_x_x.html#ga1a9e4762c544db1dc924fdff62bf9cc7", null ],
@@ -38,6 +34,5 @@ var group___r_m___z_m_o_d4_x_x_x =
     [ "RM_ZMOD4XXX_SulfurOdorDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaf200a9dc7ca8bf0601c2a2b96c341ecf", null ],
     [ "RM_ZMOD4XXX_Oaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaeafe7943df31f237ac45310796df64b2", null ],
     [ "RM_ZMOD4XXX_Oaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33", null ],
-    [ "RM_ZMOD4XXX_Close", "group___r_m___z_m_o_d4_x_x_x.html#ga564266f1fd972d2a4b0d607925a8be48", null ],
-    [ "rm_zmod4xxx_comms_i2c_callback", "group___r_m___z_m_o_d4_x_x_x.html#ga9587dfcac2e80e4adf26f12dc6dc06ae", null ]
+    [ "RM_ZMOD4XXX_Close", "group___r_m___z_m_o_d4_x_x_x.html#ga564266f1fd972d2a4b0d607925a8be48", null ]
 ];

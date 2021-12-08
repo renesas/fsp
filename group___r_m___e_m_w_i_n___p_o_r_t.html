@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -306,7 +306,7 @@ WARNING: Disabling vertical sync will result in tearing. It is recommended to al
 <li>
 Unaligned (slower)</li>
 </ul>
-</td><td>Unaligned (slower) </td><td>Setting this option to 8-bit alignment can allow the hardware JPEG Codec to directly read JPEG data. This speeds up JPEG decoding operations and reduces RAM overhead, but all JPEG images must reside on an 8-byte boundary.<br />
+</td><td>8-byte aligned (faster) </td><td>Setting this option to 8-bit alignment can allow the hardware JPEG Codec to directly read JPEG data. This speeds up JPEG decoding operations and reduces RAM overhead, but all JPEG images must reside on an 8-byte boundary.<br />
 <br />
 When this option is enabled the input buffer is not allocated. </td></tr>
 <tr>
@@ -351,8 +351,11 @@ Getting Started</h2>
 <li>JPEG Encode/Decode and Data Transfer Interrupts (if applicable)</li>
 </ul>
 </li>
+<li>Confirm stack and heap are configured as needed<ul>
+<li>When starting development a minimum stack of 0x1000 (4K) and heap of 0x4000 (16K) are recommended until actual usage can be characterized</li>
+</ul>
+</li>
 <li>Click Generate Project Content to save and commit configuration changes</li>
-<li>(Non-RTOS projects only) Before calling GUI_Init, call g_hal_init to initialize the framebuffer address.</li>
 </ol>
 <p>At this point the project is now ready to build with emWin. Please refer to the SEGGER emWin User Guide (UM03001) as well as demo and sample code for details on how to create a GUI application.</p>
 <h2>Using Hardware Acceleration</h2>
@@ -379,6 +382,10 @@ Getting Started</h2>
 <li>Hardware acceleration is not available for SEGGER's RLE format.</li>
 </ul>
 </li>
+<li>JPEG images:<ul>
+<li>Align any user-declared JPEG data to an 8-byte boundary. If 8-byte alignment cannot be guaranteed disable the <b>JPEG Decoding -&gt; General -&gt; Input Alignment</b> option in the RA Configuration.</li>
+</ul>
+</li>
 </ul>
 <h2>Multi-thread Support</h2>
 <p>When the "Multi-thread Support" configuration is enabled, emWin can be called from multiple threads. This comes with advantages and disadvantages:</p>
@@ -396,8 +403,8 @@ Limitations</h2>
 <p>Developers should be aware of the following limitations when using SEGGER emWin with FSP:</p>
 <ul>
 <li>Hardware acceleration is not available when using color modes lower than 16 bits.</li>
-<li>Support for rotated screen modes is in development.</li>
 <li>Hardware acceleration is not available for SEGGER's RLE image format.</li>
+<li>Rotated screen modes are not supported.</li>
 </ul>
 <hr/>
 <h1><a class="anchor" id="rm-emwin-port-examples"></a>
@@ -413,7 +420,7 @@ Basic Example</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -159,7 +159,8 @@ $(document).ready(function(){initNavTree('group___m_o_t_o_r___d_r_i_v_e_r.html',
 </div>
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Motor Driver (rm_motor_driver)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
 </div><!--header-->
@@ -221,40 +222,74 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr>
+<td>ADC_B Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Select ADC_B module support. </td></tr>
 </table>
- <h2>Configurations for Middleware &gt; Motor &gt; ADC and PWM Modulation Driver on rm_motor_driver</h2>
-This module can be added to the Stacks tab via New Stack &gt; Middleware &gt; Motor &gt; ADC and PWM Modulation Driver on rm_motor_driver .<br />
+ <h2>Configurations for Motor &gt; ADC and PWM Modulation (rm_motor_driver)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Motor &gt; ADC and PWM Modulation (rm_motor_driver).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr>
 <td>General &gt; Name</td><td>Name must be a valid C symbol</td><td>g_motor_driver0 </td><td>Module name. </td></tr>
 <tr>
-<td>General &gt; PWM Timer Frequency[MHz]</td><td>Manual Entry</td><td>120 </td><td>GPT PWM Timer Frequency </td></tr>
+<td>General &gt; Shunt type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 shunt</li>
+<li>
+2 shunt</li>
+<li>
+3 shunt</li>
+</ul>
+</td><td>2 shunt </td><td>Select shunt type </td></tr>
 <tr>
-<td>General &gt; PWM Carrier Period[Microseconds]</td><td>Manual Entry</td><td>50 </td><td>GPT PWM Carrier Period </td></tr>
+<td>General &gt; Modulation method</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+SVPWM</li>
+<li>
+SPWM</li>
+</ul>
+</td><td>SVPWM </td><td>Select PWM modulation method </td></tr>
 <tr>
-<td>General &gt; Dead Time[Raw Counts]</td><td>Manual Entry</td><td>240 </td><td>GPT PWM Dead Time </td></tr>
+<td>General &gt; PWM Timer Frequency (MHz)</td><td>Must be a valid non-negative value.</td><td>120 </td><td>GPT PWM timer frequency </td></tr>
 <tr>
-<td>General &gt; Current Range[A]</td><td>Manual Entry</td><td>27.5F </td><td>Current Range to measure(Maximum input current) </td></tr>
+<td>General &gt; PWM Carrier Period (Microseconds)</td><td>Must be a valid non-negative value.</td><td>50 </td><td>GPT PWM carrier period </td></tr>
 <tr>
-<td>General &gt; Voltage Range[V]</td><td>Manual Entry</td><td>111.0F </td><td>Voltage Range to measure(Maximum input Main Line Voltage) </td></tr>
+<td>General &gt; Dead Time (Raw Counts)</td><td>Must be a valid non-negative value.</td><td>240 </td><td>GPT PWM dead time </td></tr>
 <tr>
-<td>General &gt; Counts for current offset measurement</td><td>Manual Entry</td><td>500 </td><td>How many times to measure current offset </td></tr>
+<td>General &gt; Current Range (A)</td><td>Must be a valid non-negative value.</td><td>27.5F </td><td>Current range to measure(Maximum input current) </td></tr>
 <tr>
-<td>General &gt; A/D conversion channel for U Phase current</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D channel for U Phase current </td></tr>
+<td>General &gt; Voltage Range (V)</td><td>Must be a valid non-negative value.</td><td>111.0F </td><td>Voltage range to measure(Maximum input Main Line Voltage) </td></tr>
 <tr>
-<td>General &gt; A/D conversion channel for W Phase current</td><td>Manual Entry</td><td>2 </td><td>Specify the A/D channel for W Phase current </td></tr>
+<td>General &gt; Counts for current offset measurement</td><td>Must be a valid non-negative value.</td><td>500 </td><td>How many times to measure current offset </td></tr>
 <tr>
-<td>General &gt; A/D conversion channel for Main Line Voltage</td><td>Manual Entry</td><td>5 </td><td>Specify the A/D channel for Main Line Voltage </td></tr>
+<td>General &gt; A/D conversion channel for U Phase current</td><td>Manual Entry</td><td>0 </td><td>Specify the A/D channel for U phase current </td></tr>
 <tr>
-<td>General &gt; Input Voltage</td><td>Manual Entry</td><td>24.0F </td><td>Input Voltage </td></tr>
+<td>General &gt; A/D conversion channel for W Phase current</td><td>Manual Entry</td><td>2 </td><td>Specify the A/D channel for W phase current </td></tr>
+<tr>
+<td>General &gt; A/D conversion channel for Main Line Voltage</td><td>Manual Entry</td><td>5 </td><td>Specify the A/D channel for main line voltage </td></tr>
+<tr>
+<td>General &gt; A/D conversion channel for V Phase current</td><td>Manual Entry</td><td>1 </td><td>Specify the A/D channel for V phase current </td></tr>
+<tr>
+<td>General &gt; Adjustment value to current A/D</td><td>Must be a valid non-negative value.</td><td>20.0 </td><td>Value to adjust 1shunt A/D double buffer </td></tr>
+<tr>
+<td>General &gt; Minimum difference of PWM duty</td><td>Manual Entry</td><td>300 </td><td>Minimum difference of PWM duty </td></tr>
+<tr>
+<td>General &gt; Adjustment delay of A/D conversion</td><td>Manual Entry</td><td>240 </td><td>Adjustment delay of A/D conversion </td></tr>
+<tr>
+<td>General &gt; Input Voltage (V)</td><td>Must be a valid non-negative value.</td><td>24.0F </td><td>Input voltage </td></tr>
 <tr>
 <td>General &gt; Resolution of A/D conversion</td><td>Manual Entry</td><td>0xFFF </td><td>Resolution of A/D conversion </td></tr>
 <tr>
 <td>General &gt; Offset of A/D conversion for current</td><td>Manual Entry</td><td>0x745 </td><td>Offset of A/D conversion for current </td></tr>
 <tr>
-<td>General &gt; Conversion level of A/D conversion for voltage</td><td>Manual Entry</td><td>0.6F </td><td>Conversion level of A/D conversion for voltage </td></tr>
+<td>General &gt; Conversion level of A/D conversion for voltage</td><td>Must be a valid non-negative value.</td><td>0.66F </td><td>Conversion level of A/D conversion for voltage </td></tr>
 <tr>
 <td>General &gt; GTIOCA Stop Level</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -272,7 +307,7 @@ Pin Level High</li>
 </ul>
 </td><td>Pin Level High </td><td>Select the behavior of the output pin when the timer is stopped. </td></tr>
 <tr>
-<td>Modulation &gt; Maximum Duty</td><td>Manual Entry</td><td>0.9375F </td><td>Maximum Duty of PWM </td></tr>
+<td>Modulation &gt; Maximum Duty</td><td>Must be a valid non-negative value.</td><td>0.9375F </td><td>Maximum duty of PWM </td></tr>
 <tr>
 <td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called at A/D conversion finish interrupt. </td></tr>
 </table>
@@ -292,7 +327,34 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the Motor Driver in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> motor_driver_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga4bd2f8839a086bd8a9d43f621a21457e">RM_MOTOR_DRIVER_Open</a>(&amp;g_motor_driver0.p_ctrl, &amp;g_motor_driver0.p_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Basically run this module at cyclic interrupt (e.g. included GPT PWM Carrier intterupt).</span></div><div class="line"><span class="comment">     * This implementation is an example. */</span></div><div class="line"></div><div class="line">    <span class="comment">// while (true)</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get electric current, main line voltage and maximum voltage component */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#gabd93daea13fa1de8ca55d0d455dbac8b">RM_MOTOR_DRIVER_CurrentGet</a>(&amp;g_motor_driver0.p_ctrl, &amp;f_get_iu, &amp;f_get_iw, &amp;f_get_vdc, &amp;f_get_va_max);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get the flag of A/D convderted current offset */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga633b9d92ae17f4a177d5cf9d7e606433">RM_MOTOR_DRIVER_FlagCurrentOffsetGet</a>(&amp;g_motor_driver0.p_ctrl, &amp;u1_get_flg_offset);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">// Perform current control process here</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Set phase voltage */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#gab4b6a5885ff92438ae5aa4bec910c2d7">RM_MOTOR_DRIVER_PhaseVoltageSet</a>(&amp;g_motor_driver0.p_ctrl, 1.0F, 1.0F, 1.0F);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga90e9bf7d09f25ca18cdb735798ca5c1e">RM_MOTOR_DRIVER_ParameterUpdate</a>(&amp;g_motor_driver0.p_ctrl, &amp;g_motor_driver0.p_cfg);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga47e6e5e673759ff4a9a4f6732d684114">RM_MOTOR_DRIVER_Reset</a>(&amp;g_motor_driver0.p_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">//</span></div><div class="line"><span class="comment"></span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga8578efe055c99d6df3e22c50c4b4a19f">RM_MOTOR_DRIVER_Close</a>(&amp;g_motor_driver0.p_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> motor_driver_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga4bd2f8839a086bd8a9d43f621a21457e">RM_MOTOR_DRIVER_Open</a>(&amp;g_motor_driver0.p_ctrl, &amp;g_motor_driver0.p_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Basically run this module at cyclic interrupt (e.g. included GPT PWM Carrier intterupt).</span></div><div class="line"><span class="comment">     * This implementation is an example. */</span></div><div class="line"></div><div class="line">    <span class="comment">// while (true)</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Application work here. */</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get electric current, main line voltage and maximum voltage component */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#gabd93daea13fa1de8ca55d0d455dbac8b">RM_MOTOR_DRIVER_CurrentGet</a>(&amp;g_motor_driver0.p_ctrl, &amp;f_get_iu, &amp;f_get_iw, &amp;f_get_vdc, &amp;f_get_va_max);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Get the flag of A/D convderted current offset */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga633b9d92ae17f4a177d5cf9d7e606433">RM_MOTOR_DRIVER_FlagCurrentOffsetGet</a>(&amp;g_motor_driver0.p_ctrl, &amp;u1_get_flg_offset);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">// Perform current control process here</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Set phase voltage */</span></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#gab4b6a5885ff92438ae5aa4bec910c2d7">RM_MOTOR_DRIVER_PhaseVoltageSet</a>(&amp;g_motor_driver0.p_ctrl, 1.0F, 1.0F, 1.0F);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">        (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga90e9bf7d09f25ca18cdb735798ca5c1e">RM_MOTOR_DRIVER_ParameterUpdate</a>(&amp;g_motor_driver0.p_ctrl, &amp;g_motor_driver0.p_cfg);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga47e6e5e673759ff4a9a4f6732d684114">RM_MOTOR_DRIVER_Reset</a>(&amp;g_motor_driver0.p_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">//</span></div><div class="line"><span class="comment"></span></div><div class="line">    (void) <a class="code" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga8578efe055c99d6df3e22c50c4b4a19f">RM_MOTOR_DRIVER_Close</a>(&amp;g_motor_driver0.p_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga838f55612e0a7eaa8ecb9f8c836b943d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga838f55612e0a7eaa8ecb9f8c836b943d">motor_driver_modulation_method_t</a> </td></tr>
+<tr class="separator:ga838f55612e0a7eaa8ecb9f8c836b943d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga838f55612e0a7eaa8ecb9f8c836b943d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga838f55612e0a7eaa8ecb9f8c836b943d">&#9670;&nbsp;</a></span>motor_driver_modulation_method_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___d_r_i_v_e_r.html#ga838f55612e0a7eaa8ecb9f8c836b943d">motor_driver_modulation_method_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga838f55612e0a7eaa8ecb9f8c836b943da1d720f25a026bd9d664494544264204c"></a>MOTOR_DRIVER_MODULATION_METHOD_SPWM&#160;</td><td class="fielddoc"><p>Sinusoidal pulse-width-modulation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga838f55612e0a7eaa8ecb9f8c836b943dacafa57f3fa4f25e8b0ef3c42f30c58ac"></a>MOTOR_DRIVER_MODULATION_METHOD_SVPWM&#160;</td><td class="fielddoc"><p>Space vector pulse-width-modulation. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="ga4bd2f8839a086bd8a9d43f621a21457e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga4bd2f8839a086bd8a9d43f621a21457e">&#9670;&nbsp;</a></span>RM_MOTOR_DRIVER_Open()</h2>
 
@@ -587,7 +649,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

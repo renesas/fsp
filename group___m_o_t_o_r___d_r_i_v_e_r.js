@@ -1,5 +1,9 @@
 var group___m_o_t_o_r___d_r_i_v_e_r =
 [
+    [ "motor_driver_modulation_method_t", "group___m_o_t_o_r___d_r_i_v_e_r.html#ga838f55612e0a7eaa8ecb9f8c836b943d", [
+      [ "MOTOR_DRIVER_MODULATION_METHOD_SPWM", "group___m_o_t_o_r___d_r_i_v_e_r.html#gga838f55612e0a7eaa8ecb9f8c836b943da1d720f25a026bd9d664494544264204c", null ],
+      [ "MOTOR_DRIVER_MODULATION_METHOD_SVPWM", "group___m_o_t_o_r___d_r_i_v_e_r.html#gga838f55612e0a7eaa8ecb9f8c836b943dacafa57f3fa4f25e8b0ef3c42f30c58ac", null ]
+    ] ],
     [ "RM_MOTOR_DRIVER_Open", "group___m_o_t_o_r___d_r_i_v_e_r.html#ga4bd2f8839a086bd8a9d43f621a21457e", null ],
     [ "RM_MOTOR_DRIVER_Close", "group___m_o_t_o_r___d_r_i_v_e_r.html#ga8578efe055c99d6df3e22c50c4b4a19f", null ],
     [ "RM_MOTOR_DRIVER_Reset", "group___m_o_t_o_r___d_r_i_v_e_r.html#ga47e6e5e673759ff4a9a4f6732d684114", null ],

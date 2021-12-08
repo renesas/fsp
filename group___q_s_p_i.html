@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -191,6 +191,10 @@ Functions</h2></td></tr>
 <tr class="separator:ga03da39d9d9f82ea0dfd0f7cc4f253189"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3762ca61aea95737c5a018d0aa9bd6f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___q_s_p_i.html#ga3762ca61aea95737c5a018d0aa9bd6f1">R_QSPI_BankSet</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, uint32_t bank)</td></tr>
 <tr class="separator:ga3762ca61aea95737c5a018d0aa9bd6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3439f15e60af9cf55e15e8016b67875"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___q_s_p_i.html#gaf3439f15e60af9cf55e15e8016b67875">R_QSPI_DirectTransfer</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const p_transfer, <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a> direction)</td></tr>
+<tr class="separator:gaf3439f15e60af9cf55e15e8016b67875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f163c6c0a41fae3a196d3bf2eeb0907"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___q_s_p_i.html#ga3f163c6c0a41fae3a196d3bf2eeb0907">R_QSPI_AutoCalibrate</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga3f163c6c0a41fae3a196d3bf2eeb0907"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the QSPI peripheral on RA MCUs. This module implements the <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html">SPI Flash Interface</a>. </p>
@@ -233,8 +237,8 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If selected code for programming on multiple lines in extended SPI mode is included in the build. </td></tr>
 </table>
- <h2>Configurations for Driver &gt; Storage &gt; QSPI Driver on r_qspi</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Storage &gt; QSPI Driver on r_qspi.<br />
+ <h2>Configurations for Storage &gt; QSPI (r_qspi)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Storage &gt; QSPI (r_qspi).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -948,13 +952,80 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<a id="gaf3439f15e60af9cf55e15e8016b67875"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf3439f15e60af9cf55e15e8016b67875">&#9670;&nbsp;</a></span>R_QSPI_DirectTransfer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_QSPI_DirectTransfer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_transfer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga80ecf65e658f5b36bfe0bf2d88dd3ca5">spi_flash_direct_transfer_dir_t</a>&#160;</td>
+          <td class="paramname"><em>direction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read/Write raw data directly with the OctaFlash/OctaRAM device. Unsupported by QSPI.</p>
+<p>Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a21da248768dd75281ea7b29f2d243afd">spi_flash_api_t::directTransfer</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported by QSPI. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3f163c6c0a41fae3a196d3bf2eeb0907"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3f163c6c0a41fae3a196d3bf2eeb0907">&#9670;&nbsp;</a></span>R_QSPI_AutoCalibrate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_QSPI_AutoCalibrate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Auto-calibrate the OctaRAM device using the preamble pattern. Unsupported by QSPI. Implements <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ad04434e2c049da61d3389355d5961f31">spi_flash_api_t::autoCalibrate</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>API not supported by QSPI </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

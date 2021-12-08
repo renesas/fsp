@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -207,6 +207,10 @@ Enumerations</h2></td></tr>
 <tr class="separator:gae2177d6e5bf43e3749cc60f835456847"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaafc4060027875f8fe46242b0656d7814"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> </td></tr>
 <tr class="separator:gaafc4060027875f8fe46242b0656d7814"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga625267e574e3f26d9d55918652e91176"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#ga625267e574e3f26d9d55918652e91176">adc_group_id_t</a> </td></tr>
+<tr class="separator:ga625267e574e3f26d9d55918652e91176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee17c30275c1c9376cc485a62ea121eb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a> </td></tr>
+<tr class="separator:gaee17c30275c1c9376cc485a62ea121eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2783ab2e29809bf0a50bc66c6fa8d3c6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#ga2783ab2e29809bf0a50bc66c6fa8d3c6">adc_state_t</a> </td></tr>
 <tr class="separator:ga2783ab2e29809bf0a50bc66c6fa8d3c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -272,7 +276,19 @@ Placeholder for user data. </td></tr>
 <td class="fieldname">
 channel</td>
 <td class="fielddoc">
-Channel of conversion result. Only valid for ADC_EVENT_CONVERSION_COMPLETE. </td></tr>
+Channel of conversion result. Only valid for r_adc ADC_EVENT_CONVERSION_COMPLETE. </td></tr>
+<tr><td class="fieldtype">
+<a id="a50ca40e036fb0058265aca9e500911c0"></a>uint64_t</td>
+<td class="fieldname">
+channel_mask</td>
+<td class="fielddoc">
+Channel mask for conversion result. Only valid for r_adc_b. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2e4f7b7ce1a5858b39f7a85ad16ab655"></a><a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a></td>
+<td class="fieldname">
+group_mask</td>
+<td class="fielddoc">
+Group Mask. </td></tr>
 </table>
 
 </div>
@@ -292,7 +308,7 @@ Channel of conversion result. Only valid for ADC_EVENT_CONVERSION_COMPLETE. </td
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a00e0f32e4dfb5790b1dbdd3723dd38cf"></a>__I uint16_t *</td>
+<a id="a779dbfcdb47eb8fb79af75eed3b4284b"></a>__I void *</td>
 <td class="fieldname">
 p_address</td>
 <td class="fielddoc">
@@ -429,6 +445,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a44289d7822720544751eb22e3d7d38ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f9e091ca57ca2c58262f66ab5c341c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a2f9e091ca57ca2c58262f66ab5c341c9">scanStart</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a2f9e091ca57ca2c58262f66ab5c341c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeae126b8a09e1ec34e8e3afb4a3344ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#aeae126b8a09e1ec34e8e3afb4a3344ff">scanGroupStart</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a> group_mask)</td></tr>
+<tr class="separator:aeae126b8a09e1ec34e8e3afb4a3344ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90346240a89666209a78bdcb020278bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a90346240a89666209a78bdcb020278bd">scanStop</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a90346240a89666209a78bdcb020278bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae54bb53ea323ac24a3b63769e0196a57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#ae54bb53ea323ac24a3b63769e0196a57">scanStatusGet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> *p_status)</td></tr>
@@ -437,8 +455,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a9a540c52a5052a12b3b879d78543efd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81338d39975b7fe87d5e06c55a8c5dc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a81338d39975b7fe87d5e06c55a8c5dc5">read32</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, uint32_t *const p_data)</td></tr>
 <tr class="separator:a81338d39975b7fe87d5e06c55a8c5dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ea4b7aa41983d837edfed54fcd79b5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a1ea4b7aa41983d837edfed54fcd79b5d">calibrate</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void *const p_extend)</td></tr>
-<tr class="separator:a1ea4b7aa41983d837edfed54fcd79b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1020d90e58d3bf86cee2f46a62e62fc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a1020d90e58d3bf86cee2f46a62e62fc4">calibrate</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void const *p_extend)</td></tr>
+<tr class="separator:a1020d90e58d3bf86cee2f46a62e62fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a305b2c2466cd88fdddf6134db542dc7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a305b2c2466cd88fdddf6134db542dc7e">offsetSet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, int32_t const offset)</td></tr>
 <tr class="separator:a305b2c2466cd88fdddf6134db542dc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d081aba32f84d62e7d48389b1d10b3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a8d081aba32f84d62e7d48389b1d10b3e">callbackSet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td></tr>
@@ -462,6 +480,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Initialize ADC Unit; apply power, set the operational mode, trigger sources, interrupt priority, and configurations common to all channels and sensors. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open()</a></li>
+<li><a class="el" href="group___a_d_c___b.html#gaa70d037030e931e9645d0d13caa9fd5b">R_ADC_B_Open()</a></li>
 <li><a class="el" href="group___s_d_a_d_c.html#ga57663247dadf8d0ca835f1d674985e8b">R_SDADC_Open()</a></li>
 </ul>
 </dd></dl>
@@ -489,6 +508,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Configure the scan including the channels, groups, and scan triggers to be used for the unit that was initialized in the open call. Some configurations are not supported for all implementations. See implementation for details. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg()</a></li>
+<li><a class="el" href="group___a_d_c___b.html#gacfe241a4fa1069fbb1a5d731b01fed5b">R_ADC_B_ScanCfg()</a></li>
 <li><a class="el" href="group___s_d_a_d_c.html#ga0a7002fc86458bbd74ac178bbaaaff68">R_SDADC_ScanCfg()</a></li>
 </ul>
 </dd></dl>
@@ -521,6 +541,31 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeae126b8a09e1ec34e8e3afb4a3344ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeae126b8a09e1ec34e8e3afb4a3344ff">&#9670;&nbsp;</a></span>scanGroupStart</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  adc_api_t::scanGroupStart) (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a> group_mask)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start the scan group (in case of a software trigger), or enable the hardware trigger. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___a_d_c___b.html#ga8d95c7e3d20f54f196be0ec932914869">R_ADC_B_ScanGroupStart()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_mask</td><td>Mask of groups to start </td></tr>
   </table>
   </dd>
 </dl>
@@ -565,6 +610,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Check scan status. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___a_d_c.html#ga676b1c7f1ccceda288cbb2ad79a14ff2">R_ADC_StatusGet()</a></li>
+<li><a class="el" href="group___a_d_c___b.html#gae8b29759f635df34c71a66fbb9c91cc3">R_ADC_B_StatusGet()</a></li>
 <li><a class="el" href="group___s_d_a_d_c.html#gaebb38f07bd7922342597c2d453957433">R_SDADC_StatusGet()</a></li>
 </ul>
 </dd></dl>
@@ -591,6 +637,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Read ADC conversion result. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___a_d_c.html#gad6bfc8395b53a96ee89f266fc940e2da">R_ADC_Read()</a></li>
+<li><a class="el" href="group___a_d_c___b.html#gabd5b134248487fb52dcdc4c0484d1534">R_ADC_B_Read()</a></li>
 <li><a class="el" href="group___s_d_a_d_c.html#gaf6af5f96116f06d57982fb1cdc8d416b">R_SDADC_Read()</a></li>
 </ul>
 </dd></dl>
@@ -617,6 +664,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Read ADC conversion result into a 32-bit word. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___a_d_c.html#ga905e1cd6ff8ca4aaf91ee63529dc0d0d">R_ADC_Read32()</a></li>
+<li><a class="el" href="group___a_d_c___b.html#gab9fd1b2a5e37b74bed0f5595f5a951e1">R_ADC_B_Read32()</a></li>
 <li><a class="el" href="group___s_d_a_d_c.html#ga77dc084a35379f65d2e2084e9a9c5806">R_SDADC_Read32()</a></li>
 </ul>
 </dd></dl>
@@ -631,19 +680,21 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a1ea4b7aa41983d837edfed54fcd79b5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ea4b7aa41983d837edfed54fcd79b5d">&#9670;&nbsp;</a></span>calibrate</h2>
+<a id="a1020d90e58d3bf86cee2f46a62e62fc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1020d90e58d3bf86cee2f46a62e62fc4">&#9670;&nbsp;</a></span>calibrate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  adc_api_t::calibrate) (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void *const p_extend)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  adc_api_t::calibrate) (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void const *p_extend)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Calibrate ADC or associated PGA (programmable gain amplifier). The driver may require implementation specific arguments to the p_extend input. Not supported for all implementations. See implementation for details. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___s_d_a_d_c.html#gab365571e4e0d3ab6ae46acd4fb558a5b">R_SDADC_Calibrate()</a></li>
+<li><a class="el" href="group___a_d_c.html#gac73578543d084faf58d17474dbaad23a">R_ADC_Calibrate()</a></li>
+<li><a class="el" href="group___a_d_c___b.html#gac8b61426725c479730493944cbf5ce2c">R_ADC_B_Calibrate()</a></li>
+<li><a class="el" href="group___s_d_a_d_c.html#ga9c8c90f3182823e0b8a76fab5612d181">R_SDADC_Calibrate()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -695,6 +746,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___a_d_c.html#ga9110aa7c0d36661e561641f522eeb737">R_ADC_CallbackSet()</a></li>
+<li><a class="el" href="group___a_d_c___b.html#ga938080cae666663ae01bc1f33242f811">R_ADC_B_CallbackSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -722,6 +774,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Close the specified ADC unit by ending any scan in progress, disabling interrupts, and removing power to the specified A/D unit. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___a_d_c.html#ga499187b3067534e42a57239ead111797">R_ADC_Close()</a></li>
+<li><a class="el" href="group___a_d_c___b.html#ga71489a9abc0c25e0e2329d78c358cc3c">R_ADC_B_Close()</a></li>
 <li><a class="el" href="group___s_d_a_d_c.html#gacd3903592611777a4bdd0bf0e6488da8">R_SDADC_Close()</a></li>
 </ul>
 </dd></dl>
@@ -747,6 +800,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Return the ADC data register address of the first (lowest number) channel and the total number of bytes to be read in order for the DTC/DMAC to read the conversion results of all configured channels. Return the temperature sensor calibration and slope data. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___a_d_c.html#ga1cc44d84e1dd1cad8fdafe1e91a3b6d0">R_ADC_InfoGet()</a></li>
+<li><a class="el" href="group___a_d_c___b.html#ga8989d65eac9cb46cf9f571a941149a26">R_ADC_B_InfoGet()</a></li>
 <li><a class="el" href="group___s_d_a_d_c.html#ga4f0d9f978b33d4bf19d6522ea3701032">R_SDADC_InfoGet()</a></li>
 </ul>
 </dd></dl>
@@ -939,6 +993,18 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847aa3091bf90a88f96ed9b5a6ab499680bb"></a>ADC_EVENT_CONVERSION_COMPLETE&#160;</td><td class="fielddoc"><p>Conversion complete. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847ae30b20571a57953009f49eb5cbc2866a"></a>ADC_EVENT_CALIBRATION_REQUEST&#160;</td><td class="fielddoc"><p>Calibration requested. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847a4d62358854590ae9bed21fc8c8c96e09"></a>ADC_EVENT_CONVERSION_ERROR&#160;</td><td class="fielddoc"><p>Scan error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847a214f2bd1b932acbaacba970b138f23d2"></a>ADC_EVENT_OVERFLOW&#160;</td><td class="fielddoc"><p>Overflow occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847ac42d84c9087c3228125a5a2ae90f958f"></a>ADC_EVENT_LIMIT_CLIP&#160;</td><td class="fielddoc"><p>Limiter clipping occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847a227823940dfc7793973e6716ec17742e"></a>ADC_EVENT_FIFO_READ_REQUEST&#160;</td><td class="fielddoc"><p>FIFO read requested. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847a0df21824c256f4cb9689cb1d6a3dd91a"></a>ADC_EVENT_FIFO_OVERFLOW&#160;</td><td class="fielddoc"><p>FIFO overflow occurred. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847a0194955f4f59f8d6952adc058539632b"></a>ADC_EVENT_WINDOW_COMPARE_A&#160;</td><td class="fielddoc"><p>Window A comparison condition met. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggae2177d6e5bf43e3749cc60f835456847ab32572630797968579adeed03f19bcd3"></a>ADC_EVENT_WINDOW_COMPARE_B&#160;</td><td class="fielddoc"><p>Window B comparison condition met. </p>
@@ -960,73 +1026,217 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>ADC channels </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104"></a>ADC_CHANNEL_0&#160;</td><td class="fielddoc"><p>ADC channel 0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104"></a>ADC_CHANNEL_0&#160;</td><td class="fielddoc"><p>ADC channel 0. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492"></a>ADC_CHANNEL_1&#160;</td><td class="fielddoc"><p>ADC channel 1. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492"></a>ADC_CHANNEL_1&#160;</td><td class="fielddoc"><p>ADC channel 1. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ab5ff3c915ec02ae6ac3980a1312a4815"></a>ADC_CHANNEL_2&#160;</td><td class="fielddoc"><p>ADC channel 2. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ab5ff3c915ec02ae6ac3980a1312a4815"></a>ADC_CHANNEL_2&#160;</td><td class="fielddoc"><p>ADC channel 2. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a6ca054f67bee5197eec92a0379cffb6e"></a>ADC_CHANNEL_3&#160;</td><td class="fielddoc"><p>ADC channel 3. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a6ca054f67bee5197eec92a0379cffb6e"></a>ADC_CHANNEL_3&#160;</td><td class="fielddoc"><p>ADC channel 3. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131"></a>ADC_CHANNEL_4&#160;</td><td class="fielddoc"><p>ADC channel 4. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131"></a>ADC_CHANNEL_4&#160;</td><td class="fielddoc"><p>ADC channel 4. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a"></a>ADC_CHANNEL_5&#160;</td><td class="fielddoc"><p>ADC channel 5. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a"></a>ADC_CHANNEL_5&#160;</td><td class="fielddoc"><p>ADC channel 5. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814acf3be71bfeb9d342e6d845db91782b79"></a>ADC_CHANNEL_6&#160;</td><td class="fielddoc"><p>ADC channel 6. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814acf3be71bfeb9d342e6d845db91782b79"></a>ADC_CHANNEL_6&#160;</td><td class="fielddoc"><p>ADC channel 6. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ad6ef86ca1b448f220905d771f258586a"></a>ADC_CHANNEL_7&#160;</td><td class="fielddoc"><p>ADC channel 7. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ad6ef86ca1b448f220905d771f258586a"></a>ADC_CHANNEL_7&#160;</td><td class="fielddoc"><p>ADC channel 7. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a2875a590dc7e8502581ff68a075ce019"></a>ADC_CHANNEL_8&#160;</td><td class="fielddoc"><p>ADC channel 8. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a2875a590dc7e8502581ff68a075ce019"></a>ADC_CHANNEL_8&#160;</td><td class="fielddoc"><p>ADC channel 8. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a0e198353a76bf512e4dcc8224710d6b0"></a>ADC_CHANNEL_9&#160;</td><td class="fielddoc"><p>ADC channel 9. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a0e198353a76bf512e4dcc8224710d6b0"></a>ADC_CHANNEL_9&#160;</td><td class="fielddoc"><p>ADC channel 9. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a9db3195dade30ed8b254187c22616898"></a>ADC_CHANNEL_10&#160;</td><td class="fielddoc"><p>ADC channel 10. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a9db3195dade30ed8b254187c22616898"></a>ADC_CHANNEL_10&#160;</td><td class="fielddoc"><p>ADC channel 10. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814af6193eda0e4807c9d560aac13e302093"></a>ADC_CHANNEL_11&#160;</td><td class="fielddoc"><p>ADC channel 11. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814af6193eda0e4807c9d560aac13e302093"></a>ADC_CHANNEL_11&#160;</td><td class="fielddoc"><p>ADC channel 11. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a42838efffa3e21e6b970eee65de86e40"></a>ADC_CHANNEL_12&#160;</td><td class="fielddoc"><p>ADC channel 12. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a42838efffa3e21e6b970eee65de86e40"></a>ADC_CHANNEL_12&#160;</td><td class="fielddoc"><p>ADC channel 12. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa2718519e5964f136de3e5234e36264c"></a>ADC_CHANNEL_13&#160;</td><td class="fielddoc"><p>ADC channel 13. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa2718519e5964f136de3e5234e36264c"></a>ADC_CHANNEL_13&#160;</td><td class="fielddoc"><p>ADC channel 13. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a7f3900d4031a3f01889fbe4179d8cade"></a>ADC_CHANNEL_14&#160;</td><td class="fielddoc"><p>ADC channel 14. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a7f3900d4031a3f01889fbe4179d8cade"></a>ADC_CHANNEL_14&#160;</td><td class="fielddoc"><p>ADC channel 14. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afa75046e6f6f23ed8e6573c7bc8563d2"></a>ADC_CHANNEL_15&#160;</td><td class="fielddoc"><p>ADC channel 15. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afa75046e6f6f23ed8e6573c7bc8563d2"></a>ADC_CHANNEL_15&#160;</td><td class="fielddoc"><p>ADC channel 15. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a61914b17568b94ef0651ee10e79e6892"></a>ADC_CHANNEL_16&#160;</td><td class="fielddoc"><p>ADC channel 16. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a61914b17568b94ef0651ee10e79e6892"></a>ADC_CHANNEL_16&#160;</td><td class="fielddoc"><p>ADC channel 16. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a22aa8198d9a4012a012ddd838adf256c"></a>ADC_CHANNEL_17&#160;</td><td class="fielddoc"><p>ADC channel 17. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a22aa8198d9a4012a012ddd838adf256c"></a>ADC_CHANNEL_17&#160;</td><td class="fielddoc"><p>ADC channel 17. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ae47fe79b66fda5fcb9f02d6a648c8dc9"></a>ADC_CHANNEL_18&#160;</td><td class="fielddoc"><p>ADC channel 18. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ae47fe79b66fda5fcb9f02d6a648c8dc9"></a>ADC_CHANNEL_18&#160;</td><td class="fielddoc"><p>ADC channel 18. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a514ca4fdb7e9862d3d9ebe1d4e926349"></a>ADC_CHANNEL_19&#160;</td><td class="fielddoc"><p>ADC channel 19. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a514ca4fdb7e9862d3d9ebe1d4e926349"></a>ADC_CHANNEL_19&#160;</td><td class="fielddoc"><p>ADC channel 19. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afdcbeb5840bd281a4a2ec3f1f64ed52b"></a>ADC_CHANNEL_20&#160;</td><td class="fielddoc"><p>ADC channel 20. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afdcbeb5840bd281a4a2ec3f1f64ed52b"></a>ADC_CHANNEL_20&#160;</td><td class="fielddoc"><p>ADC channel 20. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>ADC channel 21. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>ADC channel 21. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC channel 22. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC channel 22. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a9009b78e30e87985cbfb40296a0bab16"></a>ADC_CHANNEL_23&#160;</td><td class="fielddoc"><p>ADC channel 23. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a9009b78e30e87985cbfb40296a0bab16"></a>ADC_CHANNEL_23&#160;</td><td class="fielddoc"><p>ADC channel 23. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a7ae985a21367ea6d7488517948fc625d"></a>ADC_CHANNEL_24&#160;</td><td class="fielddoc"><p>ADC channel 24. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a7ae985a21367ea6d7488517948fc625d"></a>ADC_CHANNEL_24&#160;</td><td class="fielddoc"><p>ADC channel 24. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a31855ff8fefcff144e9dc4911466ce52"></a>ADC_CHANNEL_25&#160;</td><td class="fielddoc"><p>ADC channel 25. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a31855ff8fefcff144e9dc4911466ce52"></a>ADC_CHANNEL_25&#160;</td><td class="fielddoc"><p>ADC channel 25. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa9c18e09bdb5cdf44c8c89ecdd7770d3"></a>ADC_CHANNEL_26&#160;</td><td class="fielddoc"><p>ADC channel 26. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa9c18e09bdb5cdf44c8c89ecdd7770d3"></a>ADC_CHANNEL_26&#160;</td><td class="fielddoc"><p>ADC channel 26. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ad002942933ed78124a50b3276f9d88cc"></a>ADC_CHANNEL_27&#160;</td><td class="fielddoc"><p>ADC channel 27. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ad002942933ed78124a50b3276f9d88cc"></a>ADC_CHANNEL_27&#160;</td><td class="fielddoc"><p>ADC channel 27. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a558a69bc271b849d3c3a2cca05ebbba0"></a>ADC_CHANNEL_28&#160;</td><td class="fielddoc"><p>ADC channel 28. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a558a69bc271b849d3c3a2cca05ebbba0"></a>ADC_CHANNEL_28&#160;</td><td class="fielddoc"><p>ADC channel 28. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aadc3763b403f4b9ab667602137a9de57"></a>ADC_CHANNEL_DUPLEX_A&#160;</td><td class="fielddoc"><p>Data duplexing register A. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aadc3763b403f4b9ab667602137a9de57"></a>ADC_CHANNEL_DUPLEX_A&#160;</td><td class="fielddoc"><p>Data duplexing register A. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa66d57680818caebf7be4d68f8c505be"></a>ADC_CHANNEL_DUPLEX_B&#160;</td><td class="fielddoc"><p>Data duplexing register B. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa66d57680818caebf7be4d68f8c505be"></a>ADC_CHANNEL_DUPLEX_B&#160;</td><td class="fielddoc"><p>Data duplexing register B. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a2602b0a06ce1ce485d0812de6f6f4091"></a>ADC_CHANNEL_DUPLEX&#160;</td><td class="fielddoc"><p>Data duplexing register. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a2602b0a06ce1ce485d0812de6f6f4091"></a>ADC_CHANNEL_DUPLEX&#160;</td><td class="fielddoc"><p>Data duplexing register. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aff4cf0b5a9bfd1fc634f6b097e34fe73"></a>ADC_CHANNEL_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor output. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aff4cf0b5a9bfd1fc634f6b097e34fe73"></a>ADC_CHANNEL_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor output. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641"></a>ADC_CHANNEL_VOLT&#160;</td><td class="fielddoc"><p>Internal reference voltage. </p>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641"></a>ADC_CHANNEL_VOLT&#160;</td><td class="fielddoc"><p>Internal reference voltage. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104"></a>ADC_CHANNEL_0&#160;</td><td class="fielddoc"><p>ADC channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492"></a>ADC_CHANNEL_1&#160;</td><td class="fielddoc"><p>ADC channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ab5ff3c915ec02ae6ac3980a1312a4815"></a>ADC_CHANNEL_2&#160;</td><td class="fielddoc"><p>ADC channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a6ca054f67bee5197eec92a0379cffb6e"></a>ADC_CHANNEL_3&#160;</td><td class="fielddoc"><p>ADC channel 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131"></a>ADC_CHANNEL_4&#160;</td><td class="fielddoc"><p>ADC channel 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a"></a>ADC_CHANNEL_5&#160;</td><td class="fielddoc"><p>ADC channel 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814acf3be71bfeb9d342e6d845db91782b79"></a>ADC_CHANNEL_6&#160;</td><td class="fielddoc"><p>ADC channel 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ad6ef86ca1b448f220905d771f258586a"></a>ADC_CHANNEL_7&#160;</td><td class="fielddoc"><p>ADC channel 7. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a2875a590dc7e8502581ff68a075ce019"></a>ADC_CHANNEL_8&#160;</td><td class="fielddoc"><p>ADC channel 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a0e198353a76bf512e4dcc8224710d6b0"></a>ADC_CHANNEL_9&#160;</td><td class="fielddoc"><p>ADC channel 9. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a9db3195dade30ed8b254187c22616898"></a>ADC_CHANNEL_10&#160;</td><td class="fielddoc"><p>ADC channel 10. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814af6193eda0e4807c9d560aac13e302093"></a>ADC_CHANNEL_11&#160;</td><td class="fielddoc"><p>ADC channel 11. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a42838efffa3e21e6b970eee65de86e40"></a>ADC_CHANNEL_12&#160;</td><td class="fielddoc"><p>ADC channel 12. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa2718519e5964f136de3e5234e36264c"></a>ADC_CHANNEL_13&#160;</td><td class="fielddoc"><p>ADC channel 13. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a7f3900d4031a3f01889fbe4179d8cade"></a>ADC_CHANNEL_14&#160;</td><td class="fielddoc"><p>ADC channel 14. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afa75046e6f6f23ed8e6573c7bc8563d2"></a>ADC_CHANNEL_15&#160;</td><td class="fielddoc"><p>ADC channel 15. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a61914b17568b94ef0651ee10e79e6892"></a>ADC_CHANNEL_16&#160;</td><td class="fielddoc"><p>ADC channel 16. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a22aa8198d9a4012a012ddd838adf256c"></a>ADC_CHANNEL_17&#160;</td><td class="fielddoc"><p>ADC channel 17. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ae47fe79b66fda5fcb9f02d6a648c8dc9"></a>ADC_CHANNEL_18&#160;</td><td class="fielddoc"><p>ADC channel 18. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a514ca4fdb7e9862d3d9ebe1d4e926349"></a>ADC_CHANNEL_19&#160;</td><td class="fielddoc"><p>ADC channel 19. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afdcbeb5840bd281a4a2ec3f1f64ed52b"></a>ADC_CHANNEL_20&#160;</td><td class="fielddoc"><p>ADC channel 20. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>ADC channel 21. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC channel 22. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a9009b78e30e87985cbfb40296a0bab16"></a>ADC_CHANNEL_23&#160;</td><td class="fielddoc"><p>ADC channel 23. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a7ae985a21367ea6d7488517948fc625d"></a>ADC_CHANNEL_24&#160;</td><td class="fielddoc"><p>ADC channel 24. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a31855ff8fefcff144e9dc4911466ce52"></a>ADC_CHANNEL_25&#160;</td><td class="fielddoc"><p>ADC channel 25. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa9c18e09bdb5cdf44c8c89ecdd7770d3"></a>ADC_CHANNEL_26&#160;</td><td class="fielddoc"><p>ADC channel 26. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ad002942933ed78124a50b3276f9d88cc"></a>ADC_CHANNEL_27&#160;</td><td class="fielddoc"><p>ADC channel 27. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a558a69bc271b849d3c3a2cca05ebbba0"></a>ADC_CHANNEL_28&#160;</td><td class="fielddoc"><p>ADC channel 28. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a8b483ea355dff47129b4242c8dafa2c1"></a>ADC_CHANNEL_SELF_DIAGNOSIS&#160;</td><td class="fielddoc"><p>Self-Diagnosis channel. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aff4cf0b5a9bfd1fc634f6b097e34fe73"></a>ADC_CHANNEL_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641"></a>ADC_CHANNEL_VOLT&#160;</td><td class="fielddoc"><p>Internal reference voltage. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aee8fb112ab2f4218a1f6179f4816a7dc"></a>ADC_CHANNEL_DA0&#160;</td><td class="fielddoc"><p>D/A Converter Channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ac9dcb888def48e903008fdc40af7035f"></a>ADC_CHANNEL_DA1&#160;</td><td class="fielddoc"><p>D/A Converter Channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814adca63847cbb92590837a06415a15a3c0"></a>ADC_CHANNEL_DA2&#160;</td><td class="fielddoc"><p>D/A Converter Channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa4bebe867a2c5e04b52644fd0a68b3f2"></a>ADC_CHANNEL_DA3&#160;</td><td class="fielddoc"><p>D/A Converter Channel 3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga625267e574e3f26d9d55918652e91176"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga625267e574e3f26d9d55918652e91176">&#9670;&nbsp;</a></span>adc_group_id_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_d_c___a_p_i.html#ga625267e574e3f26d9d55918652e91176">adc_group_id_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga625267e574e3f26d9d55918652e91176af4886d3826fb26d4bbdfaeb2195a5ddc"></a>ADC_GROUP_ID_0&#160;</td><td class="fielddoc"><p>Group ID 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga625267e574e3f26d9d55918652e91176a5affde6af0ba379220ade2c4ca8a027e"></a>ADC_GROUP_ID_1&#160;</td><td class="fielddoc"><p>Group ID 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga625267e574e3f26d9d55918652e91176a3bbc61292808df4caf5c0991e7b9f73c"></a>ADC_GROUP_ID_2&#160;</td><td class="fielddoc"><p>Group ID 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga625267e574e3f26d9d55918652e91176a10bc5348770837fad29ae361a75ede8e"></a>ADC_GROUP_ID_3&#160;</td><td class="fielddoc"><p>Group ID 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga625267e574e3f26d9d55918652e91176a0dc20198ed1fcd90b6b5cee6da08677f"></a>ADC_GROUP_ID_4&#160;</td><td class="fielddoc"><p>Group ID 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga625267e574e3f26d9d55918652e91176a4ce5371decbc45bfe70580f4d8717e39"></a>ADC_GROUP_ID_5&#160;</td><td class="fielddoc"><p>Group ID 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga625267e574e3f26d9d55918652e91176acc7f6d39b3a21eb846e58e1a8ce4142d"></a>ADC_GROUP_ID_6&#160;</td><td class="fielddoc"><p>Group ID 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga625267e574e3f26d9d55918652e91176a21f524469d82b63154be5f2f1f9dd95d"></a>ADC_GROUP_ID_7&#160;</td><td class="fielddoc"><p>Group ID 7. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga625267e574e3f26d9d55918652e91176a095b0310fe37230c34f3d1b4d48d4e42"></a>ADC_GROUP_ID_8&#160;</td><td class="fielddoc"><p>Group ID 8. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaee17c30275c1c9376cc485a62ea121eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaee17c30275c1c9376cc485a62ea121eb">&#9670;&nbsp;</a></span>adc_group_mask_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121eba6cc9000330017d217de6ca0e3eb70af5"></a>ADC_GROUP_MASK_NONE&#160;</td><td class="fielddoc"><p>Group Mask Unknown or None. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121ebaeedbedf9fc1fc6055524220d6e0af60d"></a>ADC_GROUP_MASK_0&#160;</td><td class="fielddoc"><p>Group Mask 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121ebaf727cf72c6c097e87f3e02209f1c2f1f"></a>ADC_GROUP_MASK_1&#160;</td><td class="fielddoc"><p>Group Mask 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121eba434af3ad0c8079644a51035acd8fd835"></a>ADC_GROUP_MASK_2&#160;</td><td class="fielddoc"><p>Group Mask 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121eba584a4fb88b98b8689d5a64e104fcbc6b"></a>ADC_GROUP_MASK_3&#160;</td><td class="fielddoc"><p>Group Mask 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121eba8a271a13324d7b13e732aeef6b5ef0dc"></a>ADC_GROUP_MASK_4&#160;</td><td class="fielddoc"><p>Group Mask 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121eba298a89e90d290117e69acb7569409a8a"></a>ADC_GROUP_MASK_5&#160;</td><td class="fielddoc"><p>Group Mask 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121ebadd19ea2551df6c56813bf9d9dfa3d218"></a>ADC_GROUP_MASK_6&#160;</td><td class="fielddoc"><p>Group Mask 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121eba0b145ee64281e271a0c2b075484b175a"></a>ADC_GROUP_MASK_7&#160;</td><td class="fielddoc"><p>Group Mask 7. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121ebaad618fc3cf12d1bb5575659bb56ffb84"></a>ADC_GROUP_MASK_8&#160;</td><td class="fielddoc"><p>Group Mask 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaee17c30275c1c9376cc485a62ea121ebafcbf5a874521ebcfb98323c2a7990847"></a>ADC_GROUP_MASK_ALL&#160;</td><td class="fielddoc"><p>All Groups. </p>
 </td></tr>
 </table>
 
@@ -1059,7 +1269,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

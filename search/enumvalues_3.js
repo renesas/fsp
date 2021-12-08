@@ -38,8 +38,14 @@ var searchData=
   ['display_5fstate_5fclosed',['DISPLAY_STATE_CLOSED',['../group___d_i_s_p_l_a_y___a_p_i.html#gga04db5dee2c7091830c3e4f899e934f97a70fd5873a7a060db5777a6bc22c32012',1,'r_display_api.h']]],
   ['display_5fstate_5fdisplaying',['DISPLAY_STATE_DISPLAYING',['../group___d_i_s_p_l_a_y___a_p_i.html#gga04db5dee2c7091830c3e4f899e934f97a569d2a2c65ddd27c92f30cf8f7af16bb',1,'r_display_api.h']]],
   ['display_5fstate_5fopened',['DISPLAY_STATE_OPENED',['../group___d_i_s_p_l_a_y___a_p_i.html#gga04db5dee2c7091830c3e4f899e934f97a27795e8293ff94f7a4ed6aad917a094f',1,'r_display_api.h']]],
+  ['doc_5fbit_5fwidth_5f16',['DOC_BIT_WIDTH_16',['../group___d_o_c___a_p_i.html#gga6a05a5570c5dc2d79f92ac5ca1a4a691a6b0a5c334510b2d15078253a36037301',1,'r_doc_api.h']]],
+  ['doc_5fbit_5fwidth_5f32',['DOC_BIT_WIDTH_32',['../group___d_o_c___a_p_i.html#gga6a05a5570c5dc2d79f92ac5ca1a4a691a85f6a214caad70948e2b9f4e81c2b247',1,'r_doc_api.h']]],
   ['doc_5fevent_5faddition',['DOC_EVENT_ADDITION',['../group___d_o_c___a_p_i.html#gga0ff188142746d68859b2acb3c3d0f2fea7decc1683a69bbb27f7d2007c27dd788',1,'r_doc_api.h']]],
+  ['doc_5fevent_5fcomparison_5finside_5fwindow',['DOC_EVENT_COMPARISON_INSIDE_WINDOW',['../group___d_o_c___a_p_i.html#gga0ff188142746d68859b2acb3c3d0f2fea57b0e65805bd2f43777369df47415112',1,'r_doc_api.h']]],
+  ['doc_5fevent_5fcomparison_5flower',['DOC_EVENT_COMPARISON_LOWER',['../group___d_o_c___a_p_i.html#gga0ff188142746d68859b2acb3c3d0f2fea602eb1b05e93f13bbd341b6875fdba02',1,'r_doc_api.h']]],
   ['doc_5fevent_5fcomparison_5fmatch',['DOC_EVENT_COMPARISON_MATCH',['../group___d_o_c___a_p_i.html#gga0ff188142746d68859b2acb3c3d0f2feabc5d21c1d1bf33cc1ffd0f8aa352c2c3',1,'r_doc_api.h']]],
   ['doc_5fevent_5fcomparison_5fmismatch',['DOC_EVENT_COMPARISON_MISMATCH',['../group___d_o_c___a_p_i.html#gga0ff188142746d68859b2acb3c3d0f2fea576179771341175f50daa22aeeaf0dd8',1,'r_doc_api.h']]],
+  ['doc_5fevent_5fcomparison_5foutside_5fwindow',['DOC_EVENT_COMPARISON_OUTSIDE_WINDOW',['../group___d_o_c___a_p_i.html#gga0ff188142746d68859b2acb3c3d0f2fea08494edfa70f2faa04f338f5da21038c',1,'r_doc_api.h']]],
+  ['doc_5fevent_5fcomparison_5fupper',['DOC_EVENT_COMPARISON_UPPER',['../group___d_o_c___a_p_i.html#gga0ff188142746d68859b2acb3c3d0f2feab264b2a4e828331af92abc72d1c18e40',1,'r_doc_api.h']]],
   ['doc_5fevent_5fsubtraction',['DOC_EVENT_SUBTRACTION',['../group___d_o_c___a_p_i.html#gga0ff188142746d68859b2acb3c3d0f2feac7b6c9eea276e767439cc703fc0c6006',1,'r_doc_api.h']]]
 ];

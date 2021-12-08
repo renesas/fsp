@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -175,7 +175,8 @@ Summary</h1>
 <li>Callback function support which returns a event codes</li>
 </ul>
 <p>Implemented by:</p><ul>
-<li><a class="el" href="group___i_i_c___s_l_a_v_e.html">I2C Slave on IIC (r_iic_slave)</a> </li>
+<li><a class="el" href="group___i_i_c___s_l_a_v_e.html">I2C Slave on IIC (r_iic_slave)</a></li>
+<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html">I2C Slave on IIC/I3C (r_iic_b_slave)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -406,6 +407,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Opens the I2C Slave driver and initializes the hardware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___s_l_a_v_e.html#ga2781d08100bc6a53034347927422e206">R_IIC_SLAVE_Open()</a></li>
+<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#ga3ecc5e5e2481cfa4f77a18d086d10814">R_IIC_B_SLAVE_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -431,6 +433,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Performs a read operation on an I2C Slave device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___s_l_a_v_e.html#ga62cdf56c786ad26cb09811e27d225d06">R_IIC_SLAVE_Read()</a></li>
+<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#ga2b520288e7fc9e4481f608164dcf0144">R_IIC_B_SLAVE_Read()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -457,6 +460,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Performs a write operation on an I2C Slave device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___s_l_a_v_e.html#ga26692591d226125907ecd208a6d8d0fd">R_IIC_SLAVE_Write()</a></li>
+<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#gad9c8d17d33ab4cc1ee5b978370478cd7">R_IIC_B_SLAVE_Write()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -483,6 +487,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___s_l_a_v_e.html#gab803811cfa1a11e23b90ee9eb9e021ba">R_IIC_SLAVE_CallbackSet()</a></li>
+<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#ga7e697559a06f6ea2f27feafabcffa559">R_IIC_B_SLAVE_CallbackSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -510,6 +515,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Closes the driver and releases the I2C Slave device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___s_l_a_v_e.html#gae4bb6d75bb3a27d940d70592242dbbe3">R_IIC_SLAVE_Close()</a></li>
+<li><a class="el" href="group___i_i_c___b___s_l_a_v_e.html#ga91d9d05b98c11c03bea96ab9401402d7">R_IIC_B_SLAVE_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -663,7 +669,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

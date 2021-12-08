@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -216,8 +216,8 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
- <h2>Configurations for Driver &gt; Analog &gt; DAC Driver on r_dac</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Analog &gt; DAC Driver on r_dac. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+ <h2>Configurations for Analog &gt; DAC (r_dac)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Analog &gt; DAC (r_dac). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -226,13 +226,7 @@ This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Analog
 <tr>
 <td>Channel</td><td>Value must be an integer greater than or equal to 0</td><td>0 </td><td>Specify the hardware channel. </td></tr>
 <tr>
-<td>Synchronize with ADC</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>Enable DA/AD synchronization. </td></tr>
+<td>Synchronize with ADC</td><td>MCU Specific Options</td><td></td><td>Enable DA/AD synchronization. </td></tr>
 <tr>
 <td>Data Format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -245,6 +239,8 @@ Left Justified</li>
 <td>Output Amplifier</td><td>MCU Specific Options</td><td></td><td>Enable the DAC output amplifier. </td></tr>
 <tr>
 <td>Charge Pump (Requires MOCO active)</td><td>MCU Specific Options</td><td></td><td>Enable the DAC charge pump. </td></tr>
+<tr>
+<td>Internal Output</td><td>MCU Specific Options</td><td></td><td>Enable DAC output to internal modules. </td></tr>
 <tr>
 <td>ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC event source that will trigger the DAC to start a conversion. </td></tr>
 </table>
@@ -264,6 +260,9 @@ Usage Notes</h1>
 <dl class="section note"><dt>Note</dt><dd>The MOCO must be running to use the charge pump.</dd>
 <dd>
 If the DAC output is to be routed to an internal signal, do not enable the charge pump.</dd></dl>
+<h2>Output to Internal Modules</h2>
+<p><a class="anchor" id="um_dac_dac_internal_output_enable"></a>The DAC output can be used as an analog input to other peripherals on the MCU (eg. ACMPHS, ADC) without outputting the voltage to an external pin.</p>
+<p>On some MCUs this functionality must be enabled during configuration using <a class="el" href="group___d_a_c.html#a40f306ae33487cdf460bb00176358c25">dac_extended_cfg_t::internal_output_enabled</a>. When internal output is enabled, the DAC output will be routed to internal modules. If the DAC output amplifier is enabled or when internal output is disabled, the output will be routed to the DAC output pin (DAn).</p>
 <h2>Synchronization with ADC</h2>
 <p>When ADC synchronization is enabled and an ADC conversion is in progress, if a DAC conversion is started it will automatically be delayed until after the ADC conversion is complete.</p>
 <h2><a class="anchor" id="r-dac-limitations"></a>
@@ -331,6 +330,12 @@ Enable DAC charge pump available on selected MCUs. </td></tr>
 output_amplifier_enabled</td>
 <td class="fielddoc">
 Output amplifier enable available on selected MCUs. </td></tr>
+<tr><td class="fieldtype">
+<a id="a40f306ae33487cdf460bb00176358c25"></a>bool</td>
+<td class="fieldname">
+internal_output_enabled</td>
+<td class="fielddoc">
+Internal output enable available on selected MCUs. </td></tr>
 <tr><td class="fieldtype">
 <a id="aa52f7b31a54e93850984647a0b0dd6f0"></a><a class="el" href="group___d_a_c___a_p_i.html#gac447d1d0850297aefbec6e8be8b55591">dac_data_format_t</a></td>
 <td class="fieldname">
@@ -510,7 +515,7 @@ Data format. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

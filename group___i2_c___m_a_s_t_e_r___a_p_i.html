@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -175,7 +175,10 @@ Summary</h1>
 <li>Callback function support which can return an event code</li>
 </ul>
 <p>Implemented by:</p><ul>
-<li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html">I2C Master on IIC (r_iic_master)</a> </li>
+<li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html">I2C Master on IIC (r_iic_master)</a></li>
+<li><a class="el" href="group___s_c_i___i2_c.html">Serial Communications Interface (SCI) I2C (r_sci_i2c)</a></li>
+<li><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html">I2C Master on IIC/I3C (r_iic_b_master)</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html">Serial Communications Interface (SCI) I2C (r_sci_b_i2c)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -444,6 +447,9 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Opens the I2C Master driver and initializes the hardware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#gaf27ed4f61dc662c28564646bd8bf01c3">R_IIC_MASTER_Open()</a></li>
+<li><a class="el" href="group___s_c_i___i2_c.html#gaddcd4299259f33f1586458c6f580ef4c">R_SCI_I2C_Open()</a></li>
+<li><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html#ga6c138174d7cc2493f1c5655d1178f247">R_IIC_B_MASTER_Open()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#gae457daf3146cc92adfadc471b5bebd27">R_SCI_B_I2C_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -468,7 +474,10 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Performs a read operation on an I2C Master device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___s_c_i___i2_c.html#gad044a875458d5878769a8f4b4b5e038f">R_SCI_I2C_Read()</a></li>
 <li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#ga6147f27a169deef934b6f46a0de3652f">R_IIC_MASTER_Read()</a></li>
+<li><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html#gaacea39dba042834b911e2b40c42b4c43">R_IIC_B_MASTER_Read()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#ga0d1ab3b59b204adb64bff01d4c83d10f">R_SCI_B_I2C_Read()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -496,6 +505,9 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Performs a write operation on an I2C Master device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#gad6f6d1f0e12c28bf77c27941fbf18359">R_IIC_MASTER_Write()</a></li>
+<li><a class="el" href="group___s_c_i___i2_c.html#ga7bb2633c299214aa6c1779aa39d8df0c">R_SCI_I2C_Write()</a></li>
+<li><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html#gabce90de50045312bc6eb5bc3f6471eb7">R_IIC_B_MASTER_Write()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#gaa214ca399eb4bb9cb198237f608b4767">R_SCI_B_I2C_Write()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -523,6 +535,9 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Performs a reset of the peripheral. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#ga85ef762ddd49f1a137ce9e24c6573059">R_IIC_MASTER_Abort()</a></li>
+<li><a class="el" href="group___s_c_i___i2_c.html#ga417258e6c32f4000c95198a60f2a699d">R_SCI_I2C_Abort()</a></li>
+<li><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html#gaf26bf8626a5208a121fe91d64406929f">R_IIC_B_MASTER_Abort()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#gadddbf1fa35661d53916faae95db97202">R_SCI_B_I2C_Abort()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -547,6 +562,9 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Sets address of the slave device without reconfiguring the bus. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#gac71642b0b148f43ffb3e6b8cf2a3c949">R_IIC_MASTER_SlaveAddressSet()</a></li>
+<li><a class="el" href="group___s_c_i___i2_c.html#gaafb153ace0acecf6d61037ed2113c6da">R_SCI_I2C_SlaveAddressSet()</a></li>
+<li><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html#gaa46377030b4361a6af20ad10b7fee69d">R_IIC_B_MASTER_SlaveAddressSet()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#ga286e5448d62d962610e1c7e104eb3fe9">R_SCI_B_I2C_SlaveAddressSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -573,6 +591,9 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Specify callback function and optional context pointer and working memory pointer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#ga535b73426b62ef08adecfde663160133">R_IIC_MASTER_CallbackSet()</a></li>
+<li><a class="el" href="group___s_c_i___i2_c.html#gaff974630e37963ed18027b7b529d9f0d">R_SCI_I2C_CallbackSet()</a></li>
+<li><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html#gaea59f8a727c9425ffb04595286f008a2">R_IIC_B_MASTER_CallbackSet()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#gaa8c8d381f7c639650bf775c3eec125b9">R_SCI_B_I2C_CallbackSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -600,6 +621,9 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Gets the status of the configured I2C device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#ga8913f214f86f2ec06b31bfd68925e050">R_IIC_MASTER_StatusGet()</a></li>
+<li><a class="el" href="group___s_c_i___i2_c.html#ga56527ece3b09569cf8abdba614190b9f">R_SCI_I2C_StatusGet()</a></li>
+<li><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html#ga63be09d64a19796573bf7acc7da293f4">R_IIC_B_MASTER_StatusGet()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#ga677766a68a258bb7a2e97090cff1c03b">R_SCI_B_I2C_StatusGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -625,6 +649,9 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><div class="memdoc">
 <p>Closes the driver and releases the I2C Master device. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___i_i_c___m_a_s_t_e_r.html#ga88558649a9cf9ccd54b745457227ab7c">R_IIC_MASTER_Close()</a></li>
+<li><a class="el" href="group___s_c_i___i2_c.html#ga6ce2bd61f5a153cd7957c4a1b1350df8">R_SCI_I2C_Close()</a></li>
+<li><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html#gaf80b1b65b5d3ddcc22a98a186a89310b">R_IIC_B_MASTER_Close()</a></li>
+<li><a class="el" href="group___s_c_i___b___i2_c.html#ga1d57041c70f924d2968792d59d1b980b">R_SCI_B_I2C_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -768,7 +795,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

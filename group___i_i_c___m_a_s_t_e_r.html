@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.4.0</span>
+   &#160;<span id="projectnumber">Release v3.5.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -245,8 +245,8 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If enabled, the driver will support 10-bit slave addressing mode along with the default 7-bit slave addressing mode. </td></tr>
 </table>
- <h2>Configurations for Driver &gt; Connectivity &gt; I2C Master Driver on r_iic_master</h2>
-This module can be added to the Stacks tab via New Stack &gt; Driver &gt; Connectivity &gt; I2C Master Driver on r_iic_master. Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+ <h2>Configurations for Connectivity &gt; I2C Master (r_iic_master)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; I2C Master (r_iic_master). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -328,6 +328,7 @@ IIC Master Rate Calculation</h2>
 Enabling DTC with the IIC</h2>
 <ul>
 <li>DTC transfer support is configurable and is disabled from the build by default. IIC driver provides two DTC instances for transmission and reception respectively. The DTC instances can be enabled individually during configuration.</li>
+<li>DTC is helpful for minimizing interrupts during large transactions. Many I2C applications have shorter transactions. These applications will likely not see any improvement with DTC. I2C often runs at a much slower speed than the CPU core clock. Some applications with longer transactions may prefer servicing the interrupts at the I2C bitrate to the overhead of bringing in the DTC driver.</li>
 <li>For further details on DTC please refer <a class="el" href="group___d_t_c.html">Data Transfer Controller (r_dtc)</a></li>
 </ul>
 <h2><a class="anchor" id="r-iic_master-multiple-devices-on-same-bus"></a>
@@ -343,7 +344,7 @@ Multi-Master Support</h2>
 <h2><a class="anchor" id="r-iic_master-restart"></a>
 Restart</h2>
 <ul>
-<li>IIC master can hold the the bus after an I2C transaction by issuing Restart. This will mimic a stop followed by start condition.</li>
+<li>IIC master can hold the the bus after an I2C transaction by issuing a repeated start condition.</li>
 </ul>
 <h1><a class="anchor" id="r-iic_master-examples"></a>
 Examples</h1>
@@ -839,7 +840,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.4.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

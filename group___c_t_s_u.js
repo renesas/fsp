@@ -69,9 +69,14 @@ var group___c_t_s_u =
       [ "read_irq", "group___c_t_s_u.html#a422889992dd929096784b65c29c8780b", null ],
       [ "end_irq", "group___c_t_s_u.html#a139bed35e18c276442ed790e2f49ad92", null ],
       [ "p_callback", "group___c_t_s_u.html#a0c65e56730176fb25ab76ddb33b772ee", null ],
+      [ "interrupt_reverse_flag", "group___c_t_s_u.html#a16f6a8656c90a6efeb22d35da9f07952", null ],
       [ "error_status", "group___c_t_s_u.html#aa8feceb5a0f8f20795459c94d0c18bd5", null ],
       [ "p_callback_memory", "group___c_t_s_u.html#a042150cc9f3c41639dcd6bb989e6ba1e", null ],
-      [ "p_context", "group___c_t_s_u.html#ac3493d9a66a667f943638459c3ba5392", null ]
+      [ "p_context", "group___c_t_s_u.html#ac3493d9a66a667f943638459c3ba5392", null ],
+      [ "serial_tuning_enable", "group___c_t_s_u.html#a9630297d507bbd5d4f7ed56588d560ac", null ],
+      [ "serial_tuning_mutual_cnt", "group___c_t_s_u.html#af566fb688739a5c442320bbb50ddf86a", null ],
+      [ "tuning_self_target_value", "group___c_t_s_u.html#afd86e4b99d5cd0930a61d55cac6780a0", null ],
+      [ "tuning_mutual_target_value", "group___c_t_s_u.html#a80b867400f41d3ae2908d179cde0ac61", null ]
     ] ],
     [ "ctsu_state_t", "group___c_t_s_u.html#ga9be3b4466784415a4193f9584362c2ce", [
       [ "CTSU_STATE_INIT", "group___c_t_s_u.html#gga9be3b4466784415a4193f9584362c2cea728f7cac2f957376ddfdcb0a9bc7eb24", null ],
