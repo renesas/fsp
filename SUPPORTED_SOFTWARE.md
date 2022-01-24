@@ -1,7 +1,7 @@
 ## Software Modules Packaged with FSP
 
 ### FSP Top Level Modules
-  * Analog
+  * SystemInit()_Analog
     * [ADC (r_adc)](https://renesas.github.io/fsp/group___a_d_c.html)
     * [ADC (r_sdadc)](https://renesas.github.io/fsp/group___s_d_a_d_c.html)
     * [ADC Driver on r_adc_b](https://renesas.github.io/fsp/group___a_d_c___b.html)
@@ -281,4 +281,4 @@
     * [LittleFS on Flash (rm_littlefs_flash)](https://renesas.github.io/fsp/group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h.html)
     * [Persistent Storage Stub (not currently supported)](https://renesas.github.io/fsp/group___r_m___l_i_t_t_l_e_f_s___f_l_a_s_h.html)
   * System
-    * [Arm CMSIS5 Core (M)](https://arm-software.github.io/CMSIS_5/Core/html/index.html)
+    * [Arm CMSIS5 Core (SystemInit()_Analog)](https://arm-software.github.io/CMSIS_5/Core/html/index.html)
