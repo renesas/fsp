@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -839,6 +839,10 @@ Receive context. </td></tr>
 <tr class="separator:ac2b9fd6871571a54b991b598cd5802a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4071ec30a3255c3ea18f8554bd68da50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a4071ec30a3255c3ea18f8554bd68da50">setupGet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, usb_setup_t *setup)</td></tr>
 <tr class="separator:a4071ec30a3255c3ea18f8554bd68da50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15d71759c0ca7e7b9e1381d29de14222"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#a15d71759c0ca7e7b9e1381d29de14222">otgCallbackSet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, usb_otg_callback_t *p_callback)</td></tr>
+<tr class="separator:a15d71759c0ca7e7b9e1381d29de14222"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af15343382920023c7268b49f3720a605"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___a_p_i.html#af15343382920023c7268b49f3720a605">otgSRP</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:af15343382920023c7268b49f3720a605"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="ad92d0a1d797e8e806082b4fb6cf65f03"></a>
@@ -1577,6 +1581,55 @@ Receive context. </td></tr>
 
 </div>
 </div>
+<a id="a15d71759c0ca7e7b9e1381d29de14222"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15d71759c0ca7e7b9e1381d29de14222">&#9670;&nbsp;</a></span>otgCallbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::otgCallbackSet) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, usb_otg_callback_t *p_callback)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This API sets the callback function for OTG. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#ga66b9f21c7fc7cce60388edeaf7861d0e">R_USB_OtgCallbackSet()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Pointer to the callback function for OTG. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af15343382920023c7268b49f3720a605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af15343382920023c7268b49f3720a605">&#9670;&nbsp;</a></span>otgSRP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_api_t::otgSRP) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This API starts SRP processing for OTG. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___u_s_b.html#ga1a52197abba908bdd990e9bca22d50a7">R_USB_OtgSRP()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>USB control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -1922,7 +1975,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

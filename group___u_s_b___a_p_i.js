@@ -54,7 +54,9 @@ var group___u_s_b___a_p_i =
       [ "pipeNumberGet", "group___u_s_b___a_p_i.html#a25d98b97877550ba5c87cef179612387", null ],
       [ "deviceStateGet", "group___u_s_b___a_p_i.html#ac00188c075546f27f2b9ba3fc6f452b9", null ],
       [ "dataSizeGet", "group___u_s_b___a_p_i.html#ac2b9fd6871571a54b991b598cd5802a7", null ],
-      [ "setupGet", "group___u_s_b___a_p_i.html#a4071ec30a3255c3ea18f8554bd68da50", null ]
+      [ "setupGet", "group___u_s_b___a_p_i.html#a4071ec30a3255c3ea18f8554bd68da50", null ],
+      [ "otgCallbackSet", "group___u_s_b___a_p_i.html#a15d71759c0ca7e7b9e1381d29de14222", null ],
+      [ "otgSRP", "group___u_s_b___a_p_i.html#af15343382920023c7268b49f3720a605", null ]
     ] ],
     [ "usb_instance_t", "group___u_s_b___a_p_i.html#structusb__instance__t", [
       [ "p_ctrl", "group___u_s_b___a_p_i.html#ac8909c912596ac5e73604a533c526f90", null ],

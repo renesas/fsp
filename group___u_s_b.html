@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -255,6 +255,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga628af921919f90a9232c8c1713cc6c48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#ga628af921919f90a9232c8c1713cc6c48">R_USB_SetupGet</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, usb_setup_t *setup)</td></tr>
 <tr class="memdesc:ga628af921919f90a9232c8c1713cc6c48"><td class="mdescLeft">&#160;</td><td class="mdescRight">This API gets the setup type.  <a href="#ga628af921919f90a9232c8c1713cc6c48">More...</a><br /></td></tr>
 <tr class="separator:ga628af921919f90a9232c8c1713cc6c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66b9f21c7fc7cce60388edeaf7861d0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#ga66b9f21c7fc7cce60388edeaf7861d0e">R_USB_OtgCallbackSet</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, usb_otg_callback_t *p_callback)</td></tr>
+<tr class="memdesc:ga66b9f21c7fc7cce60388edeaf7861d0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set callback function to be called when the OTG role swap was completed on Azure RTOS.  <a href="#ga66b9f21c7fc7cce60388edeaf7861d0e">More...</a><br /></td></tr>
+<tr class="separator:ga66b9f21c7fc7cce60388edeaf7861d0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a52197abba908bdd990e9bca22d50a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#ga1a52197abba908bdd990e9bca22d50a7">R_USB_OtgSRP</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="memdesc:ga1a52197abba908bdd990e9bca22d50a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the SRP processing for OTG on Azure RTOS.  <a href="#ga1a52197abba908bdd990e9bca22d50a7">More...</a><br /></td></tr>
+<tr class="separator:ga1a52197abba908bdd990e9bca22d50a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the USB peripheral on RA MCUs. This module implements the <a class="el" href="group___u_s_b___a_p_i.html">USB Interface</a>. </p>
@@ -301,43 +307,15 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr>
-<td>PLL Frequency</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-24MHz</li>
-<li>
-20MHz</li>
-<li>
-12MHz</li>
-<li>
-Other</li>
-</ul>
-</td><td>24MHz </td><td>Specify the PLL frequency supplied to the USB module. This setting only applies to USB1 (not USB0). </td></tr>
+<td>PLL Frequency</td><td>MCU Specific Options</td><td></td><td>Specify the PLL frequency supplied to the USB module. This setting only applies to USB1 (not USB0). </td></tr>
 <tr>
-<td>CPU Bus Access Wait Cycles</td><td>Refer to the RA Configuration tool for available options.</td><td>9 cycles </td><td>This setting controls the delay for consecutive USB peripheral register access. Set this value to a number of CPU cycles that is equivalent to 40.8ns or more. </td></tr>
+<td>CPU Bus Access Wait Cycles</td><td>MCU Specific Options</td><td></td><td>This setting controls the delay for consecutive USB peripheral register access. Set this value to a number of CPU cycles that is equivalent to 40.8ns or more. </td></tr>
 <tr>
-<td>Battery Charging</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Enabled </td><td>Specify whether or not to include battery charging functionality. </td></tr>
+<td>Battery Charging</td><td>MCU Specific Options</td><td></td><td>Specify whether or not to include battery charging functionality. </td></tr>
 <tr>
-<td>Power IC Shutdown Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Active High</li>
-<li>
-Active Low</li>
-</ul>
-</td><td>Active High </td><td>Select the polarity of the Shutdown signal on the power supply IC (if provided). </td></tr>
+<td>Power IC Shutdown Polarity</td><td>MCU Specific Options</td><td></td><td>Select the polarity of the Shutdown signal on the power supply IC (if provided). </td></tr>
 <tr>
-<td>Dedicated Charging Port (DCP) Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>When enabled, USB communication is disabled and the port is used for charging only. </td></tr>
+<td>Dedicated Charging Port (DCP) Mode</td><td>MCU Specific Options</td><td></td><td>When enabled, USB communication is disabled and the port is used for charging only. </td></tr>
 <tr>
 <td>Notifications for SET_INTERFACE/SET_FEATURE/CLEAR_FEATURE</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -355,29 +333,11 @@ Enabled</li>
 </ul>
 </td><td>Enabled </td><td>When enabled, the FIFOs for Pipes 1-5 are double-buffered. </td></tr>
 <tr>
-<td>Continuous Transfer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>Disabled </td><td>Enable or disable continuous transfer mode. </td></tr>
+<td>Continuous Transfer Mode</td><td>MCU Specific Options</td><td></td><td>Enable or disable continuous transfer mode. </td></tr>
 <tr>
-<td>LDO Regulator</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable</li>
-</ul>
-</td><td>Disable </td><td>Enable or disable LDO regulator. </td></tr>
+<td>LDO Regulator</td><td>MCU Specific Options</td><td></td><td>Enable or disable LDO regulator. </td></tr>
 <tr>
-<td>DMA Support</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disable</li>
-<li>
-Enable</li>
-</ul>
-</td><td>Disable </td><td>Enable or disable DMA support for the USB module. </td></tr>
+<td>DMA Support</td><td>MCU Specific Options</td><td></td><td>Enable or disable DMA support for the USB module. </td></tr>
 <tr>
 <td>DMA Source Address</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -421,6 +381,8 @@ Disabled</li>
 Host mode</li>
 <li>
 Peri mode</li>
+<li>
+OTG mode</li>
 </ul>
 </td><td>Host mode </td><td>Select the usb mode. </td></tr>
 <tr>
@@ -1900,13 +1862,80 @@ Do not call this API in the interrupt function. </dd></dl>
 
 </div>
 </div>
+<a id="ga66b9f21c7fc7cce60388edeaf7861d0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga66b9f21c7fc7cce60388edeaf7861d0e">&#9670;&nbsp;</a></span>R_USB_OtgCallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_OtgCallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">usb_otg_callback_t *&#160;</td>
+          <td class="paramname"><em>p_callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set callback function to be called when the OTG role swap was completed on Azure RTOS. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful completion. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter is NULL error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga1a52197abba908bdd990e9bca22d50a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1a52197abba908bdd990e9bca22d50a7">&#9670;&nbsp;</a></span>R_USB_OtgSRP()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_OtgSRP </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start the SRP processing for OTG on Azure RTOS. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful completion. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter is NULL error. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Do not support the VBUS Pulsing since OTG 2.0 does not support the VBUS Pulsing.. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

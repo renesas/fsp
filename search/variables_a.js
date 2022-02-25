@@ -4,5 +4,6 @@ var searchData=
   ['key_5fid',['key_id',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a156a9d174f4f72ea949a1d60b7425761',1,'sce_ecdh_handle_t']]],
   ['key_5fnotf',['key_notf',['../group___g_a_p___a_p_i.html#a80799d7680e6e63d8b35fa77c34bef51',1,'st_ble_gap_pairing_param_t']]],
   ['key_5ftype',['key_type',['../group___g_a_p___a_p_i.html#a870fe05818d039120a4da9dcb0228641',1,'st_ble_gap_key_press_ntf_evt_t::key_type()'],['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a3bb0e7ebd18deb1f7707187b53e82452',1,'sce_ecdh_handle_t::key_type()']]],
+  ['keyid',['keyid',['../group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a69a3ff7929c4b2ea3d122246a777ecf4',1,'rm_ble_mesh_provision_data_t']]],
   ['keys',['keys',['../group___g_a_p___a_p_i.html#a92ff8aaef443b5cde52a35cffc3846c8',1,'st_ble_gap_key_ex_param_t']]]
 ];

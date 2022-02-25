@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -277,17 +277,17 @@ If the requested transfer rate cannot be achieved, the settings with the largest
 <tr>
 <td>SDA Output Delay (nano seconds)</td><td>Must be a valid non-negative integer with maximum configurable value of 300</td><td>300 </td><td>Specify the SDA output delay in nanoseconds. </td></tr>
 <tr>
-<td>Noise filter setting</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Noise Filter Clock Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Use clock signal divided by 1 with noise filter</li>
+The on-chip baud rate generator source clock divided by 1</li>
 <li>
-Use clock signal divided by 2 with noise filter</li>
+The on-chip baud rate generator source clock divided by 2</li>
 <li>
-Use clock signal divided by 4 with noise filter</li>
+The on-chip baud rate generator source clock divided by 4</li>
 <li>
-Use clock signal divided by 8 with noise filter</li>
+The on-chip baud rate generator source clock divided by 8</li>
 </ul>
-</td><td>Use clock signal divided by 1 with noise filter </td><td>Select the sampling clock for the digital noise filter </td></tr>
+</td><td>The on-chip baud rate generator source clock divided by 1 </td><td>Select the on-chip baud rate generator source clock division setting for the digital noise filter </td></tr>
 <tr>
 <td>Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -318,38 +318,6 @@ Clock Configuration</h2>
 </p><table class="doxtable">
 <tr>
 <th>MCU Group</th><th>Peripheral Clock </th></tr>
-<tr>
-<td>RA2A1</td><td>PCLKB</td></tr>
-<tr>
-<td>RA2E1</td><td>PCLKB</td></tr>
-<tr>
-<td>RA2E2</td><td>PCLKB</td></tr>
-<tr>
-<td>RA2L1</td><td>PCLKB</td></tr>
-<tr>
-<td>RA4E1</td><td>PCLKA</td></tr>
-<tr>
-<td>RA4M1</td><td>PCLKA</td></tr>
-<tr>
-<td>RA4M2</td><td>PCLKA</td></tr>
-<tr>
-<td>RA4M3</td><td>PCLKA</td></tr>
-<tr>
-<td>RA4W1</td><td>PCLKA</td></tr>
-<tr>
-<td>RA6E1</td><td>PCLKA</td></tr>
-<tr>
-<td>RA6M1</td><td>PCLKA</td></tr>
-<tr>
-<td>RA6M2</td><td>PCLKA</td></tr>
-<tr>
-<td>RA6M3</td><td>PCLKA</td></tr>
-<tr>
-<td>RA6M4</td><td>PCLKA</td></tr>
-<tr>
-<td>RA6M5</td><td>PCLKA</td></tr>
-<tr>
-<td>RA6T1</td><td>PCLKA</td></tr>
 <tr>
 <td>RA6T2</td><td>PCLKA</td></tr>
 </table>
@@ -866,7 +834,7 @@ I2C Clock settings. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

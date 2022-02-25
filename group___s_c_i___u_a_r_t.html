@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -204,6 +204,7 @@ Features</h2>
 <li>Baud-rate change at run-time<a class="anchor" id="um_sci_uart_baud_rate"></a></li>
 <li>Bit rate modulation and noise cancellation<a class="anchor" id="um_sci_uart_bitrate_modulation"></a><a class="anchor" id="um_sci_uart_noise_cancellation"></a></li>
 <li>CTS/RTS hardware flow control (with an associated pin)<a class="anchor" id="um_sci_uart_flow_control"></a></li>
+<li>RS-485 Half Duplex driver support with external RS-485 transceiver<a class="anchor" id="um_sci_uart_rs485"></a></li>
 <li>Integration with the DTC transfer module</li>
 <li>Abort in-progress read/write operations<a class="anchor" id="um_sci_uart_abort"></a></li>
 <li>FIFO support on supported channels<a class="anchor" id="um_sci_uart_fifo_disabled"></a> </li>
@@ -248,7 +249,15 @@ Enable</li>
 <li>
 Disable</li>
 </ul>
-</td><td>Disable </td><td>Enable RS232 and RS485 flow control support using a user provided pin. </td></tr>
+</td><td>Disable </td><td>Enable RS232 and RS-485 flow control support using a user provided pin. </td></tr>
+<tr>
+<td>RS-485 Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable support for controlling the RS-485 DE pin. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; UART (r_sci_uart)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; UART (r_sci_uart). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -300,7 +309,7 @@ Enabled</li>
 </ul>
 </td><td>Disabled </td><td>Enabling baud rate modulation reduces the percent error of the actual baud rate with respect to the requested baud rate. It does this by modulating the number of cycles per clock, so some bits are slightly longer than others. </td></tr>
 <tr>
-<td>Baud &gt; Max Error (%)</td><td>Must be a valid non negative integer with a maximum configurable value of 100</td><td>5 </td><td>Maximum percent error allowed during baud calculation. This is used by the algorithm to determine whether or not to consider using less accurate alternative register settings.<br />
+<td>Baud &gt; Max Error (%)</td><td>Must be a valid non-negative integer with a maximum configurable value of 100</td><td>5 </td><td>Maximum percent error allowed during baud calculation. This is used by the algorithm to determine whether or not to consider using less accurate alternative register settings.<br />
 <br />
 NOTE: The baud calculation does not show an error in the tool if this percent error was not achieved. The calculated percent error is recorded in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
 <tr>
@@ -309,6 +318,26 @@ NOTE: The baud calculation does not show an error in the tool if this percent er
 <td>Flow Control &gt; Software RTS Port</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin port for the MCU. </td></tr>
 <tr>
 <td>Flow Control &gt; Software RTS Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the flow control pin for the MCU. </td></tr>
+<tr>
+<td>Extra &gt; RS-485 &gt; DE Pin</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Disable </td><td>Enable or disable the DE pin for use in RS-485 half-duplex mode. </td></tr>
+<tr>
+<td>Extra &gt; RS-485 &gt; DE Pin Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Active Low</li>
+<li>
+Active High</li>
+</ul>
+</td><td>Active High </td><td>Select the polarity of the DE pin. </td></tr>
+<tr>
+<td>Extra &gt; RS-485 &gt; DE Port Number</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>GPIO output port number to use for generating the DE signal. </td></tr>
+<tr>
+<td>Extra &gt; RS-485 &gt; DE Pin Number</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>GPIO output pin number to use for generating the DE signal. </td></tr>
 <tr>
 <td>Extra &gt; Clock Source</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -346,7 +375,7 @@ Max</li>
 </ul>
 </td><td>Max </td><td>Unused if the channel has no FIFO or if DTC is used for reception. Set to One to get a callback immediately when each byte is received. Set to Max to get a callback when FIFO is full or after 15 bit times with no data (fewer interrupts). </td></tr>
 <tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>user_uart_callback </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
 <tr>
 <td>Interrupts &gt; Receive Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
 <tr>
@@ -395,8 +424,6 @@ Clock Configuration</h2>
 <td>RA6M5</td><td>PCLKA</td></tr>
 <tr>
 <td>RA6T1</td><td>PCLKA</td></tr>
-<tr>
-<td>RA6T2</td><td>PCLKA</td></tr>
 </table>
 </p>
 <p>The clock source for the baud-rate clock generator can be selected from the internal clock, the external clock times 8 or the external clock times 16. The external clock is supplied to the SCK pin.<a class="anchor" id="um_sci_uart_clock_configuration"></a> </p>
@@ -426,13 +453,15 @@ DTC Limitations</h2>
 Examples</h1>
 <h2>SCI UART Example</h2>
 <div class="fragment"><div class="line">uint8_t  g_dest[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_src[TRANSFER_LENGTH];</div><div class="line">uint8_t  g_out_of_band_received[TRANSFER_LENGTH];</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line">uint32_t g_receive_complete  = 0;</div><div class="line">uint32_t g_out_of_band_index = 0;</div><div class="line"><span class="keywordtype">void</span> r_sci_uart_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the transfer instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open</a>(&amp;g_uart0_ctrl, &amp;g_uart0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165">R_SCI_UART_Read</a>(&amp;g_uart0_ctrl, g_dest, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga8916449e6e6de86681c04d1931645e7c">R_SCI_UART_Write</a>(&amp;g_uart0_ctrl, g_src, TRANSFER_LENGTH);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_transfer_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!g_receive_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> example_callback (<a class="code" href="group___u_a_r_t___a_p_i.html#structuart__callback__args__t">uart_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Handle the UART event */</span></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a558f63e26549462cf3a893ed73fd26ad">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Received a character */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da794925d1c74f16bde84152508e66a6bd">UART_EVENT_RX_CHAR</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Only put the next character in the receive buffer if there is space for it */</span></div><div class="line">            <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(g_out_of_band_received) &gt; g_out_of_band_index)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Write either the next one or two bytes depending on the receive data size */</span></div><div class="line">                <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db">UART_DATA_BITS_8</a> &gt;= g_uart0_cfg.data_bits)</div><div class="line">                {</div><div class="line">                    g_out_of_band_received[g_out_of_band_index++] = (uint8_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                }</div><div class="line">                <span class="keywordflow">else</span></div><div class="line">                {</div><div class="line">                    uint16_t * p_dest = (uint16_t *) &amp;g_out_of_band_received[g_out_of_band_index];</div><div class="line">                    *p_dest              = (uint16_t) p_args-&gt;<a class="code" href="group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70">data</a>;</div><div class="line">                    g_out_of_band_index += 2;</div><div class="line">                }</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Receive complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8dabe2b1428416bd300ee15a2608df30837">UART_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_receive_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Transmit complete */</span></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da56867c1db03ea3ee2c704604ac94b767">UART_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_transfer_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>SCI UART Baud Set Example</h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#define SCI_UART_BAUDRATE_19200    (19200)</span></div><div class="line"><span class="keywordtype">void</span> r_sci_uart_baud_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> baud_setting;</div><div class="line">    uint32_t       baud_rate                 = SCI_UART_BAUDRATE_19200;</div><div class="line">    <span class="keywordtype">bool</span>           enable_bitrate_modulation = <span class="keyword">false</span>;</div><div class="line">    uint32_t       error_rate_x_1000         = 5;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2">R_SCI_UART_BaudCalculate</a>(baud_rate, enable_bitrate_modulation, error_rate_x_1000, &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga3b3a6c761a66c6cbcca3c72a451b3371">R_SCI_UART_BaudSet</a>(&amp;g_uart0_ctrl, (<span class="keywordtype">void</span> *) &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="preprocessor">#define SCI_UART_BAUDRATE_19200              (19200)</span></div><div class="line"><span class="preprocessor">#define SCI_UART_BAUDRATE_ERROR_PERCENT_5    (5000)</span></div><div class="line"><span class="keywordtype">void</span> r_sci_uart_baud_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> baud_setting;</div><div class="line">    uint32_t       baud_rate                 = SCI_UART_BAUDRATE_19200;</div><div class="line">    <span class="keywordtype">bool</span>           enable_bitrate_modulation = <span class="keyword">false</span>;</div><div class="line">    uint32_t       error_rate_x_1000         = SCI_UART_BAUDRATE_ERROR_PERCENT_5;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2">R_SCI_UART_BaudCalculate</a>(baud_rate, enable_bitrate_modulation, error_rate_x_1000, &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___u_a_r_t.html#ga3b3a6c761a66c6cbcca3c72a451b3371">R_SCI_UART_BaudSet</a>(&amp;g_uart0_ctrl, (<span class="keywordtype">void</span> *) &amp;baud_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structsci__uart__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#structsci__uart__instance__ctrl__t">sci_uart_instance_ctrl_t</a></td></tr>
 <tr class="separator:structsci__uart__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structbaud__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a></td></tr>
 <tr class="separator:structbaud__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structsci__uart__rs485__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#structsci__uart__rs485__setting__t">sci_uart_rs485_setting_t</a></td></tr>
+<tr class="separator:structsci__uart__rs485__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structsci__uart__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#structsci__uart__extended__cfg__t">sci_uart_extended_cfg_t</a></td></tr>
 <tr class="separator:structsci__uart__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -448,6 +477,10 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga373d96cc125e44fc8491e98bf54a0459"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga39a35f02d1e2aa6560591dc6a54de2f6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga39a35f02d1e2aa6560591dc6a54de2f6">sci_uart_noise_cancellation_t</a> </td></tr>
 <tr class="separator:ga39a35f02d1e2aa6560591dc6a54de2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9522502f434bcaa2bbaf9cb1321ce542"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga9522502f434bcaa2bbaf9cb1321ce542">sci_uart_rs485_enable_t</a> </td></tr>
+<tr class="separator:ga9522502f434bcaa2bbaf9cb1321ce542"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bd2440ef30f2feca9a2d129989bffce"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___u_a_r_t.html#ga0bd2440ef30f2feca9a2d129989bffce">sci_uart_rs485_de_polarity_t</a> </td></tr>
+<tr class="separator:ga0bd2440ef30f2feca9a2d129989bffce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structsci__uart__instance__ctrl__t" id="structsci__uart__instance__ctrl__t"></a>
@@ -480,7 +513,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a82c68098cecc8b450cc8a273315a3cf8"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
+<a id="aaf59c23777f39ed87b3d4600a43d393c"></a>union <a class="el" href="group___s_c_i___u_a_r_t.html#unionbaud__setting__t_8____unnamed____">baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -503,6 +536,42 @@ Bit Rate Register setting. </td></tr>
 mddr</td>
 <td class="fielddoc">
 Modulation Duty Register setting. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structsci__uart__rs485__setting__t" id="structsci__uart__rs485__setting__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsci__uart__rs485__setting__t">&#9670;&nbsp;</a></span>sci_uart_rs485_setting_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sci_uart_rs485_setting_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration settings for controlling the DE signal for RS-485. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7ecf6bb47dcdafcd7e569695d0be405b"></a><a class="el" href="group___s_c_i___u_a_r_t.html#ga9522502f434bcaa2bbaf9cb1321ce542">sci_uart_rs485_enable_t</a></td>
+<td class="fieldname">
+enable</td>
+<td class="fielddoc">
+Enable the DE signal. </td></tr>
+<tr><td class="fieldtype">
+<a id="aafcbd1f2c02e2f81d81371bb9e6b895d"></a><a class="el" href="group___s_c_i___u_a_r_t.html#ga0bd2440ef30f2feca9a2d129989bffce">sci_uart_rs485_de_polarity_t</a></td>
+<td class="fieldname">
+polarity</td>
+<td class="fielddoc">
+DE signal polarity. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2e764fad5f11c412720a531a8e1b6815"></a><a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+de_control_pin</td>
+<td class="fielddoc">
+UART Driver Enable pin. </td></tr>
 </table>
 
 </div>
@@ -563,6 +632,12 @@ UART Driver Enable pin. </td></tr>
 flow_control</td>
 <td class="fielddoc">
 CTS/RTS function of the SSn pin. </td></tr>
+<tr><td class="fieldtype">
+<a id="afbddfe3e0c2394d7cfd9db923078404f"></a><a class="el" href="group___s_c_i___u_a_r_t.html#structsci__uart__rs485__setting__t">sci_uart_rs485_setting_t</a></td>
+<td class="fieldname">
+rs485_setting</td>
+<td class="fielddoc">
+RS-485 settings. </td></tr>
 </table>
 
 </div>
@@ -676,6 +751,48 @@ CTS/RTS function of the SSn pin. </td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga39a35f02d1e2aa6560591dc6a54de2f6ae2520375d106830858c0897a2282f777"></a>SCI_UART_NOISE_CANCELLATION_DISABLE&#160;</td><td class="fielddoc"><p>Disable noise cancellation. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga39a35f02d1e2aa6560591dc6a54de2f6ae1395e580c42c36838a0b626d3852a8f"></a>SCI_UART_NOISE_CANCELLATION_ENABLE&#160;</td><td class="fielddoc"><p>Enable noise cancellation. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga9522502f434bcaa2bbaf9cb1321ce542"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9522502f434bcaa2bbaf9cb1321ce542">&#9670;&nbsp;</a></span>sci_uart_rs485_enable_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_c_i___u_a_r_t.html#ga9522502f434bcaa2bbaf9cb1321ce542">sci_uart_rs485_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RS-485 Enable/Disable. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9522502f434bcaa2bbaf9cb1321ce542aa05bec8fad1420e777b184f55300b484"></a>SCI_UART_RS485_DISABLE&#160;</td><td class="fielddoc"><p>RS-485 disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9522502f434bcaa2bbaf9cb1321ce542acd3ee665f5225c5bb017bb64d33cf127"></a>SCI_UART_RS485_ENABLE&#160;</td><td class="fielddoc"><p>RS-485 enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga0bd2440ef30f2feca9a2d129989bffce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0bd2440ef30f2feca9a2d129989bffce">&#9670;&nbsp;</a></span>sci_uart_rs485_de_polarity_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_c_i___u_a_r_t.html#ga0bd2440ef30f2feca9a2d129989bffce">sci_uart_rs485_de_polarity_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The polarity of the RS-485 DE signal. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga0bd2440ef30f2feca9a2d129989bffcea7cfd9e1ff7eca0657388f7cf9ce708fc"></a>SCI_UART_RS485_DE_POLARITY_HIGH&#160;</td><td class="fielddoc"><p>The DE signal is high when a write transfer is in progress. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0bd2440ef30f2feca9a2d129989bffceac1a061d1cb22d6b336e23185af20e089"></a>SCI_UART_RS485_DE_POLARITY_LOW&#160;</td><td class="fielddoc"><p>The DE signal is low when a write transfer is in progress. </p>
 </td></tr>
 </table>
 
@@ -1013,7 +1130,7 @@ CTS/RTS function of the SSn pin. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">baudrate</td><td>Baud rate [bps]. For example, 19200, 57600, 115200, etc. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bitrate_modulation</td><td>Enable bitrate modulation </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">baud_rate_error_x_1000</td><td>&lt;baud_rate_percent_error&gt; x 1000 required for module to function. Absolute max baud_rate_error is 15000 (15%). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">baud_rate_error_x_1000</td><td>Max baud rate error. At most &lt;baud_rate_percent_error&gt; x 1000 required for module to function. Absolute max baud_rate_error is 15000 (15%). </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_baud_setting</td><td>Baud setting information stored here if successful</td></tr>
   </table>
   </dd>
@@ -1022,7 +1139,7 @@ CTS/RTS function of the SSn pin. </td></tr>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Baud rate is set successfully </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Baud rate is '0', source clock frequency could not be read, or error in calculated baud rate is larger than 10%. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Baud rate is '0', error in calculated baud rate is larger than requested max error, or requested max error in baud rate is larger than 15%. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1127,7 +1244,7 @@ CTS/RTS function of the SSn pin. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -193,6 +193,7 @@ Features</h2>
 <ul>
 <li>Standard SPI Modes<ul>
 <li>Master or Slave Mode</li>
+<li>3-Wire (clock synchronous) or 4-Wire (SPI) Mode</li>
 <li>Clock Polarity (CPOL)<ul>
 <li>CPOL=0 SCLK is low when idle</li>
 <li>CPOL=1 SCLK is high when idle</li>
@@ -204,11 +205,11 @@ Features</h2>
 </ul>
 </li>
 <li>MSB/LSB first</li>
-<li>8-Bit, 9-bit, 10-bit, 11-bit, 12-bit, 13-bit, 14-bit, 15-bit, 16-Bit, 20-bit, 24-bit, and 32-Bit data frames<ul>
-<li>Hardware endian swap in 16-Bit and 32-Bit mode</li>
+<li>8-16 bit, 20-bit, 24-bit, and 32-bit data frames<ul>
+<li>Hardware endian swap in 16-bit and 32-bit modes</li>
 </ul>
 </li>
-<li>3-Wire (clock synchronous) or 4-Wire (SPI) Mode</li>
+<li>SSL level keep (burst transfer) supported if available</li>
 </ul>
 </li>
 <li>Configurable bitrate</li>
@@ -481,8 +482,6 @@ Clock Configuration</h2>
 <td>RA6M5</td><td>PCLKA</td></tr>
 <tr>
 <td>RA6T1</td><td>PCLKA</td></tr>
-<tr>
-<td>RA6T2</td><td>PCLKA</td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-spi-pin-configuration"></a>
@@ -1255,7 +1254,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

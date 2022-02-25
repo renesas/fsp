@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -170,7 +170,11 @@ $(document).ready(function(){initNavTree('_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html',
 <li class="level2"><a href="#fsp-terms">FSP Terms</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#fsp-modules">FSP Modules</a></li>
+<li class="level1"><a href="#fsp-modules">FSP Modules</a><ul><li class="level2"><a href="#module-sources">Module Sources</a></li>
+<li class="level2"><a href="#module-distribution">Module Distribution</a></li>
+<li class="level2"><a href="#module-versioning">Module Versioning</a></li>
+</ul>
+</li>
 <li class="level1"><a href="#fsp-stacks">FSP Stacks</a></li>
 <li class="level1"><a href="#fsp-interfaces">FSP Interfaces</a><ul><li class="level2"><a href="#fsp-interface-enumerations">FSP Interface Enumerations</a></li>
 <li class="level2"><a href="#fsp-interface-callback-functions">FSP Interface Callback Functions</a></li>
@@ -261,6 +265,20 @@ Modules</div></div>
 <div class="caption">
 Module with application</div></div>
 <p> The Board Support Package (BSP) is the foundation for FSP modules, providing functionality to determine the MCU used as well as configuring clocks, interrupts and pins. For the sake of clarity, the BSP will be omitted from further diagrams.</p>
+<h2><a class="anchor" id="module-sources"></a>
+Module Sources</h2>
+<p>Some modules distributed alongside FSP originate from outside sources. A full list of sources for FSP modules, including versions and hyperlinks, can be found in the Third Party Software section of the release notes for each release.</p>
+<h2><a class="anchor" id="module-distribution"></a>
+Module Distribution</h2>
+<p>All modules distributed with FSP are packaged as CMSIS components in CMSIS packs. Each module consists of source files and a tooling support file used to integrate the module with e2 studio or RASC. The tooling support file defines the configurations used to generate code in the ra_gen and ra_cfg folders.</p>
+<h2><a class="anchor" id="module-versioning"></a>
+Module Versioning</h2>
+<p>Module versions can be seen on the Components tab of the FSP Configuration editor. The FSP Configuration editor automatically selects compatible components.</p>
+<p>All third party modules have a semantic version are versioned with their original semantic version plus added metadata <code>fsp.&lt;fsp_semantic_version&gt;</code>. The metadata is added to reflect the tooling support file added for the FSP configuration tool.</p>
+<p>Third party modules versioned with <code>+renesas.&lt;counter&gt;</code> in the metadata have been forked and updated for FSP. If <code>+renesas.&lt;counter&gt;</code> is not in the metadata, the third party code is unchanged from its original source.</p>
+<p>If changes are made to third party module source code to support FSP, the changes are pushed to a public Renesas GitHub fork of the original source. Links to Renesas forks are provided in the Third Party Software section of the release notes for each release.</p>
+<p>Modules that originate from outside sources that do not have a semantic version are versioned with the FSP version.</p>
+<p>All modules that are part of FSP or integrated with FSP are tested as a package. Mixing versions is not encouraged and may lead to support issues.</p>
 <h1><a class="anchor" id="fsp-stacks"></a>
 FSP Stacks</h1>
 <p>When modules are layered atop one another, an FSP stack is formed. The stacking process is performed by matching what one module provides with what another module requires. For example, the SPI module (<a class="el" href="group___s_p_i.html">Serial Peripheral Interface (r_spi)</a>) requires a module that provides the transfer interface (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html">Transfer Interface</a>) to send or receive data without a CPU interrupt. The transfer interface requirement can be fulfilled by the DTC driver module (<a class="el" href="group___d_t_c.html">Data Transfer Controller (r_dtc)</a>).</p>
@@ -443,7 +461,7 @@ Use the Instance API in the Application</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -183,6 +183,8 @@ Swap</li>
 Overwrite Only</li>
 <li>
 Overwrite Only Fast</li>
+<li>
+Direct XIP</li>
 </ul>
 </td><td>Overwrite Only </td><td>Swap supports A/B image swapping with rollback. Other modes with simpler code path, which only supports overwriting the existing image with the update image or running the newest image directly from its flash partition, are also available. </td></tr>
 <tr>
@@ -250,20 +252,6 @@ RSA 3072</li>
 <tr>
 <td>Signing Options &gt; Python</td><td>Manual Entry</td><td>python </td><td>Name of the python command to use. Default is python, but can be updated to python3 for Linux or an absolute path if needed. </td></tr>
 <tr>
-<td>Debugging &gt; Log Level</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Off</li>
-<li>
-Error</li>
-<li>
-Warning</li>
-<li>
-Info</li>
-<li>
-Debug</li>
-</ul>
-</td><td>Off </td><td>Configure log level. </td></tr>
-<tr>
 <td>Flash Layout &gt; TrustZone &gt; Non-Secure Callable Region Size (Bytes)</td><td>Value must be an integer multiple of the 1024.</td><td>0x0 </td><td>Size of the Non-Secure Callable region of the Secure image. </td></tr>
 <tr>
 <td>Flash Layout &gt; TrustZone &gt; Non-Secure Flash Area Size (Bytes) (TrustZone Non-Secure)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x0 </td><td>Size of the Non-Secure region. This must be non-zero for all TrustZone projects to ensure memory is partitioned correctly, even if the Secure and Non-Secure regions are treated as a single image. If the Non-Secure region can be updated separately, this size must account for the header and trailer. </td></tr>
@@ -272,11 +260,11 @@ Debug</li>
 <tr>
 <td>Flash Layout &gt; TrustZone &gt; Non-Secure RAM Region Size (Bytes) (TrustZone Non-Secure)</td><td>Value must be an integer multiple of the 8192.</td><td>0x0 </td><td>Size of the Non-Secure RAM region. This must be non-zero for all TrustZone projects to ensure memory is partitioned correctly, even if the Secure and Non-Secure regions are treated as a single image. </td></tr>
 <tr>
-<td>Flash Layout &gt; TrustZone &gt; Image 2 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x80 </td><td>Size of the flash reserved for the application image header for Image 2. </td></tr>
+<td>Flash Layout &gt; TrustZone &gt; Image 2 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header for Image 2. </td></tr>
 <tr>
 <td>Flash Layout &gt; Bootloader Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the flash reserved for the bootloader. </td></tr>
 <tr>
-<td>Flash Layout &gt; Image 1 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x80 </td><td>Size of the flash reserved for the application image header. </td></tr>
+<td>Flash Layout &gt; Image 1 Header Size (Bytes)</td><td>Value must be an integer multiple of 0x80 (alignment required by VTOR).</td><td>0x200 </td><td>Size of the flash reserved for the application image header. Must meet minimum VTOR alignment requirements for the core (0x100 for Cortex-M23, 0x80 for Cortex-M4 and Cortex-M33). </td></tr>
 <tr>
 <td>Flash Layout &gt; Image 1 Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the application image 1, including the header and trailer. For TrustZone projects, enter the combined size of the Secure and Non-Secure Callable regions if the Non-Secure image can be updated separately, or enter the size of the entire image slot if Secure, Non-Secure Callable, and Non-Secure regions are updated as a single image. </td></tr>
 <tr>
@@ -353,6 +341,24 @@ Usage Notes</h1>
 <p>In Swap Mode operation, if the upgrade image is signed with the &ndash;pad option, MCUboot will install that image as a temporary update where if nothing else is done, a reboot will cause MCUboot to revert to the image version that was swapped out during the upgrade. In order for the updated image to prevent this reversion and make the update permanent, the boot_set_confirmed() must be called from the application.</p>
 <p>To avail this capability in the application image, from the Stacks tab, add New &gt; Bootloader &gt; MCUboot Image Utilities (Swap Mode). Resolve any constraint errors and edit configurations as desired.</p>
 <p>In src/hal_entry.c, drag in Developer Assistance &gt; HAL/Common &gt; MCUboot Image Utilities &gt; Quick Setup &gt; Confirm Primary Image. Add a call to boot_set_confirmed() in the application and confirm the image in the primary slot.</p>
+<h2>XIP Mode operation</h2>
+<p>XIP mode is enabled selecting "Direct XIP" as the Upgrade Mode option in the configurator or by defining "MCUBOOT_DIRECT_XIP" in the mcuboot config file. The linker script defines the symbol "XIP_SECONDARY_SLOT_IMAGE" by default to 0. To link an application to the secondar slot in XIP mode, set XIP_SECONDARY_SLOT_IMAGE to 1 in the application linker script. Direct XIP mode does not support TrustZone projects.</p>
+<h2>Dual Bank operation</h2>
+<p>MCUboot can be used with Dual bank mode to leverage the advantages of dual bank flash operation. When Dual Bank mode is enabled, only the XIP upgrade mode can be used. </p><dl class="section note"><dt>Note</dt><dd><b>Unlike in normal XIP Mode operation, the linker script symbol "XIP_SECONDARY_SLOT_IMAGE" must be undefined in Dual Bank mode.</b> An example flash layout in this configuration for a 1 MB is shown below. Note that there are 2 copies of the bootloader, one in Bank 0 and another in Bank 1.</dd></dl>
+<div class="image">
+<img src="rm_mcuboot_port_map_dualbank.png" alt="rm_mcuboot_port_map_dualbank.png"/>
+<div class="caption">
+MCUboot Dual Bank layout for 1 MB Memory</div></div>
+<p> For this example layout, the following files are generated when Dual Bank mode with XIP is enabled:</p>
+<ol type="1">
+<li>Bootloader Project: srec file linked to address 0 and includes the OFS region.</li>
+<li>Application Project (Primary): signed bin file linked to address 0x20000.</li>
+<li>Application Project (Secondary): signed bin file linked to address 0x20000.</li>
+</ol>
+<p>In Dual Bank mode, the available flash memory is split into two halves and referred to as Bank 0 and 1. In this example Bank 0 would span from address 0x0 - 0x7FFFF and Bank 1 from 0x200000 - 0x27FFFF. In Linear mode, it is possible to program the Bank 1 area by programming to 0x80000 - 0xFFFFF.</p>
+<h3>Programming in Dual Bank Mode</h3>
+<p>The bootloader must be duplicated in Dual Bank mode. Bank 0 can be programmed using the srec file generated from the MCUboot project; this will also program the OFS region which contains the dual bank enable bit, so it must either be programmed last if each file is programmed independently. Another option is to combine all images: MCUboot in Bank 0, primary image, MCUboot in Bank 1 (no OFS), and secondary image (optional). To program MCUboot to Bank 1, offset MCUboot by half the flash size and cut off the OFS region (0x0100A100 to address 0x0100A2FF on CM33 MCUs that support dual bank). Using srec-cat for a 1 MB flash MCU (0x80000 flash per bank), an example command to create the bootloader image for Bank 1: "srec_cat MCUboot_dualbank.srec -crop 0 0x80000 -offset 0x80000 -o MCUboot_dualbank_offset.srec". The application project for Bank 1 can be similarly offset using srec_cat: "srec_cat app1.bin.signed -binary -offset 0xA0000 -o app1_offset.srec", where 0xA0000 is 0x80000 (half the flash) + 0x20000 (MCUboot size). The signed binary file for Bank 0 can be converted to srec format using srec_cat: "srec_cat app0.bin.signed -binary -offset 0x20000 -o app0.srec"</p>
+<p>To combine all the files into one srec file, use "srec_cat MCUboot_dualbank.srec MCUboot_dualbank_offset.srec app0.srec app1_offset.srec -o combined_srec".</p>
 <h2>External Memory Support</h2>
 <p>QSPI support for secondary image storage can be enabled in the configurator. The booloader expectes the QSPI memory to be pre-configured by user code in the bootloader for read/write operation. The bootloader code operates under the assumption that the user has configured the QSPI in Extended-SPI mode and that <a class="el" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open()</a> has been called prior to invoking boot_go();. For an example on how to initialize the QSPI device, refer to the QSPI module. The QSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation.</p>
 <h2>MCUboot Memory Map</h2>
@@ -371,11 +377,6 @@ MCUboot Memory Map (TrustZone)</div></div>
 <img src="rm_mcuboot_port_map_qspi.png" alt="rm_mcuboot_port_map_qspi.png"/>
 <div class="caption">
 MCUboot Memory Map with QSPI</div></div>
-<p> For projects with 2 separately updateable images (used for TrustZone applications where the Secure and Non-Secure images can be updated separately), the default memory map with QSPI support looks like:</p>
-<div class="image">
-<img src="rm_mcuboot_port_map_tz_qspi.png" alt="rm_mcuboot_port_map_tz_qspi.png"/>
-<div class="caption">
-MCUboot Memory Map (TrustZone) with QSPI</div></div>
  <h2>MCUboot Crypto Stack Options</h2>
 <p>The following crypto stacks can be used with MCUboot in FSP:</p><ol type="1">
 <li>MbedTLS, which is hardware accelerated on all RA devices. On the RA2 which has an AES engine only, ECC/RSA/SHA operations are in software.</li>
@@ -395,9 +396,7 @@ MCUboot Memory Map (TrustZone) with QSPI</div></div>
 <li>Use RFP as described in R11AN0496 to install the key to the location of mcuboot_sce9_key section.</li>
 </ol>
 <p>These are examples that install the default keys provided with MCUboot in ra/mcu-tools/MCUboot/. The examples assume that UFPK nd W-UFPK are already available.</p>
-<div class="fragment"><div class="line">  //Print out the EC-P256 Public Key using openSSL</div><div class="line">C:\ openssl ec -noout -text -in root-ec-p256.pem</div><div class="line"></div><div class="line">read EC key</div><div class="line">Private-Key: (256 bit)</div><div class="line">priv:</div><div class="line">    d7:98:d5:2f:83:01:24:3b:d3:54:2b:7e:55:ed:4c:</div><div class="line">    74:61:19:00:b0:f9:50:5a:82:4f:e1:e8:ec:06:3b:</div><div class="line">    cf:f1</div><div class="line">pub:</div><div class="line">    04:2a:cb:40:3c:e8:fe:ed:5b:a4:49:95:a1:a9:1d:</div><div class="line">    ae:e8:db:be:19:37:cd:14:fb:2f:24:57:37:e5:95:</div><div class="line">    39:88:d9:94:b9:d6:5a:eb:d7:cd:d5:30:8a:d6:fe:</div><div class="line">    48:b2:4a:6a:81:0e:e5:f0:7d:8b:68:34:cc:3a:6a:</div><div class="line">    fc:53:8e:fa:c1</div><div class="line">ASN1 OID: prime256v1</div><div class="line">NIST CURVE: P-256</div><div class="line"></div><div class="line">//Use the public key (ignore the 0x04 ASN.1 demarcator) in the RFP command line to convert the public key into an installable format</div><div class="line">C:\ &quot;C:\Program Files (x86)\Renesas Electronics\Programming Tools\Renesas Flash Programmer V3.08\rfp-util.exe&quot; /genkey /ufpk &quot;C:\ufpk.key&quot; /wufpk &quot;C:\ufpk.key_enc.key&quot; /key &quot;2acb403ce8feed5ba44995a1a91daee8dbbe1937cd14fb2f245737e5953988d994b9d65aebd7cdd5308ad6fe48b24a6a810ee5f07d8b6834cc3a6afc538efac1&quot; /userkey &quot;16&quot; /output &quot;C:\ECC_pub_install.rkey&quot;</div><div class="line"></div><div class="line">// From the bootloader map file determine the address of mcuboot_sce9_key section</div><div class="line">Use RFP to install &quot;ECC_pub_install.rkey&quot; as described in R11AN0496 to the address where the mcuboot_sce9_key section is located.</div></div><!-- fragment --><h2>Limitations</h2>
-<p>MCUboot tooling updates to adjust available flash in application images are currently only supported for the GCC compiler. IAR and AC6 support will be added in a future release.</p>
-<h1><a class="anchor" id="r-mcuboot-port-examples"></a>
+<div class="fragment"><div class="line">  //Print out the EC-P256 Public Key using openSSL</div><div class="line">C:\ openssl ec -noout -text -in root-ec-p256.pem</div><div class="line"></div><div class="line">read EC key</div><div class="line">Private-Key: (256 bit)</div><div class="line">priv:</div><div class="line">    d7:98:d5:2f:83:01:24:3b:d3:54:2b:7e:55:ed:4c:</div><div class="line">    74:61:19:00:b0:f9:50:5a:82:4f:e1:e8:ec:06:3b:</div><div class="line">    cf:f1</div><div class="line">pub:</div><div class="line">    04:2a:cb:40:3c:e8:fe:ed:5b:a4:49:95:a1:a9:1d:</div><div class="line">    ae:e8:db:be:19:37:cd:14:fb:2f:24:57:37:e5:95:</div><div class="line">    39:88:d9:94:b9:d6:5a:eb:d7:cd:d5:30:8a:d6:fe:</div><div class="line">    48:b2:4a:6a:81:0e:e5:f0:7d:8b:68:34:cc:3a:6a:</div><div class="line">    fc:53:8e:fa:c1</div><div class="line">ASN1 OID: prime256v1</div><div class="line">NIST CURVE: P-256</div><div class="line"></div><div class="line">//Use the public key (ignore the 0x04 ASN.1 demarcator) in the RFP command line to convert the public key into an installable format</div><div class="line">C:\ &quot;C:\Program Files (x86)\Renesas Electronics\Programming Tools\Renesas Flash Programmer V3.08\rfp-util.exe&quot; /genkey /ufpk &quot;C:\ufpk.key&quot; /wufpk &quot;C:\ufpk.key_enc.key&quot; /key &quot;2acb403ce8feed5ba44995a1a91daee8dbbe1937cd14fb2f245737e5953988d994b9d65aebd7cdd5308ad6fe48b24a6a810ee5f07d8b6834cc3a6afc538efac1&quot; /userkey &quot;16&quot; /output &quot;C:\ECC_pub_install.rkey&quot;</div><div class="line"></div><div class="line">// From the bootloader map file determine the address of mcuboot_sce9_key section</div><div class="line">Use RFP to install &quot;ECC_pub_install.rkey&quot; as described in R11AN0496 to the address where the mcuboot_sce9_key section is located.</div></div><!-- fragment --><h1><a class="anchor" id="r-mcuboot-port-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is an example of using MCUboot in an application.</p>
@@ -407,7 +406,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

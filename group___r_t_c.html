@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -320,6 +320,7 @@ Usage Notes</h1>
 <ul>
 <li>Carry interrupt priority must be set to avoid incorrect time returned from calendarTimeGet API during roll-over.</li>
 <li>Even when only running in Periodic Interrupt mode <a class="el" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a> must be called successfully to start the RTC.</li>
+<li>When handling power-on reset events in software, the application must ensure that the RTC is stopped prior to clearing the power-on reset flag (RSTSRO.PORF).</li>
 </ul>
 <h2><a class="anchor" id="r-rtc-limitations"></a>
 Limitations</h2>
@@ -772,7 +773,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

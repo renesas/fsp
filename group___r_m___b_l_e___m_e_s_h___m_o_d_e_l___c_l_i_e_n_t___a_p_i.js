@@ -1,0 +1,22 @@
+var group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i =
+[
+    [ "rm_ble_mesh_model_client_callback_args_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#structrm__ble__mesh__model__client__callback__args__t", null ],
+    [ "rm_ble_mesh_model_client_cfg_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#structrm__ble__mesh__model__client__cfg__t", [
+      [ "p_access_instance", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#aebef5d4fbe4ba71522e39e121552794b", null ],
+      [ "p_context", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a378391399c79abb4ae1f6aad4a449723", null ],
+      [ "p_extend", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ab6490ca6330d039fcb4ecb4814fba329", null ]
+    ] ],
+    [ "rm_ble_mesh_model_client_api_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#structrm__ble__mesh__model__client__api__t", [
+      [ "open", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a91a1c9d4bc4b1ff4d2bfbe16ab1c29d0", null ],
+      [ "close", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#af3dfa31cd026481ddb36f982efa44880", null ],
+      [ "setModelHandle", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a468443f9957fcd21a9cc07df13fe64e7", null ],
+      [ "getModelHandle", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#aefdd178892bc2093f6c4c0f0a72db7e9", null ],
+      [ "sendReliablePdu", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a2102d3db1562e88c56bc8c9373522891", null ]
+    ] ],
+    [ "rm_ble_mesh_model_client_instance_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#structrm__ble__mesh__model__client__instance__t", [
+      [ "p_ctrl", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a24d8a9e53130769abcd13eb1ae23a0a5", null ],
+      [ "p_cfg", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a15940da5ae6aa59361845c17812a9d96", null ],
+      [ "p_api", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#abb659a40d9552cb77eb77d3aa0ffbe1c", null ]
+    ] ],
+    [ "rm_ble_mesh_model_client_ctrl_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4", null ]
+];

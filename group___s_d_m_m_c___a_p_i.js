@@ -1,5 +1,6 @@
 var group___s_d_m_m_c___a_p_i =
 [
+    [ "sdmmc_response_t.status_b", "group___s_d_m_m_c___a_p_i.html#structsdmmc__response__t_8status__b", null ],
     [ "sdmmc_status_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__status__t", [
       [ "initialized", "group___s_d_m_m_c___a_p_i.html#aeaa9941f75b2d6b637be1b24e36c8cb2", null ],
       [ "transfer_in_progress", "group___s_d_m_m_c___a_p_i.html#a6f796677f6203ef572b998bb32740f91", null ],
@@ -18,6 +19,9 @@ var group___s_d_m_m_c___a_p_i =
       [ "response", "group___s_d_m_m_c___a_p_i.html#ab083228c33e9c702e8caf91fcdea0ffe", null ],
       [ "p_context", "group___s_d_m_m_c___a_p_i.html#a07513c165370d5e64468e227ac9e13b3", null ]
     ] ],
+    [ "sdmmc_write_io_args_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__write__io__args__t", null ],
+    [ "sdmmc_read_io_ext_args_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__read__io__ext__args__t", null ],
+    [ "sdmmc_write_io_ext_args_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__write__io__ext__args__t", null ],
     [ "sdmmc_cfg_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__cfg__t", [
       [ "channel", "group___s_d_m_m_c___a_p_i.html#a1ea8120c09417039684eedc1e41eb3ca", null ],
       [ "bus_width", "group___s_d_m_m_c___a_p_i.html#a2169b066e0d84bdf2f8349348ea5f749", null ],

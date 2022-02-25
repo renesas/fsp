@@ -5,6 +5,7 @@ var searchData=
   ['segger_20emwin_20port_20_28rm_5femwin_5fport_29',['SEGGER emWin Port (rm_emwin_port)',['../group___r_m___e_m_w_i_n___p_o_r_t.html',1,'']]],
   ['secure_20crypto_20engine_20_28r_5fsce_5fprotected_29',['Secure Crypto Engine (r_sce_protected)',['../group___s_c_e___p_r_o_t_e_c_t_e_d.html',1,'']]],
   ['sce_20interface',['SCE Interface',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html',1,'']]],
+  ['secure_20crypto_20engine_20_28r_5fsce_5fprotected_5fcavp_29',['Secure Crypto Engine (r_sce_protected_cavp)',['../group___s_c_e___p_r_o_t_e_c_t_e_d___c_a_v_p.html',1,'']]],
   ['serial_20communications_20interface_20_28sci_29_20i2c_20_28r_5fsci_5fb_5fi2c_29',['Serial Communications Interface (SCI) I2C (r_sci_b_i2c)',['../group___s_c_i___b___i2_c.html',1,'']]],
   ['serial_20communications_20interface_20_28sci_29_20spi_20_28r_5fsci_5fb_5fspi_29',['Serial Communications Interface (SCI) SPI (r_sci_b_spi)',['../group___s_c_i___b___s_p_i.html',1,'']]],
   ['serial_20communications_20interface_20_28sci_29_20uart_20_28r_5fsci_5fb_5fuart_29',['Serial Communications Interface (SCI) UART (r_sci_b_uart)',['../group___s_c_i___b___u_a_r_t.html',1,'']]],

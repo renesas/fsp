@@ -19,6 +19,7 @@ var searchData=
   ['vendor_5fstatus',['vendor_status',['../group___i3_c___a_p_i.html#a0148d668a40c53ea6aeba6b14050593e',1,'i3c_device_status_t']]],
   ['version',['version',['../group___g_a_p___a_p_i.html#a383ff637f62580e7903466c10e3c4e28',1,'st_ble_gap_dev_info_evt_t::version()'],['../group___p_t_p___a_p_i.html#a5d9dd652591f35448cc1fbb93eeb7698',1,'ptp_message_header_t::version()']]],
   ['version_5fid',['version_id',['../group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#a3d5dd6d84edfe02a1eb1f1f1ac2f3054',1,'fsp_pack_version_t']]],
+  ['version_5fid_5fb_5fs',['version_id_b_s',['../group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#structfsp__pack__version__t_1_1version__id__b__s',1,'fsp_pack_version_t']]],
   ['vertical_5fresolution',['vertical_resolution',['../group___j_p_e_g___a_p_i.html#a46d7f920adfd6dc7144b8672decf7b79',1,'jpeg_encode_image_size_t::vertical_resolution()'],['../group___j_p_e_g___a_p_i.html#a4bb89951df35729ace4d87e235ba0363',1,'jpeg_cfg_t::vertical_resolution()'],['../group___j_p_e_g.html#a9f90954e1af2ed22f8d84e75525ac88f',1,'jpeg_instance_ctrl_t::vertical_resolution()']]],
   ['virtual_5fchannel_5fcount',['virtual_channel_count',['../group___a_d_c___b.html#a327edbb6e3606009121a398d4721af87',1,'adc_b_group_cfg_t']]],
   ['voltage_5fslope',['voltage_slope',['../group___l_v_d___a_p_i.html#ad2d96d7a62eb0134be6dc53f8a2f1e01',1,'lvd_cfg_t']]],

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -441,8 +441,6 @@ Clock Configuration</h2>
 <td>RA6M5</td><td>PCLKC</td></tr>
 <tr>
 <td>RA6T1</td><td>PCLKC</td></tr>
-<tr>
-<td>RA6T2</td><td>PCLKC</td></tr>
 </table>
 </p>
 <p>The ADC clock must be at least 1 MHz when the ADC is used. Many MCUs also have PCLK ratio restrictions when the ADC is used. For details on PCLK ratio restrictions, reference the footnotes in the second table of the Clock Generation Circuit chapter of the MCU User's Manual (for example, Table 9.2 "Specifications
@@ -499,7 +497,10 @@ ADC Operational Modes</h2>
 <h3>Sample States for Temperature Sensor and Internal Voltage Reference</h3>
 <p>Sample states for the temperature sensor and the internal reference voltage are calculated during <a class="el" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg()</a> based on the ADCLK frequency at the time. The sample states for the temperature sensor and internal voltage reference cannot be updated with <a class="el" href="group___a_d_c.html#gaf0701bf45818dee071cb12e979017bce">R_ADC_SampleStateCountSet()</a>. If the ADCLK frequency changes, call <a class="el" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg()</a> before using the temperature sensor or internal reference voltage again to ensure the sampling time for the temperature sensor and internal voltage reference is optimal.</p>
 <h3>Selecting Reference Voltage</h3>
-<p>The ADC16 can select VREFH0 or VREFADC as the high-potential reference voltage on selected MCU's. When using VREFADC stabilization time of 1500us is required after call for <a class="el" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open()</a>.</p>
+<p>The ADC high-potential and low-potential reference voltages may be configured for selected MCU's. Please refer to the RA Configuration editor in e2 studio for further details.</p>
+<dl class="section note"><dt>Note</dt><dd>When using VREFADC, a stabilization time of 1500us is required after call for <a class="el" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open()</a>. Consult Section 32.6 "Selecting Reference Voltage" in the RA2A1 User's Manual (R01UH0888EJ0100) for details. </dd>
+<dd>
+When the internal reference voltage is selected as the high-potential reference voltage, the Low-power A/D Conversion mode will automatically be selected. Consult Section 29.6 "Selecting Reference Voltage" in the RA2E1 User's Manual (R01UH0852EJ0110) for details.</dd></dl>
 <h2>Using the Temperature Sensor with the ADC</h2>
 <p>The ADC HAL module supports reading the data from the on-chip temperature sensor. The value returned from the sensor can be converted into degrees Celsius or Fahrenheit in the application program using the following formula, T = (Vs - V1)/slope + T1, where:</p>
 <ul>
@@ -1703,7 +1704,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

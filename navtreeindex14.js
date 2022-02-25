@@ -1,14 +1,5 @@
 var NAVTREEINDEX14 =
 {
-"group___g_a_p___a_p_i.html#ga25d1cfdfc74463bd80d5c4294b70a1e9":[3,2,1,0,104],
-"group___g_a_p___a_p_i.html#ga28a6f8f1e741d4fb3b7da4cefd8cefe2":[3,2,1,0,126],
-"group___g_a_p___a_p_i.html#ga28bb3a50421f244e0671d5c14eec634a":[3,2,1,0,117],
-"group___g_a_p___a_p_i.html#ga2aa56ec698521e709358f23e768505c8":[3,2,1,0,94],
-"group___g_a_p___a_p_i.html#ga2ada347e31c1be9ee93d963e73ccdf19":[3,2,1,0,189],
-"group___g_a_p___a_p_i.html#ga2bf6924cbd492ad9b50e2781dfea6756":[3,2,1,0,223],
-"group___g_a_p___a_p_i.html#ga2f8d1eee6460c16864b67674dd42e4f3":[3,2,1,0,68],
-"group___g_a_p___a_p_i.html#ga31ec76e9465ce24fc8f64c6b1b796098":[3,2,1,0,182],
-"group___g_a_p___a_p_i.html#ga3372c0902a7f38fb910d9ff77f1a6948":[3,2,1,0,184],
 "group___g_a_p___a_p_i.html#ga3555233434a16e9c22db03de0c35aceb":[3,2,1,0,251],
 "group___g_a_p___a_p_i.html#ga363fedd67d5094e8849374e24092506f":[3,2,1,0,76],
 "group___g_a_p___a_p_i.html#ga364427e5484f795fc38e3e100281c866":[3,2,1,0,97],
@@ -249,5 +240,14 @@ var NAVTREEINDEX14 =
 "group___g_a_p___a_p_i.html#structst__ble__gap__conn__upd__evt__t":[3,2,1,0,38],
 "group___g_a_p___a_p_i.html#structst__ble__gap__conn__upd__req__evt__t":[3,2,1,0,39],
 "group___g_a_p___a_p_i.html#structst__ble__gap__create__conn__param__t":[3,2,1,0,10],
-"group___g_a_p___a_p_i.html#structst__ble__gap__data__len__chg__evt__t":[3,2,1,0,41]
+"group___g_a_p___a_p_i.html#structst__ble__gap__data__len__chg__evt__t":[3,2,1,0,41],
+"group___g_a_p___a_p_i.html#structst__ble__gap__dev__info__evt__t":[3,2,1,0,37],
+"group___g_a_p___a_p_i.html#structst__ble__gap__disconn__evt__t":[3,2,1,0,34],
+"group___g_a_p___a_p_i.html#structst__ble__gap__enc__chg__evt__t":[3,2,1,0,57],
+"group___g_a_p___a_p_i.html#structst__ble__gap__ext__adv__param__t":[3,2,1,0,2],
+"group___g_a_p___a_p_i.html#structst__ble__gap__ext__adv__rept__t":[3,2,1,0,25],
+"group___g_a_p___a_p_i.html#structst__ble__gap__ext__scan__param__t":[3,2,1,0,6],
+"group___g_a_p___a_p_i.html#structst__ble__gap__hw__err__evt__t":[3,2,1,0,22],
+"group___g_a_p___a_p_i.html#structst__ble__gap__key__dist__t":[3,2,1,0,15],
+"group___g_a_p___a_p_i.html#structst__ble__gap__key__ex__param__t":[3,2,1,0,16]
 };

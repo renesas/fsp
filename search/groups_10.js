@@ -17,6 +17,7 @@ var searchData=
   ['ra6m5',['RA6M5',['../group___b_s_p___m_c_u___r_a6_m5.html',1,'']]],
   ['ra6t1',['RA6T1',['../group___b_s_p___m_c_u___r_a6_t1.html',1,'']]],
   ['ra6t2',['RA6T2',['../group___b_s_p___m_c_u___r_a6_t2.html',1,'']]],
+  ['ryz_20aws_20cellular_20interface_20port_20_28rm_5fcellular_5fryz_5faws_29',['RYZ AWS Cellular Interface Port (rm_cellular_ryz_aws)',['../group___r_m___c_e_l_l_u_l_a_r___r_y_z___a_w_s.html',1,'']]],
   ['rtos_20context_20management_20_28rm_5ftz_5fcontext_29',['RTOS Context Management (rm_tz_context)',['../group___r_m___t_z___c_o_n_t_e_x_t.html',1,'']]],
   ['realtime_20clock_20_28r_5frtc_29',['Realtime Clock (r_rtc)',['../group___r_t_c.html',1,'']]],
   ['rtc_20interface',['RTC Interface',['../group___r_t_c___a_p_i.html',1,'']]]

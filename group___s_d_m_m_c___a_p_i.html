@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -177,12 +177,20 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structsdmmc__response__t_8status__b"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__response__t_8status__b">sdmmc_response_t.status_b</a></td></tr>
+<tr class="separator:structsdmmc__response__t_8status__b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structsdmmc__status__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__status__t">sdmmc_status_t</a></td></tr>
 <tr class="separator:structsdmmc__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structsdmmc__device__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__device__t">sdmmc_device_t</a></td></tr>
 <tr class="separator:structsdmmc__device__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structsdmmc__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a></td></tr>
 <tr class="separator:structsdmmc__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structsdmmc__write__io__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__write__io__args__t">sdmmc_write_io_args_t</a></td></tr>
+<tr class="separator:structsdmmc__write__io__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structsdmmc__read__io__ext__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__read__io__ext__args__t">sdmmc_read_io_ext_args_t</a></td></tr>
+<tr class="separator:structsdmmc__read__io__ext__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structsdmmc__write__io__ext__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__write__io__ext__args__t">sdmmc_write_io_ext_args_t</a></td></tr>
+<tr class="separator:structsdmmc__write__io__ext__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structsdmmc__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__cfg__t">sdmmc_cfg_t</a></td></tr>
 <tr class="separator:structsdmmc__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structsdmmc__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__api__t">sdmmc_api_t</a></td></tr>
@@ -217,6 +225,21 @@ Enumerations</h2></td></tr>
 <tr class="separator:gadd4486d95cc9042b3278638b1ca77326"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structsdmmc__response__t_8status__b" id="structsdmmc__response__t_8status__b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsdmmc__response__t_8status__b">&#9670;&nbsp;</a></span>sdmmc_response_t.status_b</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sdmmc_response_t.status_b</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>SDIO Card Status Register. </p>
+</div>
+</div>
+</div>
 <a name="structsdmmc__status__t" id="structsdmmc__status__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structsdmmc__status__t">&#9670;&nbsp;</a></span>sdmmc_status_t</h2>
 
@@ -343,6 +366,51 @@ p_context</td>
 Placeholder for user data. </td></tr>
 </table>
 
+</div>
+</div>
+<a name="structsdmmc__write__io__args__t" id="structsdmmc__write__io__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsdmmc__write__io__args__t">&#9670;&nbsp;</a></span>sdmmc_write_io_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sdmmc_write_io_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Non-secure arguments for writeIo guard function </p>
+</div>
+</div>
+</div>
+<a name="structsdmmc__read__io__ext__args__t" id="structsdmmc__read__io__ext__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsdmmc__read__io__ext__args__t">&#9670;&nbsp;</a></span>sdmmc_read_io_ext_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sdmmc_read_io_ext_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Non-secure arguments for readIoExt guard function </p>
+</div>
+</div>
+</div>
+<a name="structsdmmc__write__io__ext__args__t" id="structsdmmc__write__io__ext__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structsdmmc__write__io__ext__args__t">&#9670;&nbsp;</a></span>sdmmc_write_io_ext_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sdmmc_write_io_ext_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Non-secure arguments for writeIoExt guard function </p>
+</div>
 </div>
 </div>
 <a name="structsdmmc__cfg__t" id="structsdmmc__cfg__t"></a>
@@ -1157,7 +1225,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

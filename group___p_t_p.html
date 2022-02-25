@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -294,7 +294,7 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; PT
 <tr>
 <td>Synchronization Lost Detection &gt; Count</td><td>Value must in the range [0,255].</td><td>5 </td><td>The number of times the calculated offsetFromMaster value must be greater than the threshold in order to lose synchronization with the master. </td></tr>
 <tr>
-<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>${module.driver.ptp.name}_callback </td><td>Called when a STCA/SYNFP event occurs, a PTP message is received, or if a Pulse Timer event occurs. </td></tr>
+<td>Interrupts &gt; Callback</td><td>Name must be a valid C symbol</td><td>ptp0_user_callback </td><td>Called when a STCA/SYNFP event occurs, a PTP message is received, or if a Pulse Timer event occurs. </td></tr>
 <tr>
 <td>Interrupts &gt; MINT Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the EPTPC MINT interrupt priority. </td></tr>
 <tr>
@@ -1185,7 +1185,7 @@ Typically the clock ID is derived from the MAC address (E.g. {b1,b2,b3,0xFF,0xFE
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

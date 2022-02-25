@@ -10,6 +10,8 @@ var searchData=
   ['i2c_20slave_20on_20iic_2fi3c_20_28r_5fiic_5fb_5fslave_29',['I2C Slave on IIC/I3C (r_iic_b_slave)',['../group___i_i_c___b___s_l_a_v_e.html',1,'']]],
   ['i2c_20master_20on_20iic_20_28r_5fiic_5fmaster_29',['I2C Master on IIC (r_iic_master)',['../group___i_i_c___m_a_s_t_e_r.html',1,'']]],
   ['i2c_20slave_20on_20iic_20_28r_5fiic_5fslave_29',['I2C Slave on IIC (r_iic_slave)',['../group___i_i_c___s_l_a_v_e.html',1,'']]],
+  ['iir_20interface',['IIR Interface',['../group___i_i_r___a_p_i.html',1,'']]],
+  ['iir_20filter_20accelerator_20_28r_5fiirfa_29',['IIR Filter Accelerator (r_iirfa)',['../group___i_i_r_f_a.html',1,'']]],
   ['i_2fo_20ports_20_28r_5fioport_29',['I/O Ports (r_ioport)',['../group___i_o_p_o_r_t.html',1,'']]],
   ['i_2fo_20port_20interface',['I/O Port Interface',['../group___i_o_p_o_r_t___a_p_i.html',1,'']]],
   ['independent_20watchdog_20timer_20_28r_5fiwdt_29',['Independent Watchdog Timer (r_iwdt)',['../group___i_w_d_t.html',1,'']]],

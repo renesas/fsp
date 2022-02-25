@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.5.0</span>
+   &#160;<span id="projectnumber">Release v3.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -322,7 +322,13 @@ MOx resistance. </td></tr>
 <td class="fieldname">
 log_rcda</td>
 <td class="fielddoc">
-log10 of CDA resistance. </td></tr>
+log10 of CDA resistance for IAQ 2nd Gen. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4bf54edf41460cfb0e6a8bd1cf9a825e"></a>float</td>
+<td class="fieldname">
+log_nonlog_rcda[3]</td>
+<td class="fielddoc">
+log10 of CDA resistance for IAQ 2nd Gen ULP. </td></tr>
 <tr><td class="fieldtype">
 <a id="a6de91ae7e87c6ad5197ceff295b7fdf3"></a>float</td>
 <td class="fieldname">
@@ -581,6 +587,8 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <tr class="separator:ad1d9b01a5d84a3a4a06dfd714f485911"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a504a4e2266dc1ae46f27b752ade032e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9">temperatureAndHumiditySet</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, float temperature, float humidity)</td></tr>
 <tr class="separator:a504a4e2266dc1ae46f27b752ade032e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a032f14a6414a147c3e05a28064d97069"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069">deviceErrorCheck</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:a032f14a6414a147c3e05a28064d97069"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37597974b2ae3e5ba15c57fce44b2c83"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83">close</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:a37597974b2ae3e5ba15c57fce44b2c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -889,6 +897,30 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
+<a id="a032f14a6414a147c3e05a28064d97069"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a032f14a6414a147c3e05a28064d97069">&#9670;&nbsp;</a></span>deviceErrorCheck</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::deviceErrorCheck) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check device error event. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94">RM_ZMOD4XXX_DeviceErrorCheck()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a37597974b2ae3e5ba15c57fce44b2c83"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a37597974b2ae3e5ba15c57fce44b2c83">&#9670;&nbsp;</a></span>close</h2>
 
@@ -987,6 +1019,12 @@ p_api</td>
       </table>
 </div><div class="memdoc">
 <p>Event in the callback function </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060a55d1b247ecb594b099b15e120ae6b6a4"></a>RM_ZMOD4XXX_EVENT_DEV_ERR_POWER_ON_RESET&#160;</td><td class="fielddoc"><p>Unexpected reset. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060aa55c18d81d34427bcfd2f631e6b2a3a4"></a>RM_ZMOD4XXX_EVENT_DEV_ERR_ACCESS_CONFLICT&#160;</td><td class="fielddoc"><p>Getting invalid results while results readout. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -1011,7 +1049,7 @@ p_api</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.5.0 User's Manual Copyright © (2021) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

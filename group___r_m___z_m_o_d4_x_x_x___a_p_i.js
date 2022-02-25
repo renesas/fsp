@@ -13,6 +13,7 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
     [ "rm_zmod4xxx_iaq_2nd_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__2nd__data__t", [
       [ "rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6486c18c874aacc219e4015104c62431", null ],
       [ "log_rcda", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a04d026df23f93a2ccd598b7fc7546c5d", null ],
+      [ "log_nonlog_rcda", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a4bf54edf41460cfb0e6a8bd1cf9a825e", null ],
       [ "iaq", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6de91ae7e87c6ad5197ceff295b7fdf3", null ],
       [ "tvoc", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6dc721959ed25ffaade04a78ba4c1ba6", null ],
       [ "etoh", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a92ce32ead1c82ad9b1c355827fe027a9", null ],
@@ -61,6 +62,7 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
       [ "oaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad56aa9708d3f48a92253eeda652edede", null ],
       [ "oaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad1d9b01a5d84a3a4a06dfd714f485911", null ],
       [ "temperatureAndHumiditySet", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9", null ],
+      [ "deviceErrorCheck", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069", null ],
       [ "close", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83", null ]
     ] ],
     [ "rm_zmod4xxx_instance_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__instance__t", [
@@ -69,6 +71,9 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
       [ "p_api", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a92ddaabd0705326f5e1fcf0a4ced9ba7", null ]
     ] ],
     [ "rm_zmod4xxx_ctrl_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c", null ],
-    [ "rm_zmod4xxx_event_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#gadd54ca8592a0f7cb81913d2250e89060", null ],
+    [ "rm_zmod4xxx_event_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#gadd54ca8592a0f7cb81913d2250e89060", [
+      [ "RM_ZMOD4XXX_EVENT_DEV_ERR_POWER_ON_RESET", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060a55d1b247ecb594b099b15e120ae6b6a4", null ],
+      [ "RM_ZMOD4XXX_EVENT_DEV_ERR_ACCESS_CONFLICT", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060aa55c18d81d34427bcfd2f631e6b2a3a4", null ]
+    ] ],
     [ "rm_zmod4xxx_sulfur_odor_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga47f50ad1a54e470fb44b443351c39beb", null ]
 ];
