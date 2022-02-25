@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,34 +19,38 @@
  **********************************************************************************************************************/
 
 #ifndef R_USB_PMSC_H
-#define R_USB_PMSC_H
+ #define R_USB_PMSC_H
 
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
  ***********************************************************************************************************************/
 
+ #ifdef __cplusplus
+extern "C" {
+ #endif
+
 /***********************************************************************************************************************
  * Macro definitions
  ***********************************************************************************************************************/
-#define USB_PMSC_TSK              (USB_TID_10)   /* Task ID */
-#define USB_PMSC_MBX              (USB_PMSC_TSK) /* Mailbox ID */
+ #define USB_PMSC_TSK              (USB_TID_10)   /* Task ID */
+ #define USB_PMSC_MBX              (USB_PMSC_TSK) /* Mailbox ID */
 
 /* CBW Structure define */
-#define USB_MSC_CBWLENGTH         (0x1fU)
-#define USB_MSC_CBWCB_LENGTH      (0x0cU)
-#define USB_MSC_CSW_LENGTH        (0x0dU)
+ #define USB_MSC_CBWLENGTH         (0x1fU)
+ #define USB_MSC_CBWCB_LENGTH      (0x0cU)
+ #define USB_MSC_CSW_LENGTH        (0x0dU)
 
-#define USB_VALUE_481             (481)
-#define USB_VALUE_33              (33)
+ #define USB_VALUE_481             (481)
+ #define USB_VALUE_33              (33)
 
 /* CPU bit endian select (BIT_LITTLE:little, BIT_BIG:big) */
-#if USB_CFG_ENDIAN == USB_CFG_BIG
- #define USB_MSC_CBW_SIGNATURE    ((uint32_t) 0x55534243)
- #define USB_MSC_CSW_SIGNATURE    ((uint32_t) 0x55534253)
-#else                                  /* USB_CFG_ENDIAN == USB_CFG_BIG */
- #define USB_MSC_CBW_SIGNATURE    ((uint32_t) 0x43425355)
- #define USB_MSC_CSW_SIGNATURE    ((uint32_t) 0x53425355)
-#endif  /* USB_CFG_ENDIAN == USB_CFG_BIG */
+ #if USB_CFG_ENDIAN == USB_CFG_BIG
+  #define USB_MSC_CBW_SIGNATURE    ((uint32_t) 0x55534243)
+  #define USB_MSC_CSW_SIGNATURE    ((uint32_t) 0x55534253)
+ #else                                 /* USB_CFG_ENDIAN == USB_CFG_BIG */
+  #define USB_MSC_CBW_SIGNATURE    ((uint32_t) 0x43425355)
+  #define USB_MSC_CSW_SIGNATURE    ((uint32_t) 0x53425355)
+ #endif /* USB_CFG_ENDIAN == USB_CFG_BIG */
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -162,15 +166,15 @@ typedef struct
     usb_msc_bmcbw_flags_t   bmcbw_flags;
     usb_msc_bcbwlun_t       bcbwlun;
     usb_msc_bcbwcb_length_t bcbwcb_length;
-#if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     uint8_t cbwcb[(16 + USB_VALUE_481)]; /* Hi-Speed USB_MSC_CBW_t:512Byte */
- #else  /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #else /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     uint8_t cbwcb[(16 + USB_VALUE_33)];  /* Full-Speed USB_MSC_CBW_t:64Byte*/
- #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
-#else                                    /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
+  #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #else                                   /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
     uint8_t cbwcb[16];
-#endif  /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
+ #endif /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
 } usb_msc_cbw_t;
 
 /* CSW Structure define define. */
@@ -193,6 +197,10 @@ extern uint32_t       g_usb_pmsc_dtl;
 extern usb_pmsc_cbm_t g_usb_pmsc_message;
 
 void usb_pmsc_init(void);
+
+ #ifdef __cplusplus
+}
+ #endif
 
 #endif                                 /* R_USB_PMSC_H */
 

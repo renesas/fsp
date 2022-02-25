@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -60,11 +60,19 @@ typedef struct __PACKED
     union
     {
         uint32_t raw;
+
+        /* DEPRECATED: Anonymous structure. */
         struct
         {
             uint32_t        : 31U;
             uint32_t active : 1U;
         };
+
+        struct
+        {
+            uint32_t        : 31U;
+            uint32_t active : 1U;
+        } raw_b;
     };
 } edmac_desc_status_t;
 

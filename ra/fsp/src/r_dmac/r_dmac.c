@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -489,20 +489,21 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
     r_dmac_prv_disable(p_ctrl);
 
     /* Configure the Transfer Data Size (1,2,4) bytes. */
-    dmtmd |= (uint32_t) (p_info->size << DMAC_PRV_DMTMD_SZ_OFFSET);
+    dmtmd |= (uint32_t) (p_info->transfer_settings_word_b.size << DMAC_PRV_DMTMD_SZ_OFFSET);
 
     /* Configure source and destination address mode. */
-    dmamd |= (uint32_t) (p_info->src_addr_mode << DMAC_PRV_DMAMD_SM_OFFSET);
-    dmamd |= (uint32_t) (p_info->dest_addr_mode << DMAC_PRV_DMAMD_DM_OFFSET);
+    dmamd |= (uint32_t) (p_info->transfer_settings_word_b.src_addr_mode << DMAC_PRV_DMAMD_SM_OFFSET);
+    dmamd |= (uint32_t) (p_info->transfer_settings_word_b.dest_addr_mode << DMAC_PRV_DMAMD_DM_OFFSET);
 
     /* Configure the transfer mode. */
-    dmtmd |= (uint32_t) p_info->mode << DMAC_PRV_DMTMD_MD_OFFSET;
+    dmtmd |= (uint32_t) p_info->transfer_settings_word_b.mode << DMAC_PRV_DMTMD_MD_OFFSET;
 
     /* Configure the transfer count. */
     dmcra = p_info->length;
 
-    if ((TRANSFER_MODE_BLOCK == p_info->mode) || (TRANSFER_MODE_REPEAT == p_info->mode) ||
-        (TRANSFER_MODE_REPEAT_BLOCK == p_info->mode))
+    if ((TRANSFER_MODE_BLOCK == p_info->transfer_settings_word_b.mode) ||
+        (TRANSFER_MODE_REPEAT == p_info->transfer_settings_word_b.mode) ||
+        (TRANSFER_MODE_REPEAT_BLOCK == p_info->transfer_settings_word_b.mode))
     {
         /* Configure the reload count. */
         dmcra |= dmcra << DMAC_PRV_DMCRA_HIGH_OFFSET;
@@ -511,10 +512,11 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
         /* Configure the block count. */
         dmcrb = p_info->num_blocks;
 
-        if ((TRANSFER_MODE_BLOCK == p_info->mode) || (TRANSFER_MODE_REPEAT == p_info->mode))
+        if ((TRANSFER_MODE_BLOCK == p_info->transfer_settings_word_b.mode) ||
+            (TRANSFER_MODE_REPEAT == p_info->transfer_settings_word_b.mode))
         {
             /* Configure the repeat area */
-            dmtmd |= (uint32_t) (p_info->repeat_area << DMAC_PRV_DMTMD_DTS_OFFSET);
+            dmtmd |= (uint32_t) (p_info->transfer_settings_word_b.repeat_area << DMAC_PRV_DMTMD_DTS_OFFSET);
         }
     }
     else                               /* TRANSFER_MODE_NORMAL */
@@ -534,9 +536,9 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
         /* Enable transfer end interrupt requests. */
         dmint |= DMAC_PRV_DMINT_DTIE_MASK;
 
-        if (TRANSFER_IRQ_EACH == p_info->irq)
+        if (TRANSFER_IRQ_EACH == p_info->transfer_settings_word_b.irq)
         {
-            if (TRANSFER_MODE_REPEAT_BLOCK == p_info->mode)
+            if (TRANSFER_MODE_REPEAT_BLOCK == p_info->transfer_settings_word_b.mode)
             {
                 /* Enable the transfer end escape interrupt requests.
                  * Repeat size end and Extended Repeat area overflow requests are not
@@ -560,14 +562,14 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
     uint32_t dmsbs = 0;
     uint32_t dmdbs = 0;
 
-    if (TRANSFER_MODE_REPEAT_BLOCK == p_info->mode)
+    if (TRANSFER_MODE_REPEAT_BLOCK == p_info->transfer_settings_word_b.mode)
     {
         uint16_t num_of_blocks = p_info->num_blocks;
         uint16_t size_of_block;
         size_of_block = p_info->length;
         uint16_t src_buffer_size;
         uint16_t dest_buffer_size;
-        if (TRANSFER_ADDR_MODE_OFFSET == p_info->src_addr_mode)
+        if (TRANSFER_ADDR_MODE_OFFSET == p_info->transfer_settings_word_b.src_addr_mode)
         {
             src_buffer_size = num_of_blocks;
             dmamd          |= R_DMAC0_DMAMD_SADR_Msk;
@@ -577,7 +579,7 @@ static void r_dmac_config_transfer_info (dmac_instance_ctrl_t * p_ctrl, transfer
             src_buffer_size = p_extend->src_buffer_size;
         }
 
-        if (TRANSFER_ADDR_MODE_OFFSET == p_info->dest_addr_mode)
+        if (TRANSFER_ADDR_MODE_OFFSET == p_info->transfer_settings_word_b.dest_addr_mode)
         {
             dest_buffer_size = num_of_blocks;
             dmamd           |= R_DMAC0_DMAMD_DADR_Msk;
@@ -659,7 +661,7 @@ static fsp_err_t r_dmac_info_paramter_checking (transfer_info_t const * const p_
 {
     FSP_ASSERT(p_info != NULL);
 
-    if (TRANSFER_MODE_NORMAL != p_info->mode)
+    if (TRANSFER_MODE_NORMAL != p_info->transfer_settings_word_b.mode)
     {
         FSP_ASSERT(p_info->length <= DMAC_REPEAT_BLOCK_MAX_LENGTH);
     }

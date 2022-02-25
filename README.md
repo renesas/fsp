@@ -10,7 +10,7 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 
 ### Current Release
 
-[FSP v3.5.0](https://github.com/renesas/fsp/releases/tag/v3.5.0)
+[FSP v3.6.0](https://github.com/renesas/fsp/releases/tag/v3.6.0)
 
 ### Supported RA MCU Kits
 
@@ -58,12 +58,13 @@ For a list of software modules packaged with FSP, see [Supported Software](SUPPO
 - FSP versions of 3.0.0 and later require a minimum e² studio version of 2021-04.
 - FSP versions of 3.2.0 and later require a minimum e² studio version of 2021-07.
 - FSP versions of 3.4.0 and later require a minimum e² studio version of 2021-10.
+- FSP versions of 3.6.0 and later require a minimum e² studio version of 2022-01.
 
 If you have already installed a previous FSP release that included e² studio then you can download the packs separately. These are available for download under the Assets section for each release. There is a zipped version, FSP_Packs_\<version\>.zip, and an installer version, FSP_Packs_\<version\>.exe.
 
 #### For new users that are using FSP with e² studio
 
-1.	Download the FSP with e² studio Installer from the Assets section of the [current release](https://github.com/renesas/fsp/releases/tag/v3.5.0).
+1.	Download the FSP with e² studio Installer from the Assets section of the [current release](https://github.com/renesas/fsp/releases/tag/v3.6.0).
 2.	Run the installer. This will install the e² studio tool, FSP packs, GCC toolchain and other tools required to use this software. No additional installations are required.
 
 #### If using RA Smart Configurator (RASC) with IAR Embedded Workbench or Keil MDK ####

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -286,6 +286,285 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTW0 Structure   
         } AGTIOSEL_b;
     };
 } R_AGTW0_Type;                        /*!< Size = 20 (0x14)                                                          */
+
+/* =========================================================================================================================== */
+/* ================                                          R_PORT0                                          ================ */
+/* =========================================================================================================================== */
+
+/**
+ * @brief I/O Ports (R_PORT0)
+ */
+
+typedef struct                         /*!< (@ 0x40040000) R_PORT0 Structure                                          */
+{
+    union
+    {
+        union
+        {
+            __IOM uint32_t PCNTR1;        /*!< (@ 0x00000000) Port Control Register 1                                    */
+
+            struct
+            {
+                __IOM uint32_t PDR  : 16; /*!< [15..0] Pmn Direction                                                     */
+                __IOM uint32_t PODR : 16; /*!< [31..16] Pmn Output Data                                                  */
+            } PCNTR1_b;
+        };
+
+        struct
+        {
+            union
+            {
+                __IOM uint16_t PDR;           /*!< (@ 0x00000000) Data direction register                                    */
+
+                struct
+                {
+                    __IOM uint16_t PDR0  : 1; /*!< [0..0] Pmn Direction                                                      */
+                    __IOM uint16_t PDR1  : 1; /*!< [1..1] Pmn Direction                                                      */
+                    __IOM uint16_t PDR2  : 1; /*!< [2..2] Pmn Direction                                                      */
+                    __IOM uint16_t PDR3  : 1; /*!< [3..3] Pmn Direction                                                      */
+                    __IOM uint16_t PDR4  : 1; /*!< [4..4] Pmn Direction                                                      */
+                    __IOM uint16_t PDR5  : 1; /*!< [5..5] Pmn Direction                                                      */
+                    __IOM uint16_t PDR6  : 1; /*!< [6..6] Pmn Direction                                                      */
+                    __IOM uint16_t PDR7  : 1; /*!< [7..7] Pmn Direction                                                      */
+                    __IOM uint16_t PDR8  : 1; /*!< [8..8] Pmn Direction                                                      */
+                    __IOM uint16_t PDR9  : 1; /*!< [9..9] Pmn Direction                                                      */
+                    __IOM uint16_t PDR10 : 1; /*!< [10..10] Pmn Direction                                                    */
+                    __IOM uint16_t PDR11 : 1; /*!< [11..11] Pmn Direction                                                    */
+                    __IOM uint16_t PDR12 : 1; /*!< [12..12] Pmn Direction                                                    */
+                    __IOM uint16_t PDR13 : 1; /*!< [13..13] Pmn Direction                                                    */
+                    __IOM uint16_t PDR14 : 1; /*!< [14..14] Pmn Direction                                                    */
+                    __IOM uint16_t PDR15 : 1; /*!< [15..15] Pmn Direction                                                    */
+                } PDR_b;
+            };
+
+            union
+            {
+                __IOM uint16_t PODR;           /*!< (@ 0x00000002) Output data register                                       */
+
+                struct
+                {
+                    __IOM uint16_t PODR0  : 1; /*!< [0..0] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR1  : 1; /*!< [1..1] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR2  : 1; /*!< [2..2] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR3  : 1; /*!< [3..3] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR4  : 1; /*!< [4..4] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR5  : 1; /*!< [5..5] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR6  : 1; /*!< [6..6] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR7  : 1; /*!< [7..7] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR8  : 1; /*!< [8..8] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR9  : 1; /*!< [9..9] Pmn Output Data                                                    */
+                    __IOM uint16_t PODR10 : 1; /*!< [10..10] Pmn Output Data                                                  */
+                    __IOM uint16_t PODR11 : 1; /*!< [11..11] Pmn Output Data                                                  */
+                    __IOM uint16_t PODR12 : 1; /*!< [12..12] Pmn Output Data                                                  */
+                    __IOM uint16_t PODR13 : 1; /*!< [13..13] Pmn Output Data                                                  */
+                    __IOM uint16_t PODR14 : 1; /*!< [14..14] Pmn Output Data                                                  */
+                    __IOM uint16_t PODR15 : 1; /*!< [15..15] Pmn Output Data                                                  */
+                } PODR_b;
+            };
+        };
+    };
+
+    union
+    {
+        union
+        {
+            __IM uint32_t PCNTR2;        /*!< (@ 0x00000004) Port Control Register 2                                    */
+
+            struct
+            {
+                __IM uint32_t PIDR : 16; /*!< [15..0] Pmn Input Data                                                    */
+                __IM uint32_t EIDR : 16; /*!< [31..16] Pmn Event Input Data                                             */
+            } PCNTR2_b;
+        };
+
+        struct
+        {
+            union
+            {
+                __IM uint16_t PIDR;           /*!< (@ 0x00000004) Input data register                                        */
+
+                struct
+                {
+                    __IM uint16_t PIDR0  : 1; /*!< [0..0] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR1  : 1; /*!< [1..1] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR2  : 1; /*!< [2..2] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR3  : 1; /*!< [3..3] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR4  : 1; /*!< [4..4] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR5  : 1; /*!< [5..5] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR6  : 1; /*!< [6..6] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR7  : 1; /*!< [7..7] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR8  : 1; /*!< [8..8] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR9  : 1; /*!< [9..9] Pmn Input Data                                                     */
+                    __IM uint16_t PIDR10 : 1; /*!< [10..10] Pmn Input Data                                                   */
+                    __IM uint16_t PIDR11 : 1; /*!< [11..11] Pmn Input Data                                                   */
+                    __IM uint16_t PIDR12 : 1; /*!< [12..12] Pmn Input Data                                                   */
+                    __IM uint16_t PIDR13 : 1; /*!< [13..13] Pmn Input Data                                                   */
+                    __IM uint16_t PIDR14 : 1; /*!< [14..14] Pmn Input Data                                                   */
+                    __IM uint16_t PIDR15 : 1; /*!< [15..15] Pmn Input Data                                                   */
+                } PIDR_b;
+            };
+
+            union
+            {
+                __IM uint16_t EIDR;           /*!< (@ 0x00000006) Event input data register                                  */
+
+                struct
+                {
+                    __IM uint16_t EIDR0  : 1; /*!< [0..0] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR1  : 1; /*!< [1..1] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR2  : 1; /*!< [2..2] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR3  : 1; /*!< [3..3] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR4  : 1; /*!< [4..4] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR5  : 1; /*!< [5..5] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR6  : 1; /*!< [6..6] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR7  : 1; /*!< [7..7] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR8  : 1; /*!< [8..8] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR9  : 1; /*!< [9..9] Pmn Event Input Data                                               */
+                    __IM uint16_t EIDR10 : 1; /*!< [10..10] Pmn Event Input Data                                             */
+                    __IM uint16_t EIDR11 : 1; /*!< [11..11] Pmn Event Input Data                                             */
+                    __IM uint16_t EIDR12 : 1; /*!< [12..12] Pmn Event Input Data                                             */
+                    __IM uint16_t EIDR13 : 1; /*!< [13..13] Pmn Event Input Data                                             */
+                    __IM uint16_t EIDR14 : 1; /*!< [14..14] Pmn Event Input Data                                             */
+                    __IM uint16_t EIDR15 : 1; /*!< [15..15] Pmn Event Input Data                                             */
+                } EIDR_b;
+            };
+        };
+    };
+
+    union
+    {
+        union
+        {
+            __OM uint32_t PCNTR3;        /*!< (@ 0x00000008) Port Control Register 3                                    */
+
+            struct
+            {
+                __OM uint32_t POSR : 16; /*!< [15..0] Pmn Output Set                                                    */
+                __OM uint32_t PORR : 16; /*!< [31..16] Pmn Output Reset                                                 */
+            } PCNTR3_b;
+        };
+
+        struct
+        {
+            union
+            {
+                __OM uint16_t POSR;           /*!< (@ 0x00000008) Output reset register                                      */
+
+                struct
+                {
+                    __OM uint16_t POSR0  : 1; /*!< [0..0] Pmn Output Set                                                     */
+                    __OM uint16_t POSR1  : 1; /*!< [1..1] Pmn Output Set                                                     */
+                    __OM uint16_t POSR2  : 1; /*!< [2..2] Pmn Output Set                                                     */
+                    __OM uint16_t POSR3  : 1; /*!< [3..3] Pmn Output Set                                                     */
+                    __OM uint16_t POSR4  : 1; /*!< [4..4] Pmn Output Set                                                     */
+                    __OM uint16_t POSR5  : 1; /*!< [5..5] Pmn Output Set                                                     */
+                    __OM uint16_t POSR6  : 1; /*!< [6..6] Pmn Output Set                                                     */
+                    __OM uint16_t POSR7  : 1; /*!< [7..7] Pmn Output Set                                                     */
+                    __OM uint16_t POSR8  : 1; /*!< [8..8] Pmn Output Set                                                     */
+                    __OM uint16_t POSR9  : 1; /*!< [9..9] Pmn Output Set                                                     */
+                    __OM uint16_t POSR10 : 1; /*!< [10..10] Pmn Output Set                                                   */
+                    __OM uint16_t POSR11 : 1; /*!< [11..11] Pmn Output Set                                                   */
+                    __OM uint16_t POSR12 : 1; /*!< [12..12] Pmn Output Set                                                   */
+                    __OM uint16_t POSR13 : 1; /*!< [13..13] Pmn Output Set                                                   */
+                    __OM uint16_t POSR14 : 1; /*!< [14..14] Pmn Output Set                                                   */
+                    __OM uint16_t POSR15 : 1; /*!< [15..15] Pmn Output Set                                                   */
+                } POSR_b;
+            };
+
+            union
+            {
+                __OM uint16_t PORR;           /*!< (@ 0x0000000A) Output set register                                        */
+
+                struct
+                {
+                    __OM uint16_t PORR0  : 1; /*!< [0..0] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR1  : 1; /*!< [1..1] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR2  : 1; /*!< [2..2] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR3  : 1; /*!< [3..3] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR4  : 1; /*!< [4..4] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR5  : 1; /*!< [5..5] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR6  : 1; /*!< [6..6] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR7  : 1; /*!< [7..7] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR8  : 1; /*!< [8..8] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR9  : 1; /*!< [9..9] Pmn Output Reset                                                   */
+                    __OM uint16_t PORR10 : 1; /*!< [10..10] Pmn Output Reset                                                 */
+                    __OM uint16_t PORR11 : 1; /*!< [11..11] Pmn Output Reset                                                 */
+                    __OM uint16_t PORR12 : 1; /*!< [12..12] Pmn Output Reset                                                 */
+                    __OM uint16_t PORR13 : 1; /*!< [13..13] Pmn Output Reset                                                 */
+                    __OM uint16_t PORR14 : 1; /*!< [14..14] Pmn Output Reset                                                 */
+                    __OM uint16_t PORR15 : 1; /*!< [15..15] Pmn Output Reset                                                 */
+                } PORR_b;
+            };
+        };
+    };
+
+    union
+    {
+        union
+        {
+            __IOM uint32_t PCNTR4;        /*!< (@ 0x0000000C) Port Control Register 4                                    */
+
+            struct
+            {
+                __IOM uint32_t EOSR : 16; /*!< [15..0] Pmn Event Output Set                                              */
+                __IOM uint32_t EORR : 16; /*!< [31..16] Pmn Event Output Reset                                           */
+            } PCNTR4_b;
+        };
+
+        struct
+        {
+            union
+            {
+                __IOM uint16_t EOSR;           /*!< (@ 0x0000000C) Event output reset register                                */
+
+                struct
+                {
+                    __IOM uint16_t EOSR0  : 1; /*!< [0..0] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR1  : 1; /*!< [1..1] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR2  : 1; /*!< [2..2] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR3  : 1; /*!< [3..3] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR4  : 1; /*!< [4..4] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR5  : 1; /*!< [5..5] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR6  : 1; /*!< [6..6] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR7  : 1; /*!< [7..7] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR8  : 1; /*!< [8..8] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR9  : 1; /*!< [9..9] Pmn Event Output Set                                               */
+                    __IOM uint16_t EOSR10 : 1; /*!< [10..10] Pmn Event Output Set                                             */
+                    __IOM uint16_t EOSR11 : 1; /*!< [11..11] Pmn Event Output Set                                             */
+                    __IOM uint16_t EOSR12 : 1; /*!< [12..12] Pmn Event Output Set                                             */
+                    __IOM uint16_t EOSR13 : 1; /*!< [13..13] Pmn Event Output Set                                             */
+                    __IOM uint16_t EOSR14 : 1; /*!< [14..14] Pmn Event Output Set                                             */
+                    __IOM uint16_t EOSR15 : 1; /*!< [15..15] Pmn Event Output Set                                             */
+                } EOSR_b;
+            };
+
+            union
+            {
+                __IOM uint16_t EORR;           /*!< (@ 0x0000000E) Event output set register                                  */
+
+                struct
+                {
+                    __IOM uint16_t EORR0  : 1; /*!< [0..0] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR1  : 1; /*!< [1..1] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR2  : 1; /*!< [2..2] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR3  : 1; /*!< [3..3] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR4  : 1; /*!< [4..4] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR5  : 1; /*!< [5..5] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR6  : 1; /*!< [6..6] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR7  : 1; /*!< [7..7] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR8  : 1; /*!< [8..8] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR9  : 1; /*!< [9..9] Pmn Event Output Reset                                             */
+                    __IOM uint16_t EORR10 : 1; /*!< [10..10] Pmn Event Output Reset                                           */
+                    __IOM uint16_t EORR11 : 1; /*!< [11..11] Pmn Event Output Reset                                           */
+                    __IOM uint16_t EORR12 : 1; /*!< [12..12] Pmn Event Output Reset                                           */
+                    __IOM uint16_t EORR13 : 1; /*!< [13..13] Pmn Event Output Reset                                           */
+                    __IOM uint16_t EORR14 : 1; /*!< [14..14] Pmn Event Output Reset                                           */
+                    __IOM uint16_t EORR15 : 1; /*!< [15..15] Pmn Event Output Reset                                           */
+                } EORR_b;
+            };
+        };
+    };
+} R_PORT0_Type;                        /*!< Size = 16 (0x10)                                                          */
 
 /***********************************************************************************************************************
  * Exported global variables

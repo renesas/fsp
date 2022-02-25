@@ -15,7 +15,11 @@
  */
 
 #ifndef __DEVICE_CFG_H__
-#define __DEVICE_CFG_H__
+ #define __DEVICE_CFG_H__
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 /**
  * \file device_cfg.h
@@ -28,6 +32,10 @@
  */
 
 /* Macro used by uart_stdout.c, this macro has no affect on baudrate config */
-#define DEFAULT_UART_BAUDRATE 115200
+ #define DEFAULT_UART_BAUDRATE    115200
 
-#endif  /* __DEVICE_CFG_H__ */
+ #ifdef __cplusplus
+}
+ #endif
+
+#endif                                 /* __DEVICE_CFG_H__ */

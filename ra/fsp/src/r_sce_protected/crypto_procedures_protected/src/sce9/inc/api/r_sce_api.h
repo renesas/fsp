@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -572,6 +572,54 @@ typedef struct st_sce_api
      */
     fsp_err_t (* AES256_EncryptedKeyWrap)(uint8_t * initial_vector, uint8_t * encrypted_key,
                                           sce_key_update_key_t * key_update_key, sce_aes_wrapped_key_t * wrapped_key);
+
+    /** This API outputs 128-bit AES wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_AES128_RFC3394KeyWrap()
+     *
+     * @param[in]  master_key          AES-128 key used for wrapping.
+     * @param[in]  target_key_type     Selects key to be wrapped.
+     * @param[in]  target_key          Key to be wrapped.
+     * @param[out] rfc3394_wrapped_key Wrapped key.
+     */
+    fsp_err_t (* AES128_RFC3394KeyWrap)(sce_aes_wrapped_key_t * master_key, uint32_t target_key_type,
+                                        sce_aes_wrapped_key_t * target_key, uint32_t * rfc3394_wrapped_key);
+
+    /** This API outputs 256-bit AES wrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_AES256_RFC3394KeyWrap()
+     *
+     * @param[in]  master_key          AES-256 key used for wrapping.
+     * @param[in]  target_key_type     Selects key to be wrapped.
+     * @param[in]  target_key          Key to be wrapped.
+     * @param[out] rfc3394_wrapped_key Wrapped key.
+     */
+    fsp_err_t (* AES256_RFC3394KeyWrap)(sce_aes_wrapped_key_t * master_key, uint32_t target_key_type,
+                                        sce_aes_wrapped_key_t * target_key, uint32_t * rfc3394_wrapped_key);
+
+    /** This API outputs 128-bit AES unwrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_AES128_RFC3394KeyUnwrap()
+     *
+     * @param[in]  master_key          AES-128 key used for unwrapping.
+     * @param[in]  target_key_type     Selects key to be unwrapped.
+     * @param[in]  rfc3394_wrapped_key Wrapped key.
+     * @param[out] target_key          Key to be unwrapped.
+     */
+    fsp_err_t (* AES128_RFC3394KeyUnwrap)(sce_aes_wrapped_key_t * master_key, uint32_t target_key_type,
+                                          uint32_t * rfc3394_wrapped_key, sce_aes_wrapped_key_t * target_key);
+
+    /** This API outputs 256-bit AES unwrapped key.
+     * @par Implemented as
+     * - @ref R_SCE_AES256_RFC3394KeyUnwrap()
+     *
+     * @param[in]  master_key          AES-256 key used for unwrapping.
+     * @param[in]  target_key_type     Selects key to be unwrapped.
+     * @param[in]  rfc3394_wrapped_key Wrapped key.
+     * @param[out] target_key          Key to be unwrapped.
+     */
+    fsp_err_t (* AES256_RFC3394KeyUnwrap)(sce_aes_wrapped_key_t * master_key, uint32_t target_key_type,
+                                          uint32_t * rfc3394_wrapped_key, sce_aes_wrapped_key_t * target_key);
 
     /** Initialize AES128ECB encryption.
      * @par Implemented as

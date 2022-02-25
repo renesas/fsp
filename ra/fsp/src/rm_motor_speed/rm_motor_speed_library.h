@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -24,7 +24,11 @@
  ***********************************************************************************************************************/
 
 #ifndef RM_MOTOR_SPEED_LIBRARY_H
-#define RM_MOTOR_SPEED_LIBRARY_H
+ #define RM_MOTOR_SPEED_LIBRARY_H
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 void rm_motor_speed_pi_gain_calc(motor_speed_motor_parameter_t * p_motor,
                                  motor_speed_design_params_t   * p_design_params,
@@ -83,5 +87,9 @@ void rm_motor_speed_observer_SecondOrderLpffGainCalc(motor_speed_2nd_order_lpf_t
                                                      float                         f4_omega,
                                                      float                         f4_zeta,
                                                      float                         f4_ctrl_period);
+
+ #ifdef __cplusplus
+}
+ #endif
 
 #endif                                 /* RM_MOTOR_SPEED_LIBRARY_H */

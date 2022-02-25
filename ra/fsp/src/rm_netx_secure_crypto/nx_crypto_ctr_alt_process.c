@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -69,14 +69,14 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
         case AES_CTR_KEY_SIZE_128_ROUNDS:
         {
  #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-            if (aes_ptr->nx_crypto_aes_reserved != (UCHAR) SCE_OEM_KEY_TYPE_ENCRYPTED)
+            if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS)
             {
-                aes_ctr_method = HW_SCE_AES_128CtrEncrypt;
+                aes_ctr_method = HW_SCE_AES_128CtrEncryptUsingEncryptedKey;
             }
             else
  #endif
             {
-                aes_ctr_method = HW_SCE_AES_128CtrEncryptUsingEncryptedKey;
+                aes_ctr_method = HW_SCE_AES_128CtrEncrypt;
             }
 
             break;
@@ -92,14 +92,14 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
         case AES_CTR_KEY_SIZE_256_ROUNDS:
         {
  #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-            if (aes_ptr->nx_crypto_aes_reserved != (UCHAR) SCE_OEM_KEY_TYPE_ENCRYPTED)
+            if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS)
             {
-                aes_ctr_method = HW_SCE_AES_256CtrEncrypt;
+                aes_ctr_method = HW_SCE_AES_256CtrEncryptUsingEncryptedKey;
             }
             else
  #endif
             {
-                aes_ctr_method = HW_SCE_AES_256CtrEncryptUsingEncryptedKey;
+                aes_ctr_method = HW_SCE_AES_256CtrEncrypt;
             }
 
             break;

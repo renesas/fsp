@@ -30,16 +30,18 @@
 #include "hw_sce_private.h"
 #include "nx_crypto.h"
 
+
 #ifdef NX_CRYPTO_SELF_TEST
 
 /* Include necessary system files.  */
+
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _nx_crypto_self_test_memcpy                              PORTABLE C      */
-/*                                                           6.1          */
+/*    _nx_crypto_self_test_memcpy                         PORTABLE C      */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -76,17 +78,20 @@
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Bhupendra Naphade        Modified comment(s),          */
+/*                                            renamed function,           */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
-NX_CRYPTO_KEEP VOID * _nx_crypto_self_test_memcpy (void * dest, const void * src, size_t size)
+NX_CRYPTO_KEEP VOID *_nx_crypto_self_test_memcpy(void *dest, const void *src, size_t size)
 {
-    char       * from, * to;
+    char *from, *to;
     unsigned int i;
 
-    from = (char *) src;
-    to   = (char *) dest;
+    from = (char*)src;
+    to = (char*)dest;
 
-    for (i = 0; i < size; i++)
+    for(i = 0; i < size; i++)
     {
         to[i] = from[i];
     }
@@ -98,8 +103,8 @@ NX_CRYPTO_KEEP VOID * _nx_crypto_self_test_memcpy (void * dest, const void * src
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _nx_crypto_self_test_memset                              PORTABLE C      */
-/*                                                           6.1          */
+/*    _nx_crypto_self_test_memset                         PORTABLE C      */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -136,17 +141,20 @@ NX_CRYPTO_KEEP VOID * _nx_crypto_self_test_memcpy (void * dest, const void * src
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Bhupendra Naphade        Modified comment(s),          */
+/*                                            renamed function,           */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
-NX_CRYPTO_KEEP VOID * _nx_crypto_self_test_memset (void * dest, int value, size_t size)
+NX_CRYPTO_KEEP VOID *_nx_crypto_self_test_memset(void *dest, int value, size_t size)
 {
-    char       * to;
+    char  *to;
     unsigned int i;
-    char         v;
+    char v;
 
-    to = (char *) dest;
-    v  = (char) (value & 0xFF);
-    for (i = 0; i < size; i++)
+    to = (char*)dest;
+    v = (char)(value & 0xFF);
+    for(i = 0; i < size; i++)
     {
         to[i] = v;
     }
@@ -158,8 +166,8 @@ NX_CRYPTO_KEEP VOID * _nx_crypto_self_test_memset (void * dest, int value, size_
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _nx_crypto_self_test_memcmp                              PORTABLE C      */
-/*                                                           6.1          */
+/*    _nx_crypto_self_test_memcmp                         PORTABLE C      */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -198,33 +206,34 @@ NX_CRYPTO_KEEP VOID * _nx_crypto_self_test_memset (void * dest, int value, size_
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Bhupendra Naphade        Modified comment(s),          */
+/*                                            renamed function,           */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
-NX_CRYPTO_KEEP int _nx_crypto_self_test_memcmp (const void * str1, const void * str2, size_t size)
+NX_CRYPTO_KEEP int _nx_crypto_self_test_memcmp(const void *str1, const void *str2, size_t size)
 {
-    char       * string1;
-    char       * string2;
+    char *string1;
+    char *string2;
     unsigned int i;
 
-    string1 = (char *) str1;
-    string2 = (char *) str2;
-    for (i = 0; i < size; i++)
+    string1 = (char*)str1;
+    string2 = (char*)str2;
+    for(i = 0; i < size; i++)
     {
-        if (*string1++ != *string2++)
-        {
-            return 1;
+        if(*string1++ != *string2++)
+            return(1);
         }
-    }
 
-    return 0;
+    return(0);
 }
 
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _nx_crypto_self_test_memmove                             PORTABLE C      */
-/*                                                           6.1          */
+/*    _nx_crypto_self_test_memmove                        PORTABLE C      */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -260,33 +269,35 @@ NX_CRYPTO_KEEP int _nx_crypto_self_test_memcmp (const void * str1, const void * 
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Bhupendra Naphade        Modified comment(s),          */
+/*                                            renamed function,           */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
-NX_CRYPTO_KEEP void * _nx_crypto_self_test_memmove (void * dest, const void * src, size_t size)
+NX_CRYPTO_KEEP void* _nx_crypto_self_test_memmove(void *dest, const void *src, size_t size)
 {
-    char       * from, * to;
+    char *from, *to;
     unsigned int i;
 
-    from = (char *) src;
-    to   = (char *) dest;
+    from = (char*)src;
+    to = (char*)dest;
 
-    if ((ULONG) dest < (ULONG) src)
+    if((ULONG)dest < (ULONG)src)
     {
-        for (i = 0; i < size; i++)
+        for(i = 0; i < size; i++)
         {
             to[i] = from[i];
         }
     }
-    else if ((ULONG) dest > (ULONG) src)
+    else if((ULONG)dest > (ULONG)src)
     {
-        for (i = size; i != 0; i--)
-        {
-            to[i - 1] = from[i - 1];
-        }
-    }
 
-    return dest;
+        for(i = size; i != 0; i--)
+            to[i - 1] = from[i - 1];
+    }
+    return(dest);
 }
+
 
 /**************************************************************************/
 /*                                                                        */
@@ -331,12 +342,14 @@ NX_CRYPTO_KEEP void * _nx_crypto_self_test_memmove (void * dest, const void * sr
 /*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-NX_CRYPTO_KEEP UINT _nx_crypto_module_state_get (VOID)
+NX_CRYPTO_KEEP UINT _nx_crypto_module_state_get(VOID)
 {
-    return _nx_crypto_library_state;
+    return(_nx_crypto_library_state);
+
 }
 
 #endif
+
 
 /**************************************************************************/
 /*                                                                        */
@@ -376,8 +389,7 @@ NX_CRYPTO_KEEP UINT _nx_crypto_module_state_get (VOID)
 /*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-
-NX_CRYPTO_KEEP UINT _nx_crypto_initialize (VOID)
+NX_CRYPTO_KEEP UINT _nx_crypto_initialize(VOID)
 {
 #if (1U == NETX_SECURE_CRYPTO_HW_ACCELERATE)
     fsp_err_t iret = FSP_ERR_CRYPTO_SCE_FAIL;

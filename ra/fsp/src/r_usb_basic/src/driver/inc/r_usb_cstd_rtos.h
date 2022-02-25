@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -32,6 +32,9 @@
 
  #ifndef R_USB_CSTD_RTOS_H
   #define R_USB_CSTD_RTOS_H
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
 
   #if (BSP_CFG_RTOS == 2)
 typedef TaskHandle_t      rtos_task_id_t;
@@ -76,11 +79,14 @@ typedef uint32_t     rtos_time_t;
     #define HCD_STACK_SIZE    (2048)
     #define MGR_STACK_SIZE    (2048)
    #else
-    #define HCD_STACK_SIZE    (1536)
-    #define MGR_STACK_SIZE    (1536)
+
+// #define HCD_STACK_SIZE    (1536)
+// #define MGR_STACK_SIZE    (1536)
+    #define HCD_STACK_SIZE    (1536 + 1024)
+    #define MGR_STACK_SIZE    (1536 + 1024)
    #endif
    #define HUB_STACK_SIZE     (512)
-   #define PCD_STACK_SIZE     (1024)
+   #define PCD_STACK_SIZE     (1024 * 2)
    #define PMSC_STACK_SIZE    (512)
    #define HCDC_STACK_SIZE    (512)
    #define HHID_STACK_SIZE    (512)
@@ -101,14 +107,19 @@ typedef uint32_t     rtos_time_t;
  ******************************************************************************/
 typedef enum e_usb_rtos_err
 {
-    UsbRtos_Success = 0,               // Successful
-    UsbRtos_Err_Init_Mbx,              // Failure of Mailbox Creation
-    UsbRtos_Err_Init_Mpl,              // Failure of Memory Pool Creation
-    UsbRtos_Err_Init_Tsk,              // Failure of Task Creation
-    UsbRtos_Err_Init_Sem,              // Failure of Semaphore Creation
-    UsbRtos_Err_Delete_Mbx,            // Failure of Mailbox Delete
-    UsbRtos_Err_Delete_Mpl,            // Failure of Memory Pool Delete
-    UsbRtos_Err_Delete_Tsk,            // Failure of Task Delete
+    UsbRtos_Success = 0,                 // Successful
+    UsbRtos_Err_Init_Mbx,                // Failure of Mailbox Creation
+    UsbRtos_Err_Init_Mpl,                // Failure of Memory Pool Creation
+    UsbRtos_Err_Init_Tsk,                // Failure of Task Creation
+    UsbRtos_Err_Init_Sem,                // Failure of Semaphore Creation
+    UsbRtos_Err_Delete_Mbx,              // Failure of Mailbox Delete
+    UsbRtos_Err_Delete_Mpl,              // Failure of Memory Pool Delete
+    UsbRtos_Err_Delete_Tsk,              // Failure of Task Delete
+  #if defined(USB_CFG_OTG_USE)
+    UsbRtos_Err_Init_OTG_Detach_Tmr,     // Failure of OTG Detach Timer Creation
+    UsbRtos_Err_Delete_OTG_Detach_Tmr,   // Failure of OTG Detach Timer Delete
+    UsbRtos_Err_Init_OTG_Chattering_Tmr, // Failure of OTG Chattering Timer Creation
+  #endif /* defined(USB_CFG_OTG_USE) */
 } usb_rtos_err_t;
 
 /******************************************************************************
@@ -124,5 +135,8 @@ usb_rtos_err_t usb_rtos_configuration(usb_mode_t usb_mode);
 usb_rtos_err_t usb_rtos_delete(uint8_t module_number);
 
  #endif                                /* #if (BSP_CFG_RTOS != 0) */
+
+/** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
 
 #endif                                 /* R_USB_CSTD_RTOS_H */

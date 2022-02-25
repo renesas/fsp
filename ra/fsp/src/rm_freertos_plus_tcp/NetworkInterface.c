@@ -358,3 +358,20 @@ BSP_WEAK_REFERENCE uint32_t ulApplicationGetNextSequenceNumber (uint32_t ulSourc
 
     return ulResult;
 }
+
+#if defined(__ARMCC_VERSION)
+
+/*******************************************************************************************************************//**
+ * Default implementation of IotClock_GetTimestring for AC6.
+ **********************************************************************************************************************/
+__attribute__((weak))
+bool IotClock_GetTimestring (char * pBuffer, size_t bufferSize, size_t * pTimestringLength)
+{
+    FSP_PARAMETER_NOT_USED(pBuffer);
+    FSP_PARAMETER_NOT_USED(bufferSize);
+    FSP_PARAMETER_NOT_USED(pTimestringLength);
+
+    return true;
+}
+
+#endif

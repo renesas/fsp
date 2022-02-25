@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -730,13 +730,13 @@ static fsp_err_t r_sci_spi_write_read_common (sci_spi_instance_ctrl_t * const p_
         {
             /* If the source is NULL transmit using a dummy value using FIXED mode. */
             static uint8_t tx_dummy = 0;
-            p_transfer->p_cfg->p_info->src_addr_mode = TRANSFER_ADDR_MODE_FIXED;
-            p_transfer->p_cfg->p_info->p_src         = &tx_dummy;
+            p_transfer->p_cfg->p_info->transfer_settings_word_b.src_addr_mode = TRANSFER_ADDR_MODE_FIXED;
+            p_transfer->p_cfg->p_info->p_src = &tx_dummy;
         }
         else
         {
-            p_transfer->p_cfg->p_info->src_addr_mode = TRANSFER_ADDR_MODE_INCREMENTED;
-            p_transfer->p_cfg->p_info->p_src         = p_src;
+            p_transfer->p_cfg->p_info->transfer_settings_word_b.src_addr_mode = TRANSFER_ADDR_MODE_INCREMENTED;
+            p_transfer->p_cfg->p_info->p_src = p_src;
         }
 
         /* Enable the transfer instance. */

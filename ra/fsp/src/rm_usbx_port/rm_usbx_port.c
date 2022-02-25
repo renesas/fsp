@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -113,6 +113,12 @@ static void usb_peri_usbx_pmsc_storage_uninit(void);
   #endif                               /* defined(USB_CFG_PMSC_USE) */
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
+ #if defined(USB_CFG_OTG_USE)
+static UINT usb_otg_hnp_swap(ULONG type);
+static UINT usb2_otg_hnp_swap(ULONG type);
+
+ #endif                                /* defined(USB_CFG_OTG_USE) */
+
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 static uint8_t  usb_host_usbx_endpoint_to_pipe(uint8_t module_number, uint8_t ep_number);
 static void     usb_host_usbx_configured(usb_utr_t * p_utr, uint16_t devadr, uint16_t data2);
@@ -181,6 +187,16 @@ static void * g_p_usbx_hmsc_dma_buf[USB_MAXDEVADDR] = {0};
    #endif                              /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
   #endif /* #if defined(USB_CFG_HMSC_USE) */
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+
+ #if defined(USB_CFG_OTG_USE)
+uint8_t g_usb_otg_hnp_process[USB_NUM_USBIP] =
+{
+    USB_OFF,
+  #if USB_NUM_USBIP == 2
+    USB_OFF
+  #endif
+};
+ #endif                                /* defined(USB_CFG_OTG_USE) */
 
  #if (USB_CFG_DMA == USB_CFG_ENABLE)
 extern const transfer_instance_t * g_p_usbx_transfer_tx;
@@ -541,6 +557,7 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                         {
                             status = (uint32_t) UX_SUCCESS;
                         }
+
   #else                                /* defined(USB_CFG_PMSC_USE) */
                         status = (uint32_t) UX_SUCCESS;
   #endif /* define(USB_CFG_PMSC_USE */
@@ -678,7 +695,7 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
             }
             else
             {
-  #if defined(USB_CFG_PAUD_USE)
+  #if (defined(USB_CFG_PAUD_USE) || defined(USB_CFG_OTG_USE))
                 if (parameter == (void *) UX_DEVICE_CONFIGURED)
                 {
                     if (UX_NULL != _ux_system_slave->ux_system_slave_change_function)
@@ -686,7 +703,7 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                         _ux_system_slave->ux_system_slave_change_function(UX_DEVICE_CONFIGURED);
                     }
                 }
-  #endif                               /* #if defined(USB_CFG_PAUD_USE) */
+  #endif                               /* (defined(USB_CFG_PAUD_USE) || defined(USB_CFG_OTG_USE)) */
                 status = (uint32_t) UX_SUCCESS;
             }
 
@@ -852,10 +869,8 @@ static UINT usb_peri_usbx_media_write (VOID  * storage,
     if ((status.initialized == true) && (status.busy == false) && (status.media_inserted == true))
     {
         err_code =
-            gp_block_media_instance->p_api->write(gp_block_media_instance->p_ctrl,
-                                                  (uint8_t * const) data_pointer,
-                                                  (uint32_t const) lba,
-                                                  (uint32_t const) number_blocks);
+            gp_block_media_instance->p_api->write(gp_block_media_instance->p_ctrl, (uint8_t * const) data_pointer,
+                                                  (uint32_t const) lba, (uint32_t const) number_blocks);
         if (err_code == FSP_SUCCESS)
         {
             while (timeout > 0)
@@ -1130,6 +1145,17 @@ static uint32_t usb_host_usbx_initialize_common (UX_HCD * hcd)
      * for the generic HCD container and the local Synergy container.  */
     hcd->ux_hcd_nb_root_hubs = 1U;
 
+  #if defined(USB_CFG_OTG_USE)
+    if (R_USB_HS0_BASE == hcd->ux_hcd_io)
+    {
+        _ux_system_otg->ux_system_otg_function = usb2_otg_hnp_swap;
+    }
+    else
+    {
+        _ux_system_otg->ux_system_otg_function = usb_otg_hnp_swap;
+    }
+  #endif                               /* defined(USB_CFG_OTG_USE) */
+
     /* Return successful completion.  */
     return (uint32_t) UX_SUCCESS;
 }                                      /* End of function usb_host_usbx_initialize_common() */
@@ -1156,31 +1182,9 @@ uint32_t usb_host_usbx_uninitialize (uint32_t hcd_io)
 {
     UX_HCD * hcd;
 
-// uint32_t hcd_index;
-// uint32_t status = UX_SUCCESS;
     (void) hcd_io;
 
     hcd = _ux_system_host->ux_system_host_hcd_array;
-  #if 0
-    for (hcd_index = 0U; hcd_index < (_ux_system_host->ux_system_host_registered_hcd); hcd_index++)
-    {
-        if (((uint32_t) UX_UNUSED != hcd->ux_hcd_status) && (hcd_io == hcd->ux_hcd_io))
-        {
-            /* We found the correct synergy HCD .  */
-            status = UX_SUCCESS;
-            break;
-        }
-
-        /* Try the next HCD structure */
-        hcd++;
-    }
-
-    if (UX_SUCCESS != status)
-    {
-        /* Return failure status  */
-        return (uint32_t) FSP_ERR_USB_FAILED;
-    }
-  #endif
 
     hcd->ux_hcd_status = (uint32_t) UX_UNUSED;
 
@@ -1332,20 +1336,21 @@ void usb_host_usbx_registration (usb_utr_t * p_utr)
     driver.devresume  = (usb_cb_t) &usb_hstd_dummy_function;         /* Device resume */
 
   #if USB_CFG_HUB == USB_CFG_ENABLE
+
     /* WAIT_LOOP */
-    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)                 /* Loop support CDC device count */
+    for (i = 0; i < USB_MAX_CONNECT_DEVICE_NUM; i++)  /* Loop support CDC device count */
     {
-        usb_hstd_driver_registration(p_utr, &driver);                /* Host CDC class driver registration. */
+        usb_hstd_driver_registration(p_utr, &driver); /* Host CDC class driver registration. */
     }
 
    #if (BSP_CFG_RTOS == 0)
-    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);                   /* Hub Task Priority set */
+    usb_cstd_set_task_pri(USB_HUB_TSK, USB_PRI_3);    /* Hub Task Priority set */
    #endif /* (BSP_CFG_RTOS == 0) */
-    usb_hhub_registration(p_utr, USB_NULL);                          /* Hub registration. */
-  #else                                                              /* USB_CFG_HUB == USB_CFG_ENABLE */
-    usb_hstd_driver_registration(p_utr, &driver);                    /* Host CDC class driver registration. */
+    usb_hhub_registration(p_utr, USB_NULL);           /* Hub registration. */
+  #else                                               /* USB_CFG_HUB == USB_CFG_ENABLE */
+    usb_hstd_driver_registration(p_utr, &driver);     /* Host CDC class driver registration. */
   #endif /* USB_CFG_HUB == USB_CFG_ENABLE */
-}                                                                    /* End of function usb_host_usbx_registration() */
+}                                                     /* End of function usb_host_usbx_registration() */
 
 /******************************************************************************
  * Function Name    : usb_host_usbx_class_check
@@ -1414,6 +1419,7 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
 
                 g_usb_hmsc_out_pipectr[p_utr->ip][0] = 0;
             }
+
    #else                               /* defined(USB_CFG_HMSC_USE) */
             pipe_no = usb_hstd_make_pipe_reg_info(p_utr->ip,
                                                   USB_DEVICEADDR,
@@ -1588,7 +1594,7 @@ static void usb_host_usbx_class_request_cb (usb_utr_t * p_utr, uint16_t data1, u
 
     pipe = (uint8_t) p_utr->keyword;
 
-  #if defined(USB_CFG_HHID_USE)
+  #if (defined(USB_CFG_HHID_USE) | defined(USB_CFG_OTG_USE))
     *g_p_usb_host_actural_length[p_utr->ip][0] = p_utr->read_req_len - p_utr->tranlen;
   #endif                               /* #if defined(USB_CFG_HHID_USE) */
 
@@ -1608,6 +1614,16 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
     uint8_t       pipe;
     UX_TRANSFER * transfer_request;
     uint16_t      pipe_reg;
+
+  #if defined(USB_CFG_OTG_USE)
+    UINT           status;
+    CHAR         * p_sem_name;
+    ULONG          current_value;
+    TX_THREAD    * p_suspend_thread;
+    ULONG          suspend_count;
+    TX_SEMAPHORE * p_next_sem;
+  #endif                               /* defined(USB_CFG_OTG_USE) */
+
   #if defined(USB_CFG_HMSC_USE)
    #if (USB_CFG_DMA == USB_CFG_ENABLE)
     uint32_t  counter;
@@ -1681,7 +1697,24 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
     transfer_request->ux_transfer_request_completion_function(transfer_request);
   #endif                               /* defined(USB_CFG_HHID_USE) */
 
+  #if defined(USB_CFG_OTG_USE)
+    status = tx_semaphore_info_get(&transfer_request->ux_transfer_request_semaphore,
+                                   &p_sem_name,
+                                   &current_value,
+                                   &p_suspend_thread,
+                                   &suspend_count,
+                                   &p_next_sem);
+    if (TX_SUCCESS == status)
+    {
+        if (0UL != suspend_count)
+        {
+            _ux_utility_semaphore_put(&transfer_request->ux_transfer_request_semaphore);
+        }
+    }
+
+  #else                                /* defined(USB_CFG_OTG_USE) */
     _ux_utility_semaphore_put(&transfer_request->ux_transfer_request_semaphore);
+  #endif /* defined(USB_CFG_OTG_USE) */
 }                                      /* End of function usb_hstd_transfer_complete_cb() */
 
 /******************************************************************************
@@ -1776,6 +1809,7 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
                             (uint16_t) transfer_request->ux_transfer_request_requested_length;
                         g_usb_host_usbx_req_msg[module_number].complete = (usb_cb_t) &usb_host_usbx_class_request_cb;
                     }
+
   #else                                /* #if defined(USB_CFG_HHID_USE) */
                     /* In this "case", only SetConfiguraion or the class request is processed.  */
                     if (UX_FSP_SET_CONFIGURATION == transfer_request->ux_transfer_request_function)
@@ -1998,6 +2032,75 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
             break;
         }
 
+        case (uint32_t) UX_HCD_GET_PORT_STATUS:
+        {
+  #if defined(USB_CFG_OTG_USE)
+            uint16_t  port_status = 0;
+            uint16_t  reg_dvstctr;
+            uint16_t  speed;
+            usb_utr_t utr;
+
+            if (USB_MODE_HOST == g_usb_usbmode[module_number])
+            {
+                utr.ip = module_number;
+
+                reg_dvstctr = hw_usb_read_dvstctr(&utr);
+
+                /* Isolate speed.  */
+                speed = reg_dvstctr & (uint16_t) USB_RHST;
+                if (USB_NULL != speed)
+                {
+                    /* Detect Port Device Attached speed.   */
+                    switch (speed)
+                    {
+                        case USB_FSMODE:
+                        {
+                            port_status |= (ULONG) UX_PS_DS_FS;
+                            break;
+                        }
+
+                        case USB_HSMODE:
+                        {
+                            port_status |= (ULONG) UX_PS_DS_HS;
+                            break;
+                        }
+
+                        default:
+                        {
+                            port_status |= (ULONG) UX_PS_DS_LS;
+                            break;
+                        }
+                    }
+
+                    /*  Device connection detected .  */
+                    port_status |= UX_PS_CCS;
+
+   #if !defined(USB_CFG_OTG_USE)
+                    / *Port Enabled. * /
+                    hcd_synergy->ux_hcd_synergy_port_status = (ULONG) UX_SYNERGY_HC_PORT_ENABLED;
+   #endif                              /* !defined(USB_CFG_OTG_USE) */
+
+                    /* Port Enable Status.  */
+                    if (reg_dvstctr & USB_UACT)
+                    {
+                        port_status |= UX_PS_PES;
+                    }
+
+                    port_status |= UX_PS_PPS;
+                    status       = (uint32_t) port_status;
+                }
+                else
+                {
+                    status = 0;
+                }
+            }
+
+  #else                                /* defined(USB_CFG_OTG_USE) */
+            status = 0;
+  #endif                               /* defined(USB_CFG_OTG_USE) */
+            break;
+        }
+
         default:
         {
             /* Error trap. */
@@ -2016,6 +2119,51 @@ static UINT usb_host_usbx_to_basic (UX_HCD * hcd, UINT function, VOID * paramete
 }                                      /* End of function usb_host_usbx_to_basic() */
 
  #endif                                /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+
+ #if defined(USB_CFG_OTG_USE)
+
+/******************************************************************************
+ * Function Name   : usb_otg_hnp_swap
+ * Description     : OTG swap start processing for USB IP0
+ * Argument        : LONG type : UX_OTG_HOST_TO_SLAVE
+ * Return          : UX_SUCCESS
+ ******************************************************************************/
+static UINT usb_otg_hnp_swap (ULONG type)
+{
+    FSP_PARAMETER_NOT_USED(type);
+    usb_utr_t utr;
+
+    g_usb_otg_hnp_process[0] = USB_ON;
+
+    utr.ip = USB_IP0;
+    usb_hstd_hcd_snd_mbx(&utr, USB_MSG_HCD_OTG_SUSPEND, 0, (uint16_t *) 0, 0);
+
+    return UX_SUCCESS;
+}
+
+  #if USB_NUM_USBIP == 2
+
+/******************************************************************************
+ * Function Name   : usb_otg_hnp_swap
+ * Description     : OTG swap start processing for USB IP0
+ * Argument        : LONG type : UX_OTG_HOST_TO_SLAVE
+ * Return          : UX_SUCCESS
+ ******************************************************************************/
+static UINT usb2_otg_hnp_swap (ULONG type)
+{
+    FSP_PARAMETER_NOT_USED(type);
+    usb_utr_t utr;
+
+    g_usb_otg_hnp_process[1] = USB_ON;
+
+    utr.ip = USB_IP1;
+    usb_hstd_hcd_snd_mbx(&utr, USB_MSG_HCD_OTG_SUSPEND, 0, (uint16_t *) 0, 0);
+
+    return UX_SUCCESS;
+}
+
+  #endif                               /* USB_NUM_USBIP == 2 */
+ #endif
 #endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 /******************************************************************************

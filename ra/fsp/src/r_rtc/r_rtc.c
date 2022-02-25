@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -226,6 +226,13 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
     p_instance_ctrl->carry_isr_triggered = false;
 
     r_rtc_config_rtc_interrupts(p_instance_ctrl, p_cfg);
+
+    /* On a cold-start, force the RTC to be in the stoped state. Some devices power up with the RTC started. */
+    /* Checks to see if the PORF bit is set. PORF can be cleared by software if application code handles a POR. */
+    if (R_SYSTEM->RSTSR0 == 1)
+    {
+        r_rtc_start_bit_update(0U);
+    }
 
     /* Check if the RTC is already running */
     if (R_RTC->RCR2_b.START == 0)

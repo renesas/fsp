@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -45,6 +45,10 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define ADC_B_CHANNEL_MASK_EXT_OFFSET           (32U)
+#define ADC_B_CHANNEL_VALID_FOR_UNIT(channel_mask, unit_id)    ((ADC_B_UNIT_ID_0 == unit_id) ?                       \
+                                                                (channel_mask & BSP_FEATURE_ADC_B_UNIT_0_CHANNELS) : \
+                                                                (channel_mask & BSP_FEATURE_ADC_B_UNIT_1_CHANNELS))
+
 #define R_ADC_B0_ADUGTR_UGAIN_INTEGER_Pos       (22)
 #define R_ADC_B0_ADUGTR_UGAIN_INTEGER_Msk       (0xC00000)
 #define R_ADC_B0_ADUGTR_UGAIN_FRACTIONAL_Pos    (0)
@@ -378,7 +382,7 @@ typedef struct st_adc_b_virtual_channel_cfg
         uint32_t channel_cfg;               ///< Channel configuration register data
         struct
         {
-            uint32_t group             : 5; ///< Scan group selection
+            uint32_t group             : 5; ///< Scan group mask selection
             uint32_t                   : 3;
             uint32_t channel           : 7; ///< A/D conversion channel selection
             uint32_t self_diag_enabled : 1; ///< Analog input mode selection (set to 1 if self-diagnosis is enabled)
@@ -507,53 +511,109 @@ typedef struct st_adc_b_isr_cfg
 typedef struct st_adc_b_extended_cfg
 {
     /* Data used to calculate register settings */
-    adc_b_pga_gain_t pga_gain[4];                               ///< PGA Gain selection
+    adc_b_pga_gain_t pga_gain[4];       ///< PGA Gain selection
     union
     {
-        uint8_t pga_debug_monitor_mask;                         // PGA monitor mode mask bits
+        uint8_t pga_debug_monitor_mask; // PGA monitor mode mask bits
         struct
         {
             /* For debug only! Prolonged use of PGA Monitor function may deteriorate PGA characteristics. See user manual for more information.*/
-            uint8_t unit_0 : 1;                                 // UPGA monitor mode unit 0 bit - FOR DEBUG USE ONLY! DO NOT USE IN PRODUCTION!
-            uint8_t unit_1 : 1;                                 // UPGA monitor mode unit 1 bit - FOR DEBUG USE ONLY! DO NOT USE IN PRODUCTION!
-            uint8_t unit_2 : 1;                                 // UPGA monitor mode unit 2 bit - FOR DEBUG USE ONLY! DO NOT USE IN PRODUCTION!
-            uint8_t unit_3 : 1;                                 // UPGA monitor mode unit 3 bit - FOR DEBUG USE ONLY! DO NOT USE IN PRODUCTION!
+            uint8_t unit_0 : 1;         // PGA monitor mode unit 0 bit - FOR DEBUG USE ONLY! DO NOT USE IN PRODUCTION!
+            uint8_t unit_1 : 1;         // PGA monitor mode unit 1 bit - FOR DEBUG USE ONLY! DO NOT USE IN PRODUCTION!
+            uint8_t unit_2 : 1;         // PGA monitor mode unit 2 bit - FOR DEBUG USE ONLY! DO NOT USE IN PRODUCTION!
+            uint8_t unit_3 : 1;         // PGA monitor mode unit 3 bit - FOR DEBUG USE ONLY! DO NOT USE IN PRODUCTION!
             uint8_t        : 4;
-        } pga_debug_monitor_mask_b;                             ///< PGA monitor mode bitfield
+        } pga_debug_monitor_mask_b;     ///< PGA monitor mode bitfield
     };
 
     /* Register Data */
-    uint32_t                clock_control_data;                 ///< Clock control register data
-    uint32_t                sync_operation_control;             ///< Synchronous Operation Control register data
-    uint32_t                adc_b_mode;                         ///< ADC_B mode register data
-    uint32_t                scan_group_enable;                  ///< Scan Group enable register data
-    uint32_t                converter_selection_0;              ///< Converter Selection register data for groups 0,1,2,3
-    uint32_t                converter_selection_1;              ///< Converter Selection register data for groups 4,5,6,7
-    uint32_t                converter_selection_2;              ///< Converter Selection register data for group 8
-    uint32_t                fifo_enable_mask;                   ///< FIFO enable register data
-    uint32_t                fifo_interrupt_enable_mask;         ///< FIFO interrupt enable register data
-    uint32_t                fifo_interrupt_level0;              ///< FIFO data threshold interrupt level register data for Group 0 and 1
-    uint32_t                fifo_interrupt_level1;              ///< FIFO data threshold interrupt level register data for Group 2 and 3
-    uint32_t                fifo_interrupt_level2;              ///< FIFO data threshold interrupt level register data for Group 4 and 5
-    uint32_t                fifo_interrupt_level3;              ///< FIFO data threshold interrupt level register data for Group 6 and 7
-    uint32_t                fifo_interrupt_level4;              ///< FIFO data threshold interrupt level register data for Group 8
-    uint32_t                start_trigger_delay_0;              ///< Start trigger delay register data for group 0 and 1
-    uint32_t                start_trigger_delay_1;              ///< Start trigger delay register data for group 2 and 3
-    uint32_t                start_trigger_delay_2;              ///< Start trigger delay register data for group 4 and 5
-    uint32_t                start_trigger_delay_3;              ///< Start trigger delay register data for group 6 and 7
-    uint32_t                start_trigger_delay_4;              ///< Start trigger delay register data for group 8
-    uint32_t                calibration_adc_state;              ///< Calibration State register data
-    uint32_t                calibration_sample_and_hold;        ///< Calibration Sample and Hold register data
-    const adc_b_isr_cfg_t * p_isr_cfg;                          ///< Pointer to ISR configuration
-    uint32_t                sampling_state_tables[8];           ///< Sampling State Table register data
-    uint8_t                 sample_and_hold_enable_mask;        ///< Sample and Hold enable register data
-    uint32_t                sample_and_hold_config_012;         ///< Sample and Hold configuration register data
-    uint32_t                sample_and_hold_config_456;         ///< Sample and Hold configuration register data
-    uint32_t                conversion_state;                   ///< ADC 0/1 Successive Approximation Time Configuration
-    int32_t                 user_offset_tables[8];              ///< User Offset Table register data
-    uint32_t                user_gain_tables[8];                ///< User Gain Table register data
-    uint32_t                limiter_clip_interrupt_enable_mask; ///< Limiter clip interrupt enable register data
-    uint32_t                limiter_clip_tables[8];             ///< Limiter clip Table register data
+    union
+    {
+        uint32_t clock_control_data;       ///< Clock control register data
+        struct
+        {
+            uint32_t source_selection : 2; ///< ADC_B clock source selection
+            uint32_t                  : 14;
+            uint32_t divider          : 3; ///< ADC_B clock divider selection
+            uint32_t                  : 13;
+        } clock_control_bits;
+    };
+
+    union
+    {
+        uint32_t sync_operation_control; ///< Synchronous Operation Control register data
+        struct
+        {
+            uint32_t period_cycle       : 10;
+            uint32_t                    : 5;
+            uint32_t adc_0_disable_sync : 1;
+            uint32_t adc_1_disable_sync : 1;
+            uint32_t                    : 14;
+        } sync_operation_control_bits;
+    };
+    uint32_t adc_b_mode;               ///< ADC_B mode register data
+    uint32_t scan_group_enable;        ///< Scan Group enable register data
+    union
+    {
+        struct
+        {
+            uint32_t converter_selection_0; ///< Converter Selection register data for groups 0,1,2,3
+            uint32_t converter_selection_1; ///< Converter Selection register data for groups 4,5,6,7
+            uint32_t converter_selection_2; ///< Converter Selection register data for group 8
+        };
+        uint8_t converter_selection[9];
+    };
+
+    union
+    {
+        uint16_t fifo_enable_mask;       ///< FIFO enable register data
+        struct
+        {
+            uint16_t fifo_0 : 1;         ///< FIFO enable for group 0
+            uint16_t fifo_1 : 1;         ///< FIFO enable for group 1
+            uint16_t fifo_2 : 1;         ///< FIFO enable for group 2
+            uint16_t fifo_3 : 1;         ///< FIFO enable for group 3
+            uint16_t fifo_4 : 1;         ///< FIFO enable for group 4
+            uint16_t fifo_5 : 1;         ///< FIFO enable for group 5
+            uint16_t fifo_6 : 1;         ///< FIFO enable for group 6
+            uint16_t fifo_7 : 1;         ///< FIFO enable for group 7
+            uint16_t fifo_8 : 1;         ///< FIFO enable for group 8
+        } fifo_enable_mask_bits;
+    };
+    uint16_t fifo_interrupt_enable_mask; ///< FIFO interrupt enable register data
+    union
+    {
+        struct
+        {
+            uint32_t fifo_interrupt_level0;              ///< FIFO data threshold interrupt level register data for Group 0 and 1
+            uint32_t fifo_interrupt_level1;              ///< FIFO data threshold interrupt level register data for Group 2 and 3
+            uint32_t fifo_interrupt_level2;              ///< FIFO data threshold interrupt level register data for Group 4 and 5
+            uint32_t fifo_interrupt_level3;              ///< FIFO data threshold interrupt level register data for Group 6 and 7
+            uint32_t fifo_interrupt_level4;              ///< FIFO data threshold interrupt level register data for Group 8
+        };
+        uint16_t fifo_interrupt_level[9];                ///< FIFO data threshold interrupt level
+    };
+    uint32_t                start_trigger_delay_0;       ///< Start trigger delay register data for group 0 and 1
+    uint32_t                start_trigger_delay_1;       ///< Start trigger delay register data for group 2 and 3
+    uint32_t                start_trigger_delay_2;       ///< Start trigger delay register data for group 4 and 5
+    uint32_t                start_trigger_delay_3;       ///< Start trigger delay register data for group 6 and 7
+    uint32_t                start_trigger_delay_4;       ///< Start trigger delay register data for group 8
+    uint32_t                calibration_adc_state;       ///< Calibration State register data
+    uint32_t                calibration_sample_and_hold; ///< Calibration Sample and Hold register data
+    const adc_b_isr_cfg_t * p_isr_cfg;                   ///< Pointer to ISR configuration
+    union
+    {
+        uint32_t sampling_state_tables[8];               /// Sampling State Table register data
+        uint16_t sampling_state_table[15];               ///< Sampling State Tables
+    };
+    uint8_t  sample_and_hold_enable_mask;                ///< Sample and Hold enable register data
+    uint32_t sample_and_hold_config_012;                 ///< Sample and Hold configuration register data
+    uint32_t sample_and_hold_config_456;                 ///< Sample and Hold configuration register data
+    uint32_t conversion_state;                           ///< ADC 0/1 Successive Approximation Time Configuration
+    int32_t  user_offset_tables[8];                      ///< User Offset Table register data
+    uint32_t user_gain_tables[8];                        ///< User Gain Table register data
+    uint32_t limiter_clip_interrupt_enable_mask;         ///< Limiter clip interrupt enable register data
+    uint32_t limiter_clip_tables[8];                     ///< Limiter clip Table register data
 } adc_b_extended_cfg_t;
 
 /***********************************************************************************************************************

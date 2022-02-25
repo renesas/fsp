@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1969,6 +1969,179 @@ fsp_err_t R_SCE_EcdhKeyDerivationPrivate (uint32_t *InData_KeyIndexType, uint32_
 {
     return R_SCE_DlmsCosemCalculateKekSub(InData_KeyIndexType, InData_KeyIndex, InData_KDFType, InData_PaddedMsg,
             MAX_CNT, InData_SaltKeyIndex, OutData_KeyIndex);
+}
+
+/*******************************************************************************************************************//**
+ * Wrap InData_WrappedKeyIndex with InData_KeyIndex.
+ *
+ * @param InData_KeyIndex User   key generation information area.
+ * @param InData_WrappedKeyType  select key to be wrapped.
+ * @param InData_WrappedKeyIndex key to be wrapped.
+ * @param OutData_Text           wrapped key.
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
+ * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
+ *********************************************************************************************************************/
+fsp_err_t R_SCE_Aes128KeyWrapPrivate(uint32_t * InData_KeyIndex,
+                                     uint32_t * InData_WrappedKeyType,
+                                     uint32_t * InData_WrappedKeyIndex,
+                                     uint32_t * OutData_Text)
+{
+    uint32_t indata_cmd = 0;
+    int32_t key_index_size = 0;
+    uint32_t wrapped_key_size = 0;
+
+    indata_cmd = change_endian_long(0);
+
+    if (SCE_KEYWRAP_AES128 == (*InData_WrappedKeyType))
+    {
+        wrapped_key_size = 6;
+        key_index_size = 9;
+    }
+    else
+    {
+        wrapped_key_size = 10;
+        key_index_size = 13;
+    }
+
+    *InData_WrappedKeyType = change_endian_long(*InData_WrappedKeyType);
+    return R_SCE_AesKeyWrapSub(&indata_cmd, InData_KeyIndex, key_index_size, InData_WrappedKeyType,
+            InData_WrappedKeyIndex, wrapped_key_size, OutData_Text);
+}
+
+/*******************************************************************************************************************//**
+ * Wrap InData_WrappedKeyIndex with InData_KeyIndex.
+ *
+ * @param InData_KeyIndex User   key generation information area.
+ * @param InData_WrappedKeyType  select key to be wrapped.
+ * @param InData_WrappedKeyIndex key to be wrapped.
+ * @param OutData_Text           wrapped key.
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
+ * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
+ *********************************************************************************************************************/
+fsp_err_t R_SCE_Aes256KeyWrapPrivate(uint32_t * InData_KeyIndex,
+                                     uint32_t * InData_WrappedKeyType,
+                                     uint32_t * InData_WrappedKeyIndex,
+                                     uint32_t * OutData_Text)
+{
+    uint32_t indata_cmd = 0;
+    int32_t key_index_size = 0;
+    uint32_t wrapped_key_size = 0;
+
+    indata_cmd = change_endian_long(1);
+
+    if (SCE_KEYWRAP_AES128 == (*InData_WrappedKeyType))
+    {
+        wrapped_key_size = 6;
+        key_index_size = 9;
+    }
+    else
+    {
+        wrapped_key_size = 10;
+        key_index_size = 13;
+    }
+
+    *InData_WrappedKeyType = change_endian_long(*InData_WrappedKeyType);
+
+    return R_SCE_AesKeyWrapSub(&indata_cmd, InData_KeyIndex, key_index_size, InData_WrappedKeyType,
+            InData_WrappedKeyIndex, wrapped_key_size, OutData_Text);
+}
+
+/*******************************************************************************************************************//**
+ * Unwrap InData_Text with key_index.
+ *
+ * @param InData_MasterKey      key used for unwrapping.
+ * @param InData_WrappedKeyType select key to be wrapped.
+ * @param InData_Text           wrapped key.
+ * @param OutData_KeyIndex      key to be unwrapped.
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
+ * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
+ *********************************************************************************************************************/
+fsp_err_t R_SCE_Aes128KeyUnWrapPrivate(sce_aes_wrapped_key_t * InData_MasterKey,
+                                       uint32_t * InData_WrappedKeyType,
+                                       uint32_t * InData_Text,
+                                       uint32_t * OutData_KeyIndex)
+{
+    uint32_t indata_keytype = 0; /* For normal */
+    uint32_t indata_cmd = 0;
+    uint32_t key_index_size = 0;
+    uint32_t wrapped_key_size = 0;
+
+    if (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == InData_MasterKey->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    indata_cmd = change_endian_long(0);
+
+    if (SCE_KEYWRAP_AES128 == (*InData_WrappedKeyType))
+    {
+        wrapped_key_size = 6;
+        key_index_size = 9;
+    }
+    else
+    {
+        wrapped_key_size = 10;
+        key_index_size = 13;
+    }
+
+    *InData_WrappedKeyType = change_endian_long(*InData_WrappedKeyType);
+
+    return R_SCE_AesKeyUnwrapSub(&indata_keytype, &indata_cmd, InData_MasterKey->value, key_index_size,
+            InData_WrappedKeyType, InData_Text, wrapped_key_size, OutData_KeyIndex);
+}
+
+/*******************************************************************************************************************//**
+ * Unwrap InData_Text with key_index.
+ *
+ * @param InData_MasterKey      key used for unwrapping.
+ * @param InData_WrappedKeyType select key to be wrapped.
+ * @param InData_Text           wrapped key.
+ * @param OutData_KeyIndex      key to be unwrapped.
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
+ * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
+ *********************************************************************************************************************/
+fsp_err_t R_SCE_Aes256KeyUnWrapPrivate(sce_aes_wrapped_key_t * InData_MasterKey,
+                                       uint32_t * InData_WrappedKeyType,
+                                       uint32_t * InData_Text,
+                                       uint32_t * OutData_KeyIndex)
+{
+    uint32_t indata_keytype = 0; /* For normal */
+    uint32_t indata_cmd = 0;
+    uint32_t key_index_size = 0;
+    uint32_t wrapped_key_size = 0;
+
+    if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == InData_MasterKey->type)
+    {
+        indata_keytype = change_endian_long(2); /* For ECDH */
+    }
+    indata_cmd = change_endian_long(1);
+
+    if (SCE_KEYWRAP_AES128 == (*InData_WrappedKeyType))
+    {
+        wrapped_key_size = 6;
+        key_index_size = 9;
+    }
+    else
+    {
+        wrapped_key_size = 10;
+        key_index_size = 13;
+    }
+
+    *InData_WrappedKeyType = change_endian_long(*InData_WrappedKeyType);
+
+    return R_SCE_AesKeyUnwrapSub(&indata_keytype, &indata_cmd, InData_MasterKey->value, key_index_size,
+            InData_WrappedKeyType, InData_Text, wrapped_key_size, OutData_KeyIndex);
 }
 
 /*******************************************************************************************************************//**

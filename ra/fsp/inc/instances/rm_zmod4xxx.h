@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -81,6 +81,7 @@ typedef enum e_rm_zmod4xxx_lib_type
     RM_ZMOD4410_LIB_TYPE_IAQ_1ST_GEN_CONTINUOUS = 1,
     RM_ZMOD4410_LIB_TYPE_IAQ_1ST_GEN_LOW_POWER,
     RM_ZMOD4410_LIB_TYPE_IAQ_2ND_GEN,
+    RM_ZMOD4410_LIB_TYPE_IAQ_2ND_GEN_ULP,
     RM_ZMOD4410_LIB_TYPE_ODOR,
     RM_ZMOD4410_LIB_TYPE_SULFUR_ODOR,
     RM_ZMOD4510_LIB_TYPE_OAQ_1ST_GEN,
@@ -125,6 +126,7 @@ typedef struct st_rm_zmod4xxx_instance_ctrl
     uint8_t  buf[RM_ZMOD4XXX_MAX_I2C_BUF_SIZE];                      ///< Buffer for I2C communications
     uint8_t  register_address;                                       ///< Register address to access
     rm_zmod4xxx_status_params_t       status;                        ///< Status parameter
+    volatile bool                     dev_err_check;                 ///< Flag for checking device error
     volatile rm_zmod4xxx_event_t      event;                         ///< Callback event
     rm_zmod4xxx_init_process_params_t init_process_params;           ///< For the initialization process.
     rm_zmod4xxx_cfg_t const         * p_cfg;                         ///< Pointer of configuration block
@@ -158,6 +160,7 @@ fsp_err_t RM_ZMOD4XXX_StatusCheck(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 fsp_err_t RM_ZMOD4XXX_Read(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data);
 fsp_err_t RM_ZMOD4XXX_TemperatureAndHumiditySet(rm_zmod4xxx_ctrl_t * const p_api_ctrl, float temperature,
                                                 float humidity);
+fsp_err_t RM_ZMOD4XXX_DeviceErrorCheck(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 fsp_err_t RM_ZMOD4XXX_Iaq1stGenDataCalculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                              rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                              rm_zmod4xxx_iaq_1st_data_t * const p_zmod4xxx_data);

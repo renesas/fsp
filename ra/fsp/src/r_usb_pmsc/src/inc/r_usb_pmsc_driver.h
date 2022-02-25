@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,13 +19,17 @@
  **********************************************************************************************************************/
 
 #ifndef R_USB_MEDIA_DRIVER_IF_H        /* Multiple inclusion prevention */
-#define R_USB_MEDIA_DRIVER_IF_H
+ #define R_USB_MEDIA_DRIVER_IF_H
 
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
  ***********************************************************************************************************************/
-#include <stdint.h>
-#include <stdbool.h>
+ #include <stdint.h>
+ #include <stdbool.h>
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -100,4 +104,8 @@ fsp_err_t r_usb_pmsc_media_write(uint8_t const * const p_wbuffer,    /* Pointer 
 void r_usb_pmsc_media_ioctl(usb_ioctl_cmd_t ioctl_cmd,               /* Control command code */
                             uint32_t      * ioctl_data);             /* Data transfer buffer */
 
-#endif /* R_USB_MEDIA_DRIVER_IF_H */
+ #ifdef __cplusplus
+}
+ #endif
+
+#endif                                 /* R_USB_MEDIA_DRIVER_IF_H */

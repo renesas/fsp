@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -169,8 +169,7 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 #if BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK
  #define FLASH_HP_PRV_DUALSEL_BANKMD_MASK             (0x7U)
  #define FLASH_HP_PRV_BANKSEL_BANKSWP_MASK            (0x7U)
- #define FLASH_HP_PRV_BANK1_START_ADDR                (0x00200000U)
- #define FLASH_HP_PRV_BANK1_MASK                      (~FLASH_HP_PRV_BANK1_START_ADDR)
+ #define FLASH_HP_PRV_BANK1_MASK                      (~BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START)
 #else
  #define FLASH_HP_PRV_BANK1_MASK                      (UINT32_MAX)
 #endif
@@ -1481,7 +1480,7 @@ static fsp_err_t r_flash_hp_write_bc_parameter_checking (flash_hp_instance_ctrl_
   #if BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK
         if (0 == (FLASH_HP_PRV_DUALSEL_BANKMD_MASK & *flash_hp_dualsel))
         {
-            flash_address = flash_address % FLASH_HP_PRV_BANK1_START_ADDR;
+            flash_address = flash_address % BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START;
             rom_end       = BSP_ROM_SIZE_BYTES / 2;
         }
   #endif

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -87,7 +87,7 @@ static fsp_err_t rm_zmod4410_odor_oaq_2nd_gen_data_calculate(rm_zmod4xxx_ctrl_t 
                                                              rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                                              rm_zmod4xxx_oaq_2nd_data_t * const p_zmod4xxx_data);
 static fsp_err_t rm_zmod4410_odor_close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
-
+static fsp_err_t rm_zmod4410_odor_device_error_check(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 static fsp_err_t rm_zmod4410_odor_calc_rmox(rm_zmod4xxx_instance_ctrl_t * const p_ctrl,
                                             uint8_t                           * adc_result,
                                             float                             * rmox);
@@ -110,6 +110,7 @@ rm_zmod4xxx_api_t const g_zmod4xxx_on_zmod4410_odor =
     .oaq1stGenDataCalculate    = rm_zmod4410_odor_oaq_1st_gen_data_calculate,
     .oaq2ndGenDataCalculate    = rm_zmod4410_odor_oaq_2nd_gen_data_calculate,
     .temperatureAndHumiditySet = rm_zmod4410_odor_temperature_and_humidity_set,
+    .deviceErrorCheck          = rm_zmod4410_odor_device_error_check,
 };
 
 /***********************************************************************************************************************
@@ -332,6 +333,18 @@ static fsp_err_t rm_zmod4410_odor_oaq_2nd_gen_data_calculate (rm_zmod4xxx_ctrl_t
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(p_raw_data);
     FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * @brief  Unsupported API.
+ *
+ * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
+ **********************************************************************************************************************/
+static fsp_err_t rm_zmod4410_odor_device_error_check (rm_zmod4xxx_ctrl_t * const p_api_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
 
     return FSP_ERR_UNSUPPORTED;
 }

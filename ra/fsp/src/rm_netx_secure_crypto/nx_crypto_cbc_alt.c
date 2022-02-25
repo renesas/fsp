@@ -262,6 +262,7 @@ UINT  i;
     {
         return(NX_CRYPTO_PTR_ERROR);
     }
+    
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT)
     NX_CRYPTO_PARAMETER_NOT_USED(crypto_function); /* Directly using AES CBC procedures from SCE */
     NX_CRYPTO_PARAMETER_NOT_USED(last_cipher);

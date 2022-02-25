@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -40,9 +40,15 @@
  #endif                                /* defined(USB_CFG_HMSC_USE) */
 #endif /* #if (BSP_CFG_RTOS != 1) */
 
-#if defined(USB_CFG_HCDC_USE)
- #include "r_usb_hcdc_cfg.h"
-#endif                                 /* defined(USB_CFG_HCDC_USE) */
+#if defined(USB_CFG_OTG_USE)
+ #if defined(USB_CFG_HCDC_USE)
+  #include "r_usb_otg_cdc_cfg.h"
+ #endif                                /* (defined(USB_CFG_HCDC_USE) | defined(USB_CFG_PCDC_USE)) */
+#else                                  /* defined(USB_CFG_OTG_USE) */
+ #if defined(USB_CFG_HCDC_USE)
+  #include "r_usb_hcdc_cfg.h"
+ #endif                                /* defined(USB_CFG_HCDC_USE) */
+#endif                                 /* defined(USB_CFG_OTG_USE) */
 
 #if defined(USB_CFG_HHID_USE)
  #include "r_usb_hhid_cfg.h"

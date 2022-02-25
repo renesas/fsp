@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -175,10 +175,9 @@ void usb_hstd_ovrcr0function (usb_utr_t * ptr)
  * Function Name   : usb_hdriver_init
  * Description     : USB Host driver initialization
  * Arguments       : usb_utr_t *ptr : Pointer to usb_utr_t structure.
- *               : usb_cfg_t *cfg : Pointer to usb_cfg_t structure.
  * Return value    : none
  ******************************************************************************/
-void usb_hdriver_init (usb_utr_t * ptr, usb_cfg_t const * const cfg)
+void usb_hdriver_init (usb_utr_t * ptr)
 {
     uint16_t i;
 
@@ -203,15 +202,6 @@ void usb_hdriver_init (usb_utr_t * ptr, usb_cfg_t const * const cfg)
         }
 
         g_usb_cstd_driver_open = USB_TRUE;
-    }
-
-    if (USB_SPEED_HS == cfg->usb_speed)
-    {
-        g_usb_hstd_hs_enable[ptr->ip] = USB_HS_ENABLE;
-    }
-    else
-    {
-        g_usb_hstd_hs_enable[ptr->ip] = USB_HS_DISABLE;
     }
 
     usb_hstd_init_usb_message(ptr);    /* USB interrupt message initialize */

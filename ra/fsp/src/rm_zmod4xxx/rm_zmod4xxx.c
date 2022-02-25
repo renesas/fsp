@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -48,6 +48,7 @@
 #define RM_ZMOD4XXX_ADDR_CMD                           (0x93)
 #define RM_ZMOD4XXX_ADDR_STATUS                        (0x94)
 #define RM_ZMOD4XXX_ADDR_TRACKING                      (0x3A)
+#define RM_ZMOD4XXX_ADDR_DEV_ERR                       (0xB7)
 
 /* Definitions of data size */
 #define RM_ZMOD4XXX_LEN_PID                            (2)
@@ -73,7 +74,6 @@
 #define RM_ZMOD4XXX_512000F                            (512000.0F)
 #define RM_ZMOD4XXX_12288000F                          (12288000.0F)
 #define RM_ZMOD4XXX_FF                                 (0x00FF)
-#define RM_ZMOD4XXX_B7                                 (0xB7)
 #define RM_ZMOD4XXX_1E_3                               (1e-3)
 #define RM_ZMOD4XXX_10E9                               (10e9)
 #define RM_ZMOD4XXX_1E3                                (1e3)
@@ -101,6 +101,7 @@ rm_zmod4xxx_api_t const g_zmod4xxx_on_zmod4xxx =
     .oaq1stGenDataCalculate    = RM_ZMOD4XXX_Oaq1stGenDataCalculate,
     .oaq2ndGenDataCalculate    = RM_ZMOD4XXX_Oaq2ndGenDataCalculate,
     .temperatureAndHumiditySet = RM_ZMOD4XXX_TemperatureAndHumiditySet,
+    .deviceErrorCheck          = RM_ZMOD4XXX_DeviceErrorCheck,
 };
 
 /**********************************************************************************************************************
@@ -129,6 +130,7 @@ static fsp_err_t rm_zmod4xxx_start_measurement(rm_zmod4xxx_instance_ctrl_t * con
 static fsp_err_t rm_zmod4xxx_read_adc_result(rm_zmod4xxx_instance_ctrl_t * const p_ctrl, uint8_t * adc_result);
 static fsp_err_t rm_zmod4xxx_stop_measurement(rm_zmod4xxx_instance_ctrl_t * const p_ctrl);
 static fsp_err_t rm_zmod4xxx_configuration(rm_zmod4xxx_instance_ctrl_t * const p_ctrl);
+static fsp_err_t rm_zmod4xxx_device_error_event_check(rm_zmod4xxx_instance_ctrl_t * const p_ctrl);
 
 /*******************************************************************************************************************//**
  * @addtogroup RM_ZMOD4XXX
@@ -193,6 +195,7 @@ fsp_err_t RM_ZMOD4XXX_Open (rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_c
     p_ctrl->p_irq_callback   = p_cfg->p_irq_callback;
     p_ctrl->status.flag      = false;
     p_ctrl->event            = RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE;
+    p_ctrl->dev_err_check    = false;
 
     /* Open Communications middleware */
     err = p_ctrl->p_comms_i2c_instance->p_api->open(p_ctrl->p_comms_i2c_instance->p_ctrl,
@@ -582,7 +585,7 @@ fsp_err_t RM_ZMOD4XXX_Oaq2ndGenDataCalculate (rm_zmod4xxx_ctrl_t * const        
 }
 
 /*******************************************************************************************************************//**
- * @brief  This function is valid only for OAQ_2nd_Gen. This function should be called before DataCalculate.
+ * @brief  This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate.
  * Humidity and temperature measurements are needed for ambient compensation.
  * Implements @ref rm_zmod4xxx_api_t::temperatureAndHumiditySet
  *
@@ -607,6 +610,37 @@ fsp_err_t RM_ZMOD4XXX_TemperatureAndHumiditySet (rm_zmod4xxx_ctrl_t * const p_ap
 
     p_lib->temperature = temperature;
     p_lib->humidity    = humidity;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * @brief  This function is valid only for IAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before Read and DataCalculate.
+ * Check for unexpected reset occurs or getting unvalid ADC data.
+ * Implements @ref rm_zmod4xxx_api_t::deviceErrorCheck
+ *
+ * @retval FSP_SUCCESS                            Successfully results are read.
+ * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
+ * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
+ * @retval FSP_ERR_TIMEOUT          communication is timeout.
+ * @retval FSP_ERR_ABORTED          communication is aborted.
+ **********************************************************************************************************************/
+fsp_err_t RM_ZMOD4XXX_DeviceErrorCheck (rm_zmod4xxx_ctrl_t * const p_api_ctrl)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    /* Set flag */
+    p_ctrl->dev_err_check = true;
+
+    /* Check device error event */
+    err = rm_zmod4xxx_device_error_event_check(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
 }
@@ -692,20 +726,34 @@ void rm_zmod4xxx_comms_i2c_callback (rm_comms_callback_args_t * p_args)
 
             /* Clear flag */
             p_ctrl->status.flag = false;
-
-            if (NULL != p_ctrl->p_comms_callback)
+        }
+        else if ((true == p_ctrl->dev_err_check) && (RM_ZMOD4XXX_EVENT_SUCCESS == zmod4xxx_callback_args.event))
+        {
+            /* Set event */
+            if (RM_ZMOD4XXX_STATUS_ACCESS_CONFLICT_MASK & p_ctrl->buf[0])
             {
-                /* Call callback function */
-                p_ctrl->p_comms_callback(&zmod4xxx_callback_args);
+                zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_DEV_ERR_ACCESS_CONFLICT;
             }
+            else if (RM_ZMOD4XXX_STATUS_POR_EVENT_MASK & p_ctrl->buf[0])
+            {
+                zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_DEV_ERR_POWER_ON_RESET;
+            }
+            else
+            {
+                zmod4xxx_callback_args.event = RM_ZMOD4XXX_EVENT_SUCCESS;
+            }
+
+            /* Clear flag */
+            p_ctrl->dev_err_check = false;
         }
         else
         {
-            if (NULL != p_ctrl->p_comms_callback)
-            {
-                /* Call callback function */
-                p_ctrl->p_comms_callback(&zmod4xxx_callback_args);
-            }
+        }
+
+        if (NULL != p_ctrl->p_comms_callback)
+        {
+            /* Call callback function */
+            p_ctrl->p_comms_callback(&zmod4xxx_callback_args);
         }
     }
 }
@@ -937,12 +985,7 @@ static fsp_err_t rm_zmod4xxx_init_sensor (rm_zmod4xxx_instance_ctrl_t * const p_
     uint8_t   status;
 
     /* Read address 0xB7 */
-    p_ctrl->register_address     = RM_ZMOD4XXX_B7;
-    write_read_params.p_src      = &p_ctrl->register_address;
-    write_read_params.src_bytes  = 1;
-    write_read_params.p_dest     = &p_ctrl->buf[0];
-    write_read_params.dest_bytes = 1;
-    err = rm_zmod4xxx_i2c_read(p_ctrl, write_read_params);
+    err = rm_zmod4xxx_device_error_event_check(p_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Calculate the factor */
@@ -1234,6 +1277,30 @@ static fsp_err_t rm_zmod4xxx_configuration (rm_zmod4xxx_instance_ctrl_t * const 
 
     /* Initialize the sensor for corresponding measurement */
     err = rm_zmod4xxx_init_measurement(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * @brief Check device error event.
+ *
+ * @retval FSP_SUCCESS              successfully configured.
+ * @retval FSP_ERR_TIMEOUT          communication is timeout.
+ * @retval FSP_ERR_ABORTED          communication is aborted.
+ **********************************************************************************************************************/
+static fsp_err_t rm_zmod4xxx_device_error_event_check (rm_zmod4xxx_instance_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    rm_comms_write_read_params_t write_read_params;
+
+    /* Read device error event */
+    p_ctrl->register_address     = RM_ZMOD4XXX_ADDR_DEV_ERR;
+    write_read_params.p_src      = &p_ctrl->register_address;
+    write_read_params.src_bytes  = 1;
+    write_read_params.p_dest     = &p_ctrl->buf[0];
+    write_read_params.dest_bytes = 1;
+    err = rm_zmod4xxx_i2c_read(p_ctrl, write_read_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;

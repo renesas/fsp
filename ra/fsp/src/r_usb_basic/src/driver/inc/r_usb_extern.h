@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -21,10 +21,16 @@
 #define R_USB_EXTERN_H
 
 #include "r_usb_basic_api.h"
+#if defined(USB_CFG_OTG_USE)
+ #include "r_external_irq_api.h"
+#endif                                 /* defined(USB_CFG_OTG_USE) */
 
 #if (BSP_CFG_RTOS != 0)
  #include "r_usb_cstd_rtos.h"
 #endif                                 /* #if (BSP_CFG_RTOS != 0) */
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
 
 /*****************************************************************************
  * Public Variables
@@ -39,17 +45,17 @@ extern uint16_t g_usb_change_device_state[USB_NUM_USBIP];
 
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 extern usb_utr_t * g_p_usb_pstd_pipe[USB_MAX_PIPE_NO + 1U];
-extern uint32_t    g_usb_pstd_data_cnt[USB_MAX_PIPE_NO + 1U]; /* PIPEn Buffer counter */
-extern uint8_t   * gp_usb_pstd_data[USB_MAX_PIPE_NO + 1U];    /* PIPEn Buffer pointer(8bit) */
+extern uint32_t  g_usb_pstd_data_cnt[USB_MAX_PIPE_NO + 1U]; /* PIPEn Buffer counter */
+extern uint8_t * gp_usb_pstd_data[USB_MAX_PIPE_NO + 1U];    /* PIPEn Buffer pointer(8bit) */
 
 #endif  /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 extern usb_utr_t * g_p_usb_hstd_pipe[][USB_MAX_PIPE_NO + 1U];           /* Message pipe */
-extern uint8_t   * gp_usb_hstd_data_ptr[][USB_MAX_PIPE_NO + 1U];        /* PIPEn Buffer pointer(8bit) */
-extern uint32_t    g_usb_hstd_data_cnt[][USB_MAX_PIPE_NO + 1U];         /* PIPEn Buffer counter */
-extern uint32_t    g_usb_hstd_data_cnt_pipe0[];                         /* PIPE0 Control transfer data stage receive size */
-extern uint16_t    g_usb_hstd_hs_enable[];                              /* Hi-speed enable */
+extern uint8_t * gp_usb_hstd_data_ptr[][USB_MAX_PIPE_NO + 1U];          /* PIPEn Buffer pointer(8bit) */
+extern uint32_t  g_usb_hstd_data_cnt[][USB_MAX_PIPE_NO + 1U];           /* PIPEn Buffer counter */
+extern uint32_t  g_usb_hstd_data_cnt_pipe0[];                           /* PIPE0 Control transfer data stage receive size */
+extern uint16_t  g_usb_hstd_hs_enable[];                                /* Hi-speed enable */
 
 /* r_usb_cinthandler_usbip0.c */
 extern usb_utr_t g_usb_cstd_int_msg[][USB_INTMSGMAX];                   /* Interrupt message */
@@ -96,7 +102,7 @@ extern void            (* usb_hstd_bc_func[USB_BC_STATE_MAX][USB_BC_EVENT_MAX])(
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /* r_usb_pdriver.c */
-extern usb_cb_t     g_usb_pstd_stall_cb;                           /* Stall Callback function */
+extern usb_cb_t g_usb_pstd_stall_cb;                               /* Stall Callback function */
 extern uint16_t     g_usb_pstd_config_num;                         /* Configuration Number */
 extern uint16_t     g_usb_pstd_stall_pipe[USB_MAX_PIPE_NO + 1U];   /* Stall Pipe info */
 extern uint16_t     g_usb_pstd_alt_num[];                          /* Alternate */
@@ -178,6 +184,19 @@ extern uint8_t g_drive_search_que_cnt;
 
 #endif                                 /* defined(USB_CFG_HMSC_USE) */
 
+#if defined(USB_CFG_OTG_USE)
+extern uint8_t          g_usb_otg_hnp_process[USB_NUM_USBIP];
+extern uint8_t          g_is_A_device[USB_NUM_USBIP];
+extern uint8_t          g_is_A_cable_detach[USB_NUM_USBIP];
+extern void             (* g_p_otg_callback[USB_NUM_USBIP])(ULONG mode);
+extern volatile uint8_t g_usb_is_otg_attach_interrupt[USB_NUM_USBIP];
+
+extern TX_TIMER g_usb_otg_detach_timer;
+ #if USB_NUM_USBIP == 2
+extern TX_TIMER g_usb2_otg_detach_timer;
+ #endif                                /* USB_NUM_USBIP == 2 */
+#endif                                 /* defined(USB_CFG_OTG_USE) */
+
 /*****************************************************************************
  * Public Functions
  ******************************************************************************/
@@ -194,6 +213,7 @@ void Test_USB_Change_Info(usb_instance_ctrl_t * p_ctrl, uint16_t ifcls, uint16_t
 void Test_USB_Change_Pipe_flag(uint16_t data1, uint16_t data2, uint16_t pipe_no);
 
 fsp_err_t usb_module_start(uint8_t ip_type);
+fsp_err_t usb_module_register_clear(uint8_t usb_ip);
 fsp_err_t usb_module_stop(uint8_t ip_type);
 void      usb_cpu_delay_xms(uint16_t time);
 void      usb_cpu_delay_1us(uint16_t time);
@@ -413,7 +433,7 @@ void usb_hstd_ls_connect_function(usb_utr_t * ptr);
 void usb_hstd_attach_function(void);
 void usb_hstd_ovrcr0function(usb_utr_t * ptr);
 
-void usb_hdriver_init(usb_utr_t * ptr, usb_cfg_t const * const cfg);
+void usb_hdriver_init(usb_utr_t * ptr);
 void usb_class_driver_start(usb_utr_t * ptr);
 
  #if (BSP_CFG_RTOS != 0)
@@ -761,12 +781,25 @@ void usb_host_usbx_registration(usb_utr_t * p_utr);
 void usb_host_usbx_attach_init(uint8_t module_number);
 
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
+
  #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 uint32_t usb_peri_usbx_initialize_complete(void);
 
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI) */
 
+ #if defined(USB_CFG_OTG_USE)
+void usb_otg_irq_callback(external_irq_callback_args_t * p_args);
+void usb2_otg_irq_callback(external_irq_callback_args_t * p_args);
+VOID usb_otg_detach_timer(ULONG args);
+VOID usb2_otg_detach_timer(ULONG args);
+VOID usb_otg_chattering_timer(ULONG args);
+
+ #endif                                /* defined(USB_CFG_OTG_USE) */
+
 #endif                                 /* #if (BSP_CFG_RTOS == 1) */
+
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
 
 #endif                                 /* R_USB_EXTERN_H */
 

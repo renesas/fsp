@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -53,6 +53,10 @@ FSP_HEADER
 #define SCE_ECC_KEY_LENGTH_256          (0)
 #define SCE_ECC_KEY_LENGTH_224          (1)
 #define SCE_ECC_KEY_LENGTH_192          (2)
+
+/* For AES operation. */
+#define SCE_KEYWRAP_AES128              (0U)
+#define SCE_KEYWRAP_AES256              (1U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -173,7 +177,22 @@ fsp_err_t R_SCE_AES256_EncryptedKeyWrap(uint8_t               * initial_vector,
                                         uint8_t               * encrypted_key,
                                         sce_key_update_key_t  * key_update_key,
                                         sce_aes_wrapped_key_t * wrapped_key);
-
+fsp_err_t R_SCE_AES128_RFC3394KeyWrap(sce_aes_wrapped_key_t * master_key,
+                                      uint32_t                target_key_type,
+                                      sce_aes_wrapped_key_t * target_key,
+                                      uint32_t              * rfc3394_wrapped_key);
+fsp_err_t R_SCE_AES256_RFC3394KeyWrap(sce_aes_wrapped_key_t * master_key,
+                                      uint32_t                target_key_type,
+                                      sce_aes_wrapped_key_t * target_key,
+                                      uint32_t              * rfc3394_wrapped_key);
+fsp_err_t R_SCE_AES128_RFC3394KeyUnwrap(sce_aes_wrapped_key_t * master_key,
+                                        uint32_t                target_key_type,
+                                        uint32_t              * rfc3394_wrapped_key,
+                                        sce_aes_wrapped_key_t * target_key);
+fsp_err_t R_SCE_AES256_RFC3394KeyUnwrap(sce_aes_wrapped_key_t * master_key,
+                                        uint32_t                target_key_type,
+                                        uint32_t              * rfc3394_wrapped_key,
+                                        sce_aes_wrapped_key_t * target_key);
 fsp_err_t R_SCE_SHA256HMAC_EncryptedKeyWrap(uint8_t                    * initial_vector,
                                             uint8_t                    * encrypted_key,
                                             sce_key_update_key_t       * key_update_key,

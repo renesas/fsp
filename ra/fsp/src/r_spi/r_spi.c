@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -585,7 +585,7 @@ static void r_spi_hw_config (spi_instance_ctrl_t * p_ctrl)
 #if BSP_FEATURE_SPI_HAS_SSL_LEVEL_KEEP == 1
 
         /* Configure SSL Level Keep Setting. */
-        spcmd0 |= R_SPI0_SPCMD0_SSLKP_Msk;
+        spcmd0 |= (uint32_t) (!p_ctrl->p_cfg->operating_mode << R_SPI0_SPCMD0_SSLKP_Pos);
 #endif
 
         /* Configure 4-Wire Mode Setting. */
@@ -845,26 +845,28 @@ static fsp_err_t r_spi_write_read_common (spi_ctrl_t * const    p_api_ctrl,
         /* Configure the receive DMA instance. */
         if (SPI_BIT_WIDTH_16_BITS < p_ctrl->bit_width)
         {
-            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->size = TRANSFER_SIZE_4_BYTE;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->transfer_settings_word_b.size = TRANSFER_SIZE_4_BYTE;
         }
         else if (SPI_BIT_WIDTH_8_BITS >= p_ctrl->bit_width)
         {
-            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->size = TRANSFER_SIZE_1_BYTE;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->transfer_settings_word_b.size = TRANSFER_SIZE_1_BYTE;
         }
         else
         {
-            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->size = TRANSFER_SIZE_2_BYTE;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->transfer_settings_word_b.size = TRANSFER_SIZE_2_BYTE;
         }
 
-        p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->dest_addr_mode = TRANSFER_ADDR_MODE_INCREMENTED;
-        p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->length         = (uint16_t) length;
-        p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_dest         = p_dest;
+        p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->transfer_settings_word_b.dest_addr_mode =
+            TRANSFER_ADDR_MODE_INCREMENTED;
+        p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->length = (uint16_t) length;
+        p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_dest = p_dest;
 
         if (NULL == p_dest)
         {
             static uint32_t dummy_rx;
-            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->dest_addr_mode = TRANSFER_ADDR_MODE_FIXED;
-            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_dest         = &dummy_rx;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->transfer_settings_word_b.dest_addr_mode =
+                TRANSFER_ADDR_MODE_FIXED;
+            p_ctrl->p_cfg->p_transfer_rx->p_cfg->p_info->p_dest = &dummy_rx;
         }
 
         fsp_err_t err = p_ctrl->p_cfg->p_transfer_rx->p_api->reconfigure(p_ctrl->p_cfg->p_transfer_rx->p_ctrl,
@@ -881,26 +883,28 @@ static fsp_err_t r_spi_write_read_common (spi_ctrl_t * const    p_api_ctrl,
         /* Configure the transmit DMA instance. */
         if (SPI_BIT_WIDTH_16_BITS < p_ctrl->bit_width)
         {
-            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->size = TRANSFER_SIZE_4_BYTE;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->transfer_settings_word_b.size = TRANSFER_SIZE_4_BYTE;
         }
         else if (SPI_BIT_WIDTH_8_BITS >= p_ctrl->bit_width)
         {
-            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->size = TRANSFER_SIZE_1_BYTE;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->transfer_settings_word_b.size = TRANSFER_SIZE_1_BYTE;
         }
         else
         {
-            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->size = TRANSFER_SIZE_2_BYTE;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->transfer_settings_word_b.size = TRANSFER_SIZE_2_BYTE;
         }
 
-        p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->src_addr_mode = TRANSFER_ADDR_MODE_INCREMENTED;
-        p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->length        = (uint16_t) length;
-        p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->p_src         = p_src;
+        p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->transfer_settings_word_b.src_addr_mode =
+            TRANSFER_ADDR_MODE_INCREMENTED;
+        p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->length = (uint16_t) length;
+        p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->p_src  = p_src;
 
         if (NULL == p_src)
         {
             static uint32_t dummy_tx = 0;
-            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->src_addr_mode = TRANSFER_ADDR_MODE_FIXED;
-            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->p_src         = &dummy_tx;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->transfer_settings_word_b.src_addr_mode =
+                TRANSFER_ADDR_MODE_FIXED;
+            p_ctrl->p_cfg->p_transfer_tx->p_cfg->p_info->p_src = &dummy_tx;
         }
 
         fsp_err_t err = p_ctrl->p_cfg->p_transfer_tx->p_api->reconfigure(p_ctrl->p_cfg->p_transfer_tx->p_ctrl,

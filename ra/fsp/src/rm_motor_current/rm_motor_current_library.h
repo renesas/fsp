@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,7 +19,11 @@
  **********************************************************************************************************************/
 
 #ifndef RM_MOTOR_CURRENT_LIBRARY_H
-#define RM_MOTOR_CURRENT_LIBRARY_H
+ #define RM_MOTOR_CURRENT_LIBRARY_H
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 /***********************************************************************************************************************
  * Prototype definition
@@ -36,5 +40,9 @@ void rm_motor_voltage_error_compensation_main(motor_currnt_voltage_compensation_
                                               float                               * p_f4_v_array,
                                               float                               * p_f4_i_array,
                                               float                                 f4_vdc);
+
+ #ifdef __cplusplus
+}
+ #endif
 
 #endif                                 /* RM_MOTOR_CURRENT_LIBRARY_H */

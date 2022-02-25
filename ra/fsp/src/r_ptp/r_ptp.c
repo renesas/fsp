@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -816,7 +816,7 @@ fsp_err_t R_PTP_MessageSend (ptp_ctrl_t * const          p_ctrl,
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* If the current buffer descriptor is active, then there is no more space in the transmit queue. */
-    if (1U == p_desc->status.active)
+    if (1U == p_desc->status.raw_b.active)
     {
         return FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL;
     }
@@ -1960,7 +1960,7 @@ void r_ptp_edmac_callback (edmac_callback_args_t * p_args)
                 FSP_LOG_PRINT("Failed to get receive buffer descriptor.");
             }
 
-            desc_status = p_desc->status.active;
+            desc_status = p_desc->status.raw_b.active;
 
             /* Check if the buffer descriptor is active. */
             if (0U == desc_status)
@@ -2025,7 +2025,7 @@ void r_ptp_edmac_callback (edmac_callback_args_t * p_args)
             status = p_desc->status;
 
             /* If the status is no longer active, then the buffer has been transmitted. */
-            if (0U == status.active)
+            if (0U == status.raw_b.active)
             {
                 ptp_callback_args_t callback_args;
                 callback_args.event = PTP_EVENT_MESSAGE_TRANSMIT_COMPLETE;
@@ -2037,7 +2037,7 @@ void r_ptp_edmac_callback (edmac_callback_args_t * p_args)
             {
                 tx_buffer_complete_index = 0U;
             }
-        } while (tx_buffer_complete_index != tx_buffer_write_index && 0U == status.active);
+        } while (tx_buffer_complete_index != tx_buffer_write_index && 0U == status.raw_b.active);
 
         p_instance_ctrl->tx_buffer_complete_index = tx_buffer_complete_index;
     }

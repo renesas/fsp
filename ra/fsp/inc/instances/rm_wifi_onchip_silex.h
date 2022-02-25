@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -36,7 +36,6 @@
 
 #include "r_ioport_api.h"
 #include "r_uart_api.h"
-#include "r_sci_uart.h"
 
 #if (BSP_CFG_RTOS == 2)                // FreeRTOS
  #include "FreeRTOS.h"
@@ -124,6 +123,10 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 #define WIFI_ONCHIP_SILEX_RETURN_TEXT_LENGTH    (13 + 1) // Length of the tailing buffer used by command parser
+#define SOCKETS_SOCK_DGRAM_RECV                 (3)
+#define SOCKETS_IPPROTO_V4_SILEX                (4)
+#define WIFI_ONCHIP_SILEX_UDP_TRANSMIT_TYPE     (0)
+#define WIFI_ONCHIP_SILEX_UDP_RECEIVE_TYPE      (1)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -260,6 +263,9 @@ fsp_err_t rm_wifi_onchip_silex_avail_socket_get(uint32_t * p_socket_id);
 fsp_err_t rm_wifi_onchip_silex_socket_status_get(uint32_t socket_no, uint32_t * p_socket_status);
 fsp_err_t rm_wifi_onchip_silex_socket_create(uint32_t socket_no, uint32_t type, uint32_t ipversion);
 fsp_err_t rm_wifi_onchip_silex_tcp_connect(uint32_t socket_no, uint32_t ipaddr, uint32_t port);
+fsp_err_t rm_wifi_onchip_silex_udp_connect(uint32_t socket_no, uint32_t ipaddr, uint32_t port, uint32_t type);
+int32_t   rm_wifi_onchip_silex_send(uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
+int32_t   rm_wifi_onchip_silex_recv(uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
 int32_t   rm_wifi_onchip_silex_tcp_send(uint32_t socket_no, const uint8_t * p_data, uint32_t length,
                                         uint32_t timeout_ms);
 int32_t   rm_wifi_onchip_silex_tcp_recv(uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
@@ -274,7 +280,8 @@ void      rm_wifi_onchip_silex_uart_callback(uart_callback_args_t * p_args);
 void rm_wifi_onchip_silex_initialize_packet_buffers(uint8_t * p_current_packet_buffer,
                                                     uint8_t * p_next_packet_buffer,
                                                     uint32_t  packet_buffer_size);
-void      rm_wifi_onchip_silex_set_next_packet_buffer(uint8_t * p_next_packet_buffer, bool move_current_packet_buffer);
+void      rm_wifi_onchip_silex_set_next_packet_buffer(uint8_t * p_next_packet_buffer);
+void      rm_wifi_onchip_silex_move_to_next_packet_buffer(void);
 fsp_err_t rm_wifi_onchip_silex_change_socket(uint32_t socket_no);
 fsp_err_t rm_wifi_onchip_silex_stop_tcp_recv(uint32_t * bytes_received);
 UINT      rm_wifi_onchip_silex_get_rx_start_semaphore(ULONG wait_option);

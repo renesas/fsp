@@ -30,6 +30,9 @@
 #include "mbedtls/ecp.h"
 #include "mbedtls/rsa.h"
 
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
+
 psa_status_t psa_remove_key_data_from_memory(psa_key_slot_t * slot);
 psa_status_t psa_allocate_buffer_to_slot(psa_key_slot_t * slot, size_t buffer_length);
 
@@ -88,11 +91,11 @@ psa_status_t psa_import_ec_private_key_vendor(psa_ecc_family_t       curve,
 int ecp_gen_key_vendor(mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair * key);
 
 psa_status_t psa_import_ecp_key(psa_key_slot_t * slot, const uint8_t * data, size_t data_length);
-psa_status_t psa_export_ecp_key( psa_key_type_t type,
-                                        mbedtls_ecp_keypair *ecp,
-                                        uint8_t *data,
-                                        size_t data_size,
-                                        size_t *data_length );
+psa_status_t psa_export_ecp_key(psa_key_type_t        type,
+                                mbedtls_ecp_keypair * ecp,
+                                uint8_t             * data,
+                                size_t                data_size,
+                                size_t              * data_length);
 
 #endif                                 /* MBEDTLS_ECP_ALT */
 
@@ -119,5 +122,8 @@ psa_status_t psa_rsa_verify(mbedtls_rsa_context * rsa,
                             size_t                signature_length);
 
 #endif                                 /* MBEDTLS_RSA_ALT */
+
+/** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
 
 #endif                                 /* ASYMMETRIC_VENDOR_H */

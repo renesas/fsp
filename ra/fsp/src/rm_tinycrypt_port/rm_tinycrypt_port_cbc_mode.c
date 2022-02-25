@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -103,15 +103,13 @@ int tc_cbc_mode_encrypt (uint8_t             * out,
                 break;
             }
         }
-
-        /* Copy the final iv (final encrypted block) out to be used as iv for future CBC continuation. */
-        memcpy((uint8_t *) iv, (uint8_t *) local_out, TC_AES_BLOCK_SIZE);
     }
     else
     {
+        memcpy((uint8_t *) local_iv, (uint8_t *) iv, TC_AES_BLOCK_SIZE);
         err =
             (HW_SCE_AES_128CbcEncrypt((uint32_t *) &sched->words[0], (uint32_t *) &iv[0], (inlen / 4U),
-                                      (uint32_t *) &in[0], (uint32_t *) &out[TC_AES_BLOCK_SIZE], (uint32_t *) &iv[0]));
+                                      (uint32_t *) &in[0], (uint32_t *) &out[TC_AES_BLOCK_SIZE], &local_iv[0]));
         if (FSP_SUCCESS != err)
         {
             tc_return = TC_CRYPTO_FAIL;

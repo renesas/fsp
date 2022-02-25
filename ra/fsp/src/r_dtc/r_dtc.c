@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -271,15 +271,15 @@ fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
         gp_dtc_vector_table[p_ctrl->irq]->p_dest = p_dest;
     }
 
-    if (TRANSFER_MODE_BLOCK == gp_dtc_vector_table[p_ctrl->irq]->mode)
+    if (TRANSFER_MODE_BLOCK == gp_dtc_vector_table[p_ctrl->irq]->transfer_settings_word_b.mode)
     {
         gp_dtc_vector_table[p_ctrl->irq]->num_blocks = num_transfers;
     }
-    else if (TRANSFER_MODE_NORMAL == gp_dtc_vector_table[p_ctrl->irq]->mode)
+    else if (TRANSFER_MODE_NORMAL == gp_dtc_vector_table[p_ctrl->irq]->transfer_settings_word_b.mode)
     {
         gp_dtc_vector_table[p_ctrl->irq]->length = num_transfers;
     }
-    else                               /* (TRANSFER_MODE_REPEAT == gp_dtc_vector_table[p_ctrl->irq]->mode) */
+    else                               /* (TRANSFER_MODE_REPEAT == gp_dtc_vector_table[p_ctrl->irq]->transfer_settings_word_b.mode) */
     {
         /* Do nothing. */
     }
@@ -393,7 +393,7 @@ fsp_err_t R_DTC_InfoGet (transfer_ctrl_t * const p_api_ctrl, transfer_properties
     p_properties->block_count_max       = 0U;
     p_properties->block_count_remaining = 0U;
 
-    if (TRANSFER_MODE_NORMAL != p_info->mode)
+    if (TRANSFER_MODE_NORMAL != p_info->transfer_settings_word_b.mode)
     {
         /* Repeat and Block Mode */
 
@@ -401,7 +401,7 @@ fsp_err_t R_DTC_InfoGet (transfer_ctrl_t * const p_api_ctrl, transfer_properties
         p_properties->transfer_length_max       = DTC_MAX_REPEAT_TRANSFER_LENGTH;
         p_properties->transfer_length_remaining = p_info->length & DTC_PRV_MASK_CRAL;
 
-        if (TRANSFER_MODE_BLOCK == p_info->mode)
+        if (TRANSFER_MODE_BLOCK == p_info->transfer_settings_word_b.mode)
         {
             p_properties->block_count_max       = DTC_MAX_BLOCK_COUNT;
             p_properties->block_count_remaining = p_info->num_blocks;
@@ -544,12 +544,12 @@ static void r_dtc_block_repeat_initialize (transfer_info_t * p_info)
     do
     {
         /* Update the CRA register to the desired settings */
-        if (TRANSFER_MODE_NORMAL != p_info[i].mode)
+        if (TRANSFER_MODE_NORMAL != p_info[i].transfer_settings_word_b.mode)
         {
             uint8_t CRAL = p_info[i].length & DTC_PRV_MASK_CRAL;
             p_info[i].length = (uint16_t) ((CRAL << DTC_PRV_OFFSET_CRAH) | CRAL);
         }
-    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].chain_mode); /* Increment 'i' after checking. */
+    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].transfer_settings_word_b.chain_mode); /* Increment 'i' after checking. */
 }
 
 #if DTC_CFG_PARAM_CHECKING_ENABLE
@@ -569,15 +569,17 @@ static fsp_err_t r_dtc_length_assert (transfer_info_t * p_info)
     uint32_t i = 0;
     do
     {
-        FSP_ERROR_RETURN(TRANSFER_ADDR_MODE_OFFSET != p_info[i].src_addr_mode, FSP_ERR_UNSUPPORTED);
-        FSP_ERROR_RETURN(TRANSFER_ADDR_MODE_OFFSET != p_info[i].dest_addr_mode, FSP_ERR_UNSUPPORTED);
+        FSP_ERROR_RETURN(TRANSFER_ADDR_MODE_OFFSET != p_info[i].transfer_settings_word_b.src_addr_mode,
+                         FSP_ERR_UNSUPPORTED);
+        FSP_ERROR_RETURN(TRANSFER_ADDR_MODE_OFFSET != p_info[i].transfer_settings_word_b.dest_addr_mode,
+                         FSP_ERR_UNSUPPORTED);
 
-        if (TRANSFER_MODE_NORMAL != p_info[i].mode)
+        if (TRANSFER_MODE_NORMAL != p_info[i].transfer_settings_word_b.mode)
         {
             /* transfer_length_max is the same for Block and repeat mode. */
             FSP_ASSERT(p_info[i].length <= DTC_MAX_REPEAT_TRANSFER_LENGTH);
         }
-    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].chain_mode); /* Increment 'i' after checking. */
+    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].transfer_settings_word_b.chain_mode); /* Increment 'i' after checking. */
 
     return FSP_SUCCESS;
 }
@@ -597,13 +599,17 @@ static fsp_err_t r_dtc_source_destination_parameter_check (transfer_info_t * p_i
     uint32_t i = 0;
     do
     {
-        FSP_ERROR_RETURN(TRANSFER_ADDR_MODE_OFFSET != p_info[i].src_addr_mode, FSP_ERR_UNSUPPORTED);
-        FSP_ERROR_RETURN(TRANSFER_ADDR_MODE_OFFSET != p_info[i].dest_addr_mode, FSP_ERR_UNSUPPORTED);
+        FSP_ERROR_RETURN(TRANSFER_ADDR_MODE_OFFSET != p_info[i].transfer_settings_word_b.src_addr_mode,
+                         FSP_ERR_UNSUPPORTED);
+        FSP_ERROR_RETURN(TRANSFER_ADDR_MODE_OFFSET != p_info[i].transfer_settings_word_b.dest_addr_mode,
+                         FSP_ERR_UNSUPPORTED);
         FSP_ASSERT(NULL != p_info[i].p_src);
         FSP_ASSERT(NULL != p_info[i].p_dest);
-        FSP_ASSERT(0U == ((uint32_t) p_info[i].p_dest & DTC_PRV_MASK_ALIGN_N_BYTES(p_info[i].size)));
-        FSP_ASSERT(0U == ((uint32_t) p_info[i].p_src & DTC_PRV_MASK_ALIGN_N_BYTES(p_info[i].size)));
-    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].chain_mode); /* Increment 'i' after checking. */
+        FSP_ASSERT(0U ==
+                   ((uint32_t) p_info[i].p_dest & DTC_PRV_MASK_ALIGN_N_BYTES(p_info[i].transfer_settings_word_b.size)));
+        FSP_ASSERT(0U ==
+                   ((uint32_t) p_info[i].p_src & DTC_PRV_MASK_ALIGN_N_BYTES(p_info[i].transfer_settings_word_b.size)));
+    } while (TRANSFER_CHAIN_MODE_DISABLED != p_info[i++].transfer_settings_word_b.chain_mode); /* Increment 'i' after checking. */
 
     return FSP_SUCCESS;
 }

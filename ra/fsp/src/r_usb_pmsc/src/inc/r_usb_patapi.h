@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -19,11 +19,15 @@
  **********************************************************************************************************************/
 
 #ifndef R_USB_PATAPI_H
-#define R_USB_PATAPI_H
+ #define R_USB_PATAPI_H
 
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
  ***********************************************************************************************************************/
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -34,7 +38,7 @@
 /*  0: Respond to 0x00 with CSW with setting PIPE to STALL
  *  1: Respond to 0x00 with CSW without setting PIPE to STALL
  */
-#define USB_ATAPI_SHT_RESPONSE    1
+ #define USB_ATAPI_SHT_RESPONSE    1
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -212,6 +216,10 @@ typedef union
 void pmsc_atapi_analyze_cbwcb(uint8_t * cbwcb);
 void pmsc_atapi_command_processing(uint8_t * cbw, uint16_t usb_result, usb_cb_t complete, uint8_t module_number);
 void pmsc_atapi_init(void);
+
+ #ifdef __cplusplus
+}
+ #endif
 
 #endif                                 /* R_USB_PATAPI_H */
 

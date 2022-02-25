@@ -78,6 +78,10 @@
 #include "tz_context.h"
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Define ThreadX basic types for this port.  */
 
 #define VOID                                    void
@@ -672,6 +676,9 @@ extern  CHAR                    _tx_version_id[];
 #endif
 #endif
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

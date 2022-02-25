@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -195,11 +195,11 @@ fsp_err_t RM_MOTOR_SENSORLESS_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t con
     MOTOR_SENSORLESS_ERROR_RETURN(p_extended_cfg->f_lowvoltage_limit >= 0.0F, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    p_cfg->p_motor_speed_instance->p_api->open(p_cfg->p_motor_speed_instance->p_ctrl,
-                                               p_cfg->p_motor_speed_instance->p_cfg);
-
     p_cfg->p_motor_current_instance->p_api->open(p_cfg->p_motor_current_instance->p_ctrl,
                                                  p_cfg->p_motor_current_instance->p_cfg);
+
+    p_cfg->p_motor_speed_instance->p_api->open(p_cfg->p_motor_speed_instance->p_ctrl,
+                                               p_cfg->p_motor_speed_instance->p_cfg);
 
     p_instance_ctrl->p_cfg = p_cfg;
 

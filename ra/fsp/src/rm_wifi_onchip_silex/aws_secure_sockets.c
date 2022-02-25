@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -64,6 +64,7 @@ typedef struct SSOCKETContext
     uint32_t   ulRecvTimeout;
     char     * pcServerCertificate;
     uint32_t   ulServerCertificateLength;
+    int32_t    ulSocketType;
 } SSOCKETContext_t, * SSOCKETContextPtr_t;
 
 static const TickType_t xMaxSemaphoreBlockTime = pdMS_TO_TICKS(60000UL);
@@ -94,10 +95,10 @@ static BaseType_t prvNetworkSend (void * pvContext, const unsigned char * pucDat
     int32_t             ret       = SOCKETS_SOCKET_ERROR;
     SSOCKETContextPtr_t pxContext = (SSOCKETContextPtr_t) pvContext; /*lint !e9087 cast used for portability. */
 
-    ret = rm_wifi_onchip_silex_tcp_send(((uint32_t) pxContext->xSocket),
-                                        (const uint8_t *) pucData,
-                                        (uint32_t) xDataLength,
-                                        pxContext->ulSendTimeout);
+    ret = rm_wifi_onchip_silex_send(((uint32_t) pxContext->xSocket),
+                                    (const uint8_t *) pucData,
+                                    (uint32_t) xDataLength,
+                                    pxContext->ulSendTimeout);
 
     return ret;
 }
@@ -109,17 +110,11 @@ static BaseType_t prvNetworkRecv (void * pvContext, unsigned char * pucReceiveBu
 {
     BaseType_t          receive_byte = 0;
     SSOCKETContextPtr_t pxContext    = (SSOCKETContextPtr_t) pvContext; /*lint !e9087 cast used for portability. */
-    uint32_t            socket_num   = ((uint32_t) pxContext->xSocket);
 
-    if (socket_num >= WIFI_ONCHIP_SILEX_CFG_NUM_CREATEABLE_SOCKETS)
-    {
-        return SOCKETS_SOCKET_ERROR;
-    }
-
-    receive_byte = rm_wifi_onchip_silex_tcp_recv(socket_num,
-                                                 (uint8_t *) pucReceiveBuffer,
-                                                 (uint32_t) xReceiveLength,
-                                                 pxContext->ulRecvTimeout);
+    receive_byte = rm_wifi_onchip_silex_recv((uint32_t) pxContext->xSocket,
+                                             (uint8_t *) pucReceiveBuffer,
+                                             (uint32_t) xReceiveLength,
+                                             pxContext->ulRecvTimeout);
 
     return receive_byte;
 }
@@ -151,11 +146,11 @@ Socket_t SOCKETS_Socket (int32_t lDomain, int32_t lType, int32_t lProtocol)
 
     /* Ensure that only supported values are supplied. */
     configASSERT(lDomain == SOCKETS_AF_INET);
-    configASSERT(lType == SOCKETS_SOCK_STREAM);
-    configASSERT(lProtocol == SOCKETS_IPPROTO_TCP);
+    configASSERT(lType == SOCKETS_SOCK_STREAM || lType == SOCKETS_SOCK_DGRAM);
+    configASSERT(lProtocol == SOCKETS_IPPROTO_TCP || lProtocol == SOCKETS_IPPROTO_UDP);
 
     /* Ensure that only supported values are supplied. */
-    if ((lDomain != SOCKETS_AF_INET) || (lType != SOCKETS_SOCK_STREAM) || (lProtocol != SOCKETS_IPPROTO_TCP))
+    if ((lDomain != SOCKETS_AF_INET) || ((lType != SOCKETS_SOCK_STREAM) && (lType != SOCKETS_SOCK_DGRAM)))
     {
         return SOCKETS_INVALID_SOCKET;
     }
@@ -179,7 +174,7 @@ Socket_t SOCKETS_Socket (int32_t lDomain, int32_t lType, int32_t lProtocol)
             memset(pxContext, 0, sizeof(SSOCKETContext_t));
 
             /* Create the wrapped socket. */
-            ret = (int32_t) rm_wifi_onchip_silex_socket_create(socketId, 0, 4);
+            ret = (int32_t) rm_wifi_onchip_silex_socket_create(socketId, (uint32_t) lType, SOCKETS_IPPROTO_V4_SILEX);
             if (FSP_SUCCESS != ret)
             {
                 lStatus = SOCKETS_SOCKET_ERROR;
@@ -189,6 +184,7 @@ Socket_t SOCKETS_Socket (int32_t lDomain, int32_t lType, int32_t lProtocol)
                 pxContext->xSocket       = (void *) (socketId);
                 pxContext->ulRecvTimeout = socketsconfigDEFAULT_RECV_TIMEOUT;
                 pxContext->ulSendTimeout = socketsconfigDEFAULT_SEND_TIMEOUT;
+                pxContext->ulSocketType  = lType;
             }
         }
 
@@ -243,10 +239,22 @@ int32_t SOCKETS_Connect (Socket_t xSocket, SocketsSockaddr_t * pxAddress, Sockle
 
     if ((pxContext->xSocket != SOCKETS_INVALID_SOCKET) && (pxAddress != NULL))
     {
-        ret =
-            (int32_t) rm_wifi_onchip_silex_tcp_connect(((uint32_t) pxContext->xSocket),
-                                                       SOCKETS_ntohl(pxAddress->ulAddress),
-                                                       SOCKETS_ntohs(pxAddress->usPort));
+        if (pxContext->ulSocketType == SOCKETS_SOCK_STREAM)
+        {
+            ret =
+                (int32_t) rm_wifi_onchip_silex_tcp_connect(((uint32_t) pxContext->xSocket),
+                                                           SOCKETS_ntohl(pxAddress->ulAddress),
+                                                           SOCKETS_ntohs(pxAddress->usPort));
+        }
+        else
+        {
+            /* Two sockets need to be generated here. One for transmit and one for receive for UDP */
+            ret =
+                (int32_t) rm_wifi_onchip_silex_udp_connect(((uint32_t) pxContext->xSocket),
+                                                           SOCKETS_ntohl(pxAddress->ulAddress),
+                                                           SOCKETS_ntohs(pxAddress->usPort),
+                                                           WIFI_ONCHIP_SILEX_UDP_TRANSMIT_TYPE);
+        }
 
         if (0 != ret)
         {

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -376,6 +376,12 @@ typedef TaskHandle_t usb_hdl_t;
 typedef void         (usb_callback_t)(usb_event_info_t *, usb_hdl_t, usb_onoff_t);
 #endif                                 /* #if (BSP_CFG_RTOS == 2) */
 
+#if (BSP_CFG_RTOS != 1)
+typedef uint32_t ULONG;
+#endif
+
+typedef void (usb_otg_callback_t)(ULONG);
+
 /** USB configuration. */
 typedef struct st_usb_cfg
 {
@@ -680,6 +686,23 @@ typedef struct st_usb_api
      * @param[out] setup            Setup type to get.
      */
     fsp_err_t (* setupGet)(usb_ctrl_t * const p_api_ctrl, usb_setup_t * setup);
+
+    /** This API sets the callback function for OTG.
+     * @par Implemented as
+     * - @ref R_USB_OtgCallbackSet()
+     *
+     * @param[in]  p_api_ctrl       USB control structure.
+     * @param[in]  p_callback       Pointer to the callback function for OTG.
+     */
+    fsp_err_t (* otgCallbackSet)(usb_ctrl_t * const p_api_ctrl, usb_otg_callback_t * p_callback);
+
+    /** This API starts SRP processing for OTG.
+     * @par Implemented as
+     * - @ref R_USB_OtgSRP()
+     *
+     * @param[in]  p_api_ctrl       USB control structure.
+     */
+    fsp_err_t (* otgSRP)(usb_ctrl_t * const p_api_ctrl);
 } usb_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

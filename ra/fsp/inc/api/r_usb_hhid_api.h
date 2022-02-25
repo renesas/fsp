@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -40,6 +40,9 @@
  ******************************************************************************/
 #include "r_usb_hhid_cfg.h"
 #include "r_usb_basic_api.h"
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
 
 /******************************************************************************
  * Macro definitions
@@ -107,6 +110,10 @@ typedef struct st_usb_hhid_instance
     usb_cfg_t const      * p_cfg;      ///< Pointer to the configuration structure for this instance
     usb_hhid_api_t const * p_api;      ///< Pointer to the API structure for this instance
 } usb_hhid_instance_t;
+
+/** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
+
 #endif                                 /* USB_HHID_API_H */
 
 /*******************************************************************************************************************//**

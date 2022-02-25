@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -57,8 +57,11 @@
 #endif
 
 /** FSP Header and Footer definitions */
-#define FSP_HEADER             FSP_CPP_HEADER
-#define FSP_FOOTER             FSP_CPP_FOOTER
+#define FSP_HEADER    FSP_CPP_HEADER
+#define FSP_FOOTER    FSP_CPP_FOOTER
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
 
 /** Macro to be used when argument to function is ignored since function call is NSC and the parameter is statically
  *  defined on the Secure side. */
@@ -153,6 +156,9 @@ typedef enum e_fsp_err
     /* Start of CAC Specific */
     FSP_ERR_INVALID_CAC_REF_CLOCK = 600,                    ///< Measured clock rate < reference clock rate
 
+    /* Start of IIRFA Specific */
+    FSP_ERR_INVALID_RESULT = 700,                           ///< The result of one or more calculations was +/- infinity.
+
     /* Start of GLCD Specific */
     FSP_ERR_CLOCK_GENERATION           = 1000,              ///< Clock cannot be specified as system clock
     FSP_ERR_INVALID_TIMING_SETTING     = 1001,              ///< Invalid timing parameter
@@ -186,6 +192,10 @@ typedef enum e_fsp_err
 
     /* Start of touch panel framework specific */
     FSP_ERR_CALIBRATE_FAILED = 1200,                        ///< Calibration failed
+
+    /* Start of IIRFA specific */
+    FSP_ERR_IIRFA_ECC_1BIT = 1300,                          ///< 1-bit ECC error detected
+    FSP_ERR_IIRFA_ECC_2BIT = 1301,                          ///< 2-bit ECC error detected
 
     /* Start of IP specific */
     FSP_ERR_IP_HARDWARE_NOT_PRESENT = 1400,                 ///< Requested IP does not exist on this device
@@ -360,5 +370,8 @@ typedef enum e_fsp_err
 /***********************************************************************************************************************
  * Function prototypes
  **********************************************************************************************************************/
+
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
 
 #endif

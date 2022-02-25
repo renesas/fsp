@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -33,6 +33,9 @@
 
 #if (BSP_CFG_RTOS == 1)
  #include "../driver/inc/r_usb_cstd_rtos.h"
+ #if defined(USB_CFG_OTG_USE)
+  #include "ux_api.h"
+ #endif                                /* defined(USB_CFG_OTG_USE) */
 #endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
@@ -74,21 +77,23 @@
  #endif                                /* USB_CFG_DTC == USB_CFG_ENABLE */
 #endif                                 /* USB_CFG_DMA == USB_CFG_ENABLE */
 
-#if USB_CFG_MODE == USB_CFG_HOST
- #if defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PHID_USE) || defined(USB_CFG_PMSC_USE) || defined(USB_CFG_PVND_USE)
-  #error  Can not enable these definitions(USB_CFG_PCDC_USE/USB_CFG_PHID_USE/USB_CFG_PMSC_USE/USB_CFG_PVND_USE) \
+#if !defined(USB_CFG_OTG_USE)
+ #if USB_CFG_MODE == USB_CFG_HOST
+  #if defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PHID_USE) || defined(USB_CFG_PMSC_USE) || defined(USB_CFG_PVND_USE)
+   #error  Can not enable these definitions(USB_CFG_PCDC_USE/USB_CFG_PHID_USE/USB_CFG_PMSC_USE/USB_CFG_PVND_USE) \
     when setting USB_MODE_HOST to USB_CFG_MODE in r_usb_basic_cfg.h.
 
- #endif                                /* defined(USB_CFG_PCDC_USE || USB_CFG_PHID_USE || USB_CFG_PMSC_USE || USB_CFG_PVND_USE) */
-#endif                                 /* USB_CFG_MODE == USB_MODE_HOST */
+  #endif                               /* defined(USB_CFG_PCDC_USE || USB_CFG_PHID_USE || USB_CFG_PMSC_USE || USB_CFG_PVND_USE) */
+ #endif                                /* USB_CFG_MODE == USB_MODE_HOST */
 
-#if USB_CFG_MODE == USB_CFG_PERI
- #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || defined(USB_CFG_HVND_USE)
-  #error  Can not enable these definitions(USB_CFG_HCDC_USE/USB_CFG_HHID_USE/USB_CFG_HMSC_USE/USB_CFG_HVND_USE) \
+ #if USB_CFG_MODE == USB_CFG_PERI
+  #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || defined(USB_CFG_HVND_USE)
+   #error  Can not enable these definitions(USB_CFG_HCDC_USE/USB_CFG_HHID_USE/USB_CFG_HMSC_USE/USB_CFG_HVND_USE) \
     when setting USB_MODE_PERI to USB_CFG_MODE in r_usb_basic_cfg.h.
 
- #endif                                /* defined(USB_CFG_HCDC_USE || USB_CFG_HHID_USE || USB_CFG_HMSC_USE || USB_CFG_HVND_USE) */
-#endif                                 /* USB_CFG_MODE == USB_MODE_PERI */
+  #endif                               /* defined(USB_CFG_HCDC_USE || USB_CFG_HHID_USE || USB_CFG_HMSC_USE || USB_CFG_HVND_USE) */
+ #endif                                /* USB_CFG_MODE == USB_MODE_PERI */
+#endif                                 /* !defined(USB_CFG_OTG_USE) */
 
 #if ((!defined(BSP_MCU_GROUP_RA6M3)) && (!defined(BSP_MCU_GROUP_RA6M5)))
  #if USB_CFG_ELECTRICAL == USB_CFG_ENABLE
@@ -112,6 +117,13 @@ void usbfs_d1fifo_handler(void);
 void usbhs_interrupt_handler(void);
 void usbhs_d0fifo_handler(void);
 void usbhs_d1fifo_handler(void);
+
+#if defined(USB_CFG_OTG_USE)
+static usb_utr_t g_usb_irq_otg_msg;
+static usb_utr_t g_usb_otg_detach_msg;
+static uint16_t  g_usb_otg_frmnum_prev        = 0;
+volatile uint8_t g_usb_otg_chattering_counter = 0;
+#endif                                 /* defined(USB_CFG_OTG_USE) */
 
 /******************************************************************************
  * Renesas Abstracted RSK functions
@@ -155,19 +167,35 @@ fsp_err_t usb_module_start (uint8_t ip_type)
  ******************************************************************************/
 
 /**************************************************************************//**
- * @brief This function stops USB module.
+ * @brief This function clear USB module register.
  *
  * @retval FSP_SUCCESS           Success.
- * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
- * @retval FSP_ERR_USB_NOT_OPEN  USB module is not open.
- * @retval FSP_ERR_USB_PARAMETER USB IP type is wrong.
  ******************************************************************************/
-fsp_err_t usb_module_stop (uint8_t ip_type)
+fsp_err_t usb_module_register_clear (uint8_t usb_ip)
 {
-    if (USB_IP0 == ip_type)
+    if (USB_IP0 == usb_ip)
     {
-        FSP_ERROR_RETURN(1 != R_MSTP->MSTPCRB_b.MSTPB11, FSP_ERR_USB_FAILED)
-
+#if defined(USB_CFG_OTG_USE)
+        USB_M0->DVSTCTR0    = (uint16_t) (USB_M0->DVSTCTR0 & (USB_EXICEN | USB_VBUSEN));
+        USB_M0->DCPCTR      = USB_SQSET;
+        USB_M0->PIPE_CTR[0] = 0;
+        USB_M0->PIPE_CTR[1] = 0;
+        USB_M0->PIPE_CTR[2] = 0;
+        USB_M0->PIPE_CTR[3] = 0;
+        USB_M0->PIPE_CTR[4] = 0;
+        USB_M0->PIPE_CTR[5] = 0;
+        USB_M0->PIPE_CTR[6] = 0;
+        USB_M0->PIPE_CTR[7] = 0;
+        USB_M0->PIPE_CTR[8] = 0;
+        USB_M0->BRDYENB     = 0;
+        USB_M0->NRDYENB     = 0;
+        USB_M0->BEMPENB     = 0;
+        USB_M0->INTENB0     = 0;
+        USB_M0->INTENB1     = 0;
+        USB_M0->BRDYSTS     = 0;
+        USB_M0->NRDYSTS     = 0;
+        USB_M0->BEMPSTS     = 0;
+#else                                  /* defined(USB_CFG_OTG_USE) */
         USB_M0->DVSTCTR0    = 0;
         USB_M0->DCPCTR      = USB_SQSET;
         USB_M0->PIPE_CTR[0] = 0;
@@ -191,17 +219,31 @@ fsp_err_t usb_module_stop (uint8_t ip_type)
         USB_M0->BRDYSTS     = 0;
         USB_M0->NRDYSTS     = 0;
         USB_M0->BEMPSTS     = 0;
-
-        FSP_ERROR_RETURN(0 == R_MSTP->MSTPCRB_b.MSTPB11, FSP_ERR_USB_NOT_OPEN)
-
-        /* Disable power for USB0 */
-        R_BSP_MODULE_STOP(FSP_IP_USBFS, 0);
+#endif                                 /* defined(USB_CFG_OTG_USE) */
     }
-    else if (USB_IP1 == ip_type)
+    else
     {
-#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
-        FSP_ERROR_RETURN(1 != R_MSTP->MSTPCRB_b.MSTPB12, FSP_ERR_USB_FAILED)
-
+#if defined(USB_CFG_OTG_USE)
+        USB_M1->DVSTCTR0    = (uint16_t) (USB_M0->DVSTCTR0 & (USB_EXICEN | USB_VBUSEN));
+        USB_M1->DCPCTR      = USB_SQSET;
+        USB_M1->PIPE_CTR[0] = 0;
+        USB_M1->PIPE_CTR[1] = 0;
+        USB_M1->PIPE_CTR[2] = 0;
+        USB_M1->PIPE_CTR[3] = 0;
+        USB_M1->PIPE_CTR[4] = 0;
+        USB_M1->PIPE_CTR[5] = 0;
+        USB_M1->PIPE_CTR[6] = 0;
+        USB_M1->PIPE_CTR[7] = 0;
+        USB_M1->PIPE_CTR[8] = 0;
+        USB_M1->BRDYENB     = 0;
+        USB_M1->NRDYENB     = 0;
+        USB_M1->BEMPENB     = 0;
+        USB_M1->INTENB0     = 0;
+        USB_M1->INTENB1     = 0;
+        USB_M1->BRDYSTS     = 0;
+        USB_M1->NRDYSTS     = 0;
+        USB_M1->BEMPSTS     = 0;
+#else                                  /* defined(USB_CFG_OTG_USE) */
         USB_M1->DVSTCTR0    = 0;
         USB_M1->DCPCTR      = USB_SQSET;
         USB_M1->PIPE_CTR[0] = 0;
@@ -225,7 +267,36 @@ fsp_err_t usb_module_stop (uint8_t ip_type)
         USB_M1->BRDYSTS     = 0;
         USB_M1->NRDYSTS     = 0;
         USB_M1->BEMPSTS     = 0;
+#endif                                 /* defined(USB_CFG_OTG_USE) */
+    }
 
+    return FSP_SUCCESS;
+}
+
+/**************************************************************************//**
+ * @brief This function stops USB module.
+ *
+ * @retval FSP_SUCCESS           Success.
+ * @retval FSP_ERR_USB_FAILED    The function could not be completed successfully.
+ * @retval FSP_ERR_USB_NOT_OPEN  USB module is not open.
+ * @retval FSP_ERR_USB_PARAMETER USB IP type is wrong.
+ ******************************************************************************/
+fsp_err_t usb_module_stop (uint8_t ip_type)
+{
+    usb_module_register_clear(ip_type);
+
+    if (USB_IP0 == ip_type)
+    {
+        FSP_ERROR_RETURN(1 != R_MSTP->MSTPCRB_b.MSTPB11, FSP_ERR_USB_FAILED)
+        FSP_ERROR_RETURN(0 == R_MSTP->MSTPCRB_b.MSTPB11, FSP_ERR_USB_NOT_OPEN)
+
+        /* Disable power for USB0 */
+        R_BSP_MODULE_STOP(FSP_IP_USBFS, 0);
+    }
+    else if (USB_IP1 == ip_type)
+    {
+#if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+        FSP_ERROR_RETURN(1 != R_MSTP->MSTPCRB_b.MSTPB12, FSP_ERR_USB_FAILED)
         FSP_ERROR_RETURN(0 == R_MSTP->MSTPCRB_b.MSTPB12, FSP_ERR_USB_NOT_OPEN)
 
         /* Enable power for USBA */
@@ -255,6 +326,7 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
     if (USB_IP0 == ip_type)
     {
 #if (!defined(BSP_MCU_GROUP_RA4M1)) && (!defined(BSP_MCU_GROUP_RA2A1))
+
         /* Deep standby USB monitor register
          * b0      SRPC0    USB0 single end control
          * b1      PRUE0    DP Pull-Up Resistor control
@@ -301,6 +373,7 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
     if (ip_type == USB_IP1)
     {
 #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+
         /* Interrupt enable register
          * b0 IEN0 Interrupt enable bit
          * b1 IEN1 Interrupt enable bit
@@ -389,9 +462,10 @@ void usb_cpu_int_enable (void)
      * b6 IEN6 Interrupt enable bit
      * b7 IEN7 Interrupt enable bit
      */
-    R_BSP_IrqCfgEnable(host_cfg->irq, host_cfg->ipl, host_cfg);     /* USBI enable */
+    R_BSP_IrqCfgEnable(host_cfg->irq, host_cfg->ipl, host_cfg); /* USBI enable */
 
  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+
     /* Interrupt enable register (USB1 USBIO enable)
      * b0 IEN0 Interrupt enable bit
      * b1 IEN1 Interrupt enable bit
@@ -431,6 +505,7 @@ void usb_cpu_int_disable (void)
     R_BSP_IrqDisable(host_cfg->irq);   /* USBI enable */
 
  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+
     /* Interrupt enable register (USB1 USBIO disable)
      * b0 IEN0 Interrupt enable bit
      * b1 IEN1 Interrupt enable bit
@@ -481,6 +556,249 @@ uint16_t usb_chattaring (uint16_t * syssts)
  ******************************************************************************/
 
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+
+#if (BSP_CFG_RTOS == 1)
+ #if defined(USB_CFG_OTG_USE)
+
+/*******************************************************************************
+ * Function Name: usb_otg_irq_callback
+ * Description  : IRQ Interrupt service for attaching and detaching OTG A-device of USB_IP0
+ * Arguments    : none
+ * Return Value : none
+ *******************************************************************************/
+void usb_otg_irq_callback (external_irq_callback_args_t * p_args)
+{
+    usb_er_t    err;
+    usb_utr_t * p_utr;
+    uint16_t    syssts;
+
+    (void) p_args;
+
+    p_utr                        = &g_usb_irq_otg_msg;
+    p_utr->msghead               = (usb_mh_t) USB_NULL;
+    g_usb_otg_chattering_counter = 0;
+    while (g_usb_otg_chattering_counter != 5)
+    {
+        ;
+    }
+
+    p_utr->ip = USB_IP0;
+    syssts    = hw_usb_read_syssts(p_utr);
+    if (USB_IDMON != (syssts & USB_IDMON))
+    {
+        /* For attaching */
+        if (USB_MODE_PERI == g_usb_usbmode[0])
+        {
+            p_utr->msginfo = USB_MSG_HCD_INT;
+            p_utr->keyword = USB_INT_OTG_HOST_INIT;
+            err            = USB_SND_MSG(USB_HCD_MBX, (usb_msg_t *) p_utr);
+        }
+        else
+        {
+            return;
+        }
+    }
+    else
+    {
+        /* For Detaching */
+        /* Don't set "USB_NO" to "g_is_A_device[]" */
+        tx_timer_deactivate(&g_usb_otg_detach_timer);
+        g_is_A_cable_detach[0] = USB_YES;
+        _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_IDLE;
+        (*g_p_otg_callback[0])(UX_OTG_MODE_IDLE);
+        if (USB_MODE_PERI == g_usb_usbmode[0])
+        {
+            p_utr->msginfo = USB_MSG_PCD_INT;
+            p_utr->keyword = USB_INT_VBINT;
+            err            = USB_SND_MSG(USB_PCD_MBX, (usb_msg_t *) p_utr);
+        }
+        else
+        {
+            p_utr->keyword = USB_INT_DTCH0;
+            err            = USB_SND_MSG(USB_HCD_MBX, (usb_msg_t *) p_utr);
+        }
+    }
+
+    if (USB_OK != err)
+    {
+        USB_PRINTF1("### IRQ Interrupt for OTG snd_msg error (%ld)\n", err);
+    }
+}
+
+  #if USB_NUM_USBIP == 2
+
+/*******************************************************************************
+ * Function Name: usb_otg_irq_callback
+ * Description  : IRQ Interrupt service for attaching and detaching OTG A-device of USB_IP1
+ * Arguments    : none
+ * Return Value : none
+ *******************************************************************************/
+void usb2_otg_irq_callback (external_irq_callback_args_t * p_args)
+{
+    usb_er_t    err;
+    usb_utr_t * p_utr;
+    uint16_t    syssts;
+
+    (void) p_args;
+
+    p_utr          = &g_usb_irq_otg_msg;
+    p_utr->msghead = (usb_mh_t) USB_NULL;
+
+    g_usb_otg_chattering_counter = 0;
+    while (g_usb_otg_chattering_counter != 5)
+    {
+        ;
+    }
+
+    p_utr->ip = USB_IP1;
+    syssts    = hw_usb_read_syssts(p_utr);
+    if (USB_IDMON != (syssts & USB_IDMON))
+    {
+        /* For attaching */
+        if (USB_MODE_PERI == g_usb_usbmode[1])
+        {
+            p_utr->msginfo = USB_MSG_HCD_INT;
+            p_utr->keyword = USB_INT_OTG_HOST_INIT;
+            err            = USB_SND_MSG(USB_HCD_MBX, (usb_msg_t *) p_utr);
+        }
+        else
+        {
+            return;
+        }
+    }
+    else
+    {
+        /* For Detaching */
+        /* Don't set "USB_NO" to "g_is_A_device[]" */
+        tx_timer_deactivate(&g_usb_otg_detach_timer);
+        g_is_A_cable_detach[1] = USB_YES;
+        _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_IDLE;
+        (*g_p_otg_callback[1])(UX_OTG_MODE_IDLE);
+        if (USB_MODE_PERI == g_usb_usbmode[1])
+        {
+            p_utr->msginfo = USB_MSG_PCD_INT;
+            p_utr->keyword = USB_INT_VBINT;
+            err            = USB_SND_MSG(USB_PCD_MBX, (usb_msg_t *) p_utr);
+        }
+        else
+        {
+            p_utr->keyword = USB_INT_DTCH0;
+            err            = USB_SND_MSG(USB_HCD_MBX, (usb_msg_t *) p_utr);
+        }
+    }
+
+    if (USB_OK != err)
+    {
+        USB_PRINTF1("### IRQ Interrupt for OTG snd_msg error (%ld)\n", err);
+    }
+}
+
+  #endif                               /* USB_NUM_USBIP == 2 */
+
+/*******************************************************************************
+ * Function Name: usb_otg_detach_timer (5ms interval)
+ * Description  : The timer to detect that USB B-cable is detached when A device is Peripheral mode for USB IP0
+ * Arguments    : args  : No use
+ * Return Value : none
+ *******************************************************************************/
+VOID usb_otg_detach_timer (ULONG args)
+{
+    uint16_t    frmnum;
+    usb_utr_t * p_utr;
+    usb_er_t    err;
+
+    (void) args;
+    p_utr     = &g_usb_otg_detach_msg;
+    p_utr->ip = USB_IP0;
+
+    if (USB_MODE_PERI == g_usb_usbmode[0])
+    {
+        frmnum  = hw_usb_read_frmnum(p_utr);
+        frmnum &= USB_FRNM;
+
+        if ((g_usb_otg_frmnum_prev == frmnum) && (0 != frmnum))
+        {
+            g_usb_otg_frmnum_prev = 0;
+
+            /* Detect the B-cable detaching */
+            p_utr->ip      = USB_IP0;
+            p_utr->msghead = (usb_mh_t) USB_NULL;
+            p_utr->msginfo = USB_MSG_PCD_INT;
+
+            p_utr->keyword = USB_INT_VBINT;
+            err            = USB_SND_MSG(USB_PCD_MBX, (usb_msg_t *) p_utr);
+            if (USB_OK != err)
+            {
+                USB_PRINTF1("### IRQ Interrupt for OTG isnd_msg error (%ld)\n", err);
+            }
+        }
+        else
+        {
+            g_usb_otg_frmnum_prev = frmnum;
+        }
+    }
+}
+
+/*******************************************************************************
+ * Function Name: usb_otg_chattering_timer (5ms interval)
+ * Description  : The timer to detect that USB B-cable is detached when A device is Peripheral mode for USB IP0
+ * Arguments    : args  : No use
+ * Return Value : none
+ *******************************************************************************/
+VOID usb_otg_chattering_timer (ULONG args)
+{
+    (void) args;
+    g_usb_otg_chattering_counter++;
+}
+
+  #if USB_NUM_USBIP == 2
+
+/*******************************************************************************
+ * Function Name: usb2_otg_detach_timer (5ms interval)
+ * Description  : The timer to detect that USB B-cable is detached when A device is Peripheral mode for USB IP1
+ * Arguments    : args  : No use
+ * Return Value : none
+ *******************************************************************************/
+VOID usb2_otg_detach_timer (ULONG args)
+{
+    uint16_t    frmnum;
+    usb_utr_t * p_utr;
+    usb_er_t    err;
+
+    (void) args;
+    p_utr = &g_usb_otg_detach_msg;
+
+    p_utr->ip = USB_IP1;
+    if (USB_MODE_PERI == g_usb_usbmode[1])
+    {
+        frmnum  = hw_usb_read_frmnum(p_utr);
+        frmnum &= USB_FRNM;
+
+        if ((g_usb_otg_frmnum_prev == frmnum) && (0 != frmnum))
+        {
+            /* Detect the B-cable detaching */
+            p_utr->ip      = USB_IP1;
+            p_utr->msghead = (usb_mh_t) USB_NULL;
+            p_utr->msginfo = USB_MSG_PCD_INT;
+
+            p_utr->keyword = USB_INT_VBINT;
+            err            = USB_SND_MSG(USB_PCD_MBX, (usb_msg_t *) p_utr);
+            if (USB_OK != err)
+            {
+                USB_PRINTF1("### IRQ Interrupt for OTG isnd_msg error (%ld)\n", err);
+            }
+        }
+        else
+        {
+            g_usb_otg_frmnum_prev = frmnum;
+        }
+    }
+}
+
+  #endif                               /* USB_NUM_USBIP == 2 */
+
+ #endif                                /* defined(USB_CFG_OTG_USE) */
+#endif                                 /* if (BSP_CFG_RTOS == 1) */
 
 /*******************************************************************************
  * Function Name: usbfs_usbi_isr
@@ -644,10 +962,17 @@ bool usb_check_use_usba_module (usb_utr_t * ptr)
     return ret_code;
 }                                      /* End of function usb_check_use_usba_module */
 
+#if defined(USB_CFG_OTG_USE)
+IRQn_Type g_otg_usb_fs_irq;
+#endif /* defined(USB_CFG_OTG_USE) */
+
 void usbfs_interrupt_handler (void)
 {
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
+#if defined(USB_CFG_OTG_USE)
+    g_otg_usb_fs_irq = irq;
+#endif                                 /* defined(USB_CFG_OTG_USE) */
 
     usbfs_usbi_isr();
 }

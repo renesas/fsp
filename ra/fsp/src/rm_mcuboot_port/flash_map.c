@@ -54,13 +54,38 @@ extern spi_flash_cfg_t const * const gp_mcuboot_qspi_cfg;
 #endif
 
 #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
+
+/* This macro is used to index into gp_flush_buffer_lookup[] lookup table to determine the appropriate flush buffer to use.
+ * The logic works based on the MSB values of FLASH_DEVICE_INTERNAL_FLASH and FLASH_DEVICE_QSPI being 0 and 1 respectively.
+ */
+ #define RM_MCUBOOT_PORT_FLUSH_LOOKUP(x)    (x >> 7U)
+
 uint32_t   g_rm_mcuboot_port_flash_write_ram[RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN / sizeof(uint32_t)];
 uint32_t * p_write_buffer  = g_rm_mcuboot_port_flash_write_ram;
 uint32_t   g_current_block = UINT32_MAX;
+
+static rm_mcuboot_port_flush_buffer_t g_internal_flash_flush_buffer =
+{
+    .g_current_block = UINT32_MAX,
+};
+
  #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
   #define RM_MCUBOOT_PORT_QSPI_FLUSH_BUFFER_SIZE_WORDS    (256U)
 uint32_t g_rm_mcuboot_port_qspi_write_ram[RM_MCUBOOT_PORT_QSPI_FLUSH_BUFFER_SIZE_WORDS];
+
+static rm_mcuboot_port_flush_buffer_t g_qspi_flush_buffer =
+{
+    .g_current_block = UINT32_MAX,
+};
  #endif
+
+static rm_mcuboot_port_flush_buffer_t * gp_flush_buffer_lookup[2] =
+{
+    &g_internal_flash_flush_buffer,
+ #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
+    &g_qspi_flush_buffer
+ #endif
+};
 #endif
 
 /* Flash device name must be specified by target */
@@ -165,10 +190,16 @@ int flash_area_open (uint8_t id, const struct flash_area ** area)
             return -1;
         }
 
+#if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
+        g_internal_flash_flush_buffer.p_flush_buffer = g_rm_mcuboot_port_flash_write_ram;
+#endif
         g_internal_flash_driver_open = true;
     }
 
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
+ #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
+    g_qspi_flush_buffer.p_flush_buffer = g_rm_mcuboot_port_qspi_write_ram;
+ #endif
 
     /* The QSPI driver is expected to have been opened by the user and set up for DirectWrite mode. */
     g_external_flash_driver_open = true;
@@ -216,12 +247,13 @@ int flash_area_read (const struct flash_area * area, uint32_t off, void * dst, u
 int flash_on_chip_flush (const struct flash_area * area)
 {
     int err = -1;
+    rm_mcuboot_port_flush_buffer_t * p_area_flush_buffer =
+        gp_flush_buffer_lookup[RM_MCUBOOT_PORT_FLUSH_LOOKUP(area->fa_device_id)];
 
     /* If the write buffer has data, write it. */
-    if (UINT32_MAX != g_current_block)
+    if (UINT32_MAX != p_area_flush_buffer->g_current_block)
     {
-        BOOT_LOG_DBG("write flush ram buffer, addr=%#x, len=%#x",
-                     (unsigned int) g_current_block,
+        BOOT_LOG_DBG("write flush ram buffer, addr=%#x, len=%#x", (unsigned int) p_area_flush_buffer->g_current_block,
                      (unsigned int) RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN);
 
         FSP_CRITICAL_SECTION_DEFINE;
@@ -229,28 +261,29 @@ int flash_on_chip_flush (const struct flash_area * area)
         if (FLASH_DEVICE_INTERNAL_FLASH == area->fa_device_id)
         {
             err = (int) R_FLASH_Write(gp_mcuboot_flash_ctrl,
-                                      (uint32_t) &g_rm_mcuboot_port_flash_write_ram[0],
-                                      g_current_block,
+                                      (uint32_t) p_area_flush_buffer->p_flush_buffer,
+                                      p_area_flush_buffer->g_current_block,
                                       RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN);
         }
         else
         {
  #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_QSPI
-            BOOT_LOG_DBG("write flush qspi buffer, addr=%#x, len=%#x", (unsigned int) g_current_block,
+            BOOT_LOG_DBG("write flush qspi buffer, addr=%#x, len=%#x",
+                         (unsigned int) p_area_flush_buffer->g_current_block,
                          (unsigned int) (qspi_instance_ctrl_t *) gp_mcuboot_qspi_ctrl->p_cfg->page_size_bytes);
             err = (int) get_flash_status();
             if (0 == err)
             {
                 err =
                     (int) R_QSPI_Write(gp_mcuboot_qspi_ctrl,
-                                       (uint8_t *) &g_rm_mcuboot_port_qspi_write_ram[0],
-                                       (uint8_t *) g_current_block,
+                                       (uint8_t *) p_area_flush_buffer->p_flush_buffer,
+                                       (uint8_t *) p_area_flush_buffer->g_current_block,
                                        (uint32_t) (qspi_instance_ctrl_t *) gp_mcuboot_qspi_ctrl->p_cfg->page_size_bytes);
             }
  #endif
         }
 
-        g_current_block = UINT32_MAX;
+        p_area_flush_buffer->g_current_block = UINT32_MAX;
         FSP_CRITICAL_SECTION_EXIT;
 
         return err;
@@ -267,6 +300,8 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
     int err = 0U;
 
 #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
+    rm_mcuboot_port_flush_buffer_t * p_area_flush_buffer =
+        gp_flush_buffer_lookup[RM_MCUBOOT_PORT_FLUSH_LOOKUP(area->fa_device_id)];
     uint32_t write_align_size = RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN;
 
     if (FLASH_DEVICE_INTERNAL_FLASH == area->fa_device_id)
@@ -291,13 +326,13 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
         uint32_t aligned_address =
             (uint32_t) ((area->fa_off + off) & (uint32_t) ~(write_align_size - 1));
         uint32_t offset = (area->fa_off + off) % write_align_size;
-        if (g_current_block != aligned_address)
+        if (p_area_flush_buffer->g_current_block != aligned_address)
         {
             /* If the requested write block is different from the data in the buffer, flush the buffer before
              * buffering a new write block. */
             err = flash_on_chip_flush(area);
             memset(p_write_buffer, UINT8_MAX, write_align_size);
-            g_current_block = aligned_address;
+            p_area_flush_buffer->g_current_block = aligned_address;
         }
         else
         {
@@ -632,8 +667,14 @@ int flash_area_id_from_image_slot (int slot)
 
 /* Assign region addresses to pointers so that AC6 includes symbols that can be used to determine the
  * start addresses of Secure, Non-secure and Non-secure Callable regions. */
-uint32_t const __bl_FLASH_IMAGE_START BSP_PLACE_IN_SECTION(".bl_boundary.bl_flash_image_start") = 0;
-uint32_t const __bl_FLASH_IMAGE_END   BSP_PLACE_IN_SECTION(".bl_boundary.bl_flash_image_end")   = 0;
+uint32_t const __bl_FLASH_IMAGE_START BSP_PLACE_IN_SECTION(".bl_boundary.bl_flash_image_start") =
+    0;
+uint32_t const __bl_FLASH_IMAGE_END BSP_PLACE_IN_SECTION(".bl_boundary.bl_flash_image_end") =
+    0;
+uint32_t const __bl_XIP_SECONDARY_FLASH_IMAGE_START BSP_PLACE_IN_SECTION(
+    ".bl_boundary.bl_xip_secondary_flash_image_start") = 0;
+uint32_t const __bl_XIP_SECONDARY_FLASH_IMAGE_END BSP_PLACE_IN_SECTION(
+    ".bl_boundary.bl_xip_secondary_flash_image_end") = 0;
 
  #if RM_MCUBOOT_PORT_CFG_NS_PARTITION_SIZE > 0
 

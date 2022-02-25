@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -29,11 +29,11 @@ extern const struct bootutil_key bootutil_keys_wrapped[];
 
 /* NUM_ECC_BYTES is the size of the P256 private key.
  * 2 x NUM_ECC_BYTES is the size of the public key and the signature. */
- #define NUM_ECC_BYTES                                  (32U)
+ #define NUM_ECC_BYTES                              (32U)
 
 /* The size of the array designated to program the wrapped keys from RFP should
  * aligned to the flash write size. */
- #define MCUBOOT_SCE9_ALIGNED_ECC_KEY_SIZE_BYTES        (128U)
+ #define MCUBOOT_SCE9_ALIGNED_ECC_KEY_SIZE_BYTES    (128U)
 
 #endif
 

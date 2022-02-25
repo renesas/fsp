@@ -24,30 +24,34 @@
  *  This file is part of Mbed TLS (https://tls.mbed.org)
  */
 #ifndef MBEDTLS_ECP_ALT_H
-#define MBEDTLS_ECP_ALT_H
+ #define MBEDTLS_ECP_ALT_H
 
-#include "mbedtls/bignum.h"
-#include "mbedtls/md.h"
-#include "hw_sce_ecc_private.h"
+ #include "mbedtls/bignum.h"
+ #include "mbedtls/md.h"
+ #include "hw_sce_ecc_private.h"
 
-#if defined(MBEDTLS_ECP_ALT)
+ #ifdef __cplusplus
+extern "C" {
+ #endif
+
+ #if defined(MBEDTLS_ECP_ALT)
 
 // Alternate implementation
 //
-#define RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(bits) ((bits >> 7) & (1U))
-#define RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT (0U)
-#define RM_PSA_CRYPTO_ECC_KEY_WRAPPED (1U)
+  #define RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(bits)    ((bits >> 7) & (1U))
+  #define RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT    (0U)
+  #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED      (1U)
 
- #define PSA_ECC_BYTES_VENDOR_RAW(bit_length)                                                                      \
+  #define PSA_ECC_BYTES_VENDOR_RAW(bit_length)                                                                     \
     ((bit_length) ==                                                                                               \
      PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_LENGTH_BITS) : \
      (bit_length) ==                                                                                               \
      PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS) ? PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_LENGTH_BITS) : \
      0)
- #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED_SIZE_BYTES(bit_length)                                                                      \
-    ((bit_length) ==                                                                                               \
+  #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED_SIZE_BYTES(bit_length)                                  \
+    ((bit_length) ==                                                                            \
      ECC_256_PRIVATE_KEY_LENGTH_BITS ? PSA_BITS_TO_BYTES(ECC_256_PRIVATE_KEY_HRK_LENGTH_BITS) : \
-     (bit_length) ==                                                                                               \
+     (bit_length) ==                                                                            \
      ECC_384_PRIVATE_KEY_LENGTH_BITS ? PSA_BITS_TO_BYTES(ECC_384_PRIVATE_KEY_HRK_LENGTH_BITS) : \
      0)
 
@@ -93,27 +97,27 @@
  */
 typedef struct mbedtls_ecp_group
 {
-    mbedtls_ecp_group_id id;                    /*!< An internal group identifier. */
-    mbedtls_mpi P;                              /*!< The prime modulus of the base field. */
-    mbedtls_mpi A;                              /*!< For Short Weierstrass: \p A in the equation. For
+    mbedtls_ecp_group_id id;                     /*!< An internal group identifier. */
+    mbedtls_mpi          P;                      /*!< The prime modulus of the base field. */
+    mbedtls_mpi          A;                      /*!< For Short Weierstrass: \p A in the equation. For
                                                   * Montgomery curves: <code>(A + 2) / 4</code>. */
-    mbedtls_mpi B;                              /*!< For Short Weierstrass: \p B in the equation.
+    mbedtls_mpi B;                               /*!< For Short Weierstrass: \p B in the equation.
                                                   * For Montgomery curves: unused. */
-    mbedtls_ecp_point G;                        /*!< The generator of the subgroup used. */
-    mbedtls_mpi N;                              /*!< The order of \p G. */
-    size_t pbits;                               /*!< The number of bits in \p P.*/
-    size_t nbits;                               /*!< For Short Weierstrass: The number of bits in \p P.
+    mbedtls_ecp_point G;                         /*!< The generator of the subgroup used. */
+    mbedtls_mpi       N;                         /*!< The order of \p G. */
+    size_t            pbits;                     /*!< The number of bits in \p P.*/
+    size_t            nbits;                     /*!< For Short Weierstrass: The number of bits in \p P.
                                                   * For Montgomery curves: the number of bits in the
                                                   * private keys. */
-    unsigned int h;                             /*!< \internal 1 if the constants are static. */
-    int (*modp)(mbedtls_mpi *);                 /*!< The function for fast pseudo-reduction
+    unsigned int h;                              /*!< \internal 1 if the constants are static. */
+    int (* modp)(mbedtls_mpi *);                 /*!< The function for fast pseudo-reduction
                                                   * mod \p P (see above).*/
-    int (*t_pre)(mbedtls_ecp_point *, void *);  /*!< Unused. */
-    int (*t_post)(mbedtls_ecp_point *, void *); /*!< Unused. */
-    void *t_data;                               /*!< Unused. */
-    mbedtls_ecp_point *T;                       /*!< Pre-computed points for ecp_mul_comb(). */
-    size_t T_size;                              /*!< The number of pre-computed points. */
-    void *vendor_ctx;                           /*!< Vendor defined context. */
+    int (* t_pre)(mbedtls_ecp_point *, void *);  /*!< Unused. */
+    int (* t_post)(mbedtls_ecp_point *, void *); /*!< Unused. */
+    void              * t_data;                  /*!< Unused. */
+    mbedtls_ecp_point * T;                       /*!< Pre-computed points for ecp_mul_comb(). */
+    size_t              T_size;                  /*!< The number of pre-computed points. */
+    void              * vendor_ctx;              /*!< Vendor defined context. */
 } mbedtls_ecp_group;
 
 /**
@@ -124,18 +128,18 @@ typedef struct mbedtls_ecp_group
  * \{
  */
 
-#if !defined(MBEDTLS_ECP_MAX_BITS)
+  #if !defined(MBEDTLS_ECP_MAX_BITS)
 
 /**
  * The maximum size of the groups, that is, of \c N and \c P.
  */
-#define MBEDTLS_ECP_MAX_BITS 521 /**< The maximum size of groups, in bits. */
-#endif
+   #define MBEDTLS_ECP_MAX_BITS       521 /**< The maximum size of groups, in bits. */
+  #endif
 
-#define MBEDTLS_ECP_MAX_BYTES ((MBEDTLS_ECP_MAX_BITS + 7) / 8)
-#define MBEDTLS_ECP_MAX_PT_LEN (2 * MBEDTLS_ECP_MAX_BYTES + 1)
+  #define MBEDTLS_ECP_MAX_BYTES       ((MBEDTLS_ECP_MAX_BITS + 7) / 8)
+  #define MBEDTLS_ECP_MAX_PT_LEN      (2 * MBEDTLS_ECP_MAX_BYTES + 1)
 
-#if !defined(MBEDTLS_ECP_WINDOW_SIZE)
+  #if !defined(MBEDTLS_ECP_WINDOW_SIZE)
 
 /*
  * Maximum "window" size used for point multiplication.
@@ -156,10 +160,10 @@ typedef struct mbedtls_ecp_group
  *      224       475     475     453     398     342
  *      192       640     640     633     587     476
  */
-#define MBEDTLS_ECP_WINDOW_SIZE 6 /**< The maximum window size used. */
-#endif                            /* MBEDTLS_ECP_WINDOW_SIZE */
+   #define MBEDTLS_ECP_WINDOW_SIZE    6 /**< The maximum window size used. */
+  #endif                                /* MBEDTLS_ECP_WINDOW_SIZE */
 
-#if !defined(MBEDTLS_ECP_FIXED_POINT_OPTIM)
+  #if !defined(MBEDTLS_ECP_FIXED_POINT_OPTIM)
 
 /*
  * Trade memory for speed on fixed-point multiplication.
@@ -172,8 +176,13 @@ typedef struct mbedtls_ecp_group
  *
  * Change this value to 0 to reduce peak memory usage.
  */
-#define MBEDTLS_ECP_FIXED_POINT_OPTIM 1 /**< Enable fixed-point speed-up. */
-#endif                                  /* MBEDTLS_ECP_FIXED_POINT_OPTIM */
+   #define MBEDTLS_ECP_FIXED_POINT_OPTIM    1 /**< Enable fixed-point speed-up. */
+  #endif                                      /* MBEDTLS_ECP_FIXED_POINT_OPTIM */
 
-#endif /* MBEDTLS_ECP_ALT */
-#endif /* MBEDTLS_ECP_ALT_H */
+ #endif /* MBEDTLS_ECP_ALT */
+
+ #ifdef __cplusplus
+}
+ #endif
+
+#endif                                 /* MBEDTLS_ECP_ALT_H */

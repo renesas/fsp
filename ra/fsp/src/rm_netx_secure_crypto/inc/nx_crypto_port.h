@@ -9,7 +9,6 @@
 /*                                                                        */
 /**************************************************************************/
 
-
 /**************************************************************************/
 /**************************************************************************/
 /**                                                                       */
@@ -19,7 +18,6 @@
 /**                                                                       */
 /**************************************************************************/
 /**************************************************************************/
-
 
 /**************************************************************************/
 /*                                                                        */
@@ -45,49 +43,56 @@
 /**************************************************************************/
 
 #ifndef _NX_CRYPTO_PORT_H_
-#define _NX_CRYPTO_PORT_H_
-#include <stdlib.h>
-#include <string.h>
-#include "rm_netx_secure_crypto_cfg.h"
-#ifdef NX_CRYPTO_STANDALONE_ENABLE
+ #define _NX_CRYPTO_PORT_H_
+ #include <stdlib.h>
+ #include <string.h>
+ #include "rm_netx_secure_crypto_cfg.h"
+ #ifdef NX_CRYPTO_STANDALONE_ENABLE
 
-#if defined ( __ICCARM__ )
-#include <intrinsics.h>
-#endif
+  #if defined(__ICCARM__)
+   #include <intrinsics.h>
+  #endif
 
+  #ifdef __cplusplus
+extern "C" {
+  #endif
 
 /* Default to little endian, since this is what most ARM targets are.  */
-#define NX_CRYPTO_LITTLE_ENDIAN 1
+  #define NX_CRYPTO_LITTLE_ENDIAN    1
 
 /* Define macros that swap the endian for little endian ports.  */
-#if NX_CRYPTO_LITTLE_ENDIAN
-  #if defined(__GNUC__)               /* GCC compiler */
-    #define NX_CRYPTO_CHANGE_ULONG_ENDIAN(arg)       (arg) = __builtin_bswap32(arg)
-    #define NX_CRYPTO_CHANGE_USHORT_ENDIAN(arg)      (arg) = __builtin_bswap16(arg)
-  #elif defined(__ICCARM__)             /* IAR compiler */
-    #define NX_CRYPTO_CHANGE_ULONG_ENDIAN(arg)       (arg) = __REV(arg)
-    #define NX_CRYPTO_CHANGE_USHORT_ENDIAN(arg)      (arg) = __REV16(arg)
-  #elif defined(__ARMCC_VERSION)        /* AC6 compiler */
-    #define NX_CRYPTO_CHANGE_ULONG_ENDIAN(arg)        (arg) = (unsigned int)(__rev(arg))
-    #define NX_CRYPTO_CHANGE_USHORT_ENDIAN(arg)       (arg) = (unsigned short)(__rev(arg) >> 16)
+  #if NX_CRYPTO_LITTLE_ENDIAN
+   #if defined(__GNUC__)               /* GCC compiler */
+    #define NX_CRYPTO_CHANGE_ULONG_ENDIAN(arg)     (arg) = __builtin_bswap32(arg)
+    #define NX_CRYPTO_CHANGE_USHORT_ENDIAN(arg)    (arg) = __builtin_bswap16(arg)
+   #elif defined(__ICCARM__)           /* IAR compiler */
+    #define NX_CRYPTO_CHANGE_ULONG_ENDIAN(arg)     (arg) = __REV(arg)
+    #define NX_CRYPTO_CHANGE_USHORT_ENDIAN(arg)    (arg) = __REV16(arg)
+   #elif defined(__ARMCC_VERSION)      /* AC6 compiler */
+    #define NX_CRYPTO_CHANGE_ULONG_ENDIAN(arg)     (arg) = (unsigned int) (__rev(arg))
+    #define NX_CRYPTO_CHANGE_USHORT_ENDIAN(arg)    (arg) = (unsigned short) (__rev(arg) >> 16)
+   #endif
+  #else
+   #define NX_CRYPTO_CHANGE_ULONG_ENDIAN(a)
+   #define NX_CRYPTO_CHANGE_USHORT_ENDIAN(a)
   #endif
-#else
-#define NX_CRYPTO_CHANGE_ULONG_ENDIAN(a)
-#define NX_CRYPTO_CHANGE_USHORT_ENDIAN(a)
-#endif
 
-#ifndef VOID 
-#define VOID                                      void
-typedef char                                      CHAR;
-typedef unsigned char                             UCHAR;
-typedef int                                       INT;
-typedef unsigned int                              UINT;
-typedef long                                      LONG;
-typedef unsigned long                             ULONG;
-typedef short                                     SHORT;
-typedef unsigned short                            USHORT;
-#endif
+  #ifndef VOID
+   #define VOID    void
+typedef char           CHAR;
+typedef unsigned char  UCHAR;
+typedef int            INT;
+typedef unsigned int   UINT;
+typedef long           LONG;
+typedef unsigned long  ULONG;
+typedef short          SHORT;
+typedef unsigned short USHORT;
+  #endif
 
-#endif /* NX_CRYPTO_STANDALONE_ENABLE */
+ #endif                                /* NX_CRYPTO_STANDALONE_ENABLE */
 
-#endif /* _NX_CRYPTO_PORT_H_ */
+ #ifdef __cplusplus
+}
+ #endif
+
+#endif                                 /* _NX_CRYPTO_PORT_H_ */

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -171,10 +171,10 @@ fsp_err_t R_EDMAC_DescriptorUpdate (edmac_instance_ctrl_t * const p_ctrl,
 
     if (EDMAC_DESC_RECEIVE == type)
     {
-        p_ctrl->p_cfg->p_rx_descriptors[index].p_buffer      = p_buffer;
-        p_ctrl->p_cfg->p_rx_descriptors[index].buffer_size   = length;
-        p_ctrl->p_cfg->p_rx_descriptors[index].status.raw   &= EDMAC_TDLE;
-        p_ctrl->p_cfg->p_rx_descriptors[index].status.active = 1U;
+        p_ctrl->p_cfg->p_rx_descriptors[index].p_buffer            = p_buffer;
+        p_ctrl->p_cfg->p_rx_descriptors[index].buffer_size         = length;
+        p_ctrl->p_cfg->p_rx_descriptors[index].status.raw         &= EDMAC_TDLE;
+        p_ctrl->p_cfg->p_rx_descriptors[index].status.raw_b.active = 1U;
 
         /* Re-enable the receive request register in case it was cleared. */
         if (0U == p_ctrl->p_reg->EDRRR)

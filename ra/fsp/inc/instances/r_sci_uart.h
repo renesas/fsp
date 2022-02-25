@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -120,6 +120,20 @@ typedef enum e_sci_uart_noise_cancellation
     SCI_UART_NOISE_CANCELLATION_ENABLE  = 0x1, ///< Enable noise cancellation
 } sci_uart_noise_cancellation_t;
 
+/** RS-485 Enable/Disable. */
+typedef enum e_sci_uart_rs485_enable
+{
+    SCI_UART_RS485_DISABLE = 0,        ///< RS-485 disabled.
+    SCI_UART_RS485_ENABLE  = 1,        ///< RS-485 enabled.
+} sci_uart_rs485_enable_t;
+
+/** The polarity of the RS-485 DE signal. */
+typedef enum e_sci_uart_rs485_de_polarity
+{
+    SCI_UART_RS485_DE_POLARITY_HIGH = 0, ///< The DE signal is high when a write transfer is in progress.
+    SCI_UART_RS485_DE_POLARITY_LOW  = 1, ///< The DE signal is low when a write transfer is in progress.
+} sci_uart_rs485_de_polarity_t;
+
 /** Register settings to acheive a desired baud rate and modulation duty. */
 typedef struct st_baud_setting_t
 {
@@ -127,6 +141,7 @@ typedef struct st_baud_setting_t
     {
         uint8_t semr_baudrate_bits;
 
+        /* DEPRECATED: Anonymous structure. */
         struct
         {
             uint8_t       : 2;
@@ -137,11 +152,30 @@ typedef struct st_baud_setting_t
             uint8_t bgdm  : 1;         ///< Baud Rate Generator Double-Speed Mode Select
             uint8_t       : 1;
         };
+
+        struct
+        {
+            uint8_t       : 2;
+            uint8_t brme  : 1;         ///< Bit Rate Modulation Enable
+            uint8_t abcse : 1;         ///< Asynchronous Mode Extended Base Clock Select 1
+            uint8_t abcs  : 1;         ///< Asynchronous Mode Base Clock Select
+            uint8_t       : 1;
+            uint8_t bgdm  : 1;         ///< Baud Rate Generator Double-Speed Mode Select
+            uint8_t       : 1;
+        } semr_baudrate_bits_b;
     };
     uint8_t cks : 2;                   ///< CKS  value to get divisor (CKS = N)
     uint8_t brr;                       ///< Bit Rate Register setting
     uint8_t mddr;                      ///< Modulation Duty Register setting
 } baud_setting_t;
+
+/** Configuration settings for controlling the DE signal for RS-485. */
+typedef struct st_sci_uart_rs485_setting
+{
+    sci_uart_rs485_enable_t      enable;         ///< Enable the DE signal.
+    sci_uart_rs485_de_polarity_t polarity;       ///< DE signal polarity.
+    bsp_io_port_pin_t            de_control_pin; ///< UART Driver Enable pin.
+} sci_uart_rs485_setting_t;
 
 /** UART on SCI device Configuration */
 typedef struct st_sci_uart_extended_cfg
@@ -153,6 +187,7 @@ typedef struct st_sci_uart_extended_cfg
     sci_uart_rx_fifo_trigger_t    rx_fifo_trigger;  ///< Receive FIFO trigger level, unused if channel has no FIFO or if DTC is used.
     bsp_io_port_pin_t             flow_control_pin; ///< UART Driver Enable pin
     sci_uart_flow_control_t       flow_control;     ///< CTS/RTS function of the SSn pin
+    sci_uart_rs485_setting_t      rs485_setting;    ///< RS-485 settings.
 } sci_uart_extended_cfg_t;
 
 /**********************************************************************************************************************

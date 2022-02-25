@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -22,6 +22,10 @@
  * Includes
  **********************************************************************************************************************/
 #include "tx_cmsis.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -111,3 +115,7 @@
  **********************************************************************************************************************/
 
 void * _tx_port_wait_thread_ready(void);
+
+#ifdef __cplusplus
+}
+#endif

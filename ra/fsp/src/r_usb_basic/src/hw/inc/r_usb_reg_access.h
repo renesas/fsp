@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -16,56 +16,61 @@
  * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
  * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/ #ifndef HW_USB_REG_ACCESS_H
-#define HW_USB_REG_ACCESS_H
+ **********************************************************************************************************************/
+#ifndef HW_USB_REG_ACCESS_H
+ #define HW_USB_REG_ACCESS_H
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 /******************************************************************************
  * Macro definitions
  ******************************************************************************/
-#define USB_BUFSIZE_BIT     (10U)
-#define USB_SUSPEND_MODE    (1U)
-#define USB_NORMAL_MODE     (0)
+ #define USB_BUFSIZE_BIT     (10U)
+ #define USB_SUSPEND_MODE    (1U)
+ #define USB_NORMAL_MODE     (0)
 
-#define USB0_CFIFO8         (USB_M0->CFIFOLL)
-#define USB0_D0FIFO8        (USB_M0->D0FIFOLL)
-#define USB0_D1FIFO8        (USB_M0->D1FIFOLL)
-#define USB0_CFIFO16        (USB_M0->CFIFOL)
-#define USB0_D0FIFO16       (USB_M0->D0FIFOL)
-#define USB0_D1FIFO16       (USB_M0->D1FIFOL)
+ #define USB0_CFIFO8         (USB_M0->CFIFOLL)
+ #define USB0_D0FIFO8        (USB_M0->D0FIFOLL)
+ #define USB0_D1FIFO8        (USB_M0->D1FIFOLL)
+ #define USB0_CFIFO16        (USB_M0->CFIFOL)
+ #define USB0_D0FIFO16       (USB_M0->D0FIFOL)
+ #define USB0_D1FIFO16       (USB_M0->D1FIFOL)
 
-#if USB_CFG_ENDIAN == USB_CFG_LITTLE
+ #if USB_CFG_ENDIAN == USB_CFG_LITTLE
 
- #define USB1_CFIFO8        (USB_M1->CFIFOHH)
- #define USB1_D0FIFO8       (USB_M1->D0FIFOHH)
- #define USB1_D1FIFO8       (USB_M1->D1FIFOHH)
- #define USB1_CFIFO16       (USB_M1->CFIFOH)
- #define USB1_D0FIFO16      (USB_M1->D0FIFOH)
- #define USB1_D1FIFO16      (USB_M1->D1FIFOH)
+  #define USB1_CFIFO8        (USB_M1->CFIFOHH)
+  #define USB1_D0FIFO8       (USB_M1->D0FIFOHH)
+  #define USB1_D1FIFO8       (USB_M1->D1FIFOHH)
+  #define USB1_CFIFO16       (USB_M1->CFIFOH)
+  #define USB1_D0FIFO16      (USB_M1->D0FIFOH)
+  #define USB1_D1FIFO16      (USB_M1->D1FIFOH)
 
-#endif                                 /* USB_CFG_ENDIAN == USB_CFG_LITTLE */
+ #endif                                /* USB_CFG_ENDIAN == USB_CFG_LITTLE */
 
-#if USB_CFG_ENDIAN == USB_CFG_BIG
- #define USB1_CFIFO8        (USB_M1->CFIFOLL)
- #define USB1_D0FIFO8       (USB_M1->D0FIFOLL)
- #define USB1_D1FIFO8       (USB_M1->D1FIFOLL)
- #define USB1_CFIFO16       (USB_M1->CFIFOL)
- #define USB1_D0FIFO16      (USB_M1->D0FIFOL)
- #define USB1_D1FIFO16      (USB_M1->D1FIFOL)
+ #if USB_CFG_ENDIAN == USB_CFG_BIG
+  #define USB1_CFIFO8        (USB_M1->CFIFOLL)
+  #define USB1_D0FIFO8       (USB_M1->D0FIFOLL)
+  #define USB1_D1FIFO8       (USB_M1->D1FIFOLL)
+  #define USB1_CFIFO16       (USB_M1->CFIFOL)
+  #define USB1_D0FIFO16      (USB_M1->D0FIFOL)
+  #define USB1_D1FIFO16      (USB_M1->D1FIFOL)
 
-#endif                                 /* USB_CFG_ENDIAN == USB_CFG_BIG */
+ #endif                                /* USB_CFG_ENDIAN == USB_CFG_BIG */
 
-#define USB1_CFIFO32        (USB_M1->CFIFO)
-#define USB1_D0FIFO32       (USB_M1->D0FIFO)
-#define USB1_D1FIFO32       (USB_M1->D1FIFO)
+ #define USB1_CFIFO32        (USB_M1->CFIFO)
+ #define USB1_D0FIFO32       (USB_M1->D0FIFO)
+ #define USB1_D1FIFO32       (USB_M1->D1FIFO)
 
-#if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA4M1))
- #define USB_LDO_REGULATOR_MODULE
-#endif                                 /* (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE)) */
+ #if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA4M1))
+  #define USB_LDO_REGULATOR_MODULE
+ #endif                                /* (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE)) */
 
 /****************/
 /*  INITIARIZE  */
 /****************/
-void hw_usb_hmodule_init(usb_ctrl_t * p_api_ctrl);
+void hw_usb_hmodule_init(uint8_t usb_ip);
 void hw_usb_pmodule_init(uint8_t usb_ip);
 
 /************/
@@ -78,18 +83,19 @@ void     hw_usb_set_hse(usb_utr_t * ptr);
 void     hw_usb_clear_hse(usb_utr_t * ptr);
 void     hw_usb_set_dcfm(usb_utr_t * p_utr);
 void     hw_usb_clear_dcfm(usb_utr_t * ptr);
+void     hw_usb_set_drpd(usb_utr_t * ptr);
 void     hw_usb_clear_drpd(usb_utr_t * ptr);
 void     hw_usb_set_usbe(usb_utr_t * ptr);
 void     hw_usb_clear_usbe(usb_utr_t * ptr);
 
-#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+ #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 void hw_usb_set_cnen(uint8_t usb_ip);
 void hw_usb_pset_dprpu(uint8_t usb_ip);
 void hw_usb_pclear_dprpu(uint8_t usb_ip);
 void hw_usb_pcontrol_dprpu(uint8_t usb_ip, uint8_t state);
 void hw_usb_pcontrol_dcpctr_pid(uint8_t usb_ip, uint16_t data);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /************/
 /*  BUSWAIT */
@@ -110,20 +116,23 @@ void     hw_usb_rmw_dvstctr(usb_utr_t * ptr, uint16_t data, uint16_t bitptn);
 void     hw_usb_clear_dvstctr(usb_utr_t * ptr, uint16_t bitptn);
 void     hw_usb_set_vbout(usb_utr_t * ptr);
 void     hw_usb_clear_vbout(usb_utr_t * ptr);
+void     hw_usb_set_hnpbtoa(usb_utr_t * p_utr);
+void     hw_usb_clear_hnpbtoa(usb_utr_t * p_utr);
 
-#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 void hw_usb_hset_rwupe(usb_utr_t * ptr);
 void hw_usb_hclear_rwupe(usb_utr_t * ptr);
 void hw_usb_hset_resume(usb_utr_t * ptr);
 void hw_usb_hclear_resume(usb_utr_t * ptr);
 void hw_usb_hset_uact(usb_utr_t * ptr);
 void hw_usb_hclear_uact(usb_utr_t * ptr);
+void hw_usb_hmodule_otg_init(uint8_t usb_ip);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
-#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+ #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+ #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 void hw_usb_pset_wkup(uint8_t usb_ip);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /**************/
 /*  TESTMODE  */
@@ -167,11 +176,11 @@ void     hw_usb_set_intenb(usb_utr_t * ptr, uint16_t data);
 void     hw_usb_clear_enb_vbse(usb_utr_t * ptr);
 void     hw_usb_clear_enb_sofe(usb_utr_t * ptr);
 
-#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+ #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 void hw_usb_pset_enb_rsme(uint8_t usb_ip);
 void hw_usb_pclear_enb_rsme(uint8_t usb_ip);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /*************/
 /*  BRDYENB  */
@@ -199,10 +208,10 @@ void hw_usb_clear_bempenb(usb_utr_t * ptr, uint16_t pipeno);
 /*************/
 void hw_usb_set_sofcfg(usb_utr_t * ptr, uint16_t data);
 
-#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 void hw_usb_hset_trnensel(usb_utr_t * ptr);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
 /*************/
 /*  INTSTS0  */
@@ -210,12 +219,12 @@ void hw_usb_hset_trnensel(usb_utr_t * ptr);
 void hw_usb_write_intsts(usb_utr_t * ptr, uint16_t data);
 void hw_usb_clear_sts_sofr(usb_utr_t * ptr);
 
-#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+ #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 uint16_t hw_usb_read_intsts(uint8_t usb_ip);
 void     hw_usb_pclear_sts_resm(uint8_t usb_ip);
 void     hw_usb_pclear_sts_valid(uint8_t usb_ip);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /************/
 /* BRDYSTS  */
@@ -241,7 +250,7 @@ void hw_usb_clear_status_bemp(usb_utr_t * ptr, uint16_t pipeno);
 /************/
 uint16_t hw_usb_read_frmnum(usb_utr_t * ptr);
 
-#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
 /************/
 /* USBREQ   */
@@ -263,9 +272,9 @@ void hw_usb_hset_usbindx(usb_utr_t * ptr, uint16_t data);
 /************/
 void hw_usb_hset_usbleng(usb_utr_t * ptr, uint16_t data);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
-#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+ #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
 /************/
 /* USBREQ   */
@@ -287,7 +296,7 @@ uint16_t hw_usb_read_usbindx(uint8_t usb_ip);
 /************/
 uint16_t hw_usb_read_usbleng(uint8_t usb_ip);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /************/
 /* DCPCFG   */
@@ -304,16 +313,16 @@ void     hw_usb_write_dcpmxps(usb_utr_t * ptr, uint16_t data);
 /************/
 /* DCPCTR   */
 /************/
-#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 void hw_usb_hwrite_dcpctr(usb_utr_t * ptr, uint16_t data);
 void hw_usb_hset_sureq(usb_utr_t * ptr);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
-#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
+ #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+ #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 uint16_t hw_usb_read_dcpctr(uint8_t usb_ip);
 void     hw_usb_pset_ccpl(uint8_t usb_ip);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /************/
 /* PIPESEL  */
@@ -383,17 +392,17 @@ void     hw_usb_clear_idpsinke(usb_utr_t * ptr);
 void     hw_usb_set_vdcen(void);
 void     hw_usb_clear_vdcen(void);
 
-#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 void hw_usb_hset_dcpmode(usb_utr_t * ptr);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
 /**********************************/
 /*  DMA0CFG, DMA1CFG  for 597ASSP */
 /**********************************/
 void hw_usb_write_dmacfg(usb_utr_t * ptr, uint16_t pipemode, uint16_t data);
 
-#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
 /*************/
 /*  INTENB1  */
@@ -430,9 +439,13 @@ uint16_t hw_usb_hread_devadd(usb_utr_t * ptr, uint16_t devsel);
 void     hw_usb_hrmw_devadd(usb_utr_t * ptr, uint16_t devsel, uint16_t data, uint16_t width);
 void     hw_usb_hset_usbspd(usb_utr_t * ptr, uint16_t devsel, uint16_t data);
 
-#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+ #endif                                /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
-#endif /* HW_USB_REG_ACCESS_H */
+ #ifdef __cplusplus
+}
+ #endif
+
+#endif                                 /* HW_USB_REG_ACCESS_H */
 
 /******************************************************************************
  * End of file

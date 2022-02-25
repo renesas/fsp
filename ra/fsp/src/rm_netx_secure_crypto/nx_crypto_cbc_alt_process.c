@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -89,11 +89,11 @@ UINT sce_nx_crypto_cbc_encrypt (VOID          * crypto_metadata,
     /* total_length is a multiple of block size, ensured by caller */
     while (total_length != 0U)
     {
-        if (aes_ptr->nx_crypto_aes_reserved == (UCHAR) SCE_OEM_KEY_TYPE_ENCRYPTED)
+        switch (num_rounds)
         {
-            switch (num_rounds)
+            case 10:
             {
-                case 10:
+                if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS)
                 {
                     ret = HW_SCE_AES_128CbcEncryptUsingEncryptedKey((uint32_t *) w,
                                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
@@ -101,45 +101,10 @@ UINT sce_nx_crypto_cbc_encrypt (VOID          * crypto_metadata,
                                                                     p_aligned_input,
                                                                     p_aligned_output,
                                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
                 }
-
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
-                case 12:
-                {
-                    ret = HW_SCE_AES_192CbcEncryptUsingEncryptedKey((uint32_t *) w,
-                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
-                                                                    process_length,
-                                                                    p_aligned_input,
-                                                                    p_aligned_output,
-                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
-                }
- #endif
-                case 14:
-                {
-                    ret = HW_SCE_AES_256CbcEncryptUsingEncryptedKey((uint32_t *) w,
-                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
-                                                                    process_length,
-                                                                    p_aligned_input,
-                                                                    p_aligned_output,
-                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
-                }
-
-                default:
-                {
-                    break;             /* Will never get here due to the num_rounds check above. */
-                }
-            }
-        }
 
  #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-        else
-        {
-            switch (num_rounds)
-            {
-                case 10:
+                else
                 {
                     ret = HW_SCE_AES_128CbcEncrypt((uint32_t *) w,
                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
@@ -147,10 +112,37 @@ UINT sce_nx_crypto_cbc_encrypt (VOID          * crypto_metadata,
                                                    p_aligned_input,
                                                    p_aligned_output,
                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
+                }
+ #endif
+                break;
+            }
+
+ #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
+            case 12:
+            {
+                ret = HW_SCE_AES_192CbcEncryptUsingEncryptedKey((uint32_t *) w,
+                                                                (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
+                                                                process_length,
+                                                                p_aligned_input,
+                                                                p_aligned_output,
+                                                                (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
+                break;
+            }
+ #endif
+            case 14:
+            {
+                if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_256_WRAPPED_WORDS)
+                {
+                    ret = HW_SCE_AES_256CbcEncryptUsingEncryptedKey((uint32_t *) w,
+                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
+                                                                    process_length,
+                                                                    p_aligned_input,
+                                                                    p_aligned_output,
+                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
                 }
 
-                case 14:
+ #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
+                else
                 {
                     ret = HW_SCE_AES_256CbcEncrypt((uint32_t *) w,
                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
@@ -158,16 +150,16 @@ UINT sce_nx_crypto_cbc_encrypt (VOID          * crypto_metadata,
                                                    p_aligned_input,
                                                    p_aligned_output,
                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
                 }
+ #endif
+                break;
+            }
 
-                default:
-                {
-                    break;             /* Will never get here due to the num_rounds check above. */
-                }
+            default:
+            {
+                break;                 /* Will never get here due to the num_rounds check above. */
             }
         }
- #endif
 
         /* Return immediately in case of error */
         FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);
@@ -242,11 +234,11 @@ UINT sce_nx_crypto_cbc_decrypt (VOID          * crypto_metadata,
     /* total_length is a multiple of block size, ensured by caller */
     while (total_length != 0U)
     {
-        if (aes_ptr->nx_crypto_aes_reserved == (UCHAR) SCE_OEM_KEY_TYPE_ENCRYPTED)
+        switch (num_rounds)
         {
-            switch (num_rounds)
+            case 10:
             {
-                case 10:
+                if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS)
                 {
                     ret = HW_SCE_AES_128CbcDecryptUsingEncryptedKey((uint32_t *) w,
                                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
@@ -254,45 +246,8 @@ UINT sce_nx_crypto_cbc_decrypt (VOID          * crypto_metadata,
                                                                     p_aligned_input,
                                                                     p_aligned_output,
                                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
                 }
-
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
-                case 12:
-                {
-                    ret = HW_SCE_AES_192CbcDecryptUsingEncryptedKey((uint32_t *) w,
-                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
-                                                                    process_length,
-                                                                    p_aligned_input,
-                                                                    p_aligned_output,
-                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
-                }
- #endif
-                case 14:
-                {
-                    ret = HW_SCE_AES_256CbcDecryptUsingEncryptedKey((uint32_t *) w,
-                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
-                                                                    process_length,
-                                                                    p_aligned_input,
-                                                                    p_aligned_output,
-                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
-                }
-
-                default:
-                {
-                    break;             /* Will never get here due to the num_rounds check above. */
-                }
-            }
-        }
-
- #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 0)
-        else
-        {
-            switch (num_rounds)
-            {
-                case 10:
+                else
                 {
                     ret = HW_SCE_AES_128CbcDecrypt((uint32_t *) w,
                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
@@ -300,10 +255,35 @@ UINT sce_nx_crypto_cbc_decrypt (VOID          * crypto_metadata,
                                                    p_aligned_input,
                                                    p_aligned_output,
                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
                 }
 
-                case 14:
+                break;
+            }
+
+ #if (BSP_FEATURE_CRYPTO_HAS_SCE9 == 1)
+            case 12:
+            {
+                ret = HW_SCE_AES_192CbcDecryptUsingEncryptedKey((uint32_t *) w,
+                                                                (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
+                                                                process_length,
+                                                                p_aligned_input,
+                                                                p_aligned_output,
+                                                                (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
+                break;
+            }
+ #endif
+            case 14:
+            {
+                if (aes_ptr->nx_crypto_aes_key_size == (UCHAR) SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS)
+                {
+                    ret = HW_SCE_AES_256CbcDecryptUsingEncryptedKey((uint32_t *) w,
+                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
+                                                                    process_length,
+                                                                    p_aligned_input,
+                                                                    p_aligned_output,
+                                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
+                }
+                else
                 {
                     ret = HW_SCE_AES_256CbcDecrypt((uint32_t *) w,
                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block,
@@ -311,16 +291,16 @@ UINT sce_nx_crypto_cbc_decrypt (VOID          * crypto_metadata,
                                                    p_aligned_input,
                                                    p_aligned_output,
                                                    (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-                    break;
                 }
 
-                default:
-                {
-                    break;             /* Will never get here due to the num_rounds check above. */
-                }
+                break;
+            }
+
+            default:
+            {
+                break;                 /* Will never get here due to the num_rounds check above. */
             }
         }
- #endif
 
         /* Return immediately in case of error */
         FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);

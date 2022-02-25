@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -26,6 +26,9 @@
  * Includes <System Includes> , "Project Includes"
  ***********************************************************************************************************************/
 #include "rm_motor_position.h"
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -104,5 +107,8 @@ float motor_position_ipd_ctrl(motor_position_ipd_t             * st_ipd,
                               motor_position_motor_parameter_t * st_motor,
                               float                              f4_pos_err_rad,
                               float                              f4_max_speed_rad);
+
+/** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
 
 #endif                                 /* RM_MOTOR_POSITION_LIBRARY_H */

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -217,6 +217,15 @@ fsp_err_t R_AGT_Start (timer_ctrl_t * const p_ctrl)
     fsp_err_t err = r_agt_common_preamble(p_instance_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
+    /* Reload period register for one-shot timers. This must be done here instead of in the underflow interrupt because
+     * setting AGTCR.TSTOP causes AGT to be reset after 3 cycles of the count source. When the AGT count source is much
+     * slower than the core clock, 3 cycles of the count source is too long to wait in an interrupt. */
+    if (TIMER_MODE_ONE_SHOT == p_instance_ctrl->p_cfg->mode)
+    {
+        /* Set counter to period minus one. */
+        r_agt_period_register_set(p_instance_ctrl, p_instance_ctrl->period);
+    }
+
     /* Start timer */
     p_instance_ctrl->p_reg->AGTCR = AGT_PRV_AGTCR_START_TIMER;
 
@@ -229,6 +238,7 @@ fsp_err_t R_AGT_Start (timer_ctrl_t * const p_ctrl)
         /* Verify the timer is started before modifying any other AGT registers. Reference section 25.4.1 "Count
          * Operation Start and Stop Control" in the RA6M3 manual R01UH0886EJ0100. */
         FSP_HARDWARE_REGISTER_WAIT(1U, p_instance_ctrl->p_reg->AGTCR_b.TCSTF);
+
  #if BSP_FEATURE_AGT_HAS_AGTW
         p_instance_ctrl->p_reg->AGTCMA = UINT32_MAX;
         p_instance_ctrl->p_reg->AGTCMB = UINT32_MAX;
@@ -790,12 +800,12 @@ static void r_agt_hardware_cfg (agt_instance_ctrl_t * const p_instance_ctrl, tim
                                        p_instance_ctrl->p_cfg->duty_cycle_counts - 1;
         uint32_t agtcma = p_instance_ctrl->p_cfg->duty_cycle_counts;
         uint32_t agtcmb = p_instance_ctrl->p_cfg->duty_cycle_counts;
-        if (AGT_PIN_CFG_START_LEVEL_HIGH == p_extend->agtoa)
+        if (AGT_PIN_CFG_START_LEVEL_HIGH == p_extend->agtoab_settings_b.agtoa)
         {
             agtcma = inverted_duty_cycle;
         }
 
-        if (AGT_PIN_CFG_START_LEVEL_HIGH == p_extend->agtob)
+        if (AGT_PIN_CFG_START_LEVEL_HIGH == p_extend->agtoab_settings_b.agtob)
         {
             agtcmb = inverted_duty_cycle;
         }
@@ -974,13 +984,10 @@ void agt_int_isr (void)
         uint8_t agtcmsr = p_instance_ctrl->p_reg->AGTCMSR;
 #endif
 
-        /* Stop timer */
+        /* Stop timer. This resets the timer period (AGT register). The AGT register is reconfigured in R_AGT_Start(). */
         p_instance_ctrl->p_reg->AGTCR = AGT_PRV_AGTCR_FORCE_STOP;
         agtcr &= AGT_PRV_AGTCR_STATUS_FLAGS;
         p_instance_ctrl->p_reg->AGTCR = (uint8_t) agtcr;
-
-        /* Set counter to period minus one. */
-        r_agt_period_register_set(p_instance_ctrl, p_instance_ctrl->period);
 
 #if AGT_CFG_OUTPUT_SUPPORT_ENABLE
 

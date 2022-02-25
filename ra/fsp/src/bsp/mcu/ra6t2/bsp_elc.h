@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -64,14 +64,14 @@ typedef enum e_elc_event_ra6t2
     ELC_EVENT_ICU_IRQ13              = (0x00E), // External pin interrupt 13
     ELC_EVENT_ICU_IRQ14              = (0x00F), // External pin interrupt 14
     ELC_EVENT_ICU_IRQ15              = (0x010), // External pin interrupt 15
-    ELC_EVENT_IIRFA_ORDY0            = (0x011), // IIRFA output data preprate complete 0
-    ELC_EVENT_IIRFA_CPRCF0           = (0x012), // IIRFA processing complete 0
-    ELC_EVENT_IIRFA_ORDY1            = (0x013), // IIRFA output data preprate complete 1
-    ELC_EVENT_IIRFA_CPRCF1           = (0x014), // IIRFA processing complete 1
-    ELC_EVENT_IIRFA_ORDY2            = (0x015), // IIRFA output data preprate complete 2
-    ELC_EVENT_IIRFA_CPRCF2           = (0x016), // IIRFA processing complete 2
-    ELC_EVENT_IIRFA_ORDY3            = (0x017), // IIRFA output data preprate complete 3 to 15
-    ELC_EVENT_IIRFA_CPRCF3           = (0x018), // IIRFA processing complete 3 to 15
+    ELC_EVENT_IIRFA_ORDY0            = (0x011), // IIRFA output data ready 0
+    ELC_EVENT_IIRFA_ORDY1            = (0x012), // IIRFA output data ready 1
+    ELC_EVENT_IIRFA_ORDY2            = (0x013), // IIRFA output data ready 2
+    ELC_EVENT_IIRFA_ORDY3            = (0x014), // IIRFA output data ready 3 to 15
+    ELC_EVENT_IIRFA_CPRCF0           = (0x015), // IIRFA channel processing complete 0
+    ELC_EVENT_IIRFA_CPRCF1           = (0x016), // IIRFA channel processing complete 1
+    ELC_EVENT_IIRFA_CPRCF2           = (0x017), // IIRFA channel processing complete 2
+    ELC_EVENT_IIRFA_CPRCF3           = (0x018), // IIRFA channel processing complete 3 to 15
     ELC_EVENT_IIRFA_ERR              = (0x019), // IIRFA operation error
     ELC_EVENT_DMAC0_INT              = (0x020), // DMAC transfer end 0
     ELC_EVENT_DMAC1_INT              = (0x021), // DMAC transfer end 1

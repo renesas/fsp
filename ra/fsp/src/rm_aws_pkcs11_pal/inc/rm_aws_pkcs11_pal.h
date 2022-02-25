@@ -32,6 +32,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
  *  @brief Initialize the PAL.
  */
@@ -61,5 +65,9 @@ extern CK_RV PKCS11_PAL_GetObjectValue(CK_OBJECT_HANDLE xHandle,
  *  @brief Free the buffer allocated in PKCS11_PAL_GetObjectValue() (see PAL).
  */
 extern void PKCS11_PAL_GetObjectValueCleanup(uint8_t * pucBuffer, uint32_t ulBufferSize);
+
+#ifdef __cplusplus
+}
+#endif
 
 /*-----------------------------------------------------------*/

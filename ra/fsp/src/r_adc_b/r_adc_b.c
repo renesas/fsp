@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -258,6 +258,7 @@ fsp_err_t R_ADC_B_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
  * @retval FSP_ERR_ASSERTION           An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
  * @retval FSP_ERR_INVALID_STATE       Invalid Scan Configuration.
+ * @retval FSP_ERR_INVALID_CHANNEL     Invalid configured channel for group converter id.
  **********************************************************************************************************************/
 fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
 {
@@ -273,6 +274,12 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
 #endif
 
     adc_b_extended_cfg_t * p_extend = (adc_b_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+    /* Clear any previous channel configuration, specifically group selections */
+    for (uint8_t channel = 0; channel <= ADC_B_VIRTUAL_CHANNEL_36; channel++)
+    {
+        *ADC_B_REG_ADDRESS(R_ADC_B->ADCHCR0, channel, 0x10) = 0;
+    }
 
     /* Assign scan groups to selected converters */
     R_ADC_B->ADSGCR0 = p_extend->converter_selection_0;
@@ -303,7 +310,9 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
      *  Constraints to check while Synchronous Mode is enabled
      *   - See section 36.3.17.2, Restrictions on Synchronous Operation, in the RA6T2 User Manual, R01UH0951EJ0100
      *============================================================================================================*/
-    if (p_extend->sync_operation_control != 0)
+    bool sync_operation_enabled = !p_extend->sync_operation_control_bits.adc_0_disable_sync ||
+                                  !p_extend->sync_operation_control_bits.adc_1_disable_sync;
+    if (sync_operation_enabled)
     {
         /* Set the Synchronous Operation Period to a value larger than successive approximation time at Self-Calibration. */
         uint32_t caladcst = (p_extend->calibration_adc_state & R_ADC_B0_ADCALSTCR_CALADCST_Msk) >>
@@ -322,13 +331,14 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
     {
         const adc_b_group_cfg_t * p_adc_group = p_scan_data->p_adc_groups[group];
 #if ADC_B_CFG_PARAM_CHECKING_ENABLE
+        adc_b_unit_id_t converter_selection = p_adc_group->converter_selection;
 
         /*============================================================================================================
          *  Constraints to check while Synchronous Mode is enabled
          *   - See section 36.3.17.2, Restrictions on Synchronous Operation, in the RA6T2 User Manual, R01UH0951EJ0100
          *============================================================================================================*/
         uint32_t cst = (p_adc_group->converter_selection ? cst0 : cst1);
-        if (p_extend->sync_operation_control != 0)
+        if (sync_operation_enabled)
         {
             /* Set the Synchronous Operation Period to a value larger than successive approximation time of ADCm (m = 0, 1) */
             FSP_ERROR_RETURN(adsycyc >= cst + 1, FSP_ERR_INVALID_STATE);
@@ -361,7 +371,18 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
             adc_b_virtual_channel_cfg_t * p_virtual_channel_cfg = p_adc_group->p_virtual_channels[channel];
             adc_b_virtual_channel_t       virtual_channel_id    = p_virtual_channel_cfg->channel_id;
 #if ADC_B_CFG_PARAM_CHECKING_ENABLE
-            if ((p_extend->sync_operation_control != 0))
+
+            /* Check that channel is valid for configured unit */
+            adc_channel_t        channel_id    = (adc_channel_t) p_virtual_channel_cfg->channel_cfg_bits.channel;
+            adc_b_channel_mask_t extended_mask =
+                (adc_b_channel_mask_t) ((1U + channel_id - ADC_B_CHANNEL_MASK_DIAGNOSIS) <<
+                                        ADC_B_CHANNEL_MASK_EXT_OFFSET);
+            adc_b_channel_mask_t physical_mask = (adc_b_channel_mask_t) (1 << channel_id);
+            adc_b_channel_mask_t channel_mask  = (channel_id > ADC_CHANNEL_28) ? extended_mask : physical_mask;
+            FSP_ERROR_RETURN(ADC_B_CHANNEL_VALID_FOR_UNIT(channel_mask, converter_selection), FSP_ERR_INVALID_CHANNEL);
+
+            /* Check synchronous operation */
+            if (sync_operation_enabled)
             {
                 /* Set so that the sum of the sampling times of the analog channels and successive approximation time of ADCm (m = 0, 1) is an integral multiple of the Synchronous Operation Period */
                 uint16_t sst = ((uint16_t *) p_extend->sampling_state_tables)[virtual_channel_id];
@@ -371,9 +392,7 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
                  * Constraints to check while Synchronous Mode is enabled and Sample and Hold is enabled
                  *   - See section 36.3.17.2, Restrictions on Synchronous Operation, in the RA6T2 User Manual, R01UH0951EJ0100
                  *============================================================================================================*/
-                uint32_t      channel_cfg   = p_virtual_channel_cfg->channel_cfg;
-                adc_channel_t an_channel_id = (adc_channel_t) ((channel_cfg & R_ADC_B0_ADCHCR0_CNVCS_Msk) >>
-                                                               R_ADC_B0_ADCHCR0_CNVCS_Pos);
+                adc_channel_t an_channel_id = (adc_channel_t) p_virtual_channel_cfg->channel_cfg_bits.channel;
                 if (adc_channel_is_sample_hold_enabled(an_channel_id, p_extend->sample_and_hold_enable_mask))
                 {
                     uint32_t config_012 = p_extend->sample_and_hold_config_012;
@@ -761,6 +780,9 @@ fsp_err_t R_ADC_B_FifoRead (adc_ctrl_t * p_ctrl, adc_group_mask_t const group_ma
     fsp_err_t err = (count ? FSP_SUCCESS : FSP_ERR_UNDERFLOW);
     FSP_ERROR_LOG(err);
 
+    /* Clear FIFO full flag */
+    R_ADC_B->ADFIFOERSCR_b.FIFOFLCn = group_mask;
+
     return err;
 }
 
@@ -1099,7 +1121,7 @@ static void adc_b_call_callback (adc_b_instance_ctrl_t * p_ctrl, adc_callback_ar
     else
     {
         /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
-        adc_prv_ns_callback p_callback = (adc_prv_ns_callback) (p_ctrl->p_callback);
+        adc_b_prv_ns_callback p_callback = (adc_b_prv_ns_callback) (p_ctrl->p_callback);
         p_callback(p_args_memory);
     }
 
@@ -1440,11 +1462,10 @@ void adc_b_fiforeq4_isr (void) {
  **********************************************************************************************************************/
 void adc_b_fiforeq5678_isr (void) {
     /* Get groups with less data availabe than threshold */
-    adc_group_mask_t group = (adc_group_mask_t) R_ADC_B->ADFIFOERSR_b.FIFOFLFn;
+    adc_group_mask_t group = (adc_group_mask_t) (ADC_B_GROUP_MASK_5678 & R_ADC_B->ADFIFOERSR_b.FIFOFLFn);
     IRQn_Type        irq   = adc_b_isr_handler(ADC_EVENT_FIFO_READ_REQUEST,
                                                group,
                                                ADC_B_CHANNEL_MASK_NONE,
                                                ADC_B_UNIT_MASK_UNDEFINED);
-
     R_BSP_IrqStatusClear(irq);
 }

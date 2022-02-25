@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -121,7 +121,7 @@ fsp_err_t RM_AUDIO_PLAYBACK_PWM_Open (audio_playback_ctrl_t * const      p_api_c
     transfer_instance_t const * p_transfer = p_extend->p_lower_lvl_transfer;
     transfer_info_t           * p_info     = p_transfer->p_cfg->p_info;
     p_info->p_dest = p_extend->p_timer_duty_reg;
-    p_info->size   = p_extend->transfer_size;
+    p_info->transfer_settings_word_b.size = p_extend->transfer_size;
 
     /* Open transfer driver */
     err = p_transfer->p_api->open(p_transfer->p_ctrl, p_transfer->p_cfg);

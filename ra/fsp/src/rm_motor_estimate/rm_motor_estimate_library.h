@@ -28,7 +28,11 @@
  ***********************************************************************************************************************/
 
 #ifndef RM_MOTOR_ESTIMATE_LIBRARY_H
-#define RM_MOTOR_ESTIMATE_LIBRARY_H
+ #define RM_MOTOR_ESTIMATE_LIBRARY_H
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 /* Library functions */
 void rm_motor_estimate_bemf_observer(motor_estimate_bemf_observer_t * p_bemf_obs,
@@ -58,5 +62,9 @@ void rm_motor_estimate_speed_gain_calc(motor_estimate_extended_cfg_t * p_design_
                                        float                           f4_ctrl_period);
 
 void rm_motor_estimate_speed_reset(motor_estimate_pll_est_t * p_pll_est);
+
+ #ifdef __cplusplus
+}
+ #endif
 
 #endif                                 /* RM_MOTOR_ESTIMATE_LIBRARY_H */

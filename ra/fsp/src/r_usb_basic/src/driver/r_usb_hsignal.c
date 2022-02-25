@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -151,6 +151,7 @@ void usb_hstd_attach (usb_utr_t * ptr, uint16_t result)
  ******************************************************************************/
 void usb_hstd_detach (usb_utr_t * ptr)
 {
+#if !defined (USB_CFG_OTG_USE)
  #if USB_CFG_BC == USB_CFG_ENABLE
   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
     if (USB_IP1 == ptr->ip)
@@ -163,6 +164,7 @@ void usb_hstd_detach (usb_utr_t * ptr)
     /* DVSTCTR clear */
     hw_usb_clear_dvstctr(ptr, (uint16_t) (USB_RWUPE | USB_USBRST | USB_RESUME | USB_UACT));
 
+#endif /* !defined (USB_CFG_OTG_USE) */
     /* ATTCH interrupt enable */
     usb_hstd_attch_enable(ptr);
 

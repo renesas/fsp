@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -29,7 +29,9 @@
 
 #include "fsp_common_api.h"
 
-#if ((BSP_CFG_RTOS == 2))
+#if (BSP_CFG_RTOS == 1)
+ #include "tx_api.h"
+#elif (BSP_CFG_RTOS == 2)
  #include "FreeRTOS.h"
  #include "task.h"
  #include "event_groups.h"
@@ -490,7 +492,7 @@ uint8_t r_dflash_write(uint32_t addr, uint8_t * buff, uint16_t len);
 void    r_ble_rf_control_error(uint32_t err_no);
 uint8_t r_ble_rf_power_save_mode(void);
 
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS == 1) || (BSP_CFG_RTOS == 2)
 void r_ble_wake_up_task(void * EventGroupHandle);
 void r_ble_wake_up_task_from_isr(void * EventGroupHandle);
 
@@ -658,7 +660,6 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
         }
     }
 
-#if (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT)
     if ((0 < p_cfg->gatt_client_callback_list_number) && (NULL != p_cfg->p_gatt_client_callback_list))
     {
         FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GATTC_Init(p_cfg->gatt_client_callback_list_number),
@@ -681,7 +682,6 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
             }
         }
     }
-#endif                                 /* (BLE_CFG_LIBRARY_TYPE != BLE_LIB_COMPACT) */
 
     FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_VS_Init(ble_abs_vendor_specific_callback), FSP_ERR_INVALID_ARGUMENT);
 
@@ -3690,7 +3690,24 @@ uint8_t r_ble_rf_power_save_mode (void)
     return ret;
 }
 
-#if (BSP_CFG_RTOS == 2)
+#if (BSP_CFG_RTOS == 1)
+void r_ble_wake_up_task (void * EventGroupHandle)
+{
+    if (NULL != EventGroupHandle)
+    {
+        tx_semaphore_put((TX_SEMAPHORE *) EventGroupHandle);
+    }
+}
+
+void r_ble_wake_up_task_from_isr (void * EventGroupHandle)
+{
+    if (NULL != EventGroupHandle)
+    {
+        tx_semaphore_put((TX_SEMAPHORE *) EventGroupHandle);
+    }
+}
+
+#elif (BSP_CFG_RTOS == 2)
 void r_ble_wake_up_task (void * EventGroupHandle)
 {
     EventGroupHandle_t event_group_handle = (EventGroupHandle_t) EventGroupHandle;

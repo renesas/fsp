@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -72,6 +72,10 @@
 /* Locations of bitfields used to configure CLKOUT. */
 #define BSP_PRV_CKOCR_CKODIV_BIT                (4U)
 #define BSP_PRV_CKOCR_CKOEN_BIT                 (7U)
+
+/* Stop interval of at least 5 SOSC clock cycles between stop and restart of SOSC.
+ * Calculated based on 8Mhz of MOCO clock. */
+#define BSP_PRV_SUBCLOCK_STOP_INTERVAL_US       (1220U)
 
 #ifdef BSP_CFG_UCK_DIV
 
@@ -953,20 +957,27 @@ void bsp_clock_init (void)
 #if BSP_FEATURE_CGC_HAS_SOSC
  #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
 
-    /* If the board has a subclock, set the subclock drive and start the subclock if the subclock is stopped.  If the
-     * subclock is running, the subclock drive is assumed to be set appropriately. */
-    if (R_SYSTEM->SOSCCR)
+    /* If Sub-Clock Oscillator is started at reset, stop it before configuring the subclock drive. */
+    if (0U == R_SYSTEM->SOSCCR)
     {
-        /* Configure the subclock drive if the subclock is not already running. */
-        R_SYSTEM->SOMCR  = ((BSP_CLOCK_CFG_SUBCLOCK_DRIVE << BSP_FEATURE_CGC_SODRV_SHIFT) & BSP_FEATURE_CGC_SODRV_MASK);
-        R_SYSTEM->SOSCCR = 0U;
-  #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
+        /* Stop the Sub-Clock Oscillator to update the SOMCR register. */
+        R_SYSTEM->SOSCCR = 1U;
 
-        /* If the subclock is the system clock source OR if FLL is used, wait for stabilization. */
-        R_BSP_SoftwareDelay(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS, BSP_DELAY_UNITS_MILLISECONDS);
-  #endif
+        /* Allow a stop interval of at least 5 SOSC clock cycles before configuring the drive capacity
+         * and restarting Sub-Clock Oscillator. */
+        R_BSP_SoftwareDelay(BSP_PRV_SUBCLOCK_STOP_INTERVAL_US, BSP_DELAY_UNITS_MICROSECONDS);
     }
 
+    /* Configure the subclock drive as subclock is not running. */
+    R_SYSTEM->SOMCR = ((BSP_CLOCK_CFG_SUBCLOCK_DRIVE << BSP_FEATURE_CGC_SODRV_SHIFT) & BSP_FEATURE_CGC_SODRV_MASK);
+
+    /* Restart the Sub-Clock Oscillator. */
+    R_SYSTEM->SOSCCR = 0U;
+  #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
+
+    /* If the subclock is the system clock source OR if FLL is used, wait for stabilization. */
+    R_BSP_SoftwareDelay(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS, BSP_DELAY_UNITS_MILLISECONDS);
+  #endif
  #else
     R_SYSTEM->SOSCCR = 1U;
  #endif
@@ -1128,6 +1139,12 @@ void bsp_clock_init (void)
 
     /* Set source clock and dividers. */
 #if BSP_CFG_SOFT_RESET_SUPPORTED
+ #if BSP_TZ_SECURE_BUILD
+
+    /* In case of soft reset, make sure callback pointer is NULL initially. */
+    g_bsp_clock_update_callback = NULL;
+ #endif
+
     bsp_prv_clock_set(BSP_CFG_CLOCK_SOURCE, BSP_PRV_STARTUP_SCKDIVCR);
 #else
     bsp_prv_clock_set_hard_reset();

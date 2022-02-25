@@ -15,13 +15,17 @@
  */
 
 #ifndef JPEGCONF_H
-#define JPEGCONF_H
+ #define JPEGCONF_H
 
-#include <stdint.h>
+ #include <stdint.h>
 
-#include "rm_emwin_port_cfg.h"
+ #include "rm_emwin_port_cfg.h"
 
-#if EMWIN_JPEG_USE_HW && EMWIN_LCD_USE_DAVE
+ #ifdef __cplusplus
+extern "C" {
+ #endif
+
+ #if EMWIN_JPEG_USE_HW && EMWIN_LCD_USE_DAVE
 
 typedef struct
 {
@@ -53,12 +57,16 @@ typedef struct
     uint32_t xSizeExtended;
     uint8_t  Error;
     uint8_t  IRQFlag;
- #if GUI_SUPPORT_MEMDEV
+  #if GUI_SUPPORT_MEMDEV
     GUI_MEMDEV_Handle hMem;
- #endif
+  #endif
 } JPEG_X_CONTEXT;
 
-#endif
+ #endif
+
+ #ifdef __cplusplus
+}
+ #endif
 
 #endif                                 /* LCDCONF_H */
 

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -84,6 +84,8 @@
 
 #define BSP_FEATURE_ADC_B_TSN_CALIBRATION32_MASK          (0x0000FFFFU)
 #define BSP_FEATURE_ADC_B_TSN_SLOPE                       (4000)
+#define BSP_FEATURE_ADC_B_UNIT_0_CHANNELS                 (0x0000003F1FF3F03F) // DAC 0 to 3, Vref, Volt, Temp, Self-diag, AN 0 to 5, 12 to 17, 20 to 28
+#define BSP_FEATURE_ADC_B_UNIT_1_CHANNELS                 (0x0000003F1FFC0FC0) // DAC 0 to 3, Vref, Volt, Temp, Self-diag, AN 6 to 11, 18 to 28
 
 #define BSP_FEATURE_AGT_VALID_CHANNEL_MASK                (0x3U)
 #define BSP_FEATURE_AGT_MAX_CHANNEL_NUM                   (1)
@@ -214,6 +216,7 @@
 #define BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE                (4U)
 #define BSP_FEATURE_FLASH_HP_HAS_FMEPROT                  (1)
 #define BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK           (0)
+#define BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START           (0) // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_HP_VERSION                      (40U)
 #define BSP_FEATURE_FLASH_LP_AWS_FAW_MASK                 (0) // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_LP_AWS_FAW_SHIFT                (0) // Feature not available on this MCU

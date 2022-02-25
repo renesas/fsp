@@ -41,17 +41,18 @@
 
 /* Define timeouts for TCP recv semaphores */
 #ifndef RM_NETXDUO_WIFI_BYTE_START_SEMAPHORE_TIMEOUT_MS
- #define RM_NETXDUO_WIFI_BYTE_START_SEMAPHORE_TIMEOUT_MS         (20)
+ #define RM_NETXDUO_WIFI_BYTE_START_SEMAPHORE_TIMEOUT_MS         (50)
 #endif
 #ifndef RM_NETXDUO_WIFI_PACKET_COMPLETE_SEMAPHORE_TIMEOUT_MS
- #define RM_NETXDUO_WIFI_PACKET_COMPLETE_SEMAPHORE_TIMEOUT_MS    (50)
+ #define RM_NETXDUO_WIFI_PACKET_COMPLETE_SEMAPHORE_TIMEOUT_MS    (100)
 #endif
 #define RM_NETXDUO_WIFI_MIN_TICKS                                (2)
 
 /* Define the maximum wait timeout in ms for socket send. This is limited by hardware TCP/IP on Silex WiFi driver.  */
-#define RM_NETXDUO_WIFI_SOCKET_SEND_TIMEOUT_MAXIMUM              3000
+#define RM_NETXDUO_WIFI_SOCKET_SEND_TIMEOUT_MAXIMUM              (3000)
+#define RM_NETXDUO_WIFI_SOCKET_UDP_SEND_TIMEOUT_MAXIMUM          (200)
 
-#define RM_NETXDUO_WIFI_MAC_LENGTH                               6
+#define RM_NETXDUO_WIFI_MAC_LENGTH                               (6)
 
 #define TickType_t                                               unsigned long
 #define MS_TO_TICKS(xTimeInMs)    ((TickType_t) (((TickType_t) (xTimeInMs) * (TickType_t) TX_TIMER_TICKS_PER_SECOND * \
@@ -59,6 +60,9 @@
                                                  (TickType_t) 1000ULL))
 
 #define RM_NETXDUO_WIFI_TIME_TICKS_WAIT_DIV                      (1000)
+#define RM_NETXDUO_WIFI_SOCKET_TYPE_TCP                          (0)
+#define RM_NETXDUO_WIFI_SOCKET_TYPE_UDP                          (2)
+#define RM_NETXDUO_WIFI_SOCKET_IPV4                              (4)
 
 /* NetX Driver States */
 #define NX_DRIVER_STATE_NOT_INITIALIZED                          1
@@ -779,6 +783,13 @@ static VOID _nx_driver_thread_entry (ULONG thread_input)
                 {
                     ULONG received_length = (ULONG) data_length;
 
+                    NXD_ADDRESS local_ip;
+                    NXD_ADDRESS remote_ip;
+                    local_ip.nxd_ip_version     = NX_IP_VERSION_V4;
+                    local_ip.nxd_ip_address.v4  = nx_driver_sockets[i].local_ip;
+                    remote_ip.nxd_ip_version    = NX_IP_VERSION_V4;
+                    remote_ip.nxd_ip_address.v4 = nx_driver_sockets[i].remote_ip;
+
                     /* Wait for semaphore that notifies of packet being filled */
                     if (TX_SUCCESS == rm_wifi_onchip_silex_get_rx_complete_semaphore(wait_ticks_packet_complete))
                     {
@@ -796,15 +807,36 @@ static VOID _nx_driver_thread_entry (ULONG thread_input)
                         current_packet_ptr = next_packet_ptr;
                         if (NX_SUCCESS != nx_packet_allocate(pool_ptr, &next_packet_ptr, NX_TCP_PACKET, NX_NO_WAIT))
                         {
-                            _nx_tcp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr, NX_NULL);
+                            if (nx_driver_sockets[i].protocol == NX_PROTOCOL_TCP)
+                            {
+                                _nx_tcp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr, NX_NULL);
+                            }
+                            else
+                            {
+                                _nx_udp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr,
+                                                                     NX_NULL,
+                                                                     &local_ip,
+                                                                     &remote_ip,
+                                                                     nx_driver_sockets[i].remote_port);
+                            }
                         }
 
                         /* Set next packet pointer */
-                        rm_wifi_onchip_silex_set_next_packet_buffer((uint8_t *) next_packet_ptr->nx_packet_prepend_ptr,
-                                                                    false);
+                        rm_wifi_onchip_silex_set_next_packet_buffer((uint8_t *) next_packet_ptr->nx_packet_prepend_ptr);
 
                         /* Pass packet to NetXDuo.  */
-                        _nx_tcp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr, packet_to_send);
+                        if (nx_driver_sockets[i].protocol == NX_PROTOCOL_TCP)
+                        {
+                            _nx_tcp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr, packet_to_send);
+                        }
+                        else
+                        {
+                            _nx_udp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr,
+                                                                 packet_to_send,
+                                                                 &local_ip,
+                                                                 &remote_ip,
+                                                                 nx_driver_sockets[i].remote_port);
+                        }
                     }
                     else
                     {
@@ -819,6 +851,9 @@ static VOID _nx_driver_thread_entry (ULONG thread_input)
                         {
                             /* No more data at the moment */
                             rm_wifi_onchip_silex_stop_tcp_recv((uint32_t *) &received_length);
+
+                            /* Advance to next packet buffer inside the critical section in case we get more data before buffers can be switched */
+                            rm_wifi_onchip_silex_move_to_next_packet_buffer();
                         }
 
                         FSP_CRITICAL_SECTION_EXIT;
@@ -836,15 +871,36 @@ static VOID _nx_driver_thread_entry (ULONG thread_input)
                         current_packet_ptr = next_packet_ptr;
                         if (NX_SUCCESS != nx_packet_allocate(pool_ptr, &next_packet_ptr, NX_TCP_PACKET, NX_NO_WAIT))
                         {
-                            _nx_tcp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr, NX_NULL);
+                            if (nx_driver_sockets[i].protocol == NX_PROTOCOL_TCP)
+                            {
+                                _nx_tcp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr, NX_NULL);
+                            }
+                            else
+                            {
+                                _nx_udp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr,
+                                                                     NX_NULL,
+                                                                     &local_ip,
+                                                                     &remote_ip,
+                                                                     nx_driver_sockets[i].remote_port);
+                            }
                         }
 
-                        /* Set next packet pointer, move current packet pointer if rx not complete */
-                        rm_wifi_onchip_silex_set_next_packet_buffer((uint8_t *) next_packet_ptr->nx_packet_prepend_ptr,
-                                                                    (TX_NO_INSTANCE == semaphore_err));
+                        /* Set next packet pointer */
+                        rm_wifi_onchip_silex_set_next_packet_buffer((uint8_t *) next_packet_ptr->nx_packet_prepend_ptr);
 
                         /* Pass packet to NetXDuo.  */
-                        _nx_tcp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr, packet_to_send);
+                        if (nx_driver_sockets[i].protocol == NX_PROTOCOL_TCP)
+                        {
+                            _nx_tcp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr, packet_to_send);
+                        }
+                        else
+                        {
+                            _nx_udp_socket_driver_packet_receive(nx_driver_sockets[i].socket_ptr,
+                                                                 packet_to_send,
+                                                                 &local_ip,
+                                                                 &remote_ip,
+                                                                 nx_driver_sockets[i].remote_port);
+                        }
 
                         if (TX_NO_INSTANCE == semaphore_err)
                         {
@@ -924,7 +980,7 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
     int32_t sent_size = 0;
     UINT    i         = 0;
 
-    if (operation == NX_TCPIP_OFFLOAD_TCP_CLIENT_SOCKET_CONNECT)
+    if ((operation == NX_TCPIP_OFFLOAD_TCP_CLIENT_SOCKET_CONNECT) || (operation == NX_TCPIP_OFFLOAD_UDP_SOCKET_BIND))
     {
         /* Find a socket that is not used.  */
         while (i < RM_NETXDUO_WIFI_SOCKETS_MAXIMUM)
@@ -954,7 +1010,7 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
             /* Store the index of driver socket.  */
             ((NX_TCP_SOCKET *) socket_ptr)->nx_tcp_socket_tcpip_offload_context = (VOID *) i;
 
-            if (rm_wifi_onchip_silex_socket_create(i, 0, 4))
+            if (rm_wifi_onchip_silex_socket_create(i, RM_NETXDUO_WIFI_SOCKET_TYPE_TCP, RM_NETXDUO_WIFI_SOCKET_IPV4))
             {
                 return NX_NOT_SUCCESSFUL;
             }
@@ -980,7 +1036,9 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
         }
 
         case NX_TCPIP_OFFLOAD_TCP_SOCKET_DISCONNECT:
+        case NX_TCPIP_OFFLOAD_UDP_SOCKET_UNBIND:
         {
+            /* Disconnect socket */
             i = (UINT) (((NX_TCP_SOCKET *) socket_ptr)->nx_tcp_socket_tcpip_offload_context);
             if (nx_driver_sockets[i].remote_port)
             {
@@ -988,25 +1046,84 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
             }
 
             /* Reset socket to free this entry.  */
-            nx_driver_sockets[i].socket_ptr = NX_NULL;
+            nx_driver_sockets[i].socket_ptr  = NX_NULL;
+            nx_driver_sockets[i].remote_port = 0;
             break;
         }
 
         case NX_TCPIP_OFFLOAD_UDP_SOCKET_BIND:
         {
-            status = NX_NOT_SUPPORTED;
-            break;
-        }
+            /* Store the index of driver socket.  */
+            ((NX_TCP_SOCKET *) socket_ptr)->nx_tcp_socket_tcpip_offload_context = (VOID *) i;
 
-        case NX_TCPIP_OFFLOAD_UDP_SOCKET_UNBIND:
-        {
-            status = NX_NOT_SUPPORTED;
+            /* Create UDP socket */
+            if (rm_wifi_onchip_silex_socket_create(i, RM_NETXDUO_WIFI_SOCKET_TYPE_UDP, RM_NETXDUO_WIFI_SOCKET_IPV4)) // Create a UDP socket
+            {
+                return NX_NOT_SUCCESSFUL;
+            }
+
+            /* Set the socket id.  */
+            nx_driver_sockets[i].socket_id = i;
+
+            status = NX_SUCCESS;
+
             break;
         }
 
         case NX_TCPIP_OFFLOAD_UDP_SOCKET_SEND:
         {
-            status = NX_NOT_SUPPORTED;
+            i = (UINT) (((NX_TCP_SOCKET *) socket_ptr)->nx_tcp_socket_tcpip_offload_context);
+
+            /* Initialize the current packet to the input packet pointer.  */
+            current_packet = packet_ptr;
+
+            /* Setup UDP connection with server if not already done*/
+            if (nx_driver_sockets[i].remote_port == 0)
+            {
+                /* Setup UDP client to remote ip and port */
+                if (rm_wifi_onchip_silex_udp_connect(nx_driver_sockets[i].socket_id, remote_ip->nxd_ip_address.v4,
+                                                     *remote_port, 0)) // Connect UDP port client
+                {
+                    return NX_NOT_SUCCESSFUL;
+                }
+
+                /* Store address and port.  */
+                nx_driver_sockets[i].remote_ip   = remote_ip->nxd_ip_address.v4;
+                nx_driver_sockets[i].local_port  = (uint16_t) local_port;
+                nx_driver_sockets[i].remote_port = (uint16_t) *remote_port;
+                nx_driver_sockets[i].protocol    = NX_PROTOCOL_UDP;
+            }
+
+            /* Loop to send the packet.  */
+            while (current_packet)
+            {
+                sent_size = rm_wifi_onchip_silex_send(nx_driver_sockets[i].socket_id,
+                                                      (const uint8_t *) current_packet->nx_packet_prepend_ptr,
+                                                      (uint32_t) current_packet->nx_packet_length,
+                                                      RM_NETXDUO_WIFI_SOCKET_UDP_SEND_TIMEOUT_MAXIMUM);
+
+                /* Check status.  */
+                if (sent_size != (int32_t) current_packet->nx_packet_length)
+                {
+                    return NX_NOT_SUCCESSFUL;
+                }
+
+#ifndef NX_DISABLE_PACKET_CHAIN
+
+                /* We have crossed the packet boundary.  Move to the next packet structure.  */
+                current_packet = current_packet->nx_packet_next;
+#else
+
+                /* End of the loop.  */
+                current_packet = NX_NULL;
+#endif                                 /* NX_DISABLE_PACKET_CHAIN */
+            }
+
+            /* Release the packet.  */
+            nx_packet_transmit_release(packet_ptr);
+
+            status = NX_SUCCESS;
+
             break;
         }
 
@@ -1036,10 +1153,10 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
                 packet_size = (int32_t) current_packet->nx_packet_append_ptr -
                               (int32_t) current_packet->nx_packet_prepend_ptr;
 
-                sent_size = rm_wifi_onchip_silex_tcp_send(nx_driver_sockets[i].socket_id,
-                                                          (const uint8_t *) current_packet->nx_packet_prepend_ptr,
-                                                          (uint32_t) packet_size,
-                                                          wait_option);
+                sent_size = rm_wifi_onchip_silex_send(nx_driver_sockets[i].socket_id,
+                                                      (const uint8_t *) current_packet->nx_packet_prepend_ptr,
+                                                      (uint32_t) packet_size,
+                                                      wait_option);
 
                 /* Check status.  */
                 if (sent_size != packet_size)

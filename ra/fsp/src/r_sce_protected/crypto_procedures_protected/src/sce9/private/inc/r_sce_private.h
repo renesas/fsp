@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -271,7 +271,22 @@ fsp_err_t R_SCE_EcdhKeyDerivationPrivate(uint32_t * InData_KeyIndexType,
                                          uint32_t   MAX_CNT,
                                          uint32_t * InData_SaltKeyIndex,
                                          uint32_t * OutData_KeyIndex);
-
+fsp_err_t R_SCE_Aes128KeyWrapPrivate(uint32_t * InData_KeyIndex,
+                                     uint32_t * InData_WrappedKeyType,
+                                     uint32_t * InData_WrappedKeyIndex,
+                                     uint32_t * OutData_Text);
+fsp_err_t R_SCE_Aes256KeyWrapPrivate(uint32_t * InData_KeyIndex,
+                                     uint32_t * InData_WrappedKeyType,
+                                     uint32_t * InData_WrappedKeyIndex,
+                                     uint32_t * OutData_Text);
+fsp_err_t R_SCE_Aes128KeyUnWrapPrivate(sce_aes_wrapped_key_t  * InData_MasterKey,
+                                       uint32_t               * InData_WrappedKeyType,
+                                       uint32_t               * InData_Text,
+                                       uint32_t               * OutData_KeyIndex);
+fsp_err_t R_SCE_Aes256KeyUnWrapPrivate(sce_aes_wrapped_key_t  * InData_MasterKey,
+                                       uint32_t               * InData_WrappedKeyType,
+                                       uint32_t               * InData_Text,
+                                       uint32_t               * OutData_KeyIndex);
 /* --------------------- SCE control procedure related ---------------------- */
 
 void R_SCE_SoftwareResetSub(void);
@@ -684,8 +699,27 @@ fsp_err_t R_SCE_DlmsCosemCalculateKekSub(uint32_t *InData_KeyIndexType,
                                          uint32_t   MAX_CNT,
                                          uint32_t * InData_SaltKeyIndex,
                                          uint32_t * OutData_KeyIndex);
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL @retval FSP_ERR_CRYPTO_SCE_FAIL **/
+fsp_err_t R_SCE_AesKeyWrapSub(uint32_t * InData_Cmd,
+                              uint32_t * InData_KeyIndex,
+                              int32_t    KEY_INDEX_SIZE,
+                              uint32_t * InData_WrappedKeyType,
+                              uint32_t * InData_WrappedKeyIndex,
+                              uint32_t   WRAPPED_KEY_SIZE,
+                              uint32_t * OutData_Text);
+/** @retval FSP_SUCCESS @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL @retval FSP_ERR_CRYPTO_SCE_FAIL **/
+fsp_err_t R_SCE_AesKeyUnwrapSub(uint32_t * InData_KeyType,
+                                uint32_t * InData_Cmd,
+                                uint32_t * InData_KeyIndex,
+                                uint32_t   KEY_INDEX_SIZE,
+                                uint32_t * InData_WrappedKeyType,
+                                uint32_t * InData_Text,
+                                uint32_t   WRAPPED_KEY_SIZE,
+                                uint32_t * OutData_KeyIndex);
 
 void R_SCE_SelfCheck1SubSub(void);
+void R_SCE_TlsRootCertificateVerificationSubSub(void);
+void R_SCE_TlsGenerateSubSub(void);
 
 void R_SCE_func000(uint32_t * InData_PaddedMsg, int32_t MAX_CNT);
 void R_SCE_func001(void);
@@ -704,6 +738,7 @@ void R_SCE_func023(void);
 void R_SCE_func025_r1(uint32_t ARG1);
 void R_SCE_func027_r2(uint32_t ARG1);
 void R_SCE_func028_r2(uint32_t ARG1);
+void R_SCE_func030(void);
 void R_SCE_func040(void);
 void R_SCE_func043(void);
 void R_SCE_func044(void);

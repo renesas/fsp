@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -25,8 +25,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "limits.h"
-
-#include "r_sci_uart.h"
 #include "r_ioport.h"
 #include "rm_wifi_onchip_silex.h"
 
@@ -37,6 +35,25 @@
  #include "portmacro.h"
 #else                                  // Azure RTOS
  #include "tx_api.h"
+#endif
+#if (BSP_FEATURE_SCI_VERSION == 2U)
+ #include "r_sci_b_uart.h"
+typedef sci_b_uart_instance_ctrl_t rm_wifi_onchip_silex_uart_instance_t;
+typedef sci_b_uart_extended_cfg_t  rm_wifi_onchip_silex_uart_extended_cfg_t;
+typedef sci_b_baud_setting_t       rm_wifi_onchip_silex_baud_setting_t;
+ #define RM_WIFI_ONCHIP_SILEX_SCI_UART_FLOW_CONTROL_RTS                SCI_B_UART_FLOW_CONTROL_RTS
+ #define RM_WIFI_ONCHIP_SILEX_SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS    SCI_B_UART_FLOW_CONTROL_HARDWARE_CTSRTS
+static fsp_err_t (* p_sci_uart_baud_calculate)(uint32_t, bool, uint32_t,
+                                               struct st_sci_b_baud_setting_t * const) = &R_SCI_B_UART_BaudCalculate;
+#else
+ #include "r_sci_uart.h"
+typedef sci_uart_instance_ctrl_t rm_wifi_onchip_silex_uart_instance_t;
+typedef sci_uart_extended_cfg_t  rm_wifi_onchip_silex_uart_extended_cfg_t;
+typedef baud_setting_t           rm_wifi_onchip_silex_baud_setting_t;
+ #define RM_WIFI_ONCHIP_SILEX_SCI_UART_FLOW_CONTROL_RTS                SCI_UART_FLOW_CONTROL_RTS
+ #define RM_WIFI_ONCHIP_SILEX_SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS    SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS
+static fsp_err_t (* p_sci_uart_baud_calculate)(uint32_t, bool, uint32_t,
+                                               baud_setting_t * const) = &R_SCI_UART_BaudCalculate;
 #endif
 
 /*! \cond PRIVATE */
@@ -184,6 +201,10 @@ typedef enum
 #define WIFI_ONCHIP_SILEX_DEFAULT_MODULATION               false
 #define WIFI_ONCHIP_SILEX_DEFAULT_ERROR                    9000
 
+#define WIFI_ONCHIP_SILEX_SOCKET_TYPE_TCP                  (0)
+#define WIFI_ONCHIP_SILEX_SOCKET_TYPE_UDP                  (1)
+#define WIFI_ONCHIP_SILEX_SOCKET_TYPE_MAX                  (2)
+
 /* Unique number for WIFI Open status */
 #define WIFI_OPEN                                          (0x57495749ULL) // Is "WIFI" in ASCII
 
@@ -281,7 +302,7 @@ static StaticSemaphore_t g_uart_tei_mutexes[2];
 /* Control instance for the Silex wifi module */
 static wifi_onchip_silex_instance_ctrl_t g_rm_wifi_onchip_silex_instance;
 
-static baud_setting_t g_baud_setting_115200 =
+static rm_wifi_onchip_silex_baud_setting_t g_baud_setting_115200 =
 {.brme = 0, .abcse = 0, .abcs = 0, .bgdm = 0, .brr = 0, .mddr = 0, };
 
 /***********************************************************************************************************************
@@ -351,10 +372,10 @@ static fsp_err_t rm_wifi_onchip_silex_send_scan(wifi_onchip_silex_instance_ctrl_
 fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg)
 {
     wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_silex_instance;
-    fsp_err_t               err    = FSP_SUCCESS;
-    uart_instance_t       * p_uart = NULL;
-    sci_uart_extended_cfg_t uart0_cfg_extended_115200;
-    uart_cfg_t              uart0_cfg_115200;
+    fsp_err_t         err    = FSP_SUCCESS;
+    uart_instance_t * p_uart = NULL;
+    rm_wifi_onchip_silex_uart_extended_cfg_t uart0_cfg_extended_115200;
+    uart_cfg_t uart0_cfg_115200;
 
 #if (WIFI_ONCHIP_SILEX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ASSERT(NULL != p_cfg);
@@ -486,26 +507,23 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     /* Create memory copy of uart extended configuration and then copy new configuration values in. */
     memcpy((void *) &uart0_cfg_extended_115200,
            (void *) p_instance_ctrl->uart_instance_objects[0]->p_cfg->p_extend,
-           sizeof(sci_uart_extended_cfg_t));
+           sizeof(rm_wifi_onchip_silex_uart_extended_cfg_t));
 
     /* Create memory copy of uart configuration and update with new extended configuration structure. */
     memcpy((void *) &uart0_cfg_115200, p_instance_ctrl->uart_instance_objects[0]->p_cfg, sizeof(uart_cfg_t));
-
-    R_SCI_UART_BaudCalculate(WIFI_ONCHIP_SILEX_DEFAULT_BAUDRATE,
-                             WIFI_ONCHIP_SILEX_DEFAULT_MODULATION,
-                             WIFI_ONCHIP_SILEX_DEFAULT_ERROR,
-                             &g_baud_setting_115200);
+    p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT];
+    (*p_sci_uart_baud_calculate)(WIFI_ONCHIP_SILEX_DEFAULT_BAUDRATE, WIFI_ONCHIP_SILEX_DEFAULT_MODULATION,
+                                 WIFI_ONCHIP_SILEX_DEFAULT_ERROR, &g_baud_setting_115200);
 
     uart0_cfg_extended_115200.p_baud_setting   = &g_baud_setting_115200;
-    uart0_cfg_extended_115200.flow_control     = SCI_UART_FLOW_CONTROL_RTS;
+    uart0_cfg_extended_115200.flow_control     = RM_WIFI_ONCHIP_SILEX_SCI_UART_FLOW_CONTROL_RTS;
     uart0_cfg_extended_115200.flow_control_pin =
         (bsp_io_port_pin_t) WIFI_ONCHIP_SILEX_BSP_PIN_PORT_INVALID;
 
     uart0_cfg_115200.p_extend = (void *) &uart0_cfg_extended_115200;
 
     /* Open uart 1 with module default values for baud. 115200 and no hardware flow control. */
-    p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT];
-    err    = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg_115200);
+    err = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg_115200);
 
     if (FSP_SUCCESS != err)
     {
@@ -551,11 +569,12 @@ fsp_err_t rm_wifi_onchip_silex_open (wifi_onchip_silex_cfg_t const * const p_cfg
     strncat((char *) p_temp_buff, g_wifi_onchip_silex_uart_cmd_baud, 10);
     strncat((char *) p_temp_buff, ",,,,", 5);
 
-    sci_uart_extended_cfg_t * ext_cfg = (sci_uart_extended_cfg_t *)p_instance_ctrl->uart_instance_objects[ 
-        WIFI_ONCHIP_SILEX_UART_INITIAL_PORT]->p_cfg->p_extend;
+    rm_wifi_onchip_silex_uart_extended_cfg_t * ext_cfg =
+        (rm_wifi_onchip_silex_uart_extended_cfg_t *) p_instance_ctrl->uart_instance_objects[
+            WIFI_ONCHIP_SILEX_UART_INITIAL_PORT]->p_cfg->p_extend;
 
-    if (((uint32_t)ext_cfg->flow_control_pin != (uint32_t)WIFI_ONCHIP_SILEX_BSP_PIN_PORT_INVALID) || 
-        (ext_cfg->flow_control == SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS))
+    if (((uint32_t) ext_cfg->flow_control_pin != (uint32_t) WIFI_ONCHIP_SILEX_BSP_PIN_PORT_INVALID) ||
+        (ext_cfg->flow_control == RM_WIFI_ONCHIP_SILEX_SCI_UART_FLOW_CONTROL_HARDWARE_CTSRTS))
     {
         strncat((char *) p_temp_buff, "h\r", 3);
     }
@@ -1122,6 +1141,9 @@ fsp_err_t rm_wifi_onchip_silex_connect (const char * p_ssid, WIFISecurity_t secu
                                           WIFI_ONCHIP_SILEX_TIMEOUT_3MS,
                                           WIFI_ONCHIP_SILEX_TIMEOUT_20SEC,
                                           WIFI_ONCHIP_SILEX_RETURN_OK);
+
+    /* Clear password from command buffer before function return */
+    memset(&p_instance_ctrl->cmd_tx_buff[0], 0, sizeof(p_instance_ctrl->cmd_tx_buff));
 
     if (FSP_SUCCESS == ret)
     {
@@ -1826,10 +1848,13 @@ fsp_err_t rm_wifi_onchip_silex_socket_create (uint32_t socket_no, uint32_t type,
     fsp_err_t ret;
     uint32_t  mutex_flag;
 
+    FSP_PARAMETER_NOT_USED(ipversion);
+
     wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_silex_instance;
 
 #if (WIFI_ONCHIP_SILEX_CFG_PARAM_CHECKING_ENABLED == 1)
     FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ASSERT(type <= WIFI_ONCHIP_SILEX_SOCKET_TYPE_MAX);
 #endif
 
     mutex_flag = (WIFI_ONCHIP_SILEX_MUTEX_TX | WIFI_ONCHIP_SILEX_MUTEX_RX);
@@ -1854,7 +1879,17 @@ fsp_err_t rm_wifi_onchip_silex_socket_create (uint32_t socket_no, uint32_t type,
         }
     }
 
-    sprintf((char *) p_instance_ctrl->cmd_tx_buff, "ATNSOCK=%u,%u\r", (unsigned int) type, (unsigned int) ipversion);
+    /* If type is anything but 0 or 1 then assign type to UDP */
+    if (1 >= type)
+    {
+        type = WIFI_ONCHIP_SILEX_SOCKET_TYPE_TCP; // TCP type selected
+    }
+    else
+    {
+        type = WIFI_ONCHIP_SILEX_SOCKET_TYPE_UDP; // UDP type selected
+    }
+
+    sprintf((char *) p_instance_ctrl->cmd_tx_buff, "ATNSOCK=%u,%u\r", (unsigned int) type, 4);
 
     ret = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
                                           p_instance_ctrl->curr_cmd_port,
@@ -1975,6 +2010,101 @@ fsp_err_t rm_wifi_onchip_silex_tcp_connect (uint32_t socket_no, uint32_t ipaddr,
 }
 
 /*******************************************************************************************************************//**
+ *  Connect to a specific IP and Port using UDP socket.
+ *
+ * @param[in]  socket_no        Socket ID number.
+ * @param[in]  ipaddr           IP address for socket connection. 0 if type is server.
+ * @param[in]  port             Port number for socket connection.
+ * @param[in]  type             Type of UDP connection. Can be client or server.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
+ * @retval FSP_ERR_ASSERTION        The p_instance_ctrl is NULL.
+ * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t rm_wifi_onchip_silex_udp_connect (uint32_t socket_no, uint32_t ipaddr, uint32_t port, uint32_t type)
+{
+    fsp_err_t ret = FSP_SUCCESS;
+    uint32_t  mutex_flag;
+
+    wifi_onchip_silex_instance_ctrl_t * p_instance_ctrl = &g_rm_wifi_onchip_silex_instance;
+
+#if (WIFI_ONCHIP_SILEX_CFG_PARAM_CHECKING_ENABLED == 1)
+    FSP_ERROR_RETURN(WIFI_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    mutex_flag = (WIFI_ONCHIP_SILEX_MUTEX_TX | WIFI_ONCHIP_SILEX_MUTEX_RX);
+    FSP_ERROR_RETURN(FSP_SUCCESS == rm_wifi_onchip_silex_send_basic_take_mutex(p_instance_ctrl, mutex_flag),
+                     FSP_ERR_WIFI_FAILED);
+
+    if (0 == p_instance_ctrl->sockets[socket_no].socket_create_flag)
+    {
+        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+        return FSP_ERR_WIFI_FAILED;
+    }
+
+    if (2 == p_instance_ctrl->num_uarts)
+    {
+        ret = rm_wifi_onchip_silex_change_socket_index(p_instance_ctrl, socket_no);
+        if (FSP_SUCCESS != ret)
+        {
+            rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+            return FSP_ERR_WIFI_FAILED;
+        }
+    }
+
+    memset(p_instance_ctrl->cmd_tx_buff, 0, sizeof(p_instance_ctrl->cmd_tx_buff));
+
+    if (type == 0)
+    {
+        // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy) Disable warning about use of strcpy
+        strcpy((char *) p_instance_ctrl->cmd_tx_buff, "ATNCUDP=");
+        sprintf((char *) p_instance_ctrl->cmd_tx_buff + strlen((char *) p_instance_ctrl->cmd_tx_buff),
+                "%d.%d.%d.%d,%d\r",
+                (uint8_t) (ipaddr >> 24),
+                (uint8_t) (ipaddr >> 16),
+                (uint8_t) (ipaddr >> 8),
+                (uint8_t) (ipaddr),
+                (int) port);
+    }
+    else
+    {
+        // NOLINTNEXTLINE(clang-analyzer-security.insecureAPI.strcpy) Disable warning about use of strcpy
+        strcpy((char *) p_instance_ctrl->cmd_tx_buff, "ATNSUDP=");
+        sprintf((char *) p_instance_ctrl->cmd_tx_buff + strlen((char *) p_instance_ctrl->cmd_tx_buff),
+                "%d\r",
+                (int) port);
+    }
+
+    ret = rm_wifi_onchip_silex_send_basic(p_instance_ctrl,
+                                          p_instance_ctrl->curr_cmd_port,
+                                          (char *) p_instance_ctrl->cmd_tx_buff,
+                                          WIFI_ONCHIP_SILEX_TIMEOUT_3MS,
+                                          WIFI_ONCHIP_SILEX_TIMEOUT_15SEC,
+                                          WIFI_ONCHIP_SILEX_RETURN_CONNECT);
+
+    if ((FSP_SUCCESS == ret) || (WIFI_ONCHIP_SILEX_RETURN_BUSY == (sx_ulpgn_return_code_t) ret) ||
+        (WIFI_ONCHIP_SILEX_RETURN_CONNECT == (sx_ulpgn_return_code_t) ret))
+    {
+        p_instance_ctrl->sockets[socket_no].socket_status          = WIFI_ONCHIP_SILEX_SOCKET_STATUS_CONNECTED;
+        p_instance_ctrl->sockets[socket_no].socket_read_write_flag = WIFI_ONCHIP_SILEX_SOCKET_READ |
+                                                                     WIFI_ONCHIP_SILEX_SOCKET_WRITE;
+    }
+    else
+    {
+        rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+        return FSP_ERR_WIFI_FAILED;
+    }
+
+    rm_wifi_onchip_silex_send_basic_give_mutex(p_instance_ctrl, mutex_flag);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  *  Send data over TCP to a server.
  *
  * @param[in]  socket_no        Socket ID number.
@@ -1986,7 +2116,7 @@ fsp_err_t rm_wifi_onchip_silex_tcp_connect (uint32_t socket_no, uint32_t ipaddr,
  * @retval FSP_ERR_ASSERTION        The p_instance_ctrl or parameter p_data is NULL.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  **********************************************************************************************************************/
-int32_t rm_wifi_onchip_silex_tcp_send (uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
+int32_t rm_wifi_onchip_silex_send (uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
 {
     uint32_t  sent_count = 0;
     uint32_t  lenghttmp1;
@@ -2091,6 +2221,23 @@ int32_t rm_wifi_onchip_silex_tcp_send (uint32_t socket_no, const uint8_t * p_dat
     return (int32_t) sent_count;
 }
 
+/***********************************************************************************************************************
+ *  DEPRECATED - Send data over TCP to a server.
+ *
+ * @param[in]  socket_no        Socket ID number.
+ * @param[in]  p_data            Pointer to data to send.
+ * @param[in]  length           Length of data to send.
+ * @param[in]  timeout_ms       Timeout to wait for transmit end event
+ *
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
+ * @retval FSP_ERR_ASSERTION        The p_instance_ctrl or parameter p_data is NULL.
+ * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
+ **********************************************************************************************************************/
+int32_t rm_wifi_onchip_silex_tcp_send (uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
+{
+    return rm_wifi_onchip_silex_send(socket_no, p_data, length, timeout_ms);
+}
+
 /*******************************************************************************************************************//**
  *  Receive data over TCP from a server.
  *
@@ -2104,7 +2251,7 @@ int32_t rm_wifi_onchip_silex_tcp_send (uint32_t socket_no, const uint8_t * p_dat
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
  * @retval FSP_ERR_ASSERTION        The p_instance_ctrl or parameter p_data is NULL.
  **********************************************************************************************************************/
-int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
+int32_t rm_wifi_onchip_silex_recv (uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
 {
 #if (BSP_CFG_RTOS == 2)                // FreeRTOS
     uint32_t  recvcnt = 0;
@@ -2206,7 +2353,7 @@ int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uin
         }
         else
         {
-            ret = WIFI_ONCHIP_SILEX_ERR_ERROR; // timeout occurred
+            ret = 0; // timeout occurred
         }
 
         /* Reset the trigger level for socket stream buffer */
@@ -2278,6 +2425,24 @@ int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uin
 
     return FSP_ERR_UNSUPPORTED;
 #endif
+}
+
+/***********************************************************************************************************************
+ *  DEPRECATED - Receive data over TCP from a server.
+ *
+ * @param[in]  socket_no        Socket ID number.
+ * @param[out]  p_data            Pointer to data received from socket.
+ * @param[in]  length           Length of data array used for receive.
+ * @param[in]  timeout_ms       Timeout to wait for data to be received from socket.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
+ * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
+ * @retval FSP_ERR_ASSERTION        The p_instance_ctrl or parameter p_data is NULL.
+ **********************************************************************************************************************/
+int32_t rm_wifi_onchip_silex_tcp_recv (uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms)
+{
+    return rm_wifi_onchip_silex_recv(socket_no, p_data, length, timeout_ms);
 }
 
 /*******************************************************************************************************************//**
@@ -2496,20 +2661,21 @@ void rm_wifi_onchip_silex_initialize_packet_buffers (uint8_t * p_current_packet_
 }
 
 /*******************************************************************************************************************//**
- *  Initialize packet buffers with packet pointers and set the size of the packet.
+ *  Set next packet buffer pointer.
  *
  * @param[in]  p_next_packet_buffer         Packet buffer address to switch to after current packet is full.
- * @param[in]  move_current_packet_buffer   If true, set current packet buffer pointer to next pointer before writing
- *                                             next buffer pointer.
  **********************************************************************************************************************/
-void rm_wifi_onchip_silex_set_next_packet_buffer (uint8_t * p_next_packet_buffer, bool move_current_packet_buffer)
+void rm_wifi_onchip_silex_set_next_packet_buffer (uint8_t * p_next_packet_buffer)
 {
-    if (move_current_packet_buffer)
-    {
-        g_rm_wifi_onchip_silex_instance.p_current_packet_buffer = g_rm_wifi_onchip_silex_instance.p_next_packet_buffer;
-    }
-
     g_rm_wifi_onchip_silex_instance.p_next_packet_buffer = p_next_packet_buffer;
+}
+
+/*******************************************************************************************************************//**
+ *  Advance current packet buffer pointer to the next packet buffer pointer.
+ **********************************************************************************************************************/
+void rm_wifi_onchip_silex_move_to_next_packet_buffer (void)
+{
+    g_rm_wifi_onchip_silex_instance.p_current_packet_buffer = g_rm_wifi_onchip_silex_instance.p_next_packet_buffer;
 }
 
 /*******************************************************************************************************************//**
@@ -2661,13 +2827,13 @@ static void rm_wifi_onchip_silex_cleanup_open (wifi_onchip_silex_instance_ctrl_t
 #endif
 
     uart_instance_t * p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_INITIAL_PORT];
-    if (SCIU_OPEN == ((sci_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
+    if (SCIU_OPEN == ((rm_wifi_onchip_silex_uart_instance_t *) p_uart->p_ctrl)->open)
     {
         p_uart->p_api->close(p_uart->p_ctrl);
     }
 
     p_uart = p_instance_ctrl->uart_instance_objects[WIFI_ONCHIP_SILEX_UART_SECOND_PORT];
-    if (SCIU_OPEN == ((sci_uart_instance_ctrl_t *) p_uart->p_ctrl)->open)
+    if (SCIU_OPEN == ((rm_wifi_onchip_silex_uart_instance_t *) p_uart->p_ctrl)->open)
     {
         p_uart->p_api->close(p_uart->p_ctrl);
     }
@@ -3322,8 +3488,9 @@ static fsp_err_t rm_wifi_onchip_silex_change_socket_index (wifi_onchip_silex_ins
         if (socket_no != p_instance_ctrl->curr_socket_index) // Only attempt change if socket number is different than current.
         {
 #if (BSP_CFG_RTOS == 1)
-            sci_uart_instance_ctrl_t * p_data_port_uart_ctrl =
-                (sci_uart_instance_ctrl_t *) p_instance_ctrl->uart_instance_objects[p_instance_ctrl->curr_data_port]->
+            rm_wifi_onchip_silex_uart_instance_t * p_data_port_uart_ctrl =
+                (rm_wifi_onchip_silex_uart_instance_t *) p_instance_ctrl->uart_instance_objects[p_instance_ctrl->
+                                                                                                curr_data_port]->
                 p_ctrl;
 
             /* Set flow control in order to pause data over data port. */

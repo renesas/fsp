@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -26,8 +26,14 @@
 #include "system_core_init.h"
 #include "mbedtls/platform.h"
 
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
+
 extern void tfm_main(void);
 
-extern void R_BSP_WarmStart (bsp_warm_start_event_t event);
+extern void R_BSP_WarmStart(bsp_warm_start_event_t event);
 
-#endif /* RM_TFM_PORT_H */
+/** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
+
+#endif                                 /* RM_TFM_PORT_H */

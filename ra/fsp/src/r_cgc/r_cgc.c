@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -578,7 +578,7 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
 #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
 
     /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
-    clock_cfg.bclk_div = clock_cfg.pclkb_div;
+    clock_cfg.sckdivcr_b.bclk_div = clock_cfg.sckdivcr_b.pclkb_div;
 #endif
     bsp_prv_clock_set(requested_system_clock, clock_cfg.sckdivcr_w);
 
@@ -866,7 +866,7 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
 #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
 
     /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
-    clock_cfg.bclk_div = clock_cfg.pclkb_div;
+    clock_cfg.sckdivcr_b.bclk_div = clock_cfg.sckdivcr_b.pclkb_div;
 #endif
     bsp_prv_clock_set(clock_source, clock_cfg.sckdivcr_w);
 
@@ -1531,35 +1531,35 @@ static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_
      * circuit for the internal clocks" in the RA6M3 manual R01UH0886EJ0100). */
 
     /* ICLK frequency must be >= PCLKA, so ICLK divider must be <= PCLKA. */
-    FSP_ASSERT(p_divider_cfg->iclk_div <= p_divider_cfg->pclka_div);
+    FSP_ASSERT(p_divider_cfg->sckdivcr_b.iclk_div <= p_divider_cfg->sckdivcr_b.pclka_div);
 
     /* PCLKA frequency must be >= PCLKB, so PCLKA divider must be <= PCLKB. */
-    FSP_ASSERT(p_divider_cfg->pclka_div <= p_divider_cfg->pclkb_div);
+    FSP_ASSERT(p_divider_cfg->sckdivcr_b.pclka_div <= p_divider_cfg->sckdivcr_b.pclkb_div);
 
     /* PCLKD frequency must be >= PCLKA, so PCLKD divider must be <= PCLKA. */
-    FSP_ASSERT(p_divider_cfg->pclkd_div <= p_divider_cfg->pclka_div);
+    FSP_ASSERT(p_divider_cfg->sckdivcr_b.pclkd_div <= p_divider_cfg->sckdivcr_b.pclka_div);
  #elif BSP_FEATURE_CGC_HAS_PCLKB
 
     /* Check dividers against hardware constraints (see footnotes of Table 9.2 "Clock generation circuit specifications
      * for the internal clocks" in the RA2A1 manual R01UH0888EJ0100). */
 
     /* ICLK frequency must be >= PCLKB, so ICLK divider must be <= PCLKB. */
-    FSP_ASSERT(p_divider_cfg->iclk_div <= p_divider_cfg->pclkb_div);
+    FSP_ASSERT(p_divider_cfg->sckdivcr_b.iclk_div <= p_divider_cfg->sckdivcr_b.pclkb_div);
 
     /* PCLKD frequency must be >= PCLKB, so PCLKD divider must be <= PCLKB. */
-    FSP_ASSERT(p_divider_cfg->pclkd_div <= p_divider_cfg->pclkb_div);
+    FSP_ASSERT(p_divider_cfg->sckdivcr_b.pclkd_div <= p_divider_cfg->sckdivcr_b.pclkb_div);
  #endif
 
  #if BSP_FEATURE_CGC_HAS_FCLK
 
     /* ICLK frequency must be >= FCLK, so ICLK divider must be <= FCLK. */
-    FSP_ASSERT(p_divider_cfg->iclk_div <= p_divider_cfg->fclk_div);
+    FSP_ASSERT(p_divider_cfg->sckdivcr_b.iclk_div <= p_divider_cfg->sckdivcr_b.fclk_div);
  #endif
 
  #if BSP_FEATURE_CGC_HAS_BCLK
 
     /* ICLK frequency must be >= BCLK, so ICLK divider must be <= BCLK. */
-    FSP_ASSERT(p_divider_cfg->iclk_div <= p_divider_cfg->bclk_div);
+    FSP_ASSERT(p_divider_cfg->sckdivcr_b.iclk_div <= p_divider_cfg->sckdivcr_b.bclk_div);
  #endif
 
     return FSP_SUCCESS;

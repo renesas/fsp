@@ -185,6 +185,12 @@ int flash_area_id_to_multi_image_slot(int image_index, int area_id);
  */
 int flash_on_chip_cleanup(void);
 
+typedef struct rm_mcuboot_port_flush_buffer
+{
+    uint32_t   g_current_block;
+    uint32_t * p_flush_buffer;
+} rm_mcuboot_port_flush_buffer_t;
+
 /*
  * Flush on chip flash buffer.
  */

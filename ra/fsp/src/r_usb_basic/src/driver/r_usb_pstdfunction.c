@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -53,7 +53,7 @@
 
  #if (BSP_CFG_RTOS == 1)
 static uint8_t        * g_p_usbx_string_table[NUM_STRING_DESC];
-static usb_descriptor_t g_usbx_descriptor;
+usb_descriptor_t g_usbx_descriptor;
 
 void usb_pstd_ux_descriptor_to_basic(usb_cfg_t * p_cfg);
 

@@ -260,8 +260,8 @@ uint8_t g_device_framework_hi_speed[DEVICE_FRAME_HIGH_LEN] =
         USB_AUD_CS_INTERFACE,   /* 1:bDescriptorType */
         USB_AUD_OUTPUT_TERMINAL,/* 2:bDescriptorSubtype */
         0x06,                   /* 3:bTerminalID */
-        0x02,                   /* 4:wTerminalType : (HeadSet) */
-        0x04,                   /* 5:wTerminalType : (HeadSet) */
+        0x02,                   /* 4:wTerminalType : (Headphone) */
+        0x03,                   /* 5:wTerminalType : (Headphone) */
         0x00,                   /* 6:bAssocTerminal */
         0x05,                   /* 7:bSourceID */
         0x10,                   /* 8:bCSourceID */
@@ -274,8 +274,8 @@ uint8_t g_device_framework_hi_speed[DEVICE_FRAME_HIGH_LEN] =
         USB_AUD_CS_INTERFACE,   /* 1:bDescriptorType */
         USB_AUD_INPUT_TERMINAL, /* 2:bDescriptorSubtype */
         0x07,                   /* 3:bTerminalID */
-        0x02,                   /* 4:wTerminalType : (HeadSet) */
-        0x04,                   /* 5:wTerminalType : (HeadSet) */
+        0x01,                   /* 4:wTerminalType : (Microphone) */
+        0x02,                   /* 5:wTerminalType : (Microphone) */
         0x00,                   /* 6:bAssocTerminal */
         0x10,                   /* 7:bCSourceID */
         0x02,                   /* 8:bNrChannels */

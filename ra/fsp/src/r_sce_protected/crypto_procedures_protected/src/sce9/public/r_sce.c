@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -119,6 +119,10 @@ const sce_api_t g_sce_protected_on_sce =
     .AES256_WrappedKeyGenerate                         = R_SCE_AES256_WrappedKeyGenerate,
     .AES128_EncryptedKeyWrap                           = R_SCE_AES128_EncryptedKeyWrap,
     .AES256_EncryptedKeyWrap                           = R_SCE_AES256_EncryptedKeyWrap,
+    .AES128_RFC3394KeyWrap                             = R_SCE_AES128_RFC3394KeyWrap,
+    .AES256_RFC3394KeyWrap                             = R_SCE_AES256_RFC3394KeyWrap,
+    .AES128_RFC3394KeyUnwrap                           = R_SCE_AES128_RFC3394KeyUnwrap,
+    .AES256_RFC3394KeyUnwrap                           = R_SCE_AES256_RFC3394KeyUnwrap,
     .AES128ECB_EncryptInit                             = R_SCE_AES128ECB_EncryptInit,
     .AES128ECB_EncryptUpdate                           = R_SCE_AES128ECB_EncryptUpdate,
     .AES128ECB_EncryptFinal                            = R_SCE_AES128ECB_EncryptFinal,
@@ -557,6 +561,126 @@ fsp_err_t R_SCE_AES256_EncryptedKeyWrap (uint8_t               * initial_vector,
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API wraps 128-bit AES key within the user routine.
+ * @param[in]  master_key          AES-128 key used for wrapping.
+ * @param[in]  target_key_type     Selects key to be wrapped.
+ * @param[in]  target_key          Key to be wrapped.
+ * @param[out] rfc3394_wrapped_key Wrapped key.
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
+ * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_AES128_RFC3394KeyWrap (sce_aes_wrapped_key_t * master_key,
+                                       uint32_t target_key_type,
+                                       sce_aes_wrapped_key_t * target_key,
+                                       uint32_t * rfc3394_wrapped_key)
+{
+    return R_SCE_Aes128KeyWrapPrivate(
+            /* Casting uint32_t pointer is used for address. */
+            (uint32_t*)&master_key->value, &target_key_type, (uint32_t*)&target_key->value, rfc3394_wrapped_key);
+}
+
+/*******************************************************************************************************************//**
+ * This API wraps 256-bit AES key within the user routine.
+ * @param[in]  master_key          AES-256 key used for wrapping.
+ * @param[in]  target_key_type     Selects key to be wrapped.
+ * @param[in]  target_key          Key to be wrapped.
+ * @param[out] rfc3394_wrapped_key Wrapped key.
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
+ * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_AES256_RFC3394KeyWrap (sce_aes_wrapped_key_t * master_key,
+                                       uint32_t target_key_type,
+                                       sce_aes_wrapped_key_t * target_key,
+                                       uint32_t * rfc3394_wrapped_key)
+{
+    return R_SCE_Aes256KeyWrapPrivate(
+            /* Casting uint32_t pointer is used for address. */
+            (uint32_t*)&master_key->value, &target_key_type, (uint32_t*)&target_key->value, rfc3394_wrapped_key);
+}
+
+/*******************************************************************************************************************//**
+ * This API unwraps 128-bit AES key within the user routine.
+ * @param[in]  master_key          AES-128 key used for unwrapping.
+ * @param[in]  target_key_type     Selects key to be unwrapped.
+ * @param[in]  rfc3394_wrapped_key Wrapped key.
+ * @param[out] target_key          Key to be unwrapped.
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
+ * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_AES128_RFC3394KeyUnwrap (sce_aes_wrapped_key_t * master_key,
+                                         uint32_t target_key_type,
+                                         uint32_t * rfc3394_wrapped_key,
+                                         sce_aes_wrapped_key_t * target_key)
+{
+    fsp_err_t error_code = FSP_SUCCESS;
+
+    error_code = R_SCE_Aes128KeyUnWrapPrivate(master_key, &target_key_type, rfc3394_wrapped_key, target_key->value);
+    if (FSP_SUCCESS == error_code)
+    {
+        if (SCE_KEYWRAP_AES128 == target_key_type)
+        {
+            target_key->type = SCE_KEY_INDEX_TYPE_AES128;
+        }
+        else    /* if (SCE_KEYWRAP_AES128 == target_key_type) */
+        {
+            target_key->type =SCE_KEY_INDEX_TYPE_AES256;
+        }
+    }
+    else
+    {
+        target_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API unwraps 256-bit AES key within the user routine.
+ * @param[in]  master_key          AES-256 key used for unwrapping.
+ * @param[in]  target_key_type     Selects key to be unwrapped.
+ * @param[in]  rfc3394_wrapped_key Wrapped key.
+ * @param[out] target_key          Key to be unwrapped.
+ *
+ * @retval FSP_SUCCESS                          Normal termination.
+ * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT Resource conflict.
+ * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal user Key Generation Information.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
+ **********************************************************************************************************************/
+fsp_err_t R_SCE_AES256_RFC3394KeyUnwrap (sce_aes_wrapped_key_t * master_key,
+                                         uint32_t target_key_type,
+                                         uint32_t * rfc3394_wrapped_key,
+                                         sce_aes_wrapped_key_t * target_key)
+{
+    fsp_err_t error_code = FSP_SUCCESS;
+
+    error_code = R_SCE_Aes256KeyUnWrapPrivate(master_key, &target_key_type, rfc3394_wrapped_key, target_key->value);
+    if (FSP_SUCCESS == error_code)
+    {
+        if (SCE_KEYWRAP_AES128 == target_key_type)
+        {
+            target_key->type = SCE_KEY_INDEX_TYPE_AES128;
+        }
+        else    /* if (SCE_KEYWRAP_AES128 == target_key_type) */
+        {
+            target_key->type =SCE_KEY_INDEX_TYPE_AES256;
+        }
+    }
+    else
+    {
+        target_key->type = SCE_KEY_INDEX_TYPE_INVALID;
+    }
     return error_code;
 }
 

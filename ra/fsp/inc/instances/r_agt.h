@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -148,12 +148,21 @@ typedef struct st_agt_extended_cfg
     union
     {
         uint8_t agtoab_settings;
+
+        /* DEPRECATED: Anonymous structure. */
+        struct
+        {
+            agt_pin_cfg_t agtoa : 3;   ///< Configure AGTOA/AGTWOA pin
+            uint8_t             : 1;
+            agt_pin_cfg_t agtob : 3;   ///< Configure AGTOB/AGTWOB pin
+        };
+
         struct
         {
             agt_pin_cfg_t agtoa : 3;     ///< Configure AGTOA/AGTWOA pin
             uint8_t             : 1;
             agt_pin_cfg_t agtob : 3;     ///< Configure AGTOB/AGTWOB pin
-        };
+        } agtoab_settings_b;
     };
     agt_pin_cfg_t agto : 3;              ///< Configure AGTO pin @note AGTIO polarity is opposite AGTO
 

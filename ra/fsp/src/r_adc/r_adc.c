@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -1105,6 +1105,8 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
 
     /* Determine the value for ADCSR:
      *   * The configured mode is set in ADCSR.ADCS.
+     *   * Low-power conversion mode must be selected when internal reference voltage is selected as the high-potential
+     *     reference voltage.
      *   * ADCSR.GBADIE is always set by this driver. It will only trigger an interrupt in group mode if the group B
      *     interrupt is enabled.
      *   * If double-trigger mode is selected ADCSR.DBLANS is set to the chosen double-trigger scan channel and
@@ -1116,6 +1118,13 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
     uint32_t adcsr = (uint32_t) (p_cfg->mode << R_ADC0_ADCSR_ADCS_Pos);
     adcsr |= (uint32_t) (R_ADC0_ADCSR_GBADIE_Msk);
     adcsr |= ((uint32_t) p_cfg->trigger << R_ADC0_ADCSR_EXTRG_Pos);
+
+#if BSP_FEATURE_ADC_HAS_ADHVREFCNT
+    if (ADC_PRV_ADHVREFCNT_VREF_INTERNAL_BIT_1 & p_cfg_extend->adc_vref_control)
+    {
+        adcsr |= R_ADC0_ADCSR_ADHSC_Msk;
+    }
+#endif
 
     if (ADC_DOUBLE_TRIGGER_DISABLED != p_cfg_extend->double_trigger_mode)
     {

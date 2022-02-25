@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -235,7 +235,7 @@ fsp_err_t R_SDADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
             uint32_t pgac_register_value = p_cfg_extend->p_channel_cfgs[i]->pgac_setting;
 
             /* If differential mode is used and calibration during open is not skipped, enable calibration on this channel. */
-            if (SDADC_CHANNEL_INPUT_DIFFERENTIAL == p_cfg_extend->p_channel_cfgs[i]->input)
+            if (SDADC_CHANNEL_INPUT_DIFFERENTIAL == p_cfg_extend->p_channel_cfgs[i]->pgac_setting_b.input)
             {
                 pgac_register_value |= 1U << SDADC_PRIV_PGAC_PGACVE_SHIFT;
             }
@@ -770,11 +770,14 @@ static fsp_err_t r_sdadc_open_param_check_2 (adc_cfg_t const * const p_cfg)
         if (NULL != p_cfg_extend->p_channel_cfgs[i])
         {
             channels_configured++;
-            if (SDADC_CHANNEL_INPUT_SINGLE_ENDED == p_cfg_extend->p_channel_cfgs[i]->input)
+            if (SDADC_CHANNEL_INPUT_SINGLE_ENDED == p_cfg_extend->p_channel_cfgs[i]->pgac_setting_b.input)
             {
-                FSP_ASSERT(SDADC_CHANNEL_OVERSAMPLING_256 == p_cfg_extend->p_channel_cfgs[i]->oversampling);
-                FSP_ASSERT(SDADC_CHANNEL_STAGE_1_GAIN_1 == p_cfg_extend->p_channel_cfgs[i]->stage_1_gain);
-                FSP_ASSERT(SDADC_CHANNEL_STAGE_2_GAIN_1 == p_cfg_extend->p_channel_cfgs[i]->stage_2_gain);
+                FSP_ASSERT(
+                    SDADC_CHANNEL_OVERSAMPLING_256 == p_cfg_extend->p_channel_cfgs[i]->pgac_setting_b.oversampling);
+                FSP_ASSERT(SDADC_CHANNEL_STAGE_1_GAIN_1 ==
+                           p_cfg_extend->p_channel_cfgs[i]->pgac_setting_b.stage_1_gain);
+                FSP_ASSERT(SDADC_CHANNEL_STAGE_2_GAIN_1 ==
+                           p_cfg_extend->p_channel_cfgs[i]->pgac_setting_b.stage_2_gain);
             }
         }
     }
@@ -862,7 +865,7 @@ static fsp_err_t r_sdadc_open_irq_cfg (sdadc_instance_ctrl_t * const p_instance_
     {
         if (NULL != p_cfg_extend->p_channel_cfgs[i])
         {
-            if (SDADC_CHANNEL_INPUT_DIFFERENTIAL == p_cfg_extend->p_channel_cfgs[i]->input)
+            if (SDADC_CHANNEL_INPUT_DIFFERENTIAL == p_cfg_extend->p_channel_cfgs[i]->pgac_setting_b.input)
             {
                 FSP_ERROR_RETURN(FSP_INVALID_VECTOR != p_cfg->scan_end_b_irq, FSP_ERR_IRQ_BSP_DISABLED);
             }

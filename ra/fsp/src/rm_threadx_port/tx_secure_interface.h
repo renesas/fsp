@@ -9,7 +9,6 @@
 /*                                                                        */
 /**************************************************************************/
 
-
 /**************************************************************************/
 /**************************************************************************/
 /**                                                                       */
@@ -19,7 +18,6 @@
 /**                                                                       */
 /**************************************************************************/
 /**************************************************************************/
-
 
 /**************************************************************************/
 /*                                                                        */
@@ -37,12 +35,20 @@
 /**************************************************************************/
 
 #ifndef TX_SECURE_INTERFACE_H
-#define TX_SECURE_INTERFACE_H
+ #define TX_SECURE_INTERFACE_H
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 /* Define SVC numbers used to call CMSIS TrustZone secure context functions.  */
 
-#define TX_SVC_NUM_SECURE_ALLOC               1
-#define TX_SVC_NUM_SECURE_FREE                2
-#define TX_SVC_NUM_SECURE_INIT                3
+ #define TX_SVC_NUM_SECURE_ALLOC    1
+ #define TX_SVC_NUM_SECURE_FREE     2
+ #define TX_SVC_NUM_SECURE_INIT     3
+
+ #ifdef __cplusplus
+}
+ #endif
 
 #endif

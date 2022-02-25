@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -447,7 +447,11 @@ static void usb_pstd_get_status1 (usb_utr_t * p_utr)
     uint16_t       buffer;
     uint16_t       pipe;
 
+#if defined (USB_CFG_OTG_USE)
+    if ((0 == g_usb_pstd_req_value) && (1 == g_usb_pstd_req_length))
+#else
     if ((0 == g_usb_pstd_req_value) && (2 == g_usb_pstd_req_length))
+#endif
     {
         tbl[0] = 0;
         tbl[1] = 0;
@@ -471,6 +475,16 @@ static void usb_pstd_get_status1 (usb_utr_t * p_utr)
                     /* Control read start */
                     usb_pstd_ctrl_read((uint32_t) 2, tbl, p_utr);
                 }
+
+ #if defined(USB_CFG_OTG_USE)
+                else if (USB_OTG_SELECTOR == g_usb_pstd_req_index)
+                {
+                    tbl[0] = (uint8_t) _ux_system_otg->ux_system_otg_slave_role_swap_flag;
+
+                    /* Control read start */
+                    usb_pstd_ctrl_read((uint32_t) 1, tbl, p_utr);
+                }
+ #endif                                /* defined(USB_CFG_OTG_USE) */
                 else
                 {
                     /* Request error */
@@ -1198,6 +1212,23 @@ static void usb_pstd_set_feature3 (usb_utr_t * p_utr)
                         break;
                     }
 
+ #ifdef  USB_CFG_OTG_USE
+                    case B_HNP_ENABLE:
+                    {
+                        g_usb_otg_hnp_process[p_utr->ip] = USB_ON;
+                        hw_usb_set_hnpbtoa(p_utr);
+                        usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
+
+                        break;
+                    }
+
+                    case A_HNP_SUPPORT:
+                    {
+                        usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
+                        break;
+                    }
+ #endif                                /* USB_CFG_OTG_USE */
+
                     default:
                     {
                         usb_pstd_set_feature_function(p_utr);
@@ -1523,7 +1554,7 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
                 usb_pstd_set_eptbl_index(g_usb_pstd_req_index, g_usb_pstd_alt_num[g_usb_pstd_req_index]);
  #ifndef USB_CFG_PAUD_USE
                 usb_pstd_set_pipe_reg(p_utr);
- #endif /* USB_CFG_PAUD_USE */
+ #endif                                /* USB_CFG_PAUD_USE */
  #if BSP_CFG_RTOS == 1
   #ifdef  USB_CFG_PAUD_USE
                 if (0 == (g_usb_pstd_req_value & USB_ALT_SET))

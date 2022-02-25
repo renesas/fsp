@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -18,34 +18,38 @@
  * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
  **********************************************************************************************************************/
 #ifndef R_USB_HCDC_H
-#define R_USB_HCDC_H
+ #define R_USB_HCDC_H
 
 /******************************************************************************
  * Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 /*****************************************************************************
  * Macro definitions
  ******************************************************************************/
 
 /* CDC Transfer data size */
-#define     USB_HCDC_EP_OFFSET_DATA    (0) /* Ep Table Bulk Pipe offset */
-#define     USB_HCDC_EP_OFFSET_CTL     (2) /* Ep Table Int Pipe offset */
+ #define     USB_HCDC_EP_OFFSET_DATA    (0) /* Ep Table Bulk Pipe offset */
+ #define     USB_HCDC_EP_OFFSET_CTL     (2) /* Ep Table Int Pipe offset */
 
-#define     USB_NOPIPE                 ((uint8_t) 0xFF)
+ #define     USB_NOPIPE                 ((uint8_t) 0xFF)
 
 /* Host Sample Task */
-#if (BSP_CFG_RTOS_USED == 0)
- #define USB_HCDC_TSK                  (USB_TID_6)    /* Task ID */
- #define USB_HCDC_MBX                  (USB_HCDC_TSK) /* Mailbox ID */
- #define USB_HCDC_MPL                  (USB_HCDC_TSK) /* Memorypool ID */
-#else
- #define USB_HCDC_TSK                  (USB_TID_8)    /* Task ID */
- #define USB_HCDC_MBX                  (USB_HCDC_TSK) /* Mailbox ID */
- #define USB_HCDC_MPL                  (USB_HCDC_TSK) /* Memorypool ID */
-#endif /* (BSP_CFG_RTOS_USED == 0) */
-#define USB_MAX_CONNECT_DEVICE_NUM     (2U)           /* 1-2 */
-#define USB_MAX_WLANGID_NUM            (32U)          /* Max Index Num of wLANGID. */
+ #if (BSP_CFG_RTOS_USED == 0)
+  #define USB_HCDC_TSK                  (USB_TID_6)    /* Task ID */
+  #define USB_HCDC_MBX                  (USB_HCDC_TSK) /* Mailbox ID */
+  #define USB_HCDC_MPL                  (USB_HCDC_TSK) /* Memorypool ID */
+ #else
+  #define USB_HCDC_TSK                  (USB_TID_8)    /* Task ID */
+  #define USB_HCDC_MBX                  (USB_HCDC_TSK) /* Mailbox ID */
+  #define USB_HCDC_MPL                  (USB_HCDC_TSK) /* Memorypool ID */
+ #endif /* (BSP_CFG_RTOS_USED == 0) */
+ #define USB_MAX_CONNECT_DEVICE_NUM     (2U)           /* 1-2 */
+ #define USB_MAX_WLANGID_NUM            (32U)          /* Max Index Num of wLANGID. */
 
 /******************************************************************************
  * Exported global variables
@@ -70,6 +74,10 @@ extern void     usb_hcdc_class_check(usb_utr_t * ptr, uint16_t ** table);
 
 void     usb_hcdc_enumeration(usb_clsinfo_t * mess);
 uint16_t usb_hcdc_pipe_info(usb_utr_t * ptr, uint8_t * table, uint16_t speed, uint16_t length);
+
+ #ifdef __cplusplus
+}
+ #endif
 
 #endif                                 /* R_USB_HCDC_H */
 

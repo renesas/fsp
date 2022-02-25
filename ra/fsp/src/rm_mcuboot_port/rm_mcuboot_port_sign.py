@@ -27,7 +27,6 @@ except:
 # Determine version
 if os.getenv('MCUBOOT_IMAGE_VERSION') is not None:
     # Version defined in environment variable
-    print('Packaging application image with version from environment variable MCUBOOT_IMAGE_VERSION: ' + os.getenv('MCUBOOT_IMAGE_VERSION'))
     if '-v' in sys.argv or '--version' in sys.argv:
         print('ERROR: Remove -v and --version from Signing Options > Custom and Signing Options > TrustZone > Custom (Image 2) to use MCUBOOT_IMAGE_VERSION.')
         sys.exit(1)
@@ -57,6 +56,9 @@ if mcuboot_image_signing_key is not None:
     else:
         sys.argv.insert(sys.argv.index('sign') + 1, '--key')
         sys.argv.insert(sys.argv.index('sign') + 2, mcuboot_image_signing_key)
+        print('Packaging application image with version from environment variable MCUBOOT_IMAGE_VERSION: ' + os.getenv('MCUBOOT_IMAGE_VERSION') + ' and key from MCUBOOT_IMAGE_SIGNING_KEY ' + mcuboot_image_signing_key)
+else:
+    print('Packaging application image with version from environment variable MCUBOOT_IMAGE_VERSION: ' + os.getenv('MCUBOOT_IMAGE_VERSION'))
 
 # Determine if the input file is .elf or binary format
 input_file = sys.argv[-2]
@@ -115,4 +117,5 @@ sys.path.append(boot_project_root + '/ra/mcu-tools/MCUboot/scripts')
 from imgtool import main
 
 if __name__ == '__main__':
+    print('python imgtool.py ' + ' '.join(sys.argv[1:]))
     main.imgtool()

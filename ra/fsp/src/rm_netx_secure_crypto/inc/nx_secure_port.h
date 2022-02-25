@@ -46,17 +46,25 @@
 /**************************************************************************/
 
 #ifndef NX_SECURE_PORT_H
-#define NX_SECURE_PORT_H
+ #define NX_SECURE_PORT_H
 
-#include "nx_secure_user.h"
+ #include "nx_secure_user.h"
+
+ #ifdef __cplusplus
+extern "C" {
+ #endif
 
 /* Define the version ID of NetX Secure.  This may be utilized by the application.  */
 
-#ifdef NX_SECURE_SYSTEM_INIT
+ #ifdef NX_SECURE_SYSTEM_INIT
 CHAR _nx_secure_version_id[] =
     "Copyright (c) Microsoft Corporation. All rights reserved.  *  NetX Secure Generic Version G6.1 *";
-#else
+ #else
 extern CHAR _nx_secure_version_id[];
-#endif
+ #endif
+
+ #ifdef __cplusplus
+}
+ #endif
 
 #endif

@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -28,6 +28,9 @@
 #include "r_usb_cstd_rtos.h"
 #include "r_usb_basic.h"
 #include "r_usb_basic_define.h"
+
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
+FSP_HEADER
 
 /******************************************************************************
  * Typedef definitions
@@ -245,4 +248,7 @@ typedef enum e_usb_class_internal
     USB_CLASS_INTERNAL_END             ///< USB Class
 } usb_class_internal_t;
 
-#endif /* R_USB_TYPEDEF_H */
+/** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+FSP_FOOTER
+
+#endif                                 /* R_USB_TYPEDEF_H */

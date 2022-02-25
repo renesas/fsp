@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -216,8 +216,6 @@ void hw_usb_clear_hse (usb_utr_t * ptr)
  ******************************************************************************/
 #endif                                 /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 
-#if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-
 /******************************************************************************
  * Function Name   : hw_usb_set_dcfm
  * Description     : DCFM-bit set of register SYSCFG
@@ -240,7 +238,6 @@ void hw_usb_set_dcfm (usb_utr_t * p_utr)
 /******************************************************************************
  * End of function hw_usb_set_dcfm
  ******************************************************************************/
-#endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_REPI */
 
 /******************************************************************************
  * Function Name   : hw_usb_clear_dcfm
@@ -277,6 +274,21 @@ void hw_usb_clear_dcfm (usb_utr_t * ptr)
  ******************************************************************************/
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+
+/******************************************************************************
+ * Function Name   : hw_usb_set_drpd
+ * Description     : Set bit of the specified port's SYSCFG DRPD register.
+ * Arguments       : usb_utr_t    *ptr  : Pointer to usb_utr_t structure.
+ * Return value    : none
+ ******************************************************************************/
+void hw_usb_set_drpd (usb_utr_t * ptr)
+{
+    ptr->ipp->SYSCFG |= USB_DRPD;
+}
+
+/******************************************************************************
+ * End of function hw_usb_clear_drpd
+ ******************************************************************************/
 
 /******************************************************************************
  * Function Name   : hw_usb_clear_drpd
@@ -592,14 +604,50 @@ void hw_usb_clear_dvstctr (usb_utr_t * ptr, uint16_t bitptn)
 void hw_usb_set_vbout (usb_utr_t * ptr)
 {
  #if USB_CFG_VBUS == USB_CFG_HIGH
+  #if defined(USB_CFG_OTG_USE)
+    ptr->ipp->DVSTCTR0 |= USB_EXICEN;
+  #endif                               /* defined(USB_CFG_OTG_USE) */
     ptr->ipp->DVSTCTR0 |= USB_VBUSEN;
  #else                                 /* USB_CFG_VBUS == USB_CFG_HIGH */
+  #if defined(USB_CFG_OTG_USE)
+    ptr->ipp->DVSTCTR0 = (uint16_t) (ptr->ipp->DVSTCTR0 & (~USB_EXICEN));
+  #endif                               /* defined(USB_CFG_OTG_USE) */
     ptr->ipp->DVSTCTR0 = (uint16_t) (ptr->ipp->DVSTCTR0 & (~USB_VBUSEN));
- #endif /* USB_CFG_VBUS == USB_CFG_HIGH */
+ #endif                                /* USB_CFG_VBUS == USB_CFG_HIGH */
 }
 
 /******************************************************************************
  * End of function hw_usb_set_vbout
+ ******************************************************************************/
+
+/******************************************************************************
+ * Function Name   : hw_usb_set_hnpbtoa
+ * Description     : Set specified port's HNPBTOA bit in the DVSTCTR register.
+ * Arguments       : usb_utr_t *p_utr  : Pointer to usb_utr_t structure.
+ * Return value    : none
+ ******************************************************************************/
+void hw_usb_set_hnpbtoa (usb_utr_t * p_utr)
+{
+    p_utr->ipp->DVSTCTR0 |= USB_HNPBTOA;
+}
+
+/******************************************************************************
+ * End of function hw_usb_set_hnpbtoa
+ ******************************************************************************/
+
+/******************************************************************************
+ * Function Name   : hw_usb_clear_hnpbtoa
+ * Description     : Clear specified port's HNPBTOA bit in the DVSTCTR register.
+ * Arguments       : usb_utr_t *p_utr  : Pointer to usb_utr_t structure.
+ * Return value    : none
+ ******************************************************************************/
+void hw_usb_clear_hnpbtoa (usb_utr_t * p_utr)
+{
+    p_utr->ipp->DVSTCTR0 = (uint16_t) (p_utr->ipp->DVSTCTR0 & (~USB_HNPBTOA));
+}
+
+/******************************************************************************
+ * End of function hw_usb_clear_hnpbtoa
  ******************************************************************************/
 
 /******************************************************************************

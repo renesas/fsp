@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -206,6 +206,14 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
         p_cfg->p_adc_instance->p_api->scanCfg(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_channel_cfg);
         p_cfg->p_adc_instance->p_api->calibrate(p_cfg->p_adc_instance->p_ctrl, p_cfg->p_adc_instance->p_cfg->p_extend);
 
+#if (MOTOR_DRIVER_CFG_ADC_B_SUPPORTED == 1)
+        adc_status_t status = {.state = ADC_STATE_SCAN_IN_PROGRESS};
+        while (ADC_STATE_SCAN_IN_PROGRESS == status.state)
+        {
+            p_cfg->p_adc_instance->p_api->scanStatusGet(p_cfg->p_adc_instance->p_ctrl, &status);
+        }
+#endif
+
         if (p_cfg->shunt != MOTOR_DRIVER_SHUNT_TYPE_1_SHUNT)
         {
             p_cfg->p_adc_instance->p_api->callbackSet(p_cfg->p_adc_instance->p_ctrl,
@@ -214,8 +222,6 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
                                                       &(p_instance_ctrl->adc_callback_args));
         }
 
-        p_cfg->p_adc_instance->p_api->calibrate(p_cfg->p_adc_instance->p_ctrl,
-                                                (void *) p_cfg->p_adc_instance->p_cfg->p_extend);
         p_cfg->p_adc_instance->p_api->scanStart(p_cfg->p_adc_instance->p_ctrl);
     }
 

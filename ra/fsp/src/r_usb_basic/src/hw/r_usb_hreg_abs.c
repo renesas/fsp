@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -169,6 +169,12 @@ void usb_hstd_interrupt_handler (usb_utr_t * ptr)
         /* DTCH  interrupt disable */
         usb_hstd_bus_int_disable(ptr);
         ptr->keyword = USB_INT_ATTCH0;
+ #if defined(USB_CFG_OTG_USE)
+        if (USB_YES == g_usb_otg_hnp_process[ptr->ip])
+        {
+            g_usb_is_otg_attach_interrupt[ptr->ip] = USB_YES;
+        }
+ #endif                                          /* defined(USB_CFG_OTG_USE) */
     }
     else if (USB_EOFERR == (ists1 & USB_EOFERR)) /***** EOFERR INT *****/
     {
@@ -245,18 +251,22 @@ uint16_t usb_hstd_chk_attach (usb_utr_t * ptr)
         {
             /* High/Full speed device */
             USB_PRINTF0(" Detect FS-J\n");
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if !defined(USB_CFG_OTG_USE)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
             usb_hstd_set_hse(ptr, g_usb_hstd_hs_enable[ptr->ip]);
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* !defined(USB_CFG_OTG_USE) */
             result = USB_ATTACHF;
         }
         else if (USB_LS_JSTS == (buf[0] & USB_LNST))
         {
             /* Low speed device */
             USB_PRINTF0(" Attach LS device\n");
- #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+ #if !defined(USB_CFG_OTG_USE)
+  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
             usb_hstd_set_hse(ptr, USB_HS_DISABLE);
- #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+ #endif                                /* !defined(USB_CFG_OTG_USE) */
             result = USB_ATTACHL;
         }
         else if (USB_SE0 == (buf[0] & USB_LNST))
@@ -384,8 +394,11 @@ void usb_hstd_detach_process (usb_utr_t * ptr)
             /* USB detach */
             usb_hstd_detach(ptr);
 
+ #if !defined(USB_CFG_OTG_USE)
+
             /* Check clock */
             usb_hstd_chk_clk(ptr, (uint16_t) USB_DETACHED);
+ #endif                                /* !defined (USB_CFG_OTG_USE) */
             break;
         }
 
@@ -536,6 +549,10 @@ void usb_hstd_bus_reset (usb_utr_t * ptr)
         hw_usb_clear_dvstctr(ptr, USB_USBRST); /* for UTMI */
         usb_cpu_delay_1us(USB_VALUE_300);      /* for UTMI */
     }
+
+ #if defined(USB_CFG_OTG_USE)
+    hw_usb_clear_hnpbtoa(ptr);
+ #endif                                /* defined (USB_CFG_OTG_USE) */
 
     /* USBRST=0, RESUME=0, UACT=1 */
     usb_hstd_set_uact(ptr);

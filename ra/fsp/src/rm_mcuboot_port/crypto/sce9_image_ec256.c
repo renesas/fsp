@@ -197,19 +197,5 @@ bootutil_verify_sig(uint8_t *hash, uint32_t hlen, uint8_t *sig, size_t slen,
     return rc;
 }
 
-/* This function is only used by MCUboot for RSA keys which is currently not supported for Protected Mode.
- * Since its not used, this function should be compiled out, but AC6 has a known issue where unused functions are not compiled out
- * so this function is created as a placeholder to get rid of the build warning. */
- #if defined(__ARMCC_VERSION)        /* AC6 compiler */
-  int mbedtls_mpi_read_binary( mbedtls_mpi *X, const unsigned char *buf, size_t buflen )
-{
-    FSP_PARAMETER_NOT_USED(X);
-    FSP_PARAMETER_NOT_USED(buf);
-    FSP_PARAMETER_NOT_USED(buflen);
-    return 0;
-}
- #endif
-
-
  #endif /* MCUBOOT_USE_USER_DEFINED_CRYPTO_STACK */
 #endif /* MCUBOOT_SIGN_EC256 */

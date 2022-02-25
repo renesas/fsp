@@ -1,5 +1,5 @@
 /***********************************************************************************************************************
- * Copyright [2020-2021] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
+ * Copyright [2020-2022] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
  *
  * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
  * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
@@ -74,6 +74,8 @@ typedef enum e_rm_zmod4xxx_event
     RM_ZMOD4XXX_EVENT_SUCCESS = 0,
     RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE,
     RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE,
+    RM_ZMOD4XXX_EVENT_DEV_ERR_POWER_ON_RESET,  ///< Unexpected reset
+    RM_ZMOD4XXX_EVENT_DEV_ERR_ACCESS_CONFLICT, ///< Getting invalid results while results readout
     RM_ZMOD4XXX_EVENT_ERROR,
 } rm_zmod4xxx_event_t;
 
@@ -112,7 +114,8 @@ typedef struct st_rm_zmod4xxx_iaq_1st_data
 typedef struct st_rm_zmod4xxx_iaq_2nd_data
 {
     float rmox[13];                    ///< MOx resistance.
-    float log_rcda;                    ///< log10 of CDA resistance.
+    float log_rcda;                    ///< log10 of CDA resistance for IAQ 2nd Gen.
+    float log_nonlog_rcda[3];          ///< log10 of CDA resistance for IAQ 2nd Gen ULP.
     float iaq;                         ///< IAQ index.
     float tvoc;                        ///< TVOC concentration (mg/m^3).
     float etoh;                        ///< EtOH concentration (ppm).
@@ -295,6 +298,14 @@ typedef struct st_rm_zmod4xxx_api
      * @param[in]  humidity               Humidity (percent).
      */
     fsp_err_t (* temperatureAndHumiditySet)(rm_zmod4xxx_ctrl_t * const p_api_ctrl, float temperature, float humidity);
+
+    /** Check device error event.
+     * @par Implemented as
+     * - @ref RM_ZMOD4XXX_DeviceErrorCheck()
+     *
+     * @param[in]  p_api_ctrl             Pointer to control structure.
+     */
+    fsp_err_t (* deviceErrorCheck)(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 
     /** Close the sensor
      * @par Implemented as
