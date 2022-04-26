@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -202,6 +202,7 @@ $(document).ready(function(){initNavTree('_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html',
 <li class="level1"><a href="#fsp-trustzone-support">FSP TrustZone Support</a><ul><li class="level2"><a href="#fsp-trustzone-projects">FSP TrustZone Projects</a></li>
 <li class="level2"><a href="#fsp-trustzone-nsc-guard-functions">Non-Secure Callable Guard Functions</a></li>
 <li class="level2"><a href="#fsp-trustzone-callback-to-non-secure">Callbacks in Non-Secure from Non-Secure Callable Modules</a></li>
+<li class="level2"><a href="#fsp-trustzone-project-migration">Migrating TrustZone Project to newer FSP Version</a></li>
 <li class="level2"><a href="#additional-trustzone-information">Additional TrustZone Information</a></li>
 </ul>
 </li>
@@ -281,8 +282,8 @@ Module Versioning</h2>
 <p>All modules that are part of FSP or integrated with FSP are tested as a package. Mixing versions is not encouraged and may lead to support issues.</p>
 <h1><a class="anchor" id="fsp-stacks"></a>
 FSP Stacks</h1>
-<p>When modules are layered atop one another, an FSP stack is formed. The stacking process is performed by matching what one module provides with what another module requires. For example, the SPI module (<a class="el" href="group___s_p_i.html">Serial Peripheral Interface (r_spi)</a>) requires a module that provides the transfer interface (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html">Transfer Interface</a>) to send or receive data without a CPU interrupt. The transfer interface requirement can be fulfilled by the DTC driver module (<a class="el" href="group___d_t_c.html">Data Transfer Controller (r_dtc)</a>).</p>
-<p>Through this methodology the same code can be shared by several modules simultaneously. The example below illustrates how the same DTC module can be used with SPI (<a class="el" href="group___s_p_i.html">Serial Peripheral Interface (r_spi)</a>), UART (<a class="el" href="group___s_c_i___u_a_r_t.html">Serial Communications Interface (SCI) UART (r_sci_uart)</a>) and SDHI (<a class="el" href="group___s_d_h_i.html">SD/MMC Host Interface (r_sdhi)</a>).</p>
+<p>When modules are layered atop one another, an FSP stack is formed. The stacking process is performed by matching what one module provides with what another module requires. For example, the SPI module (<a class="el" href="group___s_p_i.html">SPI (r_spi)</a>) requires a module that provides the transfer interface (<a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html">Transfer Interface</a>) to send or receive data without a CPU interrupt. The transfer interface requirement can be fulfilled by the DTC driver module (<a class="el" href="group___d_t_c.html">Transfer (r_dtc)</a>).</p>
+<p>Through this methodology the same code can be shared by several modules simultaneously. The example below illustrates how the same DTC module can be used with SPI (<a class="el" href="group___s_p_i.html">SPI (r_spi)</a>), UART (<a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>) and SDHI (<a class="el" href="group___s_d_h_i.html">SD/MMC (r_sdhi)</a>).</p>
 <div class="image">
 <object type="image/svg+xml" data="figure-fsp-multiple-drivers-use-dtc.svg">figure-fsp-multiple-drivers-use-dtc.svg</object>
 <div class="caption">
@@ -318,7 +319,7 @@ FSP Interface Configuration Structure</h3>
 <p>When FSP stacks are used, it is also important to understand that configuration structures only have members that apply to the current interface. If multiple layers in the same stack define the same configuration parameters then it becomes difficult to know where to modify the option. For example, the baud rate for a UART is only defined in the UART module instance. Any modules that use the UART interface rely on the baud rate being provided in the UART module instance and do not offer it in their own configuration structures.</p>
 <h3><a class="anchor" id="fsp-interface-api-structure"></a>
 FSP Interface API Structure</h3>
-<p>All interfaces include an API structure which contains function pointers for all the supported interface functions. An example structure for the <a class="el" href="group___d_a_c.html">Digital to Analog Converter (r_dac)</a> is shown below.</p>
+<p>All interfaces include an API structure which contains function pointers for all the supported interface functions. An example structure for the <a class="el" href="group___d_a_c.html">DAC (r_dac)</a> is shown below.</p>
  <div class="fragment"><div class="line">typedef struct st_dac_api</div><div class="line">{</div><div class="line">    /** Initial configuration.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Open()</div><div class="line">     * - @ref R_DAC8_Open()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Pointer to control block. Must be declared by user. Elements set here.</div><div class="line">     * @param[in]   p_cfg      Pointer to configuration structure. All elements of this structure must be set by user.</div><div class="line">     */</div><div class="line">    fsp_err_t (* open)(dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg);</div><div class="line"></div><div class="line">    /** Close the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Close()</div><div class="line">     * - @ref R_DAC8_Close()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* close)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Write sample value to the D/A Converter.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Write()</div><div class="line">     * - @ref R_DAC8_Write()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     * @param[in]   value      Sample value to be written to the D/A Converter.</div><div class="line">     */</div><div class="line">    fsp_err_t (* write)(dac_ctrl_t * const p_ctrl, uint16_t value);</div><div class="line"></div><div class="line">    /** Start the D/A Converter if it has not been started yet.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Start()</div><div class="line">     * - @ref R_DAC8_Start()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* start)(dac_ctrl_t * const p_ctrl);</div><div class="line"></div><div class="line">    /** Stop the D/A Converter if the converter is running.</div><div class="line">     * @par Implemented as</div><div class="line">     * - @ref R_DAC_Stop()</div><div class="line">     * - @ref R_DAC8_Stop()</div><div class="line">     *</div><div class="line">     * @param[in]   p_ctrl     Control block set in @ref dac_api_t::open call for this timer.</div><div class="line">     */</div><div class="line">    fsp_err_t (* stop)(dac_ctrl_t * const p_ctrl);</div><div class="line">} dac_api_t;</div></div><!-- fragment --></p>
 <p>The API structure is what allows for modules to easily be swapped in and out for other modules that are instances of the same interface. Let's look at an example application using the DAC interface above.</p>
 <p>RA MCUs have an internal DAC peripheral. If the DAC API structure in the DAC interface is not used the application can make calls directly into the module. In the example below the application is making calls to the <a class="el" href="group___d_a_c.html#gad33261cb041a53bdd0e8978b2efcc435">R_DAC_Write()</a> function which is provided in the r_dac module.</p>
@@ -364,7 +365,7 @@ FSP Instance Control Structure</h2>
 FSP Interface Extensions</h2>
 <p>In some cases, instances require more information than is provided in the interface. This situation can occur in the following cases:</p>
 <ul>
-<li>An instance offers extra features that are not common to most instances of the interface. An example of this is the start source selection of the GPT (<a class="el" href="group___g_p_t.html">General PWM Timer (r_gpt)</a>). The GPT can be configured to start based on hardware events such as a falling edge on a trigger pin. This feature is not common to all timers, so it is included in the GPT instance.</li>
+<li>An instance offers extra features that are not common to most instances of the interface. An example of this is the start source selection of the GPT (<a class="el" href="group___g_p_t.html">Timer, General PWM (r_gpt)</a>). The GPT can be configured to start based on hardware events such as a falling edge on a trigger pin. This feature is not common to all timers, so it is included in the GPT instance.</li>
 <li>An interface must be very generic out of necessity. As an interface becomes more generic, the number of possible instances increases. An example of an interface that must be generic is a block media interface that abstracts functions required by a file system. Possible instances include SD card, SPI Flash, SDRAM, USB, and many more.</li>
 </ul>
 <p>The <code>p_extend</code> member provides this extension function.</p>
@@ -423,6 +424,28 @@ Non-Secure Callable Guard Functions</h2>
 <h2><a class="anchor" id="fsp-trustzone-callback-to-non-secure"></a>
 Callbacks in Non-Secure from Non-Secure Callable Modules</h2>
 <p>If the non-secure project needs a callback function from a non-secure callable module, the callback can be registered after the module is opened using the callback_set() guard function.</p>
+<h2><a class="anchor" id="fsp-trustzone-project-migration"></a>
+Migrating TrustZone Project to newer FSP Version</h2>
+<p>The TrustZone projects can be migrated to newer FSP version as mentioned in the following resource.</p>
+<ul>
+<li><a href="https://www.renesas.com/us/en/document/apn/migrating-projects-new-fsp-version">Migrating Projects to New FSP Version</a> (Application Note)</li>
+</ul>
+<p>Additional steps are required if newer FSP version introduces new guard function. In such case, simply migrating the project would result in the build failure for non secure project. Following extra steps are required:</p>
+<ul>
+<li>If xxx_guard.c file in src folder of secure project was not modified earlier<ol type="1">
+<li>Delete the xxx_guard.c file in secure project before generating the Project Files.</li>
+<li>Generate Project contents and build the secure project.</li>
+<li>Follow the steps in Application Note to migrate the Non-Secure project.</li>
+</ol>
+</li>
+<li>If xxx_guard.c file in src folder of secure project was modified earlier<ol type="1">
+<li>Take the backup of existing xxx_guard.c file and delete it from src folder of secure project before generating the Project Files.</li>
+<li>Generate Project contents. It creates a new guard.c file. Compare the contents of the older file and newly generated guard.c file.</li>
+<li>Copy the modified code from the older file (i.e Security checks added by user) and add it to newly generated file.</li>
+<li>Follow the steps in Application Note to migrate the Non-Secure project.</li>
+</ol>
+</li>
+</ul>
 <h2><a class="anchor" id="additional-trustzone-information"></a>
 Additional TrustZone Information</h2>
 <p>The following resources provide technical background, application notes and example projects that demonstrate key TrustZone concepts and implementation procedures.</p>
@@ -461,7 +484,7 @@ Use the Instance API in the Application</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

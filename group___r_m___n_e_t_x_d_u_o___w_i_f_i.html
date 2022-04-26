@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Azure RTOS NetX Duo WiFi Driver (rm_netxduo_wifi)</title>
+<title>RA Flexible Software Package Documentation: NetX Duo WiFi Driver (rm_netxduo_wifi)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -159,7 +159,7 @@ $(document).ready(function(){initNavTree('group___r_m___n_e_t_x_d_u_o___w_i_f_i.
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">Azure RTOS NetX Duo WiFi Driver (rm_netxduo_wifi)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">NetX Duo WiFi Driver (rm_netxduo_wifi)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <h1><a class="anchor" id="rm-netxduo-wifi-overview"></a>
@@ -198,14 +198,26 @@ Usage Notes</h1>
 <li>rm_wifi_onchip_silex_network_info_get() should be used after an access point connection has been established to get DHCP acquired IP address, subnet mask, and gateway.</li>
 </ul>
 <h2>Unsupported NetX Duo Features</h2>
-<p>TCP client sockets are the sole feature supported by both the hardware TCP/IP feature in NetX Duo and the WiFi driver as well. Any protocol that does not utilize a TCP client socket will be unsupported.</p>
+<p>These features are currently not supported due to lack of support in the rm_wifi_onchip_silex driver or in the WiFi module hardware/firmware:</p>
 <ul>
-<li>TCP server mode is not currently supported.</li>
-<li>DNS is not supported. The user can preform a DNS lookup by calling rm_wifi_onchip_silex_dns_query.</li>
-<li>ICMP is not supported. The user can perform a ping by calling rm_wifi_onchip_silex_ping.</li>
-<li>ARP is not supported. This should be handled directly by the WiFi module.</li>
-<li>SNTP is not supported. See the public APIs for communication with time servers <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html">Wifi Middleware (rm_wifi_onchip_silex)</a>.</li>
-<li>Static address assignment is not currently supported by the rm_wifi_onchip_silex driver. You must use DHCP.</li>
+<li>IPv6 functionality</li>
+<li>TCP/UDP server mode</li>
+<li>ARP is handled directly by the WiFi module</li>
+<li>DHCP is always enabled on module by the rm_wifi_onchip_silex driver, thus the software DHCP stack is unsupported.</li>
+</ul>
+<h2>On Module Alternatives</h2>
+<p>Instead of using NetX Duo Software Addons the following features can be performed directly on the WiFi module by calling the appropriate function instead if desired:</p>
+<ul>
+<li>DNS: The user can preform a DNS lookup by calling rm_wifi_onchip_silex_dns_query.</li>
+<li>ICMP: The user can perform a ping by calling rm_wifi_onchip_silex_ping.</li>
+<li>SNTP: The WiFi module has multiple public APIs for time related functions:<ul>
+<li>RM_WIFI_ONCHIP_SILEX_EpochTimeGet</li>
+<li>RM_WIFI_ONCHIP_SILEX_LocalTimeGet</li>
+<li>RM_WIFI_ONCHIP_SILEX_SntpEnableSet</li>
+<li>RM_WIFI_ONCHIP_SILEX_SntpServerIpAddressSet</li>
+<li>RM_WIFI_ONCHIP_SILEX_SntpTimeZoneSet</li>
+</ul>
+</li>
 </ul>
 <h1><a class="anchor" id="rm-netxduo-wifi-examples"></a>
 Examples</h1>
@@ -221,7 +233,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

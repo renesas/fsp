@@ -35,6 +35,10 @@ var group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v =
       [ "saturation_range_max", "group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#ac21f8a608cdeb9518eee2748333f158a", null ],
       [ "status", "group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#aedd26bc345520707de1281fffd5bf420", null ]
     ] ],
+    [ "rm_mesh_light_hsl_srv_extended_cfg_t", "group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#structrm__mesh__light__hsl__srv__extended__cfg__t", [
+      [ "p_hue_access_instance", "group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#af140e15d164211526ce8468d8de6a6ba", null ],
+      [ "p_saturation_access_instance", "group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#abfb7d1d65b33fa92efeeb1cecd68df33", null ]
+    ] ],
     [ "rm_mesh_light_hsl_srv_instance_ctrl_t", "group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#structrm__mesh__light__hsl__srv__instance__ctrl__t", null ],
     [ "RM_MESH_LIGHT_HSL_SRV_Open", "group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#ga612ebab68c4d2ab7016ae2a9eb2b3b17", null ],
     [ "RM_MESH_LIGHT_HSL_SRV_Close", "group___r_m___m_e_s_h___l_i_g_h_t___h_s_l___s_r_v.html#ga5ae600e6899d431b79def8e50cd8e34f", null ],

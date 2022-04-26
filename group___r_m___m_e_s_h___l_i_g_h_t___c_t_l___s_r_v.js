@@ -30,6 +30,9 @@ var group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v =
       [ "ctl_temperature_range_max", "group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#a9047f64d72cfa6630fded6f6e4fcd9d4", null ],
       [ "status", "group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#a3ff1ef79c99551ff4cd40f1508cc0ecc", null ]
     ] ],
+    [ "rm_mesh_light_ctl_srv_extended_cfg_t", "group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#structrm__mesh__light__ctl__srv__extended__cfg__t", [
+      [ "p_temperature_access_instance", "group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#a9f20c0ff528b53f5284b13cfa70928f9", null ]
+    ] ],
     [ "rm_mesh_light_ctl_srv_instance_ctrl_t", "group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#structrm__mesh__light__ctl__srv__instance__ctrl__t", null ],
     [ "RM_MESH_LIGHT_CTL_SRV_Open", "group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#ga5207f60b44840f9dcd41577f830587d1", null ],
     [ "RM_MESH_LIGHT_CTL_SRV_Close", "group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#ga34f89a16ede16b6ab0d4cdd48d27065c", null ],

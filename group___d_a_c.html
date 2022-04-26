@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Digital to Analog Converter (r_dac)</title>
+<title>RA Flexible Software Package Documentation: DAC (r_dac)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('group___d_a_c.html','');});
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Digital to Analog Converter (r_dac)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">DAC (r_dac)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html">Analog</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -274,7 +274,6 @@ Limitations</h2>
 <li>For MCUs having more than 1 DAC channel, both channels are synchronized with ADC unit 1 if synchronization is enabled.</li>
 </ul>
 </li>
-<li>Pin configuration does not support setting ASEL and PSEL bit fields for the same pin. In order to set the PSEL when DAC pin is enabled, maually update the setting of the DAC pin to .pin_cfg = ((uint32_t)IOPORT_CFG_ANALOG_ENABLE | IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_CAC_AD)}.</li>
 </ul>
 <h1><a class="anchor" id="r-dac-examples"></a>
 Examples</h1>
@@ -515,7 +514,7 @@ Data format. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

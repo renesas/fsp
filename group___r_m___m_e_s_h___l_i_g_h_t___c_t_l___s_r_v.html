@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('group___r_m___m_e_s_h___l_i_g_h_t___c_
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Bluetooth Low Energy Mesh Network Light Control Server (rm_mesh_light_ctl_srv)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s.html">Bluetooth Low Energy Mesh Network Modules</a></div></div>  </div>
+<div class="title">Bluetooth Low Energy Mesh Network Light Control Server (rm_mesh_light_ctl_srv)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s.html">Bluetooth Low Energy Mesh Network Modules</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -180,6 +180,31 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h1><a class="anchor" id="rm_mesh_light_ctl_srv-overview"></a>
 Overview</h1>
+<h2>Target Devices</h2>
+<p>The Bluetooth Low Energy Energy Mesh Network Light Control Server module supports the following devices.</p><ul>
+<li>RA4W1</li>
+</ul>
+<h1><a class="anchor" id="rm_mesh_light_ctl_srv-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_mesh_light_ctl_srv</h2>
+The following build time configurations are defined in fsp_cfg/rm_mesh_light_ctl_srv_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+</table>
+ <h2>Configurations for Networking &gt; BLE Mesh Model Light Control Server (rm_mesh_light_ctl_srv)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; BLE Mesh Model Light Control Server (rm_mesh_light_ctl_srv).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>Interrupts &gt; Callback Provided when Timeout Occurs</td><td>Name Must Be a Valid C Symbol</td><td>NULL </td><td>Callback provided when mesh light control server ISR occurs </td></tr>
+<tr>
+<td>Interrupts &gt; Callback Provided when an Timeout ISR Occurs</td><td>Name Must Be a Valid C Symbol</td><td>NULL </td><td>Callback provided when mesh light control server timeout ISR occurs </td></tr>
+<tr>
+<td>Name</td><td>Name Must Be a Valid C Symbol</td><td>g_rm_mesh_light_ctl_srv0 </td><td>Module name. </td></tr>
+</table>
+</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -191,6 +216,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structrm__mesh__light__ctl__srv__temperature__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__mesh__light__ctl__srv__temperature__range__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#structrm__mesh__light__ctl__srv__temperature__range__info__t">rm_mesh_light_ctl_srv_temperature_range_info_t</a></td></tr>
 <tr class="separator:structrm__mesh__light__ctl__srv__temperature__range__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__mesh__light__ctl__srv__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#structrm__mesh__light__ctl__srv__extended__cfg__t">rm_mesh_light_ctl_srv_extended_cfg_t</a></td></tr>
+<tr class="separator:structrm__mesh__light__ctl__srv__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__mesh__light__ctl__srv__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_e_s_h___l_i_g_h_t___c_t_l___s_r_v.html#structrm__mesh__light__ctl__srv__instance__ctrl__t">rm_mesh_light_ctl_srv_instance_ctrl_t</a></td></tr>
 <tr class="separator:structrm__mesh__light__ctl__srv__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -421,6 +448,31 @@ status</td>
 
 </div>
 </div>
+<a name="structrm__mesh__light__ctl__srv__extended__cfg__t" id="structrm__mesh__light__ctl__srv__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__mesh__light__ctl__srv__extended__cfg__t">&#9670;&nbsp;</a></span>rm_mesh_light_ctl_srv_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_mesh_light_ctl_srv_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>BLE mesh light ctl extension for BLE mesh light ctl. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a9f20c0ff528b53f5284b13cfa70928f9"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__instance__t">rm_ble_mesh_access_instance_t</a> <br class="typebreak" />
+const  *</td>
+<td class="fieldname">
+p_temperature_access_instance</td>
+<td class="fielddoc">
+Pointer to access instance for temperature model. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structrm__mesh__light__ctl__srv__instance__ctrl__t" id="structrm__mesh__light__ctl__srv__instance__ctrl__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structrm__mesh__light__ctl__srv__instance__ctrl__t">&#9670;&nbsp;</a></span>rm_mesh_light_ctl_srv_instance_ctrl_t</h2>
 
@@ -610,7 +662,7 @@ status</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -68,6 +68,9 @@ var group___i3_c =
       [ "ipl", "group___i3_c.html#a86a139e5f3252fdfe37eaf369be665c2", null ],
       [ "eei_ipl", "group___i3_c.html#a5eb05eb62f67698fb37405d6380dabb4", null ]
     ] ],
+    [ "I3C_ERROR_RECOVERY_VERSION_1", "group___i3_c.html#ga67844f1842e610992efb2557b91f2916", null ],
+    [ "I3C_ERROR_RECOVERY_VERSION_2", "group___i3_c.html#ga7fe9bf59b703822fe10ca9a1282812f3", null ],
+    [ "I3C_ERROR_RECOVERY_VERSION_BOTH", "group___i3_c.html#ga8826d958a50fd2431575b95756869002", null ],
     [ "I3C_DEVICE_INDEX_EXTENDED_DEVICE", "group___i3_c.html#ga431d3d9f020658bd13e385b1759f2993", null ],
     [ "I3C_EVENT_STATUS_SUCCESS", "group___i3_c.html#ga959c7b7b56c392d9b4e69dcce92a5062", null ],
     [ "I3C_EVENT_STATUS_PARITY", "group___i3_c.html#gadb1dc4312f422107a959919f6b81f193", null ],

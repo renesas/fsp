@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,12 +162,18 @@ $(document).ready(function(){initNavTree('group___u_s_b.html','');});
 <a href="#func-members">Functions</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">USB (r_usb_basic)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">USB (r_usb_basic)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:gaf882576a8f79312c27fa700d3fb94951"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951">R_USB_EventGet</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> *event)</td></tr>
+<tr class="memdesc:gaf882576a8f79312c27fa700d3fb94951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains completed USB related events. (OS-less Only)  <a href="#gaf882576a8f79312c27fa700d3fb94951">More...</a><br /></td></tr>
+<tr class="separator:gaf882576a8f79312c27fa700d3fb94951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2560b302dca363895820a82ea6a2ba9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#ga2560b302dca363895820a82ea6a2ba9c">R_USB_Callback</a> (usb_callback_t *p_callback)</td></tr>
+<tr class="memdesc:ga2560b302dca363895820a82ea6a2ba9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback function to be called upon completion of a USB related event. (RTOS only)  <a href="#ga2560b302dca363895820a82ea6a2ba9c">More...</a><br /></td></tr>
+<tr class="separator:ga2560b302dca363895820a82ea6a2ba9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab9810a1d8e322cb89a9a7f9ca84a368f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#gab9810a1d8e322cb89a9a7f9ca84a368f">R_USB_Open</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#structusb__cfg__t">usb_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="memdesc:gab9810a1d8e322cb89a9a7f9ca84a368f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies power to the USB module specified in the argument (p_ctrl).  <a href="#gab9810a1d8e322cb89a9a7f9ca84a368f">More...</a><br /></td></tr>
 <tr class="separator:gab9810a1d8e322cb89a9a7f9ca84a368f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,12 +219,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga999a06f4569d82b8e18c2509e579a35f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#ga999a06f4569d82b8e18c2509e579a35f">R_USB_PullUp</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, uint8_t state)</td></tr>
 <tr class="memdesc:ga999a06f4569d82b8e18c2509e579a35f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This API enables or disables pull-up of D+/D- line.  <a href="#ga999a06f4569d82b8e18c2509e579a35f">More...</a><br /></td></tr>
 <tr class="separator:ga999a06f4569d82b8e18c2509e579a35f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf882576a8f79312c27fa700d3fb94951"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951">R_USB_EventGet</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> *event)</td></tr>
-<tr class="memdesc:gaf882576a8f79312c27fa700d3fb94951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains completed USB related events. (OS-less Only)  <a href="#gaf882576a8f79312c27fa700d3fb94951">More...</a><br /></td></tr>
-<tr class="separator:gaf882576a8f79312c27fa700d3fb94951"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2560b302dca363895820a82ea6a2ba9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#ga2560b302dca363895820a82ea6a2ba9c">R_USB_Callback</a> (usb_callback_t *p_callback)</td></tr>
-<tr class="memdesc:ga2560b302dca363895820a82ea6a2ba9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a callback function to be called upon completion of a USB related event. (RTOS only)  <a href="#ga2560b302dca363895820a82ea6a2ba9c">More...</a><br /></td></tr>
-<tr class="separator:ga2560b302dca363895820a82ea6a2ba9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaecba62e40820ec837fa0b285140ed13b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#gaecba62e40820ec837fa0b285140ed13b">R_USB_HostControlTransfer</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, usb_setup_t *p_setup, uint8_t *p_buf, uint8_t device_address)</td></tr>
 <tr class="memdesc:gaecba62e40820ec837fa0b285140ed13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs settings and transmission processing when transmitting a setup packet.  <a href="#gaecba62e40820ec837fa0b285140ed13b">More...</a><br /></td></tr>
 <tr class="separator:gaecba62e40820ec837fa0b285140ed13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -416,6 +416,8 @@ Peripheral Vendor Class</li>
 <li>
 Peripheral Audio Class</li>
 <li>
+Peripheral Printer Device Class</li>
+<li>
 Host Communications Device Class</li>
 <li>
 Host Human Interface Device Class</li>
@@ -565,6 +567,77 @@ Typedefs</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gaf882576a8f79312c27fa700d3fb94951"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf882576a8f79312c27fa700d3fb94951">&#9670;&nbsp;</a></span>R_USB_EventGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_EventGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> *&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Obtains completed USB related events. (OS-less Only) </p>
+<p>In USB host mode, the device address value of the USB device that completed an event is specified in the usb_ctrl_t structure member (address) specified by the event's argument. In USB peripheral mode, USB_NULL is specified in member (address). If this function is called in the RTOS execution environment, a failure is returned.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Event Get Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>If called in the RTOS environment, an error is returned.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Do not use the same variable as the first argument of R_USB_Open for the first argument. </dd>
+<dd>
+Do not call this API in the interrupt function. </dd></dl>
+
+</div>
+</div>
+<a id="ga2560b302dca363895820a82ea6a2ba9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2560b302dca363895820a82ea6a2ba9c">&#9670;&nbsp;</a></span>R_USB_Callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_Callback </td>
+          <td>(</td>
+          <td class="paramtype">usb_callback_t *&#160;</td>
+          <td class="paramname"><em>p_callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Register a callback function to be called upon completion of a USB related event. (RTOS only) </p>
+<p>This function registers a callback function to be called when a USB-related event has completed. If this function is called in the OS-less execution environment, a failure is returned.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully completed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>If this function is called in the OS-less execution environment, a failure is returned. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter is NULL error. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Do not call this API in the interrupt function. </dd></dl>
+
+</div>
+</div>
 <a id="gab9810a1d8e322cb89a9a7f9ca84a368f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab9810a1d8e322cb89a9a7f9ca84a368f">&#9670;&nbsp;</a></span>R_USB_Open()</h2>
 
@@ -1301,77 +1374,6 @@ R_USB_PipeWrite (&amp;g_basic0_ctrl, &amp;g_buf, USB_NULL, pipe_number); </dd>
 
 </div>
 </div>
-<a id="gaf882576a8f79312c27fa700d3fb94951"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf882576a8f79312c27fa700d3fb94951">&#9670;&nbsp;</a></span>R_USB_EventGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_EventGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group___u_s_b___a_p_i.html#ga56bea25fbffdbda134044c49d40d5e40">usb_status_t</a> *&#160;</td>
-          <td class="paramname"><em>event</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Obtains completed USB related events. (OS-less Only) </p>
-<p>In USB host mode, the device address value of the USB device that completed an event is specified in the usb_ctrl_t structure member (address) specified by the event's argument. In USB peripheral mode, USB_NULL is specified in member (address). If this function is called in the RTOS execution environment, a failure is returned.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Event Get Success. </td></tr>
-    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>If called in the RTOS environment, an error is returned.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Do not use the same variable as the first argument of R_USB_Open for the first argument. </dd>
-<dd>
-Do not call this API in the interrupt function. </dd></dl>
-
-</div>
-</div>
-<a id="ga2560b302dca363895820a82ea6a2ba9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2560b302dca363895820a82ea6a2ba9c">&#9670;&nbsp;</a></span>R_USB_Callback()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_Callback </td>
-          <td>(</td>
-          <td class="paramtype">usb_callback_t *&#160;</td>
-          <td class="paramname"><em>p_callback</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Register a callback function to be called upon completion of a USB related event. (RTOS only) </p>
-<p>This function registers a callback function to be called when a USB-related event has completed. If this function is called in the OS-less execution environment, a failure is returned.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully completed. </td></tr>
-    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>If this function is called in the OS-less execution environment, a failure is returned. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter is NULL error. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Do not call this API in the interrupt function. </dd></dl>
-
-</div>
-</div>
 <a id="gaecba62e40820ec837fa0b285140ed13b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaecba62e40820ec837fa0b285140ed13b">&#9670;&nbsp;</a></span>R_USB_HostControlTransfer()</h2>
 
@@ -1935,7 +1937,7 @@ Do not call this API in the interrupt function. </dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

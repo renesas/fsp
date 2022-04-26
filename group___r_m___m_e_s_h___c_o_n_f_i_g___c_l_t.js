@@ -4,7 +4,7 @@ var group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t =
     [ "RM_MESH_CONFIG_CLT_Open", "group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t.html#gaf923a3a3dddeef5e2f3b80993ca56b9d", null ],
     [ "RM_MESH_CONFIG_CLT_Close", "group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t.html#ga65949d988cc72ce4260f7085432fbd9d", null ],
     [ "RM_MESH_CONFIG_CLT_SetServer", "group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t.html#ga1db7a6491786d4d441fc18eca4d053a8", null ],
-    [ "RM_MESH_CONFIG_CLT_SendReliablePdu", "group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t.html#gaa0289bcc0081a680dfd24c93dac0df1f", null ],
+    [ "RM_MESH_CONFIG_CLT_SendReliablePdu", "group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t.html#gae8941a8d42f2cf96969764a3bcfb2be1", null ],
     [ "RM_MESH_CONFIG_CLT_BeaconGet", "group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t.html#gabdc6461a11e829e74f9b70ee38edacac", null ],
     [ "RM_MESH_CONFIG_CLT_BeaconSet", "group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t.html#ga4a8032184566aab28432cdc384a0cc83", null ],
     [ "RM_MESH_CONFIG_CLT_CompositionDataGet", "group___r_m___m_e_s_h___c_o_n_f_i_g___c_l_t.html#gadff5e4ca20008b927b7eae8cf94a3e96", null ],

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Ethernet PHY (r_ether_phy)</title>
+<title>RA Flexible Software Package Documentation: Ethernet (r_ether_phy)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r___p_h_y.html','');})
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Ethernet PHY (r_ether_phy)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">Ethernet (r_ether_phy)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -225,6 +225,8 @@ KSZ8091RNB</li>
 KSZ8041</li>
 <li>
 DP83620</li>
+<li>
+ICS1894</li>
 </ul>
 </td><td>Default </td><td>Select PHY chip to use. Selecting 'Default' will automatically choose the correct option when using a Renesas development board. </td></tr>
 <tr>
@@ -321,7 +323,13 @@ operation (Z is output). No control is required, because a bus was already relea
 <h2><a class="anchor" id="r-ether-phy-limitations"></a>
 Limitations</h2>
 <ul>
-<li>The r_ether_phy module may need to be customized for PHY devices other than the ones currently supported (KSZ8091RNB, KSZ8041 and DP83620). Use the existing code as a starting point for creating a custom implementation.</li>
+<li>The r_ether_phy module may need to be customized for PHY devices other than the ones currently supported. Use the existing code as a starting point for creating a custom implementation. Supported PHY devices are as follows.<ul>
+<li>KSZ8091RNB</li>
+<li>KSZ8041</li>
+<li>DP83620</li>
+<li>ICS1894</li>
+</ul>
+</li>
 </ul>
 <h1><a class="anchor" id="r-ether-phy-examples"></a>
 Examples</h1>
@@ -562,7 +570,7 @@ Capabilities bitmap for local advertising. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

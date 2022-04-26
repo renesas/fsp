@@ -13,6 +13,7 @@ var searchData=
   ['timer_5fevent_5fcycle_5fend',['TIMER_EVENT_CYCLE_END',['../group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c',1,'r_timer_api.h']]],
   ['timer_5fevent_5ftrough',['TIMER_EVENT_TROUGH',['../group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba83cb2de8ac629fcd95525e94b94089f0',1,'r_timer_api.h']]],
   ['timer_5fmode_5fone_5fshot',['TIMER_MODE_ONE_SHOT',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a',1,'r_timer_api.h']]],
+  ['timer_5fmode_5fone_5fshot_5fpulse',['TIMER_MODE_ONE_SHOT_PULSE',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2afe99f13968cabc479896dfd0bc67fb6a',1,'r_timer_api.h']]],
   ['timer_5fmode_5fperiodic',['TIMER_MODE_PERIODIC',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e',1,'r_timer_api.h']]],
   ['timer_5fmode_5fpwm',['TIMER_MODE_PWM',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac',1,'r_timer_api.h']]],
   ['timer_5fmode_5ftriangle_5fwave_5fasymmetric_5fpwm',['TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM',['../group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a204001ad413e9ad0db08a66d004a555a',1,'r_timer_api.h']]],

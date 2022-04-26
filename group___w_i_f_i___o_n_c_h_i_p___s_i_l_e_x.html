@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Wifi Middleware (rm_wifi_onchip_silex)</title>
+<title>RA Flexible Software Package Documentation: WiFi Onchip Silex Driver using r_sci_uart (rm_wifi_onchip_silex)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___w_i_f_i___o_n_c_h_i_p___s_i_l_
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Wifi Middleware (rm_wifi_onchip_silex)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">WiFi Onchip Silex Driver using r_sci_uart (rm_wifi_onchip_silex)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -269,13 +269,13 @@ Disabled</li>
 <p>Note: It is a good idea to also enable the FIFO in the UART configuration settings if you plan to use higher baud rates.</p>
 <h2><a class="anchor" id="r-wifi-onchip-silex-interrupt-configuration"></a>
 Interrupt Configuration</h2>
-<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">Serial Communications Interface (SCI) UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html">Wifi Middleware (rm_wifi_onchip_silex)</a>.</p>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html">WiFi Onchip Silex Driver using r_sci_uart (rm_wifi_onchip_silex)</a>.</p>
 <h2><a class="anchor" id="r-wifi-onchip-silex-clock-configuration"></a>
 Clock Configuration</h2>
-<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">Serial Communications Interface (SCI) UART (r_sci_uart)</a>.</p>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>.</p>
 <h2><a class="anchor" id="r-wifi-onchip-silex-pin-configuration"></a>
 Pin Configuration</h2>
-<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">Serial Communications Interface (SCI) UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html">Wifi Middleware (rm_wifi_onchip_silex)</a></p>
+<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html">WiFi Onchip Silex Driver using r_sci_uart (rm_wifi_onchip_silex)</a></p>
 <h1><a class="anchor" id="r-wifi-onchip-silex-usage_notes"></a>
 Usage Notes</h1>
 <h2>Limitations</h2>
@@ -702,7 +702,6 @@ Internal socket instances. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the current system time as the number of seconds since epoch 1970-01-01 00:00:00 UTC</p>
 <p>This will retrieve time info from an NTP server at the address entered via an during configuration. If the server isn’t set or the client isn’t enabled, then it will return an error. The date/time is retrieved as the number of seconds since 00:00:00 UTC January 1, 1970</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -715,10 +714,11 @@ Internal socket instances. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully retrieved the system time from module. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter utc_time or p_instance_ctrl is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Get the current system time as the number of seconds since epoch 1970-01-01 00:00:00 UTC </p>
 
 </div>
 </div>
@@ -747,7 +747,6 @@ Internal socket instances. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the current local time based on current timezone in a string format</p>
 <p>Get the current local time based on current timezone in a string . Exp: Wed Oct 15 1975 07:06:00</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -762,10 +761,11 @@ Internal socket instances. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter local_time or p_instance_ctrl is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>String size value passed in exceeds maximum. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>String size value passed in exceeds maximum.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Get the current local time based on current timezone in a string format </p>
 
 </div>
 </div>
@@ -784,7 +784,6 @@ Internal socket instances. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enable or Disable the SNTP Client Service</p>
 <p>Set the SNTP Client to Enable or Disable</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -796,10 +795,11 @@ Internal socket instances. </td></tr>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set the value. </td></tr>
     <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Enable or Disable the SNTP Client Service </p>
 
 </div>
 </div>
@@ -818,7 +818,6 @@ Internal socket instances. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Update the SNTP Server IP Address</p>
 <p>Set the SNTP Client Server IP Address</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -831,10 +830,11 @@ Internal socket instances. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set the value. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_ip_address or p_instance_ctrl is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Update the SNTP Server IP Address </p>
 
 </div>
 </div>
@@ -869,7 +869,6 @@ Internal socket instances. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Update the SNTP Timezone</p>
 <p>Set the SNTP Client Timezone</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -884,10 +883,11 @@ Internal socket instances. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set the value. </td></tr>
     <tr><td class="paramname">FSP_ERR_WIFI_FAILED</td><td>Error occurred with command to Wifi module. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Parameter passed into function was invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Parameter passed into function was invalid.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Update the SNTP Timezone </p>
 
 </div>
 </div>
@@ -897,7 +897,7 @@ Internal socket instances. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

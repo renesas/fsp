@@ -44,7 +44,12 @@ var group___g_p_t =
       [ "GPT_IO_PIN_GTIOCB", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aebd74a7b9507fb082ec4cce60ebe9369", null ],
       [ "GPT_IO_PIN_GTIOCA_AND_GTIOCB", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60a2b44d1e05050c34cc6e8d9ee4093294d", null ],
       [ "GPT_IO_PIN_TROUGH", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60ac68b7e1ef5c48c55960faacd7eb538b9", null ],
-      [ "GPT_IO_PIN_CREST", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60acb3ba96929217eb6bb1ec5b2f1ccf9d4", null ]
+      [ "GPT_IO_PIN_CREST", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60acb3ba96929217eb6bb1ec5b2f1ccf9d4", null ],
+      [ "GPT_IO_PIN_ONE_SHOT_LEADING_EDGE", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60ae3e479af00c84f4ccf6e7376b4b44c8d", null ],
+      [ "GPT_IO_PIN_ONE_SHOT_TRAILING_EDGE", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60a59f7576cde98e497d35b98a926732e52", null ]
+    ] ],
+    [ "gpt_buffer_force_push", "group___g_p_t.html#ga8abd050b841fe99c9b641a22c69501c5", [
+      [ "GPT_BUFFER_FORCE_PUSH", "group___g_p_t.html#gga8abd050b841fe99c9b641a22c69501c5a23c94706bd1a34c9f1b9cfffea30f4cc", null ]
     ] ],
     [ "gpt_pin_level_t", "group___g_p_t.html#ga454c639e426428470ce78115af5d3648", [
       [ "GPT_PIN_LEVEL_LOW", "group___g_p_t.html#gga454c639e426428470ce78115af5d3648a3270f1165e7a86c5b12eecb9501390f4", null ],

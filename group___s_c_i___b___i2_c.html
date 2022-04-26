@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Serial Communications Interface (SCI) I2C (r_sci_b_i2c)</title>
+<title>RA Flexible Software Package Documentation: I2C Master (r_sci_b_i2c)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___s_c_i___b___i2_c.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Serial Communications Interface (SCI) I2C (r_sci_b_i2c)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">I2C Master (r_sci_b_i2c)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -171,8 +171,6 @@ $(document).ready(function(){initNavTree('group___s_c_i___b___i2_c.html','');});
 Functions</h2></td></tr>
 <tr class="memitem:gae457daf3146cc92adfadc471b5bebd27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___i2_c.html#gae457daf3146cc92adfadc471b5bebd27">R_SCI_B_I2C_Open</a> (<a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__cfg__t">i2c_master_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="separator:gae457daf3146cc92adfadc471b5bebd27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d57041c70f924d2968792d59d1b980b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___i2_c.html#ga1d57041c70f924d2968792d59d1b980b">R_SCI_B_I2C_Close</a> (<a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="separator:ga1d57041c70f924d2968792d59d1b980b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0d1ab3b59b204adb64bff01d4c83d10f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___i2_c.html#ga0d1ab3b59b204adb64bff01d4c83d10f">R_SCI_B_I2C_Read</a> (<a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const p_api_ctrl, uint8_t *const p_dest, uint32_t const bytes, bool const restart)</td></tr>
 <tr class="separator:ga0d1ab3b59b204adb64bff01d4c83d10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa214ca399eb4bb9cb198237f608b4767"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___i2_c.html#gaa214ca399eb4bb9cb198237f608b4767">R_SCI_B_I2C_Write</a> (<a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const p_api_ctrl, uint8_t *const p_src, uint32_t const bytes, bool const restart)</td></tr>
@@ -185,6 +183,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaa8c8d381f7c639650bf775c3eec125b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga677766a68a258bb7a2e97090cff1c03b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___i2_c.html#ga677766a68a258bb7a2e97090cff1c03b">R_SCI_B_I2C_StatusGet</a> (<a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__status__t">i2c_master_status_t</a> *p_status)</td></tr>
 <tr class="separator:ga677766a68a258bb7a2e97090cff1c03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d57041c70f924d2968792d59d1b980b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___i2_c.html#ga1d57041c70f924d2968792d59d1b980b">R_SCI_B_I2C_Close</a> (<a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:ga1d57041c70f924d2968792d59d1b980b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the SCI_B peripheral on RA MCUs. This module implements the <a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html">I2C Master Interface</a>. </p>
@@ -346,7 +346,7 @@ Enabling DTC with the SCI_B I2C</h2>
 <ul>
 <li>DTC transfer support is configurable and is disabled from the build by default. SCI_B I2C driver provides two DTC instances for transmission and reception respectively.</li>
 <li>DTC is helpful for minimizing interrupts during large transactions. Many I2C applications have shorter transactions. These applications will likely not see any improvement with DTC. I2C often runs at a much slower speed than the CPU core clock. Some applications with longer transactions may prefer servicing the interrupts at the I2C bitrate to the overhead of bringing in the DTC driver.</li>
-<li>For further details on DTC please refer <a class="el" href="group___d_t_c.html">Data Transfer Controller (r_dtc)</a></li>
+<li>For further details on DTC please refer <a class="el" href="group___d_t_c.html">Transfer (r_dtc)</a></li>
 </ul>
 <h2><a class="anchor" id="r-sci_b_i2c-multiple-devices-on-same-bus"></a>
 Multiple Devices on the Bus</h2>
@@ -534,34 +534,6 @@ I2C Clock settings. </td></tr>
 <li>Invalid IRQ number assigned </li>
 </ol>
 </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga1d57041c70f924d2968792d59d1b980b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1d57041c70f924d2968792d59d1b980b">&#9670;&nbsp;</a></span>R_SCI_B_I2C_Close()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_I2C_Close </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Closes the I2C device. Power down I2C peripheral.</p>
-<p>This function will safely terminate any in-progress I2C transfer with the device. If a transfer is aborted, the user will be notified via callback with an abort event. Since the callback is optional, this function will also return a specific error code in this situation.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Device closed without issue. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_ctrl is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Device was not even opened. </td></tr>
   </table>
   </dd>
 </dl>
@@ -828,13 +800,41 @@ I2C Clock settings. </td></tr>
 
 </div>
 </div>
+<a id="ga1d57041c70f924d2968792d59d1b980b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1d57041c70f924d2968792d59d1b980b">&#9670;&nbsp;</a></span>R_SCI_B_I2C_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_I2C_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#ga87f5194ba16044322815db81dc442138">i2c_master_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Closes the I2C device. Power down I2C peripheral.</p>
+<p>This function will safely terminate any in-progress I2C transfer with the device. If a transfer is aborted, the user will be notified via callback with an abort event. Since the callback is optional, this function will also return a specific error code in this situation.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Device closed without issue. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Device was not even opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -54,16 +54,16 @@ var group___q_s_p_i =
       [ "QSPI_QSPCLK_DIV_48", "group___q_s_p_i.html#gga53abedddf8fc81df853fc93071edf117a9becf972d9269ef9599c11d08cbca19c", null ]
     ] ],
     [ "R_QSPI_Open", "group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44", null ],
-    [ "R_QSPI_Close", "group___q_s_p_i.html#ga96b3e76ff7daef41184898e3af0aa1a4", null ],
     [ "R_QSPI_DirectWrite", "group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c", null ],
     [ "R_QSPI_DirectRead", "group___q_s_p_i.html#gacddc3f64e5e87d4df22dd0da7a444308", null ],
-    [ "R_QSPI_SpiProtocolSet", "group___q_s_p_i.html#ga7d09918d3ab7458bbd15908f17bae951", null ],
+    [ "R_QSPI_DirectTransfer", "group___q_s_p_i.html#gaf3439f15e60af9cf55e15e8016b67875", null ],
     [ "R_QSPI_XipEnter", "group___q_s_p_i.html#ga13cbc9d58890d7094712edcf64bc1bf1", null ],
     [ "R_QSPI_XipExit", "group___q_s_p_i.html#ga9c894a8a9ef0bb28ba8db701e5a71b3a", null ],
     [ "R_QSPI_Write", "group___q_s_p_i.html#ga9d449604f886f5f59952d9e789d5dc65", null ],
     [ "R_QSPI_Erase", "group___q_s_p_i.html#gaa0409e8bb9585e9bd0be17ba9840f8fb", null ],
     [ "R_QSPI_StatusGet", "group___q_s_p_i.html#ga03da39d9d9f82ea0dfd0f7cc4f253189", null ],
     [ "R_QSPI_BankSet", "group___q_s_p_i.html#ga3762ca61aea95737c5a018d0aa9bd6f1", null ],
-    [ "R_QSPI_DirectTransfer", "group___q_s_p_i.html#gaf3439f15e60af9cf55e15e8016b67875", null ],
-    [ "R_QSPI_AutoCalibrate", "group___q_s_p_i.html#ga3f163c6c0a41fae3a196d3bf2eeb0907", null ]
+    [ "R_QSPI_SpiProtocolSet", "group___q_s_p_i.html#ga7d09918d3ab7458bbd15908f17bae951", null ],
+    [ "R_QSPI_AutoCalibrate", "group___q_s_p_i.html#ga3f163c6c0a41fae3a196d3bf2eeb0907", null ],
+    [ "R_QSPI_Close", "group___q_s_p_i.html#ga96b3e76ff7daef41184898e3af0aa1a4", null ]
 ];

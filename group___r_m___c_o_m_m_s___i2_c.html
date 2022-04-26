@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: I2C Communicatons Middleware (rm_comms_i2c)</title>
+<title>RA Flexible Software Package Documentation: I2C Communication Device (rm_comms_i2c)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('group___r_m___c_o_m_m_s___i2_c.html','
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">I2C Communicatons Middleware (rm_comms_i2c)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">I2C Communication Device (rm_comms_i2c)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -227,7 +227,7 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <tr>
 <td>Bus Timeout</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Set timeout for locking bus in using RTOS. </td></tr>
 <tr>
-<td>Semaphore for Blocking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Semaphore for Blocking (RTOS only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Unuse</li>
 <li>
@@ -235,7 +235,7 @@ Use</li>
 </ul>
 </td><td>Unuse </td><td>Set Semaphore for blocking in using RTOS. </td></tr>
 <tr>
-<td>Recursive Mutex for Bus</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Recursive Mutex for Bus (RTOS only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Unuse</li>
 <li>
@@ -251,7 +251,7 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <tr>
 <td>Name</td><td>Manual Entry</td><td>g_comms_i2c_device0 </td><td>Module name. </td></tr>
 <tr>
-<td>Semaphore Timeout</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Set timeout for blocking in using RTOS. </td></tr>
+<td>Semaphore Timeout (RTOS only)</td><td>Value must be a non-negative integer</td><td>0xFFFFFFFF </td><td>Set timeout for blocking in using RTOS. </td></tr>
 <tr>
 <td>Slave Address</td><td>Value must be non-negative</td><td>0x00 </td><td>Specify the slave address. </td></tr>
 <tr>
@@ -273,7 +273,8 @@ Pin Configuration</h2>
 Usage Notes</h1>
 <p>If an RTOS is used, blocking and bus lock is available.</p><ul>
 <li>If blocking of an I2C bus is required, it is necessary to create a semaphore for blocking.</li>
-<li>If bus lock is required, it is necessary to create a mutex for bus lock. Bus lock is only available when a semaphore for blocking is used.</li>
+<li>If bus lock is required, it is necessary to create a mutex for bus lock. Bus lock is only available when a semaphore for blocking is used.<br />
+ If an RTOS is used and blocking and bus lock is enabled, <a class="el" href="group___r_m___c_o_m_m_s___i2_c.html#gada9c139b138ed7c6d4b9bbeae0ffcb52">RM_COMMS_I2C_Write()</a>, <a class="el" href="group___r_m___c_o_m_m_s___i2_c.html#ga5f84cbe68338541d75b220fb374f192b">RM_COMMS_I2C_Read()</a> and <a class="el" href="group___r_m___c_o_m_m_s___i2_c.html#ga58164da5f2284c73a72902f85814438e">RM_COMMS_I2C_WriteRead()</a> cannot be called in callback.</li>
 </ul>
 <h2>Bus Initialization</h2>
 <p>The I2C communications interface expects a bus instance to be opened before opening any specific I2C comms device. The communications interface will handle switching between devices on the bus but will not open or close the bus instance. The user should open the bus with the appropriate <a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html">I2C Master Interface</a> open call.</p>
@@ -534,7 +535,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

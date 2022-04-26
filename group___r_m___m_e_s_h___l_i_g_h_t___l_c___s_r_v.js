@@ -26,5 +26,5 @@ var group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v =
     [ "rm_mesh_light_lc_srv_instance_ctrl_t", "group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html#structrm__mesh__light__lc__srv__instance__ctrl__t", null ],
     [ "RM_MESH_LIGHT_LC_SRV_Open", "group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html#ga9a56ef5c2965836bd704a4ab96d8d0c8", null ],
     [ "RM_MESH_LIGHT_LC_SRV_Close", "group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html#gafbadcc1895fa0cb10a8a536f906dde07", null ],
-    [ "RM_MESH_LIGHT_LC_SRV_StateUpdate", "group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html#ga59d27bf7d96aff1f4bf874da60be8342", null ]
+    [ "RM_MESH_LIGHT_LC_SRV_StateUpdate", "group___r_m___m_e_s_h___l_i_g_h_t___l_c___s_r_v.html#ga6e325a712b2a804f77111b8438f552c9", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: USB Composite Class (r_usb_composite)</title>
+<title>RA Flexible Software Package Documentation: USB Composite (r_usb_composite)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -159,7 +159,7 @@ $(document).ready(function(){initNavTree('group___u_s_b___c_o_m_p_o_s_i_t_e.html
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">USB Composite Class (r_usb_composite)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">USB Composite (r_usb_composite)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <p><a class="anchor" id="functionss"></a></p><h2 class="groupheader">Functions</h2>
@@ -172,6 +172,7 @@ This USB driver supports the following composite devices:</p><ol type="1">
 <li>PCDC + PHID</li>
 <li>PHID + PMSC</li>
 <li>PCDC + PCDC</li>
+<li>PHID + PHID</li>
 </ol>
 <h1><a class="anchor" id="r-usb_composite-configuration"></a>
 How to Configuration</h1>
@@ -199,6 +200,7 @@ USB Composite Stack</div></div>
 Select Device Classes</div></div>
 <dl class="section note"><dt>Note</dt><dd><ol type="1">
 <li>Be sure to select "USB PCDC driver on r_usb_pcdc" and "USB PCDC 2channel driver on r_usb_pcdc" when configurating for "PCDC + PCDC".</li>
+<li>Be sure to select "USB PHID driver on r_usb_phid" and "USB PHID 2channel driver on r_usb_phid" when configurating for "PHID + PHID".</li>
 </ol>
 </dd></dl>
 <p><br />
@@ -213,7 +215,6 @@ Delete USB Basic Instance</div></div>
 <li>Delete the "g_basic1" instance manually since this instance is not used in composite device. (Refer to the blue frame in the above figure.)</li>
 <li>The error is output when selecting the following device classes.<ol type="a">
 <li>PMSC + PMSC</li>
-<li>PHID + PHID</li>
 </ol>
 </li>
 </ol>
@@ -242,6 +243,7 @@ Descriptor</h1>
 <li>r_usb_pcdc_phid_descriptor.c.template (for PCDC + PHID)</li>
 <li>r_usb_phid_pmsc_descriptor.c.template (for PHID + PMSC)</li>
 <li>r_usb_pcdc_pcdc_descriptor.c.template (for PCDC + PCDC)</li>
+<li>r_usb_phid_phid_descriptor.c.template (for PHID + PHID)</li>
 </ol>
 <h1><a class="anchor" id="r-usb_composite-examples"></a>
 Examples</h1>
@@ -255,7 +257,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

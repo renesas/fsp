@@ -17,8 +17,9 @@ var group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r =
     ] ],
     [ "rm_filex_levelx_nor_instance_t", "group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#structrm__filex__levelx__nor__instance__t", [
       [ "p_ctrl", "group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#a36a50894c5775e920c524451b6bd3d87", null ],
-      [ "p_cfg", "group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#a173ecf415048b96fb194a55e2ca2d495", null ]
+      [ "p_cfg", "group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#a69460462985646d0c6edc31e5fcbae64", null ]
     ] ],
+    [ "VOID", "group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#ga7f319bfc2492a2136964194204e7a8cf", null ],
     [ "rm_filex_levelx_nor_event_t", "group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#ga50a68cde1290af62786375f06729908b", [
       [ "RM_FILEX_LEVELX_NOR_EVENT_BUSY", "group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#gga50a68cde1290af62786375f06729908ba6bcb085314fab96ebee0c099d84d500c", null ]
     ] ],

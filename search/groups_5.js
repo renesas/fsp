@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['flash_20interface',['Flash Interface',['../group___f_l_a_s_h___a_p_i.html',1,'']]],
-  ['freertos_20plus_20tcp_20_28rm_5ffreertos_5fplus_5ftcp_29',['FreeRTOS Plus TCP (rm_freertos_plus_tcp)',['../group___f_r_e_e_r_t_o_s___p_l_u_s___t_c_p.html',1,'']]],
-  ['filex_20block_20media_20port_20interface',['FileX Block Media Port Interface',['../group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a___a_p_i.html',1,'']]],
-  ['freertos_2bfat_20port_20_28rm_5ffreertos_5fplus_5ffat_29',['FreeRTOS+FAT Port (rm_freertos_plus_fat)',['../group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t.html',1,'']]],
-  ['freertos_2bfat_20port_20interface',['FreeRTOS+FAT Port Interface',['../group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html',1,'']]],
-  ['freertos_20port_20_28rm_5ffreertos_5fport_29',['FreeRTOS Port (rm_freertos_port)',['../group___r_m___f_r_e_e_r_t_o_s___p_o_r_t.html',1,'']]],
-  ['fs2012_20sensor_20middleware_20_28rm_5ffs2012_29',['FS2012 Sensor Middleware (rm_fs2012)',['../group___r_m___f_s2012.html',1,'']]],
-  ['fsxxxx_20middleware_20interface',['FSXXXX Middleware Interface',['../group___r_m___f_s_x_x_x_x___a_p_i.html',1,'']]]
+  ['event_20link_20controller_20_28r_5felc_29',['Event Link Controller (r_elc)',['../group___e_l_c.html',1,'']]],
+  ['elc_20interface',['ELC Interface',['../group___e_l_c___a_p_i.html',1,'']]],
+  ['ethernet_20_28r_5fether_29',['Ethernet (r_ether)',['../group___e_t_h_e_r.html',1,'']]],
+  ['ethernet_20interface',['Ethernet Interface',['../group___e_t_h_e_r___a_p_i.html',1,'']]],
+  ['ethernet_20_28r_5fether_5fphy_29',['Ethernet (r_ether_phy)',['../group___e_t_h_e_r___p_h_y.html',1,'']]],
+  ['ethernet_20phy_20interface',['Ethernet PHY Interface',['../group___e_t_h_e_r___p_h_y___a_p_i.html',1,'']]],
+  ['external_20irq_20interface',['External IRQ Interface',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html',1,'']]],
+  ['external_20irq_20_28r_5ficu_29',['External IRQ (r_icu)',['../group___i_c_u.html',1,'']]]
 ];

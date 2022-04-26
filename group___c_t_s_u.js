@@ -106,8 +106,8 @@ var group___c_t_s_u =
     [ "R_CTSU_DataGet", "group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe", null ],
     [ "R_CTSU_ScanStop", "group___c_t_s_u.html#gac88d0518c996cb44643a82818b961485", null ],
     [ "R_CTSU_CallbackSet", "group___c_t_s_u.html#ga3c966546f3774ce2228739a5ffc0ac19", null ],
-    [ "R_CTSU_Diagnosis", "group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26", null ],
     [ "R_CTSU_Close", "group___c_t_s_u.html#ga73b45020c568d57065c8a7adecaaeb4c", null ],
     [ "R_CTSU_SpecificDataGet", "group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79", null ],
-    [ "R_CTSU_DataInsert", "group___c_t_s_u.html#gac51fca87e02d589bcdeb894b99f7a08e", null ]
+    [ "R_CTSU_DataInsert", "group___c_t_s_u.html#gac51fca87e02d589bcdeb894b99f7a08e", null ],
+    [ "R_CTSU_Diagnosis", "group___c_t_s_u.html#ga45103e8db4a16dfabf3a516ab2da9f26", null ]
 ];

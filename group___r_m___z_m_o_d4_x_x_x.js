@@ -24,17 +24,17 @@ var group___r_m___z_m_o_d4_x_x_x =
     ] ],
     [ "rm_zmod4xxx_lib_type_t", "group___r_m___z_m_o_d4_x_x_x.html#gacebf611dd2d5d0b091db57023ea373b6", null ],
     [ "RM_ZMOD4XXX_Open", "group___r_m___z_m_o_d4_x_x_x.html#ga2d4f33091a3b32dc0bda323c24a4eb15", null ],
+    [ "RM_ZMOD4XXX_Close", "group___r_m___z_m_o_d4_x_x_x.html#ga564266f1fd972d2a4b0d607925a8be48", null ],
     [ "RM_ZMOD4XXX_MeasurementStart", "group___r_m___z_m_o_d4_x_x_x.html#ga21bde6c18d166c38790d044a3325d7b9", null ],
     [ "RM_ZMOD4XXX_MeasurementStop", "group___r_m___z_m_o_d4_x_x_x.html#ga1a9e4762c544db1dc924fdff62bf9cc7", null ],
     [ "RM_ZMOD4XXX_StatusCheck", "group___r_m___z_m_o_d4_x_x_x.html#gaad8d1b8d7b71762b60c6078f9059bf1d", null ],
     [ "RM_ZMOD4XXX_Read", "group___r_m___z_m_o_d4_x_x_x.html#gafabd01cfcb93ac2bcdc4378dc94ec804", null ],
-    [ "RM_ZMOD4XXX_TemperatureAndHumiditySet", "group___r_m___z_m_o_d4_x_x_x.html#ga5a6c9c9dcb25bc3964b07ed7fe002477", null ],
-    [ "RM_ZMOD4XXX_DeviceErrorCheck", "group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94", null ],
     [ "RM_ZMOD4XXX_Iaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga3ee9369b728a5687fcc637114b563875", null ],
     [ "RM_ZMOD4XXX_Iaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaa2b8de7170ff85a0f991dfdb6fb71317", null ],
     [ "RM_ZMOD4XXX_OdorDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaed61c1d9714552e574a4e6037d926180", null ],
     [ "RM_ZMOD4XXX_SulfurOdorDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaf200a9dc7ca8bf0601c2a2b96c341ecf", null ],
     [ "RM_ZMOD4XXX_Oaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaeafe7943df31f237ac45310796df64b2", null ],
     [ "RM_ZMOD4XXX_Oaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33", null ],
-    [ "RM_ZMOD4XXX_Close", "group___r_m___z_m_o_d4_x_x_x.html#ga564266f1fd972d2a4b0d607925a8be48", null ]
+    [ "RM_ZMOD4XXX_TemperatureAndHumiditySet", "group___r_m___z_m_o_d4_x_x_x.html#ga5a6c9c9dcb25bc3964b07ed7fe002477", null ],
+    [ "RM_ZMOD4XXX_DeviceErrorCheck", "group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94", null ]
 ];

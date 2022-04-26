@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Serial Peripheral Interface (r_spi)</title>
+<title>RA Flexible Software Package Documentation: SPI (r_spi)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___s_p_i.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Serial Peripheral Interface (r_spi)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">SPI (r_spi)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -177,12 +177,12 @@ Functions</h2></td></tr>
 <tr class="separator:ga97b928cbe1a9df78d4ab5ff69732dbcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga459fb4dfcfc9ee278599ae431237f549"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga459fb4dfcfc9ee278599ae431237f549">R_SPI_WriteRead</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void const *p_src, void *p_dest, uint32_t const length, <a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const bit_width)</td></tr>
 <tr class="separator:ga459fb4dfcfc9ee278599ae431237f549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2812fdb85312afcc52ef06c97f41fceb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga2812fdb85312afcc52ef06c97f41fceb">R_SPI_CallbackSet</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga2812fdb85312afcc52ef06c97f41fceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2130d38f52a95911a8f0cec6018ec041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga2130d38f52a95911a8f0cec6018ec041">R_SPI_Close</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga2130d38f52a95911a8f0cec6018ec041"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga06b45c13797497f90c7ef8a20f3bff7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga06b45c13797497f90c7ef8a20f3bff7f">R_SPI_CalculateBitrate</a> (uint32_t bitrate, <a class="el" href="group___s_p_i.html#structrspck__div__setting__t">rspck_div_setting_t</a> *spck_div)</td></tr>
 <tr class="separator:ga06b45c13797497f90c7ef8a20f3bff7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2812fdb85312afcc52ef06c97f41fceb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga2812fdb85312afcc52ef06c97f41fceb">R_SPI_CallbackSet</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ga2812fdb85312afcc52ef06c97f41fceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the SPI peripheral on RA MCUs. This module implements the <a class="el" href="group___s_p_i___a_p_i.html">SPI Interface</a>. </p>
@@ -1123,6 +1123,56 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
+<a id="ga2812fdb85312afcc52ef06c97f41fceb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2812fdb85312afcc52ef06c97f41fceb">&#9670;&nbsp;</a></span>R_SPI_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SPI_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_p_i___a_p_i.html#a01c7aacdcdf219dcfa88c2b40e7d25b1">spi_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga2130d38f52a95911a8f0cec6018ec041"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga2130d38f52a95911a8f0cec6018ec041">&#9670;&nbsp;</a></span>R_SPI_Close()</h2>
 
@@ -1198,63 +1248,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a id="ga2812fdb85312afcc52ef06c97f41fceb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2812fdb85312afcc52ef06c97f41fceb">&#9670;&nbsp;</a></span>R_SPI_CallbackSet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SPI_CallbackSet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void(*)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *)&#160;</td>
-          <td class="paramname"><em>p_callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void const *const&#160;</td>
-          <td class="paramname"><em>p_context</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_p_i___a_p_i.html#a01c7aacdcdf219dcfa88c2b40e7d25b1">spi_api_t::callbackSet</a></p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

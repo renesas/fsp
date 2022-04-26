@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Graphics LCD Controller (r_glcdc)</title>
+<title>RA Flexible Software Package Documentation: Graphics LCD (r_glcdc)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___g_l_c_d_c.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Graphics LCD Controller (r_glcdc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">Graphics LCD (r_glcdc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___g_r_a_p_h_i_c_s___m_o_d_u_l_e_s.html">Graphics</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -187,8 +187,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaaabcf5b43ea6cb821c0cddee78172cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadae3a06f170b361c175a49a9961298e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_l_c_d_c.html#gadae3a06f170b361c175a49a9961298e9">R_GLCDC_ClutEdit</a> (<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_api_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#ga364ba16397d9d24efb92170246c024ab">display_frame_layer_t</a> layer, uint8_t index, uint32_t color)</td></tr>
 <tr class="separator:gadae3a06f170b361c175a49a9961298e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4c5e0ed8faa047d4875460d4760dd8ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_l_c_d_c.html#ga4c5e0ed8faa047d4875460d4760dd8ed">R_GLCDC_StatusGet</a> (<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_api_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__status__t">display_status_t</a> *const status)</td></tr>
-<tr class="separator:ga4c5e0ed8faa047d4875460d4760dd8ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ba1f4b003e8045aefaa604f4eb5954f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_l_c_d_c.html#ga1ba1f4b003e8045aefaa604f4eb5954f">R_GLCDC_StatusGet</a> (<a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#gafff5c06483fd448fc33c2e2302602d5f">display_ctrl_t</a> const *const p_api_ctrl, <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__status__t">display_status_t</a> *const p_status)</td></tr>
+<tr class="separator:ga1ba1f4b003e8045aefaa604f4eb5954f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the GLCDC peripheral on RA MCUs. This module implements the <a class="el" href="group___d_i_s_p_l_a_y___a_p_i.html">Display Interface</a>. </p>
@@ -1846,8 +1846,8 @@ Dithering pattern D. </td></tr>
 
 </div>
 </div>
-<a id="ga4c5e0ed8faa047d4875460d4760dd8ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4c5e0ed8faa047d4875460d4760dd8ed">&#9670;&nbsp;</a></span>R_GLCDC_StatusGet()</h2>
+<a id="ga1ba1f4b003e8045aefaa604f4eb5954f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1ba1f4b003e8045aefaa604f4eb5954f">&#9670;&nbsp;</a></span>R_GLCDC_StatusGet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1889,7 +1889,7 @@ Dithering pattern D. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -25,7 +25,7 @@ var group___i_i_c___b___m_a_s_t_e_r =
     [ "R_IIC_B_MASTER_Write", "group___i_i_c___b___m_a_s_t_e_r.html#gabce90de50045312bc6eb5bc3f6471eb7", null ],
     [ "R_IIC_B_MASTER_Abort", "group___i_i_c___b___m_a_s_t_e_r.html#gaf26bf8626a5208a121fe91d64406929f", null ],
     [ "R_IIC_B_MASTER_SlaveAddressSet", "group___i_i_c___b___m_a_s_t_e_r.html#gaa46377030b4361a6af20ad10b7fee69d", null ],
-    [ "R_IIC_B_MASTER_Close", "group___i_i_c___b___m_a_s_t_e_r.html#gaf80b1b65b5d3ddcc22a98a186a89310b", null ],
     [ "R_IIC_B_MASTER_CallbackSet", "group___i_i_c___b___m_a_s_t_e_r.html#gaea59f8a727c9425ffb04595286f008a2", null ],
-    [ "R_IIC_B_MASTER_StatusGet", "group___i_i_c___b___m_a_s_t_e_r.html#ga63be09d64a19796573bf7acc7da293f4", null ]
+    [ "R_IIC_B_MASTER_StatusGet", "group___i_i_c___b___m_a_s_t_e_r.html#ga63be09d64a19796573bf7acc7da293f4", null ],
+    [ "R_IIC_B_MASTER_Close", "group___i_i_c___b___m_a_s_t_e_r.html#gaf80b1b65b5d3ddcc22a98a186a89310b", null ]
 ];

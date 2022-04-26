@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Precision Time Protocol (r_ptp)</title>
+<title>RA Flexible Software Package Documentation: PTP (r_ptp)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('group___p_t_p.html','');});
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Precision Time Protocol (r_ptp)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">PTP (r_ptp)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -470,7 +470,7 @@ IPLS IRQ Generation</div></div>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the PTP:</p>
 <ul>
-<li>PTP will not automatically initialize <a class="el" href="group___e_t_h_e_r.html">Ethernet (r_ether)</a>. This provides flexibility by allowing PTP to be used alongside 3rd party IP stacks (Eg. <a class="el" href="group___f_r_e_e_r_t_o_s___p_l_u_s___t_c_p.html">FreeRTOS Plus TCP (rm_freertos_plus_tcp)</a>), however this means the application must execute the <a class="el" href="group___e_t_h_e_r.html">Ethernet (r_ether)</a> link process in order to use PTP.</li>
+<li>PTP will not automatically initialize <a class="el" href="group___e_t_h_e_r.html">Ethernet (r_ether)</a>. This provides flexibility by allowing PTP to be used alongside 3rd party IP stacks (Eg. <a class="el" href="group___f_r_e_e_r_t_o_s___p_l_u_s___t_c_p.html">FreeRTOS+TCP Wrapper to r_ether (rm_freertos_plus_tcp)</a>), however this means the application must execute the <a class="el" href="group___e_t_h_e_r.html">Ethernet (r_ether)</a> link process in order to use PTP.</li>
 <li>The driver will not detect announce message timeouts. This functionality must be handled by the application.</li>
 <li>When IP + UDP frame format is selected, the driver will not automatically join the multicast group. This must be done by the application.</li>
 <li>In order to call PTP API functions from ISRs, the MINT and IPLS interrupt priorities must be configured to be lower than BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION. This is to guarantee that PTP register accesses are atomic.</li>
@@ -1185,7 +1185,7 @@ Typically the clock ID is derived from the MAC address (E.g. {b1,b2,b3,0xFF,0xFE
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

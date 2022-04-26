@@ -41,6 +41,7 @@ var group___r_t_c___a_p_i =
     [ "rtc_api_t", "group___r_t_c___a_p_i.html#structrtc__api__t", [
       [ "open", "group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a", null ],
       [ "close", "group___r_t_c___a_p_i.html#af5b8ce71ff3d65a0f9a556151e6d3b5c", null ],
+      [ "clockSourceSet", "group___r_t_c___a_p_i.html#a5119270ac476dc4c0aa6869df0627de9", null ],
       [ "calendarTimeSet", "group___r_t_c___a_p_i.html#a9a389b61ac0714083083fd04d9223479", null ],
       [ "calendarTimeGet", "group___r_t_c___a_p_i.html#aef7d57fb6eb6e5e781743071793de36e", null ],
       [ "calendarAlarmSet", "group___r_t_c___a_p_i.html#a5bda4cf6957658e03d59db0cf11933e5", null ],

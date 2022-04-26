@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Azure RTOS FileX LevelX I/O Driver (rm_filex_levelx_nor)</title>
+<title>RA Flexible Software Package Documentation: FileX I/O (rm_filex_levelx_nor)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -161,9 +161,10 @@ $(document).ready(function(){initNavTree('group___r_m___f_i_l_e_x___l_e_v_e_l_x_
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Azure RTOS FileX LevelX I/O Driver (rm_filex_levelx_nor)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">FileX I/O (rm_filex_levelx_nor)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s.html">Storage</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -478,6 +479,11 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structrm__filex__levelx__nor__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#structrm__filex__levelx__nor__instance__t">rm_filex_levelx_nor_instance_t</a></td></tr>
 <tr class="separator:structrm__filex__levelx__nor__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga7f319bfc2492a2136964194204e7a8cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#ga7f319bfc2492a2136964194204e7a8cf">VOID</a></td></tr>
+<tr class="separator:ga7f319bfc2492a2136964194204e7a8cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga50a68cde1290af62786375f06729908b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#ga50a68cde1290af62786375f06729908b">rm_filex_levelx_nor_event_t</a> </td></tr>
@@ -601,12 +607,28 @@ p_ctrl</td>
 <td class="fielddoc">
 Pointer to the control structure for this instance. </td></tr>
 <tr><td class="fieldtype">
-<a id="a173ecf415048b96fb194a55e2ca2d495"></a><a class="el" href="group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#structrm__filex__levelx__nor__cfg__t">rm_filex_levelx_nor_cfg_t</a> *const</td>
+<a id="a69460462985646d0c6edc31e5fcbae64"></a><a class="el" href="group___r_m___f_i_l_e_x___l_e_v_e_l_x___n_o_r.html#structrm__filex__levelx__nor__cfg__t">rm_filex_levelx_nor_cfg_t</a> const  *</td>
 <td class="fieldname">
 p_cfg</td>
 <td class="fielddoc">
 Pointer to the configuration structure for this instance. </td></tr>
 </table>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga7f319bfc2492a2136964194204e7a8cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7f319bfc2492a2136964194204e7a8cf">&#9670;&nbsp;</a></span>VOID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define VOID</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. </p>
 
 </div>
 </div>
@@ -622,7 +644,7 @@ Pointer to the configuration structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. Options for the callback events. </p>
+<p>Options for the callback events. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga50a68cde1290af62786375f06729908ba6bcb085314fab96ebee0c099d84d500c"></a>RM_FILEX_LEVELX_NOR_EVENT_BUSY&#160;</td><td class="fielddoc"><p>Pending operation, user can define their own wait functionality. </p>
 </td></tr>
@@ -671,7 +693,7 @@ Pointer to the configuration structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

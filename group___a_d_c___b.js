@@ -334,7 +334,7 @@ var group___a_d_c___b =
     ] ],
     [ "R_ADC_B_Open", "group___a_d_c___b.html#gaa70d037030e931e9645d0d13caa9fd5b", null ],
     [ "R_ADC_B_ScanCfg", "group___a_d_c___b.html#gacfe241a4fa1069fbb1a5d731b01fed5b", null ],
-    [ "R_ADC_B_InfoGet", "group___a_d_c___b.html#ga8989d65eac9cb46cf9f571a941149a26", null ],
+    [ "R_ADC_B_CallbackSet", "group___a_d_c___b.html#ga938080cae666663ae01bc1f33242f811", null ],
     [ "R_ADC_B_ScanStart", "group___a_d_c___b.html#ga4ba715bef636283b61beea8952ff2d57", null ],
     [ "R_ADC_B_ScanGroupStart", "group___a_d_c___b.html#ga8d95c7e3d20f54f196be0ec932914869", null ],
     [ "R_ADC_B_ScanStop", "group___a_d_c___b.html#ga129e300b5e495e9b8aa7afe2ab12f204", null ],
@@ -342,8 +342,8 @@ var group___a_d_c___b =
     [ "R_ADC_B_Read", "group___a_d_c___b.html#gabd5b134248487fb52dcdc4c0484d1534", null ],
     [ "R_ADC_B_Read32", "group___a_d_c___b.html#gab9fd1b2a5e37b74bed0f5595f5a951e1", null ],
     [ "R_ADC_B_FifoRead", "group___a_d_c___b.html#gaf3495a942e210aec9b563922a497d75f", null ],
+    [ "R_ADC_B_InfoGet", "group___a_d_c___b.html#ga8989d65eac9cb46cf9f571a941149a26", null ],
     [ "R_ADC_B_Close", "group___a_d_c___b.html#ga71489a9abc0c25e0e2329d78c358cc3c", null ],
-    [ "R_ADC_B_OffsetSet", "group___a_d_c___b.html#ga8ad33cdd854cfb8369a15ba55b07d8fe", null ],
     [ "R_ADC_B_Calibrate", "group___a_d_c___b.html#gac8b61426725c479730493944cbf5ce2c", null ],
-    [ "R_ADC_B_CallbackSet", "group___a_d_c___b.html#ga938080cae666663ae01bc1f33242f811", null ]
+    [ "R_ADC_B_OffsetSet", "group___a_d_c___b.html#ga8ad33cdd854cfb8369a15ba55b07d8fe", null ]
 ];

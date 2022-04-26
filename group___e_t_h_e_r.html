@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Ethernet (r_ether)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">Ethernet (r_ether)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -175,24 +175,24 @@ Functions</h2></td></tr>
 <tr class="memitem:gafbd25f2b961e8e2a807444f04e08d158"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gafbd25f2b961e8e2a807444f04e08d158">R_ETHER_Close</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:gafbd25f2b961e8e2a807444f04e08d158"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables interrupts. Removes power and releases hardware lock. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a1c0bc3caef73e0a216c2fe2edc4fff4b">ether_api_t::close</a>.  <a href="#gafbd25f2b961e8e2a807444f04e08d158">More...</a><br /></td></tr>
 <tr class="separator:gafbd25f2b961e8e2a807444f04e08d158"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga174de3d54336469ca7a1e5949820bd3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga174de3d54336469ca7a1e5949820bd3f">R_ETHER_Read</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer, uint32_t *const length_bytes)</td></tr>
-<tr class="memdesc:ga174de3d54336469ca7a1e5949820bd3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive Ethernet frame. Receives data to the location specified by the pointer to the receive buffer. In zero copy mode, the address of the receive buffer is returned. In non zero copy mode, the received data in the internal buffer is copied to the pointer passed by the argument. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a41d56c8843a454690b1969f8f766d65a">ether_api_t::read</a>.  <a href="#ga174de3d54336469ca7a1e5949820bd3f">More...</a><br /></td></tr>
-<tr class="separator:ga174de3d54336469ca7a1e5949820bd3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3bc8e53a14aa52d4d2b9b247ddd7cce8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga3bc8e53a14aa52d4d2b9b247ddd7cce8">R_ETHER_BufferRelease</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:ga3bc8e53a14aa52d4d2b9b247ddd7cce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move to the next buffer in the circular receive buffer list. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa38e7f82e66fd26fd8d51b11f46ae6e6">ether_api_t::bufferRelease</a>.  <a href="#ga3bc8e53a14aa52d4d2b9b247ddd7cce8">More...</a><br /></td></tr>
 <tr class="separator:ga3bc8e53a14aa52d4d2b9b247ddd7cce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7ea6c9f72dc3b81cdcf6de7c84a87d53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga7ea6c9f72dc3b81cdcf6de7c84a87d53">R_ETHER_RxBufferUpdate</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer)</td></tr>
 <tr class="memdesc:ga7ea6c9f72dc3b81cdcf6de7c84a87d53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the buffer pointer of the current rx buffer descriptor. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa714b8287d1cef38d8442850dd9b9fb5">ether_api_t::rxBufferUpdate</a>.  <a href="#ga7ea6c9f72dc3b81cdcf6de7c84a87d53">More...</a><br /></td></tr>
 <tr class="separator:ga7ea6c9f72dc3b81cdcf6de7c84a87d53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad54ccf1420a5c32afe90762eebde112"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer, uint32_t const frame_length)</td></tr>
-<tr class="memdesc:gaad54ccf1420a5c32afe90762eebde112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit Ethernet frame. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length. In the non zero copy mode, transmits data after being copied to the internal buffer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233">ether_api_t::write</a>.  <a href="#gaad54ccf1420a5c32afe90762eebde112">More...</a><br /></td></tr>
-<tr class="separator:gaad54ccf1420a5c32afe90762eebde112"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab10af3abff76900b7895934685c43311"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gab10af3abff76900b7895934685c43311">R_ETHER_LinkProcess</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:gab10af3abff76900b7895934685c43311"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Link up processing, the Link down processing, and the magic packet detection processing are executed. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a125ca4ee69c6c63e1db42708324c0fb3">ether_api_t::linkProcess</a>.  <a href="#gab10af3abff76900b7895934685c43311">More...</a><br /></td></tr>
 <tr class="separator:gab10af3abff76900b7895934685c43311"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga992be578c310d212389be65762d1b6ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga992be578c310d212389be65762d1b6ea">R_ETHER_WakeOnLANEnable</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="memdesc:ga992be578c310d212389be65762d1b6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">The setting of ETHERC is changed from normal sending and receiving mode to magic packet detection mode. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#afabb87ef0be65717bb7675a4a004e3ad">ether_api_t::wakeOnLANEnable</a>.  <a href="#ga992be578c310d212389be65762d1b6ea">More...</a><br /></td></tr>
 <tr class="separator:ga992be578c310d212389be65762d1b6ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga174de3d54336469ca7a1e5949820bd3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga174de3d54336469ca7a1e5949820bd3f">R_ETHER_Read</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer, uint32_t *const length_bytes)</td></tr>
+<tr class="memdesc:ga174de3d54336469ca7a1e5949820bd3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive Ethernet frame. Receives data to the location specified by the pointer to the receive buffer. In zero copy mode, the address of the receive buffer is returned. In non zero copy mode, the received data in the internal buffer is copied to the pointer passed by the argument. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a41d56c8843a454690b1969f8f766d65a">ether_api_t::read</a>.  <a href="#ga174de3d54336469ca7a1e5949820bd3f">More...</a><br /></td></tr>
+<tr class="separator:ga174de3d54336469ca7a1e5949820bd3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad54ccf1420a5c32afe90762eebde112"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112">R_ETHER_Write</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer, uint32_t const frame_length)</td></tr>
+<tr class="memdesc:gaad54ccf1420a5c32afe90762eebde112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit Ethernet frame. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length. In the non zero copy mode, transmits data after being copied to the internal buffer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233">ether_api_t::write</a>.  <a href="#gaad54ccf1420a5c32afe90762eebde112">More...</a><br /></td></tr>
+<tr class="separator:gaad54ccf1420a5c32afe90762eebde112"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8993d43da08dc2f328d67be680fa85e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r.html#ga8993d43da08dc2f328d67be680fa85e0">R_ETHER_TxStatusGet</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer_address)</td></tr>
 <tr class="separator:ga8993d43da08dc2f328d67be680fa85e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -662,55 +662,6 @@ Current Link status. </td></tr>
 
 </div>
 </div>
-<a id="ga174de3d54336469ca7a1e5949820bd3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga174de3d54336469ca7a1e5949820bd3f">&#9670;&nbsp;</a></span>R_ETHER_Read()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHER_Read </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *const&#160;</td>
-          <td class="paramname"><em>p_buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>length_bytes</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Receive Ethernet frame. Receives data to the location specified by the pointer to the receive buffer. In zero copy mode, the address of the receive buffer is returned. In non zero copy mode, the received data in the internal buffer is copied to the pointer passed by the argument. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a41d56c8843a454690b1969f8f766d65a">ether_api_t::read</a>. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_NO_DATA</td><td>There is no data in receive buffer. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKET_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_FILTERING</td><td>Multicast Frame filter is enable, and Multicast Address Frame is received. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Value of the pointer is NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga3bc8e53a14aa52d4d2b9b247ddd7cce8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3bc8e53a14aa52d4d2b9b247ddd7cce8">&#9670;&nbsp;</a></span>R_ETHER_BufferRelease()</h2>
 
@@ -782,55 +733,6 @@ Current Link status. </td></tr>
 
 </div>
 </div>
-<a id="gaad54ccf1420a5c32afe90762eebde112"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaad54ccf1420a5c32afe90762eebde112">&#9670;&nbsp;</a></span>R_ETHER_Write()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHER_Write </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *const&#160;</td>
-          <td class="paramname"><em>p_buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t const&#160;</td>
-          <td class="paramname"><em>frame_length</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Transmit Ethernet frame. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length. In the non zero copy mode, transmits data after being copied to the internal buffer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233">ether_api_t::write</a>. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKET_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL</td><td>Transmit buffer is not empty. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Value of the pointer is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Value of the send frame size is out of range. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gab10af3abff76900b7895934685c43311"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab10af3abff76900b7895934685c43311">&#9670;&nbsp;</a></span>R_ETHER_LinkProcess()</h2>
 
@@ -896,6 +798,104 @@ Current Link status. </td></tr>
 
 </div>
 </div>
+<a id="ga174de3d54336469ca7a1e5949820bd3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga174de3d54336469ca7a1e5949820bd3f">&#9670;&nbsp;</a></span>R_ETHER_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHER_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>length_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Receive Ethernet frame. Receives data to the location specified by the pointer to the receive buffer. In zero copy mode, the address of the receive buffer is returned. In non zero copy mode, the received data in the internal buffer is copied to the pointer passed by the argument. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a41d56c8843a454690b1969f8f766d65a">ether_api_t::read</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_NO_DATA</td><td>There is no data in receive buffer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKET_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_FILTERING</td><td>Multicast Frame filter is enable, and Multicast Address Frame is received. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Value of the pointer is NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaad54ccf1420a5c32afe90762eebde112"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad54ccf1420a5c32afe90762eebde112">&#9670;&nbsp;</a></span>R_ETHER_Write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHER_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>frame_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transmit Ethernet frame. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length. In the non zero copy mode, transmits data after being copied to the internal buffer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a92e87f33f0a4e0ccb26464d697cdf233">ether_api_t::write</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_MAGIC_PACKET_MODE</td><td>As a Magic Packet is being detected, transmission and reception is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL</td><td>Transmit buffer is not empty. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Value of the pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Value of the send frame size is out of range. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga8993d43da08dc2f328d67be680fa85e0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8993d43da08dc2f328d67be680fa85e0">&#9670;&nbsp;</a></span>R_ETHER_TxStatusGet()</h2>
 
@@ -941,7 +941,7 @@ Current Link status. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

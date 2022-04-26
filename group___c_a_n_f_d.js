@@ -66,8 +66,8 @@ var group___c_a_n_f_d =
     ] ],
     [ "R_CANFD_Open", "group___c_a_n_f_d.html#ga664d1e07613b250a3084681a613334be", null ],
     [ "R_CANFD_Close", "group___c_a_n_f_d.html#ga7387d2e68262798a52c3a820ce12ea47", null ],
-    [ "R_CANFD_Write", "group___c_a_n_f_d.html#ga9a43dfa148767d10e12b22cb317111a9", null ],
-    [ "R_CANFD_Read", "group___c_a_n_f_d.html#gaa79e3baad3f67bc4a3d1741dea29a3ae", null ],
+    [ "R_CANFD_Write", "group___c_a_n_f_d.html#gadc41bfd0b92eb607d8dbc0b8c248bb94", null ],
+    [ "R_CANFD_Read", "group___c_a_n_f_d.html#gab31328c78c603cbdc1c83846d4a6a7bb", null ],
     [ "R_CANFD_ModeTransition", "group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890", null ],
     [ "R_CANFD_InfoGet", "group___c_a_n_f_d.html#ga16ff5e9e44e32191944292aea98ab4cb", null ],
     [ "R_CANFD_CallbackSet", "group___c_a_n_f_d.html#ga96f34361e525a46f121b11d627c3a1a8", null ]

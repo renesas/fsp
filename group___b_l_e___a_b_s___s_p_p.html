@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Bluetooth Low Energy Abstraction with RYZ012 (rm_ble_abs_spp)</title>
+<title>RA Flexible Software Package Documentation: SPP BLE Abstraction (rm_ble_abs_spp)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -159,14 +159,14 @@ $(document).ready(function(){initNavTree('group___b_l_e___a_b_s___s_p_p.html',''
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">Bluetooth Low Energy Abstraction with RYZ012 (rm_ble_abs_spp)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">SPP BLE Abstraction (rm_ble_abs_spp)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <p>Middleware for the Bluetooth peripheral on RA MCUs. This module implements the <a class="el" href="group___b_l_e___a_b_s___a_p_i.html">BLE ABS Interface</a>. </p>
 <h1><a class="anchor" id="rm_ble_abs_spp-overview"></a>
 Overview</h1>
 <p>This module provides BLE GAP functionality that complies with the Bluetooth Core Specification version 5.0 specified by the Bluetooth SIG. This module is configured via the <a href="https://www.renesas.com/qe-ble">QE for BLE</a>. QE for BLE provides standard and custom services defined by the user.</p>
-<p>The module supports the Renesas Electronics RYZ012 Bluetooth® Low Energy 5 Module. The connection to the host is done through connecting the module to a PMOD on the development board. The rm_ble_abs_spp driver interfaces with the RYZ012 module over UART.</p>
+<p>The module supports the Renesas Electronics RYZ012 Bluetooth® Low Energy 5 Module. The rm_ble_abs_spp driver interfaces with the RYZ012 module over UART or SPI.</p>
 <h2><a class="anchor" id="rm_ble_abs_spp-features"></a>
 Features</h2>
 <p>The Bluetooth Low Energy Abstraction module with SPP supports the following features:</p><ul>
@@ -197,11 +197,16 @@ Features</h2>
 <li>Read/Write of GATT Profile from host.</li>
 </ul>
 </li>
+<li>Selectable Communication Interfaces<ul>
+<li><a class="el" href="group___s_p_i___a_p_i.html">SPI Interface</a></li>
+<li><a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a></li>
+</ul>
+</li>
 </ul>
 <h2>Target Devices</h2>
 <p>The Bluetooth Low Energy Abstraction module supports the following devices.</p><ul>
-<li>RA6 line of devices using a PMOD connector for the RYZ012 module</li>
-<li>RA4 Line of devices using a PMOD connector for the RYZ012 module</li>
+<li>RA6 line of devices using the RYZ012 module</li>
+<li>RA4 Line of devices using the RYZ012 module</li>
 </ul>
 <h1><a class="anchor" id="rm_ble_abs_spp-configuration"></a>
 Configuration</h1>
@@ -229,6 +234,10 @@ Disable</li>
 <tr>
 <td>UART/SPI Select Pin (PB5)</td><td>Refer to the RA Configuration tool for available options.</td><td>11 </td><td>Specify the module PB5 pin for the MCU. </td></tr>
 <tr>
+<td>SPI Software SSL Port</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the port to use for controlling SSL using the ioport module. </td></tr>
+<tr>
+<td>SPI Software SSL Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the pin to use for controlling SSL using the ioport module. </td></tr>
+<tr>
 <td>Transmit Power Level (in dBm)</td><td>Refer to the RA Configuration tool for available options.</td><td>4.57 </td><td>Specify the module transmit power in dBm. </td></tr>
 </table>
  <h2>Configurations for Networking &gt; SPP BLE Abstraction (rm_ble_abs_spp)</h2>
@@ -254,11 +263,17 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; SP
 </p>
 <h2><a class="anchor" id="rm_ble_abs_spp-pin-configuration"></a>
 Pin Configuration</h2>
-<p>Refer to <a class="el" href="group___s_c_i___u_a_r_t.html">Serial Communications Interface (SCI) UART (r_sci_uart)</a>. <a class="el" href="group___s_c_i___u_a_r_t.html#gaef2636b50df00f5e888e833f0e6bbf6c">R_SCI_UART_Open()</a> is called by <a class="el" href="group___b_l_e___a_b_s___s_p_p.html">Bluetooth Low Energy Abstraction with RYZ012 (rm_ble_abs_spp)</a></p>
-<p>GPIO pins used by the BLE driver to control RYZ012:</p><ul>
+<p>Pins used by the BLE driver to control the RYZ012 module:</p><ul>
 <li>Reset Pin : Active low reset line for RYZ012 module</li>
-<li>UART/SPI Select Pin : Allows selection between UART or SPI from module communication. UART is selected with output low and SPI with output high.</li>
+<li>UART/SPI Select Pin : Allows selection between UART or SPI for module communication. UART is selected with output low and SPI with output high.</li>
+<li><a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a> : RX/TX Pins</li>
+<li><a class="el" href="group___s_p_i___a_p_i.html">SPI Interface</a> : MOSI/MISO/SCK/SSL Pins<ul>
+<li>Data Ready Pin : When the <a class="el" href="group___s_p_i___a_p_i.html">SPI Interface</a> is selected as the communication interface, the Data Ready pin is asserted in order to notify the MCU that there is data ready to be read.</li>
+<li>Software SSL Pin : Can be optionally configured in order to drive the SSL Pin using software instead of hardware<sup>1</sup>.</li>
 </ul>
+</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>1. The Software SSL Pin is required when using the <a class="el" href="group___s_c_i___s_p_i.html">SPI (r_sci_spi)</a> driver.</dd></dl>
 <h1><a class="anchor" id="rm_ble_abs_spp-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="rm_ble_abs_spp-limitations"></a>
@@ -320,7 +335,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

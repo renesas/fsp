@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Analog to Digital Converter (r_adc_b)</title>
+<title>RA Flexible Software Package Documentation: ADC Driver on r_adc_b</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___a_d_c___b.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Analog to Digital Converter (r_adc_b)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">ADC Driver on r_adc_b<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html">Analog</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -173,8 +173,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaa70d037030e931e9645d0d13caa9fd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacfe241a4fa1069fbb1a5d731b01fed5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gacfe241a4fa1069fbb1a5d731b01fed5b">R_ADC_B_ScanCfg</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, void const *const p_scan_cfg)</td></tr>
 <tr class="separator:gacfe241a4fa1069fbb1a5d731b01fed5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8989d65eac9cb46cf9f571a941149a26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga8989d65eac9cb46cf9f571a941149a26">R_ADC_B_InfoGet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *p_adc_info)</td></tr>
-<tr class="separator:ga8989d65eac9cb46cf9f571a941149a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga938080cae666663ae01bc1f33242f811"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga938080cae666663ae01bc1f33242f811">R_ADC_B_CallbackSet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga938080cae666663ae01bc1f33242f811"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4ba715bef636283b61beea8952ff2d57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga4ba715bef636283b61beea8952ff2d57">R_ADC_B_ScanStart</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl)</td></tr>
 <tr class="separator:ga4ba715bef636283b61beea8952ff2d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8d95c7e3d20f54f196be0ec932914869"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga8d95c7e3d20f54f196be0ec932914869">R_ADC_B_ScanGroupStart</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a> group_mask)</td></tr>
@@ -189,14 +189,14 @@ Functions</h2></td></tr>
 <tr class="separator:gab9fd1b2a5e37b74bed0f5595f5a951e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf3495a942e210aec9b563922a497d75f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gaf3495a942e210aec9b563922a497d75f">R_ADC_B_FifoRead</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a> const group_mask, <a class="el" href="group___a_d_c___b.html#structadc__b__fifo__read__t">adc_b_fifo_read_t</a> *const p_data)</td></tr>
 <tr class="separator:gaf3495a942e210aec9b563922a497d75f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8989d65eac9cb46cf9f571a941149a26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga8989d65eac9cb46cf9f571a941149a26">R_ADC_B_InfoGet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *p_adc_info)</td></tr>
+<tr class="separator:ga8989d65eac9cb46cf9f571a941149a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga71489a9abc0c25e0e2329d78c358cc3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga71489a9abc0c25e0e2329d78c358cc3c">R_ADC_B_Close</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl)</td></tr>
 <tr class="separator:ga71489a9abc0c25e0e2329d78c358cc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ad33cdd854cfb8369a15ba55b07d8fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga8ad33cdd854cfb8369a15ba55b07d8fe">R_ADC_B_OffsetSet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, int32_t offset)</td></tr>
-<tr class="separator:ga8ad33cdd854cfb8369a15ba55b07d8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac8b61426725c479730493944cbf5ce2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gac8b61426725c479730493944cbf5ce2c">R_ADC_B_Calibrate</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void const *p_extend)</td></tr>
 <tr class="separator:gac8b61426725c479730493944cbf5ce2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga938080cae666663ae01bc1f33242f811"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga938080cae666663ae01bc1f33242f811">R_ADC_B_CallbackSet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ga938080cae666663ae01bc1f33242f811"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ad33cdd854cfb8369a15ba55b07d8fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga8ad33cdd854cfb8369a15ba55b07d8fe">R_ADC_B_OffsetSet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, int32_t offset)</td></tr>
+<tr class="separator:ga8ad33cdd854cfb8369a15ba55b07d8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the ADC_B peripheral on RA MCUs. This module implements the <a class="el" href="group___a_d_c___a_p_i.html">ADC Interface</a>. </p>
@@ -361,7 +361,7 @@ A/D Conversion Overflow</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the ADC_B in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* A channel configuration is generated by the RA Configuration editor based on the options selected.  If additional</span></div><div class="line"><span class="comment"> * configurations are desired additional adc_channel_cfg_t elements can be defined and passed to R_ADC_B_ScanCfg. */</span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="group___a_d_c___b.html#structadc__b__scan__cfg__t">adc_b_scan_cfg_t</a> g_adc_b0_scan_cfg;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> adc_b_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___a_d_c___b.html#gaa70d037030e931e9645d0d13caa9fd5b">R_ADC_B_Open</a>(&amp;g_adc_b0_ctrl, &amp;g_adc_b0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___a_d_c___b.html#gac8b61426725c479730493944cbf5ce2c">R_ADC_B_Calibrate</a>(&amp;g_adc_b0_ctrl, NULL);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for calibration to complete */</span></div><div class="line">    <a class="code" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> status = {.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a> = <a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a>};</div><div class="line">    <span class="keywordflow">while</span> ((<a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a> == status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a>) &amp;&amp;</div><div class="line">           (FSP_SUCCESS == err))</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        err = <a class="code" href="group___a_d_c___b.html#gae8b29759f635df34c71a66fbb9c91cc3">R_ADC_B_StatusGet</a>(&amp;g_adc_b0_ctrl, &amp;status);</div><div class="line">    }</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Enable channels. */</span></div><div class="line">    err = <a class="code" href="group___a_d_c___b.html#gacfe241a4fa1069fbb1a5d731b01fed5b">R_ADC_B_ScanCfg</a>(&amp;g_adc_b0_ctrl, &amp;g_adc_b0_scan_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start one or more scan groups by calling R_ADC_B_ScanGroupStart(). Alternatively, all scan groups may be started</span></div><div class="line"><span class="comment">     * by calling R_ADC_B_ScanCfg(). */</span></div><div class="line">    (void) <a class="code" href="group___a_d_c___b.html#ga8d95c7e3d20f54f196be0ec932914869">R_ADC_B_ScanGroupStart</a>(&amp;g_adc_b0_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaee17c30275c1c9376cc485a62ea121ebaeedbedf9fc1fc6055524220d6e0af60d">ADC_GROUP_MASK_0</a>);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for conversion to complete. */</span></div><div class="line">    status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a> = <a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a>;</div><div class="line">    <span class="keywordflow">while</span> (<a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a> == status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a>)</div><div class="line">    {</div><div class="line">        (void) <a class="code" href="group___a_d_c___b.html#gae8b29759f635df34c71a66fbb9c91cc3">R_ADC_B_StatusGet</a>(&amp;g_adc_b0_ctrl, &amp;status);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read converted data. */</span></div><div class="line">    uint16_t channel_0_conversion_result;</div><div class="line">    err = <a class="code" href="group___a_d_c___b.html#gabd5b134248487fb52dcdc4c0484d1534">R_ADC_B_Read</a>(&amp;g_adc_b0_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104">ADC_CHANNEL_0</a>, &amp;channel_0_conversion_result);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* A channel configuration is generated by the RA Configuration editor based on the options selected.  If additional</span></div><div class="line"><span class="comment"> * configurations are desired additional adc_channel_cfg_t elements can be defined and passed to R_ADC_B_ScanCfg. */</span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="group___a_d_c___b.html#structadc__b__scan__cfg__t">adc_b_scan_cfg_t</a> g_adc_b0_scan_cfg;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> adc_b_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___a_d_c___b.html#gaa70d037030e931e9645d0d13caa9fd5b">R_ADC_B_Open</a>(&amp;g_adc_b0_ctrl, &amp;g_adc_b0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___a_d_c___b.html#gac8b61426725c479730493944cbf5ce2c">R_ADC_B_Calibrate</a>(&amp;g_adc_b0_ctrl, NULL);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for calibration to complete */</span></div><div class="line">    <a class="code" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> status = {.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a> = <a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a>};</div><div class="line">    <span class="keywordflow">while</span> ((<a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a> == status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a>) &amp;&amp;</div><div class="line">           (FSP_SUCCESS == err))</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        err = <a class="code" href="group___a_d_c___b.html#gae8b29759f635df34c71a66fbb9c91cc3">R_ADC_B_StatusGet</a>(&amp;g_adc_b0_ctrl, &amp;status);</div><div class="line">    }</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Enable channels. */</span></div><div class="line">    err = <a class="code" href="group___a_d_c___b.html#gacfe241a4fa1069fbb1a5d731b01fed5b">R_ADC_B_ScanCfg</a>(&amp;g_adc_b0_ctrl, &amp;g_adc_b0_scan_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start one or more scan groups by calling R_ADC_B_ScanGroupStart(). Alternatively, all scan groups may be started</span></div><div class="line"><span class="comment">     * by calling R_ADC_B_ScanCfg(). */</span></div><div class="line">    (void) <a class="code" href="group___a_d_c___b.html#ga8d95c7e3d20f54f196be0ec932914869">R_ADC_B_ScanGroupStart</a>(&amp;g_adc_b0_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaee17c30275c1c9376cc485a62ea121ebaeedbedf9fc1fc6055524220d6e0af60d">ADC_GROUP_MASK_0</a>);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for conversion to complete. */</span></div><div class="line">    status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a> = <a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a>;</div><div class="line">    <span class="keywordflow">while</span> (<a class="code" href="group___a_d_c___a_p_i.html#gga2783ab2e29809bf0a50bc66c6fa8d3c6abe1c11b191e48669cc5129aca45800d7">ADC_STATE_SCAN_IN_PROGRESS</a> == status.<a class="code" href="group___a_d_c___a_p_i.html#a276869569116678c7838ef506fceb77b">state</a>)</div><div class="line">    {</div><div class="line">        (void) <a class="code" href="group___a_d_c___b.html#gae8b29759f635df34c71a66fbb9c91cc3">R_ADC_B_StatusGet</a>(&amp;g_adc_b0_ctrl, &amp;status);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read converted data. */</span></div><div class="line">    uint16_t channel_0_conversion_result;</div><div class="line">    err = <a class="code" href="group___a_d_c___b.html#gabd5b134248487fb52dcdc4c0484d1534">R_ADC_B_Read</a>(&amp;g_adc_b0_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104">ADC_CHANNEL_0</a>, &amp;channel_0_conversion_result);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structadc__b__fifo__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#structadc__b__fifo__data__t">adc_b_fifo_data_t</a></td></tr>
@@ -890,19 +890,19 @@ pga_gain[4]</td>
 <td class="fielddoc">
 PGA Gain selection. </td></tr>
 <tr><td class="fieldtype">
-<a id="ac3d3d17838339929ab22c761889dce7e"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a0fd4168e4bf25d2160b127dbe250e35c"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="af5fe0926790be49f346c836d8b22df66"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a548d372f0629f94d83c844bce9731031"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a1674a1377b108cc4e5a0908e1c951d35"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a61c5ce4c72aef99676ec16e70d9c692b"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -920,13 +920,13 @@ scan_group_enable</td>
 <td class="fielddoc">
 Scan Group enable register data. </td></tr>
 <tr><td class="fieldtype">
-<a id="a561391104380dd95922b197def3ecb94"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a95f6186cf38972e1e3d12c951d092628"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="ae6cabd9f400017231704ee59470993cd"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="ace9b344c4fc568ff03f14cea5b7263c6"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -938,7 +938,7 @@ fifo_interrupt_enable_mask</td>
 <td class="fielddoc">
 FIFO interrupt enable register data. </td></tr>
 <tr><td class="fieldtype">
-<a id="a42c6ec15dc333fb8a0c696d3ae6f51c1"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a49c1a710fc4a09be52bfb13458ca6d49"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -992,7 +992,7 @@ p_isr_cfg</td>
 <td class="fielddoc">
 Pointer to ISR configuration. </td></tr>
 <tr><td class="fieldtype">
-<a id="aa67e76d2c4ca8d31d0229bb6ec2dbe39"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="ae59b5b0db2bd8d396eae512ce469e6ad"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1857,23 +1857,35 @@ Limiter clip Table register data. </td></tr>
 
 </div>
 </div>
-<a id="ga8989d65eac9cb46cf9f571a941149a26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8989d65eac9cb46cf9f571a941149a26">&#9670;&nbsp;</a></span>R_ADC_B_InfoGet()</h2>
+<a id="ga938080cae666663ae01bc1f33242f811"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga938080cae666663ae01bc1f33242f811">&#9670;&nbsp;</a></span>R_ADC_B_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ADC_B_InfoGet </td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ADC_B_CallbackSet </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ctrl</em>, </td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *&#160;</td>
-          <td class="paramname"><em>p_adc_info</em>&#160;</td>
+          <td class="paramtype">void(*)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1882,13 +1894,13 @@ Limiter clip Table register data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Provides the temperature sensor slope and the calibration data for the sensor if available on this MCU. Otherwise, invalid calibration data of 0xFFFFFFFF will be returned.</p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___a_d_c___a_p_i.html#a8d081aba32f84d62e7d48389b1d10b3e">adc_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Info is read into p_adc_info. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input argument is invalid. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Unit is not open. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>Unit not initialized. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2178,6 +2190,44 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
 
 </div>
 </div>
+<a id="ga8989d65eac9cb46cf9f571a941149a26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8989d65eac9cb46cf9f571a941149a26">&#9670;&nbsp;</a></span>R_ADC_B_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ADC_B_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *&#160;</td>
+          <td class="paramname"><em>p_adc_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides the temperature sensor slope and the calibration data for the sensor if available on this MCU. Otherwise, invalid calibration data of 0xFFFFFFFF will be returned.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Info is read into p_adc_info. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input argument is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Unit is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>Unit not initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga71489a9abc0c25e0e2329d78c358cc3c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga71489a9abc0c25e0e2329d78c358cc3c">&#9670;&nbsp;</a></span>R_ADC_B_Close()</h2>
 
@@ -2199,47 +2249,6 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
     <tr><td class="paramname">FSP_SUCCESS</td><td>Module closed. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input argument is invalid. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Unit is not open. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga8ad33cdd854cfb8369a15ba55b07d8fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8ad33cdd854cfb8369a15ba55b07d8fe">&#9670;&nbsp;</a></span>R_ADC_B_OffsetSet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ADC_B_OffsetSet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const&#160;</td>
-          <td class="paramname"><em>reg_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int32_t&#160;</td>
-          <td class="paramname"><em>offset</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p><a class="el" href="group___a_d_c___a_p_i.html#a305b2c2466cd88fdddf6134db542dc7e">adc_api_t::offsetSet</a> is not supported on the ADC_B.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2291,35 +2300,29 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
 
 </div>
 </div>
-<a id="ga938080cae666663ae01bc1f33242f811"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga938080cae666663ae01bc1f33242f811">&#9670;&nbsp;</a></span>R_ADC_B_CallbackSet()</h2>
+<a id="ga8ad33cdd854cfb8369a15ba55b07d8fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8ad33cdd854cfb8369a15ba55b07d8fe">&#9670;&nbsp;</a></span>R_ADC_B_OffsetSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ADC_B_CallbackSet </td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ADC_B_OffsetSet </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em>, </td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *)&#160;</td>
-          <td class="paramname"><em>p_callback</em>, </td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const&#160;</td>
+          <td class="paramname"><em>reg_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
-          <td class="paramname"><em>p_context</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2328,13 +2331,10 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___a_d_c___a_p_i.html#a8d081aba32f84d62e7d48389b1d10b3e">adc_api_t::callbackSet</a></p>
+<p><a class="el" href="group___a_d_c___a_p_i.html#a305b2c2466cd88fdddf6134db542dc7e">adc_api_t::offsetSet</a> is not supported on the ADC_B.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2347,7 +2347,7 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

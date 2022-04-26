@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Serial Sound Interface (r_ssi)</title>
+<title>RA Flexible Software Package Documentation: I2S (r_ssi)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___s_s_i.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Serial Sound Interface (r_ssi)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">I2S (r_ssi)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -171,18 +171,18 @@ $(document).ready(function(){initNavTree('group___s_s_i.html','');});
 Functions</h2></td></tr>
 <tr class="memitem:ga11eda7ae877dbff4d650b4bc5847bb72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#ga11eda7ae877dbff4d650b4bc5847bb72">R_SSI_Open</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i2_s___a_p_i.html#structi2s__cfg__t">i2s_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="separator:ga11eda7ae877dbff4d650b4bc5847bb72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaece1c2abe43d44acb9078a073b62c186"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#gaece1c2abe43d44acb9078a073b62c186">R_SSI_Stop</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl)</td></tr>
-<tr class="separator:gaece1c2abe43d44acb9078a073b62c186"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaff322c2f867c9c0518da4a3d47d10242"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#gaff322c2f867c9c0518da4a3d47d10242">R_SSI_StatusGet</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i2_s___a_p_i.html#structi2s__status__t">i2s_status_t</a> *const p_status)</td></tr>
-<tr class="separator:gaff322c2f867c9c0518da4a3d47d10242"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga50467e833da72f35c1dcf5f74059da18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#ga50467e833da72f35c1dcf5f74059da18">R_SSI_Write</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl, void const *const p_src, uint32_t const bytes)</td></tr>
 <tr class="separator:ga50467e833da72f35c1dcf5f74059da18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4920c995f4b40edcf21a9287b63d669a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#ga4920c995f4b40edcf21a9287b63d669a">R_SSI_Read</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl, void *const p_dest, uint32_t const bytes)</td></tr>
 <tr class="separator:ga4920c995f4b40edcf21a9287b63d669a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaec5fe3772ecc9fca9b85126f6d2f3f49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#gaec5fe3772ecc9fca9b85126f6d2f3f49">R_SSI_WriteRead</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl, void const *const p_src, void *const p_dest, uint32_t const bytes)</td></tr>
 <tr class="separator:gaec5fe3772ecc9fca9b85126f6d2f3f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaece1c2abe43d44acb9078a073b62c186"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#gaece1c2abe43d44acb9078a073b62c186">R_SSI_Stop</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gaece1c2abe43d44acb9078a073b62c186"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacd323f1e3ef5f11745645b8297889b9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#gacd323f1e3ef5f11745645b8297889b9b">R_SSI_Mute</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i2_s___a_p_i.html#ga59e0c765fddd3ab6aba0d87aaaff0b3b">i2s_mute_t</a> const mute_enable)</td></tr>
 <tr class="separator:gacd323f1e3ef5f11745645b8297889b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff322c2f867c9c0518da4a3d47d10242"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#gaff322c2f867c9c0518da4a3d47d10242">R_SSI_StatusGet</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl, <a class="el" href="group___i2_s___a_p_i.html#structi2s__status__t">i2s_status_t</a> *const p_status)</td></tr>
+<tr class="separator:gaff322c2f867c9c0518da4a3d47d10242"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga377334858b5b5c7757c0bdce3bcacbf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#ga377334858b5b5c7757c0bdce3bcacbf0">R_SSI_Close</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ga377334858b5b5c7757c0bdce3bcacbf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga487b2317d289066a0a27e0e5a9124463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_s_i.html#ga487b2317d289066a0a27e0e5a9124463">R_SSI_CallbackSet</a> (<a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___i2_s___a_p_i.html#structi2s__callback__args__t">i2s_callback_args_t</a> *const p_callback_memory)</td></tr>
@@ -550,73 +550,6 @@ Select bit clock division ratio. </td></tr>
 
 </div>
 </div>
-<a id="gaece1c2abe43d44acb9078a073b62c186"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaece1c2abe43d44acb9078a073b62c186">&#9670;&nbsp;</a></span>R_SSI_Stop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SSI_Stop </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Stops SSI. Implements <a class="el" href="group___i2_s___a_p_i.html#a3a101cfd39c85cca163c5daf6bf29e34">i2s_api_t::stop</a>.</p>
-<p>This function disables both transmission and reception, and disables any transfer instances used.</p>
-<p>The SSI will stop on the next frame boundary. Do not restart SSI until it is idle.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>I2S communication stop request issued. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The pointer to p_ctrl was null. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or lower level drivers for other possible return codes. </dd></dl>
-
-</div>
-</div>
-<a id="gaff322c2f867c9c0518da4a3d47d10242"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaff322c2f867c9c0518da4a3d47d10242">&#9670;&nbsp;</a></span>R_SSI_StatusGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SSI_StatusGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group___i2_s___a_p_i.html#structi2s__status__t">i2s_status_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_status</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Gets SSI status and stores it in provided pointer p_status. Implements <a class="el" href="group___i2_s___a_p_i.html#a1f88823bc677660a18881e9a348e6af0">i2s_api_t::statusGet</a>.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Information stored successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The p_instance_ctrl or p_status parameter was null. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga50467e833da72f35c1dcf5f74059da18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga50467e833da72f35c1dcf5f74059da18">&#9670;&nbsp;</a></span>R_SSI_Write()</h2>
 
@@ -777,6 +710,36 @@ Select bit clock division ratio. </td></tr>
 
 </div>
 </div>
+<a id="gaece1c2abe43d44acb9078a073b62c186"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaece1c2abe43d44acb9078a073b62c186">&#9670;&nbsp;</a></span>R_SSI_Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SSI_Stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops SSI. Implements <a class="el" href="group___i2_s___a_p_i.html#a3a101cfd39c85cca163c5daf6bf29e34">i2s_api_t::stop</a>.</p>
+<p>This function disables both transmission and reception, and disables any transfer instances used.</p>
+<p>The SSI will stop on the next frame boundary. Do not restart SSI until it is idle.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>I2S communication stop request issued. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The pointer to p_ctrl was null. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or lower level drivers for other possible return codes. </dd></dl>
+
+</div>
+</div>
 <a id="gacd323f1e3ef5f11745645b8297889b9b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gacd323f1e3ef5f11745645b8297889b9b">&#9670;&nbsp;</a></span>R_SSI_Mute()</h2>
 
@@ -808,6 +771,43 @@ Select bit clock division ratio. </td></tr>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Transmission is muted. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The pointer to p_ctrl was null. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaff322c2f867c9c0518da4a3d47d10242"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaff322c2f867c9c0518da4a3d47d10242">&#9670;&nbsp;</a></span>R_SSI_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SSI_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___i2_s___a_p_i.html#ga0fa2b29e32a127c3151b9da8b91e67d6">i2s_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___i2_s___a_p_i.html#structi2s__status__t">i2s_status_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets SSI status and stores it in provided pointer p_status. Implements <a class="el" href="group___i2_s___a_p_i.html#a1f88823bc677660a18881e9a348e6af0">i2s_api_t::statusGet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Information stored successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The p_instance_ctrl or p_status parameter was null. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
   </table>
   </dd>
@@ -899,7 +899,7 @@ Select bit clock division ratio. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

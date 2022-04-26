@@ -65,6 +65,7 @@ var group___t_i_m_e_r___a_p_i =
       [ "TIMER_MODE_PERIODIC", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a78838cf8d728f8c64bb8012d522d1e2e", null ],
       [ "TIMER_MODE_ONE_SHOT", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a", null ],
       [ "TIMER_MODE_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac", null ],
+      [ "TIMER_MODE_ONE_SHOT_PULSE", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2afe99f13968cabc479896dfd0bc67fb6a", null ],
       [ "TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a6a3c462f9e9cc1b26ab68f38efd79b14", null ],
       [ "TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a204001ad413e9ad0db08a66d004a555a", null ],
       [ "TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2aa2eb9fa5372856039d5d53dfbbbe6040", null ]

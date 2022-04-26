@@ -49,16 +49,16 @@ var group___a_g_t =
       [ "AGT_PIN_CFG_START_LEVEL_LOW", "group___a_g_t.html#ggabb88a55a2156cdd322947f71189da627a3fab671eb8f52a392eeb9bb91896f5f5", null ],
       [ "AGT_PIN_CFG_START_LEVEL_HIGH", "group___a_g_t.html#ggabb88a55a2156cdd322947f71189da627a49e8e6f466efe14a756d1f684b7c01bb", null ]
     ] ],
-    [ "R_AGT_Close", "group___a_g_t.html#gabe0a42cc31ae911c5ac6fe78eeb21c8a", null ],
-    [ "R_AGT_PeriodSet", "group___a_g_t.html#ga1b8a21776f618aaa1b8471592b4b5464", null ],
-    [ "R_AGT_DutyCycleSet", "group___a_g_t.html#ga25f4904a0e4ce56c413364b7c21b76a3", null ],
-    [ "R_AGT_Reset", "group___a_g_t.html#ga1ae3d1d197e2a433939dc430dad05d99", null ],
+    [ "R_AGT_Open", "group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46", null ],
     [ "R_AGT_Start", "group___a_g_t.html#ga6e5c0080a8a035351d920360d6e9fd4d", null ],
+    [ "R_AGT_Stop", "group___a_g_t.html#gaa2b20f0b2d6856813a3a76413e0083c0", null ],
+    [ "R_AGT_Reset", "group___a_g_t.html#ga1ae3d1d197e2a433939dc430dad05d99", null ],
     [ "R_AGT_Enable", "group___a_g_t.html#ga548babc3a9f803374e70ba027935a086", null ],
     [ "R_AGT_Disable", "group___a_g_t.html#gae27f425278e24c45345242a78a10d649", null ],
+    [ "R_AGT_PeriodSet", "group___a_g_t.html#ga1b8a21776f618aaa1b8471592b4b5464", null ],
+    [ "R_AGT_DutyCycleSet", "group___a_g_t.html#ga25f4904a0e4ce56c413364b7c21b76a3", null ],
     [ "R_AGT_InfoGet", "group___a_g_t.html#ga91174b9feb94088512b85d2f020d3fe2", null ],
     [ "R_AGT_StatusGet", "group___a_g_t.html#ga11a30a7a093f91c09a340f7b301945fd", null ],
-    [ "R_AGT_Stop", "group___a_g_t.html#gaa2b20f0b2d6856813a3a76413e0083c0", null ],
-    [ "R_AGT_Open", "group___a_g_t.html#ga499ee5459a9adb90cf73dd659ae29b46", null ],
-    [ "R_AGT_CallbackSet", "group___a_g_t.html#gabbe61b0c767174654b68bcc55fc97fed", null ]
+    [ "R_AGT_CallbackSet", "group___a_g_t.html#gabbe61b0c767174654b68bcc55fc97fed", null ],
+    [ "R_AGT_Close", "group___a_g_t.html#gabe0a42cc31ae911c5ac6fe78eeb21c8a", null ]
 ];

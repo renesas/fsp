@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: General PWM Timer (r_gpt)</title>
+<title>RA Flexible Software Package Documentation: Timer, General PWM (r_gpt)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___g_p_t.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">General PWM Timer (r_gpt)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">Timer, General PWM (r_gpt)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___t_i_m_e_r_s___m_o_d_u_l_e_s.html">Timers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -228,6 +228,7 @@ Features</h2>
 <li>APIs are provided to get the current timer status and counter value.<a class="anchor" id="um_timer_status"></a></li>
 <li>Supports start, stop, clear, count up, count down, and capture by external sources from GTETRG pins, GTIOC pins, or ELC events.<a class="anchor" id="um_gpt_count_down_external_source"></a><a class="anchor" id="um_gpt_start_external_source"></a><a class="anchor" id="um_gpt_stop_external_source"></a><a class="anchor" id="um_gpt_clear_external_source"></a></li>
 <li>Supports symmetric and asymmetric PWM waveform generation.<a class="anchor" id="um_gpt_symmetric_pwm"></a><a class="anchor" id="um_gpt_asymmetric_pwm"></a><a class="anchor" id="um_gpt_pwm_mode3"></a></li>
+<li>Supports One shot synchronous pulse waveform generation.<a class="anchor" id="um_gpt_one_shot_pulse_mode"></a></li>
 <li>Supports automatic addition of dead time.<a class="anchor" id="um_gpt_pwm_dead_time"></a></li>
 <li>Supports generating ELC events to start an ADC scan at a compare match value (see <a class="el" href="group___e_l_c.html">Event Link Controller (r_elc)</a>) and updating the compare match value.<a class="anchor" id="um_gpt_adc_trigger"></a><a class="anchor" id="um_gpt_adc_trigger_update"></a></li>
 <li>Supports linking with a POEG channel to automatically disable GPT output when an error condition is detected.<a class="anchor" id="um_gpt_poeg_link"></a></li>
@@ -306,6 +307,8 @@ Periodic</li>
 One-Shot</li>
 <li>
 PWM</li>
+<li>
+One-Shot Pulse</li>
 <li>
 Triangle-Wave Symmetric PWM</li>
 <li>
@@ -540,7 +543,7 @@ GTIOCA and GTIOCB High Level</li>
 <li>
 GTIOCA and GTIOCB Low Level</li>
 </ul>
-</td><td></td><td>Select which errors send an output disable trigger to POEG. Dead time error is only available on GPT32E and GPT32EH variants. </td></tr>
+</td><td></td><td>Select which errors send an output disable trigger to POEG. Dead time error is only available GPT channels that have GTINTAD.GRPDTE. </td></tr>
 <tr>
 <td>Extra Features &gt; Output Disable &gt; GTIOCA Disable Setting</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -566,7 +569,7 @@ Level High</li>
 </ul>
 </td><td>Disable Prohibited </td><td>Select the disable setting for GTIOCB. </td></tr>
 <tr>
-<td>Extra Features &gt; ADC Trigger &gt; Start Event Trigger (GPTE/GPTEH only)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Extra Features &gt; ADC Trigger &gt; Start Event Trigger (Channels with GTINTAD only)</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Trigger Event A/D Converter Start Request A During Up Counting</li>
 <li>
@@ -576,17 +579,17 @@ Trigger Event A/D Converter Start Request B During Up Counting</li>
 <li>
 Trigger Event A/D Converter Start Request B During Down Counting</li>
 </ul>
-</td><td></td><td>Select which A/D converter start request interrupts to generate and at which point in the cycle to generate them. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+</td><td></td><td>Select which A/D converter start request interrupts to generate and at which point in the cycle to generate them. </td></tr>
 <tr>
-<td>Extra Features &gt; Dead Time &gt; Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for the GPT32 and GPT16 variants. </td></tr>
+<td>Extra Features &gt; Dead Time &gt; Dead Time Count Up (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during up counting. This value also applies during down counting for channels that do not have GTDVD. </td></tr>
 <tr>
-<td>Extra Features &gt; Dead Time &gt; Dead Time Count Down (Raw Counts) (GPTE/GPTEH only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+<td>Extra Features &gt; Dead Time &gt; Dead Time Count Down (Raw Counts) (Channels with GTDVD only)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the dead time to apply during down counting. </td></tr>
 <tr>
-<td>Extra Features &gt; ADC Trigger (GPTE/GPTEH only) &gt; ADC A Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG A event. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+<td>Extra Features &gt; ADC Trigger (Channels with GTADTRA only) &gt; ADC A Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG A event. </td></tr>
 <tr>
-<td>Extra Features &gt; ADC Trigger (GPTE/GPTEH only) &gt; ADC B Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG B event. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+<td>Extra Features &gt; ADC Trigger (Channels with GTADTRB only) &gt; ADC B Compare Match (Raw Counts)</td><td>Must be a valid non-negative integer with a maximum configurable value of 4294967295 (0xffffffff).</td><td>0 </td><td>Select the compare match value that generates a GPTn AD TRIG B event. </td></tr>
 <tr>
-<td>Extra Features &gt; Interrupt Skipping (GPTE/GPTEH only) &gt; Interrupt to Count</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Extra Features &gt; Interrupt Skipping (Channels with GTITC only) &gt; Interrupt to Count</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -596,9 +599,9 @@ Crest (triangle)</li>
 <li>
 Trough (triangle)</li>
 </ul>
-</td><td>None </td><td>Select the count source for interrupt skipping. The interrupt skip counter increments after each source event. All crest/overflow and trough/underflow interrupts are skipped when the interrupt skip counter is non-zero. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+</td><td>None </td><td>Select the count source for interrupt skipping. The interrupt skip counter increments after each source event. All crest/overflow and trough/underflow interrupts are skipped when the interrupt skip counter is non-zero. </td></tr>
 <tr>
-<td>Extra Features &gt; Interrupt Skipping (GPTE/GPTEH only) &gt; Interrupt Skip Count</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Extra Features &gt; Interrupt Skipping (Channels with GTITC only) &gt; Interrupt Skip Count</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 0</li>
 <li>
@@ -616,9 +619,9 @@ Trough (triangle)</li>
 <li>
 7</li>
 </ul>
-</td><td>0 </td><td>Select the number of interrupts to skip. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+</td><td>0 </td><td>Select the number of interrupts to skip. </td></tr>
 <tr>
-<td>Extra Features &gt; Interrupt Skipping (GPTE/GPTEH only) &gt; Skip ADC Events</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Extra Features &gt; Interrupt Skipping (Channels with GTITC only) &gt; Skip ADC Events</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -628,7 +631,7 @@ ADC B Compare Match</li>
 <li>
 ADC A and B Compare Match</li>
 </ul>
-</td><td>module.driver.timer.interrupt_skip.adc.none </td><td>Select ADC events to suppress when the interrupt skip count is not zero. This value only applies to the GPT32E and GPT32EH variants. </td></tr>
+</td><td>module.driver.timer.interrupt_skip.adc.none </td><td>Select ADC events to suppress when the interrupt skip count is not zero. </td></tr>
 <tr>
 <td>Extra Features &gt; Extra Features</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -656,7 +659,7 @@ Usage Notes</h1>
 <h2>Updating Period and Duty Cycle</h2>
 <p>The period and duty cycle are updated after the next counter overflow after calling <a class="el" href="group___g_p_t.html#gafedbfd8bc3f534d06969588ff10a351b">R_GPT_PeriodSet()</a> or <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet()</a>. To force them to update before the next counter overflow, call <a class="el" href="group___g_p_t.html#ga5eb494add3d40775dbc48c5498e15a3a">R_GPT_Reset()</a> while the counter is running.</p>
 <h2>One-Shot Mode</h2>
-<p><a class="anchor" id="um_timer_one_shot_mode"></a> The GPT timer does not support one-shot mode natively. One-shot mode is achieved by stopping the timer in the interrupt service routine before the callback is called. If the interrupt is not serviced before the timer period expires again, the timer generates more than one event. The callback is only called once in this case, but multiple events may be generated if the timer is linked to the <a class="el" href="group___d_t_c.html">Data Transfer Controller (r_dtc)</a>.</p>
+<p><a class="anchor" id="um_timer_one_shot_mode"></a> The GPT timer does not support one-shot mode natively. One-shot mode is achieved by stopping the timer in the interrupt service routine before the callback is called. If the interrupt is not serviced before the timer period expires again, the timer generates more than one event. The callback is only called once in this case, but multiple events may be generated if the timer is linked to the <a class="el" href="group___d_t_c.html">Transfer (r_dtc)</a>.</p>
 <h3>One-Shot Mode Output</h3>
 <p><a class="anchor" id="um_timer_one_shot_output"></a> The output waveform in one-shot mode is one PCLKD cycle less than the configured period. The configured period must be at least 2 counts to generate an output pulse.</p>
 <p>Examples of one-shot signals that can be generated by this module are shown below:</p>
@@ -664,6 +667,20 @@ Usage Notes</h1>
 <object type="image/svg+xml" data="r_gpt_one_shot_output.svg">r_gpt_one_shot_output.svg</object>
 <div class="caption">
 GPT One-Shot Output</div></div>
+ <h2>One-Shot Pulse Mode</h2>
+<p>The one-shot pulse mode is an asymmetric PWM mode that provides more control over the rising and falling edges of the output. The user provides a period and initial output level and controls the signal by specifying compare match values for the leading and trailing edges each period.</p>
+<dl class="section note"><dt>Note</dt><dd>Despite its name, the One-Shot Pulse Mode operates continuously and does not stop after the first period.</dd></dl>
+<h3>One-Shot Pulse Mode Output</h3>
+<p>Examples of PWM signals that can be generated by this module are shown below. The leading and trailing edge match values can be modified using <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet()</a> in the overflow interrupt.</p>
+<div class="image">
+<object type="image/svg+xml" data="r_gpt_one_shot_pulse_output.svg">r_gpt_one_shot_pulse_output.svg</object>
+<div class="caption">
+GPT One-Shot Pulse Output (without dead time)</div></div>
+<p> If dead time is enabled only match values for GTIOCnA need to be set; the match values for GTIOCnB will be automatically configured in hardware.</p>
+<div class="image">
+<object type="image/svg+xml" data="r_gpt_one_shot_pulse_output_dead_time.svg">r_gpt_one_shot_pulse_output_dead_time.svg</object>
+<div class="caption">
+GPT One-Shot Pulse Output (with dead time)</div></div>
  <h2>Periodic Output</h2>
 <p><a class="anchor" id="um_timer_periodic_output"></a> The GTIOC pin toggles twice each time the timer expires in periodic mode. This is achieved by defining a PWM wave at a 50 percent duty cycle so that the period of the resulting square wave (from rising edge to rising edge) matches the period of the GPT timer. Since the periodic output is actually a PWM output, the time at the stop level is one cycle shorter than the time opposite the stop level for odd period values.</p>
 <p>Examples of periodic signals that can be generated by this module are shown below:</p>
@@ -737,7 +754,9 @@ Examples</h1>
 <p><a class="anchor" id="um_timer_duty_cycle_set"></a> This an example of updating the duty cycle.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define GPT_EXAMPLE_DESIRED_DUTY_CYCLE_PERCENT    (25)</span></div><div class="line"><span class="preprocessor">#define GPT_EXAMPLE_MAX_PERCENT                   (100)</span></div><div class="line"></div><div class="line"><span class="comment">/* This example shows how to calculate a new duty cycle value at runtime. */</span></div><div class="line"><span class="keywordtype">void</span> gpt_duty_cycle_calculation_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#ga97d0a9c1a8fb6b88d1c12756dd8ce2d2">R_GPT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga2769f9fda49613246bc84dba41aa4863">R_GPT_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the current period setting. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">    (void) <a class="code" href="group___g_p_t.html#gaca62ac33de2c05918b0fc359aeaebd97">R_GPT_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">    uint32_t current_period_counts = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a08b897cfbf2d0cefafe8d3abb1afc747">period_counts</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Calculate the desired duty cycle based on the current period. Note that if the period could be larger than</span></div><div class="line"><span class="comment">     * UINT32_MAX / 100, this calculation could overflow. A cast to uint64_t is used to prevent this. The cast is</span></div><div class="line"><span class="comment">     * not required for 16-bit timers. */</span></div><div class="line">    uint32_t duty_cycle_counts =</div><div class="line">        (uint32_t) (((uint64_t) current_period_counts * GPT_EXAMPLE_DESIRED_DUTY_CYCLE_PERCENT) /</div><div class="line">                    GPT_EXAMPLE_MAX_PERCENT);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the calculated duty cycle. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a>(&amp;g_timer0_ctrl, duty_cycle_counts, <a class="code" href="group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aebd74a7b9507fb082ec4cce60ebe9369">GPT_IO_PIN_GTIOCB</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>GPT A/D Converter Start Request Example</h2>
 <p>This is an example of using the GPT to start the ADC at a configurable A/D converter compare match value.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#if ((1U &lt;&lt; GPT_EXAMPLE_CHANNEL) &amp; (BSP_FEATURE_GPTEH_CHANNEL_MASK | BSP_FEATURE_GPTE_CHANNEL_MASK))</span></div><div class="line"></div><div class="line"><span class="comment">/* This example shows how to configure the GPT to generate an A/D start request at an A/D start request compare</span></div><div class="line"><span class="comment"> * match value. This example can only be used with GPTE or GPTEH variants. */</span></div><div class="line"><span class="keywordtype">void</span> gpt_adc_start_request_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize and configure the ELC. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure the ELC to start a scan on ADC unit 0 when GPT channel 0. Note: This is typically configured in</span></div><div class="line"><span class="comment">     * g_elc_cfg and already set during R_ELC_Open. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_GPT0_AD_TRIG_A);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Globally enable ELC events. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4bcac22edb575069ba86d87ce9aea84c">R_ELC_Enable</a>(&amp;g_elc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the ADC to start a scan based on an ELC event trigger. Set adc_cfg_t::trigger to</span></div><div class="line"><span class="comment">     * ADC_TRIGGER_SYNC_ELC.  */</span></div><div class="line">    err = <a class="code" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open</a>(&amp;g_adc0_ctrl, &amp;g_adc0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg</a>(&amp;g_adc0_ctrl, &amp;g_adc0_channel_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable ELC triggers by calling R_ADC_ScanStart(). */</span></div><div class="line">    (void) <a class="code" href="group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2">R_ADC_ScanStart</a>(&amp;g_adc0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the GPT module. Configure gpt_extended_pwm_cfg_t::adc_trigger to set when the A/D start request</span></div><div class="line"><span class="comment">     * is generated. Set gpt_extended_pwm_cfg_t::adc_a_compare_match to set the desired compare match value. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#ga97d0a9c1a8fb6b88d1c12756dd8ce2d2">R_GPT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. A/D converter start request events are generated each time the counter is equal to the</span></div><div class="line"><span class="comment">     * A/D start request compare match value. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga2769f9fda49613246bc84dba41aa4863">R_GPT_Start</a>(&amp;g_timer0_ctrl);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#if ((1U &lt;&lt; GPT_EXAMPLE_CHANNEL) &amp; (BSP_FEATURE_GPTEH_CHANNEL_MASK | BSP_FEATURE_GPTE_CHANNEL_MASK))</span></div><div class="line"></div><div class="line"><span class="comment">/* This example shows how to configure the GPT to generate an A/D start request at an A/D start request compare</span></div><div class="line"><span class="comment"> * match value. This example can only be used with GPTE or GPTEH variants. */</span></div><div class="line"><span class="keywordtype">void</span> gpt_adc_start_request_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize and configure the ELC. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure the ELC to start a scan on ADC unit 0 when GPT channel 0. Note: This is typically configured in</span></div><div class="line"><span class="comment">     * g_elc_cfg and already set during R_ELC_Open. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, ELC_PERIPHERAL_ADC0, ELC_EVENT_GPT0_AD_TRIG_A);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Globally enable ELC events. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4bcac22edb575069ba86d87ce9aea84c">R_ELC_Enable</a>(&amp;g_elc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the ADC to start a scan based on an ELC event trigger. Set adc_cfg_t::trigger to</span></div><div class="line"><span class="comment">     * ADC_TRIGGER_SYNC_ELC.  */</span></div><div class="line">    err = <a class="code" href="group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac">R_ADC_Open</a>(&amp;g_adc0_ctrl, &amp;g_adc0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88">R_ADC_ScanCfg</a>(&amp;g_adc0_ctrl, &amp;g_adc0_channel_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable ELC triggers by calling R_ADC_ScanStart(). */</span></div><div class="line">    (void) <a class="code" href="group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2">R_ADC_ScanStart</a>(&amp;g_adc0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the GPT module. Configure gpt_extended_pwm_cfg_t::adc_trigger to set when the A/D start request</span></div><div class="line"><span class="comment">     * is generated. Set gpt_extended_pwm_cfg_t::adc_a_compare_match to set the desired compare match value. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#ga97d0a9c1a8fb6b88d1c12756dd8ce2d2">R_GPT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. A/D converter start request events are generated each time the counter is equal to the</span></div><div class="line"><span class="comment">     * A/D start request compare match value. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga2769f9fda49613246bc84dba41aa4863">R_GPT_Start</a>(&amp;g_timer0_ctrl);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div></div><!-- fragment --> <h2>GPT One-Shot Pulse Mode Example</h2>
+<p>This example demonstrates the configuration and use of one-shot pulse mode with GPT timer.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example callback called when timer overflows. */</span></div><div class="line"><span class="keywordtype">void</span> gpt_overflow_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c">TIMER_EVENT_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Use R_GPT_DutyCycleSet() API to set new values for each cycle.</span></div><div class="line"><span class="comment">         * - Use GPT_IO_PIN_ONE_SHOT_LEADING_EDGE to set the leading edge transition match value (GTCCRC or GTCCRE register).</span></div><div class="line"><span class="comment">         * - Use GPT_IO_PIN_ONE_SHOT_TRAILING_EDGE to set the trailing edge transition match value (GTCCRD or GTCCRF register).</span></div><div class="line"><span class="comment">         */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#define GPT_ONE_SHOT_EXAMPLE_DUTY_CYCLE_GTCCRD_GTCCRF    (0x1000U)</span></div><div class="line"><span class="preprocessor">#define GPT_ONE_SHOT_EXAMPLE_DUTY_CYCLE_GTCCRC           (0x800U)</span></div><div class="line"><span class="preprocessor">#define GPT_ONE_SHOT_EXAMPLE_DUTY_CYCLE_GTCCRE           (0x100U)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> gpt_one_shot_pulse_mode_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#ga97d0a9c1a8fb6b88d1c12756dd8ce2d2">R_GPT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the duty cycle for One-Shot-Pulse mode */</span></div><div class="line"></div><div class="line">    <span class="comment">/* GPT_IO_PIN_ONE_SHOT_LEADING_EDGE sets the initial value for the GTCCRC register if GTIOCnA is the selected pin for output. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a>(&amp;g_timer0_ctrl,</div><div class="line">                             GPT_ONE_SHOT_EXAMPLE_DUTY_CYCLE_GTCCRC,</div><div class="line">                             <a class="code" href="group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aec2d2c471241869efb57a9a48a5d0eda">GPT_IO_PIN_GTIOCA</a> | <a class="code" href="group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60ae3e479af00c84f4ccf6e7376b4b44c8d">GPT_IO_PIN_ONE_SHOT_LEADING_EDGE</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* GPT_IO_PIN_ONE_SHOT_LEADING_EDGE sets the initial value for the GTCCRE register if GTIOCnB is the selected pin for output. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a>(&amp;g_timer0_ctrl,</div><div class="line">                             GPT_ONE_SHOT_EXAMPLE_DUTY_CYCLE_GTCCRE,</div><div class="line">                             <a class="code" href="group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aebd74a7b9507fb082ec4cce60ebe9369">GPT_IO_PIN_GTIOCB</a> | <a class="code" href="group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60ae3e479af00c84f4ccf6e7376b4b44c8d">GPT_IO_PIN_ONE_SHOT_LEADING_EDGE</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* GPT_IO_PIN_ONE_SHOT_TRAILING_EDGE sets the initial value for the GTCCRD register if GTIOCnA is the selected pin for output. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a>(&amp;g_timer0_ctrl,</div><div class="line">                             GPT_ONE_SHOT_EXAMPLE_DUTY_CYCLE_GTCCRD_GTCCRF,</div><div class="line">                             <a class="code" href="group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aec2d2c471241869efb57a9a48a5d0eda">GPT_IO_PIN_GTIOCA</a> | <a class="code" href="group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60a59f7576cde98e497d35b98a926732e52">GPT_IO_PIN_ONE_SHOT_TRAILING_EDGE</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* GPT_IO_PIN_ONE_SHOT_TRAILING_EDGE sets the initial value for the GTCCRF register if GTIOCnB is the selected pin for output.</span></div><div class="line"><span class="comment">     * GPT_BUFFER_FORCE_PUSH pushes set values to temporary registers to prepare for the initial output cycle. This must be done</span></div><div class="line"><span class="comment">     * when setting the duty cycle before starting the timer. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a>(&amp;g_timer0_ctrl,</div><div class="line">                             GPT_ONE_SHOT_EXAMPLE_DUTY_CYCLE_GTCCRD_GTCCRF,</div><div class="line">                             <a class="code" href="group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aebd74a7b9507fb082ec4cce60ebe9369">GPT_IO_PIN_GTIOCB</a> | <a class="code" href="group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60a59f7576cde98e497d35b98a926732e52">GPT_IO_PIN_ONE_SHOT_TRAILING_EDGE</a> | <a class="code" href="group___g_p_t.html#gga8abd050b841fe99c9b641a22c69501c5a23c94706bd1a34c9f1b9cfffea30f4cc">GPT_BUFFER_FORCE_PUSH</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga2769f9fda49613246bc84dba41aa4863">R_GPT_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga1e6af74d7faaf735f5847a34121eff71">R_GPT_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structgpt__output__pin__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#structgpt__output__pin__t">gpt_output_pin_t</a></td></tr>
@@ -755,6 +774,8 @@ Data Structures</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:gaabd4a03d16b1b4254cc44c7779f44c60"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#gaabd4a03d16b1b4254cc44c7779f44c60">gpt_io_pin_t</a> </td></tr>
 <tr class="separator:gaabd4a03d16b1b4254cc44c7779f44c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8abd050b841fe99c9b641a22c69501c5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga8abd050b841fe99c9b641a22c69501c5">gpt_buffer_force_push</a> </td></tr>
+<tr class="separator:ga8abd050b841fe99c9b641a22c69501c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga454c639e426428470ce78115af5d3648"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga454c639e426428470ce78115af5d3648">gpt_pin_level_t</a> </td></tr>
 <tr class="separator:ga454c639e426428470ce78115af5d3648"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa1457c9c1f178fff4dd1558832db196a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#gaa1457c9c1f178fff4dd1558832db196a">gpt_source_t</a> </td></tr>
@@ -1090,6 +1111,29 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <tr><td class="fieldname"><a id="ggaabd4a03d16b1b4254cc44c7779f44c60ac68b7e1ef5c48c55960faacd7eb538b9"></a>GPT_IO_PIN_TROUGH&#160;</td><td class="fielddoc"><p>Used in <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a> when Triangle-wave PWM Mode 3 is selected. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaabd4a03d16b1b4254cc44c7779f44c60acb3ba96929217eb6bb1ec5b2f1ccf9d4"></a>GPT_IO_PIN_CREST&#160;</td><td class="fielddoc"><p>Used in <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a> when Triangle-wave PWM Mode 3 is selected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaabd4a03d16b1b4254cc44c7779f44c60ae3e479af00c84f4ccf6e7376b4b44c8d"></a>GPT_IO_PIN_ONE_SHOT_LEADING_EDGE&#160;</td><td class="fielddoc"><p>Used in <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a> to set GTCCRC and GTCCRE registers when One-Shot Pulse mode is selected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaabd4a03d16b1b4254cc44c7779f44c60a59f7576cde98e497d35b98a926732e52"></a>GPT_IO_PIN_ONE_SHOT_TRAILING_EDGE&#160;</td><td class="fielddoc"><p>Used in <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a> to set GTCCRD and GTCCRF registers when One-Shot Pulse mode is selected. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga8abd050b841fe99c9b641a22c69501c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8abd050b841fe99c9b641a22c69501c5">&#9670;&nbsp;</a></span>gpt_buffer_force_push</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___g_p_t.html#ga8abd050b841fe99c9b641a22c69501c5">gpt_buffer_force_push</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Forced buffer push operation used in One-Sot Pulse mode with <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet()</a>. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8abd050b841fe99c9b641a22c69501c5a23c94706bd1a34c9f1b9cfffea30f4cc"></a>GPT_BUFFER_FORCE_PUSH&#160;</td><td class="fielddoc"><p>Used in <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet</a> to force push the data from GTCCRn registers to temporary buffer A or B when One-Shot Pulse mode is selected. </p>
 </td></tr>
 </table>
 
@@ -1555,7 +1599,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required input pointer is NULL or the source divider is invalid. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
     <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td><a class="el" href="group___t_i_m_e_r___a_p_i.html#a9519afc7ea8aec3aaf1eb787b39cc97c" title="Select enumerated value from timer_mode_t. ">timer_cfg_t::mode</a> is <a class="el" href="group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a140f07675d67258a7ca9a95a9a793e3a" title="Timer stops after period elapses. ">TIMER_MODE_ONE_SHOT</a> or <a class="el" href="group___t_i_m_e_r___a_p_i.html#a7d2f434f07723a53b504751e9e5ac540">timer_cfg_t::p_callback</a> is not NULL, but ISR is not enabled. ISR must be enabled to use one-shot mode or callback. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Triangle wave PWM is only supported if GPT_CFG_OUTPUT_SUPPORT_ENABLE is 2. Selected channel does not support external count sources. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Triangle wave PWM is only supported if GPT_CFG_OUTPUT_SUPPORT_ENABLE is 2. Selected channel does not support external count sources. External and event count sources not are available in this mode. </td></tr>
     <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
   </table>
   </dd>
@@ -2186,7 +2230,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

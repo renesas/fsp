@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: ZMOD4XXX Sensor Middleware (rm_zmod4xxx)</title>
+<title>RA Flexible Software Package Documentation: ZMOD4XXX Gas Sensor (rm_zmod4xxx)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group___r_m___z_m_o_d4_x_x_x.html','')
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">ZMOD4XXX Sensor Middleware (rm_zmod4xxx)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">ZMOD4XXX Gas Sensor (rm_zmod4xxx)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_e_n_s_o_r___m_o_d_u_l_e_s.html">Sensor</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -172,6 +172,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2d4f33091a3b32dc0bda323c24a4eb15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga2d4f33091a3b32dc0bda323c24a4eb15">RM_ZMOD4XXX_Open</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t">rm_zmod4xxx_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="memdesc:ga2d4f33091a3b32dc0bda323c24a4eb15"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when start a measurement and when measurement data is stale data. Sends the slave address to the zmod4xxx and start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5ba1799ed3669a41fd7f0f436706367b">rm_zmod4xxx_api_t::open</a>.  <a href="#ga2d4f33091a3b32dc0bda323c24a4eb15">More...</a><br /></td></tr>
 <tr class="separator:ga2d4f33091a3b32dc0bda323c24a4eb15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga564266f1fd972d2a4b0d607925a8be48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga564266f1fd972d2a4b0d607925a8be48">RM_ZMOD4XXX_Close</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="memdesc:ga564266f1fd972d2a4b0d607925a8be48"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when close the sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83">rm_zmod4xxx_api_t::close</a>.  <a href="#ga564266f1fd972d2a4b0d607925a8be48">More...</a><br /></td></tr>
+<tr class="separator:ga564266f1fd972d2a4b0d607925a8be48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga21bde6c18d166c38790d044a3325d7b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga21bde6c18d166c38790d044a3325d7b9">RM_ZMOD4XXX_MeasurementStart</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="memdesc:ga21bde6c18d166c38790d044a3325d7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when start a measurement. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af9e1e5ff4fd276f7d7bfeb341854b0c2">rm_zmod4xxx_api_t::measurementStart</a>.  <a href="#ga21bde6c18d166c38790d044a3325d7b9">More...</a><br /></td></tr>
 <tr class="separator:ga21bde6c18d166c38790d044a3325d7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,12 +187,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gafabd01cfcb93ac2bcdc4378dc94ec804"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gafabd01cfcb93ac2bcdc4378dc94ec804">RM_ZMOD4XXX_Read</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data)</td></tr>
 <tr class="memdesc:gafabd01cfcb93ac2bcdc4378dc94ec804"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8f0e582715db0dc1589f314944c2a41a">rm_zmod4xxx_api_t::read</a>.  <a href="#gafabd01cfcb93ac2bcdc4378dc94ec804">More...</a><br /></td></tr>
 <tr class="separator:gafabd01cfcb93ac2bcdc4378dc94ec804"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga5a6c9c9dcb25bc3964b07ed7fe002477">RM_ZMOD4XXX_TemperatureAndHumiditySet</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, float temperature, float humidity)</td></tr>
-<tr class="memdesc:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate. Humidity and temperature measurements are needed for ambient compensation. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9">rm_zmod4xxx_api_t::temperatureAndHumiditySet</a>.  <a href="#ga5a6c9c9dcb25bc3964b07ed7fe002477">More...</a><br /></td></tr>
-<tr class="separator:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac455a0f48d2eb704341bd83bb37fff94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94">RM_ZMOD4XXX_DeviceErrorCheck</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="memdesc:gac455a0f48d2eb704341bd83bb37fff94"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is valid only for IAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before Read and DataCalculate. Check for unexpected reset occurs or getting unvalid ADC data. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069">rm_zmod4xxx_api_t::deviceErrorCheck</a>.  <a href="#gac455a0f48d2eb704341bd83bb37fff94">More...</a><br /></td></tr>
-<tr class="separator:gac455a0f48d2eb704341bd83bb37fff94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ee9369b728a5687fcc637114b563875"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga3ee9369b728a5687fcc637114b563875">RM_ZMOD4XXX_Iaq1stGenDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__1st__data__t">rm_zmod4xxx_iaq_1st_data_t</a> *const p_zmod4xxx_data)</td></tr>
 <tr class="memdesc:ga3ee9369b728a5687fcc637114b563875"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6e96d0abcbc4a4479d92d6e8e8d410de">rm_zmod4xxx_api_t::iaq1stGenDataCalculate</a>.  <a href="#ga3ee9369b728a5687fcc637114b563875">More...</a><br /></td></tr>
 <tr class="separator:ga3ee9369b728a5687fcc637114b563875"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,9 +205,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8dcfe9a7b0b9419f1ecfce5d82c3fc33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33">RM_ZMOD4XXX_Oaq2ndGenDataCalculate</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
 <tr class="memdesc:ga8dcfe9a7b0b9419f1ecfce5d82c3fc33"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ad1d9b01a5d84a3a4a06dfd714f485911">rm_zmod4xxx_api_t::oaq2ndGenDataCalculate</a>.  <a href="#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33">More...</a><br /></td></tr>
 <tr class="separator:ga8dcfe9a7b0b9419f1ecfce5d82c3fc33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga564266f1fd972d2a4b0d607925a8be48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga564266f1fd972d2a4b0d607925a8be48">RM_ZMOD4XXX_Close</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
-<tr class="memdesc:ga564266f1fd972d2a4b0d607925a8be48"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when close the sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83">rm_zmod4xxx_api_t::close</a>.  <a href="#ga564266f1fd972d2a4b0d607925a8be48">More...</a><br /></td></tr>
-<tr class="separator:ga564266f1fd972d2a4b0d607925a8be48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#ga5a6c9c9dcb25bc3964b07ed7fe002477">RM_ZMOD4XXX_TemperatureAndHumiditySet</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl, float temperature, float humidity)</td></tr>
+<tr class="memdesc:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate. Humidity and temperature measurements are needed for ambient compensation. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9">rm_zmod4xxx_api_t::temperatureAndHumiditySet</a>.  <a href="#ga5a6c9c9dcb25bc3964b07ed7fe002477">More...</a><br /></td></tr>
+<tr class="separator:ga5a6c9c9dcb25bc3964b07ed7fe002477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac455a0f48d2eb704341bd83bb37fff94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94">RM_ZMOD4XXX_DeviceErrorCheck</a> (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="memdesc:gac455a0f48d2eb704341bd83bb37fff94"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is valid only for IAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before Read and DataCalculate. Check for unexpected reset occurs or getting unvalid ADC data. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069">rm_zmod4xxx_api_t::deviceErrorCheck</a>.  <a href="#gac455a0f48d2eb704341bd83bb37fff94">More...</a><br /></td></tr>
+<tr class="separator:gac455a0f48d2eb704341bd83bb37fff94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Middleware to implement the ZMOD4XXX sensor interface. This module implements the <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html">ZMOD4XXX Middleware Interface</a>. </p>
@@ -552,6 +552,34 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
+<a id="ga564266f1fd972d2a4b0d607925a8be48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga564266f1fd972d2a4b0d607925a8be48">&#9670;&nbsp;</a></span>RM_ZMOD4XXX_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ZMOD4XXX_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function should be called when close the sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83">rm_zmod4xxx_api_t::close</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga21bde6c18d166c38790d044a3325d7b9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga21bde6c18d166c38790d044a3325d7b9">&#9670;&nbsp;</a></span>RM_ZMOD4XXX_MeasurementStart()</h2>
 
@@ -677,80 +705,6 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
     <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Communication is timeout. </td></tr>
     <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Communication is aborted. </td></tr>
     <tr><td class="paramname">FSP_ERR_SENSOR_MEASUREMENT_NOT_FINISHED</td><td>Measurement is not finished. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga5a6c9c9dcb25bc3964b07ed7fe002477"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5a6c9c9dcb25bc3964b07ed7fe002477">&#9670;&nbsp;</a></span>RM_ZMOD4XXX_TemperatureAndHumiditySet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ZMOD4XXX_TemperatureAndHumiditySet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>temperature</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>humidity</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate. Humidity and temperature measurements are needed for ambient compensation. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9">rm_zmod4xxx_api_t::temperatureAndHumiditySet</a>. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened configured. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="gac455a0f48d2eb704341bd83bb37fff94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac455a0f48d2eb704341bd83bb37fff94">&#9670;&nbsp;</a></span>RM_ZMOD4XXX_DeviceErrorCheck()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ZMOD4XXX_DeviceErrorCheck </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This function is valid only for IAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before Read and DataCalculate. Check for unexpected reset occurs or getting unvalid ADC data. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069">rm_zmod4xxx_api_t::deviceErrorCheck</a>. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened configured. </td></tr>
-    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>communication is timeout. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>communication is aborted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1021,14 +975,58 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="ga564266f1fd972d2a4b0d607925a8be48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga564266f1fd972d2a4b0d607925a8be48">&#9670;&nbsp;</a></span>RM_ZMOD4XXX_Close()</h2>
+<a id="ga5a6c9c9dcb25bc3964b07ed7fe002477"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5a6c9c9dcb25bc3964b07ed7fe002477">&#9670;&nbsp;</a></span>RM_ZMOD4XXX_TemperatureAndHumiditySet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ZMOD4XXX_Close </td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ZMOD4XXX_TemperatureAndHumiditySet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>temperature</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>humidity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function is valid only for OAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before DataCalculate. Humidity and temperature measurements are needed for ambient compensation. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a504a4e2266dc1ae46f27b752ade032e9">rm_zmod4xxx_api_t::temperatureAndHumiditySet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened configured. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac455a0f48d2eb704341bd83bb37fff94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac455a0f48d2eb704341bd83bb37fff94">&#9670;&nbsp;</a></span>RM_ZMOD4XXX_DeviceErrorCheck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ZMOD4XXX_DeviceErrorCheck </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const&#160;</td>
           <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
@@ -1037,12 +1035,14 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 
-<p>This function should be called when close the sensor. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a37597974b2ae3e5ba15c57fce44b2c83">rm_zmod4xxx_api_t::close</a>. </p>
+<p>This function is valid only for IAQ_2nd_Gen and IAQ_2nd_Gen_ULP. This function should be called before Read and DataCalculate. Check for unexpected reset occurs or getting unvalid ADC data. Implements <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a032f14a6414a147c3e05a28064d97069">rm_zmod4xxx_api_t::deviceErrorCheck</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>communication is timeout. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>communication is aborted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1055,7 +1055,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

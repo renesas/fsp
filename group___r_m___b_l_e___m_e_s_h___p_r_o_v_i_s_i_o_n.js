@@ -8,6 +8,9 @@ var group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n =
     [ "RM_BLE_MESH_PROVISION_SendPdu", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#gae7c6f2433b7437c23b276340e01411ec", null ],
     [ "RM_BLE_MESH_PROVISION_SetAuthVal", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga808573f1d4da0c3232a1c3ec8eddb6c0", null ],
     [ "RM_BLE_MESH_PROVISION_Abort", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga098ac36b8e39faa7050674f98c26bdca", null ],
-    [ "RM_BLE_MESH_PROVISION_GetLocalPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga52aae98c1bfbc86c0e7eccc7190b08fe", null ],
-    [ "RM_BLE_MESH_PROVISION_SetLocalPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga7ab56152d43b14770c4bd5b4f379a829", null ]
+    [ "RM_BLE_MESH_PROVISION_GetLocalPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga6fde0f74aa1633c79abebe1c9e1c03db", null ],
+    [ "RM_BLE_MESH_PROVISION_SetLocalPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga344c608b962ff0ddd5a041edc88e1a11", null ],
+    [ "RM_BLE_MESH_PROVISION_GenerateRandomizedNumber", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#gaa06214035afcab3d76bbb28a6ce0caa4", null ],
+    [ "RM_BLE_MESH_PROVISION_SetOobPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga842afc519426cab5364a4733f2b36a70", null ],
+    [ "RM_BLE_MESH_PROVISION_SetOobAuthInfo", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga2bd755daa6d80c90a706449555f1e2f6", null ]
 ];

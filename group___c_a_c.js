@@ -5,6 +5,6 @@ var group___c_a_c =
     [ "R_CAC_StartMeasurement", "group___c_a_c.html#ga4b5ab0d272e1893197f9bcfd3c53b370", null ],
     [ "R_CAC_StopMeasurement", "group___c_a_c.html#gabd26d52deb4396fa2b161a30d34c5bad", null ],
     [ "R_CAC_Read", "group___c_a_c.html#gaf21e6d7a9df9c765fb43d512d29a3197", null ],
-    [ "R_CAC_Close", "group___c_a_c.html#ga41866f47feaf7ac5493edc1c20a58f12", null ],
-    [ "R_CAC_CallbackSet", "group___c_a_c.html#ga98efa851bbc34d394b17399d2b855d3e", null ]
+    [ "R_CAC_CallbackSet", "group___c_a_c.html#ga98efa851bbc34d394b17399d2b855d3e", null ],
+    [ "R_CAC_Close", "group___c_a_c.html#ga41866f47feaf7ac5493edc1c20a58f12", null ]
 ];

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -171,7 +171,7 @@ $(document).ready(function(){initNavTree('group___a_d_c___a_p_i.html','');});
 <h1><a class="anchor" id="ADC_API_SUMMARY"></a>
 Summary</h1>
 <p>The ADC interface provides standard ADC functionality including one-shot mode (single scan), continuous scan and group scan. It also allows configuration of hardware and software triggers for starting scans. After each conversion an interrupt can be triggered, and if a callback function is provided, the call back is invoked with the appropriate event information.</p>
-<p>Implemented by: <a class="el" href="group___a_d_c.html">Analog to Digital Converter (r_adc)</a> </p>
+<p>Implemented by: <a class="el" href="group___a_d_c.html">ADC (r_adc)</a> </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -332,7 +332,7 @@ elc_peripheral</td>
 <td class="fielddoc">
 Name of the peripheral in the ELC list. </td></tr>
 <tr><td class="fieldtype">
-<a id="a06d242e573821f38b3a7543dd9eb5548"></a><a class="el" href="group___b_s_p___m_c_u___r_a2_a1.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
+<a id="a06d242e573821f38b3a7543dd9eb5548"></a><a class="el" href="group___b_s_p___m_c_u___r_a6_m2.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
 <td class="fieldname">
 elc_event</td>
 <td class="fielddoc">
@@ -1020,151 +1020,151 @@ Pointer to the API structure for this instance. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a></td>
+          <td class="memname">enum adc_channel_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>ADC channels </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104"></a>ADC_CHANNEL_0&#160;</td><td class="fielddoc"><p>ADC channel 0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104"></a>ADC_CHANNEL_0&#160;</td><td class="fielddoc"><p>ADC channel 0. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492"></a>ADC_CHANNEL_1&#160;</td><td class="fielddoc"><p>ADC channel 1. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492"></a>ADC_CHANNEL_1&#160;</td><td class="fielddoc"><p>ADC channel 1. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ab5ff3c915ec02ae6ac3980a1312a4815"></a>ADC_CHANNEL_2&#160;</td><td class="fielddoc"><p>ADC channel 2. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ab5ff3c915ec02ae6ac3980a1312a4815"></a>ADC_CHANNEL_2&#160;</td><td class="fielddoc"><p>ADC channel 2. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a6ca054f67bee5197eec92a0379cffb6e"></a>ADC_CHANNEL_3&#160;</td><td class="fielddoc"><p>ADC channel 3. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a6ca054f67bee5197eec92a0379cffb6e"></a>ADC_CHANNEL_3&#160;</td><td class="fielddoc"><p>ADC channel 3. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131"></a>ADC_CHANNEL_4&#160;</td><td class="fielddoc"><p>ADC channel 4. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131"></a>ADC_CHANNEL_4&#160;</td><td class="fielddoc"><p>ADC channel 4. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a"></a>ADC_CHANNEL_5&#160;</td><td class="fielddoc"><p>ADC channel 5. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a"></a>ADC_CHANNEL_5&#160;</td><td class="fielddoc"><p>ADC channel 5. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814acf3be71bfeb9d342e6d845db91782b79"></a>ADC_CHANNEL_6&#160;</td><td class="fielddoc"><p>ADC channel 6. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814acf3be71bfeb9d342e6d845db91782b79"></a>ADC_CHANNEL_6&#160;</td><td class="fielddoc"><p>ADC channel 6. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ad6ef86ca1b448f220905d771f258586a"></a>ADC_CHANNEL_7&#160;</td><td class="fielddoc"><p>ADC channel 7. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ad6ef86ca1b448f220905d771f258586a"></a>ADC_CHANNEL_7&#160;</td><td class="fielddoc"><p>ADC channel 7. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a2875a590dc7e8502581ff68a075ce019"></a>ADC_CHANNEL_8&#160;</td><td class="fielddoc"><p>ADC channel 8. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a2875a590dc7e8502581ff68a075ce019"></a>ADC_CHANNEL_8&#160;</td><td class="fielddoc"><p>ADC channel 8. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a0e198353a76bf512e4dcc8224710d6b0"></a>ADC_CHANNEL_9&#160;</td><td class="fielddoc"><p>ADC channel 9. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a0e198353a76bf512e4dcc8224710d6b0"></a>ADC_CHANNEL_9&#160;</td><td class="fielddoc"><p>ADC channel 9. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a9db3195dade30ed8b254187c22616898"></a>ADC_CHANNEL_10&#160;</td><td class="fielddoc"><p>ADC channel 10. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a9db3195dade30ed8b254187c22616898"></a>ADC_CHANNEL_10&#160;</td><td class="fielddoc"><p>ADC channel 10. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814af6193eda0e4807c9d560aac13e302093"></a>ADC_CHANNEL_11&#160;</td><td class="fielddoc"><p>ADC channel 11. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814af6193eda0e4807c9d560aac13e302093"></a>ADC_CHANNEL_11&#160;</td><td class="fielddoc"><p>ADC channel 11. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a42838efffa3e21e6b970eee65de86e40"></a>ADC_CHANNEL_12&#160;</td><td class="fielddoc"><p>ADC channel 12. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a42838efffa3e21e6b970eee65de86e40"></a>ADC_CHANNEL_12&#160;</td><td class="fielddoc"><p>ADC channel 12. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa2718519e5964f136de3e5234e36264c"></a>ADC_CHANNEL_13&#160;</td><td class="fielddoc"><p>ADC channel 13. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa2718519e5964f136de3e5234e36264c"></a>ADC_CHANNEL_13&#160;</td><td class="fielddoc"><p>ADC channel 13. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a7f3900d4031a3f01889fbe4179d8cade"></a>ADC_CHANNEL_14&#160;</td><td class="fielddoc"><p>ADC channel 14. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a7f3900d4031a3f01889fbe4179d8cade"></a>ADC_CHANNEL_14&#160;</td><td class="fielddoc"><p>ADC channel 14. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afa75046e6f6f23ed8e6573c7bc8563d2"></a>ADC_CHANNEL_15&#160;</td><td class="fielddoc"><p>ADC channel 15. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afa75046e6f6f23ed8e6573c7bc8563d2"></a>ADC_CHANNEL_15&#160;</td><td class="fielddoc"><p>ADC channel 15. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a61914b17568b94ef0651ee10e79e6892"></a>ADC_CHANNEL_16&#160;</td><td class="fielddoc"><p>ADC channel 16. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a61914b17568b94ef0651ee10e79e6892"></a>ADC_CHANNEL_16&#160;</td><td class="fielddoc"><p>ADC channel 16. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a22aa8198d9a4012a012ddd838adf256c"></a>ADC_CHANNEL_17&#160;</td><td class="fielddoc"><p>ADC channel 17. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a22aa8198d9a4012a012ddd838adf256c"></a>ADC_CHANNEL_17&#160;</td><td class="fielddoc"><p>ADC channel 17. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ae47fe79b66fda5fcb9f02d6a648c8dc9"></a>ADC_CHANNEL_18&#160;</td><td class="fielddoc"><p>ADC channel 18. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ae47fe79b66fda5fcb9f02d6a648c8dc9"></a>ADC_CHANNEL_18&#160;</td><td class="fielddoc"><p>ADC channel 18. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a514ca4fdb7e9862d3d9ebe1d4e926349"></a>ADC_CHANNEL_19&#160;</td><td class="fielddoc"><p>ADC channel 19. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a514ca4fdb7e9862d3d9ebe1d4e926349"></a>ADC_CHANNEL_19&#160;</td><td class="fielddoc"><p>ADC channel 19. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afdcbeb5840bd281a4a2ec3f1f64ed52b"></a>ADC_CHANNEL_20&#160;</td><td class="fielddoc"><p>ADC channel 20. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afdcbeb5840bd281a4a2ec3f1f64ed52b"></a>ADC_CHANNEL_20&#160;</td><td class="fielddoc"><p>ADC channel 20. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>ADC channel 21. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>ADC channel 21. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC channel 22. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC channel 22. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a9009b78e30e87985cbfb40296a0bab16"></a>ADC_CHANNEL_23&#160;</td><td class="fielddoc"><p>ADC channel 23. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a9009b78e30e87985cbfb40296a0bab16"></a>ADC_CHANNEL_23&#160;</td><td class="fielddoc"><p>ADC channel 23. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a7ae985a21367ea6d7488517948fc625d"></a>ADC_CHANNEL_24&#160;</td><td class="fielddoc"><p>ADC channel 24. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a7ae985a21367ea6d7488517948fc625d"></a>ADC_CHANNEL_24&#160;</td><td class="fielddoc"><p>ADC channel 24. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a31855ff8fefcff144e9dc4911466ce52"></a>ADC_CHANNEL_25&#160;</td><td class="fielddoc"><p>ADC channel 25. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a31855ff8fefcff144e9dc4911466ce52"></a>ADC_CHANNEL_25&#160;</td><td class="fielddoc"><p>ADC channel 25. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa9c18e09bdb5cdf44c8c89ecdd7770d3"></a>ADC_CHANNEL_26&#160;</td><td class="fielddoc"><p>ADC channel 26. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa9c18e09bdb5cdf44c8c89ecdd7770d3"></a>ADC_CHANNEL_26&#160;</td><td class="fielddoc"><p>ADC channel 26. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ad002942933ed78124a50b3276f9d88cc"></a>ADC_CHANNEL_27&#160;</td><td class="fielddoc"><p>ADC channel 27. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ad002942933ed78124a50b3276f9d88cc"></a>ADC_CHANNEL_27&#160;</td><td class="fielddoc"><p>ADC channel 27. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a558a69bc271b849d3c3a2cca05ebbba0"></a>ADC_CHANNEL_28&#160;</td><td class="fielddoc"><p>ADC channel 28. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a558a69bc271b849d3c3a2cca05ebbba0"></a>ADC_CHANNEL_28&#160;</td><td class="fielddoc"><p>ADC channel 28. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aadc3763b403f4b9ab667602137a9de57"></a>ADC_CHANNEL_DUPLEX_A&#160;</td><td class="fielddoc"><p>Data duplexing register A. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a8b483ea355dff47129b4242c8dafa2c1"></a>ADC_CHANNEL_SELF_DIAGNOSIS&#160;</td><td class="fielddoc"><p>Self-Diagnosis channel. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa66d57680818caebf7be4d68f8c505be"></a>ADC_CHANNEL_DUPLEX_B&#160;</td><td class="fielddoc"><p>Data duplexing register B. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aff4cf0b5a9bfd1fc634f6b097e34fe73"></a>ADC_CHANNEL_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor output. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a2602b0a06ce1ce485d0812de6f6f4091"></a>ADC_CHANNEL_DUPLEX&#160;</td><td class="fielddoc"><p>Data duplexing register. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641"></a>ADC_CHANNEL_VOLT&#160;</td><td class="fielddoc"><p>Internal reference voltage. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aff4cf0b5a9bfd1fc634f6b097e34fe73"></a>ADC_CHANNEL_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor output. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aee8fb112ab2f4218a1f6179f4816a7dc"></a>ADC_CHANNEL_DA0&#160;</td><td class="fielddoc"><p>D/A Converter Channel 0. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641"></a>ADC_CHANNEL_VOLT&#160;</td><td class="fielddoc"><p>Internal reference voltage. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ac9dcb888def48e903008fdc40af7035f"></a>ADC_CHANNEL_DA1&#160;</td><td class="fielddoc"><p>D/A Converter Channel 1. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104"></a>ADC_CHANNEL_0&#160;</td><td class="fielddoc"><p>ADC channel 0. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814adca63847cbb92590837a06415a15a3c0"></a>ADC_CHANNEL_DA2&#160;</td><td class="fielddoc"><p>D/A Converter Channel 2. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492"></a>ADC_CHANNEL_1&#160;</td><td class="fielddoc"><p>ADC channel 1. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa4bebe867a2c5e04b52644fd0a68b3f2"></a>ADC_CHANNEL_DA3&#160;</td><td class="fielddoc"><p>D/A Converter Channel 3. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ab5ff3c915ec02ae6ac3980a1312a4815"></a>ADC_CHANNEL_2&#160;</td><td class="fielddoc"><p>ADC channel 2. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104"></a>ADC_CHANNEL_0&#160;</td><td class="fielddoc"><p>ADC channel 0. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a6ca054f67bee5197eec92a0379cffb6e"></a>ADC_CHANNEL_3&#160;</td><td class="fielddoc"><p>ADC channel 3. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492"></a>ADC_CHANNEL_1&#160;</td><td class="fielddoc"><p>ADC channel 1. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131"></a>ADC_CHANNEL_4&#160;</td><td class="fielddoc"><p>ADC channel 4. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ab5ff3c915ec02ae6ac3980a1312a4815"></a>ADC_CHANNEL_2&#160;</td><td class="fielddoc"><p>ADC channel 2. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a"></a>ADC_CHANNEL_5&#160;</td><td class="fielddoc"><p>ADC channel 5. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a6ca054f67bee5197eec92a0379cffb6e"></a>ADC_CHANNEL_3&#160;</td><td class="fielddoc"><p>ADC channel 3. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814acf3be71bfeb9d342e6d845db91782b79"></a>ADC_CHANNEL_6&#160;</td><td class="fielddoc"><p>ADC channel 6. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131"></a>ADC_CHANNEL_4&#160;</td><td class="fielddoc"><p>ADC channel 4. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ad6ef86ca1b448f220905d771f258586a"></a>ADC_CHANNEL_7&#160;</td><td class="fielddoc"><p>ADC channel 7. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a"></a>ADC_CHANNEL_5&#160;</td><td class="fielddoc"><p>ADC channel 5. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a2875a590dc7e8502581ff68a075ce019"></a>ADC_CHANNEL_8&#160;</td><td class="fielddoc"><p>ADC channel 8. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814acf3be71bfeb9d342e6d845db91782b79"></a>ADC_CHANNEL_6&#160;</td><td class="fielddoc"><p>ADC channel 6. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a0e198353a76bf512e4dcc8224710d6b0"></a>ADC_CHANNEL_9&#160;</td><td class="fielddoc"><p>ADC channel 9. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ad6ef86ca1b448f220905d771f258586a"></a>ADC_CHANNEL_7&#160;</td><td class="fielddoc"><p>ADC channel 7. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a9db3195dade30ed8b254187c22616898"></a>ADC_CHANNEL_10&#160;</td><td class="fielddoc"><p>ADC channel 10. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a2875a590dc7e8502581ff68a075ce019"></a>ADC_CHANNEL_8&#160;</td><td class="fielddoc"><p>ADC channel 8. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814af6193eda0e4807c9d560aac13e302093"></a>ADC_CHANNEL_11&#160;</td><td class="fielddoc"><p>ADC channel 11. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a0e198353a76bf512e4dcc8224710d6b0"></a>ADC_CHANNEL_9&#160;</td><td class="fielddoc"><p>ADC channel 9. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a42838efffa3e21e6b970eee65de86e40"></a>ADC_CHANNEL_12&#160;</td><td class="fielddoc"><p>ADC channel 12. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a9db3195dade30ed8b254187c22616898"></a>ADC_CHANNEL_10&#160;</td><td class="fielddoc"><p>ADC channel 10. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa2718519e5964f136de3e5234e36264c"></a>ADC_CHANNEL_13&#160;</td><td class="fielddoc"><p>ADC channel 13. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814af6193eda0e4807c9d560aac13e302093"></a>ADC_CHANNEL_11&#160;</td><td class="fielddoc"><p>ADC channel 11. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a7f3900d4031a3f01889fbe4179d8cade"></a>ADC_CHANNEL_14&#160;</td><td class="fielddoc"><p>ADC channel 14. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a42838efffa3e21e6b970eee65de86e40"></a>ADC_CHANNEL_12&#160;</td><td class="fielddoc"><p>ADC channel 12. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afa75046e6f6f23ed8e6573c7bc8563d2"></a>ADC_CHANNEL_15&#160;</td><td class="fielddoc"><p>ADC channel 15. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa2718519e5964f136de3e5234e36264c"></a>ADC_CHANNEL_13&#160;</td><td class="fielddoc"><p>ADC channel 13. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a61914b17568b94ef0651ee10e79e6892"></a>ADC_CHANNEL_16&#160;</td><td class="fielddoc"><p>ADC channel 16. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a7f3900d4031a3f01889fbe4179d8cade"></a>ADC_CHANNEL_14&#160;</td><td class="fielddoc"><p>ADC channel 14. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a22aa8198d9a4012a012ddd838adf256c"></a>ADC_CHANNEL_17&#160;</td><td class="fielddoc"><p>ADC channel 17. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afa75046e6f6f23ed8e6573c7bc8563d2"></a>ADC_CHANNEL_15&#160;</td><td class="fielddoc"><p>ADC channel 15. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ae47fe79b66fda5fcb9f02d6a648c8dc9"></a>ADC_CHANNEL_18&#160;</td><td class="fielddoc"><p>ADC channel 18. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a61914b17568b94ef0651ee10e79e6892"></a>ADC_CHANNEL_16&#160;</td><td class="fielddoc"><p>ADC channel 16. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a514ca4fdb7e9862d3d9ebe1d4e926349"></a>ADC_CHANNEL_19&#160;</td><td class="fielddoc"><p>ADC channel 19. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a22aa8198d9a4012a012ddd838adf256c"></a>ADC_CHANNEL_17&#160;</td><td class="fielddoc"><p>ADC channel 17. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afdcbeb5840bd281a4a2ec3f1f64ed52b"></a>ADC_CHANNEL_20&#160;</td><td class="fielddoc"><p>ADC channel 20. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ae47fe79b66fda5fcb9f02d6a648c8dc9"></a>ADC_CHANNEL_18&#160;</td><td class="fielddoc"><p>ADC channel 18. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>ADC channel 21. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a514ca4fdb7e9862d3d9ebe1d4e926349"></a>ADC_CHANNEL_19&#160;</td><td class="fielddoc"><p>ADC channel 19. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC channel 22. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afdcbeb5840bd281a4a2ec3f1f64ed52b"></a>ADC_CHANNEL_20&#160;</td><td class="fielddoc"><p>ADC channel 20. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a9009b78e30e87985cbfb40296a0bab16"></a>ADC_CHANNEL_23&#160;</td><td class="fielddoc"><p>ADC channel 23. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>ADC channel 21. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a7ae985a21367ea6d7488517948fc625d"></a>ADC_CHANNEL_24&#160;</td><td class="fielddoc"><p>ADC channel 24. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC channel 22. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a31855ff8fefcff144e9dc4911466ce52"></a>ADC_CHANNEL_25&#160;</td><td class="fielddoc"><p>ADC channel 25. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a9009b78e30e87985cbfb40296a0bab16"></a>ADC_CHANNEL_23&#160;</td><td class="fielddoc"><p>ADC channel 23. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa9c18e09bdb5cdf44c8c89ecdd7770d3"></a>ADC_CHANNEL_26&#160;</td><td class="fielddoc"><p>ADC channel 26. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a7ae985a21367ea6d7488517948fc625d"></a>ADC_CHANNEL_24&#160;</td><td class="fielddoc"><p>ADC channel 24. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ad002942933ed78124a50b3276f9d88cc"></a>ADC_CHANNEL_27&#160;</td><td class="fielddoc"><p>ADC channel 27. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a31855ff8fefcff144e9dc4911466ce52"></a>ADC_CHANNEL_25&#160;</td><td class="fielddoc"><p>ADC channel 25. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a558a69bc271b849d3c3a2cca05ebbba0"></a>ADC_CHANNEL_28&#160;</td><td class="fielddoc"><p>ADC channel 28. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa9c18e09bdb5cdf44c8c89ecdd7770d3"></a>ADC_CHANNEL_26&#160;</td><td class="fielddoc"><p>ADC channel 26. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a8b483ea355dff47129b4242c8dafa2c1"></a>ADC_CHANNEL_SELF_DIAGNOSIS&#160;</td><td class="fielddoc"><p>Self-Diagnosis channel. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ad002942933ed78124a50b3276f9d88cc"></a>ADC_CHANNEL_27&#160;</td><td class="fielddoc"><p>ADC channel 27. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aff4cf0b5a9bfd1fc634f6b097e34fe73"></a>ADC_CHANNEL_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor output. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a558a69bc271b849d3c3a2cca05ebbba0"></a>ADC_CHANNEL_28&#160;</td><td class="fielddoc"><p>ADC channel 28. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641"></a>ADC_CHANNEL_VOLT&#160;</td><td class="fielddoc"><p>Internal reference voltage. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aadc3763b403f4b9ab667602137a9de57"></a>ADC_CHANNEL_DUPLEX_A&#160;</td><td class="fielddoc"><p>Data duplexing register A. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aee8fb112ab2f4218a1f6179f4816a7dc"></a>ADC_CHANNEL_DA0&#160;</td><td class="fielddoc"><p>D/A Converter Channel 0. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa66d57680818caebf7be4d68f8c505be"></a>ADC_CHANNEL_DUPLEX_B&#160;</td><td class="fielddoc"><p>Data duplexing register B. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814ac9dcb888def48e903008fdc40af7035f"></a>ADC_CHANNEL_DA1&#160;</td><td class="fielddoc"><p>D/A Converter Channel 1. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a2602b0a06ce1ce485d0812de6f6f4091"></a>ADC_CHANNEL_DUPLEX&#160;</td><td class="fielddoc"><p>Data duplexing register. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814adca63847cbb92590837a06415a15a3c0"></a>ADC_CHANNEL_DA2&#160;</td><td class="fielddoc"><p>D/A Converter Channel 2. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aff4cf0b5a9bfd1fc634f6b097e34fe73"></a>ADC_CHANNEL_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor output. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gaafc4060027875f8fe46242b0656d7814aa4bebe867a2c5e04b52644fd0a68b3f2"></a>ADC_CHANNEL_DA3&#160;</td><td class="fielddoc"><p>D/A Converter Channel 3. </p>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641"></a>ADC_CHANNEL_VOLT&#160;</td><td class="fielddoc"><p>Internal reference voltage. </p>
 </td></tr>
 </table>
 
@@ -1269,7 +1269,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -647,6 +647,12 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a803d17091deba534c1880d15f57eb5ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acff7e6a30f446c1e13e8e0071d63aa78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#acff7e6a30f446c1e13e8e0071d63aa78">setLocalPublicKey</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t const *const public_key)</td></tr>
 <tr class="separator:acff7e6a30f446c1e13e8e0071d63aa78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca92c9371e11b73ccc44fffdf64aae7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a2ca92c9371e11b73ccc44fffdf64aae7">generateRandomizedNumber</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t *const p_key)</td></tr>
+<tr class="separator:a2ca92c9371e11b73ccc44fffdf64aae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1161f3e2c459ffaf6ad139a9cce876b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a1161f3e2c459ffaf6ad139a9cce876b5">setOobPublicKey</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t const *const p_key, uint8_t size)</td></tr>
+<tr class="separator:a1161f3e2c459ffaf6ad139a9cce876b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d4095fbfe6f3fb4bb2c61b0d04b5ac1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a5d4095fbfe6f3fb4bb2c61b0d04b5ac1">setOobAuthInfo</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t const *const p_auth_info, uint8_t size)</td></tr>
+<tr class="separator:a5d4095fbfe6f3fb4bb2c61b0d04b5ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="af2b8fb246fc2e54dcacf5abf4a68c917"></a>
@@ -722,7 +728,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or Error Code on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -745,12 +751,13 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">info</td><td>Device information. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">attention</td><td>The attention duration in seconds to be configured by the device. This parameter is dont care if the role is RM_BLE_MESH_PROVISION_ROLE_DEVICE. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_handle</td><td>Pointer to handle.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This API is for use by the Provisioner application only upon reception of an Unprovisioned Device Beacon.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or Error Code on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -778,7 +785,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or Error Code on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -801,11 +808,11 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Pointer to provisioning context to be used. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">auth_value</td><td>Pointer to the Authval (UINT32 *) or (uint8_t *)</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">auth_value</td><td>The buffer structure that is stored authentication data and data size.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or Error Code on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -832,7 +839,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or Error Code on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -848,7 +855,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Utility API to get current ECDH Public Key to be used for Provisioning </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga52aae98c1bfbc86c0e7eccc7190b08fe">RM_BLE_MESH_PROVISION_GetLocalPublicKey()</a></li>
+<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga6fde0f74aa1633c79abebe1c9e1c03db">RM_BLE_MESH_PROVISION_GetLocalPublicKey()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -858,7 +865,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or Error Code on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -874,7 +881,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 <p>Utility API to set current ECDH Public Key to be used for Provisioning </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga7ab56152d43b14770c4bd5b4f379a829">RM_BLE_MESH_PROVISION_SetLocalPublicKey()</a></li>
+<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga344c608b962ff0ddd5a041edc88e1a11">RM_BLE_MESH_PROVISION_SetLocalPublicKey()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -884,7 +891,87 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or Error Code on failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
+
+</div>
+</div>
+<a id="a2ca92c9371e11b73ccc44fffdf64aae7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ca92c9371e11b73ccc44fffdf64aae7">&#9670;&nbsp;</a></span>generateRandomizedNumber</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_ble_mesh_provision_api_t::generateRandomizedNumber) (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t *const p_key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Utility API to generate 128bits (16 bytes) randomized number to be used for provisioning. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#gaa06214035afcab3d76bbb28a6ce0caa4">RM_BLE_MESH_PROVISION_GenerateRandomizedNumber()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_key</td><td>Pointer to buffer to store random number</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
+
+</div>
+</div>
+<a id="a1161f3e2c459ffaf6ad139a9cce876b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1161f3e2c459ffaf6ad139a9cce876b5">&#9670;&nbsp;</a></span>setOobPublicKey</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_ble_mesh_provision_api_t::setOobPublicKey) (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t const *const p_key, uint8_t size)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Utility API to set device out of band public key for provisioning. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga842afc519426cab5364a4733f2b36a70">RM_BLE_MESH_PROVISION_SetOobPublicKey()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_key</td><td>Pointer to Public Key </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">size</td><td>Size of public key</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
+
+</div>
+</div>
+<a id="a5d4095fbfe6f3fb4bb2c61b0d04b5ac1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d4095fbfe6f3fb4bb2c61b0d04b5ac1">&#9670;&nbsp;</a></span>setOobAuthInfo</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_ble_mesh_provision_api_t::setOobAuthInfo) (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ga3f979dc66051373e819615cba5a0d72e">rm_ble_mesh_provision_ctrl_t</a> *const p_ctrl, uint8_t const *const p_auth_info, uint8_t size)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Utility API to set device out of band authentication information for provisioning. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga2bd755daa6d80c90a706449555f1e2f6">RM_BLE_MESH_PROVISION_SetOobAuthInfo()</a></li>
+</ul>
+</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_auth_info</td><td>Pointer to authentication information. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">size</td><td>Size of authentication information.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -1477,7 +1564,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

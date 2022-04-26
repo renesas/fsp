@@ -57,7 +57,10 @@ var group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i =
       [ "setAuthVal", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a835a71183af9a878f970386cae248b30", null ],
       [ "abort", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a8e2c51bf7a8fe53f1c2efb6183e56603", null ],
       [ "getLocalPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a803d17091deba534c1880d15f57eb5ce", null ],
-      [ "setLocalPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#acff7e6a30f446c1e13e8e0071d63aa78", null ]
+      [ "setLocalPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#acff7e6a30f446c1e13e8e0071d63aa78", null ],
+      [ "generateRandomizedNumber", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a2ca92c9371e11b73ccc44fffdf64aae7", null ],
+      [ "setOobPublicKey", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a1161f3e2c459ffaf6ad139a9cce876b5", null ],
+      [ "setOobAuthInfo", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a5d4095fbfe6f3fb4bb2c61b0d04b5ac1", null ]
     ] ],
     [ "rm_ble_mesh_provision_instance_t", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__instance__t", [
       [ "p_ctrl", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a226824f2bc10a368a762bfae33e88d35", null ],

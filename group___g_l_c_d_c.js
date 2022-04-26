@@ -100,5 +100,5 @@ var group___g_l_c_d_c =
     [ "R_GLCDC_ColorCorrection", "group___g_l_c_d_c.html#ga9d0754a6820a3a189c270f8da8677b72", null ],
     [ "R_GLCDC_ClutUpdate", "group___g_l_c_d_c.html#gaaabcf5b43ea6cb821c0cddee78172cc5", null ],
     [ "R_GLCDC_ClutEdit", "group___g_l_c_d_c.html#gadae3a06f170b361c175a49a9961298e9", null ],
-    [ "R_GLCDC_StatusGet", "group___g_l_c_d_c.html#ga4c5e0ed8faa047d4875460d4760dd8ed", null ]
+    [ "R_GLCDC_StatusGet", "group___g_l_c_d_c.html#ga1ba1f4b003e8045aefaa604f4eb5954f", null ]
 ];

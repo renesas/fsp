@@ -17,15 +17,15 @@ var group___j_p_e_g =
       [ "total_lines_encoded", "group___j_p_e_g.html#a0d6fbc975cb2cbeee7e05bca0a6b5ee9", null ]
     ] ],
     [ "R_JPEG_Open", "group___j_p_e_g.html#ga34766994da3769a1f5cd3e7f22652b43", null ],
-    [ "R_JPEG_OutputBufferSet", "group___j_p_e_g.html#ga87c5935b87503688890e7af3ad7c6f74", null ],
-    [ "R_JPEG_InputBufferSet", "group___j_p_e_g.html#gafdadb62bd28baa5552f90fe6bf14b772", null ],
-    [ "R_JPEG_StatusGet", "group___j_p_e_g.html#ga1d62e16ee0c22a4ca2c3853ec81c7928", null ],
-    [ "R_JPEG_Close", "group___j_p_e_g.html#ga0b41824f40d6c66c59a6c5ad908cbdce", null ],
-    [ "R_JPEG_EncodeImageSizeSet", "group___j_p_e_g.html#ga6cff298a8d044d4a7ea04c577a9170ca", null ],
-    [ "R_JPEG_DecodeLinesDecodedGet", "group___j_p_e_g.html#ga21a77d572299550b56a4f5c39757612e", null ],
+    [ "R_JPEG_OutputBufferSet", "group___j_p_e_g.html#ga6d304aad5fbb148f8bd7ed71f878e53d", null ],
+    [ "R_JPEG_InputBufferSet", "group___j_p_e_g.html#gaaed65a4fe2f87a3c30dc817d311056f0", null ],
+    [ "R_JPEG_DecodeLinesDecodedGet", "group___j_p_e_g.html#gae339672b9122a431c66a695858877463", null ],
+    [ "R_JPEG_DecodeImageSubsampleSet", "group___j_p_e_g.html#ga3246bd6af57284f48d8c5061257bfeed", null ],
     [ "R_JPEG_DecodeHorizontalStrideSet", "group___j_p_e_g.html#ga62ffba3d7256310ec46dff12b798983e", null ],
     [ "R_JPEG_DecodeImageSizeGet", "group___j_p_e_g.html#ga3d68546c7a9f31f72b96cf17086bdfe4", null ],
-    [ "R_JPEG_DecodeImageSubsampleSet", "group___j_p_e_g.html#ga3246bd6af57284f48d8c5061257bfeed", null ],
     [ "R_JPEG_DecodePixelFormatGet", "group___j_p_e_g.html#gae1ed6685a29aa94b4fc5a6764c72c2a5", null ],
-    [ "R_JPEG_ModeSet", "group___j_p_e_g.html#gab669afd6c669dabba75e3510fc9f5bda", null ]
+    [ "R_JPEG_EncodeImageSizeSet", "group___j_p_e_g.html#ga6cff298a8d044d4a7ea04c577a9170ca", null ],
+    [ "R_JPEG_ModeSet", "group___j_p_e_g.html#gab669afd6c669dabba75e3510fc9f5bda", null ],
+    [ "R_JPEG_Close", "group___j_p_e_g.html#ga0b41824f40d6c66c59a6c5ad908cbdce", null ],
+    [ "R_JPEG_StatusGet", "group___j_p_e_g.html#ga1d62e16ee0c22a4ca2c3853ec81c7928", null ]
 ];

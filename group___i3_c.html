@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: I3C Bus Interface (r_i3c)</title>
+<title>RA Flexible Software Package Documentation: I3C (r_i3c)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -164,7 +164,7 @@ $(document).ready(function(){initNavTree('group___i3_c.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">I3C Bus Interface (r_i3c)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">I3C (r_i3c)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -282,6 +282,8 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>If only master mode is required, disable slave support to decrease code size. </td></tr>
+<tr>
+<td>Error Recovery Procedure</td><td>MCU Specific Options</td><td></td><td>There are two different chip versions of the RA2E2 MCU (Version 1 and Version 2). Each version requires a different procedure for recovering from errors. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; I3C (r_i3c)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; I3C (r_i3c).<br />
@@ -587,11 +589,26 @@ In slave mode, if the master issues a stop condition before the slave ends the t
 <p>The MIPI I3C Specification v1.0 defines a Mixed Slow Bus as a bus that has legacy I2C devices that do not have a 50ns Spike Filter.</p>
 <p>In this case, the SCL frequency is limited to I2C Fast Mode or I2C Fast Mode Plus.</p>
 <dl class="section note"><dt>Note</dt><dd>1. See section 5.1.2.4 in the MIPI I3C Specification v1.0.</dd></dl>
+<h2>RA2E2 MCU Version</h2>
+<p>There are two versions of the RA2E2. The version number can be identified by the part number or by reading the MCU Version Register.</p>
+<table class="doxtable">
+<tr>
+<th>Part Number </th><th>Chip Version  </th></tr>
+<tr>
+<td>R7FA2E2A72DNK::HA0 </td><td>Version 1 </td></tr>
+<tr>
+<td>R7FA2E2A72DNK::HA1 </td><td>Version 2 </td></tr>
+<tr>
+<td>R7FA2E2A72DNK::AA0 </td><td>Version 1 </td></tr>
+<tr>
+<td>R7FA2E2A72DNK::AA1 </td><td>Version 2 </td></tr>
+</table>
+<p>The I3C peripheral on the RA2E2 Version 1 has a hardware limitation related to using dynamic address assignment in slave mode. When the ENTDAA command is received, the peripheral will continue driving its PID, DCR, and BCR registers during arbitration even after its dynamic address has already been configured. This will prevent any other devices on the bus from being configured after the RA2E2 Version 1 device has been configured. One workaround for this limitation is to configure the Provisional ID to all '1's in order to ensure that the RA2E2 Version 1 device is configured last. If more than one RA2E2 Version 1 device is present on the same bus, consider initializing them using another method (Eg. SETDASA). <b>Note that this issue has been corrected on the RA2E2 Version 2 (Part numbers ending in #AA1 or #HA1).</b></p>
+<p>In addition to fixing this hardware limitation, the revised I3C peripheral on the RA2E2 version 2 also greatly simplifies the error recovery procedures. By default, the driver will automatically include the error recovery procedures for both versions, however, it can be configured to only support version 1 or version 2 procedures in order to reduce code size.</p>
 <h2><a class="anchor" id="r-i3c-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the I3C:</p>
 <ul>
-<li>The I3C peripheral on the RA2E2 has a hardware defect related to using ENTDAA in slave mode. When the ENTDAA command is received, the peripheral will continue driving its PID, DCR, and BCR registers even after its dynamic address has been configured. This will prevent any other devices from being configured on the bus. One workaround for this limitation is to configure the device Provisional ID to all '1's in order to ensure that the device is initialized last. If more than one device with this limitation is present on the same bus, consider initializing them using another method (Eg. SETDASA).</li>
 <li>The MIPI Reserved area and Vendor Extension area of Command Codes are not supported.</li>
 <li>Mixed Fast Bus topology has the following limitation on RA2E2 MCUs. The minimum SCL high period (T<sub>DIG_H</sub>) is 156 nanoseconds when PCLKD is 48 Mhz, and 120 nanoseconds when PCLKD is 64 Mhz. On a Mixed Fast Bus, the high period T<sub>DIG_HIGH_MIXED</sub> must be less than 45 nanoseconds in order to ensure that Legacy I2C devices do not interpret I3C signaling as valid I2C signaling (See Table 111 Push-Pull-Timing Parameters in the MIPI I3C Specification v1.1). This required high period cannot be achievable with RA2E2 MCUs.</li>
 <li>Secondary Master device role is not currently supported.</li>
@@ -630,6 +647,17 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ga67844f1842e610992efb2557b91f2916"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c.html#ga67844f1842e610992efb2557b91f2916">I3C_ERROR_RECOVERY_VERSION_1</a></td></tr>
+<tr class="memdesc:ga67844f1842e610992efb2557b91f2916"><td class="mdescLeft">&#160;</td><td class="mdescRight">Support error recovery procedure for chip version 1.  <a href="#ga67844f1842e610992efb2557b91f2916">More...</a><br /></td></tr>
+<tr class="separator:ga67844f1842e610992efb2557b91f2916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7fe9bf59b703822fe10ca9a1282812f3"><td class="memItemLeft" align="right" valign="top"><a id="ga7fe9bf59b703822fe10ca9a1282812f3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c.html#ga7fe9bf59b703822fe10ca9a1282812f3">I3C_ERROR_RECOVERY_VERSION_2</a></td></tr>
+<tr class="memdesc:ga7fe9bf59b703822fe10ca9a1282812f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Support error recovery procedure for chip version 2. <br /></td></tr>
+<tr class="separator:ga7fe9bf59b703822fe10ca9a1282812f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8826d958a50fd2431575b95756869002"><td class="memItemLeft" align="right" valign="top"><a id="ga8826d958a50fd2431575b95756869002"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c.html#ga8826d958a50fd2431575b95756869002">I3C_ERROR_RECOVERY_VERSION_BOTH</a></td></tr>
+<tr class="memdesc:ga8826d958a50fd2431575b95756869002"><td class="mdescLeft">&#160;</td><td class="mdescRight">Support error recovery procedure for chip version 1 and version 2. <br /></td></tr>
+<tr class="separator:ga8826d958a50fd2431575b95756869002"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga431d3d9f020658bd13e385b1759f2993"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c.html#ga431d3d9f020658bd13e385b1759f2993">I3C_DEVICE_INDEX_EXTENDED_DEVICE</a></td></tr>
 <tr class="separator:ga431d3d9f020658bd13e385b1759f2993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga959c7b7b56c392d9b4e69dcce92a5062"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i3_c.html#ga959c7b7b56c392d9b4e69dcce92a5062">I3C_EVENT_STATUS_SUCCESS</a></td></tr>
@@ -1109,6 +1137,23 @@ Error and Event Interrupt Priority. </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga67844f1842e610992efb2557b91f2916"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga67844f1842e610992efb2557b91f2916">&#9670;&nbsp;</a></span>I3C_ERROR_RECOVERY_VERSION_1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define I3C_ERROR_RECOVERY_VERSION_1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Support error recovery procedure for chip version 1. </p>
+<p>There are two different versions of the RA2E2 MCU and the error recovery procedure is different for each version. </p>
+
+</div>
+</div>
 <a id="ga431d3d9f020658bd13e385b1759f2993"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga431d3d9f020658bd13e385b1759f2993">&#9670;&nbsp;</a></span>I3C_DEVICE_INDEX_EXTENDED_DEVICE</h2>
 
@@ -1816,7 +1861,7 @@ Error and Event Interrupt Priority. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

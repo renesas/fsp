@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: USB Host Mass Storage Class Driver (r_usb_hmsc)</title>
+<title>RA Flexible Software Package Documentation: USB HMSC (r_usb_hmsc)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -161,7 +161,7 @@ $(document).ready(function(){initNavTree('group___u_s_b___h_m_s_c.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">USB Host Mass Storage Class Driver (r_usb_hmsc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a></div></div>  </div>
+<div class="title">USB HMSC (r_usb_hmsc)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -173,18 +173,18 @@ Functions</h2></td></tr>
 <tr class="memitem:gaccfdc1d2f97f244fcfbb94c52b03dc3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#gaccfdc1d2f97f244fcfbb94c52b03dc3b">R_USB_HMSC_DriveNumberGet</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, uint8_t *p_drive, uint8_t destination)</td></tr>
 <tr class="memdesc:gaccfdc1d2f97f244fcfbb94c52b03dc3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of Storage drive.  <a href="#gaccfdc1d2f97f244fcfbb94c52b03dc3b">More...</a><br /></td></tr>
 <tr class="separator:gaccfdc1d2f97f244fcfbb94c52b03dc3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7320b74cf0e524e1ab5f038c80663fda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#ga7320b74cf0e524e1ab5f038c80663fda">R_USB_HMSC_SemaphoreGet</a> (void)</td></tr>
-<tr class="memdesc:ga7320b74cf0e524e1ab5f038c80663fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a semaphore. (RTOS only)  <a href="#ga7320b74cf0e524e1ab5f038c80663fda">More...</a><br /></td></tr>
-<tr class="separator:ga7320b74cf0e524e1ab5f038c80663fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga06eed41115834790213c720d27cf2a1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#ga06eed41115834790213c720d27cf2a1e">R_USB_HMSC_SemaphoreRelease</a> (void)</td></tr>
-<tr class="memdesc:ga06eed41115834790213c720d27cf2a1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release a semaphore. (RTOS only)  <a href="#ga06eed41115834790213c720d27cf2a1e">More...</a><br /></td></tr>
-<tr class="separator:ga06eed41115834790213c720d27cf2a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa79dafa161ab34b91125136493f4a547"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#gaa79dafa161ab34b91125136493f4a547">R_USB_HMSC_StorageReadSector</a> (uint16_t drive_number, uint8_t *const buff, uint32_t sector_number, uint16_t sector_count)</td></tr>
 <tr class="memdesc:gaa79dafa161ab34b91125136493f4a547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read sector information.  <a href="#gaa79dafa161ab34b91125136493f4a547">More...</a><br /></td></tr>
 <tr class="separator:gaa79dafa161ab34b91125136493f4a547"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga87590ff490e5f422294773bfbc8ab1ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#ga87590ff490e5f422294773bfbc8ab1ce">R_USB_HMSC_StorageWriteSector</a> (uint16_t drive_number, uint8_t const *const buff, uint32_t sector_number, uint16_t sector_count)</td></tr>
 <tr class="memdesc:ga87590ff490e5f422294773bfbc8ab1ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write sector information.  <a href="#ga87590ff490e5f422294773bfbc8ab1ce">More...</a><br /></td></tr>
 <tr class="separator:ga87590ff490e5f422294773bfbc8ab1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7320b74cf0e524e1ab5f038c80663fda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#ga7320b74cf0e524e1ab5f038c80663fda">R_USB_HMSC_SemaphoreGet</a> (void)</td></tr>
+<tr class="memdesc:ga7320b74cf0e524e1ab5f038c80663fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a semaphore. (RTOS only)  <a href="#ga7320b74cf0e524e1ab5f038c80663fda">More...</a><br /></td></tr>
+<tr class="separator:ga7320b74cf0e524e1ab5f038c80663fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06eed41115834790213c720d27cf2a1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_m_s_c.html#ga06eed41115834790213c720d27cf2a1e">R_USB_HMSC_SemaphoreRelease</a> (void)</td></tr>
+<tr class="memdesc:ga06eed41115834790213c720d27cf2a1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release a semaphore. (RTOS only)  <a href="#ga06eed41115834790213c720d27cf2a1e">More...</a><br /></td></tr>
+<tr class="separator:ga06eed41115834790213c720d27cf2a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>This module provides a USB Host Mass Storage Class (HMSC) driver. It implements the <a class="el" href="group___u_s_b___h_m_s_c___a_p_i.html">USB HMSC Interface</a>. </p>
@@ -396,60 +396,6 @@ usb_apl_task</div></div>
 
 </div>
 </div>
-<a id="ga7320b74cf0e524e1ab5f038c80663fda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7320b74cf0e524e1ab5f038c80663fda">&#9670;&nbsp;</a></span>R_USB_HMSC_SemaphoreGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_SemaphoreGet </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get a semaphore. (RTOS only) </p>
-<p>If this function is called in the OS less execution environment, a failure is returned. </p><dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
-    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga06eed41115834790213c720d27cf2a1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga06eed41115834790213c720d27cf2a1e">&#9670;&nbsp;</a></span>R_USB_HMSC_SemaphoreRelease()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_SemaphoreRelease </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Release a semaphore. (RTOS only) </p>
-<p>If this function is called in the OS less execution environment, a failure is returned. </p><dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
-    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gaa79dafa161ab34b91125136493f4a547"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa79dafa161ab34b91125136493f4a547">&#9670;&nbsp;</a></span>R_USB_HMSC_StorageReadSector()</h2>
 
@@ -554,13 +500,67 @@ usb_apl_task</div></div>
 
 </div>
 </div>
+<a id="ga7320b74cf0e524e1ab5f038c80663fda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7320b74cf0e524e1ab5f038c80663fda">&#9670;&nbsp;</a></span>R_USB_HMSC_SemaphoreGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_SemaphoreGet </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a semaphore. (RTOS only) </p>
+<p>If this function is called in the OS less execution environment, a failure is returned. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga06eed41115834790213c720d27cf2a1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga06eed41115834790213c720d27cf2a1e">&#9670;&nbsp;</a></span>R_USB_HMSC_SemaphoreRelease()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HMSC_SemaphoreRelease </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Release a semaphore. (RTOS only) </p>
+<p>If this function is called in the OS less execution environment, a failure is returned. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Success. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

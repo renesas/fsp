@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_e___m_e_s_h___a_c_c_
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Bluetooth Low Energy Mesh Network Access (rm_ble_mesh_access)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s.html">Bluetooth Low Energy Mesh Network Modules</a></div></div>  </div>
+<div class="title">Bluetooth Low Energy Mesh Network Access (rm_ble_mesh_access)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___b_l_e___m_e_s_h___m_o_d_u_l_e_s.html">Bluetooth Low Energy Mesh Network Modules</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -324,6 +324,31 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h1><a class="anchor" id="rm_ble_mesh_access-overview"></a>
 Overview</h1>
+<h2>Target Devices</h2>
+<p>The Bluetooth Low Energy Energy Mesh Network Access module supports the following devices.</p><ul>
+<li>RA4W1</li>
+</ul>
+<h1><a class="anchor" id="rm_ble_mesh_access-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_ble_mesh_access</h2>
+The following build time configurations are defined in fsp_cfg/rm_ble_mesh_access_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+</table>
+ <h2>Configurations for Networking &gt; BLE Mesh Access (rm_ble_mesh_access)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; BLE Mesh Access (rm_ble_mesh_access).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr>
+<td>General &gt; Name</td><td>Name Must Be a Valid C Symbol</td><td>g_rm_ble_mesh_access0 </td><td>Module name. </td></tr>
+<tr>
+<td>Channel Number</td><td>Invalid Channel Number</td><td>0 </td><td>Select channel corresponding to the channel number of the hardware. </td></tr>
+<tr>
+<td>Location Descriptor</td><td>Invalid Descriptor</td><td>0 </td><td>Location descriptor. </td></tr>
+</table>
+</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -3818,7 +3843,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

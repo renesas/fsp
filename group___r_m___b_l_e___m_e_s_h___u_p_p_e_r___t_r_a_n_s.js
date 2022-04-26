@@ -2,7 +2,7 @@ var group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s =
 [
     [ "rm_ble_mesh_upper_trans_instance_ctrl_t", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s.html#structrm__ble__mesh__upper__trans__instance__ctrl__t", null ],
     [ "RM_BLE_MESH_UPPER_TRANS_Open", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s.html#gad87e8ac8380f213c397c4ea58bc23f54", null ],
-    [ "RM_BLE_MESH_UPPER_TRANS_Close", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s.html#ga678fd7d7b032896cca7a6cf865345343", null ],
+    [ "RM_BLE_MESH_UPPER_TRANS_Close", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s.html#ga7c1115a5838c4450b1b9fbe58cad7407", null ],
     [ "RM_BLE_MESH_UPPER_TRANS_SendAccessPdu", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s.html#ga8e6e488607a72f3c9a361fa0d9f747c9", null ],
     [ "RM_BLE_MESH_UPPER_TRANS_SendControlPdu", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s.html#gafb204951ea92fb02cae8b99d53261d02", null ],
     [ "RM_BLE_MESH_UPPER_TRANS_LpnSetupFriendship", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s.html#ga4f478cdee700ec1f980f77723811159a", null ],

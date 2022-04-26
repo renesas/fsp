@@ -247,13 +247,13 @@ var group___i_o_p_o_r_t =
     [ "R_IOPORT_Close", "group___i_o_p_o_r_t.html#ga91d4fde6e5f7cdf57b99af5b5f89f1cc", null ],
     [ "R_IOPORT_PinsCfg", "group___i_o_p_o_r_t.html#ga3daa7097b08c7f623a741e2e481cf89f", null ],
     [ "R_IOPORT_PinCfg", "group___i_o_p_o_r_t.html#gab518fc544fe2b59722e30bd0a28ef430", null ],
-    [ "R_IOPORT_PinEventInputRead", "group___i_o_p_o_r_t.html#ga01fe1fa97720d982173bf110032fa21f", null ],
-    [ "R_IOPORT_PinEventOutputWrite", "group___i_o_p_o_r_t.html#gaa561f3c4df61925e4c24b420b78a5583", null ],
     [ "R_IOPORT_PinRead", "group___i_o_p_o_r_t.html#gadb3ad72c9add6d73eb896c58c36f34ee", null ],
+    [ "R_IOPORT_PortRead", "group___i_o_p_o_r_t.html#gab84c08b8ac66d18c5636ebc772133e77", null ],
+    [ "R_IOPORT_PortWrite", "group___i_o_p_o_r_t.html#ga31825f3f0295317e5b446d74f791cd68", null ],
     [ "R_IOPORT_PinWrite", "group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28", null ],
     [ "R_IOPORT_PortDirectionSet", "group___i_o_p_o_r_t.html#gab83a07936c37ad904c329f8209d735e1", null ],
-    [ "R_IOPORT_PortEventInputRead", "group___i_o_p_o_r_t.html#gae310ec091b58570972ea46f1f263985d", null ],
+    [ "R_IOPORT_PortEventInputRead", "group___i_o_p_o_r_t.html#gac6797f0cf13907487f66f99e3ed937b2", null ],
+    [ "R_IOPORT_PinEventInputRead", "group___i_o_p_o_r_t.html#ga01fe1fa97720d982173bf110032fa21f", null ],
     [ "R_IOPORT_PortEventOutputWrite", "group___i_o_p_o_r_t.html#ga8d3f8c4c90241587fee076b6fb0623ff", null ],
-    [ "R_IOPORT_PortRead", "group___i_o_p_o_r_t.html#gab84c08b8ac66d18c5636ebc772133e77", null ],
-    [ "R_IOPORT_PortWrite", "group___i_o_p_o_r_t.html#ga31825f3f0295317e5b446d74f791cd68", null ]
+    [ "R_IOPORT_PinEventOutputWrite", "group___i_o_p_o_r_t.html#gaa561f3c4df61925e4c24b420b78a5583", null ]
 ];

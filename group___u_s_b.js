@@ -1,6 +1,8 @@
 var group___u_s_b =
 [
     [ "usb_instance_ctrl_t", "group___u_s_b.html#gad5c104adfb44c721d9c664bf7fabddfb", null ],
+    [ "R_USB_EventGet", "group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951", null ],
+    [ "R_USB_Callback", "group___u_s_b.html#ga2560b302dca363895820a82ea6a2ba9c", null ],
     [ "R_USB_Open", "group___u_s_b.html#gab9810a1d8e322cb89a9a7f9ca84a368f", null ],
     [ "R_USB_Close", "group___u_s_b.html#ga42c6c75ae96e3860b726d1b0dcbf110d", null ],
     [ "R_USB_Read", "group___u_s_b.html#ga42ad1cbad598d06023d83e8a91fd49d4", null ],
@@ -16,8 +18,6 @@ var group___u_s_b =
     [ "R_USB_UsedPipesGet", "group___u_s_b.html#ga112c7de01280de80c529ec61789c9cc0", null ],
     [ "R_USB_PipeInfoGet", "group___u_s_b.html#ga08f0810f299c825fae9a9f8ada2f9dbf", null ],
     [ "R_USB_PullUp", "group___u_s_b.html#ga999a06f4569d82b8e18c2509e579a35f", null ],
-    [ "R_USB_EventGet", "group___u_s_b.html#gaf882576a8f79312c27fa700d3fb94951", null ],
-    [ "R_USB_Callback", "group___u_s_b.html#ga2560b302dca363895820a82ea6a2ba9c", null ],
     [ "R_USB_HostControlTransfer", "group___u_s_b.html#gaecba62e40820ec837fa0b285140ed13b", null ],
     [ "R_USB_PeriControlDataGet", "group___u_s_b.html#ga1293995ba77495705db3a3adf703b7f1", null ],
     [ "R_USB_PeriControlDataSet", "group___u_s_b.html#ga3fb9080601ee1041e35073e0538a21b0", null ],

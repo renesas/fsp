@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.6.0</span>
+   &#160;<span id="projectnumber">Release v3.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -173,8 +173,8 @@ Summary</h1>
 <p>The general timer interface provides standard timer functionality including periodic mode, one-shot mode, PWM output, and free-running timer mode. After each timer cycle (overflow or underflow), an interrupt can be triggered.</p>
 <p>If an instance supports output compare mode, it is provided in the extension configuration timer_on_&lt;instance&gt;_cfg_t defined in r_&lt;instance&gt;.h.</p>
 <p>Implemented by:</p><ul>
-<li><a class="el" href="group___g_p_t.html">General PWM Timer (r_gpt)</a></li>
-<li><a class="el" href="group___a_g_t.html">Asynchronous General Purpose Timer (r_agt)</a> </li>
+<li><a class="el" href="group___g_p_t.html">Timer, General PWM (r_gpt)</a></li>
+<li><a class="el" href="group___a_g_t.html">Timer, Low-Power (r_agt)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -916,6 +916,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2aca44e952a6930f39ac05393522392eac"></a>TIMER_MODE_PWM&#160;</td><td class="fielddoc"><p>Timer generates saw-wave PWM output. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2afe99f13968cabc479896dfd0bc67fb6a"></a>TIMER_MODE_ONE_SHOT_PULSE&#160;</td><td class="fielddoc"><p>Saw-wave one-shot pulse mode (fixed buffer operation). </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2a6a3c462f9e9cc1b26ab68f38efd79b14"></a>TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM&#160;</td><td class="fielddoc"><p>Timer generates symmetric triangle-wave PWM output. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6d4cd64aed5c0009ac26803efc9c13b2a204001ad413e9ad0db08a66d004a555a"></a>TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM&#160;</td><td class="fielddoc"><p>Timer generates asymmetric triangle-wave PWM output. </p>
@@ -992,7 +994,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.6.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

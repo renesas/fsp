@@ -13,11 +13,11 @@ var group___s_c_i___i2_c =
       [ "clock_settings", "group___s_c_i___i2_c.html#a8695398d7f739c6335fed576df646973", null ]
     ] ],
     [ "R_SCI_I2C_Open", "group___s_c_i___i2_c.html#gaddcd4299259f33f1586458c6f580ef4c", null ],
-    [ "R_SCI_I2C_Close", "group___s_c_i___i2_c.html#ga6ce2bd61f5a153cd7957c4a1b1350df8", null ],
     [ "R_SCI_I2C_Read", "group___s_c_i___i2_c.html#gad044a875458d5878769a8f4b4b5e038f", null ],
     [ "R_SCI_I2C_Write", "group___s_c_i___i2_c.html#ga7bb2633c299214aa6c1779aa39d8df0c", null ],
     [ "R_SCI_I2C_Abort", "group___s_c_i___i2_c.html#ga417258e6c32f4000c95198a60f2a699d", null ],
     [ "R_SCI_I2C_SlaveAddressSet", "group___s_c_i___i2_c.html#gaafb153ace0acecf6d61037ed2113c6da", null ],
     [ "R_SCI_I2C_CallbackSet", "group___s_c_i___i2_c.html#gaff974630e37963ed18027b7b529d9f0d", null ],
-    [ "R_SCI_I2C_StatusGet", "group___s_c_i___i2_c.html#ga56527ece3b09569cf8abdba614190b9f", null ]
+    [ "R_SCI_I2C_StatusGet", "group___s_c_i___i2_c.html#ga56527ece3b09569cf8abdba614190b9f", null ],
+    [ "R_SCI_I2C_Close", "group___s_c_i___i2_c.html#ga6ce2bd61f5a153cd7957c4a1b1350df8", null ]
 ];
