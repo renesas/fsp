@@ -46,12 +46,20 @@ FSP_HEADER
 /** Input/Output pins, used to select which duty cycle to update in R_GPT_DutyCycleSet(). */
 typedef enum e_gpt_io_pin
 {
-    GPT_IO_PIN_GTIOCA            = 0,  ///< GTIOCA
-    GPT_IO_PIN_GTIOCB            = 1,  ///< GTIOCB
-    GPT_IO_PIN_GTIOCA_AND_GTIOCB = 2,  ///< GTIOCA and GTIOCB
-    GPT_IO_PIN_TROUGH            = 4,  ///< Used in @ref R_GPT_DutyCycleSet when Triangle-wave PWM Mode 3 is selected.
-    GPT_IO_PIN_CREST             = 8,  ///< Used in @ref R_GPT_DutyCycleSet when Triangle-wave PWM Mode 3 is selected.
+    GPT_IO_PIN_GTIOCA                 = 0, ///< GTIOCA
+    GPT_IO_PIN_GTIOCB                 = 1, ///< GTIOCB
+    GPT_IO_PIN_GTIOCA_AND_GTIOCB      = 2, ///< GTIOCA and GTIOCB
+    GPT_IO_PIN_TROUGH                 = 4, ///< Used in @ref R_GPT_DutyCycleSet when Triangle-wave PWM Mode 3 is selected.
+    GPT_IO_PIN_CREST                  = 8, ///< Used in @ref R_GPT_DutyCycleSet when Triangle-wave PWM Mode 3 is selected.
+    GPT_IO_PIN_ONE_SHOT_LEADING_EDGE  = 4, ///< Used in @ref R_GPT_DutyCycleSet to set GTCCRC and GTCCRE registers when One-Shot Pulse mode is selected.
+    GPT_IO_PIN_ONE_SHOT_TRAILING_EDGE = 8, ///< Used in @ref R_GPT_DutyCycleSet to set GTCCRD and GTCCRF registers when One-Shot Pulse mode is selected.
 } gpt_io_pin_t;
+
+/** Forced buffer push operation used in One-Sot Pulse mode with R_GPT_DutyCycleSet(). */
+typedef enum e_gpt_buffer_force_push
+{
+    GPT_BUFFER_FORCE_PUSH = 64,        ///< Used in @ref R_GPT_DutyCycleSet to force push the data from GTCCRn registers to temporary buffer A or B when One-Shot Pulse mode is selected.
+} gpt_buffer_force_push;
 
 /** Level of GPT pin */
 typedef enum e_gpt_pin_level

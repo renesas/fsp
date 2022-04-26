@@ -107,18 +107,21 @@ typedef uint32_t     rtos_time_t;
  ******************************************************************************/
 typedef enum e_usb_rtos_err
 {
-    UsbRtos_Success = 0,                 // Successful
-    UsbRtos_Err_Init_Mbx,                // Failure of Mailbox Creation
-    UsbRtos_Err_Init_Mpl,                // Failure of Memory Pool Creation
-    UsbRtos_Err_Init_Tsk,                // Failure of Task Creation
-    UsbRtos_Err_Init_Sem,                // Failure of Semaphore Creation
-    UsbRtos_Err_Delete_Mbx,              // Failure of Mailbox Delete
-    UsbRtos_Err_Delete_Mpl,              // Failure of Memory Pool Delete
-    UsbRtos_Err_Delete_Tsk,              // Failure of Task Delete
+    UsbRtos_Success = 0,                   // Successful
+    UsbRtos_Err_Init_Mbx,                  // Failure of Mailbox Creation
+    UsbRtos_Err_Init_Mpl,                  // Failure of Memory Pool Creation
+    UsbRtos_Err_Init_Tsk,                  // Failure of Task Creation
+    UsbRtos_Err_Init_Sem,                  // Failure of Semaphore Creation
+    UsbRtos_Err_Delete_Mbx,                // Failure of Mailbox Delete
+    UsbRtos_Err_Delete_Mpl,                // Failure of Memory Pool Delete
+    UsbRtos_Err_Delete_Tsk,                // Failure of Task Delete
   #if defined(USB_CFG_OTG_USE)
-    UsbRtos_Err_Init_OTG_Detach_Tmr,     // Failure of OTG Detach Timer Creation
-    UsbRtos_Err_Delete_OTG_Detach_Tmr,   // Failure of OTG Detach Timer Delete
-    UsbRtos_Err_Init_OTG_Chattering_Tmr, // Failure of OTG Chattering Timer Creation
+    UsbRtos_Err_Init_OTG_Detach_Tmr,       // Failure of OTG Detach Timer Creation
+    UsbRtos_Err_Delete_OTG_Detach_Tmr,     // Failure of OTG Detach Timer Delete
+    UsbRtos_Err_Init_OTG_Chattering_Tmr,   // Failure of OTG Chattering Timer Creation
+    UsbRtos_Err_Delete_OTG_Chattering_Tmr, // Failure of OTG Chattering Timer Creation
+    UsbRtos_Err_Init_OTG_HNP_Tmr,          // Failure of OTG HNP Timer Creation
+    UsbRtos_Err_Delete_OTG_HNP_Tmr,        // Failure of OTG HNP Timer Delete
   #endif /* defined(USB_CFG_OTG_USE) */
 } usb_rtos_err_t;
 

@@ -75,7 +75,17 @@ void usb_phid_write_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
 
     ctrl.pipe          = (uint8_t) mess->keyword; /* Pipe number setting */
     ctrl.module_number = mess->ip;
-    ctrl.type          = USB_CLASS_PHID;          /* HID Data class  */
+
+// ctrl.type          = USB_CLASS_PHID;          /* HID Data class  */
+    if (USB_CFG_PHID_INT_IN == ctrl.pipe)
+    {
+        ctrl.type = USB_CLASS_PHID;    /* Device class setting  */
+    }
+    else
+    {
+        ctrl.type = USB_CLASS_PHID2;   /* Device class setting  */
+    }
+
     if (USB_DATA_NONE == mess->status)
     {
         ctrl.status = FSP_SUCCESS;
@@ -116,7 +126,16 @@ void usb_phid_read_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
     ctrl.pipe          = (uint8_t) mess->keyword; /* Pipe number setting */
     ctrl.module_number = mess->ip;
 
-    ctrl.type = USB_CLASS_PHID;                   /* Device class setting  */
+// ctrl.type = USB_CLASS_PHID;                   /* Device class setting  */
+    if (USB_CFG_PHID_INT_OUT == ctrl.pipe)
+    {
+        ctrl.type = USB_CLASS_PHID;    /* Device class setting  */
+    }
+    else
+    {
+        ctrl.type = USB_CLASS_PHID2;   /* Device class setting  */
+    }
+
     switch (mess->status)
     {
         case USB_DATA_OK:

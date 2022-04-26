@@ -2807,7 +2807,11 @@ void usb_hstd_mgr_task (void * stacd)
                                 }
                                 else
                                 {
-                                    _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_IDLE;
+                                    syssts = hw_usb_read_syssts(ptr);
+                                    if (USB_SE0 == (syssts & USB_LNST))
+                                    {
+                                        _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_IDLE;
+                                    }
                                 }
  #endif                                /* defined(USB_CFG_OTG_USE) */
 

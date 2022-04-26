@@ -3855,7 +3855,7 @@ static UINT gx_renesas_jpeg_draw_minimum_height_get (jpeg_color_space_t format, 
  * @retval  Others            See @ref Common_Error_Codes for other possible return codes. This function calls
  *                            jpeg_api_t::wait.
  **********************************************************************************************************************/
-static INT gx_renesas_jpeg_draw_output_streaming_wait ()
+static INT gx_renesas_jpeg_draw_output_streaming_wait (void)
 {
     INT ret;
 

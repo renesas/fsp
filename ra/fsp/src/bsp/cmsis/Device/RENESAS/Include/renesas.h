@@ -14024,8 +14024,14 @@ typedef struct                         /*!< (@ 0x40078000) R_GPT0 Structure     
             __IOM uint32_t CSELCF : 1;   /*!< [21..21] ELC_GPTA Event Source Counter Clear Enable                       */
             __IOM uint32_t CSELCG : 1;   /*!< [22..22] ELC_GPTA Event Source Counter Clear Enable                       */
             __IOM uint32_t CSELCH : 1;   /*!< [23..23] ELC_GPTA Event Source Counter Clear Enable                       */
-            uint32_t              : 7;
-            __IOM uint32_t CCLR   : 1;   /*!< [31..31] Software Source Counter Clear Enable                             */
+            __IOM uint32_t CSCMSC : 3;   /*!< [26..24] Compare Match/Input Capture/Synchronous counter clearing
+                                          *   Source Counter Clear Enable.                                              */
+            __IOM uint32_t CP1CCE : 1;   /*!< [27..27] Complementary PWM mode1 Crest Source Counter Clear
+                                          *   Enable (This bit is only available in GPT324 to GPT329.
+                                          *   In GPT320 to GPT323, this bit is read as 0. The write value
+                                          *   should be 0.)                                                             */
+            uint32_t            : 3;
+            __IOM uint32_t CCLR : 1;     /*!< [31..31] Software Source Counter Clear Enable                             */
         } GTCSR_b;
     };
 
@@ -14254,12 +14260,19 @@ typedef struct                         /*!< (@ 0x40078000) R_GPT0 Structure     
         struct
         {
             __IOM uint32_t GTIOA  : 5; /*!< [4..0] GTIOCA Pin Function Select                                         */
-            uint32_t              : 1;
+            __IOM uint32_t CPSCIR : 1; /*!< [5..5] Complementary PWM Mode Initial Output at Synchronous
+                                        *   Clear Disable.(This bit is only available in GPT324 to
+                                        *   GPT329. In GPT320 to GPT323, this bit is read as 0. The
+                                        *   write value should be 0.)                                                 */
             __IOM uint32_t OADFLT : 1; /*!< [6..6] GTIOCA Pin Output Value Setting at the Count Stop                  */
             __IOM uint32_t OAHLD  : 1; /*!< [7..7] GTIOCA Pin Output Setting at the Start/Stop Count                  */
             __IOM uint32_t OAE    : 1; /*!< [8..8] GTIOCA Pin Output Enable                                           */
             __IOM uint32_t OADF   : 2; /*!< [10..9] GTIOCA Pin Disable Value Setting                                  */
-            uint32_t              : 2;
+            __IOM uint32_t OAEOCD : 1; /*!< [11..11] GTCCRA Compare Match Cycle End Output Invalidate.(This
+                                        *   bit is only available in GPT324 to GPT329. In GPT320 to
+                                        *   GPT323, this bit is read as 0. The write value should be
+                                        *   0.)                                                                       */
+            __IOM uint32_t PSYE   : 1; /*!< [12..12] PWM Synchronous output Enable                                    */
             __IOM uint32_t NFAEN  : 1; /*!< [13..13] Noise Filter A Enable                                            */
             __IOM uint32_t NFCSA  : 2; /*!< [15..14] Noise Filter A Sampling Clock Select                             */
             __IOM uint32_t GTIOB  : 5; /*!< [20..16] GTIOCB Pin Function Select                                       */
@@ -14268,9 +14281,13 @@ typedef struct                         /*!< (@ 0x40078000) R_GPT0 Structure     
             __IOM uint32_t OBHLD  : 1; /*!< [23..23] GTIOCB Pin Output Setting at the Start/Stop Count                */
             __IOM uint32_t OBE    : 1; /*!< [24..24] GTIOCB Pin Output Enable                                         */
             __IOM uint32_t OBDF   : 2; /*!< [26..25] GTIOCB Pin Disable Value Setting                                 */
-            uint32_t              : 2;
-            __IOM uint32_t NFBEN  : 1; /*!< [29..29] Noise Filter B Enable                                            */
-            __IOM uint32_t NFCSB  : 2; /*!< [31..30] Noise Filter B Sampling Clock Select                             */
+            __IOM uint32_t OBEOCD : 1; /*!< [27..27] GTCCRB Compare Match Cycle End Output Invalidate.(This
+                                        *   bit is only available in GPT324 to GPT329. In GPT320 to
+                                        *   GPT323, this bit is read as 0. The write value should be
+                                        *   0.)                                                                       */
+            uint32_t             : 1;
+            __IOM uint32_t NFBEN : 1;  /*!< [29..29] Noise Filter B Enable                                            */
+            __IOM uint32_t NFCSB : 2;  /*!< [31..30] Noise Filter B Sampling Clock Select                             */
         } GTIOR_b;
     };
 
@@ -38657,6 +38674,10 @@ typedef struct                         /*!< (@ 0x90003000) R_TFU Structure      
 /* =========================================================  GTCSR  ========================================================= */
  #define R_GPT0_GTCSR_CCLR_Pos             (31UL)         /*!< CCLR (Bit 31)                                         */
  #define R_GPT0_GTCSR_CCLR_Msk             (0x80000000UL) /*!< CCLR (Bitfield-Mask: 0x01)                            */
+ #define R_GPT0_GTCSR_CP1CCE_Pos           (27UL)         /*!< CP1CCE (Bit 27)                                       */
+ #define R_GPT0_GTCSR_CP1CCE_Msk           (0x8000000UL)  /*!< CP1CCE (Bitfield-Mask: 0x01)                          */
+ #define R_GPT0_GTCSR_CSCMSC_Pos           (24UL)         /*!< CSCMSC (Bit 24)                                       */
+ #define R_GPT0_GTCSR_CSCMSC_Msk           (0x7000000UL)  /*!< CSCMSC (Bitfield-Mask: 0x07)                          */
  #define R_GPT0_GTCSR_CSELC_Pos            (16UL)         /*!< CSELC (Bit 16)                                        */
  #define R_GPT0_GTCSR_CSELC_Msk            (0x10000UL)    /*!< CSELC (Bitfield-Mask: 0x01)                           */
  #define R_GPT0_GTCSR_CSCBFAH_Pos          (15UL)         /*!< CSCBFAH (Bit 15)                                      */
@@ -38804,6 +38825,8 @@ typedef struct                         /*!< (@ 0x90003000) R_TFU Structure      
  #define R_GPT0_GTIOR_NFCSB_Msk            (0xc0000000UL) /*!< NFCSB (Bitfield-Mask: 0x03)                           */
  #define R_GPT0_GTIOR_NFBEN_Pos            (29UL)         /*!< NFBEN (Bit 29)                                        */
  #define R_GPT0_GTIOR_NFBEN_Msk            (0x20000000UL) /*!< NFBEN (Bitfield-Mask: 0x01)                           */
+ #define R_GPT0_GTIOR_OBEOCD_Pos           (27UL)         /*!< OBEOCD (Bit 27)                                       */
+ #define R_GPT0_GTIOR_OBEOCD_Msk           (0x8000000UL)  /*!< OBEOCD (Bitfield-Mask: 0x01)                          */
  #define R_GPT0_GTIOR_OBDF_Pos             (25UL)         /*!< OBDF (Bit 25)                                         */
  #define R_GPT0_GTIOR_OBDF_Msk             (0x6000000UL)  /*!< OBDF (Bitfield-Mask: 0x03)                            */
  #define R_GPT0_GTIOR_OBE_Pos              (24UL)         /*!< OBE (Bit 24)                                          */
@@ -38818,6 +38841,10 @@ typedef struct                         /*!< (@ 0x90003000) R_TFU Structure      
  #define R_GPT0_GTIOR_NFCSA_Msk            (0xc000UL)     /*!< NFCSA (Bitfield-Mask: 0x03)                           */
  #define R_GPT0_GTIOR_NFAEN_Pos            (13UL)         /*!< NFAEN (Bit 13)                                        */
  #define R_GPT0_GTIOR_NFAEN_Msk            (0x2000UL)     /*!< NFAEN (Bitfield-Mask: 0x01)                           */
+ #define R_GPT0_GTIOR_PSYE_Pos             (12UL)         /*!< PSYE (Bit 12)                                         */
+ #define R_GPT0_GTIOR_PSYE_Msk             (0x1000UL)     /*!< PSYE (Bitfield-Mask: 0x01)                            */
+ #define R_GPT0_GTIOR_OAEOCD_Pos           (11UL)         /*!< OAEOCD (Bit 11)                                       */
+ #define R_GPT0_GTIOR_OAEOCD_Msk           (0x800UL)      /*!< OAEOCD (Bitfield-Mask: 0x01)                          */
  #define R_GPT0_GTIOR_OADF_Pos             (9UL)          /*!< OADF (Bit 9)                                          */
  #define R_GPT0_GTIOR_OADF_Msk             (0x600UL)      /*!< OADF (Bitfield-Mask: 0x03)                            */
  #define R_GPT0_GTIOR_OAE_Pos              (8UL)          /*!< OAE (Bit 8)                                           */
@@ -38826,6 +38853,8 @@ typedef struct                         /*!< (@ 0x90003000) R_TFU Structure      
  #define R_GPT0_GTIOR_OAHLD_Msk            (0x80UL)       /*!< OAHLD (Bitfield-Mask: 0x01)                           */
  #define R_GPT0_GTIOR_OADFLT_Pos           (6UL)          /*!< OADFLT (Bit 6)                                        */
  #define R_GPT0_GTIOR_OADFLT_Msk           (0x40UL)       /*!< OADFLT (Bitfield-Mask: 0x01)                          */
+ #define R_GPT0_GTIOR_CPSCIR_Pos           (5UL)          /*!< CPSCIR (Bit 5)                                        */
+ #define R_GPT0_GTIOR_CPSCIR_Msk           (0x20UL)       /*!< CPSCIR (Bitfield-Mask: 0x01)                          */
  #define R_GPT0_GTIOR_GTIOA_Pos            (0UL)          /*!< GTIOA (Bit 0)                                         */
  #define R_GPT0_GTIOR_GTIOA_Msk            (0x1fUL)       /*!< GTIOA (Bitfield-Mask: 0x1f)                           */
 /* ========================================================  GTINTAD  ======================================================== */

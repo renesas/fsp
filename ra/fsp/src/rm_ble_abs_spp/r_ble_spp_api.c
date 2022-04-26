@@ -26,7 +26,6 @@
 #include <rm_ble_abs_spp_cfg.h>
 #include "r_ble_api.h"
 #include "r_ble_spp.h"
-#include "r_uart_api.h"
 #include "qe_ble_profile.h"
 #if (BSP_CFG_RTOS == 2)
  #include "FreeRTOS.h"
@@ -93,12 +92,22 @@ extern ble_abs_instance_ctrl_t * gp_instance_ctrl;
 /******************************************************************************
  * Static Private Function Definitions
  ******************************************************************************/
-static void         r_ble_spp_api_set_ryz012_communication_mode(ble_abs_spp_comms_transport_mode_t mode);
-static fsp_err_t    r_ble_spp_api_fsp_callback_open(void * p_context);
-static fsp_err_t    r_ble_spp_api_fsp_callback_write(void * p_context, uint8_t * p_data, uint32_t len);
-static fsp_err_t    r_ble_spp_api_fsp_callback_close(void * p_context);
+static void r_ble_spp_api_set_ryz012_communication_mode(ble_abs_spp_comms_transport_mode_t mode);
+static int  r_ble_spp_api_fsp_callback_open(void * p_context);
+static int  r_ble_spp_api_fsp_callback_write(void * p_context, uint8_t * p_data, uint32_t len);
+
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+static int r_ble_spp_api_fsp_callback_read(void * const   p_context,
+                                           void const   * p_src,
+                                           void         * p_dest,
+                                           uint32_t const len,
+                                           uint8_t const  bit_width);
+
+#endif
+static int          r_ble_spp_api_fsp_callback_close(void * p_context);
 static void         r_ble_spp_api_mw_callback(r_ble_spp_payload_t * p_payload);
 static ble_status_t r_ble_spp_api_check_return_valid(uint32_t expected_spp_reply);
+static void         r_ble_spp_api_delay_ms(uint32_t ms);
 
 /******************************************************************************
  * Static Private Variables
@@ -111,7 +120,7 @@ static volatile uint32_t   g_spp_cmd_unknown = 0;
 static volatile uint32_t   g_spp_cmd_failed  = 0;
 static volatile uint32_t   g_spp_cmd_async   = 0;
 static r_ble_spp_cfg_t     r_ble_spp_api_transport_api;
-static volatile uint32_t   g_spp_tx_data_empty = 0;
+static volatile uint32_t   g_transfer_complete = 0;
 static bool                g_dynamic_profile_set;
 
 ble_gap_app_cb_t g_gap_cb   = NULL;
@@ -126,11 +135,23 @@ uint32_t ble_version_special = 0;
 /* LUT used in R_BLE_GAP_SetAdvParam */
 static const uint8_t g_ch_map_lut[8] = {0, 0, 1, 0, 2, 0, 1, 3};
 
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+
+static volatile uint8_t g_data_ready = 0;
+
+#endif
+
 /******************************************************************************
  * Public Function Prototypes
  ******************************************************************************/
-
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
 void rm_ble_spp_callback(uart_callback_args_t * p_args);
+
+#elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+void rm_ble_spp_host_spi_callback(spi_callback_args_t * p_args);
+void rm_ble_spp_data_ready_callback(external_irq_callback_args_t * p_args);
+
+#endif
 
 /******************************************************************************
  * Public Functions
@@ -141,24 +162,32 @@ ble_status_t R_BLE_Open (void)
 #if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(gp_instance_ctrl);
     FSP_ASSERT(gp_instance_ctrl->p_cfg);
+ #if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
     FSP_ASSERT(gp_instance_ctrl->p_cfg->p_uart_instance);
+ #elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+    FSP_ASSERT(gp_instance_ctrl->p_cfg->p_spi_instance);
+    FSP_ASSERT(gp_instance_ctrl->p_cfg->p_irq_instance);
+ #endif
 #endif
 
-    r_ble_spp_api_transport_api.p_context   = (void *) gp_instance_ctrl->p_cfg->p_uart_instance;
-    r_ble_spp_api_transport_api.open        = (int (*)(void *)) & r_ble_spp_api_fsp_callback_open;
-    r_ble_spp_api_transport_api.write       = (int (*)(void *, uint8_t *, uint32_t)) & r_ble_spp_api_fsp_callback_write;
-    r_ble_spp_api_transport_api.read        = NULL;
-    r_ble_spp_api_transport_api.close       = (int (*)(void *)) & r_ble_spp_api_fsp_callback_close;
+    r_ble_spp_api_transport_api.p_context = (void *) gp_instance_ctrl->p_cfg;
+
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
+    r_ble_spp_api_transport_api.config_flag = BLE_SPP_COMMS_UART;
+#elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+    r_ble_spp_api_transport_api.Read        = r_ble_spp_api_fsp_callback_read;
+    r_ble_spp_api_transport_api.config_flag = BLE_SPP_COMMS_SPI;
+#endif
+    r_ble_spp_api_transport_api.open        = r_ble_spp_api_fsp_callback_open;
+    r_ble_spp_api_transport_api.write       = r_ble_spp_api_fsp_callback_write;
+    r_ble_spp_api_transport_api.close       = r_ble_spp_api_fsp_callback_close;
     r_ble_spp_api_transport_api.mw_callback = &r_ble_spp_api_mw_callback;
 
-    if (gp_instance_ctrl->p_cfg->p_uart_instance != NULL)
-    {
-        r_ble_spp_api_set_ryz012_communication_mode(BLE_SPP_COMMS_UART);
-    }
-    else
-    {
-        return BLE_ERR_INVALID_PTR;
-    }
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
+    r_ble_spp_api_set_ryz012_communication_mode(BLE_SPP_COMMS_UART);
+#elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+    r_ble_spp_api_set_ryz012_communication_mode(BLE_SPP_COMMS_SPI);
+#endif
 
     if (R_BLE_SPP_GAP_Open(&r_ble_spp_api_transport_api) == R_BLE_SPP_SUCCESS)
     {
@@ -290,8 +319,6 @@ ble_status_t R_BLE_GAP_SetAdvParam (st_ble_gap_adv_param_t * p_adv_param)
 {
     uint8_t chan_map;
 
-    BLE_SPP_COMMAND(R_BLE_SPP_GAP_Init(), R_BLE_SPP_EVENT_BLE_INIT);
-
     /* Select lowest configured channel or all three */
     chan_map = g_ch_map_lut[p_adv_param->adv_ch_map];
 
@@ -420,6 +447,8 @@ ble_status_t R_BLE_VS_SetBdAddr (uint8_t area, st_ble_dev_addr_t * p_addr)
             return BLE_ERR_INVALID_PTR;
         }
     }
+
+    BLE_SPP_COMMAND(R_BLE_SPP_GAP_Init(), R_BLE_SPP_EVENT_BLE_INIT);
 
     return BLE_SUCCESS;
 }
@@ -659,11 +688,7 @@ static void r_ble_spp_api_set_ryz012_communication_mode (ble_abs_spp_comms_trans
     R_BSP_PinAccessDisable();
 
     /* hold RYZ012 in reset/allow power to settle */
-#if (BSP_CFG_RTOS == 2)
-    vTaskDelay(pdMS_TO_TICKS(BLE_MODULE_RESET_TIMEOUT));
-#else
-    R_BSP_SoftwareDelay(BLE_MODULE_RESET_TIMEOUT, BSP_DELAY_UNITS_MILLISECONDS);
-#endif
+    r_ble_spp_api_delay_ms(BLE_MODULE_RESET_TIMEOUT);
 
     R_BSP_PinAccessEnable();
 
@@ -673,41 +698,115 @@ static void r_ble_spp_api_set_ryz012_communication_mode (ble_abs_spp_comms_trans
     R_BSP_PinAccessDisable();
 
     /* Allow device to come out of reset and stabilize */
-#if (BSP_CFG_RTOS == 2)
-    vTaskDelay(pdMS_TO_TICKS(BLE_MODULE_STABILIZE_TIMEOUT));
-#else
-    R_BSP_SoftwareDelay(BLE_MODULE_STABILIZE_TIMEOUT, BSP_DELAY_UNITS_MILLISECONDS);
-#endif
+    r_ble_spp_api_delay_ms(BLE_MODULE_STABILIZE_TIMEOUT);
 
     /* Dynamic profile can now be configured again */
     g_dynamic_profile_set = false;
 }
 
-static fsp_err_t r_ble_spp_api_fsp_callback_open (void * p_context)
+static int r_ble_spp_api_fsp_callback_open (void * p_context)
 {
-    fsp_err_t         err;
-    uart_instance_t * bkup_context = (uart_instance_t *) p_context;
+    fsp_err_t       err;
+    ble_abs_cfg_t * bkup_context = (ble_abs_cfg_t *) p_context;
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
+    err = bkup_context->p_uart_instance->p_api->open(bkup_context->p_uart_instance->p_ctrl,
+                                                     bkup_context->p_uart_instance->p_cfg);
+#elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+    err = bkup_context->p_spi_instance->p_api->open(bkup_context->p_spi_instance->p_ctrl,
+                                                    bkup_context->p_spi_instance->p_cfg);
+    bkup_context->p_irq_instance->p_api->open(bkup_context->p_irq_instance->p_ctrl,
+                                              bkup_context->p_irq_instance->p_cfg);
+    bkup_context->p_irq_instance->p_api->enable(bkup_context->p_irq_instance->p_ctrl);
+#endif
 
-    err = R_SCI_UART_Open(bkup_context->p_ctrl, bkup_context->p_cfg);
+    if (FSP_SUCCESS != err)
+    {
+        return R_BLE_SPP_DEVICE_NOT_OPEN;
+    }
+
+    return R_BLE_SPP_SUCCESS;
+}
+
+static int r_ble_spp_api_fsp_callback_write (void * p_context, uint8_t * p_data, uint32_t len)
+{
+    fsp_err_t err;
+    g_transfer_complete = 0;
+
+    ble_abs_cfg_t * bkup_context = (ble_abs_cfg_t *) p_context;
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+ #if defined(BLE_ABS_CFG_SSL_PIN)
+    R_BSP_PinAccessEnable();
+
+    /* If the software SSL Pin is defined, then assert SSL. */
+    R_BSP_PinWrite(BLE_ABS_CFG_SSL_PIN, BSP_IO_LEVEL_LOW);
+
+    R_BSP_PinAccessDisable();
+ #endif
+    err = bkup_context->p_spi_instance->p_api->write(bkup_context->p_spi_instance->p_ctrl,
+                                                     p_data,
+                                                     len,
+                                                     SPI_BIT_WIDTH_8_BITS);
+#else
+    err = bkup_context->p_uart_instance->p_api->write(bkup_context->p_uart_instance->p_ctrl, p_data, len);
+#endif
+
+    if (FSP_SUCCESS != err)
+    {
+        return R_BLE_APP_TRANSPORT_WRITE_ERROR;
+    }
+
+    return R_BLE_SPP_SUCCESS;
+}
+
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+static int r_ble_spp_api_fsp_callback_read (void * const   p_context,
+                                            void const   * p_src,
+                                            void         * p_dest,
+                                            uint32_t const len,
+                                            uint8_t const  bit_width)
+{
+    BLE_PARAMETER_NOT_USED(bit_width);
+
+    fsp_err_t err = FSP_SUCCESS;
+ #if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+  #if defined(BLE_ABS_CFG_SSL_PIN)
+    R_BSP_PinAccessEnable();
+
+    /* If the software SSL Pin is defined, then assert SSL. */
+    R_BSP_PinWrite(BLE_ABS_CFG_SSL_PIN, BSP_IO_LEVEL_LOW);
+
+    R_BSP_PinAccessDisable();
+  #endif
+
+    ble_abs_cfg_t * bkup_context = (ble_abs_cfg_t *) p_context;
+    err = bkup_context->p_spi_instance->p_api->writeRead(bkup_context->p_spi_instance->p_ctrl,
+                                                         p_src,
+                                                         p_dest,
+                                                         len,
+                                                         SPI_BIT_WIDTH_8_BITS);
+ #endif
+
+    if (FSP_SUCCESS != err)
+    {
+        return R_BLE_APP_TRANSPORT_READ_ERROR;
+    }
+
+    return R_BLE_SPP_SUCCESS;
 
     return err;
 }
 
-static fsp_err_t r_ble_spp_api_fsp_callback_write (void * p_context, uint8_t * p_data, uint32_t len)
-{
-    fsp_err_t         err;
-    uart_instance_t * bkup_context = (uart_instance_t *) p_context;
-    g_spp_tx_data_empty = 0;
-    err                 = R_SCI_UART_Write(bkup_context->p_ctrl, p_data, len);
+#endif
 
-    return err;
-}
-
-static fsp_err_t r_ble_spp_api_fsp_callback_close (void * p_context)
+static int r_ble_spp_api_fsp_callback_close (void * p_context)
 {
-    fsp_err_t         err;
-    uart_instance_t * bkup_context = (uart_instance_t *) p_context;
-    err = R_SCI_UART_Close(bkup_context->p_ctrl);
+    fsp_err_t       err          = FSP_SUCCESS;
+    ble_abs_cfg_t * bkup_context = (ble_abs_cfg_t *) p_context;
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
+    err = bkup_context->p_uart_instance->p_api->close(bkup_context->p_uart_instance->p_ctrl);
+#elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+    err = bkup_context->p_spi_instance->p_api->close(bkup_context->p_spi_instance->p_ctrl);
+#endif
 
     return err;
 }
@@ -723,6 +822,23 @@ ble_status_t R_BLE_Execute (void)
         g_cb_event();
         g_cb_event = NULL;
     }
+
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+
+    /* If an asynchronous command was received then the data ready pin will be asserted. */
+    if (!g_data_ready)
+    {
+        return status;
+    }
+
+    g_data_ready = 0;
+
+    /* Read the event data. */
+    R_BLE_SPP_SPI_Read(&g_current_spp_payload);
+
+    /* Process the event. */
+    r_ble_spp_api_mw_callback(&g_current_spp_payload);
+#endif
 
     if (g_spp_cmd_async)
     {
@@ -868,6 +984,7 @@ static void r_ble_spp_api_mw_callback (r_ble_spp_payload_t * p_payload)
     }
 }
 
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
 void rm_ble_spp_callback (uart_callback_args_t * p_args)
 {
     switch (p_args->event)
@@ -880,7 +997,7 @@ void rm_ble_spp_callback (uart_callback_args_t * p_args)
 
         case UART_EVENT_TX_DATA_EMPTY:
         {
-            g_spp_tx_data_empty = 1;
+            g_transfer_complete = 1;
             break;
         }
 
@@ -891,48 +1008,112 @@ void rm_ble_spp_callback (uart_callback_args_t * p_args)
     }
 }
 
+#endif
+
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+void rm_ble_spp_host_spi_callback (spi_callback_args_t * p_args)
+{
+    if (p_args->event == SPI_EVENT_TRANSFER_COMPLETE)
+    {
+ #if defined(BLE_ABS_CFG_SSL_PIN)
+        R_BSP_PinAccessEnable();
+
+        /* If the software SSL Pin is defined, then negate SSL. */
+        R_BSP_PinWrite(BLE_ABS_CFG_SSL_PIN, BSP_IO_LEVEL_HIGH);
+
+        R_BSP_PinAccessDisable();
+ #endif
+
+        g_transfer_complete = 1;
+    }
+}
+
+void rm_ble_spp_data_ready_callback (external_irq_callback_args_t * p_args)
+{
+    BLE_PARAMETER_NOT_USED(p_args);
+
+    g_data_ready = 1;
+}
+
+#endif
+
 static ble_status_t r_ble_spp_api_check_return_valid (uint32_t expected_spp_reply)
 {
     uint32_t countdown = BLE_MODULE_RESET_TIMEOUT;
 
-    while (countdown && !g_spp_tx_data_empty)
+    /* Wait for data transmit to complete */
+    while (--countdown && !g_transfer_complete)
     {
-#if (BSP_CFG_RTOS == 2)
-        vTaskDelay(1);
-#else
-        R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MILLISECONDS);
-#endif
-        countdown--;
+        r_ble_spp_api_delay_ms(1);
     }
 
-    while (!g_spp_cmd_ready && countdown && !g_spp_cmd_failed)
-    {
-#if (BSP_CFG_RTOS == 2)
-        vTaskDelay(1);
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
+
+    /* Wait for data receive to complete */
+    while (--countdown && !g_spp_cmd_ready && !g_spp_cmd_failed)
 #else
-        R_BSP_SoftwareDelay(1, BSP_DELAY_UNITS_MILLISECONDS);
+
+    /* Wait for the data ready pin to be asserted. */
+    while (--countdown && !g_data_ready)
 #endif
-        countdown--;
+    {
+        r_ble_spp_api_delay_ms(1);
     }
 
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
+
+    /* Check if the command response is ready. */
     if (g_spp_cmd_ready)
     {
+        /* Check if the expected response was received. */
         if (g_current_spp_payload.event_id != expected_spp_reply)
         {
             return BLE_ERR_HC_UNKNOWN_HCI_CMD;
         }
     }
+    /* Check if the command failed. */
     else if (g_spp_cmd_failed)
     {
         return BLE_ERR_HC_CMD_DISALLOWED;
     }
+
+#elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+
+    /* Check if the data ready pin was asserted in response to the command. */
+    if (g_data_ready)
+    {
+        /* Read the response to the command. */
+        R_BLE_SPP_SPI_Read(&g_current_spp_payload);
+
+        /* Check if the expected response was received. */
+        if (g_current_spp_payload.event_id != expected_spp_reply)
+        {
+            return BLE_ERR_HC_UNKNOWN_HCI_CMD;
+        }
+    }
+#endif
     else
     {
+
+        /* No response was received. */
         return BLE_ERR_RSP_TIMEOUT;
     }
 
+#if defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_UART)
     g_spp_cmd_ready  = 0;
     g_spp_cmd_failed = 0;
+#elif defined(RM_BLE_ABS_SPP_TRANSPORT_INTERFACE_SPI)
+    g_data_ready = 0;
+#endif
 
     return BLE_SUCCESS;
+}
+
+static void r_ble_spp_api_delay_ms (uint32_t ms)
+{
+#if (BSP_CFG_RTOS == 2)
+    vTaskDelay(pdMS_TO_TICKS(ms));
+#else
+    R_BSP_SoftwareDelay(ms, BSP_DELAY_UNITS_MILLISECONDS);
+#endif
 }

@@ -305,7 +305,7 @@ __STATIC_INLINE uint32_t R_FSP_SciSpiClockHzGet (void)
  *
  * @return  A pointer to the unique identifier structure
  **********************************************************************************************************************/
-__STATIC_INLINE bsp_unique_id_t const * R_BSP_UniqueIdGet ()
+__STATIC_INLINE bsp_unique_id_t const * R_BSP_UniqueIdGet (void)
 {
     return (bsp_unique_id_t *) BSP_FEATURE_BSP_UNIQUE_ID_POINTER;
 }
@@ -313,7 +313,7 @@ __STATIC_INLINE bsp_unique_id_t const * R_BSP_UniqueIdGet ()
 /*******************************************************************************************************************//**
  * Disables the flash cache.
  **********************************************************************************************************************/
-__STATIC_INLINE void R_BSP_FlashCacheDisable ()
+__STATIC_INLINE void R_BSP_FlashCacheDisable (void)
 {
 #if BSP_FEATURE_BSP_FLASH_CACHE
     R_FCACHE->FCACHEE = 0U;
@@ -329,7 +329,7 @@ __STATIC_INLINE void R_BSP_FlashCacheDisable ()
 /*******************************************************************************************************************//**
  * Enables the flash cache.
  **********************************************************************************************************************/
-__STATIC_INLINE void R_BSP_FlashCacheEnable ()
+__STATIC_INLINE void R_BSP_FlashCacheEnable (void)
 {
 #if BSP_FEATURE_BSP_FLASH_CACHE
 

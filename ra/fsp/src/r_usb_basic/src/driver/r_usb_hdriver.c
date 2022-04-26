@@ -55,6 +55,11 @@
 
 #endif                                 /* defined(USB_CFG_PCDC_USE) */
 
+#if defined(USB_CFG_PPRN_USE)
+ #include "r_usb_pprn_api.h"
+
+#endif                                 /* defined(USB_CFG_PPRN_USE) */
+
 #if defined(USB_CFG_PMSC_USE)
  #include "r_usb_pmsc_api.h"
 
@@ -1041,14 +1046,6 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
                 usb_hstd_otg_mode_to_peri(ptr);
 
                 g_usb_usbmode[ptr->ip] = USB_MODE_PERI;
-                if (USB_YES == g_is_A_device[ptr->ip])
-                {
-                    _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_A;
-                }
-                else
-                {
-                    _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_B;
-                }
 
                 (*g_p_otg_callback[ptr->ip])(UX_OTG_MODE_SLAVE);
 
@@ -3097,9 +3094,9 @@ void usb_hvnd_read_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 
     usb_instance_ctrl_t ctrl;
 
-    ctrl.module_number = ptr->ip;                 /* Module number setting */
-    ctrl.pipe          = (uint8_t) ptr->keyword;  /* Pipe number setting */
-    ctrl.type          = USB_CLASS_INTERNAL_HVND; /* Vendor class  */
+    ctrl.module_number = ptr->ip;                /* Module number setting */
+    ctrl.pipe          = (uint8_t) ptr->keyword; /* Pipe number setting */
+    ctrl.type          = USB_CLASS_HVND;         /* Vendor class  */
 
     ctrl.data_size      = ptr->read_req_len - ptr->tranlen;
     ctrl.device_address = (uint8_t) (usb_hstd_get_devsel(ptr, ctrl.pipe) >> 12);
@@ -3156,9 +3153,9 @@ void usb_hvnd_write_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 
     usb_instance_ctrl_t ctrl;
 
-    ctrl.module_number  = ptr->ip;                 /* Module number setting */
-    ctrl.pipe           = (uint8_t) ptr->keyword;  /* Pipe number setting */
-    ctrl.type           = USB_CLASS_INTERNAL_HVND; /* Vendor class  */
+    ctrl.module_number  = ptr->ip;                /* Module number setting */
+    ctrl.pipe           = (uint8_t) ptr->keyword; /* Pipe number setting */
+    ctrl.type           = USB_CLASS_HVND;         /* Vendor class  */
     ctrl.device_address = (uint8_t) (usb_hstd_get_devsel(ptr, ctrl.pipe) >> 12);
   #if (BSP_CFG_RTOS != 0)
     ctrl.p_data = (void *) ptr->cur_task_hdl;

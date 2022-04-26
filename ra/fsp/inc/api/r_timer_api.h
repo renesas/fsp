@@ -108,6 +108,7 @@ typedef enum e_timer_mode
     TIMER_MODE_PERIODIC,                          ///< Timer restarts after period elapses.
     TIMER_MODE_ONE_SHOT,                          ///< Timer stops after period elapses.
     TIMER_MODE_PWM,                               ///< Timer generates saw-wave PWM output.
+    TIMER_MODE_ONE_SHOT_PULSE,                    ///< Saw-wave one-shot pulse mode (fixed buffer operation).
     TIMER_MODE_TRIANGLE_WAVE_SYMMETRIC_PWM  = 4U, ///< Timer generates symmetric triangle-wave PWM output.
     TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM = 5U, ///< Timer generates asymmetric triangle-wave PWM output.
 

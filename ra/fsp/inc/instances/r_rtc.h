@@ -75,6 +75,7 @@ extern const rtc_api_t g_rtc_on_rtc;
  **********************************************************************************************************************/
 fsp_err_t R_RTC_Open(rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg);
 fsp_err_t R_RTC_Close(rtc_ctrl_t * const p_ctrl);
+fsp_err_t R_RTC_ClockSourceSet(rtc_ctrl_t * const p_ctrl);
 fsp_err_t R_RTC_CalendarTimeSet(rtc_ctrl_t * const p_ctrl, rtc_time_t * const p_time);
 fsp_err_t R_RTC_CalendarTimeGet(rtc_ctrl_t * const p_ctrl, rtc_time_t * const p_time);
 fsp_err_t R_RTC_CalendarAlarmSet(rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t * const p_alarm);

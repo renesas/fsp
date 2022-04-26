@@ -89,6 +89,12 @@ fsp_err_t R_KINT_Open (keymatrix_ctrl_t * const p_api_ctrl, keymatrix_cfg_t cons
     FSP_ERROR_RETURN(p_cfg->channel_mask <= UINT8_MAX, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 #endif
 
+#if BSP_FEATURE_KINT_HAS_MSTP
+
+    /* Clear the Module Stop bit. */
+    R_BSP_MODULE_START(FSP_IP_KEY, 0);
+#endif
+
     p_ctrl->p_cfg = p_cfg;
 
     /* Configure the trigger edge. */
@@ -131,6 +137,12 @@ fsp_err_t R_KINT_Close (keymatrix_ctrl_t * const p_api_ctrl)
 
     /** Disable interrupts in the KINT peripheral*/
     R_KINT->KRM = 0U;
+
+#if BSP_FEATURE_KINT_HAS_MSTP
+
+    /* Set the Module Stop bit. */
+    R_BSP_MODULE_STOP(FSP_IP_KEY, 0);
+#endif
 
     /* Mark KINT as un-initialized */
     p_ctrl->open = 0;

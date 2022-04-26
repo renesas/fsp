@@ -84,163 +84,12 @@ typedef enum e_ble_abs_pv_status
 /*********************************/
 /* Define for create connection  */
 /*********************************/
-/* Scan interval for connection request with 1M & 2M PHY */
-#define BLE_ABS_CONN_SC_INTV_FAST                               (0x0060)
-
-/* Scan window for connection request with 1M & 2M PHY */
-#define BLE_ABS_CONN_SC_WINDOW_FAST                             (0x0030)
-
-/* Scan interval for connection request with coded PHY */
-#define BLE_ABS_CONN_SC_INTV_SLOW                               (0x0180)
-
-/* Scan window for connection request with coded PHY */
-#define BLE_ABS_CONN_SC_WINDOW_SLOW                             (0x0090)
 
 /* Minimum advertising data length */
-#define BLE_ABS_LEGACY_ADV_DATA_LEN                             (31)
-#define BLE_ABS_CONN_EXT_ADV_DATA_LEN                           (229)
-
-/* Add magic number value set */
-#define BLE_ABS_GAP_CONNECTION_CE_LENGTH                        (0xFFFF)
-#define BLE_ABS_SET_PAIRING_MAXIMUM_LTK_SIZE                    (0x10)
-#define BLE_ABS_SECURE_DATA_BOND_ADDRESS_FF                     (0xFF)
-#define BLE_ABS_GAP_REMOTE_IRK_AA                               (0xAA)
-#define BLE_ABS_REMOTE_DEVICE_ADDRESS_55                        (0x55)
-#define BLE_ABS_GAP_EVENT_CONNECTION_TIMEOUT_1000               (1000)
-
-/* r_ble_sec_data functions added start */
-#if (BLE_ABS_CFG_ENABLE_SECURE_DATA == 1)
- #define BLE_SECD_UPD_BN_ADD                                    (0x00)
- #define BLE_SECD_UPD_BN_ADD_OVERWR                             (0x01)
- #define BLE_SECD_UPD_BN_DEL                                    (0x02)
- #define BLE_SECD_UPD_BN_ALL_DEL                                (0x03)
- #define BLE_ABS_SECURE_DATA_DELETE_LOCAL_FF                    (0xFF)
- #define BLE_ABS_SECURE_DATA_UPDATE_BOND_NUMBER_FF              (0xFF)
- #define BLE_ABS_SECURE_DATA_REMOTE_BOND_NUMBER_FF              (0xFF)
- #define BLE_ABS_SECURE_DATA_BOND_ADDRESS_FF                    (0xFF)
- #define BLE_ABS_SECURE_DATA_BOND_CHECK_FF                      (0xFF)
-#endif
-
-#define BLE_ABS_SECURE_DATA_INVALID_DATA                        (0xFF)
-
-#if (BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE != 0)
- #define BLE_DEV_DATA_DF_ADDR                                   _BLE_DF_ADDR(BLE_CFG_DEV_DATA_DF_BLOCK)
- #define BLE_ABS_SECURE_DATA_DF_ADDR                            _BLE_DF_ADDR(BLE_CFG_SECD_DATA_DF_BLOCK)
-#elif (BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE != 0)
- #define BLE_DEV_DATA_DF_ADDR                                   _BLE_DF_ADDR(BLE_CFG_DEV_DATA_DF_BLOCK)
- #define BLE_ABS_SECURE_DATA_DF_ADDR                            _BLE_DF_ADDR(BLE_CFG_SECD_DATA_DF_BLOCK)
-#endif
-
-/* RF event notify function pointer */
-#define BLE_EVENT_TYPE_CONN                                     (0x0000U)
-#define BLE_EVENT_TYPE_ADV                                      (0x0001U)
-#define BLE_EVENT_TYPE_SCAN                                     (0x0002U)
-#define BLE_EVENT_TYPE_INITIATOR                                (0x0003U)
-
-#define BLE_EVENT_NOTIFY_CONN_START_POS                         (0)
-#define BLE_EVENT_NOTIFY_ADV_START_POS                          (1)
-#define BLE_EVENT_NOTIFY_SCAN_START_POS                         (2)
-#define BLE_EVENT_NOTIFY_INIT_START_POS                         (3)
-#define BLE_EVENT_NOTIFY_CONN_CLOSE_POS                         (4)
-#define BLE_EVENT_NOTIFY_ADV_CLOSE_POS                          (5)
-#define BLE_EVENT_NOTIFY_SCAN_CLOSE_POS                         (6)
-#define BLE_EVENT_NOTIFY_INIT_CLOSE_POS                         (7)
-#define BLE_EVENT_NOTIFY_DS_START_POS                           (8)
-#define BLE_EVENT_NOTIFY_DS_CLOSE_POS                           (9)
-
-#define BLE_EVENT_TYPE_RF_DS_START                              (0x0U)
-#define BLE_EVENT_TYPE_RF_DS_CLOSE                              (0x1U)
-
-#define BLE_EVENT_NOTIFY_CONN_START_BIT                         (0x1U << BLE_EVENT_NOTIFY_CONN_START_POS)
-#define BLE_EVENT_NOTIFY_ADV_START_BIT                          (0x1U << BLE_EVENT_NOTIFY_ADV_START_POS)
-#define BLE_EVENT_NOTIFY_SCAN_START_BIT                         (0x1U << BLE_EVENT_NOTIFY_SCAN_START_POS)
-#define BLE_EVENT_NOTIFY_INIT_START_BIT                         (0x1U << BLE_EVENT_NOTIFY_INIT_START_POS)
-
-#define BLE_EVENT_NOTIFY_CONN_CLOSE_BIT                         (0x1U << BLE_EVENT_NOTIFY_CONN_CLOSE_POS)
-#define BLE_EVENT_NOTIFY_ADV_CLOSE_BIT                          (0x1U << BLE_EVENT_NOTIFY_ADV_CLOSE_POS)
-#define BLE_EVENT_NOTIFY_SCAN_CLOSE_BIT                         (0x1U << BLE_EVENT_NOTIFY_SCAN_CLOSE_POS)
-#define BLE_EVENT_NOTIFY_INIT_CLOSE_BIT                         (0x1U << BLE_EVENT_NOTIFY_INIT_CLOSE_POS)
-
-#define BLE_EVENT_NOTIFY_DS_START_BIT                           (0x1U << BLE_EVENT_NOTIFY_DS_START_POS)
-#define BLE_EVENT_NOTIFY_DS_CLOSE_BIT                           (0x1U << BLE_EVENT_NOTIFY_DS_CLOSE_POS)
-
-#define BLE_EVENT_NOTIFY_START_MASK                             ( \
-        (BLE_EVENT_NOTIFY_CONN_START_BIT) |                       \
-        (BLE_EVENT_NOTIFY_ADV_START_BIT) |                        \
-        (BLE_EVENT_NOTIFY_SCAN_START_BIT) |                       \
-        (BLE_EVENT_NOTIFY_INIT_START_BIT) |                       \
-        (0x0U))
-
-#define BLE_EVENT_NOTIFY_CLOSE_MASK                             ( \
-        (BLE_EVENT_NOTIFY_CONN_CLOSE_BIT) |                       \
-        (BLE_EVENT_NOTIFY_ADV_CLOSE_BIT) |                        \
-        (BLE_EVENT_NOTIFY_SCAN_CLOSE_BIT) |                       \
-        (BLE_EVENT_NOTIFY_INIT_CLOSE_BIT) |                       \
-        (0x0U))
-
-#define BLE_EVENT_NOTIFY_DS_MASK                                ( \
-        (BLE_EVENT_NOTIFY_DS_START_BIT) |                         \
-        (BLE_EVENT_NOTIFY_DS_CLOSE_BIT) |                         \
-        (0x0U))
-
-#define BLE_HOST_TBL_NUM                                        8
-
-#define BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE                   (4)
-#define BLE_ABS_SECURE_DATA_MAGIC_NUMBER                        (0x12345678)
-
-/* Internal data flash base address. */
-#define BLE_ABS_SECURE_DATA_BLOCK_BASE                          (0x40100000)
-
-#if (BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE != 0)
- #define BLE_ABS_SECURE_DATA_BLOCK_SIZE                         (BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE)
-#elif (BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE != 0)
- #define BLE_ABS_SECURE_DATA_BLOCK_SIZE                         (BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE)
-#endif
-
-#define BLE_ABS_SECURE_DATA_BONDING_NUMBER_OFFSET               BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE
-#define BLE_ABS_SECURE_DATA_OUT_BONDING_OFFSET                  (5)
-#define BLE_ABS_SECURE_DATA_SECURITY_INFOMATION_OFFSET          (8)
-#define BLE_ABS_SECURE_DATA_SECURITY_KEYS_INFOMATION_OFFSET     (12)
-#define BLE_ABS_SECURE_DATA_SECURITY_KEYS_OFFSET                (20)
-#define BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET              (48)
-#define BLE_ABS_SECURE_DATA_SECURITY_IDENTITY_ADDRESS_OFFSET    (62)
-
-#define BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE                 (88)
-#define BLE_ABS_SECURE_DATA_LOCAL_AREA_SIZE                     (40)
-#define BLE_ABS_SECURE_DATA_LOCAL_INFOMATION_SIZE               (1)
-#define BLE_ABS_SECURE_DATA_BLUETOOTH_DEVICE_ADDRESS_SIZE       (7)
-#define BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE                (8)
-#define BLE_ABS_SECURE_DATA_REMOTE_KEY_ATTRIBUTE_SIZE           (6)
-#define BLE_ABS_SECURE_DATA_REMOTE_KEYS_SIZE                    (65)
-#define BLE_ABS_SECURE_DATA_REMOTE_KEYS_INFOMATION_SIZE         (4)
-
-#define BLE_ABS_SECURE_DATA_BASE_ADDR                           (BLE_ABS_SECURE_DATA_BLOCK_BASE +           \
-                                                                 (BLE_ABS_CFG_SECURE_DATA_DATAFLASH_BLOCK * \
-                                                                  BLE_ABS_SECURE_DATA_BLOCK_SIZE))
-#define BLE_ABS_SECURE_DATA_ADDR_MGN_DATA                       (BLE_ABS_SECURE_DATA_BASE_ADDR)
-#define BLE_ABS_SECURE_DATA_SEC_BOND_NUM                        (BLE_ABS_SECURE_DATA_ADDR_MGN_DATA + \
-                                                                 BLE_ABS_SECURE_DATA_MAGIC_NUMBER_SIZE)
-#define BLE_ABS_SECURE_DATA_ADDR_LOC_AREA                       (BLE_ABS_SECURE_DATA_BASE_ADDR + \
-                                                                 BLE_ABS_SECURE_DATA_MANEGEMENT_DATA_SIZE)
-#define BLE_ABS_SECURE_DATA_ADDR_LOC_IRK                        (BLE_ABS_SECURE_DATA_ADDR_LOC_AREA)
-#define BLE_ABS_SECURE_DATA_ADDR_LOC_CSRK                       (BLE_ABS_SECURE_DATA_ADDR_LOC_IRK + BLE_GAP_IRK_SIZE)
-#define BLE_ABS_SECURE_DATA_ADDR_LOC_IDADDR                     (BLE_ABS_SECURE_DATA_ADDR_LOC_CSRK + BLE_GAP_CSRK_SIZE)
-#define BLE_ABS_SECURE_DATA_ADDR_LOC_INFO                       (BLE_ABS_SECURE_DATA_ADDR_LOC_IDADDR + \
-                                                                 BLE_ABS_SECURE_DATA_BLUETOOTH_DEVICE_ADDRESS_SIZE)
-#define BLE_ABS_SECURE_DATA_ADDR_REM_START                      (BLE_ABS_SECURE_DATA_ADDR_LOC_INFO + \
-                                                                 BLE_ABS_SECURE_DATA_LOCAL_INFOMATION_SIZE)
-#define BLE_ABS_SECURE_DATA_MAX_SIZE                            (BLE_ABS_SECURE_DATA_SECURITY_REMOTE_OFFSET + \
-                                                                 BLE_ABS_SECURE_DATA_REMOTE_BONDING_SIZE *    \
-                                                                 BLE_ABS_CFG_NUMBER_BONDING)
-#define BLE_ABS_SECURE_DATA_BLOCK_SIZE_MASK                     (BLE_ABS_SECURE_DATA_BLOCK_SIZE - 1UL)
+#define BLE_ABS_LEGACY_ADV_DATA_LEN    (31)
 
 /* The invalid timer handle. */
-#define BLE_TIMER_INVALID_HDL                                   (0xFF)
-
-/* Add magic number value set */
-#define BLE_ABS_TIMER_REMAIN_TIMESHORTEST                       (0xFFFFFFFF)
-#define BLE_ABS_TIMER_DEFAULT_TIMEOUT_MS                        (1000)
-#define BLE_ABS_TIMER_METRIC_PREFIX                             (1000)
+#define BLE_TIMER_INVALID_HDL          (0xFF)
 
 /***********************************************************************************************************************
  * Local Typedef definitions
@@ -343,7 +192,7 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_cfg);
     FSP_ASSERT(p_cfg->gap_callback);
-    FSP_ASSERT(p_cfg->p_uart_instance);
+    FSP_ASSERT(p_cfg->p_uart_instance || (p_cfg->p_spi_instance && p_cfg->p_irq_instance));
 #endif
 
     FSP_ERROR_RETURN(BLE_ABS_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
@@ -1395,6 +1244,9 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
 
         case BLE_GAP_EVENT_CONN_IND:
         {
+            ble_abs_set_advertising_status(gp_instance_ctrl, BLE_ABS_LEGACY_HDL, 0,
+                                           (BLE_ABS_ADV_STATUS_ADV_FAST_START | BLE_ABS_ADV_STATUS_ADV_SLOW_START));
+
             R_BLE_GAP_StopAdv(0);
 
             break;

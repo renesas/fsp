@@ -128,6 +128,9 @@
 uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
 void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
 void     ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl) __attribute__((weak));
+bool     ether_phy_targets_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                           uint32_t                    line_speed_duplex) __attribute__((
+                                                                                                                                                                                       weak));
 
 /***********************************************************************************************************************
  * Private global variables and functions
@@ -318,8 +321,10 @@ fsp_err_t R_ETHER_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
                                              uint32_t * const         p_local_pause,
                                              uint32_t * const         p_partner_pause)
 {
+    fsp_err_t err = FSP_SUCCESS;
     ether_phy_instance_ctrl_t * p_instance_ctrl = (ether_phy_instance_ctrl_t *) p_ctrl;
     uint32_t reg;
+    uint32_t line_speed_duplex = ETHER_PHY_LINK_SPEED_NO_LINK;
 
 #if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_instance_ctrl);
@@ -366,27 +371,40 @@ fsp_err_t R_ETHER_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
     }
 
     /* Establish the line speed and the duplex */
-    if (ETHER_PHY_AN_LINK_PARTNER_10H == (reg & ETHER_PHY_AN_LINK_PARTNER_10H))
+    if ((ETHER_PHY_AN_LINK_PARTNER_10H == (reg & ETHER_PHY_AN_LINK_PARTNER_10H)) &&
+        ether_phy_targets_is_support_link_partner_ability(p_instance_ctrl, ETHER_PHY_LINK_SPEED_10H))
     {
-        (*p_line_speed_duplex) = ETHER_PHY_LINK_SPEED_10H;
+        line_speed_duplex = ETHER_PHY_LINK_SPEED_10H;
     }
 
-    if (ETHER_PHY_AN_LINK_PARTNER_10F == (reg & ETHER_PHY_AN_LINK_PARTNER_10F))
+    if ((ETHER_PHY_AN_LINK_PARTNER_10F == (reg & ETHER_PHY_AN_LINK_PARTNER_10F)) &&
+        ether_phy_targets_is_support_link_partner_ability(p_instance_ctrl, ETHER_PHY_LINK_SPEED_10F))
     {
-        (*p_line_speed_duplex) = ETHER_PHY_LINK_SPEED_10F;
+        line_speed_duplex = ETHER_PHY_LINK_SPEED_10F;
     }
 
-    if (ETHER_PHY_AN_LINK_PARTNER_100H == (reg & ETHER_PHY_AN_LINK_PARTNER_100H))
+    if ((ETHER_PHY_AN_LINK_PARTNER_100H == (reg & ETHER_PHY_AN_LINK_PARTNER_100H)) &&
+        ether_phy_targets_is_support_link_partner_ability(p_instance_ctrl, ETHER_PHY_LINK_SPEED_100H))
     {
-        (*p_line_speed_duplex) = ETHER_PHY_LINK_SPEED_100H;
+        line_speed_duplex = ETHER_PHY_LINK_SPEED_100H;
     }
 
-    if (ETHER_PHY_AN_LINK_PARTNER_100F == (reg & ETHER_PHY_AN_LINK_PARTNER_100F))
+    if ((ETHER_PHY_AN_LINK_PARTNER_100F == (reg & ETHER_PHY_AN_LINK_PARTNER_100F)) &&
+        ether_phy_targets_is_support_link_partner_ability(p_instance_ctrl, ETHER_PHY_LINK_SPEED_100F))
     {
-        (*p_line_speed_duplex) = ETHER_PHY_LINK_SPEED_100F;
+        line_speed_duplex = ETHER_PHY_LINK_SPEED_100F;
     }
 
-    return FSP_SUCCESS;
+    if (ETHER_PHY_LINK_SPEED_NO_LINK == line_speed_duplex)
+    {
+        err = FSP_ERR_ETHER_PHY_ERROR_LINK;
+    }
+    else
+    {
+        (*p_line_speed_duplex) = line_speed_duplex;
+    }
+
+    return err;
 }                                      /* End of function R_ETHER_PHY_LinkPartnerAbilityGet() */
 
 /********************************************************************************************************************//**
@@ -795,11 +813,30 @@ static void ether_phy_mii_write0 (ether_phy_instance_ctrl_t * p_instance_ctrl)
 /***********************************************************************************************************************
  * Function Name: ether_phy_targets_initialize
  * Description  : PHY-LSI specific initialization processing
- * Arguments    : p_ctrl -
- *                    Ethernet channel number
+ * Arguments    : p_instance_ctrl -
+ *                    Ethernet control block
  * Return Value : none
  ***********************************************************************************************************************/
 void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
 {
     (void) p_instance_ctrl;
 }                                      /* End of function ether_phy_targets_initialize() */
+
+/***********************************************************************************************************************
+ * Function Name: ether_phy_targets_is_support_link_partner_ability
+ * Description  : Check if the PHY-LSI connected Ethernet controller supports link ability
+ * Arguments    : p_instance_ctrl -
+ *                    Ethernet control block
+ *                line_speed_duplex -
+ *                    Line speed duplex of link partner PHY-LSI
+ * Return Value : bool
+ ***********************************************************************************************************************/
+bool ether_phy_targets_is_support_link_partner_ability (ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                        uint32_t                    line_speed_duplex)
+{
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+    FSP_PARAMETER_NOT_USED(line_speed_duplex);
+
+    /* This PHY-LSI supports half and full duplex mode. */
+    return true;
+}                                      /* End of function ether_phy_targets_is_support_link_partner_ability() */

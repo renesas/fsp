@@ -24,12 +24,9 @@
 #include "r_i3c.h"
 #include "r_i3c_cfg.h"
 
-#ifndef I3C_ECO_VERSION
-
-/* If this is not the version of the IP that has been modified by ECO, then special error recovery operation is
- * required. */
- #define I3C_ECO_VERSION    (0U)
-#endif
+/* The address of the MCU Version Register on RA2E2 MCUs. Different error recovery procedures are used depending on the
+ * version of the MCU (This is only used on RA2E2 devices). */
+#define I3C_A2E2_VERSION    (*((uint8_t const *) 0x01001C20U))
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -1683,12 +1680,20 @@ void i3c_resp_isr (void)
             /* Read the remaining byte stored in the FIFO. */
             i3c_fifo_read(p_ctrl, bytes_remaining);
 
-            /* If the transfer length is less than expected, the driver must perform error recovery defined in
-             * Figure 25.96 in the RA2E2 manual R01UH0919EJ0100. */
-            if (data_length != p_ctrl->read_buffer_descriptor.buffer_size)
+ #if I3C_ERROR_RECOVERY_VERSION_1 == I3C_CFG_ERROR_RECOVERY_SUPPORT || \
+            I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
+  #if I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
+            if (1U == I3C_A2E2_VERSION)
+  #endif
             {
-                error_recovery_case_2 = true;
+                /* If the transfer length is less than expected, the driver must perform error recovery defined in
+                 * Figure 25.96 in the RA2E2 manual R01UH0919EJ0100. */
+                if (data_length != p_ctrl->read_buffer_descriptor.buffer_size)
+                {
+                    error_recovery_case_2 = true;
+                }
             }
+ #endif
 
             /*
              * For a read transfer, the DATA_LENGTH field in the response descriptor provides the total number of bytes
@@ -2005,7 +2010,7 @@ void i3c_rcv_isr (void)
 
     uint32_t ntst = p_ctrl->p_reg->NTST;
 
-    /* If an error eccurred during the transfer, perform the error recovery operation defined in Figure 25.97 in the RA2E2 manual R01UH0919EJ0100. */
+    /* If an error occurred during the transfer, perform the error recovery operation defined in Figure 25.97 in the RA2E2 manual R01UH0919EJ0100. */
     if ((0 != (ntst & (R_I3C0_NTST_TEF_Msk | R_I3C0_NTST_TABTF_Msk))) && (0U == p_ctrl->p_reg->NRSQSTLV_b.RSQLV))
     {
         if (I3C_INTERNAL_STATE_SLAVE_IDLE == p_ctrl->internal_state)
@@ -2203,123 +2208,152 @@ void i3c_eei_isr (void)
  **********************************************************************************************************************/
 void i3c_master_error_recovery (i3c_instance_ctrl_t * p_ctrl, bool error_recovery_case_2)
 {
- #if !I3C_ECO_VERSION
+ #if I3C_ERROR_RECOVERY_VERSION_1 == I3C_CFG_ERROR_RECOVERY_SUPPORT || \
+    I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
+  #if I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
 
-    /* Flush the Command, Rx and Tx Buffers. */
-    p_ctrl->p_reg->RSTCTL = I3C_RSTCTRL_FIFO_FLUSH_Msk;
-
-    /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
-    FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->RSTCTL & I3C_RSTCTRL_FIFO_FLUSH_Msk), 0U);
-
-    /* Wait for the bus available condition. */
-    while (1)
+    /* For A2E2 version that has not been modified by ECO, the following error recovery procedure must be performed.
+     * See Figure 25.96 in the RA2E2 manual R01UH0919EJ0100. */
+    if (1U == I3C_A2E2_VERSION)
+  #endif
     {
-        /* If SDA is pulled low, then a slave device started an IBI during error recovery. */
-        if (0U == p_ctrl->p_reg->PRSTDBG_b.SDILV)
+        /* Flush the Command, Rx and Tx Buffers. */
+        p_ctrl->p_reg->RSTCTL = I3C_RSTCTRL_FIFO_FLUSH_Msk;
+
+        /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
+        FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->RSTCTL & I3C_RSTCTRL_FIFO_FLUSH_Msk), 0U);
+
+        /* Wait for the bus available condition. */
+        while (1)
         {
-            break;
-        }
-
-        /* Check the bus available condition. */
-        if (1 == p_ctrl->p_reg->BCST_b.BAVLF)
-        {
-            break;
-        }
-    }
-
-    if (error_recovery_case_2)
-    {
-        /* Disable the IBI Status Buffer Full IRQ. */
-        p_ctrl->p_reg->NTIE_b.IBIQEFIE = 0;
-
-        /* When recovering from a read operation where the transfer length is less than expected, perform internal
-         * software reset. */
-        p_ctrl->p_reg->RSTCTL = R_I3C0_RSTCTL_INTLRST_Msk;
-        p_ctrl->p_reg->RSTCTL = 0;
-
-        /* Restore the current master setting. */
-        p_ctrl->p_reg->PRSST = (uint32_t) (R_I3C0_PRSST_CRMS_Msk | R_I3C0_PRSST_PRSSTWP_Msk);
-
-        /* After an internal reset, the CRMS bit is cleared which causes the IBI Queue Empty/Full Flag to be set indicating the queue is empty.
-         * Since the driver is in master mode, this status should be discarded and the flag should be cleared. */
-        p_ctrl->p_reg->NTST_b.IBIQEFF = 0;
-
-        /* Enable the IBI Status Buffer Full IRQ. */
-        p_ctrl->p_reg->NTIE_b.IBIQEFIE = 1;
-    }
-    else
-    {
-        /* Resume I3C operation. */
-        p_ctrl->p_reg->BCTL_b.RSM = 1;
-    }
-
-    /* If a slave device started an IBI during error recovery, then it must be NACK'd or SDA will be held low indefinitely. */
-    if (0U == p_ctrl->p_reg->PRSTDBG_b.SDILV)
-    {
-        /* Calculate the frequency of PCLKD. */
-        uint32_t pclkd_frequency = (SystemCoreClock << R_SYSTEM->SCKDIVCR_b.ICK);
-        pclkd_frequency >>= R_SYSTEM->SCKDIVCR_b.PCKD;
-
-        i3c_extended_cfg_t * p_extend = (i3c_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
-
-        /* Get the low and high period in PCLKD ticks. */
-        uint32_t pclkd_low_period = (p_extend->bitrate_settings.stdbr & R_I3C0_STDBR_SBRLO_Msk) >>
-                                    R_I3C0_STDBR_SBRLO_Pos;
-        uint32_t pclkd_high_period = (p_extend->bitrate_settings.stdbr & R_I3C0_STDBR_SBRHO_Msk) >>
-                                     R_I3C0_STDBR_SBRHO_Pos;
-
-        /* Calculate the high and low period for SCL. */
-        uint32_t high_frequency = pclkd_frequency / pclkd_high_period;
-        uint32_t low_frequency  = pclkd_frequency / pclkd_low_period;
-        uint32_t high_delay_us  = (1000000U + high_frequency - 1) / high_frequency; // NOLINT(readability-magic-numbers)
-        uint32_t low_delay_us   = (1000000U + low_frequency - 1) / low_frequency;   // NOLINT(readability-magic-numbers)
-
-        /* Check if BITCNT is working correctly. */
-        bool bcnt_zero = true;
-        for (uint32_t i = 0; i < 4; i++)
-        {
-            R_BSP_SoftwareDelay(high_delay_us + low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
-            if (0 != p_ctrl->p_reg->BITCNT_b.BCNT)
+            /* If SDA is pulled low, then a slave device started an IBI during error recovery. */
+            if (0U == p_ctrl->p_reg->PRSTDBG_b.SDILV)
             {
-                bcnt_zero = false;
+                break;
+            }
+
+            /* Check the bus available condition. */
+            if (1 == p_ctrl->p_reg->BCST_b.BAVLF)
+            {
+                break;
             }
         }
 
-        /* If BITCNT is not incrementing, then the master is not aware of the IBI. */
-        if (bcnt_zero)
+        if (error_recovery_case_2)
         {
-            /* Write SCL low in order to complete the start condition. */
-            p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SDOC_Msk | R_I3C0_OUTCTL_SOCWP_Msk;
+            /* Disable the IBI Status Buffer Full IRQ. */
+            p_ctrl->p_reg->NTIE_b.IBIQEFIE = 0;
 
-            R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+            /* When recovering from a read operation where the transfer length is less than expected, perform internal
+             * software reset. */
+            p_ctrl->p_reg->RSTCTL = R_I3C0_RSTCTL_INTLRST_Msk;
+            p_ctrl->p_reg->RSTCTL = 0;
 
-            /* Complete 9 SCL clock cycles while holding SDA high in order to NACK the IBI. */
-            for (uint32_t i = 0; i < 9; i++)
+            /* Restore the current master setting. */
+            p_ctrl->p_reg->PRSST = (uint32_t) (R_I3C0_PRSST_CRMS_Msk | R_I3C0_PRSST_PRSSTWP_Msk);
+
+            /* After an internal reset, the CRMS bit is cleared which causes the IBI Queue Empty/Full Flag to be set indicating the queue is empty.
+             * Since the driver is in master mode, this status should be discarded and the flag should be cleared. */
+            p_ctrl->p_reg->NTST_b.IBIQEFF = 0;
+
+            /* Enable the IBI Status Buffer Full IRQ. */
+            p_ctrl->p_reg->NTIE_b.IBIQEFIE = 1;
+        }
+        else
+        {
+            /* Resume I3C operation. */
+            p_ctrl->p_reg->BCTL_b.RSM = 1;
+        }
+
+        /* If a slave device started an IBI during error recovery, then it must be NACK'd or SDA will be held low indefinitely. */
+        if (0U == p_ctrl->p_reg->PRSTDBG_b.SDILV)
+        {
+            /* Calculate the frequency of PCLKD. */
+            uint32_t pclkd_frequency = (SystemCoreClock << R_SYSTEM->SCKDIVCR_b.ICK);
+            pclkd_frequency >>= R_SYSTEM->SCKDIVCR_b.PCKD;
+
+            i3c_extended_cfg_t * p_extend = (i3c_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+            /* Get the low and high period in PCLKD ticks. */
+            uint32_t pclkd_low_period = (p_extend->bitrate_settings.stdbr & R_I3C0_STDBR_SBRLO_Msk) >>
+                                        R_I3C0_STDBR_SBRLO_Pos;
+            uint32_t pclkd_high_period = (p_extend->bitrate_settings.stdbr & R_I3C0_STDBR_SBRHO_Msk) >>
+                                         R_I3C0_STDBR_SBRHO_Pos;
+
+            /* Calculate the high and low period for SCL. */
+            uint32_t high_frequency = pclkd_frequency / pclkd_high_period;
+            uint32_t low_frequency  = pclkd_frequency / pclkd_low_period;
+            uint32_t high_delay_us  = (1000000U + high_frequency - 1) / high_frequency; // NOLINT(readability-magic-numbers)
+            uint32_t low_delay_us   = (1000000U + low_frequency - 1) / low_frequency;   // NOLINT(readability-magic-numbers)
+
+            /* Check if BITCNT is working correctly. */
+            bool bcnt_zero = true;
+            for (uint32_t i = 0; i < 4; i++)
             {
-                /* Write SCL high. */
-                p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SDOC_Msk | R_I3C0_OUTCTL_SCOC_Msk | R_I3C0_OUTCTL_SOCWP_Msk;
+                R_BSP_SoftwareDelay(high_delay_us + low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+                if (0 != p_ctrl->p_reg->BITCNT_b.BCNT)
+                {
+                    bcnt_zero = false;
+                }
+            }
 
-                R_BSP_SoftwareDelay(high_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
-
-                /* Write SCL low. */
+            /* If BITCNT is not incrementing, then the master is not aware of the IBI. */
+            if (bcnt_zero)
+            {
+                /* Write SCL low in order to complete the start condition. */
                 p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SDOC_Msk | R_I3C0_OUTCTL_SOCWP_Msk;
 
                 R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+
+                /* Complete 9 SCL clock cycles while holding SDA high in order to NACK the IBI. */
+                for (uint32_t i = 0; i < 9; i++)
+                {
+                    /* Write SCL high. */
+                    p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SDOC_Msk | R_I3C0_OUTCTL_SCOC_Msk | R_I3C0_OUTCTL_SOCWP_Msk;
+
+                    R_BSP_SoftwareDelay(high_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+
+                    /* Write SCL low. */
+                    p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SDOC_Msk | R_I3C0_OUTCTL_SOCWP_Msk;
+
+                    R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+                }
+
+                /* Write SCL and SDA low. */
+                p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SOCWP_Msk;
+
+                R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+
+                /* Write SCL high. */
+                p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SCOC_Msk | R_I3C0_OUTCTL_SOCWP_Msk;
+
+                R_BSP_SoftwareDelay(high_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+
+                /* Write SDA anb SCL high to complete the stop condition. */
+                p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SDOC_Msk | R_I3C0_OUTCTL_SCOC_Msk | R_I3C0_OUTCTL_SOCWP_Msk;
             }
-
-            /* Write SCL and SDA low. */
-            p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SOCWP_Msk;
-
-            R_BSP_SoftwareDelay(low_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
-
-            /* Write SCL high. */
-            p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SCOC_Msk | R_I3C0_OUTCTL_SOCWP_Msk;
-
-            R_BSP_SoftwareDelay(high_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
-
-            /* Write SDA anb SCL high to complete the stop condition. */
-            p_ctrl->p_reg->OUTCTL = R_I3C0_OUTCTL_SDOC_Msk | R_I3C0_OUTCTL_SCOC_Msk | R_I3C0_OUTCTL_SOCWP_Msk;
         }
+    }
+ #endif
+
+ #if I3C_ERROR_RECOVERY_VERSION_2 == I3C_CFG_ERROR_RECOVERY_SUPPORT || \
+    I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
+  #if I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
+
+    /* For A2E2 version that has been modified by ECO, simplified error recovery procedure can be performed. */
+    if (2U == I3C_A2E2_VERSION)
+  #endif
+    {
+        FSP_PARAMETER_NOT_USED(error_recovery_case_2);
+
+        /* Flush the Command, Rx and Tx Buffers. */
+        p_ctrl->p_reg->RSTCTL = I3C_RSTCTRL_FIFO_FLUSH_Msk;
+
+        /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
+        FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->RSTCTL & I3C_RSTCTRL_FIFO_FLUSH_Msk), 0U);
+
+        /* Resume I3C operation. */
+        p_ctrl->p_reg->BCTL_b.RSM = 1;
     }
  #endif
 }
@@ -2333,7 +2367,6 @@ void i3c_master_error_recovery (i3c_instance_ctrl_t * p_ctrl, bool error_recover
  **********************************************************************************************************************/
 void i3c_slave_error_recovery (i3c_instance_ctrl_t * p_ctrl, i3c_slave_error_recovery_type_t recovery_type)
 {
- #if !I3C_ECO_VERSION
     switch (recovery_type)
     {
         case I3C_SLAVE_ERROR_RECOVERY_TYPE_WRITE:
@@ -2366,44 +2399,68 @@ void i3c_slave_error_recovery (i3c_instance_ctrl_t * p_ctrl, i3c_slave_error_rec
     /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the RA2E2 manual R01UH0919EJ0100). */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL, 0U);
 
-    /* Wait for Bus Available Condition (See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100). */
-    FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BCST & R_I3C0_BCST_BAVLF_Msk), R_I3C0_BCST_BAVLF_Msk);
+ #if I3C_ERROR_RECOVERY_VERSION_1 == I3C_CFG_ERROR_RECOVERY_SUPPORT || \
+    I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
+  #if I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
 
-    /* Wait for start condition to be cleared (See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100).. */
-    FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BST & R_I3C0_BST_STCNDDF_Msk), 0);
-
-    /* Read the current value of SDDYAD. */
-    uint32_t sdatbas0 = p_ctrl->p_reg->SDATBAS0;
-
-    /* Perform internal software reset. */
-    p_ctrl->p_reg->RSTCTL = R_I3C0_RSTCTL_INTLRST_Msk;
-    p_ctrl->p_reg->RSTCTL = 0;
-
-    /* Calculate the frequency of PCLKD. */
-    uint32_t pclkd_frequency = (SystemCoreClock << R_SYSTEM->SCKDIVCR_b.ICK);
-    pclkd_frequency >>= R_SYSTEM->SCKDIVCR_b.PCKD;
-
-    /* Wait for the expected amount of time for the Bus Available Condition. */
-    uint32_t expected_bus_available_time = (1000000U * p_ctrl->p_reg->BAVLCDT + pclkd_frequency - 1) / pclkd_frequency; // NOLINT(readability-magic-numbers)
-    R_BSP_SoftwareDelay(expected_bus_available_time, BSP_DELAY_UNITS_MICROSECONDS);
-
-    /* If the Bus is already available then error recovery is complete. */
-    if (0 == (p_ctrl->p_reg->BCST & R_I3C0_BCST_BAVLF_Msk))
+    /* For A2E2 version that has not been modified by ECO, the following error recovery procedure must be performed.
+     * See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100. */
+    if (1U == I3C_A2E2_VERSION)
+  #endif
     {
-        while (0 == (p_ctrl->p_reg->BST & R_I3C0_BST_STCNDDF_Msk))
+        /* Wait for Bus Available Condition (See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100). */
+        FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BCST & R_I3C0_BCST_BAVLF_Msk), R_I3C0_BCST_BAVLF_Msk);
+
+        /* Wait for start condition to be cleared (See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100).. */
+        FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BST & R_I3C0_BST_STCNDDF_Msk), 0);
+
+        /* Read the current value of SDDYAD. */
+        uint32_t sdatbas0 = p_ctrl->p_reg->SDATBAS0;
+
+        /* Perform internal software reset. */
+        p_ctrl->p_reg->RSTCTL = R_I3C0_RSTCTL_INTLRST_Msk;
+        p_ctrl->p_reg->RSTCTL = 0;
+
+        /* Calculate the frequency of PCLKD. */
+        uint32_t pclkd_frequency = (SystemCoreClock << R_SYSTEM->SCKDIVCR_b.ICK);
+        pclkd_frequency >>= R_SYSTEM->SCKDIVCR_b.PCKD;
+
+        /* Wait for the expected amount of time for the Bus Available Condition. */
+        uint32_t expected_bus_available_time =
+            (1000000U * p_ctrl->p_reg->BAVLCDT + pclkd_frequency - 1) / pclkd_frequency; // NOLINT(readability-magic-numbers)
+
+        R_BSP_SoftwareDelay(expected_bus_available_time, BSP_DELAY_UNITS_MICROSECONDS);
+
+        /* If the Bus is already available then error recovery is complete. */
+        if (0 == (p_ctrl->p_reg->BCST & R_I3C0_BCST_BAVLF_Msk))
         {
-            /* Perform internal software reset. */
-            p_ctrl->p_reg->RSTCTL = R_I3C0_RSTCTL_INTLRST_Msk;
+            while (0 == (p_ctrl->p_reg->BST & R_I3C0_BST_STCNDDF_Msk))
+            {
+                /* Perform internal software reset. */
+                p_ctrl->p_reg->RSTCTL = R_I3C0_RSTCTL_INTLRST_Msk;
 
-            /* Wait for Bus Available Condition (See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100).. */
-            FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BCST & R_I3C0_BCST_BAVLF_Msk), R_I3C0_BCST_BAVLF_Msk);
+                /* Wait for Bus Available Condition (See Figure 25.97 in the RA2E2 manual R01UH0919EJ0100).. */
+                FSP_HARDWARE_REGISTER_WAIT((p_ctrl->p_reg->BCST & R_I3C0_BCST_BAVLF_Msk), R_I3C0_BCST_BAVLF_Msk);
 
-            p_ctrl->p_reg->RSTCTL = 0;
+                p_ctrl->p_reg->RSTCTL = 0;
+            }
         }
-    }
 
-    /* Write back value of SDDYAD. */
-    p_ctrl->p_reg->SDATBAS0 = sdatbas0;
+        /* Write back value of SDDYAD. */
+        p_ctrl->p_reg->SDATBAS0 = sdatbas0;
+    }
+ #endif
+ #if I3C_ERROR_RECOVERY_VERSION_2 == I3C_CFG_ERROR_RECOVERY_SUPPORT || \
+    I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
+  #if I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
+
+    /* For A2E2 version that has been modified by ECO, simplified error recovery procedure can be performed. */
+    if (2U == I3C_A2E2_VERSION)
+  #endif
+    {
+        /* Resume I3C operation. */
+        p_ctrl->p_reg->BCTL_b.RSM = 1;
+    }
  #endif
 }
 

@@ -20,7 +20,7 @@
 
 /*******************************************************************************************************************//**
  * @ingroup RENESAS_INTERFACES
- * @defgroup MOTOR_120_CONTROL_API Interface
+ * @defgroup MOTOR_120_CONTROL_API Motor 120-Degree Control Interface
  * @brief Interface for motor 120 control functions.
  *
  * @section MOTOR_120_CONTROL_API_Summary Summary

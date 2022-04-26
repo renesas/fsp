@@ -105,10 +105,7 @@ fsp_err_t rm_comms_i2c_bus_read (rm_comms_ctrl_t * const p_api_ctrl, uint8_t * c
     p_ctrl->transfer_data_bytes = 0;
 
     /* Use RA I2C driver to read data */
-    err = p_driver_instance->p_api->read(p_driver_instance->p_ctrl,
-                                         p_dest,
-                                         bytes,
-                                         false);
+    err = p_driver_instance->p_api->read(p_driver_instance->p_ctrl, p_dest, bytes, false);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS
@@ -150,10 +147,7 @@ fsp_err_t rm_comms_i2c_bus_write (rm_comms_ctrl_t * const p_api_ctrl, uint8_t * 
     p_ctrl->transfer_data_bytes = 0;
 
     /* Use RA I2C driver to write data */
-    err = p_driver_instance->p_api->write(p_driver_instance->p_ctrl,
-                                          p_src,
-                                          bytes,
-                                          false);
+    err = p_driver_instance->p_api->write(p_driver_instance->p_ctrl, p_src, bytes, false);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS

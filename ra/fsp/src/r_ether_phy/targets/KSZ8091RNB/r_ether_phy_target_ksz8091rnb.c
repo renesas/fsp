@@ -52,7 +52,9 @@
 /***********************************************************************************************************************
  * Exported global function
  ***********************************************************************************************************************/
-void            ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+void ether_phy_targets_initialize(ether_phy_instance_ctrl_t * p_instance_ctrl);
+bool ether_phy_targets_is_support_link_partner_ability(ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                       uint32_t                    line_speed_duplex);
 extern uint32_t ether_phy_read(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr);
 extern void     ether_phy_write(ether_phy_instance_ctrl_t * p_instance_ctrl, uint32_t reg_addr, uint32_t data);
 
@@ -96,5 +98,24 @@ void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
     reg &= (uint16_t) ~ETHER_PHY_REG_PHY_CONTROL2_RMII_IL_OFFSET;
     ether_phy_write(p_instance_ctrl, ETHER_PHY_REG_PHY_CONTROL2, reg);
 }                                      /* End of function ether_phy_targets_initialize() */
+
+/***********************************************************************************************************************
+ * Function Name: ether_phy_targets_is_support_link_partner_ability
+ * Description  : Check if the PHY-LSI connected Ethernet controller supports link ability
+ * Arguments    : p_instance_ctrl -
+ *                    Ethernet control block
+ *                line_speed_duplex -
+ *                    Line speed duplex of link partner PHY-LSI
+ * Return Value : bool
+ ***********************************************************************************************************************/
+bool ether_phy_targets_is_support_link_partner_ability (ether_phy_instance_ctrl_t * p_instance_ctrl,
+                                                        uint32_t                    line_speed_duplex)
+{
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+    FSP_PARAMETER_NOT_USED(line_speed_duplex);
+
+    /* This PHY-LSI supports half and full duplex mode. */
+    return true;
+}                                      /* End of function ether_phy_targets_is_support_link_partner_ability() */
 
 #endif /* ETHER_PHY_CFG_USE_PHY == ETHER_PHY_CFG_USE_PHY_KSZ8091RNB */

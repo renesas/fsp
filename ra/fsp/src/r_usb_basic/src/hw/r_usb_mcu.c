@@ -79,11 +79,13 @@
 
 #if !defined(USB_CFG_OTG_USE)
  #if USB_CFG_MODE == USB_CFG_HOST
-  #if defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PHID_USE) || defined(USB_CFG_PMSC_USE) || defined(USB_CFG_PVND_USE)
-   #error  Can not enable these definitions(USB_CFG_PCDC_USE/USB_CFG_PHID_USE/USB_CFG_PMSC_USE/USB_CFG_PVND_USE) \
+  #if defined(USB_CFG_PCDC_USE) || defined(USB_CFG_PPRN_USE) || defined(USB_CFG_PHID_USE) || \
+    defined(USB_CFG_PMSC_USE) || defined(USB_CFG_PVND_USE)
+   #error                                                                                                                  \
+    Can not enable these definitions(USB_CFG_PCDC_USE/USB_CFG_PPRN_USE/USB_CFG_PHID_USE/USB_CFG_PMSC_USE/USB_CFG_PVND_USE) \
     when setting USB_MODE_HOST to USB_CFG_MODE in r_usb_basic_cfg.h.
 
-  #endif                               /* defined(USB_CFG_PCDC_USE || USB_CFG_PHID_USE || USB_CFG_PMSC_USE || USB_CFG_PVND_USE) */
+  #endif                               /* defined(USB_CFG_PCDC_USE || USB_CFG_PPRN_USE || USB_CFG_PHID_USE || USB_CFG_PMSC_USE || USB_CFG_PVND_USE) */
  #endif                                /* USB_CFG_MODE == USB_MODE_HOST */
 
  #if USB_CFG_MODE == USB_CFG_PERI
@@ -105,7 +107,12 @@
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
  ******************************************************************************/
-usb_cfg_t * host_cfg;
+#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+static usb_cfg_t * g_p_usb_cfg_ip0;
+ #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
+static usb_cfg_t * g_p_usb_cfg_ip1;
+ #endif                                /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+#endif                                 /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
 
 /******************************************************************************
  * Private global variables and functions
@@ -123,6 +130,7 @@ static usb_utr_t g_usb_irq_otg_msg;
 static usb_utr_t g_usb_otg_detach_msg;
 static uint16_t  g_usb_otg_frmnum_prev        = 0;
 volatile uint8_t g_usb_otg_chattering_counter = 0;
+volatile uint8_t g_usb_otg_hnp_counter        = 0;
 #endif                                 /* defined(USB_CFG_OTG_USE) */
 
 /******************************************************************************
@@ -367,7 +375,10 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
         R_BSP_IrqCfgEnable(cfg->irq_r, cfg->ipl_r, (void *) cfg);   /* USBR enable */
 
         R_BSP_IrqCfgEnable(cfg->irq, cfg->ipl, (void *) cfg);       /* USBI enable */
-        host_cfg = (usb_cfg_t *) cfg;
+
+#if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+        g_p_usb_cfg_ip0 = (usb_cfg_t *) cfg;
+#endif  /*((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)*/
     }
 
     if (ip_type == USB_IP1)
@@ -391,7 +402,9 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
  #endif /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
 
         R_BSP_IrqCfgEnable(cfg->hsirq, cfg->hsipl, (void *) cfg);       /* USBIR enable */
-        host_cfg = (usb_cfg_t *) cfg;
+ #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
+        g_p_usb_cfg_ip1 = (usb_cfg_t *) cfg;
+ #endif  /*((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)*/
 #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
     }
 }
@@ -462,7 +475,10 @@ void usb_cpu_int_enable (void)
      * b6 IEN6 Interrupt enable bit
      * b7 IEN7 Interrupt enable bit
      */
-    R_BSP_IrqCfgEnable(host_cfg->irq, host_cfg->ipl, host_cfg); /* USBI enable */
+    if (USB_MODE_HOST == g_p_usb_cfg_ip0->usb_mode)
+    {
+        R_BSP_IrqCfgEnable(g_p_usb_cfg_ip0->irq, g_p_usb_cfg_ip0->ipl, g_p_usb_cfg_ip0); /* USBI enable */
+    }
 
  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
 
@@ -476,7 +492,10 @@ void usb_cpu_int_enable (void)
      * b6 IEN6 Interrupt enable bit
      * b7 IEN7 Interrupt enable bit
      */
-    R_BSP_IrqCfgEnable(host_cfg->hsirq, host_cfg->hsipl, host_cfg); /* USBIR enable */
+    if (USB_MODE_HOST == g_p_usb_cfg_ip1->usb_mode)
+    {
+        R_BSP_IrqCfgEnable(g_p_usb_cfg_ip1->hsirq, g_p_usb_cfg_ip1->hsipl, g_p_usb_cfg_ip1); /* USBIR enable */
+    }
  #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 }
 
@@ -502,7 +521,10 @@ void usb_cpu_int_disable (void)
      * b6 IEN6 Interrupt enable bit
      * b7 IEN7 Interrupt enable bit
      */
-    R_BSP_IrqDisable(host_cfg->irq);   /* USBI enable */
+    if (USB_MODE_HOST == g_p_usb_cfg_ip0->usb_mode)
+    {
+        R_BSP_IrqDisable(g_p_usb_cfg_ip0->irq); /* USBI enable */
+    }
 
  #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
 
@@ -516,7 +538,10 @@ void usb_cpu_int_disable (void)
      * b6 IEN6 Interrupt enable bit
      * b7 IEN7 Interrupt enable bit
      */
-    R_BSP_IrqDisable(host_cfg->hsirq); /* USBIR enable */
+    if (USB_MODE_HOST == g_p_usb_cfg_ip1->usb_mode)
+    {
+        R_BSP_IrqDisable(g_p_usb_cfg_ip1->hsirq); /* USBIR enable */
+    }
  #endif /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
 }
 
@@ -749,6 +774,18 @@ VOID usb_otg_chattering_timer (ULONG args)
 {
     (void) args;
     g_usb_otg_chattering_counter++;
+}
+
+/*******************************************************************************
+ * Function Name: usb_otg_hnp_timer (10ms interval)
+ * Description  : The timer to detect that USB B-cable is detached when A device is Peripheral mode for USB IP0
+ * Arguments    : args  : No use
+ * Return Value : none
+ *******************************************************************************/
+VOID usb_otg_hnp_timer (ULONG args)
+{
+    (void) args;
+    g_usb_otg_hnp_counter++;
 }
 
   #if USB_NUM_USBIP == 2

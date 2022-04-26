@@ -145,6 +145,12 @@ typedef struct st_rm_mesh_light_ctl_srv_temperature_range_info
     uint8_t status;
 } rm_mesh_light_ctl_srv_temperature_range_info_t;
 
+/** BLE mesh light ctl extension for BLE mesh light ctl. */
+typedef struct st_rm_mesh_light_ctl_srv_extended_cfg
+{
+    rm_ble_mesh_access_instance_t const * p_temperature_access_instance; ///< Pointer to access instance for temperature model.
+} rm_mesh_light_ctl_srv_extended_cfg_t;
+
 /** BLE mesh light ctl instance control block. DO NOT INITIALIZE. Initialization occurs when RM_MESH_LIGHT_CTL_SRV_Open() is called. */
 typedef struct st_rm_mesh_light_ctl_srv_instance_ctrl
 {

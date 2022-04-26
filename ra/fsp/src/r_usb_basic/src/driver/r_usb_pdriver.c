@@ -51,7 +51,8 @@
  * Macro definitions
  ******************************************************************************/
 
- #define USB_VALUE_100    (100)
+ #define USB_VALUE_100       (100)
+ #define USB_OTG_SE0_BRST    (16)
 
 /******************************************************************************
  * Private global variables and functions
@@ -103,6 +104,7 @@ usb_setup_t  g_usb_pstd_req_reg;                        /* Device Request - Requ
 volatile uint8_t g_usb_is_otg_attach_interrupt[USB_NUM_USBIP];
 
  #if (BSP_CFG_RTOS == 1)
+extern bool         g_usb_peri_usbx_is_detach[USB_MAX_PIPE_NO + 1];
 extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
 extern UINT usb_host_usbx_initialize(UX_HCD * hcd);
 
@@ -452,13 +454,13 @@ static void usb_pstd_interrupt (usb_utr_t * p_mess)
         {
   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
             hw_usb_set_cnen(p_mess->ip);
-  #endif                                         /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                                                                     /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
             if (USB_ATTACH == usb_pstd_chk_vbsts(p_mess->ip))
             {
                 USB_PRINTF0("VBUS int attach\n");
-                usb_pstd_attach_process(p_mess); /* USB attach */
+                usb_pstd_attach_process(p_mess);                             /* USB attach */
   #if defined(USB_CFG_OTG_USE)
-                _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_B;
+                _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_B; /* IDLE --> DEVICE_B */
                 (*g_p_otg_callback[p_mess->ip])(UX_OTG_MODE_SLAVE);
   #endif /* defined(USB_CFG_OTG_USE) */
             }
@@ -479,12 +481,12 @@ static void usb_pstd_interrupt (usb_utr_t * p_mess)
 
                         /* A device and A cable detach --> Peri mode */
                         g_is_A_cable_detach[p_mess->ip]           = USB_NO;
-                        _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_IDLE;
+                        _ux_system_otg->ux_system_otg_device_type = UX_OTG_DEVICE_IDLE; /* A Device --> IDLE */
                         (*g_p_otg_callback[p_mess->ip])(UX_OTG_MODE_IDLE);
                     }
                     else
                     {
-                        /* A device and B cable detach --> Host mode */
+                        /* B cable detach in A device --> Host mode */
                         p_mess->ipp = usb_hstd_get_usb_ip_adr(p_mess->ip);
                         usb_pstd_otg_mode_to_host(p_mess);
                         if (USB_IP0 == p_mess->ip)
@@ -781,11 +783,16 @@ static void usb_pstd_otg_mode_to_host (usb_utr_t * p_utr)
 static void usb_pstd_otg_hnp_process (usb_utr_t * p_utr)
 {
     uint16_t i;
+    uint16_t usb_reg;
+    uint8_t  is_otg_hnp_possible = USB_NO;
 
     p_utr->ipp = (usb_regadr_t) usb_hstd_get_usb_ip_adr(p_utr->ip); /* Get the USB IP base address. */
 
     /* D+ Pullup Off */
     hw_usb_pclear_dprpu(p_utr->ip);
+
+    g_usb_otg_hnp_counter = 0;
+    tx_timer_activate(&g_usb_otg_hnp_timer);
 
     /* Change to Host mode */
     hw_usb_set_dcfm(p_utr);
@@ -813,10 +820,20 @@ static void usb_pstd_otg_hnp_process (usb_utr_t * p_utr)
     /* Wait 3ms */
     usb_cpu_delay_xms((uint16_t) 3);
 
-    if ((USB_YES == g_usb_is_otg_attach_interrupt[p_utr->ip]) ||
-        ((USB_YES == g_is_A_device[p_utr->ip]) && (USB_NO == g_is_A_cable_detach[p_utr->ip])))
+    g_usb_otg_hnp_counter = 0;
+    if (g_usb_otg_hnp_counter <= USB_OTG_SE0_BRST)
+    {
+        is_otg_hnp_possible = USB_YES;
+    }
+
+    tx_timer_deactivate(&g_usb_otg_hnp_timer);
+
+    if (((USB_YES == g_usb_is_otg_attach_interrupt[p_utr->ip]) ||
+         ((USB_YES == g_is_A_device[p_utr->ip]) && (USB_NO == g_is_A_cable_detach[p_utr->ip]))) &&
+        (USB_YES == is_otg_hnp_possible))
     {
         g_usb_is_otg_attach_interrupt[p_utr->ip] = USB_NO;
+        is_otg_hnp_possible = USB_NO;
 
         /* USB Peripheral --> USB Host */
 
@@ -902,7 +919,31 @@ static void usb_pstd_otg_hnp_process (usb_utr_t * p_utr)
         g_usb_usbmode[p_utr->ip] = USB_MODE_PERI;
 
         p_utr->ipp->INTENB0 = (USB_BEMPE | USB_BRDYE | USB_VBSE | USB_DVSE | USB_CTRE);
-        (*g_p_otg_callback[p_utr->ip])(UX_OTG_MODE_IDLE);
+
+        if (USB_YES == g_is_A_device[p_utr->ip])
+        {
+            usb_reg = hw_usb_read_syssts(p_utr);
+            if (0 == (usb_reg & USB_IDMON))
+            {
+                (*g_p_otg_callback[p_utr->ip])(UX_OTG_MODE_SLAVE);
+            }
+            else
+            {
+                (*g_p_otg_callback[p_utr->ip])(UX_OTG_MODE_IDLE);
+            }
+        }
+        else
+        {
+            usb_reg = hw_usb_read_intsts(p_utr->ip);
+            if (USB_VBSTS == (usb_reg & USB_VBSTS))
+            {
+                (*g_p_otg_callback[p_utr->ip])(UX_OTG_MODE_SLAVE);
+            }
+            else
+            {
+                (*g_p_otg_callback[p_utr->ip])(UX_OTG_MODE_IDLE);
+            }
+        }
     }
 
     _ux_utility_thread_resume(&g_hcd_tsk_hdl);
@@ -1991,7 +2032,7 @@ void usb_peri_devdefault (usb_utr_t * ptr, uint16_t mode, uint16_t data2)
 
     FSP_PARAMETER_NOT_USED(data2);
 
- #if (defined(USB_CFG_PCDC_USE) | defined(USB_CFG_PHID_USE))
+ #if (defined(USB_CFG_PCDC_USE) | defined(USB_CFG_PHID_USE) | defined(USB_CFG_PPRN_USE))
     usb_instance_ctrl_t ctrl;
   #if (USB_CFG_DMA == USB_CFG_ENABLE)
     ctrl.p_transfer_rx = ptr->p_transfer_rx;
@@ -1999,7 +2040,7 @@ void usb_peri_devdefault (usb_utr_t * ptr, uint16_t mode, uint16_t data2)
   #endif
  #endif
 
-    usb_peri_detach(ptr, USB_NULL, USB_NULL);
+    usb_peri_detach(ptr, USB_DEFAULT, USB_NULL);
 
     /* Connect Speed = Hi-Speed? */
     if (USB_HSCONNECT == mode)
@@ -2050,7 +2091,7 @@ void usb_peri_devdefault (usb_utr_t * ptr, uint16_t mode, uint16_t data2)
     usb_pstd_clr_pipe_table(ptr->ip);
     usb_peri_pipe_info(ptable, mode, len, ptr);
 
- #if (defined(USB_CFG_PCDC_USE) | defined(USB_CFG_PHID_USE))
+ #if (defined(USB_CFG_PCDC_USE) | defined(USB_CFG_PHID_USE) | defined(USB_CFG_PPRN_USE))
     ctrl.module_number = ptr->ip;
     usb_set_event(USB_STATUS_DEFAULT, &ctrl);
  #endif
@@ -2148,18 +2189,45 @@ void usb_peri_configured (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 /******************************************************************************
  * Function Name   : usb_peri_detach
  * Description     : Peripheral Devices Class close function
- * Arguments       : usb_utr_t    *ptr        : Not used
- *               : uint16_t     data1       : Not used
- *               : uint16_t     data2       : Not used
+ * Arguments       : usb_utr_t    *ptr              : Not used
+ *                 : uint16_t     usb_state         : USB state
+ *                 : uint16_t     data2             : Not used
  * Return value    : none
  ******************************************************************************/
-void usb_peri_detach (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
+void usb_peri_detach (usb_utr_t * ptr, uint16_t usb_state, uint16_t data2)
 {
     usb_instance_ctrl_t ctrl;
+ #if (BSP_CFG_RTOS == 1)
+    uint8_t  pipe;
+    uint16_t intsts;
+ #endif                                /* #if (BSP_CFG_RTOS == 1) */
 
     FSP_PARAMETER_NOT_USED(*ptr);
-    FSP_PARAMETER_NOT_USED(data1);
     FSP_PARAMETER_NOT_USED(data2);
+
+ #if (BSP_CFG_RTOS == 1)
+    intsts = hw_usb_read_intsts(ptr->ip);
+    if (USB_VBSTS == (intsts & USB_VBSTS))
+    {
+        /* When doing the warm start PC(USB_Host), PC sends the USB Reset.                          *
+         * The following code is needed to release the waiting status of the semaphore waiting task *
+         * before doing the warm start.                                                             */
+        if (USB_DEFAULT == usb_state)
+        {
+            for (pipe = USB_MIN_PIPE_NO; pipe < (USB_MAXPIPE_NUM + 1); pipe++)
+            {
+                g_usb_peri_usbx_is_detach[pipe] = USB_NO;
+                tx_semaphore_put(&g_usb_peri_usbx_sem[pipe]);
+                tx_semaphore_delete(&g_usb_peri_usbx_sem[pipe]);
+            }
+
+            _ux_device_stack_disconnect();
+        }
+    }
+
+ #else                                 /* #if (BSP_CFG_RTOS == 1) */
+    FSP_PARAMETER_NOT_USED(usb_state);
+ #endif /* #if (BSP_CFG_RTOS == 1) */
 
     if (USB_TRUE == g_usb_peri_connected)
     {
@@ -2271,7 +2339,7 @@ void usb_pvnd_read_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
     /* Set Receive data length */
     ctrl.data_size = mess->read_req_len - mess->tranlen;
     ctrl.pipe      = (uint8_t) mess->keyword; /* Pipe number setting */
-    ctrl.type      = USB_CLASS_INTERNAL_PVND; /* Device class setting  */
+    ctrl.type      = USB_CLASS_PVND;          /* Device class setting  */
   #if (BSP_CFG_RTOS != 0)
     ctrl.p_data = (void *) mess->cur_task_hdl;
   #endif /* (BSP_CFG_RTOS != 0) */
@@ -2321,7 +2389,7 @@ void usb_pvnd_write_complete (usb_utr_t * mess, uint16_t data1, uint16_t data2)
     usb_instance_ctrl_t ctrl;
 
     ctrl.pipe = (uint8_t) mess->keyword; /* Pipe number setting */
-    ctrl.type = USB_CLASS_INTERNAL_PVND; /* CDC Control class  */
+    ctrl.type = USB_CLASS_PVND;          /* CDC Control class  */
     if (USB_DATA_NONE == mess->status)
     {
         ctrl.status = FSP_SUCCESS;

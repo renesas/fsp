@@ -447,11 +447,11 @@ static void usb_pstd_get_status1 (usb_utr_t * p_utr)
     uint16_t       buffer;
     uint16_t       pipe;
 
-#if defined (USB_CFG_OTG_USE)
+ #if defined(USB_CFG_OTG_USE)
     if ((0 == g_usb_pstd_req_value) && (1 == g_usb_pstd_req_length))
-#else
+ #else
     if ((0 == g_usb_pstd_req_value) && (2 == g_usb_pstd_req_length))
-#endif
+ #endif
     {
         tbl[0] = 0;
         tbl[1] = 0;
@@ -1539,24 +1539,35 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
     if ((USB_TRUE == usb_pstd_chk_configured(p_utr)) &&
         (USB_INTERFACE == (g_usb_pstd_req_type & USB_BMREQUESTTYPERECIP)))
     {
+ #if defined(USB_CFG_PPRN_USE)
+        if (((1 == usb_pstd_get_interface_num()) && (0 == usb_pstd_get_alternate_num(0))) &&
+            ((0 == g_usb_pstd_req_index) && (0 == g_usb_pstd_req_value)))
+        {
+            /* Do nothing about alternate setting */
+            usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
+
+            return;
+        }
+
+ #else                                 /* defined(USB_CFG_PPRN_USE) */
         if ((g_usb_pstd_req_index <= usb_pstd_get_interface_num()) && (0 == g_usb_pstd_req_length))
         {
             if (g_usb_pstd_req_value <= usb_pstd_get_alternate_num(g_usb_pstd_req_index))
             {
- #ifdef  USB_CFG_PAUD_USE
+  #ifdef  USB_CFG_PAUD_USE
                 current_alt_value = g_usb_pstd_alt_num[g_usb_pstd_req_index];
- #endif                                // USB_CFG_PAUD_USE
+  #endif                               // USB_CFG_PAUD_USE
                 g_usb_pstd_alt_num[g_usb_pstd_req_index] = (uint16_t) (g_usb_pstd_req_value & USB_ALT_SET);
                 usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
                 usb_pstd_clr_eptbl_index();
 
                 /* Search endpoint setting */
                 usb_pstd_set_eptbl_index(g_usb_pstd_req_index, g_usb_pstd_alt_num[g_usb_pstd_req_index]);
- #ifndef USB_CFG_PAUD_USE
+  #ifndef USB_CFG_PAUD_USE
                 usb_pstd_set_pipe_reg(p_utr);
- #endif                                /* USB_CFG_PAUD_USE */
- #if BSP_CFG_RTOS == 1
-  #ifdef  USB_CFG_PAUD_USE
+  #endif                               /* USB_CFG_PAUD_USE */
+  #if BSP_CFG_RTOS == 1
+   #ifdef  USB_CFG_PAUD_USE
                 if (0 == (g_usb_pstd_req_value & USB_ALT_SET))
                 {
                     if (current_alt_value == 1)
@@ -1566,9 +1577,9 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
                         tx_semaphore_put(&g_usb_peri_usbx_sem[pipe]);
                     }
                 }
-  #endif                                                                  // USB_CFG_PAUD_USE
+   #endif                                                                 // USB_CFG_PAUD_USE
                 _ux_device_stack_alternate_setting_set((ULONG) g_usb_pstd_req_index, (ULONG) g_usb_pstd_req_value);
- #endif
+  #endif
             }
             else
             {
@@ -1576,6 +1587,7 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
                 usb_pstd_set_stall_pipe0(p_utr);
             }
         }
+ #endif                                /* defined(USB_CFG_PPRN_USE) */
         else
         {
             /* Request error */

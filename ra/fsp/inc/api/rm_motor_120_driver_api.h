@@ -20,7 +20,7 @@
 
 /*******************************************************************************************************************//**
  * @ingroup RENESAS_INTERFACES
- * @defgroup MOTOR_120_DRIVER_API Interface
+ * @defgroup MOTOR_120_DRIVER_API Motor 120-Degree Driver Interface
  * @brief Interface for motor driver functions.
  *
  * @section MOTOR_120_DRIVER_API_Summary Summary

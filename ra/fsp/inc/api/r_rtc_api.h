@@ -199,6 +199,14 @@ typedef struct st_rtc_api
      */
     fsp_err_t (* close)(rtc_ctrl_t * const p_ctrl);
 
+    /** Sets the RTC clock source.
+     * @par Implemented as
+     * - @ref R_RTC_ClockSourceSet()
+     *
+     * @param[in] p_ctrl     Pointer to RTC device handle
+     */
+    fsp_err_t (* clockSourceSet)(rtc_ctrl_t * const p_ctrl);
+
     /** Set the calendar time and start the calender counter
      * @par Implemented as
      * - @ref R_RTC_CalendarTimeSet()

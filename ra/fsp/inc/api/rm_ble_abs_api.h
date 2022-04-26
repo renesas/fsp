@@ -47,7 +47,8 @@
  #include "r_timer_api.h"
 #else
  #include "r_uart_api.h"
- #include "r_sci_uart.h"
+ #include "r_spi_api.h"
+ #include "r_external_irq_api.h"
 #endif
 
 #include "fsp_common_api.h"
@@ -789,7 +790,9 @@ typedef struct st_ble_abs_cfg
     flash_instance_t const * p_flash_instance;                              ///< Pointer to flash instance.
     timer_instance_t const * p_timer_instance;                              ///< Pointer to timer instance.
 #else
-    const uart_instance_t * p_uart_instance;                                ///< SCI UART instance
+    const uart_instance_t         * p_uart_instance;                        ///< SCI UART instance
+    const spi_instance_t          * p_spi_instance;                         ///< SPI instance
+    const external_irq_instance_t * p_irq_instance;                         ///< IRQ instance
 #endif
     void (* p_callback)(ble_abs_callback_args_t * p_args);                  ///< Callback provided when a BLE ISR occurs.
     void const * p_context;                                                 ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.

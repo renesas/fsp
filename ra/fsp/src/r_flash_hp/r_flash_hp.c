@@ -1922,7 +1922,7 @@ static fsp_err_t flash_hp_df_erase (flash_hp_instance_ctrl_t * p_ctrl, uint32_t 
  * @retval     FSP_ERR_PE_FAILURE  Failed to exited P/E mode
  * @retval     FSP_ERR_CMD_LOCKED  Flash entered command locked state.
  **********************************************************************************************************************/
-static fsp_err_t flash_hp_pe_mode_exit ()
+static fsp_err_t flash_hp_pe_mode_exit (void)
 {
     /* See "Transition to Read Mode": Section 47.9.3.5 of the RA6M4 manual R01UH0890EJ0100. */
     /* FRDY and CMDLK are checked after the previous commands complete and do not need to be checked again. */
@@ -2039,7 +2039,7 @@ static fsp_err_t flash_hp_reset (flash_hp_instance_ctrl_t * p_ctrl)
  * @retval     FSP_ERR_TIMEOUT     Timeout executing flash_stop.
  * @retval     FSP_ERR_CMD_LOCKED  Peripheral in command locked state.
  **********************************************************************************************************************/
-static fsp_err_t flash_hp_stop ()
+static fsp_err_t flash_hp_stop (void)
 {
     /* See "Forced Stop Command": Section 47.9.3.13 of the RA6M4 manual R01UH0890EJ0100. If the CMDLK bit
      * is still set after issuing the force stop command return an error. */
@@ -2071,7 +2071,7 @@ static fsp_err_t flash_hp_stop ()
  * @retval     FSP_ERR_TIMEOUT     Timeout executing flash_stop.Failed to exited P/E mode
  * @retval     FSP_ERR_CMD_LOCKED  Peripheral in command locked state
  **********************************************************************************************************************/
-static fsp_err_t flash_hp_status_clear ()
+static fsp_err_t flash_hp_status_clear (void)
 {
     /* See "Status Clear Command": Section 47.9.3.12 of the RA6M4 manual R01UH0890EJ0100. */
     /* Timeout counter. */

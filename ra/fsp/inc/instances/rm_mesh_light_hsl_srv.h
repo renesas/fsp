@@ -159,6 +159,13 @@ typedef struct st_rm_mesh_light_hsl_srv_range_info
     uint8_t status;
 } rm_mesh_light_hsl_srv_range_info_t;
 
+/** BLE mesh light hsl extension for BLE mesh light hsl. */
+typedef struct st_rm_mesh_light_hsl_srv_extended_cfg
+{
+    rm_ble_mesh_access_instance_t const * p_hue_access_instance;        ///< Pointer to access instance for hue model.
+    rm_ble_mesh_access_instance_t const * p_saturation_access_instance; ///< Pointer to access instance for saturation model.
+} rm_mesh_light_hsl_srv_extended_cfg_t;
+
 /** BLE mesh light hsl instance control block. DO NOT INITIALIZE. Initialization occurs when RM_MESH_LIGHT_HSL_SRV_Open() is called. */
 typedef struct st_rm_mesh_light_hsl_srv_instance_ctrl
 {

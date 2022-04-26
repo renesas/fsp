@@ -786,6 +786,16 @@ static void r_agt_hardware_cfg (agt_instance_ctrl_t * const p_instance_ctrl, tim
 
     uint32_t agtmr1 = (count_source_int | edge) | mode;
 
+#if BSP_FEATURE_RTC_HAS_ROPSEL
+    if (AGT_CLOCK_SUBCLOCK == p_extend->count_source)
+    {
+        /* Clear the RCR4_b.ROPSEL bit if AGT uses Sub-clock. This is necessary as ROPSEL bit is undefined after
+         * MCU Reset and if it is set to 1, the Sub-clock output to AGT stops in Software Standby mode. */
+        R_RTC->RCR4_b.ROPSEL = 0U;
+        FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR4_b.ROPSEL, 0U);
+    }
+#endif
+
     /* Configure output settings. */
 
 #if AGT_CFG_OUTPUT_SUPPORT_ENABLE

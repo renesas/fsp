@@ -45,6 +45,10 @@
   #include "r_usb_hhid_cfg.h"
  #endif                                /* defined(USB_CFG_HHID_USE) */
 
+ #if defined(USB_CFG_PHID_USE)
+  #include "r_usb_phid_cfg.h"
+ #endif                                /* defined(USB_CFG_HHID_USE) */
+
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
   #include "ux_host_stack.h"
  #endif                                /* #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
@@ -558,13 +562,41 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
                             status = (uint32_t) UX_SUCCESS;
                         }
 
+  #elif defined(USB_CFG_PHID_USE)
+                        if (USB_CFG_PHID_INT_OUT == pipe)
+                        {
+                            status = (uint32_t) UX_TRANSFER_ERROR;
+                        }
+                        else
+                        {
+                            status = (uint32_t) UX_SUCCESS;
+                        }
+
   #else                                /* defined(USB_CFG_PMSC_USE) */
                         status = (uint32_t) UX_SUCCESS;
   #endif /* define(USB_CFG_PMSC_USE */
                     }
                     else
                     {
+  #if defined(USB_CFG_PMSC_USE)
+
+                        /*  The error code other UX_SUCCESS must be returned than       *
+                         *  when USB peripheral device status is not CONFIGURED status. */
+                        uint16_t dvsq;
+                        dvsq = hw_usb_read_intsts(module_number);
+
+                        if (USB_DS_CNFG == (dvsq & USB_DVSQ))
+                        {
+                            status = (uint32_t) UX_SUCCESS;
+                        }
+                        else
+                        {
+                            status = (uint32_t) UX_TRANSFER_ERROR;
+                        }
+
+  #else                                /* defined(USB_CFG_PMSC_USE) */
                         status = (uint32_t) UX_SUCCESS;
+  #endif /* define(USB_CFG_PMSC_USE */
                     }
                 }
                 else
@@ -611,38 +643,50 @@ static UINT usb_peri_usbx_to_basic (UX_SLAVE_DCD * dcd, UINT function, VOID * pa
         }
 
         case (uint32_t) UX_DCD_TRANSFER_ABORT:
-        {
   #if defined(USB_CFG_PCDC_USE)
-            CHAR         * name;
-            ULONG          current_value;
-            TX_THREAD    * first_suspended;
-            ULONG          suspended_count;
-            TX_SEMAPHORE * next_semaphore;
-
-            transfer_request = (UX_SLAVE_TRANSFER *) parameter;
-            endpoint         = transfer_request->ux_slave_transfer_request_endpoint;
-            endpoint_index   = endpoint->ux_slave_endpoint_descriptor.bEndpointAddress;
-            if (0 != endpoint_index)
             {
-                pipe = usb_pstd_epadr2pipe((uint16_t) endpoint_index, &tran_data);
+                CHAR         * name;
+                ULONG          current_value;
+                TX_THREAD    * first_suspended;
+                ULONG          suspended_count;
+                TX_SEMAPHORE * next_semaphore;
+
+                transfer_request = (UX_SLAVE_TRANSFER *) parameter;
+                endpoint         = transfer_request->ux_slave_transfer_request_endpoint;
+                endpoint_index   = endpoint->ux_slave_endpoint_descriptor.bEndpointAddress;
+                if (0 != endpoint_index)
+                {
+                    pipe = usb_pstd_epadr2pipe((uint16_t) endpoint_index, &tran_data);
+                }
+
+                tx_semaphore_info_get(&g_usb_peri_usbx_sem[pipe],
+                                      &name,
+                                      &current_value,
+                                      &first_suspended,
+                                      &suspended_count,
+                                      &next_semaphore);
+
+                if (suspended_count == 1)
+                {
+                    _ux_utility_thread_suspend(first_suspended);
+                    tx_semaphore_put(&g_usb_peri_usbx_sem[pipe]);
+                }
+
+                break;
             }
-
-            tx_semaphore_info_get(&g_usb_peri_usbx_sem[pipe],
-                                  &name,
-                                  &current_value,
-                                  &first_suspended,
-                                  &suspended_count,
-                                  &next_semaphore);
-
-            if (suspended_count == 1)
+  #elif defined(USB_CFG_PPRN_USE)      /* #if defined(USB_CFG_PCDC_USE) */
             {
-                _ux_utility_thread_suspend(first_suspended);
-                tx_semaphore_put(&g_usb_peri_usbx_sem[pipe]);
-            }
-  #endif                               /* #if defined(USB_CFG_PCDC_USE) */
+                for (pipe = USB_MIN_PIPE_NO; pipe < (USB_MAXPIPE_NUM + 1); pipe++)
+                {
+                    if (USB_TRUE == g_usb_pipe_table[tran_data.ip][pipe].use_flag)
+                    {
+                        usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_STOP, &tran_data);
+                    }
+                }
 
-            break;
-        }
+                break;
+            }
+  #endif
 
         case (uint32_t) UX_DCD_CREATE_ENDPOINT:
         {
@@ -1372,6 +1416,11 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
     usb_pipe_table_reg_t ep_tbl;
    #endif                              /* #if !defined(USB_CFG_HMSC_USE) */
 
+   #if defined(USB_CFG_HHID_USE)
+    uint8_t num_set_pipe   = 0;
+    uint8_t set_pipe_no[2] = {0, 0};
+   #endif                              /* defined(USB_CFG_HHID_USE) */
+
     speed    = *table[6];
     p_config = (uint8_t *) table[1];
     length   = (uint16_t) (*(p_config + 3) << 8);
@@ -1429,13 +1478,17 @@ void usb_host_usbx_class_check (usb_utr_t * p_utr, uint16_t ** table)
                                                   &ep_tbl);
             if (USB_NULL != pipe_no)
             {
-                usb_hstd_set_pipe_info(p_utr->ip, pipe_no, &ep_tbl);
     #if defined(USB_CFG_HHID_USE)
-                if (USB_CFG_HHID_INT_IN == pipe_no)
+                if ((pipe_no != set_pipe_no[0]) && (pipe_no != set_pipe_no[1]) && (num_set_pipe < 2))
                 {
-                    break;
+                    set_pipe_no[num_set_pipe] = pipe_no;
+                    num_set_pipe++;
+                    usb_hstd_set_pipe_info(p_utr->ip, pipe_no, &ep_tbl);
                 }
-    #endif
+
+    #else                              /* defined(USB_CFG_HHID_USE) */
+                usb_hstd_set_pipe_info(p_utr->ip, pipe_no, &ep_tbl);
+    #endif /* defined(USB_CFG_HHID_USE) */
             }
             else
             {
@@ -1694,7 +1747,10 @@ static void usb_host_usbx_transfer_complete_cb (usb_utr_t * p_utr, uint16_t data
 
   #if defined(USB_CFG_HHID_USE)
     transfer_request->ux_transfer_request_completion_code = UX_SUCCESS;
-    transfer_request->ux_transfer_request_completion_function(transfer_request);
+    if (UX_NULL != transfer_request->ux_transfer_request_completion_function)
+    {
+        transfer_request->ux_transfer_request_completion_function(transfer_request);
+    }
   #endif                               /* defined(USB_CFG_HHID_USE) */
 
   #if defined(USB_CFG_OTG_USE)

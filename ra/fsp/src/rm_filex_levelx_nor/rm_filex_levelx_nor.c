@@ -117,7 +117,7 @@ static UINT rm_filex_levelx_nor_driver_request_handler (FX_MEDIA * p_fx_media)
         (rm_filex_levelx_nor_instance_t *) p_fx_media->fx_media_driver_info;
 
     rm_filex_levelx_nor_instance_ctrl_t * p_filex_levelx_nor_ctrl = p_filex_levelx_nor_instance->p_ctrl;
-    rm_filex_levelx_nor_cfg_t           * p_filex_levelx_nor_cfg  = p_filex_levelx_nor_instance->p_cfg;
+    rm_filex_levelx_nor_cfg_t const     * p_filex_levelx_nor_cfg  = p_filex_levelx_nor_instance->p_cfg;
 
     /* Process the driver request specified in the media control block. */
     switch (p_fx_media->fx_media_driver_request)

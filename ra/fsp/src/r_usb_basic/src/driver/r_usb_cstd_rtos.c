@@ -61,6 +61,7 @@ TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
   #if defined(USB_CFG_OTG_USE)
 TX_TIMER g_usb_otg_detach_timer;
 TX_TIMER g_usb_otg_chattering_timer;
+TX_TIMER g_usb_otg_hnp_timer;
    #if USB_NUM_USBIP == 2
 TX_TIMER g_usb2_otg_detach_timer;
    #endif                              /* USB_NUM_USBIP == 2 */
@@ -1005,6 +1006,21 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
         return err;
     }
 
+    ret = tx_timer_create(&g_usb_otg_hnp_timer, /* Pointer to detach timer */
+                          "USB OTG HNP Timer",  /* Detach Timer Name */
+                          usb_otg_hnp_timer,    /* Pointer to detach timer function */
+                          (ULONG) 0,            /* Expiration Input */
+                          (ULONG) 10,           /* Initial Ticks */
+                          (ULONG) 10,           /* Reschedule Ticks */
+                          TX_NO_ACTIVATE);      /* Auto Activate */
+
+    if (TX_SUCCESS != ret)
+    {
+        err = UsbRtos_Err_Init_OTG_HNP_Tmr;
+
+        return err;
+    }
+
    #if USB_NUM_USBIP == 2
     ret = tx_timer_create(&g_usb2_otg_detach_timer, /* Pointer to detach timer */
                           "USB2 OTG Detach Timer",  /* Detach Timer Name */
@@ -1435,6 +1451,21 @@ usb_rtos_err_t usb_rtos_delete (uint8_t module_number)
         return err;
     }
    #endif                              /* USB_NUM_USBIP == 2 */
+    ret = tx_timer_delete(&g_usb_otg_chattering_timer);
+    if (TX_SUCCESS != ret)
+    {
+        err = UsbRtos_Err_Delete_OTG_Chattering_Tmr;
+
+        return err;
+    }
+
+    ret = tx_timer_delete(&g_usb_otg_hnp_timer);
+    if (TX_SUCCESS != ret)
+    {
+        err = UsbRtos_Err_Delete_OTG_HNP_Tmr;
+
+        return err;
+    }
   #endif                               /* defined (USB_CFG_OTG_USE) */
 
  #endif                                /* BSP_CFG_RTOS */

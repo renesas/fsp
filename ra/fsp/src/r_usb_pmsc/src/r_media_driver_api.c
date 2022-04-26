@@ -301,7 +301,7 @@ void r_usb_pmsc_block_media_event_callback (rm_block_media_callback_args_t * p_a
     }
 }
 
-static void r_usb_pmsc_block_media_operation_event ()
+static void r_usb_pmsc_block_media_operation_event (void)
 {
     uint32_t timeout = UINT32_MAX;
     while (timeout > 0)

@@ -369,6 +369,20 @@
 static uint8_t bsp_clock_set_prechange(uint32_t requested_freq_hz);
 static void    bsp_clock_set_postchange(uint32_t updated_freq_hz, uint8_t new_rom_wait_state);
 
+#if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
+ #if defined(__ICCARM__)
+
+void R_BSP_SubClockStabilizeWait(uint32_t delay_ms);
+
+  #pragma weak R_BSP_SubClockStabilizeWait
+
+ #elif defined(__GNUC__) || defined(__ARMCC_VERSION)
+
+void R_BSP_SubClockStabilizeWait(uint32_t delay_ms) __attribute__((weak));
+
+ #endif
+#endif
+
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
 static void bsp_prv_operating_mode_opccr_set(uint8_t operating_mode);
 
@@ -976,7 +990,7 @@ void bsp_clock_init (void)
   #if (BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK == BSP_CFG_CLOCK_SOURCE) || (BSP_PRV_HOCO_USE_FLL)
 
     /* If the subclock is the system clock source OR if FLL is used, wait for stabilization. */
-    R_BSP_SoftwareDelay(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS, BSP_DELAY_UNITS_MILLISECONDS);
+    R_BSP_SubClockStabilizeWait(BSP_CLOCK_CFG_SUBCLOCK_STABILIZATION_MS);
   #endif
  #else
     R_SYSTEM->SOSCCR = 1U;
@@ -1372,6 +1386,25 @@ void bsp_clock_init (void)
     R_FACI_LP->PFBER = 1;
 #endif
 }
+
+#if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
+
+/*******************************************************************************************************************//**
+ * This function is called during SOSC stabilization when Sub-Clock oscillator is populated.
+ * This function is declared as a weak symbol higher up in this file because it is meant to be overridden by a user
+ * implemented version. One of the main uses for this function is to update the IWDT/WDT Refresh Register if an
+ * application starts IWDT/WDT automatically after reset. To use this function just copy this function into your own
+ * code and modify it to meet your needs.
+ *
+ * @param[in]  delay_ms    Stabilization Time for the clock.
+ **********************************************************************************************************************/
+void R_BSP_SubClockStabilizeWait (uint32_t delay_ms)
+{
+    /* Wait for clock to stabilize. */
+    R_BSP_SoftwareDelay(delay_ms, BSP_DELAY_UNITS_MILLISECONDS);
+}
+
+#endif
 
 /*******************************************************************************************************************//**
  * Increases the ROM and RAM wait state settings to the minimum required based on the requested clock change.

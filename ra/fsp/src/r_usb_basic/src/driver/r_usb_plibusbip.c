@@ -45,6 +45,10 @@
  #endif                                /* defined(USB_CFG_PCDC_USE) */
 #endif                                 /* defined(USB_CFG_OTG_USE) */
 
+#if defined(USB_CFG_PPRN_USE)
+ #include "r_usb_pprn_cfg.h"
+#endif                                 /* defined(USB_CFG_PPRN_USE) */
+
 #if defined(USB_CFG_PHID_USE)
  #include "r_usb_phid_cfg.h"
 #endif                                 /* defined(USB_CFG_PHID_USE) */
@@ -1381,6 +1385,23 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
     }
  #endif                                /* defined(USB_CFG_PCDC_USE) */
 
+ #if defined(USB_CFG_PPRN_USE)
+    if (USB_IFCLS_PRN == class_info)
+    {
+        if (USB_EP_BULK == type)
+        {
+            if (USB_PIPE_DIR_IN == dir)
+            {
+                pipe_no = USB_CFG_PPRN_BULK_IN;
+            }
+            else
+            {
+                pipe_no = USB_CFG_PPRN_BULK_OUT;
+            }
+        }
+    }
+ #endif                                /* defined(USB_CFG_PPRN_USE) */
+
  #if defined(USB_CFG_PHID_USE)
     if (USB_IFCLS_HID == class_info)
     {
@@ -1388,13 +1409,39 @@ uint8_t usb_pstd_get_pipe_no (uint8_t type, uint8_t dir, usb_utr_t * p_utr, uint
         {
             if (USB_PIPE_DIR_IN == dir)
             {
-                pipe_no = USB_CFG_PHID_INT_IN;
+                if (USB_FALSE == g_usb_pipe_table[p_utr->ip][USB_CFG_PHID_INT_IN].use_flag)
+                {
+                    pipe_no = USB_CFG_PHID_INT_IN; /* Set Free pipe */
+                }
+
+  #if (USB_NULL != USB_CFG_PHID_INT_IN2)
+                else if (USB_FALSE == g_usb_pipe_table[p_utr->ip][USB_CFG_PHID_INT_IN2].use_flag)
+                {
+                    pipe_no = USB_CFG_PHID_INT_IN2; /* Set Free pipe */
+                }
+                else
+                {
+                    /* Error */
+                }
+  #endif                               /* #if (USB_NULL != USB_CFG_PCDC_INT_IN2) */
             }
             else
             {
-  #if (BSP_CFG_RTOS != 1)
-                pipe_no = USB_CFG_PHID_INT_OUT;
-  #endif                               /* #if (BSP_CFG_RTOS != 1) */
+                if (USB_FALSE == g_usb_pipe_table[p_utr->ip][USB_CFG_PHID_INT_OUT].use_flag)
+                {
+                    pipe_no = USB_CFG_PHID_INT_OUT; /* Set Free pipe */
+                }
+
+  #if ((USB_NULL != USB_CFG_PHID_INT_OUT2) && (BSP_CFG_RTOS != 1))
+                else if (USB_FALSE == g_usb_pipe_table[p_utr->ip][USB_CFG_PHID_INT_OUT2].use_flag)
+                {
+                    pipe_no = USB_CFG_PHID_INT_OUT2; /* Set Free pipe */
+                }
+                else
+                {
+                    /* Error */
+                }
+  #endif                               /* #if ((USB_NULL != USB_CFG_PHID_INT_OUT2) && (BSP_CFG_RTOS != 1)) */
             }
         }
     }
@@ -1545,6 +1592,28 @@ uint16_t usb_pstd_get_pipe_buf_value (uint16_t pipe_no)
             break;
         }
   #endif /* defined(USB_CFG_PCDC_USE) */
+
+  #if defined(USB_CFG_PPRN_USE)
+        case USB_CFG_PPRN_BULK_IN:
+        {
+   #if USB_CFG_DTC == USB_CFG_ENABLE
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
+   #else                               /* USB_CFG_DTC == USB_CFG_ENABLE */
+            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
+   #endif                              /* USB_CFG_DTC == USB_CFG_ENABLE */
+            break;
+        }
+
+        case USB_CFG_PPRN_BULK_OUT:
+        {
+   #if USB_CFG_DTC == USB_CFG_ENABLE
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(36U));
+   #else                               /* USB_CFG_DTC == USB_CFG_ENABLE */
+            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
+   #endif                              /* USB_CFG_DTC == USB_CFG_ENABLE */
+            break;
+        }
+  #endif /* defined(USB_CFG_PPRN_USE) */
 
   #if defined(USB_CFG_PMSC_USE)
         case USB_CFG_PMSC_BULK_IN:

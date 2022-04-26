@@ -52,7 +52,7 @@
  ******************************************************************************/
 
  #if (BSP_CFG_RTOS == 1)
-static uint8_t        * g_p_usbx_string_table[NUM_STRING_DESC];
+static uint8_t * g_p_usbx_string_table[NUM_STRING_DESC];
 usb_descriptor_t g_usbx_descriptor;
 
 void usb_pstd_ux_descriptor_to_basic(usb_cfg_t * p_cfg);
@@ -211,6 +211,20 @@ void usb_pstd_ux_descriptor_to_basic (usb_cfg_t * p_cfg)
                 break;
             }
 
+            case USB_SOFT_CHANGE:
+            {
+                if (USB_SPEED_FS == p_cfg->usb_speed)
+                {
+                    p_cfg->p_usb_reg->p_config_f = p;
+                }
+                else
+                {
+                    p_cfg->p_usb_reg->p_config_h = p;
+                }
+
+                break;
+            }
+
             case USB_DT_OTHER_SPEED_CONF:
             {
                 if (USB_SPEED_FS == p_cfg->usb_speed)
@@ -239,6 +253,30 @@ void usb_pstd_ux_descriptor_to_basic (usb_cfg_t * p_cfg)
 
         length = *p;
         p      = p + length;
+    }
+
+    if (USB_SPEED_HS == p_cfg->usb_speed)
+    {
+        start_address = (uint8_t *) (_ux_system_slave->ux_system_slave_device_framework_full_speed);
+        length        = _ux_system_slave->ux_system_slave_device_framework_length_full_speed;
+
+        end_address = (start_address + length);
+
+        p = start_address;
+        if (USB_NULL != p)
+        {
+            while (p < end_address)
+            {
+                if ((USB_DT_OTHER_SPEED_CONF == *(p + 1)) || (USB_SOFT_CHANGE == *(p + 1)))
+                {
+                    p_cfg->p_usb_reg->p_config_f = p;
+                    break;
+                }
+
+                length = *p;
+                p      = p + length;
+            }
+        }
     }
 
     if (USB_NULL != _ux_system_slave->ux_system_slave_language_id_framework)

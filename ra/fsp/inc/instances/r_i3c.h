@@ -38,6 +38,11 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
+/** There are two different versions of the RA2E2 MCU and the error recovery procedure is different for each version. */
+#define I3C_ERROR_RECOVERY_VERSION_1          (0U) ///< Support error recovery procedure for chip version 1.
+#define I3C_ERROR_RECOVERY_VERSION_2          (1U) ///< Support error recovery procedure for chip version 2.
+#define I3C_ERROR_RECOVERY_VERSION_BOTH       (2U) ///< Support error recovery procedure for chip version 1 and version 2.
+
 /** Index for selecting the device defined in the extended address table. */
 #define I3C_DEVICE_INDEX_EXTENDED_DEVICE      (1U << 5U)
 

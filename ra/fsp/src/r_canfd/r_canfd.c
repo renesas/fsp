@@ -84,14 +84,18 @@ static bool r_canfd_bit_timing_parameter_check(can_bit_timing_cfg_t * p_bit_timi
 
 #endif
 
-static void    r_canfd_mb_read(uint32_t buffer, can_frame_t * const frame);
-static void    r_canfd_call_callback(canfd_instance_ctrl_t * p_ctrl, can_callback_args_t * p_args);
-static void    r_canfd_mode_transition(canfd_instance_ctrl_t * p_ctrl, can_operation_mode_t operation_mode);
-static void    r_canfd_mode_ctr_set(volatile uint32_t * p_ctr_reg, can_operation_mode_t operation_mode);
+#if BSP_FEATURE_CANFD_FD_SUPPORT
 static uint8_t r_canfd_bytes_to_dlc(uint8_t bytes);
-void           canfd_error_isr(void);
-void           canfd_rx_fifo_isr(void);
-void           canfd_channel_tx_isr(void);
+
+#endif
+
+static void r_canfd_mb_read(uint32_t buffer, can_frame_t * const frame);
+static void r_canfd_call_callback(canfd_instance_ctrl_t * p_ctrl, can_callback_args_t * p_args);
+static void r_canfd_mode_transition(canfd_instance_ctrl_t * p_ctrl, can_operation_mode_t operation_mode);
+static void r_canfd_mode_ctr_set(volatile uint32_t * p_ctr_reg, can_operation_mode_t operation_mode);
+void        canfd_error_isr(void);
+void        canfd_rx_fifo_isr(void);
+void        canfd_channel_tx_isr(void);
 
 /***********************************************************************************************************************
  * ISR prototypes
@@ -179,6 +183,8 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
     /* Check nominal bit timing parameters for correctness */
     FSP_ERROR_RETURN(r_canfd_bit_timing_parameter_check(p_cfg->p_bit_timing), FSP_ERR_CAN_INIT_FAILED);
 
+ #if BSP_FEATURE_CANFD_FD_SUPPORT
+
     /* Check that bit timing for FD bitrate switching is present and correct */
     can_bit_timing_cfg_t * p_data_timing = p_extend->p_data_timing;
     FSP_ASSERT(p_data_timing);
@@ -192,6 +198,7 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
     uint32_t nominal_rate_clocks = p_bit_timing->baud_rate_prescaler *
                                    (p_bit_timing->time_segment_1 + p_bit_timing->time_segment_2 + 1U);
     FSP_ERROR_RETURN(data_rate_clocks <= nominal_rate_clocks, FSP_ERR_CAN_INIT_FAILED);
+ #endif
 #else
     uint32_t channel = p_cfg->channel;
 
@@ -309,6 +316,8 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
         ((p_cfg->p_bit_timing->time_segment_2 - 1U) << R_CANFD_CFDC_NCFG_NTSEG2_Pos) |
         ((p_cfg->p_bit_timing->synchronization_jump_width - 1U) << R_CANFD_CFDC_NCFG_NSJW_Pos);
 
+#if BSP_FEATURE_CANFD_FD_SUPPORT
+
     /* Configure data bitrate for rate switching on FD frames */
     R_CANFD->CFDC2[channel].DCFG =
         (uint32_t) (((p_extend->p_data_timing->baud_rate_prescaler - 1) & R_CANFD_CFDC2_DCFG_DBRP_Msk) <<
@@ -329,6 +338,7 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
         (tdco << R_CANFD_CFDC2_FDCFG_TDCO_Pos) |
         (uint32_t) (p_extend->delay_compensation << R_CANFD_CFDC2_FDCFG_TDCE_Pos) |
         R_CANFD_CFDC2_FDCFG_ESIC_Msk | 1U;
+#endif
 
     /* Write TX message buffer interrupt enable bits */
     memcpy((void *) &R_CANFD->CFDTMIEC[channel * CANFD_PRV_CFDTMIEC_LENGTH],
@@ -444,7 +454,8 @@ fsp_err_t R_CANFD_Close (can_ctrl_t * const p_api_ctrl)
  * @retval FSP_ERR_CAN_TRANSMIT_NOT_READY   Transmit in progress, cannot write data at this time.
  * @retval FSP_ERR_INVALID_ARGUMENT         Data length or buffer number invalid.
  * @retval FSP_ERR_INVALID_MODE             An FD option was set on a non-FD frame.
- * @retval FSP_ERR_ASSERTION                Null pointer presented
+ * @retval FSP_ERR_ASSERTION                One or more pointer arguments is NULL.
+ * @retval FSP_ERR_UNSUPPORTED              FD is not supported on this MCU.
  *****************************************************************************************************************/
 fsp_err_t R_CANFD_Write (can_ctrl_t * const p_api_ctrl, uint32_t buffer, can_frame_t * const p_frame)
 {
@@ -466,6 +477,7 @@ fsp_err_t R_CANFD_Write (can_ctrl_t * const p_api_ctrl, uint32_t buffer, can_fra
  #endif
 
     /* Check DLC field */
+ #if BSP_FEATURE_CANFD_FD_SUPPORT
     if (!(p_frame->options & CANFD_FRAME_OPTION_FD))
     {
         FSP_ERROR_RETURN(p_frame->data_length_code <= 8, FSP_ERR_INVALID_ARGUMENT);
@@ -481,6 +493,10 @@ fsp_err_t R_CANFD_Write (can_ctrl_t * const p_api_ctrl, uint32_t buffer, can_fra
         /* Do nothing. */
     }
 
+ #else
+    FSP_ERROR_RETURN(p_frame->data_length_code <= 8, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(p_frame->options == 0, FSP_ERR_UNSUPPORTED);
+ #endif
 #else
     canfd_instance_ctrl_t * p_ctrl = (canfd_instance_ctrl_t *) p_api_ctrl;
 #endif
@@ -491,14 +507,22 @@ fsp_err_t R_CANFD_Write (can_ctrl_t * const p_api_ctrl, uint32_t buffer, can_fra
     /* Ensure MB is ready */
     FSP_ERROR_RETURN(0U == R_CANFD->CFDTMSTS_b[txmb].TMTSTS, FSP_ERR_CAN_TRANSMIT_NOT_READY);
 
-    /* Set TX message buffer registers */
+    /* Set ID */
     R_CANFD->CFDTM[txmb].ID = p_frame->id | ((uint32_t) p_frame->type << R_CANFD_CFDTM_ID_TMRTR_Pos) |
                               ((uint32_t) p_frame->id_mode << R_CANFD_CFDTM_ID_TMIDE_Pos);
+#if BSP_FEATURE_CANFD_FD_SUPPORT
+
+    /* Set DLC */
     R_CANFD->CFDTM[txmb].PTR = (uint32_t) r_canfd_bytes_to_dlc(p_frame->data_length_code) <<
                                R_CANFD_CFDTM_PTR_TMDLC_Pos;
 
     /* Set FD bits (ESI, BRS and FDF) */
     R_CANFD->CFDTM[txmb].FDCTR = p_frame->options & 7U;
+#else
+
+    /* Set DLC */
+    R_CANFD->CFDTM[txmb].PTR = (uint32_t) p_frame->data_length_code << R_CANFD_CFDTM_PTR_TMDLC_Pos;
+#endif
 
     /* Copy data to register buffer */
     uint32_t  len    = p_frame->data_length_code;
@@ -809,8 +833,13 @@ static void r_canfd_mb_read (uint32_t buffer, can_frame_t * const frame)
     /* Get the frame type */
     frame->type = (can_frame_type_t) ((id & R_CANFD_CFDRM_ID_RMRTR_Msk) >> R_CANFD_CFDRM_ID_RMRTR_Pos);
 
+#if BSP_FEATURE_CANFD_FD_SUPPORT
+
     /* Get FD status bits (ESI, BRS and FDF) */
     frame->options = mb_regs->FDSTS & 7U;
+#else
+    frame->options = 0U;
+#endif
 
     /* Get the frame ID */
     frame->id = id & R_CANFD_CFDRM_ID_RMID_Msk;
@@ -1153,6 +1182,8 @@ static void r_canfd_mode_ctr_set (volatile uint32_t * p_ctr_reg, can_operation_m
     FSP_HARDWARE_REGISTER_WAIT((*p_sts_reg & CANFD_PRV_CTR_MODE_MASK), operation_mode);
 }
 
+#if BSP_FEATURE_CANFD_FD_SUPPORT
+
 /*******************************************************************************************************************//**
  * Converts bytes into a DLC value
  * @param[in]  bytes       Number of payload bytes
@@ -1171,3 +1202,5 @@ static uint8_t r_canfd_bytes_to_dlc (uint8_t bytes)
 
     return (uint8_t) (0xDU + ((bytes / 16U) - 2U));
 }
+
+#endif

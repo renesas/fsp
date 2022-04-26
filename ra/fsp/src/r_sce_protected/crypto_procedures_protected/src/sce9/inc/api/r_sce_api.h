@@ -2079,7 +2079,7 @@ typedef struct st_sce_api
      * @param[in]     sce_pre_master_secret  pre-master secret value for SCE.
      * @param[in]     client_random          random value reported ClientHello.
      * @param[in]     server_random          random value reported ServerHello.
-     * @param[out]    sce_master_secret      master secret value for SCE.
+     * @param[out]    sce_master_secret      master secret value with SCE-specific conversion.
      *
      * @retval FSP_SUCCESS                          Normal termination
      * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed

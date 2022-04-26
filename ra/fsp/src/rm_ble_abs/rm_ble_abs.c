@@ -4619,7 +4619,7 @@ static void ble_abs_timer_remove_timer (ble_abs_instance_ctrl_t * const p_instan
     p_instance_ctrl->timer[timer_hdl].status = BLE_TIMER_STATUS_IDLE;
 }
 
-static void ble_abs_timer_event_cb ()
+static void ble_abs_timer_event_cb (void)
 {
     ble_abs_instance_ctrl_t * p_instance_ctrl = gp_instance_ctrl;
 

@@ -9,6 +9,8 @@
 /******************************************************************************
  * Macro definitions
  ******************************************************************************/
+// #define HID_OUT_TRNASFER
+
 #define USB_BCDNUM                   (0x0200U) /* bcdUSB */
 #define USB_RELEASE                  (0x0200U) /* Release Number */
 #define USB_CONFIGNUM                (1U)      /* Configuration number */
@@ -17,7 +19,12 @@
 #define USB_IFPROTOCOL               (USB_IFPRO_KBD)
 #define ITEM_LEN                     (76U)
 #define MXPS                         (8U)
+
+#ifdef HID_OUT_TRNASFER
+#define NUM_EP                       (2U)
+#else   /* HID_OUT_TRNASFER */
 #define NUM_EP                       (1U)
+#endif  /* HID_OUT_TRNASFER */
 
 /* [Vendor ID & Product ID setting] */
 #define USB_VENDORID                 (0x0000U)
@@ -27,7 +34,11 @@
 #define NUM_STRING_DESCRIPTOR        (7U)
 
 /* Configuration Descriptor Length */
+#ifdef HID_OUT_TRNASFER
+#define CD_LEN                       (34+7U)
+#else   /* HID_OUT_TRNASFER */
 #define CD_LEN                       (34U)
+#endif  /* HID_OUT_TRNASFER */
 
 /* Descriptor data Mask */
 #define USB_VALUE_32                 (32)
@@ -53,7 +64,12 @@
 /************************************************************
  *  Device Descriptor                                       *
  ************************************************************/
+#ifdef HID_OUT_TRNASFER
+#define DEVICE_FRAME_LENGTH_SPEED    (59U)
+#else /* HID_OUT_TRNASFER */
 #define DEVICE_FRAME_LENGTH_SPEED    (52U)
+#endif /* HID_OUT_TRNASFER */
+
 uint8_t g_device_framework_full_speed[DEVICE_FRAME_LENGTH_SPEED] =
 {
     /* Device Descriptor */
@@ -117,6 +133,17 @@ uint8_t g_device_framework_full_speed[DEVICE_FRAME_LENGTH_SPEED] =
     MXPS,                                                                 /*  4:wMaxPacketSize_lo */
     0,                                                                    /*  5:wMaxPacketSize_hi */
     0x0A,                                                                 /*  6:bInterval */
+
+#ifdef HID_OUT_TRNASFER
+    /* Endpoint Descriptor 0 */
+    USB_ED_BLENGTH,                                             /*  0:bLength */
+    USB_DT_ENDPOINT,                                            /*  1:bDescriptorType */
+    (uint8_t) (USB_EP_OUT | USB_EP2),                           /*  2:bEndpointAddress */
+    USB_EP_INT,                                                 /*  3:bmAttribute */
+    64,                                                         /*  4:wMaxPacketSize_lo */
+    0,                                                          /*  5:wMaxPacketSize_hi */
+    0x0A,                                                       /*  6:bInterval */
+#endif /* HID_OUT_TRNASFER */
 };
 
 /************************************************************
@@ -161,7 +188,7 @@ uint8_t g_string_framework[] =
     '1',
 
     /* iConfiguration */
-    0x09, 0x04, 0x3, 11,
+    0x09, 0x04, 0x4, 11,
     'F',
     'S',
     ' ',
@@ -219,7 +246,7 @@ uint8_t g_apl_report[USB_VALUE_76] =
     USB_VALUE_29H, USB_VALUE_65H,      /* Usage Maximum (101) */
     USB_VALUE_81H, 0x00,               /* Input (Data , Array)  ;Key arrays (6 bytes) */
 
-    /* *** The OUTPUR REPORT *** */
+    /* *** The OUTPUT REPORT *** */
     0x09, 0x00,                        /* Usage ID within this page (Vendor defined)*/
     0x15, 0x00,                        /* Logical Min 0 */
     USB_VALUE_26H, USB_UCHAR_MAX, 0x00,/* Logical Max 255 */

@@ -321,7 +321,7 @@ static void _SetLUTEntry (LCD_COLOR Color, uint8_t Pos)
 
 #if (EMWIN_LCD_NUM_FRAMEBUFFERS == 2)
 
-static void vsync_wait ()
+static void vsync_wait (void)
 {
  #if EMWIN_LCD_VSYNC_WAIT
   #if EMWIN_CFG_RTOS == 2              // FreeRTOS

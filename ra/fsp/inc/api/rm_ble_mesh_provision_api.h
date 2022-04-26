@@ -500,7 +500,7 @@ typedef struct st_rm_ble_mesh_provision_api
      * @param [in] info     Device information.
      * @param [in] timeout  The time period for which the setup shall be active.
      *
-     * @return API_SUCCESS or Error Code on failure
+     * @return FSP_SUCCESS or Error Code on failure
      */
     fsp_err_t (* setup)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, rm_ble_mesh_provision_role_t role,
                         rm_ble_mesh_provision_device_info_t info, uint16_t timeout);
@@ -509,14 +509,16 @@ typedef struct st_rm_ble_mesh_provision_api
      * @par Implemented as
      * - @ref RM_BLE_MESH_PROVISION_Bind()
      *
-     * @param [in] p_ctrl   Pointer to control structure.
-     * @param [in] info     Device information.
+     * @param [in] p_ctrl    Pointer to control structure.
+     * @param [in] info      Device information.
+     * @param [in] attention The attention duration in seconds to be configured by the device.
+     *                       This parameter is dont care if the role is RM_BLE_MESH_PROVISION_ROLE_DEVICE.
      * @param [out] p_handle Pointer to handle.
      *
      * @note This API is for use by the Provisioner application only upon
      *  reception of an Unprovisioned Device Beacon.
      *
-     * @return API_SUCCESS or Error Code on failure
+     * @return FSP_SUCCESS or Error Code on failure
      */
     fsp_err_t (* bind)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, rm_ble_mesh_provision_device_info_t info,
                        uint8_t attention, rm_ble_mesh_provision_handle_t * const p_handle);
@@ -533,7 +535,7 @@ typedef struct st_rm_ble_mesh_provision_api
      *                  PROV_PDU_TYPE_DATA
      * @param [in] pdu_data  Pointer to the data corresponding to the above PDUs
      *
-     * @return API_SUCCESS or Error Code on failure
+     * @return FSP_SUCCESS or Error Code on failure
      */
     fsp_err_t (* sendPdu)(rm_ble_mesh_provision_ctrl_t * const p_ctrl,
                           rm_ble_mesh_provision_handle_t const * const p_handle, rm_ble_mesh_provision_pdu_type_t type,
@@ -545,9 +547,9 @@ typedef struct st_rm_ble_mesh_provision_api
      *
      * @param [in] p_ctrl     Pointer to control structure.
      * @param [in] p_handle   Pointer to provisioning context to be used.
-     * @param [in] auth_value Pointer to the Authval (UINT32 *) or (uint8_t *)
+     * @param [in] auth_value The buffer structure that is stored authentication data and data size.
      *
-     * @return API_SUCCESS or Error Code on failure
+     * @return FSP_SUCCESS or Error Code on failure
      */
     fsp_err_t (* setAuthVal)(rm_ble_mesh_provision_ctrl_t * const p_ctrl,
                              rm_ble_mesh_provision_handle_t const * const p_handle, rm_ble_mesh_buffer_t auth_value);
@@ -560,7 +562,7 @@ typedef struct st_rm_ble_mesh_provision_api
      * @param [in] p_handle  Pointer to provisioning context to be used.
      * @param [in] reason    Reason for termination.
      *
-     * @return API_SUCCESS or Error Code on failure
+     * @return FSP_SUCCESS or Error Code on failure
      */
     fsp_err_t (* abort)(rm_ble_mesh_provision_ctrl_t * const         p_ctrl,
                         rm_ble_mesh_provision_handle_t const * const p_handle,
@@ -575,7 +577,7 @@ typedef struct st_rm_ble_mesh_provision_api
      * @param [out] public_key To a pointer of uint8_t array of length
      *               @ref RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE
      *
-     * @return API_SUCCESS or Error Code on failure
+     * @return FSP_SUCCESS or Error Code on failure
      */
     fsp_err_t (* getLocalPublicKey)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t * const public_key);
 
@@ -588,9 +590,49 @@ typedef struct st_rm_ble_mesh_provision_api
      * @param [out] public_key To a pointer of uint8_t array of length
      *               @ref RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE
      *
-     * @return API_SUCCESS or Error Code on failure
+     * @return FSP_SUCCESS or Error Code on failure
      */
     fsp_err_t (* setLocalPublicKey)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t const * const public_key);
+
+    /** Utility API to generate 128bits (16 bytes) randomized number to be used for provisioning.
+     * @par Implemented as
+     * - @ref RM_BLE_MESH_PROVISION_GenerateRandomizedNumber()
+     *
+     * @param [in] p_ctrl    Pointer to control structure.
+     *
+     * @param [out] p_key    Pointer to buffer to store random number
+     *
+     * @return FSP_SUCCESS or Error Code on failure
+     */
+    fsp_err_t (* generateRandomizedNumber)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t * const p_key);
+
+    /** Utility API to set device out of band public key for provisioning.
+     * @par Implemented as
+     * - @ref RM_BLE_MESH_PROVISION_SetOobPublicKey()
+     *
+     * @param [in] p_ctrl    Pointer to control structure.
+     *
+     * @param [in] p_key     Pointer to Public Key
+     * @param [out] size     Size of public key
+     *
+     * @return FSP_SUCCESS or Error Code on failure
+     */
+    fsp_err_t (* setOobPublicKey)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t const * const p_key,
+                                  uint8_t size);
+
+    /** Utility API to set device out of band authentication information for provisioning.
+     * @par Implemented as
+     * - @ref RM_BLE_MESH_PROVISION_SetOobAuthInfo()
+     *
+     * @param [in] p_ctrl       Pointer to control structure.
+     *
+     * @param [out] p_auth_info Pointer to authentication information.
+     * @param [out] size        Size of authentication information.
+     *
+     * @return FSP_SUCCESS or Error Code on failure
+     */
+    fsp_err_t (* setOobAuthInfo)(rm_ble_mesh_provision_ctrl_t * const p_ctrl, uint8_t const * const p_auth_info,
+                                 uint8_t size);
 } rm_ble_mesh_provision_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

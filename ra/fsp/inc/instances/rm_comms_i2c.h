@@ -44,7 +44,7 @@
  #else
   #define BSP_CFG_RTOS    0
  #endif
-#elif defined(__CCRL__) || defined(__ICCRL__) || defined(__RL78__)
+#elif defined(__CCRL__) || defined(__ICCRL78__) || defined(__RL78__)
  #include "r_comms_i2c_rl_config.h"
 #else
  #include "r_i2c_master_api.h"
@@ -149,7 +149,7 @@ fsp_err_t RM_COMMS_I2C_WriteRead(rm_comms_ctrl_t * const            p_api_ctrl,
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)
 void rm_comms_i2c_callback(rm_comms_ctrl_t const * p_api_ctrl);
 
-#elif defined(__CCRL__) || defined(__ICCRL__) || defined(__RL78__)
+#elif defined(__CCRL__) || defined(__ICCRL78__) || defined(__RL78__)
 void rm_comms_i2c_callback(rm_comms_ctrl_t const * p_api_ctrl, bool aborted);
 
 #else

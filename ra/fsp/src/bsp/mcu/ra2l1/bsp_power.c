@@ -69,7 +69,7 @@ static inline void bsp_power_dcdc_disable (bsp_power_mode_t mode)
  * This function follows the procedure given in the RA2L1 User's Manual (R01UH0853EJ0100) Section 10.5.1 (3) "Switching
  * from the High-Speed/Middle-Speed mode (LDO power mode) to the High-speed/Middle speed mode (DCDC power mode)"
  **********************************************************************************************************************/
-static inline void bsp_power_dcdc_enable ()
+static inline void bsp_power_dcdc_enable (void)
 {
     /* Enable DCDC IO buffer. */
     uint8_t dcdcctl = R_SYSTEM->DCDCCTL | R_SYSTEM_DCDCCTL_STOPZA_Msk;

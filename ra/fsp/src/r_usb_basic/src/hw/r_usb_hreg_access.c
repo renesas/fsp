@@ -821,8 +821,16 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
             }
         }
 
-        USB_M0->INTSTS1 &= ((~USB_OVRCRE) & INTSTS1_MASK);
-        USB_M0->INTENB0  = ((USB_BEMPE | USB_NRDYE) | USB_BRDYE);
+        /*
+         *  When R_USB_Open function was called immediately after calling R_USB_Close function,
+         *  D+ line keeps High level since VBUS shifts to High level before USB Periheral Device recognizes VBUS Low,
+         *  The Attach interrupt is genrated since D+ line keeps High level.
+         *  When "INTSTS1 = 0" is described code, the Attach interrupt is canceled. "INTSTS1 = 0" is NG.
+         *  The following code(INTSTS1) is correct.
+         */
+        USB_M0->INTSTS1 = ((~USB_OVRCRE) & INTSTS1_MASK);
+
+        USB_M0->INTENB0 = ((USB_BEMPE | USB_NRDYE) | USB_BRDYE);
  #if !defined(USB_CFG_OTG_USE)
         USB_M0->INTENB1 = (USB_OVRCRE | USB_ATTCH);
  #endif                                /* !defined (USB_CFG_OTG_USE) */
@@ -943,7 +951,15 @@ void hw_usb_hmodule_init (uint8_t usb_ip)
             }
         }
 
-        USB_M1->INTSTS1 = 0;
+        /*
+         *  When R_USB_Open function was called immediately after calling R_USB_Close function,
+         *  D+ line keeps High level since VBUS shifts to High level before USB Periheral Device recognizes VBUS Low,
+         *  The Attach interrupt is genrated since D+ line keeps High level.
+         *  When "INTSTS1 = 0" is described code, the Attach interrupt is canceled. "INTSTS1 = 0" is NG.
+         *  The following code(INTSTS1) is correct.
+         */
+        USB_M1->INTSTS1 = (~USB_OVRCRE & INTSTS1_MASK);
+
         USB_M1->INTENB0 = (USB_BEMPE | USB_NRDYE | USB_BRDYE);
   #if defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5)
         USB_M1->INTENB1 = (USB_OVRCRE | USB_ATTCH);

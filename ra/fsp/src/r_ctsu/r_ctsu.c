@@ -1466,9 +1466,11 @@ fsp_err_t R_CTSU_Close (ctsu_ctrl_t * const p_ctrl)
  *
  * By setting the third argument to CTSU_SPECIFIC_SELECTED_DATA,
  * Get bitmap of the frequency values used in majority decision from the second argument.
- * The bitch map is shown as follows.
- * ||2bit                | 1bit                | 0bit                ||
- * ||3rd frequency value | 2nd frequency value | 1st frequency value ||
+ * The bitmap is shown as follows.
+ *
+ * | 2bit                | 1bit                | 0bit                |
+ * |---------------------|---------------------|---------------------|
+ * | 3rd frequency value | 2nd frequency value | 1st frequency value |
  *
  * Implements @ref ctsu_api_t::specificDataGet.
  *

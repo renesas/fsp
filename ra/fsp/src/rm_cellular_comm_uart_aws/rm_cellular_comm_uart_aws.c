@@ -76,10 +76,15 @@ void comm_uart_aws_callback (uart_callback_args_t * p_args)
             {
                 /* Kick off zero-copy transfer */
                 p_instance_ctrl->p_recv_buffer[0] = data_byte;
-                p_instance_ctrl->recv_read_length--;
+                p_instance_ctrl->remaining_recv_read_length--;
                 p_instance_ctrl->p_recv_buffer++;
+                p_instance_ctrl->current_recv_read_length--;
 
-                p_uart_instance->p_api->read(p_uart_instance->p_ctrl, p_instance_ctrl->p_recv_buffer, 1);
+                p_uart_instance->p_api->read(p_uart_instance->p_ctrl,
+                                             p_instance_ctrl->p_recv_buffer,
+                                             p_instance_ctrl->current_recv_read_length);
+
+                p_instance_ctrl->transfer_in_progress = true;
             }
 
             break;
@@ -87,13 +92,27 @@ void comm_uart_aws_callback (uart_callback_args_t * p_args)
 
         case UART_EVENT_RX_COMPLETE:
         {
-            p_instance_ctrl->recv_read_length--;
+            /* Read complete, update remaining length */
+            p_instance_ctrl->remaining_recv_read_length = p_instance_ctrl->remaining_recv_read_length -
+                                                          p_instance_ctrl->current_recv_read_length;
 
-            if (p_instance_ctrl->recv_read_length > 0)
+            if (p_instance_ctrl->remaining_recv_read_length > 0)
             {
+                p_instance_ctrl->p_recv_buffer += p_instance_ctrl->current_recv_read_length;
+
                 /* Buffer hasn't been filled yet, continue reading */
-                p_instance_ctrl->p_recv_buffer++;
-                p_uart_instance->p_api->read(p_uart_instance->p_ctrl, p_instance_ctrl->p_recv_buffer, 1);
+                if (p_instance_ctrl->remaining_recv_read_length > RM_CELLULAR_COMM_UART_AWS_RECEIVE_CLUSTER_BYTE_COUNT)
+                {
+                    p_instance_ctrl->current_recv_read_length = RM_CELLULAR_COMM_UART_AWS_RECEIVE_CLUSTER_BYTE_COUNT;
+                }
+                else
+                {
+                    p_instance_ctrl->current_recv_read_length = p_instance_ctrl->remaining_recv_read_length;
+                }
+
+                p_uart_instance->p_api->read(p_uart_instance->p_ctrl,
+                                             p_instance_ctrl->p_recv_buffer,
+                                             p_instance_ctrl->current_recv_read_length);
             }
             else
             {
@@ -149,10 +168,11 @@ CellularCommInterfaceError_t RM_CELLULAR_COMM_UART_AWS_Open (
     FSP_ERROR_RETURN(NULL != receive_callback, IOT_COMM_INTERFACE_BAD_PARAMETER);
 #endif
 
-    p_instance_ctrl->p_user_data      = pUserData;
-    p_instance_ctrl->receive_callback = receive_callback;
-    p_instance_ctrl->read_count       = 0;
-    p_instance_ctrl->p_recv_buffer    = NULL;
+    p_instance_ctrl->p_user_data          = pUserData;
+    p_instance_ctrl->receive_callback     = receive_callback;
+    p_instance_ctrl->read_count           = 0;
+    p_instance_ctrl->p_recv_buffer        = NULL;
+    p_instance_ctrl->transfer_in_progress = false;
 
     p_uart_instance = p_instance_ctrl->p_lower_level_instance;
 
@@ -264,6 +284,7 @@ CellularCommInterfaceError_t RM_CELLULAR_COMM_UART_AWS_Receive (CellularCommInte
 {
     rm_cellular_comm_uart_aws_instance_ctrl_t * p_instance_ctrl =
         (rm_cellular_comm_uart_aws_instance_ctrl_t *) commInterfaceHandle;
+
 #if RM_CELLULAR_COMM_UART_AWS_PARAM_CHECKING_ENABLE
     FSP_ERROR_RETURN(NULL != p_instance_ctrl, IOT_COMM_INTERFACE_BAD_PARAMETER);
     FSP_ERROR_RETURN(NULL != pBuffer, IOT_COMM_INTERFACE_BAD_PARAMETER);
@@ -274,66 +295,121 @@ CellularCommInterfaceError_t RM_CELLULAR_COMM_UART_AWS_Receive (CellularCommInte
     FSP_CRITICAL_SECTION_DEFINE;
     FSP_CRITICAL_SECTION_ENTER;
 
-    p_instance_ctrl->recv_read_length = bufferLength - p_instance_ctrl->read_count;
-    p_instance_ctrl->p_recv_buffer    = pBuffer + p_instance_ctrl->read_count;
-
-    memcpy(pBuffer, p_instance_ctrl->rx_buffer, p_instance_ctrl->read_count);
-    p_instance_ctrl->read_count = 0;
-
-    FSP_CRITICAL_SECTION_EXIT;
-
-    /* Loop until timeout/transfer complete */
-    while (true)
+    if (bufferLength > p_instance_ctrl->read_count)
     {
-        /* Wait for UART_EVENT_RX_COMPLETE semaphore */
-        if (pdTRUE == xSemaphoreTake(p_instance_ctrl->rx_semaphore_handle, pdMS_TO_TICKS(timeoutMilliseconds)))
+        p_instance_ctrl->remaining_recv_read_length = bufferLength - p_instance_ctrl->read_count;
+        p_instance_ctrl->p_recv_buffer              = pBuffer + p_instance_ctrl->read_count;
+
+        if (p_instance_ctrl->remaining_recv_read_length > RM_CELLULAR_COMM_UART_AWS_RECEIVE_CLUSTER_BYTE_COUNT)
         {
-            if ((0 == p_instance_ctrl->recv_read_length) && (NULL == p_instance_ctrl->p_recv_buffer))
-            {
-                /* Full bufferLength was read */
-                *pDataReceivedLength = bufferLength;
-                break;
-            }
+#if RM_CELLULAR_COMM_UART_AWS_RECEIVE_CLUSTER_BYTE_COUNT > 1
+            p_instance_ctrl->current_recv_read_length = RM_CELLULAR_COMM_UART_AWS_RECEIVE_CLUSTER_BYTE_COUNT;
+#else
+
+            /* Special case for 1 */
+            p_instance_ctrl->current_recv_read_length = RM_CELLULAR_COMM_UART_AWS_RECEIVE_CLUSTER_BYTE_COUNT + 1;
+#endif
         }
         else
         {
-            /* Byte read timed out */
-            FSP_CRITICAL_SECTION_ENTER;
+            p_instance_ctrl->current_recv_read_length = p_instance_ctrl->remaining_recv_read_length;
+        }
 
-            p_instance_ctrl->p_recv_buffer = NULL;
+        memcpy(pBuffer, p_instance_ctrl->rx_buffer, p_instance_ctrl->read_count);
 
-            /* Check for semaphore one more time inside critical section */
-            if (pdTRUE != xSemaphoreTake(p_instance_ctrl->rx_semaphore_handle, 0))
+        p_instance_ctrl->read_count = 0;
+    }
+    else
+    {
+        /* Amount to store in read buffer is less than or equal to what has been read in rx_buffer, only copy bufferLength */
+        memcpy(pBuffer, p_instance_ctrl->rx_buffer, bufferLength);
+
+        if (bufferLength < p_instance_ctrl->read_count)
+        {
+            /* Buffer length is less than read count, move bytes not copied to pBuffer to front of rx_buffer */
+            p_instance_ctrl->read_count = p_instance_ctrl->read_count - bufferLength;
+
+            memcpy(p_instance_ctrl->rx_buffer, p_instance_ctrl->rx_buffer + bufferLength, p_instance_ctrl->read_count);
+        }
+        else
+        {
+            p_instance_ctrl->read_count = 0;
+        }
+
+        *pDataReceivedLength = bufferLength;
+    }
+
+    FSP_CRITICAL_SECTION_EXIT;
+
+    if (NULL != p_instance_ctrl->p_recv_buffer)
+    {
+        /* Loop until timeout/transfer complete */
+        while (true)
+        {
+            /* Wait for UART_EVENT_RX_COMPLETE semaphore */
+            if (pdTRUE == xSemaphoreTake(p_instance_ctrl->rx_semaphore_handle, pdMS_TO_TICKS(timeoutMilliseconds)))
             {
-                /* Semaphore not posted, continue to abort read */
-                uart_instance_t * p_uart_instance = p_instance_ctrl->p_lower_level_instance;
-                uint32_t          remaining_bytes;
-
-                /* No more data received, cancel transfer */
-                if (FSP_SUCCESS != p_uart_instance->p_api->readStop(p_uart_instance->p_ctrl, &remaining_bytes))
+                if ((0 == p_instance_ctrl->remaining_recv_read_length) && (NULL == p_instance_ctrl->p_recv_buffer))
                 {
-                    FSP_CRITICAL_SECTION_EXIT;
-                    *pDataReceivedLength = 0;
+                    /* Full bufferLength was read */
+                    *pDataReceivedLength = bufferLength;
+                    break;
+                }
+            }
+            else
+            {
+                /* Byte read timed out */
+                FSP_CRITICAL_SECTION_ENTER;
 
-                    return IOT_COMM_INTERFACE_DRIVER_ERROR;
+                p_instance_ctrl->p_recv_buffer = NULL;
+
+                /* Check for semaphore one more time inside critical section */
+                if (pdTRUE != xSemaphoreTake(p_instance_ctrl->rx_semaphore_handle, 0))
+                {
+                    /* Semaphore not posted, continue to abort read */
+                    uart_instance_t * p_uart_instance = p_instance_ctrl->p_lower_level_instance;
+                    uint32_t          remaining_bytes;
+
+                    if (p_instance_ctrl->transfer_in_progress)
+                    {
+                        if (FSP_SUCCESS != p_uart_instance->p_api->readStop(p_uart_instance->p_ctrl, &remaining_bytes))
+                        {
+                            /* No more data received, cancel transfer */
+                            FSP_CRITICAL_SECTION_EXIT;
+                            *pDataReceivedLength = 0;
+
+                            return IOT_COMM_INTERFACE_DRIVER_ERROR;
+                        }
+
+                        /* Get received data length */
+                        uint32_t current_bytes_read    = p_instance_ctrl->current_recv_read_length - remaining_bytes;
+                        uint32_t total_remaining_bytes = p_instance_ctrl->remaining_recv_read_length -
+                                                         current_bytes_read;
+                        *pDataReceivedLength = bufferLength - total_remaining_bytes;
+                    }
+                    else
+                    {
+                        /* Transfer never started */
+                        *pDataReceivedLength = bufferLength - p_instance_ctrl->remaining_recv_read_length;
+                    }
+
+                    FSP_CRITICAL_SECTION_EXIT;
+                    break;
                 }
 
-                /* Get received data length */
-                *pDataReceivedLength = bufferLength - p_instance_ctrl->recv_read_length;
-                FSP_CRITICAL_SECTION_EXIT;
-                break;
-            }
+                if ((0 == p_instance_ctrl->remaining_recv_read_length) && (NULL == p_instance_ctrl->p_recv_buffer))
+                {
+                    /* Full bufferLength was read */
+                    *pDataReceivedLength = bufferLength;
+                    FSP_CRITICAL_SECTION_EXIT;
+                    break;
+                }
 
-            if ((0 == p_instance_ctrl->recv_read_length) && (NULL == p_instance_ctrl->p_recv_buffer))
-            {
-                /* Full bufferLength was read */
-                *pDataReceivedLength = bufferLength;
                 FSP_CRITICAL_SECTION_EXIT;
-                break;
             }
-
-            FSP_CRITICAL_SECTION_EXIT;
         }
+
+        p_instance_ctrl->transfer_in_progress = false;
     }
 
     return IOT_COMM_INTERFACE_SUCCESS;

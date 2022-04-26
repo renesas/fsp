@@ -129,6 +129,7 @@
 
 #define BSP_FEATURE_CANFD_NUM_CHANNELS                    (0U)                  // Feature not available on this MCU
 #define BSP_FEATURE_CANFD_LITE                            (0U)
+#define BSP_FEATURE_CANFD_FD_SUPPORT                      (0U)
 
 #define BSP_FEATURE_CGC_HAS_BCLK                          (0U)
 #define BSP_FEATURE_CGC_HAS_FCLK                          (0U)
@@ -257,6 +258,8 @@
 #define BSP_FEATURE_IOPORT_ELC_PORTS                      (0x0006U)
 #define BSP_FEATURE_IOPORT_HAS_ETHERNET                   (0U)
 
+#define BSP_FEATURE_KINT_HAS_MSTP                         (0U)
+
 #define BSP_FEATURE_LPM_CHANGE_MSTP_ARRAY                 (0) // Feature not available on this MCU
 #define BSP_FEATURE_LPM_CHANGE_MSTP_REQUIRED              (0U)
 #define BSP_FEATURE_LPM_DPSIEGR_MASK                      (0) // Feature not available on this MCU
@@ -296,6 +299,8 @@
 #define BSP_FEATURE_POEG_CHANNEL_MASK                     (0x3U)
 
 #define BSP_FEATURE_QSPI_DEVICE_START_ADDRESS             (0x0U)
+
+#define BSP_FEATURE_RTC_HAS_ROPSEL                        (0U)
 
 #define BSP_FEATURE_SCI_VERSION                           (1U)
 #define BSP_FEATURE_SCI_ADDRESS_MATCH_CHANNELS            (BSP_FEATURE_SCI_CHANNELS)

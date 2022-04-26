@@ -255,7 +255,6 @@ int mbedtls_rsa_public (mbedtls_rsa_context * ctx, const unsigned char * input, 
 
     hw_sce_rsa_public_encrypt_t p_hw_sce_rsa_public_encrypt;
 
-    // TODO: temporary implementation.
     if (ctx->len == RSA_MODULUS_SIZE_BYTES(RSA_2048_BITS))
     {
         p_hw_sce_rsa_public_encrypt = HW_SCE_RSA_2048PublicKeyEncrypt;

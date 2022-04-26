@@ -111,7 +111,7 @@ fsp_err_t R_IIRFA_Open (iir_ctrl_t * const p_api_ctrl, iir_cfg_t const * const p
 /******************************************************************************************************************//**
  * Start a filter operation on the specified data.
  *
- * @retval   FSP_SUCCESS                Data is successfully written to the D/A Converter.
+ * @retval   FSP_SUCCESS                Data has been successfully filtered.
  * @retval   FSP_ERR_ASSERTION          One of the provided pointers is NULL.
  * @retval   FSP_ERR_NOT_OPEN           Instance is not open.
  * @retval   FSP_ERR_INVALID_ARGUMENT   num_samples is zero.

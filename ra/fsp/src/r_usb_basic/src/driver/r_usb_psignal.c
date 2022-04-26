@@ -187,7 +187,7 @@ void usb_pstd_detach_process (usb_utr_t * p_utr)
     /* Callback */
     if (USB_NULL != g_usb_pstd_driver.devdetach)
     {
-        (*g_usb_pstd_driver.devdetach)(p_utr, USB_NO_ARG, USB_NULL);
+        (*g_usb_pstd_driver.devdetach)(p_utr, USB_POWERED, USB_NULL);
     }
 
     usb_pstd_stop_clock(p_utr->ip);

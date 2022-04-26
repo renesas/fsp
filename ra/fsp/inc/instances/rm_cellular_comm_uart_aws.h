@@ -57,7 +57,9 @@ typedef struct st_rm_cellular_comm_uart_aws_instance_ctrl
 {
     uart_instance_t * p_lower_level_instance;                              ///< Lower level UART instance
     uint8_t         * p_recv_buffer;                                       ///< Receieve buffer to zero copy to
-    uint32_t          recv_read_length;                                    ///< Length to read to receive buffer
+    uint32_t          remaining_recv_read_length;                          ///< Length left overall to read to receive buffer
+    uint32_t          current_recv_read_length;                            ///< Length to read to receive buffer for current cluster of bytes
+    bool              transfer_in_progress;                                ///< Indicates if transfer is in progress for recv
     uint8_t           rx_buffer[RM_CELLULAR_COMM_UART_AWS_RX_BUFFER_SIZE]; ///< Receive Buffer
     uint32_t          read_count;                                          ///< Number of bytes read into rx_buffer so far
     StaticSemaphore_t tx_semaphore_buffer;                                 ///< Transmit semaphore buffer

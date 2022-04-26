@@ -44,6 +44,18 @@ FSP_HEADER
 /**********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#ifndef VOID
+ #define VOID    void
+typedef char           CHAR;
+typedef char           BOOL;
+typedef unsigned char  UCHAR;
+typedef int            INT;
+typedef unsigned int   UINT;
+typedef long           LONG;
+typedef unsigned long  ULONG;
+typedef short          SHORT;
+typedef unsigned short USHORT;
+#endif
 
 /** Options for the callback events. */
 typedef enum e_rm_filex_levelx_nor_event
@@ -78,8 +90,8 @@ typedef struct
 /** This structure encompasses everything that is needed to use an instance of this interface. */
 typedef struct st_rm_filex_levelx_nor_instance
 {
-    rm_filex_levelx_nor_instance_ctrl_t   * p_ctrl; ///< Pointer to the control structure for this instance
-    rm_filex_levelx_nor_cfg_t * const p_cfg;  ///< Pointer to the configuration structure for this instance
+    rm_filex_levelx_nor_instance_ctrl_t * p_ctrl; ///< Pointer to the control structure for this instance
+    rm_filex_levelx_nor_cfg_t const     * p_cfg;  ///< Pointer to the configuration structure for this instance
 } rm_filex_levelx_nor_instance_t;
 
 /**********************************************************************************************************************

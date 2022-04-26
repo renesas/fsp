@@ -40,9 +40,43 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
+/** GATT Interface Events */
+typedef enum e_rm_mesh_bearer_platform_interface_event
+{
+    /** The event GATT Bearer BLE Link Layer connected */
+    RM_MESH_BEARER_PLATFORM_INTERFACE_EVENT_UP = 0x00,
+
+    /** The event GATT Bearer BLE Link Layer disconnected */
+    RM_MESH_BEARER_PLATFORM_INTERFACE_EVENT_DOWN = 0x01,
+
+    /** The event GATT Bearer service enabled for communication */
+    RM_MESH_BEARER_PLATFORM_INTERFACE_EVENT_ENABLE = 0x02,
+
+    /** The event  GATT Bearer service disabled for communication */
+    RM_MESH_BEARER_PLATFORM_INTERFACE_EVENT_DISABLE = 0x03,
+
+    /** The event discovery process is not completed */
+    RM_MESH_BEARER_PLATFORM_INTERFACE_EVENT_NOT_FOUND = 0x04,
+
+    /** The event that connectable device having Mesh GATT Service is found*/
+    RM_MESH_BEARER_PLATFORM_INTERFACE_EVENT_SCAN = 0x05,
+
+    /** The Event  GATT/BLE link layer connection creation is canceled */
+    RM_MESH_BEARER_PLATFORM_INTERFACE_EVENT_CANCEL = 0x06,
+} rm_mesh_bearer_platform_interface_event_t;
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+
+/**
+ * @brief Callback function for GATT interface event.
+ *
+ * @param event_name  The event defined by @ref rm_mesh_bearer_platform_interface_event_t
+ * @param event_param The mode of GATT connection @ref rm_mesh_bearer_platform_gatt_mode_t
+ * @param conn_hdl    The connection handle
+ * @param peer_addr   Pointer to the connected device address
+ */
 typedef void (* rm_mesh_bearer_platform_gatt_iface_cb_t)(uint8_t event_name, uint8_t event_param, uint16_t conn_hdl,
                                                          st_ble_dev_addr_t * peer_addr);
 

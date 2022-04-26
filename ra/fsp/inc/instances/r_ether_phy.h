@@ -44,6 +44,7 @@ FSP_HEADER
 #define ETHER_PHY_CFG_USE_PHY_KSZ8091RNB    (1)
 #define ETHER_PHY_CFG_USE_PHY_KSZ8041       (2)
 #define ETHER_PHY_CFG_USE_PHY_DP83620       (3)
+#define ETHER_PHY_CFG_USE_PHY_ICS1894       (4)
 
 /***********************************************************************************************************************
  * Typedef definitions

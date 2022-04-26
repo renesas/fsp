@@ -526,7 +526,8 @@ uint16_t hw_usb_read_dvstctr (usb_utr_t * ptr)
     else
     {
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-        result = (ptr->ipp->DVSTCTR0);
+        ptr->ipp = usb_hstd_get_usb_ip_adr(ptr->ip);
+        result   = (ptr->ipp->DVSTCTR0);
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
     }
 
