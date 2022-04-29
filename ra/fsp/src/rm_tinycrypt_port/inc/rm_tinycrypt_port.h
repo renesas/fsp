@@ -30,14 +30,15 @@
  * @addtogroup RM_TINYCRYPT_PORT
  * @{
  **********************************************************************************************************************/
-fsp_err_t RM_TINCYRYPT_PORT_TRNG_Read(uint8_t * const p_rngbuf, uint32_t num_req_bytes);
-fsp_err_t RM_TINCYRYPT_PORT_Init(void);
 
  #ifdef __cplusplus
 extern "C"
 {
  #endif
-
+ 
+fsp_err_t RM_TINCYRYPT_PORT_TRNG_Read(uint8_t * const p_rngbuf, uint32_t num_req_bytes);
+fsp_err_t RM_TINCYRYPT_PORT_Init(void);
+ 
  #ifdef __cplusplus
 }
  #endif
