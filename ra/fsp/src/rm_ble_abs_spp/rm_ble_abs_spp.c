@@ -402,26 +402,36 @@ fsp_err_t RM_BLE_ABS_StartLegacyAdvertising (ble_abs_ctrl_t * const             
         g_mac_id_is_set = 1;
     }
 
-    FSP_ERROR_RETURN(FSP_SUCCESS == R_BLE_GAP_SetAdvParam(&advertising_parameter), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GAP_SetAdvParam(&advertising_parameter), FSP_ERR_INVALID_ARGUMENT);
 
+    if ((NULL != p_advertising_parameter->p_advertising_data) && (0 < p_advertising_parameter->advertising_data_length))
+    {
+        /* Configure the GAP Advertisment Payload. */
+        st_ble_gap_adv_data_t advertising_data = {0};
+        advertising_data.data_type   = (uint8_t) (BLE_GAP_ADV_DATA_MODE);
+        advertising_data.data_length = p_advertising_parameter->advertising_data_length;
+        advertising_data.p_data      = p_advertising_parameter->p_advertising_data;
+        FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GAP_SetAdvSresData(&advertising_data), FSP_ERR_INVALID_ARGUMENT);
+    }
+
+    if ((NULL != p_advertising_parameter->p_scan_response_data) &&
+        (0 < p_advertising_parameter->scan_response_data_length))
+    {
+        /* Configure the GAP Scan Response Payload. */
+        st_ble_gap_adv_data_t advertising_data = {0};
+        advertising_data.data_type   = (uint8_t) (BLE_GAP_SCAN_RSP_DATA_MODE);
+        advertising_data.data_length = p_advertising_parameter->scan_response_data_length;
+        advertising_data.p_data      = p_advertising_parameter->p_scan_response_data;
+        FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GAP_SetAdvSresData(&advertising_data), FSP_ERR_INVALID_ARGUMENT);
+    }
+
+    /* Start Legacy Advertisment. */
+    FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GAP_StartAdv(0, 0, 0), FSP_ERR_INVALID_ARGUMENT);
+
+    /* Set the internal status flags to indicate the advertisment mode. */
     uint32_t status =
         p_advertising_parameter->fast_advertising_period ? BLE_ABS_ADV_STATUS_PARAM_FAST : BLE_ABS_ADV_STATUS_PARAM_SLOW;
     ble_abs_set_advertising_status(p_instance_ctrl, advertising_handle, status, 0);
-
-    st_ble_evt_data_t        event;
-    st_ble_gap_adv_set_evt_t data;
-    data.adv_hdl    = 0x00;
-    event.param_len = sizeof(st_ble_gap_adv_set_evt_t);
-    event.p_param   = (void *) &data;
-    ble_abs_advertising_parameter_set_handler(p_instance_ctrl, &event);
-
-    st_ble_evt_data_t         event2;
-    st_ble_gap_adv_data_evt_t data2;
-    data2.adv_hdl    = 0x00;
-    data2.data_type  = 0x02;
-    event2.param_len = sizeof(st_ble_gap_adv_data_evt_t);
-    event2.p_param   = (void *) &data2;
-    ble_abs_advertising_data_set_handler(p_instance_ctrl, &event2);
 
     return FSP_SUCCESS;
 }                                      /* End of function RM_BLE_ABS_StartLegacyAdvertising() */

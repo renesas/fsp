@@ -275,16 +275,11 @@ ble_status_t R_BLE_GAP_StopAdv (uint8_t adv_hdl)
 ble_status_t R_BLE_GAP_SetAdvSresData (st_ble_gap_adv_data_t * p_adv_srsp_data)
 {
     r_ble_spp_adv_data_t advertising_data;
-    advertising_data.data_type   = R_BLE_SPP_ADV_DATA_MODE;
+    advertising_data.data_type   = (r_ble_spp_adv_type_t) p_adv_srsp_data->data_type;
     advertising_data.data_length = p_adv_srsp_data->data_length;
     advertising_data.p_data      = p_adv_srsp_data->p_data;
 
     /* Set advertising data */
-    BLE_SPP_COMMAND(R_BLE_SPP_GAP_SetAdvSresData(&advertising_data), R_BLE_SPP_EVENT_SET_ADV_SRES);
-
-    advertising_data.data_type = R_BLE_SPP_SCAN_RSP_DATA_MODE;
-
-    /* Set scan response data */
     BLE_SPP_COMMAND(R_BLE_SPP_GAP_SetAdvSresData(&advertising_data), R_BLE_SPP_EVENT_SET_ADV_SRES);
 
     return BLE_SUCCESS;
@@ -324,10 +319,10 @@ ble_status_t R_BLE_GAP_SetAdvParam (st_ble_gap_adv_param_t * p_adv_param)
 
     r_ble_spp_adv_param_t adv_param;
     adv_param.adv_ch_map    = chan_map;
-    adv_param.filter_policy = p_adv_param->filter_policy;
-    adv_param.adv_phy       = 0x01;
-    adv_param.sec_adv_phy   = 0x01;
-    adv_param.adv_prop_type = 0x0000;
+    adv_param.filter_policy = (r_ble_spp_filter_policy_t) p_adv_param->filter_policy;
+    adv_param.adv_phy       = R_BLE_SPP_SET_PHYS_PREF_1M;
+    adv_param.sec_adv_phy   = R_BLE_SPP_SET_PHYS_PREF_1M;
+    adv_param.adv_prop_type = R_BLE_SPP_ADV_TYPE_CONNECTABLE_UNDIRECTED;
     adv_param.adv_intv_min  = p_adv_param->adv_intv_min;
     adv_param.adv_intv_max  = p_adv_param->adv_intv_max;
 
@@ -792,8 +787,6 @@ static int r_ble_spp_api_fsp_callback_read (void * const   p_context,
     }
 
     return R_BLE_SPP_SUCCESS;
-
-    return err;
 }
 
 #endif
@@ -808,7 +801,12 @@ static int r_ble_spp_api_fsp_callback_close (void * p_context)
     err = bkup_context->p_spi_instance->p_api->close(bkup_context->p_spi_instance->p_ctrl);
 #endif
 
-    return err;
+    if (FSP_SUCCESS != err)
+    {
+        return R_BLE_APP_TRANSPORT_READ_ERROR;
+    }
+
+    return R_BLE_SPP_SUCCESS;
 }
 
 ble_status_t R_BLE_Execute (void)
