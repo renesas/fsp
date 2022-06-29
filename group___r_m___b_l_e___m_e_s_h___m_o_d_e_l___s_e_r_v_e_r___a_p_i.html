@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -335,6 +335,7 @@ property_ids</td>
 <td class="fieldname">
 property_ids_count</td>
 <td class="fielddoc">
+<p>Count of property_ids </p>
 </td></tr>
 </table>
 
@@ -352,7 +353,46 @@ property_ids_count</td>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Mesh model server callback parameter definition </p>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a194809a660fccf22c9aac56ccab6315f"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="acab02fb95c6b7469bccbfadee4823f40"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__model__req__msg__context__t">rm_ble_mesh_access_model_req_msg_context_t</a> *</td>
+<td class="fieldname">
+p_msg_context</td>
+<td class="fielddoc">
+Context of the message. </td></tr>
+<tr><td class="fieldtype">
+<a id="aaa55f93ca9c06f31751d5df5d394edee"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__req__msg__raw__t">rm_ble_mesh_access_req_msg_raw_t</a> *</td>
+<td class="fieldname">
+p_msg_raw</td>
+<td class="fielddoc">
+Uninterpreted/raw received message for a specific model instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5ff567a00d8754392278b318980441d9"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__model__req__msg__t">rm_ble_mesh_access_model_req_msg_t</a> *</td>
+<td class="fieldname">
+p_req_type</td>
+<td class="fielddoc">
+Requested message type for a specific model instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4f344b589ae119ec5f85b57f60d88b58"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__model__state__parameter__t">rm_ble_mesh_access_model_state_parameter_t</a> *</td>
+<td class="fieldname">
+p_state_parameter</td>
+<td class="fielddoc">
+Model specific state parameters in a request or response message. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5189e99579be7829cfe8603ccca2a0f5"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__extended__parameter__t">rm_ble_mesh_access_extended_parameter_t</a> *</td>
+<td class="fieldname">
+p_extended_parameter</td>
+<td class="fielddoc">
+Additional parameters in a Model specific request or response message. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structrm__ble__mesh__model__server__timeout__callback__args__t" id="structrm__ble__mesh__model__server__timeout__callback__args__t"></a>
@@ -375,7 +415,28 @@ property_ids_count</td>
   </table>
   </dd>
 </dl>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a705cc1e3cdf1b4527fba69428390acc1"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4c521ad8e2bfe3dc77a2a4e9f5beff88"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a> *</td>
+<td class="fieldname">
+p_handle</td>
+<td class="fielddoc">
+Access Model handle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7a87731c144db85df0f59b2306792fea"></a>void *</td>
+<td class="fieldname">
+p_blob</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
 </div>
 </div>
 <a name="structrm__ble__mesh__model__server__cfg__t" id="structrm__ble__mesh__model__server__cfg__t"></a>
@@ -394,9 +455,17 @@ property_ids_count</td>
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:aa6e267a29eef3d2734caff042aad8caa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__instance__t">rm_ble_mesh_access_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#aa6e267a29eef3d2734caff042aad8caa">p_access_instance</a></td></tr>
 <tr class="separator:aa6e267a29eef3d2734caff042aad8caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a45303fb91bdef282d708bc4ab89d34"><td class="memItemLeft" align="right" valign="top"><a id="a3a45303fb91bdef282d708bc4ab89d34"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a3a45303fb91bdef282d708bc4ab89d34">p_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__server__callback__args__t">rm_ble_mesh_model_server_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a3a45303fb91bdef282d708bc4ab89d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mesh model server callback. <br /></td></tr>
+<tr class="separator:a3a45303fb91bdef282d708bc4ab89d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b1bcc200bc0c6b85853254caae41c6a"><td class="memItemLeft" align="right" valign="top"><a id="a1b1bcc200bc0c6b85853254caae41c6a"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a1b1bcc200bc0c6b85853254caae41c6a">p_timeout_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__server__timeout__callback__args__t">rm_ble_mesh_model_server_timeout_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a1b1bcc200bc0c6b85853254caae41c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access Layer Model publication timeout callback. <br /></td></tr>
+<tr class="separator:a1b1bcc200bc0c6b85853254caae41c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a187a97d3a328b6092d3a958cce6d7278"><td class="memItemLeft" align="right" valign="top"><a id="a187a97d3a328b6092d3a958cce6d7278"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a187a97d3a328b6092d3a958cce6d7278">p_context</a></td></tr>
-<tr class="memdesc:a187a97d3a328b6092d3a958cce6d7278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__callback__args__t">ble_abs_callback_args_t</a>. <br /></td></tr>
+<tr class="memdesc:a187a97d3a328b6092d3a958cce6d7278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. <br /></td></tr>
 <tr class="separator:a187a97d3a328b6092d3a958cce6d7278"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10d8f14abd471ac5b64d8c771d64031a"><td class="memItemLeft" align="right" valign="top"><a id="a10d8f14abd471ac5b64d8c771d64031a"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a10d8f14abd471ac5b64d8c771d64031a">p_extend</a></td></tr>
@@ -678,6 +747,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaa555423bf6315a6fca9c7ca91a004427a18c8b8558bbecb7ad0819f417eef9908"></a>RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_READ_WRITE&#160;</td><td class="fielddoc"><p>User Access - the device property can be read and written </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaa555423bf6315a6fca9c7ca91a004427a09854418f79b4e1958c7dd18e693448e"></a>RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_INVALID_PROPERTY_ID&#160;</td><td class="fielddoc"><p>User Access - the invalid device property id </p>
+</td></tr>
 </table>
 
 </div>
@@ -750,7 +821,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

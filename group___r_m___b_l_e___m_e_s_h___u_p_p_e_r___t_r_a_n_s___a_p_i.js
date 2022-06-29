@@ -56,6 +56,8 @@ var group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i =
     ] ],
     [ "rm_ble_mesh_upper_trans_cfg_t", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#structrm__ble__mesh__upper__trans__cfg__t", [
       [ "channel", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a15ad41cb5c573c19019596a0a004b8df", null ],
+      [ "control_message_evnet", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a7d793f4030abaeca5865ba41c72e17d0", null ],
+      [ "access_message_evnet", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a350d4739bf274bcb9c0eecf28d259abb", null ],
       [ "p_mesh_lower_trans_instance", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a726d896d7593a8bc61ba7d7a23e3f183", null ],
       [ "p_callback", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a758ace21e7f02039d491ce5e655fa6ac", null ],
       [ "p_context", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a0e55637be1008ab5e36ddba5bac752bb", null ],
@@ -112,5 +114,12 @@ var group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i =
       [ "RM_BLE_MESH_UPPER_TRANS_FRIEND_ROLE_FRIEND", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#ggae662bcbfbcf66ba6de23895d3a1d5d3bae48e91af68d4adfcc3c3545fc51979d9", null ],
       [ "RM_BLE_MESH_UPPER_TRANS_FRIEND_ROLE_LPN", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#ggae662bcbfbcf66ba6de23895d3a1d5d3ba980df35199f224aa96ee124f5bd051b1", null ]
     ] ],
-    [ "rm_ble_mesh_upper_trans_event_t", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#ga4ddbc76ad1d3b1c828c5ceb1ace23b9f", null ]
+    [ "rm_ble_mesh_upper_trans_event_t", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#ga4ddbc76ad1d3b1c828c5ceb1ace23b9f", [
+      [ "RM_BLE_MESH_UPPER_TRANS_EVENT_ACCESS", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#gga4ddbc76ad1d3b1c828c5ceb1ace23b9faf684a8cc8a2425e51f6fa0efa45aeafd", null ],
+      [ "RM_BLE_MESH_UPPER_TRANS_EVENT_CONTROL", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#gga4ddbc76ad1d3b1c828c5ceb1ace23b9fa380fe7c2dc065978f6bbd9feb9266e38", null ],
+      [ "RM_BLE_MESH_UPPER_TRANS_EVENT_FRIENDSHIP_SETUP", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#gga4ddbc76ad1d3b1c828c5ceb1ace23b9fa76178d5f8104fb9ec9bc9287c3d3b4de", null ],
+      [ "RM_BLE_MESH_UPPER_TRANS_EVENT_FRIENDSHIP_SUBSCRIPTION_LIST", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#gga4ddbc76ad1d3b1c828c5ceb1ace23b9fa5a4c5576529532ce1547ccbe527ebc02", null ],
+      [ "RM_BLE_MESH_UPPER_TRANS_EVENT_FRIENDSHIP_CLEAR", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#gga4ddbc76ad1d3b1c828c5ceb1ace23b9fa6a09027958dd1f3164f94d7aa94e0d9f", null ],
+      [ "RM_BLE_MESH_UPPER_TRANS_EVENT_FRIENDSHIP_TERMINATE", "group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#gga4ddbc76ad1d3b1c828c5ceb1ace23b9fa67e8bbdfcf8aa47fbc1fe0aea5f331cf", null ]
+    ] ]
 ];

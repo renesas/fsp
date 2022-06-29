@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -222,6 +222,21 @@ Functions</h2></td></tr>
 <tr class="memitem:ga64876fb75bdd8184deffbc1349d40737"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_s___a_p_i.html#ga64876fb75bdd8184deffbc1349d40737">R_BLE_VS_GetScanChMap</a> (void)</td></tr>
 <tr class="memdesc:ga64876fb75bdd8184deffbc1349d40737"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets currently scan channel map.  <a href="#ga64876fb75bdd8184deffbc1349d40737">More...</a><br /></td></tr>
 <tr class="separator:ga64876fb75bdd8184deffbc1349d40737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa59b32368f8497a6c32e2b4b28945297"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_s___a_p_i.html#gaa59b32368f8497a6c32e2b4b28945297">R_BLE_VS_StartFirmwareUpdate</a> (void)</td></tr>
+<tr class="memdesc:gaa59b32368f8497a6c32e2b4b28945297"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function starts the firmware update procedure.  <a href="#gaa59b32368f8497a6c32e2b4b28945297">More...</a><br /></td></tr>
+<tr class="separator:gaa59b32368f8497a6c32e2b4b28945297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga138a72420cbb8b9ff69487e97bce8321"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_s___a_p_i.html#ga138a72420cbb8b9ff69487e97bce8321">R_BLE_VS_SendFirmwareData</a> (uint16_t index, uint16_t length, uint8_t const *const p_data)</td></tr>
+<tr class="memdesc:ga138a72420cbb8b9ff69487e97bce8321"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sends a firmware update data frame.  <a href="#ga138a72420cbb8b9ff69487e97bce8321">More...</a><br /></td></tr>
+<tr class="separator:ga138a72420cbb8b9ff69487e97bce8321"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b67ecf8ccf2e2f371cbd0e8f43e47e9"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_s___a_p_i.html#ga6b67ecf8ccf2e2f371cbd0e8f43e47e9">R_BLE_VS_EndFirmwareUpdate</a> (uint16_t end_index)</td></tr>
+<tr class="memdesc:ga6b67ecf8ccf2e2f371cbd0e8f43e47e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function ends the firmware update procedure.  <a href="#ga6b67ecf8ccf2e2f371cbd0e8f43e47e9">More...</a><br /></td></tr>
+<tr class="separator:ga6b67ecf8ccf2e2f371cbd0e8f43e47e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabe8bdfb158d778c3eba76d08e8cc7d3"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_s___a_p_i.html#gaabe8bdfb158d778c3eba76d08e8cc7d3">R_BLE_VS_GetFirmwareVersion</a> (void)</td></tr>
+<tr class="memdesc:gaabe8bdfb158d778c3eba76d08e8cc7d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function requests the BLE module firmware version.  <a href="#gaabe8bdfb158d778c3eba76d08e8cc7d3">More...</a><br /></td></tr>
+<tr class="separator:gaabe8bdfb158d778c3eba76d08e8cc7d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae7e573e4b50ed3942eab6848ebec702f"><td class="memItemLeft" align="right" valign="top">ble_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_s___a_p_i.html#gae7e573e4b50ed3942eab6848ebec702f">R_BLE_VS_RestartModule</a> (void)</td></tr>
+<tr class="memdesc:gae7e573e4b50ed3942eab6848ebec702f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function restarts the module.  <a href="#gae7e573e4b50ed3942eab6848ebec702f">More...</a><br /></td></tr>
+<tr class="separator:gae7e573e4b50ed3942eab6848ebec702f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <table class="memberdecls">
@@ -263,6 +278,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structst__ble__vs__get__scan__ch__map__comp__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_s___a_p_i.html#structst__ble__vs__get__scan__ch__map__comp__evt__t">st_ble_vs_get_scan_ch_map_comp_evt_t</a></td></tr>
 <tr class="memdesc:structst__ble__vs__get__scan__ch__map__comp__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that current scan channel map.  <a href="group___v_s___a_p_i.html#structst__ble__vs__get__scan__ch__map__comp__evt__t">More...</a><br /></td></tr>
 <tr class="separator:structst__ble__vs__get__scan__ch__map__comp__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__vs__get__fw__version__comp__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_s___a_p_i.html#structst__ble__vs__get__fw__version__comp__evt__t">st_ble_vs_get_fw_version_comp_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__vs__get__fw__version__comp__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies the current firmware version.  <a href="group___v_s___a_p_i.html#structst__ble__vs__get__fw__version__comp__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__vs__get__fw__version__comp__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -842,6 +860,42 @@ The result of current scan channel map. </td></tr>
 
 </div>
 </div>
+<a name="structst__ble__vs__get__fw__version__comp__evt__t" id="structst__ble__vs__get__fw__version__comp__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__vs__get__fw__version__comp__evt__t">&#9670;&nbsp;</a></span>st_ble_vs_get_fw_version_comp_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_vs_get_fw_version_comp_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure notifies the current firmware version. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="adda53096a6b7929b431b6d5ca41303d3"></a>uint8_t</td>
+<td class="fieldname">
+major</td>
+<td class="fielddoc">
+The result of get firmware version. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab70a0dfcb944f240ccaa8e574aaaa81a"></a>uint8_t</td>
+<td class="fieldname">
+minor</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a0df898d61dbfbe6cafc33be8944f224a"></a>uint8_t</td>
+<td class="fieldname">
+special</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga35cfc1fb6715e37ceb8d4f2b67031b36"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga35cfc1fb6715e37ceb8d4f2b67031b36">&#9670;&nbsp;</a></span>ble_vs_app_cb_t</h2>
@@ -1116,6 +1170,118 @@ The result of current scan channel map. </td></tr>
 </dl>
 <h2>Event Data:</h2>
 <p><a class="el" href="group___v_s___a_p_i.html#structst__ble__vs__get__scan__ch__map__comp__evt__t" title="This structure notifies that current scan channel map. ">st_ble_vs_get_scan_ch_map_comp_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga750cb97a97e51e829021134b5fd32579a183b7b9caa037961566009001f811e03"></a>BLE_VS_EVENT_START_FW_UPDATE_COMP&#160;</td><td class="fielddoc"><p>This event notifies that START_FW_UPDATE command has completed. </p>
+<h2>Event Code: 0x072C</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>none </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga750cb97a97e51e829021134b5fd32579af585f7b8df0abc561781203ceaaee771"></a>BLE_VS_EVENT_SEND_FW_DATA_COMP&#160;</td><td class="fielddoc"><p>This event notifies that SEND_FW_DATA command has completed. </p>
+<h2>Event Code: 0x072D</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>none </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga750cb97a97e51e829021134b5fd32579a54612e1399c07f741b5cb0edeab8c3aa"></a>BLE_VS_EVENT_END_FW_UPDATE_COMP&#160;</td><td class="fielddoc"><p>This event notifies that END_FW_UPDATE command has completed. </p>
+<h2>Event Code: 0x072E</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>none </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga750cb97a97e51e829021134b5fd32579a7cdc707aab98ed80052d2fe0f0276ec0"></a>BLE_VS_EVENT_GET_FW_VERSION_COMP&#160;</td><td class="fielddoc"><p>This event notifies that END_FW_UPDATE command has completed. </p>
+<h2>Event Code: 0x0772</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p><a class="el" href="group___v_s___a_p_i.html#structst__ble__vs__get__fw__version__comp__evt__t" title="This structure notifies the current firmware version. ">st_ble_vs_get_fw_version_comp_evt_t</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga750cb97a97e51e829021134b5fd32579a09ca4ffa583e1594f8d1e0d171c3ae8f"></a>BLE_VS_EVENT_MODULE_READY_COMP&#160;</td><td class="fielddoc"><p>This event notifies that module is ready. </p>
+<h2>Event Code: 0x0746</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>none </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga750cb97a97e51e829021134b5fd32579ad0e2a8595dd45c03433da2871bde22d4"></a>BLE_VS_EVENT_OTA_START_NOTIFY&#160;</td><td class="fielddoc"><p>This event notifies that OTA firmware update has been started. </p>
+<h2>Event Code: 0x09B0</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>none </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga750cb97a97e51e829021134b5fd32579a7dc52ac325464a7d17e317e28b1e52c5"></a>BLE_VS_EVENT_OTA_END_NOTIFY&#160;</td><td class="fielddoc"><p>This event notifies that OTA firmware update has been completed successfully. </p>
+<h2>Event Code: 0x09C0</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>none </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga750cb97a97e51e829021134b5fd32579a83806cf2361dc8bb2626983d3d1e946c"></a>BLE_VS_EVENT_OTA_ERROR_NOTIFY&#160;</td><td class="fielddoc"><p>This event notifies that OTA firmware update has failed. </p>
+<h2>Event Code: 0x09D0</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>none </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga750cb97a97e51e829021134b5fd32579a9ba51c2d70b111a45df250a2f070617e"></a>BLE_VS_EVENT_INVALID&#160;</td><td class="fielddoc"><p>Invalid VS Event. </p>
 <h2>Event Code: 0x80FF</h2>
@@ -1842,13 +2008,185 @@ The result of current scan channel map. </td></tr>
 
 </div>
 </div>
+<a id="gaa59b32368f8497a6c32e2b4b28945297"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa59b32368f8497a6c32e2b4b28945297">&#9670;&nbsp;</a></span>R_BLE_VS_StartFirmwareUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_VS_StartFirmwareUpdate </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function starts the firmware update procedure. </p>
+<p>The result of this API call is notified in BLE_VS_EVENT_START_FW_UPDATE_COMP event. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+    <tr><td class="paramname">BLE_ERR_INVALID_MODE</td><td>A command was sent from an invalid mode </td></tr>
+    <tr><td class="paramname">BLE_ERR_UNSUPPORTED</td><td>This API does not support </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga138a72420cbb8b9ff69487e97bce8321"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga138a72420cbb8b9ff69487e97bce8321">&#9670;&nbsp;</a></span>R_BLE_VS_SendFirmwareData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_VS_SendFirmwareData </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function sends a firmware update data frame. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>The index of the current data frame. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The length of the current data frame. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>A pointer to the data frame.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The result of this API call is notified in BLE_VS_EVENT_SEND_FW_DATA_COMP event. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+    <tr><td class="paramname">BLE_ERR_INVALID_ARG</td><td>An input parameter was invalid </td></tr>
+    <tr><td class="paramname">BLE_ERR_INVALID_MODE</td><td>A command was sent from an invalid mode </td></tr>
+    <tr><td class="paramname">BLE_ERR_UNSUPPORTED</td><td>This API does not support </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6b67ecf8ccf2e2f371cbd0e8f43e47e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6b67ecf8ccf2e2f371cbd0e8f43e47e9">&#9670;&nbsp;</a></span>R_BLE_VS_EndFirmwareUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_VS_EndFirmwareUpdate </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>end_index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function ends the firmware update procedure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">end_index</td><td>The index of the last data frame.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The result of this API call is notified in BLE_VS_EVENT_END_FW_UPDATE_COMP event. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+    <tr><td class="paramname">BLE_ERR_INVALID_MODE</td><td>A command was sent from an invalid mode </td></tr>
+    <tr><td class="paramname">BLE_ERR_UNSUPPORTED</td><td>This API does not support </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaabe8bdfb158d778c3eba76d08e8cc7d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaabe8bdfb158d778c3eba76d08e8cc7d3">&#9670;&nbsp;</a></span>R_BLE_VS_GetFirmwareVersion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_VS_GetFirmwareVersion </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function requests the BLE module firmware version. </p>
+<p>The result of this API call is notified in BLE_VS_EVENT_GET_FW_VERSION_COMP event. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+    <tr><td class="paramname">BLE_ERR_INVALID_MODE</td><td>A command was sent from an invalid mode </td></tr>
+    <tr><td class="paramname">BLE_ERR_UNSUPPORTED</td><td>This API does not support </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae7e573e4b50ed3942eab6848ebec702f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae7e573e4b50ed3942eab6848ebec702f">&#9670;&nbsp;</a></span>R_BLE_VS_RestartModule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ble_status_t R_BLE_VS_RestartModule </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function restarts the module. </p>
+<p>The result of this API call is notified in BLE_VS_EVENT_MODULE_READY_COMP event. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">BLE_SUCCESS(0x0000)</td><td>Success </td></tr>
+    <tr><td class="paramname">BLE_ERR_RSP_TIMEOUT</td><td>A command did not receive a response </td></tr>
+    <tr><td class="paramname">BLE_ERR_INVALID_MODE</td><td>A command was sent from an invalid mode </td></tr>
+    <tr><td class="paramname">BLE_ERR_UNSUPPORTED</td><td>This API does not support </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

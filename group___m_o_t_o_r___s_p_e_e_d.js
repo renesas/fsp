@@ -2,7 +2,9 @@ var group___m_o_t_o_r___s_p_e_e_d =
 [
     [ "motor_speed_control_type_t", "group___m_o_t_o_r___s_p_e_e_d.html#ga4c82a94748a6e1b2d26c3867c9626c54", [
       [ "MOTOR_SPEED_CONTROL_TYPE_SENSORLESS", "group___m_o_t_o_r___s_p_e_e_d.html#gga4c82a94748a6e1b2d26c3867c9626c54a9efebb805975591431076529fb70b85c", null ],
-      [ "MOTOR_SPEED_CONTROL_TYPE_ENCODER", "group___m_o_t_o_r___s_p_e_e_d.html#gga4c82a94748a6e1b2d26c3867c9626c54a6b5026fecacdb9cc90cb048bdb00156a", null ]
+      [ "MOTOR_SPEED_CONTROL_TYPE_ENCODER", "group___m_o_t_o_r___s_p_e_e_d.html#gga4c82a94748a6e1b2d26c3867c9626c54a6b5026fecacdb9cc90cb048bdb00156a", null ],
+      [ "MOTOR_SPEED_CONTROL_TYPE_HALL", "group___m_o_t_o_r___s_p_e_e_d.html#gga4c82a94748a6e1b2d26c3867c9626c54a9e974ecef9079eb8c7d43287855125a6", null ],
+      [ "MOTOR_SPEED_CONTROL_TYPE_INDUCTION", "group___m_o_t_o_r___s_p_e_e_d.html#gga4c82a94748a6e1b2d26c3867c9626c54a71c7039b0b88c86f698452ce667f801a", null ]
     ] ],
     [ "motor_speed_openloop_damping_t", "group___m_o_t_o_r___s_p_e_e_d.html#ga34ad035595f726d4cce1c81478afd6c6", [
       [ "MOTOR_SPEED_OPENLOOP_DAMPING_DISABLE", "group___m_o_t_o_r___s_p_e_e_d.html#gga34ad035595f726d4cce1c81478afd6c6a12e3884782df060d5fc01fd20742f2b2", null ],

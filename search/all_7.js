@@ -45,6 +45,8 @@ var searchData=
   ['f_5fid',['f_id',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ad204edb685e5c6034e68a756ec0eeb10',1,'motor_current_output_t']]],
   ['f_5fiq',['f_iq',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ac4dd77a591675419296d8271cf14dcac',1,'motor_current_output_t']]],
   ['f_5flowvoltage_5flimit',['f_lowvoltage_limit',['../group___m_o_t_o_r__120___d_e_g_r_e_e.html#acb462f3ba4cd9ef0499a5970830e7cd1',1,'motor_120_degree_extended_cfg_t']]],
+  ['f_5fopenloop_5fid_5fref',['f_openloop_id_ref',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#aa5beb05306be184c3690372f4ddabe89',1,'motor_angle_encoder_info_t::f_openloop_id_ref()'],['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#afc3147981b08616a9d45eff685ad671e',1,'motor_current_output_t::f_openloop_id_ref()']]],
+  ['f_5fopenloop_5fspeed',['f_openloop_speed',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a61519ae0853c4b2f5639cf41430d0c99',1,'motor_angle_encoder_info_t::f_openloop_speed()'],['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a60c5fd4a4a2a091cda930fc0d261f3aa',1,'motor_current_output_t::f_openloop_speed()']]],
   ['f_5fovercurrent_5flimit',['f_overcurrent_limit',['../group___m_o_t_o_r__120___d_e_g_r_e_e.html#ab439307301fb7a6838b0c0eecffd2e9b',1,'motor_120_degree_extended_cfg_t']]],
   ['f_5foverspeed_5flimit',['f_overspeed_limit',['../group___m_o_t_o_r__120___d_e_g_r_e_e.html#a5739cfcdd8a5905624c16a9e26a14979',1,'motor_120_degree_extended_cfg_t']]],
   ['f_5fovervoltage_5flimit',['f_overvoltage_limit',['../group___m_o_t_o_r__120___d_e_g_r_e_e.html#afe4d8c3ee1941d615912e6c0333e0a8f',1,'motor_120_degree_extended_cfg_t']]],
@@ -179,6 +181,7 @@ var searchData=
   ['frame_5ftype',['frame_type',['../group___c_a_n.html#af01f0306a9ad2e430154d9d6a4e3404f',1,'can_mailbox_t']]],
   ['freertos_2btcp_20wrapper_20to_20r_5fether_20_28rm_5ffreertos_5fplus_5ftcp_29',['FreeRTOS+TCP Wrapper to r_ether (rm_freertos_plus_tcp)',['../group___f_r_e_e_r_t_o_s___p_l_u_s___t_c_p.html',1,'']]],
   ['freq_5fcompare_5fvalue_5floco',['freq_compare_value_loco',['../group___r_t_c___a_p_i.html#a0a64ff37fefef5f044209c6f85564b70',1,'rtc_cfg_t']]],
+  ['frequency',['frequency',['../group___r_m___h_s400_x___a_p_i.html#a4a9e3392df8193428e1907f2e4a315b9',1,'rm_hs400x_cfg_t']]],
   ['friend',['friend',['../structrm__mesh__config__clt__friend__set__parameter__t.html#af8cee3d2cba9dd45ebdf06367045e14d',1,'rm_mesh_config_clt_friend_set_parameter_t']]],
   ['friend_5faddr',['friend_addr',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a3952a7dc8170f9343ac6ddca0b0a6cc2',1,'rm_ble_mesh_access_friend_security_credential_info_t']]],
   ['friend_5fcounter',['friend_counter',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a7900ac9357e076fef16723dcb0c2fedd',1,'rm_ble_mesh_access_friend_security_credential_info_t::friend_counter()'],['../group___r_m___b_l_e___m_e_s_h___u_p_p_e_r___t_r_a_n_s___a_p_i.html#a07551cd3f11f1d1ca9981501096af76c',1,'rm_ble_mesh_upper_trans_friendship_info_t::friend_counter()']]],
@@ -669,6 +672,8 @@ var searchData=
   ['freertos_2bfat_20port_20for_20ra_20_28rm_5ffreertos_5fplus_5ffat_29',['FreeRTOS+FAT Port for RA (rm_freertos_plus_fat)',['../group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t.html',1,'']]],
   ['freertos_2bfat_20port_20interface',['FreeRTOS+FAT Port Interface',['../group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html',1,'']]],
   ['freertos_20port_20_28rm_5ffreertos_5fport_29',['FreeRTOS Port (rm_freertos_port)',['../group___r_m___f_r_e_e_r_t_o_s___p_o_r_t.html',1,'']]],
+  ['fs1015_20flow_20sensor_20_28rm_5ffs1015_29',['FS1015 Flow Sensor (rm_fs1015)',['../group___r_m___f_s1015.html',1,'']]],
   ['fs2012_20flow_20sensor_20_28rm_5ffs2012_29',['FS2012 Flow Sensor (rm_fs2012)',['../group___r_m___f_s2012.html',1,'']]],
+  ['fs3000_20flow_20sensor_20_28rm_5ffs3000_29',['FS3000 Flow Sensor (rm_fs3000)',['../group___r_m___f_s3000.html',1,'']]],
   ['fsxxxx_20middleware_20interface',['FSXXXX Middleware Interface',['../group___r_m___f_s_x_x_x_x___a_p_i.html',1,'']]]
 ];

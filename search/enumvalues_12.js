@@ -44,6 +44,7 @@ var searchData=
   ['usb_5fclass_5fhcdcc',['USB_CLASS_HCDCC',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a849e5469fce2840fde1a475474f3ddc4',1,'r_usb_basic_api.h']]],
   ['usb_5fclass_5fhhid',['USB_CLASS_HHID',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a38b8cf9a51297016282ad06c4d9ae875',1,'r_usb_basic_api.h']]],
   ['usb_5fclass_5fhmsc',['USB_CLASS_HMSC',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2afd9d59bc253fddb8b37cb089fc7f4e62',1,'r_usb_basic_api.h']]],
+  ['usb_5fclass_5fhprn',['USB_CLASS_HPRN',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2ae145518d6f16d45ba75acded515f9fac',1,'r_usb_basic_api.h']]],
   ['usb_5fclass_5fhvnd',['USB_CLASS_HVND',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2af8045de085f8312fc88985be178ea330',1,'r_usb_basic_api.h']]],
   ['usb_5fclass_5fpaud',['USB_CLASS_PAUD',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a3191feacc2113109da5c0324de9641a7',1,'r_usb_basic_api.h']]],
   ['usb_5fclass_5fpcdc',['USB_CLASS_PCDC',['../group___u_s_b___a_p_i.html#ggab1dc4a2240edf1a50cca3945f31dc9f2a80c133e3ac3ddabc6aa656c3daf78c5e',1,'r_usb_basic_api.h']]],

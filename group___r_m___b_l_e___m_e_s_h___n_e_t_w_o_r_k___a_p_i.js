@@ -27,6 +27,7 @@ var group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i =
       [ "p_header", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a79091e1ba884ba1b85bc972cd376f984", null ],
       [ "subnet_handle", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a7960214bd760bc6455052f08be26056c", null ],
       [ "p_network_interface", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#aaf0851189396d924aa149d0aa1bd0694", null ],
+      [ "event_data", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#ac2725d985751e703ee079cb625fc43a0", null ],
       [ "p_context", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a85792cea5a321637d44eab15ed60ff58", null ]
     ] ],
     [ "rm_ble_mesh_network_cfg_t", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#structrm__ble__mesh__network__cfg__t", [

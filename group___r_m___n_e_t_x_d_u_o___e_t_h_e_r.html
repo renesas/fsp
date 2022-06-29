@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -196,6 +196,12 @@ Usage Notes</h1>
 <p>In order to ensure that there is enough space to store an entire Ethernet frame, the packet pool used for receiving packets must have a payload size that is 32 bytes larger than the configured <a class="el" href="group___e_t_h_e_r___a_p_i.html#abe9247fcd1556396eb74c76c899f5256" title="Size of transmit and receive buffer. ">ether_cfg_t::ether_buffer_size</a>. The extra 32 bytes is needed in order to ensure that the allocated packets are properly aligned to 32 bytes.</p>
 <p><a class="el" href="group___e_t_h_e_r___a_p_i.html#abe9247fcd1556396eb74c76c899f5256" title="Size of transmit and receive buffer. ">ether_cfg_t::ether_buffer_size</a> is calcualted from the IP MTU using the following formula:</p>
 <p>ceil(( rm_netxduo_ether_cfg_t::mtu + Ethernet Header (14) + Padding Bytes (2)) / 32 ) * 32</p>
+<h2><a class="anchor" id="rm-netxduo-ether-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations when using rm_netxduo_ether:</p>
+<ul>
+<li><a class="anchor" id="um_rm_netxduo_dynamic_mac_address"></a>The MAC address cannot be configured through the NetX Duo API (nx_ip_interface_physical_address_set). In order to dynamically configure the MAC address, the application must set <a class="el" href="group___e_t_h_e_r___a_p_i.html#afd4c3c463a931fa8068576f5bb410609">ether_cfg_t::p_mac_address</a> prior to initializing the IP instance.</li>
+</ul>
 <h1><a class="anchor" id="rm-netxduo-ether-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -206,7 +212,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

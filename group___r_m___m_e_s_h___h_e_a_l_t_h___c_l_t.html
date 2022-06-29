@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -174,6 +174,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga93654e3bdf20ae07cfa8a942904adb17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga91aa409f4e7aa12a8e540d9503b9583c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga91aa409f4e7aa12a8e540d9503b9583c">RM_MESH_HEALTH_CLIENT_GetModelHandle</a> (<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a> *const p_model_handle)</td></tr>
 <tr class="separator:ga91aa409f4e7aa12a8e540d9503b9583c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga332bf4ff2ca68f3fc36ff9a91ed71d38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga332bf4ff2ca68f3fc36ff9a91ed71d38">RM_MESH_HEALTH_CLIENT_SetModelHandle</a> (<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a> model_handle)</td></tr>
+<tr class="separator:ga332bf4ff2ca68f3fc36ff9a91ed71d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8ebbfa9d81a1f493a3da3ff83dd563e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga8ebbfa9d81a1f493a3da3ff83dd563e1">RM_MESH_HEALTH_CLIENT_SendReliablePdu</a> (<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const p_ctrl, uint32_t req_opcode, void const *const p_parameter, uint32_t rsp_opcode)</td></tr>
 <tr class="separator:ga8ebbfa9d81a1f493a3da3ff83dd563e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga89aade7e8f750eba32c5384d085ba01c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga89aade7e8f750eba32c5384d085ba01c">RM_MESH_HEALTH_CLIENT_FaultGet</a> (<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const p_ctrl, void const *const p_parameter)</td></tr>
@@ -348,7 +350,43 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Got model handle successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_ctrl is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Model is not open. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>The parameter p_parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>The parameter p_model_handle is NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga332bf4ff2ca68f3fc36ff9a91ed71d38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga332bf4ff2ca68f3fc36ff9a91ed71d38">&#9670;&nbsp;</a></span>RM_MESH_HEALTH_CLIENT_SetModelHandle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MESH_HEALTH_CLIENT_SetModelHandle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ga7aa5013351139f4a2eaf87dc9a47a4d4">rm_ble_mesh_model_client_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a>&#160;</td>
+          <td class="paramname"><em>model_handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DEPRECATED This is to set the handle of Health client model.</p>
+<p>Implements <a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a468443f9957fcd21a9cc07df13fe64e7">rm_ble_mesh_model_client_api_t::setModelHandle</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Set the handle of health client model. */</span></div><div class="line">    err = <a class="code" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga332bf4ff2ca68f3fc36ff9a91ed71d38">RM_MESH_HEALTH_CLIENT_SetModelHandle</a>(&amp;g_mesh_health_clt0_ctrl, model_handle);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -981,7 +1019,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

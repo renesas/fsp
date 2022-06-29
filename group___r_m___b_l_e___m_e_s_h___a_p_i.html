@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -207,6 +207,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:gada936fe1f7fc81238176b75e5bc556d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6e37dac7df8150b4acc536a89266286b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_p_i.html#ga6e37dac7df8150b4acc536a89266286b">rm_ble_mesh_feature_select_t</a> </td></tr>
 <tr class="separator:ga6e37dac7df8150b4acc536a89266286b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7eca29b48925577fc4864d98bfe841d1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_p_i.html#ga7eca29b48925577fc4864d98bfe841d1">rm_ble_mesh_feature_state_t</a> </td></tr>
+<tr class="separator:ga7eca29b48925577fc4864d98bfe841d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structrm__ble__mesh__buffer__t" id="structrm__ble__mesh__buffer__t"></a>
@@ -252,7 +254,7 @@ length</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Access Stasus Transision Type </p>
+<div class="textblock"><p>Access Status Transition Type </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:a5efaaeda668caba9a9ec946b71bbe3be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_p_i.html#ga0514b5e2a3e239bed5bca6edf4ff7026">rm_ble_mesh_timer_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_p_i.html#a5efaaeda668caba9a9ec946b71bbe3be">transition_timer_handle</a></td></tr>
@@ -475,14 +477,14 @@ maximum_ltrn_sar_context</td>
 <td class="fieldname">
 maximum_friend_message_queue</td>
 <td class="fielddoc">
-<p>Maximum number of messages that the friend is capabale to queue for a single Low Power Node. </p>
+<p>Maximum number of messages that the friend is capable to queue for a single Low Power Node. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a5e83c6c6b70f9bc8b1276ae9a8bdf277"></a>uint32_t</td>
 <td class="fieldname">
 maximum_friend_subscription_list</td>
 <td class="fielddoc">
-<p>Maximum number of subscription addresses that the friend is capabale to store for a single Low Power Node. </p>
+<p>Maximum number of subscription addresses that the friend is capable to store for a single Low Power Node. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a008ab2aca76382d2ab28714bc48e4a3f"></a>uint32_t</td>
@@ -608,7 +610,7 @@ ltrn_rtx_count</td>
 <td class="fieldname">
 ltrn_ack_timeout</td>
 <td class="fielddoc">
-<p>Lower Transport Acknowledgement Timeout in milliseconds </p>
+<p>Lower Transport Acknowledgment Timeout in milliseconds </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a722d8e1f7093e761209efd2c72ab7479"></a>uint32_t</td>
@@ -713,7 +715,7 @@ default_vendor_id</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
-Placeholder for user data. Passed to the user callback in <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__callback__args__t">ble_abs_callback_args_t</a>. </td></tr>
+Placeholder for user data. </td></tr>
 <tr><td class="fieldtype">
 <a id="a2bd53a7a29ea4cc98b69dfbc9ef2e61e"></a>void const  *</td>
 <td class="fieldname">
@@ -767,7 +769,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Open ble mesh middleware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>Open BLE mesh middleware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h.html#ga2ed79a38381be2a6285a07b5fd5d61f0">RM_BLE_MESH_Open()</a></li>
 </ul>
 </dd></dl>
@@ -792,7 +794,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Close ble mesh middleware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>Close BLE mesh middleware. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h.html#ga06559de2d2c61d8302986354b7839469">RM_BLE_MESH_Close()</a></li>
 </ul>
 </dd></dl>
@@ -823,12 +825,11 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">transition</td><td>State Transition data structure, which includes the timeout, transition start and complete callback etc.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">transition_time_handle</td><td>Transition Time Handle, which can be used to stop the transition timer if required.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_transition</td><td>Pointer to state transition data structure, which includes the timeout, transition start and complete callback etc.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_transition_time_handle</td><td>Pointer to transition time handle, which can be used to stop the transition timer if required. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or an error code indicating reason for failure </dd></dl>
 
 </div>
 </div>
@@ -850,11 +851,10 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">transition_time_handle</td><td>Transition Time Handle, returned by the Start Transition Timer interface.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">transition_time_handle</td><td>Transition time handle, returned by the Start Transition Timer interface. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or an error code indicating reason for failure </dd></dl>
 
 </div>
 </div>
@@ -876,12 +876,11 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">transition_time_handle</td><td>Transition Time Handle, returned by the Start Transition Timer interface.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">remaining_transition_time</td><td>Remaining Transition Time.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">transition_time_handle</td><td>Transition time handle, returned by the Start Transition Timer interface.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_remaining_transition_time</td><td>Pointer to remaining transition time. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or an error code indicating reason for failure </dd></dl>
 
 </div>
 </div>
@@ -903,13 +902,12 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">transition_time_handle</td><td>Transition Time Handle, returned by the Start Transition Timer interface.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">offset_in_ms</td><td>Offset in ms.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">remaining_transition_time</td><td>Remaining Transition Time.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">transition_time_handle</td><td>Transition time handle, returned by the Start Transition Timer interface.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset_in_ms</td><td>Offset in millisecond.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_remaining_transition_time</td><td>Pointer to remaining transition time. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or an error code indicating reason for failure </dd></dl>
 
 </div>
 </div>
@@ -924,19 +922,18 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To convert transition time from milisecond. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>To convert transition time from millisecond. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h.html#gab759662d150605e293af3a81d1768cb2">RM_BLE_MESH_ConvertTransitionTimeFromMs()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">transition_time_in_ms</td><td>Transition Time in milisecond.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">transition_time</td><td>Converted value in Generic Default Transition Time state format.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">transition_time_in_ms</td><td>Transition time in millisecond.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_transition_time</td><td>Pointer to converted value in Generic Default Transition Time state format. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or an error code indicating reason for failure </dd></dl>
 
 </div>
 </div>
@@ -951,7 +948,7 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To convert transition time to milisecond. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>To convert transition time to millisecond. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h.html#gaf267f4caecff958757b4ded76fe0850b">RM_BLE_MESH_ConvertTransitionTimeToMs()</a></li>
 </ul>
 </dd></dl>
@@ -959,11 +956,10 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">transition_time</td><td>Transition time in Generic Default Transition Time state format.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">transition_time_in_ms</td><td>Converted value of Transition Time in milisecond.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_transition_time_in_ms</td><td>Pointer to converted value of transition time in millisecond. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>API_SUCCESS or an error code indicating reason for failure </dd></dl>
 
 </div>
 </div>
@@ -1133,13 +1129,33 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga7eca29b48925577fc4864d98bfe841d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7eca29b48925577fc4864d98bfe841d1">&#9670;&nbsp;</a></span>rm_ble_mesh_feature_state_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_p_i.html#ga7eca29b48925577fc4864d98bfe841d1">rm_ble_mesh_feature_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7eca29b48925577fc4864d98bfe841d1a6555f53b27cbc486b71eaa8eb85f638c"></a>RM_BLE_MESH_FEATURE_STATE_DISABLE&#160;</td><td class="fielddoc"><p>BLE Mesh featre status - Disable </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7eca29b48925577fc4864d98bfe841d1ada3c91f8261a7cd0529bfa5aaa51e37e"></a>RM_BLE_MESH_FEATURE_STATE_ENABLE&#160;</td><td class="fielddoc"><p>BLE Mesh featre status - Enable </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

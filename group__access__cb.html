@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -234,6 +234,7 @@ Uninterpreted/raw received message for a specific model instance. </td></tr>
 <p>Access Layer calls the registered callback to indicate Publication Timeout for the associated model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">p_context</td><td>Placeholder for user data. </td></tr>
     <tr><td class="paramname">handle</td><td>Model Handle. </td></tr>
     <tr><td class="paramname">blob</td><td>Blob if any or NULL. </td></tr>
   </table>
@@ -279,14 +280,7 @@ Blob if any or NULL. </td></tr>
 <p>Access Layer calls the registered callback to indicate events occurred to the application.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Model Handle. </td></tr>
-    <tr><td class="paramname">saddr</td><td>16 bit Source Address. </td></tr>
-    <tr><td class="paramname">daddr</td><td>16 bit Destination Address. </td></tr>
-    <tr><td class="paramname">subnet_handle</td><td>Subnet Handle. </td></tr>
-    <tr><td class="paramname">appkey_handle</td><td>AppKey Handle. </td></tr>
-    <tr><td class="paramname">opcode</td><td>Opcode. </td></tr>
-    <tr><td class="paramname">data_param</td><td>Data associated with the event if any or NULL. </td></tr>
-    <tr><td class="paramname">data_len</td><td>Size of the event data. 0 if event data is NULL. </td></tr>
+    <tr><td class="paramname">p_args</td><td>Access Layer application asynchronous notification callback arguments. </td></tr>
   </table>
   </dd>
 </dl>
@@ -308,8 +302,7 @@ Blob if any or NULL. </td></tr>
 <p>Access Layer calls the registered callback to indicate Publication Timeout for the associated model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Model Handle. </td></tr>
-    <tr><td class="paramname">blob</td><td>Blob if any or NULL. </td></tr>
+    <tr><td class="paramname">p_args</td><td>Access Layer Model publication timeout callback arguments. </td></tr>
   </table>
   </dd>
 </dl>
@@ -322,7 +315,7 @@ Blob if any or NULL. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

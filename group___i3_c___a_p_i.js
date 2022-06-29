@@ -66,6 +66,7 @@ var group___i3_c___a_p_i =
       [ "p_cfg", "group___i3_c___a_p_i.html#a9076df3ea1eaa0842da95560f98309af", null ],
       [ "p_api", "group___i3_c___a_p_i.html#aac576dcfc7c8ada6d77bba14314a8859", null ]
     ] ],
+    [ "i3c_ctrl_t", "group___i3_c___a_p_i.html#ga63111d6c1096458d5059f5f6fac3f579", null ],
     [ "i3c_common_command_code_t", "group___i3_c___a_p_i.html#gae0fcac252ef200a5a24cdadfa123dc52", [
       [ "I3C_CCC_BROADCAST_ENEC", "group___i3_c___a_p_i.html#ggae0fcac252ef200a5a24cdadfa123dc52acc5d7a5de1e6f3169a5b89f675feca40", null ],
       [ "I3C_CCC_BROADCAST_DISEC", "group___i3_c___a_p_i.html#ggae0fcac252ef200a5a24cdadfa123dc52a1f75c76bf09458b99003305112107dc7", null ],

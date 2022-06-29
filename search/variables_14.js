@@ -3,6 +3,7 @@ var searchData=
   ['u1_5fadjust_5fcount_5ffull',['u1_adjust_count_full',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a3c272518a04545f0736f810de1bf9232',1,'motor_angle_encoder_info_t::u1_adjust_count_full()'],['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#abf01fec7f3bbef78f0a3585f0a18a2da',1,'motor_current_output_t::u1_adjust_count_full()']]],
   ['u1_5fadjust_5fstatus',['u1_adjust_status',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a6eb9c59db46057cc1006bc6758f696b9',1,'motor_current_output_t']]],
   ['u1_5fflag_5fget_5firef',['u1_flag_get_iref',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ae7614e22637a6ce6a8ad9c17483e9bea',1,'motor_current_output_t']]],
+  ['u1_5fopenloop_5fstatus',['u1_openloop_status',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ac8ced348d34cc2d4c8eb8d593b1fecd9',1,'motor_current_output_t']]],
   ['u2_5ferror_5fstatus',['u2_error_status',['../group___m_o_t_o_r__120___d_e_g_r_e_e.html#a37ed0508105e2a29678236879d718a7c',1,'motor_120_degree_statemachine_t']]],
   ['u4_5fadc_5finterrupt_5fcnt',['u4_adc_interrupt_cnt',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#a7a2adbb92ec7f42dc6e759336f32d15a',1,'motor_120_control_hall_instance_ctrl_t']]],
   ['u4_5fangle_5fshift_5fcnt',['u4_angle_shift_cnt',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#a4ffed2ed1fbc56193b004da904a4cc85',1,'motor_120_control_sensorless_instance_ctrl_t']]],

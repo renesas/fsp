@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -323,7 +323,7 @@ PWM: Generates basic PWM waveforms.<br />
 Triangle-Wave Symmetric PWM: Generates symmetric PWM waveforms with duty cycle determined by compare match set during a crest interrupt and updated at the next trough.<br />
 Triangle-Wave Asymmetric PWM: Generates asymmetric PWM waveforms with duty cycle determined by compare match set during a crest/trough interrupt and updated at the next trough/crest. </td></tr>
 <tr>
-<td>General &gt; Period</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>0x100000000 </td><td>Specify the timer period in units selected below. Setting the period to 0x100000000 raw counts results in the maximum period. Set the period to 0x100000000 raw counts for a free running timer or an input capture configuration. The period can be set up to 0x40000000000, which will use a divider of 1024 with the maximum period.<br />
+<td>General &gt; Period</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>0x100000000 </td><td>Specify the timer period in units selected below. Set the period to 0x100000000 (32-bit) or 0x10000 (16-bit) raw counts for a free running timer or an input capture configuration. The period can be set up to 0x40000000000 (32-bit) or 0x4000000 (16-bit) which will use a divider of 1024 with the maximum period.<br />
 <br />
 If the requested period cannot be achieved, the settings with the largest possible period that is less than or equal to the requested period are used. The theoretical calculated period is printed in a comment in the generated <a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__cfg__t">timer_cfg_t</a> structure. </td></tr>
 <tr>
@@ -652,12 +652,13 @@ Pin Configuration</h2>
 <p>This module can use GTIOCA and GTIOCB as input pins to measure input signals.</p>
 <h1><a class="anchor" id="r-gpt-usage_notes"></a>
 Usage Notes</h1>
-<h2>Maximum Period for GPT32</h2>
+<h2>Maximum Period</h2>
 <p>The RA Configuration editor will automatically calculate the period count value and source clock divider based on the selected period time, units and clock speed.</p>
-<p>When the selected period unit is "Raw counts", the maximum period setting is 0x40000000000 on a 32-bit timer or 0x0x4000000 on a 16-bit timer. This will configure the timer with the maximum period and a count clock divisor of 128.</p>
-<dl class="section note"><dt>Note</dt><dd>When manually changing the timer period counts the maximum value for a 32-bit GPT is 0x100000000. This number overflows the 32-bit value for <a class="el" href="group___t_i_m_e_r___a_p_i.html#aa892b6997a1972de6a6ebd48e0fb9233" title="Period in raw timer counts. ">timer_cfg_t::period_counts</a>. To configure the timer for the maximum period, set <a class="el" href="group___t_i_m_e_r___a_p_i.html#aa892b6997a1972de6a6ebd48e0fb9233" title="Period in raw timer counts. ">timer_cfg_t::period_counts</a> to 0.</dd></dl>
+<p>When the selected period unit is "Raw counts", the maximum period setting is 0x40000000000 on a 32-bit timer or 0x0x4000000 on a 16-bit timer. This will configure the timer with the maximum period and a count clock divisor of 1024.</p>
+<dl class="section note"><dt>Note</dt><dd>16-bit channels inherently have a reduced maximum period compared to 32-bit channels. When setting period values of hundreds of milliseconds or more on 16-bit channels be sure to check the generated output to confirm the actual configured value as it will clip much earlier than 32-bit channels. In general, it is recommended to use a lower-power timer like AGT or RTC if long hardware delays are required.</dd></dl>
 <h2>Updating Period and Duty Cycle</h2>
 <p>The period and duty cycle are updated after the next counter overflow after calling <a class="el" href="group___g_p_t.html#gafedbfd8bc3f534d06969588ff10a351b">R_GPT_PeriodSet()</a> or <a class="el" href="group___g_p_t.html#gad14bacf6fb7fce88f3e877160be529ea">R_GPT_DutyCycleSet()</a>. To force them to update before the next counter overflow, call <a class="el" href="group___g_p_t.html#ga5eb494add3d40775dbc48c5498e15a3a">R_GPT_Reset()</a> while the counter is running.</p>
+<dl class="section note"><dt>Note</dt><dd>When manually changing the timer period counts the maximum value for a 32-bit GPT is 0x100000000. This number overflows the 32-bit value for <a class="el" href="group___t_i_m_e_r___a_p_i.html#aa892b6997a1972de6a6ebd48e0fb9233" title="Period in raw timer counts. ">timer_cfg_t::period_counts</a>. To configure the timer for the maximum period, set <a class="el" href="group___t_i_m_e_r___a_p_i.html#aa892b6997a1972de6a6ebd48e0fb9233" title="Period in raw timer counts. ">timer_cfg_t::period_counts</a> to 0.</dd></dl>
 <h2>One-Shot Mode</h2>
 <p><a class="anchor" id="um_timer_one_shot_mode"></a> The GPT timer does not support one-shot mode natively. One-shot mode is achieved by stopping the timer in the interrupt service routine before the callback is called. If the interrupt is not serviced before the timer period expires again, the timer generates more than one event. The callback is only called once in this case, but multiple events may be generated if the timer is linked to the <a class="el" href="group___d_t_c.html">Transfer (r_dtc)</a>.</p>
 <h3>One-Shot Mode Output</h3>
@@ -2230,7 +2231,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -1,12 +1,20 @@
 var group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i =
 [
-    [ "rm_ble_mesh_model_health_callback_args_t", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__health__callback__args__t", null ],
+    [ "rm_ble_mesh_model_health_callback_args_t", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__health__callback__args__t", [
+      [ "p_handle", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a9e253aadd56999bc90bc108fe651431f", null ],
+      [ "event_type", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#ab33bed27878fa7957d25a44937a8b31d", null ],
+      [ "p_event_data", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#ad388949d95e2ab99e852fd93cc4b9440", null ],
+      [ "event_data_length", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a5d14b46978a9a3675d5ecab1de170192", null ]
+    ] ],
     [ "rm_ble_mesh_health_server_self_test_t", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__health__server__self__test__t", [
       [ "test_id", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#ad96f09616fd4a6deb19ea0c3317239dc", null ],
       [ "self_test_fn", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a6704581114e417a1692e54c46a8a198a", null ]
     ] ],
     [ "rm_ble_mesh_health_server_cfg_t", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__health__server__cfg__t", [
       [ "p_access_instance", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#aaf1e5a56e56118ad7650d7af7bb496b9", null ],
+      [ "p_self_tests", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a766314337333fadb416ae7d5ecc9d327", null ],
+      [ "company_id", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a2ae28df98f89429ebfc5b195527d28a5", null ],
+      [ "num_self_tests", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#ad5254d9e7aa30dcadc034b58d606cde3", null ],
       [ "p_context", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a862a747800c97e5f971c97f8d8d422a5", null ],
       [ "p_extend", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#ae319563d6c2f03aa92f17a73993a4b1e", null ]
     ] ],

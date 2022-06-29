@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -206,6 +206,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga112f36bdb669ddaa125b3df710038bb3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga112f36bdb669ddaa125b3df710038bb3">RM_MOTOR_ESTIMATE_InfoGet</a> (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__encoder__info__t">motor_angle_encoder_info_t</a> *const p_info)</td></tr>
 <tr class="memdesc:ga112f36bdb669ddaa125b3df710038bb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets information of Encoder Angle Module. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ab9bcf47d0dd2b983b9f76ba3850da432">motor_angle_api_t::infoGet</a>.  <a href="#ga112f36bdb669ddaa125b3df710038bb3">More...</a><br /></td></tr>
 <tr class="separator:ga112f36bdb669ddaa125b3df710038bb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaedc38884e6e77db365a67670acb8f2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#gaaedc38884e6e77db365a67670acb8f2d">RM_MOTOR_ESTIMATE_CyclicProcess</a> (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:gaaedc38884e6e77db365a67670acb8f2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform induction cyclic process. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ae9b1b64e47f2244ffe8e1618dee5bb44">motor_angle_api_t::cyclicProcess</a>.  <a href="#gaaedc38884e6e77db365a67670acb8f2d">More...</a><br /></td></tr>
+<tr class="separator:gaaedc38884e6e77db365a67670acb8f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga88d72479420ca5e424018e1e9f566493"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___e_s_t_i_m_a_t_e.html#ga88d72479420ca5e424018e1e9f566493">RM_MOTOR_ESTIMATE_SensorDataSet</a> (<a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const p_ctrl, <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__ad__data__t">motor_angle_ad_data_t</a> *const p_ad_data)</td></tr>
+<tr class="memdesc:ga88d72479420ca5e424018e1e9f566493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set sensor data. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ab2e079fd53134dd6b186712f53c9d634">motor_angle_api_t::sensorDataSet</a>.  <a href="#ga88d72479420ca5e424018e1e9f566493">More...</a><br /></td></tr>
+<tr class="separator:ga88d72479420ca5e424018e1e9f566493"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Calculation proccess for the motor control on RA MCUs. This module implements the <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html">Motor angle Interface</a>. </p>
@@ -766,13 +772,75 @@ Examples</h1>
 
 </div>
 </div>
+<a id="gaaedc38884e6e77db365a67670acb8f2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaedc38884e6e77db365a67670acb8f2d">&#9670;&nbsp;</a></span>RM_MOTOR_ESTIMATE_CyclicProcess()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_ESTIMATE_CyclicProcess </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform induction cyclic process. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ae9b1b64e47f2244ffe8e1618dee5bb44">motor_angle_api_t::cyclicProcess</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga88d72479420ca5e424018e1e9f566493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga88d72479420ca5e424018e1e9f566493">&#9670;&nbsp;</a></span>RM_MOTOR_ESTIMATE_SensorDataSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MOTOR_ESTIMATE_SensorDataSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga8961e3efb000814487fb7a9457a2f80e">motor_angle_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__ad__data__t">motor_angle_ad_data_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ad_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set sensor data. Implements <a class="el" href="group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ab2e079fd53134dd6b186712f53c9d634">motor_angle_api_t::sensorDataSet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Unsupported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

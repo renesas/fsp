@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -196,7 +196,7 @@ Overview</h1>
 Features</h2>
 <p>The SSI module supports the following features:</p>
 <ul>
-<li><a class="anchor" id="um_ssi_receive_audio_data"></a>Transmission and reception of uncompressed audio data using the standard I2S protocol in master mode</li>
+<li><a class="anchor" id="um_ssi_receive_audio_data"></a>Transmission and reception of uncompressed audio data using the standard I2S protocol in master and slave modes</li>
 <li><a class="anchor" id="um_ssi_full_duplex"></a>Full-duplex I2S communication (channel 0 only)</li>
 <li><a class="anchor" id="um_ssi_hardware_acceleration_using_dtc"></a>Integration with the DTC transfer module</li>
 <li><a class="anchor" id="um_ssi_internal_audio_clock_connection"></a>Internal connection to GPT timer output to generate the audio clock</li>
@@ -237,6 +237,14 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_i2s0 </td><td>Module name. </td></tr>
 <tr>
 <td>Channel</td><td>Value must be an integer between 0 and 1</td><td>0 </td><td>Specify the I2S channel. </td></tr>
+<tr>
+<td>Operating Mode (Master/Slave)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Master Mode</li>
+<li>
+Slave Mode</li>
+</ul>
+</td><td>Master Mode </td><td>Select if the MCU is I2S master or slave. </td></tr>
 <tr>
 <td>Bit Depth</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -899,7 +907,7 @@ Select bit clock division ratio. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

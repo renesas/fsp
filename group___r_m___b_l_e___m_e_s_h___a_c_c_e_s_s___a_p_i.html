@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -172,7 +172,7 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_e___m_e_s_h___a_c_c_
 <p>Interface for Bluetooth Low Energy Mesh Access functions. </p>
 <h1><a class="anchor" id="RM_BLE_MESH_ACCESS_API_Summary"></a>
 Summary</h1>
-<p>The BLE Mesh Access interface for the Bluetooth Low Energy Mesh Netwrok Access (BLE MESH ACCESS) peripheral provides Bluetooth Low Energy Mesh Network Access functionality.</p>
+<p>The BLE Mesh Access interface for the Bluetooth Low Energy Mesh Network Access (BLE MESH ACCESS) peripheral provides Bluetooth Low Energy Mesh Network Access functionality.</p>
 <p>The Bluetooth Low Energy Mesh Network Access interface can be implemented by:</p><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html">Bluetooth Low Energy Mesh Network Access (rm_ble_mesh_access)</a> </li>
 </ul>
@@ -732,7 +732,7 @@ state</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Additional paramters in a Model specific request or response message </p>
+<div class="textblock"><p>Additional parameters in a Model specific request or response message </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -772,7 +772,7 @@ ext</td>
 <td class="fieldname">
 uaddr</td>
 <td class="fielddoc">
-<p>Unicast Address of the first element </p>
+<p>Unicast address of the first element </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a8fc82bd2e68f9db2646ed28da44d1687"></a>uint8_t</td>
@@ -918,7 +918,7 @@ If state to be published. </td></tr>
 <td class="fieldname">
 uaddr</td>
 <td class="fielddoc">
-<p>Unicast Address of the first element </p>
+<p>Unicast address of the first element </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a916a683a0ad5dcecb8676e72cac332ac"></a>uint8_t</td>
@@ -957,7 +957,7 @@ privacy_key[<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_
 <td class="fieldname">
 encrypt_key[<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#ga5a17cd8128a44c0c5d6a015c9749ea0a">RM_BLE_MESH_ACCESS_KEY_SIZE</a>]</td>
 <td class="fielddoc">
-<p>Encription key </p>
+<p>Encryption key </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="ab5da4628e1c95352d137fbd7407a6abb"></a>uint8_t</td>
@@ -1151,8 +1151,8 @@ Placeholder for user extension. </td></tr>
 <tr class="separator:a3f4414c5fe0e3b81582421bee7e9195e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac27ff15468e1d2b24fcbc23101194284"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#ac27ff15468e1d2b24fcbc23101194284">getAppKey</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gacf0a54d93cb08abb816caf65f0d09fc2">rm_ble_mesh_access_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#gad969ac3d171ae649e508ce243cf1d0d9">rm_ble_mesh_network_appkey_handle_t</a> appkey_handle, uint8_t **const p_app_key, uint8_t *const p_aid)</td></tr>
 <tr class="separator:ac27ff15468e1d2b24fcbc23101194284"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e48d26fc2566dae081038cd5abfdbae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a6e48d26fc2566dae081038cd5abfdbae">addUpdateNetkey</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gacf0a54d93cb08abb816caf65f0d09fc2">rm_ble_mesh_access_ctrl_t</a> *const p_ctrl, uint16_t netkey_index, uint32_t opcode, uint8_t const *const net_key)</td></tr>
-<tr class="separator:a6e48d26fc2566dae081038cd5abfdbae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88dbc4100de31cd02a1ad0a58999f6a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a88dbc4100de31cd02a1ad0a58999f6a1">addUpdateNetkey</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gacf0a54d93cb08abb816caf65f0d09fc2">rm_ble_mesh_access_ctrl_t</a> *const p_ctrl, uint16_t netkey_index, uint32_t opcode, uint8_t const *const p_net_key)</td></tr>
+<tr class="separator:a88dbc4100de31cd02a1ad0a58999f6a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae37f34a4b9756d5ace1a00b33c7b4728"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#ae37f34a4b9756d5ace1a00b33c7b4728">addFriendSecurityCredential</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gacf0a54d93cb08abb816caf65f0d09fc2">rm_ble_mesh_access_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#gaf2a1dd9eb8ba28729d02533d511f4f37">rm_ble_mesh_network_subnet_handle_t</a> subnet_handle, uint16_t friend_index, <a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__friend__security__credential__info__t">rm_ble_mesh_access_friend_security_credential_info_t</a> info)</td></tr>
 <tr class="separator:ae37f34a4b9756d5ace1a00b33c7b4728"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73bbff95d4e62fb5147d2550825526de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a73bbff95d4e62fb5147d2550825526de">deleteFriendSecurityCredential</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gacf0a54d93cb08abb816caf65f0d09fc2">rm_ble_mesh_access_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#gaf2a1dd9eb8ba28729d02533d511f4f37">rm_ble_mesh_network_subnet_handle_t</a> subnet_handle, uint16_t friend_index)</td></tr>
@@ -1386,8 +1386,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">elem_handle</td><td>Element Identifier associated with the Model. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">model_id</td><td>Model Identifier for which the model handle to be searched. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">elem_handle</td><td>Element identifier associated with the Model. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">model_id</td><td>Model identifier for which the model handle to be searched. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_handle</td><td>Pointer to model handle. </td></tr>
   </table>
   </dd>
@@ -1521,8 +1521,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_pdu</td><td>Pointer to pdu structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">reliable</td><td>If requires lower transport Ack, set reliable as TRUE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_pdu</td><td>Pointer to PDU structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reliable</td><td>If requires lower transport ACK, set reliable as TRUE. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1621,7 +1621,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Primary Unicast Address to be set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Primary Unicast address to be set. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1696,7 +1696,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ttl</td><td>Pointer to ttl. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ttl</td><td>Pointer to TTL. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1721,8 +1721,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">iv_index</td><td>IV Index to be set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">iv_update_flag</td><td>IV Update Flag. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">iv_index</td><td>IV index to be set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">iv_update_flag</td><td>IV update flag. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1773,7 +1773,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ivi</td><td>Least Significant bit of the IV Index used in the nonce to authenticate and encrypt the Network PDU. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ivi</td><td>Least significant bit of the IV index used in the once to authenticate and encrypt the network PDU. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_iv_index</td><td>Pointer to index. </td></tr>
   </table>
   </dd>
@@ -1800,7 +1800,7 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Enable or Disable. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">feature</td><td>Relay, proxy, friend or Low Power. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">feature</td><td>Relay, proxy, friend or low power. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1825,8 +1825,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Pointer to enable. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">feature</td><td>Relay, proxy, friend or Low Power. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_enable</td><td>Pointer to enable. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">feature</td><td>Relay, proxy, friend or low power. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1927,7 +1927,7 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_dev_key</td><td>Pointer to device Key. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">uaddr</td><td>Unicast Address of the first element. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">uaddr</td><td>Unicast address of the first element. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">num_elements</td><td>Number of elements. </td></tr>
   </table>
   </dd>
@@ -1953,8 +1953,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dev_key_index</td><td>Device Key Index. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_dev_key</td><td>Pointer to Device Key to be returned. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dev_key_index</td><td>Device key index. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_dev_key</td><td>Pointer to device key to be returned. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2003,7 +2003,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_prov_dev_list</td><td>Pointer to provisioned device lList structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_prov_dev_list</td><td>Pointer to provisioned device list structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_num_entries</td><td>Pointer to number of entries. </td></tr>
   </table>
   </dd>
@@ -2064,14 +2064,14 @@ Placeholder for user extension. </td></tr>
 
 </div>
 </div>
-<a id="a6e48d26fc2566dae081038cd5abfdbae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e48d26fc2566dae081038cd5abfdbae">&#9670;&nbsp;</a></span>addUpdateNetkey</h2>
+<a id="a88dbc4100de31cd02a1ad0a58999f6a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88dbc4100de31cd02a1ad0a58999f6a1">&#9670;&nbsp;</a></span>addUpdateNetkey</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_ble_mesh_access_api_t::addUpdateNetkey) (<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gacf0a54d93cb08abb816caf65f0d09fc2">rm_ble_mesh_access_ctrl_t</a> *const p_ctrl, uint16_t netkey_index, uint32_t opcode, uint8_t const *const net_key)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_ble_mesh_access_api_t::addUpdateNetkey) (<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gacf0a54d93cb08abb816caf65f0d09fc2">rm_ble_mesh_access_ctrl_t</a> *const p_ctrl, uint16_t netkey_index, uint32_t opcode, uint8_t const *const p_net_key)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2082,9 +2082,9 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">netkey_index</td><td>Identifies global Index of NetKey. A 12-bit value. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">opcode</td><td>To identify Add or Update NetKey. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">net_key</td><td>Pointer to Netkey. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">netkey_index</td><td>Identifies global index of NetKey. A 12bits value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">opcode</td><td>To identify Add or Update NetKey. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_net_key</td><td>Pointer to NetKey. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2137,7 +2137,7 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Identifies associated subnet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">friend_index</td><td>Friend Index. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">friend_index</td><td>Friend index. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2188,7 +2188,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">friend_subnet_handle</td><td>Idetifies the friend subnet handle, corresponding to friend subnet handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">friend_subnet_handle</td><td>Identifies the friend subnet handle, corresponding to friend subnet handle. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_master_subnet_handle</td><td>Pointer to master subnet handle. </td></tr>
   </table>
   </dd>
@@ -2214,7 +2214,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle of the Subnet for which NetKey to be deleted. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle of the subnet for which NetKey to be deleted. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2239,8 +2239,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle of the Subnet for which NetKey to be deleted. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_net_key</td><td>Pointer to Netkey. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Target subnet handle to get net key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_net_key</td><td>Pointer to NetKey. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2265,8 +2265,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_netkey_count</td><td>Pointer to Netkey count. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_netkey_index_list</td><td>Pointer to Netkey index list. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_netkey_count</td><td>Pointer to NetKey count. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_netkey_index_list</td><td>Pointer to NetKey index list. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2318,8 +2318,9 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_network_id</td><td>Network ID to be searched in all known subnets for match. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_network_id</td><td>Pointer to network ID to be searched in all known subnets for match. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_subnet_handle</td><td>Pointer to subnet handle. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_key_set</td><td>Pointer to key settings. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2338,7 +2339,7 @@ Placeholder for user extension. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>To search for AID. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
-<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga533553210b72a55dc449367c828c7dbc">RM_BLE_MESH_ACCESS_LookUpNetworkId()</a></li>
+<li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga01db896f852dcb9b43838aead21b1b97">RM_BLE_MESH_ACCESS_LookUpAid()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -2396,7 +2397,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifing the subnet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifying the subnet. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_nid</td><td>Pointer to NID. </td></tr>
   </table>
   </dd>
@@ -2415,14 +2416,14 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Privacy Key associated with a subnet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>To get privacy Key associated with a subnet. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga21d278ab6a93d1e6f027172223719ee5">RM_BLE_MESH_ACCESS_GetSubnetPrivacyKey()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifing the subnet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifying the subnet. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_privacy_key</td><td>Pointer to Privacy Key. </td></tr>
   </table>
   </dd>
@@ -2448,7 +2449,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifing the subnet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifying the subnet. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_network_id</td><td>Pointer to Network ID. </td></tr>
   </table>
   </dd>
@@ -2474,7 +2475,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifing the subnet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifying the subnet. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_beacon_key</td><td>Pointer to Beacon Key. </td></tr>
   </table>
   </dd>
@@ -2500,7 +2501,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifing the subnet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifying the subnet. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_identity_key</td><td>Pointer to Identity Key. </td></tr>
   </table>
   </dd>
@@ -2526,8 +2527,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifing the subnet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_encrypt_key</td><td>Pointer to Encyption Key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle identifying the subnet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_encrypt_key</td><td>Pointer to Encryption Key. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2552,8 +2553,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle identifing the subnet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_id_state</td><td>Pointer to node Identity state. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle identifying the subnet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_id_state</td><td>Pointer to node identity state. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2578,8 +2579,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle identifing the subnet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_id_state</td><td>Pointer to node Identity state. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle identifying the subnet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_id_state</td><td>Pointer to node identity state. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2597,14 +2598,14 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To get Key Refresh Phase. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>To get Key refresh phase. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#gac9885ebc2431d15c10dccbb37cccd0e8">RM_BLE_MESH_ACCESS_GetKeyRefreshPhase()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle identifing the subnet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle identifying the subnet. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_key_refresh_state</td><td>Pointer to key refresh phase state. </td></tr>
   </table>
   </dd>
@@ -2623,14 +2624,14 @@ Placeholder for user extension. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>To set Key Refresh Phase. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>To set Key refresh phase. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s.html#ga20b168552d81ed88bfb1022b16864b71">RM_BLE_MESH_ACCESS_SetKeyRefreshPhase()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle identifing the subnet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle identifying the subnet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_key_refresh_state</td><td>Pointer to key refresh phase state. </td></tr>
   </table>
   </dd>
@@ -2656,8 +2657,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tx_state_type</td><td>Transmit State Type (Network or Relay). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tx_state</td><td>Composite state (3-bits of Tx Count and 5-bits of Tx Interval Steps). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tx_state_type</td><td>Transmit state type (Network or Relay). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tx_state</td><td>Composite state (3bits of TX count and 5bits of TX interval steps). </td></tr>
   </table>
   </dd>
 </dl>
@@ -2683,7 +2684,7 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">tx_state_type</td><td>Transmit State Type (Network or Relay). </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_tx_state</td><td>Pointer to tx state. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_tx_state</td><td>Pointer to TX state. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2708,8 +2709,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle of the Subnet for which AppKey to be added. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global Index of AppKey. A 12-bit value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle of the subnet for which AppKey to be added. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global Index of AppKey. A 12bits value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_app_key</td><td>Pointer to AppKey. </td></tr>
   </table>
   </dd>
@@ -2736,7 +2737,7 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle of the Subnet for which AppKey to be updated/deleted. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global Index of AppKey. A 12-bit value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global Index of AppKey. A 12bits value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_app_key</td><td>Pointer to AppKey. </td></tr>
   </table>
   </dd>
@@ -2763,7 +2764,7 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle of the Subnet for which AppKey to be updated/deleted. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global Index of AppKey. A 12-bit value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global index of AppKey. A 12bits value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_app_key</td><td>Pointer to AppKey. </td></tr>
   </table>
   </dd>
@@ -2789,8 +2790,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle of the Subnet for which AppKey to be updated. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global Index of AppKey. A 12-bit value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subnet_handle</td><td>Handle of the Subnet for which AppKey to be gotten. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global Index of AppKey. A 12bits value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_app_key</td><td>Pointer to AppKey. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_app_key_handle</td><td>Pointer to AppKey handle. </td></tr>
   </table>
@@ -2844,8 +2845,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Model handle identifing the model. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Pointer to AppKey index. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Model handle identifying the model. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global index of AppKey. A 12bits value. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2870,8 +2871,8 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Model handle identifing the model. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global Index of AppKey. A 12-bit value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Model handle identifying the model. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">appkey_index</td><td>Identifies global index of AppKey. A 12bits value. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2924,7 +2925,7 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Handle of the Model for which Publication info to be set. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_publish_info</td><td>Pointer to publication information structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_publish_info</td><td>Pointer to publication information structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2976,7 +2977,7 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Handle of the Model for which Publication info to be returned. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_publish_info</td><td>Pointer to publication information structure.. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_publish_info</td><td>Pointer to publication information structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3027,7 +3028,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Handle of the Model for which address to be deleteed in the subscription list. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Handle of the Model for which address to be deleted in the subscription list. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_sub_addr</td><td>Pointer to address structure. </td></tr>
   </table>
   </dd>
@@ -3080,7 +3081,7 @@ Placeholder for user extension. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">model_handle</td><td>Handle of the Model for which the subscription addresses to be returned. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_sub_addr_count</td><td>Pointer to maximum number of subscription address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_sub_addr_list</td><td>Pointer to subscription addresses. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_sub_addr_list</td><td>Pointer to subscription addresses. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3106,7 +3107,7 @@ Placeholder for user extension. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_sub_addr_count</td><td>Pointer to maximum number of subscription address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_sub_addr_list</td><td>Pointer to maximum number of subscription address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_sub_addr_list</td><td>Pointer to subscription addresses. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3131,7 +3132,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Unicast address to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>A valid element address, to be checked. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3181,7 +3182,7 @@ Placeholder for user extension. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Address to search. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>A valid subscription address, to be checked. </td></tr>
   </table>
   </dd>
 </dl>
@@ -4207,7 +4208,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

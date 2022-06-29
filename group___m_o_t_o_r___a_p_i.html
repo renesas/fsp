@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -174,7 +174,9 @@ Summary</h1>
 <p>Implemented by:</p><ul>
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html">Motor Sensorless Vector Control (rm_motor_sensorless)</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html">Motor Encoder Vector Control (rm_motor_encoder)</a></li>
-<li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html">Motor 120 degree control (rm_motor_120_degree)</a> </li>
+<li><a class="el" href="group___m_o_t_o_r___h_a_l_l.html">Motor Vector Control with hall sensors (rm_motor_hall)</a></li>
+<li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html">Motor 120 degree control (rm_motor_120_degree)</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html">Motor vector control with induction sensor (rm_motor_induction)</a> </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -338,6 +340,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga6825d930d49b00b475d84b435da23a03">RM_MOTOR_SENSORLESS_Open()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#gaecd01568f210cefeeb276b97ad04e4ee">RM_MOTOR_ENCODER_Open()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga276039454e9c02c0eddee693a58c0785">RM_MOTOR_120_DEGREE_Open()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#gaa744e174893876a8b73cc2aafc543559">RM_MOTOR_INDUCTION_Open()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -365,6 +368,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga23cbbc2134c7357859a9a810a5aa2dcd">RM_MOTOR_SENSORLESS_Close()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga9f21ecbab1a5056a36836231b5d68515">RM_MOTOR_ENCODER_Close()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga278a6a471d8e9ded3e3dbc28f2bbdda4">RM_MOTOR_120_DEGREE_Close()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga476f1bd96db9334e881cb0677a2c2629">RM_MOTOR_INDUCTION_Close()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -391,6 +395,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gabf12d514070de65a4f2d27ac585a17b6">RM_MOTOR_SENSORLESS_Run()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga985687d27ae1c1678fcd8985b09f0b35">RM_MOTOR_ENCODER_Run()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga5c6f9c62a41a753d3041c4d5f829b474">RM_MOTOR_120_DEGREE_Run()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga9934e435e08300a1344a96f09db066ef">RM_MOTOR_INDUCTION_Run()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -417,6 +422,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gaf7780babe25d9defb5b8d423b526aea2">RM_MOTOR_SENSORLESS_Stop()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga7cd50e2d1aff3b470b007f06ee1032b8">RM_MOTOR_ENCODER_Stop()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga60975c215c8d3c4cbe9397beef0a00b3">RM_MOTOR_120_DEGREE_Stop()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#gafabbc176d480b563eab8af37e533c63e">RM_MOTOR_INDUCTION_Stop()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -443,6 +449,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga31f166c241521b3d83e8b20c53b8e374">RM_MOTOR_SENSORLESS_Reset()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga2daebe4ca8593caf678284bb38f85909">RM_MOTOR_ENCODER_Reset()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#gaccd292ad25657c3e5dcbc77b524f0b55">RM_MOTOR_120_DEGREE_Reset()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga66d2f1dfcf3a2654ea789c07360145c3">RM_MOTOR_INDUCTION_Reset()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -469,6 +476,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga1fe3c7c943b0296c70bb4f8f8490fddf">RM_MOTOR_SENSORLESS_ErrorSet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga583f5f46a956624fc746b7956ea5ed7c">RM_MOTOR_ENCODER_ErrorSet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga174112b1183e761ae0f07dd670ecc981">RM_MOTOR_120_DEGREE_ErrorSet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga6a82b4cc447ceb868fd4ac9b397c0053">RM_MOTOR_INDUCTION_ErrorSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -496,6 +504,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gada67cd9968dfc0db075478fa69565e2f">RM_MOTOR_SENSORLESS_SpeedSet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga63a42e780314d29c52f1dcf39797ec60">RM_MOTOR_ENCODER_SpeedSet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga8f81656028ce3d35c6aeeb4c110dbb33">RM_MOTOR_120_DEGREE_SpeedSet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga8672bf5ac50c7ca7240cbb3972515127">RM_MOTOR_INDUCTION_SpeedSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -523,6 +532,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga36f325fde67d3386cebab2bfa20137b9">RM_MOTOR_SENSORLESS_PositionSet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga9b00009036879df702ff75bea45fb3c0">RM_MOTOR_ENCODER_PositionSet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga8ba53ebb135f0eafd7634bf0370be97b">RM_MOTOR_120_DEGREE_PositionSet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga283b05645999471d856850951586f1bf">RM_MOTOR_INDUCTION_PositionSet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -550,6 +560,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#gaef47adefadf91147d95fba13f058190f">RM_MOTOR_SENSORLESS_StatusGet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga33da9fde0aadb4e8f565b96ff1c9b547">RM_MOTOR_ENCODER_StatusGet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga545fa9002c34f4191af536de4c64ada4">RM_MOTOR_120_DEGREE_StatusGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga9f130fbc7ee6d7b6b99ad6c6acab0f78">RM_MOTOR_INDUCTION_StatusGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -577,6 +588,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga84c1eb58db8f6cbad123ca3413aa7b2a">RM_MOTOR_SENSORLESS_AngleGet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga27fbe507dce70c440d1e65904364c2e0">RM_MOTOR_ENCODER_AngleGet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga234d2b5e16f9a11acde14cafae1471f0">RM_MOTOR_120_DEGREE_AngleGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga18535fe7e3c7630e75a89d808edbe8e8">RM_MOTOR_INDUCTION_AngleGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -604,6 +616,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga737b83c18e18f49488b90bdb71b0eef9">RM_MOTOR_SENSORLESS_SpeedGet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3c85184d654dd4e3dabbfc5d6b031b23">RM_MOTOR_ENCODER_SpeedGet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga087f9c951f8a57c35e21bb4690c49ee9">RM_MOTOR_120_DEGREE_SpeedGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga5534bd478e36f0899af95aa444888a17">RM_MOTOR_INDUCTION_SpeedGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -631,6 +644,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga29ca45eae3dd41fd2b8b539abb56e410">RM_MOTOR_SENSORLESS_WaitStopFlagGet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#ga3e122409d2716c81f3acadd9bef82b9c">RM_MOTOR_ENCODER_WaitStopFlagGet()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#gadba69522cd127f7934c82d0e436eaf17">RM_MOTOR_120_DEGREE_WaitStopFlagGet()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga3eaa0b435b3d076ad246ebec39f8c21a">RM_MOTOR_INDUCTION_WaitStopFlagGet()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -658,6 +672,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___m_o_t_o_r___s_e_n_s_o_r_l_e_s_s.html#ga526e1f2e08b5b8ec13ec92e4481e10af">RM_MOTOR_SENSORLESS_ErrorCheck()</a></li>
 <li><a class="el" href="group___m_o_t_o_r___e_n_c_o_d_e_r.html#gaceff5b6babf7eddc59469185a1c8e756">RM_MOTOR_ENCODER_ErrorCheck()</a></li>
 <li><a class="el" href="group___m_o_t_o_r__120___d_e_g_r_e_e.html#ga2a7098995201a3e33fc4415003c6e7aa">RM_MOTOR_120_DEGREE_ErrorCheck()</a></li>
+<li><a class="el" href="group___m_o_t_o_r___i_n_d_u_c_t_i_o_n.html#ga54d19cc20c9a5459fcb9350c94068ffe">RM_MOTOR_INDUCTION_ErrorCheck()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -804,7 +819,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

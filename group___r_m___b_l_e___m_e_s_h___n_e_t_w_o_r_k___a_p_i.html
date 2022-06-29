@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -278,7 +278,7 @@ nid</td>
 <td class="fieldname">
 new_key</td>
 <td class="fielddoc">
-<p>Indicates use of a new Netkey to which the network is being updated to </p>
+<p>Indicates use of a new NetKey to which the network is being updated to. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a30dc33ef1c4694202a79ca2a68e69160"></a>uint8_t</td>
@@ -313,7 +313,7 @@ dst_addr</td>
 <td class="fieldname">
 seq_num</td>
 <td class="fielddoc">
-<p>24 bit sequence number - currently filled only in recption path </p>
+<p>24 bit sequence number - currently filled only in reception path </p>
 </td></tr>
 </table>
 
@@ -458,14 +458,13 @@ Network interface handle. </td></tr>
 <td class="fieldname">
 event_data</td>
 <td class="fielddoc">
-</td></tr>
+Event data. </td></tr>
 <tr><td class="fieldtype">
 <a id="a85792cea5a321637d44eab15ed60ff58"></a>void const  *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
-&lt; Event data <p>Context provided to user during callback. </p>
-</td></tr>
+Context provided to user during callback. </td></tr>
 </table>
 
 </div>
@@ -584,7 +583,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Register Inerface with Network Layer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>Register Interface with Network Layer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k.html#ga8455248d1ab95b92e058f7e39f07723b">RM_BLE_MESH_NETWORK_Open()</a></li>
 </ul>
 </dd></dl>
@@ -609,7 +608,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Unregister Inerface with Network Layer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>Unregister Interface with Network Layer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k.html#gacb0d86f9277962425d6ff1882e397b86">RM_BLE_MESH_NETWORK_Close()</a></li>
 </ul>
 </dd></dl>
@@ -658,7 +657,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extension API to send Network PDUs on selected network interfaces. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>Extension API to send network PDUs on selected network interfaces. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k.html#ga2979b845995a72da09b62cd0e3785de5">RM_BLE_MESH_NETWORK_SendPduOnInterface()</a></li>
 </ul>
 </dd></dl>
@@ -1148,7 +1147,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Ignore netcache wrapping. </p>
+<p>Ignore network cache wrapping. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga166c375bbf01a34f8b3052f71403f69bad2b5d8ab86eb8ee5197cc55b45f83472"></a>RM_BLE_MESH_NETWORK_OLD_PACKET_TREATMENT_DROPPED&#160;</td><td class="fielddoc"><p>Old packets will be dropped. </p>
 </td></tr>
@@ -1171,9 +1170,9 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>Whether to enable the RX callback event or not. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggabd731d130a2e4168b367267f922fd202a39d606056ed9f93e08356a1670d7902e"></a>RM_BLE_MESH_NETWORK_RX_STATE_EVENT_DISABLE&#160;</td><td class="fielddoc"><p>Rx state callback disable. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggabd731d130a2e4168b367267f922fd202a39d606056ed9f93e08356a1670d7902e"></a>RM_BLE_MESH_NETWORK_RX_STATE_EVENT_DISABLE&#160;</td><td class="fielddoc"><p>RX state callback disable. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggabd731d130a2e4168b367267f922fd202a277d542bd64e42bdff948d003f96d921"></a>RM_BLE_MESH_NETWORK_RX_STATE_EVENT_ENABLE&#160;</td><td class="fielddoc"><p>Rx state callback enable. </p>
+<tr><td class="fieldname"><a id="ggabd731d130a2e4168b367267f922fd202a277d542bd64e42bdff948d003f96d921"></a>RM_BLE_MESH_NETWORK_RX_STATE_EVENT_ENABLE&#160;</td><td class="fielddoc"><p>RX state callback enable. </p>
 </td></tr>
 </table>
 
@@ -1192,9 +1191,9 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>Whether to enable the TX callback event or not. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga27951e874965a14029723fb9c5d20fd7aa6182a4f07b396b6c55b14c6265ea084"></a>RM_BLE_MESH_NETWORK_TX_STATE_EVENT_DISABLE&#160;</td><td class="fielddoc"><p>Tx state callback disable. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga27951e874965a14029723fb9c5d20fd7aa6182a4f07b396b6c55b14c6265ea084"></a>RM_BLE_MESH_NETWORK_TX_STATE_EVENT_DISABLE&#160;</td><td class="fielddoc"><p>TX state callback disable. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga27951e874965a14029723fb9c5d20fd7a4858b2bb8a95b2c05afcdfbb7c32460d"></a>RM_BLE_MESH_NETWORK_TX_STATE_EVENT_ENABLE&#160;</td><td class="fielddoc"><p>Tx state callback enable. </p>
+<tr><td class="fieldname"><a id="gga27951e874965a14029723fb9c5d20fd7a4858b2bb8a95b2c05afcdfbb7c32460d"></a>RM_BLE_MESH_NETWORK_TX_STATE_EVENT_ENABLE&#160;</td><td class="fielddoc"><p>TX state callback enable. </p>
 </td></tr>
 </table>
 
@@ -1321,7 +1320,7 @@ Pointer to the API structure for this instance. </td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf4b7026a0a61a9cae3da2e235d382ab5a38434c07fb9225211e83e7e64a811a62"></a>RM_BLE_MESH_NETWORK_GATT_PROXY_ADV_MODE_NET_ID&#160;</td><td class="fielddoc"><p>Network ID Type </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaf4b7026a0a61a9cae3da2e235d382ab5a4c0c88f2f734937159ebae3cee78b839"></a>RM_BLE_MESH_NETWORK_GATT_PROXY_ADV_MODE_NODE_ID&#160;</td><td class="fielddoc"><p>Node Idetity Type </p>
+<tr><td class="fieldname"><a id="ggaf4b7026a0a61a9cae3da2e235d382ab5a4c0c88f2f734937159ebae3cee78b839"></a>RM_BLE_MESH_NETWORK_GATT_PROXY_ADV_MODE_NODE_ID&#160;</td><td class="fielddoc"><p>Node Identity Type </p>
 </td></tr>
 </table>
 
@@ -1348,7 +1347,7 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8522d95c55fe5ca77557704e3d612eccae6e42dbb363440d34c7d71b55625229a"></a>RM_BLE_MESH_NETWORK_EVENT_RECIEVE&#160;</td><td class="fielddoc"><p>GATT Proxy Event - Receive </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga8522d95c55fe5ca77557704e3d612ecca3f2b60f4a91230f6634f2110705f9693"></a>RM_BLE_MESH_NETWORK_EVENT_TX_QUEUE_EMPTY&#160;</td><td class="fielddoc"><p>GATT Proxy Event - Tx queue empty </p>
+<tr><td class="fieldname"><a id="gga8522d95c55fe5ca77557704e3d612ecca3f2b60f4a91230f6634f2110705f9693"></a>RM_BLE_MESH_NETWORK_EVENT_TX_QUEUE_EMPTY&#160;</td><td class="fielddoc"><p>GATT Proxy Event - TX queue empty </p>
 </td></tr>
 </table>
 
@@ -1360,7 +1359,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

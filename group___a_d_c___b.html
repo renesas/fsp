@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -249,8 +249,8 @@ Configuration</h1>
 <p>To perform A/D conversion of an analog pin, the channel associated with the pin must first be assigned to a virtual channel. That virtual channel is then assigned to a scan group, which brings together one or more virtual channels to be converted in sequence with a specified conversion unit.</p>
 <dl class="section note"><dt>Note</dt><dd>Analog channels may be assigned to more than one virtual channel. However, a virtual channel can be assigned to only one scan group. When performing A/D conversion on one analog channel in different scan groups or when converting a channel several times within the same scan group, assign several virtual channels to one analog channel.</dd>
 <dd>
-To avoid data being overwritten, when converting a channel multiple times within the same scan group use <a class="el" href="group___a_d_c___b.html#gaf3495a942e210aec9b563922a497d75f">R_ADC_B_FifoRead()</a> instead of <a class="el" href="group___a_d_c___b.html#gabd5b134248487fb52dcdc4c0484d1534">R_ADC_B_Read()</a>.</dd></dl>
-<h2>Configuring a Scan</h2>
+To avoid data being overwritten, when converting a channel multiple times within the same scan group use <a class="el" href="group___a_d_c___b.html#gaf3495a942e210aec9b563922a497d75f">R_ADC_B_FifoRead()</a> instead of <a class="el" href="group___a_d_c___b.html#gabd5b134248487fb52dcdc4c0484d1534">R_ADC_B_Read()</a>. <a class="anchor" id="um_adc_multiple_groups"></a> <h2>Configuring a Scan</h2>
+</dd></dl>
 <p>To perform A/D conversion of a scan group the following should be configured:</p><ul>
 <li>Assign the analog channel for conversion to a virtual channel.</li>
 <li>Assign the virtual channel to a scan group.</li>
@@ -284,6 +284,10 @@ Pin Configuration</h2>
 <p><a class="anchor" id="um_adc_api_configure_the_external_trigger"></a>ADTRG0 and ADTRG1 can be used to start scans with an external trigger. When external triggers are used, ADC_B scans begin on the falling edge of the ADTRG pin.</p>
 <h1><a class="anchor" id="r-adc_b-usage_notes"></a>
 Usage Notes</h1>
+<h2>Limitations</h2>
+<p>Developers should be aware of the following limitations when using R_ADC_B:</p><ul>
+<li>Except for Group Priority Operation, if ADC0 or ADC1 are currently performing an A/D conversion operation, attempting to start another scan group that uses the same A/D converter will be ignored. This also applies to starting multiple groups at one time. When Group Priority Operation is not enabled, only the lowest numbered group will be started (for each ADC converter), other groups will be ignored.</li>
+</ul>
 <h2>Self-Calibration</h2>
 <p>Calibration is required to use this peripheral; call <a class="el" href="group___a_d_c___b.html#gac8b61426725c479730493944cbf5ce2c">R_ADC_B_Calibrate()</a> after open, and prior to any other function. Self-Calibration should be performed any time ADC operating characteristics are modified, including after reset, releasing module-stop, when returning from software standby or deep software standby mode, or each time the ADC open function is called.</p>
 <dl class="section note"><dt>Note</dt><dd>Self-calibration is a non-blocking operation. The application should wait for an ADC_EVENT_CALIBRATION_COMPLETE callback before using other ADC_B functionality.</dd></dl>
@@ -1922,7 +1926,7 @@ Limiter clip Table register data. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enables the hardware trigger for a scan depending on how the triggers were configured in the R_ADC_B_ScanCfg call. If the unit was configured for ELC, GPT, or external hardware triggering, then this function allows the trigger signal to get to the ADC unit. The function is not able to control the generation of the trigger itself. If the unit was configured for software triggering, This function was added to this ADC version for compatability with r_adc driver. For additional flexibility, it is recommended R_ADC_B_GroupScanStart.</p>
+<p>Enables the hardware trigger for a scan depending on how the triggers were configured in the R_ADC_B_ScanCfg call. If the unit was configured for ELC, GPT, or external hardware triggering, then this function allows the trigger signal to get to the ADC unit. The function is not able to control the generation of the trigger itself. If the unit was configured for software triggering, This function was added to this ADC version for compatability with r_adc driver. For additional flexibility, it is recommended to use R_ADC_B_ScanGroupStart.</p>
 <dl class="section pre"><dt>Precondition</dt><dd>Call R_ADC_B_ScanCfg after R_ADC_B_Open before starting a scan. </dd>
 <dd>
 Call R_ADC_B_Calibrate and wait for calibration to complete before starting a scan.</dd></dl>
@@ -1965,6 +1969,7 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
       </table>
 </div><div class="memdoc">
 <p>Starts a software scan or enables the hardware trigger for a scan depending on how triggers were configured. If the group was configured for ELC, GPT, or external hardware triggering then this function allows the trigger signal to get to the ADC unit. The function itself is not able to control the generation of peripheral triggers. If the unit was configured for software triggering, then this function starts the software triggered scan.</p>
+<dl class="section note"><dt>Note</dt><dd>Except for Group Priority Operation, if ADC0 or ADC1 are currently performing an A/D conversion operation, attempting to start another scan group that uses the same A/D converter will be ignored. This also applies to starting multiple groups at one time. When Group Priority Operation is not enabled, only the lowest numbered group will be started (for each ADC converter), other groups will be ignored.</dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>Call R_ADC_B_ScanCfg after R_ADC_B_Open before starting a scan. </dd>
 <dd>
 Call R_ADC_B_Calibrate and wait for calibration to complete before starting a scan.</dd></dl>
@@ -2347,7 +2352,7 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -137,7 +137,7 @@ var group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i =
       [ "getProvisionedDeviceList", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a0d63ad977e9ce4a66c3ee3e1f47294ce", null ],
       [ "getDeviceKeyHandle", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a3f4414c5fe0e3b81582421bee7e9195e", null ],
       [ "getAppKey", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#ac27ff15468e1d2b24fcbc23101194284", null ],
-      [ "addUpdateNetkey", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a6e48d26fc2566dae081038cd5abfdbae", null ],
+      [ "addUpdateNetkey", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a88dbc4100de31cd02a1ad0a58999f6a1", null ],
       [ "addFriendSecurityCredential", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#ae37f34a4b9756d5ace1a00b33c7b4728", null ],
       [ "deleteFriendSecurityCredential", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a73bbff95d4e62fb5147d2550825526de", null ],
       [ "findSubnet", "group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#af25c3b58efab12ef27667cf4733bbc76", null ],

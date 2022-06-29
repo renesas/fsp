@@ -19,6 +19,8 @@ var group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i =
       [ "role", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#af041a22eb2b49c9e28d015fe997a0903", null ]
     ] ],
     [ "rm_ble_mesh_bearer_ntf_callback_args_t", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#structrm__ble__mesh__bearer__ntf__callback__args__t", [
+      [ "p_handle", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a3a67525d746e543329f822713a74dc99", null ],
+      [ "event", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#ae6822615d9144c0063b2314d6a152ecd", null ],
       [ "p_data", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a7d0f5a13e907015dd85f307066483cbf", null ],
       [ "data_length", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#acc53f97168f1efc9c306ab9df61d015b", null ]
     ] ],
@@ -44,7 +46,7 @@ var group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i =
       [ "broadcastBeacon", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a6f1b13356f50f18f2373969fff6e2e62", null ],
       [ "startProxyAdv", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a75c7688a1f8239ce70b53ca62d40f1f8", null ],
       [ "sendPdu", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a64cdbeaf5ec4ffc074c9f0370af34795", null ],
-      [ "getPacketRssi", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a83994f91a2257c3b9de43eb003fcf49b", null ],
+      [ "getPacketRssi", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#aa0562f376dc1d0336e2ba9e049916d18", null ],
       [ "sleep", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#abc73d4850d501aeca2b8c910d72e7ee5", null ],
       [ "wakeup", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a21dae7999c7e9109688e74fb22a8733a", null ]
     ] ],

@@ -104,5 +104,9 @@ var group___r_m___b_l_e___m_e_s_h___a_p_i =
       [ "RM_BLE_MESH_FEATURE_SELECT_PROXY", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#gga6e37dac7df8150b4acc536a89266286baa1fee2f5cea558a0f989f2bedcba1098", null ],
       [ "RM_BLE_MESH_FEATURE_SELECT_FRIEND", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#gga6e37dac7df8150b4acc536a89266286bab3cb162437f4c0f49c3debec4ac538e3", null ],
       [ "RM_BLE_MESH_FEATURE_SELECT_LPN", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#gga6e37dac7df8150b4acc536a89266286ba755020319f89fd8fa7d94c241974e93c", null ]
+    ] ],
+    [ "rm_ble_mesh_feature_state_t", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#ga7eca29b48925577fc4864d98bfe841d1", [
+      [ "RM_BLE_MESH_FEATURE_STATE_DISABLE", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#gga7eca29b48925577fc4864d98bfe841d1a6555f53b27cbc486b71eaa8eb85f638c", null ],
+      [ "RM_BLE_MESH_FEATURE_STATE_ENABLE", "group___r_m___b_l_e___m_e_s_h___a_p_i.html#gga7eca29b48925577fc4864d98bfe841d1ada3c91f8261a7cd0529bfa5aaa51e37e", null ]
     ] ]
 ];

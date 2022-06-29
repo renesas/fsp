@@ -4,6 +4,7 @@ var group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t =
     [ "RM_MESH_HEALTH_CLIENT_Open", "group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#gab9577355472debbbb7ab31c0f88faa08", null ],
     [ "RM_MESH_HEALTH_CLIENT_Close", "group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga93654e3bdf20ae07cfa8a942904adb17", null ],
     [ "RM_MESH_HEALTH_CLIENT_GetModelHandle", "group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga91aa409f4e7aa12a8e540d9503b9583c", null ],
+    [ "RM_MESH_HEALTH_CLIENT_SetModelHandle", "group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga332bf4ff2ca68f3fc36ff9a91ed71d38", null ],
     [ "RM_MESH_HEALTH_CLIENT_SendReliablePdu", "group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga8ebbfa9d81a1f493a3da3ff83dd563e1", null ],
     [ "RM_MESH_HEALTH_CLIENT_FaultGet", "group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga89aade7e8f750eba32c5384d085ba01c", null ],
     [ "RM_MESH_HEALTH_CLIENT_FaultClearUnacknowledged", "group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga0cdbf9ea47a384e6572a5a994dc4a90b", null ],

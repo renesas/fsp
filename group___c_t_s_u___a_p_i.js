@@ -54,7 +54,8 @@ var group___c_t_s_u___a_p_i =
       [ "callbackSet", "group___c_t_s_u___a_p_i.html#adda480537f35733dbed856a30b89be50", null ],
       [ "close", "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395", null ],
       [ "specificDataGet", "group___c_t_s_u___a_p_i.html#adf2f74b741c739e9e21b1ce544292872", null ],
-      [ "dataInsert", "group___c_t_s_u___a_p_i.html#a84dfd5dd2ab6b16465cc5c06953c6a9f", null ]
+      [ "dataInsert", "group___c_t_s_u___a_p_i.html#a84dfd5dd2ab6b16465cc5c06953c6a9f", null ],
+      [ "offsetTuning", "group___c_t_s_u___a_p_i.html#a5c1e1ab640eec8358e7ef92de31fcdc8", null ]
     ] ],
     [ "ctsu_instance_t", "group___c_t_s_u___a_p_i.html#structctsu__instance__t", [
       [ "p_ctrl", "group___c_t_s_u___a_p_i.html#a869c53c171f70f95ed85cbf7109914fc", null ],

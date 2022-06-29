@@ -59,6 +59,9 @@ var group___v_s___a_p_i =
     [ "st_ble_vs_get_scan_ch_map_comp_evt_t", "group___v_s___a_p_i.html#structst__ble__vs__get__scan__ch__map__comp__evt__t", [
       [ "ch_map", "group___v_s___a_p_i.html#a6a1c01e6853fc9727251a9e3ff6ea01f", null ]
     ] ],
+    [ "st_ble_vs_get_fw_version_comp_evt_t", "group___v_s___a_p_i.html#structst__ble__vs__get__fw__version__comp__evt__t", [
+      [ "major", "group___v_s___a_p_i.html#adda53096a6b7929b431b6d5ca41303d3", null ]
+    ] ],
     [ "BLE_VS_TX_POWER_HIGH", "group___v_s___a_p_i.html#ga6ccd1f174f5549d2c91dad762184a873", null ],
     [ "BLE_VS_TX_POWER_MID", "group___v_s___a_p_i.html#ga89dd56b8f1f9cf97564524116bf156d2", null ],
     [ "BLE_VS_TX_POWER_LOW", "group___v_s___a_p_i.html#ga68d928f069a2f275115cf4bf7b172840", null ],
@@ -106,6 +109,14 @@ var group___v_s___a_p_i =
       [ "BLE_VS_EVENT_FAIL_DETECT", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a222f1bdb6d44e236d72dca050b643da0", null ],
       [ "BLE_VS_EVENT_SET_SCAN_CH_MAP", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a7270f796d36de951b326298b95f0ba4e", null ],
       [ "BLE_VS_EVENT_GET_SCAN_CH_MAP", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a26016a8c9b0aad4b1dccf4578ce74103", null ],
+      [ "BLE_VS_EVENT_START_FW_UPDATE_COMP", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a183b7b9caa037961566009001f811e03", null ],
+      [ "BLE_VS_EVENT_SEND_FW_DATA_COMP", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579af585f7b8df0abc561781203ceaaee771", null ],
+      [ "BLE_VS_EVENT_END_FW_UPDATE_COMP", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a54612e1399c07f741b5cb0edeab8c3aa", null ],
+      [ "BLE_VS_EVENT_GET_FW_VERSION_COMP", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a7cdc707aab98ed80052d2fe0f0276ec0", null ],
+      [ "BLE_VS_EVENT_MODULE_READY_COMP", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a09ca4ffa583e1594f8d1e0d171c3ae8f", null ],
+      [ "BLE_VS_EVENT_OTA_START_NOTIFY", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579ad0e2a8595dd45c03433da2871bde22d4", null ],
+      [ "BLE_VS_EVENT_OTA_END_NOTIFY", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a7dc52ac325464a7d17e317e28b1e52c5", null ],
+      [ "BLE_VS_EVENT_OTA_ERROR_NOTIFY", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a83806cf2361dc8bb2626983d3d1e946c", null ],
       [ "BLE_VS_EVENT_INVALID", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579a9ba51c2d70b111a45df250a2f070617e", null ]
     ] ],
     [ "R_BLE_VS_Init", "group___v_s___a_p_i.html#ga57b6b04c7dd2eed94a69b583850f4ba7", null ],
@@ -124,5 +135,10 @@ var group___v_s___a_p_i =
     [ "R_BLE_VS_GetTxBufferNum", "group___v_s___a_p_i.html#ga94ff65ce099fb521b13e224aaea44475", null ],
     [ "R_BLE_VS_SetTxLimit", "group___v_s___a_p_i.html#ga01f0f9aa4b719394f3bf1523a0790ef5", null ],
     [ "R_BLE_VS_SetScanChMap", "group___v_s___a_p_i.html#gacb552f473dfd105f69bbf4e087cadf0a", null ],
-    [ "R_BLE_VS_GetScanChMap", "group___v_s___a_p_i.html#ga64876fb75bdd8184deffbc1349d40737", null ]
+    [ "R_BLE_VS_GetScanChMap", "group___v_s___a_p_i.html#ga64876fb75bdd8184deffbc1349d40737", null ],
+    [ "R_BLE_VS_StartFirmwareUpdate", "group___v_s___a_p_i.html#gaa59b32368f8497a6c32e2b4b28945297", null ],
+    [ "R_BLE_VS_SendFirmwareData", "group___v_s___a_p_i.html#ga138a72420cbb8b9ff69487e97bce8321", null ],
+    [ "R_BLE_VS_EndFirmwareUpdate", "group___v_s___a_p_i.html#ga6b67ecf8ccf2e2f371cbd0e8f43e47e9", null ],
+    [ "R_BLE_VS_GetFirmwareVersion", "group___v_s___a_p_i.html#gaabe8bdfb158d778c3eba76d08e8cc7d3", null ],
+    [ "R_BLE_VS_RestartModule", "group___v_s___a_p_i.html#gae7e573e4b50ed3942eab6848ebec702f", null ]
 ];

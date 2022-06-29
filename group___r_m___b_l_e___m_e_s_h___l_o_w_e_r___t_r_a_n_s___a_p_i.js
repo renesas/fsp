@@ -51,7 +51,13 @@ var group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i =
       [ "RM_BLE_MESH_LOWER_TRANS_RELIABLE_DISABLE", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#ggaa8034c908ce836f078df616b4f9f3d06a66b931fde3c75a0b964d3d877a446c66", null ],
       [ "RM_BLE_MESH_LOWER_TRANS_RELIABLE_ENABLE", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#ggaa8034c908ce836f078df616b4f9f3d06a84d67379a92a33dca063c4c92432a928", null ]
     ] ],
-    [ "rm_ble_mesh_lower_trans_event_t", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#ga9da13f918d5d3e8da2c56313dcccb96e", null ],
+    [ "rm_ble_mesh_lower_trans_event_t", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#ga9da13f918d5d3e8da2c56313dcccb96e", [
+      [ "RM_BLE_MESH_LOWER_TRANS_EVENT_RX_COMPLETED", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#gga9da13f918d5d3e8da2c56313dcccb96ea69167d544538bf5ff67a577c6a7f687d", null ],
+      [ "RM_BLE_MESH_LOWER_TRANS_EVENT_RX_FROM_FRIEND", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#gga9da13f918d5d3e8da2c56313dcccb96ea2e17c32dd77af1f75c0aaeac221d700c", null ],
+      [ "RM_BLE_MESH_LOWER_TRANS_EVENT_ADD_UPPER_TRANS_COMPLETED", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#gga9da13f918d5d3e8da2c56313dcccb96ea6bae27f1b2b9de08d7815ebdb4aec6a0", null ],
+      [ "RM_BLE_MESH_LOWER_TRANS_EVENT_SEG_TX_CANCELED", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#gga9da13f918d5d3e8da2c56313dcccb96eadac78af0a1fb18d5b2babebeb46d634b", null ],
+      [ "RM_BLE_MESH_LOWER_TRANS_EVENT_SEG_TX_COMPLETED", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#gga9da13f918d5d3e8da2c56313dcccb96ea25940b051588c146a1889d05dceb5128", null ]
+    ] ],
     [ "rm_ble_mesh_lower_trans_notification_t", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#gae39844e1773235974e03ba5df25cc9aa", [
       [ "RM_BLE_MESH_LOWER_TRANS_NOTIFICATION_DISABLE", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#ggae39844e1773235974e03ba5df25cc9aaa954e975551aac08821e370c60c45b41f", null ],
       [ "RM_BLE_MESH_LOWER_TRANS_NOTIFICATION_ENABLE", "group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#ggae39844e1773235974e03ba5df25cc9aaacae12c0b4460ff848d134968c8380514", null ]

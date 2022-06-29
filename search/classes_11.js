@@ -209,6 +209,7 @@ var searchData=
   ['st_5fble_5frf_5fnotify_5ft',['st_ble_rf_notify_t',['../group___b_l_e___a_b_s.html#structst__ble__rf__notify__t',1,'']]],
   ['st_5fble_5fvs_5fevt_5fdata_5ft',['st_ble_vs_evt_data_t',['../group___v_s___a_p_i.html#structst__ble__vs__evt__data__t',1,'']]],
   ['st_5fble_5fvs_5fget_5fbd_5faddr_5fcomp_5fevt_5ft',['st_ble_vs_get_bd_addr_comp_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__get__bd__addr__comp__evt__t',1,'']]],
+  ['st_5fble_5fvs_5fget_5ffw_5fversion_5fcomp_5fevt_5ft',['st_ble_vs_get_fw_version_comp_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__get__fw__version__comp__evt__t',1,'']]],
   ['st_5fble_5fvs_5fget_5frand_5fcomp_5fevt_5ft',['st_ble_vs_get_rand_comp_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__get__rand__comp__evt__t',1,'']]],
   ['st_5fble_5fvs_5fget_5fscan_5fch_5fmap_5fcomp_5fevt_5ft',['st_ble_vs_get_scan_ch_map_comp_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__get__scan__ch__map__comp__evt__t',1,'']]],
   ['st_5fble_5fvs_5fget_5ftx_5fpwr_5fcomp_5fevt_5ft',['st_ble_vs_get_tx_pwr_comp_evt_t',['../group___v_s___a_p_i.html#structst__ble__vs__get__tx__pwr__comp__evt__t',1,'']]],

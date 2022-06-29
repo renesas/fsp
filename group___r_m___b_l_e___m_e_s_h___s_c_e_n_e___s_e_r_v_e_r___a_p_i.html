@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -211,7 +211,40 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Mesh model scene server callback parameter definition </p>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a462cead331d1388bf1b96dadf8bc8e99"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2f8f7bd28ffda7d4d66f9cd6a9e15fe1"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a> *</td>
+<td class="fieldname">
+p_handle</td>
+<td class="fielddoc">
+Access Model handle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5a2aef22db1a0245120390ab33edda8b"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#ga28809a69e9f35eff1a7a4a28abab1d0a">rm_ble_mesh_scene_srv_event_t</a></td>
+<td class="fieldname">
+event_type</td>
+<td class="fielddoc">
+Scene event types. </td></tr>
+<tr><td class="fieldtype">
+<a id="a02dc3663294b21cc311f502d8a83e795"></a>uint8_t *</td>
+<td class="fieldname">
+p_event_data</td>
+<td class="fielddoc">
+Pointer to event data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a804db82d86b90c76af311f0bf5a26f2b"></a>uint16_t</td>
+<td class="fieldname">
+event_data_length</td>
+<td class="fielddoc">
+Event data length. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structrm__ble__mesh__scene__server__timeout__callback__args__t" id="structrm__ble__mesh__scene__server__timeout__callback__args__t"></a>
@@ -225,16 +258,38 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Access Layer Model Publication Timeout Callback.</p>
+<div class="textblock"><p>Mesh model scene server publication timeout callback.</p>
 <p>Access Layer calls the registered callback to indicate Publication Timeout for the associated model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Model Handle. </td></tr>
-    <tr><td class="paramname">blob</td><td>Blob if any or NULL. </td></tr>
+    <tr><td class="paramname">p_context</td><td>User data. </td></tr>
+    <tr><td class="paramname">p_handle</td><td>Model Handle. </td></tr>
+    <tr><td class="paramname">p_blob</td><td>Blob if any or NULL. </td></tr>
   </table>
   </dd>
 </dl>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a42f7baecbcaebb4e648c3f46cac7befc"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3d089160b4df274b34da9282fdb928e4"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a> *</td>
+<td class="fieldname">
+p_handle</td>
+<td class="fielddoc">
+Access Model handle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3c54d751f7b7b7d3cb0eec3a455579ba"></a>void *</td>
+<td class="fieldname">
+p_blob</td>
+<td class="fielddoc">
+Binary Large Object. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structrm__ble__mesh__scene__server__cfg__t" id="structrm__ble__mesh__scene__server__cfg__t"></a>
@@ -252,10 +307,27 @@ Enumerations</h2></td></tr>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:a07c8305d82dce230537c6cb1b0581e82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__instance__t">rm_ble_mesh_access_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#a07c8305d82dce230537c6cb1b0581e82">p_access_instance</a></td></tr>
+<tr class="memdesc:a07c8305d82dce230537c6cb1b0581e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access Layer instance structure.  <a href="#a07c8305d82dce230537c6cb1b0581e82">More...</a><br /></td></tr>
 <tr class="separator:a07c8305d82dce230537c6cb1b0581e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa6e75924d1ff20bb2a45e912550e0bf"><td class="memItemLeft" align="right" valign="top"><a id="afa6e75924d1ff20bb2a45e912550e0bf"></a>
+<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#afa6e75924d1ff20bb2a45e912550e0bf">model_handle</a></td></tr>
+<tr class="memdesc:afa6e75924d1ff20bb2a45e912550e0bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access Model handle. <br /></td></tr>
+<tr class="separator:afa6e75924d1ff20bb2a45e912550e0bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08589afa2deb276842ea048cb9b85fa7"><td class="memItemLeft" align="right" valign="top"><a id="a08589afa2deb276842ea048cb9b85fa7"></a>
+<a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#a08589afa2deb276842ea048cb9b85fa7">setup_server_handle</a></td></tr>
+<tr class="memdesc:a08589afa2deb276842ea048cb9b85fa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access Model handle for setup server. <br /></td></tr>
+<tr class="separator:a08589afa2deb276842ea048cb9b85fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ab65d5b5e366a0778c14c7cf03d55b3"><td class="memItemLeft" align="right" valign="top"><a id="a6ab65d5b5e366a0778c14c7cf03d55b3"></a>
+void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#a6ab65d5b5e366a0778c14c7cf03d55b3">p_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__scene__server__callback__args__t">rm_ble_mesh_scene_server_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a6ab65d5b5e366a0778c14c7cf03d55b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mesh model scene server callback. <br /></td></tr>
+<tr class="separator:a6ab65d5b5e366a0778c14c7cf03d55b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae93d4d3abd9a46470edbb3c1c7e196e"><td class="memItemLeft" align="right" valign="top"><a id="aae93d4d3abd9a46470edbb3c1c7e196e"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#aae93d4d3abd9a46470edbb3c1c7e196e">p_timeout_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__scene__server__timeout__callback__args__t">rm_ble_mesh_scene_server_timeout_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:aae93d4d3abd9a46470edbb3c1c7e196e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mesh model scene server publication timeout callback. <br /></td></tr>
+<tr class="separator:aae93d4d3abd9a46470edbb3c1c7e196e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dd3dfebeaf2916c4d27a15b90dfd391"><td class="memItemLeft" align="right" valign="top"><a id="a8dd3dfebeaf2916c4d27a15b90dfd391"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#a8dd3dfebeaf2916c4d27a15b90dfd391">p_context</a></td></tr>
-<tr class="memdesc:a8dd3dfebeaf2916c4d27a15b90dfd391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__callback__args__t">ble_abs_callback_args_t</a>. <br /></td></tr>
+<tr class="memdesc:a8dd3dfebeaf2916c4d27a15b90dfd391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. <br /></td></tr>
 <tr class="separator:a8dd3dfebeaf2916c4d27a15b90dfd391"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafd7cdadbb1b57a166ca7469e2ddb8ad"><td class="memItemLeft" align="right" valign="top"><a id="aafd7cdadbb1b57a166ca7469e2ddb8ad"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___s_c_e_n_e___s_e_r_v_e_r___a_p_i.html#aafd7cdadbb1b57a166ca7469e2ddb8ad">p_extend</a></td></tr>
@@ -274,6 +346,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Access Layer instance structure. </p>
 <p>the parameters for initialization. </p>
 
 </div>
@@ -471,7 +545,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

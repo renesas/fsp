@@ -22,6 +22,7 @@ var searchData=
   ['motor_5f120_5fdriver_5fextended_5fcfg_5ft',['motor_120_driver_extended_cfg_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html#structmotor__120__driver__extended__cfg__t',1,'']]],
   ['motor_5f120_5fdriver_5finstance_5ft',['motor_120_driver_instance_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r___a_p_i.html#structmotor__120__driver__instance__t',1,'']]],
   ['motor_5f120_5fdriver_5fmodulation_5ft',['motor_120_driver_modulation_t',['../group___m_o_t_o_r__120___d_r_i_v_e_r.html#structmotor__120__driver__modulation__t',1,'']]],
+  ['motor_5fangle_5fad_5fdata_5ft',['motor_angle_ad_data_t',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__ad__data__t',1,'']]],
   ['motor_5fangle_5fapi_5ft',['motor_angle_api_t',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__api__t',1,'']]],
   ['motor_5fangle_5fcfg_5ft',['motor_angle_cfg_t',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__cfg__t',1,'']]],
   ['motor_5fangle_5fcurrent_5ft',['motor_angle_current_t',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__current__t',1,'']]],

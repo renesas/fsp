@@ -10,12 +10,24 @@ var group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i =
       [ "property_id", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a83969750ff31aa60b5f2ed9a8f53ee0a", null ]
     ] ],
     [ "rm_ble_mesh_model_server_generic_prop_srv_ids_info_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__server__generic__prop__srv__ids__info__t", [
-      [ "property_ids", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#adf8302627280a08bb1b6274ad93b7a60", null ]
+      [ "property_ids", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#adf8302627280a08bb1b6274ad93b7a60", null ],
+      [ "property_ids_count", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#ab2b946e0e0a4225c128e73126657bfd2", null ]
     ] ],
-    [ "rm_ble_mesh_model_server_callback_args_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__server__callback__args__t", null ],
-    [ "rm_ble_mesh_model_server_timeout_callback_args_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__server__timeout__callback__args__t", null ],
+    [ "rm_ble_mesh_model_server_callback_args_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__server__callback__args__t", [
+      [ "p_msg_context", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#acab02fb95c6b7469bccbfadee4823f40", null ],
+      [ "p_msg_raw", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#aaa55f93ca9c06f31751d5df5d394edee", null ],
+      [ "p_req_type", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a5ff567a00d8754392278b318980441d9", null ],
+      [ "p_state_parameter", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a4f344b589ae119ec5f85b57f60d88b58", null ],
+      [ "p_extended_parameter", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a5189e99579be7829cfe8603ccca2a0f5", null ]
+    ] ],
+    [ "rm_ble_mesh_model_server_timeout_callback_args_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__server__timeout__callback__args__t", [
+      [ "p_context", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a705cc1e3cdf1b4527fba69428390acc1", null ],
+      [ "p_handle", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a4c521ad8e2bfe3dc77a2a4e9f5beff88", null ]
+    ] ],
     [ "rm_ble_mesh_model_server_cfg_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__model__server__cfg__t", [
       [ "p_access_instance", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#aa6e267a29eef3d2734caff042aad8caa", null ],
+      [ "p_callback", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a3a45303fb91bdef282d708bc4ab89d34", null ],
+      [ "p_timeout_callback", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a1b1bcc200bc0c6b85853254caae41c6a", null ],
       [ "p_context", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a187a97d3a328b6092d3a958cce6d7278", null ],
       [ "p_extend", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#a10d8f14abd471ac5b64d8c771d64031a", null ]
     ] ],
@@ -39,7 +51,8 @@ var group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i =
       [ "RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_PROHIBITED", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#ggaa555423bf6315a6fca9c7ca91a004427ae19cb8df52b7e24f7c0cda51c8b0412a", null ],
       [ "RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_READ", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#ggaa555423bf6315a6fca9c7ca91a004427a4ef16a71c27af0ab4e1e0985e1ff36f1", null ],
       [ "RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_WRITE", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#ggaa555423bf6315a6fca9c7ca91a004427aa357528c6100b9c449bb9821e0854813", null ],
-      [ "RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_READ_WRITE", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#ggaa555423bf6315a6fca9c7ca91a004427a18c8b8558bbecb7ad0819f417eef9908", null ]
+      [ "RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_READ_WRITE", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#ggaa555423bf6315a6fca9c7ca91a004427a18c8b8558bbecb7ad0819f417eef9908", null ],
+      [ "RM_BLE_MESH_MODEL_SERVER_USER_ACCESS_INVALID_PROPERTY_ID", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#ggaa555423bf6315a6fca9c7ca91a004427a09854418f79b4e1958c7dd18e693448e", null ]
     ] ],
     [ "rm_ble_mesh_model_server_device_property_t", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#ga4a5da1b554e2f42a3d5bc8ef6dd90916", [
       [ "RM_BLE_MESH_MODEL_SERVER_DEVICE_PROPERTY_LIGHT_CONTROL_TIME_OCCUPANCY_DELAY", "group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___s_e_r_v_e_r___a_p_i.html#gga4a5da1b554e2f42a3d5bc8ef6dd90916a840be902023efa2b471ce9aa86e1d5ed", null ],

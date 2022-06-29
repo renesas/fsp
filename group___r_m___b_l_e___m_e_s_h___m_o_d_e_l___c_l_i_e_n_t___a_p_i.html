@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -220,7 +220,28 @@ Typedefs</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Mesh model client callback parameter definition </p>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a3f9ecf2f1484990ca84f3da85f4c5585"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9640685931d729b8dd39349418796f99"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__model__req__msg__context__t">rm_ble_mesh_access_model_req_msg_context_t</a> *</td>
+<td class="fieldname">
+p_msg_context</td>
+<td class="fielddoc">
+Context of message received for a specific model instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a960206910037371141d2aac5b3162d19"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__req__msg__raw__t">rm_ble_mesh_access_req_msg_raw_t</a> *</td>
+<td class="fieldname">
+p_msg_raw</td>
+<td class="fielddoc">
+Uninterpreted/raw received message for a specific model instance. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structrm__ble__mesh__model__client__cfg__t" id="structrm__ble__mesh__model__client__cfg__t"></a>
@@ -238,10 +259,15 @@ Typedefs</h2></td></tr>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:aebef5d4fbe4ba71522e39e121552794b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__instance__t">rm_ble_mesh_access_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#aebef5d4fbe4ba71522e39e121552794b">p_access_instance</a></td></tr>
+<tr class="memdesc:aebef5d4fbe4ba71522e39e121552794b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access Layer instance structure.  <a href="#aebef5d4fbe4ba71522e39e121552794b">More...</a><br /></td></tr>
 <tr class="separator:aebef5d4fbe4ba71522e39e121552794b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68599b0f2f9c050f0760bda6658b1a72"><td class="memItemLeft" align="right" valign="top"><a id="a68599b0f2f9c050f0760bda6658b1a72"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a68599b0f2f9c050f0760bda6658b1a72">p_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#structrm__ble__mesh__model__client__callback__args__t">rm_ble_mesh_model_client_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a68599b0f2f9c050f0760bda6658b1a72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mesh model client callback. <br /></td></tr>
+<tr class="separator:a68599b0f2f9c050f0760bda6658b1a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a378391399c79abb4ae1f6aad4a449723"><td class="memItemLeft" align="right" valign="top"><a id="a378391399c79abb4ae1f6aad4a449723"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#a378391399c79abb4ae1f6aad4a449723">p_context</a></td></tr>
-<tr class="memdesc:a378391399c79abb4ae1f6aad4a449723"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__callback__args__t">ble_abs_callback_args_t</a>. <br /></td></tr>
+<tr class="memdesc:a378391399c79abb4ae1f6aad4a449723"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. <br /></td></tr>
 <tr class="separator:a378391399c79abb4ae1f6aad4a449723"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6490ca6330d039fcb4ecb4814fba329"><td class="memItemLeft" align="right" valign="top"><a id="ab6490ca6330d039fcb4ecb4814fba329"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___m_o_d_e_l___c_l_i_e_n_t___a_p_i.html#ab6490ca6330d039fcb4ecb4814fba329">p_extend</a></td></tr>
@@ -260,6 +286,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Access Layer instance structure. </p>
 <p>the parameters for initialization. </p>
 
 </div>
@@ -387,7 +415,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>API to set Model client model handle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>DEPRECATED - API to set Model client model handle. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___b_a_t_t_e_r_y___c_l_t.html#gafaab86717c293305d7f7e3aaf9884114">RM_MESH_GENERIC_BATTERY_CLT_SetModelHandle()</a></li>
 <li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___d_t_t___c_l_t.html#gafbf2200bae501a9f1a86d63ab004ae76">RM_MESH_GENERIC_DTT_CLT_SetModelHandle()</a></li>
 <li><a class="el" href="group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_e_v_e_l___c_l_t.html#gae4ed019457fb045921b831490b6a07ef">RM_MESH_GENERIC_LEVEL_CLT_SetModelHandle()</a></li>
@@ -405,6 +433,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <li><a class="el" href="group___r_m___m_e_s_h___s_c_h_e_d_u_l_e_r___c_l_t.html#ga74528baad50b2482621c8523cdd9c12b">RM_MESH_SCHEDULER_CLT_SetModelHandle()</a></li>
 <li><a class="el" href="group___r_m___m_e_s_h___t_i_m_e___c_l_t.html#ga7d77f400de19b8f7e4734cfa335420f1">RM_MESH_TIME_CLT_SetModelHandle()</a></li>
 <li><a class="el" href="group___r_m___m_e_s_h___s_e_n_s_o_r___c_l_t.html#ga57107b4c5709b736ae798033456133de">RM_MESH_SENSOR_CLT_SetModelHandle()</a></li>
+<li><a class="el" href="group___r_m___m_e_s_h___h_e_a_l_t_h___c_l_t.html#ga332bf4ff2ca68f3fc36ff9a91ed71d38">RM_MESH_HEALTH_CLIENT_SetModelHandle()</a></li>
 </ul>
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -569,7 +598,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

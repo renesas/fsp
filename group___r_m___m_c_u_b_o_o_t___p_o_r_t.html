@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -230,11 +230,11 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Copies the user data into the secure RAM, intended to be used by the secure App. </td></tr>
 <tr>
-<td>Signing Options &gt; TrustZone &gt; Boot Record (Image 2)</td><td>String length must be 12 characters or less.</td><td></td><td>Create CBOR encoded boot record TLV for Image 2. Represents the role of the software component (e.g. CoFM for coprocessor firmware). [max. 12 characters] </td></tr>
+<td>Signing and Encryption Options &gt; TrustZone &gt; Boot Record (Image 2)</td><td>String length must be 12 characters or less.</td><td></td><td>Create CBOR encoded boot record TLV for Image 2. Represents the role of the software component (e.g. CoFM for coprocessor firmware). [max. 12 characters] </td></tr>
 <tr>
-<td>Signing Options &gt; TrustZone &gt; Custom (Image 2)</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
+<td>Signing and Encryption Options &gt; TrustZone &gt; Custom (Image 2)</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
 <tr>
-<td>Signing Options &gt; Signature Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Signing and Encryption Options &gt; Signature Type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 None</li>
 <li>
@@ -246,11 +246,21 @@ RSA 3072</li>
 </ul>
 </td><td>ECDSA P-256 </td><td>Configure the signature type. </td></tr>
 <tr>
-<td>Signing Options &gt; Boot Record</td><td>String length must be 12 characters or less.</td><td></td><td>Create CBOR encoded boot record TLV. Represents the role of the software component (e.g. CoFM for coprocessor firmware). [max. 12 characters] </td></tr>
+<td>Signing and Encryption Options &gt; Boot Record</td><td>String length must be 12 characters or less.</td><td></td><td>Create CBOR encoded boot record TLV. Represents the role of the software component (e.g. CoFM for coprocessor firmware). [max. 12 characters] </td></tr>
 <tr>
-<td>Signing Options &gt; Custom</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
+<td>Signing and Encryption Options &gt; Custom</td><td>Manual Entry</td><td>--confirm </td><td>Add any custom options to pass to imgtool.py here. --pad places a trailer on the image that indicates that the image should be considered an upgrade. Writing this image in the secondary slot will then cause the bootloader to upgrade to it. --confirm marks the image as confirmed, which causes the upgrade to be permanent. </td></tr>
 <tr>
-<td>Signing Options &gt; Python</td><td>Manual Entry</td><td>python </td><td>Name of the python command to use. Default is python, but can be updated to python3 for Linux or an absolute path if needed. </td></tr>
+<td>Signing and Encryption Options &gt; Python</td><td>Manual Entry</td><td>python </td><td>Name of the python command to use. Default is python, but can be updated to python3 for Linux or an absolute path if needed. </td></tr>
+<tr>
+<td>Signing and Encryption Options &gt; Encryption Scheme</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+ECIES-P256</li>
+<li>
+RSA-OAEP (RSA 2048 only)</li>
+<li>
+Encryption Disabled</li>
+</ul>
+</td><td>Encryption Disabled </td><td>Choose the encryption scheme. </td></tr>
 <tr>
 <td>Flash Layout &gt; TrustZone &gt; Non-Secure Callable Region Size (Bytes)</td><td>Value must be an integer multiple of the 1024.</td><td>0x0 </td><td>Size of the Non-Secure Callable region of the Secure image. </td></tr>
 <tr>
@@ -321,6 +331,11 @@ Usage Notes</h1>
 <li>RSA 3K: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-rsa-3072.pem</li>
 </ul>
 </li>
+<li>MCUBOOT_IMAGE_ENC_KEY: Set the path to the key used for encryption. If encryption is not required, do not set this variable. If example keys are used, set MCUBOOT_IMAGE_ENC_KEY as follows (replace &lt;boot_project&gt; with the bootloader project path):<ul>
+<li>ECIES: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/enc-ec256-pub.pem</li>
+<li>RSA 2K: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/enc-rsa2048-pub.pem</li>
+</ul>
+</li>
 <li>MCUBOOT_APP_BIN_CONVERTER: Optional. Set to path to objcopy, arm-none-eabi-objcopy, fromelf, or ielftool. Not required if one of these tools is on the path.</li>
 </ul>
 </li>
@@ -360,7 +375,8 @@ MCUboot Dual Bank layout for 1 MB Memory</div></div>
 <p>The bootloader must be duplicated in Dual Bank mode. Bank 0 can be programmed using the srec file generated from the MCUboot project; this will also program the OFS region which contains the dual bank enable bit, so it must either be programmed last if each file is programmed independently. Another option is to combine all images: MCUboot in Bank 0, primary image, MCUboot in Bank 1 (no OFS), and secondary image (optional). To program MCUboot to Bank 1, offset MCUboot by half the flash size and cut off the OFS region (0x0100A100 to address 0x0100A2FF on CM33 MCUs that support dual bank). Using srec-cat for a 1 MB flash MCU (0x80000 flash per bank), an example command to create the bootloader image for Bank 1: "srec_cat MCUboot_dualbank.srec -crop 0 0x80000 -offset 0x80000 -o MCUboot_dualbank_offset.srec". The application project for Bank 1 can be similarly offset using srec_cat: "srec_cat app1.bin.signed -binary -offset 0xA0000 -o app1_offset.srec", where 0xA0000 is 0x80000 (half the flash) + 0x20000 (MCUboot size). The signed binary file for Bank 0 can be converted to srec format using srec_cat: "srec_cat app0.bin.signed -binary -offset 0x20000 -o app0.srec"</p>
 <p>To combine all the files into one srec file, use "srec_cat MCUboot_dualbank.srec MCUboot_dualbank_offset.srec app0.srec app1_offset.srec -o combined_srec".</p>
 <h2>External Memory Support</h2>
-<p>QSPI support for secondary image storage can be enabled in the configurator. The booloader expectes the QSPI memory to be pre-configured by user code in the bootloader for read/write operation. The bootloader code operates under the assumption that the user has configured the QSPI in Extended-SPI mode and that <a class="el" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open()</a> has been called prior to invoking boot_go();. For an example on how to initialize the QSPI device, refer to the QSPI module. The QSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation.</p>
+<p>QSPI support for secondary image storage can be enabled in the configurator. The booloader expectes the QSPI memory to be pre-configured by user code in the bootloader for read/write operation. The bootloader code operates under the assumption that the user has configured the QSPI in Extended-SPI mode and that <a class="el" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open()</a> has been called prior to invoking boot_go();. For example, on the EK_RA6M4 which has the MX25L25645G QSPI flash, after adding the QSPI module to the project, calling the following snippet will configure the QSPI for read/write operation:</p>
+<div class="fragment"><div class="line"><span class="comment">/* Status Register (SREG) payload size */</span></div><div class="line"><span class="preprocessor"># define SREG_SIZE                             0x03</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_COMMAND_WRITE_STATUS_REGISTER   0x01</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR1                     0x40</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR2                     0x00</span></div><div class="line"></div><div class="line"><span class="comment">/* Status register payload */</span></div><div class="line">uint8_t   data_sreg[SREG_SIZE]                 = {QSPI_COMMAND_WRITE_STATUS_REGISTER, QSPI_DEFAULT_SR1, QSPI_DEFAULT_SR2};</div><div class="line"></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open</a>(&amp;g_qspi0_ctrl, &amp;g_qspi0_cfg);</div><div class="line"><span class="comment">/* Configure for Extended SPI Read/Write Mode */</span></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, &amp;(g_qspi0_cfg.write_enable_command), 1, <span class="keyword">false</span>);</div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, data_sreg, SREG_SIZE, <span class="keyword">false</span>);</div></div><!-- fragment --><p>For a more detailed example on how to initialize the QSPI device, refer to the QSPI module. The QSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation.</p>
 <h2>MCUboot Memory Map</h2>
 <p>For single image projects with no external memory support, the default memory map looks like:</p>
 <div class="image">
@@ -377,7 +393,17 @@ MCUboot Memory Map (TrustZone)</div></div>
 <img src="rm_mcuboot_port_map_qspi.png" alt="rm_mcuboot_port_map_qspi.png"/>
 <div class="caption">
 MCUboot Memory Map with QSPI</div></div>
- <h2>MCUboot Crypto Stack Options</h2>
+ <h2>MCUboot verification options</h2>
+<p>MCUboot in FSP supports the following secure image verification options</p><ol type="1">
+<li>Hash verification only (SHA256).</li>
+<li>Hash and signature verification (ECDSA-P256, RSA-2048 and RSA-3072).</li>
+<li>Hash, signature verification and image encryption (ECIES-P256 and RSA-OAEP-2048 with AES-128).</li>
+<li>Hash and image encryption only.</li>
+</ol>
+<p>MCUboot also supports signature verification using EdDSA-25519 and image encryption using AES-KW-128 and AES-KW-256 but those are currently not supported in FSP.</p>
+<h3>Notes</h3>
+<p>When encryption is enabled, MCUboot requires the image in the primary slot to be unencrypted. Only the image loaded in the secondary slot can be encrypted.</p>
+<h2>MCUboot Crypto Stack Options</h2>
 <p>The following crypto stacks can be used with MCUboot in FSP:</p><ol type="1">
 <li>MbedTLS, which is hardware accelerated on all RA devices. On the RA2 which has an AES engine only, ECC/RSA/SHA operations are in software.</li>
 <li>TinyCrypt (S/W Only) can be used with all devices.</li>
@@ -386,8 +412,9 @@ MCUboot Memory Map with QSPI</div></div>
 </ol>
 <p>MbedTLS provides the best performance for MCUBoot signature verification on the RA6 and RA4 devices but has a much larger code footprint compared to TinyCrypt. For RA2 devices TinyCrypt is the best option.</p>
 <h2>Using SCE9 Protected Mode Crypto Stack</h2>
-<p>Using this crypto stack with MCUBoot provides additional security by ensuring that any keys that are used were securely provisioned for the specific device. The Application Note "Installing and Updating Secure Keys for RA Family" (R11AN0496) provides detailed steps on how to go about installing these keys. Since the section "Preparing Keys for Installation and Update Using RFP" document currently only provides information on how to install an AES key, this section will provide information on how to install an ECC public key.</p>
+<p>Using this crypto stack with MCUBoot provides additional security by ensuring that any keys that are used were securely provisioned for the specific device. The Application Note "Installing and Updating Secure Keys for RA Family" (R11AN0496) provides detailed steps on how to go about installing these keys. Since the section "Preparing Keys for Installation and Update Using RFP" document currently only provides information on how to install an AES key, this section will provide information on how to install an ECC public key. These steps can be used to install the public keys used for image verification or the keys used for image encryption.</p>
 <dl class="section note"><dt>Note</dt><dd><b>When using the SCE9 Protected Mode Stack with MCUboot it is required that the public keys in the format described in the "MCUboot Example Keys" module in the stack is also provided in the project.</b></dd></dl>
+<h3>Installing public keys used for signature verification</h3>
 <ol type="1">
 <li>Generate an ECC key pair. There are various ways to do this but you can use openSSL to do so: "openssl ecparam -name secp256k1 -genkey -noout -out my_ecc_secp256k1_key.pem".</li>
 <li>Once the key is generated, in order to install the public key using RFP (Renesas Flash Programmer) the user needs to have their own UFPK (User Factory Programming Key) and W-UFPK (Wrapped User Factory Programming Key). Refer to R11AN0496 on how to obtain these keys.</li>
@@ -406,7 +433,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

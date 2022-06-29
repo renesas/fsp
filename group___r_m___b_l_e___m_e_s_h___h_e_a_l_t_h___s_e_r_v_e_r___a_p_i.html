@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -213,7 +213,40 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Mesh model health server callback parameter definition </p>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a4c7007fd785ed0802fde024e738a17f5"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a9e253aadd56999bc90bc108fe651431f"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#gaf7d1dc3fd3f4fef93a42a4c2d28b2e2a">rm_ble_mesh_access_model_handle_t</a> *</td>
+<td class="fieldname">
+p_handle</td>
+<td class="fielddoc">
+Access model handle. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab33bed27878fa7957d25a44937a8b31d"></a><a class="el" href="group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#gaf057d007ed1db315ac943fd25b81160f">rm_ble_mesh_health_server_events_t</a></td>
+<td class="fieldname">
+event_type</td>
+<td class="fielddoc">
+Application events defined for Health Server Model. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad388949d95e2ab99e852fd93cc4b9440"></a>uint8_t *</td>
+<td class="fieldname">
+p_event_data</td>
+<td class="fielddoc">
+Event data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5d14b46978a9a3675d5ecab1de170192"></a>uint16_t</td>
+<td class="fieldname">
+event_data_length</td>
+<td class="fielddoc">
+Event data length. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structrm__ble__mesh__health__server__self__test__t" id="structrm__ble__mesh__health__server__self__test__t"></a>
@@ -227,7 +260,7 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Health Server Self Test Funtion Structure. </p>
+<div class="textblock"><p>Health Server Self Test Function Structure. </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -263,7 +296,20 @@ self_test_fn</td>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:aaf1e5a56e56118ad7650d7af7bb496b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#structrm__ble__mesh__access__instance__t">rm_ble_mesh_access_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#aaf1e5a56e56118ad7650d7af7bb496b9">p_access_instance</a></td></tr>
+<tr class="memdesc:aaf1e5a56e56118ad7650d7af7bb496b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access Layer instance structure.  <a href="#aaf1e5a56e56118ad7650d7af7bb496b9">More...</a><br /></td></tr>
 <tr class="separator:aaf1e5a56e56118ad7650d7af7bb496b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a766314337333fadb416ae7d5ecc9d327"><td class="memItemLeft" align="right" valign="top"><a id="a766314337333fadb416ae7d5ecc9d327"></a>
+<a class="el" href="group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__health__server__self__test__t">rm_ble_mesh_health_server_self_test_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a766314337333fadb416ae7d5ecc9d327">p_self_tests</a></td></tr>
+<tr class="memdesc:a766314337333fadb416ae7d5ecc9d327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Health Server self test function structure. <br /></td></tr>
+<tr class="separator:a766314337333fadb416ae7d5ecc9d327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ae28df98f89429ebfc5b195527d28a5"><td class="memItemLeft" align="right" valign="top"><a id="a2ae28df98f89429ebfc5b195527d28a5"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a2ae28df98f89429ebfc5b195527d28a5">company_id</a></td></tr>
+<tr class="memdesc:a2ae28df98f89429ebfc5b195527d28a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Company ID. <br /></td></tr>
+<tr class="separator:a2ae28df98f89429ebfc5b195527d28a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5254d9e7aa30dcadc034b58d606cde3"><td class="memItemLeft" align="right" valign="top"><a id="ad5254d9e7aa30dcadc034b58d606cde3"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#ad5254d9e7aa30dcadc034b58d606cde3">num_self_tests</a></td></tr>
+<tr class="memdesc:ad5254d9e7aa30dcadc034b58d606cde3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of self test. <br /></td></tr>
+<tr class="separator:ad5254d9e7aa30dcadc034b58d606cde3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a862a747800c97e5f971c97f8d8d422a5"><td class="memItemLeft" align="right" valign="top"><a id="a862a747800c97e5f971c97f8d8d422a5"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a862a747800c97e5f971c97f8d8d422a5">p_context</a></td></tr>
 <tr class="memdesc:a862a747800c97e5f971c97f8d8d422a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__callback__args__t">ble_abs_callback_args_t</a>. <br /></td></tr>
@@ -285,6 +331,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Access Layer instance structure. </p>
 <p>the parameters for initialization. </p>
 
 </div>
@@ -524,7 +572,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

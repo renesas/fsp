@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -284,7 +284,7 @@ Sequence number. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>BLE Mesh lowe trans callback parameter definition </p>
+<div class="textblock"><p>BLE Mesh lower trans callback parameter definition </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -358,7 +358,7 @@ Context provided to user during callback. </td></tr>
 <tr class="separator:addb8c377f8ac81a67a565a6a2e04b3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99de17a2a579ae66526085f90786c82f"><td class="memItemLeft" align="right" valign="top"><a id="a99de17a2a579ae66526085f90786c82f"></a>
 <a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#structrm__ble__mesh__network__instance__t">rm_ble_mesh_network_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#a99de17a2a579ae66526085f90786c82f">p_mesh_network_instance</a></td></tr>
-<tr class="memdesc:a99de17a2a579ae66526085f90786c82f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance structure of BLE Mesh Network. <br /></td></tr>
+<tr class="memdesc:a99de17a2a579ae66526085f90786c82f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance structure of BLE Mesh network. <br /></td></tr>
 <tr class="separator:a99de17a2a579ae66526085f90786c82f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05ab27038af08417d2c36284452a068a"><td class="memItemLeft" align="right" valign="top"><a id="a05ab27038af08417d2c36284452a068a"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#a05ab27038af08417d2c36284452a068a">p_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#structrm__ble__mesh__lower__trans__callback__args__t">rm_ble_mesh_lower_trans_callback_args_t</a> *p_args)</td></tr>
@@ -435,7 +435,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Register Inerface with Lower Transport Layer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>Register Interface with Lower Transport Layer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s.html#ga8c7dcd7eadd749297f8e84ca31371447">RM_BLE_MESH_LOWER_TRANS_Open()</a></li>
 </ul>
 </dd></dl>
@@ -460,7 +460,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Unregister Inerface with Lower Transport Layer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>Unregister Interface with Lower Transport Layer. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s.html#ga32b34770badd3b17270491c3c2cc40bb">RM_BLE_MESH_LOWER_TRANS_Close()</a></li>
 </ul>
 </dd></dl>
@@ -493,7 +493,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_transmit_setting</td><td>Pointer to transmit setting structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to payload and payload length structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">reliable</td><td>If requires lower transport Ack, set reliable as RM_BLE_MESH_LOWER_TRANS_RELIABLE_ENABLE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reliable</td><td>If requires lower transport ACK, set reliable as RM_BLE_MESH_LOWER_TRANS_RELIABLE_ENABLE. </td></tr>
   </table>
   </dd>
 </dl>
@@ -705,11 +705,11 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If requires lower transport Ack </p>
+<p>If requires lower transport ACK </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa8034c908ce836f078df616b4f9f3d06a66b931fde3c75a0b964d3d877a446c66"></a>RM_BLE_MESH_LOWER_TRANS_RELIABLE_DISABLE&#160;</td><td class="fielddoc"><p>Ack enable. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa8034c908ce836f078df616b4f9f3d06a66b931fde3c75a0b964d3d877a446c66"></a>RM_BLE_MESH_LOWER_TRANS_RELIABLE_DISABLE&#160;</td><td class="fielddoc"><p>ACK enable. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaa8034c908ce836f078df616b4f9f3d06a84d67379a92a33dca063c4c92432a928"></a>RM_BLE_MESH_LOWER_TRANS_RELIABLE_ENABLE&#160;</td><td class="fielddoc"><p>Ack disable. </p>
+<tr><td class="fieldname"><a id="ggaa8034c908ce836f078df616b4f9f3d06a84d67379a92a33dca063c4c92432a928"></a>RM_BLE_MESH_LOWER_TRANS_RELIABLE_ENABLE&#160;</td><td class="fielddoc"><p>ACK disable. </p>
 </td></tr>
 </table>
 
@@ -727,6 +727,18 @@ Pointer to the API structure for this instance. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Callback event </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga9da13f918d5d3e8da2c56313dcccb96ea69167d544538bf5ff67a577c6a7f687d"></a>RM_BLE_MESH_LOWER_TRANS_EVENT_RX_COMPLETED&#160;</td><td class="fielddoc"><p>BLE Mesh Lower Trans event - RX completed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9da13f918d5d3e8da2c56313dcccb96ea2e17c32dd77af1f75c0aaeac221d700c"></a>RM_BLE_MESH_LOWER_TRANS_EVENT_RX_FROM_FRIEND&#160;</td><td class="fielddoc"><p>BLE Mesh Lower Trans event - RX from friend. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9da13f918d5d3e8da2c56313dcccb96ea6bae27f1b2b9de08d7815ebdb4aec6a0"></a>RM_BLE_MESH_LOWER_TRANS_EVENT_ADD_UPPER_TRANS_COMPLETED&#160;</td><td class="fielddoc"><p>BLE Mesh Lower Trans event - Add Upper Trans completed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9da13f918d5d3e8da2c56313dcccb96eadac78af0a1fb18d5b2babebeb46d634b"></a>RM_BLE_MESH_LOWER_TRANS_EVENT_SEG_TX_CANCELED&#160;</td><td class="fielddoc"><p>BLE Mesh Lower Trans event - TX canceled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9da13f918d5d3e8da2c56313dcccb96ea25940b051588c146a1889d05dceb5128"></a>RM_BLE_MESH_LOWER_TRANS_EVENT_SEG_TX_COMPLETED&#160;</td><td class="fielddoc"><p>BLE Mesh Lower Trans event - TX completed. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -757,7 +769,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

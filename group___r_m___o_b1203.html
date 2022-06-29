@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: OB1203 Light/Proximity/PPG Sensor Middleware (rm_ob1203)</title>
+<title>RA Flexible Software Package Documentation: OB1203 Light/Proximity/PPG Sensor (rm_ob1203)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('group___r_m___o_b1203.html','');});
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">OB1203 Light/Proximity/PPG Sensor Middleware (rm_ob1203)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_e_n_s_o_r___m_o_d_u_l_e_s.html">Sensor</a></div></div>  </div>
+<div class="title">OB1203 Light/Proximity/PPG Sensor (rm_ob1203)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_e_n_s_o_r___m_o_d_u_l_e_s.html">Sensor</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -881,6 +881,11 @@ If FIFO informations (write index, read index, overflow counter, unread_samples)
 <tr>
 <td><a class="el" href="group___r_m___o_b1203.html#ga6ffbbe58d90adb8001d2f6424987e71b">RM_OB1203_FifoInfoGet()</a> </td><td>FIFO_WR_PTR, FIFO_RD_PTR and FIFO_OVF_CNT </td></tr>
 </table>
+<h2>Notifications</h2>
+<p>The application note [R01AN6311] using this module has an algorithm for biometric data calculation. The algorithm has the constraint of sampling rate (default: 100 samples per second). Please refer to the application note [R36AN0001EU] and OB1203 sensor page (<a href="https://www.renesas.com/jp/en/products/sensor-products/biosensors/ob1203-heart-rate-blood-oxygen-concentration-pulse-oximetry-proximity-light-and-color-sensor">https://www.renesas.com/jp/en/products/sensor-products/biosensors/ob1203-heart-rate-blood-oxygen-concentration-pulse-oximetry-proximity-light-and-color-sensor</a>)<br />
+R01AN6311 : <a href="https://www.renesas.com/document/apn/ob1203-sample-application-sample-code">https://www.renesas.com/document/apn/ob1203-sample-application-sample-code</a> <br />
+R36AN0001EU : <a href="https://www.renesas.com/document/apn/ob1203-pulse-oximeter-algorithm-spo2-heart-rate-and-respiration-rate">https://www.renesas.com/document/apn/ob1203-pulse-oximeter-algorithm-spo2-heart-rate-and-respiration-rate</a> <br />
+ </p>
 <h1><a class="anchor" id="rm-ob1203-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -1853,7 +1858,7 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

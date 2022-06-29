@@ -59,7 +59,7 @@ var searchData=
   ['getnetkey',['getNetKey',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a1510797e50b12c5e9e045cb7683d69ad',1,'rm_ble_mesh_access_api_t']]],
   ['getnetkeyindexlist',['getNetKeyIndexList',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#aa3f5a9a26fbf66d06a91f5232ffc689d',1,'rm_ble_mesh_access_api_t']]],
   ['getnodeidentity',['getNodeIdentity',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#af221c2322e2c6f833c27b2658f664c73',1,'rm_ble_mesh_access_api_t']]],
-  ['getpacketrssi',['getPacketRssi',['../group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a83994f91a2257c3b9de43eb003fcf49b',1,'rm_ble_mesh_bearer_api_t']]],
+  ['getpacketrssi',['getPacketRssi',['../group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#aa0562f376dc1d0336e2ba9e049916d18',1,'rm_ble_mesh_bearer_api_t']]],
   ['getprimaryunicastaddress',['getPrimaryUnicastAddress',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#aaf5ff6123934de8bc404cce33c19e381',1,'rm_ble_mesh_access_api_t']]],
   ['getprovisioneddevicelist',['getProvisionedDeviceList',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#a0d63ad977e9ce4a66c3ee3e1f47294ce',1,'rm_ble_mesh_access_api_t']]],
   ['getremainingtransitiontime',['getRemainingTransitionTime',['../group___r_m___b_l_e___m_e_s_h___a_p_i.html#ac86232992ce5d11fd1daa0eb6e3f1f24',1,'rm_ble_mesh_api_t']]],

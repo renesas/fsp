@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -221,11 +221,13 @@ Supported functions</h2>
 <tr>
 <td><a class="el" href="group___l2_c_a_p___a_p_i.html">L2CAP API</a> </td><td>Supported </td><td>Not supported </td><td style="color:orange"><b>Not supported</b>  </td></tr>
 <tr>
-<td><a class="el" href="group___v_s___a_p_i.html">Vendor Specific API</a> </td><td>Supported </td><td>Supported </td><td style="color:orange"><b>Supported</b>  </td></tr>
+<td><a class="el" href="group___v_s___a_p_i.html">Vendor Specific API</a> </td><td>*3 Limited </td><td>*3 Limited </td><td style="color:orange"><b>*3 Limited</b>  </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>1. This configuration dose not support LE Advertising Extensions functionality APIs. </dd>
 <dd>
-2. This configuration dose not support Central and Observer functionality APIs.</dd></dl>
+2. This configuration dose not support Central and Observer functionality APIs. </dd>
+<dd>
+3. This configuration dose not support vender specific firmware update functionality APIs.</dd></dl>
 <h2>Target Devices</h2>
 <p>The Renesas Bluetooth Low Energy Library supports the following devices.</p><ul>
 <li>RA4W1</li>
@@ -253,21 +255,35 @@ BLE software structure</div></div>
 <p> The BLE FSP module consists of the BLE library.<br />
 The BLE Application uses the BLE functions via the <a class="el" href="group___b_l_e___a_p_i.html">R_BLE API</a> provided by the BLE Library.<br />
 The QE for BLE generates the source codes (BLE base skeleton program) as a base for the BLE Application and the BLE Profile codes including the Profile API.</p>
+<h2>Initialize the BLE protocol stack</h2>
+<dl class="section note"><dt>Note</dt><dd>It takes around 250msec to initialize BLE protocol stack. </dd>
+<dd>
+<a class="el" href="group___b_l_e___a_p_i.html#ga96e018e46221096ede90c56659b4be86">R_BLE_Open</a> API will be occupied MCU resources during the initialization.</dd></dl>
 <h2><a class="anchor" id="r-ble-compact-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the ble:</p>
-<ul>
-<li>This configuration dose not supports LE Advertising Extensions functionality APIs. If those functionality needs your system, select <a class="el" href="group___b_l_e___e_x_t_e_n_d_e_d.html">BLE Driver (r_ble_extended)</a> configration.</li>
-<li>This configuration dose not supports Central and Observer functionality APIs. If those functionality needs your system, select <a class="el" href="group___b_l_e___e_x_t_e_n_d_e_d.html">BLE Driver (r_ble_extended)</a> or <a class="el" href="group___b_l_e___b_a_l_a_n_c_e.html">BLE Driver (r_ble_balance)</a> configration.</li>
-<li>This configuration dose not supports L2CAP functionality APIs. If those functionality needs your system, select <a class="el" href="group___b_l_e___e_x_t_e_n_d_e_d.html">BLE Driver (r_ble_extended)</a> configration.</li>
-</ul>
+<dl class="section note"><dt>Note</dt><dd>- This configuration dose not supports LE Advertising Extensions functionality APIs. </dd>
+<dd>
+If those functionalities need your system, select <a class="el" href="group___b_l_e___e_x_t_e_n_d_e_d.html">BLE Driver (r_ble_extended)</a> configration. </dd>
+<dd>
+- This configuration dose not supports Central and Observer functionality APIs. </dd>
+<dd>
+If those functionalities need your system, select <a class="el" href="group___b_l_e___e_x_t_e_n_d_e_d.html">BLE Driver (r_ble_extended)</a> or <a class="el" href="group___b_l_e___b_a_l_a_n_c_e.html">BLE Driver (r_ble_balance)</a> configration. </dd>
+<dd>
+- This configuration dose not supports L2CAP functionality APIs. </dd>
+<dd>
+If those functionalities need your system, select <a class="el" href="group___b_l_e___e_x_t_e_n_d_e_d.html">BLE Driver (r_ble_extended)</a> configration. </dd>
+<dd>
+- This configuration dose not supports vender specific firmware update functionality APIs. </dd>
+<dd>
+Those APIs are only supported by <a class="el" href="group___b_l_e___a_b_s___s_p_p.html">SPP BLE Abstraction (rm_ble_abs_spp)</a> module.</dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

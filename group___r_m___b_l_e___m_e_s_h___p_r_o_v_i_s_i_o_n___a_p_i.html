@@ -37,7 +37,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v3.7.0</span>
+   &#160;<span id="projectnumber">Release v3.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -435,7 +435,7 @@ oob</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Data exchanged during Provisiong procedure </p>
+<div class="textblock"><p>Data exchanged during Provisioning procedure </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -457,7 +457,7 @@ keyid</td>
 <td class="fieldname">
 flags</td>
 <td class="fielddoc">
-<p>Flags bitmask bit 0: Key Refresh Flag. 0: Not-In-Phase2 1: In-Phase2 bit 1: IV Update Flag 0: Normal operation 1: IV Update active</p>
+<p>Flags bit-mask bit 0: Key Refresh Flag. 0: Not-In-Phase2 1: In-Phase2 bit 1: IV Update Flag 0: Normal operation 1: IV Update active</p>
 <p>bits 2-7: RFU </p>
 </td></tr>
 <tr><td class="fieldtype">
@@ -583,7 +583,7 @@ p_context</td>
 <tr class="separator:a6ad579b03f8784eb824932265880b17f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a062138af7ccec4217c7cabea2b3ef11c"><td class="memItemLeft" align="right" valign="top"><a id="a062138af7ccec4217c7cabea2b3ef11c"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a062138af7ccec4217c7cabea2b3ef11c">p_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__callback__args__t">rm_ble_mesh_provision_callback_args_t</a> *p_args)</td></tr>
-<tr class="memdesc:a062138af7ccec4217c7cabea2b3ef11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback. <br /></td></tr>
+<tr class="memdesc:a062138af7ccec4217c7cabea2b3ef11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function. <br /></td></tr>
 <tr class="separator:a062138af7ccec4217c7cabea2b3ef11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae48c79d74d162eb6be570fd187098f8e"><td class="memItemLeft" align="right" valign="top"><a id="ae48c79d74d162eb6be570fd187098f8e"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ae48c79d74d162eb6be570fd187098f8e">p_context</a></td></tr>
@@ -722,13 +722,12 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">role</td><td>Provisioniong role to be setup - Device or Provisioner. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">role</td><td>Provisioning role to be setup - Device or Provisioner. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">info</td><td>Device information. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>The time period for which the setup shall be active.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>The time period for which the setup shall be active. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -751,13 +750,12 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">info</td><td>Device information. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">attention</td><td>The attention duration in seconds to be configured by the device. This parameter is dont care if the role is RM_BLE_MESH_PROVISION_ROLE_DEVICE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">attention</td><td>Attention duration. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_handle</td><td>Pointer to handle.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>This API is for use by the Provisioner application only upon reception of an Unprovisioned Device Beacon.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This API is for use by the Provisioner application only upon reception of an Unprovisioned Device Beacon. </dd></dl>
 
 </div>
 </div>
@@ -780,12 +778,11 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Pointer to provisioning context to be used. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Following PDU types are handled - PROV_PDU_TYPE_START PROV_PDU_TYPE_INPUT_CMPLT PROV_PDU_TYPE_DATA </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pdu_data</td><td>Pointer to the data corresponding to the above PDUs</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Following PDU types are handled - <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gga02bb7eb0aafdb600b9dd3da65c376da0a1f71c8f3e5283a66f10615b0a2b97830">RM_BLE_MESH_PROVISION_PDU_TYPE_START</a> <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gga02bb7eb0aafdb600b9dd3da65c376da0a649ab0aa1936657457e626b859978370">RM_BLE_MESH_PROVISION_PDU_TYPE_INPUT_COMPLETE</a> <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gga02bb7eb0aafdb600b9dd3da65c376da0a38266e1492e67098f757e95b77d1ad5c">RM_BLE_MESH_PROVISION_PDU_TYPE_DATA</a> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pdu_data</td><td>Pointer to the data corresponding to the above PDUs. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -800,7 +797,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the display authval. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
+<p>Set the display Auth-Value. </p><dl class="section user"><dt>Implemented as</dt><dd><ul>
 <li><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#ga808573f1d4da0c3232a1c3ec8eddb6c0">RM_BLE_MESH_PROVISION_SetAuthVal()</a></li>
 </ul>
 </dd></dl>
@@ -808,11 +805,10 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Pointer to provisioning context to be used. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">auth_value</td><td>The buffer structure that is stored authentication data and data size.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">auth_value</td><td>Pointer to the Authval (UINT32 *) or (uint8_t *). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -835,11 +831,10 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Pointer to provisioning context to be used. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">reason</td><td>Reason for termination.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reason</td><td>Reason for termination. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -860,12 +855,11 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">public_key</td><td>To a pointer of uint8_t array of length <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gac396f194696ac755d13c903e9b615480">RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">public_key</td><td>To a pointer of uint8_t array of length <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gac396f194696ac755d13c903e9b615480">RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -886,12 +880,11 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">public_key</td><td>To a pointer of uint8_t array of length <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gac396f194696ac755d13c903e9b615480">RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">public_key</td><td>To a pointer of uint8_t array of length <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gac396f194696ac755d13c903e9b615480">RM_BLE_MESH_PROVISION_KEY_NETKEY_SIZE</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -912,12 +905,11 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_key</td><td>Pointer to buffer to store random number</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_key</td><td>Pointer to buffer to store random number. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -938,13 +930,12 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_key</td><td>Pointer to Public Key </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">size</td><td>Size of public key</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_key</td><td>Pointer to public key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of public key. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -965,13 +956,12 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure.</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_auth_info</td><td>Pointer to authentication information. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">size</td><td>Size of authentication information.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_auth_info</td><td>Pointer to authentication information. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of authentication information. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS or Error Code on failure </dd></dl>
 
 </div>
 </div>
@@ -1028,7 +1018,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Provisioning array size requirements Provisioning key netkey size </p>
+<p>Provisioning array size requirements Provisioning key NetKey size </p>
 
 </div>
 </div>
@@ -1123,7 +1113,7 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Provisiong Roles </p>
+<p>Provisioning Roles </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa2ffe6e3c72addf91770f36a6b71ea17ad58273cb349ff7b9ca67d663c4655c23"></a>RM_BLE_MESH_PROVISION_ROLE_DEVICE&#160;</td><td class="fielddoc"><p>Device role. </p>
 </td></tr>
@@ -1277,13 +1267,13 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>Provisioning Input OOB action values </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga016f0086032c90e5a91c9d767747c55ca9319af1920e12a801187f753f9a68f71"></a>RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_PUSH&#160;</td><td class="fielddoc"><p>Iuput OOB action push. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga016f0086032c90e5a91c9d767747c55ca9319af1920e12a801187f753f9a68f71"></a>RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_PUSH&#160;</td><td class="fielddoc"><p>Input OOB action push. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga016f0086032c90e5a91c9d767747c55ca338d16dd483cdb4f5fc5f9ff76cf1bdf"></a>RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_TWIST&#160;</td><td class="fielddoc"><p>Input OOB action twist. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga016f0086032c90e5a91c9d767747c55ca242101ebf35ee21d24e68da016c95170"></a>RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_NUMERIC&#160;</td><td class="fielddoc"><p>Iuput OOB action numeric. </p>
+<tr><td class="fieldname"><a id="gga016f0086032c90e5a91c9d767747c55ca242101ebf35ee21d24e68da016c95170"></a>RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_NUMERIC&#160;</td><td class="fielddoc"><p>Input OOB action numeric. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga016f0086032c90e5a91c9d767747c55cafa4dda77682748b56a344a9830d35776"></a>RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_ALPHANUMERIC&#160;</td><td class="fielddoc"><p>Iuput OOB action alphanumeric. </p>
+<tr><td class="fieldname"><a id="gga016f0086032c90e5a91c9d767747c55cafa4dda77682748b56a344a9830d35776"></a>RM_BLE_MESH_PROVISION_INPUT_OOB_ACTION_ALPHANUMERIC&#160;</td><td class="fielddoc"><p>Input OOB action alphanumeric. </p>
 </td></tr>
 </table>
 
@@ -1381,11 +1371,11 @@ Pointer to the API structure for this instance. </td></tr>
 </div><div class="memdoc">
 <p>Provisioning LinkClose Error codes </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga23c0e27819cc7af2adaf2f5671043fcea188199e9381b8d041e1d4508987bf0f4"></a>RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_SUCCESS&#160;</td><td class="fielddoc"><p>Linkclose error code reason success. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga23c0e27819cc7af2adaf2f5671043fcea188199e9381b8d041e1d4508987bf0f4"></a>RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_SUCCESS&#160;</td><td class="fielddoc"><p>Link close error code reason success. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga23c0e27819cc7af2adaf2f5671043fceab3ff0da681aff6171c13ca17bd37b5b3"></a>RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_TIMEOUT&#160;</td><td class="fielddoc"><p>Linkclose error code reason timeout. </p>
+<tr><td class="fieldname"><a id="gga23c0e27819cc7af2adaf2f5671043fceab3ff0da681aff6171c13ca17bd37b5b3"></a>RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_TIMEOUT&#160;</td><td class="fielddoc"><p>Link close error code reason timeout. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga23c0e27819cc7af2adaf2f5671043fceac694604df01ab9e0d0ce7b3bf3a60517"></a>RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_FAIL&#160;</td><td class="fielddoc"><p>Linkclose error code reason fail. </p>
+<tr><td class="fieldname"><a id="gga23c0e27819cc7af2adaf2f5671043fceac694604df01ab9e0d0ce7b3bf3a60517"></a>RM_BLE_MESH_PROVISION_LINK_CLOSE_REASON_FAIL&#160;</td><td class="fielddoc"><p>Link close error code reason fail. </p>
 </td></tr>
 </table>
 
@@ -1406,7 +1396,7 @@ Pointer to the API structure for this instance. </td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8739cb797c81a6280a05f5221e294dc5a5cd8c6d9220c863aedf0b9e84290e479"></a>RM_BLE_MESH_PROVISION_OOB_TYPE_OTHER&#160;</td><td class="fielddoc"><p>Other OOB type mask. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga8739cb797c81a6280a05f5221e294dc5a13f7c32e8d8c40de58f2c4060cc9468f"></a>RM_BLE_MESH_PROVISION_OOB_TYPE_URI&#160;</td><td class="fielddoc"><p>Uri OOB type mask. </p>
+<tr><td class="fieldname"><a id="gga8739cb797c81a6280a05f5221e294dc5a13f7c32e8d8c40de58f2c4060cc9468f"></a>RM_BLE_MESH_PROVISION_OOB_TYPE_URI&#160;</td><td class="fielddoc"><p>URI OOB type mask. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8739cb797c81a6280a05f5221e294dc5a0ee531c75d75ec8e7090b58fe749de86"></a>RM_BLE_MESH_PROVISION_OOB_TYPE_2DMRC&#160;</td><td class="fielddoc"><p>2DMRC OOB type mask </p>
 </td></tr>
@@ -1456,8 +1446,7 @@ Pointer to the API structure for this instance. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>This event is received by the Provisioner application. On reception of this event, the application shall make use of the <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#gac7805acf511918efe76cba8ddddbfc6f">RM_BLE_MESH_PROVISION_Bind()</a> to initiate the provisioning procedure.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS (always) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This event is received by the Provisioner application. On reception of this event, the application shall make use of the <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#gac7805acf511918efe76cba8ddddbfc6f">RM_BLE_MESH_PROVISION_Bind()</a> to initiate the provisioning procedure. </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="gga643239088014f58f26f3a85ffbb4b5dca058438d040ce4eb8fa5f1fb5f5de795a"></a>RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_SETUP&#160;</td><td class="fielddoc"><p>This event indicates that the provisioning procedure capability exchange is complete, with the following values as parameters in the <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__callback__args__t">rm_ble_mesh_provision_callback_args_t</a> callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1470,8 +1459,7 @@ Pointer to the API structure for this instance. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>When local provisioner, the appliation shall select the required capability from the received capabilities and choose to start the procedure by calling <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#gae7c6f2433b7437c23b276340e01411ec">RM_BLE_MESH_PROVISION_SendPdu()</a> put RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_SETUP as the third argument..</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS (always) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When local provisioner, the appliation shall select the required capability from the received capabilities and choose to start the procedure by calling <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n.html#gae7c6f2433b7437c23b276340e01411ec">RM_BLE_MESH_PROVISION_SendPdu()</a> put RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_SETUP as the third argument. </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="gga643239088014f58f26f3a85ffbb4b5dca8002189868012cb711e36d63df753006"></a>RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_DISPLAY&#160;</td><td class="fielddoc"><p>This event indicates to the application the OOB random data that is to be displayed on the UI via the <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__callback__args__t">rm_ble_mesh_provision_callback_args_t</a> callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1480,11 +1468,10 @@ Pointer to the API structure for this instance. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_type</td><td><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gga643239088014f58f26f3a85ffbb4b5dca8002189868012cb711e36d63df753006">RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_DISPLAY</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_result</td><td>FSP_SUCCESS on successful procedure completion, else an Error Code. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_data</td><td>Pointer to OOB information as in <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__oob__info__t">rm_ble_mesh_provision_oob_info_t</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_datalen</td><td>sizeof (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__oob__info__t">rm_ble_mesh_provision_oob_info_t</a>).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_datalen</td><td>sizeof (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__oob__info__t">rm_ble_mesh_provision_oob_info_t</a>). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS (always) </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="gga643239088014f58f26f3a85ffbb4b5dcabb4ecc6f4d521987ec5e3d8e3bd18385"></a>RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_ENTRY&#160;</td><td class="fielddoc"><p>This event indicates to the application requesting for OOB random data that is to be used in the procedure via the <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__callback__args__t">rm_ble_mesh_provision_callback_args_t</a> callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1493,11 +1480,10 @@ Pointer to the API structure for this instance. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_type</td><td><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gga643239088014f58f26f3a85ffbb4b5dcabb4ecc6f4d521987ec5e3d8e3bd18385">RM_BLE_MESH_PROVISION_EVENT_TYPE_OOB_ENTRY</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_result</td><td>FSP_SUCCESS on successful procedure completion, else an Error Code. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_data</td><td>Pointer to OOB information as in <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__oob__info__t">rm_ble_mesh_provision_oob_info_t</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_datalen</td><td>sizeof (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__oob__info__t">rm_ble_mesh_provision_oob_info_t</a>).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_datalen</td><td>sizeof (<a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__oob__info__t">rm_ble_mesh_provision_oob_info_t</a>). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS (always) </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="gga643239088014f58f26f3a85ffbb4b5dcadd0bfae1ad5ad7ada16688c4cbe7648f"></a>RM_BLE_MESH_PROVISION_EVENT_TYPE_DEVINPUT_COMPLETE&#160;</td><td class="fielddoc"><p>This event indicates to the application that the peer device has completed the Input of OOB when this capability is negotiated via the <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__callback__args__t">rm_ble_mesh_provision_callback_args_t</a> callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1510,8 +1496,7 @@ Pointer to the API structure for this instance. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>This event is generated only for the provisioner application.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS (always) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This event is generated only for the provisioner application. </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="gga643239088014f58f26f3a85ffbb4b5dca77c0caa0fb1c1d57c02c1df90d475362"></a>RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVDATA_INFO_REQ&#160;</td><td class="fielddoc"><p>This event indicates to the application requesting for Provisional data to be sent to the peer device via the <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__callback__args__t">rm_ble_mesh_provision_callback_args_t</a> callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1524,8 +1509,7 @@ Pointer to the API structure for this instance. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>This event is generated only for the provisioner application.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS (always) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This event is generated only for the provisioner application. </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="gga643239088014f58f26f3a85ffbb4b5dca2d8d9eae2a9895bc1d4fcb1032de09b1"></a>RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVDATA_INFO&#160;</td><td class="fielddoc"><p>This event indicates to the application the Provisional data received from the Provisioner via the <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__callback__args__t">rm_ble_mesh_provision_callback_args_t</a> callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1538,8 +1522,7 @@ Pointer to the API structure for this instance. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>This event is generated only for the device application.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS (always) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This event is generated only for the device application. </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="gga643239088014f58f26f3a85ffbb4b5dca14f6875a08a57ebc47fa8fd296349e99"></a>RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_COMPLETE&#160;</td><td class="fielddoc"><p>This event indicates to the application that the provisioning procedure is complete via the <a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__callback__args__t">rm_ble_mesh_provision_callback_args_t</a> callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1548,11 +1531,10 @@ Pointer to the API structure for this instance. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_type</td><td><a class="el" href="group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#gga643239088014f58f26f3a85ffbb4b5dca14f6875a08a57ebc47fa8fd296349e99">RM_BLE_MESH_PROVISION_EVENT_TYPE_PROVISIONING_COMPLETE</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_result</td><td>FSP_SUCCESS on successful procedure completion, else an Error Code. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">event_data</td><td>NULL. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_datalen</td><td>0.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_datalen</td><td>0. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FSP_SUCCESS (always) </dd></dl>
 </td></tr>
 </table>
 
@@ -1564,7 +1546,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v3.7.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v3.8.0 User's Manual Copyright © (2022) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
